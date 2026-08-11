@@ -1,0 +1,79 @@
+schema_version: "1.0"
+id: engineering-knowledge-retrieval-policy
+
+objective: >-
+  Select the smallest reliable solution that satisfies actual constraints.
+  Do not prefer an approach merely because it is obvious, conventional, fashionable,
+  remembered by the model, or commonly repeated.
+
+paths:
+  fast:
+    use_when:
+      - a verified prior decision exists
+      - current critical constraints match the prior case
+      - source and implementation versions remain applicable
+      - no unresolved security or reliability caveat invalidates reuse
+    action:
+      - retrieve the prior decision
+      - validate applicability
+      - reuse only after constraint check
+
+  adapt:
+    use_when:
+      - similar verified cases exist
+      - one or more material constraints differ
+    action:
+      - retrieve multiple relevant cases
+      - compare critical differences
+      - adapt candidate solution
+      - re-run affected tests, security checks and measurements
+
+  research:
+    use_when:
+      - no applicable verified case exists
+      - evidence conflicts
+      - current constraints invalidate prior solutions
+      - confidence is insufficient
+    action:
+      - gather primary and authoritative sources
+      - enumerate viable alternatives
+      - run targeted experiments where necessary
+      - record a new verified decision
+
+ranking:
+  mandatory_filters:
+    - correctness
+    - security_constraints
+    - hard_compatibility_constraints
+  preference_dimensions:
+    - reliability
+    - simplicity
+    - maintainability
+    - performance_for_actual_workload
+    - memory_use
+    - testability
+    - observability
+    - portability
+    - operational_cost
+    - dependency_risk
+
+anti_patterns:
+  - select_from_model_memory_without_retrieval_when_evidence_is_required
+  - equate_popularity_with_correctness
+  - equate_microbenchmark_winner_with_best_production_choice
+  - reuse_past_decision_without_context_comparison
+  - convert_expert_estimate_into_measured_fact
+  - retain_unverified_task_noise_as_reusable_knowledge
+
+post_decision_learning:
+  required_question: "What verified information from this task can improve a future decision?"
+  allowed_outputs:
+    - selection_rule_refinement
+    - new_constraint
+    - counterexample
+    - benchmark
+    - security_failure_mode
+    - version_caveat
+    - reusable_test
+    - operational_outcome
+  if_nothing_verified: do_not_update_reusable_rules
