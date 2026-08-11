@@ -1,0 +1,72 @@
+id: ALG-SEARCH-001
+title: Search Strategy Selection
+kind: algorithm-selection
+status: foundation
+
+problem:
+  Locate one or more target items in a collection or index.
+
+context_questions:
+  - Is the data sorted?
+  - Is the data static or frequently changing?
+  - Is lookup by exact key, range, prefix or predicate?
+  - How many lookups are expected relative to writes?
+  - What are the collection size and memory constraints?
+  - Are keys attacker-controlled?
+
+candidates:
+  linear_search:
+    prefer_when:
+      - collection is small
+      - data is unsorted
+      - one-off lookup does not justify preprocessing
+    tradeoff:
+      - O(n) comparisons in the general case
+
+  binary_search:
+    prefer_when:
+      - data is sorted
+      - random access is available
+      - repeated lookups justify maintaining sorted order
+    tradeoff:
+      - sorted-order maintenance may dominate when writes are frequent
+
+  hash_lookup:
+    prefer_when:
+      - exact-key lookup dominates
+      - additional memory is acceptable
+    caution:
+      - collision behaviour and attacker-controlled keys must be considered
+
+  tree_index:
+    consider_when:
+      - ordered traversal or range queries are required
+      - predictable ordered structure is useful
+
+selection_policy:
+  - condition: tiny_or_one_off_unsorted_collection
+    prefer: linear_search
+  - condition: sorted_random_access_collection
+    consider: binary_search
+  - condition: repeated_exact_key_lookup
+    consider: hash_lookup
+  - condition: range_or_ordered_queries
+    consider: tree_index
+
+security_review:
+  concerns:
+    - algorithmic complexity attacks
+    - unbounded input size
+    - hash collision abuse
+    - memory amplification from indexing
+
+agent_rule: >-
+  Do not recommend binary search merely because O(log n) is attractive. Account for the cost
+  of keeping data sorted, update frequency, collection size, memory, query shape and attacker influence.
+
+implementations:
+  python: planned
+  go: planned
+  cpp: planned
+benchmarks: planned
+sources: planned
