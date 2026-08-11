@@ -1,0 +1,63 @@
+id: DS-HASH-001
+title: Hash Table Selection
+kind: data-structure-selection
+status: foundation
+
+problem:
+  Provide efficient exact-key association and lookup.
+
+context_questions:
+  - Are lookups exact-key, range-based or ordered?
+  - How large is the key space?
+  - Are keys attacker-controlled?
+  - Is deterministic ordering required?
+  - What memory overhead is acceptable?
+  - How frequently are entries inserted and removed?
+
+candidates:
+  hash_table:
+    prefer_when:
+      - exact-key lookup dominates
+      - average-case constant-time behaviour is useful
+    cautions:
+      - collision behaviour depends on implementation
+      - memory overhead can exceed compact sequential structures
+
+  balanced_tree:
+    consider_when:
+      - ordered traversal or range queries matter
+      - predictable logarithmic operations are preferred
+
+  sorted_vector:
+    consider_when:
+      - datasets are relatively static
+      - compact memory layout and iteration locality matter
+      - insert cost is acceptable
+
+  trie:
+    consider_when:
+      - prefix queries are central
+      - key structure justifies dedicated prefix indexing
+
+security_review:
+  concerns:
+    - collision-based denial of service
+    - attacker-controlled oversized keys
+    - unbounded table growth
+    - memory exhaustion
+    - unsafe custom hashing
+  required_controls:
+    - use mature runtime/library implementations by default
+    - enforce input and resource limits at trust boundaries
+    - benchmark with representative and adversarial key distributions when risk justifies it
+
+agent_rule: >-
+  Do not convert every lookup problem into a hash table. Query semantics, ordering, update rate,
+  memory behaviour and attacker influence may make a tree, sorted vector or trie more reliable.
+
+implementations:
+  python: planned
+  go: planned
+  cpp: planned
+benchmarks: planned
+sources: planned
