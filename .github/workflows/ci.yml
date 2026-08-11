@@ -1,0 +1,46 @@
+name: Knowledge Core CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  python-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install --upgrade pip pytest
+      - name: Prepare reference implementation
+        run: cp problems/search/implementations/python.py problems/search/PROB-SEARCH-001/tests/python/solution.py
+      - name: Run Python tests
+        run: python -m pytest -q problems/search/PROB-SEARCH-001/tests/python
+
+  go-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.23.x'
+      - name: Prepare reference implementation
+        run: cp problems/search/implementations/go.go problems/search/PROB-SEARCH-001/tests/go/solution.go
+      - name: Run Go tests
+        working-directory: problems/search/PROB-SEARCH-001/tests/go
+        run: GO111MODULE=off go test -v
+
+  cpp-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build C++ test binary
+        run: g++ -std=c++20 -O2 -Wall -Wextra -Wpedantic problems/search/implementations/cpp.cpp problems/search/PROB-SEARCH-001/tests/cpp/test_membership.cpp -o /tmp/prob-search-001-test
+      - name: Run C++ tests
+        run: /tmp/prob-search-001-test
