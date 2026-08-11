@@ -1,0 +1,59 @@
+id: DM-SEARCH-001
+problem_id: PROB-SEARCH-001
+status: PENDING_MEASUREMENT
+reusability: provisional
+
+question:
+  Which strategy should be preferred for repeated membership lookup?
+
+known_context_patterns:
+  tiny_dataset_few_queries:
+    likely_candidates:
+      - linear_scan
+    rationale_status: DERIVED
+    caution:
+      - must not be promoted to a general rule without measurement and workload context
+
+  sorted_dataset_repeated_queries:
+    likely_candidates:
+      - binary_search_on_sorted_data
+    rationale_status: DERIVED
+    caution:
+      - account for sorting or maintenance cost if ordering is not already available
+
+  many_repeated_queries_static_dataset:
+    likely_candidates:
+      - hash_set_lookup
+    rationale_status: DERIVED
+    caution:
+      - preprocessing cost, memory overhead and adversarial input behaviour must be considered
+
+evidence:
+  algorithm_records:
+    - ALG-SEARCH-001
+    - DS-HASH-001
+  benchmark_plan:
+    - BENCH-SEARCH-001
+  measured_results: []
+
+current_decision:
+  state: NOT_FINAL
+  reason:
+    No measured result has yet been recorded under the repository benchmark contract.
+
+promotion_rules:
+  reusable_fast_path_requires:
+    - passing correctness tests
+    - at_least_one_valid_measured_benchmark
+    - explicit workload_scope
+    - security_review
+    - environment_metadata
+  broader_rule_requires:
+    - repeated_results_or_independent_support
+    - no_known_counterexample_in_claimed_scope
+
+learning_rule:
+  After benchmark execution, update this record with measured outcomes, discovered thresholds, counterexamples and conditions under which each strategy becomes preferable.
+
+agent_instruction:
+  This record is advisory only while status is PENDING_MEASUREMENT. Do not cite it as measured evidence and do not convert its provisional patterns into universal rules.
