@@ -1,0 +1,68 @@
+id: DS-QUEUE-001
+title: Queue and Stack Structure Selection
+kind: data-structure-selection
+status: foundation
+
+problem:
+  Manage ordered work items using FIFO, LIFO or bounded cyclic processing semantics.
+
+context_questions:
+  - Is FIFO or LIFO required?
+  - Is capacity bounded?
+  - Are operations single-threaded or concurrent?
+  - Is blocking behaviour required?
+  - Must allocations be minimized?
+  - Is persistence or cross-process transport required?
+
+candidates:
+  deque:
+    prefer_when:
+      - efficient insertion and removal at both ends are required
+      - in-process general queue or stack behaviour is sufficient
+
+  ring_buffer:
+    consider_when:
+      - bounded capacity is known
+      - predictable memory use matters
+      - streaming or cyclic workloads dominate
+
+  linked_structure:
+    consider_when:
+      - stable node references or particular insertion semantics justify it
+    caution:
+      - pointer overhead and cache locality may make it inferior to contiguous alternatives
+
+  concurrent_queue:
+    consider_when:
+      - multiple producers or consumers require synchronization
+    rule:
+      - use mature runtime/library primitives before custom lock-free structures
+
+  external_broker:
+    consider_when:
+      - durability, cross-process delivery, retries or distributed consumers are required
+
+security_review:
+  concerns:
+    - unbounded queue growth
+    - memory exhaustion
+    - deadlock or starvation
+    - unsafe lock-free code
+    - message poisoning and retry storms
+  required_controls:
+    - capacity or backpressure policy
+    - timeout and cancellation strategy where blocking exists
+    - metrics for depth, age and failure rate
+    - validation at trust boundaries
+
+agent_rule: >-
+  Choose queue semantics before choosing a container. If durability, retries or cross-process delivery
+  are requirements, an in-memory deque is not a substitute for a message broker. If bounded predictable
+  memory is the primary constraint, a ring buffer may be preferable to a dynamically growing structure.
+
+implementations:
+  python: planned
+  go: planned
+  cpp: planned
+benchmarks: planned
+sources: planned
