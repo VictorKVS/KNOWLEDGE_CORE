@@ -1,0 +1,21 @@
+name: Evidence Benchmark
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  benchmark-contract-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Verify benchmark evidence files exist
+        shell: bash
+        run: |
+          test -f benchmarks/BENCHMARK_CONTRACT.md
+          test -f benchmarks/BENCH-SEARCH-001.yaml
+          test -f decision-memory/DM-SEARCH-001.yaml
+          echo "Benchmark evidence package is present."
+          echo "Measured execution is intentionally separate from CI and must record environment metadata before promotion to reusable evidence."
