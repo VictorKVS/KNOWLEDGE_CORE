@@ -1,0 +1,75 @@
+id: PROB-SEARCH-001
+title: Repeated Membership Lookup
+kind: problem-record
+status: foundation
+
+problem:
+  Given a collection of unique integer identifiers and a stream of lookup queries, determine whether each query identifier exists in the collection.
+
+context_variants:
+  - collection is small and queried once
+  - collection is large and queried many times
+  - collection is already sorted
+  - collection changes frequently
+  - memory is constrained
+  - inputs may be attacker-controlled
+
+candidate_strategies:
+  linear_scan:
+    setup_cost: low
+    query_cost: O(n)
+    strengths:
+      - no preprocessing
+      - minimal extra memory
+    good_when:
+      - very small datasets
+      - one or very few queries
+
+  binary_search:
+    setup_requirement:
+      - sorted sequence
+    query_cost: O(log n)
+    strengths:
+      - deterministic logarithmic lookup on sorted random-access data
+    tradeoffs:
+      - sorting cost if data is not already sorted
+      - insertions can be expensive in array-like structures
+
+  hash_set:
+    setup_cost: O(n) average
+    query_cost: O(1) average
+    strengths:
+      - efficient repeated membership lookup
+    tradeoffs:
+      - extra memory
+      - implementation-dependent collision behaviour
+      - ordering not inherent
+
+selection_rules:
+  - condition: one_or_few_queries_and_small_collection
+    consider: linear_scan
+  - condition: already_sorted_and_memory_matters
+    consider: binary_search
+  - condition: many_queries_and_memory_is_available
+    consider: hash_set
+
+security_review:
+  concerns:
+    - unbounded input size
+    - adversarial query volume
+    - hash collision degradation where relevant
+    - integer parsing and range validation
+  controls:
+    - validate collection/query limits
+    - bound resource consumption for exposed services
+    - use language/runtime supported containers unless a custom implementation is justified
+
+implementations:
+  python: implementations/python.py
+  go: implementations/go.go
+  cpp: implementations/cpp.cpp
+
+benchmark_contract: ../../benchmarks/BENCHMARK_CONTRACT.md
+linked_knowledge:
+  - ALG-SEARCH-001
+  - DS-HASH-001
