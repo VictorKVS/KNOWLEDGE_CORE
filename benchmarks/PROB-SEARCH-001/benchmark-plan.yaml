@@ -1,0 +1,67 @@
+id: BENCH-SEARCH-001
+problem_id: PROB-SEARCH-001
+status: PENDING_MEASUREMENT
+
+purpose:
+  Compare repeated membership lookup strategies under reproducible conditions without inventing cross-language performance claims.
+
+strategies:
+  - linear_scan
+  - binary_search_on_sorted_data
+  - hash_set_lookup
+
+workloads:
+  tiny:
+    n: 20
+    queries: 1000
+  small:
+    n: 1000
+    queries: 10000
+  medium:
+    n: 100000
+    queries: 100000
+
+query_mix:
+  hit_ratio: 0.5
+  distribution: deterministic_seeded
+
+measurements:
+  - construction_time
+  - lookup_time_total
+  - lookup_time_per_query
+  - memory_peak_if_available
+  - correctness
+
+required_environment_metadata:
+  - os
+  - cpu
+  - architecture
+  - memory
+  - runtime_or_compiler
+  - runtime_or_compiler_version
+  - optimization_flags
+  - build_mode
+
+rules:
+  - run correctness tests before timing
+  - use identical logical datasets across strategies
+  - separate preprocessing cost from repeated lookup cost
+  - record warmup policy
+  - record iteration count
+  - report median and dispersion, not only a single run
+  - do not compare Python, Go and C++ as languages from one implementation result
+  - claims must remain scoped to the measured environment and workload
+
+security_cases:
+  - attacker_controlled_dataset_size
+  - attacker_controlled_query_count
+  - pathological_input_distribution
+  - memory_exhaustion_risk
+
+result_statuses:
+  - MEASURED
+  - INVALID
+  - NOT_RUN
+
+notes:
+  A strategy may be slower in raw lookup time but preferable overall if its setup cost, memory use, maintenance burden or security profile better matches the actual service constraints.
