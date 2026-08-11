@@ -1,0 +1,87 @@
+id: ALG-GRAPH-004
+title: Shortest Path Algorithm Selection
+kind: algorithm-selection
+status: foundation
+
+problem:
+  Find a minimum-cost path in a graph.
+
+context_questions:
+  - Are edges weighted?
+  - Can any edge weight be negative?
+  - Is the graph directed or undirected?
+  - Is the query single-source, single-target or all-pairs?
+  - Is a useful admissible heuristic available?
+  - How large and sparse is the graph?
+  - Is the graph static or changing?
+  - Are inputs attacker-controlled?
+
+candidates:
+  bfs:
+    prefer_when:
+      - graph is unweighted
+      - all edges have equal cost
+    reject_when:
+      - general unequal edge weights determine path cost
+
+  dijkstra:
+    prefer_when:
+      - edge weights are non-negative
+      - weighted shortest paths are required
+    reject_when:
+      - negative edge weights are possible
+
+  bellman_ford:
+    consider_when:
+      - negative edge weights are possible
+      - negative-cycle detection is required
+    tradeoff:
+      - generally higher computational cost than Dijkstra on non-negative weighted graphs
+
+  a_star:
+    consider_when:
+      - a meaningful heuristic exists
+      - target-directed search is useful
+    caution:
+      - correctness and optimality depend on heuristic properties and implementation details
+
+selection_policy:
+  - condition: unweighted_or_equal_cost_edges
+    prefer: bfs
+  - condition: weighted_and_non_negative
+    prefer: dijkstra
+  - condition: negative_weights_possible
+    consider: bellman_ford
+  - condition: target_directed_and_valid_heuristic
+    consider: a_star
+
+security_review:
+  concerns:
+    - adversarially large graphs
+    - memory exhaustion
+    - integer overflow in accumulated path cost
+    - malformed graph input
+    - denial of service through worst-case workloads
+  required_controls:
+    - input size limits appropriate to the service
+    - validated numeric ranges
+    - bounded resource policies where exposed to untrusted input
+    - tests for disconnected and pathological graphs
+
+evidence_requirements:
+  complexity_claims: documented_or_derived
+  performance_claims: measured_for_target_workload
+  implementation_claims: verified_against_language_runtime_and_library_version
+
+implementations:
+  python: planned
+  go: planned
+  cpp: planned
+
+benchmarks: planned
+sources: planned
+
+agent_rule: >-
+  Never infer the preferred shortest-path algorithm from the phrase "shortest path" alone.
+  Resolve graph constraints first, reject invalid candidates, then choose the smallest reliable
+  approach supported by evidence for the actual workload.
