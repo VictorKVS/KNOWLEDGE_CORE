@@ -1,0 +1,70 @@
+id: ALG-SORT-001
+title: Sorting Strategy Selection
+kind: algorithm-selection
+status: foundation
+
+problem:
+  Order a collection according to a comparison key or ordering rule.
+
+context_questions:
+  - How large is the collection?
+  - Is the data nearly sorted?
+  - Is stable ordering required?
+  - Is in-place operation important?
+  - Are worst-case guarantees important?
+  - Is the sort in memory or external?
+  - Is a language/runtime native sort already appropriate?
+  - Are comparison keys expensive or attacker-controlled?
+
+candidates:
+  insertion_sort:
+    prefer_when:
+      - collection is very small
+      - data is nearly sorted
+    tradeoff:
+      - quadratic growth on large general inputs
+
+  merge_sort:
+    consider_when:
+      - stable ordering is required
+      - predictable O(n log n) comparison complexity is valuable
+    tradeoff:
+      - additional memory may be required depending on implementation
+
+  quicksort_family:
+    consider_when:
+      - in-memory performance is important
+      - implementation mitigates pathological pivot cases
+    caution:
+      - worst-case behaviour depends on implementation and pivot strategy
+
+  heapsort:
+    consider_when:
+      - O(n log n) worst-case bound and limited auxiliary memory matter
+    tradeoff:
+      - practical locality and constant factors may be less attractive than alternatives
+
+  native_sort:
+    prefer_when:
+      - standard library implementation satisfies correctness, stability and performance requirements
+    rule:
+      - verify documented semantics and runtime version rather than reimplementing by habit
+
+security_review:
+  concerns:
+    - adversarial input causing pathological runtime
+    - expensive comparison functions
+    - inconsistent comparators
+    - memory exhaustion on large collections
+    - denial of service through unbounded sorting requests
+
+agent_rule: >-
+  Prefer the standard library sort when it satisfies the real constraints. A custom algorithm must
+  justify its maintenance and security cost with evidence or a requirement the standard implementation cannot meet.
+
+implementations:
+  python: planned
+  go: planned
+  cpp: planned
+benchmarks: planned
+sources: planned
