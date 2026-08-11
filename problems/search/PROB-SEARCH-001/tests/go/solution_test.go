@@ -1,4 +1,4 @@
-package main
+package searchproblem
 
 import "testing"
 
@@ -18,21 +18,21 @@ func TestMembershipStrategies(t *testing.T) {
 
     for _, tc := range cases {
         t.Run(tc.name, func(t *testing.T) {
-            if got := linearContains(values, tc.target); got != tc.expected {
-                t.Fatalf("linearContains() = %v, want %v", got, tc.expected)
+            if got := LinearContains(values, tc.target); got != tc.expected {
+                t.Fatalf("LinearContains() = %v, want %v", got, tc.expected)
             }
-            if got := binaryContains(values, tc.target); got != tc.expected {
-                t.Fatalf("binaryContains() = %v, want %v", got, tc.expected)
+            if got := BinaryContains(values, tc.target); got != tc.expected {
+                t.Fatalf("BinaryContains() = %v, want %v", got, tc.expected)
             }
-            if got := hashContains(set, tc.target); got != tc.expected {
-                t.Fatalf("hashContains() = %v, want %v", got, tc.expected)
+            if got := HashContains(set, tc.target); got != tc.expected {
+                t.Fatalf("HashContains() = %v, want %v", got, tc.expected)
             }
         })
     }
 }
 
 func TestEmpty(t *testing.T) {
-    if linearContains(nil, 1) || binaryContains(nil, 1) || hashContains(map[int]struct{}{}, 1) {
+    if LinearContains(nil, 1) || BinaryContains(nil, 1) || HashContains(map[int]struct{}{}, 1) {
         t.Fatal("empty collections must not contain target")
     }
 }
