@@ -8,7 +8,9 @@ This repository is the staging home for the future **`engineering-knowledge`** k
 
 ## Core principle
 
-The preferred solution is not automatically the fastest, newest or shortest. It is the **smallest reliable solution that satisfies the actual constraints**, with explicit trade-offs and evidence.
+The goal is **not the most obvious or commonly accepted solution**. The goal is the **smallest reliable solution that satisfies the actual constraints**: sufficiently fast, secure, resilient, maintainable and explainable, with explicit trade-offs and verifiable evidence.
+
+If a less obvious approach is better supported by research, official documentation, standards or reproducible experiments, the agent should prefer it and explain why it is more appropriate than the conventional alternative.
 
 Every important engineering choice should be traceable through:
 
