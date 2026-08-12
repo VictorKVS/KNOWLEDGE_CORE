@@ -1,0 +1,30 @@
+schema_version: 1
+entity: regulatory_requirement
+required_fields:
+  - id
+  - source_document
+  - source_locator
+  - subject
+  - action
+  - object
+  - applicability
+  - verification
+fields:
+  id: unique stable requirement identifier
+  source_document: canonical regulatory document id
+  source_locator: section/paragraph/item locator in source
+  subject: obligated or responsible actor
+  action: required/prohibited/permitted action
+  object: protected system, process, information, component or evidence
+  applicability: conditions under which requirement applies
+  evidence: expected evidence of implementation
+  control_question: audit/checklist question
+  relations: links to laws, decrees, other orders and superseding/amending nodes
+  verification:
+    allowed_statuses: [DRAFT, EXTRACTED, REVIEWED, VERIFIED]
+    source_quote_required_for_verified: true
+rules:
+  - Never mark a requirement VERIFIED without a source locator and source-level support.
+  - Preserve regulator terminology; normalization belongs in separate semantic fields.
+  - One atomic requirement should express one independently testable obligation where possible.
+  - Amendments modify provenance and effective wording; they are not silently flattened without traceability.
