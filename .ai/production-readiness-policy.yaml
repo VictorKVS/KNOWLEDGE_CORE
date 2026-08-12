@@ -1,0 +1,48 @@
+schema_version: "1.0"
+id: production-readiness-policy
+name: Production Readiness Policy
+
+purpose: >-
+  Extend programming decisions beyond local code into concurrency, distribution,
+  observability, build reproducibility and software supply-chain risk.
+
+required_dimensions:
+  - concurrency_model
+  - failure_model
+  - timeout_and_cancellation
+  - backpressure_and_boundedness
+  - observability
+  - dependency_provenance
+  - build_reproducibility
+  - deployment_and_rollback
+  - security_review
+  - test_evidence
+
+rules:
+  - sequential_is_valid_until_concurrency_is_required
+  - distribution_requires_explicit_reason
+  - retries_require_timeout_and_idempotency_analysis
+  - queues_require_capacity_and_backpressure_strategy
+  - observable_failure_paths_are_part_of_design
+  - dependencies_are_long_term_engineering_commitments
+  - critical_build_inputs_require_version_or_provenance_control
+  - rollback_unit_must_be_understood_before_release
+  - production_readiness_does_not_mean_maximal_infrastructure
+
+level_expectations:
+  junior:
+    - follow_existing_production_conventions
+    - do_not_invent_new_operational_patterns_without_review
+  middle:
+    - own_component_level_failure_and_observability_behaviour
+    - evaluate_dependency_and_build_impact
+  senior:
+    - minimize_systemic_operational_complexity
+    - design_reversible_boundaries
+    - define_failure_semantics_and_recovery
+    - account_for_supply_chain_and_toolchain_risk
+
+agent_rule: >-
+  A locally elegant implementation is not production-ready if its failure, dependency,
+  build, deployment or operational behaviour is undefined. Add only the operational
+  machinery required by the real risk and workload.
