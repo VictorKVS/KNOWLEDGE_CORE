@@ -1,0 +1,60 @@
+schema_version: "1.0"
+id: stale-propagation-policy
+name: Evidence Staleness and Impact Propagation Policy
+
+terminal_evidence_states:
+  - superseded
+  - withdrawn
+  - failed
+
+warning_evidence_states:
+  - stale
+  - disputed
+  - unverified
+
+propagation:
+  source_to_claim:
+    when:
+      - source_is_stale
+      - source_is_superseded
+      - source_is_withdrawn
+    effect:
+      - claim_requires_revalidation
+      - confidence_cannot_increase
+  test_to_claim_or_decision:
+    when:
+      - test_failed
+      - test_contract_changed
+    effect:
+      - dependent_claim_requires_revalidation
+      - dependent_decision_requires_review
+  benchmark_to_claim_or_decision:
+    when:
+      - benchmark_environment_no_longer_matches
+      - benchmark_superseded
+      - benchmark_invalidated
+    effect:
+      - measured_claim_requires_revalidation
+      - performance_reason_must_not_be_used_as_fast_path_without_review
+  claim_to_decision:
+    when:
+      - supporting_claim_is_stale
+      - supporting_claim_is_disputed
+      - supporting_claim_is_superseded
+    effect:
+      - decision_requires_review
+  decision_to_memory:
+    when:
+      - decision_requires_review
+      - decision_superseded
+    effect:
+      - decision_memory_fast_path_disabled
+      - retrieval_path_becomes_adapt_or_research
+
+fast_path_rule: >-
+  A decision-memory record must not remain FAST when any critical supporting evidence in its
+  transitive dependency graph is stale, disputed, failed, superseded or withdrawn.
+
+agent_rule: >-
+  Staleness is contagious only along explicit dependency edges. Do not invalidate unrelated
+  knowledge by topic similarity alone. Report the exact evidence chain that caused review.
