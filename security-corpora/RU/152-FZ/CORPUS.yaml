@@ -1,0 +1,55 @@
+schema_version: "1.0"
+id: SEC-CORPUS-RU-152FZ
+kind: security-regulatory-corpus
+status: PILOT
+
+name: "152-ФЗ — персональные данные"
+jurisdiction: RU
+purpose: >-
+  Build an evidence-traceable graph from the official consolidated text of Federal Law No. 152-FZ,
+  starting with Article 19 security duties and expanding only after the pilot extraction passes review.
+
+sources:
+  active:
+    - SEC-SRC-RU-152FZ-2025-09-01
+  superseded: []
+
+ingestion:
+  raw_capture_status: PENDING
+  structure_validation_status: PENDING
+  extraction_allowed_for_verified_records: false
+  pilot_proposed_extraction_allowed: true
+
+pilot_scope:
+  articles:
+    - "19"
+  goals:
+    - validate_atomic_requirement_model
+    - validate_source_locator_precision
+    - validate_requirement_to_control_mapping_without_legal_overreach
+    - validate_bidirectional_graph_traceability
+
+quality_gates:
+  before_requirement_verified:
+    - immutable_source_capture
+    - sha256_fingerprint
+    - exact_article_part_item_locator
+    - independent_text_check
+    - applicability_review
+    - obligation_vs_example_classification
+  before_control_mapping_verified:
+    - requirement_verified
+    - interpretation_separated_from_source_text
+    - control_does_not_claim_more_than_requirement
+
+review_roles:
+  normative_review: required
+  security_architecture_review: required_for_control_mapping
+  pentest_review: required_only_when_linking_checks
+
+provenance:
+  created_at: "2026-08-12"
+
+agent_rule: >-
+  This pilot corpus is deliberately small. Do not expand to the whole law until Article 19 has been fully
+  traced through source, requirement, control and verification layers without unresolved quality defects.
