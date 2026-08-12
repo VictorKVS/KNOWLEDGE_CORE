@@ -1,0 +1,60 @@
+id: LEARN-DEPLOY-001
+title: Deployment and Runtime Practice
+kind: learning-object
+maturity: drafted
+levels: [junior, middle, senior]
+domains: [deployment, runtime, production]
+languages: [python, go, cpp]
+
+problem:
+  summary: Turn a tested build into a controllable runtime unit with explicit startup, shutdown, health and rollback behaviour.
+
+junior:
+  focus:
+    - use established build and deployment commands
+    - keep runtime configuration explicit
+    - understand process exit codes and basic health checks
+    - avoid environment-specific code branches
+
+middle:
+  focus:
+    - design graceful startup and shutdown
+    - distinguish liveness from readiness
+    - handle signals and cancellation
+    - keep deployment artifacts reproducible
+    - validate configuration before serving traffic
+
+senior:
+  focus:
+    - define rollout, rollback and compatibility strategy
+    - minimize deployment-time coordination
+    - separate artifact creation from environment configuration
+    - design for partial rollout and mixed-version operation when necessary
+    - remove deployment coupling that makes change risky
+
+core_principles:
+  - build_once_configure_per_environment
+  - startup_and_shutdown_are_part_of_program_behavior
+  - health_signals_must_support_real_operational_decisions
+  - rollback_is_a_design_constraint_not_an_emergency_script
+  - prefer_reversible_changes
+
+anti_patterns:
+  - environment_specific_source_edits
+  - hidden_startup_dependencies
+  - health_endpoint_that_always_returns_ok
+  - deploy_and_migrate_as_one_irreversible_step
+  - manual_artifact_mutation
+
+production_view:
+  requirements:
+    - reproducible_artifact
+    - startup_validation
+    - graceful_shutdown
+    - liveness_and_readiness_semantics
+    - rollout_plan
+    - rollback_path
+    - runtime_observability
+
+reusable_lessons:
+  - deployment_quality_is_part_of_programming_quality
