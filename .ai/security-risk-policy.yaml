@@ -1,0 +1,76 @@
+schema_version: "1.0"
+id: security-risk-policy
+name: Security Risk Prioritization Policy
+
+principle: >-
+  Security risk is context dependent. Technical severity is one input, not the final answer. Prioritization
+  must combine asset importance, threat plausibility, weakness/exposure, control effectiveness, evidence
+  quality and business/mission impact.
+
+risk_inputs:
+  asset_criticality:
+    values: [low, medium, high, critical]
+    source: SEC-ASSET
+  threat_likelihood:
+    values: [low, medium, high]
+    source: SEC-THREAT
+  weakness_exposure:
+    values: [low, medium, high, critical]
+    source: SEC-WEAK_or_SEC-FIND
+  control_effectiveness:
+    values: [unknown, weak, partial, strong]
+    source: SEC-CTRL_plus_verification
+  evidence_health:
+    values: [RED, YELLOW, GREEN]
+    source: knowledge_evidence_health
+  impact:
+    dimensions:
+      - confidentiality
+      - integrity
+      - availability
+      - safety
+      - legal_or_regulatory
+      - financial
+      - operational
+      - reputation
+  external_signals:
+    examples:
+      - CVSS
+      - EPSS_or_equivalent_when_verified
+      - KEV_or_authoritative_exploitation_signal
+      - vendor_severity
+    rule: external signals inform but do not replace contextual risk
+
+risk_states:
+  LOW: locally bounded and well controlled
+  MEDIUM: material but limited exposure/impact or strong controls
+  HIGH: significant exposure, impact or weak controls
+  CRITICAL: severe plausible impact with material exposure and insufficient controls
+  UNKNOWN: evidence or context insufficient for defensible rating
+
+hard_escalators:
+  - critical_asset_plus_confirmed_exploitable_weakness
+  - safety_impact
+  - active_exploitation_signal_plus_exposed_asset
+  - mandatory_requirement_failure_on_critical_scope
+  - failed_control_on_high_impact_path
+
+hard_rules:
+  - cvss_is_not_business_risk
+  - scanner_severity_is_not_business_risk
+  - unknown_evidence_must_not_be_silently_scored_as_low
+  - risk_acceptance_requires_owner_and_expiry
+  - compensating_control_reduces_risk_only_if_verified_and_applicable
+  - ranking_must_explain_major_contributors
+
+coverage_integration:
+  uncovered_mandatory_requirement:
+    minimum_priority: high_when_material_scope
+  critical_asset_without_threat_model:
+    result: UNKNOWN_high_priority_gap
+  finding_without_retest:
+    result: residual_risk_unresolved
+
+agent_rule: >-
+  Prefer an explainable UNKNOWN over false precision. Use numeric scores only as sortable implementation
+  aids; final risk state must preserve the causal factors and evidence behind it.
