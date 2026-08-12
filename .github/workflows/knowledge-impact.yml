@@ -1,0 +1,33 @@
+name: Knowledge Impact Gate
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'sources/**'
+      - 'claims/**'
+      - 'tests/**'
+      - 'benchmarks/**'
+      - 'experiments/**'
+      - 'decisions/**'
+      - 'decision-memory/**'
+      - 'tools/impact_analysis.py'
+      - '.ai/stale-propagation-policy.yaml'
+      - '.github/workflows/knowledge-impact.yml'
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  impact-analysis:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install pyyaml
+      - name: Analyze stale evidence propagation
+        run: python tools/impact_analysis.py
