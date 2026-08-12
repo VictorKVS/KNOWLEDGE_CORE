@@ -3,12 +3,14 @@ from __future__ import annotations
 import re
 import sys
 from pathlib import Path
+from typing import Any
 
 import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
 STABLE_ID_RE = re.compile(r"^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$")
 TRACE_REF_RE = re.compile(r"^(CLM|SRC|BENCH|EXP|TEST|SEC|ADR|DM)-[A-Z0-9-]+$")
+RESOLVABLE_PREFIXES = {"CLM", "SRC", "BENCH", "EXP", "TEST", "ADR", "DM"}
 
 EXCLUDED_PARTS = {"templates", ".github"}
 STRICT_ID_ROOTS = {
@@ -21,6 +23,7 @@ STRICT_ID_ROOTS = {
     "sources",
     "claims",
     "experiments",
+    "tests",
 }
 PROMOTED_STATUSES = {"MEASURED", "VERIFIED", "REUSABLE"}
 EVIDENCE_STATES = {"DOCUMENTED", "MEASURED", "DERIVED", "EXPERT_ESTIMATE", "UNKNOWN"}
@@ -100,6 +103,21 @@ def validate_claim(path: Path, data: dict, errors: list[str]):
         errors.append(f"{path}: EXPERT_ESTIMATE requires visible rationale in reasoning.derivation")
 
 
+def validate_test(path: Path, data: dict, errors: list[str]):
+    status = str(data.get("status", "")).lower()
+    contract = data.get("contract") or {}
+    implementations = data.get("implementations") or []
+    execution = data.get("execution") or {}
+
+    if status in {"active", "verified", "reusable"}:
+        if not contract.get("verifies"):
+            errors.append(f"{path}: active test evidence requires contract.verifies")
+        if not implementations:
+            errors.append(f"{path}: active test evidence requires implementation paths")
+        if not execution.get("ci_workflow"):
+            errors.append(f"{path}: active test evidence requires execution.ci_workflow")
+
+
 def _validate_reason_items(path: Path, label: str, items, errors: list[str]):
     if not isinstance(items, list):
         errors.append(f"{path}: {label} must be a list")
@@ -169,9 +187,46 @@ def validate_decision_memory(path: Path, data: dict, errors: list[str]):
             errors.append(f"{path}: reusable record cannot have non-final decision state")
 
 
+def collect_refs(value: Any, refs: set[str]) -> None:
+    if isinstance(value, str):
+        if TRACE_REF_RE.match(value):
+            refs.add(value)
+        return
+    if isinstance(value, list):
+        for item in value:
+            collect_refs(item, refs)
+        return
+    if isinstance(value, dict):
+        for item in value.values():
+            collect_refs(item, refs)
+
+
+def is_strict_reference_record(root: str, data: dict) -> bool:
+    status = str(data.get("status", "")).upper()
+    if root == "decisions":
+        return status in MATURE_DECISION_STATUSES
+    if root == "tests":
+        return status in {"ACTIVE", "VERIFIED", "REUSABLE"}
+    if root == "decision-memory":
+        return status in PROMOTED_STATUSES or str(data.get("reusability", "")).lower() in {"reusable", "fast-path", "fast_path"}
+    if root == "claims":
+        review = str((data.get("review") or {}).get("status", "")).upper()
+        return review in {"REVIEWED", "VERIFIED"}
+    if root == "sources":
+        verification = str((data.get("verification") or {}).get("status", "")).upper()
+        return verification == "VERIFIED"
+    return False
+
+
+def ref_prefix(ref: str) -> str:
+    return ref.split("-", 1)[0]
+
+
 def main() -> int:
     errors: list[str] = []
+    warnings: list[str] = []
     ids: dict[str, Path] = {}
+    records: list[tuple[Path, dict]] = []
 
     for path in iter_yaml_files():
         rel = path.relative_to(ROOT)
@@ -180,6 +235,9 @@ def main() -> int:
         except Exception as exc:
             errors.append(f"{rel}: invalid YAML: {exc}")
             continue
+
+        if isinstance(data, dict):
+            records.append((rel, data))
 
         rid = record_id(data)
         if rid:
@@ -201,11 +259,38 @@ def main() -> int:
                 validate_claim(rel, data, errors)
             elif root == "decisions":
                 validate_decision(rel, data, errors)
+            elif root == "tests":
+                validate_test(rel, data, errors)
 
             if str(data.get("status", "")).upper() == "MEASURED" and root not in {"decision-memory", "claims"}:
                 benchmark_id = data.get("benchmark_id") or data.get("benchmark")
                 if not has_nonempty(benchmark_id):
                     errors.append(f"{rel}: MEASURED record requires benchmark_id/benchmark reference")
+
+    # Second pass: resolve evidence graph references after every ID is indexed.
+    for rel, data in records:
+        root = rel.parts[0] if rel.parts else ""
+        own_id = str(record_id(data) or "")
+        refs: set[str] = set()
+        collect_refs(data, refs)
+        refs.discard(own_id)
+        strict = is_strict_reference_record(root, data)
+
+        for ref in sorted(refs):
+            if ref_prefix(ref) not in RESOLVABLE_PREFIXES:
+                continue  # e.g. SEC-* awaits its dedicated registry.
+            if ref not in ids:
+                message = f"{rel}: unresolved evidence reference {ref}"
+                if strict:
+                    errors.append(message)
+                else:
+                    warnings.append(message)
+
+    if warnings:
+        print("Knowledge quality gate warnings:\n")
+        for warning in warnings:
+            print(f"- {warning}")
+        print()
 
     if errors:
         print("Knowledge quality gate FAILED:\n")
@@ -213,7 +298,7 @@ def main() -> int:
             print(f"- {error}")
         return 1
 
-    print(f"Knowledge quality gate PASSED. Validated {len(ids)} stable evidence IDs.")
+    print(f"Knowledge quality gate PASSED. Indexed {len(ids)} stable evidence IDs with cross-reference checks.")
     return 0
 
 
