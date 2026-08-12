@@ -1,0 +1,53 @@
+schema_version: "1.0"
+id: TEST-TRANSACTION-001
+kind: test-evidence
+status: active
+
+title: In-memory transaction teaching model preserves all-or-nothing state change
+purpose: Verify the pre-validate-then-commit teaching model used before introducing database-native transactions.
+
+scope:
+  learning_object: transaction
+  component: in-memory-transaction-boundary
+  languages: [python, go, cpp]
+  environment: repository-ci
+
+contract:
+  verifies:
+    - valid transfer updates both sides
+    - invalid transfer does not mutate either side
+  does_not_prove:
+    - database atomicity
+    - concurrency isolation
+    - crash durability
+
+implementations:
+  - language: python
+    path: learning-core/executable/transaction/python
+    runner: pytest
+  - language: go
+    path: learning-core/executable/transaction/go
+    runner: go-test
+  - language: cpp
+    path: learning-core/executable/transaction/cpp
+    runner: native-test-binary
+
+cases:
+  - successful_transfer
+  - failed_transfer_preserves_state
+
+execution:
+  ci_workflow: .github/workflows/learning-executable-ci.yml
+  last_verified_commit: ""
+  last_verified_at: null
+  result: unknown
+
+relationships:
+  supports_claims: []
+  supports_decisions: [ADR-TRANSACTION-001]
+  related_tests: [TEST-DBTX-001]
+  supersedes_tests: []
+  superseded_by_tests: []
+
+limitations:
+  - This object teaches the invariant but is intentionally weaker than a real storage transaction.
