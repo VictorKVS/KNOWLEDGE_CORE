@@ -1,0 +1,31 @@
+name: Decision Routing Gate
+
+on:
+  push:
+    paths:
+      - '.ai/decision-routing-policy.yaml'
+      - 'templates/task-context.yaml'
+      - 'tools/decision_router.py'
+      - 'tools/tests/test_decision_router.py'
+      - '.github/workflows/decision-routing.yml'
+  pull_request:
+    paths:
+      - '.ai/decision-routing-policy.yaml'
+      - 'templates/task-context.yaml'
+      - 'tools/decision_router.py'
+      - 'tools/tests/test_decision_router.py'
+      - '.github/workflows/decision-routing.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  route-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install pytest pyyaml
+      - run: pytest -q tools/tests/test_decision_router.py
