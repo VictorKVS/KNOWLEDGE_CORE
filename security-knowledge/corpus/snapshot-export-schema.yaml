@@ -7,6 +7,7 @@ purpose: >-
 status: ACTIVE
 
 manifest_required_fields:
+  - schema_version
   - manifest_id
   - knowledge_space_id
   - canonical_repository
@@ -61,9 +62,11 @@ producer_invariants:
   - Object ID and version ID are logical identities; repository path is storage metadata only.
   - Retrieval rank or semantic similarity never changes knowledge_state to VERIFIED.
   - VERIFIED objects must retain primary/admitted source lineage and exact locator where the object is a material normative/factual claim or requirement.
+  - SOURCE_VERIFIED means only that the source/source metadata reached its declared verification level; it must not be silently promoted to VERIFIED atomic requirement knowledge.
   - Selection reason must explain why the object was included for the request; selection is distinct from truth/verification.
   - Manifest generation must not silently omit stale, disputed or contradictory objects when they are material to the requested scope.
-  - Manifest digest covers repository commit, knowledge space, content root, request reference and sorted selected object identities/versions/digests/states.
+  - Manifest digest covers schema version, repository commit, knowledge space, content root, request reference and sorted selected object identities, versions, paths, content digests, knowledge states, source locators, freshness states, classifications and selection reasons.
+  - Classification and freshness are material integrity fields because they can affect whether and how a consumer may use the object.
   - Re-running the same selection against a different repository commit produces a different manifest identity or digest when any material state changes.
   - Export does not grant runtime authority, approval, compliance status or tool capability.
 
@@ -76,6 +79,7 @@ consumer_contract:
     - repository_commit_sha is immutable and valid
     - every object digest is valid SHA-256
     - knowledge_space_id matches requested binding
+    - manifest integrity covers classification/freshness as well as object/state provenance
     - manifest/object snapshot refs participate in ContextPackage hash
     - historical replay never silently follows a newer repository head
 
@@ -83,5 +87,6 @@ first_integration_target:
   product: SEC-PROD-0001
   runtime: VictorKVS/PX00
   scope: >-
-    One small VERIFIED Security Knowledge slice sufficient to prove cross-repository selection,
-    snapshot pinning, ContextPackage construction and historical replay before broad integration.
+    First prove cross-repository transport and historical pinning with a real source object whose
+    verification state is honestly preserved. Then repeat with an atomic VERIFIED requirement slice
+    once such a slice is available, before claiming knowledge-backed decision replay.
