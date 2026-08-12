@@ -1,0 +1,52 @@
+schema_version: "1.0"
+id: security-remediation-policy
+name: Security Remediation, Retest and Closure Policy
+
+principle: >-
+  A finding is not closed because a change was deployed or an owner marked it fixed. Closure requires
+  target-specific retest evidence showing that the bounded weakness is no longer reproducible and that the
+  intended control still satisfies its requirement without unacceptable regression.
+
+lifecycle:
+  - FINDING_OPEN
+  - REMEDIATION_PLANNED
+  - REMEDIATION_IMPLEMENTED
+  - RETEST_REQUIRED
+  - RETEST_PASS_or_RETEST_FAIL_or_INCONCLUSIVE
+  - CLOSED_or_REOPENED_or_RISK_ACCEPTED
+
+remediation_requirements:
+  - finding_ref
+  - root_cause_or_best_supported_cause
+  - affected_assets
+  - intended_control_state
+  - proposed_change
+  - regression_risks
+  - verification_plan
+  - rollback_plan_when_relevant
+
+closure_requirements:
+  CLOSED:
+    - remediation_ref
+    - retest_ref
+    - retest_result_PASS
+    - evidence_refs
+    - affected_requirement_or_control_re_evaluated
+  RISK_ACCEPTED:
+    - explicit_risk_owner
+    - rationale
+    - validity_period
+    - compensating_controls_or_reason_none
+    - review_date
+
+hard_rules:
+  - implementation_is_not_closure
+  - scanner_clean_result_alone_is_not_closure_unless_the_check_contract_defines_it_as_sufficient
+  - retest_must_target_original_failure_condition
+  - retest_should_check_regression_or_control_bypass_when_relevant
+  - risk_acceptance_does_not_convert_a_weakness_into_fixed
+  - closed_finding_reopens_if_equivalent_failure_is_reproduced_with_valid_evidence
+
+agent_rule: >-
+  Preserve the original finding and remediation history. Never overwrite evidence to make the final state
+  look cleaner; closure is a new evidence-backed state transition.
