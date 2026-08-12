@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        object: [validation, errors, state, retry, cache, queue, transaction]
+        object: [validation, errors, state, retry, cache, queue, transaction, dbtx, idempotent-message]
     defaults:
       run:
         working-directory: learning-core/executable/${{ matrix.object }}/python
@@ -31,7 +31,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        object: [validation, errors, state, retry, cache, queue, transaction]
+        object: [validation, errors, state, retry, cache, queue, transaction, dbtx, idempotent-message]
     defaults:
       run:
         working-directory: learning-core/executable/${{ matrix.object }}/go
@@ -61,6 +61,10 @@ jobs:
             test: test_queue.cpp
           - object: transaction
             test: test_transaction.cpp
+          - object: dbtx
+            test: test_dbtx.cpp
+          - object: idempotent-message
+            test: test_idempotent_message.cpp
     defaults:
       run:
         working-directory: learning-core/executable/${{ matrix.object }}/cpp
