@@ -18,6 +18,7 @@ Every important engineering choice should be traceable through:
 
 ## Knowledge domains
 
+- [**Security Knowledge Base**](security-knowledge/README.md) — document-first regulatory knowledge graph: complete source/version history, structural chunks, definitions, atomic requirements, intra/inter-document links, applicability, controls, checks, evidence, audit, FSTEC/FSB solution registries, future security architecture and development roadmap.
 - [**Languages**](languages/README.md) — Python, Go, C++ and cross-language selection.
 - [**Algorithms & Data Structures**](algorithms/README.md) — selection rules, complexity, alternatives and implementations.
 - [**Architecture**](architecture/README.md) — topology, decomposition, ADRs and system boundaries.
@@ -30,6 +31,16 @@ Every important engineering choice should be traceable through:
 - **Problems** — structured problem sets with multiple candidate solutions.
 - **Sources & Claims** — standards, official documentation, books, papers, claims, contradictions and applicability.
 - [**Decision Memory**](decision-memory/README.md) — verified reusable experience for FAST / ADAPT / RESEARCH paths.
+
+## Security Knowledge: current priority
+
+The immediate priority is the **primary document corpus**, not premature architecture automation.
+
+`Official source → immutable version → normalized text → document structure → chunks → definitions → atomic requirements → typed graph relationships → applicability → controls/checks/evidence`
+
+Later registered development tracks add authoritative FSTEC/FSB product, certificate, licence and hardware/software registries; organization Current State; security audit; alternatives and cost/TCO; target security architecture; development roadmap; and controlled automatic regulatory updates with impact and weight recalculation.
+
+See the full specification and development registry in [security-knowledge/README.md](security-knowledge/README.md).
 
 ## Knowledge object model
 
