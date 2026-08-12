@@ -7,10 +7,22 @@ from pathlib import Path
 import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
-ID_RE = re.compile(r"^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$")
+STABLE_ID_RE = re.compile(r"^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$")
 
-EXCLUDED_PARTS = {"templates", ".github", ".ai"}
+EXCLUDED_PARTS = {"templates", ".github"}
+STRICT_ID_ROOTS = {
+    "algorithms",
+    "data-structures",
+    "problems",
+    "benchmarks",
+    "decisions",
+    "decision-memory",
+    "sources",
+    "claims",
+    "experiments",
+}
 PROMOTED_STATUSES = {"MEASURED", "VERIFIED", "REUSABLE"}
+EVIDENCE_STATES = {"DOCUMENTED", "MEASURED", "DERIVED", "EXPERT_ESTIMATE", "UNKNOWN"}
 
 
 def iter_yaml_files():
@@ -37,6 +49,53 @@ def has_nonempty(value):
     if isinstance(value, (list, dict, str)):
         return bool(value)
     return True
+
+
+def validate_stable_id(rel: Path, rid: str, errors: list[str]):
+    if rel.parts and rel.parts[0] in STRICT_ID_ROOTS and not STABLE_ID_RE.match(rid):
+        errors.append(f"{rel}: invalid stable id format: {rid}")
+
+
+def validate_source(path: Path, data: dict, errors: list[str]):
+    verification = data.get("verification") or {}
+    status = str(verification.get("status", "")).lower()
+    access = data.get("access") or {}
+    identifiers = data.get("identifiers") or {}
+
+    if status == "verified":
+        has_locator = bool(access.get("canonical_url")) or any(
+            bool(identifiers.get(key)) for key in ("doi", "isbn", "rfc", "standard", "official_id")
+        )
+        if not has_locator:
+            errors.append(f"{path}: verified source requires canonical_url or authoritative identifier")
+        if not verification.get("checked_at"):
+            errors.append(f"{path}: verified source requires checked_at")
+
+
+def validate_claim(path: Path, data: dict, errors: list[str]):
+    strength = data.get("strength") or {}
+    state = str(strength.get("state", "UNKNOWN")).upper()
+    supporting = data.get("supporting_evidence") or {}
+    reasoning = data.get("reasoning") or {}
+
+    if state not in EVIDENCE_STATES:
+        errors.append(f"{path}: invalid evidence state {state}")
+        return
+
+    if state == "DOCUMENTED" and not supporting.get("sources"):
+        errors.append(f"{path}: DOCUMENTED claim requires supporting source ids")
+
+    if state == "MEASURED" and not (supporting.get("benchmarks") or supporting.get("experiments")):
+        errors.append(f"{path}: MEASURED claim requires benchmark or experiment evidence")
+
+    if state == "DERIVED":
+        if not reasoning.get("derivation"):
+            errors.append(f"{path}: DERIVED claim requires explicit derivation")
+        if not reasoning.get("assumptions"):
+            errors.append(f"{path}: DERIVED claim requires explicit assumptions")
+
+    if state == "EXPERT_ESTIMATE" and not reasoning.get("derivation"):
+        errors.append(f"{path}: EXPERT_ESTIMATE requires visible rationale in reasoning.derivation")
 
 
 def validate_decision_memory(path: Path, data: dict, errors: list[str]):
@@ -78,20 +137,26 @@ def main() -> int:
         rid = record_id(data)
         if rid:
             rid = str(rid)
-            if not ID_RE.match(rid):
-                errors.append(f"{rel}: invalid stable id format: {rid}")
-            if rid in ids:
-                errors.append(f"{rel}: duplicate id {rid}; first seen in {ids[rid].relative_to(ROOT)}")
-            else:
-                ids[rid] = path
+            validate_stable_id(rel, rid, errors)
+            if rel.parts and rel.parts[0] in STRICT_ID_ROOTS:
+                if rid in ids:
+                    errors.append(f"{rel}: duplicate id {rid}; first seen in {ids[rid].relative_to(ROOT)}")
+                else:
+                    ids[rid] = path
 
-        if rel.parts and rel.parts[0] == "decision-memory" and isinstance(data, dict):
-            validate_decision_memory(rel, data, errors)
+        if isinstance(data, dict):
+            root = rel.parts[0] if rel.parts else ""
+            if root == "decision-memory":
+                validate_decision_memory(rel, data, errors)
+            elif root == "sources":
+                validate_source(rel, data, errors)
+            elif root == "claims":
+                validate_claim(rel, data, errors)
 
-        if isinstance(data, dict) and str(data.get("status", "")).upper() == "MEASURED":
-            benchmark_id = data.get("benchmark_id") or data.get("benchmark")
-            if not has_nonempty(benchmark_id) and rel.parts[0] != "decision-memory":
-                errors.append(f"{rel}: MEASURED record requires benchmark_id/benchmark reference")
+            if str(data.get("status", "")).upper() == "MEASURED" and root not in {"decision-memory", "claims"}:
+                benchmark_id = data.get("benchmark_id") or data.get("benchmark")
+                if not has_nonempty(benchmark_id):
+                    errors.append(f"{rel}: MEASURED record requires benchmark_id/benchmark reference")
 
     if errors:
         print("Knowledge quality gate FAILED:\n")
@@ -99,7 +164,7 @@ def main() -> int:
             print(f"- {error}")
         return 1
 
-    print(f"Knowledge quality gate PASSED. Validated {len(ids)} stable IDs.")
+    print(f"Knowledge quality gate PASSED. Validated {len(ids)} stable evidence IDs.")
     return 0
 
 
