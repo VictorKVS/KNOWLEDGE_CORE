@@ -1,0 +1,72 @@
+document: DOC-RU-PP-1119
+rule_engine: ispdn_protection_level
+status: PROPOSED
+inputs:
+  pd_category: [special, biometric, public, other]
+  subject_scope: [employees_only, non_employees]
+  non_employee_subject_count: integer
+  threat_type: [1, 2, 3]
+outputs:
+  protection_level: [1, 2, 3, 4]
+rules:
+  - id: SEC-APRULE-RU-PP1119-UZ1-A
+    source: 'p.9(a)'
+    when: 'threat_type == 1 and pd_category in [special, biometric, other]'
+    then: 1
+  - id: SEC-APRULE-RU-PP1119-UZ1-B
+    source: 'p.9(b)'
+    when: 'threat_type == 2 and pd_category == special and subject_scope == non_employees and non_employee_subject_count > 100000'
+    then: 1
+  - id: SEC-APRULE-RU-PP1119-UZ2-A
+    source: 'p.10(a)'
+    when: 'threat_type == 1 and pd_category == public'
+    then: 2
+  - id: SEC-APRULE-RU-PP1119-UZ2-B
+    source: 'p.10(b)'
+    when: 'threat_type == 2 and pd_category == special and (subject_scope == employees_only or non_employee_subject_count < 100000)'
+    then: 2
+  - id: SEC-APRULE-RU-PP1119-UZ2-C
+    source: 'p.10(c)'
+    when: 'threat_type == 2 and pd_category == biometric'
+    then: 2
+  - id: SEC-APRULE-RU-PP1119-UZ2-D
+    source: 'p.10(d)'
+    when: 'threat_type == 2 and pd_category == public and subject_scope == non_employees and non_employee_subject_count > 100000'
+    then: 2
+  - id: SEC-APRULE-RU-PP1119-UZ2-E
+    source: 'p.10(e)'
+    when: 'threat_type == 2 and pd_category == other and subject_scope == non_employees and non_employee_subject_count > 100000'
+    then: 2
+  - id: SEC-APRULE-RU-PP1119-UZ2-F
+    source: 'p.10(f)'
+    when: 'threat_type == 3 and pd_category == special and subject_scope == non_employees and non_employee_subject_count > 100000'
+    then: 2
+  - id: SEC-APRULE-RU-PP1119-UZ3-A
+    source: 'p.11(a)'
+    when: 'threat_type == 2 and pd_category == public and (subject_scope == employees_only or non_employee_subject_count < 100000)'
+    then: 3
+  - id: SEC-APRULE-RU-PP1119-UZ3-B
+    source: 'p.11(b)'
+    when: 'threat_type == 2 and pd_category == other and (subject_scope == employees_only or non_employee_subject_count < 100000)'
+    then: 3
+  - id: SEC-APRULE-RU-PP1119-UZ3-C
+    source: 'p.11(c)'
+    when: 'threat_type == 3 and pd_category == special and (subject_scope == employees_only or non_employee_subject_count < 100000)'
+    then: 3
+  - id: SEC-APRULE-RU-PP1119-UZ3-D
+    source: 'p.11(d)'
+    when: 'threat_type == 3 and pd_category == biometric'
+    then: 3
+  - id: SEC-APRULE-RU-PP1119-UZ3-E
+    source: 'p.11(e)'
+    when: 'threat_type == 3 and pd_category == other and subject_scope == non_employees and non_employee_subject_count > 100000'
+    then: 3
+  - id: SEC-APRULE-RU-PP1119-UZ4-A
+    source: 'p.12(a)'
+    when: 'threat_type == 3 and pd_category == public'
+    then: 4
+  - id: SEC-APRULE-RU-PP1119-UZ4-B
+    source: 'p.12(b)'
+    when: 'threat_type == 3 and pd_category == other and (subject_scope == employees_only or non_employee_subject_count < 100000)'
+    then: 4
+boundary_note: 'The decree text uses “less than 100000” in several clauses and “more than 100000” in others; exact treatment of the 100000 boundary requires normative review before VERIFIED status.'
