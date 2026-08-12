@@ -1,0 +1,53 @@
+schema_version: "1.0"
+id: knowledge-index-policy
+name: Knowledge Graph Index Policy
+
+principle: >-
+  Agents query a compact derived index first and open source records only when needed. The index is a cache
+  of knowledge metadata, never the source of truth.
+
+indexed_kinds:
+  SRC: sources
+  CLM: claims
+  TEST: tests
+  BENCH: benchmarks
+  EXP: experiments
+  ADR: decisions
+  DM: decision-memory
+  CTX: contexts
+  DPK: decision-packets
+  OUT: outcomes
+  PROM: promotions
+  CON: contradictions
+  RQ: research-queue
+
+node_fields:
+  required: [id, kind, path]
+  preferred: [status, title, tags, applicability, health]
+
+edge_semantics:
+  supports: evidence supports a claim or decision
+  contradicts: evidence conflicts with another conclusion
+  used_by: evidence participates in a downstream decision
+  derived_from: record was produced from earlier records
+  verifies: test or measurement verifies a bounded property
+  supersedes: newer record replaces an older record
+  impacts: stale or conflicting evidence affects downstream records
+
+query_strategy:
+  - filter_hard_context_constraints
+  - filter_health
+  - retrieve_by_kind_and_tags
+  - rank_context_similarity
+  - expand_one_or_two_hops_for_explanation
+  - open_full_records_only_for_selected_candidates
+
+hard_rules:
+  - index_must_be_rebuildable_from_repository_records
+  - index_must_not_invent_missing_fields
+  - unresolved_refs_remain_visible
+  - source_record_wins_over_index_on_conflict
+  - FAST_path_requires_normal_health_and_context_checks
+
+agent_rule: >-
+  Use the index for discovery and routing, then cite and reason from canonical records and their evidence.
