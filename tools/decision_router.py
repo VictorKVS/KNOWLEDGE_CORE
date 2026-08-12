@@ -47,10 +47,12 @@ def compare_section(current: dict[str, Any], candidate: dict[str, Any]) -> tuple
 
     compared = 0
     mismatches: list[str] = []
+    compared_fields: list[str] = []
     for key, cur in current.items():
         if key not in candidate or not nonempty(candidate[key]):
             continue
         compared += 1
+        compared_fields.append(key)
         if candidate[key] != cur:
             mismatches.append(f"{key}: current={cur!r}, candidate={candidate[key]!r}")
 
@@ -58,9 +60,17 @@ def compare_section(current: dict[str, Any], candidate: dict[str, Any]) -> tuple
         return "MISMATCH", mismatches
     if compared == 0:
         return "UNKNOWN", ["no comparable declared fields"]
-    if len(compared_fields := [k for k in current if k in candidate and nonempty(candidate[k])]) == len(current):
+    if len(compared_fields) == len(current):
         return "EXACT", [f"matched fields: {', '.join(compared_fields)}"]
     return "COMPATIBLE", [f"matched {compared} declared field(s); remaining fields not constrained by candidate"]
+
+
+def _section_or_mapping(value: Any, scalar_key: str) -> dict[str, Any]:
+    if isinstance(value, dict):
+        return flatten_known(value)
+    if nonempty(value):
+        return {scalar_key: value}
+    return {}
 
 
 def candidate_context(record: dict[str, Any]) -> dict[str, dict[str, Any]]:
@@ -68,20 +78,19 @@ def candidate_context(record: dict[str, Any]) -> dict[str, dict[str, Any]]:
     applicability = record.get("applicability") if isinstance(record.get("applicability"), dict) else {}
     constraints = record.get("constraints") if isinstance(record.get("constraints"), dict) else {}
 
+    runtime = context.get("runtime") if isinstance(context.get("runtime"), dict) else {
+        "language": context.get("language"),
+        "version": context.get("runtime_version"),
+        "compiler": context.get("compiler"),
+    }
+
     return {
-        "workload": flatten_known(context.get("workload")),
-        "scale": flatten_known(context.get("scale")),
-        "runtime": flatten_known({
-            "language": context.get("language"),
-            "version": context.get("runtime_version"),
-        }),
-        "environment": flatten_known({
-            "environment": context.get("environment"),
-        }),
+        "workload": _section_or_mapping(context.get("workload"), "description"),
+        "scale": _section_or_mapping(context.get("scale"), "description"),
+        "runtime": flatten_known(runtime),
+        "environment": _section_or_mapping(context.get("environment"), "os"),
         "data_semantics": flatten_known(applicability.get("data_semantics")),
-        "trust_boundary": flatten_known({
-            "trust_boundary": context.get("trust_boundary"),
-        }),
+        "trust_boundary": _section_or_mapping(context.get("trust_boundary"), "input_trust"),
         "failure_model": flatten_known(applicability.get("failure_model")),
         "compatibility": flatten_known(applicability.get("compatibility")),
         "operational_constraints": flatten_known(constraints.get("operational")),
