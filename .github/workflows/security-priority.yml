@@ -1,0 +1,43 @@
+name: Security Remediation Priority
+
+on:
+  push:
+    paths:
+      - 'security-priority/**'
+      - 'templates/security-priority-item.yaml'
+      - '.ai/security-priority-policy.yaml'
+      - 'tools/security_priority.py'
+      - '.github/workflows/security-priority.yml'
+  pull_request:
+    paths:
+      - 'security-priority/**'
+      - 'templates/security-priority-item.yaml'
+      - '.ai/security-priority-policy.yaml'
+      - 'tools/security_priority.py'
+      - '.github/workflows/security-priority.yml'
+
+jobs:
+  rank-priority:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install pyyaml
+      - name: Validate and rank security priority items
+        shell: bash
+        run: |
+          shopt -s nullglob globstar
+          files=(security-priority/**/*.yaml security-priority/**/*.yml)
+          mkdir -p generated
+          if ((${#files[@]})); then
+            python tools/security_priority.py "${files[@]}"
+            python tools/security_priority.py --json "${files[@]}" > generated/security-priority.json
+          else
+            echo '[]' > generated/security-priority.json
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: security-priority
+          path: generated/security-priority.json
