@@ -1,0 +1,42 @@
+name: Security Evidence Dashboard
+
+on:
+  push:
+    paths:
+      - 'security-core/**'
+      - 'security-risk/**'
+      - 'security-priority/**'
+      - 'security-roadmap/**'
+      - 'security-findings/**'
+      - 'security-remediation/**'
+      - 'security-retest/**'
+      - 'security-closure/**'
+      - '.ai/security-metrics-policy.yaml'
+      - 'tools/security_dashboard.py'
+  pull_request:
+    paths:
+      - 'security-core/**'
+      - 'security-risk/**'
+      - 'security-priority/**'
+      - 'security-roadmap/**'
+      - 'security-findings/**'
+      - 'security-remediation/**'
+      - 'security-retest/**'
+      - 'security-closure/**'
+      - '.ai/security-metrics-policy.yaml'
+      - 'tools/security_dashboard.py'
+
+jobs:
+  build-dashboard-data:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install pyyaml
+      - run: python tools/security_dashboard.py --output generated/security-dashboard.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: security-dashboard-data
+          path: generated/security-dashboard.json
