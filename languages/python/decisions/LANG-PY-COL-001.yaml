@@ -1,0 +1,68 @@
+id: LANG-PY-COL-001
+kind: language-decision-map
+language: python
+status: foundation
+title: Collection Selection
+
+question:
+  Which standard collection shape best matches the access and mutation pattern?
+
+context_questions:
+  - Is ordering semantically required?
+  - Are duplicate values meaningful?
+  - Is fast membership lookup decision-relevant?
+  - Is lookup by key required?
+  - Is queue/deque behavior required?
+  - How often is the collection mutated?
+  - Is memory usage material?
+  - Can inputs be attacker-controlled?
+
+candidates:
+  list:
+    consider_when:
+      - ordered sequence semantics are needed
+      - indexed iteration/access is central
+    verify:
+      - mutation pattern
+      - membership workload
+  tuple:
+    consider_when:
+      - fixed record/sequence semantics and immutability intent matter
+    verify:
+      - API meaning
+      - serialization/interoperability
+  set:
+    consider_when:
+      - uniqueness or repeated membership queries are central
+    verify:
+      - ordering assumptions
+      - memory cost
+      - input behavior
+  dict:
+    consider_when:
+      - key-to-value association is the domain model
+    verify:
+      - key design
+      - mutation behavior
+      - input trust
+  deque:
+    consider_when:
+      - queue-like operations dominate
+    verify:
+      - concurrency requirements
+      - boundedness/backpressure needs
+
+security_review:
+  - unbounded collection growth
+  - attacker-controlled key/value sizes
+  - algorithmic resource exhaustion
+  - unsafe assumptions about uniqueness/order
+
+selection_rule:
+  Do not choose from asymptotic complexity alone. Model the real operation mix, correctness semantics, memory/security constraints and maintenance cost; benchmark only if the remaining choice is decision-relevant.
+
+evidence:
+  claims: []
+  sources: []
+  benchmarks: []
+  decision_memory: []
