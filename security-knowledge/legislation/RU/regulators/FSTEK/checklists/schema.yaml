@@ -1,0 +1,23 @@
+schema_version: 1
+entity: compliance_check
+required_fields:
+  - id
+  - requirement_id
+  - question
+  - result
+fields:
+  id: stable check identifier
+  requirement_id: link to atomic regulatory requirement
+  question: auditable yes/no/na question
+  expected_evidence: documents, configuration, logs, protocols or organizational evidence
+  result:
+    allowed: [YES, NO, PARTIAL, NA, NOT_CHECKED]
+  finding: observed gap or note
+  remediation: recommended corrective action
+  owner: responsible role
+  due_date: remediation deadline
+  evidence_refs: links to evidence artifacts
+rules:
+  - Every checklist item must trace to at least one atomic requirement.
+  - A checklist must not invent obligations absent from its cited source.
+  - Recommendations beyond mandatory requirements must be explicitly labeled RECOMMENDATION.
