@@ -1,0 +1,121 @@
+schema_version: "1.0"
+id: knowledge-promotion-policy
+name: Knowledge Promotion Engine Policy
+
+principle: >-
+  Knowledge earns authority by evidence and reproducibility, not by repetition, confidence of wording,
+  agent seniority, documentation volume or successful appearance in one project.
+
+promotion_lanes:
+  observation_to_claim:
+    from: OBSERVATION
+    to: CLM
+    requires:
+      - explicit_statement
+      - applicability_envelope
+      - provenance
+      - no_known_contradiction_hidden
+    rule: one_project_observation_starts_as_context_bound
+
+  claim_documented:
+    from: CLM_DRAFT
+    to: DOCUMENTED
+    requires:
+      - traceable_source
+      - source_quality_recorded
+      - applicability_recorded
+    forbids:
+      - treating_documentation_as_measurement
+
+  claim_measured:
+    from: DOCUMENTED_OR_HYPOTHESIS
+    to: MEASURED
+    requires:
+      - BENCH_or_EXP_reference
+      - environment_recorded
+      - method_recorded
+      - result_recorded
+      - limitations_recorded
+    forbids:
+      - performance_claim_from_unit_test
+      - universal_claim_from_single_environment
+
+  decision_verified:
+    from: ADR_DRAFT
+    to: VERIFIED
+    requires:
+      - reason_chain
+      - rejection_reason_chain_when_alternatives_exist
+      - resolved_required_evidence_refs
+      - implementation_or_experiment
+      - verification_evidence
+      - evidence_health_not_RED
+
+  outcome_to_decision_memory:
+    from: OUT
+    to: DM
+    requires:
+      - outcome_compared_to_expectation
+      - verification_evidence
+      - applicability_envelope
+      - reusable_lesson
+      - unresolved_risks_recorded
+    forbids:
+      - promotion_from_success_alone
+      - promotion_when_result_is_not_reproducible
+
+  decision_memory_fast_path:
+    from: DM
+    to: FAST_ELIGIBLE
+    requires:
+      - evidence_health_GREEN
+      - source_ADR_verified
+      - no_open_critical_evidence_gap
+      - context_match_required_at_use_time
+      - rollback_or_failure_constraints_recorded_when_relevant
+    note: FAST eligibility is not universal applicability.
+
+  reusable_learning:
+    from: learning_object
+    to: REUSABLE
+    requires:
+      - executable_or_verifiable_content
+      - tests
+      - evidence_links
+      - production_review
+      - security_review_when_relevant
+      - applicability_constraints
+      - reusable_lessons
+
+hard_blocks:
+  - failed_required_test
+  - withdrawn_required_source
+  - disputed_critical_claim_without_resolution
+  - missing_applicability_for_context_sensitive_claim
+  - benchmark_without_environment_for_performance_claim
+  - security_critical_claim_without_security_review
+  - unresolved_reference_in_mature_record
+
+role_boundaries:
+  programming_agent:
+    may_promote:
+      - implementation_observation
+      - tested_programming_practice
+      - language_specific_lesson
+    must_delegate:
+      - research_heavy_algorithmic_generalization
+      - disputed_scientific_claim
+  analyst_research_agent:
+    owns:
+      - literature_comparison
+      - algorithmic_evidence_synthesis
+      - research_methodology
+  security_specialist:
+    owns:
+      - high_risk_security_generalization
+      - abuse_case_review
+      - security_control_claim_review
+
+agent_rule: >-
+  Never promote a record merely to make the knowledge graph look complete. An explicit UNKNOWN or
+  evidence gap is healthier than a falsely mature record.
