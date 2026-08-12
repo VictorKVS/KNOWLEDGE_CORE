@@ -1,0 +1,54 @@
+schema_version: "1.0"
+id: TEST-DBTX-001
+kind: test-evidence
+status: active
+
+title: Database transaction boundary preserves atomic transfer behavior
+purpose: Verify that the learning object does not expose a partial logical transfer when the operation fails.
+
+scope:
+  learning_object: dbtx
+  component: transaction-boundary
+  languages: [python, go, cpp]
+  environment: repository-ci
+
+contract:
+  verifies:
+    - successful operation applies both related mutations
+    - rejected operation leaves persistent or modeled state unchanged
+    - transaction boundary is explicit in the implementation
+  does_not_prove:
+    - all isolation levels
+    - crash durability for every database engine
+    - distributed transaction guarantees
+
+implementations:
+  - language: python
+    path: learning-core/executable/dbtx/python
+    runner: pytest
+  - language: go
+    path: learning-core/executable/dbtx/go
+    runner: go-test
+  - language: cpp
+    path: learning-core/executable/dbtx/cpp
+    runner: native-test-binary
+
+cases:
+  - successful_transfer
+  - rejected_transfer_preserves_state
+
+execution:
+  ci_workflow: .github/workflows/learning-executable-ci.yml
+  last_verified_commit: ""
+  last_verified_at: null
+  result: unknown
+
+relationships:
+  supports_claims: [CLM-DBTX-001]
+  supports_decisions: [ADR-DBTX-002]
+  related_tests: [TEST-TRANSACTION-001]
+  supersedes_tests: []
+  superseded_by_tests: []
+
+limitations:
+  - Python uses SQLite while Go and C++ remain portable teaching models without external database drivers.
