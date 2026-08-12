@@ -1,0 +1,106 @@
+schema_version: 1
+purpose: Make every security object lifecycle-complete: creation, approval, operation, review, change, replacement, archival/destruction, verification and accountability.
+applies_to:
+  - local_normative_document
+  - policy
+  - instruction
+  - register
+  - risk_assessment
+  - threat_model
+  - system_classification
+  - CII_category
+  - security_architecture
+  - access_right
+  - account
+  - cryptographic_key
+  - certificate
+  - license
+  - security_product
+  - media
+  - backup
+  - log
+  - evidence
+  - personal_data
+  - system_or_asset
+  - supplier_relationship
+  - exception
+  - risk_acceptance
+lifecycle_fields:
+  - owner
+  - responsible_executor
+  - approver
+  - verifier
+  - custodian
+  - review_frequency
+  - review_event_triggers
+  - change_triggers
+  - replacement_triggers
+  - archive_triggers
+  - destruction_triggers
+  - destruction_method
+  - destruction_approver
+  - destruction_executor
+  - destruction_verifier
+  - evidence_of_change
+  - evidence_of_destruction
+  - retention_period
+  - legal_hold
+  - successor_object
+  - affected_dependencies
+  - notification_required
+  - rollback_or_recovery
+trigger_categories:
+  legal:
+    examples: [law_changed, regulator_order_changed, standard_changed, certificate_status_changed, retention_expired]
+  organizational:
+    examples: [reorganization, responsible_person_changed, owner_changed, function_changed, contractor_changed]
+  system:
+    examples: [architecture_changed, software_changed, hardware_changed, integration_added, network_boundary_changed, cloud_migration]
+  information:
+    examples: [data_category_changed, processing_purpose_changed, data_flow_changed, subject_category_changed]
+  threat_and_risk:
+    examples: [new_threat, new_vulnerability, incident, risk_threshold_exceeded, control_failure]
+  lifecycle:
+    examples: [end_of_support, end_of_certificate, end_of_contract, decommissioning, retention_period_expired]
+  assurance:
+    examples: [audit_finding, attestation_condition_changed, failed_test, evidence_stale]
+decision_model:
+  steps:
+    - detect_trigger
+    - identify_affected_objects
+    - determine_governing_sources
+    - decide_keep_change_replace_archive_destroy
+    - identify_approver_and_executor
+    - perform_action
+    - independently_verify_where_required
+    - collect_evidence
+    - update_graph_and_dependencies
+    - schedule_next_review
+responsibility_model:
+  OWNER: accountable_for_object_and_business_need
+  EXECUTOR: performs_change_or_destruction
+  APPROVER: authorizes_action_when_required
+  VERIFIER: confirms_action_and_result
+  CUSTODIAN: maintains_record_or_artifact
+  AUDITOR: independently_assesses_compliance_and_evidence
+rules:
+  - The same person must not automatically be assumed to approve, execute and verify a critical action.
+  - Role separation is derived from source requirements, risk and organization size; exceptions require documented rationale.
+  - Destruction is not complete until required evidence of destruction exists.
+  - Replacement must preserve a link from predecessor to successor and record why the change occurred.
+  - Archival and destruction are distinct states.
+  - Legal hold or investigation hold overrides routine destruction until released.
+  - Every change trigger must propagate through dependencies: requirements, controls, documents, systems, risks, evidence and audit plans.
+  - Periodic review does not replace event-driven review.
+  - If a source does not specify who verifies, the knowledge base must distinguish legal requirement from recommended governance practice.
+outputs:
+  - lifecycle_state
+  - trigger_reason
+  - action_required
+  - accountable_role
+  - executor_role
+  - verifier_role
+  - deadline
+  - evidence_required
+  - affected_nodes
+  - next_review
