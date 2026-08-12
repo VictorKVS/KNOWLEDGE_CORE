@@ -1,9 +1,16 @@
-schema_version: 1
-purpose: Registry of professional knowledge bases used by Father. Each domain is built with the same evidence-first pipeline while retaining domain-specific laws, standards, calculations, tools and professional practice.
+schema_version: 2
+purpose: Registry of professional knowledge bases used by Father. Each domain is built with the same evidence-first discipline while retaining domain-specific laws, standards, calculations, tools and professional practice.
 domains:
   - id: SECURITY
     title: Information and cyber security
     status: IN_PROGRESS
+    logical_knowledge_space_ref: KB-SECURITY
+    canonical_tree: security-knowledge/
+    product_ref: SEC-PROD-0001
+    product_roadmap_ref: father/product-roadmap/security-products.yaml
+    pipeline: SOURCE -> VERSION -> CHUNK -> ATOMIC CLAIM/REQUIREMENT -> APPLICABILITY -> RELATIONS -> CONTROL -> CHECK -> EVIDENCE -> EXPERT REVIEW
+    verified_rule: VERIFIED requires admitted primary source plus exact locator.
+    product_value_rule: Retrieval/RAG is a lower layer; authoritative value is the evidence graph and expert-reviewed derivation chain.
   - id: SOFTWARE_ENGINEERING
     title: Software engineering and architecture
     status: PLANNED
@@ -71,3 +78,5 @@ rules:
   - New domains are added when a Father capability requires a distinct professional evidence base.
   - Cross-domain concepts are linked, not copied as conflicting independent truths.
   - Every domain must expose requirements, workflows, checklists, evidence, implementations and competency paths where applicable.
+  - Logical domain identity is stable even if physical repository/path changes later.
+  - FATHER consumes domain knowledge through governed routes and cannot silently rewrite VERIFIED domain truth.
