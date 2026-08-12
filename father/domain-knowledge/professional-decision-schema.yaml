@@ -1,0 +1,149 @@
+schema_version: 1
+entity: PROFESSIONAL_DECISION_RECORD
+status: ACTIVE
+purpose: >-
+  Preserve the evidence-backed derivation of a material professional decision so FATHER can
+  explain, review, replay and later reassess why an option was selected under the requirements,
+  constraints, knowledge and uncertainty that existed at decision time.
+
+required_fields:
+  - decision_id
+  - domain_id
+  - materiality_class
+  - decision_question
+  - context_ref
+  - requirements
+  - constraints
+  - criteria
+  - options
+  - chosen_disposition
+  - rationale
+  - assumptions
+  - uncertainty
+  - evidence_refs
+  - verification_plan
+  - provenance
+
+materiality_classes:
+  D0_LOCAL_CONVENTIONAL:
+    minimum_evidence: [project_standard_or_convention]
+    independent_review_required: false
+  D1_IMPLEMENTATION:
+    minimum_evidence: [official_or_admitted_technical_reference, executable_or_measurable_check]
+    independent_review_required: risk_based
+  D2_ARCHITECTURE_PRODUCT:
+    minimum_evidence: [requirements, constraints, alternatives, measurable_criteria, cost_or_resource_view, risk_view, verification_plan]
+    independent_review_required: normally_yes
+  D3_REGULATED_SAFETY_CRITICAL:
+    minimum_evidence: [primary_or_normative_source_with_locator, applicability, residual_risk, qualified_independent_review]
+    independent_review_required: true
+
+requirements_item:
+  fields: [requirement_ref, type, priority, applicability_state, hard_gate]
+  types: [LEGAL, REGULATORY, CONTRACTUAL, BUSINESS, TECHNICAL, QUALITY, SECURITY, SAFETY, OPERATIONAL, RESOURCE]
+
+constraints_item:
+  fields: [constraint_ref, dimension, value_or_rule, evidence_ref, hard_gate]
+  dimensions: [LAW, BUDGET, TIME, PEOPLE, INFRASTRUCTURE, DATA, INTEROPERABILITY, PERFORMANCE, RELIABILITY, SECURITY, SAFETY, VENDOR, LIFECYCLE, ENERGY, SUPPLY_CHAIN, MAINTAINABILITY, OTHER]
+
+criteria_item:
+  fields:
+    - criterion_id
+    - definition
+    - metric_or_rule_ref
+    - direction
+    - threshold_or_target
+    - weight
+    - weight_rationale
+    - evidence_ref
+  rules:
+    - weight_is_optional
+    - weighted_scoring_requires_weight_rationale
+    - hard_constraints_are_not_overridden_by_weighted_score
+    - metric_choice_must_be_traceable_to_decision_purpose
+
+option_item:
+  required_fields:
+    - option_id
+    - description
+    - applicability
+    - evidence_refs
+    - requirement_fit
+    - constraint_fit
+    - risks
+    - uncertainty
+    - status
+  optional_fields:
+    - estimated_cost
+    - estimated_time
+    - performance_estimate
+    - reliability_estimate
+    - operational_burden
+    - vendor_lifecycle_ref
+    - benchmark_refs
+    - experiment_refs
+    - rejected_reason
+  status_values: [CANDIDATE, ELIMINATED_HARD_GATE, PARETO_VALID, SELECTED, REJECTED, NEEDS_EVIDENCE]
+
+chosen_disposition_values:
+  - SELECT_OPTION
+  - MULTIPLE_VALID_OPTIONS
+  - REQUEST_MORE_EVIDENCE
+  - ESCALATE
+  - NO_GO
+
+rationale_required_semantics:
+  - explain_how_requirements_and_constraints_eliminated_or_ranked_options
+  - explain_material_tradeoffs
+  - distinguish_verified_facts_from_assumptions
+  - preserve_rejected_option_reasons
+  - do_not_use_best_practice_as_unresolved_terminal_justification
+
+assumptions_item:
+  fields: [assumption_id, statement, confidence, evidence_ref, sensitivity, invalidation_trigger]
+
+uncertainty_fields:
+  - known_unknowns
+  - missing_evidence
+  - sensitivity_summary
+  - residual_risk_refs
+
+provenance_fields:
+  - created_at
+  - role_ref
+  - assignment_ref
+  - knowledge_snapshot_refs
+  - source_refs
+  - calculation_refs
+  - benchmark_refs
+  - experiment_refs
+  - prior_decision_refs
+  - reviewer_refs
+
+verification_plan_fields:
+  - expected_outcomes
+  - acceptance_checks
+  - measurement_refs
+  - review_trigger
+  - expiry_or_reassessment_condition
+
+post_implementation_optional:
+  fields:
+    - implementation_ref
+    - measured_outcomes
+    - deviations
+    - incidents_or_failures
+    - lessons_refs
+    - decision_reassessment
+
+invariants:
+  - knowledge_or_evidence_never_grants_runtime_authority
+  - material_decision_requires_evidence_depth_appropriate_to_materiality
+  - mandatory_hard_gate_cannot_be_overridden_by_preference_or_score
+  - selected_option_must_be_one_of_declared_options_when_selection_occurs
+  - rejected_options_and_material_dissent_are_preserved
+  - source_conflict_is_recorded_not_silently_erased
+  - model_output_is_not_primary_authority_by_itself
+  - decision_replay_uses_historical_knowledge_and_evidence_snapshots
+  - current_reassessment_does_not_rewrite_historical_decision
+  - cost_performance_reliability_security_and_other_tradeoffs_are_context_dependent
