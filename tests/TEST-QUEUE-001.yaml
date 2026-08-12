@@ -1,0 +1,55 @@
+schema_version: "1.0"
+id: TEST-QUEUE-001
+kind: test-evidence
+status: active
+
+title: Bounded queue exposes capacity pressure without breaking FIFO
+purpose: Verify FIFO behavior and explicit rejection when the configured capacity is exhausted.
+
+scope:
+  learning_object: queue
+  component: bounded-queue
+  languages: [python, go, cpp]
+  environment: repository-ci
+
+contract:
+  verifies:
+    - FIFO order is preserved
+    - enqueue beyond capacity is rejected explicitly
+    - dequeue releases capacity
+  does_not_prove:
+    - fairness under contention
+    - lock-free progress guarantees
+    - production broker durability
+
+implementations:
+  - language: python
+    path: learning-core/executable/queue/python
+    runner: pytest
+  - language: go
+    path: learning-core/executable/queue/go
+    runner: go-test
+  - language: cpp
+    path: learning-core/executable/queue/cpp
+    runner: native-test-binary
+
+cases:
+  - fifo_order
+  - capacity_rejection
+  - capacity_released_after_dequeue
+
+execution:
+  ci_workflow: .github/workflows/learning-executable-ci.yml
+  last_verified_commit: ""
+  last_verified_at: null
+  result: unknown
+
+relationships:
+  supports_claims: []
+  supports_decisions: [ADR-QUEUE-001]
+  related_tests: []
+  supersedes_tests: []
+  superseded_by_tests: []
+
+limitations:
+  - This is a bounded in-process queue teaching model, not a durable message broker.
