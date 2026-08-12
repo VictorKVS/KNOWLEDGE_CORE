@@ -1,0 +1,52 @@
+schema_version: 1
+purpose: Productization roadmap derived from the Security Knowledge and Father architecture.
+status: PLANNING
+principle: Finish the evidence-grade Security Knowledge base first; then move through implementation stages in order.
+products:
+  - id: SKB-CORE
+    title: Security Knowledge Base
+    description: Evidence-grade regulatory, standards, threat, control, implementation and audit graph.
+    maturity_target: EXPERT
+    status: IN_PROGRESS
+  - id: COMPLIANCE-ENGINE
+    title: Regulatory Applicability and Compliance Engine
+    depends_on: [SKB-CORE]
+    description: Builds the applicable requirement set for an organization and generates traceable checks, evidence requirements and gaps.
+    status: PLANNED
+  - id: SECURITY-ARCHITECT
+    title: Evidence-Based Security Architect
+    depends_on: [SKB-CORE, COMPLIANCE-ENGINE]
+    description: Maps requirements and threats to unified controls, implementation alternatives, cost, residual risk and target architecture.
+    status: PLANNED
+  - id: WHITE-HAT-IMMUNE
+    title: White-Hat / Continuous Security Assurance Expert
+    depends_on: [SKB-CORE, SECURITY-ARCHITECT]
+    description: Authorized continuous attack-surface analysis, vulnerability validation, pentest evidence, control effectiveness assessment and retest.
+    status: PLANNED
+  - id: VULN-RISK-ENGINE
+    title: Vulnerability and Risk Management Expert
+    depends_on: [SKB-CORE]
+    description: Continuous asset-vulnerability-threat-risk correlation using BDU/CVE/NVD/KEV/EPSS and organizational context.
+    status: PLANNED
+  - id: REGULATORY-CHANGE-ENGINE
+    title: Regulatory Change and Impact Engine
+    depends_on: [SKB-CORE]
+    description: Watches normative sources, versions changes, computes impacted graph nodes and proposes reviewable changes to controls, checks and weights.
+    status: PLANNED
+  - id: SECURITY-AUDIT-ENGINE
+    title: Continuous Security Audit Expert
+    depends_on: [COMPLIANCE-ENGINE, SECURITY-ARCHITECT, VULN-RISK-ENGINE]
+    description: Combines documentary, configuration, technical and adversarial evidence into expert findings and remediation roadmaps.
+    status: PLANNED
+execution_order:
+  - Complete current Security Knowledge source corpus.
+  - Complete atomic requirements, applicability, checklists and evidence mapping.
+  - Complete unified controls and implementation knowledge.
+  - Complete expert metrics and risk model.
+  - Build update and dependency monitoring.
+  - Build compliance and architecture engines.
+  - Build continuous vulnerability and white-hat validation loops.
+  - Integrate all experts into Father orchestration.
+quality_gate:
+  - No product proceeds to implementation based on incomplete or untraceable core knowledge where that knowledge is a prerequisite.
+  - Each product decision must preserve source-to-decision traceability.
