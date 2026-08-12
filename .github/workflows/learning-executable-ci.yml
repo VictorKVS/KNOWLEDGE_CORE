@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        object: [validation, errors]
+        object: [validation, errors, state]
     defaults:
       run:
         working-directory: learning-core/executable/${{ matrix.object }}/python
@@ -31,7 +31,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        object: [validation, errors]
+        object: [validation, errors, state]
     defaults:
       run:
         working-directory: learning-core/executable/${{ matrix.object }}/go
@@ -51,6 +51,8 @@ jobs:
             test: test_validation.cpp
           - object: errors
             test: test_errors.cpp
+          - object: state
+            test: test_state.cpp
     defaults:
       run:
         working-directory: learning-core/executable/${{ matrix.object }}/cpp
