@@ -1,0 +1,57 @@
+id: LEARN-RESILIENCE-001
+title: Resilience and Failure Handling
+kind: learning-object
+maturity: drafted
+levels: [junior, middle, senior]
+domains: [reliability, failure_handling, production]
+languages: [python, go, cpp]
+
+problem:
+  summary: Handle failure explicitly without turning retries, fallbacks and recovery logic into uncontrolled complexity.
+
+junior:
+  focus:
+    - handle expected failure paths
+    - preserve useful error context
+    - avoid infinite retries
+    - test failure cases
+
+middle:
+  focus:
+    - distinguish transient from permanent failures
+    - add timeouts and bounded retries where justified
+    - use idempotency when repeated execution is possible
+    - expose cancellation and partial failure
+
+senior:
+  focus:
+    - define failure domains and recovery ownership
+    - choose graceful degradation only when semantics remain acceptable
+    - design retry budgets, backpressure and dependency isolation
+    - prefer removing fragile dependency chains over compensating for them forever
+
+core_principles:
+  - failure_is_part_of_the_contract
+  - retries_are_load
+  - boundedness_is_a_reliability_feature
+  - recovery_must_preserve_semantics
+  - graceful_degradation_must_be_intentional
+
+anti_patterns:
+  - retry_everything
+  - catch_and_ignore
+  - fallback_to_stale_or_wrong_data_without_contract
+  - unbounded_queueing
+  - hidden_partial_failure
+
+production_view:
+  requirements:
+    - timeout_policy
+    - retry_policy
+    - idempotency_review
+    - cancellation_path
+    - failure_tests
+    - observability
+
+reusable_lessons:
+  - make_failure_semantics_visible_before_adding_resilience_mechanisms
