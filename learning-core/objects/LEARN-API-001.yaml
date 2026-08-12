@@ -1,0 +1,69 @@
+schema_version: "1.0"
+id: LEARN-API-001
+title: Design a Stable API Contract
+kind: learning-object
+status: drafted
+family: api
+levels: [junior, middle, senior]
+languages: [python, go, cpp]
+
+problem:
+  summary: Expose behaviour through an interface that is clear, evolvable and safe to consume.
+
+junior:
+  goal: Implement an existing contract correctly.
+  practices:
+    - validate required inputs
+    - return documented outputs
+    - distinguish success from failure clearly
+    - keep names and types consistent
+
+middle:
+  goal: Design a component-level API.
+  compare:
+    - direct function call
+    - object/interface method
+    - HTTP endpoint
+    - message/event boundary
+  review:
+    - versioning
+    - compatibility
+    - error model
+    - idempotency
+    - testability
+
+senior:
+  goal: Decide whether the boundary itself is correct and how it can evolve without unnecessary coupling.
+  questions:
+    - Is this API exposing implementation detail?
+    - Which parts are stable business contracts versus internal mechanics?
+    - Can the boundary remain backward compatible?
+    - Is synchronous request/response actually the right interaction model?
+
+elegant_view:
+  principle: a good interface exposes the minimum stable contract needed by the consumer
+
+production_view:
+  add:
+    - authentication_and_authorization_context_when_relevant
+    - validation
+    - compatibility_policy
+    - timeout_and_cancellation_contract
+    - error_semantics
+    - observability
+    - rate_or_resource_limits_when_exposed_to_untrusted_clients
+
+anti_patterns:
+  - chatty_api
+  - leaking_internal_models
+  - boolean_parameter_explosion
+  - undocumented_error_contract
+  - accidental_breaking_change
+
+analyst_handoff:
+  required: false
+  note: Research is delegated when protocol choice or performance characteristics require evidence beyond routine engineering judgement.
+
+reusable_lessons:
+  - design boundaries around stable responsibilities rather than current internal structure
+  - smaller contracts are usually easier to evolve safely
