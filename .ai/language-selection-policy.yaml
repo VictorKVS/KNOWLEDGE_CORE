@@ -1,0 +1,72 @@
+schema_version: "1.0"
+id: language-selection-policy
+
+objective: >-
+  Select the language or language split that best satisfies the actual engineering constraints.
+  Do not treat Python, Go or C++ as a universal default.
+
+required_inputs:
+  - problem_class
+  - hard_constraints
+  - trust_boundary
+  - deployment_target
+  - maintenance_context
+
+conditional_inputs:
+  - workload_scale
+  - latency_requirement
+  - throughput_requirement
+  - memory_limit
+  - concurrency_model
+  - interoperability_requirements
+  - required_libraries_or_platform_apis
+
+candidate_generation:
+  python:
+    signals:
+      - ai_or_data_ecosystem
+      - automation_or_orchestration
+      - rapid_product_iteration
+      - backend_or_research_tooling
+  go:
+    signals:
+      - network_service
+      - infrastructure_or_collector
+      - bounded_concurrency
+      - compiled_operational_component
+  cpp:
+    signals:
+      - native_integration
+      - low_level_control
+      - performance_critical_component
+      - systems_or_hardware_boundary
+
+rules:
+  - signals generate candidates only; they do not prove selection
+  - reject candidates violating hard constraints before scoring preferences
+  - performance claims require measurement or authoritative evidence when decision-relevant
+  - mixed_language architecture must justify boundary complexity
+  - prefer adapting an existing suitable component over rewrite without evidence
+  - include security and maintainability costs in the decision
+
+retrieval_order:
+  - applicable_decision_memory
+  - language_topic_map
+  - verified_claims
+  - sources
+  - benchmarks_and_experiments
+
+escalation:
+  when_uncertain:
+    - create_or_update_adr
+    - prototype_only_the_uncertain_boundary
+    - benchmark_only_decision_relevant_dimensions
+    - security_review_if_trust_boundary_changes
+
+output_requirements:
+  - selected_candidate_or_split
+  - rejected_candidates
+  - decisive_constraints
+  - evidence_links
+  - confidence
+  - review_conditions
