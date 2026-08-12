@@ -1,0 +1,60 @@
+schema_version: "1.0"
+id: security-external-mapping-policy
+name: Security External Mapping Policy
+
+principle: >-
+  External security catalogs are mapping and enrichment layers over the internal SEC-* graph. They do not
+  create legal obligations, replace internal asset/threat/control models, or become findings by themselves.
+
+supported_catalog_families:
+  weakness_catalogs: [CWE]
+  application_risk_lists: [OWASP]
+  adversary_technique_catalogs: [ATTACK]
+  attack_pattern_catalogs: [CAPEC]
+  vulnerability_identifiers: [CVE]
+  severity_scoring: [CVSS]
+  configuration_catalogs: [CIS, vendor_hardening]
+
+mapping_rules:
+  - every_external_entry_must_keep_canonical_external_id
+  - every_mapping_must_state_relation_type
+  - every_mapping_must_state_scope_and_limitations
+  - mappings_may_be_many_to_many
+  - mappings_must_not_imply_equivalence_unless_explicitly_proven
+  - CVE_is_instance_level_not_weakness_class
+  - CVSS_is_severity_context_not_normative_requirement
+  - ATTACK_technique_is_adversary_behavior_not_control_requirement
+  - OWASP_category_is_risk_taxonomy_not_finding
+  - CWE_entry_is_weakness_classification_not_observed_finding
+
+relation_types:
+  exact_match: same bounded concept
+  narrower_than: external concept is more specific
+  broader_than: external concept is more general
+  related_to: useful non-equivalent relationship
+  instance_of: concrete vulnerability instance belongs to weakness class
+  may_enable: weakness may enable attack technique or pattern
+  may_mitigate: control may reduce applicability or impact
+  verification_relevant: external entry helps select a SEC-CHECK
+
+required_mapping_fields:
+  - external_catalog
+  - external_id
+  - external_version_or_release
+  - internal_refs
+  - relation_type
+  - rationale
+  - applicability
+  - limitations
+  - source_ref
+  - verified_at
+
+health_rules:
+  stale_external_release: YELLOW
+  withdrawn_external_entry: RED_for_that_mapping
+  unresolved_equivalence_claim: YELLOW
+  missing_canonical_source: RED
+
+agent_rule: >-
+  Use external catalogs to enrich classification, threat modeling and test selection. Always return to
+  canonical SEC-* nodes for obligations, controls, evidence and findings.
