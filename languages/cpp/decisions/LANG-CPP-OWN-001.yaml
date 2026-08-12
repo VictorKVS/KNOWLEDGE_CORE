@@ -1,0 +1,67 @@
+id: LANG-CPP-OWN-001
+kind: language-decision-map
+language: cpp
+status: foundation
+title: Ownership and Lifetime Selection
+
+question:
+  Which ownership and lifetime model makes object lifetime easiest to reason about and verify?
+
+context_questions:
+  - Who creates the object?
+  - Who is responsible for destroying it?
+  - Is ownership unique, shared or non-owning?
+  - Can the object outlive the current scope?
+  - Is allocation required at all?
+  - Are ABI/FFI boundaries involved?
+  - Is aliasing required?
+  - Can failure/exception paths change lifetime behavior?
+
+candidates:
+  value_semantics:
+    consider_when:
+      - scope-bound ownership is sufficient
+      - copying/moving semantics are acceptable
+    verify:
+      - object size and move/copy behavior
+  reference_or_non_owning_view:
+    consider_when:
+      - lifetime is owned elsewhere and the relationship is clearly non-owning
+    verify:
+      - referenced lifetime strictly dominates use
+  unique_ownership:
+    consider_when:
+      - dynamic lifetime is needed with one clear owner
+    verify:
+      - transfer points
+      - destruction behavior
+  shared_ownership:
+    consider_when:
+      - multiple owners are genuinely required
+    verify:
+      - ownership graph
+      - cycle risk
+      - synchronization/lifetime interaction
+  raw_pointer_boundary:
+    consider_when:
+      - required by low-level API, ABI or explicitly non-owning interface
+    verify:
+      - ownership is documented elsewhere
+      - nullability and lifetime constraints
+
+security_review:
+  - use-after-free
+  - dangling references
+  - double destruction
+  - ownership cycles/resource leaks
+  - cross-thread lifetime races
+  - FFI lifetime mismatch
+
+selection_rule:
+  Prefer the ownership model that makes lifetime explicit with the least machinery. Dynamic or shared ownership must be justified by actual lifetime requirements rather than convenience.
+
+evidence:
+  claims: []
+  sources: []
+  experiments: []
+  decision_memory: []
