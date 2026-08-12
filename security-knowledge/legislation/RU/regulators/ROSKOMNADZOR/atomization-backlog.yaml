@@ -1,0 +1,61 @@
+schema_version: 1
+purpose: Ordered expert ingestion backlog for Roskomnadzor corpus. Metadata registration is not completion; every source must become testable requirements, applicability rules, evidence and cross-regime links.
+priority_order:
+  - source_id: RKN-180-2022
+    topic: operator_notifications
+    outputs:
+      - notification_event_catalog
+      - applicability_rules
+      - required_fields
+      - responsible_roles
+      - evidence_catalog
+      - audit_checks
+      - lifecycle_change_triggers
+  - source_id: RKN-179-2022
+    topic: personal_data_destruction_evidence
+    outputs:
+      - destruction_trigger_catalog
+      - destruction_proof_requirements
+      - evidence_retention_model
+      - organization_checklist
+      - specialist_checklist
+      - audit_checks
+  - source_id: RKN-140-2025
+    topic: anonymization
+    outputs:
+      - anonymization_methods
+      - method_applicability
+      - reversibility_and_reidentification_risk
+      - evidence_requirements
+      - implementation_checks
+      - residual_risk_links
+next_source_families:
+  - personal_data_incident_notifications
+  - cross_border_transfer
+  - operator_registry_and_notification_changes
+  - regulator_inspection_checklists
+  - localization_and_processing_requirements_where_RKN_relevant
+  - consent_and_publication_related_regulatory_materials_where_applicable
+cross_regime_links_required:
+  - FZ-152
+  - PP-RF-1119-2012
+  - FSTEK-21
+  - FSB-77-2023
+  - FSB-378-2014
+  - CII_regime_when_same_system_asset_or_incident
+  - GIS_regime_when_same_system
+expert_gate:
+  - exact_source_locator_present
+  - current_status_checked
+  - applicability_explicit
+  - actor_action_object_condition_extracted
+  - deadline_verified_if_any
+  - evidence_defined
+  - testability_defined
+  - cross_regime_intersections_recorded
+  - ambiguity_and_uncertainty_recorded
+rules:
+  - Do not merge a Roskomnadzor obligation with an FSB/FSTEK obligation merely because the operational action overlaps.
+  - Reuse controls and evidence where valid, but preserve separate legal provenance.
+  - Any incident affecting a system with multiple regimes must invoke the organization-regime intersection engine.
+  - Any change to operator facts, processing purposes, systems, data categories or cross-border flows must be evaluated as a possible notification/update trigger.
