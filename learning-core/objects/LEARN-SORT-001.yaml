@@ -1,0 +1,81 @@
+schema_version: "1.0"
+id: LEARN-SORT-001
+title: Sorting as an Engineering Choice
+kind: learning-object
+status: drafted
+
+domain: sorting
+languages: [python, go, cpp]
+levels: [junior, middle, senior]
+
+problem:
+  summary: >-
+    Order a collection according to an explicit key while preserving correctness requirements
+    and avoiding unnecessary custom sorting logic.
+  questions:
+    - Is full ordering actually required?
+    - Is stability required?
+    - Is the data already partially ordered?
+    - Is ordering one-time or repeated?
+    - Can the standard library satisfy the contract?
+
+junior:
+  goal: use_the_language_sorting_facility_correctly
+  practices:
+    - define_the_key_explicitly
+    - verify_ascending_or_descending_contract
+    - test_duplicates_empty_and_single_element_inputs
+    - prefer_standard_library_over_hand_written_sort
+
+middle:
+  goal: choose_the_sorting_strategy_for_component_needs
+  practices:
+    - reason_about_stability_and_key_extraction
+    - avoid_repeated_expensive_key_computation_when_it_matters
+    - distinguish_in_place_from_copying_semantics
+    - compare_sort_once_vs_maintain_ordered_representation
+  analyst_handoff_when:
+    - nontrivial_algorithm_comparison_is_material
+    - performance_claim_requires_research_or_benchmark_methodology
+
+senior:
+  goal: decide_whether_global_sorting_is_the_right_system_operation
+  practices:
+    - challenge_unnecessary_total_ordering
+    - consider_database_or_index_ordering_boundaries
+    - consider_streaming_top_k_or_partial_order_when_contract_allows
+    - account_for_memory_latency_and_operational_cost
+    - avoid_architecture_built_around_accidental_sorting_requirements
+
+views:
+  elegant:
+    core_idea: >-
+      Express the ordering rule directly and let a trusted language/library primitive perform
+      the mechanics unless evidence shows the primitive cannot meet the contract.
+    anti_goal: reimplement_sorting_to_look_smart
+  production:
+    hardening:
+      - explicit_key_contract
+      - stable_behavior_if_required
+      - locale_or_normalization_rules_if_textual
+      - bounded_resource_expectations
+      - tests_for_edge_cases
+      - benchmark_only_when_material
+
+security:
+  concerns:
+    - attacker_controlled_large_inputs
+    - expensive_key_functions
+    - pathological_memory_pressure
+    - incorrect_text_normalization_assumptions
+
+related:
+  algorithm_refs: [ALG-SORT-001]
+  practice_refs: [programming-practice/PATTERNS_AND_STRATEGIES.md]
+
+reusable_lessons:
+  - library_primitive_first
+  - make_ordering_contract_explicit
+  - partial_order_can_be_better_than_full_sort_when_requirements_allow
+
+maturity_target: evidence_linked
