@@ -1,0 +1,87 @@
+schema_version: 1
+purpose: Link each verified security obligation to possible consequences of non-compliance without overstating liability. Liability is evaluated from facts, applicable composition/elements, responsible subject, effective legal version and evidence.
+consequence_types:
+  - ADMINISTRATIVE
+  - CRIMINAL
+  - CIVIL
+  - DISCIPLINARY
+  - CONTRACTUAL
+  - REGULATORY_MEASURE
+  - LICENSE_OR_CERTIFICATION_IMPACT
+  - OPERATIONAL
+  - REPUTATIONAL
+consequence_record:
+  required_fields:
+    - consequence_id
+    - violated_requirement
+    - underlying_source
+    - liability_source
+    - liability_source_version
+    - exact_locator
+    - effective_from
+    - effective_until
+    - liable_subject_type
+    - required_factual_elements
+    - required_fault_or_intent_if_applicable
+    - consequence_type
+    - sanction_range_or_measure
+    - aggravating_conditions
+    - mitigating_conditions
+    - repeat_offense_effect
+    - limitation_or_procedure_notes
+    - evidence_needed
+    - confidence
+    - legal_review_required
+liable_subject_types:
+  - organization
+  - official
+  - individual
+  - individual_entrepreneur
+  - operator
+  - CII_subject
+  - contractor
+  - license_holder
+  - other_source_defined_subject
+severity_dimensions:
+  - legal_exposure
+  - maximum_financial_exposure
+  - criminal_exposure
+  - regulator_intervention
+  - business_interruption
+  - certification_or_license_risk
+  - remediation_urgency
+  - evidence_strength
+  - uncertainty
+analysis_pipeline:
+  - identify_verified_requirement
+  - identify_actual_or_potential_violation
+  - determine_event_date
+  - resolve_law_version_effective_on_event_date
+  - identify_possible_liability_norms
+  - test_each_required_element_against_facts
+  - identify_possible liable subjects
+  - calculate or represent sanction only as source permits
+  - identify aggravating_mitigating_repeat_conditions
+  - link evidence
+  - require legal review for high-impact or ambiguous conclusions
+  - output exposure with confidence and uncertainty
+expert_rules:
+  - Never state that a fine, disqualification or criminal penalty automatically follows from a technical or documentary gap.
+  - A security requirement and a liability provision are separate nodes connected by a conditional relation.
+  - The composition/elements of the offense must be evaluated against actual facts.
+  - Use the legal version effective for the event and separately show the current version where useful.
+  - Monetary amounts, imprisonment terms and other sanctions require exact verified source locators and effective dates.
+  - Criminal exposure always requires explicit legal-review flag and must never be inferred solely from non-compliance with an information-security control.
+  - Administrative, criminal, civil, disciplinary and contractual consequences must never be collapsed into one score.
+  - Repeat-offense and turnover-based sanctions require explicit calculation inputs and provenance.
+  - Unknown facts produce conditional exposure, not a definitive liability conclusion.
+  - Regulator practice and court practice are evidence layers, not substitutes for statutory text.
+outputs:
+  - requirement_consequence_graph
+  - organization_exposure_matrix
+  - responsible_subject_matrix
+  - high_consequence_gaps
+  - legal_review_queue
+  - sanction_calculation_inputs
+  - uncertainty_register
+  - remediation_priority_input
