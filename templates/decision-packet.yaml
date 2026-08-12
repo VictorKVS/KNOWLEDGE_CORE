@@ -1,0 +1,61 @@
+schema_version: "1.0"
+id: DPK-XXXX
+kind: decision-packet
+status: draft
+
+request:
+  task_context: CTX-XXXX
+  requested_level: middle
+  requested_languages: []
+  requested_domains: []
+
+candidate_search:
+  query_basis: []
+  candidate_records: []
+
+candidates:
+  - id: DM-XXXX
+    health: UNKNOWN
+    route: RESEARCH
+    context_match:
+      exact: []
+      compatible: []
+      mismatched: []
+      unknown: []
+    supporting_reasons: []
+    blocking_reasons: []
+
+selection:
+  selected_candidate: null
+  route: RESEARCH # FAST | ADAPT | RESEARCH
+  rationale: ""
+  required_revalidation: []
+  delegated_to: []
+
+result:
+  decision_record: null
+  implementation_refs: []
+  verification_refs: []
+  new_claims: []
+  new_tests: []
+  new_benchmarks: []
+  new_decision_memory: null
+
+traceability:
+  context_refs: []
+  health_refs: []
+  evidence_refs: []
+  rejected_candidate_refs: []
+
+reproducibility:
+  generated_at: null
+  agent_role: programming-agent
+  policy_versions:
+    routing_policy: decision-routing-policy
+    evidence_health_policy: evidence-health-policy
+  repository_revision: ""
+
+agent_rule: >-
+  A decision packet records the reproducible path from task context through candidate evaluation
+  to the final engineering decision. It must preserve rejected candidates and blocking reasons,
+  not only the selected answer.
