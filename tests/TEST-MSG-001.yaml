@@ -1,0 +1,55 @@
+schema_version: "1.0"
+id: TEST-MSG-001
+kind: test-evidence
+status: active
+
+title: Idempotent message processing suppresses duplicate side effects
+purpose: Verify that repeated delivery of the same logical message does not repeat the business side effect.
+
+scope:
+  learning_object: idempotent-message
+  component: message-consumer
+  languages: [python, go, cpp]
+  environment: repository-ci
+
+contract:
+  verifies:
+    - first delivery applies the side effect
+    - duplicate message id does not apply the side effect again
+    - distinct message ids are processed independently
+  does_not_prove:
+    - durable deduplication across process crash
+    - atomic coupling between business mutation and deduplication state
+    - broker-specific delivery guarantees
+
+implementations:
+  - language: python
+    path: learning-core/executable/idempotent-message/python
+    runner: pytest
+  - language: go
+    path: learning-core/executable/idempotent-message/go
+    runner: go-test
+  - language: cpp
+    path: learning-core/executable/idempotent-message/cpp
+    runner: native-test-binary
+
+cases:
+  - first_delivery_applies_once
+  - duplicate_delivery_is_suppressed
+  - distinct_delivery_is_applied
+
+execution:
+  ci_workflow: .github/workflows/learning-executable-ci.yml
+  last_verified_commit: ""
+  last_verified_at: null
+  result: unknown
+
+relationships:
+  supports_claims: [CLM-MSG-001]
+  supports_decisions: [ADR-MSG-001]
+  related_tests: []
+  supersedes_tests: []
+  superseded_by_tests: []
+
+limitations:
+  - Deduplication storage in this learning object is not yet crash durable.
