@@ -26,6 +26,7 @@ ALLOWED_STATES = {
     "DISPUTED",
     "SUPERSEDED",
 }
+ALLOWED_CLASSIFICATIONS = {"PUBLIC", "INTERNAL", "CONFIDENTIAL", "SECRET"}
 
 
 def canonical(value: object) -> bytes:
@@ -69,9 +70,12 @@ def digest_material(data: dict) -> dict:
                 "knowledge_state": item["knowledge_state"],
                 "selection_reason": item["selection_reason"],
                 "source_locator_ref": item.get("source_locator_ref"),
+                "freshness_state": item.get("freshness_state"),
+                "classification": item.get("classification"),
             }
         )
     return {
+        "schema_version": data.get("schema_version"),
         "manifest_id": data["manifest_id"],
         "knowledge_space_id": data["knowledge_space_id"],
         "canonical_repository": data["canonical_repository"],
@@ -95,6 +99,7 @@ def validate_manifest(path: Path) -> list[str]:
         return [f"{rel}: manifest must be an object"]
 
     required = {
+        "schema_version",
         "manifest_id",
         "knowledge_space_id",
         "canonical_repository",
@@ -156,6 +161,10 @@ def validate_manifest(path: Path) -> list[str]:
             errors.append(f"{label}: invalid knowledge_state {state}")
         if state in {"SOURCE_VERIFIED", "VERIFIED"} and not item.get("source_locator_ref"):
             errors.append(f"{label}: {state} requires source_locator_ref")
+
+        classification = item.get("classification")
+        if classification is not None and str(classification) not in ALLOWED_CLASSIFICATIONS:
+            errors.append(f"{label}: invalid classification {classification}")
 
         digest = str(item.get("content_digest_sha256", "")).lower()
         if not SHA256_RE.fullmatch(digest):
