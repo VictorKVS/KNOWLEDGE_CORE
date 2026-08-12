@@ -1,0 +1,31 @@
+name: Decision Packet Gate
+
+on:
+  push:
+    paths:
+      - 'decision-packets/**'
+      - 'templates/decision-packet.yaml'
+      - '.ai/decision-packet-policy.yaml'
+      - 'tools/validate_decision_packet.py'
+      - '.github/workflows/decision-packet-gate.yml'
+  pull_request:
+    paths:
+      - 'decision-packets/**'
+      - 'templates/decision-packet.yaml'
+      - '.ai/decision-packet-policy.yaml'
+      - 'tools/validate_decision_packet.py'
+      - '.github/workflows/decision-packet-gate.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  validate-packets:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install pyyaml
+      - run: python tools/validate_decision_packet.py
