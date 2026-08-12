@@ -1,0 +1,60 @@
+schema_version: "1.0"
+id: contradiction-policy
+name: Knowledge Contradiction Policy
+
+principle: >-
+  Conflicting evidence is information. Never silently select the convenient source, average incompatible
+  results, or collapse context-dependent conclusions into one universal rule.
+
+conflict_types:
+  direct_claim_conflict:
+    example: two claims assert incompatible outcomes under materially equivalent applicability.
+  measurement_conflict:
+    example: benchmarks disagree after environment and workload normalization.
+  source_conflict:
+    example: authoritative sources specify incompatible behavior for the same supported version/context.
+  outcome_conflict:
+    example: verified project outcomes differ despite apparently equivalent decision context.
+  apparent_conflict:
+    example: conclusions differ because versions, workloads, trust boundaries or constraints differ.
+
+resolution_order:
+  - compare_applicability_envelopes
+  - compare_versions_and_dates
+  - compare_workload_and_scale
+  - compare_environment_and_runtime
+  - compare_methodology_and_measurement_quality
+  - compare_source_authority_and_directness
+  - inspect_hidden_assumptions
+  - reproduce_when_feasible
+  - delegate_research_heavy_conflict_to_analyst
+
+states:
+  OPEN:
+    fast_path: blocked_for_affected_decision
+  CONTEXT_SPLIT:
+    fast_path: allowed_only_inside_resolved_context_branches
+  RESOLVED:
+    fast_path: subject_to_normal_health_and_context_rules
+  ACCEPTED_UNCERTAINTY:
+    fast_path: blocked_unless_policy_explicitly_allows_uncertainty
+
+hard_rules:
+  - do_not_resolve_by_majority_vote_alone
+  - do_not_prefer_newer_source_without_version_or_authority_reason
+  - do_not_average_benchmarks_from_incompatible_environments
+  - do_not_hide_negative_or_failed_outcomes
+  - security_critical_open_conflict_requires_security_review
+  - scientific_or_algorithmic_open_conflict_requires_analyst_review
+
+propagation:
+  OPEN:
+    claim_health: YELLOW_or_RED_by_severity
+    dependent_ADR: requires_review
+    dependent_DM: fast_path_blocked
+  CONTEXT_SPLIT:
+    action: replace_universal_rule_with_context_specific_claims_when_supported
+
+agent_rule: >-
+  First attempt to explain a contradiction by context. If materially equivalent contexts still disagree,
+  preserve the contradiction as OPEN and request stronger evidence rather than inventing certainty.
