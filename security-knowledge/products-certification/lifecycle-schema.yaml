@@ -1,0 +1,59 @@
+schema_version: 1
+purpose: Track security product certificates, regulator licenses/permissions and their reliability over time. Product suitability is a time-dependent fact, not a permanent label.
+entities:
+  SECURITY_PRODUCT:
+    fields: [vendor, product, edition, version, platform, purpose]
+  CERTIFICATE:
+    fields: [authority, registry_id, certificate_number, issue_date, valid_from, valid_until, status, scope, security_level, certified_versions, conditions, source_url, checked_at]
+  LICENSE_OR_PERMISSION:
+    fields: [authority, holder, license_number, activities, issue_date, valid_until, status, suspension_date, restoration_date, revocation_date, source_url, checked_at]
+  STATUS_EVENT:
+    fields: [event_type, effective_date, discovered_at, source, reason, previous_status, new_status]
+status_values:
+  - ACTIVE
+  - EXPIRING_SOON
+  - EXPIRED
+  - SUSPENDED
+  - RESTORED
+  - REVOKED
+  - REPLACED
+  - UNKNOWN
+monitoring_windows_days:
+  INFO: 365
+  WATCH: 180
+  WARNING: 90
+  HIGH: 30
+  CRITICAL: 7
+calculated_metrics:
+  days_to_expiry: valid_until - evaluation_date
+  certificate_freshness: time_since_last_registry_check
+  status_stability:
+    description: Stability of authorization/certification status over historical observation window.
+    inputs: [suspensions, restorations, revocations, replacements, gaps, duration_of_events]
+  renewal_risk:
+    description: Risk that a certificate/permission becomes unsuitable before planned system lifecycle ends.
+    inputs: [days_to_expiry, renewal_history, replacement_available, vendor_support, project_horizon]
+  operational_dependency:
+    description: Consequence to organization if status changes.
+    inputs: [number_of_systems, criticality, replacement_complexity, migration_time, regulatory_dependency]
+  temporal_suitability:
+    description: Suitability at a specific evaluation date and for a required planning horizon.
+expert_rules:
+  - Never store certified=true without certificate identity, scope, version and time validity.
+  - Certificate validity and vendor/license-holder authorization are separate facts.
+  - Suspension and later restoration must remain in immutable history; restoration does not erase the reliability event.
+  - Suitability must be evaluated against the planned service/project horizon, not only today's date.
+  - If certificate validity ends before expected system lifecycle or next attestation/audit horizon, raise renewal/migration risk.
+  - Registry data must be periodically re-read from authoritative regulator sources.
+  - A status change triggers impact analysis for all systems and controls depending on the product.
+  - Unknown or stale registry status reduces expert confidence and must not be treated as ACTIVE.
+outputs:
+  - current_status
+  - days_to_expiry
+  - renewal_alert_level
+  - status_history
+  - dependent_systems
+  - affected_controls
+  - replacement_candidates
+  - migration_lead_time
+  - expert_confidence
