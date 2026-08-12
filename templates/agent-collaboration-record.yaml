@@ -1,0 +1,56 @@
+schema_version: "1.0"
+id: COLLAB-XXXX
+kind: agent-collaboration
+status: OPEN
+
+task:
+  context_ref: ""
+  objective: ""
+  lead_agent: ""
+  collaboration_mode: CONSULT
+
+participants:
+  - agent: ""
+    role: lead|specialist|reviewer
+    bounded_question: ""
+    required: true
+
+contributions:
+  - agent: ""
+    position: ""
+    recommendation: ""
+    knowledge_refs: []
+    evidence_refs: []
+    applicability: {}
+    assumptions: []
+    uncertainty: ""
+    blockers: []
+    proposed_cross_domain_refs: []
+
+integration:
+  accepted_positions: []
+  rejected_positions:
+    - position_ref: ""
+      reason: ""
+  unresolved_conflicts: []
+  contradiction_refs: []
+  evidence_gap_refs: []
+  research_task_refs: []
+
+routing:
+  result: pending  # FAST | ADAPT | RESEARCH | BLOCKED
+  rationale: ""
+
+finalization:
+  decision_packet_ref: ""
+  required_reviews_completed: []
+  unresolved_required_reviews: []
+
+provenance:
+  created_at: ""
+  updated_at: ""
+  orchestrated_by: father
+
+agent_rule: >-
+  Preserve minority specialist positions when they contain relevant evidence. Rejection requires a reason;
+  silence is not consensus.
