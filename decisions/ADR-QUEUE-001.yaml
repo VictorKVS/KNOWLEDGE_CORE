@@ -1,0 +1,78 @@
+schema_version: "1.1"
+id: ADR-QUEUE-001
+status: draft
+
+title: Bounded in-memory queue for local producer-consumer flow
+question: How should local work be buffered without allowing unbounded memory growth?
+
+context:
+  system: single-process worker component
+  environment: in-memory local execution
+  workload: producer may temporarily outpace consumer
+  security_boundary: internal component boundary
+
+constraints:
+  - memory growth must be bounded
+  - FIFO ordering is sufficient
+  - persistence is not required
+  - overload must become explicit
+
+alternatives:
+  - id: unbounded-queue
+    description: accept all items until memory is exhausted
+    advantages: [simple producer path]
+    disadvantages: [unbounded memory growth, delayed failure]
+    evidence: []
+  - id: bounded-queue
+    description: fixed-capacity FIFO queue with explicit full condition
+    advantages: [bounded resource use, visible overload]
+    disadvantages: [producer must handle backpressure]
+    evidence: []
+
+reason_chain:
+  - because: producer throughput can temporarily exceed consumer throughput
+    applies_when: [local asynchronous handoff exists]
+    supports: [TEST-QUEUE-BOUNDED]
+    strength: DERIVED
+    limitations: [does not define distributed delivery semantics]
+  - because: unbounded buffering converts overload into memory growth
+    applies_when: [memory is finite]
+    supports: [TEST-QUEUE-BOUNDED]
+    strength: DERIVED
+    limitations: [capacity still requires workload-specific sizing]
+
+rejection_reason_chain:
+  - option: unbounded-queue
+    because: overload would remain hidden until resource exhaustion
+    supports: [TEST-QUEUE-BOUNDED]
+
+traceability:
+  selected_claims: []
+  selected_benchmarks: []
+  selected_experiments: []
+  selected_tests: [TEST-QUEUE-BOUNDED]
+  rejected_claims: []
+
+decision:
+  selected: bounded-queue
+  rationale: Make overload explicit at a fixed resource boundary instead of accumulating unlimited work in memory.
+  rejected_options: [unbounded-queue]
+  exceptions:
+    - use a durable broker when persistence, cross-process delivery or recovery semantics are required
+  confidence: medium
+
+verification:
+  tests:
+    - learning-core/executable/queue/python/test_queue_model.py
+    - learning-core/executable/queue/go/queue_test.go
+    - learning-core/executable/queue/cpp/test_queue.cpp
+  benchmarks: []
+  security_reviews: []
+
+sources: []
+
+metadata:
+  created: 2026-08-12
+  reviewed: null
+  supersedes: null
+  superseded_by: null
