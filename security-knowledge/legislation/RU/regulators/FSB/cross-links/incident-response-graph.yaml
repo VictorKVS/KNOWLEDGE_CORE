@@ -1,0 +1,73 @@
+schema_version: 1
+purpose: Cross-regulatory knowledge graph for incident reporting, response and evidence preservation. This file defines relationships only; individual obligations become VERIFIED only from source-level ingestion.
+nodes:
+  - FZ-152
+  - FZ-187
+  - PRESIDENT-250-2022
+  - FSB-77-2023
+  - FSB-547-2025
+  - FSB-548-2025
+  - FSB-553-2025
+  - FSB-554-2025
+  - FSTEK-235-2017
+  - FSTEK-239-2017
+concepts:
+  - SECURITY_EVENT
+  - COMPUTER_ATTACK
+  - COMPUTER_INCIDENT
+  - PERSONAL_DATA_INCIDENT
+  - CII_INCIDENT
+  - INCIDENT_NOTIFICATION
+  - INCIDENT_RESPONSE
+  - CONSEQUENCE_ELIMINATION
+  - GOSSOPKA_INTERACTION
+  - INCIDENT_EVIDENCE
+relations:
+  - from: FZ-152
+    to: FSB-77-2023
+    type: IMPLEMENTED_OR_DETAILED_BY
+    confidence: REVIEW_REQUIRED
+  - from: FZ-187
+    to: FSB-547-2025
+    type: IMPLEMENTED_OR_DETAILED_BY
+    confidence: REVIEW_REQUIRED
+  - from: FZ-187
+    to: FSB-548-2025
+    type: IMPLEMENTED_OR_DETAILED_BY
+    confidence: REVIEW_REQUIRED
+  - from: PRESIDENT-250-2022
+    to: FSTEK-235-2017
+    type: GOVERNANCE_CONTEXT
+    confidence: REVIEW_REQUIRED
+  - from: FSB-547-2025
+    to: INCIDENT_NOTIFICATION
+    type: REGULATES
+  - from: FSB-547-2025
+    to: INCIDENT_RESPONSE
+    type: REGULATES
+  - from: FSB-547-2025
+    to: CONSEQUENCE_ELIMINATION
+    type: REGULATES
+  - from: FSB-548-2025
+    to: GOSSOPKA_INTERACTION
+    type: REGULATES
+  - from: FSB-553-2025
+    to: GOSSOPKA_INTERACTION
+    type: TECHNICAL_ENABLEMENT
+    confidence: REVIEW_REQUIRED
+  - from: FSB-554-2025
+    to: GOSSOPKA_INTERACTION
+    type: TECHNICAL_REQUIREMENTS
+    confidence: REVIEW_REQUIRED
+expert_questions:
+  - Which incident class has occurred?
+  - Which legal regime applies to the affected asset and data?
+  - Which notification obligations are triggered?
+  - Which deadlines and channels are source-verified?
+  - Which evidence must be preserved for regulator, investigation and retest?
+  - Which controls failed or were absent?
+  - Does the incident alter threat relevance, residual risk or architecture priorities?
+rules:
+  - Never infer a notification deadline from a related act; deadline must be source-verified.
+  - A single incident may trigger multiple regimes; preserve each obligation separately.
+  - Reusable evidence may support multiple obligations, but legal obligations are not deduplicated away.
