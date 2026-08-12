@@ -1,0 +1,50 @@
+schema_version: 1
+purpose: Expert knowledge model joining legal applicability, cryptographic requirements, implementations, lifecycle and evidence without treating cryptography as a single product-selection question.
+entities:
+  - PROTECTED_INFORMATION
+  - INFORMATION_SYSTEM
+  - DATA_FLOW
+  - CRYPTOGRAPHY_APPLICABILITY
+  - CRYPTOGRAPHIC_CONTROL
+  - CRYPTOGRAPHIC_MEANS
+  - CERTIFICATE_OR_APPROVAL
+  - CRYPTO_KEY
+  - KEY_LIFECYCLE
+  - CRYPTO_ROLE
+  - TRUST_BOUNDARY
+  - CRYPTO_EVIDENCE
+  - CRYPTO_RISK
+lifecycle:
+  - determine_information_and_system_context
+  - determine_legal_and_threat_based_crypto_applicability
+  - define_security_objective
+  - select_cryptographic_control
+  - define_requirements_for_crypto_means
+  - design_key_management
+  - deploy_and_configure
+  - authorize_roles_and_access
+  - operate_and_monitor
+  - rotate_revoke_destroy_keys
+  - verify_and_collect_evidence
+  - reassess_on_change
+cross_source_inputs:
+  - FZ-152
+  - PP-RF-1119-2012
+  - FSB-378-2014
+  - FSB-117-2025
+  - other_FSB_crypto_acts_after_verification
+expert_rules:
+  - Do not infer that every protected system requires cryptography; derive applicability from the governing regime, threat model, architecture and data flow.
+  - Do not infer suitability of a product from the existence of a certificate alone; verify scope, version, class/level, validity, operating conditions and target use.
+  - Separate cryptographic algorithm requirements from requirements for certified/approved means and from operational key-management requirements.
+  - Every key lifecycle stage must have an owner, procedure, evidence and failure handling where applicable.
+  - Product and hardware mappings belong to a separate verified registry and must be time/version aware.
+  - Compensating measures never silently replace a mandatory cryptographic obligation.
+expert_outputs:
+  - crypto_applicability_decision
+  - crypto_architecture_requirements
+  - approved_solution_candidates
+  - key_management_checklist
+  - implementation_checklist
+  - evidence_package
+  - residual_crypto_risk
