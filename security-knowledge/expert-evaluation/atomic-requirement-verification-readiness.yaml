@@ -1,0 +1,67 @@
+schema_version: 1
+record_id: SEC-READINESS-ATOMIC-0001
+status: ACTIVE_BASELINE
+observed_at: 2026-08-13
+product_id: SEC-PROD-0001
+scope: security-knowledge atomic requirement corpus
+
+quality_gate:
+  workflow: Knowledge Quality Gate
+  validator: tools/validate_security_requirements.py
+  rule: >-
+    An atomic requirement may be VERIFIED only when it has a stable requirement identity,
+    admitted source document identity, exact source_locator, and non-empty source_quote.
+  missing_verification_state_semantics: UNVERIFIED
+
+observed_corpus:
+  requirement_files_checked: 9
+  atomic_requirements_checked: 82
+  verified_atomic_requirements: 0
+  interpretation: >-
+    The corpus contains extracted/reviewed/seeding work, but no atomic requirement currently
+    satisfies the strict VERIFIED proof floor enforced by CI. This blocks expert D3 reasoning
+    claims that depend on a VERIFIED atomic requirement, while allowing corpus construction to continue.
+
+status_correction:
+  affected_document: FSTEK-31-2014
+  corrected_files:
+    - security-knowledge/legislation/RU/regulators/FSTEK/31-2014/requirements/core.yaml
+    - security-knowledge/legislation/RU/regulators/FSTEK/31-2014/requirements/technical-specification.yaml
+    - security-knowledge/legislation/RU/regulators/FSTEK/31-2014/requirements/threat-model.yaml
+  action: DOWNGRADE_VERIFICATION_TO_REVIEWED
+  reason: source_locator was present but source_quote required by the canonical verification rule was absent
+  knowledge_preserved:
+    - atomic decomposition
+    - source locator
+    - applicability hints
+    - evidence hints
+    - normalized actions/objects
+  forbidden_interpretation: downgrade_does_not_mean_requirement_is_false
+
+first_verification_target:
+  requirement_id: FSTEK31-REQ-001
+  source_document_id: FSTEK-31-2014
+  current_state: REVIEWED
+  source_locator: "p. 10"
+  normalized_subject: operator
+  normalized_action: appoint
+  normalized_object: structural_unit_or_employee_responsible_for_information_protection
+  missing_evidence:
+    - exact source_quote from admitted primary source/revision
+    - verification review confirming quote-to-atom semantic fidelity
+  promotion_condition: >-
+    Promote to VERIFIED only after the exact quote is recorded from the admitted source at the
+    declared locator and the atomic interpretation is independently checked.
+
+runtime_effect:
+  professional_D3_security_run:
+    state: BLOCKED_BY_KNOWLEDGE_PROOF_FLOOR
+    unblock_when: at_least_one_applicable_atomic_requirement_is_VERIFIED_and_exportable
+  live_provider_summit:
+    state: NOT_BLOCKED
+
+anti_goodhart:
+  - do_not_inflate_verified_count_by_weakening_source_quote_or_locator_requirements
+  - do_not_fabricate_quotes_or_reconstruct_them_from_memory
+  - do_not_treat_REVIEWED_as_VERIFIED_in_runtime_context
+  - verification_count_is_not_a_quality_goal_by_itself; semantic correctness and applicability remain required
