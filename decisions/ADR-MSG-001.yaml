@@ -26,7 +26,7 @@ alternatives:
     description: record processed message IDs and skip already processed IDs
     advantages: [idempotent_consumer_behavior, explicit_duplicate_semantics]
     disadvantages: [requires_durable_deduplication_state_in_production]
-    evidence: []
+    evidence: [CLM-MSG-001]
 
 decision:
   selected: deduplicate-by-message-id
@@ -36,9 +36,9 @@ decision:
   confidence: medium
 
 reason_chain:
-  - because: delivery systems can repeat a message while the logical operation should occur once
+  - because: at-least-once delivery may redeliver the same logical message
     applies_when: [delivery_may_be_at_least_once]
-    supports: [CLM-MSG-001]
+    supports: [CLM-MSG-001, SRC-KAFKA-DELIVERY-001]
     strength: DOCUMENTED
     limitations: [actual broker semantics must be checked per product and configuration]
   - because: a stable idempotency key lets the consumer recognize the same logical operation
@@ -57,15 +57,15 @@ verification:
   benchmarks: []
   security_reviews: []
 
-sources: [CLM-MSG-001]
+sources: [SRC-KAFKA-DELIVERY-001]
 
 traceability:
-  selected_supported_by: [CLM-MSG-001, TEST-MSG-001]
+  selected_supported_by: [CLM-MSG-001, SRC-KAFKA-DELIVERY-001, TEST-MSG-001]
   rejected_supported_by: [TEST-MSG-001]
   unresolved_evidence_gaps:
     - durable deduplication storage
-    - transaction coupling between business effect and processed-message record
-    - broker-specific delivery semantics
+    - atomic coupling between business effect and processed-message record
+    - broker-specific delivery semantics outside the cited Kafka model
 
 metadata:
   created: 2026-08-12
