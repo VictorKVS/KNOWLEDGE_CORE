@@ -1,0 +1,49 @@
+schema_version: "1.0"
+id: security-by-design-policy
+
+objective: >-
+  Make security constraints part of candidate generation, rejection and verification rather than a final cosmetic review.
+
+required_questions:
+  - what crosses a trust boundary
+  - which inputs are attacker-controlled
+  - what privileges are required
+  - what resources can be amplified
+  - what secrets or sensitive data exist
+  - what dependencies and build artifacts are trusted
+  - what failure evidence must be observable
+
+mandatory_rejection_conditions:
+  - violates_hard_authz_constraint
+  - requires_unjustified_privilege
+  - creates_unbounded_external_resource_path_without_control
+  - depends_on_unverified_secret_handling
+  - introduces_known_unacceptable_dependency_or_supply_chain_risk
+
+verification_candidates:
+  code:
+    - unit_and_regression_tests
+    - static_analysis
+    - dependency_analysis
+    - secret_scanning
+  exposed_interfaces:
+    - fuzzing
+    - negative_tests
+    - dynamic_testing
+    - rate_and_resource_limit_tests
+  deployment:
+    - configuration_review
+    - least_privilege_review
+    - logging_and_detection_review
+    - recovery_and_rollback_review
+
+learning:
+  vulnerability_or_failure_should_produce_when_possible:
+    - regression_test
+    - new_constraint
+    - security_failure_mode
+    - updated_claim
+    - updated_decision_memory
+
+agent_rule: >-
+  Never prefer a candidate solely because it is simpler or faster if the simplification transfers an unbounded or unjustified security cost to production.
