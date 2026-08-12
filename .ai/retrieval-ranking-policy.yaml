@@ -1,0 +1,62 @@
+schema_version: "1.0"
+id: retrieval-ranking-policy
+name: Evidence-Aware Retrieval Ranking Policy
+
+principle: >-
+  Rank candidate knowledge by engineering fitness, not textual similarity alone. Ranking must remain
+  explainable, and no numeric score may override a hard safety, health or applicability block.
+
+hard_filters_before_ranking:
+  - unresolved_required_reference
+  - evidence_health_RED_for_required_dependency
+  - hard_context_mismatch
+  - open_critical_contradiction
+  - withdrawn_required_source
+  - failed_required_test
+
+ranking_dimensions:
+  semantic_relevance:
+    description: topical and problem-class similarity
+    weight: 20
+  context_match:
+    description: workload, scale, runtime, environment, semantics, trust and failure model match
+    weight: 25
+  evidence_health:
+    description: GREEN/YELLOW health of causal dependencies
+    weight: 20
+  maturity:
+    description: verified/reusable evidence maturity
+    weight: 10
+  applicability:
+    description: declared applicability envelope covers current task
+    weight: 10
+  successful_outcomes:
+    description: verified outcomes in materially similar contexts
+    weight: 10
+  freshness:
+    description: version/date relevance where temporally important
+    weight: 5
+
+penalties:
+  open_noncritical_contradiction: 20
+  evidence_gap: 10
+  stale_dependency: 15
+  context_unknown: 8
+  medium_confidence_claim: 5
+
+ranking_rules:
+  - hard_filters_run_before_numeric_scoring
+  - score_is_for_candidate_order_not_truth
+  - a_lower_score_candidate_may_be_selected_if_constraints_make_it_the_only_applicable_option
+  - every_score_must_be_explainable_by_dimension
+  - successful_outcomes_count_only_when_context_is_materially_similar
+  - semantic_similarity_never_upgrades_evidence_health
+
+preferred_candidate_types:
+  for_reuse: [DM, ADR]
+  for_explanation: [CLM, SRC, TEST, BENCH, EXP, OUT]
+  for_risk_visibility: [CON, RQ]
+
+agent_rule: >-
+  Retrieve broadly enough to see alternatives and risks, but choose only after hard filters, evidence health
+  and context applicability are evaluated.
