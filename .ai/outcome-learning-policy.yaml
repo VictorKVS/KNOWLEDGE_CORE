@@ -1,0 +1,92 @@
+schema_version: "1.0"
+id: outcome-learning-policy
+name: Learning From Engineering Outcomes
+
+purpose: >-
+  Convert verified project outcomes into traceable reusable knowledge without confusing anecdote,
+  local success or agent intuition with general evidence.
+
+flow:
+  - observe
+  - compare_with_expectation
+  - classify_result
+  - extract_candidate_lessons
+  - validate_lessons
+  - update_evidence_graph
+  - promote_only_supported_knowledge
+
+classifications:
+  confirmed:
+    meaning: expected behavior reproduced within declared context
+  rejected:
+    meaning: expected behavior contradicted by observed result
+  weakened:
+    meaning: claim still usable but applicability became narrower
+  strengthened:
+    meaning: independent evidence increased confidence without expanding scope beyond evidence
+  novel:
+    meaning: observation not represented by existing claims or decisions
+
+mandatory_capture:
+  - actual_context
+  - implementation_refs
+  - tests_or_measurements
+  - expected_vs_actual
+  - unexpected_observations
+  - newly_discovered_constraints
+  - failure_modes
+  - version_caveats
+  - candidate_outcome
+
+promotion_rules:
+  observation_to_claim:
+    requires:
+      - explicit_statement
+      - evidence_ref
+      - applicability_scope
+  claim_to_measured:
+    requires:
+      - benchmark_or_experiment
+  outcome_to_decision_memory:
+    requires:
+      - verified_decision
+      - passing_required_tests
+      - evidence_health_not_red
+      - explicit_context
+      - reusable_selection_rule
+  outcome_to_fast_path:
+    requires:
+      - decision_memory_green
+      - context_envelope_defined
+      - no_open_critical_evidence_gap
+      - security_and_reliability_requirements_satisfied
+
+anti_patterns:
+  - generalize_from_one_success_without_scope
+  - hide_failed_candidate
+  - rewrite_original_prediction_after_result
+  - promote_benchmark_without_environment
+  - treat_no_incident_as_security_proof
+  - treat_test_pass_as_performance_proof
+  - discard_counterexamples_because_selected_solution_worked
+
+role_boundaries:
+  programming_agent:
+    owns:
+      - implementation_observations
+      - code_quality_lessons
+      - test_results
+      - production_hardening_lessons
+  analyst_research_agent:
+    owns:
+      - research_heavy_generalization
+      - disputed_algorithmic_claims
+      - literature_comparison
+      - nontrivial_benchmark_methodology
+  security_specialist:
+    owns:
+      - security_claim_promotion_when_risk_is_material
+
+agent_rule: >-
+  Preserve the prediction and the outcome separately. Learn from the delta between them. Never
+  rewrite history so that the selected decision appears more certain than it was before execution.
