@@ -1,0 +1,52 @@
+schema_version: "1.0"
+id: CLM-MSG-001
+kind: evidence-claim
+status: active
+
+statement: At-least-once delivery permits redelivery, so a consumer with non-idempotent side effects must account for duplicate processing.
+claim_type: reliability
+
+scope:
+  domain: messaging
+  language: ""
+  component: Apache Kafka delivery semantics
+  version_from: ""
+  version_to: ""
+  workload: message consumption
+  environment: distributed messaging
+
+strength:
+  state: DOCUMENTED
+  confidence: HIGH
+
+supporting_evidence:
+  sources: [SRC-KAFKA-DELIVERY-001]
+  benchmarks: []
+  experiments: []
+  tests: []
+
+contradicting_evidence:
+  sources: []
+  benchmarks: []
+  experiments: []
+
+reasoning:
+  derivation: official Kafka documentation defines at-least-once semantics as allowing redelivery
+  assumptions:
+    - the selected broker/configuration can redeliver messages
+  limitations:
+    - not all messaging configurations use at-least-once delivery
+    - broker-specific exactly-once features must be evaluated separately
+  known_counterexamples: []
+
+relationships:
+  used_by_decisions: [ADR-MSG-001]
+  related_claims: []
+  supersedes_claims: []
+  superseded_by_claims: []
+
+review:
+  status: reviewed
+  reviewed_at: 2026-08-12
+  reviewed_by: ChatGPT
+  notes: ""
