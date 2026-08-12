@@ -26,7 +26,7 @@ alternatives:
     description: execute the logical operation inside one database transaction
     advantages: [atomic_commit_boundary, rollback_on_failure]
     disadvantages: [requires_database_transaction_semantics]
-    evidence: []
+    evidence: [CLM-DBTX-001]
 
 decision:
   selected: native-transaction
@@ -40,10 +40,10 @@ reason_chain:
     applies_when: [multiple_persistent_changes_form_one_business_operation]
     supports: [TEST-DBTX-001]
     strength: TESTED
-    limitations: [SQLite example does not establish all isolation guarantees of other databases]
-  - because: database transaction mechanisms provide a commit or rollback boundary
-    applies_when: [storage_engine_supports_transactions]
-    supports: [SRC-DBTX-OFFICIAL-001]
+    limitations: [portable Go/C++ models demonstrate the boundary but are not database engines]
+  - because: SQLite documents explicit transaction, COMMIT and ROLLBACK semantics
+    applies_when: [storage_engine_is_sqlite]
+    supports: [CLM-DBTX-001, SRC-SQLITE-TRANSACTION-001]
     strength: DOCUMENTED
     limitations: [exact isolation and durability semantics are engine specific]
 
@@ -57,14 +57,14 @@ verification:
   benchmarks: []
   security_reviews: []
 
-sources: [SRC-DBTX-OFFICIAL-001]
+sources: [SRC-SQLITE-TRANSACTION-001]
 
 traceability:
-  selected_supported_by: [TEST-DBTX-001, SRC-DBTX-OFFICIAL-001]
+  selected_supported_by: [TEST-DBTX-001, CLM-DBTX-001, SRC-SQLITE-TRANSACTION-001]
   rejected_supported_by: [TEST-DBTX-001]
   unresolved_evidence_gaps:
-    - database-specific isolation level behavior
-    - crash durability across storage engines
+    - database-specific isolation level behavior beyond SQLite
+    - production crash tests for other storage engines
 
 metadata:
   created: 2026-08-12
