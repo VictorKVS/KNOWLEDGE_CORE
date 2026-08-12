@@ -1,0 +1,96 @@
+schema_version: 1
+purpose: Adversarial audit gate for Security Knowledge. Its job is to disprove completeness, correctness and expert-readiness, not to confirm them politely.
+auditor_persona:
+  stance: skeptical
+  default_assumption: incomplete_until_proven_complete
+  mandate:
+    - find missing sources
+    - find obsolete or superseded sources
+    - find unsupported claims
+    - find wrong applicability
+    - find missing deadlines
+    - find wrong role assignments
+    - find missing lifecycle triggers
+    - find missing cross-regime obligations
+    - find evidence gaps
+    - find contradictions
+    - find false equivalence between law, standards and best practice
+    - find unverified sanctions or certificate status
+    - find practical failure modes not represented in the graph
+severity:
+  CRITICAL: could materially change legal obligation, reporting deadline, classification, liability, architecture or mandatory control
+  HIGH: could produce a materially incomplete compliance/security conclusion
+  MEDIUM: reduces traceability, reproducibility, maintainability or operational usefulness
+  LOW: editorial or non-material consistency issue
+hard_fail_conditions:
+  - verified_claim_without_exact_source_locator
+  - mandatory_deadline_without_exact_source_and_effective_version
+  - sanction_amount_or_criminal_exposure_without_exact_liability_locator
+  - active_status_assumed_from_stale_or_secondary_registry_data
+  - superseded_source_used_as_current_without temporal qualification
+  - requirement_missing_applicability_rule
+  - cross_regime_event_collapsed_into_single_obligation_or_deadline
+  - legal_requirement_and_recommendation_not_distinguished
+  - mandatory_gap_hidden_by_aggregate_score
+  - NOT_APPLICABLE_without_reason_and_evidence
+  - critical_decision_without_authority_or_responsibility provenance
+  - source_conflict_silently_resolved
+review_dimensions:
+  source_inventory:
+    checks: [completeness, authority, authenticity, current_status, amendments, supersession, historical_versions]
+  extraction:
+    checks: [chunk_coverage, definitions, atomicity, conditions, exceptions, actors, objects, actions]
+  applicability:
+    checks: [jurisdiction, organization, sector, system, asset, data, process, event, lifecycle_stage]
+  temporal:
+    checks: [effective_dates, event_date_version, deadlines, calendar_rules, review_intervals, retention, validity]
+  governance:
+    checks: [formal_appointment, authority_scope, RACI_plus, deputies, segregation_of_duties, escalation]
+  lifecycle:
+    checks: [create, approve, review, change, replace, archive, destroy, legal_hold, reassessment_triggers]
+  controls:
+    checks: [coverage, non_equivalence, compensating_measures, technical_effectiveness, unified_control_mapping]
+  evidence:
+    checks: [evidence_type, freshness, integrity, testability, timestamps, independent_verification]
+  legal_consequences:
+    checks: [separate_liability_norm, composition_elements, subject, version, sanction, uncertainty, legal_review]
+  classification_and_categorization:
+    checks: [inputs, formulas_or_rules, decision_authority, review_triggers, evidence]
+  threats_and_risks:
+    checks: [methodology, threat_sources, violator_model, BDU_links, vulnerability_context, inherent_and_residual_risk]
+  products_and_certification:
+    checks: [certificate_identity, version, scope, validity, suspension_history, support_horizon, migration_risk]
+  practice:
+    checks: [audit_cases, regulator_practice, implementation_failures, negative_cases, regression_tests]
+  cross_document_graph:
+    checks: [references, dependencies, conflicts, implementation_overlap, shared_evidence, orphan_nodes]
+  completeness:
+    checks: [all_paper_security_dimensions, explicit_unknowns, explicit_not_applicable, no_silent_omissions]
+status_model:
+  states: [UNREVIEWED, FAILED, CONDITIONAL, PASSED]
+  expert_ready_rule: PASSED only when CRITICAL=0 and HIGH=0 for the declared scope, all UNKNOWN material facts are surfaced, and residual MEDIUM/LOW findings are documented and accepted for that scope.
+red_team_questions:
+  - What would make this conclusion wrong?
+  - Which source could supersede this source?
+  - Which exception or condition was omitted?
+  - Which organization fact would reverse applicability?
+  - Which second regulator becomes relevant to the same system/event?
+  - Which deadline clock starts from the same event?
+  - Who has legal authority versus merely operational responsibility?
+  - What evidence proves actual operation rather than document existence?
+  - What changed since the last verification?
+  - What happens if the certificate, supplier, administrator, architecture or law changes tomorrow?
+  - Which practical failure case would embarrass an auditor or architect if we missed it?
+required_outputs:
+  - audit_run_id
+  - scope
+  - reviewed_commit
+  - findings_by_severity
+  - missing_source_register
+  - stale_source_register
+  - contradiction_register
+  - unsupported_claim_register
+  - coverage_gaps
+  - corrective_backlog
+  - regression_cases_added
+  - readiness_decision
