@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        object: [validation, errors, state, retry]
+        object: [validation, errors, state, retry, cache]
     defaults:
       run:
         working-directory: learning-core/executable/${{ matrix.object }}/python
@@ -31,7 +31,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        object: [validation, errors, state, retry]
+        object: [validation, errors, state, retry, cache]
     defaults:
       run:
         working-directory: learning-core/executable/${{ matrix.object }}/go
@@ -55,6 +55,8 @@ jobs:
             test: test_state.cpp
           - object: retry
             test: test_retry.cpp
+          - object: cache
+            test: test_cache.cpp
     defaults:
       run:
         working-directory: learning-core/executable/${{ matrix.object }}/cpp
