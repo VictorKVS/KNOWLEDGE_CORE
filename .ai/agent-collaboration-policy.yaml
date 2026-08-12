@@ -1,0 +1,91 @@
+schema_version: "1.0"
+id: agent-collaboration-policy
+name: Father Agent Collaboration Protocol
+
+principle: >-
+  Multi-agent work produces one auditable decision, not a majority-vote answer. Each specialist contributes
+  within its domain, cites canonical knowledge, exposes uncertainty and conflicts, and the lead agent integrates
+  contributions into a Decision Packet.
+
+roles:
+  orchestrator:
+    responsibilities:
+      - decompose_task
+      - select_lead_agent
+      - request_specialist_reviews
+      - enforce_required_domain_reviews
+      - collect_conflicts_and_evidence_gaps
+      - require_final_decision_packet
+    must_not:
+      - invent_domain_evidence
+      - override_hard_security_or_regulatory_block_without_explicit_governance_decision
+
+  lead_agent:
+    responsibilities:
+      - own_problem_definition
+      - maintain_task_context
+      - integrate_specialist_contributions
+      - document_alternatives
+      - produce_or_update_DPK
+      - escalate_unresolved_conflicts
+
+  specialist_agent:
+    responsibilities:
+      - answer_bounded_domain_question
+      - cite_knowledge_refs
+      - state_applicability
+      - state_uncertainty
+      - identify_blockers
+      - propose_cross_domain_updates_when_needed
+
+collaboration_modes:
+  CONSULT:
+    description: one lead asks one or more specialists bounded questions
+  REVIEW:
+    description: specialist validates a proposed decision inside its domain
+  JOINT_DECISION:
+    description: multiple domains materially determine the result
+  CONFLICT_RESOLUTION:
+    description: specialists produce incompatible conclusions requiring CON or RQ records
+
+lead_selection:
+  programming_change: programming_agent
+  architecture_change: architect
+  security_control_or_requirement: security_agent
+  authorized_pentest: pentest_agent
+  research_heavy_algorithm_question: analyst_research_agent
+  product_tradeoff: product_agent
+  devsecops_pipeline: devsecops_agent
+  cross_domain_system_design: architect
+
+mandatory_reviews:
+  security_boundary_change: [security_agent]
+  regulatory_interpretation: [security_agent]
+  destructive_or_disruptive_pentest: [security_agent, architect]
+  public_api_contract_change: [architect]
+  production_data_migration: [architect, security_agent]
+  research_heavy_algorithm_generalization: [analyst_research_agent]
+
+conflict_rules:
+  - no_majority_vote_as_truth
+  - compare_applicability_and_assumptions_first
+  - preserve_each_position_and_evidence
+  - create_CON_when_materially_equivalent_contexts_still_disagree
+  - create_RQ_when_missing_evidence_can_change_the_decision
+  - unresolved_hard_conflict_blocks_FAST
+
+finalization:
+  requires:
+    - task_context
+    - lead_agent
+    - consulted_agents
+    - accepted_and_rejected_positions
+    - evidence_refs
+    - conflicts
+    - evidence_gaps
+    - route_FAST_ADAPT_RESEARCH
+    - final_DPK_ref
+
+agent_rule: >-
+  Expertise determines responsibility, not automatic correctness. A specialist position becomes part of the
+  final decision only through explicit evidence, applicability and recorded integration.
