@@ -11,6 +11,10 @@ class SecurityRequirementValidationTests(unittest.TestCase):
         data = {"document": document, "requirements": [requirement]}
         return validate_requirement_document(Path("security-knowledge/test/requirements/core.yaml"), data)
 
+    def test_missing_verification_state_is_conservative_unverified(self):
+        errors = self.validate({"id": "REQ-SEED-001", "source_locator": "p. 0"})
+        self.assertEqual(errors, [])
+
     def test_reviewed_requirement_does_not_need_source_quote(self):
         errors = self.validate(
             {
