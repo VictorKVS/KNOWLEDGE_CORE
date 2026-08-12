@@ -1,0 +1,95 @@
+schema_version: "1.0"
+id: premium-repository-policy
+name: Premium Repository Policy
+
+thresholds:
+  premium_score: 90
+  critical_dimension_minimum: 90
+
+weights:
+  architecture: 15
+  documentation: 15
+  code_quality: 15
+  tests_ci: 15
+  security: 15
+  evidence: 15
+  agent_readability: 5
+  visual_consistency: 5
+
+critical_dimensions:
+  - architecture
+  - documentation
+  - code_quality
+  - tests_ci
+  - security
+  - evidence
+
+anti_gaming:
+  - empty_placeholder_files_do_not_score
+  - badges_do_not_prove_quality
+  - generated_metrics_require_reproducible_checks
+  - documentation_claims_must_match_repository_state
+  - not_applicable_requires_rationale
+
+premium_gate:
+  architecture:
+    checks:
+      - architecture_documented
+      - canonical_boundaries_explicit
+      - stable_ids_or_equivalent_identity
+      - consequential_decisions_traceable
+  documentation:
+    checks:
+      - root_readme
+      - quick_start
+      - architecture_navigation
+      - roadmap
+      - contribution_guidance
+  code_quality:
+    checks:
+      - executable_code_has_tests
+      - modules_are_bounded
+      - static_or_type_checks_where_applicable
+      - examples_are_runnable
+  tests_ci:
+    checks:
+      - automated_tests
+      - validators
+      - ci_workflows
+      - critical_invariants_gated
+  security:
+    checks:
+      - security_policy
+      - secrets_not_committed
+      - dependency_checks_where_applicable
+      - workflow_permissions_reviewed
+      - security_claims_have_provenance
+  evidence:
+    checks:
+      - source_claim_decision_traceability
+      - evidence_health_visible
+      - contradictions_visible
+      - research_gaps_visible
+  agent_readability:
+    checks:
+      - machine_readable_records
+      - typed_relations
+      - generated_index
+      - query_interface
+  visual_consistency:
+    checks:
+      - consistent_headings
+      - readable_diagrams
+      - restrained_badges
+      - no_visual_noise
+
+maturity_levels:
+  EXPERIMENT: 0
+  STRUCTURED: 1
+  VERIFIED: 2
+  PREMIUM: 3
+  REFERENCE: 4
+
+agent_rule: >-
+  Optimize first for truth, reproducibility and navigation; visual polish is applied after correctness gates.
+  Never inflate a Premium score using placeholder documents, decorative badges or unverifiable metrics.
