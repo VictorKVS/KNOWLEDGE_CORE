@@ -1,0 +1,163 @@
+schema_version: "1.0"
+id: LEARN-SEARCH-001
+problem_id: PROB-SEARCH-001
+title: Repeated Membership Lookup
+status: active
+kind: learning-object
+
+domains:
+  - algorithms
+  - data-structures
+  - programming-practice
+  - performance
+  - security
+
+languages:
+  - python
+  - go
+  - cpp
+
+difficulty:
+  algorithmic: junior
+  implementation: junior
+  engineering: middle
+  security: middle
+  performance_reasoning: middle
+  architecture: middle
+
+problem:
+  summary: >-
+    Given a dataset and repeated membership queries, decide whether to use linear scan,
+    binary search over ordered data, or a hash-based index.
+  key_question: >-
+    When does preprocessing or indexing become worthwhile compared with the simplest direct scan?
+
+junior:
+  objective: implement correct membership lookup from a clear contract
+  focus:
+    - clear_loop_or_standard_library_use
+    - correct_found_not_found_behavior
+    - empty_input
+    - duplicate_values
+    - simple_tests
+  avoid:
+    - premature_indexing
+    - custom_complex_structures
+    - benchmark_claims_without_measurement
+
+middle:
+  objective: choose a strategy for the actual workload
+  questions:
+    - how_large_is_the_dataset
+    - how_many_queries_are_expected
+    - is_the_dataset_already_sorted
+    - how_often_does_the_dataset_change
+    - what_memory_budget_exists
+    - are_inputs_untrusted
+  candidate_strategies:
+    - linear_scan
+    - binary_search_on_sorted_data
+    - hash_set_lookup
+  responsibilities:
+    - compare_setup_cost_and_query_cost
+    - include_memory_tradeoffs
+    - test_edge_cases
+    - identify_resource_exhaustion_risk
+
+senior:
+  objective: optimize the whole engineering outcome rather than lookup speed alone
+  questions:
+    - should_an_index_exist_at_all
+    - can_the_data_model_make_membership_natural
+    - is_lookup_part_of_a_database_or_cache_responsibility
+    - what_is_the_update_to_read_ratio
+    - does_distribution_or_persistence_change_the_choice
+    - what_are_failure_and_recovery_implications
+    - is_the_benchmark_representative_of_production
+  responsibilities:
+    - challenge_unnecessary_precomputation
+    - preserve_reversibility
+    - bound_untrusted_workloads
+    - separate_measured_claims_from_derived_reasoning
+    - capture_reusable_thresholds_only_after_measurement
+
+olympiad_view:
+  goal: expose_the_core_algorithmic_idea
+  insight: >-
+    Repeated work can often be exchanged for preprocessing. The elegant solution is not
+    automatically the asymptotically fastest lookup; it is the representation that best matches
+    the number of queries and update pattern.
+  proof_focus:
+    - all_three_strategies_preserve_membership_semantics
+    - binary_search_requires_ordering
+    - hash_lookup_requires_index_construction
+  complexity_notes:
+    linear_scan: "query O(n), no preprocessing"
+    binary_search: "query O(log n) once ordering exists; ordering/maintenance cost must be counted"
+    hash_set: "expected constant-time lookup in typical implementations; construction and memory cost must be counted"
+
+production_view:
+  requirements:
+    - descriptive_names
+    - explicit_input_contract
+    - correctness_tests
+    - bounded_resource_policy_for_untrusted_input
+    - measured_performance_claims_only
+    - environment_metadata_for_benchmarks
+  observability_when_service_exposed:
+    - dataset_size
+    - query_rate
+    - latency_distribution
+    - memory_pressure
+    - rejected_or_bounded_requests
+
+implementations:
+  python:
+    reference: problems/search/implementations/python.py
+    tests: problems/search/PROB-SEARCH-001/tests/python
+  go:
+    reference: problems/search/implementations/go.go
+    tests: problems/search/PROB-SEARCH-001/tests/go
+  cpp:
+    reference: problems/search/implementations/cpp.cpp
+    tests: problems/search/PROB-SEARCH-001/tests/cpp
+
+related_knowledge:
+  algorithms:
+    - ALG-SEARCH-001
+    - DS-HASH-001
+  benchmark:
+    - BENCH-SEARCH-001
+  decision_memory:
+    - DM-SEARCH-001
+
+security:
+  concerns:
+    - attacker_controlled_dataset_size
+    - attacker_controlled_query_count
+    - memory_exhaustion
+    - pathological_input_distribution
+  principle: >-
+    A faster lookup strategy can still be the worse production choice if it increases memory,
+    attack surface, maintenance cost or invalidation complexity beyond the real workload need.
+
+reusable_lessons:
+  - count_preprocessing_cost_separately_from_query_cost
+  - do_not_use_big_o_as_the_only_selection_rule
+  - data_representation_can_remove_control_flow_complexity
+  - benchmark_thresholds_are_environment_and_workload_scoped
+  - simple_linear_work_can_be_the_best_engineering_choice_for_small_or_rare_queries
+
+site_views:
+  tabs:
+    - junior
+    - middle
+    - senior
+    - elegant
+    - production
+    - python
+    - go
+    - cpp
+    - tests
+    - evidence
+    - security
