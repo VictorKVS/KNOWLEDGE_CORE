@@ -1,5 +1,11 @@
-schema_version: 2
-purpose: Registry of professional knowledge bases used by Father. Each domain is built with the same evidence-first discipline while retaining domain-specific laws, standards, calculations, tools and professional practice.
+schema_version: 3
+purpose: >-
+  Registry of professional knowledge bases used by Father. Each domain is built with the same
+  evidence-first discipline while retaining domain-specific laws, standards, calculations,
+  tools, metrics, constraints and professional practice.
+common_doctrine_ref: father/domain-knowledge/PROFESSIONAL_EVIDENCE_DOCTRINE.md
+common_decision_contract_ref: father/domain-knowledge/professional-decision-schema.yaml
+
 domains:
   - id: SECURITY
     title: Information and cyber security
@@ -11,6 +17,7 @@ domains:
     pipeline: SOURCE -> VERSION -> CHUNK -> ATOMIC CLAIM/REQUIREMENT -> APPLICABILITY -> RELATIONS -> CONTROL -> CHECK -> EVIDENCE -> EXPERT REVIEW
     verified_rule: VERIFIED requires admitted primary source plus exact locator.
     product_value_rule: Retrieval/RAG is a lower layer; authoritative value is the evidence graph and expert-reviewed derivation chain.
+    reference_domain_role: first evidence-first implementation pattern for other professional domains
   - id: SOFTWARE_ENGINEERING
     title: Software engineering and architecture
     status: PLANNED
@@ -74,9 +81,15 @@ domains:
   - id: OSINT_RESEARCH
     title: OSINT and research methodology
     status: PLANNED
+
 rules:
   - New domains are added when a Father capability requires a distinct professional evidence base.
   - Cross-domain concepts are linked, not copied as conflicting independent truths.
-  - Every domain must expose requirements, workflows, checklists, evidence, implementations and competency paths where applicable.
+  - Every domain must expose requirements, constraints, metrics, workflows, checklists, evidence, alternatives, decisions, implementations and competency paths where applicable.
+  - Every domain must define its own source taxonomy, source precedence, freshness policy and conflict-handling rules.
+  - Material decisions use PROFESSIONAL_DECISION_RECORD and evidence depth proportional to decision materiality D0-D3.
+  - Best practice, industry standard, vendor recommendation or model output is not a terminal justification unless its source, applicability and limitations are explicit.
+  - Hard legal, contractual, security or safety constraints cannot be overridden by preference scores or business convenience without an explicit governed exception where such exception is legally and organizationally possible.
+  - Historical decisions preserve the knowledge/evidence available at decision time; later reassessment supersedes rather than rewrites history.
   - Logical domain identity is stable even if physical repository/path changes later.
   - FATHER consumes domain knowledge through governed routes and cannot silently rewrite VERIFIED domain truth.
