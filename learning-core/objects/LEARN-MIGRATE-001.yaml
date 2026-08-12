@@ -1,0 +1,22 @@
+schema_version: "1.0"
+id: LEARN-MIGRATE-001
+title: Safe Migration and Rollback
+kind: learning-object
+status: drafted
+domains: [migrations, rollback, databases, production]
+levels:
+  junior:
+    goal: apply reversible schema or configuration changes through the project mechanism
+  middle:
+    goal: plan forward and rollback paths with compatibility windows
+  senior:
+    goal: design zero_or_low_downtime change strategy with data safety and irreversible steps explicit
+core_idea: A migration is a controlled transition between valid system states.
+elegant_view: Prefer small compatible steps over one dramatic irreversible cutover.
+production_view:
+  requires: [preconditions, compatibility_plan, backup_or_recovery_path, observability, rollback_or_forward_fix, post_validation]
+anti_patterns: [big_bang_change, destructive_change_without_recovery, deploy_and_hope, hidden_irreversible_step]
+security:
+  concerns: [permission_changes, data_exposure_during_transition, backup_protection]
+reusable_lessons:
+  - reversibility_is_an_architectural_property_not_a_last_minute_script
