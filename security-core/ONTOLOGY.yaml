@@ -1,0 +1,98 @@
+schema_version: "1.0"
+id: security-ontology
+name: Security Knowledge Ontology
+
+node_types:
+  LAW:
+    meaning: primary legislation
+  DECREE:
+    meaning: government or executive decree
+  ORDER:
+    meaning: regulator or authority order
+  STANDARD:
+    meaning: technical or organizational standard
+  METHOD:
+    meaning: official methodology or guidance
+  REQUIREMENT:
+    meaning: atomic requirement derived from authoritative text
+  DEFINITION:
+    meaning: authoritative term or scope definition
+  APPLICABILITY:
+    meaning: conditions under which a rule applies
+  ASSET:
+    meaning: system component or protected resource
+  DATA:
+    meaning: protected or processed information class
+  PROCESS:
+    meaning: business or technical process
+  SUBJECT:
+    meaning: actor or role
+  TRUST_BOUNDARY:
+    meaning: boundary where trust assumptions change
+  THREAT:
+    meaning: threat condition or scenario
+  WEAKNESS:
+    meaning: weakness class
+  VULNERABILITY:
+    meaning: concrete vulnerability or externally cataloged issue
+  CONTROL:
+    meaning: preventive detective corrective or compensating control
+  CONFIGURATION:
+    meaning: technical configuration implementing a control
+  ATTACK_TECHNIQUE:
+    meaning: mapped attack behavior or technique
+  ABUSE_CASE:
+    meaning: concrete misuse scenario
+  PENTEST_CHECK:
+    meaning: authorized test objective and method
+  FINDING:
+    meaning: observed security or compliance finding
+  REMEDIATION:
+    meaning: corrective action
+  EVIDENCE:
+    meaning: observed or documentary evidence
+
+edge_types:
+  DERIVED_FROM: [REQUIREMENT, DEFINITION, APPLICABILITY]
+  APPLIES_TO: [ASSET, DATA, PROCESS, SUBJECT]
+  REQUIRES: [CONTROL, CONFIGURATION]
+  SATISFIES: [REQUIREMENT]
+  MITIGATES: [THREAT, WEAKNESS, VULNERABILITY, ABUSE_CASE]
+  EXPOSES: [WEAKNESS, VULNERABILITY]
+  ENABLES: [ATTACK_TECHNIQUE, ABUSE_CASE]
+  TESTS: [CONTROL, CONFIGURATION, WEAKNESS, VULNERABILITY, REQUIREMENT]
+  PRODUCES: [EVIDENCE, FINDING]
+  VIOLATES: [REQUIREMENT]
+  REMEDIATED_BY: [REMEDIATION, CONTROL, CONFIGURATION]
+  MAPPED_TO: [external_catalog_identifier]
+  SUPERSEDES: [any_versioned_security_node]
+  CONTRADICTS: [REQUIREMENT, CLAIM, METHOD]
+
+traceability_paths:
+  compliance:
+    - source_document
+    - requirement
+    - applicability
+    - asset_or_process
+    - control
+    - evidence
+    - finding
+  pentest:
+    - authorization_scope
+    - asset
+    - requirement_or_threat
+    - weakness_or_attack_technique
+    - pentest_check
+    - evidence
+    - finding
+    - remediation
+  vulnerability:
+    - external_catalog
+    - weakness_or_vulnerability
+    - affected_asset
+    - control
+    - pentest_check
+    - evidence
+
+rule: >-
+  Graph edges must carry rationale and source references when the relationship is not purely structural.
