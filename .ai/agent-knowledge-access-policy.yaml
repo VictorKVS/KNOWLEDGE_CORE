@@ -1,0 +1,72 @@
+schema_version: "1.0"
+id: agent-knowledge-access-policy
+name: Agent Knowledge Access and Ownership Policy
+
+principle: >-
+  Agents may consume knowledge broadly but may only authoritatively modify or promote records inside their
+  owned domain, unless an explicit cross-domain review grants that authority. Cross-domain observations are
+  proposals, not authoritative updates.
+
+access_modes:
+  READ:
+    description: consume canonical knowledge for reasoning
+  PROPOSE:
+    description: create a draft observation, gap, contradiction or suggested change for another domain
+  WRITE_DRAFT:
+    description: create or update draft records inside owned domain
+  REVIEW:
+    description: approve domain-specific review when assigned
+  PROMOTE:
+    description: raise maturity/authority of records inside owned domain when evidence and review gates pass
+
+roles:
+  programming_agent:
+    owns: [programming, algorithms, language-practice]
+    read_supporting: [architecture, security, devsecops, research]
+    may_propose_to: [architecture, security, devsecops, research]
+    cannot_authoritatively_promote: [security-regulation, legal-requirement]
+
+  analyst_research_agent:
+    owns: [research, evidence-synthesis, algorithmic-comparison]
+    read_supporting: [programming, architecture, security, product, devsecops]
+    may_propose_to: [programming, architecture, security, product, devsecops]
+
+  architect_agent:
+    owns: [architecture, system-boundaries, cross-component-tradeoffs]
+    read_supporting: [programming, security, devsecops, product, research]
+    may_propose_to: [programming, security, devsecops, product]
+
+  security_agent:
+    owns: [security, security-regulation, security-requirement, threats, controls]
+    read_supporting: [architecture, programming, devsecops, research]
+    may_propose_to: [architecture, programming, devsecops, research]
+
+  pentest_agent:
+    owns: [pentest-observations, security-check-results]
+    read_supporting: [security, architecture, programming, devsecops]
+    may_propose_to: [security, programming, architecture]
+    cannot_authoritatively_promote: [security-regulation, security-requirement]
+    execution_requires: [SEC-ENG, SEC-RULE]
+
+  devsecops_agent:
+    owns: [devsecops, pipeline-security, deployment-controls]
+    read_supporting: [programming, security, architecture]
+    may_propose_to: [programming, security, architecture]
+
+  product_agent:
+    owns: [product, product-decisions, requirements-prioritization]
+    read_supporting: [architecture, research, security]
+    may_propose_to: [architecture, research, security]
+
+hard_rules:
+  - reading_a_domain_does_not_grant_write_authority
+  - draft_cross_domain_observations_must_preserve_source_agent_and_target_domain
+  - promotion_requires_domain_owner_review_when_cross_domain
+  - pentest_finding_does_not_create_a_legal_requirement
+  - programming_implementation_does_not_override_security_requirement
+  - security_requirement_does_not_select_implementation_without_architecture_or_programming_context
+  - contradictions_between_domains_must_be_preserved_until_reviewed
+
+agent_rule: >-
+  When a task crosses domains, keep one primary owner and request evidence or review from supporting agents.
+  Do not solve authority conflicts by silently editing another domain's canonical record.
