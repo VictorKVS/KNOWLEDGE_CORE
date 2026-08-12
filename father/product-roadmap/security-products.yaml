@@ -1,52 +1,128 @@
-schema_version: 1
-purpose: Productization roadmap derived from the Security Knowledge and Father architecture.
-status: PLANNING
-principle: Finish the evidence-grade Security Knowledge base first; then move through implementation stages in order.
+schema_version: 2
+roadmap_id: ROADMAP-SECURITY-0001
+purpose: Productization roadmap derived from Security Knowledge and FATHER architecture.
+status: ACTIVE
+source_of_direction: OWNER_PRIORITY
+canonical_repository: VictorKVS/KNOWLEDGE_CORE
+canonical_product_tree: security-knowledge/
+principle: Finish the evidence-grade Security Knowledge foundation first; downstream products inherit its verified graph rather than recreate security truth.
+
+security_knowledge_pipeline:
+  - SOURCE
+  - VERSION
+  - CHUNK
+  - ATOMIC_CLAIM_OR_REQUIREMENT
+  - APPLICABILITY
+  - RELATIONS
+  - UNIFIED_CONTROL
+  - CHECK
+  - EVIDENCE
+  - EXPERT_REVIEW
+
+verified_rule: >-
+  VERIFIED requires a primary/admitted source and an exact locator to the relevant source version.
+  Retrieval, RAG output, model memory or generated explanation alone cannot create VERIFIED knowledge.
+
 products:
-  - id: SKB-CORE
+  - id: SEC-PROD-0001
+    legacy_id: SKB-CORE
     title: Security Knowledge Base
     description: Evidence-grade regulatory, standards, threat, control, implementation and audit graph.
-    maturity_target: EXPERT
+    maturity_target: EXPERT_READY
     status: IN_PROGRESS
-  - id: COMPLIANCE-ENGINE
+    canonical_tree: security-knowledge/
+
+  - id: SEC-PROD-0002
+    legacy_id: COMPLIANCE-ENGINE
     title: Regulatory Applicability and Compliance Engine
-    depends_on: [SKB-CORE]
+    depends_on: [SEC-PROD-0001]
     description: Builds the applicable requirement set for an organization and generates traceable checks, evidence requirements and gaps.
-    status: PLANNED
-  - id: SECURITY-ARCHITECT
+    status: BLOCKED_BY_FOUNDATION_FOR_AUTHORITATIVE_PROMOTION
+
+  - id: SEC-PROD-0003
+    legacy_id: SECURITY-ARCHITECT
     title: Evidence-Based Security Architect
-    depends_on: [SKB-CORE, COMPLIANCE-ENGINE]
+    depends_on: [SEC-PROD-0001, SEC-PROD-0002]
     description: Maps requirements and threats to unified controls, implementation alternatives, cost, residual risk and target architecture.
-    status: PLANNED
-  - id: WHITE-HAT-IMMUNE
-    title: White-Hat / Continuous Security Assurance Expert
-    depends_on: [SKB-CORE, SECURITY-ARCHITECT]
-    description: Authorized continuous attack-surface analysis, vulnerability validation, pentest evidence, control effectiveness assessment and retest.
-    status: PLANNED
-  - id: VULN-RISK-ENGINE
+    status: BLOCKED_BY_FOUNDATION_FOR_AUTHORITATIVE_PROMOTION
+
+  - id: SEC-PROD-0004
+    legacy_id: VULN-RISK-ENGINE
     title: Vulnerability and Risk Management Expert
-    depends_on: [SKB-CORE]
+    depends_on: [SEC-PROD-0001, SEC-PROD-0003]
     description: Continuous asset-vulnerability-threat-risk correlation using BDU/CVE/NVD/KEV/EPSS and organizational context.
-    status: PLANNED
-  - id: REGULATORY-CHANGE-ENGINE
+    status: FUTURE_GATED
+
+  - id: SEC-PROD-0005
+    legacy_id: WHITE-HAT-IMMUNE
+    title: White-Hat / Continuous Security Assurance Expert
+    depends_on: [SEC-PROD-0003, SEC-PROD-0004]
+    description: Authorized continuous attack-surface analysis, vulnerability validation, pentest evidence, control effectiveness assessment and retest.
+    status: FUTURE_GATED
+    mandatory_constraints:
+      - explicit authorization and scope
+      - tool boundary and capability grants
+      - safe-stop and rate/impact limits
+      - full trace and evidence preservation
+      - no implicit privilege escalation
+
+  - id: SEC-PROD-0006
+    legacy_id: REGULATORY-CHANGE-ENGINE
     title: Regulatory Change and Impact Engine
-    depends_on: [SKB-CORE]
-    description: Watches normative sources, versions changes, computes impacted graph nodes and proposes reviewable changes to controls, checks and weights.
-    status: PLANNED
-  - id: SECURITY-AUDIT-ENGINE
+    depends_on: [SEC-PROD-0001, SEC-PROD-0002]
+    description: Watches normative sources and version changes, computes impacted graph nodes and proposes reviewable changes to controls, checks and weights.
+    status: FUTURE_GATED
+
+  - id: SEC-PROD-0007
+    legacy_id: SECURITY-AUDIT-ENGINE
     title: Continuous Security Audit Expert
-    depends_on: [COMPLIANCE-ENGINE, SECURITY-ARCHITECT, VULN-RISK-ENGINE]
+    depends_on: [SEC-PROD-0002, SEC-PROD-0003, SEC-PROD-0004, SEC-PROD-0006]
     description: Combines documentary, configuration, technical and adversarial evidence into expert findings and remediation roadmaps.
-    status: PLANNED
+    status: FUTURE_GATED
+
 execution_order:
-  - Complete current Security Knowledge source corpus.
-  - Complete atomic requirements, applicability, checklists and evidence mapping.
-  - Complete unified controls and implementation knowledge.
-  - Complete expert metrics and risk model.
-  - Build update and dependency monitoring.
-  - Build compliance and architecture engines.
-  - Build continuous vulnerability and white-hat validation loops.
-  - Integrate all experts into Father orchestration.
+  - Complete current FSTEC source corpus and atomicization/review.
+  - Complete FSB P0 corpus including GosSOPKA, NKCKI, SKZI and revision history.
+  - Complete Roskomnadzor layer.
+  - Complete base federal laws, Government resolutions, decrees and inter-document relationships.
+  - Complete applicable sector regulators.
+  - Add GOST and Russian standards.
+  - Add ISO/international standards as a separate authority layer.
+  - Add NIST/CIS/OWASP and other frameworks without treating them as law.
+  - Add BDU/CVE/CWE/ATT&CK and other threat/vulnerability knowledge.
+  - Add pentest/vulnerability/risk knowledge with authorization and evidence semantics.
+  - Add vendor/platform hardening based on organization facts.
+  - After sufficient corpus accumulation, consolidate overlapping requirements into Unified Controls, checks, evidence and expert review.
+  - Build Compliance Engine and later products only on verified slices whose prerequisites are satisfied.
+
+parallel_work:
+  live_provider_summit:
+    repository: VictorKVS/PX00
+    status: ALLOWED_IN_PARALLEL
+    blocker_for_security_knowledge: false
+    rule: >-
+      Live AI/provider integration may advance independently because Security Knowledge corpus construction
+      does not require it. Any future use of live models for extraction or interpretation must still obey
+      Security Knowledge provenance, verification and review rules.
+  downstream_product_poc:
+    allowed: true
+    condition: >-
+      A downstream product may run on a bounded VERIFIED subset as an isolated PoC, but may not claim
+      broad authoritative maturity while dependent Security Knowledge coverage is incomplete.
+
 quality_gate:
-  - No product proceeds to implementation based on incomplete or untraceable core knowledge where that knowledge is a prerequisite.
-  - Each product decision must preserve source-to-decision traceability.
+  expert_ready_state: NOT_REACHED
+  conditions:
+    - Primary/admitted source and exact locator exist for every VERIFIED material node.
+    - Significant P0 corpus is atomized, applicability-linked and independently rechecked.
+    - Source versions and legal/effective history are preserved.
+    - Conflicts and uncertainty remain explicit.
+    - Completeness/expert-readiness matrix passes for declared scope.
+    - Representative expert benchmark is evidence-backed and independently reviewed.
+    - No product proceeds to authoritative implementation based on incomplete or untraceable prerequisite knowledge.
+    - Each product decision preserves source-to-decision traceability.
+
+main_constraint: >-
+  Do not reduce SEC-PROD-0001 to ordinary RAG over PDFs. Retrieval is only a lower layer.
+  Product value is the evidence graph requirement <-> applicability <-> control <-> implementation
+  <-> check <-> evidence <-> risk plus expert evaluation of each derived conclusion.
