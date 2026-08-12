@@ -1,0 +1,68 @@
+schema_version: "1.0"
+id: LEARN-QUEUE-001
+title: Queue Work With Explicit Delivery Semantics
+kind: learning-object
+status: drafted
+family: queue
+levels: [junior, middle, senior]
+languages: [python, go, cpp]
+
+problem:
+  summary: Process work asynchronously without hiding ordering, delivery and recovery behaviour.
+
+junior:
+  goal: Use an established queue safely.
+  practices:
+    - preserve documented ordering assumptions
+    - acknowledge work only at the correct point
+    - handle duplicates when contract requires it
+
+middle:
+  goal: Choose a bounded queue/worker model.
+  compare:
+    - in_process_queue
+    - bounded_worker_pool
+    - persistent_message_broker
+  review:
+    - queue_capacity
+    - consumer_count
+    - ordering
+    - retries
+    - duplicate_delivery
+    - poison_messages
+
+senior:
+  goal: Define delivery semantics, backpressure and recovery across system boundaries.
+  questions:
+    - Is asynchronous decoupling actually needed?
+    - At-most-once, at-least-once or application-level exactly-once effect?
+    - Where is idempotency enforced?
+    - How is overload signaled upstream?
+    - What is the dead-letter/recovery policy?
+
+elegant_view:
+  principle: model work as an explicit stream of units with clear ownership and completion semantics
+
+production_view:
+  add:
+    - bounded_capacity
+    - idempotency_strategy
+    - retry_policy
+    - dead_letter_or_failure_path
+    - shutdown_and_drain_semantics
+    - observability
+
+anti_patterns:
+  - unbounded_queue
+  - retry_forever
+  - hidden_duplicate_assumption
+  - queue_as_database
+  - background_worker_without_shutdown_contract
+
+analyst_handoff:
+  required_when:
+    - throughput_or_capacity_claim_requires_measurement
+
+reusable_lessons:
+  - asynchronous work trades temporal coupling for delivery and recovery complexity
+  - queue capacity is part of the system contract
