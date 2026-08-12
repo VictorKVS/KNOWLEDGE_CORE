@@ -1,0 +1,47 @@
+schema_version: "1.0"
+id: SEC-APRULE-RU-152FZ-OPERATOR
+kind: security-applicability-rule
+status: PROPOSED
+
+title: Applicability of the personal-data regulatory branch to a personal-data operator
+jurisdiction: RU
+
+basis:
+  source_refs:
+    - SEC-SRC-RU-152FZ-CURRENT
+  note: >-
+    Final promotion requires review against the verified current consolidated text and exact statutory definitions.
+
+conditions:
+  all:
+    - fact: organization.personal_data_operator
+      operator: equals
+      value: true
+
+result:
+  when_true: APPLIES
+  activate_branches:
+    - RU/PERSONAL-DATA/152-FZ
+  when_false: UNKNOWN
+  false_reason: >-
+    A false or missing flag must not by itself prove non-applicability; the organization facts and statutory definition
+    must be reviewed before DOES_NOT_APPLY is allowed.
+
+missing_fact_behavior:
+  result: UNKNOWN
+  required_facts:
+    - organization.personal_data_operator
+
+explanation:
+  short: >-
+    The personal-data branch is activated when the organization is established, on verified facts, to be a personal-data operator.
+  limitations:
+    - Does not by itself determine whether a particular information system is an ISPDn.
+    - Does not by itself activate every subordinate act or every technical control.
+
+review:
+  legal_review_required: true
+  security_review_required: true
+
+agent_rule: >-
+  Never infer operator status merely from industry, ownership form, employer status, website presence or storage of names.
