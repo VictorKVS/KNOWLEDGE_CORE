@@ -1,0 +1,69 @@
+schema_version: "1.0"
+id: LEARN-CACHE-001
+title: Cache Only With an Invalidation and Failure Model
+kind: learning-object
+status: drafted
+family: cache
+levels: [junior, middle, senior]
+languages: [python, go, cpp]
+
+problem:
+  summary: Reduce repeated work without creating hidden consistency and failure problems.
+
+junior:
+  goal: Use an existing cache contract safely.
+  practices:
+    - respect TTL and invalidation rules
+    - handle cache miss explicitly
+    - never assume cache is authoritative unless contract says so
+
+middle:
+  goal: Choose a component-level cache strategy.
+  compare:
+    - no_cache
+    - local_memory_cache
+    - shared_cache
+    - precomputed_index
+  review:
+    - hit_rate
+    - invalidation
+    - memory_cost
+    - stale_data_tolerance
+    - concurrency
+
+senior:
+  goal: Decide whether caching is the right system intervention at all.
+  questions:
+    - What measured bottleneck does the cache address?
+    - Where is the source of truth?
+    - What happens when cache and authority disagree?
+    - Can better indexing, batching or representation remove the need for a cache?
+    - What is the failure mode when cache is unavailable?
+
+elegant_view:
+  principle: the best cache may be no cache if a simpler representation or index removes repeated work
+
+production_view:
+  add:
+    - invalidation_contract
+    - stale_data_policy
+    - memory_or_capacity_limit
+    - fallback_behaviour
+    - observability
+    - security_review_for_sensitive_cached_data
+
+anti_patterns:
+  - cache_without_invalidation_model
+  - cache_as_hidden_authority
+  - unbounded_cache
+  - caching_before_measurement
+
+analyst_handoff:
+  required_when:
+    - claimed_benefit_requires_workload_measurement
+  expected_artifacts:
+    - workload_and_hit_rate_brief
+
+reusable_lessons:
+  - caching_moves complexity from computation into consistency and invalidation
+  - a cache needs an explicit failure model
