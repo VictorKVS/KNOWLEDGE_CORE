@@ -1,0 +1,48 @@
+schema_version: "1.0"
+id: decision-packet-policy
+name: Reproducible Decision Packet Policy
+
+purpose: >-
+  Preserve the complete engineering decision path so another agent or engineer can reproduce
+  why a route and implementation were chosen from the same declared context and evidence state.
+
+required_for:
+  - mature_ADR_creation
+  - FAST_route_reuse
+  - ADAPT_route_reuse
+  - promotion_to_reusable_decision_memory
+
+required_sections:
+  - request
+  - candidate_search
+  - candidates
+  - selection
+  - result
+  - traceability
+  - reproducibility
+
+rules:
+  - preserve_rejected_candidates
+  - preserve_blocking_reasons
+  - do_not_hide_unknown_context
+  - record_evidence_health_used_at_decision_time
+  - record_policy_versions_used
+  - record_repository_revision_when_available
+  - FAST_requires_selected_candidate
+  - FAST_requires_GREEN_health
+  - FAST_requires_no_critical_context_mismatch
+  - ADAPT_requires_explicit_revalidation_actions
+  - RESEARCH_requires_reason_for_escalation
+  - final_ADR_must_be_traceable_from_packet
+
+minimum_candidate_record:
+  - id
+  - health
+  - route
+  - context_match
+  - supporting_reasons
+  - blocking_reasons
+
+promotion_rule: >-
+  Decision memory may become reusable only when the originating decision packet is complete enough
+  to reproduce candidate rejection, selected route, evidence state and verification path.
