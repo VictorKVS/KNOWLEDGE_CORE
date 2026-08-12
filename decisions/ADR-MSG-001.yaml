@@ -1,0 +1,74 @@
+schema_version: "1.1"
+id: ADR-MSG-001
+status: reviewed
+
+title: Deduplicate messages by stable message identifier before applying side effects
+question: How should a consumer handle repeated delivery of the same logical message?
+
+context:
+  system: learning-core idempotent message consumer
+  environment: in-memory teaching model
+  workload: messages may be delivered more than once
+  security_boundary: external message delivery boundary
+
+constraints:
+  - duplicate delivery must not repeat the business side effect
+  - distinct messages must still be applied
+  - duplicate detection must be explicit and testable
+
+alternatives:
+  - id: apply-every-delivery
+    description: apply the side effect whenever a message arrives
+    advantages: [minimal_code]
+    disadvantages: [duplicate_side_effects]
+    evidence: []
+  - id: deduplicate-by-message-id
+    description: record processed message IDs and skip already processed IDs
+    advantages: [idempotent_consumer_behavior, explicit_duplicate_semantics]
+    disadvantages: [requires_durable_deduplication_state_in_production]
+    evidence: []
+
+decision:
+  selected: deduplicate-by-message-id
+  rationale: repeated delivery must not multiply externally visible effects
+  rejected_options: [apply-every-delivery]
+  exceptions: []
+  confidence: medium
+
+reason_chain:
+  - because: delivery systems can repeat a message while the logical operation should occur once
+    applies_when: [delivery_may_be_at_least_once]
+    supports: [CLM-MSG-001]
+    strength: DOCUMENTED
+    limitations: [actual broker semantics must be checked per product and configuration]
+  - because: a stable idempotency key lets the consumer recognize the same logical operation
+    applies_when: [message_has_stable_unique_identity]
+    supports: [TEST-MSG-001]
+    strength: TESTED
+    limitations: [in-memory test does not prove durable deduplication across crashes]
+
+rejection_reason_chain:
+  - option: apply-every-delivery
+    because: the same message ID would repeat the side effect
+    supports: [TEST-MSG-001]
+
+verification:
+  tests: [TEST-MSG-001]
+  benchmarks: []
+  security_reviews: []
+
+sources: [CLM-MSG-001]
+
+traceability:
+  selected_supported_by: [CLM-MSG-001, TEST-MSG-001]
+  rejected_supported_by: [TEST-MSG-001]
+  unresolved_evidence_gaps:
+    - durable deduplication storage
+    - transaction coupling between business effect and processed-message record
+    - broker-specific delivery semantics
+
+metadata:
+  created: 2026-08-12
+  reviewed: 2026-08-12
+  supersedes: null
+  superseded_by: null
