@@ -1,0 +1,104 @@
+schema_version: "1.0"
+id: security-knowledge-policy
+name: Security Knowledge Construction Policy
+
+principle: >-
+  Security knowledge is built top-down from authoritative primary material. Laws, regulations, orders,
+  standards and official technical documentation are canonical inputs. Derived controls, attack mappings,
+  pentest procedures and checklists must remain traceable to those sources and must never silently replace them.
+
+source_priority:
+  tier_1_primary:
+    - laws
+    - government_decrees
+    - regulator_orders
+    - regulator_methodologies
+    - mandatory_standards_when_applicable
+    - official_product_security_documentation
+  tier_2_authoritative:
+    - national_and_international_standards
+    - official_security_frameworks
+    - vendor_security_advisories
+    - official_vulnerability_catalogs
+  tier_3_research:
+    - peer_reviewed_research
+    - recognized_security_research
+  tier_4_practice:
+    - professional_guides
+    - books
+    - conference_materials
+  tier_5_unverified:
+    - blogs
+    - forums
+    - community_notes
+
+construction_order:
+  - ingest_source_document
+  - identify_scope_jurisdiction_version_and_effective_dates
+  - split_into_atomic_normative_or_technical_statements
+  - create_claim_nodes
+  - classify_obligation_permission_prohibition_recommendation_definition
+  - create_control_and_object_nodes
+  - create_edges_between_requirements_assets_threats_controls_and_evidence
+  - validate_cross_references
+  - map_to_external_vulnerability_and_attack_taxonomies
+  - derive_test_and_pentest_checks
+  - add executable_or_manual_verification_procedures
+  - record_result_as_test_evidence
+
+never_do:
+  - derive_legal_requirement_from_pentest_checklist
+  - treat_blog_summary_as_substitute_for_primary_law_or_order
+  - merge_different_regulatory_versions_without_effective_dates
+  - treat_framework_recommendation_as_mandatory_law
+  - map_vulnerability_to_control_without_recorded_reason
+  - generate_exploit_or_test_procedure_without_scope_and_authorization_context
+  - claim_compliance_from_tool_output_alone
+
+legal_temporality:
+  required_fields:
+    - jurisdiction
+    - document_identifier
+    - publication_date
+    - effective_from
+    - effective_to_or_current
+    - revision
+    - verified_at
+  rule: >-
+    Regulatory nodes are versioned. A later edition does not erase the historical rule; applicability is resolved by date,
+    jurisdiction, system type, data category and other declared conditions.
+
+security_graph_layers:
+  normative:
+    nodes: [LAW, DECREE, ORDER, STANDARD, METHOD, REQUIREMENT]
+  semantic:
+    nodes: [ASSET, DATA, SUBJECT, PROCESS, TRUST_BOUNDARY, THREAT, WEAKNESS, VULNERABILITY]
+  controls:
+    nodes: [CONTROL, SAFEGUARD, CONFIGURATION, DETECTION, RESPONSE]
+  attack:
+    nodes: [TACTIC, TECHNIQUE, ATTACK_PATH, ABUSE_CASE]
+  verification:
+    nodes: [TEST, PENTEST_CHECK, SCANNER_CHECK, REVIEW, EVIDENCE]
+  compliance:
+    nodes: [APPLICABILITY, OBLIGATION, GAP, FINDING, REMEDIATION]
+
+external_catalog_mapping:
+  rule: >-
+    External Top-N lists and taxonomies are mapping layers, never the root of truth. Each mapping records catalog,
+    version/date, external identifier, mapping rationale, strength and limitations.
+
+pentest_rule:
+  prerequisite_chain:
+    - authorization_and_scope
+    - asset_and_trust_boundary
+    - applicable_requirements
+    - relevant_threat_or_weakness
+    - selected_test_objective
+    - safe_test_method
+    - expected_evidence
+    - stop_conditions
+    - result_and_remediation
+
+agent_rule: >-
+  In security work, prefer an explicit evidence gap over an invented rule. Every compliance statement and every high-impact
+  pentest recommendation must be explainable back to authoritative sources, applicability and observed evidence.
