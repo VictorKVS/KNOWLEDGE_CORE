@@ -1,4 +1,4 @@
-schema_version: "1.0"
+schema_version: "1.1"
 id: engineering-knowledge
 name: Engineering Knowledge
 type: evidence-driven-knowledge-base
@@ -6,7 +6,7 @@ status: active
 
 purpose:
   human: Explain engineering choices clearly with references, alternatives and examples.
-  agent: Retrieve validated decision rules, evidence and implementations without inventing unsupported preferences.
+  agent: Retrieve validated claims, decision rules, evidence and implementations without inventing unsupported preferences.
 
 domains:
   languages:
@@ -26,20 +26,49 @@ domains:
     - devsecops
     - application-security
 
+knowledge_objects:
+  - SRC: source-and-provenance
+  - CLM: evidence-claim
+  - ALG: algorithm-selection
+  - DS: data-structure-selection
+  - PROB: problem-record
+  - ADR: engineering-decision
+  - BENCH: benchmark
+  - EXP: experiment
+  - DM: verified-decision-memory
+
 selection_policy:
   objective: smallest-reliable-solution-that-satisfies-constraints
   required_steps:
     - identify-problem
     - identify-context
     - identify-constraints
+    - retrieve-similar-decisions
+    - retrieve-relevant-claims
+    - inspect-supporting-and-conflicting-evidence
     - retrieve-alternatives
-    - retrieve-evidence
     - compare-tradeoffs
     - select-decision
     - implement
     - test
     - security-review
     - measure-when-relevant
+    - capture-reusable-learning
+
+retrieval_order:
+  fast_path:
+    - decision-memory
+    - reviewed-claims
+    - linked-evidence-on-demand
+  adapt_path:
+    - multiple-similar-decisions
+    - reviewed-claims
+    - sources-and-measurements
+  research_path:
+    - primary-sources
+    - authoritative-sources
+    - conflicting-evidence
+    - experiments-and-benchmarks
 
 preferred_evidence:
   - primary-specification
@@ -59,6 +88,10 @@ evidence_states:
   - derived
   - expert-estimate
   - unknown
+
+policies:
+  retrieval: .ai/retrieval-policy.yaml
+  evidence: .ai/evidence-policy.yaml
 
 quality_dimensions:
   - correctness
