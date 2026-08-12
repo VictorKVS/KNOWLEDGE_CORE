@@ -1,0 +1,77 @@
+schema_version: "1.0"
+id: security-source-registry-policy
+name: Security Source Registry and Regulatory Ingestion Policy
+
+principle: >-
+  Security requirements may be extracted only from registered, versioned and provenance-preserving source
+  records. The registry preserves what document was used, which edition was in force, where it came from,
+  how it was verified and whether it is still applicable.
+
+source_classes:
+  primary_normative:
+    examples: [law, regulation, decree, order, official_methodology]
+    authority: highest_within_applicable_jurisdiction
+  official_standard:
+    examples: [national_standard, regulator_standard, official_security_standard]
+    authority: depends_on_mandatory_status_and_context
+  official_guidance:
+    examples: [regulator_guidance, vendor_security_guidance]
+    authority: informative_unless_incorporated_by_reference
+  secondary_commentary:
+    examples: [article, course, blog, summary]
+    authority: supporting_only
+
+registry_requirements:
+  - stable_SEC-SRC_id
+  - canonical_title
+  - source_class
+  - issuer
+  - jurisdiction
+  - document_number_when_applicable
+  - edition_or_revision
+  - publication_date
+  - effective_from
+  - effective_to_or_open_ended
+  - official_location
+  - retrieval_date
+  - verification_status
+  - content_fingerprint
+  - applicability_notes
+
+verification_states:
+  UNVERIFIED: metadata captured but authority/version not independently checked
+  VERIFIED: official source, edition and effective status checked
+  SUPERSEDED: replaced by a later edition or act
+  WITHDRAWN: no longer in force or officially withdrawn
+  ARCHIVED: retained only for historical traceability
+
+extraction_gate:
+  mature_SEC-REQ_requires:
+    - source_state_VERIFIED
+    - exact_locator
+    - verb_or_normative_effect_preserved
+    - applicability_captured
+    - interpretation_separated_from_quote_or_paraphrase
+
+change_handling:
+  new_revision:
+    - create_new_revision_record_or_update_version_lineage
+    - never_overwrite_historical_effective_period
+    - run_impact_analysis_on_dependent_SEC-REQ
+    - mark_changed_requirements_for_review
+  source_unavailable:
+    - preserve_existing_fingerprint_and_metadata
+    - mark_retrieval_issue
+    - do_not_claim_current_validity_without_reverification
+
+hard_rules:
+  - secondary_commentary_cannot_create_mandatory_requirement_without_primary_support
+  - title_similarity_is_not_version_identity
+  - newer_publication_date_does_not_automatically_mean_applicable_revision
+  - local_copy_does_not_replace_official_provenance
+  - extracted_requirement_must_point_to_exact_source_locator
+  - historical_sources_are_never_deleted_when_downstream_decisions_depend_on_them
+
+agent_rule: >-
+  Before extracting or using a normative requirement, verify the registered source identity, revision,
+  effective period and applicability. If any of these are uncertain, preserve the uncertainty explicitly.
