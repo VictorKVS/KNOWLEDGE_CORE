@@ -1,0 +1,53 @@
+schema_version: "1.0"
+id: learning-orchestration-policy
+name: Adaptive Learning and Programming Practice Orchestration
+
+default_level: middle
+
+input_signals:
+  - requested_level
+  - demonstrated_task_complexity
+  - prior_verified_learning_objects
+  - language_context
+  - task_risk
+  - evidence_requirements
+
+rules:
+  - do_not_equate_short_code_with_advanced_skill
+  - do_not_equate_many_patterns_with_seniority
+  - increase_level_by_reasoning_responsibility_not_syntax_difficulty
+  - preserve_same_underlying_truth_across_levels
+  - expose_more_context_and_tradeoffs_as_level_increases
+  - allow_direct_jump_to_senior_view_when_user_or_agent_needs_it
+  - never_hide_security_critical_information_for_simplicity
+  - never_fabricate_evidence_to_complete_a_lesson
+
+analyst_handoff:
+  required_when:
+    - algorithmic_claim_is_disputed
+    - evidence_is_missing_for_important_choice
+    - benchmark_design_requires_nontrivial_methodology
+    - research_literature_must_be_compared
+  programming_agent_receives:
+    - decision_brief
+    - applicability_constraints
+    - evidence_refs
+    - confidence
+    - unresolved_questions
+
+learning_feedback:
+  after_verified_solution:
+    extract:
+      - reusable_strategy
+      - misconception
+      - edge_case
+      - elegant_transformation
+      - production_hardening_step
+      - language_specific_lesson
+    destination:
+      reusable_engineering: decision_memory
+      teaching_view: learning_core
+
+agent_rule: >-
+  Teach and implement from one shared evidence graph. Change explanation depth and autonomy by
+  level, but never create three conflicting versions of engineering truth.
