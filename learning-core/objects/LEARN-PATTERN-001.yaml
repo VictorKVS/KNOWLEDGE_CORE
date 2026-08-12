@@ -1,0 +1,69 @@
+schema_version: "1.0"
+id: LEARN-PATTERN-001
+title: Use a Pattern Only When Its Pressure Is Real
+kind: learning-object
+status: drafted
+family: patterns
+levels: [junior, middle, senior]
+languages: [python, go, cpp]
+
+problem:
+  summary: Decide whether a named design pattern reduces real complexity or merely adds ceremony.
+
+junior:
+  goal: Recognize common patterns without forcing them into every solution.
+  practices:
+    - understand intent before syntax
+    - identify the concrete problem the pattern solves
+    - prefer direct code when the problem is simple
+
+middle:
+  goal: Compare a named pattern with a simpler alternative.
+  compare:
+    - direct_solution
+    - strategy
+    - adapter
+    - facade
+    - decorator
+    - dependency_injection
+    - state_machine
+  review:
+    - substitution_need
+    - change_frequency
+    - testability
+    - boundary_isolation
+    - added_indirection
+
+senior:
+  goal: Control architectural pattern debt and remove abstractions whose original pressure disappeared.
+  questions:
+    - What problem would exist if this pattern were removed?
+    - Is the abstraction protecting a volatile boundary or only reflecting framework fashion?
+    - Does the pattern reduce coupling or just relocate it?
+    - Can the same property be achieved with fewer concepts?
+
+elegant_view:
+  principle: the most elegant use of a pattern may be recognizing that no named pattern is required
+
+production_view:
+  add:
+    - explicit_pressure_statement
+    - simpler_alternative
+    - removal_cost
+    - testability_effect
+    - security_boundary_effect_when_relevant
+
+anti_patterns:
+  - pattern_for_resume
+  - factory_for_every_constructor
+  - interface_for_every_class
+  - repository_layer_without_boundary_value
+  - dependency_injection_everywhere
+  - abstraction_stack_that_hides_control_flow
+
+analyst_handoff:
+  required: false
+
+reusable_lessons:
+  - patterns are compression of recurring design pressure, not mandatory architecture vocabulary
+  - direct code is often the senior choice when variability is low
