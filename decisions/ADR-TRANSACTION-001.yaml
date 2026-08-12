@@ -1,0 +1,77 @@
+schema_version: "1.1"
+id: ADR-TRANSACTION-001
+status: draft
+
+title: Validate before mutating related state at a transaction boundary
+question: How should a transfer update related state without leaving a partial result on expected failure?
+
+context:
+  system: local transaction teaching model
+  environment: in-memory state
+  workload: transfer between two related account records
+  security_boundary: trusted application logic after input validation
+
+constraints:
+  - failed validation must not partially mutate balances
+  - successful operation updates both sides
+  - operation semantics must be visible in tests
+
+alternatives:
+  - id: mutate-then-check
+    description: update one side before all failure conditions are resolved
+    advantages: [locally simple statements]
+    disadvantages: [partial-state risk]
+    evidence: []
+  - id: validate-then-commit
+    description: resolve expected failure conditions before applying related mutations
+    advantages: [preserves invariant on expected failure, clear commit point]
+    disadvantages: [real databases still require actual transactional guarantees]
+    evidence: []
+
+reason_chain:
+  - because: debit and credit form one logical operation
+    applies_when: [both state changes must succeed or neither should be visible]
+    supports: [TEST-TRANSACTION-ATOMICITY]
+    strength: DERIVED
+    limitations: [in-memory example does not model process crash or database isolation]
+  - because: expected validation failures are knowable before mutation
+    applies_when: [failure condition can be checked against current state]
+    supports: [TEST-TRANSACTION-ATOMICITY]
+    strength: DERIVED
+    limitations: [concurrent databases need isolation/locking semantics beyond this example]
+
+rejection_reason_chain:
+  - option: mutate-then-check
+    because: an expected failure could leave one side changed while the other remains unchanged
+    supports: [TEST-TRANSACTION-ATOMICITY]
+
+traceability:
+  selected_claims: []
+  selected_benchmarks: []
+  selected_experiments: []
+  selected_tests: [TEST-TRANSACTION-ATOMICITY]
+  rejected_claims: []
+
+decision:
+  selected: validate-then-commit
+  rationale: Keep the logical invariant visible by resolving expected failure conditions before applying the related state changes.
+  rejected_options: [mutate-then-check]
+  exceptions:
+    - production databases require native transactions for crash safety and concurrent access
+  confidence: medium
+
+verification:
+  tests:
+    - learning-core/executable/transaction/python/test_transaction.py
+    - learning-core/executable/transaction/go/transaction_test.go
+    - learning-core/executable/transaction/cpp/test_transaction.cpp
+  benchmarks: []
+  security_reviews: []
+
+sources: []
+
+metadata:
+  created: 2026-08-12
+  reviewed: null
+  supersedes: null
+  superseded_by: null
