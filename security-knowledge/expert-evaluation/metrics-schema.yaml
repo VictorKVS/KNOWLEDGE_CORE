@@ -1,0 +1,70 @@
+schema_version: 1
+purpose: Expert-level multi-dimensional evaluation of security conclusions, requirements, controls, implementations and architecture decisions.
+principle: Never collapse expert judgement into one opaque score. Preserve component metrics, provenance, uncertainty and dissent.
+metrics:
+  legal_authority:
+    range: 0-5
+    meaning: Binding force of the source for the evaluated organization and jurisdiction.
+  applicability_confidence:
+    range: 0-1
+    meaning: Confidence that the source/requirement applies to the organization, system or process.
+  source_quality:
+    range: 0-5
+    meaning: Authenticity, currency, completeness and authority of the evidence source.
+  traceability:
+    range: 0-1
+    meaning: Ability to trace conclusion to exact source/version/locator and transformations.
+  evidence_strength:
+    range: 0-5
+    meaning: Strength of evidence that a control is designed, implemented and operating effectively.
+  control_coverage:
+    range: 0-1
+    meaning: Fraction of the mapped requirement/security objective actually covered by the control.
+  technical_effectiveness:
+    range: 0-5
+    meaning: Expected security effectiveness against relevant threats and failure modes.
+  threat_relevance:
+    range: 0-5
+    meaning: Relevance to the organization's actual assets, threat actors, attack paths and exposure.
+  exploitability:
+    range: 0-5
+    meaning: Practical feasibility of exploitation, informed by vulnerability and threat evidence.
+  business_impact:
+    range: 0-5
+    meaning: Potential operational, financial, legal, safety and reputational impact.
+  residual_risk:
+    range: 0-5
+    meaning: Risk remaining after current controls and compensating measures.
+  implementation_maturity:
+    range: 0-5
+    meaning: Ad hoc through measured/continually improved implementation maturity.
+  operational_sustainability:
+    range: 0-5
+    meaning: Ability to maintain the control through people, process, technology, budget and lifecycle.
+  cost_efficiency:
+    range: 0-5
+    meaning: Security/compliance value relative to implementation and operating cost.
+  verification_depth:
+    range: 0-5
+    meaning: Document review, configuration review, technical test, adversarial validation and continuous evidence.
+  freshness:
+    range: 0-1
+    meaning: Currency of source, evidence, threat data, implementation state and last verification.
+  expert_confidence:
+    range: 0-1
+    meaning: Calibrated confidence in the resulting expert judgement.
+required_metadata:
+  - evaluated_at
+  - evaluator_type
+  - evidence_refs
+  - assumptions
+  - uncertainty
+  - dissent_or_alternatives
+  - next_review_trigger
+rules:
+  - Legal authority and technical effectiveness are independent dimensions.
+  - Compliance coverage and security effectiveness are independent dimensions.
+  - Missing evidence reduces confidence; it must not be silently converted into a negative finding.
+  - A high aggregate score cannot hide a critical mandatory gap.
+  - Expert conclusions must preserve alternative interpretations when material.
+  - Scores must be reproducible from documented inputs and versioned calculation rules.
