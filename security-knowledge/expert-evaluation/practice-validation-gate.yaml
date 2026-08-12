@@ -1,0 +1,75 @@
+schema_version: 1
+purpose: Prevent formally correct but operationally incomplete security knowledge. Every major requirement/control/domain must be checked against real implementation, audit, incident and failure scenarios before EXPERT_READY.
+validation_lenses:
+  - regulator_inspection_practice
+  - attestation_and_assessment_practice
+  - security_architecture_practice
+  - system_administration_practice
+  - incident_response_practice
+  - pentest_and_vulnerability_practice
+  - procurement_and_vendor_lifecycle
+  - legal_and_contract_practice
+  - operations_and_change_management
+  - audit_evidence_practice
+  - business_continuity_practice
+  - human_factor_and_role_separation
+required_case_types:
+  - happy_path
+  - missing_document
+  - outdated_document
+  - document_exists_but_control_not_implemented
+  - control_implemented_but_not_evidenced
+  - wrong_system_classification
+  - overlapping_regimes
+  - conflicting_requirements
+  - certificate_expiring
+  - certificate_suspended_or_restored
+  - unsupported_product_version
+  - contractor_or_cloud_dependency
+  - architecture_changed_after_assessment
+  - incident_with_multiple_notification_duties
+  - staff_change_or_responsible_person_absent
+  - backup_exists_but_restore_not_tested
+  - logs_exist_but_are_not_complete_or_trustworthy
+  - vulnerability_known_but_not_exploitable_in_context
+  - vulnerability_low_score_but_real_attack_path_exists
+  - compensating_measure_claimed_without_proof
+  - evidence_stale
+  - exception_or_risk_acceptance_expired
+expert_ready_gate:
+  requirements:
+    - authoritative_source_verified
+    - applicability_tested
+    - cross_document_links_checked
+    - cross_regime_intersections_checked
+    - implementation_path_exists_or_not_applicable_reasoned
+    - evidence_model_tested
+    - negative_cases_reviewed
+    - lifecycle_and_change_triggers_defined
+    - operational_owner_defined
+    - review_frequency_or_event_trigger_defined
+    - known_practice_failure_modes_recorded
+    - uncertainty_and_alternative_interpretations_recorded
+practice_case_schema:
+  fields:
+    - case_id
+    - domain
+    - organization_context
+    - systems_and_assets
+    - applicable_sources
+    - expected_result
+    - observed_result
+    - missed_requirement
+    - root_cause
+    - control_gap
+    - evidence_gap
+    - graph_links_missing
+    - model_change_required
+    - regression_test_added
+rules:
+  - A practical omission discovered once becomes a permanent regression case for the knowledge base.
+  - A document being present is never sufficient evidence that its process/control operates.
+  - A technical control being enabled is never sufficient evidence of effective operation without appropriate verification.
+  - Do not generalize one regulator/auditor interpretation into law; store it as practice evidence with provenance and confidence.
+  - Contradictory practice evidence must be retained and escalated to expert interpretation.
+  - EXPERT_READY requires both normative completeness and demonstrated resistance to realistic omission/failure cases.
