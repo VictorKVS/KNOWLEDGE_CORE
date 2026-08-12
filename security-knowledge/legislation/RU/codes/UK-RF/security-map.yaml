@@ -1,0 +1,74 @@
+schema_version: "1.0"
+id: SEC-MAP-RU-UK-INFOSEC
+kind: legal-liability-map
+status: PROPOSED
+source_ref: SEC-SRC-RU-CODE-UK
+purpose: "Security-focused map of criminal-law consequences relevant to the knowledge graph."
+
+nodes:
+  - id: SEC-LIAB-RU-UK-137
+    article: "137"
+    topic: privacy_and_private_life
+    relation_targets:
+      - personal_data
+      - confidentiality
+    extraction_state: queued_for_atomic_review
+
+  - id: SEC-LIAB-RU-UK-183
+    article: "183"
+    topic: illegal_obtaining_or_disclosure_of_commercial_tax_or_bank_secret
+    relation_targets:
+      - SEC-SRC-RU-FZ-98
+      - commercial_secret
+      - confidentiality
+    extraction_state: queued_for_atomic_review
+
+  - id: SEC-LIAB-RU-UK-272
+    article: "272"
+    topic: unauthorized_access_to_protected_computer_information
+    source_supported_summary: "Неправомерный доступ к охраняемой законом компьютерной информации при предусмотренных статьёй последствиях образует отдельный уголовно-правовой состав."
+    relation_targets:
+      - unauthorized_access
+      - computer_information
+      - confidentiality_integrity_availability
+    extraction_state: seed_extracted
+
+  - id: SEC-LIAB-RU-UK-272-1
+    article: "272.1"
+    topic: computer_information_specific_offence
+    extraction_state: queued_for_atomic_review
+
+  - id: SEC-LIAB-RU-UK-273
+    article: "273"
+    topic: malicious_computer_programs
+    relation_targets:
+      - malware
+      - secure_development
+      - endpoint_security
+    extraction_state: queued_for_atomic_review
+
+  - id: SEC-LIAB-RU-UK-274
+    article: "274"
+    topic: violation_of_rules_for_operation_or_handling_of_protected_computer_information
+    relation_targets:
+      - operations_security
+      - access_rules
+      - computer_information
+    extraction_state: queued_for_atomic_review
+
+  - id: SEC-LIAB-RU-UK-274-1
+    article: "274.1"
+    topic: unlawful_impact_on_critical_information_infrastructure
+    source_supported_summary: "Статья охватывает создание/распространение/использование средств для неправомерного воздействия на КИИ, неправомерный доступ к информации в КИИ и нарушение правил эксплуатации/доступа в предусмотренных законом случаях."
+    relation_targets:
+      - SEC-SRC-RU-FZ-187
+      - critical_infrastructure
+      - malicious_code
+      - unauthorized_access
+      - operations_security
+    extraction_state: seed_extracted
+
+rules:
+  - "Liability nodes do not replace preventive SEC-REQ nodes from substantive security regulation."
+  - "A criminal-law article is linked as consequence/risk evidence, not automatically as an implementation control."
+  - "Exact elements, qualifying circumstances and sanctions must be atomized before VERIFIED status."
