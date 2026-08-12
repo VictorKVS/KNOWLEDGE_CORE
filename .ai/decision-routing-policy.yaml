@@ -1,0 +1,96 @@
+schema_version: "1.0"
+id: decision-routing-policy
+name: Context-Aware Decision Routing Policy
+
+purpose: >-
+  Route a task to FAST, ADAPT or RESEARCH by combining evidence health with applicability match.
+  A GREEN decision is not automatically reusable when the current context differs materially.
+
+routes:
+  FAST:
+    requires:
+      - evidence_health_GREEN
+      - no_hard_context_mismatch
+      - all_required_context_dimensions_known
+      - applicability_match_at_or_above_fast_threshold
+    action: reuse_verified_decision_with_declared_constraints
+
+  ADAPT:
+    requires_any:
+      - evidence_health_YELLOW
+      - soft_context_mismatch
+      - incomplete_noncritical_context
+      - verified_decision_needs_local_adjustment
+    action: reuse_structure_but_revalidate_changed_assumptions
+
+  RESEARCH:
+    requires_any:
+      - evidence_health_RED
+      - hard_context_mismatch
+      - no_relevant_verified_decision
+      - disputed_or_missing_critical_evidence
+      - materially_new_algorithmic_question
+    action: handoff_to_analyst_or_specialist_before_claiming_verified_choice
+
+context_dimensions:
+  workload:
+    critical: true
+    examples: [request_rate, read_write_ratio, repeated_queries, burstiness, latency_budget]
+  scale:
+    critical: true
+    examples: [data_size, concurrency, memory_budget, user_count]
+  runtime:
+    critical: false
+    examples: [language, runtime_version, compiler_version, platform]
+  environment:
+    critical: false
+    examples: [os, cpu_architecture, storage, network]
+  data_semantics:
+    critical: true
+    examples: [ordering, mutability, uniqueness, consistency, ownership]
+  trust_boundary:
+    critical: true
+    examples: [trusted_internal, untrusted_external, multi_tenant, privileged]
+  failure_model:
+    critical: true
+    examples: [partial_failure, retries, duplicate_delivery, crash_recovery]
+  compatibility:
+    critical: false
+    examples: [api_version, schema_version, dependency_version]
+  operational_constraints:
+    critical: false
+    examples: [deployment_model, rollback, observability, maintenance_window]
+
+match_states:
+  EXACT: equivalent_for_declared_dimension
+  COMPATIBLE: difference_exists_but_known_not_to_invalidate_reason_chain
+  UNKNOWN: insufficient_information
+  MISMATCH: material_difference_that_changes_reason_chain_or_applicability
+
+hard_mismatch_examples:
+  - trusted_input_record_reused_for_untrusted_input
+  - single_thread_assumption_reused_under_concurrent_mutation
+  - benchmark_from_small_dataset_reused_for_out_of_scope_scale_without_validation
+  - at_most_once_assumption_reused_with_at_least_once_delivery
+  - version_specific_behavior_reused_outside_supported_version_range
+
+routing_rules:
+  - health_and_context_are_separate_gates
+  - GREEN_health_plus_MISMATCH_context_is_not_FAST
+  - UNKNOWN_critical_dimension_blocks_FAST
+  - one_hard_mismatch_routes_to_RESEARCH_or_specialist_review
+  - soft_difference_routes_to_ADAPT_when_reason_chain_remains_valid
+  - similarity_by_title_or_keywords_never_suffices_for_FAST
+  - selected_route_must_expose_which_dimensions_matched_and_which_did_not
+
+agent_output:
+  required:
+    - route
+    - candidate_decision_ids
+    - health_state
+    - context_match_summary
+    - mismatches
+    - unknowns
+    - assumptions_reused
+    - assumptions_requiring_revalidation
+    - next_action
