@@ -1,0 +1,75 @@
+schema_version: "1.0"
+id: LEARN-CONCURRENCY-001
+title: Add Concurrency Only for a Demonstrated Need
+kind: learning-object
+status: drafted
+family: concurrency
+levels: [junior, middle, senior]
+languages: [python, go, cpp]
+
+problem:
+  summary: Introduce concurrency without making correctness and failure behaviour opaque.
+
+junior:
+  goal: Use an established concurrency primitive safely.
+  practices:
+    - follow project pattern
+    - avoid shared mutable state where possible
+    - use explicit cancellation/timeouts when provided
+    - test completion and failure paths
+
+middle:
+  goal: Choose a bounded component-level concurrency strategy.
+  compare:
+    - sequential execution
+    - async_io
+    - threads
+    - processes
+    - goroutines_or_tasks
+    - worker_pool
+  review:
+    - shared_state
+    - contention
+    - backpressure
+    - cancellation
+    - ordering
+
+senior:
+  goal: Decide whether concurrency improves the total system outcome and define its resource model.
+  questions:
+    - What workload pressure requires concurrency?
+    - Is the bottleneck CPU, I/O, latency hiding or independent work?
+    - What is the maximum concurrency budget?
+    - How does overload degrade?
+    - What happens during shutdown or partial dependency failure?
+
+elegant_view:
+  principle: keep the sequential model visible and add the smallest concurrency mechanism that preserves understandable invariants
+
+production_view:
+  add:
+    - bounded_parallelism
+    - cancellation
+    - timeouts
+    - backpressure
+    - shutdown_semantics
+    - race_or_contention_tests
+    - observability
+
+anti_patterns:
+  - unbounded_task_creation
+  - concurrency_for_style
+  - shared_mutable_state_without_clear_ownership
+  - retry_storm
+  - hidden_background_work
+
+analyst_handoff:
+  required_when:
+    - performance_claim_requires_nontrivial_measurement
+    - workload_model_is_uncertain
+  expected_artifacts:
+    - benchmark_or_capacity_brief
+
+reusable_lessons:
+  - sequential_first_is_a_design_strategy_not_a_lack_of_sophistication
+  - every_concurrency_model_needs_a_resource_budget
