@@ -1,0 +1,62 @@
+schema_version: "1.0"
+id: engineering-evidence-policy
+
+objective: >-
+  Make technical decisions traceable to explicit claims, applicable sources,
+  reproducible measurements and known counterevidence.
+
+claim_rules:
+  - every reusable technical assertion should have a stable CLM-* id
+  - claims must state scope and applicability when version or workload matters
+  - conflicting evidence must be retained and exposed
+  - UNKNOWN must be preferred over unsupported certainty
+
+source_rules:
+  - prefer primary and authoritative sources for normative or language-specific claims
+  - record canonical identifiers and version applicability where available
+  - mark stale, superseded or withdrawn sources explicitly
+  - do not treat popularity, search rank or model familiarity as authority
+  - do not store copyrighted full texts when metadata, lawful links and derived knowledge are sufficient
+
+evidence_state_rules:
+  DOCUMENTED:
+    requires:
+      - at_least_one_applicable_source
+  MEASURED:
+    requires:
+      - benchmark_or_experiment_id
+      - environment_metadata
+      - reproducible_method
+  DERIVED:
+    requires:
+      - explicit_derivation
+      - assumptions
+      - supporting_evidence_or_definitions
+  EXPERT_ESTIMATE:
+    requires:
+      - explicit_label
+      - rationale
+    prohibition:
+      - cannot_be_promoted_to_measured_without_measurement
+  UNKNOWN:
+    action:
+      - identify_missing_evidence
+      - use_research_path_if_decision_depends_on_claim
+
+conflict_resolution:
+  steps:
+    - compare_source_scope
+    - compare_versions
+    - compare_methodology
+    - compare_workload_and_environment
+    - identify_assumptions
+    - run_targeted_experiment_if_needed
+  prohibition:
+    - do_not_hide_counterevidence_to_simplify_decision
+
+promotion:
+  fast_path_claim_requires:
+    - reviewed_claim
+    - applicable_evidence
+    - no_unresolved_material_counterexample_in_claimed_scope
+    - freshness_check_for_version_sensitive_claims
