@@ -1,0 +1,29 @@
+schema_version: 1
+entity: unified_control
+required_fields: [id, title, objective, mappings, implementation, evidence]
+fields:
+  id: stable SEC-CTRL identifier
+  title: normalized control name
+  objective: security outcome
+  mappings:
+    description: many-to-many links to atomic requirements, standards and technical guidance
+    item_fields: [source_node, relation, authority_layer, applicability, coverage, confidence]
+  implementation:
+    description: organizational, process and technical implementation options
+  evidence:
+    description: reusable evidence artifacts capable of supporting multiple mapped requirements
+  checks:
+    description: SEC-CHECK nodes validating control design and operation
+  threats:
+    description: threat/scenario nodes mitigated by this control
+  weaknesses:
+    description: CWE/configuration/process weaknesses addressed
+  products:
+    description: vendor-neutral capability requirements; product mappings are separate
+  optimization:
+    fields: [coverage_score, duplicate_reduction, implementation_cost, operating_cost, residual_risk]
+rules:
+  - Mapping does not mean equivalence; store coverage and confidence.
+  - Mandatory obligations cannot be removed by deduplication.
+  - Deduplicate implementations, evidence and processes rather than deleting source obligations.
+  - Recommendations must remain distinguishable from mandatory requirements.
