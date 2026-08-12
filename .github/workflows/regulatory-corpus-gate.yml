@@ -1,0 +1,37 @@
+name: Regulatory Corpus Gate
+
+on:
+  push:
+    paths:
+      - 'security-corpus/**'
+      - 'templates/security-corpus.yaml'
+      - 'templates/security-source-diff.yaml'
+      - '.ai/regulatory-extraction-policy.yaml'
+      - 'tools/validate_regulatory_corpus.py'
+  pull_request:
+    paths:
+      - 'security-corpus/**'
+      - 'templates/security-corpus.yaml'
+      - 'templates/security-source-diff.yaml'
+      - '.ai/regulatory-extraction-policy.yaml'
+      - 'tools/validate_regulatory_corpus.py'
+
+jobs:
+  validate-regulatory-corpus:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install pyyaml
+      - name: Validate corpus manifests and source diffs
+        shell: bash
+        run: |
+          shopt -s nullglob globstar
+          files=(security-corpus/**/*.yaml security-corpus/**/*.yml)
+          if ((${#files[@]})); then
+            python tools/validate_regulatory_corpus.py "${files[@]}"
+          else
+            echo "No regulatory corpus records yet."
+          fi
