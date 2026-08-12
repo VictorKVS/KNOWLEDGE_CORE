@@ -1,0 +1,211 @@
+document: FSTEK-31-2014
+source_status: uploaded_revised_text
+verification_status: REVIEWED
+requirements:
+  - id: FSTEK31-REQ-001
+    source_locator: "p. 10"
+    subject: operator
+    action: appoint
+    object: structural_unit_or_employee_responsible_for_information_protection
+    applicability: automated_control_system_in_scope
+    evidence: [appointment_order, job_description, org_structure]
+    verification: VERIFIED
+
+  - id: FSTEK31-REQ-002
+    source_locator: "p. 11"
+    subject: operator
+    action: use
+    object: information_security_tools_that_passed_conformity_assessment
+    applicability: automated_control_system_in_scope
+    evidence: [product_certificates_or_assessment_records, asset_inventory, procurement_records]
+    verification: VERIFIED
+
+  - id: FSTEK31-REQ-003
+    source_locator: "p. 12"
+    subject: customer_operator_developer
+    action: perform_security_lifecycle
+    object: automated_control_system_security
+    applicability: automated_control_system_in_scope
+    lifecycle_stages:
+      - form_security_requirements
+      - develop_security_system
+      - implement_and_commission
+      - operate_securely
+      - decommission_securely
+    evidence: [technical_specification, project_docs, commissioning_docs, operating_docs, decommissioning_docs]
+    verification: VERIFIED
+
+  - id: FSTEK31-REQ-004
+    source_locator: "p. 13"
+    subject: customer
+    action: form_security_requirements
+    object: automated_control_system
+    applicability: automated_control_system_in_scope
+    includes:
+      - decision_on_need_for_information_protection
+      - classification
+      - threat_identification_and_threat_model
+      - security_system_requirements
+    evidence: [security_decision, classification_act, threat_model, technical_specification]
+    verification: VERIFIED
+
+  - id: FSTEK31-REQ-005
+    source_locator: "p. 13.2"
+    subject: customer_or_operator
+    action: classify
+    object: automated_control_system_or_segment
+    applicability: automated_control_system_in_scope
+    result: protection_class_1_2_or_3
+    evidence: [classification_act, technical_specification]
+    verification: VERIFIED
+
+  - id: FSTEK31-REQ-006
+    source_locator: "p. 13.3"
+    subject: customer_operator_or_authorized_developer
+    action: determine_threats
+    object: automated_control_system_each_level
+    applicability: automated_control_system_in_scope
+    must_include:
+      - threat_sources_and_intruder_potential
+      - vulnerabilities
+      - attack_scenarios
+      - consequences_for_confidentiality_integrity_availability_and_normal_operation
+    evidence: [threat_model, vulnerability_analysis, architecture_description, attack_scenarios]
+    verification: VERIFIED
+
+  - id: FSTEK31-REQ-007
+    source_locator: "p. 14.1"
+    subject: developer_or_operator_under_customer_organization
+    action: design_security_system
+    object: automated_control_system
+    applicability: security_system_design_stage
+    must_include:
+      - access_subjects_and_objects
+      - access_control_methods_and_rules
+      - selected_security_measures
+      - secure_configuration_parameters
+      - security_tool_types
+      - security_system_structure_and_placement
+      - intersystem_protection_measures
+      - compatibility_check
+    evidence: [technical_design, working_documentation, access_matrix, security_architecture, compatibility_test_results]
+    verification: VERIFIED
+
+  - id: FSTEK31-REQ-008
+    source_locator: "p. 15.2"
+    subject: operator
+    action: establish_security_policies_and_procedures
+    object: automated_control_system_operation
+    applicability: implementation_and_operation
+    includes:
+      - security_measure_operation
+      - security_planning
+      - emergency_actions
+      - personnel_awareness_and_training
+      - threat_and_risk_analysis
+      - security_administration
+      - incident_detection_and_response
+      - configuration_management
+      - security_monitoring
+      - secure_decommissioning
+    evidence: [policies, procedures, plans, training_records, incident_response_procedure, configuration_management_procedure]
+    verification: VERIFIED
+
+  - id: FSTEK31-REQ-009
+    source_locator: "p. 15.7"
+    subject: customer_operator_developer
+    action: conduct_vulnerability_analysis
+    object: automated_control_system
+    applicability: before_industrial_operation
+    includes:
+      - security_tools
+      - technical_components
+      - software
+      - installation_and_configuration_correctness
+      - component_interaction
+    evidence: [vulnerability_assessment_report, scan_results, manual_review_records, remediation_records]
+    verification: VERIFIED
+
+  - id: FSTEK31-REQ-010
+    source_locator: "p. 16.6"
+    subject: operator
+    action: implement_incident_detection_and_response
+    object: automated_control_system
+    applicability: operation_stage
+    includes:
+      - designate_responsible_persons
+      - detect_and_identify_incidents
+      - inform_responsible_persons
+      - analyze_sources_causes_and_impact
+      - eliminate_incidents_and_restore
+      - prevent_recurrence
+    evidence: [incident_response_plan, incident_register, notification_records, RCA_reports, recovery_records]
+    verification: VERIFIED
+
+  - id: FSTEK31-REQ-011
+    source_locator: "p. 16.7"
+    subject: operator
+    action: manage_configuration
+    object: automated_control_system_and_security_system
+    applicability: operation_stage
+    includes:
+      - maintain_baseline_configuration
+      - authorize_changes
+      - regulate_maintenance_and_remote_maintenance
+      - document_changes
+      - analyze_security_impact_before_changes
+      - update_operational_documentation
+    evidence: [baseline_configuration, change_log, approvals, maintenance_procedure, impact_assessments]
+    verification: VERIFIED
+
+  - id: FSTEK31-REQ-012
+    source_locator: "p. 16.8"
+    subject: operator
+    action: monitor_security_state
+    object: automated_control_system
+    applicability: operation_stage
+    includes:
+      - security_events_and_personnel_actions
+      - security_analysis
+      - security_system_effectiveness_analysis
+      - documentation_of_monitoring_results
+      - decision_on_need_for_requirements_or_system_revision
+    evidence: [monitoring_reports, SIEM_or_log_analysis_records, internal_review_reports, corrective_action_records]
+    verification: VERIFIED
+
+  - id: FSTEK31-REQ-013
+    source_locator: "p. 17"
+    subject: operator
+    action: protect_information_during_decommissioning
+    object: automated_control_system
+    applicability: decommissioning
+    includes:
+      - archive_information_when_needed
+      - erase_data_and_residual_information
+      - destroy_media_where_required
+    evidence: [decommissioning_act, media_destruction_acts, erasure_records, archive_records]
+    verification: VERIFIED
+
+  - id: FSTEK31-REQ-014
+    source_locator: "p. 18"
+    subject: operator_customer_developer
+    action: implement_security_measure_families
+    object: automated_control_system
+    applicability: based_on_protection_class_threats_technologies_and_architecture
+    families: [IAF, UPD, OPS, ZNI, AUD, AVZ, SOV, OCL, ODT, ZTS, ZIS, INC, UKF, OPO, PLN, DNS, IPO]
+    evidence: [control_matrix, security_architecture, configuration_evidence, policies]
+    verification: VERIFIED
+
+  - id: FSTEK31-REQ-015
+    source_locator: "p. 19"
+    subject: customer_operator_developer
+    action: select_and_adapt_security_measures
+    object: protection_measures_set
+    applicability: automated_control_system_in_scope
+    sequence:
+      - choose_baseline_by_protection_class
+      - adapt_to_levels_technologies_and_architecture
+      - refine_to_cover_all_threats
+      - supplement_with_requirements_from_other_applicable_acts_and_standards
+    evidence: [control_selection_matrix, applicability_statement, threat_to_control_mapping, compensating_measure_justification]
+    verification: VERIFIED
