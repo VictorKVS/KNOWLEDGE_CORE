@@ -4,7 +4,7 @@
 
 > A human-readable and agent-readable engineering memory for choosing reliable, secure and efficient solutions from evidence rather than intuition alone.
 
-This repository is the staging home for the future **`engineering-knowledge`** knowledge base. It is designed for both engineers and autonomous agents working across **Python, Go and C++**, algorithms, architecture, testing, performance, reliability, DevSecOps and application security.
+This repository is the staging home for the future **`engineering-knowledge`** knowledge base. It is designed for both engineers and autonomous agents working across **Python, Go and C++**, algorithms, architecture, data, networking, reliability, testing, performance, DevSecOps and application security.
 
 ## Core principle
 
@@ -14,24 +14,24 @@ If a less obvious approach is better supported by research, official documentati
 
 Every important engineering choice should be traceable through:
 
-`Problem → Context → Constraints → Alternatives → Evidence → Decision → Implementation → Tests → Security Review → Measurement`
+`Problem → Context → Constraints → Alternatives → Evidence → Decision → Implementation → Tests → Security Review → Measurement → Decision Memory`
 
 ## Knowledge domains
 
-- **Languages** — Python, Go, C++.
-- **Algorithms & Data Structures** — selection rules, complexity, alternatives and implementations.
-- **Architecture** — patterns, ADRs, trade-offs and system design.
-- **Databases & Networking** — reliable storage, protocols and distributed communication.
-- **Concurrency & Performance** — measurement-driven optimization and scalability.
-- **Testing & Verification** — correctness, regression, fuzzing, property tests and benchmarks.
-- **Reliability** — failure modes, resilience, observability and recovery.
-- **DevSecOps & AppSec** — secure defaults, dependency risk, CI/CD controls and attack surface reduction.
+- [**Languages**](languages/README.md) — Python, Go, C++ and cross-language selection.
+- [**Algorithms & Data Structures**](algorithms/README.md) — selection rules, complexity, alternatives and implementations.
+- [**Architecture**](architecture/README.md) — topology, decomposition, ADRs and system boundaries.
+- [**Databases**](databases/README.md) — data models, consistency, transactions, indexing and recovery.
+- [**Networking**](networking/README.md) — protocols, trust boundaries, retries, timeouts and transport behaviour.
+- [**Testing & Verification**](testing/README.md) — correctness, regression, fuzzing, static analysis and failure tests.
+- [**Performance**](performance/README.md) — measurement-driven optimization and workload-specific benchmarking.
+- [**Reliability**](reliability/README.md) — failure models, graceful degradation, recovery and resilience.
+- [**DevSecOps**](devsecops/README.md) & [**Application Security**](application-security/README.md) — secure defaults, dependency risk, CI/CD controls and attack surface reduction.
 - **Problems** — structured problem sets with multiple candidate solutions.
-- **Sources** — standards, official documentation, books, papers, university research and engineering reports.
+- **Sources & Claims** — standards, official documentation, books, papers, claims, contradictions and applicability.
+- [**Decision Memory**](decision-memory/README.md) — verified reusable experience for FAST / ADAPT / RESEARCH paths.
 
 ## Knowledge object model
-
-Each important topic should be represented as a set of linked objects:
 
 ```mermaid
 flowchart LR
@@ -43,38 +43,28 @@ flowchart LR
     I --> T[Tests]
     T --> B[Benchmarks]
     T --> S[Security Review]
-    B --> R[Reusable Knowledge]
-    S --> R
+    B --> M[Decision Memory]
+    S --> M
+    M --> F[FAST / ADAPT / RESEARCH]
 ```
 
-## Standard repository layout
+## System-level decision flow
 
-```text
-engineering-knowledge/
-├── .ai/
-│   └── manifest.yaml
-├── languages/
-│   ├── python/
-│   ├── go/
-│   └── cpp/
-├── algorithms/
-├── data-structures/
-├── architecture/
-├── databases/
-├── networking/
-├── concurrency/
-├── testing/
-├── performance/
-├── reliability/
-├── devsecops/
-├── application-security/
-├── problems/
-├── benchmarks/
-├── experiments/
-├── decisions/
-├── sources/
-└── templates/
+```mermaid
+flowchart TD
+    TASK[Task] --> CTX[Context & Constraints]
+    CTX --> MEM[Retrieve Decision Memory]
+    MEM --> CAND[Architecture / Language / Algorithm / Data / Network Candidates]
+    CAND --> EVID[Claims & Evidence]
+    EVID --> SEC[Security-by-Design Review]
+    SEC --> BUILD[Implementation]
+    BUILD --> VERIFY[Tests / Static Analysis / Fuzz / Failure Tests]
+    VERIFY --> MEASURE[Benchmark / Experiment when relevant]
+    MEASURE --> ADR[Decision Record]
+    ADR --> LEARN[Reusable Verified Knowledge]
 ```
+
+Machine-readable policies live in `.ai/`, including retrieval, language selection, evidence, security-by-design and system-level decision policies.
 
 ## Evidence levels
 
@@ -91,20 +81,7 @@ Evidence must record provenance, date/version and applicability.
 
 ## Decision quality
 
-Candidates may be assessed across:
-
-- correctness;
-- reliability;
-- security;
-- performance;
-- memory use;
-- maintainability;
-- complexity;
-- portability;
-- testability;
-- observability;
-- operational cost;
-- dependency risk.
+Candidates may be assessed across correctness, reliability, security, performance, memory use, maintainability, complexity, portability, testability, observability, operational cost and dependency risk.
 
 A score is never enough by itself. Every score must be labeled as **MEASURED**, **DOCUMENTED**, **DERIVED**, **EXPERT_ESTIMATE** or **UNKNOWN**.
 
@@ -112,7 +89,7 @@ A score is never enough by itself. Every score must be labeled as **MEASURED**, 
 
 **Human interface:** concise README pages, diagrams, examples, comparisons, references and problem walkthroughs.
 
-**Agent interface:** structured YAML metadata, stable IDs, relationship graphs, evidence records, selection rules and confidence/provenance fields.
+**Agent interface:** structured YAML metadata, stable IDs, relationship graphs, evidence records, selection rules, version/applicability fields and confidence/provenance.
 
 ## Portfolio navigation
 
@@ -122,4 +99,4 @@ Related systems: [MindForge](https://github.com/VictorKVS/MindForge) · [SecGrap
 
 ---
 
-**Status:** architecture foundation / active build
+**Status:** active architecture and knowledge-engineering build
