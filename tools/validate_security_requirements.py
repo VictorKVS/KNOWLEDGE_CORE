@@ -53,9 +53,10 @@ def validate_requirement_document(path: Path, data: Any) -> list[str]:
         if not has_nonempty(requirement_id):
             errors.append(f"{label} requires id/requirement_id")
 
-        state = str(item.get("verification", "")).upper()
+        raw_state = item.get("verification")
+        state = "UNVERIFIED" if raw_state is None or str(raw_state).strip() == "" else str(raw_state).upper()
         if state not in ALLOWED_VERIFICATION_STATES:
-            errors.append(f"{label} has invalid or missing verification state {state or '<empty>'}")
+            errors.append(f"{label} has invalid verification state {state}")
             continue
 
         if state != "VERIFIED":
