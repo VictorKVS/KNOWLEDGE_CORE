@@ -1,0 +1,29 @@
+name: Outcome Learning Gate
+
+on:
+  push:
+    paths:
+      - 'outcomes/**'
+      - 'templates/outcome-learning-record.yaml'
+      - '.ai/outcome-learning-policy.yaml'
+      - 'tools/validate_outcome_learning.py'
+  pull_request:
+    paths:
+      - 'outcomes/**'
+      - 'templates/outcome-learning-record.yaml'
+      - '.ai/outcome-learning-policy.yaml'
+      - 'tools/validate_outcome_learning.py'
+
+permissions:
+  contents: read
+
+jobs:
+  validate-outcomes:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install pyyaml
+      - run: python tools/validate_outcome_learning.py
