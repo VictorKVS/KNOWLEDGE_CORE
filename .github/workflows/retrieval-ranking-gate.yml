@@ -1,0 +1,61 @@
+name: Retrieval Ranking Gate
+
+on:
+  push:
+    paths:
+      - '.ai/retrieval-ranking-policy.yaml'
+      - 'templates/retrieval-candidate.yaml'
+      - 'tools/rank_candidates.py'
+      - '.github/workflows/retrieval-ranking-gate.yml'
+  pull_request:
+    paths:
+      - '.ai/retrieval-ranking-policy.yaml'
+      - 'templates/retrieval-candidate.yaml'
+      - 'tools/rank_candidates.py'
+      - '.github/workflows/retrieval-ranking-gate.yml'
+
+jobs:
+  ranking-smoke-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Build sample candidates
+        run: |
+          cat > /tmp/candidates.json <<'JSON'
+          [
+            {
+              "id": "DM-GREEN-001",
+              "semantic_relevance": 0.8,
+              "context_match": 0.95,
+              "health": "GREEN",
+              "maturity": "REUSABLE",
+              "applicability_match": 0.95,
+              "successful_outcomes": 0.8,
+              "freshness": 0.9
+            },
+            {
+              "id": "DM-RED-001",
+              "semantic_relevance": 1.0,
+              "context_match": 1.0,
+              "health": "RED",
+              "maturity": "REUSABLE",
+              "applicability_match": 1.0,
+              "successful_outcomes": 1.0,
+              "freshness": 1.0
+            }
+          ]
+          JSON
+      - run: python tools/rank_candidates.py /tmp/candidates.json --output /tmp/ranked.json
+      - name: Assert RED candidate cannot outrank by score
+        run: |
+          python - <<'PY'
+          import json
+          data=json.load(open('/tmp/ranked.json'))
+          assert data[0]['id']=='DM-GREEN-001'
+          red=next(x for x in data if x['id']=='DM-RED-001')
+          assert red['eligible'] is False
+          assert red['score'] is None
+          PY
