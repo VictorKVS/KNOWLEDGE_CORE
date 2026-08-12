@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import argparse
+from datetime import date
 from pathlib import Path
 from typing import Any
 from urllib.parse import urlparse
@@ -21,6 +22,10 @@ def load_yaml(path: Path) -> dict[str, Any]:
 
 def nonempty(value: Any) -> bool:
     return isinstance(value, str) and bool(value.strip())
+
+
+def present_scalar(value: Any) -> bool:
+    return nonempty(value) or isinstance(value, date)
 
 
 def validate_pack(path: Path) -> list[str]:
@@ -58,9 +63,12 @@ def validate_pack(path: Path) -> list[str]:
             if not isinstance(publication, dict):
                 errors.append(f"{where}: VERIFIED source requires official_publication")
                 continue
-            for field in ("publication_number", "publication_date", "url"):
-                if not nonempty(publication.get(field)):
-                    errors.append(f"{where}: VERIFIED source requires official_publication.{field}")
+            if not nonempty(publication.get("publication_number")):
+                errors.append(f"{where}: VERIFIED source requires official_publication.publication_number")
+            if not present_scalar(publication.get("publication_date")):
+                errors.append(f"{where}: VERIFIED source requires official_publication.publication_date")
+            if not nonempty(publication.get("url")):
+                errors.append(f"{where}: VERIFIED source requires official_publication.url")
             url = publication.get("url")
             if nonempty(url):
                 parsed = urlparse(url)
