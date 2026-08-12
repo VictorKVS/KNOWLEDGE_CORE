@@ -1,0 +1,77 @@
+schema_version: 1
+scorecard_id: SEC-COVERAGE-2026-08-13-R01
+scope: Russian paper-security P0 core
+scoring_policy:
+  purpose: conservative maturity floor; prevents architecture/file-count from being mistaken for expert coverage
+  family_status_points:
+    NOT_REGISTERED: 0
+    REGISTERED: 10
+    SOURCE_PENDING: 15
+    SOURCE_ACQUIRED: 20
+    STATUS_VERIFIED: 25
+    VERSIONED: 35
+    CHUNKED: 45
+    ATOMIZED: 60
+    LINKED: 75
+    EXPERT_REVIEWED: 90
+    COMPLETE: 100
+  overall_formula: arithmetic_mean_of_P0_family_status_points_from_master_inventory
+  caveat: "This is a floor metric. It does not award undocumented work and does not count architecture, schemas or unverified extracted requirements as legal coverage."
+p0_families:
+  RU_CONSTITUTIONAL_AND_CODES: {status: REGISTERED, score: 10}
+  RU_FEDERAL_LAWS: {status: REGISTERED, score: 10}
+  RU_PRESIDENTIAL: {status: REGISTERED, score: 10}
+  RU_GOVERNMENT_DECREES: {status: REGISTERED, score: 10}
+  FSTEK: {status: REGISTERED, score: 10}
+  FSB: {status: REGISTERED, score: 10}
+  ROSKOMNADZOR: {status: REGISTERED, score: 10}
+  GOST_AND_RU_STANDARDS: {status: NOT_REGISTERED, score: 0}
+  CLASSIFICATION_AND_CATEGORIZATION_METHODS: {status: NOT_REGISTERED, score: 0}
+  THREAT_MODELING_AND_THREAT_CATALOGS: {status: NOT_REGISTERED, score: 0}
+  RISK_METHODS: {status: NOT_REGISTERED, score: 0}
+  PRODUCTS_CERTIFICATES_LICENSES: {status: REGISTERED, score: 10}
+metrics:
+  p0_family_count: 12
+  p0_registered_or_better: 8
+  p0_not_registered: 4
+  p0_family_registration_percent: 66.7
+  conservative_overall_maturity_percent: 6.7
+  displayed_percent_rounded: 7
+atomic_requirement_proof_floor:
+  baseline_requirement_files_checked: 9
+  baseline_atomic_requirements_checked: 82
+  baseline_strict_verified_atomic_requirements: 0
+  strict_verified_requirement_percent: 0.0
+  note: "New verified source facts in source packs are not counted as verified requirements until promoted into the canonical requirement corpus and accepted by CI."
+run_additions:
+  verified_source_metadata:
+    - RU_RKN_ORDER_140_2025
+    - RU_GOV_PP_1154_2025
+    - RU_RKN_ORDER_180_2022
+  verified_atomic_source_facts_added: 6
+  canonical_verified_requirements_added: 0
+critical_gaps:
+  - id: GAP-P0-001
+    severity: CRITICAL
+    gap: "Canonical requirement corpus still has zero strict VERIFIED atomic requirements at baseline."
+  - id: GAP-P0-002
+    severity: CRITICAL
+    gap: "Four P0 families remain NOT_REGISTERED: GOST, classification/categorization, threat catalogs/methodology, risk methods."
+  - id: GAP-P0-003
+    severity: HIGH
+    gap: "Current consolidated 152-FZ statutory text and version graph are not yet fully atomized into the canonical requirement corpus."
+  - id: GAP-P0-004
+    severity: HIGH
+    gap: "2025 anonymization annexes are not fully atomized and applicability between Order 140 and PP 1154 is not yet resolved at atomic level."
+  - id: GAP-P0-005
+    severity: HIGH
+    gap: "Order 180 forms are registered, but underlying article 22 duties, exceptions and clocks are not yet linked atomically."
+red_team_result: FAIL
+expert_ready: false
+next_bottleneck:
+  target: "Get first canonical VERIFIED requirements without weakening proof floor."
+  actions:
+    - acquire_admitted_primary_or_authoritative_text_for_current_152FZ_articles_18_1_19_21_22
+    - atomize_with_exact_locators_and_short_proof_quotes
+    - map_deadlines_roles_evidence_and_KoAP_links
+    - run_requirement_validator_and_record_pass_fail
