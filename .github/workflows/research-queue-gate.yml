@@ -1,0 +1,42 @@
+name: Research Queue Gate
+
+on:
+  push:
+    paths:
+      - 'research-queue/**'
+      - 'templates/research-task.yaml'
+      - '.ai/evidence-gap-policy.yaml'
+      - 'tools/research_queue.py'
+      - '.github/workflows/research-queue-gate.yml'
+  pull_request:
+    paths:
+      - 'research-queue/**'
+      - 'templates/research-task.yaml'
+      - '.ai/evidence-gap-policy.yaml'
+      - 'tools/research_queue.py'
+      - '.github/workflows/research-queue-gate.yml'
+
+jobs:
+  research-queue-integrity:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install pyyaml
+      - name: Validate and rank research queue
+        shell: bash
+        run: |
+          shopt -s nullglob globstar
+          files=(research-queue/**/*.yaml research-queue/**/*.yml)
+          if ((${#files[@]})); then
+            python tools/research_queue.py "${files[@]}"
+            python tools/research_queue.py --json "${files[@]}" > research-queue-report.json
+          else
+            echo '[]' > research-queue-report.json
+          fi
+      - uses: actions/upload-artifact@v4
+        with:
+          name: research-queue-report
+          path: research-queue-report.json
