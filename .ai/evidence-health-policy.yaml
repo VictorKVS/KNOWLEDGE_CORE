@@ -1,0 +1,61 @@
+schema_version: "1.0"
+id: evidence-health-policy
+name: Evidence Health and Confidence Policy
+
+health_states:
+  GREEN:
+    meaning: evidence_chain_is_current_and_sufficient_for_declared_scope
+    fast_path_allowed: true
+  YELLOW:
+    meaning: usable_with_explicit_caveats_or_revalidation
+    fast_path_allowed: false
+  RED:
+    meaning: evidence_chain_is_broken_stale_failed_disputed_or_inapplicable
+    fast_path_allowed: false
+
+hard_red_conditions:
+  - source_withdrawn
+  - source_superseded_without_replacement_review
+  - required_test_failed
+  - required_benchmark_inapplicable
+  - claim_disputed_without_resolution
+  - unresolved_reference_in_mature_record
+
+ yellow_conditions:
+  - source_stale
+  - evidence_gap_open
+  - applicability_not_fully_matched
+  - benchmark_environment_differs_materially
+  - claim_confidence_medium_or_unknown
+  - review_date_missing_or_expired
+
+confidence_dimensions:
+  provenance:
+    inputs: [source_quality_tier, primary_source, peer_reviewed, official_identifier]
+  verification:
+    inputs: [tests, benchmarks, experiments, security_reviews]
+  applicability:
+    inputs: [version_match, workload_match, environment_match, trust_boundary_match]
+  consistency:
+    inputs: [contradicting_evidence, disputed_claims, supersession_state]
+  freshness:
+    inputs: [checked_at, reviewed_at, effective_date, stale_state]
+
+aggregation_rules:
+  - any_hard_red_condition_makes_chain_RED
+  - any_required_dependency_RED_makes_consumer_RED
+  - YELLOW_dependency_makes_consumer_at_least_YELLOW_unless_explicitly_waived_with_reason
+  - GREEN_requires_no_known_red_or_yellow_conditions_for_declared_scope
+  - numeric_scores_may_support_ranking_but_must_not_override_hard_conditions
+
+fast_path_rule: >-
+  A decision-memory record may be used in FAST PATH only when its own health and all required
+  causal evidence dependencies are GREEN for the current applicability context.
+
+agent_output:
+  always_expose_when_not_green:
+    - health_state
+    - reasons
+    - affected_evidence_ids
+    - applicability_mismatch
+    - recommended_revalidation_action
