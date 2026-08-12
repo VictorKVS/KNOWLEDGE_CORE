@@ -1,0 +1,65 @@
+schema_version: "1.0"
+id: security-priority-policy
+name: Security Priority and Remediation Queue Policy
+
+principle: >-
+  Remediation priority is a decision aid derived from risk, regulatory obligation, evidence quality,
+  exposure, reversibility and remediation cost. It must remain explainable and must never hide mandatory
+  obligations or critical unresolved findings behind an aggregate score.
+
+inputs:
+  - SEC-RISK
+  - SEC-FIND
+  - security-coverage gaps
+  - SEC-REQ obligation class
+  - SEC-ASSET criticality
+  - remediation effort and reversibility
+  - evidence health
+  - due dates and explicit external deadlines
+
+hard_priority_overrides:
+  - confirmed_critical_finding_on_critical_asset
+  - mandatory_requirement_with_expired_deadline
+  - active_exploitation_or_incident_related_finding
+  - failed_retest_for_critical_or_high_finding
+  - critical_asset_without_required_control
+
+ranking_dimensions:
+  risk:
+    weight: 30
+  obligation:
+    weight: 20
+  exposure:
+    weight: 15
+  asset_criticality:
+    weight: 15
+  evidence_confidence:
+    weight: 5
+  remediation_efficiency:
+    weight: 10
+  deadline_pressure:
+    weight: 5
+
+queue_classes:
+  P0:
+    meaning: immediate handling; hard override or intolerable critical exposure
+  P1:
+    meaning: highest planned remediation priority
+  P2:
+    meaning: material remediation required in normal security plan
+  P3:
+    meaning: lower urgency; track, schedule or combine with related work
+  RESEARCH:
+    meaning: priority cannot be trusted until material evidence/context gap is closed
+
+hard_rules:
+  - unknown_risk_does_not_default_to_low_priority
+  - mandatory_requirement_is_not_cancelled_by_low_technical_score
+  - remediation_cost_cannot_override_hard_priority_override
+  - accepted_risk_requires_explicit_risk_acceptance_record
+  - duplicate_findings_should_be_clustered_without_losing_asset_specific_evidence
+  - every_ranked_item_must_explain_why_it_is_above_or_below_neighbors
+
+agent_rule: >-
+  Use the queue to order work, not to redefine truth or legal obligation. Preserve explicit blockers,
+  uncertainty and deadlines even when they reduce ranking neatness.
