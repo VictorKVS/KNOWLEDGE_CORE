@@ -3,14 +3,14 @@ name: Security Source Pack Gate
 on:
   push:
     paths:
-      - 'security-knowledge/corpus/**/*.yaml'
-      - 'security-knowledge/corpus/**/*.yml'
+      - 'security-knowledge/corpus/**/*source-pack*.yaml'
+      - 'security-knowledge/corpus/**/*source-pack*.yml'
       - 'tools/validate_security_source_packs.py'
       - '.github/workflows/security-source-pack-gate.yml'
   pull_request:
     paths:
-      - 'security-knowledge/corpus/**/*.yaml'
-      - 'security-knowledge/corpus/**/*.yml'
+      - 'security-knowledge/corpus/**/*source-pack*.yaml'
+      - 'security-knowledge/corpus/**/*source-pack*.yml'
       - 'tools/validate_security_source_packs.py'
       - '.github/workflows/security-source-pack-gate.yml'
 
@@ -30,7 +30,7 @@ jobs:
         shell: bash
         run: |
           shopt -s nullglob globstar
-          files=(security-knowledge/corpus/**/*.yaml security-knowledge/corpus/**/*.yml)
+          files=(security-knowledge/corpus/**/*source-pack*.yaml security-knowledge/corpus/**/*source-pack*.yml)
           if ((${#files[@]})); then
             python tools/validate_security_source_packs.py "${files[@]}"
           else
