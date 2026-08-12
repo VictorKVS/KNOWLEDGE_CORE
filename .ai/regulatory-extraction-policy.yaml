@@ -1,0 +1,55 @@
+schema_version: "1.0"
+id: regulatory-extraction-policy
+name: Regulatory Requirement Extraction Policy
+
+principle: >-
+  Requirements are extracted atomically from verified source text with exact anchors. Interpretation,
+  implementation guidance and external framework mappings are separate layers and must not be silently
+  merged into the legal statement.
+
+atomic_requirement_rules:
+  - one_normative_obligation_per_SEC_REQ_when_practical
+  - preserve_exact_source_anchor
+  - preserve_original_modality
+  - separate_actor_action_object_condition_exception
+  - record_applicability_and_exceptions
+  - do_not_invent_technical_control_from_legal_text
+  - do_not_merge_recommendation_with_mandatory_requirement
+
+required_extraction_fields:
+  - source_ref
+  - source_anchor
+  - actor
+  - modality
+  - action
+  - object
+  - applicability
+  - exceptions
+  - interpretation_notes
+  - reviewer_status
+
+modality:
+  MUST: mandatory obligation
+  MUST_NOT: mandatory prohibition
+  MAY: permission
+  SHOULD: recommendation or non-binding expectation
+  DEFINITION: definitional statement
+  CONDITION: applicability trigger or qualifying condition
+  INFORMATIVE: contextual or explanatory text
+
+separation_of_layers:
+  source_text: immutable normative source fragment
+  requirement: normalized atomic obligation
+  interpretation: reasoned explanation of meaning/applicability
+  control_mapping: how an implementation may satisfy the requirement
+  verification_mapping: how evidence may demonstrate the control
+
+review_rules:
+  - mature_SEC_REQ_requires_verified_SEC_SRC
+  - ambiguous_requirement_stays_under_review
+  - legal_interpretation_is_not_promoted_by_frequency_of_agent_agreement
+  - changed_source_revision_requires_diff_and_impact_review
+
+agent_rule: >-
+  Extract what the source actually requires before deciding how to implement it. When wording is ambiguous,
+  preserve ambiguity explicitly and request regulatory/legal review rather than manufacturing precision.
