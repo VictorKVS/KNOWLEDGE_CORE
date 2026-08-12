@@ -1,0 +1,101 @@
+id: LANG-GO-001
+language: go
+kind: language-engineering-map
+status: foundation
+
+selection_goal:
+  Choose Go constructs and service patterns from workload, lifecycle and failure constraints.
+
+topics:
+  types:
+    decisions:
+      - value vs pointer semantics
+      - concrete type vs interface
+      - slice vs array vs map
+    evaluate:
+      - ownership intent
+      - mutation
+      - allocation
+      - API clarity
+  errors:
+    decisions:
+      - return error vs wrap error vs sentinel/typed error
+    evaluate:
+      - recoverability
+      - caller responsibility
+      - observability
+      - compatibility
+  concurrency:
+    decisions:
+      - sequential vs goroutine
+      - channel vs mutex
+      - unbounded goroutines vs bounded worker pool
+    evaluate:
+      - shared_state
+      - queueing
+      - cancellation
+      - backpressure
+      - resource bounds
+  context_lifecycle:
+    decisions:
+      - where cancellation/deadlines are required
+    evaluate:
+      - request lifetime
+      - child operations
+      - cleanup
+  networking:
+    decisions:
+      - standard HTTP stack vs additional framework
+      - synchronous pipeline vs concurrent stages
+    evaluate:
+      - protocol needs
+      - latency
+      - throughput
+      - failure isolation
+      - observability
+  memory_performance:
+    rule: benchmark target workload before promoting optimization claims
+    evaluate:
+      - allocation rate
+      - escape behavior
+      - copying
+      - contention
+      - GC impact
+  security:
+    review:
+      - input bounds
+      - parser exposure
+      - path and command handling
+      - TLS/auth boundaries
+      - dependency and module provenance
+      - goroutine/resource exhaustion
+  operations:
+    evaluate:
+      - static/portable build needs
+      - startup behavior
+      - container image
+      - telemetry
+      - graceful shutdown
+
+typical_problem_classes:
+  - network-service
+  - collector
+  - cli
+  - infrastructure-component
+  - security-tool
+  - concurrent-worker
+  - api-service
+
+cross_language_exit_conditions:
+  consider_python_when:
+    - rapid orchestration, AI/data ecosystem integration or experimentation dominates
+  consider_cpp_when:
+    - native integration, deterministic low-level control or tighter performance constraints dominate
+  rule: language switch requires explicit constraints and evidence
+
+links:
+  decisions: []
+  claims: []
+  sources: []
+  benchmarks: []
+  decision_memory: []
