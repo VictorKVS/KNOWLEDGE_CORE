@@ -1,0 +1,36 @@
+schema_version: 1
+purpose: Prevent legal requirements, standards, frameworks and technical knowledge from being assigned equal authority.
+source_layers:
+  RU_MANDATORY:
+    examples: [federal_law, presidential_decree, government_decree, regulator_order]
+    default_authority: binding_if_applicable
+  RU_STANDARDS:
+    examples: [GOST, GOST_R, GOST_R_ISO_IEC]
+    default_authority: contextual
+    note: A standard may become mandatory through law, regulation, contract, procurement, certification or organizational commitment.
+  INTERNATIONAL_STANDARDS:
+    examples: [ISO_IEC, ISO, IEC, Common_Criteria]
+    default_authority: voluntary_unless_incorporated
+  FOREIGN_REGULATION:
+    examples: [EU_GDPR, NIS2, DORA, EU_Cybersecurity_Act, CRA, AI_Act, ePrivacy, Convention_108_plus]
+    default_authority: jurisdiction_dependent
+  FRAMEWORKS_BEST_PRACTICES:
+    examples: [NIST_CSF, NIST_SP800_53, CIS_Controls, CSA_CCM, PCI_DSS, SWIFT_CSCF]
+    default_authority: non_statutory_unless_contractually_or_sectorally_required
+  THREAT_KNOWLEDGE:
+    examples: [FSTEK_BDU, CWE, CVE, NVD, CVSS, CAPEC, MITRE_ATTACK, MITRE_D3FEND, CISA_KEV, EPSS]
+    default_authority: technical_evidence
+  APPSEC:
+    examples: [OWASP_Top10, OWASP_API_Top10, ASVS, MASVS, WSTG, MASTG, SAMM, Cheat_Sheet_Series, CWE_Top25]
+    default_authority: technical_guidance
+  PENTEST:
+    examples: [PTES, NIST_SP800_115, OWASP_WSTG, OSSTMM]
+    default_authority: methodology
+  VENDOR_HARDENING:
+    examples: [Microsoft, Linux, Kubernetes, Docker, PostgreSQL, nginx, Apache, Cisco, MikroTik, VMware, cloud_provider]
+    default_authority: product_specific_guidance
+rules:
+  - Never infer legal force from technical quality or popularity.
+  - Jurisdiction and applicability are evaluated before authority weighting.
+  - Preserve the original source layer when mapping multiple sources to a unified control.
+  - A unified control may satisfy sources from many layers without collapsing their legal status.
