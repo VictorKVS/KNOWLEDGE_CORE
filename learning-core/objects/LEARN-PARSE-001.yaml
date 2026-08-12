@@ -1,0 +1,86 @@
+schema_version: "1.0"
+id: LEARN-PARSE-001
+title: Safe Parsing at Trust Boundaries
+kind: learning-object
+status: drafted
+
+domain: parsing
+languages: [python, go, cpp]
+levels: [junior, middle, senior]
+
+problem:
+  summary: Parse structured input without confusing syntax acceptance with trust.
+  contexts:
+    - command_line_input
+    - configuration
+    - file_formats
+    - network_payloads
+    - api_requests
+
+junior:
+  goal: parse_expected_input_with_clear_failure
+  practices:
+    - use_standard_parser_when_available
+    - validate_required_fields
+    - reject_invalid_values_explicitly
+    - distinguish_missing_from_malformed_input
+    - test_valid_and_invalid_examples
+
+middle:
+  goal: design_a_parser_boundary_that_is_testable_and_safe
+  practices:
+    - separate_parsing_from_business_logic
+    - normalize_only_under_explicit_rules
+    - apply_size_depth_and_count_limits_when_input_is_untrusted
+    - model_parse_errors_without_leaking_sensitive_details
+    - use_streaming_when_material_to_resource_limits
+
+senior:
+  goal: define_the_input_contract_and_abuse_resistance_for_the_system
+  practices:
+    - minimize_supported_grammar_and_ambiguity
+    - decide_where_validation_authority_lives
+    - consider_compatibility_and_versioning
+    - define_resource_budgets_for_hostile_or_accidental_inputs
+    - design_observability_for_rejected_input_without_logging_secrets
+
+views:
+  elegant:
+    core_idea: >-
+      Convert bytes or text into a small explicit domain model at one visible boundary, then let
+      the rest of the program operate on validated values rather than repeatedly re-parsing data.
+  production:
+    hardening:
+      - input_size_limits
+      - structural_limits
+      - explicit_encoding
+      - validation
+      - safe_error_messages
+      - fuzz_or_property_tests_when_parser_complexity_justifies_it
+      - no_secret_or_raw_payload_logging_by_default
+
+anti_patterns:
+  - parse_and_use_inline_everywhere
+  - regex_for_complex_recursive_grammar_without_justification
+  - silent_coercion_of_invalid_values
+  - unlimited_nested_input
+  - trusting_deserialized_objects_because_parsing_succeeded
+
+security:
+  concerns:
+    - denial_of_service
+    - injection_downstream
+    - parser_differentials
+    - encoding_confusion
+    - oversized_or_deep_payloads
+
+analyst_handoff_when:
+  - competing_parser_approaches_have_material_algorithmic_or_performance_claims
+  - protocol_specification_interpretation_is_disputed
+
+reusable_lessons:
+  - parse_once_at_the_boundary
+  - validation_is_not_the_same_as_parsing
+  - resource_limits_are_part_of_the_input_contract
+
+maturity_target: production_reviewed
