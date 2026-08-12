@@ -1,0 +1,61 @@
+schema_version: "1.0"
+id: LEARN-REFACTOR-001
+title: Refactor by Removing Accidental Complexity
+kind: learning-object
+status: drafted
+family: refactoring
+levels: [junior, middle, senior]
+languages: [python, go, cpp]
+
+problem:
+  summary: Improve structure without changing required behaviour.
+
+junior:
+  goal: Make local code clearer.
+  practices:
+    - improve names
+    - extract focused functions
+    - remove duplication when semantics truly match
+    - keep tests green
+
+middle:
+  goal: Reduce coupling and clarify module responsibilities.
+  compare:
+    - inline_vs_extract
+    - composition_vs_inheritance
+    - direct_dependency_vs_interface
+    - shared_helper_vs_domain_specific_code
+  review:
+    - cohesion
+    - coupling
+    - testability
+    - dependency_direction
+
+senior:
+  goal: Remove unnecessary architectural machinery while preserving safety and evolution paths.
+  questions:
+    - Which abstraction no longer pays for itself?
+    - Can two layers become one without losing a meaningful boundary?
+    - Can state or configuration be eliminated rather than reorganized?
+    - What migration path avoids large-bang risk?
+
+elegant_view:
+  principle: the strongest refactoring often removes concepts rather than renaming them
+
+production_view:
+  add:
+    - characterization_tests_when_needed
+    - incremental_migration
+    - rollback_plan_for_risky_changes
+    - performance_regression_check_when_relevant
+    - security_boundary_review
+
+anti_patterns:
+  - refactor_for_pattern_count
+  - abstraction_without_pressure
+  - deduplication_of_superficially_similar_but_semantically_different_code
+  - big_bang_rewrite_without_evidence
+
+reusable_lessons:
+  - fewer concepts usually reduce maintenance cost when meaningful boundaries are preserved
+  - refactoring quality is measured by reduced reasoning cost, not diff size
