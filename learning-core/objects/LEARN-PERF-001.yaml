@@ -1,0 +1,22 @@
+schema_version: "1.0"
+id: LEARN-PERF-001
+title: Profile Before Optimization
+kind: learning-object
+status: drafted
+domains: [performance, profiling, production]
+levels:
+  junior:
+    goal: avoid obvious waste and use simple timing/profiling tools correctly
+  middle:
+    goal: identify the dominant cost before changing implementation strategy
+  senior:
+    goal: connect performance work to workload, capacity, latency budgets, cost and architectural consequences
+core_idea: Optimize the measured bottleneck, not the code that merely looks expensive.
+elegant_view: Prefer removing unnecessary work over making unnecessary work faster.
+production_view:
+  requires: [workload_definition, baseline, profiler_or_measurement, correctness_guard, before_after_results, environment_record]
+anti_patterns: [micro_optimize_without_profile, benchmark_toy_input_only, claim_speed_without_environment, sacrifice_clarity_for_unmeasured_gain]
+analyst_handoff:
+  required_when: [algorithmic_alternatives_need_research, benchmark_methodology_is_nontrivial]
+reusable_lessons:
+  - the_best_optimization_is_often_a_change_in_work_done_or_representation
