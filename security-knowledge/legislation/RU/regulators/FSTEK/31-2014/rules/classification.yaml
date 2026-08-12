@@ -1,0 +1,58 @@
+document: FSTEK-31-2014
+source_locator: Appendix 1
+status: EXTRACTED
+purpose: Determine the protection class of an automated control system (ASU) from the significance/criticality level of processed information.
+classes:
+  K1:
+    rank: 1
+    description: highest protection class
+  K2:
+    rank: 2
+    description: middle protection class
+  K3:
+    rank: 3
+    description: lowest protection class
+rules:
+  - id: FSTEK31-CLASS-001
+    source_locator: p.13.2 and Appendix 1
+    subject: customer_or_operator
+    action: classify
+    object: automated_control_system
+    requirement: Classification is based on the significance/criticality level of information processed by the ASU.
+    evidence:
+      - classification_act
+      - significance_assessment
+      - technical_assignment
+    verification: EXTRACTED
+  - id: FSTEK31-CLASS-002
+    source_locator: p.13.2
+    subject: customer_or_operator
+    action: document
+    object: classification_result
+    requirement: Classification results are formalized by an act of classification.
+    evidence:
+      - classification_act
+    verification: EXTRACTED
+  - id: FSTEK31-CLASS-003
+    source_locator: p.13.2
+    subject: customer_or_operator
+    action: include
+    object: technical_assignment
+    requirement: The required protection class is included in the technical assignment for creation/modernization of the ASU and/or its protection system.
+    evidence:
+      - technical_assignment
+    verification: EXTRACTED
+  - id: FSTEK31-CLASS-004
+    source_locator: p.13.2
+    subject: customer_or_operator
+    action: review_if_condition
+    object: protection_class
+    applicability: modernization changes the significance/criticality level of processed information
+    requirement: The protection class is reviewed when modernization changes the significance/criticality level of information processed by the ASU or segment.
+    evidence:
+      - modernization_change_record
+      - revised_significance_assessment
+      - revised_classification_act
+    verification: EXTRACTED
+notes:
+  - The exact Appendix 1 mapping from significance levels to K1/K2/K3 is to be transcribed separately from the source table before VERIFIED status.
