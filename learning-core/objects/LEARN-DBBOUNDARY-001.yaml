@@ -1,0 +1,68 @@
+schema_version: "1.0"
+id: LEARN-DBBOUNDARY-001
+title: Keep Database Boundaries Explicit
+kind: learning-object
+status: drafted
+family: databases
+levels: [junior, middle, senior]
+languages: [python, go, cpp]
+
+problem:
+  summary: Use persistence without leaking storage mechanics throughout the codebase.
+
+junior:
+  goal: Execute persistence operations through the established project boundary.
+  practices:
+    - parameterize queries
+    - respect transactions
+    - handle no-result and conflict cases explicitly
+    - avoid embedding credentials or secrets
+
+middle:
+  goal: Design a component-level persistence boundary.
+  compare:
+    - direct_query_module
+    - repository_style_boundary
+    - data_mapper_or_orm
+    - command_query_split_when_justified
+  review:
+    - transaction_scope
+    - query_visibility
+    - testability
+    - migration_impact
+    - performance_visibility
+
+senior:
+  goal: Decide what persistence abstraction should exist and where transactional truth belongs.
+  questions:
+    - Does the abstraction hide important database semantics?
+    - Are transactions crossing service boundaries accidentally?
+    - Is storage-specific behavior part of the domain contract?
+    - Can a simpler persistence boundary preserve observability and control better?
+
+elegant_view:
+  principle: keep domain decisions separate from storage mechanics without pretending the database has no semantics
+
+production_view:
+  add:
+    - transaction_contract
+    - migration_strategy
+    - query_observability
+    - failure_and_retry_semantics
+    - authorization_and_tenant_scoping_when_relevant
+    - backup_and_recovery_assumptions_when_system_critical
+
+anti_patterns:
+  - sql_scattered_everywhere
+  - orm_as_domain_model_by_default
+  - transaction_boundary_hidden_by_abstraction
+  - retrying_non_idempotent_writes_blindly
+  - query_without_resource_limit
+
+analyst_handoff:
+  required_when:
+    - database_engine_or_index_choice_requires_nontrivial_evidence
+
+reusable_lessons:
+  - abstraction should hide accidental mechanics, not important transactional semantics
+  - persistence boundaries should make failure and transaction scope visible
