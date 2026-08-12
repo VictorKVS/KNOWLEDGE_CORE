@@ -1,0 +1,64 @@
+id: SRC-PLAN-001
+kind: source-acquisition-plan
+status: active
+
+purpose:
+  Build a verified source backbone for Python, Go and C++ decisions without turning the repository into a document dump.
+
+python:
+  priority_sources:
+    - language-reference
+    - standard-library-documentation
+    - peps
+    - official-release-notes
+    - official-tooling-documentation
+  claim_groups:
+    - numeric-behavior
+    - collection-semantics
+    - object-and-memory-model
+    - concurrency-and-async
+    - packaging-and-runtime
+
+go:
+  priority_sources:
+    - language-specification
+    - official-documentation
+    - official-blog-and-design-material
+    - release-notes
+    - official-tooling-documentation
+  claim_groups:
+    - type-and-memory-semantics
+    - goroutines-channels-context
+    - maps-slices-interfaces
+    - networking-http
+    - runtime-and-profiling
+
+cpp:
+  priority_sources:
+    - iso-standard-or-official-draft-where-licensing-allows-reference
+    - wg21-papers
+    - compiler-toolchain-documentation
+    - sanitizer-and-analysis-tool-documentation
+    - relevant-platform-abi-documentation
+  claim_groups:
+    - object-lifetime-and-ownership
+    - undefined-behavior-and-safety
+    - containers-and-algorithms
+    - concurrency-and-memory-model
+    - build-abi-and-toolchain
+
+acquisition_rules:
+  - store metadata and claims, not unauthorized copies of books or standards
+  - prefer stable identifiers and canonical URLs
+  - record version/applicability for language and runtime claims
+  - separate normative statements from measurements
+  - do not use secondary summaries as sole evidence for critical claims when a primary source is available
+  - preserve contradictory evidence rather than silently selecting one source
+
+workflow:
+  - identify decision-relevant claim
+  - find primary/authoritative source
+  - create SRC record
+  - create or update CLM record
+  - link claim to decision map
+  - add benchmark/experiment only when documentation cannot settle the context-specific choice
