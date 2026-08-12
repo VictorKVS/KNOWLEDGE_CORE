@@ -1,0 +1,84 @@
+schema_version: "1.0"
+id: LEARN-ERROR-001
+title: Error Handling as a Contract
+kind: learning-object
+status: drafted
+
+domain: errors
+languages: [python, go, cpp]
+levels: [junior, middle, senior]
+
+problem:
+  summary: Represent and propagate failures so callers can act correctly without hidden control flow or information loss.
+
+junior:
+  goal: handle_expected_failures_explicitly
+  practices:
+    - distinguish_expected_errors_from_programming_bugs
+    - preserve_useful_context
+    - avoid_swallowing_errors
+    - test_failure_paths
+    - do_not_use_exceptions_or_panics_for_normal_control_flow_without_reason
+
+middle:
+  goal: design_component_level_error_semantics
+  practices:
+    - define_error_categories_that_callers_can_act_on
+    - wrap_or_annotate_without_destroying_root_cause
+    - separate_user_safe_messages_from_internal_diagnostics
+    - make_retryability_explicit_when_relevant
+    - keep_error_handling_close_to_the_boundary_that_can_make_a_decision
+
+senior:
+  goal: define_failure_contracts_across_system_boundaries
+  practices:
+    - model_partial_failure
+    - align_error_semantics_with_retry_timeout_and_idempotency_rules
+    - distinguish_transient_permanent_and_policy_failures
+    - avoid_leaking_internal_topology_or_secrets
+    - make_operational_signals_useful_for_incident_response
+    - decide_when_failure_should_stop_the_system_instead_of_be_recovered
+
+views:
+  elegant:
+    core_idea: >-
+      Let failures travel only as far as needed to reach a boundary that can make a meaningful decision.
+      Avoid layers that catch and rethrow without adding policy or context.
+  production:
+    hardening:
+      - stable_error_contract
+      - safe_external_message
+      - internal_context
+      - logging_policy
+      - retryability_semantics
+      - tests_for_failure_paths
+      - metrics_or_alerting_when_operationally_material
+
+language_notes:
+  python:
+    focus: exception_boundaries_and_context
+  go:
+    focus: explicit_error_values_wrapping_and_errors_is_as
+  cpp:
+    focus: exception_vs_error_value_policy_and_raii_during_failure
+
+anti_patterns:
+  - catch_all_and_continue
+  - log_and_rethrow_at_every_layer
+  - return_magic_values_for_failure
+  - expose_stack_traces_or_internal_details_to_untrusted_clients
+  - retry_every_error
+
+security:
+  concerns:
+    - information_disclosure
+    - inconsistent_authorization_failure_handling
+    - retry_amplification
+    - sensitive_data_in_logs
+
+reusable_lessons:
+  - error_handling_is_part_of_the_api_contract
+  - only_a_decision_boundary_should_translate_failure_policy
+  - safe_external_messages_and_internal_diagnostics_are_different_artifacts
+
+maturity_target: production_reviewed
