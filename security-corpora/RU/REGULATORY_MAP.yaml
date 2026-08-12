@@ -1,0 +1,77 @@
+schema_version: "1.0"
+id: SEC-CORPUS-RU-REGULATORY-MAP
+kind: security-regulatory-map
+status: PROPOSED
+
+principle: >-
+  Russian security requirements are modeled as a layered regulatory graph. A lower-level control or
+  pentest check must preserve traceability to the applicable primary legal and regulatory sources.
+
+layers:
+  constitutional_and_presidential:
+    sources:
+      - id: RU-PRESIDENT-250-2022
+        title: "Указ Президента РФ от 01.05.2022 № 250 — О дополнительных мерах по обеспечению информационной безопасности Российской Федерации"
+        official_publication_id: "0001202205010023"
+        amended_by:
+          - RU-PRESIDENT-500-2024
+        notes: "Model organizational governance duties separately from technical controls. Verify applicability per organization."
+      - id: RU-PRESIDENT-500-2024
+        title: "Указ Президента РФ от 13.06.2024 № 500 — изменения в Указ № 250"
+        official_publication_id: "0001202406130032"
+
+  federal_laws:
+    sources:
+      - RU-152-FZ
+      - RU-149-FZ
+      - RU-187-FZ
+    notes: "Additional sector-specific federal laws are added by applicability, not by default."
+
+  government_resolutions:
+    sources:
+      - id: RU-PP-1119-2012
+        title: "Постановление Правительства РФ от 01.11.2012 № 1119 — требования к защите персональных данных при обработке в ИСПДн"
+        verification_status: TO_VERIFY_CURRENT_REVISION
+    notes: "Government resolutions operationalize statutory requirements and must be versioned independently."
+
+  regulators:
+    fstec:
+      role: "technical protection, requirements and measures within its competence"
+      initial_sources:
+        - id: RU-FSTEC-21-2013
+          title: "Приказ ФСТЭК России от 18.02.2013 № 21"
+          verification_status: TO_VERIFY_CURRENT_REVISION
+    fsb:
+      role: "cryptographic protection and other requirements within its competence"
+      initial_sources: []
+    roskomnadzor:
+      role: "personal-data regulator/supervision and regulatory acts within its competence"
+      initial_sources: []
+    rospotrebnadzor:
+      role: "consumer protection and sanitary-epidemiological supervision; include only where a security requirement is actually applicable"
+      initial_sources: []
+
+cross_domain_rules:
+  - "Do not confuse Roskomnadzor with Rospotrebnadzor."
+  - "Do not infer a technical control directly from a presidential or federal-law provision when an applicable lower-level act specifies implementation requirements."
+  - "Do not treat all listed sources as applicable to every organization."
+  - "For KII, build a separate RU-187-FZ branch and connect Presidential Decree No. 250 only where its scope actually applies."
+  - "Every amendment creates version lineage and impact analysis; never overwrite historical requirements."
+
+planned_branches:
+  personal_data:
+    root: RU-152-FZ
+    next_sources:
+      - RU-PP-1119-2012
+      - RU-FSTEC-21-2013
+      - ROSKOMNADZOR_APPLICABLE_ACTS
+      - FSB_APPLICABLE_ACTS
+  kii:
+    root: RU-187-FZ
+    governance_sources:
+      - RU-PRESIDENT-250-2022
+      - RU-PRESIDENT-500-2024
+    next_sources:
+      - FSTEC_KII_ACTS
+      - GOVERNMENT_KII_ACTS
+      - FSB_APPLICABLE_ACTS
