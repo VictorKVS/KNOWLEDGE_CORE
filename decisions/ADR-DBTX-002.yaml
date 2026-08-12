@@ -1,0 +1,73 @@
+schema_version: "1.1"
+id: ADR-DBTX-002
+status: reviewed
+
+title: Use database-native transaction boundaries for multi-step state changes
+question: How should two related persistent mutations be committed safely?
+
+context:
+  system: learning-core database transaction example
+  environment: Python uses SQLite; Go/C++ model the portable transaction contract without external DB drivers
+  workload: small transfer-style write
+  security_boundary: application-to-database boundary
+
+constraints:
+  - both mutations belong to one logical operation
+  - failed operations must not expose partial persistent state
+  - transaction semantics must be explicit
+
+alternatives:
+  - id: independent-writes
+    description: issue writes independently
+    advantages: [simple_call_sequence]
+    disadvantages: [partial_commit_risk]
+    evidence: []
+  - id: native-transaction
+    description: execute the logical operation inside one database transaction
+    advantages: [atomic_commit_boundary, rollback_on_failure]
+    disadvantages: [requires_database_transaction_semantics]
+    evidence: []
+
+decision:
+  selected: native-transaction
+  rationale: related writes must cross the persistence boundary together or not at all
+  rejected_options: [independent-writes]
+  exceptions: []
+  confidence: medium
+
+reason_chain:
+  - because: debit and credit are one logical invariant-preserving operation
+    applies_when: [multiple_persistent_changes_form_one_business_operation]
+    supports: [TEST-DBTX-001]
+    strength: TESTED
+    limitations: [SQLite example does not establish all isolation guarantees of other databases]
+  - because: database transaction mechanisms provide a commit or rollback boundary
+    applies_when: [storage_engine_supports_transactions]
+    supports: [SRC-DBTX-OFFICIAL-001]
+    strength: DOCUMENTED
+    limitations: [exact isolation and durability semantics are engine specific]
+
+rejection_reason_chain:
+  - option: independent-writes
+    because: failure between writes can expose a state that violates the operation invariant
+    supports: [TEST-DBTX-001]
+
+verification:
+  tests: [TEST-DBTX-001]
+  benchmarks: []
+  security_reviews: []
+
+sources: [SRC-DBTX-OFFICIAL-001]
+
+traceability:
+  selected_supported_by: [TEST-DBTX-001, SRC-DBTX-OFFICIAL-001]
+  rejected_supported_by: [TEST-DBTX-001]
+  unresolved_evidence_gaps:
+    - database-specific isolation level behavior
+    - crash durability across storage engines
+
+metadata:
+  created: 2026-08-12
+  reviewed: 2026-08-12
+  supersedes: null
+  superseded_by: null
