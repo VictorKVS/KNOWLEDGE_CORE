@@ -1,0 +1,70 @@
+id: LANG-GO-CONC-001
+kind: language-decision-map
+language: go
+status: foundation
+title: Concurrency Coordination Selection
+
+question:
+  Which concurrency structure gives the smallest reliable design for the workload?
+
+context_questions:
+  - Is concurrency actually required?
+  - What state is shared?
+  - Is work independent or coordinated?
+  - Is ordering required?
+  - What are cancellation and timeout rules?
+  - Is backpressure required?
+  - What bounds exist on goroutines, queues and memory?
+  - Is the workload externally triggerable?
+
+candidates:
+  sequential:
+    consider_when:
+      - concurrency adds no required throughput, latency or isolation benefit
+  mutex_protected_state:
+    consider_when:
+      - a small shared state must be protected directly
+    verify:
+      - lock scope
+      - contention
+      - lifecycle
+  channels:
+    consider_when:
+      - ownership/work coordination is clearer as message flow
+    verify:
+      - channel ownership
+      - close semantics
+      - blocking behavior
+      - capacity
+  bounded_worker_pool:
+    consider_when:
+      - work is parallelizable but resource use must be explicitly bounded
+    verify:
+      - queue capacity
+      - rejection/backpressure policy
+      - cancellation
+      - shutdown
+  external_queue_or_broker:
+    consider_when:
+      - durability, cross-process coordination or operational decoupling is a hard requirement
+    verify:
+      - delivery semantics
+      - idempotency
+      - failure recovery
+
+security_review:
+  - unbounded goroutine creation
+  - unbounded queues
+  - request-amplified work
+  - deadlock/livelock risk
+  - cancellation leaks
+  - shared-state races
+
+selection_rule:
+  Start with the simplest lifecycle that satisfies correctness and resource bounds. Concurrency primitives are implementation tools, not architecture goals.
+
+evidence:
+  claims: []
+  sources: []
+  benchmarks: []
+  decision_memory: []
