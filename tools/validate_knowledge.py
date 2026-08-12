@@ -9,7 +9,7 @@ import yaml
 ROOT = Path(__file__).resolve().parents[1]
 ID_RE = re.compile(r"^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$")
 
-EXCLUDED_PARTS = {"templates", ".github"}
+EXCLUDED_PARTS = {"templates", ".github", ".ai"}
 PROMOTED_STATUSES = {"MEASURED", "VERIFIED", "REUSABLE"}
 
 
