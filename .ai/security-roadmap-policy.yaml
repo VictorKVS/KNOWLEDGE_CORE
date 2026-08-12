@@ -1,0 +1,61 @@
+schema_version: "1.0"
+id: security-roadmap-policy
+name: Security Program and Roadmap Policy
+
+principle: >-
+  A security roadmap converts evidence-backed priority items into executable work without losing the
+  requirement, asset, risk, finding, control and verification chains that justified the work.
+
+inputs:
+  - SEC-PRI
+  - SEC-RISK
+  - security_coverage_gaps
+  - SEC-FIND
+  - SEC-REM
+  - applicable_SEC-REQ
+
+planning_horizons:
+  NOW: active emergency or P0 work
+  NEXT: committed near-term work
+  LATER: justified backlog with review date
+  RESEARCH: evidence acquisition before implementation commitment
+
+work_item_requirements:
+  - source_priority_refs
+  - objective
+  - owner_role
+  - dependencies
+  - target_window
+  - acceptance_criteria
+  - verification_refs_or_plan
+  - expected_risk_or_coverage_effect
+  - evidence_links
+
+scheduling_rules:
+  - P0_preempts_lower_priority_when_resource_conflict_exists
+  - mandatory_deadlines_are_hard_constraints
+  - unresolved_dependencies_block_false_commitment
+  - research_items_do_not_claim_risk_reduction_before_evidence
+  - compensating_controls_are_marked_explicitly
+  - verification_capacity_is_planned_with_implementation_capacity
+
+benefit_accounting:
+  allowed:
+    - requirement_coverage_delta
+    - critical_asset_coverage_delta
+    - control_verification_delta
+    - finding_closure_delta
+    - bounded_risk_reduction
+  forbidden:
+    - double_counting_same_risk_reduction_across_multiple_tasks
+    - claiming_closed_risk_before_retest
+    - converting_unknown_risk_to_zero
+
+roadmap_health:
+  GREEN: committed work has owner, dependencies, acceptance and verification
+  YELLOW: executable but has material uncertainty or dependency
+  RED: deadline/scope/ownership/verification makes commitment non-credible
+
+agent_rule: >-
+  Build the smallest credible plan that addresses the highest justified priorities. Never optimize the
+  roadmap for the appearance of activity or percentage completion.
