@@ -1,0 +1,121 @@
+schema_version: 1
+purpose: Connect real organizational events to all required reassessments, decisions, deadlines, responsible roles, documents, controls, evidence and regulatory actions.
+event_classes:
+  legal_and_regulatory:
+    - law_or_order_changed
+    - standard_changed
+    - regulator_guidance_changed
+    - liability_norm_changed
+  organization:
+    - head_changed
+    - responsible_person_changed
+    - reorganization
+    - new_branch
+    - new_business_process
+    - staffing_change
+  system_and_architecture:
+    - new_system
+    - architecture_change
+    - new_integration
+    - network_boundary_change
+    - cloud_migration
+    - new_remote_access
+    - commissioning
+    - decommissioning
+  information_and_processing:
+    - new_data_category
+    - processing_purpose_change
+    - new_personal_data_processing
+    - new_cross_border_flow
+    - data_flow_change
+    - retention_period_expired
+  CII_and_classification:
+    - CII_object_identified
+    - significance_indicators_changed
+    - GIS_scope_changed
+    - ISPDn_scope_changed
+    - protection_level_or_class_assumptions_changed
+  threat_risk_vulnerability:
+    - new_relevant_threat
+    - new_vulnerability
+    - exploited_vulnerability
+    - risk_threshold_exceeded
+    - control_failure
+    - threat_model_assumption_changed
+  incident:
+    - security_event
+    - computer_attack
+    - computer_incident
+    - personal_data_incident
+    - CII_incident
+    - service_disruption
+  product_and_supplier:
+    - certificate_expiring
+    - certificate_suspended
+    - certificate_restored
+    - certificate_revoked
+    - product_end_of_support
+    - supplier_changed
+    - supplier_incident
+    - contract_expiring
+  assurance:
+    - audit_finding
+    - regulator_finding
+    - failed_security_test
+    - attestation_scope_changed
+    - evidence_expired_or_stale
+  continuity:
+    - backup_failure
+    - restore_test_failure
+    - BIA_change
+    - DR_test_failure
+processing_pipeline:
+  - timestamp_event
+  - identify_affected_organization_system_asset_data_flow
+  - resolve_sources_effective_at_event_time
+  - calculate_applicable_regimes
+  - identify_triggered_requirements
+  - start_independent_normative_deadline_clocks
+  - identify_required_decisions
+  - assign_decision_authority_and_executors
+  - identify_documents_models_registers_and_controls_to_review
+  - determine_notification_and_escalation
+  - execute_and_collect_timestamped_evidence
+  - independently_verify_where_required
+  - recalculate_risk_and_compliance_state
+  - propagate_changes_through_dependency_graph
+  - create_followup_and_next_review
+event_output_fields:
+  - event_id
+  - event_time
+  - affected_nodes
+  - applicable_regimes
+  - triggered_requirements
+  - legal_deadlines
+  - internal_SLAs
+  - accountable_roles
+  - decision_makers
+  - executors
+  - verifiers
+  - notifications
+  - documents_to_change
+  - models_to_reassess
+  - controls_to_retest
+  - certificates_or_products_to_recheck
+  - evidence_required
+  - consequence_exposure_if_missed
+  - residual_risk_change
+  - next_review
+mandatory_cross_links:
+  - governance/organization-roles-and-decision-matrix.yaml
+  - governance/normative-time-obligation-model.yaml
+  - lifecycle/change-destruction-responsibility-model.yaml
+  - legal-consequences/responsibility-and-sanctions-model.yaml
+  - cross-domain/organization-regime-intersections.yaml
+  - products-certification/lifecycle-schema.yaml
+expert_rules:
+  - One event may trigger many obligations and many independent clocks.
+  - An event must be evaluated against the legal version effective at event time.
+  - A change is not closed merely because the technical implementation is complete; required documents, evidence, approvals and reassessments must also be closed.
+  - Event impact must propagate to dependent threat models, risk assessments, classifications, controls, documents and audit scope.
+  - If the system cannot determine applicability or timing with verified evidence, it must create an expert-review task rather than guess.
