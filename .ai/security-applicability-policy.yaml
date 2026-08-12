@@ -1,0 +1,91 @@
+schema_version: "1.0"
+id: security-applicability-policy
+name: Security Regulatory Applicability Policy
+
+principle: >-
+  Regulatory applicability is a reasoned conclusion over verified facts and verified normative sources.
+  Never infer applicability from organization name, industry label, technology keyword, or similarity alone.
+
+states:
+  APPLIES:
+    meaning: all material applicability conditions are satisfied by verified facts
+  DOES_NOT_APPLY:
+    meaning: a verified exclusion or unsatisfied mandatory condition is established
+  CONDITIONAL:
+    meaning: applicability depends on a condition that is explicitly represented and not yet resolved
+  UNKNOWN:
+    meaning: one or more decision-critical facts or normative interpretations are missing
+
+fact_domains:
+  organization:
+    - legal_form
+    - ownership_or_public_status
+    - regulator_or_sector
+    - roles_and_licenses
+  information_system:
+    - system_type
+    - GIS_status
+    - ISPDn_status
+    - KII_status
+    - significant_KII_status
+    - ASU_TP_status
+    - internet_exposure
+    - deployment_model
+  data:
+    - personal_data_processed
+    - special_categories
+    - biometric_data
+    - subject_categories
+    - subject_count_range
+    - cross_border_processing
+    - state_secret_or_restricted_information
+  processing:
+    - processing_purposes
+    - processing_operations
+    - operator_or_processor_role
+    - third_party_processing
+    - remote_access
+  cryptography:
+    - SKZI_used
+    - cryptographic_protection_required
+    - regulated_crypto_channels
+  geography:
+    - jurisdiction
+    - regions
+    - infrastructure_location
+  KII:
+    - subject_KII
+    - KII_objects
+    - categorization_status
+    - significance_category
+    - critical_processes
+
+rule_contract:
+  each_rule_requires:
+    - id
+    - normative_basis_refs
+    - decision_expression
+    - required_fact_refs
+    - result_if_true
+    - result_if_false_or_unknown
+    - explanation_template
+    - version_or_effective_period
+
+hard_rules:
+  - no_APPLIES_without_normative_basis
+  - no_DOES_NOT_APPLY_without_explicit_reason
+  - missing_critical_fact_returns_UNKNOWN_or_CONDITIONAL
+  - superseded_source_cannot_silently_drive_current_applicability
+  - sector_membership_alone_is_not_sufficient_unless_normative_rule_says_so
+  - KII_and_personal_data_branches_are_evaluated_independently_then_combined
+  - GIS_ISPDn_KII_labels_must_not_be_guessed_from_system_name
+  - result_must_preserve_fact_and_source_traceability
+
+combination_rules:
+  multiple_applicable_branches: union_requirements_with_deduplication_and_provenance
+  conflicting_rules: create_CON_record_and_block_automatic_finalization
+  unknown_high_impact_branch: keep_unknown_visible_and_generate_RQ_if_decision_material
+
+agent_rule: >-
+  Ask only for facts capable of changing applicability. When evidence is insufficient, return UNKNOWN rather
+  than forcing a binary compliance answer.
