@@ -1,0 +1,58 @@
+schema_version: "1.0"
+id: security-coverage-policy
+name: Security Coverage Engine Policy
+
+principle: >-
+  Security coverage is the ability to trace applicable requirements and material threats through controls,
+  verification and evidence. Coverage is not the number of controls, scanners, policies or checklist rows.
+
+coverage_dimensions:
+  requirement_to_control:
+    question: does each applicable mandatory or conditional requirement map to one or more controls?
+  control_to_check:
+    question: does each material control have one or more verification checks?
+  check_to_evidence:
+    question: does each executed material check produce evidence sufficient for its bounded question?
+  asset_to_threat:
+    question: are critical/high-value assets covered by relevant threat analysis?
+  threat_to_control:
+    question: do material threats map to preventive, detective, corrective or compensating controls?
+  finding_to_remediation:
+    question: does each confirmed finding have an explicit disposition?
+  remediation_to_retest:
+    question: does each implemented remediation have retest evidence before closure?
+
+states:
+  COVERED:
+    meaning: required trace exists and evidence is healthy for the applicable context
+  PARTIAL:
+    meaning: trace exists but has gaps, stale evidence, limited applicability or unverified branches
+  GAP:
+    meaning: required trace is absent
+  NOT_APPLICABLE:
+    meaning: explicitly justified outside applicability
+  UNKNOWN:
+    meaning: applicability or evidence is insufficient to classify
+
+hard_rules:
+  - mandatory_requirement_without_control_is_GAP
+  - material_control_without_verification_is_GAP
+  - critical_asset_without_threat_analysis_is_GAP
+  - material_threat_without_control_or_explicit_risk_acceptance_is_GAP
+  - closed_finding_without_valid_retest_evidence_is_GAP
+  - risk_acceptance_is_disposition_not_control_coverage
+  - scanner_presence_is_not_coverage
+  - documentation_presence_is_not_implementation_evidence
+  - percentage_summary_must_preserve_underlying_gaps
+
+priority:
+  order:
+    - critical_assets_and_mandatory_requirements
+    - high_impact_threats
+    - open_findings_and_failed_retests
+    - stale_or_unknown_evidence
+    - lower_criticality_coverage_gaps
+
+agent_rule: >-
+  Report uncovered paths explicitly. Never improve a coverage score by excluding an applicable requirement,
+  asset, threat or finding without a traceable NOT_APPLICABLE or risk decision.
