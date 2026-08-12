@@ -1,0 +1,87 @@
+schema_version: 1
+id: SEC-SNAPSHOT-EXPORT-SCHEMA-0001
+purpose: >-
+  Define the canonical producer-side manifest used to export an immutable, traceable slice
+  of Security Knowledge for governed consumers such as PX00/FATHER without copying the
+  canonical knowledge graph into the runtime repository.
+status: ACTIVE
+
+manifest_required_fields:
+  - manifest_id
+  - knowledge_space_id
+  - canonical_repository
+  - repository_commit_sha
+  - content_root
+  - selection_request_ref
+  - selected_objects
+  - manifest_digest
+  - hash_algorithm
+
+manifest_semantics:
+  knowledge_space_id: KB-SECURITY
+  canonical_repository: VictorKVS/KNOWLEDGE_CORE
+  content_root: security-knowledge/
+  repository_commit_sha: exact_40_hex_git_commit
+  hash_algorithm: sha256
+
+selected_object_required_fields:
+  - object_id
+  - version_id
+  - object_type
+  - repository_relative_path
+  - content_digest_sha256
+  - knowledge_state
+  - selection_reason
+
+selected_object_optional_fields:
+  - source_version_ref
+  - source_locator_ref
+  - applicability_ref
+  - control_ref
+  - review_ref
+  - freshness_state
+  - classification
+
+knowledge_states:
+  - CANDIDATE
+  - SOURCE_VERIFIED
+  - ATOMIZED
+  - APPLICABILITY_REVIEWED
+  - CONTROL_MAPPED
+  - EXPERT_REVIEWED
+  - VERIFIED
+  - STALE
+  - DISPUTED
+  - SUPERSEDED
+
+producer_invariants:
+  - Repository commit must be immutable; branch/tag names cannot be used as historical snapshot identity.
+  - Every selected object must exist at the pinned repository commit.
+  - content_digest_sha256 must be computed from the exact exported object representation used by the consumer.
+  - Object ID and version ID are logical identities; repository path is storage metadata only.
+  - Retrieval rank or semantic similarity never changes knowledge_state to VERIFIED.
+  - VERIFIED objects must retain primary/admitted source lineage and exact locator where the object is a material normative/factual claim or requirement.
+  - Selection reason must explain why the object was included for the request; selection is distinct from truth/verification.
+  - Manifest generation must not silently omit stale, disputed or contradictory objects when they are material to the requested scope.
+  - Manifest digest covers repository commit, knowledge space, content root, request reference and sorted selected object identities/versions/digests/states.
+  - Re-running the same selection against a different repository commit produces a different manifest identity or digest when any material state changes.
+  - Export does not grant runtime authority, approval, compliance status or tool capability.
+
+consumer_contract:
+  target_contract: PX00/schemas/KNOWLEDGE_SNAPSHOT.yaml
+  handoff_chain: >-
+    KNOWLEDGE_REQUEST -> KNOWLEDGE_CORE selection -> SEC snapshot export manifest ->
+    PX00 KNOWLEDGE_SNAPSHOT validation -> CONTEXT_PACKAGE -> RUN
+  required_consumer_checks:
+    - repository_commit_sha is immutable and valid
+    - every object digest is valid SHA-256
+    - knowledge_space_id matches requested binding
+    - manifest/object snapshot refs participate in ContextPackage hash
+    - historical replay never silently follows a newer repository head
+
+first_integration_target:
+  product: SEC-PROD-0001
+  runtime: VictorKVS/PX00
+  scope: >-
+    One small VERIFIED Security Knowledge slice sufficient to prove cross-repository selection,
+    snapshot pinning, ContextPackage construction and historical replay before broad integration.
