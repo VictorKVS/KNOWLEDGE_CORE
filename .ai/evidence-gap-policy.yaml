@@ -1,0 +1,58 @@
+schema_version: "1.0"
+id: evidence-gap-policy
+name: Evidence Gap and Research Queue Policy
+
+principle: >-
+  Missing evidence must become an explicit, bounded research task. The system should ask for the
+  cheapest evidence capable of changing the decision, not request broad research by default.
+
+gap_types:
+  missing_source:
+    examples: [no_official_reference, undocumented_version_behavior]
+  missing_measurement:
+    examples: [no_benchmark, unknown_break_even, unknown_resource_cost]
+  missing_test:
+    examples: [untested_failure_path, unverified_invariant]
+  missing_security_review:
+    examples: [unknown_abuse_case, unreviewed_trust_boundary]
+  missing_context:
+    examples: [unknown_scale, unknown_runtime_version, unknown_delivery_semantics]
+  contradiction:
+    examples: [open_conflicting_claims, incompatible_benchmarks]
+  stale_evidence:
+    examples: [superseded_source, obsolete_runtime_measurement]
+  reproducibility_gap:
+    examples: [missing_environment, missing_dataset, missing_method]
+
+priority_model:
+  factors:
+    decision_criticality: [low, medium, high, critical]
+    uncertainty: [low, medium, high]
+    reversibility: [easy, moderate, hard]
+    evidence_cost: [low, medium, high]
+    blast_radius: [local, component, system, organization]
+  rule: >-
+    Prioritize gaps that can change a high-impact or hard-to-reverse decision. Prefer low-cost decisive
+    evidence before expensive exhaustive research.
+
+research_routes:
+  programming_agent:
+    suitable_for: [unit_test, integration_test, implementation_spike, language_behavior_check]
+  analyst_research_agent:
+    suitable_for: [literature_review, algorithm_comparison, benchmark_methodology, disputed_claim]
+  security_specialist:
+    suitable_for: [threat_analysis, abuse_case_review, security_control_validation]
+  architect:
+    suitable_for: [system_boundary, cross_component_tradeoff, operational_constraint]
+
+closure_requirements:
+  - produced_evidence_refs
+  - result_summary
+  - applicability
+  - limitations
+  - affected_claims_or_decisions
+  - contradiction_update_when_relevant
+
+agent_rule: >-
+  Research is not a ritual. Create a research task only when the missing fact can materially affect the
+  route, decision, confidence, safety, cost or applicability.
