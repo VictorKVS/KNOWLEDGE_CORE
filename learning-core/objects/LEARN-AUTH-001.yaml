@@ -1,0 +1,66 @@
+id: LEARN-AUTH-001
+title: Authentication and Authorization Integration
+kind: learning-object
+maturity: drafted
+levels: [junior, middle, senior]
+domains: [security, api, integration]
+languages: [python, go, cpp]
+
+problem:
+  summary: Integrate identity and access decisions without mixing authentication, authorization and business policy.
+
+junior:
+  focus:
+    - distinguish authenticated identity from permission
+    - consume established framework primitives
+    - avoid implementing custom authentication protocols
+    - test allowed and denied paths
+
+middle:
+  focus:
+    - define authorization checks near protected actions
+    - separate identity extraction from policy evaluation
+    - avoid scattered role-string checks
+    - handle missing, expired or malformed credentials safely
+
+senior:
+  focus:
+    - define trust boundaries and policy ownership
+    - minimize privilege and implicit authority
+    - design for revocation, auditability and policy evolution
+    - question whether identity should cross every internal boundary
+
+core_principles:
+  - authentication_answers_who
+  - authorization_answers_may_they_do_this
+  - business_policy_is_not_identity_parsing
+  - deny_safely_when_context_is_missing
+  - do_not_build_custom_crypto_or_auth_protocols_without_specialist_need
+
+anti_patterns:
+  - scattered_role_checks
+  - trusting_client_supplied_identity_fields
+  - authorization_only_in_ui
+  - logging_sensitive_tokens
+  - treating_authentication_as_authorization
+
+production_view:
+  requirements:
+    - explicit_identity_source
+    - explicit_policy_point
+    - least_privilege
+    - negative_tests
+    - audit_safe_events
+    - secret_redaction
+
+security_review:
+  required: true
+
+analyst_handoff:
+  required_when:
+    - protocol_or_standard_comparison_is_needed
+    - threat_model_is_disputed
+  evidence_refs: []
+
+reusable_lessons:
+  - keep_identity_mechanics_separate_from_permission_policy
