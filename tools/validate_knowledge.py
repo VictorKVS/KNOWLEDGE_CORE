@@ -8,6 +8,7 @@ import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
 STABLE_ID_RE = re.compile(r"^[A-Z][A-Z0-9]*(?:-[A-Z0-9]+)+$")
+TRACE_REF_RE = re.compile(r"^(CLM|SRC|BENCH|EXP|TEST|SEC|ADR|DM)-[A-Z0-9-]+$")
 
 EXCLUDED_PARTS = {"templates", ".github"}
 STRICT_ID_ROOTS = {
@@ -23,6 +24,7 @@ STRICT_ID_ROOTS = {
 }
 PROMOTED_STATUSES = {"MEASURED", "VERIFIED", "REUSABLE"}
 EVIDENCE_STATES = {"DOCUMENTED", "MEASURED", "DERIVED", "EXPERT_ESTIMATE", "UNKNOWN"}
+MATURE_DECISION_STATUSES = {"REVIEWED", "VERIFIED", "APPROVED", "ADOPTED", "REUSABLE"}
 
 
 def iter_yaml_files():
@@ -98,6 +100,51 @@ def validate_claim(path: Path, data: dict, errors: list[str]):
         errors.append(f"{path}: EXPERT_ESTIMATE requires visible rationale in reasoning.derivation")
 
 
+def _validate_reason_items(path: Path, label: str, items, errors: list[str]):
+    if not isinstance(items, list):
+        errors.append(f"{path}: {label} must be a list")
+        return
+    for idx, item in enumerate(items):
+        if not isinstance(item, dict):
+            errors.append(f"{path}: {label}[{idx}] must be an object")
+            continue
+        if not item.get("because"):
+            errors.append(f"{path}: {label}[{idx}] requires because")
+        supports = item.get("supports") or []
+        if not supports:
+            errors.append(f"{path}: {label}[{idx}] requires at least one traceable support reference")
+        for ref in supports:
+            if not TRACE_REF_RE.match(str(ref)):
+                errors.append(f"{path}: {label}[{idx}] has invalid support reference {ref}")
+
+
+def validate_decision(path: Path, data: dict, errors: list[str]):
+    status = str(data.get("status", "")).upper()
+    decision = data.get("decision") or {}
+    selected = decision.get("selected")
+    reasons = data.get("reason_chain") or []
+    rejections = data.get("rejection_reason_chain") or []
+
+    if status in MATURE_DECISION_STATUSES:
+        if not selected:
+            errors.append(f"{path}: mature decision requires decision.selected")
+        if not reasons:
+            errors.append(f"{path}: mature decision requires reason_chain")
+        else:
+            _validate_reason_items(path, "reason_chain", reasons, errors)
+
+        rejected_options = decision.get("rejected_options") or []
+        if rejected_options:
+            if not rejections:
+                errors.append(f"{path}: mature decision with rejected_options requires rejection_reason_chain")
+            else:
+                _validate_reason_items(path, "rejection_reason_chain", rejections, errors)
+                explained = {str(item.get("option")) for item in rejections if isinstance(item, dict)}
+                for option in rejected_options:
+                    if str(option) not in explained:
+                        errors.append(f"{path}: rejected option {option} lacks causal rejection reason")
+
+
 def validate_decision_memory(path: Path, data: dict, errors: list[str]):
     status = str(data.get("status", "")).upper()
     reusability = str(data.get("reusability", "")).lower()
@@ -152,6 +199,8 @@ def main() -> int:
                 validate_source(rel, data, errors)
             elif root == "claims":
                 validate_claim(rel, data, errors)
+            elif root == "decisions":
+                validate_decision(rel, data, errors)
 
             if str(data.get("status", "")).upper() == "MEASURED" and root not in {"decision-memory", "claims"}:
                 benchmark_id = data.get("benchmark_id") or data.get("benchmark")
