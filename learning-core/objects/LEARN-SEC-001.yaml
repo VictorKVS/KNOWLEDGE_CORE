@@ -1,0 +1,25 @@
+schema_version: "1.0"
+id: LEARN-SEC-001
+title: Trust Boundary Validation
+kind: learning-object
+status: drafted
+domains: [security, defensive_programming]
+levels:
+  junior:
+    goal: validate untrusted input with explicit constraints
+  middle:
+    goal: place validation at the correct boundary and avoid duplicate contradictory checks
+  senior:
+    goal: define authority, abuse cases, resource budgets and failure policy across the system
+core_idea: Validate where trust changes, using constraints derived from the contract rather than arbitrary checks.
+elegant_view: Make the trust boundary visible and keep validation rules close to the authoritative contract.
+production_view:
+  requires: [schema_or_contract, size_limits, type_and_range_checks, failure_behavior, tests, logging_safety]
+anti_patterns: [validate_everywhere, trust_client_side_validation, unlimited_input, log_sensitive_payloads]
+security:
+  required: true
+  concerns: [injection, resource_exhaustion, malformed_input, confused_deputy]
+analyst_handoff:
+  required_when: [limits_require_capacity_research, protocol_claims_are_disputed]
+reusable_lessons:
+  - validation_is_a_boundary_policy_not_a_scattering_of_if_statements
