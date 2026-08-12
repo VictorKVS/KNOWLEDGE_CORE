@@ -1,0 +1,70 @@
+schema_version: "1.0"
+id: agent-query-api-contract
+name: Father Knowledge Query API Contract
+
+principle: >-
+  Father and specialist agents access knowledge through stable semantic operations, not repository paths.
+  Repository files remain canonical evidence; the query layer performs discovery, ranking, graph expansion
+  and Decision Brief assembly without becoming a second source of truth.
+
+operations:
+  resolve_context:
+    input: task_description_and_known_context
+    output: CTX
+  search_knowledge:
+    input: query_context_filters
+    output: ranked_candidate_refs
+  explain_candidate:
+    input: candidate_ref
+    output: reason_chain_health_applicability_conflicts_gaps
+  get_record:
+    input: stable_record_id
+    output: canonical_record
+  get_neighborhood:
+    input: stable_record_id_depth_edge_filters
+    output: graph_slice
+  get_impacts:
+    input: stable_record_id
+    output: downstream_affected_records
+  request_decision_brief:
+    input: CTX_agent_role_constraints
+    output: BRIEF
+  submit_outcome:
+    input: implementation_and_verification_result
+    output: OUT_and_promotion_candidates
+  propose_knowledge_change:
+    input: XDP_or_domain_draft
+    output: review_route
+
+response_envelope:
+  required:
+    - request_id
+    - operation
+    - result
+    - canonical_refs
+    - evidence_health
+    - warnings
+    - generated_at
+  optional:
+    - ranking_explanation
+    - contradiction_refs
+    - research_task_refs
+    - required_reviews
+
+hard_rules:
+  - stable_ids_not_paths_are_public_identity
+  - canonical_record_wins_over_cached_index
+  - query_layer_must_surface_RED_and_OPEN_CONFLICT_blocks
+  - no_FAST_response_on_hard_context_mismatch
+  - no_security_execution_without_required_authorization_records
+  - generated_summary_must_preserve_canonical_refs
+  - write_operations_create_records_or_proposals_never_silent_mutations
+
+future_transport:
+  initial: local_cli_or_python_library
+  service: HTTP_JSON
+  optional: MCP_or_agent_tool_adapter
+
+agent_rule: >-
+  Treat API results as an evidence-backed navigation and decision product. For audit, explanation or disputed
+  conclusions, follow canonical_refs back to repository records and primary sources.
