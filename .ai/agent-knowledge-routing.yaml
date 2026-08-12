@@ -1,0 +1,64 @@
+schema_version: "1.0"
+id: agent-knowledge-routing
+name: Father Agent Knowledge Routing
+
+principle: >-
+  Father agents do not own private hidden knowledge silos. Each agent declares primary and supporting
+  knowledge domains, reads through the common evidence/routing layer, and writes back only through the
+  domain rules and review boundaries.
+
+repositories:
+  current:
+    knowledge_core: VictorKVS/KNOWLEDGE_CORE
+  future_split_targets:
+    programming: VictorKVS/PROGRAMMING_KB
+    security: VictorKVS/SECURITY_KB
+    architecture: VictorKVS/ARCHITECTURE_KB
+    devsecops: VictorKVS/DEVSECOPS_KB
+    product: VictorKVS/PRODUCT_KB
+    research: VictorKVS/RESEARCH_KB
+    osint: VictorKVS/OSINT_KB
+    ai_agents: VictorKVS/AI_AGENTS_KB
+
+agents:
+  analyst:
+    primary_domains: [research, algorithms, evidence, benchmarks]
+    supporting_domains: [programming, architecture, security, product]
+    may_promote: [CLM, BENCH, EXP]
+  architect:
+    primary_domains: [architecture, system-design]
+    supporting_domains: [programming, security, devsecops, product]
+    may_promote: [ADR]
+  programming:
+    primary_domains: [programming]
+    supporting_domains: [algorithms, architecture, security, devsecops]
+    languages: [python, go, cpp]
+    may_promote: [TEST, implementation_observation, language_specific_lesson]
+  security:
+    primary_domains: [security]
+    supporting_domains: [architecture, devsecops, programming, research]
+    may_promote: [SEC-REQ, SEC-CTRL, SEC-CHECK, SEC-FIND]
+  pentest:
+    primary_domains: [security.pentest]
+    supporting_domains: [security.weaknesses, security.threats, security.controls, security.external-mappings]
+    execution_requires: [SEC-ENG, SEC-RULE]
+    may_promote: [SEC-FIND, SEC-RETEST]
+  devsecops:
+    primary_domains: [devsecops]
+    supporting_domains: [programming, security, architecture]
+  product:
+    primary_domains: [product]
+    supporting_domains: [research, architecture, security]
+
+routing_rules:
+  - query_common_index_first
+  - filter_by_agent_authorized_domains
+  - apply_evidence_health
+  - apply_context_match
+  - open_canonical_records_for_selected_candidates
+  - preserve_cross_domain_evidence_links
+  - delegate_when_domain_ownership_requires_it
+
+migration_rule: >-
+  A future repository split must preserve stable record IDs and graph links. Physical repository location
+  may change; logical knowledge identity must not.
