@@ -1,13 +1,19 @@
-schema_version: 1
+schema_version: 2
 entity: professional_domain
+doctrine_ref: father/domain-knowledge/PROFESSIONAL_EVIDENCE_DOCTRINE.md
+decision_contract_ref: father/domain-knowledge/professional-decision-schema.yaml
 required_layers:
   - sources
   - concepts
   - requirements
+  - constraints
+  - metrics
   - rules
   - workflows
   - checklists
   - evidence
+  - alternatives
+  - decisions
   - implementations
   - tools
   - risks
@@ -15,19 +21,27 @@ required_layers:
   - competencies
 layers:
   sources:
-    includes: [laws, regulations, standards, textbooks, official_documentation, methodologies, research, vendor_guides]
+    includes: [laws, regulations, standards, textbooks, official_documentation, methodologies, research, vendor_guides, internal_operating_history]
   concepts:
     includes: [definitions, entities, relationships, formulas, assumptions, constraints]
   requirements:
-    includes: [mandatory, contractual, standard_based, design, operational]
+    includes: [mandatory, contractual, business, standard_based, design, operational, quality, security, safety, resource]
+  constraints:
+    includes: [law, budget, time, people, infrastructure, data, interoperability, performance, reliability, security, safety, vendor, lifecycle, energy, supply_chain, maintainability]
+  metrics:
+    includes: [definitions, units, thresholds, targets, measurement_methods, data_lineage, applicability, limitations, alternative_metrics]
   rules:
-    includes: [decision_rules, applicability, calculations, acceptance_criteria, exceptions]
+    includes: [decision_rules, applicability, calculations, acceptance_criteria, exceptions, source_precedence, conflict_resolution]
   workflows:
     includes: [professional_processes, lifecycle, roles, inputs, outputs, approvals]
   checklists:
     includes: [design_review, implementation_review, operations, audit, acceptance, troubleshooting]
   evidence:
-    includes: [documents, measurements, logs, calculations, drawings, tests, screenshots, approvals]
+    includes: [documents, measurements, logs, calculations, drawings, tests, benchmarks, experiments, screenshots, approvals, incidents, near_misses]
+  alternatives:
+    includes: [candidate_options, applicability, hard_gate_elimination, cost, performance, reliability, risks, uncertainty, tradeoffs, rejected_reasons]
+  decisions:
+    includes: [professional_decision_record, rationale, assumptions, uncertainty, chosen_disposition, dissent, review_trigger, post_implementation_outcome]
   implementations:
     includes: [patterns, reference_architectures, examples, alternatives, anti_patterns]
   tools:
@@ -42,11 +56,22 @@ common_node_pipeline:
   - SOURCE
   - CHUNK
   - ATOMIC_KNOWLEDGE
+  - REQUIREMENT_OR_CONSTRAINT
   - RELATION
-  - RULE
-  - CHECK
-  - EVIDENCE
+  - RULE_OR_METRIC
+  - OPTION
+  - EVIDENCE_OR_CALCULATION
+  - PROFESSIONAL_DECISION
   - IMPLEMENTATION
+  - CHECK
   - OUTCOME
+  - LESSON
 traceability:
-  rule: Every recommendation produced by Father should be able to trace back to evidence, a professional rule, or an explicitly labeled inference.
+  rule: >-
+    Every material recommendation produced by FATHER must trace to evidence and a professional
+    rule/metric/requirement/constraint, or be explicitly labeled as an assumption or inference.
+    Material decisions must preserve alternatives, tradeoffs and rejected reasons at evidence depth
+    appropriate to decision materiality.
+materiality_rule:
+  source: father/domain-knowledge/PROFESSIONAL_EVIDENCE_DOCTRINE.md
+  classes: [D0_LOCAL_CONVENTIONAL, D1_IMPLEMENTATION, D2_ARCHITECTURE_PRODUCT, D3_REGULATED_SAFETY_CRITICAL]
