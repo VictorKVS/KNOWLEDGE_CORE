@@ -1,0 +1,23 @@
+schema_version: "1.0"
+id: LEARN-SUPPLY-001
+title: Dependency and Build Hygiene
+kind: learning-object
+status: drafted
+domains: [dependencies, build, supply_chain, production]
+levels:
+  junior:
+    goal: use pinned or controlled dependencies and reproducible project setup
+  middle:
+    goal: evaluate dependency necessity, maintenance, compatibility and vulnerability impact
+  senior:
+    goal: minimize supply-chain attack surface and preserve reproducibility, provenance and rollback
+core_idea: Every dependency is borrowed capability plus borrowed risk.
+elegant_view: Prefer a small dependency graph and boring builds whose inputs are explicit.
+production_view:
+  requires: [version_control, lock_or_equivalent, provenance, vulnerability_review, reproducible_build_path, rollback_plan]
+anti_patterns: [dependency_for_trivial_code, unpinned_critical_dependency, build_magic, mutable_external_artifacts]
+security:
+  required: true
+  concerns: [dependency_confusion, compromised_release, transitive_risk, build_environment_tampering]
+reusable_lessons:
+  - deleting_a_dependency_can_be_a_security_and_maintenance_optimization
