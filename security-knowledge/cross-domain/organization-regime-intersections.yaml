@@ -1,0 +1,75 @@
+schema_version: 1
+purpose: Model simultaneous applicability of multiple security/legal regimes to one organization, system, asset, data flow or incident. Prevent siloed compliance analysis and preserve every triggered obligation.
+intersection_engine:
+  inputs:
+    - organization_profile
+    - asset_profile
+    - information_system_profile
+    - data_categories
+    - CII_status_and_category
+    - GIS_status_and_class
+    - ISPDn_status_and_protection_level
+    - sector
+    - incident_facts
+    - architecture_and_data_flows
+  output:
+    - applicable_regimes
+    - triggered_requirements
+    - overlapping_controls
+    - distinct_notifications
+    - shared_evidence
+    - conflicts
+    - gaps
+    - unified_response_plan
+regimes:
+  PERSONAL_DATA:
+    anchors: [FZ-152, PP-RF-1119-2012, FSTEK-21, FSB-378-2014, ROSKOMNADZOR]
+  CII:
+    anchors: [FZ-187, PRESIDENT-250-2022, FSTEK-235-2017, FSTEK-239-2017, FSB_GOSSOPKA]
+  GIS:
+    anchors: [FZ-149, FSTEK-17, applicable_FSB_crypto]
+  CRYPTOGRAPHY:
+    anchors: [FSB-378-2014, FSB-117-2025, other_verified_FSB_crypto]
+  SECTOR:
+    anchors: [sector_regulator_requirements]
+example_intersection:
+  id: INCIDENT-CII-ISPDN-001
+  facts:
+    system_is_ISPDn: true
+    system_or_asset_is_CII: true
+    computer_incident: true
+    personal_data_compromise_possible: true
+  triggered_regimes:
+    - PERSONAL_DATA
+    - CII
+  analysis_required:
+    - classify incident under each regime independently
+    - determine FSB/GosSOPKA obligations from CII facts
+    - determine personal-data incident obligations from FZ-152 and Roskomnadzor/FSB rules
+    - determine whether notification recipients, deadlines and content differ
+    - preserve one evidence package where reusable while tracking each legal obligation separately
+    - map failed controls to both CII and ISPDn requirement sets
+    - update threat model and residual risk for both regimes
+    - create one coordinated remediation plan without erasing separate compliance obligations
+relations:
+  - type: REGIME_INTERSECTS_WITH
+  - type: SAME_ASSET
+  - type: SAME_SYSTEM
+  - type: SAME_INCIDENT
+  - type: SAME_DATA_FLOW
+  - type: REQUIREMENT_OVERLAPS
+  - type: CONTROL_SHARED_BY
+  - type: EVIDENCE_REUSED_BY
+  - type: NOTIFICATION_DISTINCT_FROM
+  - type: DEADLINE_DISTINCT_FROM
+  - type: CONFLICTS_WITH
+  - type: DEPENDS_ON
+expert_rules:
+  - Applicability is evaluated per organization, system, asset, data flow and event; never only per organization name.
+  - One system may simultaneously be an ISPDn, part of a GIS and an object/component relevant to CII analysis.
+  - One incident may trigger several reporting and response regimes.
+  - Do not deduplicate recipients, deadlines or legal notifications merely because they arise from the same incident.
+  - Controls, technical actions and evidence may be unified where substantively equivalent.
+  - Each reused evidence artifact must retain links to every obligation it supports.
+  - If regimes impose different strictness, preserve both source requirements and calculate the implementation needed to satisfy the applicable combination.
+  - Conflicts or ambiguous intersections require explicit expert review rather than silent precedence assumptions.
