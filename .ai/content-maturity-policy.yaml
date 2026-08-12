@@ -1,0 +1,42 @@
+schema_version: "1.0"
+id: content-maturity-policy
+name: Knowledge Content Maturity Policy
+
+states:
+  planned:
+    meaning: catalog_position_exists
+  drafted:
+    requires: [problem, learning_goal, level_scope]
+  tested:
+    requires: [implementation_or_executable_example, tests]
+  evidence_linked:
+    requires: [traceable_claims_or_decision_brief]
+  production_reviewed:
+    requires: [security_review, failure_review, maintainability_review]
+  reusable:
+    requires:
+      - tested
+      - evidence_linked
+      - production_reviewed
+      - applicability_constraints
+      - reusable_lessons
+
+promotion_rules:
+  - never_promote_for_documentation_volume_alone
+  - never_mark_reusable_because_code_looks_elegant
+  - measured_performance_requires_benchmark_reference
+  - research_heavy_algorithm_claims_require_analyst_evidence
+  - security_critical_claims_require_security_review
+  - stale_version_specific_content_must_be_revalidated
+
+site_badges:
+  planned: roadmap
+  drafted: draft
+  tested: tested
+  evidence_linked: evidence
+  production_reviewed: production-reviewed
+  reusable: verified-reusable
+
+agent_rule: >-
+  Prefer mature reusable knowledge for FAST PATH. Draft material may guide exploration but must
+  not silently inherit the confidence of tested and evidence-linked records.
