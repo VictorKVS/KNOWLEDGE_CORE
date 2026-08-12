@@ -1,0 +1,49 @@
+schema_version: "1.0"
+id: SEC-APRULE-RU-UP250-GOVERNANCE
+kind: security-applicability-rule
+status: PROPOSED
+
+title: Applicability of the Presidential Decree No. 250 governance branch
+jurisdiction: RU
+
+basis:
+  official_publication:
+    document: Presidential Decree of 01.05.2022 No. 250
+    publication_number: "0001202205010023"
+  amendment_note: >-
+    The decree must be reviewed together with later amendments before this rule can be promoted beyond PROPOSED.
+
+conditions:
+  all:
+    - fact: organization.within_decree_250_scope
+      operator: equals
+      value: true
+
+result:
+  when_true: APPLIES
+  activate_branches:
+    - RU/GOVERNANCE/UP-250
+  when_false: UNKNOWN
+  false_reason: >-
+    Scope must be established from the verified current text and organizational facts; organization type alone is insufficient.
+
+missing_fact_behavior:
+  result: UNKNOWN
+  required_facts:
+    - organization.within_decree_250_scope
+    - organization.governance_type
+    - organization.owner_or_supervising_body
+
+explanation:
+  short: >-
+    This rule activates the organizational information-security governance branch only after scope under the current decree is established.
+  limitations:
+    - Does not itself assign a specific job title or organizational structure without extracting the exact current requirement.
+    - Does not substitute for KII, personal-data or GIS applicability analysis.
+
+review:
+  legal_review_required: true
+  security_review_required: true
+
+agent_rule: >-
+  Governance obligations must be extracted from the verified current decree text; do not turn remembered wording into a mature SEC-REQ.
