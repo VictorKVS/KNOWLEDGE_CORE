@@ -1,0 +1,45 @@
+name: Evidence Health
+
+on:
+  push:
+    paths:
+      - 'sources/**'
+      - 'claims/**'
+      - 'tests/**'
+      - 'benchmarks/**'
+      - 'experiments/**'
+      - 'decisions/**'
+      - 'decision-memory/**'
+      - 'tools/evidence_health.py'
+      - '.ai/evidence-health-policy.yaml'
+      - '.github/workflows/evidence-health.yml'
+  pull_request:
+    paths:
+      - 'sources/**'
+      - 'claims/**'
+      - 'tests/**'
+      - 'benchmarks/**'
+      - 'experiments/**'
+      - 'decisions/**'
+      - 'decision-memory/**'
+      - 'tools/evidence_health.py'
+      - '.ai/evidence-health-policy.yaml'
+      - '.github/workflows/evidence-health.yml'
+  workflow_dispatch:
+
+jobs:
+  evidence-health:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install pyyaml
+      - name: Build evidence health report
+        run: python tools/evidence_health.py
+      - name: Upload evidence health report
+        uses: actions/upload-artifact@v4
+        with:
+          name: evidence-health-report
+          path: reports/evidence-health.json
