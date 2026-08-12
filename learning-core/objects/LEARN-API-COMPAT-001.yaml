@@ -1,0 +1,54 @@
+id: LEARN-API-COMPAT-001
+title: API Compatibility and Versioning
+kind: learning-object
+maturity: drafted
+levels: [junior, middle, senior]
+domains: [api, compatibility, integration]
+languages: [python, go, cpp]
+
+problem:
+  summary: Evolve interfaces without surprising consumers or turning versioning into permanent duplication.
+
+junior:
+  focus:
+    - follow the declared contract
+    - avoid silent response-shape changes
+    - add tests for expected inputs and outputs
+
+middle:
+  focus:
+    - distinguish additive from breaking changes
+    - preserve compatibility intentionally
+    - use adapters or deprecation paths when needed
+    - test old and new consumers where relevant
+
+senior:
+  focus:
+    - define compatibility promises and support horizon
+    - minimize long-lived parallel versions
+    - decide whether evolution belongs in schema, protocol, endpoint or translation boundary
+    - design deprecation, migration and rollback together
+
+core_principles:
+  - compatibility_is_a_product_and_engineering_contract
+  - version_only_when_a_real_boundary_requires_it
+  - deprecation_without_migration_is_not_a_plan
+  - backward_compatibility_has_operational_cost
+
+anti_patterns:
+  - version_every_minor_change
+  - silent_breaking_change
+  - permanent_v1_v2_v3_duplication
+  - client_specific_server_hacks
+  - undocumented_deprecation
+
+production_view:
+  requirements:
+    - compatibility_tests
+    - deprecation_notes
+    - migration_path
+    - rollback_consideration
+    - consumer_impact_review
+
+reusable_lessons:
+  - make_compatibility_pressure_explicit_before_adding_versions
