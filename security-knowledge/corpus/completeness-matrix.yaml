@@ -1,0 +1,82 @@
+schema_version: 1
+purpose: Control completeness of Security Knowledge before downstream product implementation.
+status_values: [NOT_STARTED, REGISTERED, SOURCE_ACQUIRED, VERSIONED, CHUNKED, ATOMIZED, LINKED, CHECKLISTED, IMPLEMENTATION_MAPPED, EXPERT_REVIEWED, COMPLETE]
+required_dimensions:
+  - source_inventory
+  - authoritative_source
+  - version_history
+  - amendments_and_supersession
+  - definitions
+  - chunks
+  - atomic_requirements
+  - applicability_rules
+  - roles_and_responsibilities
+  - workflows
+  - organization_checklists
+  - specialist_checklists
+  - evidence_requirements
+  - cross_document_links
+  - unified_control_mapping
+  - threat_risk_links
+  - implementation_options
+  - expert_metrics
+  - update_monitoring_metadata
+corpus:
+  RU_CORE_LAW:
+    priority: P0
+    includes: [federal_laws, codes, presidential_decrees, government_decrees]
+    status: IN_PROGRESS
+  FSTEK:
+    priority: P0
+    status: IN_PROGRESS
+  FSB:
+    priority: P0
+    status: NOT_STARTED
+  ROSKOMNADZOR:
+    priority: P0
+    status: NOT_STARTED
+  RU_SECTOR_REGULATORS:
+    priority: P1
+    includes: [Rospotrebnadzor, Minzdrav, Mintsifry, Bank_of_Russia, EMERCOM, Rostekhnadzor, others_by_applicability]
+    status: NOT_STARTED
+  GOST_RU_STANDARDS:
+    priority: P1
+    includes: [ISO_IEC_27001_RU, ISO_IEC_27002_RU, ISO_IEC_27005_RU, GOST_15408_family, GOST_57580_family, risk, incidents, continuity, secure_development, cryptography, testing, conformity_assessment]
+    status: NOT_STARTED
+  INTERNATIONAL_STANDARDS:
+    priority: P1
+    includes: [ISO_IEC_27000_family, ISO_22301, ISO_31000, Common_Criteria, ISO_IEC_27017, ISO_IEC_27018, ISO_IEC_27701, ISO_IEC_27035, ISO_IEC_27036, ISO_IEC_27034, ISO_IEC_27032]
+    status: NOT_STARTED
+  FOREIGN_REGULATION:
+    priority: P1
+    includes: [GDPR, NIS2, DORA, EU_Cybersecurity_Act, CRA, AI_Act_security, ePrivacy, Convention_108_plus]
+    status: NOT_STARTED
+  FRAMEWORKS:
+    priority: P1
+    includes: [NIST_CSF, NIST_SP800_53, NIST_SP800_30, NIST_SP800_61, NIST_SP800_115, NIST_SP800_218, CIS_Controls, CIS_Benchmarks, CSA_CCM, PCI_DSS, SWIFT_CSCF]
+    status: NOT_STARTED
+  THREAT_VULNERABILITY:
+    priority: P1
+    includes: [FSTEK_BDU, CWE, CVE, NVD, CVSS, CAPEC, MITRE_ATTACK, MITRE_D3FEND, CISA_KEV, EPSS]
+    status: NOT_STARTED
+  APPSEC:
+    priority: P1
+    includes: [OWASP_Top10, OWASP_API_Top10, ASVS, MASVS, WSTG, MASTG, SAMM, Cheat_Sheet_Series, CWE_Top25]
+    status: NOT_STARTED
+  PENTEST:
+    priority: P1
+    includes: [PTES, NIST_SP800_115, OWASP_WSTG, OSSTMM, authorization_scope_evidence_retest]
+    status: NOT_STARTED
+  VENDOR_HARDENING:
+    priority: P2
+    includes: [Microsoft, Linux, Kubernetes, Docker, PostgreSQL, nginx, Apache, Cisco, MikroTik, VMware, cloud_platforms]
+    status: NOT_STARTED
+expert_completion_gate:
+  all_P0_must_be: EXPERT_REVIEWED
+  no_verified_node_without_source_locator: true
+  no_unresolved_supersession_in_P0: true
+  mandatory_requirements_must_have_applicability: true
+  mandatory_requirements_must_have_check_or_explicit_not_testable_reason: true
+  critical_controls_must_have_evidence_model: true
+  cross_source_conflicts_must_be_recorded: true
+  uncertainty_must_be_explicit: true
