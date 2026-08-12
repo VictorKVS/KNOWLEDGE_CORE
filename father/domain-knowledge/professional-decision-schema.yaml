@@ -1,6 +1,8 @@
 schema_version: 1
 entity: PROFESSIONAL_DECISION_RECORD
 status: ACTIVE
+governance_norm_ref: VictorKVS/PX00/governance/DECISION_MATERIALITY_STANDARD.md
+governance_norm_id: PX00-NORM-DM-0001
 purpose: >-
   Preserve the evidence-backed derivation of a material professional decision so FATHER can
   explain, review, replay and later reassess why an option was selected under the requirements,
@@ -23,6 +25,12 @@ required_fields:
   - evidence_refs
   - verification_plan
   - provenance
+
+materiality_semantics:
+  authority: PX00-NORM-DM-0001
+  rule: >-
+    This schema records domain evidence for D0-D3 decisions. PX00 owns the project-wide
+    materiality floor, review and approval semantics; KNOWLEDGE_CORE defines domain evidence.
 
 materiality_classes:
   D0_LOCAL_CONVENTIONAL:
@@ -139,6 +147,7 @@ post_implementation_optional:
 invariants:
   - knowledge_or_evidence_never_grants_runtime_authority
   - material_decision_requires_evidence_depth_appropriate_to_materiality
+  - materiality_class_must_satisfy_PX00_NORM_DM_0001_floor
   - mandatory_hard_gate_cannot_be_overridden_by_preference_or_score
   - selected_option_must_be_one_of_declared_options_when_selection_occurs
   - rejected_options_and_material_dissent_are_preserved
