@@ -1,0 +1,115 @@
+schema_version: 1
+purpose: Make time a first-class property of every security obligation and decision. Determine not only who must act, but exactly when, within what legally defined period, how the period is calculated, and what happens when it expires.
+principle: No normative deadline may be inferred, approximated or copied from a similar obligation. Every mandatory time limit requires an exact authoritative source locator and version.
+time_obligation_fields:
+  - obligation_id
+  - governing_source
+  - source_version
+  - source_locator
+  - actor
+  - trigger_event
+  - action
+  - recipient
+  - time_limit_value
+  - time_limit_unit
+  - calendar_or_working_time
+  - start_point_definition
+  - end_point_definition
+  - immediate_or_without_delay_wording
+  - staged_deadlines
+  - extension_allowed
+  - extension_conditions
+  - suspension_of_period_allowed
+  - exception_conditions
+  - recurring_frequency
+  - validity_period
+  - review_period
+  - retention_period
+  - notification_period
+  - escalation_before_deadline
+  - evidence_of_timely_completion
+  - consequence_of_missed_deadline
+  - confidence
+  - checked_at
+time_types:
+  - FIXED_DEADLINE
+  - RELATIVE_AFTER_EVENT
+  - BEFORE_EVENT
+  - IMMEDIATE
+  - WITHOUT_DELAY
+  - PERIODIC
+  - CONTINUOUS
+  - VALIDITY_WINDOW
+  - RETENTION_PERIOD
+  - REVIEW_INTERVAL
+  - SOURCE_DEFINED_OTHER
+clock_rules:
+  - preserve source wording exactly for calendar_days, working_days, hours, immediately, without_delay and similar concepts
+  - do_not_convert_immediate_or_without_delay_to_numeric_value_without_legal_basis
+  - store timezone_or_business_calendar_when_relevant
+  - store whether day_of_trigger_counts only when source or governing calculation rule establishes it
+  - record staged obligations as separate linked deadlines rather than one flattened deadline
+operational_states:
+  - NOT_TRIGGERED
+  - TRIGGERED
+  - IN_PROGRESS
+  - DUE_SOON
+  - DUE
+  - OVERDUE
+  - COMPLETED_ON_TIME
+  - COMPLETED_LATE
+  - BLOCKED_WITH_ESCALATION
+alert_policy:
+  principle: Internal reminders may be earlier than the legal deadline but must never be presented as the legal deadline.
+  recommended_internal_thresholds:
+    - 50_percent_of_available_period
+    - 75_percent_of_available_period
+    - 90_percent_of_available_period
+    - critical_pre_deadline
+responsibility_links:
+  required:
+    - accountable_role
+    - decision_maker_if_needed
+    - executor
+    - verifier
+    - escalation_recipient
+    - deputy_or_substitute
+example_pattern:
+  event: INCIDENT_DETECTED
+  branches:
+    - determine_applicable_regimes
+    - create_one_deadline_clock_per_verified_obligation
+    - assign_actor_and_recipient
+    - preserve_each_source_specific_deadline
+    - execute_shared_operational_actions_where_possible
+    - collect_timestamped_evidence
+    - verify_completion_before_each_clock_expires
+cross_regime_rule:
+  description: One event may start several independent legal clocks.
+  example: A single incident involving an ISPDn and CII may trigger separate obligations under personal-data and CII regimes. They must not be collapsed into one deadline.
+expert_checks:
+  - Is the trigger fact proven and timestamped?
+  - Which source version was in force at trigger time?
+  - What exact wording defines the deadline?
+  - Is it hours, calendar days, working days, immediate, periodic or continuous?
+  - Who is legally/organizationally responsible?
+  - Is there a deputy if the primary responsible person is unavailable?
+  - Is there an earlier internal SLA?
+  - What evidence proves the action occurred on time?
+  - Does another regime create a parallel or earlier deadline?
+  - What must be escalated before breach?
+rules:
+  - Legal deadline and internal SLA are separate fields.
+  - Current law and law effective at historical event time may differ; temporal legal versioning is mandatory.
+  - A deadline is VERIFIED only when source locator and effective version are verified.
+  - If timing is ambiguous, store AMBIGUOUS_REQUIRES_EXPERT_REVIEW rather than inventing a clock.
+  - Missing a deadline must create a finding and trigger consequence/risk analysis.
+  - Completion evidence must be timestamped where timing is material.
+outputs:
+  - normative_deadline_matrix
+  - organization_compliance_calendar
+  - event_driven_deadline_clocks
+  - overdue_obligations
+  - upcoming_obligations
+  - escalation_queue
+  - deadline_evidence_register
