@@ -1,0 +1,105 @@
+schema_version: 1
+purpose: Define continuous expert feedback loops for penetration testing, vulnerability management and risk management.
+loops:
+  PENTEST_EXPERTISE:
+    inputs:
+      - organization_profile
+      - asset_inventory
+      - attack_surface
+      - threat_model
+      - vulnerability_findings
+      - authorization_and_scope
+      - security_controls
+    process:
+      - define_rules_of_engagement
+      - select_evidence_backed_test_cases
+      - execute_authorized_tests
+      - capture_reproducible_evidence
+      - map_findings_to_assets_threats_weaknesses_controls_requirements
+      - assess_exploitability_and_impact
+      - recommend_remediation
+      - retest
+    outputs:
+      - pentest_findings
+      - attack_paths
+      - control_validation
+      - evidence
+      - residual_risk_updates
+    guardrails:
+      - no_test_without_authorization
+      - scope_is_first_class_evidence
+      - preserve_retest_lineage
+
+  VULNERABILITY_MANAGEMENT:
+    inputs:
+      - asset_inventory
+      - software_hardware_inventory
+      - sbom_if_available
+      - scanner_findings
+      - CVE
+      - CWE
+      - NVD
+      - FSTEK_BDU
+      - CISA_KEV
+      - EPSS
+      - vendor_advisories
+      - configuration_baselines
+    process:
+      - normalize_findings
+      - deduplicate
+      - identify_asset_exposure
+      - enrich_with_exploitability
+      - check_known_exploitation
+      - evaluate_compensating_controls
+      - prioritize
+      - assign_owner_and_sla
+      - verify_remediation
+      - reopen_on_regression
+    outputs:
+      - vulnerability_nodes
+      - remediation_queue
+      - overdue_exposure
+      - asset_risk_updates
+      - control_gap_updates
+
+  RISK_MANAGEMENT:
+    inputs:
+      - business_assets
+      - dependencies
+      - threats
+      - vulnerabilities
+      - attack_paths
+      - incidents
+      - controls
+      - legal_requirements
+      - pentest_results
+      - operational_metrics
+    process:
+      - identify_risk_scenario
+      - estimate_likelihood
+      - estimate_impact
+      - evaluate_control_effectiveness
+      - calculate_residual_risk
+      - compare_with_risk_appetite
+      - choose_treatment
+      - approve_or_escalate
+      - monitor_triggers
+    treatments:
+      - MITIGATE
+      - AVOID
+      - TRANSFER
+      - ACCEPT
+    outputs:
+      - risk_register
+      - treatment_plan
+      - architecture_priorities
+      - roadmap_priorities
+      - accepted_risk_evidence
+
+cross_loop_rules:
+  - A pentest finding can create or strengthen a vulnerability and risk node.
+  - Vulnerability intelligence can trigger a pentest/retest decision.
+  - Risk priority can change pentest scope and vulnerability remediation SLA.
+  - Successful retest can improve evidence strength and reduce residual risk, but does not erase historical findings.
+  - New regulatory requirements can create controls, checks and new risk scenarios.
+  - All score changes must retain timestamp, cause, evidence and previous value.
