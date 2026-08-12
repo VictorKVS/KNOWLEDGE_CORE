@@ -1,0 +1,74 @@
+schema_version: 1
+purpose: Expert advisory layer for security architecture and product selection. Converts regulatory/certification facts, lifecycle reliability and organizational context into design warnings, alternatives and planning advice.
+inputs:
+  organization_profile:
+    - sector
+    - criticality
+    - regulatory_regimes
+    - system_lifecycle_years
+    - audit_attestation_horizon
+    - migration_constraints
+    - budget_constraints
+    - staffing_constraints
+  product_context:
+    - vendor
+    - product
+    - version
+    - certificate_status
+    - certificate_valid_until
+    - license_or_permission_status
+    - support_lifecycle
+    - replacement_options
+    - historical_status_events
+    - known_security_issues
+    - deployment_complexity
+  dependency_context:
+    - systems_using_product
+    - critical_processes
+    - controls_supported
+    - single_vendor_dependency
+    - migration_lead_time
+analytics:
+  - id: CERTIFICATE_HORIZON_GAP
+    rule: certificate_valid_until precedes required project/audit/attestation horizon
+    severity_model: [INFO, WATCH, WARNING, HIGH, CRITICAL]
+    advice: Plan renewal confirmation, alternate certified solution or migration before dependency becomes critical.
+  - id: STATUS_INSTABILITY
+    rule: historical suspension/revocation/restoration or repeated registry-state changes exist
+    advice: Increase supplier/regulatory dependency risk and require fallback architecture.
+  - id: VERSION_SCOPE_MISMATCH
+    rule: deployed or proposed version is outside verified certificate scope
+    advice: Do not treat the product as certified for the proposed deployment until scope is verified.
+  - id: SINGLE_VENDOR_LOCKIN
+    rule: critical controls depend on one vendor/product with high migration cost or no approved alternative
+    advice: Add exit plan, tested replacement path, contractual protections and lifecycle reserve.
+  - id: SUPPORT_CERTIFICATE_MISMATCH
+    rule: vendor support lifecycle and regulator certificate lifecycle materially diverge
+    advice: Use the earlier limiting date as architecture planning boundary unless verified otherwise.
+  - id: MIGRATION_LEAD_TIME_RISK
+    rule: remaining valid/support period is shorter than migration lead time plus safety reserve
+    advice: Start replacement/renewal project now rather than waiting for expiration.
+  - id: EVIDENCE_STALENESS
+    rule: registry or certificate verification is older than permitted freshness threshold
+    advice: Re-read authoritative source before architecture approval or procurement.
+  - id: PRODUCT_SECURITY_DEBT
+    rule: recurring critical vulnerabilities, delayed patches, unsupported versions or operational weaknesses increase lifecycle risk
+    advice: Adjust technical reliability score independently from legal/certification status.
+outputs:
+  - architecture_warning
+  - product_suitability_profile
+  - temporal_suitability
+  - renewal_and_migration_risk
+  - vendor_dependency_risk
+  - recommended_review_date
+  - alternatives
+  - procurement_notes
+  - architecture_decision_record_inputs
+  - expert_confidence
+expert_rules:
+  - Advice must distinguish legal/certification compliance from technical security quality.
+  - Do not recommend a product solely because it is certified or licensed.
+  - Do not reject a product solely because of a historical status event; quantify the event, current state and dependency impact.
+  - Every warning must identify the triggering fact, planning horizon and affected systems/controls.
+  - Architecture advice must include at least one feasible alternative or an explicit statement that no verified alternative is known.
+  - Product rankings must be version-aware and time-aware.
