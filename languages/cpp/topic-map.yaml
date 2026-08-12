@@ -1,0 +1,105 @@
+id: LANG-CPP-001
+language: cpp
+kind: language-engineering-map
+status: foundation
+
+selection_goal:
+  Use C++ when low-level control, native integration or performance constraints justify its additional complexity and safety burden.
+
+topics:
+  types_numeric:
+    decisions:
+      - integer width/sign choices
+      - floating vs fixed/decimal/domain-specific representation
+    evaluate:
+      - range
+      - precision
+      - overflow
+      - ABI/interoperability
+  ownership_lifetime:
+    decisions:
+      - value vs reference vs pointer
+      - stack vs dynamic lifetime
+      - unique ownership vs shared ownership
+    evaluate:
+      - lifetime clarity
+      - aliasing
+      - exception safety
+      - allocation cost
+  containers_algorithms:
+    decisions:
+      - vector vs deque vs list vs associative container
+      - standard algorithm vs custom loop/algorithm
+    evaluate:
+      - locality
+      - iterator/reference stability
+      - mutation pattern
+      - lookup pattern
+      - memory overhead
+  errors:
+    decisions:
+      - exception vs error/status value vs optional/expected-like result
+    evaluate:
+      - API boundary
+      - recoverability
+      - latency constraints
+      - interoperability
+  concurrency:
+    decisions:
+      - mutex vs atomic vs task/message-based design
+    evaluate:
+      - memory ordering
+      - contention
+      - correctness proof burden
+      - cancellation/lifecycle
+  performance:
+    rule: optimize from profiles and reproducible benchmarks, not folklore
+    evaluate:
+      - algorithm
+      - locality
+      - allocation
+      - branch/cache behavior
+      - compiler settings
+  safety_security:
+    review:
+      - lifetime errors
+      - bounds violations
+      - integer overflow/conversion
+      - undefined behavior exposure
+      - parser/input handling
+      - concurrency races
+      - dependency/toolchain provenance
+    verification:
+      - sanitizers where applicable
+      - static analysis where applicable
+      - fuzzing for exposed parsers/interfaces
+  build_interop:
+    evaluate:
+      - compiler and standard version
+      - ABI
+      - build reproducibility
+      - dependency pinning
+      - Python/Go FFI boundary
+
+typical_problem_classes:
+  - performance-critical-component
+  - native-library
+  - systems-component
+  - parser
+  - algorithmic-core
+  - security-sensor
+  - hardware-or-os-integration
+
+cross_language_exit_conditions:
+  consider_python_when:
+    - orchestration, experimentation or ecosystem integration dominates and native performance is unnecessary
+  consider_go_when:
+    - network-service concurrency and operational simplicity dominate over low-level control
+  rule: choosing C++ requires an explicit justification for its complexity and safety cost
+
+links:
+  decisions: []
+  claims: []
+  sources: []
+  benchmarks: []
+  decision_memory: []
