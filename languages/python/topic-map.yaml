@@ -1,0 +1,111 @@
+id: LANG-PY-001
+language: python
+kind: language-engineering-map
+status: foundation
+
+selection_goal:
+  Choose Python constructs and architecture from problem constraints, not habit or popularity.
+
+topics:
+  numeric_types:
+    decisions:
+      - integer vs float vs Decimal vs domain-specific numeric type
+    evidence_required_for:
+      - precision claims
+      - overflow or range assumptions
+      - performance claims
+  collections:
+    decisions:
+      - list vs tuple vs set vs dict
+      - deque vs list for queue-like workloads
+    evaluate:
+      - access pattern
+      - mutation pattern
+      - ordering needs
+      - uniqueness
+      - memory
+      - adversarial input
+  object_model:
+    decisions:
+      - plain class vs dataclass vs TypedDict vs validation model
+    evaluate:
+      - runtime validation
+      - serialization
+      - API boundaries
+      - mutability
+      - dependency cost
+  errors:
+    decisions:
+      - exception vs sentinel/result object vs explicit validation
+    evaluate:
+      - recoverability
+      - boundary ownership
+      - observability
+      - failure propagation
+  concurrency:
+    decisions:
+      - synchronous vs threads vs asyncio vs multiprocessing vs external worker system
+    evaluate:
+      - io_bound
+      - cpu_bound
+      - shared_state
+      - cancellation
+      - isolation
+      - operational complexity
+  io_networking:
+    decisions:
+      - blocking vs async I/O
+      - standard library vs framework abstraction
+    evaluate:
+      - throughput
+      - latency
+      - backpressure
+      - timeouts
+      - trust boundary
+  performance:
+    rule: measure before optimizing when performance is decision-relevant
+    alternatives:
+      - algorithm change
+      - data-structure change
+      - vectorized/native library
+      - Go component
+      - C++ component
+  security:
+    review:
+      - unsafe deserialization
+      - command injection
+      - path traversal
+      - secrets handling
+      - dependency risk
+      - unbounded input/resource consumption
+  deployment:
+    evaluate:
+      - packaging
+      - reproducibility
+      - runtime version
+      - containerization
+      - observability
+
+typical_problem_classes:
+  - automation
+  - backend-api
+  - ai-orchestration
+  - data-processing
+  - security-tooling
+  - cli
+  - research-prototype
+
+cross_language_exit_conditions:
+  consider_go_when:
+    - operational simplicity of a compiled service is materially valuable
+    - concurrency/network-service constraints dominate
+  consider_cpp_when:
+    - native integration or tight performance/control constraints dominate
+  rule: language switch requires an explicit constraint and evidence, not preference alone
+
+links:
+  decisions: []
+  claims: []
+  sources: []
+  benchmarks: []
+  decision_memory: []
