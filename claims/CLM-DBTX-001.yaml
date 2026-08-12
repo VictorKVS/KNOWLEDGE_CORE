@@ -1,0 +1,51 @@
+schema_version: "1.0"
+id: CLM-DBTX-001
+kind: evidence-claim
+status: active
+
+statement: SQLite transactions provide explicit COMMIT and ROLLBACK boundaries, and changes within a single transaction are applied completely or not at all.
+claim_type: reliability
+
+scope:
+  domain: databases
+  language: sql
+  component: SQLite
+  version_from: ""
+  version_to: ""
+  workload: multi-statement state changes
+  environment: SQLite
+
+strength:
+  state: DOCUMENTED
+  confidence: HIGH
+
+supporting_evidence:
+  sources: [SRC-SQLITE-TRANSACTION-001]
+  benchmarks: []
+  experiments: []
+  tests: []
+
+contradicting_evidence:
+  sources: []
+  benchmarks: []
+  experiments: []
+
+reasoning:
+  derivation: official SQLite transaction documentation describes transaction, commit and rollback semantics
+  assumptions:
+    - storage engine is SQLite
+  limitations:
+    - does not establish identical isolation or durability semantics for other database engines
+  known_counterexamples: []
+
+relationships:
+  used_by_decisions: [ADR-DBTX-002]
+  related_claims: []
+  supersedes_claims: []
+  superseded_by_claims: []
+
+review:
+  status: reviewed
+  reviewed_at: 2026-08-12
+  reviewed_by: ChatGPT
+  notes: ""
