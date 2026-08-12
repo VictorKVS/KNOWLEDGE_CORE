@@ -1,0 +1,69 @@
+schema_version: "1.0"
+id: system-decision-policy
+objective: >-
+  Select the least complicated architecture that satisfies verified functional,
+  reliability, security, performance and operational constraints while preserving
+  a credible evolution path.
+
+required_analysis:
+  - problem_boundary
+  - trust_boundaries
+  - data_semantics
+  - communication_model
+  - failure_model
+  - workload_and_scale
+  - consistency_requirements
+  - observability_requirements
+  - recovery_objectives
+  - security_constraints
+  - operational_constraints
+
+candidate_dimensions:
+  architecture:
+    - modular_monolith
+    - distributed_services
+    - event_driven
+    - batch
+    - streaming
+  state:
+    - relational
+    - document
+    - key_value
+    - graph
+    - time_series
+  communication:
+    - request_response
+    - streaming
+    - messaging
+  reliability:
+    - fail_fast
+    - retry
+    - fallback
+    - circuit_breaker
+    - redundancy
+
+mandatory_rules:
+  - do_not_distribute_without_verified_reason
+  - do_not_cache_without_consistency_and_invalidation_analysis
+  - do_not_retry_without_idempotency_timeout_and_backoff_analysis
+  - do_not_select_database_from_popularity_alone
+  - do_not_optimize_without_measurement
+  - do_not_claim_reliability_without_failure_or_recovery_evidence
+  - apply_security_review_before_promotion_to_reusable_memory
+
+promotion_to_fast_path_requires:
+  - explicit_scope
+  - passing_verification
+  - applicable_sources_or_experiments
+  - security_review
+  - known_failure_modes
+  - version_and_environment_applicability
+
+output_links:
+  - ADR
+  - CLM
+  - SRC
+  - SEC-REV
+  - BENCH
+  - EXP
+  - DM
