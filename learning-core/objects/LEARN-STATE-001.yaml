@@ -1,0 +1,70 @@
+schema_version: "1.0"
+id: LEARN-STATE-001
+title: Make State Explicit
+kind: learning-object
+status: drafted
+family: state
+levels: [junior, middle, senior]
+languages: [python, go, cpp]
+
+problem:
+  summary: Model mutable program state so behaviour remains understandable and testable.
+  questions:
+    - Who owns the state?
+    - Who may mutate it?
+    - What invariants must always hold?
+    - Can state transitions be made explicit?
+
+junior:
+  goal: Keep state local and visible.
+  practices:
+    - avoid unnecessary globals
+    - use descriptive fields
+    - initialize state explicitly
+    - test boundary transitions
+
+middle:
+  goal: Choose a state-management strategy for a component.
+  compare:
+    - direct local state
+    - immutable/value transformations
+    - encapsulated object state
+    - explicit state machine
+  review:
+    - coupling
+    - testability
+    - concurrency implications
+
+senior:
+  goal: Decide where authoritative state belongs and minimize cross-boundary synchronization.
+  questions:
+    - Is this state duplicated across services or caches?
+    - What happens after restart or partial failure?
+    - Is the lifecycle better represented as events or a state machine?
+    - Can a derived value replace stored mutable state?
+
+elegant_view:
+  principle: fewer mutable facts plus explicit transitions usually make the model easier to prove correct
+
+production_view:
+  add:
+    - ownership contract
+    - persistence contract when relevant
+    - concurrency control
+    - recovery behaviour
+    - observability for important transitions
+    - security checks on state-changing operations
+
+anti_patterns:
+  - global_mutable_state
+  - boolean_flag_explosion
+  - hidden_state_transition
+  - duplicated_authoritative_state
+
+analyst_handoff:
+  required: false
+  note: Analyst involvement is needed only if strategy depends on nontrivial workload or distributed-systems evidence.
+
+reusable_lessons:
+  - store fewer mutable facts when values can be safely derived
+  - make lifecycle transitions explicit when invalid intermediate states matter
