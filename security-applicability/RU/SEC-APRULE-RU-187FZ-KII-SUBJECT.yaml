@@ -1,0 +1,55 @@
+schema_version: "1.0"
+id: SEC-APRULE-RU-187FZ-KII-SUBJECT
+kind: security-applicability-rule
+status: PROPOSED
+
+title: Applicability of the KII regulatory branch to a KII subject
+jurisdiction: RU
+
+basis:
+  official_publication:
+    document: Federal Law of 26.07.2017 No. 187-FZ
+    publication_number: "0001201707260023"
+  source_refs: []
+  note: >-
+    The official publication confirms the act and its identity. Final promotion requires a verified current consolidated
+    text because the KII regulatory framework has continued to develop, including new FSB orders published in 2025.
+
+conditions:
+  all:
+    - fact: organization.kii_subject
+      operator: equals
+      value: true
+
+result:
+  when_true: APPLIES
+  activate_branches:
+    - RU/KII/187-FZ
+    - RU/KII/CATEGORIZATION
+    - RU/KII/GOS-SOPKA
+  when_false: UNKNOWN
+  false_reason: >-
+    Absence of an asserted KII-subject flag is not sufficient to conclude non-applicability. Sector, ownership/legal basis
+    for relevant systems/networks and statutory criteria must be reviewed.
+
+missing_fact_behavior:
+  result: UNKNOWN
+  required_facts:
+    - organization.kii_subject
+    - organization.industry_sector
+    - systems.kii_objects_identified
+
+explanation:
+  short: >-
+    The KII branch is activated only after the organization is established to be a KII subject under the verified current law.
+  limitations:
+    - Subject status does not automatically mean every system is a significant KII object.
+    - Significance category and categorization obligations require their own rules.
+    - Current subordinate FSTEC/FSB requirements must be versioned separately.
+
+review:
+  legal_review_required: true
+  security_review_required: true
+
+agent_rule: >-
+  Never infer KII-subject or significant-object status merely from organization size, public ownership or critical-looking services.
