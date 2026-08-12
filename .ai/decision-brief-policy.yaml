@@ -1,0 +1,59 @@
+schema_version: "1.0"
+id: decision-brief-policy
+name: Automatic Decision Brief Policy
+
+principle: >-
+  The Decision Brief is the compact operational interface between evidence/research and an executing agent.
+  It must preserve why a recommendation is justified, what could invalidate it, and which checks are required.
+
+required_sections:
+  - problem
+  - context
+  - recommendation
+  - alternatives
+  - reason_chain
+  - evidence
+  - applicability
+  - constraints
+  - security
+  - implementation_guidance
+  - verification
+  - unknowns
+  - conflicts
+  - confidence
+  - provenance
+
+construction_order:
+  - resolve_task_context
+  - retrieve_ranked_candidates
+  - apply_hard_filters
+  - collect_reason_chains
+  - collect_specialist_contributions
+  - collect_open_CON_and_RQ
+  - choose_route_FAST_ADAPT_RESEARCH_BLOCKED
+  - build_brief
+  - hand_to_executing_agent
+
+rules:
+  - recommendation_must_reference_canonical_records
+  - rejected_alternatives_require_reasons
+  - confidence_is_not_probability_of_truth
+  - confidence_cannot_override_RED_evidence_or_hard_context_mismatch
+  - unresolved_material_conflict_must_be_visible
+  - unknowns_that_can_change_decision_must_reference_RQ_or_create_one
+  - implementation_guidance_must_not_claim_more_than_evidence_supports
+  - security_constraints_must_survive_handoff_to_programming_or_devsecops
+
+routes:
+  FAST:
+    meaning: reusable decision with healthy evidence and matching applicability
+  ADAPT:
+    meaning: known decision requires bounded contextual modification and verification
+  RESEARCH:
+    meaning: evidence gap or conflict can materially change the decision
+  BLOCKED:
+    meaning: hard safety, authorization, regulatory, evidence or context condition prevents execution
+
+agent_rule: >-
+  The brief is intentionally smaller than the knowledge graph but must remain traceable back to it. Never
+  compress away a blocker, material uncertainty, rejected alternative, or mandatory verification condition.
