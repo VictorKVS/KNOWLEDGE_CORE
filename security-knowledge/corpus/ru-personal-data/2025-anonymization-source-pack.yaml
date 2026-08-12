@@ -1,0 +1,95 @@
+schema_version: 1
+pack_id: RU_PD_ANONYMIZATION_2025
+scope: Russian personal-data anonymization rules effective from 2025-09-01
+verification_policy: authoritative-publication metadata required; atomic statements remain conservative unless text locator is available
+sources:
+  - source_id: RU_RKN_ORDER_140_2025
+    authority: Roskomnadzor
+    document_type: order
+    number: "140"
+    signed_date: 2025-06-19
+    title: "Requirements and methods for anonymization of personal data, except the cases specified in clause 9.1 part 1 article 6 of Federal Law 152-FZ"
+    justice_registration:
+      date: 2025-07-31
+      number: "83110"
+    official_publication:
+      publication_number: "0001202508010002"
+      publication_date: 2025-08-01
+      url: "https://publication.pravo.gov.ru/document/0001202508010002"
+    secondary_text_verification:
+      provider: ConsultantPlus / Minjust mirror
+      purpose: verify operative clauses and effective date where official publication search metadata does not expose parsed text
+      url: "https://minjust.consultant.ru/documents/55878"
+    effective_from: 2025-09-01
+    supersedes:
+      - source_id: RU_RKN_ORDER_996_2013
+        relation: repeals
+        effective_from: 2025-09-01
+    verification_status: STATUS_VERIFIED
+    atomization_status: PARTIAL
+  - source_id: RU_GOV_PP_1154_2025
+    authority: Government_of_Russian_Federation
+    document_type: government_decree
+    number: "1154"
+    signed_date: 2025-08-01
+    title: "Requirements, methods and rules for anonymization of personal data"
+    official_publication:
+      publication_number: "0001202508050011"
+      publication_date: 2025-08-05
+      url: "https://publication.pravo.gov.ru/document/0001202508050011"
+    effective_from: 2025-09-01
+    legal_basis: "Federal Law 152-FZ, article 13.1"
+    verification_status: STATUS_VERIFIED
+    atomization_status: REGISTERED_FOR_ATOMIZATION
+atomic_facts:
+  - fact_id: RU_RKN140_F001
+    source_id: RU_RKN_ORDER_140_2025
+    locator: "order, clause 1(1)"
+    statement: "Order 140 approves requirements for anonymization of personal data within its stated scope."
+    verification_status: VERIFIED
+  - fact_id: RU_RKN140_F002
+    source_id: RU_RKN_ORDER_140_2025
+    locator: "order, clause 1(2)"
+    statement: "Order 140 approves anonymization methods within its stated scope."
+    verification_status: VERIFIED
+  - fact_id: RU_RKN140_F003
+    source_id: RU_RKN_ORDER_140_2025
+    locator: "order, clause 2"
+    statement: "Roskomnadzor Order 996 of 2013 is repealed by Order 140."
+    verification_status: VERIFIED
+  - fact_id: RU_RKN140_F004
+    source_id: RU_RKN_ORDER_140_2025
+    locator: "order, clause 3"
+    statement: "Order 140 enters into force on 2025-09-01."
+    verification_status: VERIFIED
+  - fact_id: RU_PP1154_F001
+    source_id: RU_GOV_PP_1154_2025
+    locator: "decree, clause 1"
+    statement: "Government Decree 1154 approves requirements, methods and rules for anonymization under article 13.1 of 152-FZ."
+    verification_status: VERIFIED
+  - fact_id: RU_PP1154_F002
+    source_id: RU_GOV_PP_1154_2025
+    locator: "decree, clause 2"
+    statement: "Government Decree 1154 enters into force on 2025-09-01."
+    verification_status: VERIFIED
+relations:
+  - from: RU_RKN_ORDER_996_2013
+    to: RU_RKN_ORDER_140_2025
+    type: SUPERSEDED_BY
+    transition_date: 2025-09-01
+  - from: RU_GOV_PP_1154_2025
+    to: Federal_Law_152_FZ_article_13_1
+    type: IMPLEMENTS
+  - from: RU_RKN_ORDER_140_2025
+    to: Federal_Law_152_FZ_article_23_part_12
+    type: ISSUED_UNDER
+red_team_notes:
+  - "Do not merge the two anonymization regimes merely because both became effective on 2025-09-01; applicability must be resolved from 152-FZ and the respective source scope."
+  - "Order 140 atomization is incomplete until every requirement/method in both annexes has a locator and proof text."
+  - "Government Decree 1154 annexes require separate atomization; source registration alone is not compliance coverage."
+next_actions:
+  - atomize_RKN140_annex_1_requirements
+  - atomize_RKN140_annex_2_methods
+  - atomize_PP1154_requirements_methods_rules
+  - map_each_atomic_requirement_to_152FZ_applicability
+  - map_evidence_controls_roles_and_consequences
