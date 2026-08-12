@@ -1,0 +1,88 @@
+schema_version: "1.0"
+id: engineering-knowledge-object-model
+
+objects:
+  source:
+    prefix: SRC
+    purpose: provenance-and-authority
+    links_to:
+      - claim
+
+  claim:
+    prefix: CLM
+    purpose: smallest-verifiable-technical-assertion
+    links_to:
+      - source
+      - benchmark
+      - experiment
+      - decision
+
+  algorithm:
+    prefix: ALG
+    purpose: algorithm-selection-knowledge
+    links_to:
+      - claim
+      - problem
+      - decision
+
+  data_structure:
+    prefix: DS
+    purpose: data-structure-selection-knowledge
+    links_to:
+      - claim
+      - problem
+      - decision
+
+  problem:
+    prefix: PROB
+    purpose: normalized-problem-and-constraints
+    links_to:
+      - algorithm
+      - data_structure
+      - decision
+      - implementation
+      - test
+
+  decision:
+    prefix: ADR
+    purpose: context-specific-engineering-choice
+    links_to:
+      - claim
+      - source
+      - benchmark
+      - security_review
+
+  benchmark:
+    prefix: BENCH
+    purpose: reproducible-measurement
+    links_to:
+      - claim
+      - problem
+      - decision_memory
+
+  experiment:
+    prefix: EXP
+    purpose: targeted-uncertainty-reduction
+    links_to:
+      - claim
+      - decision
+      - decision_memory
+
+  decision_memory:
+    prefix: DM
+    purpose: verified-reusable-experience
+    links_to:
+      - problem
+      - decision
+      - claim
+      - benchmark
+      - source
+
+retrieval_graph:
+  fast: DM -> CLM -> linked-evidence-if-needed
+  adapt: similar-DM -> CLM -> differences -> evidence -> revalidation
+  research: problem -> candidate-claims -> SRC/BENCH/EXP -> ADR -> DM
+
+principle: >-
+  Keep the common retrieval path compact, but preserve enough linked provenance
+  that any important recommendation can be reconstructed and challenged.
