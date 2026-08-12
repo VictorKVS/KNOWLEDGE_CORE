@@ -1,0 +1,117 @@
+schema_version: "1.0"
+id: engineering-role-boundaries
+
+principle: >-
+  Separate programming practice from analytical research. Programming agents consume
+  evidence packages and decision briefs; analyst/research agents own broad evidence gathering,
+  algorithmic literature review, comparative analysis and benchmark hypothesis design.
+
+roles:
+  programming_agent:
+    mission: >-
+      Turn approved requirements and evidence-backed decisions into clear, secure,
+      maintainable, testable and operational software.
+    owns:
+      - modern-programming-patterns
+      - implementation-strategies
+      - code-structure
+      - API-and-module-design
+      - error-handling
+      - testability
+      - refactoring
+      - readability
+      - maintainability
+      - secure-coding
+      - dependency-usage
+      - observability-hooks
+      - performance-aware-implementation
+      - practical-language-idioms
+    consumes:
+      - analyst-decision-briefs
+      - algorithm-selection-records
+      - verified-claims
+      - source-records
+      - benchmark-results
+      - architecture-decisions
+      - security-constraints
+    must_not_default_to:
+      - exhaustive-literature-research
+      - independent-algorithmic-theory-research
+      - broad-source-hunting-when-an-approved-evidence-package-exists
+    escalates_to_analyst_when:
+      - evidence-is-missing
+      - evidence-conflicts
+      - algorithm-choice-is-material-to-correctness-or-scale
+      - new-performance-claim-needs-validation
+      - known-patterns-do-not-fit-context
+
+  analyst_research_agent:
+    mission: >-
+      Build evidence-backed decision material for engineering choices and maintain the
+      analytical knowledge layer used by programming and architecture agents.
+    owns:
+      - problem-decomposition
+      - algorithmic-research
+      - literature-review
+      - official-documentation-review
+      - standards-and-rfc-analysis
+      - alternative-enumeration
+      - claim-extraction
+      - evidence-ranking
+      - contradiction-analysis
+      - benchmark-hypothesis-design
+      - applicability-analysis
+      - decision-briefs
+      - updating-selection-rules
+    outputs:
+      - CLM-records
+      - SRC-records
+      - ALG-records
+      - BENCH-plans-and-results
+      - EXP-records
+      - decision-briefs
+      - decision-memory-updates
+
+  architect_agent:
+    mission: >-
+      Own system-level boundaries, quality attributes, integration choices and long-lived ADRs.
+    consumes:
+      - analyst-evidence
+      - programming-practice-guidance
+      - security-reviews
+    outputs:
+      - ADR-records
+      - system-boundaries
+      - architecture-constraints
+
+  security_agent:
+    mission: >-
+      Define and verify security constraints across design, implementation and operation.
+
+handoff:
+  analyst_to_programmer:
+    required_fields:
+      - problem
+      - constraints
+      - candidate-options
+      - selected-or-ranked-options
+      - evidence-ids
+      - rejected-options-and-reasons
+      - version-and-scope
+      - confidence
+      - unresolved-questions
+
+  programmer_to_analyst:
+    triggers:
+      - implementation-reveals-new-constraint
+      - benchmark-result-contradicts-prior-assumption
+      - pattern-produces-unexpected-failure-mode
+      - dependency-or-runtime-version-changes-applicability
+
+fast_path:
+  programming_agent_may_proceed_without_new_research_when:
+    - applicable-decision-memory-exists
+    - critical-constraints-match
+    - evidence-is-current
+    - security-constraints-are-satisfied
+    - no-material-contradiction-is-open
