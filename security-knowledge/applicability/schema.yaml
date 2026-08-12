@@ -1,0 +1,32 @@
+schema_version: 1
+entity: applicability_rule
+purpose: Determine whether a document, requirement, control or sector rule applies to an organization profile.
+fields:
+  id: stable applicability rule id
+  target_id: document or requirement id
+  jurisdiction: []
+  conditions_all: []
+  conditions_any: []
+  exclusions: []
+  status_if_true: APPLIES
+  status_if_false: DOES_NOT_APPLY
+  status_if_unknown: NEEDS_FACTS
+  required_facts: []
+  explanation_template: null
+  provenance: []
+  verification:
+    allowed: [DRAFT, REVIEWED, VERIFIED]
+logic:
+  statuses: [APPLIES, DOES_NOT_APPLY, NEEDS_FACTS, CONDITIONAL, CONFLICT]
+  principles:
+    - Never infer an obligation only from sector labels when source conditions are more specific.
+    - Preserve exceptions and exclusions separately from positive conditions.
+    - The engine must explain why a rule applies or which facts are missing.
+    - Applicability conclusions inherit the temporal state of the underlying legal source.
+output_example:
+  target_id: FSTEK-21-2013
+  status: APPLIES
+  because:
+    - organization processes personal data in an information system
+    - protection measures are required under the connected legal chain
+  missing_facts: []
