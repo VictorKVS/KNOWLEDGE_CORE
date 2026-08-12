@@ -1,0 +1,148 @@
+schema_version: 1
+purpose: Model who is accountable, who decides, who executes, who must be consulted/informed, who verifies, and under which authority every material information-security decision is made.
+role_model:
+  dimensions:
+    - organization_role
+    - legal_role
+    - security_role
+    - system_role
+    - process_role
+    - emergency_role
+    - deputy_or_substitute
+    - external_role
+  base_roles:
+    - head_of_organization
+    - deputy_head_responsible_for_security
+    - CISO_or_security_head
+    - personal_data_responsible_person
+    - CII_responsible_person
+    - system_owner
+    - information_asset_owner
+    - business_process_owner
+    - risk_owner
+    - control_owner
+    - security_administrator
+    - system_administrator
+    - network_administrator
+    - cryptography_responsible_person
+    - incident_response_lead
+    - SOC_or_monitoring_role
+    - internal_audit
+    - legal
+    - HR
+    - procurement
+    - physical_security
+    - continuity_owner
+    - data_owner
+    - user
+    - contractor
+    - regulator_or_external_assessor
+assignment_fields:
+  - appointment_basis
+  - source_requirement
+  - appointment_document
+  - authority_scope
+  - systems_scope
+  - data_scope
+  - decisions_allowed
+  - decisions_prohibited
+  - escalation_path
+  - deputy
+  - competence_requirements
+  - conflict_of_interest_constraints
+  - evidence_of_assignment
+responsibility_codes:
+  A: ACCOUNTABLE
+  R: RESPONSIBLE_EXECUTOR
+  D: DECISION_MAKER
+  P: APPROVER
+  C: CONSULTED
+  I: INFORMED
+  V: VERIFIER
+  E: ESCALATION_RECIPIENT
+  K: CUSTODIAN
+  X: PROHIBITED_CONFLICTING_ROLE
+decision_matrix:
+  decision_types:
+    - classify_information_system
+    - categorize_CII_object
+    - approve_threat_model
+    - approve_risk_assessment
+    - accept_residual_risk
+    - approve_security_architecture
+    - approve_security_exception
+    - grant_privileged_access
+    - revoke_access
+    - select_security_product
+    - approve_cryptography_use
+    - approve_change
+    - declare_security_incident
+    - notify_regulator
+    - isolate_system
+    - suspend_business_service
+    - restore_service
+    - approve_evidence_package
+    - approve_document
+    - replace_document
+    - destroy_document_or_data
+    - approve_supplier
+    - accept_supplier_risk
+    - commission_system
+    - decommission_system
+    - initiate_reassessment_or_reattestation
+  fields:
+    - trigger
+    - governing_sources
+    - required_inputs
+    - decision_maker
+    - approver
+    - executor
+    - consulted
+    - informed
+    - verifier
+    - escalation
+    - deadline
+    - decision_criteria
+    - alternatives
+    - evidence_required
+    - review_or_expiry
+    - rollback_or_reversal
+    - affected_nodes
+segregation_of_duties:
+  checks:
+    - requester_vs_approver
+    - executor_vs_verifier
+    - administrator_vs_auditor
+    - risk_assessor_vs_risk_acceptor
+    - supplier_selector_vs_independent_security_assessor
+    - privileged_access_granter_vs_privileged_user_where_required
+    - evidence_producer_vs_independent_assessor_where_required
+  rule: Separation is mandatory only when required by governing source or adopted control; otherwise store it as risk-based governance recommendation with rationale.
+decision_quality:
+  required_questions:
+    - What fact triggered the decision?
+    - Which source gives authority or creates the obligation?
+    - Who owns the affected risk and asset?
+    - Who has formal authority to decide?
+    - What evidence is required before the decision?
+    - What alternatives were considered?
+    - What residual risk remains?
+    - Who independently verifies execution?
+    - When does the decision expire or require review?
+    - What changes invalidate the decision?
+expert_rules:
+  - Job title alone never proves authority; appointment basis and scope must be traceable.
+  - A responsibility matrix is organization-specific and generated from applicable regimes plus actual structure.
+  - Absence, dismissal or role change is a lifecycle trigger requiring reassignment and access/document review.
+  - Every critical decision must retain decision evidence, source basis, inputs, approver and timestamp.
+  - Emergency authority must be explicitly bounded and followed by retrospective review where applicable.
+  - Regulatory obligation, internal delegation and expert recommendation are separate provenance types.
+outputs:
+  - organization_role_catalog
+  - RACI_plus_matrix
+  - decision_authority_matrix
+  - segregation_of_duties_conflicts
+  - missing_role_findings
+  - excessive_authority_findings
+  - orphaned_responsibility_findings
+  - decision_evidence_register
