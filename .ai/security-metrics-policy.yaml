@@ -1,0 +1,102 @@
+schema_version: "1.0"
+id: security-metrics-policy
+name: Security Metrics and Evidence Dashboard Policy
+
+principle: >-
+  Security metrics summarize evidence; they must never replace it. Every reported metric must be traceable
+  to canonical SEC-* records or generated evidence reports, and percentages must not hide critical gaps.
+
+metric_families:
+  compliance_evidence:
+    - applicable_mandatory_requirements
+    - requirements_without_controls
+    - requirements_without_verified_controls
+  asset_threat_coverage:
+    - critical_assets
+    - critical_assets_without_threat_analysis
+    - material_threats_without_controls_or_acceptance
+  control_assurance:
+    - material_controls
+    - controls_without_checks
+    - controls_without_current_verification
+  findings:
+    - open_findings
+    - critical_open_findings
+    - overdue_findings
+    - findings_without_remediation
+  remediation_retest:
+    - implemented_remediations_without_retest
+    - failed_retests
+    - inconclusive_retests
+    - closures_without_valid_retest
+  risk_priority:
+    - risks_by_level
+    - unknown_risks
+    - P0_items
+    - P1_items
+    - overdue_priority_items
+  roadmap:
+    - NOW_items
+    - NEXT_items
+    - blocked_committed_items
+    - committed_items_without_verification_plan
+  evidence_health:
+    - GREEN
+    - YELLOW
+    - RED
+    - stale_or_unresolved_evidence
+
+metric_contract:
+  required_fields:
+    - id
+    - title
+    - value
+    - unit
+    - source_refs
+    - generated_at
+    - interpretation
+  optional_fields:
+    - numerator
+    - denominator
+    - threshold
+    - trend
+    - limitations
+
+hard_rules:
+  - no_metric_without_traceable_sources
+  - no_percentage_without_numerator_and_denominator
+  - unknown_is_not_zero
+  - risk_accepted_is_not_remediated
+  - planned_is_not_implemented
+  - implemented_is_not_verified
+  - scanner_clean_is_not_compliance
+  - critical_gap_must_remain_visible_even_when_aggregate_is_green
+  - historical_metric_must_preserve_original_definition_or_mark_definition_change
+
+executive_view:
+  purpose: decision_support
+  must_show:
+    - critical_gaps
+    - P0_P1_work
+    - overdue_items
+    - unknowns
+    - evidence_health
+    - verified_change_over_time
+
+engineering_view:
+  purpose: action_and_traceability
+  must_allow_drilldown_to:
+    - requirement
+    - asset
+    - threat
+    - control
+    - check
+    - finding
+    - remediation
+    - retest
+    - risk
+    - roadmap_item
+
+agent_rule: >-
+  Prefer a small set of defensible metrics over a large dashboard of weak proxies. A metric is useful only
+  when it can change a decision or direct work.
