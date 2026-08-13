@@ -1,0 +1,75 @@
+schema_version: "1.0"
+id: coverage-scorecard-2026-08-13-run-15
+date: "2026-08-13"
+overall_strict_p0_percent: 10
+p0_families_registered: "12/12"
+critical_gaps: 0
+high_gaps: 4
+red_team: FAIL
+expert_ready: false
+
+family_scores:
+  npa_rf: 10
+  gost_iso: 10
+  classification_categorization: 10
+  threat_modeling_bdu: 10
+  risk_methods: 10
+  legal_consequences: 10
+  szi_skzi_license_lifecycle: 10
+  roles_deadlines_responsibility: 10
+  evidence_audit: 10
+  practical_cases: 10
+
+this_run:
+  committed_verified_records: 10
+  committed_verified_metadata_records: 2
+  committed_file: "security-knowledge/lifecycle/szi-license-certificate-lifecycle-verified.yaml"
+  areas:
+    - "ФСТЭК СЗИ: certificate expiry/extension/suspension/resumption/termination lifecycle"
+    - "ФСТЭК приказ N 55 в редакции, учитывающей приказ N 9 от 20.01.2026, действующий с 02.05.2026"
+    - "99-ФЗ ст.9: лицензия действует бессрочно; registry entry is legal provision point"
+    - "официальные open-data реестры ФСТЭК для ТЗКИ и разработки/производства СЗКИ"
+    - "expiry-proximity model for certificates and registry-freshness model for indefinite licenses"
+  key_findings:
+    - "сертификат ФСТЭК: maximum validity <= 5 years, but exact valid_until must come from certificate/registry"
+    - "expired certificate != automatic prohibition on continued use; current p.15 conditions must be checked"
+    - "production/sale certificate extension is a different decision from continued operational use"
+    - "suspension may last no more than 90 calendar days; notification/remediation window is capped at 90 calendar days"
+    - "OSS component list changes trigger a 5-calendar-day submission duty under the 2026 amendment"
+    - "ordinary FSTEC licenses under 99-FZ are indefinite; renewal-proximity is not applicable"
+  governance_controls_added:
+    - "certificate monitoring thresholds 180/120/90/60/30/14/7/1 days explicitly labeled organizational recommendation"
+    - "indefinite license monitoring uses registry freshness and event triggers instead of fictitious expiry"
+    - "owner/IB/procurement/legal/approver/verifier decision matrix"
+  red_team_guardrails:
+    - "do not infer five-year expiry when registry/certificate has an explicit date"
+    - "do not infer mandatory removal solely from certificate expiry"
+    - "do not use scanned paper license as stronger evidence than current registry state"
+    - "do not apply FSTEC lifecycle rules to FSB/SKZI without separate authority-specific proof"
+
+verified_known_minimum:
+  previous_minimum_cumulative_relevant_verified_records: 103
+  added_this_run: 10
+  minimum_cumulative_relevant_verified_records: 113
+  additional_verified_metadata_records_this_run: 2
+  note: "Minimum only; metadata records are not counted as clause-level VERIFIED obligations."
+
+high_gaps_list:
+  - "первичный полный текст Методики оценки угроз ФСТЭК 2021 и clause-level atomization"
+  - "version-aware КИИ categorization overlays and full PP127 chain"
+  - "FSB/SKZI certificate/license lifecycle, plus official current FSTEC certificate-registry endpoint/schema for automation"
+  - "практические кейсы и судебная практика по ИБ/ПДн: ответственность, ущерб, причинная связь, применимость"
+
+closed_or_reduced_this_run:
+  - "FSTEC SZI certificate lifecycle: verified operational slice added"
+  - "FSTEC license expiry misconception removed: ordinary 99-FZ license is indefinite"
+  - "original lifecycle High gap narrowed to FSB/SKZI + registry automation proof"
+
+next_bottleneck:
+  - "FSB/SKZI lifecycle: current certificates, licenses, registry/status and time rules from primary/authoritative sources"
+  - "resolve official FSTEC certified-SZI registry endpoint and define immutable snapshot schema"
+  - "then return to primary full text of FSTEC threat assessment methodology 2021"
+
+promotion_decision:
+  family_promotion: false
+  reason: "FSTEC SZI/license lifecycle now has a verified slice, but the family-wide proof floor is not met because SKZI/FSB and official certificate-registry automation remain unresolved. Overall strict P0 stays 10%."
