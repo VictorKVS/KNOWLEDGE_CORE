@@ -6,12 +6,14 @@ on:
       - 'security-knowledge/corpus/**/*source-pack*.yaml'
       - 'security-knowledge/corpus/**/*source-pack*.yml'
       - 'tools/validate_security_source_packs.py'
+      - 'tools/test_validate_security_source_packs.py'
       - '.github/workflows/security-source-pack-gate.yml'
   pull_request:
     paths:
       - 'security-knowledge/corpus/**/*source-pack*.yaml'
       - 'security-knowledge/corpus/**/*source-pack*.yml'
       - 'tools/validate_security_source_packs.py'
+      - 'tools/test_validate_security_source_packs.py'
       - '.github/workflows/security-source-pack-gate.yml'
 
 permissions:
@@ -26,6 +28,9 @@ jobs:
         with:
           python-version: '3.12'
       - run: python -m pip install pyyaml
+      - name: Run source-pack validator regression tests
+        working-directory: tools
+        run: python -m unittest -v test_validate_security_source_packs.py
       - name: Validate Security Knowledge source packs
         shell: bash
         run: |
