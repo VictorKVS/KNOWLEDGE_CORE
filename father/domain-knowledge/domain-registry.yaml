@@ -1,108 +1,45 @@
-schema_version: 5
-purpose: >-
-  Registry of professional knowledge bases used by Father. Each domain is built with the same
-  evidence-first discipline while retaining domain-specific laws, standards, calculations,
-  tools, metrics, constraints and professional practice.
+schema_version: 6
 common_doctrine_ref: father/domain-knowledge/PROFESSIONAL_EVIDENCE_DOCTRINE.md
 common_decision_contract_ref: father/domain-knowledge/professional-decision-schema.yaml
 common_maturity_model_ref: father/domain-knowledge/PROFESSIONAL_KB_MATURITY_MODEL.yaml
 common_review_protocol_ref: father/domain-knowledge/PROFESSIONAL_KB_REVIEW_PROTOCOL.yaml
 bootstrap_template_ref: father/domain-knowledge/DOMAIN_BOOTSTRAP_TEMPLATE.yaml
-
 domains:
-  - id: SECURITY
-    title: Information and cyber security
-    status: IN_PROGRESS
-    logical_knowledge_space_ref: KB-SECURITY
-    canonical_tree: security-knowledge/
-    product_ref: SEC-PROD-0001
-    product_roadmap_ref: father/product-roadmap/security-products.yaml
-    pipeline: SOURCE -> VERSION -> CHUNK -> ATOMIC CLAIM/REQUIREMENT -> APPLICABILITY -> RELATIONS -> CONTROL -> CHECK -> EVIDENCE -> EXPERT REVIEW
-    verified_rule: VERIFIED requires admitted primary source plus exact locator.
-    product_value_rule: Retrieval/RAG is a lower layer; authoritative value is the evidence graph and expert-reviewed derivation chain.
-    reference_domain_role: first evidence-first implementation pattern for other professional domains
-  - id: SOFTWARE_ENGINEERING
-    title: Software engineering and architecture
-    status: M0_SCOPE_DEFINED
-    logical_knowledge_space_ref: KB-SOFTWARE-ENGINEERING
-    canonical_tree: professional-knowledge/software-engineering/
-    maturity_ref: professional-knowledge/software-engineering/DOMAIN.yaml
-    roadmap_ref: professional-knowledge/software-engineering/ROADMAP.yaml
-    source_policy_ref: professional-knowledge/software-engineering/SOURCE_POLICY.yaml
-    review_policy_ref: professional-knowledge/software-engineering/REVIEW_POLICY.yaml
-  - id: DEVOPS_SRE
-    title: DevOps, SRE and platform engineering
-    status: PLANNED
-  - id: AI_ML
-    title: AI, ML, LLM and agent engineering
-    status: PLANNED
-  - id: DATA_ENGINEERING
-    title: Data engineering, databases and analytics
-    status: PLANNED
-  - id: NETWORK_ENGINEERING
-    title: Networks and telecommunications
-    status: PLANNED
-  - id: SYSTEM_ADMINISTRATION
-    title: System administration and infrastructure
-    status: PLANNED
-  - id: CLOUD_ARCHITECTURE
-    title: Cloud architecture and operations
-    status: PLANNED
-  - id: PRODUCT_PROJECT
-    title: Product and project management
-    status: PLANNED
-  - id: BUSINESS_ANALYSIS
-    title: Business and systems analysis
-    status: PLANNED
-  - id: LEGAL_COMPLIANCE
-    title: Legal, contracts and compliance
-    status: PLANNED
-  - id: FINANCE_ACCOUNTING
-    title: Finance, accounting and economics
-    status: PLANNED
-  - id: HR_ORGANIZATION
-    title: HR and organizational management
-    status: PLANNED
-  - id: PROCUREMENT_VENDOR
-    title: Procurement and vendor management
-    status: PLANNED
-  - id: QUALITY_AUDIT
-    title: Quality management and audit
-    status: PLANNED
-  - id: CONSTRUCTION_ENGINEERING
-    title: Construction and building engineering systems
-    status: PLANNED
-  - id: ELECTRICAL_ENGINEERING
-    title: Electrical engineering and power systems
-    status: PLANNED
-  - id: FIRE_SAFETY
-    title: Fire safety
-    status: PLANNED
-  - id: PHYSICAL_SECURITY
-    title: Physical security, CCTV, access control and alarm systems
-    status: PLANNED
-  - id: OCCUPATIONAL_SAFETY
-    title: Occupational and industrial safety
-    status: PLANNED
-  - id: HEALTHCARE_IT
-    title: Healthcare processes and health information systems
-    status: PLANNED
-  - id: OSINT_RESEARCH
-    title: OSINT and research methodology
-    status: PLANNED
-
+- {id: SECURITY, status: IN_PROGRESS}
+- id: SOFTWARE_ENGINEERING
+  status: M1_SOURCES_ADMITTED
+  logical_knowledge_space_ref: KB-SOFTWARE-ENGINEERING
+  canonical_tree: professional-knowledge/software-engineering/
+  maturity_ref: professional-knowledge/software-engineering/DOMAIN.yaml
+  roadmap_ref: professional-knowledge/software-engineering/ROADMAP.yaml
+  source_policy_ref: professional-knowledge/software-engineering/SOURCE_POLICY.yaml
+  source_registry_ref: professional-knowledge/software-engineering/SOURCE_REGISTRY.yaml
+  review_policy_ref: professional-knowledge/software-engineering/REVIEW_POLICY.yaml
+  latest_maturity_review_ref: professional-knowledge/software-engineering/audits/M1_SOURCE_REVIEW_2026-08-13.yaml
+- {id: DEVOPS_SRE, status: PLANNED}
+- {id: AI_ML, status: PLANNED}
+- {id: DATA_ENGINEERING, status: PLANNED}
+- {id: NETWORK_ENGINEERING, status: PLANNED}
+- {id: SYSTEM_ADMINISTRATION, status: PLANNED}
+- {id: CLOUD_ARCHITECTURE, status: PLANNED}
+- {id: PRODUCT_PROJECT, status: PLANNED}
+- {id: BUSINESS_ANALYSIS, status: PLANNED}
+- {id: LEGAL_COMPLIANCE, status: PLANNED}
+- {id: FINANCE_ACCOUNTING, status: PLANNED}
+- {id: HR_ORGANIZATION, status: PLANNED}
+- {id: PROCUREMENT_VENDOR, status: PLANNED}
+- {id: QUALITY_AUDIT, status: PLANNED}
+- {id: CONSTRUCTION_ENGINEERING, status: PLANNED}
+- {id: ELECTRICAL_ENGINEERING, status: PLANNED}
+- {id: FIRE_SAFETY, status: PLANNED}
+- {id: PHYSICAL_SECURITY, status: PLANNED}
+- {id: OCCUPATIONAL_SAFETY, status: PLANNED}
+- {id: HEALTHCARE_IT, status: PLANNED}
+- {id: OSINT_RESEARCH, status: PLANNED}
 rules:
-  - New domains are added when a Father capability requires a distinct professional evidence base.
-  - Cross-domain concepts are linked, not copied as conflicting independent truths.
-  - Every domain must expose requirements, constraints, metrics, workflows, checklists, evidence, alternatives, decisions, implementations and competency paths where applicable.
-  - Every domain must define its own source taxonomy, source precedence, freshness policy and conflict-handling rules.
-  - Every activated non-Security domain follows PROFESSIONAL_KB_MATURITY_MODEL, DOMAIN_BOOTSTRAP_TEMPLATE and PROFESSIONAL_KB_REVIEW_PROTOCOL unless a stricter domain-specific model is declared.
-  - Material decisions use PROFESSIONAL_DECISION_RECORD and evidence depth proportional to decision materiality D0-D3.
-  - Material producer and final senior reviewer use separate assignments.
-  - D2-D3 review must challenge realistic alternatives, not only criticize the preferred answer.
-  - Best practice, industry standard, vendor recommendation or model output is not a terminal justification unless its source, applicability and limitations are explicit.
-  - Hard legal, contractual, security or safety constraints cannot be overridden by preference scores or business convenience without an explicit governed exception where such exception is legally and organizationally possible.
-  - Historical decisions preserve the knowledge/evidence available at decision time; later reassessment supersedes rather than rewrites history.
-  - Logical domain identity is stable even if physical repository/path changes later.
-  - FATHER consumes domain knowledge through governed routes and cannot silently rewrite VERIFIED domain truth.
-  - Maturity is earned by passed evidence gates, never by file count, token volume, commit count or model confidence.
+- separate_domains_keep_separate_evidence
+- material_review_uses_separate_producer_and_senior_assignments
+- realistic_alternatives_are_challenged
+- hard_constraints_precede_preferences
+- historical_evidence_is_preserved
+- maturity_is_earned_by_evidence_gates
