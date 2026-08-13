@@ -1,0 +1,80 @@
+schema_version: 1
+scorecard_id: SEC-COVERAGE-2026-08-13-R04
+scope: Russian paper-security P0 core
+previous_scorecard: security-knowledge/audits/coverage-scorecard-2026-08-13-run-03.yaml
+scoring_policy:
+  overall_formula: arithmetic_mean_of_P0_family_status_points_from_master_inventory
+  family_status_points: {NOT_REGISTERED: 0, REGISTERED: 10, SOURCE_PENDING: 15, SOURCE_ACQUIRED: 20, STATUS_VERIFIED: 25, VERSIONED: 35, CHUNKED: 45, ATOMIZED: 60, LINKED: 75, EXPERT_REVIEWED: 90, COMPLETE: 100}
+  conservative_rule: family promotion requires family-wide evidence; mature slices do not promote the whole family
+p0_families:
+  RU_CONSTITUTIONAL_AND_CODES: {status: REGISTERED, score: 10}
+  RU_FEDERAL_LAWS: {status: REGISTERED, score: 10}
+  RU_PRESIDENTIAL: {status: REGISTERED, score: 10}
+  RU_GOVERNMENT_DECREES: {status: REGISTERED, score: 10}
+  FSTEK: {status: REGISTERED, score: 10}
+  FSB: {status: REGISTERED, score: 10}
+  ROSKOMNADZOR: {status: REGISTERED, score: 10}
+  GOST_AND_RU_STANDARDS: {status: REGISTERED, score: 10, note: 'Official Rosstandart metadata captured for 27001, 27002, 27005 and 57580.1; clause-level corpus incomplete'}
+  CLASSIFICATION_AND_CATEGORIZATION_METHODS: {status: REGISTERED, score: 10, note: 'PP 1119 and PP 127 anchors registered; current version-chain and sector rules incomplete'}
+  THREAT_MODELING_AND_THREAT_CATALOGS: {status: REGISTERED, score: 10, note: 'BDU ASU TP live source and three records verified; methodology primary document still pending canonical capture'}
+  RISK_METHODS: {status: REGISTERED, score: 10, note: '27005/27001 official registry metadata captured; clause-level methodology extraction incomplete'}
+  PRODUCTS_CERTIFICATES_LICENSES: {status: REGISTERED, score: 10}
+metrics:
+  p0_family_count: 12
+  p0_registered_or_better: 12
+  p0_not_registered: 0
+  p0_family_registration_percent: 100.0
+  conservative_overall_maturity_percent: 10.0
+  displayed_percent_rounded: 10
+verified_corpus_state:
+  canonical_152fz_requirements: 19
+  article_22_applicability_rules: 4
+  koap_13_11_sanction_parts: 9
+  verified_atomic_legal_or_applicability_records_known: 32
+  new_verified_catalog_records_this_run: 3
+  new_official_standard_metadata_cards_this_run: 4
+  warning: Catalog records and metadata cards are not counted as VERIFIED legal requirements.
+run_additions:
+  - security-knowledge/standards/gost-and-ru-standards-source-registry.yaml
+  - security-knowledge/classification/classification-and-categorization-source-registry.yaml
+  - security-knowledge/threat-modeling/threat-modeling-and-catalogs-source-registry.yaml
+  - security-knowledge/risk/risk-methods-source-registry.yaml
+  - security-knowledge/corpus/master-source-inventory.yaml
+verified_source_anchors:
+  - GOST_R_ISO_IEC_27001_2021: Rosstandart official registry, observed active
+  - GOST_R_ISO_IEC_27002_2021: Rosstandart official registry, observed active
+  - GOST_R_ISO_IEC_27005_2010: Rosstandart official registry, observed active
+  - GOST_R_57580_1_2017: Rosstandart official registry, observed active
+  - PP_RF_127_2018: official publication 0001201802130006
+  - FSTEK_BDU_ASUTP: live primary regulator catalog
+red_team:
+  result: FAIL
+  resolved_gaps:
+    - id: GAP-P0-002
+      resolution: 'All four previously NOT_REGISTERED P0 families now have explicit source registries and red-team blocks.'
+  critical_gaps: []
+  high_gaps:
+    - id: GAP-P0-003
+      gap: '152-FZ remains only partially atomized.'
+    - id: GAP-P0-006
+      gap: 'Complete highest-tier version-chain evidence for current 152-FZ remains incomplete.'
+    - id: GAP-P0-008
+      gap: 'KoAP mapping outside Article 13.11 parts 10-18 remains incomplete.'
+    - id: GAP-P0-010
+      gap: 'GOST family has only metadata/source registration for initial standards; clause-level evidence and replacement/amendment audit are incomplete.'
+    - id: GAP-P0-011
+      gap: 'Classification/categorization lacks full current decision logic, including 2025-2026 sector-specific CII categorization rules.'
+    - id: GAP-P0-012
+      gap: 'Primary full text/canonical locator for the FSTEK 2021 threat methodology remains pending; dynamic BDU snapshot/version strategy is not yet implemented.'
+    - id: GAP-P0-013
+      gap: 'Risk-method family lacks clause-level extraction, BIA source coverage and organization risk-acceptance authority model.'
+    - id: GAP-P0-009
+      gap: 'Repository-level validator/CI acceptance is not claimed for the new registries in this pass.'
+expert_ready: false
+next_bottleneck:
+  target: Promote at least one newly registered P0 family from REGISTERED to SOURCE_ACQUIRED/STATUS_VERIFIED without weakening proof rules.
+  order:
+    - CLASSIFICATION_AND_CATEGORIZATION_METHODS: build current PP 1119 + PP 127 version chains and decision tables
+    - THREAT_MODELING_AND_THREAT_CATALOGS: capture canonical FSTEK methodology source and implement observed_at snapshots for BDU
+    - GOST_AND_RU_STANDARDS: complete current status/replacement matrix and clause-evidence acquisition plan
+    - RISK_METHODS: extract clause-level risk process only from acquired authoritative texts
