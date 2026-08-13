@@ -1,4 +1,4 @@
-schema_version: 1
+schema_version: 2
 domain_id: SOFTWARE_ENGINEERING
 slice_id: SWENG-M2-HTTP-0001
 maturity_scope: M2_ATOMIC_KNOWLEDGE
@@ -37,5 +37,37 @@ knowledge_objects:
   - this is not a complete retry policy
   - timeout backoff retry budget and business duplicate handling require separate evidence
   conflict_state: NONE_KNOWN_WITHIN_ADMITTED_SOURCE_SET
+- knowledge_id: SWENG-HTTP-CLAIM-0003
+  object_type: CONTRACT_CLAIM
+  claim_type: NORMATIVE_SERVER_RETRY_SIGNAL
+  statement: RFC 9110 defines Retry-After as a server indication of how long a user agent ought to wait before a follow-up request; with 503 it indicates how long the service is expected to be unavailable.
+  verification_state: VERIFIED_SOURCE_BOUND
+  provenance:
+    source_id: SWENG-SRC-RFC9110
+    locator: RFC 9110 section 10.2.3
+    source_url: https://www.rfc-editor.org/rfc/rfc9110.html#section-10.2.3
+    observed_at: 2026-08-13
+  context:
+    applies_to: HTTP_responses_containing_Retry_After
+    does_not_imply: [retry_is_safe_for_non_idempotent_operation, client_must_retry, Retry_After_alone_proves_business_recoverability]
+  limitations:
+  - retry eligibility still depends on request semantics and local constraints
+  - Retry-After can exceed a caller latency or deadline budget
+- knowledge_id: SWENG-HTTP-CLAIM-0004
+  object_type: CONTRACT_CLAIM
+  claim_type: NORMATIVE_TEMPORARY_SERVICE_SIGNAL
+  statement: RFC 9110 defines 503 Service Unavailable as inability to handle the request due to temporary overload or scheduled maintenance likely to be alleviated after some delay, and permits a Retry-After field to suggest a wait duration.
+  verification_state: VERIFIED_SOURCE_BOUND
+  provenance:
+    source_id: SWENG-SRC-RFC9110
+    locator: RFC 9110 section 15.6.4
+    source_url: https://www.rfc-editor.org/rfc/rfc9110.html#section-15.6.4
+    observed_at: 2026-08-13
+  context:
+    applies_to: HTTP_503_response_semantics
+    does_not_imply: [every_overload_returns_503, retry_will_succeed, retry_is_safe_for_every_method]
+  limitations:
+  - the specification notes that an overloaded server might refuse the connection instead of returning 503
+  - success probability and optimal delay require environment-specific evidence
 challenge_notes:
-  overgeneralization_rejected: [idempotent_method_is_always_safe_to_retry_without_limits, POST_can_never_be_retried, HTTP_idempotency_equals_exactly_once_processing]
+  overgeneralization_rejected: [idempotent_method_is_always_safe_to_retry_without_limits, POST_can_never_be_retried, HTTP_idempotency_equals_exactly_once_processing, Retry_After_means_retry_is_mandatory, HTTP_503_proves_retry_will_succeed]
