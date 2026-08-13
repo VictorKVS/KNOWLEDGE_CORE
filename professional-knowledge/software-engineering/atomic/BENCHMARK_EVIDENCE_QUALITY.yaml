@@ -1,0 +1,41 @@
+schema_version: 1
+domain_id: SOFTWARE_ENGINEERING
+slice_id: SWENG-M2-BENCH-0001
+maturity_scope: M2_ATOMIC_KNOWLEDGE
+status: REVIEWED_BOUNDED
+source_registry_ref: professional-knowledge/software-engineering/SOURCE_REGISTRY.yaml
+knowledge_objects:
+- knowledge_id: SWENG-BENCH-RULE-0001
+  object_type: PROFESSIONAL_RULE
+  claim_type: MEASUREMENT_QUALITY_RULE
+  statement: A pyperf benchmark that reports instability is not sufficient as stable comparative evidence without rerunning or analyzing the run and addressing environmental noise or inadequate run parameters.
+  verification_state: REVIEWED_DERIVED_FROM_SOURCE
+  provenance:
+    source_id: SWENG-SRC-PYPERF-210
+    locator: pyperf 2.10.0 Run a benchmark, instability warning and reproducibility guidance
+    source_url: https://pyperf.readthedocs.io/en/stable/run_benchmark.html
+    observed_at: 2026-08-13
+  context:
+    applies_to: Python_microbenchmark_evidence_using_pyperf_2_10
+  limitations:
+  - tool stability does not prove production workload representativeness
+  - a stable microbenchmark can still answer the wrong engineering question
+  - statistical interpretation beyond pyperf guidance needs an appropriate statistical source
+  conflict_state: NONE_KNOWN_WITHIN_ADMITTED_SOURCE_SET
+- knowledge_id: SWENG-BENCH-CLAIM-0002
+  object_type: METHOD_CLAIM
+  claim_type: TOOL_BEHAVIOR
+  statement: pyperf captures run metadata and provides system tuning and CPU affinity mechanisms intended to reduce benchmark noise and improve repeatability.
+  verification_state: VERIFIED_SOURCE_BOUND
+  provenance:
+    source_id: SWENG-SRC-PYPERF-210
+    locator: pyperf 2.10.0 system tuning and metadata documentation
+    source_url: https://pyperf.readthedocs.io/en/stable/system.html
+    observed_at: 2026-08-13
+  context:
+    applies_to: pyperf_2_10_benchmark_execution
+  limitations: [platform_specific_tuning_varies, tuning_does_not_guarantee_representative_workload, benchmark_context_must_be_recorded]
+  conflict_state: NONE_KNOWN_WITHIN_ADMITTED_SOURCE_SET
+challenge_notes:
+  overgeneralization_rejected: [stable_microbenchmark_equals_production_performance, lower_mean_always_means_better_system, one_machine_result_generalizes_to_all_environments]
+  stronger_rule_withheld: No universal numeric stability threshold is asserted because the admitted source set does not justify one for all workloads.
