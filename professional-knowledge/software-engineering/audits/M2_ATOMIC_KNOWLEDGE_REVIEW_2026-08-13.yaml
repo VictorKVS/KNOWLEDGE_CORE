@@ -1,0 +1,113 @@
+schema_version: 1
+domain_id: SOFTWARE_ENGINEERING
+review_id: SWENG-M2-REVIEW-2026-08-13
+reviewed_scope: bounded_backend_atomic_knowledge_http_postgres_benchmark_evidence
+maturity_target: M2
+materiality: D1_KNOWLEDGE_ADMISSION_WITH_NO_D2_TECHNOLOGY_SELECTION
+
+assignments:
+  SOURCE_RESEARCHER: SWENG-M2-A01
+  EVIDENCE_ENGINEER: SWENG-M2-A02
+  DOMAIN_SPECIALIST: SWENG-M2-A03
+  ALTERNATIVES_ANALYST: SWENG-M2-A04
+  DECISION_ANALYST: SWENG-M2-A05
+  SENIOR_PRACTITIONER_REVIEWER: SWENG-M2-R01
+  SKEPTICAL_CRITIC: SWENG-M2-R02
+independence:
+  producer_assignments: [SWENG-M2-A01, SWENG-M2-A02, SWENG-M2-A03, SWENG-M2-A04, SWENG-M2-A05]
+  final_review_assignments: [SWENG-M2-R01, SWENG-M2-R02]
+  self_review_detected: false
+  cross_domain_review_required: false
+  rationale: No D2 or D3 cross-domain professional decision is being admitted at M2.
+
+producer_findings:
+  SOURCE_RESEARCHER:
+    verdict: PASS_BOUNDED
+    findings:
+    - RFC 9110 section 9.2.2 directly supports HTTP method idempotency semantics and constrains automatic retry of non-idempotent methods.
+    - PostgreSQL 17 section 13.2 directly supports version-scoped transaction isolation behavior.
+    - pyperf 2.10 documentation directly supports benchmark tuning, metadata and instability handling, but not production representativeness.
+  EVIDENCE_ENGINEER:
+    verdict: PASS_BOUNDED
+    findings:
+    - Every admitted atomic object has a registered source id, locator, source URL, observation date, context and limitations.
+    - Source-bound claims are separated from derived professional rules.
+  DOMAIN_SPECIALIST:
+    verdict: PASS_WITH_RESTRICTIONS
+    findings:
+    - HTTP protocol idempotency is not business exactly-once semantics.
+    - PostgreSQL isolation guarantees do not imply a universal isolation-level choice.
+    - Stable microbenchmark execution does not establish production workload performance.
+  ALTERNATIVES_ANALYST:
+    verdict: PASS
+    viable_alternative_interpretations:
+    - id: ALT-HTTP-1
+      option: Treat HTTP method name alone as the retry decision.
+      disposition: REJECT_FOR_M2_RULE
+      reason: RFC 9110 explicitly requires extra knowledge for automatic retry of non-idempotent methods and does not define a full application retry policy.
+    - id: ALT-HTTP-2
+      option: Forbid all retries of POST-like operations.
+      disposition: REJECT_AS_OVERGENERALIZED
+      reason: The standard allows retry when actual semantics are known to be idempotent or non-application is detectable.
+    - id: ALT-PG-1
+      option: Treat Repeatable Read and Serializable as equivalent guarantees.
+      disposition: REJECT
+      reason: PostgreSQL 17 documents serialization anomalies as possible under Repeatable Read but not Serializable.
+    - id: ALT-BENCH-1
+      option: Accept a single stable-looking microbenchmark as production performance evidence.
+      disposition: REJECT
+      reason: pyperf stability controls address measurement noise, not workload representativeness.
+    - id: ALT-BENCH-2
+      option: Refuse all microbenchmarks as professionally useless.
+      disposition: REJECT
+      reason: A bounded microbenchmark can answer a narrow performance question when context and limitations are explicit.
+  DECISION_ANALYST:
+    verdict: ADMIT_BOUNDED_M2_ONLY
+    rationale: The objects are suitable as bounded atomic knowledge, not as M3 technology-selection or architecture decision rules.
+
+senior_review:
+  reviewer_assignment: SWENG-M2-R01
+  verdict: ACCEPT_WITH_RESTRICTIONS
+  strongest_objection: The slice could be mistaken for a retry, database or performance best-practice guide when it only establishes narrow source-bound semantics and evidence constraints.
+  viable_alternatives:
+  - Keep all objects at M1 source notes until decision logic exists.
+  - Admit source-bound atomic knowledge now while explicitly forbidding M3 decision use.
+  improved_option_or_reason_no_better_option_found: Admit the bounded atoms at M2 with explicit verification-state distinctions and non-claims; this preserves useful semantics without pretending decision readiness.
+  reversal_conditions:
+  - authoritative source changes or supersession
+  - locator no longer supports the recorded statement
+  - implementation version changes outside the recorded scope
+  - contradictory higher-authority or reproducible evidence appears
+
+skeptical_review:
+  reviewer_assignment: SWENG-M2-R02
+  verdict: ACCEPT_AFTER_CHALLENGE
+  strongest_objection: All three topics invite template reasoning: retry idempotent methods, choose stronger isolation, trust stable benchmarks.
+  challenge_results:
+  - The HTTP atoms explicitly reject unconditional method-name-only retry policy.
+  - The PostgreSQL atoms explicitly reject always choosing the highest isolation level.
+  - The benchmark atoms explicitly reject equating stability with representativeness.
+  improved_option_or_reason_no_better_option_found: No stronger general rule is justified by the admitted sources; narrower claims are more defensible than generic engineering slogans.
+  reversal_conditions:
+  - M3 decision packets fail to preserve these boundaries
+  - a future validator permits M2 objects without locator context and limitations
+  - reviewers become the same assignment as producers
+
+promotion_assessment:
+  required_capabilities:
+    atomic_knowledge_objects: PASS
+    provenance_to_admitted_sources_or_reproducible_measurements: PASS
+    claim_type_and_verification_state: PASS
+    limitations_and_context: PASS
+    relation_links: PASS_BOUNDED
+    explicit_metric_definitions_where_metrics_exist: NOT_APPLICABLE_NO_NEW_NUMERIC_METRIC_ADMITTED
+    independent_sample_challenge: PASS
+  verdict: PROMOTE_BOUNDED_SCOPE_TO_M2
+  expert_ready: false
+  decision_engine_ready: false
+  non_claims:
+  - no universal retry policy
+  - no universal database isolation recommendation
+  - no workload-independent performance claim
+  - no M3 decision readiness
+  - no expert-ready status
