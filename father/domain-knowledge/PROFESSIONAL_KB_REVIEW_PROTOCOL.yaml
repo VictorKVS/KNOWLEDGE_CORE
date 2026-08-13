@@ -1,0 +1,168 @@
+schema_version: 1
+protocol_id: FATHER-PROFESSIONAL-KB-REVIEW-1
+status: ACTIVE
+purpose: >-
+  Prevent professional knowledge bases from becoming template-driven summaries. Material
+  knowledge and decision logic must be produced and challenged by distinct professional roles,
+  with independent senior criticism and explicit alternative generation.
+
+principles:
+  - producer_and_final_senior_reviewer_are_separate_assignments
+  - criticism_without_actionable_alternative_or_reasoned_no_better_alternative_statement_is_incomplete
+  - repeated_generic_pattern_is_not_professional_evidence
+  - seniority_is_not_authority_to_override_primary_evidence
+  - reviewer_must_challenge_context_applicability_assumptions_and_failure_modes
+  - dissent_is_preserved_when_material
+  - review_depth_is_proportional_to_D0_D3_materiality
+  - a_more_complex_solution_is_not_better_by_default
+  - efficiency_means_best_fit_under_requirements_constraints_cost_risk_and_operational_reality
+
+production_roles:
+  SOURCE_RESEARCHER:
+    mission: Find and classify authoritative, current and relevant sources.
+    must_not: Promote interpretations to professional truth.
+    outputs:
+      - source_candidates
+      - provenance
+      - version_and_freshness_state
+      - source_limitations
+  EVIDENCE_ENGINEER:
+    mission: Convert admitted source material and measurements into traceable evidence objects.
+    must_not: Hide source conflict or missing proof.
+    outputs:
+      - atomic_evidence
+      - locators_or_measurement_provenance
+      - conflict_links
+      - confidence_or_verification_state
+  DOMAIN_SPECIALIST:
+    mission: Form professional claims, rules, methods, patterns and bounded recommendations.
+    must_not: Use preference, popularity or model opinion as terminal justification.
+    outputs:
+      - professional_claims
+      - applicability
+      - constraints
+      - methods_and_patterns
+      - known_failure_modes
+  ALTERNATIVES_ANALYST:
+    mission: Search for materially viable alternatives and non-obvious options.
+    must_not: Produce straw-man alternatives merely to justify the preferred option.
+    outputs:
+      - candidate_alternatives
+      - hard_gate_failures
+      - Pareto_valid_options
+      - missing_evidence_for_comparison
+      - conditions_where_an_alternative_becomes_better
+  DECISION_ANALYST:
+    mission: Compare viable options using justified criteria, measurements, cost/resource views and risk.
+    must_not: Score alternatives before hard constraints are evaluated.
+    outputs:
+      - tradeoff_analysis
+      - sensitivity_analysis
+      - chosen_or_multiple_valid_disposition
+      - rejected_option_reasons
+  SENIOR_PRACTITIONER_REVIEWER:
+    mission: Review professional correctness, realism, maintainability and operational consequences.
+    independence: must_not_be_same_assignment_as_DOMAIN_SPECIALIST_or_DECISION_ANALYST_for_material_review
+    required_challenges:
+      - hidden_assumptions
+      - applicability_errors
+      - stale_or_weak_sources
+      - operational_burden
+      - lifecycle_and_support
+      - failure_and_recovery_behavior
+      - total_cost_and_people_constraints
+      - simpler_or_more_robust_alternative
+  SKEPTICAL_CRITIC:
+    mission: Try to falsify the conclusion and expose overconfidence, template thinking and Goodhart effects.
+    independence: must_not_be_same_assignment_as_producer
+    required_challenges:
+      - what_if_the_main_assumption_is_wrong
+      - what_evidence_would_reverse_the_decision
+      - which_important_option_was_not_considered
+      - where_the_benchmark_or_metric_can_mislead
+      - tail_risk_and_second_order_effects
+      - whether_a_no_go_or_wait_for_evidence_result_is_better
+  CROSS_DOMAIN_REVIEWER:
+    mission: Detect conflicts with adjacent domains such as security, legal, finance, operations, safety or organization.
+    trigger: D2_or_D3_or_declared_cross_domain_dependency
+    outputs:
+      - cross_domain_constraints
+      - conflicts
+      - escalation_refs
+
+review_levels:
+  D0:
+    required_roles: [DOMAIN_SPECIALIST]
+    senior_review_required: false
+  D1:
+    required_roles: [DOMAIN_SPECIALIST]
+    senior_review_required: risk_based
+    alternatives_requirement: at_least_one_alternative_when_materially_plausible
+  D2:
+    required_roles:
+      - DOMAIN_SPECIALIST
+      - ALTERNATIVES_ANALYST
+      - DECISION_ANALYST
+      - SENIOR_PRACTITIONER_REVIEWER
+      - SKEPTICAL_CRITIC
+    cross_domain_reviewer: when_relevant
+    independent_review_required: true
+  D3:
+    required_roles:
+      - SOURCE_RESEARCHER
+      - EVIDENCE_ENGINEER
+      - DOMAIN_SPECIALIST
+      - ALTERNATIVES_ANALYST
+      - DECISION_ANALYST
+      - SENIOR_PRACTITIONER_REVIEWER
+      - SKEPTICAL_CRITIC
+      - CROSS_DOMAIN_REVIEWER
+    independent_review_required: true
+    qualified_review_required: true
+
+senior_review_contract:
+  mandatory_questions:
+    - Is the problem framed correctly or are we optimizing the wrong target?
+    - Which requirements are mandatory, which are preferences, and were they mixed?
+    - Are the strongest sources actually applicable to this context and version?
+    - What assumptions are carrying the conclusion?
+    - Which realistic alternatives remain viable after hard gates?
+    - Is there a simpler, cheaper, safer, more reliable or more maintainable solution?
+    - Under what conditions would another option become superior?
+    - Which failure mode is most likely to invalidate the recommendation?
+    - Does the evidence support the precision of the conclusion?
+    - What should be measured after implementation to verify the decision?
+  required_output:
+    verdict_values:
+      - ACCEPT
+      - ACCEPT_WITH_RESTRICTIONS
+      - REWORK
+      - REJECT
+      - NEEDS_MORE_EVIDENCE
+    fields:
+      - verdict
+      - strongest_objection
+      - missing_or_weak_evidence
+      - viable_alternatives
+      - improved_option_or_reason_no_better_option_found
+      - conditions_for_reversal
+      - residual_risks
+      - verification_recommendations
+
+anti_template_checks:
+  - reject_recommendation_if_rationale_is_only_best_practice_or_popularity
+  - reject_comparison_if_alternatives_are_straw_men
+  - reject_metric_if_decision_purpose_and_limitations_are_missing
+  - reject_benchmark_if_workload_context_is_materially_different
+  - reject_decision_if_same_generic_rationale_is_reused_without_context_specific_evidence
+  - flag_unjustified_round_numbers_thresholds_or_weights
+  - flag_solution_first_reasoning_where_requirements_were_backfilled_after_option_selection
+  - require_explicit_NO_GO_or_REQUEST_MORE_EVIDENCE_as_valid_possible_outcomes
+
+maturity_integration:
+  M0: define_review_roles_and_domain_specific_review_questions
+  M1: senior_reviewer_checks_source_hierarchy_and_freshness_policy
+  M2: sample_atomic_claims_are_challenged_for_overgeneralization_and_conflict
+  M3: all_material_decision_logic_uses_alternatives_and_independent_senior_review
+  M4: reviewer_challenges_reproducible_cases_and_failure_modes
+  M5: bounded_scope_requires_independent_senior_review_plus_skeptical_red_team_and_documented_dissent
