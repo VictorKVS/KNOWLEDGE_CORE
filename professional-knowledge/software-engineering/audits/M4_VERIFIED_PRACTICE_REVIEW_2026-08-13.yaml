@@ -1,0 +1,46 @@
+schema_version: 1
+audit_id: SWENG-M4-REVIEW-2026-08-13-0001
+domain_id: SOFTWARE_ENGINEERING
+maturity_target: M4_VERIFIED_PRACTICE
+bounded_scope: bounded_HTTP_client_decision_safety
+practice_pack_ref: professional-knowledge/software-engineering/practice/HTTP_CLIENT_RETRY_POLICY_CASES.yaml
+materiality_class: D2_ARCHITECTURE_PRODUCT
+producer_assignments:
+  SOURCE_RESEARCHER: SWENG-M4-SR-0001
+  EVIDENCE_ENGINEER: SWENG-M4-EE-0001
+  DOMAIN_SPECIALIST: SWENG-M4-DS-0001
+  ALTERNATIVES_ANALYST: SWENG-M4-AA-0001
+  DECISION_ANALYST: SWENG-M4-DA-0001
+review_assignments:
+  SENIOR_PRACTITIONER_REVIEWER: SWENG-M4-SPR-0001
+  SKEPTICAL_CRITIC: SWENG-M4-SC-0001
+  CROSS_DOMAIN_REVIEWER: SWENG-M4-CDR-0001
+independence: {producer_equals_final_senior_reviewer: false, producer_equals_skeptical_critic: false}
+case_coverage:
+  positive: [M4-HTTP-001, M4-HTTP-003]
+  negative: [M4-HTTP-002, M4-HTTP-004, M4-HTTP-005]
+  adversarial_known_limit: [M4-HTTP-006]
+  reproducibility_basis: explicit_input_tuples_and_declared_M3_hard_gates
+senior_review:
+  verdict: ACCEPT_WITH_RESTRICTIONS
+  strongest_objection: local boundedness does not prove aggregate resource safety across many dependencies
+  viable_alternatives: [keep_single_operation_scope, add_future_aggregate_resource_model, disable_automatic_recovery_when_aggregate_budget_is_unknown]
+  improved_option_or_reason_no_better_option_found: keep the present bounded scope and escalate aggregate cases rather than inventing system-level safety
+  reversal_conditions: [scope_expands_to_fanout_workflows, observed_duplicate_effect, caller_deadline_changes, attempt_budget_changes]
+skeptical_critic:
+  verdict: ACCEPT_AFTER_CHALLENGE
+  strongest_objection: positive cases could be misread as universal guidance
+  viable_alternatives: [no_automatic_action, server_directed_delay_when_safe, bounded_client_action_when_safe, application_level_mechanism_when_transport_semantics_are_insufficient]
+  improved_option_or_reason_no_better_option_found: preserve an explicit adversarial out_of_scope case so the bounded logic cannot be generalized silently
+  reversal_conditions: [new_authoritative_semantics, reproducibility_failure, observed_harm_under_accepted_path]
+cross_domain_review:
+  verdict: ACCEPT_WITH_ESCALATION_BOUNDARY
+  boundary: aggregate resource safety is outside this bounded slice
+preserved_dissent:
+  - {position: require_production_statistics_for_any_M4, resolution: rejected_for_deterministic_decision_safety_claim_only}
+  - {position: aggregate_case_should_block_all_M4, resolution: restrict_scope_and_escalate_instead}
+promotion_verdict:
+  result: ACCEPT_M4_BOUNDED
+  permitted_claim: M4_VERIFIED_PRACTICE_FOR_BOUNDED_HTTP_CLIENT_DECISION_SAFETY
+  forbidden_claims: [production_effectiveness_verified, optimal_delay_strategy_verified, aggregate_resource_safety_verified, domain_wide_expert_ready]
+  next_gate: M5_BOUNDED_EXPERT_READY
