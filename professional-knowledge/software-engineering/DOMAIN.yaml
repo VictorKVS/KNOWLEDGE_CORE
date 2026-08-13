@@ -1,4 +1,4 @@
-schema_version: 1
+schema_version: 2
 domain_id: SOFTWARE_ENGINEERING
 title: Software engineering and architecture
 logical_knowledge_space_ref: KB-SOFTWARE-ENGINEERING
@@ -133,6 +133,22 @@ decision_evidence_policy:
   D2: requirements_constraints_alternatives_metrics_cost_resource_risk_and_verification_plan
   D3: defer_to_cross_domain_regulatory_safety_or_security_proof_floor_when_triggered
 
+review_policy:
+  common_protocol_ref: father/domain-knowledge/PROFESSIONAL_KB_REVIEW_PROTOCOL.yaml
+  domain_policy_ref: professional-knowledge/software-engineering/REVIEW_POLICY.yaml
+  material_producer_and_final_senior_reviewer_separate: true
+  D2_required_roles:
+    - DOMAIN_SPECIALIST
+    - ALTERNATIVES_ANALYST
+    - DECISION_ANALYST
+    - SENIOR_PRACTITIONER_REVIEWER
+    - SKEPTICAL_CRITIC
+  D3_cross_domain_review_required: true
+  rule: >-
+    Senior review must attempt to falsify the recommendation, test realistic alternatives,
+    propose a more effective option when one exists, and otherwise explain why no better option
+    was found under the current requirements, constraints and evidence.
+
 legacy_material_policy:
   candidate_roots:
     - algorithms/
@@ -147,8 +163,8 @@ legacy_material_policy:
     provenance-linked and promoted through the maturity gates.
 
 promotion_plan:
-  M1: build_source_registry_and_admit_first_primary_technical_sources
-  M2: extract_first_atomic_rules_metrics_patterns_and_failure_modes
-  M3: build_first_bounded_decision_packets_for_material_software_choices
-  M4: prove_decision_packets_on_reproducible_cases_with_negative_tests
-  M5: independent_review_and_bounded_expert_ready_slice
+  M1: build_source_registry_and_admit_first_primary_technical_sources_with_senior_source_review
+  M2: extract_first_atomic_rules_metrics_patterns_and_failure_modes_then_challenge_for_overgeneralization
+  M3: build_first_bounded_decision_packets_with_real_alternatives_and_independent_senior_skeptical_review
+  M4: prove_decision_packets_on_reproducible_cases_with_negative_tests_and_operational_challenge
+  M5: independent_senior_review_red_team_and_bounded_expert_ready_slice
