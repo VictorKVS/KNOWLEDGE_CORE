@@ -1,0 +1,79 @@
+schema_version: "1.0"
+id: coverage-scorecard-2026-08-14-run-20
+date: "2026-08-14"
+overall_strict_p0_percent: 10
+p0_families_registered: "12/12"
+critical_gaps: 0
+high_gaps: 4
+red_team: FAIL
+expert_ready: false
+
+family_scores:
+  npa_rf: 10
+  gost_iso: 10
+  classification_categorization: 10
+  threat_modeling_bdu: 10
+  risk_methods: 10
+  legal_consequences: 10
+  szi_skzi_license_lifecycle: 10
+  roles_deadlines_responsibility: 10
+  evidence_audit: 10
+  practical_cases: 10
+
+this_run:
+  bdu_registry_commit: "7d3a0216b8547c947afef39bb91adc4202296276"
+  regression_cases_commit: "9e4d50a26659d189f6cc0fb193d908038a96b723"
+  committed_files:
+    - security-knowledge/threat-modeling/threat-modeling-and-catalogs-source-registry.yaml
+    - security-knowledge/threat-modeling/threat-relevance-regression-cases-v1.yaml
+  verified_catalog_observations_strengthened: 3
+  synthetic_regression_cases_added: 6
+  positive_regression_cases: 2
+  negative_relevance_cases: 3
+  negative_evidence_cases: 1
+  normative_verified_records_added: 0
+  primary_methodology_verified_records_added: 0
+  maturity_claim: NO_PROMOTION
+
+verified_pending_summary:
+  verified_or_tested_this_run:
+    - "UTP:01, UTP:02 and BDA:C006 now carry explicit stable catalog IDs, source UUIDs, observed_at and deterministic observation snapshot identities"
+    - "two bounded positive cases exercise RELEVANT only when tuple + consequence + capability + interface + scenario are all present"
+    - "three negative cases prove catalog presence, vulnerability presence or candidate harm alone cannot force RELEVANT"
+    - "one negative evidence case proves a live BDU URL without exact snapshot identity must fail reproducibility gate"
+  pending:
+    - "authenticated primary complete FSTEC 2021 methodology copy"
+    - "raw immutable BDU byte snapshots and cryptographic digests"
+    - "automated executable validator that runs the six regression fixtures"
+    - "remaining detailed methodology appendix matrices/subclauses"
+
+high_gaps_list:
+  - "authenticated primary full text of FSTEC Threat Assessment Methodology 2021 plus remaining matrices"
+  - "version-aware CII categorization overlays and full PP127 chain"
+  - "FSB SKZI/SZI certificate clause-level lifecycle plus official machine-readable certificate-list snapshot scheme; FSTEC certificate registry automation endpoint remains unresolved"
+  - "practical cases: broader modern corpus for security/personal-data incidents, regulator enforcement, operator/processor causation, damages and appellate outcomes"
+
+closed_or_reduced_this_run:
+  - "threat-relevance decision gate now has bounded positive and negative regression fixtures"
+  - "BDU records used by those fixtures now have reproducible logical snapshot identities rather than only live URLs/date-only observations"
+  - "catalog-presence and missing-snapshot false-positive paths are explicitly regression-tested by design"
+
+red_team_findings:
+  verdict: FAIL
+  positives:
+    - "decision logic is now materially testable against representative bounded fixtures"
+    - "synthetic fixtures are explicitly labeled non-normative"
+    - "no family maturity increase was granted for test count alone"
+  blockers:
+    - "logical observation snapshot IDs are not raw immutable source captures; no digest exists"
+    - "regression cases are declarative fixtures, not yet executed by an automated validator"
+    - "methodology primary provenance remains unresolved"
+
+next_bottleneck:
+  - "implement a small deterministic validator for the RELEVANT / NOT_PROVEN_RELEVANT / EVIDENCE_GATE_FAIL contract and run these fixtures in CI"
+  - "capture raw immutable BDU snapshots with digest when an acquisition path is available"
+  - "then resume the complete version-aware PP127/CII overlay chain"
+
+promotion_decision:
+  family_promotion: false
+  reason: "Regression evidence closes one proof gap, but primary provenance, raw snapshot integrity and executable CI validation remain missing; strict overall maturity stays 10%."
