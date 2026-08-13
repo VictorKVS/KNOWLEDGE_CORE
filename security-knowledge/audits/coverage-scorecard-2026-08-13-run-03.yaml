@@ -1,0 +1,83 @@
+schema_version: 1
+scorecard_id: SEC-COVERAGE-2026-08-13-R03
+scope: Russian paper-security P0 core
+previous_scorecard: security-knowledge/audits/coverage-scorecard-2026-08-13-run-02.yaml
+scoring_policy:
+  overall_formula: arithmetic_mean_of_P0_family_status_points_from_master_inventory
+  family_status_points: {NOT_REGISTERED: 0, REGISTERED: 10, SOURCE_PENDING: 15, SOURCE_ACQUIRED: 20, STATUS_VERIFIED: 25, VERSIONED: 35, CHUNKED: 45, ATOMIZED: 60, LINKED: 75, EXPERT_REVIEWED: 90, COMPLETE: 100}
+  conservative_rule: a family is not promoted because one document or article slice is mature
+p0_families:
+  RU_CONSTITUTIONAL_AND_CODES: {status: REGISTERED, score: 10, note: 'KoAP 13.11 parts 10-18 now have a verified sanctions slice; code family remains incomplete'}
+  RU_FEDERAL_LAWS: {status: REGISTERED, score: 10, note: '152-FZ core and Article 22 applicability slice verified; family remains incomplete'}
+  RU_PRESIDENTIAL: {status: REGISTERED, score: 10}
+  RU_GOVERNMENT_DECREES: {status: REGISTERED, score: 10}
+  FSTEK: {status: REGISTERED, score: 10}
+  FSB: {status: REGISTERED, score: 10}
+  ROSKOMNADZOR: {status: REGISTERED, score: 10}
+  GOST_AND_RU_STANDARDS: {status: NOT_REGISTERED, score: 0}
+  CLASSIFICATION_AND_CATEGORIZATION_METHODS: {status: NOT_REGISTERED, score: 0}
+  THREAT_MODELING_AND_THREAT_CATALOGS: {status: NOT_REGISTERED, score: 0}
+  RISK_METHODS: {status: NOT_REGISTERED, score: 0}
+  PRODUCTS_CERTIFICATES_LICENSES: {status: REGISTERED, score: 10}
+metrics:
+  p0_family_count: 12
+  p0_registered_or_better: 8
+  p0_not_registered: 4
+  p0_family_registration_percent: 66.7
+  conservative_overall_maturity_percent: 6.7
+  displayed_percent_rounded: 7
+verified_slices:
+  canonical_152fz_requirements: 19
+  article_22_applicability_rules: 4
+  koap_13_11_sanction_parts: 9
+  total_new_verified_records_this_run: 13
+run_additions:
+  - security-knowledge/applicability/152-fz-article-22-notification-exceptions-verified.yaml
+  - security-knowledge/legal-consequences/koap-13-11-personal-data-sanctions-verified.yaml
+verified_current_sources:
+  - document: RU_FZ_152_2006
+    revision_date: 2026-07-26
+    provider: ConsultantPlus
+    checked_at: 2026-08-13
+  - document: RU_KOAP_195_FZ
+    revision_date: 2026-07-26
+    effective_changes_checked_through: 2026-08-06
+    provider: ConsultantPlus
+    checked_at: 2026-08-13
+  - document: RU_FZ_420_2024
+    authority_class: OFFICIAL_PUBLICATION
+    publication_date: 2024-11-30
+    official_publication_number: '0001202411300011'
+red_team:
+  result: FAIL
+  resolved_gaps:
+    - GAP-P0-007
+  narrowed_gaps:
+    - id: GAP-P0-008
+      status: PARTIALLY_RESOLVED
+      note: 'KoAP 13.11 parts 10-18 are verified; parts 1-9 and mappings for the rest of 152-FZ still require systematic verification.'
+  critical_gaps:
+    - id: GAP-P0-002
+      severity: CRITICAL
+      gap: 'Four P0 families remain NOT_REGISTERED: GOST, classification/categorization, threat methodology/catalogs, risk methods.'
+  high_gaps:
+    - id: GAP-P0-003
+      severity: HIGH
+      gap: '152-FZ is not fully atomized; only core obligations and Article 22 applicability are covered.'
+    - id: GAP-P0-006
+      severity: HIGH
+      gap: 'Highest-tier primary-source/version-chain evidence for the complete current consolidated 152-FZ edition is not yet captured.'
+    - id: GAP-P0-008
+      severity: HIGH
+      gap: 'KoAP mapping remains incomplete outside Article 13.11 parts 10-18.'
+    - id: GAP-P0-009
+      severity: HIGH
+      gap: 'Repository-level validator/CI acceptance is not claimed in this pass.'
+expert_ready: false
+next_bottleneck:
+  target: Register the four missing P0 families so the conservative overall score can move above 7% without gaming the metric.
+  order:
+    - GOST_AND_RU_STANDARDS
+    - CLASSIFICATION_AND_CATEGORIZATION_METHODS
+    - THREAT_MODELING_AND_THREAT_CATALOGS
+    - RISK_METHODS
