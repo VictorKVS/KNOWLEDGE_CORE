@@ -1,0 +1,52 @@
+schema_version: 1
+domain_id: SOFTWARE_ENGINEERING
+review_id: SWENG-M2-REVIEW-2026-08-13
+maturity_target: M2
+reviewed_scope: bounded_http_postgres_benchmark_atomic_knowledge
+assignments:
+  SOURCE_RESEARCHER: SWENG-M2-A01
+  EVIDENCE_ENGINEER: SWENG-M2-A02
+  DOMAIN_SPECIALIST: SWENG-M2-A03
+  ALTERNATIVES_ANALYST: SWENG-M2-A04
+  DECISION_ANALYST: SWENG-M2-A05
+  SENIOR_PRACTITIONER_REVIEWER: SWENG-M2-R01
+  SKEPTICAL_CRITIC: SWENG-M2-R02
+independence:
+  producer_assignments: [SWENG-M2-A01, SWENG-M2-A02, SWENG-M2-A03, SWENG-M2-A04, SWENG-M2-A05]
+  reviewer_assignments: [SWENG-M2-R01, SWENG-M2-R02]
+  self_review_detected: false
+producer_verdict: PASS_BOUNDED
+alternatives_review:
+  verdict: PASS
+  alternatives_considered:
+  - method_only_HTTP_interpretation
+  - no_HTTP_repetition_interpretation
+  - equivalent_database_isolation_interpretation
+  - microbenchmark_as_full_system_evidence
+  - reject_all_microbenchmarks
+senior_review:
+  reviewer_assignment: SWENG-M2-R01
+  verdict: ACCEPT_WITH_RESTRICTIONS
+  strongest_objection: bounded_claims_must_not_become_generic_best_practice
+  improved_option_or_reason_no_better_option_found: retain_narrow_claims_and_explicit_limits
+  reversal_conditions: [source_change, locator_failure, version_change, stronger_conflicting_evidence]
+skeptical_review:
+  reviewer_assignment: SWENG-M2-R02
+  verdict: ACCEPT_AFTER_CHALLENGE
+  strongest_objection: template_reasoning_risk
+  improved_option_or_reason_no_better_option_found: narrower_claims_are_better_supported_than_generic_rules
+  reversal_conditions: [boundary_loss, missing_context, reviewer_independence_failure]
+promotion_assessment:
+  atomic_knowledge_objects: PASS
+  provenance: PASS
+  claim_state: PASS
+  limitations_and_context: PASS
+  relation_links: PASS_BOUNDED
+  metric_definitions: NOT_APPLICABLE
+  independent_challenge: PASS
+  verdict: PROMOTE_BOUNDED_SCOPE_TO_M2
+  expert_ready: false
+  decision_engine_ready: false
+failed_evidence:
+  workflow_run_id: 31680647109
+  finding: malformed_first_review_yaml_detected_by_quality_gate
