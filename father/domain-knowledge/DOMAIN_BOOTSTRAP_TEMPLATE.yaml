@@ -1,8 +1,9 @@
-schema_version: 1
+schema_version: 2
 template_id: FATHER-PROFESSIONAL-DOMAIN-BOOTSTRAP-1
 maturity_model_ref: father/domain-knowledge/PROFESSIONAL_KB_MATURITY_MODEL.yaml
 common_doctrine_ref: father/domain-knowledge/PROFESSIONAL_EVIDENCE_DOCTRINE.md
 common_decision_contract_ref: father/domain-knowledge/professional-decision-schema.yaml
+common_review_protocol_ref: father/domain-knowledge/PROFESSIONAL_KB_REVIEW_PROTOCOL.yaml
 
 required_domain_fields:
   - domain_id
@@ -19,12 +20,14 @@ required_domain_fields:
   - conflict_policy
   - objectivity_policy
   - decision_evidence_policy
+  - review_policy
   - legacy_material_policy
   - promotion_plan
 
 recommended_tree:
   - DOMAIN.yaml
   - SOURCE_POLICY.yaml
+  - REVIEW_POLICY.yaml
   - ROADMAP.yaml
   - sources/
   - claims/
@@ -72,6 +75,24 @@ knowledge_object_separation:
     meaning: governed selected disposition
     requires: PROFESSIONAL_DECISION_RECORD
 
+review_roles:
+  - SOURCE_RESEARCHER
+  - EVIDENCE_ENGINEER
+  - DOMAIN_SPECIALIST
+  - ALTERNATIVES_ANALYST
+  - DECISION_ANALYST
+  - SENIOR_PRACTITIONER_REVIEWER
+  - SKEPTICAL_CRITIC
+  - CROSS_DOMAIN_REVIEWER
+
+review_rules:
+  - producer_and_final_senior_reviewer_are_separate_assignments_for_material_work
+  - D2_and_D3_require_real_alternative_search_not_straw_man_options
+  - senior_review_must_offer_an_improved_option_or_explain_why_no_better_option_was_found
+  - review_must_identify_conditions_that_would_reverse_the_conclusion
+  - material_dissent_is_preserved
+  - seniority_does_not_override_stronger_evidence
+
 quality_rules:
   - do_not_copy_security_semantics_when_domain_evidence_is_different
   - do_not_promote_search_result_blog_or_model_output_directly_to_VERIFIED
@@ -79,4 +100,5 @@ quality_rules:
   - do_not_hide_unknowns_behind_confidence_language
   - do_not_score_options_until_hard_constraints_are_evaluated
   - do_not_use_weighted_scores_without_weight_rationale
-  - do_not_claim_objectivity_when_inputs_or_criteria_are materially_unproven
+  - do_not_claim_objectivity_when_inputs_or_criteria_are_materially_unproven
+  - do_not_reuse_generic_template_rationale_without_context_specific_evidence
