@@ -1,0 +1,202 @@
+schema_version: 1
+record_set_id: KOAP-13.11-P1-P9-2026-08-13
+scope: Russian personal-data administrative liability, KoAP RF Article 13.11 parts 1-9
+status: VERIFIED_SLICE_WITH_MAPPING_GAPS
+verified_at: 2026-08-13
+source_state:
+  koap:
+    citation: KoAP RF Article 13.11
+    edition: 2026-07-26
+    authority_class: AUTHORITATIVE_CONSOLIDATED_LEGAL_TEXT
+    source_url: https://www.consultant.ru/document/cons_doc_LAW_34661/1f421640c6775ff67079ebde06a7d2f6d17b96db/
+  amendment_420_fz:
+    date: 2024-11-30
+    official_publication_number: '0001202411300011'
+    source_url: https://publication.pravo.gov.ru/document/0001202411300011
+  fz_152:
+    authority_class: AUTHORITATIVE_CONSOLIDATED_LEGAL_TEXT
+    note: Duty mappings below are clause-specific where current text was independently verified; unresolved subordinate-act detail remains explicitly pending.
+
+routing_guardrails:
+  - id: KOAP-13.11-G1
+    rule: Before assigning an administrative consequence, test whether the facts contain elements of a criminal offense where the KoAP composition expressly contains that exclusion.
+    status: VERIFIED
+  - id: KOAP-13.11-G2
+    rule: A statutory maximum or minimum is legal exposure, not an expected-loss estimate and not proof that the composition is established in a real incident.
+    status: VERIFIED
+  - id: KOAP-13.11-G3
+    rule: Repeated-offense parts require proof of the legally relevant prior administrative punishment; do not infer repeat status merely from multiple internal incidents.
+    status: VERIFIED_INTERPRETIVE_GUARDRAIL
+
+records:
+  - id: KOAP-13.11-P1
+    koap_locator: Article 13.11 part 1
+    composition: Processing personal data in cases not provided by personal-data legislation, or processing incompatible with the purposes of collection, subject to statutory exclusions and absent criminally punishable conduct.
+    sanctions_rub:
+      citizen: [10000, 15000]
+      official: [50000, 100000]
+      legal_entity: [150000, 300000]
+    duty_mapping:
+      primary: FZ-152 lawful-basis and purpose-limitation rules
+      mapping_status: VERIFIED_AT_PRINCIPLE_LEVEL
+      note: Exact applicability must be resolved against the relevant basis under Article 6 and purpose rules; no universal consent requirement may be inferred.
+    status: VERIFIED
+
+  - id: KOAP-13.11-P1.1
+    koap_locator: Article 13.11 part 1.1
+    composition: Repeated commission of the offense in part 1.
+    sanctions_rub:
+      citizen: [15000, 30000]
+      official: [100000, 200000]
+      legal_entity: [300000, 500000]
+    prerequisite: prior administrative punishment qualifying as repeat offense
+    status: VERIFIED
+
+  - id: KOAP-13.11-P2
+    koap_locator: Article 13.11 part 2
+    composition: Processing without written consent where written consent is legally required, or written consent that violates statutory content requirements, absent criminally punishable conduct and subject to exclusions.
+    sanctions_rub:
+      citizen: [10000, 15000]
+      official: [100000, 300000]
+      legal_entity: [300000, 700000]
+    duty_mapping:
+      primary: FZ-152 consent rules including cases where written form and mandatory contents are required
+      mapping_status: VERIFIED_AT_PRINCIPLE_LEVEL
+      guardrail: Do not infer that all personal-data processing requires written consent.
+    status: VERIFIED
+
+  - id: KOAP-13.11-P2.1
+    koap_locator: Article 13.11 part 2.1
+    composition: Repeated commission of the offense in part 2.
+    sanctions_rub:
+      citizen: [15000, 30000]
+      official: [300000, 500000]
+      individual_entrepreneur: [500000, 1000000]
+      legal_entity: [1000000, 1500000]
+    prerequisite: prior administrative punishment qualifying as repeat offense
+    status: VERIFIED
+
+  - id: KOAP-13.11-P3
+    koap_locator: Article 13.11 part 3
+    composition: Failure to publish or otherwise provide unrestricted access to the operator policy document or information about implemented personal-data protection requirements.
+    sanctions_rub:
+      citizen: [1500, 3000]
+      official: [6000, 12000]
+      individual_entrepreneur: [10000, 20000]
+      legal_entity: [30000, 60000]
+    duty_mapping:
+      primary: FZ-152 Article 18.1 part 2
+      requirement: Publish or otherwise provide unrestricted access to the personal-data processing policy and information on implemented protection requirements; when data are collected through information-telecommunication networks, publish them in the corresponding network, including relevant website pages, and provide access.
+      mapping_status: VERIFIED_CLAUSE_LEVEL
+    status: VERIFIED
+
+  - id: KOAP-13.11-P4
+    koap_locator: Article 13.11 part 4
+    composition: Failure to provide the data subject with information concerning processing of that subject's personal data.
+    sanctions_rub:
+      citizen: [2000, 4000]
+      official: [8000, 12000]
+      individual_entrepreneur: [20000, 30000]
+      legal_entity: [40000, 80000]
+    duty_mapping:
+      primary: FZ-152 Article 14, especially parts 1 and 7, together with operator response duties under Article 20
+      mapping_status: VERIFIED_CLAUSE_LEVEL
+      guardrail: Subject access has statutory limitations; do not treat the right as unconditional in every case.
+    status: VERIFIED
+
+  - id: KOAP-13.11-P5
+    koap_locator: Article 13.11 part 5
+    composition: Failure within statutory time limits to satisfy a subject, representative, or supervisory-authority requirement to correct, block, or destroy data that are incomplete, outdated, inaccurate, unlawfully obtained, or unnecessary for the stated processing purpose.
+    sanctions_rub:
+      citizen: [2000, 4000]
+      official: [8000, 20000]
+      individual_entrepreneur: [20000, 40000]
+      legal_entity: [50000, 90000]
+    duty_mapping:
+      primary:
+        - FZ-152 Article 20 part 3
+        - FZ-152 Article 21 parts 1-2
+      verified_deadlines:
+        - Correct incomplete/inaccurate/outdated data within 7 working days after supporting information is provided under Article 20 part 3.
+        - Destroy unlawfully obtained or purpose-unnecessary data within 7 working days after supporting information is provided under Article 20 part 3.
+        - Block relevant data from the moment of qualifying request during verification under Article 21 part 1, unless blocking violates protected rights/interests.
+        - Where inaccuracy is confirmed, correct within 7 working days from provision of the relevant information under Article 21 part 2.
+      mapping_status: VERIFIED_CLAUSE_LEVEL
+    status: VERIFIED
+
+  - id: KOAP-13.11-P5.1
+    koap_locator: Article 13.11 part 5.1
+    composition: Repeated commission of the offense in part 5.
+    sanctions_rub:
+      citizen: [20000, 30000]
+      official: [30000, 50000]
+      individual_entrepreneur: [50000, 100000]
+      legal_entity: [300000, 500000]
+    prerequisite: prior administrative punishment qualifying as repeat offense
+    status: VERIFIED
+
+  - id: KOAP-13.11-P6
+    koap_locator: Article 13.11 part 6
+    composition: Failure, during non-automated processing, to comply with legally required conditions protecting personal data stored on physical media and preventing unauthorized access, where specified adverse actions result and no criminal offense is present.
+    sanctions_rub:
+      citizen: [1500, 4000]
+      official: [8000, 20000]
+      individual_entrepreneur: [20000, 40000]
+      legal_entity: [50000, 100000]
+    duty_mapping:
+      primary: non-automated personal-data processing requirements
+      mapping_status: PENDING_SUBORDINATE_ACT_CLAUSE_VERIFICATION
+      guardrail: Do not promote a specific subordinate-act clause until its current version and exact requirement text are verified.
+    status: VERIFIED_COMPOSITION_MAPPING_PENDING
+
+  - id: KOAP-13.11-P7
+    koap_locator: Article 13.11 part 7
+    composition: Failure by a state or municipal authority operator to anonymize personal data where required, or failure to comply with established anonymization requirements or methods.
+    sanctions_rub:
+      official: [6000, 12000]
+    duty_mapping:
+      primary: anonymization duties applicable to state/municipal authority operators
+      mapping_status: PARTIAL_PENDING_APPLICABILITY_CHAIN
+      guardrail: Do not generalize this composition to every private-sector operator or every anonymization activity.
+    status: VERIFIED_COMPOSITION_MAPPING_PARTIAL
+
+  - id: KOAP-13.11-P8
+    koap_locator: Article 13.11 part 8
+    composition: Failure during collection, including via the Internet, to comply with the localization requirement for recording, systematization, accumulation, storage, correction and extraction of Russian citizens' personal data using databases located in the Russian Federation.
+    sanctions_rub:
+      citizen: [30000, 50000]
+      official: [100000, 200000]
+      legal_entity: [1000000, 6000000]
+    duty_mapping:
+      primary: FZ-152 Article 18 part 5
+      current_rule: From the version effective 2025-07-01, use of databases outside the Russian Federation for the listed operations during collection is prohibited, subject to statutory exceptions in Article 6 part 1 points 2, 3, 4 and 8.
+      mapping_status: VERIFIED_CLAUSE_LEVEL
+      guardrail: Localization and cross-border transfer are distinct legal questions and must not be conflated.
+    status: VERIFIED
+
+  - id: KOAP-13.11-P9
+    koap_locator: Article 13.11 part 9
+    composition: Repeated commission of the localization offense in part 8.
+    sanctions_rub:
+      citizen: [50000, 100000]
+      official: [500000, 800000]
+      legal_entity: [6000000, 18000000]
+    prerequisite: prior administrative punishment qualifying as repeat offense
+    status: VERIFIED
+
+coverage:
+  verified_koap_compositions: 12
+  clause_level_duty_mappings_verified: 4
+  principle_level_duty_mappings: 2
+  mapping_gaps:
+    - Article 13.11 part 6 -> current subordinate-act clause chain for non-automated processing
+    - Article 13.11 part 7 -> complete current anonymization applicability chain for state/municipal authority operators
+    - Article 13.11 parts 1 and 2 -> exhaustive lawful-basis / written-consent applicability decision tables
+red_team:
+  result_for_slice: PASS_WITH_MAPPING_GAPS
+  forbidden_inferences:
+    - every processing operation requires consent
+    - every consent must be written
+    - every localization violation is a cross-border-transfer violation or vice versa
+    - every repeated internal event is a legally repeated administrative offense
+    - statutory sanction range proves liability in a concrete case
