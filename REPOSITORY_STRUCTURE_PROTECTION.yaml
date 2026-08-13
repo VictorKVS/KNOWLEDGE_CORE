@@ -1,0 +1,171 @@
+schema_version: 1
+registry_id: KNOWLEDGE-REPO-PROTECT-0001
+status: ACTIVE
+repository: VictorKVS/KNOWLEDGE_CORE
+purpose: >-
+  Protect canonical professional knowledge, Security Knowledge, product roadmap and evidence
+  governance surfaces from accidental deletion, rename, merge or relocation during repository restructuring.
+
+semantics:
+  content_edits_allowed: true
+  structural_reorganization_rule: >-
+    Protected paths remain editable as knowledge evolves, but generic repository cleanup must not
+    rename, relocate, merge or delete them. Structural changes require an explicit migration record,
+    old-to-new path mapping, provenance/reference impact analysis, compatibility plan and green CI.
+  protection_classes:
+    DO_NOT_MOVE: canonical identity/history surface; structural relocation requires explicit owner decision
+    MIGRATION_ONLY: relocation allowed only through a governed migration record and compatibility plan
+    CAN_REORGANIZE: not structurally protected by this registry
+
+protected_surfaces:
+  - id: KC-PROT-001
+    path: REPOSITORY_STRUCTURE_PROTECTION.yaml
+    kind: file
+    class: DO_NOT_MOVE
+    owner: KNOWLEDGE_REPOSITORY_GOVERNANCE
+    reason: self-protecting structural registry
+  - id: KC-PROT-002
+    path: security-knowledge
+    kind: directory
+    class: DO_NOT_MOVE
+    owner: KB-SECURITY
+    reason: canonical Security Knowledge product tree SEC-PROD-0001
+  - id: KC-PROT-003
+    path: security-knowledge/corpus/snapshots
+    kind: directory
+    class: DO_NOT_MOVE
+    owner: KB-SECURITY_PROVENANCE
+    reason: historical snapshot identity used by cross-repository provenance and replay
+  - id: KC-PROT-004
+    path: security-knowledge/audits
+    kind: directory
+    class: DO_NOT_MOVE
+    owner: KB-SECURITY_ASSURANCE
+    reason: append-only expert/readiness/red-team evidence history
+  - id: KC-PROT-005
+    path: father/domain-knowledge
+    kind: directory
+    class: DO_NOT_MOVE
+    owner: PROFESSIONAL_KNOWLEDGE_GOVERNANCE
+    reason: canonical common doctrine, domain registry and maturity/review contracts
+  - id: KC-PROT-006
+    path: father/domain-knowledge/domain-registry.yaml
+    kind: file
+    class: DO_NOT_MOVE
+    owner: PROFESSIONAL_KNOWLEDGE_GOVERNANCE
+    reason: canonical registry of FATHER professional knowledge domains
+  - id: KC-PROT-007
+    path: father/domain-knowledge/PROFESSIONAL_EVIDENCE_DOCTRINE.md
+    kind: file
+    class: DO_NOT_MOVE
+    owner: PROFESSIONAL_KNOWLEDGE_GOVERNANCE
+    reason: universal evidence-first doctrine for professional decisions
+  - id: KC-PROT-008
+    path: father/domain-knowledge/PROFESSIONAL_KB_MATURITY_MODEL.yaml
+    kind: file
+    class: DO_NOT_MOVE
+    owner: PROFESSIONAL_KNOWLEDGE_GOVERNANCE
+    reason: M0-M5 professional KB maturity contract
+  - id: KC-PROT-009
+    path: father/domain-knowledge/PROFESSIONAL_KB_REVIEW_PROTOCOL.yaml
+    kind: file
+    class: DO_NOT_MOVE
+    owner: PROFESSIONAL_KNOWLEDGE_GOVERNANCE
+    reason: independent senior/skeptical review protocol
+  - id: KC-PROT-010
+    path: father/domain-knowledge/professional-decision-schema.yaml
+    kind: file
+    class: DO_NOT_MOVE
+    owner: PROFESSIONAL_DECISION_GOVERNANCE
+    reason: canonical evidence-backed professional decision record contract
+  - id: KC-PROT-011
+    path: father/domain-knowledge/DOMAIN_BOOTSTRAP_TEMPLATE.yaml
+    kind: file
+    class: DO_NOT_MOVE
+    owner: PROFESSIONAL_KNOWLEDGE_GOVERNANCE
+    reason: canonical bootstrap contract for new professional domains
+  - id: KC-PROT-012
+    path: father/product-roadmap
+    kind: directory
+    class: DO_NOT_MOVE
+    owner: FATHER_PRODUCT_PORTFOLIO
+    reason: canonical product/domain roadmap ownership surface
+  - id: KC-PROT-013
+    path: father/product-roadmap/master-product-roadmap.yaml
+    kind: file
+    class: DO_NOT_MOVE
+    owner: FATHER_PRODUCT_PORTFOLIO
+    reason: canonical master product roadmap
+  - id: KC-PROT-014
+    path: father/product-roadmap/security-products.yaml
+    kind: file
+    class: DO_NOT_MOVE
+    owner: SECURITY_PRODUCT_PORTFOLIO
+    reason: canonical Security product sequence SEC-PROD-0001..0007
+  - id: KC-PROT-015
+    path: professional-knowledge
+    kind: directory
+    class: DO_NOT_MOVE
+    owner: PROFESSIONAL_KNOWLEDGE_FACTORY
+    reason: canonical root for non-Security evidence-backed professional domains
+  - id: KC-PROT-016
+    path: professional-knowledge/software-engineering
+    kind: directory
+    class: DO_NOT_MOVE
+    owner: KB-SOFTWARE-ENGINEERING
+    reason: first activated non-Security professional domain and template consumer
+  - id: KC-PROT-017
+    path: tools
+    kind: directory
+    class: MIGRATION_ONLY
+    owner: KNOWLEDGE_ASSURANCE_AUTOMATION
+    reason: validators and evidence/promotion gates supporting canonical knowledge state
+  - id: KC-PROT-018
+    path: .github/workflows
+    kind: directory
+    class: MIGRATION_ONLY
+    owner: KNOWLEDGE_CI
+    reason: quality, promotion, source, evidence and professional-domain gates
+
+reserved_protected_prefixes:
+  - prefix: professional-knowledge/
+    rule: >-
+      Every materialized professional domain beneath this root inherits DO_NOT_MOVE structural
+      protection unless the domain registry explicitly declares a stricter or migration-only policy.
+  - prefix: security-knowledge/
+    rule: canonical Security product descendants may evolve but must not be moved by generic cleanup
+
+explicitly_reorganizable_candidate_roots:
+  - algorithms
+  - architecture
+  - benchmarks
+  - build-and-packaging
+  - concurrency
+  - data-structures
+  - application-security
+  - claims
+  note: >-
+    These legacy/topical roots may contain useful candidate material, but they are not automatically
+    canonical professional knowledge. Before moving/deleting material, check inbound references and
+    whether any object has been admitted into a protected professional domain.
+
+migration_requirements:
+  required_record_path_prefix: father/repository-migrations/
+  required_fields:
+    - migration_id
+    - rationale
+    - affected_protected_surface_ids
+    - old_to_new_path_map
+    - inbound_reference_inventory
+    - source_provenance_impact
+    - historical_snapshot_impact
+    - compatibility_or_redirect_plan
+    - rollback_plan
+    - independent_reviewer
+    - ci_evidence
+  rules:
+    - generic_cleanup_is_not_a_migration_record
+    - security_knowledge_canonical_ownership_must_not_move_into_PX00
+    - PX00_runtime_truth_must_not_move_into_KNOWLEDGE_CORE
+    - historical_snapshots_and_audit_records_are_not_rewritten_to_match_new_layout
+    - logical_knowledge_identity_survives_any_approved_physical_migration
