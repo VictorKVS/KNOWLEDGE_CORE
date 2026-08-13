@@ -1,0 +1,201 @@
+schema_version: "1.0"
+id: fsb-skzi-license-lifecycle-verified
+date_verified: "2026-08-13"
+status: VERIFIED_SLICE
+scope:
+  - FSB_crypto_activity_license_applicability
+  - FSB_crypto_activity_license_lifecycle
+  - FSB_license_registry_monitoring
+  - FSB_certified_SZI_registry_metadata
+out_of_scope_pending:
+  - clause_level_FSB_SKZI_certificate_validity_suspension_extension_termination_rules
+  - exhaustive_machine_readable_FSB_certificate_registry_schema
+
+source_set:
+  - id: FZ_99_CURRENT
+    title: "Федеральный закон от 04.05.2011 N 99-ФЗ О лицензировании отдельных видов деятельности"
+    authority: Russian_Federation
+    source_class: PRIMARY_OFFICIAL_CONSOLIDATED_TEXT
+    url: "https://ips.pravo.gov.ru/api/ips/legislation/document?baseid=None&hash=fcb8eb99a41f30d017fd7c02ef8ef5699f275d70964b686f7eb114a688e0860d"
+    verified_as_of: "2026-08-13"
+  - id: PP_RF_313_CURRENT
+    title: "Постановление Правительства РФ от 16.04.2012 N 313"
+    authority: Government_RF
+    source_class: AUTHORITATIVE_CONSOLIDATED_LEGAL_TEXT
+    current_revision_seen: "2023-08-28"
+    current_revision_effective_from: "2023-09-05"
+    url: "https://www.consultant.ru/document/cons_doc_LAW_128739/"
+  - id: FSB_CLSZ_LICENSING
+    title: "ЦЛСЗ ФСБ России — общая информация по лицензированию"
+    authority: FSB_CLSZ
+    source_class: PRIMARY_REGULATOR_GUIDANCE_AND_REGISTRY_ENTRYPOINT
+    url: "https://clsz.fsb.ru/clsz/license.htm!_print=true.html"
+    verified_as_of: "2026-08-13"
+  - id: FSB_CLSZ_CERTIFICATION
+    title: "ЦЛСЗ ФСБ России — сертификация"
+    authority: FSB_CLSZ
+    source_class: PRIMARY_REGULATOR_REGISTRY_ENTRYPOINT
+    url: "https://clsz.fsb.ru/clsz/certification.htm"
+    verified_as_of: "2026-08-13"
+  - id: FSB_ORDER_142_AMENDED_557
+    title: "Приказ ФСБ России от 25.03.2023 N 142 с изменением приказом ФСБ России от 29.12.2025 N 557"
+    authority: FSB
+    source_class: PRIMARY_OFFICIAL_PUBLICATION_METADATA
+    amendment_publication_number: "0001202512300057"
+    amendment_publication_date: "2025-12-30"
+    url: "https://publication.pravo.gov.ru/document/0001202512300057"
+
+verified_rules:
+  - id: FSB-LIC-001
+    object: crypto_activity_license
+    source: FZ_99_CURRENT
+    source_locator: "ст.12 ч.1 п.1"
+    status: VERIFIED
+    requirement: "Разработка, производство, распространение криптографических средств, защищенных систем, работы и услуги по шифрованию и соответствующее техническое обслуживание входят в лицензируемый вид деятельности, кроме прямо установленного исключения для технического обслуживания в собственных нуждах."
+    decision_inputs:
+      - activity_type
+      - service_or_product
+      - own_needs_only
+      - work_item_from_PP313_list
+    guardrail: "Наличие СКЗИ в организации само по себе не доказывает обязанность иметь лицензию ФСБ; проверяется конкретная выполняемая работа/услуга и исключения."
+
+  - id: FSB-LIC-002
+    object: crypto_activity_license
+    source: FZ_99_CURRENT
+    source_locator: "ст.9 ч.4"
+    status: VERIFIED
+    requirement: "Обычная лицензия, предоставленная по 99-ФЗ, действует бессрочно, если специальным федеральным законом не установлены особенности срока действия."
+    operational_effect: "Do not calculate days_to_renewal for the ordinary PP313/99-FZ crypto-activity license."
+    guardrail: "Indefinite validity does not eliminate suspension, termination, registry-change or scope-mismatch risk."
+
+  - id: FSB-LIC-003
+    object: crypto_activity_license
+    source: FZ_99_CURRENT
+    source_locator: "ст.3 п.2; ст.9 ч.3"
+    status: VERIFIED
+    requirement: "Право подтверждается записью в реестре лицензий; лицензия считается предоставленной с момента внесения записи о предоставлении лицензии в реестр."
+    evidence_preference: "current_registry_record_or_extract > historical paper copy"
+
+  - id: FSB-LIC-004
+    object: crypto_activity_license_scope
+    source: PP_RF_313_CURRENT
+    source_locator: "п.1 и приложение — перечень работ и услуг"
+    status: VERIFIED
+    requirement: "Для определения необходимости и объема лицензии используется конкретный перечень выполняемых работ и оказываемых услуг из приложения к ПП РФ N 313."
+    guardrail: "Do not classify by vendor name or by mere possession of cryptographic software; classify by actual regulated activity."
+
+  - id: FSB-LIC-005
+    object: own_needs_exception
+    source: PP_RF_313_CURRENT
+    source_locator: "наименование/п.1; приложение п.20"
+    status: VERIFIED
+    requirement: "Исключение для собственных нужд относится к указанному техническому обслуживанию; оно не превращает все иные виды работ с криптографическими средствами в нелицензируемые."
+    guardrail: "own_needs is a bounded exception, not a universal exemption from PP313."
+
+  - id: FSB-LIC-006
+    object: license_registry_change
+    source: PP_RF_313_CURRENT
+    source_locator: "п.9"
+    status: VERIFIED
+    requirement: "При намерении осуществлять лицензируемую деятельность по адресу, не предусмотренному в реестре лицензий, применяется процедура внесения изменений в реестр и подтверждение соответствующего места деятельности."
+    operational_effect: "Monitor registered places of activity as a separate lifecycle dimension."
+
+  - id: FSB-LIC-007
+    object: offsite_work_exception
+    source: PP_RF_313_CURRENT
+    source_locator: "п.9.1"
+    status: VERIFIED
+    requirement: "Работы и услуги из прямо перечисленных пунктов приложения могут выполняться не по месту осуществления лицензируемого вида деятельности без внесения изменения в реестр по этому основанию."
+    guardrail: "Apply only to the exact listed work-item numbers; do not generalize to the whole license scope."
+
+  - id: FSB-LIC-008
+    object: licensing_authority_and_registry
+    source: FSB_CLSZ_LICENSING
+    source_locator: "раздел 4 и ссылки на реестры лицензий"
+    status: VERIFIED_METADATA
+    requirement: "ЦЛСЗ ФСБ России и территориальные органы безопасности осуществляют лицензирование криптографической деятельности в распределенной компетенции; официальный сайт ЦЛСЗ публикует ссылку на реестр лицензий для этой деятельности."
+    monitoring_effect: "Registry evidence must include regulator/source URL and observed_at because the registry is dynamic."
+
+  - id: FSB-CERT-001
+    object: FSB_certified_information_security_products
+    source: FSB_CLSZ_CERTIFICATION
+    source_locator: "страница Сертификация"
+    status: VERIFIED_METADATA
+    requirement: "ЦЛСЗ ФСБ России организует сертификацию средств защиты информации и публикует выписку из перечня средств защиты информации, сертифицированных ФСБ России."
+    guardrail: "Registry/list presence proves certification metadata only; it does not by itself establish current product applicability to a specific information system or a full certificate lifecycle rule."
+
+  - id: FSB-LIC-009
+    object: license_control
+    source: FSB_ORDER_142_AMENDED_557
+    source_locator: "official publication metadata for amendment to FSB Order N 142"
+    status: VERIFIED_METADATA
+    requirement: "ФСБ поддерживает отдельные административные процедуры лицензионного контроля по видам деятельности пп.1-3 и части п.4 ст.12 99-ФЗ; приказ N 142 изменен приказом N 557 от 29.12.2025."
+    monitoring_effect: "License-control procedure is version-aware; do not freeze a pre-2026 procedure snapshot."
+
+monitoring_model:
+  license_state_machine:
+    states:
+      - ACTIVE_REGISTERED
+      - SCOPE_OR_PLACE_CHANGE_REVIEW
+      - SUSPENDED
+      - RESUMED
+      - TERMINATED
+      - ANNULLED_OR_INVALID
+      - UNKNOWN_STALE
+    renewal_proximity: NOT_APPLICABLE_FOR_ORDINARY_INDEFINITE_99FZ_LICENSE
+    evidence_fields:
+      - regulator
+      - registry_number
+      - license_holder
+      - work_service_items
+      - registered_places_of_activity
+      - registry_status
+      - observed_at
+      - source_reference
+      - source_snapshot_hash_or_reference
+      - owner
+      - verifier
+      - affected_contracts_and_systems
+    event_triggers:
+      - contractor_selection_or_renewal
+      - new_work_or_service_item
+      - new_place_of_activity
+      - organization_reorganization
+      - registry_record_changed
+      - regulator_notice
+      - incident_or_audit
+      - before_acceptance_of_critical_crypto_related_work
+
+  certificate_registry_monitoring:
+    status: METADATA_ONLY_PENDING_CLAUSE_LEVEL_LIFECYCLE
+    evidence_fields:
+      - certificate_or_list_identifier
+      - product_name
+      - product_version
+      - holder_or_developer
+      - registry_or_list_status
+      - observed_at
+      - source_reference
+    prohibited_inference:
+      - "Do not copy FSTEC certificate validity/suspension/extension rules into the FSB model."
+      - "Do not infer a certificate expiry date unless the FSB certificate/list record or authoritative certificate document gives it."
+
+red_team_guardrails:
+  - "FSB crypto-activity licenses under the ordinary 99-FZ regime are not modeled with fictitious renewal dates."
+  - "License applicability is based on the actual PP313 work/service item, not on the mere use or purchase of cryptographic software."
+  - "The own-needs exception is narrow and must be tied to the exact regulated activity."
+  - "Registry status, scope and place of activity are independent lifecycle dimensions."
+  - "A contractor's historical paper license is weaker evidence than a current official registry record where available."
+  - "FSB certification metadata and FSB licensing are distinct controls."
+  - "No FSB SKZI certificate lifecycle rule is inherited from FSTEC certification rules."
+
+pending_gaps:
+  - id: FSB-CERT-LC-001
+    severity: HIGH
+    item: "Obtain clause-level current FSB rules governing SKZI/SZI certificate issue, validity, extension, suspension, termination and continued-use conditions."
+  - id: FSB-CERT-REG-001
+    severity: MEDIUM
+    item: "Resolve the current downloadable FSB certified-product list format and define immutable snapshots for monitoring."
+  - id: PP313-FUTURE-CHANGE-001
+    severity: MEDIUM
+    item: "A May 2026 FSB draft proposed changes to PP313; monitor official publication and do not treat the draft as law until enacted."
