@@ -1,0 +1,62 @@
+schema_version: "1.0"
+id: coverage-scorecard-2026-08-13-run-12
+date: "2026-08-13"
+overall_strict_p0_percent: 10
+p0_families_registered: "12/12"
+critical_gaps: 0
+high_gaps: 6
+red_team: FAIL
+expert_ready: false
+
+family_scores:
+  npa_rf: 10
+  gost_iso: 10
+  classification_categorization: 10
+  threat_modeling_bdu: 10
+  risk_methods: 10
+  legal_consequences: 10
+  szi_skzi_license_lifecycle: 10
+  roles_deadlines_responsibility: 10
+  evidence_audit: 10
+  practical_cases: 10
+
+this_run:
+  committed_verified_records: 14
+  committed_file: "security-knowledge/roles-and-responsibility/gk-tk-liability-compliance-slice.yaml"
+  areas:
+    - "ГК РФ: убытки, моральный вред, частная жизнь, общая деликтная ответственность, ответственность работодателя за работника"
+    - "ТК РФ: дисциплинарная ответственность и сроки процедуры"
+    - "ТК РФ: прямой действительный ущерб, default limit, gate полной материальной ответственности"
+  exact_deadlines_added:
+    - "2 рабочих дня на письменное объяснение перед дисциплинарным взысканием"
+    - "1 месяц со дня обнаружения проступка для применения взыскания с законными исключениями"
+    - "6 месяцев общий long-stop; 2 года по ревизии/финансовой проверке/аудиту; 3 года для антикоррупционных нарушений"
+    - "3 рабочих дня на ознакомление с приказом о взыскании"
+  red_team_guardrails:
+    - "внешняя гражданская ответственность работодателя != автоматическая внутренняя сумма взыскания с работника"
+    - "упущенная выгода работодателя не взыскивается с работника по ст.238 ТК РФ"
+    - "полная материальная ответственность требует специального законного основания"
+    - "ИБ-инцидент сам по себе не доказывает вину работника и не заменяет процедуру ст.193 ТК РФ"
+
+verified_known_minimum:
+  previous_legal_applicability_sanction_records: 67
+  added_this_run: 14
+  minimum_cumulative_relevant_verified_records: 81
+  note: "Minimum only; not a full repository recount."
+
+high_gaps_list:
+  - "ТК РФ ст.239, 246-248: исключения, расчет ущерба, порядок взыскания"
+  - "Приказ Минтруда России №251н от 16.04.2025: applicability договоров о полной материальной ответственности"
+  - "ГК РФ ст.1065/1081: предупреждение вреда и регресс"
+  - "первичный полный текст Методики оценки угроз ФСТЭК 2021 и clause-level atomization"
+  - "version-aware КИИ categorization overlays and full PP127 chain"
+  - "SZI/SKZI/license lifecycle with expiry/renewal monitoring and decision ownership"
+
+next_bottleneck:
+  - "ТК РФ ст.239, 246-248 + приказ Минтруда №251н"
+  - "затем ГК РФ регресс/предупреждение вреда и практические кейсы"
+  - "после юридического slice вернуть family-wide proof floor: Методика угроз ФСТЭК, КИИ, lifecycle реестров"
+
+promotion_decision:
+  family_promotion: false
+  reason: "Добавлен зрелый slice, но family-wide proof floor для legal/roles responsibility не закрыт; общий процент не повышается."
