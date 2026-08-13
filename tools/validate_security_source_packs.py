@@ -10,7 +10,8 @@ import yaml
 
 VERIFIED_SOURCE = "STATUS_VERIFIED"
 VERIFIED_FACT = "VERIFIED"
-OFFICIAL_HOST = "publication.pravo.gov.ru"
+OFFICIAL_PUBLICATION_HOST = "publication.pravo.gov.ru"
+OFFICIAL_TEXT_HOST = "ips.pravo.gov.ru"
 
 
 def load_yaml(path: Path) -> dict[str, Any]:
@@ -26,6 +27,13 @@ def nonempty(value: Any) -> bool:
 
 def present_scalar(value: Any) -> bool:
     return nonempty(value) or isinstance(value, date)
+
+
+def valid_official_url(value: Any, hostname: str) -> bool:
+    if not nonempty(value):
+        return False
+    parsed = urlparse(value)
+    return parsed.scheme == "https" and parsed.hostname == hostname
 
 
 def validate_pack(path: Path) -> list[str]:
@@ -60,21 +68,42 @@ def validate_pack(path: Path) -> list[str]:
 
         if source.get("verification_status") == VERIFIED_SOURCE:
             publication = source.get("official_publication")
-            if not isinstance(publication, dict):
-                errors.append(f"{where}: VERIFIED source requires official_publication")
+            official_text = source.get("official_text")
+            has_publication = isinstance(publication, dict)
+            has_official_text = isinstance(official_text, dict)
+
+            if not has_publication and not has_official_text:
+                errors.append(
+                    f"{where}: VERIFIED source requires official_publication or official_text"
+                )
                 continue
-            if not nonempty(publication.get("publication_number")):
-                errors.append(f"{where}: VERIFIED source requires official_publication.publication_number")
-            if not present_scalar(publication.get("publication_date")):
-                errors.append(f"{where}: VERIFIED source requires official_publication.publication_date")
-            if not nonempty(publication.get("url")):
-                errors.append(f"{where}: VERIFIED source requires official_publication.url")
-            url = publication.get("url")
-            if nonempty(url):
-                parsed = urlparse(url)
-                if parsed.scheme != "https" or parsed.hostname != OFFICIAL_HOST:
+
+            if has_publication:
+                if not nonempty(publication.get("publication_number")):
                     errors.append(
-                        f"{where}: VERIFIED Russian source official URL must use https://{OFFICIAL_HOST}"
+                        f"{where}: VERIFIED source requires official_publication.publication_number"
+                    )
+                if not present_scalar(publication.get("publication_date")):
+                    errors.append(
+                        f"{where}: VERIFIED source requires official_publication.publication_date"
+                    )
+                url = publication.get("url")
+                if not valid_official_url(url, OFFICIAL_PUBLICATION_HOST):
+                    errors.append(
+                        f"{where}: official_publication.url must use https://{OFFICIAL_PUBLICATION_HOST}"
+                    )
+
+            if has_official_text:
+                url = official_text.get("url")
+                if not valid_official_url(url, OFFICIAL_TEXT_HOST):
+                    errors.append(
+                        f"{where}: official_text.url must use https://{OFFICIAL_TEXT_HOST}"
+                    )
+                if not nonempty(official_text.get("edition_as_of")) and not isinstance(
+                    official_text.get("edition_as_of"), date
+                ):
+                    errors.append(
+                        f"{where}: VERIFIED official_text requires edition_as_of"
                     )
 
     facts = pack.get("atomic_facts", [])
