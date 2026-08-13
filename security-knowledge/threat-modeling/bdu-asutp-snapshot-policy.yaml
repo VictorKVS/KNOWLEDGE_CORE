@@ -1,0 +1,56 @@
+schema_version: 1
+policy_id: BDU-ASUTP-SNAPSHOT-POLICY
+family_id: THREAT_MODELING_AND_THREAT_CATALOGS
+status: VERIFIED_PROCESS_DESIGN
+checked_at: 2026-08-13
+purpose: Preserve time-bounded observations from the dynamic FSTEK BDU ASU TP so catalog changes never silently rewrite historical threat assessments.
+primary_source:
+  authority: FSTEK Russia
+  authority_class: PRIMARY_REGULATOR_DYNAMIC_CATALOG
+  catalog_url: https://bduasutp.fstec.ru/threats
+  evidence_status: PRIMARY_SOURCE_VERIFIED
+snapshot_contract:
+  required_fields:
+    - snapshot_id
+    - observed_at
+    - source_url
+    - stable_catalog_id
+    - record_type
+    - label
+    - source_last_modified_when_exposed
+    - normalized_relations
+    - source_excerpt_or_field_proof
+    - verification_status
+  record_types:
+    - threat
+    - vulnerability_configuration
+    - vulnerability_web_application
+    - attack_method
+    - object_of_impact
+    - control_relation
+  temporal_rules:
+    - Never overwrite a historical observation when a live BDU record changes.
+    - A changed record creates a new observation linked by supersedes_snapshot_id.
+    - Absence from a later snapshot is recorded as NOT_OBSERVED_AT_TIME and is not automatically interpreted as regulator withdrawal.
+    - Threat-model decisions must store the exact snapshot_id used during assessment.
+    - Reassessment must be triggered when newly observed catalog content can affect applicability or attack scenarios.
+  identity_rules:
+    - Prefer regulator catalog identifiers such as UTP:xx and BDA:Cxxx over page titles.
+    - Preserve regulator URL/UUID as an additional identity anchor.
+    - Do not merge records solely because labels are similar.
+  applicability_rules:
+    - Presence in BDU proves catalog existence, not relevance to a specific system.
+    - Applicability requires separate system-specific reasoning over assets, interfaces, violator capabilities, vulnerabilities/preconditions and consequences.
+  integrity_rules:
+    - Capture observed_at in ISO-8601 date/time where runtime permits; date-only is acceptable only when source acquisition cannot establish time.
+    - Store a digest when raw snapshot bytes are acquired by an ingestion pipeline.
+    - Preserve provenance and parser version for automated ingestion.
+red_team_gates:
+  - FAIL if an assessment cites a live BDU URL without an observed_at/snapshot_id.
+  - FAIL if a historical threat model is silently re-evaluated against today's catalog without explicit reassessment.
+  - FAIL if catalog presence is used as a substitute for threat applicability reasoning.
+  - FAIL if a changed label or relation overwrites prior evidence.
+source_proof:
+  source_locator: https://bduasutp.fstec.ru/threats
+  source_quote: "Национальный ресурс, содержащий актуальные сведения об уязвимостях АСУ ТП, угрозах безопасности информации в АСУ ТП"
+  verification_status: VERIFIED
