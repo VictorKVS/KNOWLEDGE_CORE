@@ -1,0 +1,86 @@
+schema_version: 1
+scorecard_id: SEC-COVERAGE-2026-08-13-R02
+scope: Russian paper-security P0 core
+previous_scorecard: security-knowledge/audits/coverage-scorecard-2026-08-13-run-01.yaml
+scoring_policy:
+  overall_formula: arithmetic_mean_of_P0_family_status_points_from_master_inventory
+  family_status_points: {NOT_REGISTERED: 0, REGISTERED: 10, SOURCE_PENDING: 15, SOURCE_ACQUIRED: 20, STATUS_VERIFIED: 25, VERSIONED: 35, CHUNKED: 45, ATOMIZED: 60, LINKED: 75, EXPERT_REVIEWED: 90, COMPLETE: 100}
+  conservative_rule: a family is not promoted because one document in that family is mature
+p0_families:
+  RU_CONSTITUTIONAL_AND_CODES: {status: REGISTERED, score: 10}
+  RU_FEDERAL_LAWS: {status: REGISTERED, score: 10, note: '152-FZ core articles now have first verified canonical atoms; family as a whole remains far from complete'}
+  RU_PRESIDENTIAL: {status: REGISTERED, score: 10}
+  RU_GOVERNMENT_DECREES: {status: REGISTERED, score: 10}
+  FSTEK: {status: REGISTERED, score: 10}
+  FSB: {status: REGISTERED, score: 10}
+  ROSKOMNADZOR: {status: REGISTERED, score: 10}
+  GOST_AND_RU_STANDARDS: {status: NOT_REGISTERED, score: 0}
+  CLASSIFICATION_AND_CATEGORIZATION_METHODS: {status: NOT_REGISTERED, score: 0}
+  THREAT_MODELING_AND_THREAT_CATALOGS: {status: NOT_REGISTERED, score: 0}
+  RISK_METHODS: {status: NOT_REGISTERED, score: 0}
+  PRODUCTS_CERTIFICATES_LICENSES: {status: REGISTERED, score: 10}
+metrics:
+  p0_family_count: 12
+  p0_registered_or_better: 8
+  p0_not_registered: 4
+  p0_family_registration_percent: 66.7
+  conservative_overall_maturity_percent: 6.7
+  displayed_percent_rounded: 7
+atomic_requirement_proof_floor:
+  prior_atomic_requirements: 82
+  canonical_verified_requirements_added_this_run: 19
+  resulting_minimum_atomic_requirements: 101
+  resulting_strict_verified_requirements: 19
+  resulting_strict_verified_percent: 18.8
+  proof_fields_required: [document, verification, source_locator, source_quote]
+run_additions:
+  canonical_requirement_file: security-knowledge/legislation/requirements/152-fz-core-operator-obligations-verified.yaml
+  verified_current_edition:
+    document: RU_FZ_152_2006
+    revision_date: 2026-07-26
+    effective_from: 2026-07-26
+    checked_at: 2026-08-13
+  coverage_added:
+    articles: ['18.1', '19', '21', '22', '22.1']
+    clocks:
+      - 3_working_days_stop_unlawful_processing
+      - 10_working_days_destroy_if_lawfulness_cannot_be_restored
+      - 24_hours_initial_personal_data_incident_notice
+      - 72_hours_internal_investigation_followup
+      - 30_calendar_days_purpose_achievement_destruction
+      - 6_months_fallback_destruction
+      - before_processing_initial_RKN_notification
+      - day_15_following_month_operator_register_changes
+      - 10_working_days_processing_termination_notice
+red_team:
+  result: FAIL
+  resolved_gaps:
+    - GAP-P0-001-zero-strict-verified-canonical-requirements
+  critical_gaps:
+    - id: GAP-P0-002
+      severity: CRITICAL
+      gap: Four P0 families remain NOT_REGISTERED: GOST, classification/categorization, threat methodology/catalogs, risk methods.
+  high_gaps:
+    - id: GAP-P0-003
+      severity: HIGH
+      gap: 152-FZ is not fully atomized; only a core operator-obligation slice is verified.
+    - id: GAP-P0-006
+      severity: HIGH
+      gap: Highest-tier primary-source/version-chain evidence for the current consolidated 152-FZ edition is not yet captured; current atoms use an authoritative consolidated legal system.
+    - id: GAP-P0-007
+      severity: HIGH
+      gap: Article 22 exceptions are not yet atomized into decision logic, so notification applicability must remain conditional.
+    - id: GAP-P0-008
+      severity: HIGH
+      gap: Current KoAP offence-part mappings for these duties are not yet verified and must not be inferred.
+    - id: GAP-P0-009
+      severity: HIGH
+      gap: CI status was not available from the connector immediately after commit; repository-level validator acceptance is therefore not claimed.
+expert_ready: false
+next_bottleneck:
+  target: Complete Article 22 exception/applicability logic and verify current KoAP personal-data offence parts before sanction links are created.
+  then:
+    - register and source GOST P0 family
+    - register classification/categorization methods
+    - register threat-modeling methodology and BDU catalog layer
+    - register risk methodology family
