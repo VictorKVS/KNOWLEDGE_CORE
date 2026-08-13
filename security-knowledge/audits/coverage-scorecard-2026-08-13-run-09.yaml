@@ -1,0 +1,60 @@
+schema_version: 1
+scorecard_id: SEC-COVERAGE-2026-08-13-R09
+scope: Russian paper-security P0 core
+previous_scorecard: security-knowledge/audits/coverage-scorecard-2026-08-13-run-08.yaml
+scoring_policy:
+  overall_formula: arithmetic_mean_of_P0_family_status_points_from_master_inventory
+  conservative_rule: Mature sub-slices do not promote a family until family-wide evidence meets the same proof floor.
+metrics:
+  p0_family_count: 12
+  p0_registered_or_better: 12
+  conservative_overall_maturity_percent: 10.0
+  displayed_percent_rounded: 10
+  critical_gap_count: 0
+  high_gap_count: 7
+family_status_summary:
+  legislation_and_npa_percent: 10
+  standards_gost_iso_percent: 10
+  classification_and_categorization_percent: 10
+  threat_methodology_and_bdu_percent: 10
+  risk_methods_percent: 10
+  legal_consequences_koap_uk_gk_tk_percent: 10
+  szi_skzi_registry_and_license_lifecycle_percent: 10
+  roles_deadlines_responsibility_percent: 10
+  evidence_and_audit_percent: 10
+  practical_cases_percent: 10
+  note: Percentages above are conservative family maturity points, not raw document-count completion.
+run_verified_work:
+  - item: UK RF Article 272.1 personal-data criminal liability
+    status: VERIFIED_SLICE_COMMITTED
+    file: security-knowledge/legal-consequences/uk-272-1-personal-data-criminal-liability-verified.yaml
+    records_added: 7
+    details: Parts 1-6 plus note 1 were normalized with clause locators, minimal evidence quotes, statutory maximum exposure, exclusions and routing guardrails.
+  - item: Federal Law 421-FZ of 2024-11-30
+    status: OFFICIAL_PUBLICATION_VERIFIED
+    details: Official publication record 0001202411300012 confirmed as the primary amendment introducing Article 272.1.
+  - item: administrative/criminal routing
+    status: CROSS_LINK_GUARDRAIL_ADDED
+    details: KoAP Article 13.11 parts 12-14 expressly exclude conduct containing elements of a criminal offense; final consequence classification must evaluate criminal routing first.
+verified_progress:
+  new_verified_records_this_run: 7
+  cumulative_known_legal_applicability_sanction_records_minimum: 39
+  pending_or_unpromoted_focus:
+    - full KoAP Article 13.11 parts 1-9 and related current mappings
+    - UK neighboring and security-relevant offenses beyond Article 272.1
+    - GK/TK civil and labor consequence mappings
+    - family-wide proof floors for classification, threat methodology, risk methods and lifecycle registries
+red_team:
+  result: FAIL
+  critical_gaps: []
+  high_gap_count: 7
+  this_run_progress:
+    - Added criminal-liability routing without equating statutory maximums to expected loss.
+    - Preserved the requirement for factual-element review before mapping a real incident to a criminal part.
+    - Explicitly prevented the false inference that any cross-border processing is criminal under Article 272.1 part 4.
+expert_ready: false
+next_bottleneck:
+  - complete KoAP Article 13.11 parts 1-9 and exact links to 152-FZ duties
+  - add UK 137/272/273/274 routing boundaries where relevant to information-security incidents
+  - add GK/TK consequence and employee-responsibility mappings
+  - continue primary-source acquisition for FSTEK 2021 threat methodology and CII/GIS/ASU TP decision logic
