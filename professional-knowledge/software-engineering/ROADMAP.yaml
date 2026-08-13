@@ -1,9 +1,9 @@
-schema_version: 2
+schema_version: 3
 domain_id: SOFTWARE_ENGINEERING
 roadmap_id: SWENG-ROADMAP-0001
 status: ACTIVE
 maturity_model_ref: father/domain-knowledge/PROFESSIONAL_KB_MATURITY_MODEL.yaml
-current_level: M2
+current_level: M3
 stages:
 - level: M0
   status: COMPLETE_BOUNDED
@@ -12,31 +12,20 @@ stages:
   status: COMPLETE_BOUNDED
   outcomes: [SOURCE_REGISTRY_with_six_admitted_source_families, version_or_mutability_state_recorded, source_limitations_and_reassessment_triggers_recorded, independent_senior_and_skeptical_source_review_recorded, M1_CI_validation_required]
   evidence_refs: [professional-knowledge/software-engineering/SOURCE_REGISTRY.yaml, professional-knowledge/software-engineering/audits/M1_SOURCE_REVIEW_2026-08-13.yaml]
-  non_claims: [no_universal_best_practice_claimed, no_expert_ready_claim]
 - level: M2
   status: COMPLETE_BOUNDED
   bounded_scope: [HTTP_retry_and_idempotency_semantics, PostgreSQL_17_transaction_isolation_semantics, pyperf_2_10_benchmark_evidence_quality]
-  outcomes:
-  - six atomic knowledge objects with claim-specific provenance
-  - source-bound and derived-rule verification states separated
-  - explicit context limitations and overgeneralization challenges
-  - relation links recorded separately
-  - independent senior and skeptical review with distinct assignments
-  evidence_refs:
-  - professional-knowledge/software-engineering/atomic/HTTP_RETRY_IDEMPOTENCY.yaml
-  - professional-knowledge/software-engineering/atomic/POSTGRES_TRANSACTION_ISOLATION.yaml
-  - professional-knowledge/software-engineering/atomic/BENCHMARK_EVIDENCE_QUALITY.yaml
-  - professional-knowledge/software-engineering/RELATIONS.yaml
-  - professional-knowledge/software-engineering/audits/M2_ATOMIC_KNOWLEDGE_REVIEW_2026-08-13.yaml
-  non_claims: [no_complete_retry_policy, no_database_selection_rule, no_universal_isolation_recommendation, no_production_capacity_claim, no_M3_decision_readiness, no_expert_ready]
+  evidence_refs: [professional-knowledge/software-engineering/atomic/HTTP_RETRY_IDEMPOTENCY.yaml, professional-knowledge/software-engineering/atomic/POSTGRES_TRANSACTION_ISOLATION.yaml, professional-knowledge/software-engineering/atomic/BENCHMARK_EVIDENCE_QUALITY.yaml, professional-knowledge/software-engineering/RELATIONS.yaml, professional-knowledge/software-engineering/audits/M2_ATOMIC_KNOWLEDGE_REVIEW_2026-08-13.yaml]
 - level: M3
-  status: NEXT
-  target: Build bounded applicability and decision packets using real alternatives and hard constraints.
-  candidate_first_packet: retry_policy_for_bounded_HTTP_client_operation
-  gate: [applicability_logic, requirements_and_constraints, viable_alternatives, hard_gate_elimination, metric_and_criteria_rationale, uncertainty_and_reassessment, independent_senior_review, skeptical_challenge]
+  status: COMPLETE_BOUNDED
+  bounded_scope: HTTP_client_retry_policy_decision_logic
+  outcomes: [explicit_applicability_and_required_inputs, hard_constraints_before_preferences, four_real_alternatives_with_conditions_where_better, hard_gate_elimination_and_REQUEST_MORE_EVIDENCE_path, criteria_without_false_numeric_precision, uncertainty_sensitivity_and_reassessment_triggers, professional_decision_record_compatibility, distinct_senior_skeptical_and_cross_domain_review]
+  evidence_refs: [professional-knowledge/software-engineering/decision-logic/HTTP_CLIENT_RETRY_POLICY.yaml, professional-knowledge/software-engineering/audits/M3_DECISION_LOGIC_REVIEW_2026-08-13.yaml]
+  non_claims: [no_universal_backoff_algorithm, no_every_5xx_retry_rule, no_production_verification, no_expert_ready]
 - level: M4
-  status: PLANNED
-  target: Prove decisions with positive negative and adversarial cases.
+  status: NEXT
+  target: Prove HTTP retry decision logic with reproducible positive negative and multi-dependency resource cases.
+  gate: [positive_case, negative_cases, multi_dependency_retry_resource_case, preserved_failed_evidence, outcome_capture, independent_senior_case_review]
 - level: M5
   status: PLANNED
   target: Establish a bounded independently reviewed expert-ready slice.
