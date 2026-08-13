@@ -1,0 +1,190 @@
+schema_version: "1.0"
+id: threat-relevance-regression-cases-v1
+status: VERIFIED_TEST_DESIGN_NON_NORMATIVE
+checked_at: 2026-08-14
+purpose: >-
+  Reproducible positive and negative regression fixtures for the FSTEC 2021 threat-relevance
+  decision gate. These are synthetic bounded architectures used to test reasoning consistency;
+  they are not regulator examples and must not be cited as normative requirements.
+
+normative_basis:
+  decision_logic_file: security-knowledge/threat-modeling/fstec-threat-assessment-methodology-2021-decision-logic-slice-02.yaml
+  relevant_rules:
+    - FSTEC-MU-2021-3.3
+    - FSTEC-MU-2021-4.1
+    - FSTEC-MU-2021-5.1.4
+    - FSTEC-MU-2021-5.2.3
+    - FSTEC-MU-2021-5.2.4
+    - FSTEC-MU-2021-5.3.3
+    - FSTEC-MU-2021-5.3.4
+    - FSTEC-MU-2021-5.3.5
+  source_status: AUTHORITATIVE_SECONDARY_VERIFIED_PRIMARY_COPY_PENDING
+
+catalog_evidence:
+  registry: security-knowledge/threat-modeling/threat-modeling-and-catalogs-source-registry.yaml
+  observations:
+    - stable_catalog_id: "УТП:01"
+      snapshot_id: BDU-ASUTP-2026-08-14-UTP01-41683af3
+      source_url: https://bduasutp.fstec.ru/threats/41683af3-eccb-4cbb-885c-aceba22a3e6d
+    - stable_catalog_id: "УТП:02"
+      snapshot_id: BDU-ASUTP-2026-08-14-UTP02-cc419fd2
+      source_url: https://bduasutp.fstec.ru/threats/cc419fd2-0524-450e-89cd-2c23d223c9db
+    - stable_catalog_id: "BDA:C006"
+      snapshot_id: BDU-ASUTP-2026-08-14-BDAC006-c842d3db
+      source_url: https://bduasutp.fstec.ru/vulnerabilities-settings/c842d3db-6558-4cd6-87e3-bed82058ee69
+
+fixture_contract:
+  required_inputs:
+    - architecture_or_inventory_snapshot
+    - protected_asset_or_process
+    - negative_consequence_basis
+    - source_or_adversary
+    - capability_rationale
+    - object_of_impact
+    - interface_or_access_path
+    - realization_method_or_precondition
+    - scenario
+    - exact_catalog_snapshot_identity_when_catalog_used
+  outputs:
+    - RELEVANT
+    - NOT_PROVEN_RELEVANT
+    - EVIDENCE_GATE_FAIL
+  red_team_rule: >-
+    A test passes only when the expected result follows from presence or absence of material
+    tuple/scenario/evidence elements; threat-name or catalog presence alone must never force RELEVANT.
+
+cases:
+  - id: TR-REG-001
+    title: Excessive internal privileges plus accessible engineering data supports UTP:01
+    type: POSITIVE
+    synthetic_fixture: true
+    inputs:
+      architecture_or_inventory_snapshot: "SYN-ICS-A-2026-08-14-v1"
+      protected_asset_or_process: "engineering workstation holding configuration and authentication information"
+      negative_consequence_basis: "unauthorized disclosure would expose configuration/authentication information used to administer the bounded control environment"
+      source_or_adversary: "internal user with legitimate workstation access"
+      capability_rationale: "fixture explicitly grants the user administrative/export capabilities beyond assigned job need"
+      object_of_impact: "engineering workstation / locally accessible information"
+      interface_or_access_path: "authenticated local session and file/export interface"
+      realization_method_or_precondition:
+        - "BDA:C006 excessive privileges"
+        - "access-control weakness consistent with UTP:01 catalog relations"
+      scenario: "user uses unnecessary privileges to access and export protected engineering information"
+      catalog_snapshot_ids:
+        - BDU-ASUTP-2026-08-14-UTP01-41683af3
+        - BDU-ASUTP-2026-08-14-BDAC006-c842d3db
+    expected_result: RELEVANT
+    assertion: >-
+      All material tuple elements and a bounded scenario are supported by the fixture; BDU evidence
+      supplies catalog relations but relevance is produced by system-specific evidence, not by catalog presence.
+
+  - id: TR-REG-002
+    title: UTP:01 catalog presence without accessible interface must not become relevant
+    type: NEGATIVE
+    synthetic_fixture: true
+    inputs:
+      architecture_or_inventory_snapshot: "SYN-ICS-B-2026-08-14-v1"
+      protected_asset_or_process: "isolated archive component"
+      negative_consequence_basis: "disclosure would be harmful if a path existed"
+      source_or_adversary: "candidate internal user"
+      capability_rationale: "no evidence that candidate has rights or physical/logical access to archive component"
+      object_of_impact: "archive component"
+      interface_or_access_path: null
+      realization_method_or_precondition: null
+      scenario: null
+      catalog_snapshot_ids:
+        - BDU-ASUTP-2026-08-14-UTP01-41683af3
+    expected_result: NOT_PROVEN_RELEVANT
+    assertion: "Missing interface/method/scenario blocks relevance even though UTP:01 exists in the catalog."
+
+  - id: TR-REG-003
+    title: Reachable external update path can support UTP:02 in a bounded fixture
+    type: POSITIVE
+    synthetic_fixture: true
+    inputs:
+      architecture_or_inventory_snapshot: "SYN-ICS-C-2026-08-14-v1"
+      protected_asset_or_process: "operator workstation software integrity and availability"
+      negative_consequence_basis: "compromised software/update content could disrupt operation or introduce malicious code"
+      source_or_adversary: "external actor capable, by fixture assumption, of compromising an upstream update source"
+      capability_rationale: "fixture marks the actor as capable of influencing the external software-distribution path used by the workstation"
+      object_of_impact: "operator workstation software/update mechanism"
+      interface_or_access_path: "outbound update channel to external software source"
+      realization_method_or_precondition: "СПА.04.010/СПА.04.011 class supply-chain/update compromise relation from UTP:02 catalog observation"
+      scenario: "workstation retrieves an update through the exposed path after the upstream source has been compromised"
+      catalog_snapshot_ids:
+        - BDU-ASUTP-2026-08-14-UTP02-cc419fd2
+    expected_result: RELEVANT
+    assertion: "The fixture supports object, consequence, capable source, update path, method and scenario."
+
+  - id: TR-REG-004
+    title: UTP:02 must not be inferred where the bounded component has no update path
+    type: NEGATIVE
+    synthetic_fixture: true
+    inputs:
+      architecture_or_inventory_snapshot: "SYN-ICS-D-2026-08-14-v1"
+      protected_asset_or_process: "fixed-function bounded controller component"
+      negative_consequence_basis: "availability/integrity would matter if an applicable path existed"
+      source_or_adversary: "candidate external supply-chain actor"
+      capability_rationale: "actor capability is not disputed for the test"
+      object_of_impact: "fixed-function component"
+      interface_or_access_path: "fixture records no software/update ingestion interface for this component"
+      realization_method_or_precondition: null
+      scenario: null
+      catalog_snapshot_ids:
+        - BDU-ASUTP-2026-08-14-UTP02-cc419fd2
+    expected_result: NOT_PROVEN_RELEVANT
+    assertion: "A catalogued supply-chain threat cannot be promoted when the target object lacks the required realization path in the bounded architecture."
+
+  - id: TR-REG-005
+    title: BDA:C006 alone is insufficient without a consequence link
+    type: NEGATIVE
+    synthetic_fixture: true
+    inputs:
+      architecture_or_inventory_snapshot: "SYN-ICS-E-2026-08-14-v1"
+      protected_asset_or_process: null
+      negative_consequence_basis: null
+      source_or_adversary: "internal user"
+      capability_rationale: "excess privileges are present"
+      object_of_impact: "test workstation"
+      interface_or_access_path: "local authenticated session"
+      realization_method_or_precondition: "BDA:C006 excessive privileges"
+      scenario: "user can perform actions exceeding assigned role"
+      catalog_snapshot_ids:
+        - BDU-ASUTP-2026-08-14-BDAC006-c842d3db
+    expected_result: NOT_PROVEN_RELEVANT
+    assertion: >-
+      The configuration weakness is real in the fixture, but without an identified protected process/asset
+      and negative consequence the threat tuple is incomplete.
+
+  - id: TR-REG-006
+    title: Live BDU citation without snapshot identity fails evidence gate
+    type: NEGATIVE_EVIDENCE
+    synthetic_fixture: true
+    inputs:
+      architecture_or_inventory_snapshot: "SYN-ICS-F-2026-08-14-v1"
+      protected_asset_or_process: "bounded test asset"
+      negative_consequence_basis: "present"
+      source_or_adversary: "present"
+      capability_rationale: "present"
+      object_of_impact: "present"
+      interface_or_access_path: "present"
+      realization_method_or_precondition: "present"
+      scenario: "present"
+      live_catalog_url_only: https://bduasutp.fstec.ru/threats
+      catalog_snapshot_ids: []
+    expected_result: EVIDENCE_GATE_FAIL
+    assertion: >-
+      Snapshot policy requires observed_at/stable identity for consumed dynamic BDU records; a live catalog URL alone
+      cannot support a reproducible historical relevance decision.
+
+regression_summary:
+  total_cases: 6
+  positive_cases: 2
+  negative_relevance_cases: 3
+  negative_evidence_cases: 1
+  expected_relevant: 2
+  expected_not_proven_relevant: 3
+  expected_evidence_gate_fail: 1
+  promotion_effect: >-
+    Adds reproducible regression evidence for the bounded decision gate, but does not justify family promotion while
+    primary methodology provenance and raw immutable BDU digests remain unresolved.
