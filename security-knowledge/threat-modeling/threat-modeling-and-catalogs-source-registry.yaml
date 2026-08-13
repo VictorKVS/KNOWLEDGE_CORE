@@ -2,15 +2,16 @@ schema_version: 1
 family_id: THREAT_MODELING_AND_THREAT_CATALOGS
 priority: P0
 family_status: REGISTERED
-checked_at: 2026-08-13
+checked_at: 2026-08-14
 status_policy: Dynamic catalogs are versioned observations; current page contents must not be treated as timeless legal requirements.
 sources:
   - id: FSTEK_THREAT_MODELING_METHODOLOGY_2021
     title: Методика оценки угроз безопасности информации
     authority: FSTEK Russia
     authority_class: PRIMARY_REGULATOR_METHOD
-    ingestion_status: SOURCE_PENDING_CANONICAL_FSTEK_DOCUMENT_URL_AND_FULL_TEXT_CAPTURE
-    note: Known methodology family retained as P0 but not promoted without primary-document capture.
+    ingestion_status: SOURCE_PENDING_AUTHENTICATED_PRIMARY_FULL_TEXT_CAPTURE
+    authoritative_secondary_status: AUTHORITATIVE_CONSOLIDATED_TEXT_AVAILABLE
+    note: Decision logic has authoritative consolidated-text coverage, but primary-document provenance remains a promotion blocker.
   - id: FSTEK_BDU_ASUTP
     title: Банк данных угроз АСУ ТП
     authority: FSTEK Russia
@@ -19,22 +20,65 @@ sources:
     observed_scope: vulnerabilities, information-security threats in ICS, implementation methods, negative consequences and recommended controls
     ingestion_status: SOURCE_ACQUIRED_DYNAMIC
     snapshot_required: true
+
 verified_observations:
   - id: UTP_01
+    stable_catalog_id: "УТП:01"
     label: Угроза утечки информации
     source_url: https://bduasutp.fstec.ru/threats/41683af3-eccb-4cbb-885c-aceba22a3e6d
+    source_uuid: 41683af3-eccb-4cbb-885c-aceba22a3e6d
     verification_status: VERIFIED_CATALOG_RECORD
-    observed_at: 2026-08-13
+    observed_at: 2026-08-14
+    source_last_modified_exposed: "2023-10-24T09:24:34Z"
+    snapshot_id: BDU-ASUTP-2026-08-14-UTP01-41683af3
+    snapshot_integrity: OBSERVATION_ONLY_NO_RAW_DIGEST
+    normalized_relations:
+      possible_object_examples:
+        - "ОА.001 АРМ оператора (диспетчера)"
+        - "ОА.002 АРМ инженера (инженерная станция)"
+        - "ОА.003 Промышленный сервер"
+      relevant_method_examples:
+        - "СПА.02.011 недостатки настройки прав доступа"
+        - "СПА.18.002 ошибки или отсутствие проверки прав доступа"
+    proof_note: "Primary BDU page/search index exposes the stable catalog id, label, definition, object list and realization-method relations."
   - id: UTP_02
+    stable_catalog_id: "УТП:02"
     label: Угроза получения информационных ресурсов из недоверенного или скомпрометированного источника
     source_url: https://bduasutp.fstec.ru/threats/cc419fd2-0524-450e-89cd-2c23d223c9db
+    source_uuid: cc419fd2-0524-450e-89cd-2c23d223c9db
     verification_status: VERIFIED_CATALOG_RECORD
-    observed_at: 2026-08-13
+    observed_at: 2026-08-14
+    source_last_modified_exposed: "2023-10-24T09:24:34Z"
+    snapshot_id: BDU-ASUTP-2026-08-14-UTP02-cc419fd2
+    snapshot_integrity: OBSERVATION_ONLY_NO_RAW_DIGEST
+    normalized_relations:
+      relevant_method_examples:
+        - "СПА.04.010 внедрение вредоносного ПО через скомпрометированные обновления"
+        - "СПА.04.011 компрометация инфраструктуры подрядчика/среды сборки/техподдержки"
+    proof_note: "Primary BDU page/search index exposes the stable catalog id, definition, possible objects and realization methods."
   - id: BDA_C006
+    stable_catalog_id: "BDA:C006"
     label: Наделение пользователей избыточными полномочиями
     source_url: https://bduasutp.fstec.ru/vulnerabilities-settings/c842d3db-6558-4cd6-87e3-bed82058ee69
+    source_uuid: c842d3db-6558-4cd6-87e3-bed82058ee69
     verification_status: VERIFIED_CATALOG_RECORD
-    observed_at: 2026-08-13
+    observed_at: 2026-08-14
+    snapshot_id: BDU-ASUTP-2026-08-14-BDAC006-c842d3db
+    snapshot_integrity: OBSERVATION_ONLY_NO_RAW_DIGEST
+    normalized_relations:
+      related_threats:
+        - "УТП:01"
+        - "УТП:04"
+        - "УТП:05"
+        - "УТП:06"
+        - "УТП:07"
+        - "УТП:10"
+      related_controls:
+        - "УПД.1 Управление учетными записями пользователей"
+        - "УПД.2 Реализация модели управления доступом"
+        - "УПД.5 Назначение минимально необходимых прав и привилегий"
+    proof_note: "Primary BDU page/search index exposes stable id BDA:C006 and explicit threat/control relations."
+
 required_model_entities:
   - protected_asset
   - threat_source
@@ -48,7 +92,9 @@ required_model_entities:
   - residual_threat
   - reassessment_trigger
   - source_snapshot_time
+
 red_team_blocks:
-  - Primary text of the FSTEK threat methodology must be captured and versioned before methodology rules are atomized as VERIFIED.
+  - Primary authenticated full text of the FSTEK threat methodology remains required for PRIMARY_VERIFIED promotion.
   - BDU and BDU ASU TP are dynamic; every consumed record needs observed_at and stable identifier.
   - Catalog presence does not prove threat relevance to a specific system.
+  - Observation-only snapshot ids are adequate for bounded regression traceability but do not substitute for raw immutable byte snapshots/digests.
