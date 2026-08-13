@@ -1,0 +1,26 @@
+schema_version: 1
+registry_id: CII-SECTOR-OVERLAYS-2026-VERIFIED-SLICE
+checked_at: 2026-08-13
+status: VERIFIED_SLICE_INCOMPLETE_FAMILY
+purpose: Prevent PP RF No. 127 from being treated as the only source when sector-specific CII categorization acts apply.
+base_rule:
+  source_id: PP_RF_127_2018
+  official_publication_number: '0001201802130006'
+  official_publication_date: 2018-02-13
+  role: BASE_CII_CATEGORIZATION_RULES
+verified_2026_overlay_anchors:
+  - {government_resolution_no: '4', act_date: 2026-01-16, official_publication_number: '0001202601160013', official_publication_date: 2026-01-16}
+  - {government_resolution_no: '92', act_date: 2026-02-06, official_publication_number: '0001202602070010', official_publication_date: 2026-02-07}
+  - {government_resolution_no: '246', act_date: 2026-03-07, official_publication_number: '0001202603070013', official_publication_date: 2026-03-07}
+  - {government_resolution_no: '303', act_date: 2026-03-23, official_publication_number: '0001202603240036', official_publication_date: 2026-03-24}
+  - {government_resolution_no: '356', act_date: 2026-03-31, official_publication_number: '0001202604010039', official_publication_date: 2026-04-01}
+applicability_gate:
+  - Establish CII-subject applicability from current law and organization facts.
+  - Determine applicable sector or sectors before running categorization logic.
+  - Apply PP 127 as the base layer plus every applicable current sector overlay.
+  - If sector applicability or current overlay inventory is unresolved, return NEEDS_SECTOR_REVIEW.
+  - Store legal version and effective date for every applied source.
+red_team_status:
+  complete_sector_inventory: false
+  reason: Five current 2026 Government overlay anchors are proven from official-publication search results, but this is not claimed exhaustive for 2025-2026.
+  blocker: Exhaustive overlay inventory and clause-level extraction are required before family-wide promotion.
