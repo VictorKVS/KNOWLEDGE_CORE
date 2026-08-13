@@ -1,0 +1,47 @@
+schema_version: 1
+scorecard_id: SEC-COVERAGE-2026-08-13-R06
+scope: Russian paper-security P0 core
+previous_scorecard: security-knowledge/audits/coverage-scorecard-2026-08-13-run-05.yaml
+scoring_policy:
+  overall_formula: arithmetic_mean_of_P0_family_status_points_from_master_inventory
+  conservative_rule: Mature sub-slices do not promote a family until family-wide evidence meets the same proof floor.
+metrics:
+  p0_family_count: 12
+  p0_registered_or_better: 12
+  conservative_overall_maturity_percent: 10.0
+  displayed_percent_rounded: 10
+run_verified_work:
+  - artifact: security-knowledge/classification/ispdn-protection-level-decision-table-pp1119-verified.yaml
+    status: VERIFIED_SLICE
+    verified_records: 21
+    details: 4 normalization rules, 16 level-selection conditions, 1 minimum control-frequency rule
+  - artifact: security-knowledge/classification/cii-sector-overlay-registry-2026-verified-slice.yaml
+    status: VERIFIED_SLICE_INCOMPLETE_FAMILY
+    verified_official_act_anchors: 5
+    details: Current official-publication anchors prove that PP 127 requires a sector-overlay discovery gate for current CII categorization.
+classification_domain:
+  family_status: REGISTERED
+  family_score: 10
+  completed_slices:
+    - ISPDn PP 1119 protection-level decision logic
+    - CII sector-overlay applicability gate with five official 2026 anchors
+  pending_for_family_promotion:
+    - exhaustive current CII sector-overlay inventory
+    - PP 127 current amendment/version chain and clause-level decision extraction
+    - GIS current classification path
+    - ASU TP classification path
+    - reassessment/reclassification trigger matrix
+red_team:
+  result: FAIL
+  critical_gaps: []
+  high_gap_count: 7
+  this_run_progress:
+    - PP 1119 is no longer only a registry anchor; it now has a proof-backed deterministic ISPDn level-selection slice.
+    - Current CII reasoning is explicitly blocked from applying PP 127 alone when sector applicability has not been resolved.
+  no_credit_for_blocked_write: A registry update attempt was blocked by connector safety classification; no completion credit is assigned to that write.
+expert_ready: false
+next_bottleneck:
+  - obtain canonical authoritative source for FSTEK 2021 threat methodology
+  - finish exhaustive current CII sector overlay inventory and PP 127 version chain
+  - implement BDU observed_at snapshot/version strategy
+  - add GIS and ASU TP classification decision paths
