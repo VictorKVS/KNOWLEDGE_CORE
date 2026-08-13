@@ -1,0 +1,76 @@
+schema_version: "1.0"
+id: coverage-scorecard-2026-08-13-run-19
+date: "2026-08-13"
+overall_strict_p0_percent: 10
+p0_families_registered: "12/12"
+critical_gaps: 0
+high_gaps: 4
+red_team: FAIL
+expert_ready: false
+
+family_scores:
+  npa_rf: 10
+  gost_iso: 10
+  classification_categorization: 10
+  threat_modeling_bdu: 10
+  risk_methods: 10
+  legal_consequences: 10
+  szi_skzi_license_lifecycle: 10
+  roles_deadlines_responsibility: 10
+  evidence_audit: 10
+  practical_cases: 10
+
+this_run:
+  committed_authoritative_verified_records: 26
+  committed_authoritative_appendix_reference_records: 4
+  committed_primary_verified_records: 0
+  committed_file: "security-knowledge/threat-modeling/fstec-threat-assessment-methodology-2021-decision-logic-slice-02.yaml"
+  commit: "f2dd094ecd0362cdd8badb5d94c4894602a28b64"
+  source_class: "AUTHORITATIVE_CONSOLIDATED_LEGAL_TEXT"
+  source_concordance:
+    - consultant
+    - garant
+    - kontur
+  primary_copy_status: PENDING
+  key_findings:
+    - "sections 3 and 4 now connect negative consequences to object/interface inventory instead of using threat labels in isolation"
+    - "5.1 now models adversary type, goals, capability levels N1-N4 and internal/external category as explicit decision inputs"
+    - "5.2 now requires adversary capability plus usable object interfaces and conditions before a realization method is treated as relevant"
+    - "5.3 now models a possible threat as source/adversary + object + method + negative consequence and requires at least one supported realization scenario for relevance"
+    - "creation-stage assumptions and operational real-architecture/inventory evidence are separated"
+    - "appendices 3/4/10/11 are mapped as structure/reference evidence, not universal automatic decisions"
+  red_team_guardrails_added:
+    - "catalog presence != relevance"
+    - "appendix example != automatic applicability"
+    - "technogenic source inclusion is conditional"
+    - "design assumption must be rechecked against operational inventory"
+    - "authoritative consolidated copy != primary provenance"
+
+verified_pending_summary:
+  verified_this_run:
+    authoritative_clause_records: 26
+    primary_clause_records: 0
+  pending:
+    - "primary authenticated complete FSTEC 2021 methodology copy"
+    - "detailed appendix matrices and remaining subclauses"
+    - "immutable BDU snapshot hashes and machine-verifiable linkage"
+    - "positive/negative regression cases for relevance decisions"
+
+high_gaps_list:
+  - "authenticated primary full text of FSTEC Threat Assessment Methodology 2021 plus remaining matrices/regression evidence"
+  - "version-aware CII categorization overlays and full PP127 chain"
+  - "FSB SKZI/SZI certificate clause-level lifecycle plus official machine-readable certificate-list snapshot scheme; FSTEC certificate registry automation endpoint remains unresolved"
+  - "practical cases: broader modern corpus for security/personal-data incidents, regulator enforcement, operator/processor causation, damages and appellate outcomes"
+
+closed_or_reduced_this_run:
+  - "methodology sections 3, 4, 5.1, 5.2 and core 5.3 decision logic moved from partial coverage to a substantive authoritative clause model"
+  - "machine decision gate now blocks threat relevance when any material tuple/scenario element is unsupported"
+
+next_bottleneck:
+  - "build positive and negative regression cases for the threat relevance gate using bounded synthetic architectures and preserved BDU snapshot identities"
+  - "continue appendix capability/interface/tactic matrices only where authoritative text can be preserved"
+  - "then resume full version-aware PP127/CII overlay chain"
+
+promotion_decision:
+  family_promotion: false
+  reason: "Threat methodology decision logic is materially stronger, but primary provenance and reproducible regression evidence are still missing; strict overall maturity remains 10%."
