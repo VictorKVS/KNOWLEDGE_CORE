@@ -1,0 +1,91 @@
+schema_version: 1
+record_set_id: ISPDN-PP1119-PROTECTION-LEVEL-VERIFIED
+checked_at: 2026-08-13
+status: VERIFIED_SLICE
+scope: Determination of personal-data protection level in ISPDn under Government Resolution No. 1119 of 2012.
+source:
+  id: PP_RF_1119_2012
+  title: Об утверждении требований к защите персональных данных при их обработке в информационных системах персональных данных
+  signed_date: 2012-11-01
+  number: '1119'
+  official_government_url: https://government.ru/docs/6339/
+  official_publication_number: '0001201211060012'
+  official_publication_url: https://publication.pravo.gov.ru/Document/View/0001201211060012
+  current_status_evidence:
+    authority: Government of the Russian Federation
+    observed_at: 2026-08-13
+    statement: Government portal exposes Resolution No. 1119 and a current-edition document link; no amendment was identified in the current consolidated legal text checked in this pass.
+  supporting_consolidated_text:
+    url: https://docs.cntd.ru/document/902377706/titles/6540IN
+inputs:
+  data_category:
+    enum: [SPECIAL, BIOMETRIC, PUBLICLY_AVAILABLE, OTHER]
+  threat_type:
+    enum: [TYPE_1, TYPE_2, TYPE_3]
+  subjects_scope:
+    enum: [EMPLOYEES_ONLY, NON_EMPLOYEES_LT_OR_EQ_100000, NON_EMPLOYEES_GT_100000]
+normalization_rules:
+  - id: NORM-PP1119-001
+    locator: paragraph_5
+    rule: SPECIAL applies when the IS processes special categories of personal data specified by paragraph 5.
+    source_quote: 'Информационная система является информационной системой, обрабатывающей специальные категории персональных данных...'
+  - id: NORM-PP1119-002
+    locator: paragraph_5
+    rule: EMPLOYEES_ONLY applies only when the IS processes personal data solely of the operator's employees; otherwise use a non-employee scope bucket.
+    source_quote: '...если в ней обрабатываются персональные данные только указанных сотрудников.'
+  - id: NORM-PP1119-003
+    locator: paragraph_6
+    rule: Threat type is based on the actual threat model; type 1 includes threats associated with undocumented/undeclared capabilities in system software.
+    source_quote: 'Угрозы 1-го типа актуальны...'
+  - id: NORM-PP1119-004
+    locator: paragraph_7
+    rule: Operator determines the relevant threat type taking into account the harm assessment and applicable normative acts under Article 19 of 152-FZ.
+    source_quote: 'Определение типа угроз безопасности персональных данных... производится оператором...'
+levels:
+  - level: 1
+    locator: paragraph_9
+    conditions_any:
+      - {threat_type: TYPE_1, data_category_in: [SPECIAL, BIOMETRIC, OTHER], subjects_scope: ANY}
+      - {threat_type: TYPE_2, data_category: SPECIAL, subjects_scope: NON_EMPLOYEES_GT_100000}
+    source_quote: 'Необходимость обеспечения 1-го уровня защищенности... устанавливается при наличии хотя бы одного...'
+  - level: 2
+    locator: paragraph_10
+    conditions_any:
+      - {threat_type: TYPE_1, data_category: PUBLICLY_AVAILABLE, subjects_scope: ANY}
+      - {threat_type: TYPE_2, data_category: SPECIAL, subjects_scope_in: [EMPLOYEES_ONLY, NON_EMPLOYEES_LT_OR_EQ_100000]}
+      - {threat_type: TYPE_2, data_category: BIOMETRIC, subjects_scope: ANY}
+      - {threat_type: TYPE_2, data_category: PUBLICLY_AVAILABLE, subjects_scope: NON_EMPLOYEES_GT_100000}
+      - {threat_type: TYPE_2, data_category: OTHER, subjects_scope: NON_EMPLOYEES_GT_100000}
+      - {threat_type: TYPE_3, data_category: SPECIAL, subjects_scope: NON_EMPLOYEES_GT_100000}
+    source_quote: 'Необходимость обеспечения 2-го уровня защищенности... устанавливается при наличии хотя бы одного...'
+  - level: 3
+    locator: paragraph_11
+    conditions_any:
+      - {threat_type: TYPE_2, data_category: PUBLICLY_AVAILABLE, subjects_scope_in: [EMPLOYEES_ONLY, NON_EMPLOYEES_LT_OR_EQ_100000]}
+      - {threat_type: TYPE_2, data_category: OTHER, subjects_scope_in: [EMPLOYEES_ONLY, NON_EMPLOYEES_LT_OR_EQ_100000]}
+      - {threat_type: TYPE_3, data_category: SPECIAL, subjects_scope_in: [EMPLOYEES_ONLY, NON_EMPLOYEES_LT_OR_EQ_100000]}
+      - {threat_type: TYPE_3, data_category: BIOMETRIC, subjects_scope: ANY}
+      - {threat_type: TYPE_3, data_category: PUBLICLY_AVAILABLE, subjects_scope: NON_EMPLOYEES_GT_100000}
+      - {threat_type: TYPE_3, data_category: OTHER, subjects_scope: NON_EMPLOYEES_GT_100000}
+    source_quote: 'Необходимость обеспечения 3-го уровня защищенности... устанавливается при наличии хотя бы одного...'
+  - level: 4
+    locator: paragraph_12
+    conditions_any:
+      - {threat_type: TYPE_3, data_category: PUBLICLY_AVAILABLE, subjects_scope_in: [EMPLOYEES_ONLY, NON_EMPLOYEES_LT_OR_EQ_100000]}
+      - {threat_type: TYPE_3, data_category: OTHER, subjects_scope_in: [EMPLOYEES_ONLY, NON_EMPLOYEES_LT_OR_EQ_100000]}
+    source_quote: 'Необходимость обеспечения 4-го уровня защищенности... устанавливается при наличии хотя бы одного...'
+post_classification_requirements:
+  - id: PP1119-CONTROL-FREQUENCY
+    locator: paragraph_17
+    rule: Compliance control is performed by operator/authorized person independently or using a licensed contractor; frequency is set by operator but at least once every three years.
+    evidence: [control_plan, control_report, contractor_TZKI_license_if_used]
+    source_quote: 'Контроль ... проводится не реже 1 раза в 3 года.'
+decision_engine_rules:
+  - Evaluate normalized inputs against levels from 1 to 4; first matching explicit condition is the required level.
+  - Never infer threat type solely from the desired protection level.
+  - Store all classification input facts and provenance with the result.
+  - If input facts are unknown or contradictory, return NEEDS_EXPERT_REVIEW rather than a level.
+red_team_notes:
+  - This is a verified slice for PP 1119 only; it does not by itself prove that all FSTEK/FSB measures required for the resulting level are implemented.
+  - Publicly available personal data terminology must be reconciled with current 152-FZ terminology in a separate semantic/version audit before cross-law reasoning is marked COMPLETE.
+  - A protection level result must be recomputed when data categories, subject counts/scope, threat model, or legal version changes.
