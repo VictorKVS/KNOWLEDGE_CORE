@@ -1,0 +1,85 @@
+schema_version: 1
+domain_id: SOFTWARE_ENGINEERING
+policy_id: SWENG-SOURCE-POLICY-0001
+status: ACTIVE_M0
+purpose: >-
+  Define how software engineering sources are classified, admitted, versioned and used as evidence.
+source_classes:
+  SPECIFICATION:
+    examples: [language_specification, protocol_standard, RFC, formal_API_contract]
+    typical_use: normative_behavior_and_interoperability
+  OFFICIAL_PRODUCT_DOCUMENTATION:
+    examples: [runtime_docs, library_docs, database_docs, compiler_docs]
+    typical_use: version_specific_supported_behavior_and_limits
+  PROJECT_REQUIREMENT:
+    examples: [SLA, acceptance_criteria, coding_standard, architecture_constraint]
+    typical_use: binding_local_context
+  REPRODUCIBLE_MEASUREMENT:
+    examples: [benchmark, load_test, profiling, experiment]
+    typical_use: empirical_comparison
+  OPERATING_EVIDENCE:
+    examples: [incident_record, production_metric, defect_history]
+    typical_use: observed_failure_and_reliability_behavior
+  RESEARCH:
+    examples: [peer_reviewed_paper, formal_study]
+    typical_use: algorithms_methods_and_generalized_findings_with_stated_limits
+  PROFESSIONAL_REFERENCE:
+    examples: [engineering_handbook, reputable_book]
+    typical_use: interpretation_and_method_context
+  SECONDARY_COMMUNITY:
+    examples: [article, conference_talk, forum, community_pattern]
+    typical_use: discovery_and_context_only_until_corroborated
+  MODEL_OUTPUT:
+    examples: [LLM_response, generated_summary]
+    typical_use: discovery_candidate_only
+  VENDOR_MARKETING:
+    examples: [sales_page, unsourced_comparison]
+    typical_use: discovery_only
+
+admission_requirements:
+  common:
+    - stable_source_identity
+    - source_class
+    - version_or_observed_at_when_material
+    - provenance_locator
+    - known_scope_and_limitations
+  empirical:
+    - environment
+    - workload
+    - measurement_method
+    - tool_versions
+    - reproducibility_status
+  product_documentation:
+    - product_or_library_version
+    - official_origin
+  research:
+    - bibliographic_identity
+    - method_or_scope_limitations
+
+claim_support_rules:
+  normative_claim: must_use_SPECIFICATION_or_binding_PROJECT_REQUIREMENT_when_applicable
+  product_behavior_claim: prefer_OFFICIAL_PRODUCT_DOCUMENTATION_and_reproducible_test
+  performance_claim: requires_REPRODUCIBLE_MEASUREMENT_for_material_decisions
+  reliability_claim: prefer_OPERATING_EVIDENCE_plus_failure_model; documentation_alone_is_insufficient_for_observed_reliability
+  comparative_vendor_claim: vendor_marketing_cannot_be_independent_terminal_evidence
+  best_practice_claim: must_be_rewritten_as_contextual_pattern_with_source_applicability_tradeoffs_and_failure_modes
+
+conflict_resolution:
+  - identify_claim_type_before_resolving_source_precedence
+  - pin_versions_and_environment
+  - preserve_both_sources_when_context_explains_difference
+  - prefer_reproducible_context_matched_evidence_for_empirical_disputes
+  - escalate_unresolved_material_conflict
+
+freshness:
+  versioned_technical_source: reassess_on_version_change_or_end_of_support
+  benchmark: reassess_on_workload_environment_or_dependency_change
+  incident_history: append_only_observation_with_timestamp
+  project_standard: reassess_on_standard_revision
+
+prohibited_shortcuts:
+  - model_output_promoted_directly_to_VERIFIED
+  - search_result_used_as_terminal_source
+  - benchmark_without_workload_context_generalized_to_all_cases
+  - official_documentation_for_one_version_applied_to_another_without_compatibility_evidence
+  - popularity_used_as_substitute_for_requirements_or_measurement
