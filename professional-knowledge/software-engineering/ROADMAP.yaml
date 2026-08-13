@@ -3,70 +3,39 @@ domain_id: SOFTWARE_ENGINEERING
 roadmap_id: SWENG-ROADMAP-0001
 status: ACTIVE
 maturity_model_ref: father/domain-knowledge/PROFESSIONAL_KB_MATURITY_MODEL.yaml
-current_level: M0
-
+current_level: M1
 stages:
   - level: M0
     status: COMPLETE_BOUNDED
-    outcomes:
-      - scope_and_non_scope_defined
-      - ontology_defined
-      - source_taxonomy_and_precedence_defined
-      - freshness_conflict_objectivity_and_legacy_admission_policies_defined
-    non_claims:
-      - no_verified_software_rule_claimed
-      - no_expert_ready_claim
+    outcomes: [scope_and_non_scope_defined, ontology_defined, source_taxonomy_and_precedence_defined, freshness_conflict_objectivity_and_review_policies_defined]
   - level: M1
-    status: NEXT
-    target: Admit a first auditable source set covering language/runtime/API contracts, architecture quality attributes, testing and empirical measurement.
-    minimum_deliverables:
-      - SOURCE_REGISTRY.yaml
-      - primary_source_version_pins
-      - explicit_source_limitations
-      - supersession_or_freshness_state
-    first_source_families:
-      - Python_language_and_runtime_contracts
-      - HTTP_and_relevant_RFC_contracts
-      - PostgreSQL_official_documentation_for_bounded_version
-      - software_architecture_quality_attribute_methodology
-      - testing_and_benchmark_methodology
+    status: COMPLETE_BOUNDED
+    outcomes:
+      - SOURCE_REGISTRY_with_six_admitted_source_families
+      - version_or_mutability_state_recorded
+      - source_limitations_and_reassessment_triggers_recorded
+      - independent_senior_and_skeptical_source_review_recorded
+      - M1_CI_validation_required
+    evidence_refs:
+      - professional-knowledge/software-engineering/SOURCE_REGISTRY.yaml
+      - professional-knowledge/software-engineering/audits/M1_SOURCE_REVIEW_2026-08-13.yaml
+    non_claims: [no_verified_software_rule_claimed, no_universal_best_practice_claimed, no_expert_ready_claim]
   - level: M2
-    status: PLANNED
-    target: Produce atomic rules, patterns, metrics and failure modes with provenance.
-    first_slices:
-      - retry_timeout_idempotency_contracts
-      - transaction_and_consistency_rules
-      - API_error_and_versioning_rules
-      - algorithm_complexity_and_resource_tradeoffs
-      - testing_pyramid_and_test_selection_as_contextual_patterns_not_dogma
+    status: NEXT
+    target: Produce atomic rules, patterns, metrics and failure modes with exact claim-specific provenance and challenge against overgeneralization.
+    first_slices: [HTTP_retry_and_idempotency_contracts, PostgreSQL_transaction_and_concurrency_rules, Python_runtime_contracts, benchmark_context_rules, testing_framework_contracts]
+    gate:
+      - exact_locator_or_equivalent_claim_support
+      - applicability_and_limitations
+      - conflict_state
+      - sample_senior_challenge
   - level: M3
     status: PLANNED
-    target: Build evidence-backed decision packets.
-    first_decision_packets:
-      - sync_vs_async_execution
-      - relational_vs_document_storage_for_bounded_workload
-      - library_vs_custom_implementation
-      - monolith_vs_service_split_for_bounded_product_context
-      - retry_policy_selection_under_failure_and_latency_constraints
+    target: Build bounded evidence-backed decision packets with real alternatives.
   - level: M4
     status: PLANNED
-    target: Reproduce decisions with positive, negative and adversarial cases.
-    required_cases:
-      - option_selected_after_hard_gate_elimination
-      - REQUEST_MORE_EVIDENCE_when_benchmark_context_is_missing
-      - NO_GO_when_requirements_conflict_with_platform_limit
-      - decision_reassessment_after_dependency_or_workload_change
+    target: Prove decisions with positive negative and adversarial cases.
   - level: M5
     status: PLANNED
     target: Establish a bounded independently reviewed expert-ready slice.
-    candidate_scope: software_architecture_and_implementation_decisions_for_bounded_backend_services
-    required_before_claim:
-      - coverage_gap_statement
-      - independent_review
-      - red_team
-      - reproducible_decision_suite
-      - freshness_monitoring
-      - no_unresolved_critical_gap_within_candidate_scope
-
-reporting_rule: >-
-  Every maturity report states what became usable, what remains unproven, which evidence supports promotion, and which next gate blocks further promotion.
+reporting_rule: report_usable_capability_unproven_scope_evidence_and_next_gate_not_file_count
