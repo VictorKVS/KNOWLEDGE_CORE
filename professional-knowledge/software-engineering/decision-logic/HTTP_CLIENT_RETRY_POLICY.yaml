@@ -1,0 +1,261 @@
+schema_version: 1
+domain_id: SOFTWARE_ENGINEERING
+decision_logic_id: SWENG-M3-HTTP-RETRY-0001
+maturity_scope: M3_DECISION_LOGIC_BOUNDED
+materiality_class: D2_ARCHITECTURE_PRODUCT
+status: REVIEWED_BOUNDED
+professional_decision_schema_ref: father/domain-knowledge/professional-decision-schema.yaml
+source_registry_ref: professional-knowledge/software-engineering/SOURCE_REGISTRY.yaml
+atomic_evidence_refs:
+  - professional-knowledge/software-engineering/atomic/HTTP_RETRY_IDEMPOTENCY.yaml
+
+bounded_question: >-
+  For one outbound HTTP client operation after a communication failure or an explicitly temporary
+  HTTP response, under what conditions may the client automatically retry, delay and retry, or refuse
+  automatic retry without inventing safety from generic retry best practices?
+
+applicability:
+  included:
+    - outbound_HTTP_client_operation
+    - retry_after_communication_failure
+    - retry_after_HTTP_503_when_application_has_classified_the_condition_as_temporary
+    - request_semantics_and_deadline_are_known_or_explicitly_unknown
+  excluded:
+    - distributed_transaction_exactly_once_guarantees
+    - queue_delivery_semantics
+    - payment_or_other_high_consequence_business_deduplication_without_cross_domain_evidence
+    - provider_specific_rate_limit_policy
+    - arbitrary_5xx_retry_without_service_contract
+    - production_capacity_or_availability_prediction
+
+required_inputs:
+  - input_id: REQUEST_SEMANTICS
+    values: [RFC_IDEMPOTENT, APPLICATION_PROVEN_IDEMPOTENT, NON_IDEMPOTENT, UNKNOWN]
+    hard_gate: true
+    evidence_requirement: protocol_semantics_or_application_contract
+  - input_id: FAILURE_SIGNAL
+    values: [COMMUNICATION_FAILURE, HTTP_503_WITH_RETRY_AFTER, HTTP_503_WITHOUT_RETRY_AFTER, OTHER_EXPLICITLY_TRANSIENT_CONTRACT_SIGNAL, UNKNOWN]
+    hard_gate: true
+    evidence_requirement: observed_response_or_service_contract
+  - input_id: DUPLICATE_SIDE_EFFECT_TOLERANCE
+    values: [TOLERABLE, NOT_TOLERABLE, UNKNOWN]
+    hard_gate: true
+    evidence_requirement: application_requirement_or_risk_record
+  - input_id: END_TO_END_DEADLINE
+    values: [KNOWN, NONE_DECLARED, UNKNOWN]
+    hard_gate: false
+    evidence_requirement: caller_or_product_requirement
+  - input_id: ATTEMPT_BUDGET
+    values: [EXPLICIT_LIMIT, NO_LIMIT_DECLARED, UNKNOWN]
+    hard_gate: false
+    evidence_requirement: resource_reliability_or_service_requirement
+  - input_id: RETRY_AFTER_VALUE
+    values: [PRESENT_WITHIN_DEADLINE, PRESENT_EXCEEDS_DEADLINE, ABSENT, NOT_APPLICABLE, UNKNOWN]
+    hard_gate: false
+    evidence_requirement: observed_response_and_deadline_context
+
+requirements_and_constraints:
+  hard_constraints:
+    - constraint_id: HC-RETRY-001
+      rule: >-
+        If request semantics are NON_IDEMPOTENT or UNKNOWN and duplicate application is not proven tolerable,
+        automatic retry is prohibited unless separate evidence proves the original request was not applied.
+      evidence_ref: SWENG-HTTP-RULE-0002
+    - constraint_id: HC-RETRY-002
+      rule: A retry action must not knowingly exceed an explicit end-to-end deadline.
+      evidence_ref: project_or_caller_requirement_required
+    - constraint_id: HC-RETRY-003
+      rule: Unknown material retry-safety inputs produce REQUEST_MORE_EVIDENCE rather than optimistic retry.
+      evidence_ref: father/domain-knowledge/PROFESSIONAL_KB_MATURITY_MODEL.yaml
+  soft_constraints:
+    - constraint_id: SC-RETRY-001
+      rule: Prefer the least operationally complex option that satisfies retry safety and deadline/resource constraints.
+      evidence_ref: father/domain-knowledge/PROFESSIONAL_KB_REVIEW_PROTOCOL.yaml
+    - constraint_id: SC-RETRY-002
+      rule: When a valid Retry-After signal is present and retry is otherwise eligible, preserve it as a first-class scheduling constraint instead of replacing it with a generic client delay by default.
+      evidence_ref: SWENG-HTTP-CLAIM-0003
+
+alternatives:
+  - option_id: OPT-NO-AUTO-RETRY
+    description: Return failure to the caller without automatic retry.
+    applicability: Always technically available; preferred when retry safety is not established or retry would violate deadline/risk constraints.
+    status: PARETO_VALID
+    risks:
+      - reduced automatic recovery from transient conditions
+      - higher caller-visible failure rate when a safe retry could have succeeded
+    operational_burden: low
+    conditions_where_better:
+      - duplicate side effect is unacceptable and semantics are not proven idempotent
+      - deadline leaves no useful retry window
+      - failure signal is not known to be transient
+      - attempt budget is unknown in a high fan-out path
+  - option_id: OPT-SERVER-DIRECTED-DELAY
+    description: If retry is eligible and Retry-After is present, wait according to Retry-After when it fits within the caller deadline, then issue a bounded retry.
+    applicability: Requires retry-safe semantics, an observed Retry-After value and sufficient deadline/attempt budget.
+    status: PARETO_VALID
+    evidence_refs: [SWENG-HTTP-CLAIM-0003, SWENG-HTTP-CLAIM-0004]
+    risks:
+      - server guidance does not guarantee success
+      - delay can consume caller deadline
+    operational_burden: medium
+    conditions_where_better:
+      - service explicitly communicates temporary unavailability and a wait interval
+      - client deadline can accommodate that interval
+  - option_id: OPT-BOUNDED-CLIENT-RETRY
+    description: Retry an eligible operation under an explicit attempt/deadline budget when no server-directed delay is available.
+    applicability: Requires RFC-idempotent or separately proven application-idempotent semantics plus explicit bounded retry budget.
+    status: PARETO_VALID
+    evidence_refs: [SWENG-HTTP-CLAIM-0001, SWENG-HTTP-RULE-0002]
+    risks:
+      - synchronized clients can amplify load if delay strategy is poorly designed
+      - extra attempts consume latency and capacity
+      - success probability is environment-specific
+    operational_burden: medium
+    conditions_where_better:
+      - transient communication failures are expected and duplicate side effects are controlled
+      - caller has explicit latency and attempt headroom
+  - option_id: OPT-APPLICATION-RELIABILITY-MECHANISM
+    description: Do not rely on transport retry alone; require an application-level duplicate-control or workflow mechanism before enabling automatic retry for high-consequence non-idempotent operations.
+    applicability: Candidate escalation path when business side effects are material and HTTP method semantics alone are insufficient.
+    status: NEEDS_EVIDENCE
+    evidence_refs: []
+    risks:
+      - greater implementation and operational complexity
+      - requires domain-specific semantics not yet admitted in this bounded slice
+    operational_burden: high
+    conditions_where_better:
+      - operation is non-idempotent but automatic recovery is a hard requirement
+      - duplicate effects have material business/security/safety consequence
+
+hard_gate_elimination:
+  - if: REQUEST_SEMANTICS in [NON_IDEMPOTENT, UNKNOWN] and DUPLICATE_SIDE_EFFECT_TOLERANCE in [NOT_TOLERABLE, UNKNOWN]
+    eliminate: [OPT-SERVER-DIRECTED-DELAY, OPT-BOUNDED-CLIENT-RETRY]
+    disposition: REQUEST_MORE_EVIDENCE
+    fallback_option: OPT-NO-AUTO-RETRY
+  - if: FAILURE_SIGNAL == UNKNOWN
+    eliminate: [OPT-SERVER-DIRECTED-DELAY, OPT-BOUNDED-CLIENT-RETRY]
+    disposition: REQUEST_MORE_EVIDENCE
+    fallback_option: OPT-NO-AUTO-RETRY
+  - if: END_TO_END_DEADLINE == KNOWN and RETRY_AFTER_VALUE == PRESENT_EXCEEDS_DEADLINE
+    eliminate: [OPT-SERVER-DIRECTED-DELAY]
+    disposition: MULTIPLE_VALID_OPTIONS
+  - if: ATTEMPT_BUDGET in [NO_LIMIT_DECLARED, UNKNOWN]
+    eliminate: [OPT-BOUNDED-CLIENT-RETRY]
+    disposition: REQUEST_MORE_EVIDENCE
+
+criteria:
+  - criterion_id: C-RETRY-SAFETY
+    definition: Risk that an automatic retry causes an unacceptable duplicate application-side effect.
+    direction: minimize
+    threshold_or_target: hard_gate_no_uncontrolled_material_duplicate
+    weight: null
+    weight_rationale: hard_constraint_not_weighted
+    evidence_ref: SWENG-HTTP-RULE-0002
+  - criterion_id: C-DEADLINE-FIT
+    definition: Whether the option can complete within the explicit caller end-to-end deadline.
+    direction: satisfy
+    threshold_or_target: no_known_deadline_violation
+    weight: null
+    weight_rationale: hard_or_contextual_constraint_not_scored
+    evidence_ref: caller_requirement_required
+  - criterion_id: C-ATTEMPT-BOUNDEDNESS
+    definition: Whether retry consumes a declared finite attempt/resource budget.
+    direction: satisfy
+    threshold_or_target: explicit_limit_for_automatic_client_retry
+    weight: null
+    weight_rationale: protects against unbounded retry amplification
+    evidence_ref: project_requirement_required
+  - criterion_id: C-OPERATIONAL-COMPLEXITY
+    definition: Additional client/service operational mechanism needed to implement and observe the option.
+    direction: minimize_after_hard_gates
+    threshold_or_target: prefer_simpler_among_equally_safe_viable_options
+    weight: null
+    weight_rationale: no numeric weighting until project-specific cost evidence exists
+    evidence_ref: father/domain-knowledge/PROFESSIONAL_KB_REVIEW_PROTOCOL.yaml
+
+selection_logic:
+  - priority: 1
+    rule: Evaluate retry-safety and known deadline constraints before any preference or scoring.
+  - priority: 2
+    rule: If material safety inputs are unknown, choose REQUEST_MORE_EVIDENCE and keep OPT-NO-AUTO-RETRY as the bounded safe fallback.
+  - priority: 3
+    rule: If a retry is eligible and a valid Retry-After fits the deadline, OPT-SERVER-DIRECTED-DELAY remains a preferred candidate because it preserves explicit server timing guidance.
+  - priority: 4
+    rule: If retry is eligible, no usable Retry-After exists, and attempt/deadline budgets are explicit, OPT-BOUNDED-CLIENT-RETRY is a viable candidate.
+  - priority: 5
+    rule: If a high-consequence non-idempotent operation requires automatic recovery, escalate to OPT-APPLICATION-RELIABILITY-MECHANISM and require new domain evidence rather than pretending HTTP retry semantics solve duplicate control.
+
+tradeoff_logic:
+  no_weighted_score: true
+  rationale: >-
+    This bounded decision has dominant hard gates. Numeric scoring would create false precision because no
+    context-specific success probability, cost, or load-amplification measurements are yet admitted.
+  pareto_dimensions: [duplicate_side_effect_risk, deadline_fit, attempt_resource_boundedness, operational_complexity]
+
+uncertainty_and_sensitivity:
+  known_unknowns:
+    - transient_failure_frequency_and_recovery_probability_are_environment_specific
+    - optimal_client_delay_strategy_without_Retry_After_is_not_proven_by_this_slice
+    - retry_load_amplification_depends_on_fanout_concurrency_and_service_behavior
+    - application_level_duplicate_control_mechanisms_are_outside_current_admitted_evidence
+  reversal_conditions:
+    - service_contract_proves_non_idempotent_operation_is_application_idempotent
+    - caller_deadline_or_attempt_budget_changes
+    - provider_or_service_contract defines explicit retryable conditions
+    - observed production outcomes show retries amplify incidents or fail to improve recovery
+    - new authoritative HTTP semantics supersede RFC_9110 for this scope
+  sensitivity_summary: >-
+    The recommendation is most sensitive to request semantics, duplicate-side-effect tolerance and caller deadline.
+    A change in any of these can reverse NO_RETRY versus bounded retry disposition without any change in HTTP itself.
+
+reassessment_triggers:
+  - request_business_semantics_change
+  - target_API_contract_change
+  - caller_deadline_or_SLA_change
+  - retry_attempt_budget_change
+  - incident_shows_duplicate_side_effect
+  - incident_shows_retry_amplification_or_thundering_behavior
+  - new_measured_recovery_data_becomes_available
+  - admitted_HTTP_source_is_superseded
+
+professional_decision_record_compatibility:
+  decision_id: maps_from_instance_id
+  domain_id: SOFTWARE_ENGINEERING
+  materiality_class: D2_ARCHITECTURE_PRODUCT
+  decision_question: maps_from_bounded_question_plus_instance_context
+  context_ref: required_for_instance
+  requirements: maps_from_instance_requirements_and_required_inputs
+  constraints: maps_from_hard_and_soft_constraints
+  criteria: maps_from_criteria
+  options: maps_from_alternatives_after_context_evaluation
+  chosen_disposition: maps_from_selection_logic
+  rationale: must_record_elimination_and_tradeoffs
+  assumptions: must_record_context_assumptions
+  uncertainty: maps_from_uncertainty_and_sensitivity
+  evidence_refs: maps_from_atomic_evidence_refs_plus_instance_evidence
+  verification_plan: required_for_instance
+  provenance: requires_distinct_producer_and_reviewer_assignments
+
+verification_plan_template:
+  expected_outcomes:
+    - no_automatic_retry_when_retry_safety_is_materially_unknown
+    - no_known_deadline_violation_created_by_retry_logic
+    - every_automatic_retry_path_has_a_finite_attempt_budget
+    - server_Retry_After_is_not_treated_as_proof_that_retry_is_safe
+  acceptance_checks:
+    - unit_case_non_idempotent_unknown_application_state_returns_more_evidence_or_no_retry
+    - unit_case_idempotent_503_retry_after_within_deadline_preserves_server_delay
+    - unit_case_retry_after_exceeds_deadline_does_not_wait_and_retry_past_deadline
+    - unit_case_unknown_attempt_budget_does_not_enable_unbounded_client_retry
+  review_trigger: any_failure_or_incident_involving_duplicate_side_effect_retry_amplification_or_deadline_violation
+  expiry_or_reassessment_condition: any_reassessment_trigger_above
+
+non_claims:
+  - exponential_backoff_is_universally_optimal
+  - jitter_strategy_is_selected
+  - every_5xx_is_retryable
+  - POST_is_never_retryable
+  - idempotent_HTTP_equals_exactly_once
+  - Retry_After_guarantees_success
+  - this_logic_is_production_verified
+  - this_logic_is_expert_ready
