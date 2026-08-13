@@ -1,0 +1,154 @@
+schema_version: 1
+domain_id: SOFTWARE_ENGINEERING
+title: Software engineering and architecture
+logical_knowledge_space_ref: KB-SOFTWARE-ENGINEERING
+canonical_tree: professional-knowledge/software-engineering/
+maturity:
+  model_ref: father/domain-knowledge/PROFESSIONAL_KB_MATURITY_MODEL.yaml
+  current_level: M0
+  current_state: SCOPE_DEFINED
+  claim_scope: domain_bootstrap_only
+  expert_ready: false
+  promotion_blocked_until: M1_source_layer_is_admitted_and_auditable
+
+purpose: >-
+  Provide evidence-backed software engineering knowledge for FATHER roles that design,
+  implement, review and operate software. The domain must support reproducible material
+  decisions rather than opinion-based technology selection.
+
+scope:
+  - software_requirements_translation_to_engineering_constraints
+  - software_architecture_and_design
+  - programming_language_and_runtime_contracts
+  - algorithms_and_data_structures
+  - APIs_and_component_boundaries
+  - concurrency_and_state_management
+  - persistence_and_data_access_patterns
+  - testing_and_verification
+  - build_packaging_and_dependency_management
+  - performance_and_reliability_engineering_at_software_level
+  - maintainability_and_evolvability
+  - software_supply_chain_and_dependency_lifecycle_as_engineering_constraints
+
+non_scope:
+  - domain_specific_security_compliance_truth_owned_by_SECURITY
+  - infrastructure_operations_owned_by_DEVOPS_SRE_or_SYSTEM_ADMINISTRATION
+  - cloud_platform_architecture_owned_by_CLOUD_ARCHITECTURE
+  - product_priority_truth_owned_by_PRODUCT_PROJECT
+  - organizational_authority_owned_by_PX00_governance
+
+ontology:
+  primary_entities:
+    - REQUIREMENT
+    - CONSTRAINT
+    - QUALITY_ATTRIBUTE
+    - SOURCE
+    - CLAIM
+    - PATTERN
+    - ALGORITHM
+    - API_CONTRACT
+    - DEPENDENCY
+    - METRIC
+    - BENCHMARK
+    - FAILURE_MODE
+    - OPTION
+    - DECISION_RULE
+    - IMPLEMENTATION
+    - TEST
+    - OUTCOME
+  principal_relations:
+    - requirement_constrains_option
+    - source_supports_claim
+    - pattern_applies_under_context
+    - option_satisfies_or_violates_constraint
+    - metric_measures_quality_attribute
+    - benchmark_estimates_option_under_workload
+    - failure_mode_challenges_option
+    - decision_selects_option
+    - test_verifies_implementation_against_decision
+    - outcome_reassesses_prior_decision
+
+source_taxonomy:
+  highest_authority_for_contractual_behavior:
+    - language_specifications
+    - protocol_standards_and_RFCs
+    - official_platform_runtime_and_library_documentation
+    - project_contracts_and_explicit_requirements
+  strong_engineering_evidence:
+    - peer_reviewed_research
+    - reproducible_benchmarks_with_relevant_workload
+    - production_measurements_with_provenance
+    - incident_and_failure_history
+    - maintained_engineering_standards_and_handbooks
+  contextual_or_secondary:
+    - reputable_books
+    - engineering_articles
+    - community_practice
+    - conference_material
+  discovery_only_until_admitted:
+    - search_snippets
+    - unsourced_blogs
+    - forum_answers
+    - model_generated_explanations
+    - vendor_marketing
+
+source_precedence:
+  rule: >-
+    Precedence depends on the claim. Normative language/protocol behavior is governed by the
+    relevant specification; product behavior by the pinned official version documentation and
+    reproducible tests; empirical performance/reliability by context-matched measurements;
+    project constraints by explicit project requirements. No universal numeric ranking is used.
+  conflict_rule: preserve_conflict_then_resolve_by_claim_type_version_context_and_reproducibility
+
+freshness_policy:
+  version_sensitive_sources: must_pin_product_language_protocol_or_library_version
+  empirical_evidence: must_record_workload_environment_date_and_tool_version
+  project_conventions: must_record_repository_or_standard_version
+  reassessment_triggers:
+    - dependency_or_runtime_version_change
+    - workload_or_scale_change
+    - architecture_constraint_change
+    - observed_failure_or_regression
+    - support_or_lifecycle_change
+    - business_SLA_or_cost_constraint_change
+
+conflict_policy:
+  - preserve_material_conflicting_claims
+  - separate_normative_behavior_from_empirical_behavior
+  - prefer_reproducible_context_matched_measurement_for_empirical_claims
+  - escalate_when_material_conflict_cannot_be_resolved
+
+objectivity_policy:
+  - mandatory_requirements_and_hard_constraints_are_evaluated_before_preferences
+  - architecture_or_technology_preference_is_not_evidence
+  - D2_decisions_compare_multiple_viable_options_when_more_than_one_exists
+  - criteria_weights_require_rationale_and_sensitivity
+  - benchmark_results_are_not_generalized_beyond_recorded_workload_without_new_evidence
+  - unknown_material_inputs_produce_REQUEST_MORE_EVIDENCE_or_ESCALATE
+  - rejected_options_and_material_dissent_are_preserved
+
+decision_evidence_policy:
+  D0: project_style_or_local_convention_is_sufficient_when_no_higher_property_is_affected
+  D1: official_contract_or_documentation_plus_executable_check_and_known_limitations
+  D2: requirements_constraints_alternatives_metrics_cost_resource_risk_and_verification_plan
+  D3: defer_to_cross_domain_regulatory_safety_or_security_proof_floor_when_triggered
+
+legacy_material_policy:
+  candidate_roots:
+    - algorithms/
+    - architecture/
+    - benchmarks/
+    - build-and-packaging/
+    - concurrency/
+    - data-structures/
+  rule: >-
+    Existing repository material is discovery/candidate material only. It is not automatically
+    admitted or VERIFIED in KB-SOFTWARE-ENGINEERING. Each reusable claim must be reclassified,
+    provenance-linked and promoted through the maturity gates.
+
+promotion_plan:
+  M1: build_source_registry_and_admit_first_primary_technical_sources
+  M2: extract_first_atomic_rules_metrics_patterns_and_failure_modes
+  M3: build_first_bounded_decision_packets_for_material_software_choices
+  M4: prove_decision_packets_on_reproducible_cases_with_negative_tests
+  M5: independent_review_and_bounded_expert_ready_slice
