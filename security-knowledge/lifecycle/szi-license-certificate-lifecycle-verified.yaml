@@ -1,0 +1,255 @@
+schema_version: "1.0"
+id: szi-license-certificate-lifecycle-verified
+date_verified: "2026-08-13"
+status: VERIFIED_SLICE
+scope:
+  - FSTEC_SZI_certificate_lifecycle
+  - FSTEC_license_lifecycle_under_99_FZ
+  - registry_status_monitoring
+  - expiry_and_renewal_proximity
+  - decision_ownership
+out_of_scope_pending:
+  - FSB_SKZI_certificate_and_license_lifecycle_clause_level_rules
+  - exhaustive_current_FSTEC_certificate_registry_endpoint/schema
+
+source_set:
+  - id: FSTEC_ORDER_55_CURRENT
+    title: "Приказ ФСТЭК России от 03.04.2018 N 55, ред. от 20.01.2026"
+    authority: FSTEC
+    source_class: AUTHORITATIVE_CONSOLIDATED_LEGAL_TEXT
+    url: "https://www.garant.ru/products/ipo/prime/doc/71842006/"
+    current_amendment:
+      act: "Приказ ФСТЭК России от 20.01.2026 N 9"
+      official_publication_number: "0001202604210031"
+      official_publication_date: "2026-04-21"
+      effective_from: "2026-05-02"
+      registration_number: "86119"
+  - id: FZ_99_ARTICLE_9
+    title: "Федеральный закон от 04.05.2011 N 99-ФЗ, статья 9"
+    authority: Russian_Federation
+    source_class: PRIMARY_OFFICIAL_CONSOLIDATED_TEXT
+    url: "https://ips.pravo.gov.ru/api/ips/legislation/document?baseid=None&hash=fcb8eb99a41f30d017fd7c02ef8ef5699f275d70964b686f7eb114a688e0860d"
+  - id: FSTEC_OPEN_DATA_LICENSE_TZKI
+    title: "Реестр лицензий на деятельность по технической защите конфиденциальной информации"
+    authority: FSTEC
+    source_class: OFFICIAL_OPEN_DATA
+    url: "https://data.gov.ru/datasets/aa06c77c-84e3-48d6-8ff8-90ba6b222e52"
+  - id: FSTEC_OPEN_DATA_LICENSE_DEV_PROD
+    title: "Реестр лицензий на деятельность по разработке и производству средств защиты конфиденциальной информации"
+    authority: FSTEC
+    source_class: OFFICIAL_OPEN_DATA
+    url: "https://data.gov.ru/datasets/db0939ac-06e0-4e47-8a14-c71fa3447cec"
+
+verified_rules:
+  - id: SZI-CERT-001
+    object: FSTEC_SZI_certificate
+    source: FSTEC_ORDER_55_CURRENT
+    source_locator: "п.14"
+    status: VERIFIED
+    requirement: "Срок действия сертификата соответствия не может превышать 5 лет; конкретный срок определяется выданным сертификатом."
+    operational_effect: "Store issued_at and valid_until from the certificate/registry record; never infer five years when an explicit valid_until exists."
+
+  - id: SZI-CERT-002
+    object: FSTEC_SZI_certificate
+    source: FSTEC_ORDER_55_CURRENT
+    source_locator: "п.15"
+    status: VERIFIED
+    requirement: "По окончании срока действия сертификата заявитель вправе подать заявку на продление."
+    guardrail: "The current rule does not create a universal statutory X-day pre-expiry filing deadline in this slice; do not reuse the old three-month rule from superseded certification procedures without current authority."
+
+  - id: SZI-CERT-003
+    object: deployed_SZI
+    source: FSTEC_ORDER_55_CURRENT
+    source_locator: "п.15"
+    status: VERIFIED
+    requirement: "Средство защиты информации может применяться по окончании срока действия сертификата при соблюдении требований по безопасности информации и осуществлении заявителем технической поддержки."
+    guardrail: "certificate_expired != automatically_use_prohibited"
+    decision_required: true
+    required_evidence:
+      - current_product_version_and_configuration
+      - continued_vendor_or_applicant_technical_support
+      - continued_compliance_with_applicable_security_requirements
+      - no_current_registry_status_or_regulator_decision_blocking_use
+
+  - id: SZI-CERT-004
+    object: FSTEC_SZI_certificate
+    source: FSTEC_ORDER_55_CURRENT
+    source_locator: "п.82"
+    status: VERIFIED
+    requirement: "Для целей производства и реализации срок действия сертификата может быть продлен в порядке сертификации, установленном Положением."
+    guardrail: "Operational continued use after expiry and certificate renewal for production/sale are distinct decisions."
+
+  - id: SZI-CERT-005
+    object: FSTEC_SZI_certificate
+    source: FSTEC_ORDER_55_CURRENT
+    source_locator: "пп.83-85, ред. от 20.01.2026"
+    status: VERIFIED
+    requirement: "Сертификат может быть приостановлен, в том числе при изменении требований безопасности, выявленном несоответствии/уязвимостях/недекларированных возможностях, прекращении необходимой технической поддержки и иных предусмотренных случаях."
+    deadline: "Приостановление — не более 90 календарных дней; срок устранения несоответствия в уведомлении также не более 90 календарных дней."
+    consequence_for_applicant: "При приостановлении заявитель прекращает производство и реализацию сертифицированного СЗИ."
+
+  - id: SZI-CERT-006
+    object: FSTEC_SZI_certificate
+    source: FSTEC_ORDER_55_CURRENT
+    source_locator: "пп.86-88"
+    status: VERIFIED
+    requirement: "Возобновление возможно после устранения несоответствия, возобновления технической поддержки либо по обращению заявителя в соответствующем случае; сведения о приостановлении/возобновлении вносятся в государственный реестр."
+
+  - id: SZI-CERT-007
+    object: FSTEC_SZI_certificate
+    source: FSTEC_ORDER_55_CURRENT
+    source_locator: "пп.89-92"
+    status: VERIFIED
+    requirement: "Действие сертификата прекращается при неустранении несоответствия в срок, невозобновлении техподдержки в срок либо по обращению заявителя; сведения вносятся в государственный реестр."
+    consequence_for_applicant: "Производство и реализация прекращаются, если не были прекращены ранее вследствие приостановления."
+
+  - id: SZI-CERT-008
+    object: certified_SZI_change
+    source: FSTEC_ORDER_55_CURRENT
+    source_locator: "п.73.1, введен/уточнен приказом ФСТЭК N 9 от 20.01.2026"
+    status: VERIFIED
+    requirement: "При изменении перечня заимствованных программных компонентов с открытым исходным кодом изготовитель представляет скорректированный перечень в ФСТЭК России в течение 5 календарных дней со дня изменения."
+    trigger: OSS_component_list_changed
+    deadline: "5 calendar days"
+
+  - id: FSTEC-LIC-001
+    object: FSTEC_license
+    source: FZ_99_ARTICLE_9
+    source_locator: "ст.9 ч.4"
+    status: VERIFIED
+    requirement: "Лицензия действует бессрочно."
+    monitoring_effect: "Do not calculate renewal proximity for ordinary 99-FZ FSTEC licenses; calculate registry-status freshness and event-driven revalidation instead."
+
+  - id: FSTEC-LIC-002
+    object: FSTEC_license
+    source: FZ_99_ARTICLE_9
+    source_locator: "ст.9 ч.3"
+    status: VERIFIED
+    requirement: "Лицензия считается предоставленной с момента внесения записи о предоставлении лицензии в реестр лицензий."
+    evidence_preference: "current_registry_extract > scanned historical license paper"
+
+  - id: FSTEC-LIC-003
+    object: FSTEC_license_register
+    source: FSTEC_OPEN_DATA_LICENSE_TZKI
+    source_locator: "dataset passport"
+    status: VERIFIED_METADATA
+    requirement: "ФСТЭК является владельцем открытого реестра лицензий на ТЗКИ; реестр должен рассматриваться как динамический источник состояния лицензии."
+
+  - id: FSTEC-LIC-004
+    object: FSTEC_license_register
+    source: FSTEC_OPEN_DATA_LICENSE_DEV_PROD
+    source_locator: "dataset passport"
+    status: VERIFIED_METADATA
+    requirement: "ФСТЭК является владельцем открытого реестра лицензий на разработку и производство средств защиты конфиденциальной информации; реестр должен рассматриваться как динамический источник состояния лицензии."
+
+monitoring_model:
+  common_fields:
+    - regulator
+    - object_type
+    - registry_id
+    - certificate_or_license_number
+    - holder_or_applicant
+    - product_name_and_version_if_applicable
+    - issue_or_registry_date
+    - valid_until_if_applicable
+    - registry_status
+    - support_status
+    - last_registry_check_at
+    - source_snapshot_hash_or_reference
+    - owner
+    - verifier
+    - next_check_at
+    - affected_systems
+    - affected_controls_and_requirements
+
+  certificate_state_machine:
+    states:
+      - ACTIVE
+      - EXPIRY_APPROACHING
+      - EXPIRED_USE_REVIEW_REQUIRED
+      - SUSPENDED
+      - RESUMED
+      - TERMINATED
+      - REPLACED_OR_EXTENDED
+      - UNKNOWN_STALE
+    legal_vs_governance:
+      expiry_thresholds_are_governance: true
+      recommended_thresholds_days: [180, 120, 90, 60, 30, 14, 7, 1]
+      note: "These thresholds are organizational monitoring recommendations, not asserted statutory deadlines."
+    expiry_formula: "days_to_expiry = valid_until - observed_at"
+    required_events:
+      - certificate_record_changed
+      - support_ended_or_changed
+      - security_requirement_changed
+      - product_version_changed
+      - vulnerability_or_undeclared_capability_discovered
+      - certificate_suspended
+      - certificate_resumed
+      - certificate_terminated
+      - certificate_expired
+
+  license_state_machine:
+    states:
+      - ACTIVE_REGISTERED
+      - SUSPENDED
+      - TERMINATED
+      - ANNULLED_OR_INVALID
+      - REGISTRY_CHANGE_REVIEW
+      - UNKNOWN_STALE
+    renewal_proximity: NOT_APPLICABLE_FOR_INDEFINITE_LICENSE
+    freshness_controls:
+      recommended_periodic_check_days: 30
+      note: "30 days is a governance recommendation; it is not claimed as a statutory FSTEC check frequency."
+    event_triggers:
+      - contractor_selection_or_renewal
+      - material_scope_change
+      - organization_reorganization
+      - license_record_changed
+      - regulator_notice
+      - audit_or_incident
+      - before_critical_work_acceptance
+
+roles_and_decisions:
+  ASSET_OR_SYSTEM_OWNER:
+    accountable_for:
+      - mapping_certificate_or_license_to_actual_system_use
+      - business_impact_of_expiry_or_status_change
+  INFORMATION_SECURITY:
+    accountable_for:
+      - regulatory_applicability_review
+      - certificate_status_and_support_review
+      - compensating_or_replacement_control_proposal
+  PROCUREMENT_CONTRACT_OWNER:
+    accountable_for:
+      - supplier_support_terms
+      - renewal_or_replacement_commercial_action
+      - current_contractor_registry_evidence
+  PRODUCT_VENDOR_OR_APPLICANT:
+    external_role:
+      - certification_renewal_or_support_actions_where_applicable
+  LEGAL_OR_COMPLIANCE:
+    accountable_for:
+      - license_scope_and_contractor_eligibility_review_when_material
+  CHANGE_ADVISORY_OR_APPROVER:
+    accountable_for:
+      - approving_replace_keep_or_exception_decision
+  INDEPENDENT_VERIFIER_OR_AUDIT:
+    accountable_for:
+      - verifying_registry_evidence_and_closed_actions
+
+red_team_guardrails:
+  - "An expired FSTEC certificate does not by itself prove that already deployed SZI must immediately be removed; apply current p.15 conditions and other applicable system-specific requirements."
+  - "A valid date on a scanned certificate is insufficient if the current registry shows suspension or termination."
+  - "A FSTEC license under 99-FZ is generally indefinite; do not invent a renewal date from the issue date."
+  - "For an indefinite license, absence of expiry does not mean absence of lifecycle risk: suspension, termination, registry changes and scope mismatch still matter."
+  - "Certificate/product/version/support are separate dimensions; matching only a vendor name is insufficient."
+  - "A registry check must be time-stamped because registry sources are dynamic."
+  - "FSB/SKZI lifecycle must not be inferred from FSTEC rules; maintain a separate authority-specific model until verified."
+
+pending_gaps:
+  - id: SKZI-LC-001
+    severity: HIGH
+    item: "Obtain and atomize current FSB rules/registries for SKZI certificates and cryptographic activity licenses."
+  - id: FSTEC-CERT-REG-001
+    severity: MEDIUM
+    item: "Resolve and snapshot the current official FSTEC certified-SZI registry endpoint/schema for automated monitoring."
