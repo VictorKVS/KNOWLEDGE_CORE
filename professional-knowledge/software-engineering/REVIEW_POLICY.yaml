@@ -1,0 +1,79 @@
+schema_version: 1
+domain_id: SOFTWARE_ENGINEERING
+policy_id: SWENG-REVIEW-POLICY-0001
+status: ACTIVE_M0
+common_review_protocol_ref: father/domain-knowledge/PROFESSIONAL_KB_REVIEW_PROTOCOL.yaml
+purpose: >-
+  Define professional challenge roles for software engineering knowledge and decisions so the
+  domain does not degrade into generic pattern repetition or technology preference.
+
+producer_roles:
+  - SOURCE_RESEARCHER
+  - EVIDENCE_ENGINEER
+  - DOMAIN_SPECIALIST
+  - ALTERNATIVES_ANALYST
+  - DECISION_ANALYST
+
+independent_review_roles:
+  - SENIOR_PRACTITIONER_REVIEWER
+  - SKEPTICAL_CRITIC
+  - CROSS_DOMAIN_REVIEWER
+
+independence:
+  D0: self_review_allowed_for_local_convention
+  D1: separate_review_when_risk_or_blast_radius_is_material
+  D2: senior_and_skeptical_review_must_be_separate_from_producer_assignment
+  D3: qualified_senior_skeptical_and_cross_domain_review_must_be_separate_from_producer_assignment
+
+software_specific_senior_questions:
+  - Is the proposed complexity justified by actual requirements and scale?
+  - Is a simpler architecture or implementation sufficient?
+  - Are concurrency, consistency and failure semantics explicit?
+  - Are dependencies version-pinned and lifecycle/support constraints understood?
+  - Are performance claims based on a relevant workload and environment?
+  - What is the operational and cognitive burden for the real team?
+  - Does the design create hidden coupling or migration lock-in?
+  - Which failure mode creates the largest user or business impact?
+  - Can the solution be tested deterministically enough for its materiality?
+  - What changes in workload, team, cost, SLA or platform would make another option better?
+
+alternative_quality_rules:
+  - alternatives_must_be_realistically_implementable_under_the_context
+  - include_simpler_option_when_plausible
+  - include_build_vs_buy_or_library_vs_custom_when_relevant
+  - include_do_nothing_or_defer_when_it_is_a_real_business_option
+  - do_not_construct_intentionally_weak_alternatives_to_validate_a_preferred_design
+  - record_conditions_under_which_each_Pareto_valid_option_wins
+
+anti_template_signals:
+  - microservices_recommended_without_scale_team_or_independent_deployment_need
+  - asynchronous_processing_recommended_without_latency_throughput_or_failure_requirements
+  - database_selected_from_popularity_without_data_workload_consistency_and_operations_constraints
+  - retry_added_without_idempotency_failure_budget_and_backoff_analysis
+  - design_pattern_named_without_problem_forces_and_known_costs
+  - benchmark_cited_without_environment_workload_versions_or_variance
+  - clean_architecture_or_SOLID_used_as_terminal_reason_without_context
+
+review_outputs:
+  required:
+    - verdict
+    - strongest_objection
+    - viable_alternatives
+    - improved_option_or_reason_no_better_option_found
+    - reversal_conditions
+    - residual_risks
+    - verification_recommendations
+  verdicts:
+    - ACCEPT
+    - ACCEPT_WITH_RESTRICTIONS
+    - REWORK
+    - REJECT
+    - NEEDS_MORE_EVIDENCE
+
+maturity_use:
+  M0: policy_defined
+  M1: senior_reviews_source_hierarchy_and_first_admitted_source_set
+  M2: sampled_claims_challenged_for_overgeneralization
+  M3: every_material_decision_packet_gets_alternatives_plus_independent_senior_and_skeptical_review
+  M4: reviewers_attack_reproducible_cases_failure_modes_and_operational_assumptions
+  M5: bounded_scope_requires_recorded_senior_review_red_team_and_material_dissent_resolution
