@@ -1,0 +1,51 @@
+schema_version: 1
+family_id: THREAT_MODELING_AND_THREAT_CATALOGS
+priority: P0
+family_status: REGISTERED
+checked_at: 2026-08-13
+status_policy: Dynamic catalogs are versioned observations; current page contents must not be treated as timeless legal requirements.
+sources:
+  - id: FSTEK_THREAT_MODELING_METHODOLOGY_2021
+    title: Методика оценки угроз безопасности информации
+    authority: FSTEK Russia
+    authority_class: PRIMARY_REGULATOR_METHOD
+    ingestion_status: SOURCE_PENDING_CANONICAL_FSTEK_DOCUMENT_URL_AND_FULL_TEXT_CAPTURE
+    note: Known methodology family retained as P0 but not promoted without primary-document capture.
+  - id: FSTEK_BDU_ASUTP
+    title: Банк данных угроз АСУ ТП
+    authority: FSTEK Russia
+    authority_class: PRIMARY_REGULATOR_DYNAMIC_CATALOG
+    source_url: https://bduasutp.fstec.ru/threats
+    observed_scope: vulnerabilities, information-security threats in ICS, implementation methods, negative consequences and recommended controls
+    ingestion_status: SOURCE_ACQUIRED_DYNAMIC
+    snapshot_required: true
+verified_observations:
+  - id: UTP_01
+    label: Угроза утечки информации
+    source_url: https://bduasutp.fstec.ru/threats/41683af3-eccb-4cbb-885c-aceba22a3e6d
+    verification_status: VERIFIED_CATALOG_RECORD
+  - id: UTP_02
+    label: Угроза получения информационных ресурсов из недоверенного или скомпрометированного источника
+    source_url: https://bduasutp.fstec.ru/threats/cc419fd2-0524-450e-89cd-2c23d223c9db
+    verification_status: VERIFIED_CATALOG_RECORD
+  - id: BDA_C006
+    label: Наделение пользователей избыточными полномочиями
+    source_url: https://bduasutp.fstec.ru/vulnerabilities-settings/c842d3db-6558-4cd6-87e3-bed82058ee69
+    verification_status: VERIFIED_CATALOG_RECORD
+required_model_entities:
+  - protected_asset
+  - threat_source
+  - violator
+  - vulnerability_or_precondition
+  - attack_method
+  - threat_scenario
+  - adverse_consequence
+  - applicability_reasoning
+  - existing_controls
+  - residual_threat
+  - reassessment_trigger
+  - source_snapshot_time
+red_team_blocks:
+  - Primary text of the FSTEK threat methodology must be captured and versioned before methodology rules are atomized as VERIFIED.
+  - BDU and BDU ASU TP are dynamic; every consumed record needs observed_at and stable identifier.
+  - Catalog presence does not prove threat relevance to a specific system.
