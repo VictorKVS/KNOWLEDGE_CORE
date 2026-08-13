@@ -1,0 +1,115 @@
+schema_version: 1
+domain_id: SOFTWARE_ENGINEERING
+audit_id: SWENG-M3-REVIEW-2026-08-13
+reviewed_object: professional-knowledge/software-engineering/decision-logic/HTTP_CLIENT_RETRY_POLICY.yaml
+maturity_target: M3_DECISION_LOGIC_BOUNDED
+materiality_class: D2_ARCHITECTURE_PRODUCT
+status: ACCEPT_WITH_RESTRICTIONS
+assignments:
+  SOURCE_RESEARCHER: {assignment_ref: SWENG-M3-SR-001, output: rechecked_RFC9110_sections_9_2_2_10_2_3_15_6_4}
+  EVIDENCE_ENGINEER: {assignment_ref: SWENG-M3-EE-001, output: strengthened_HTTP_atomic_evidence}
+  DOMAIN_SPECIALIST: {assignment_ref: SWENG-M3-DS-001, output: applicability_inputs_constraints_and_non_claims}
+  ALTERNATIVES_ANALYST: {assignment_ref: SWENG-M3-AA-001, output: real_retry_alternatives_and_conditions}
+  DECISION_ANALYST: {assignment_ref: SWENG-M3-DA-001, output: hard_gate_first_tradeoff_and_sensitivity_logic}
+  SENIOR_PRACTITIONER_REVIEWER:
+    assignment_ref: SWENG-M3-SPR-001
+    independent_from: [SWENG-M3-DS-001, SWENG-M3-DA-001]
+    verdict: ACCEPT_WITH_RESTRICTIONS
+  SKEPTICAL_CRITIC:
+    assignment_ref: SWENG-M3-SC-001
+    independent_from: [SWENG-M3-DS-001, SWENG-M3-DA-001]
+    verdict: ACCEPT_AFTER_CHALLENGE
+  CROSS_DOMAIN_REVIEWER:
+    assignment_ref: SWENG-M3-CDR-001
+    scope: operational_resource_boundary_only
+    verdict: ACCEPT_WITH_ESCALATION_BOUNDARY
+source_review:
+  source_id: SWENG-SRC-RFC9110
+  authority: IETF_RFC_Editor
+  observed_at: 2026-08-13
+  locators_checked: [RFC_9110_section_9_2_2, RFC_9110_section_10_2_3, RFC_9110_section_15_6_4]
+  findings:
+    - method_idempotency_constrains_retry_eligibility_but_is_not_a_complete_retry_policy
+    - Retry_After_is_timing_guidance_not_duplicate_safety_proof
+    - HTTP_503_is_a_temporary_service_signal_not_a_success_guarantee
+alternatives_reviewed:
+  - {option: OPT-NO-AUTO-RETRY, finding: superior_when_retry_safety_or_budget_is_not_established}
+  - {option: OPT-SERVER-DIRECTED-DELAY, finding: viable_after_retry_eligibility_and_deadline_fit}
+  - {option: OPT-BOUNDED-CLIENT-RETRY, finding: viable_with_retry_safe_semantics_and_finite_budget}
+  - {option: OPT-APPLICATION-RELIABILITY-MECHANISM, finding: escalation_candidate_requiring_new_domain_evidence}
+senior_review:
+  verdict: ACCEPT_WITH_RESTRICTIONS
+  strongest_objection: transport_recovery_must_not_override_application_side_effect_deadline_or_load_constraints
+  missing_or_weak_evidence:
+    - no_service_specific_recovery_measurements
+    - no_admitted_evidence_selecting_a_universal_delay_algorithm
+    - no_application_level_duplicate_control_evidence
+    - no_production_incident_evidence
+  viable_alternatives: [OPT-NO-AUTO-RETRY, OPT-SERVER-DIRECTED-DELAY, OPT-BOUNDED-CLIENT-RETRY, OPT-APPLICATION-RELIABILITY-MECHANISM]
+  improved_option_or_reason_no_better_option_found: >-
+    The improvement is hard-gate ordering: establish duplicate-side-effect safety first, then deadline/resource boundedness,
+    then choose the simplest viable retry behavior. No more specific delay algorithm is justified by admitted evidence.
+  conditions_for_reversal:
+    - measured_service_data_supports_a_different_schedule_without_unacceptable_amplification
+    - application_contract_strengthens_duplicate_safety
+    - deadline_or_attempt_budget_changes
+    - service_contract_supplies_stronger_retry_semantics
+  residual_risks:
+    - correlated_retries_can_amplify_overload
+    - finite_budget_can_still_be_excessive_in_high_fanout_paths
+    - Retry_After_can_conflict_with_caller_deadline
+  verification_recommendations:
+    - M4_positive_and_negative_executable_decision_cases
+    - M4_fanout_retry_amplification_case
+    - capture_retry_outcomes_for_reassessment
+skeptical_critic:
+  verdict: ACCEPT_AFTER_CHALLENGE
+  challenges:
+    - {question: idempotent_method_means_retry_every_transient_failure, result: rejected_by_deadline_attempt_and_signal_constraints}
+    - {question: Retry_After_allows_retry_of_unknown_non_idempotent_operation, result: rejected_by_duplicate_safety_hard_gate}
+    - {question: NO_RETRY_is_always_inferior, result: rejected_when_material_retry_safety_is_unknown}
+    - {question: use_standard_exponential_backoff_by_default, result: rejected_as_template_reasoning_without_context_evidence}
+    - {question: finite_budget_prevents_retry_amplification, result: not_proven_and_requires_M4_fanout_case}
+  improved_alternative: keep_NO_AUTO_RETRY_as_first_class_safe_fallback_and_escalate_when_application_duplicate_control_is_required
+  evidence_that_would_reverse_decision:
+    - service_specific_recovery_latency_and_amplification_measurements
+    - stronger_application_duplicate_control_contract
+    - explicit_service_retry_contract
+  no_go_or_more_evidence_is_valid: true
+cross_domain_review:
+  verdict: ACCEPT_WITH_ESCALATION_BOUNDARY
+  findings:
+    - duplicate_effect_tolerance_is_external_input_not_invented_by_software_engineering
+    - production_retry_amplification_needs_operations_review_before_production_claim
+  unresolved_cross_domain_claims: []
+maturity_gate_assessment:
+  applicability_logic: PASS
+  requirements_and_constraints_mapping: PASS
+  alternative_generation_or_declared_candidate_set: PASS
+  hard_gate_elimination: PASS
+  criteria_and_metric_selection_rationale: PASS_WITH_RESTRICTION_NO_EMPIRICAL_SCORING
+  tradeoff_logic: PASS
+  uncertainty_and_sensitivity_handling: PASS
+  reassessment_triggers: PASS
+  professional_decision_record_compatibility: PASS
+  independent_senior_practitioner_review: PASS
+  skeptical_critic_challenge: PASS
+  reviewer_improvement_or_no_better_alternative: PASS
+  overall: PASS_BOUNDED
+promotion_decision:
+  from: M2_ATOMIC_KNOWLEDGE_BOUNDED
+  to: M3_DECISION_LOGIC_BOUNDED
+  promote_domain_overall: true
+  bounded_scope: HTTP_client_retry_policy_decision_logic_only
+  expert_ready: false
+  production_verified: false
+next_gate:
+  level: M4_VERIFIED_PRACTICE
+  required_evidence:
+    - positive_retry_safe_503_Retry_After_within_deadline_case
+    - negative_non_idempotent_unknown_state_case
+    - negative_Retry_After_exceeds_deadline_case
+    - negative_unknown_attempt_budget_case
+    - adversarial_fanout_retry_amplification_case
+    - preserved_failed_and_rejected_case_evidence
+    - independent_senior_case_review
