@@ -6,8 +6,10 @@ import yaml
 
 ROOT = Path(__file__).resolve().parents[1]
 REGISTRY = ROOT / "REPOSITORY_STRUCTURE_PROTECTION.yaml"
+DOMAIN_REGISTRY = ROOT / "father" / "domain-knowledge" / "domain-registry.yaml"
 ALLOWED_CLASSES = {"DO_NOT_MOVE", "MIGRATION_ONLY", "CAN_REORGANIZE"}
 ALLOWED_KINDS = {"file", "directory"}
+INACTIVE_DOMAIN_STATES = {"PLANNED", "IN_PROGRESS"}
 
 
 def fail(message: str) -> None:
@@ -15,16 +17,16 @@ def fail(message: str) -> None:
     raise SystemExit(1)
 
 
-def load_registry() -> dict:
-    with REGISTRY.open("r", encoding="utf-8") as fh:
+def load_yaml(path: Path) -> dict:
+    with path.open("r", encoding="utf-8") as fh:
         data = yaml.safe_load(fh)
     if not isinstance(data, dict):
-        fail("repository structure protection registry must be a YAML mapping")
+        fail(f"{path.relative_to(ROOT)} must be a YAML mapping")
     return data
 
 
 def validate() -> None:
-    data = load_registry()
+    data = load_yaml(REGISTRY)
     if data.get("status") != "ACTIVE":
         fail("repository structure protection registry must be ACTIVE")
     if data.get("repository") != "VictorKVS/KNOWLEDGE_CORE":
@@ -36,6 +38,7 @@ def validate() -> None:
 
     ids: set[str] = set()
     paths: set[str] = set()
+    path_classes: dict[str, str] = {}
     has_self_protection = False
     for entry in entries:
         if not isinstance(entry, dict):
@@ -54,6 +57,7 @@ def validate() -> None:
             fail(f"duplicate protected surface path: {path_text}")
         ids.add(entry_id)
         paths.add(path_text)
+        path_classes[path_text] = protection_class
 
         if kind not in ALLOWED_KINDS:
             fail(f"{entry_id}: unsupported kind {kind!r}")
@@ -82,6 +86,27 @@ def validate() -> None:
         if not isinstance(prefix, str) or not prefix.strip() or not isinstance(rule, str) or not rule.strip():
             fail("each reserved protected prefix requires prefix and rule")
 
+    # Every activated non-Security professional domain becomes a stable structural identity.
+    # The domain cannot be activated while remaining only implicitly covered by the root prefix:
+    # it must receive its own DO_NOT_MOVE entry so future restructures have an explicit inventory.
+    domain_registry = load_yaml(DOMAIN_REGISTRY)
+    for domain in domain_registry.get("domains", []):
+        if not isinstance(domain, dict):
+            fail("domain registry entries must be mappings")
+        domain_id = domain.get("id")
+        status = domain.get("status")
+        canonical_tree = domain.get("canonical_tree")
+        if domain_id == "SECURITY" or status in INACTIVE_DOMAIN_STATES:
+            continue
+        if not isinstance(canonical_tree, str) or not canonical_tree.startswith("professional-knowledge/"):
+            fail(f"{domain_id}: activated professional domain must use professional-knowledge/ canonical_tree")
+        canonical_path = canonical_tree.rstrip("/")
+        if path_classes.get(canonical_path) != "DO_NOT_MOVE":
+            fail(
+                f"{domain_id}: activated canonical tree must be explicitly registered as DO_NOT_MOVE: "
+                f"{canonical_path}"
+            )
+
     migration = data.get("migration_requirements", {})
     prefix = migration.get("required_record_path_prefix")
     required_fields = migration.get("required_fields")
@@ -93,16 +118,10 @@ def validate() -> None:
     if not isinstance(required_fields, list) or not required_fields:
         fail("migration required_fields must be non-empty")
 
-    professional_root = ROOT / "professional-knowledge"
-    if professional_root.is_dir():
-        for child in professional_root.iterdir():
-            if child.is_dir() and child.name.startswith("."):
-                continue
-            if child.is_dir():
-                # Future domain roots inherit protection through the registered prefix.
-                pass
-
-    print(f"OK: {len(entries)} protected KNOWLEDGE_CORE surfaces are present and structurally registered")
+    print(
+        f"OK: {len(entries)} protected KNOWLEDGE_CORE surfaces are present; "
+        "activated professional domains have explicit structural protection"
+    )
 
 
 def main() -> int:
