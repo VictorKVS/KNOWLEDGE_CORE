@@ -1,0 +1,111 @@
+schema_version: "1.0"
+id: personal-data-modern-court-cases-2025-verified
+status: VERIFIED_CASE_CORPUS
+jurisdiction: RU
+scope: "Modern court practice on personal-data handling, disclosure, causation and moral-harm remedies"
+verified_at: "2026-08-13"
+
+source_policy:
+  minimum_source_class: PRIMARY_COURT_PUBLICATION
+  note: "Only findings traceable to official court publications are marked VERIFIED. Aggregator summaries are not used as terminal proof."
+
+cases:
+  - id: RU-VS-5-KG24-144-K2-2025
+    court: "Supreme Court of the Russian Federation"
+    date: "2025-02-18"
+    case_number: "5-КГ24-144-К2"
+    source_class: PRIMARY_COURT_PUBLICATION
+    source_url: "https://vsrf.ru/lk/practice/stor_pdf/2450742"
+    outcome: "lower-court decisions cancelled; case remanded for new hearing"
+    verified_findings:
+      - id: RU-VS-5KG24-144-F1
+        status: VERIFIED
+        finding: "A claimant's reliance on the wrong or incomplete legal basis is not by itself a ground to reject a claim where the pleaded facts support another applicable legal basis; the court determines the applicable law."
+        locator: "pp. 6-7"
+        evidence_note: "The Supreme Court held that reference to personal-data legislation, instead of the ultimately applicable civil/reklama rules, could not by itself justify dismissal."
+      - id: RU-VS-5KG24-144-F2
+        status: VERIFIED
+        finding: "Repeated advertising calls after the addressee's demand to stop can constitute unlawful conduct relevant to moral-harm liability."
+        locator: "pp. 5-6"
+        evidence_note: "Calls continued after the bank received a written demand to stop."
+      - id: RU-VS-5KG24-144-F3
+        status: VERIFIED
+        finding: "A defendant's assertion that a phone number was included by mistake does not automatically negate fault or liability."
+        locator: "p. 6"
+      - id: RU-VS-5KG24-144-F4
+        status: VERIFIED
+        finding: "For moral-harm liability, the court must analyze unlawful conduct, causation, suffering and fault; fault is presumed until rebutted where the general civil-liability rules apply."
+        locator: "pp. 4-5"
+    guardrails:
+      - "This decision does not establish that every unsolicited call is a personal-data violation."
+      - "This decision does not set a fixed amount of moral-harm compensation."
+
+  - id: RU-8KAS-88-4648-2025
+    court: "Eighth Cassation Court of General Jurisdiction"
+    date: "2025-03-13"
+    case_number: "88-4648/2025"
+    uid: "42RS0019-01-2024-003193-37"
+    source_class: PRIMARY_COURT_PUBLICATION
+    source_url: "https://8kas.sudrf.ru/modules.php?case_id=32322809&case_uid=0df61a8d-55ab-4711-a64b-08f9858ba4d4&delo_id=2800001&name=sud_delo&name_op=case&new=2800001&srv_num=1"
+    outcome: "cassation complaint dismissed; appellate award left unchanged"
+    verified_findings:
+      - id: RU-8KAS-4648-F1
+        status: VERIFIED
+        finding: "Failure by a public authority to ensure adequate protection of a person's personal data, resulting in disclosure to a third party without consent, can support moral-harm compensation."
+        locator: "official case act, reasoning section"
+      - id: RU-8KAS-4648-F2
+        status: VERIFIED
+        finding: "The appellate court awarded 6,000 RUB for moral harm; the cassation court found no basis to disturb that award."
+        locator: "official case act, reasoning section"
+      - id: RU-8KAS-4648-F3
+        status: VERIFIED
+        finding: "Compensation amount is case-specific and assessed using reasonableness, fairness and the factual circumstances of the violation."
+        locator: "official case act, GK 1101 reasoning"
+    guardrails:
+      - "The 6,000 RUB amount is a case outcome, not a tariff or statutory formula."
+      - "The case does not prove that every disclosure produces compensable moral harm without proof of the relevant factual elements."
+
+  - id: RU-3KAS-88-11884-2025
+    court: "Third Cassation Court of General Jurisdiction"
+    date: "2025-08-20"
+    case_number: "88-11884/2025"
+    uid: "11RS0001-01-2024-013527-58"
+    source_class: PRIMARY_COURT_PUBLICATION
+    source_url: "https://3kas.sudrf.ru/modules.php?case_id=20675259&case_uid=5c995bdb-ce21-48d5-8209-332ce3bcf88d&delo_id=2800001&name=sud_delo&name_op=case&new=2800001&srv_num=1"
+    outcome: "cassation complaints dismissed; appellate decision left unchanged"
+    verified_findings:
+      - id: RU-3KAS-11884-F1
+        status: VERIFIED
+        finding: "When a person is lawfully given access to a case file, the authority responsible for disclosure must still protect personal data of third parties and confidential information not necessary for that access."
+        locator: "official case act, factual and legal reasoning"
+      - id: RU-3KAS-11884-F2
+        status: VERIFIED
+        finding: "The court treated failure to exclude third-party personal data from materials shown during procedural access as legally significant in assessing the authority's conduct."
+        locator: "official case act, factual findings"
+      - id: RU-3KAS-11884-F3
+        status: VERIFIED
+        finding: "A lawful right of access to procedural materials does not erase separate duties to protect unrelated persons' personal data and private information."
+        locator: "official case act, legal reasoning"
+    guardrails:
+      - "Lawful access for one person does not equal lawful unrestricted dissemination to others."
+      - "The case must not be generalized into a rule that all material in procedural files must always be redacted; applicability depends on the legal access regime and the nature of third-party data."
+
+cross_case_rules:
+  - id: RU-PD-CASE-CROSS-01
+    status: VERIFIED_SYNTHESIS
+    rule: "Practical-case reasoning must separate: lawful basis for access/processing, scope of disclosure, third-party data protection, causation, moral harm, and amount of compensation."
+    support:
+      - RU-VS-5-KG24-144-K2-2025
+      - RU-8KAS-88-4648-2025
+      - RU-3KAS-88-11884-2025
+  - id: RU-PD-CASE-CROSS-02
+    status: VERIFIED_SYNTHESIS
+    rule: "Compensation amounts observed in individual cases are evidence of outcomes, not normative pricing tables."
+    support:
+      - RU-8KAS-88-4648-2025
+
+pending:
+  - "broader enforcement corpus involving large-scale data leaks and regulator-originated cases"
+  - "operator-versus-processor causation cases"
+  - "cases with quantified property loss linked to security incidents"
+  - "appellate/supreme outcomes for modern leak cases under the post-2025 sanction regime"
