@@ -1,0 +1,64 @@
+schema_version: "1.0"
+id: coverage-scorecard-2026-08-13-run-13
+date: "2026-08-13"
+overall_strict_p0_percent: 10
+p0_families_registered: "12/12"
+critical_gaps: 0
+high_gaps: 5
+red_team: FAIL
+expert_ready: false
+
+family_scores:
+  npa_rf: 10
+  gost_iso: 10
+  classification_categorization: 10
+  threat_modeling_bdu: 10
+  risk_methods: 10
+  legal_consequences: 10
+  szi_skzi_license_lifecycle: 10
+  roles_deadlines_responsibility: 10
+  evidence_audit: 10
+  practical_cases: 10
+
+this_run:
+  committed_verified_records: 13
+  committed_file: "security-knowledge/roles-and-responsibility/tk-material-damage-recovery-and-251n-applicability-verified.yaml"
+  areas:
+    - "ТК РФ ст.239: исключающие материальную ответственность обстоятельства"
+    - "ТК РФ ст.246-248: расчет, обязательная проверка и порядок взыскания"
+    - "ТК РФ ст.244 + приказ Минтруда №251н: applicability договоров полной материальной ответственности"
+  exact_deadlines_added:
+    - "1 месяц со дня окончательного установления размера ущерба для распоряжения работодателя по ст.248"
+    - "приказ №251н действует с 01.09.2025 до 01.09.2031"
+  red_team_guardrails:
+    - "ИБ-инцидент или штраф организации != автоматически прямой действительный ущерб работника"
+    - "ст.247 требует отдельной проверки размера и причин ущерба до решения о взыскании"
+    - "двухдневный срок объяснения из ст.193 нельзя переносить на процедуру ст.247 без отдельного основания"
+    - "должность системного администратора/специалиста ИБ сама по себе не дает основания для договора полной материальной ответственности"
+    - "внесудебное взыскание ограничено ст.248; превышение среднего месячного заработка при отсутствии добровольного возмещения требует суда"
+
+verified_known_minimum:
+  previous_minimum_cumulative_relevant_verified_records: 81
+  added_this_run: 13
+  minimum_cumulative_relevant_verified_records: 94
+  note: "Minimum only; not a full repository recount."
+
+high_gaps_list:
+  - "ГК РФ ст.1065/1081: предупреждение вреда и регресс"
+  - "первичный полный текст Методики оценки угроз ФСТЭК 2021 и clause-level atomization"
+  - "version-aware КИИ categorization overlays and full PP127 chain"
+  - "SZI/SKZI/license lifecycle with expiry/renewal monitoring and decision ownership"
+  - "практические кейсы и судебная практика по ИБ/ПДн: ответственность, ущерб, причинная связь, применимость"
+
+closed_or_reduced_this_run:
+  - "ТК РФ ст.239, 246-248: закрыт verified slice"
+  - "Приказ Минтруда №251н applicability: закрыт базовый нормативный gate; отдельные кейсы применения остаются practical-cases scope"
+
+next_bottleneck:
+  - "ГК РФ ст.1065 и 1081: предупреждение вреда и регресс"
+  - "построить матрицу организация → работник: внешний ущерб/штраф → основания внутреннего взыскания → proof requirements"
+  - "затем вернуть family-wide proof floor: Методика угроз ФСТЭК, КИИ, lifecycle реестров"
+
+promotion_decision:
+  family_promotion: false
+  reason: "Roles/responsibility slice существенно усилен и один High gap закрыт, но family-wide proof floor и практические кейсы не завершены; общий P0 остается 10%."
