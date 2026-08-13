@@ -1,0 +1,41 @@
+schema_version: 1
+domain_id: SOFTWARE_ENGINEERING
+slice_id: SWENG-M2-HTTP-0001
+maturity_scope: M2_ATOMIC_KNOWLEDGE
+status: REVIEWED_BOUNDED
+source_registry_ref: professional-knowledge/software-engineering/SOURCE_REGISTRY.yaml
+knowledge_objects:
+- knowledge_id: SWENG-HTTP-CLAIM-0001
+  object_type: CONTRACT_CLAIM
+  claim_type: NORMATIVE_PROTOCOL_SEMANTICS
+  statement: In RFC 9110, an HTTP method is idempotent when multiple identical requests are intended to have the same server-side effect as one request; PUT, DELETE and safe methods defined there are idempotent.
+  verification_state: VERIFIED_SOURCE_BOUND
+  provenance:
+    source_id: SWENG-SRC-RFC9110
+    locator: RFC 9110 section 9.2.2 paragraphs 1-2
+    source_url: https://www.rfc-editor.org/rfc/rfc9110.html#section-9.2.2
+    observed_at: 2026-08-13
+  context:
+    applies_to: HTTP_method_semantics_defined_by_RFC_9110
+    does_not_imply: [identical_responses, arbitrary_POST_idempotency, unconditional_retry_policy]
+  limitations:
+  - protocol idempotency does not eliminate every implementation side effect
+  - business semantics can require stronger duplicate handling
+- knowledge_id: SWENG-HTTP-RULE-0002
+  object_type: PROFESSIONAL_RULE
+  claim_type: NORMATIVE_RETRY_CONSTRAINT
+  statement: Automatic retry of a non-idempotent HTTP method needs additional evidence that the request semantics are idempotent or that the original request was not applied.
+  verification_state: VERIFIED_SOURCE_BOUND
+  provenance:
+    source_id: SWENG-SRC-RFC9110
+    locator: RFC 9110 section 9.2.2 paragraphs 4-8
+    source_url: https://www.rfc-editor.org/rfc/rfc9110.html#section-9.2.2
+    observed_at: 2026-08-13
+  context:
+    applies_to: automatic_client_retry_after_communication_failure
+  limitations:
+  - this is not a complete retry policy
+  - timeout backoff retry budget and business duplicate handling require separate evidence
+  conflict_state: NONE_KNOWN_WITHIN_ADMITTED_SOURCE_SET
+challenge_notes:
+  overgeneralization_rejected: [idempotent_method_is_always_safe_to_retry_without_limits, POST_can_never_be_retried, HTTP_idempotency_equals_exactly_once_processing]
