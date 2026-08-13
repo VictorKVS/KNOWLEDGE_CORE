@@ -1,0 +1,37 @@
+schema_version: 1
+domain_id: SOFTWARE_ENGINEERING
+slice_id: SWENG-M2-PG-0001
+maturity_scope: M2_ATOMIC_KNOWLEDGE
+status: REVIEWED_BOUNDED
+source_registry_ref: professional-knowledge/software-engineering/SOURCE_REGISTRY.yaml
+knowledge_objects:
+- knowledge_id: SWENG-PG-CLAIM-0001
+  object_type: CONTRACT_CLAIM
+  claim_type: VERSIONED_PRODUCT_BEHAVIOR
+  statement: PostgreSQL 17 Read Committed gives each plain SELECT a snapshot at query start, so later SELECT statements in the same transaction can observe newer committed data.
+  verification_state: VERIFIED_SOURCE_BOUND
+  provenance:
+    source_id: SWENG-SRC-PG17-DOC
+    locator: section 13.2.1 paragraphs 1-2
+    source_url: https://www.postgresql.org/docs/17/transaction-iso.html
+    observed_at: 2026-08-13
+  context:
+    applies_to: PostgreSQL_17_Read_Committed_plain_SELECT
+  limitations: [locking_and_modification_commands_have_additional_rules, some_database_features_have_special_transactional_rules, version_scoped]
+  conflict_state: NONE_KNOWN_WITHIN_ADMITTED_SOURCE_SET
+- knowledge_id: SWENG-PG-CLAIM-0002
+  object_type: CONTRACT_CLAIM
+  claim_type: VERSIONED_ISOLATION_GUARANTEE
+  statement: PostgreSQL 17 Repeatable Read provides stronger snapshot guarantees than Read Committed but can still admit a serialization anomaly; Serializable is the documented level that excludes it.
+  verification_state: VERIFIED_SOURCE_BOUND
+  provenance:
+    source_id: SWENG-SRC-PG17-DOC
+    locator: section 13.2 Table 13.1 and accompanying text
+    source_url: https://www.postgresql.org/docs/17/transaction-iso.html
+    observed_at: 2026-08-13
+  context:
+    applies_to: PostgreSQL_17_transaction_isolation
+  limitations: [does_not_prove_higher_isolation_is_always_best, performance_and_contention_require_measurement, application_error_handling_is_separate]
+  conflict_state: NONE_KNOWN_WITHIN_ADMITTED_SOURCE_SET
+challenge_notes:
+  overgeneralization_rejected: [one_snapshot_for_all_Read_Committed_queries, Repeatable_Read_equals_Serializable, always_choose_highest_isolation]
