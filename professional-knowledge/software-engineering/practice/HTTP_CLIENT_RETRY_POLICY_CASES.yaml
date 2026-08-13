@@ -1,0 +1,64 @@
+schema_version: 1
+domain_id: SOFTWARE_ENGINEERING
+practice_pack_id: SWENG-M4-HTTP-RETRY-0001
+maturity_scope: M4_VERIFIED_PRACTICE_BOUNDED
+materiality_class: D2_ARCHITECTURE_PRODUCT
+decision_logic_ref: professional-knowledge/software-engineering/decision-logic/HTTP_CLIENT_RETRY_POLICY.yaml
+status: CANDIDATE_FOR_M4_VERIFICATION
+claimed_scope: bounded_single_outbound_HTTP_client_retry_policy
+producer_assignments:
+  SOURCE_RESEARCHER: SWENG-M4-SR-0001
+  EVIDENCE_ENGINEER: SWENG-M4-EE-0001
+  DOMAIN_SPECIALIST: SWENG-M4-DS-0001
+  ALTERNATIVES_ANALYST: SWENG-M4-AA-0001
+  DECISION_ANALYST: SWENG-M4-DA-0001
+review_assignments:
+  SENIOR_PRACTITIONER_REVIEWER: SWENG-M4-SPR-0001
+  SKEPTICAL_CRITIC: SWENG-M4-SC-0001
+  CROSS_DOMAIN_REVIEWER: SWENG-M4-CDR-0001
+reproducibility:
+  execution_model: deterministic_rule_replay
+  validator_ref: tools/validate_sweng_http_retry_m4.py
+  external_network_required: false
+  benchmark_required_for_claimed_scope: false
+  benchmark_rationale: decision-safety verification only; no latency throughput availability or recovery-probability claim
+cases:
+  - case_id: M4-HTTP-001
+    class: POSITIVE
+    inputs: {REQUEST_SEMANTICS: RFC_IDEMPOTENT, FAILURE_SIGNAL: HTTP_503_WITH_RETRY_AFTER, DUPLICATE_SIDE_EFFECT_TOLERANCE: TOLERABLE, END_TO_END_DEADLINE: KNOWN, ATTEMPT_BUDGET: EXPLICIT_LIMIT, RETRY_AFTER_VALUE: PRESENT_WITHIN_DEADLINE}
+    expected: {disposition: SELECT, option: OPT-SERVER-DIRECTED-DELAY, reason_code: RETRY_ELIGIBLE_SERVER_DELAY_FITS}
+  - case_id: M4-HTTP-002
+    class: NEGATIVE
+    inputs: {REQUEST_SEMANTICS: NON_IDEMPOTENT, FAILURE_SIGNAL: COMMUNICATION_FAILURE, DUPLICATE_SIDE_EFFECT_TOLERANCE: NOT_TOLERABLE, END_TO_END_DEADLINE: KNOWN, ATTEMPT_BUDGET: EXPLICIT_LIMIT, RETRY_AFTER_VALUE: NOT_APPLICABLE}
+    expected: {disposition: REQUEST_MORE_EVIDENCE, option: OPT-NO-AUTO-RETRY, reason_code: RETRY_SAFETY_NOT_ESTABLISHED}
+  - case_id: M4-HTTP-003
+    class: POSITIVE
+    inputs: {REQUEST_SEMANTICS: RFC_IDEMPOTENT, FAILURE_SIGNAL: COMMUNICATION_FAILURE, DUPLICATE_SIDE_EFFECT_TOLERANCE: TOLERABLE, END_TO_END_DEADLINE: KNOWN, ATTEMPT_BUDGET: EXPLICIT_LIMIT, RETRY_AFTER_VALUE: NOT_APPLICABLE}
+    expected: {disposition: SELECT, option: OPT-BOUNDED-CLIENT-RETRY, reason_code: RETRY_ELIGIBLE_BOUNDED_CLIENT_PATH}
+  - case_id: M4-HTTP-004
+    class: NEGATIVE
+    inputs: {REQUEST_SEMANTICS: RFC_IDEMPOTENT, FAILURE_SIGNAL: HTTP_503_WITH_RETRY_AFTER, DUPLICATE_SIDE_EFFECT_TOLERANCE: TOLERABLE, END_TO_END_DEADLINE: KNOWN, ATTEMPT_BUDGET: EXPLICIT_LIMIT, RETRY_AFTER_VALUE: PRESENT_EXCEEDS_DEADLINE}
+    expected: {disposition: NO_ACTION_WITHIN_BOUNDED_SCOPE, option: OPT-NO-AUTO-RETRY, reason_code: SERVER_DELAY_EXCEEDS_DEADLINE}
+  - case_id: M4-HTTP-005
+    class: NEGATIVE
+    inputs: {REQUEST_SEMANTICS: RFC_IDEMPOTENT, FAILURE_SIGNAL: COMMUNICATION_FAILURE, DUPLICATE_SIDE_EFFECT_TOLERANCE: TOLERABLE, END_TO_END_DEADLINE: KNOWN, ATTEMPT_BUDGET: UNKNOWN, RETRY_AFTER_VALUE: NOT_APPLICABLE}
+    expected: {disposition: REQUEST_MORE_EVIDENCE, option: OPT-NO-AUTO-RETRY, reason_code: ATTEMPT_BUDGET_UNKNOWN}
+  - case_id: M4-HTTP-006
+    class: ADVERSARIAL_KNOWN_LIMIT
+    inputs: {REQUEST_SEMANTICS: RFC_IDEMPOTENT, FAILURE_SIGNAL: COMMUNICATION_FAILURE, DUPLICATE_SIDE_EFFECT_TOLERANCE: TOLERABLE, END_TO_END_DEADLINE: KNOWN, ATTEMPT_BUDGET: EXPLICIT_LIMIT, RETRY_AFTER_VALUE: NOT_APPLICABLE}
+    context: {dependency_fanout: 20, aggregate_retry_resource_budget: UNKNOWN}
+    expected: {disposition: ESCALATE_OUT_OF_BOUNDED_SCOPE, option: null, reason_code: AGGREGATE_RETRY_RESOURCE_MODEL_NOT_PROVEN}
+failure_modes:
+  - {id: FM-HTTP-RETRY-001, case: M4-HTTP-002, condition: uncontrolled_duplicate_effect}
+  - {id: FM-HTTP-RETRY-002, case: M4-HTTP-004, condition: server_delay_exceeds_deadline}
+  - {id: FM-HTTP-RETRY-003, case: M4-HTTP-005, condition: finite_attempt_budget_missing}
+  - {id: FM-HTTP-RETRY-004, case: M4-HTTP-006, condition: aggregate_fanout_resource_safety_unproven}
+outcome_capture:
+  required_fields: [case_id, observed_disposition, observed_option, observed_reason_code, pass, validator_version]
+  persistence: CI_log_plus_audit_summary
+preserved_rejected_evidence:
+  - {case: M4-HTTP-002, rejected: [OPT-SERVER-DIRECTED-DELAY, OPT-BOUNDED-CLIENT-RETRY], reason: retry_safety_hard_gate}
+  - {case: M4-HTTP-004, rejected: [OPT-SERVER-DIRECTED-DELAY], reason: deadline_hard_gate}
+  - {case: M4-HTTP-005, rejected: [OPT-BOUNDED-CLIENT-RETRY], reason: finite_attempt_budget_missing}
+  - {case: M4-HTTP-006, rejected: [OPT-BOUNDED-CLIENT-RETRY], reason: aggregate_resource_model_outside_proven_scope}
+non_claims: [optimal_backoff_is_proven, jitter_strategy_is_proven, retry_improves_production_availability, multi_dependency_retry_budgeting_is_solved, domain_wide_expert_ready]
