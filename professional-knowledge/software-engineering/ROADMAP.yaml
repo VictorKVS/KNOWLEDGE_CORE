@@ -1,41 +1,43 @@
-schema_version: 1
+schema_version: 2
 domain_id: SOFTWARE_ENGINEERING
 roadmap_id: SWENG-ROADMAP-0001
 status: ACTIVE
 maturity_model_ref: father/domain-knowledge/PROFESSIONAL_KB_MATURITY_MODEL.yaml
-current_level: M1
+current_level: M2
 stages:
-  - level: M0
-    status: COMPLETE_BOUNDED
-    outcomes: [scope_and_non_scope_defined, ontology_defined, source_taxonomy_and_precedence_defined, freshness_conflict_objectivity_and_review_policies_defined]
-  - level: M1
-    status: COMPLETE_BOUNDED
-    outcomes:
-      - SOURCE_REGISTRY_with_six_admitted_source_families
-      - version_or_mutability_state_recorded
-      - source_limitations_and_reassessment_triggers_recorded
-      - independent_senior_and_skeptical_source_review_recorded
-      - M1_CI_validation_required
-    evidence_refs:
-      - professional-knowledge/software-engineering/SOURCE_REGISTRY.yaml
-      - professional-knowledge/software-engineering/audits/M1_SOURCE_REVIEW_2026-08-13.yaml
-    non_claims: [no_verified_software_rule_claimed, no_universal_best_practice_claimed, no_expert_ready_claim]
-  - level: M2
-    status: NEXT
-    target: Produce atomic rules, patterns, metrics and failure modes with exact claim-specific provenance and challenge against overgeneralization.
-    first_slices: [HTTP_retry_and_idempotency_contracts, PostgreSQL_transaction_and_concurrency_rules, Python_runtime_contracts, benchmark_context_rules, testing_framework_contracts]
-    gate:
-      - exact_locator_or_equivalent_claim_support
-      - applicability_and_limitations
-      - conflict_state
-      - sample_senior_challenge
-  - level: M3
-    status: PLANNED
-    target: Build bounded evidence-backed decision packets with real alternatives.
-  - level: M4
-    status: PLANNED
-    target: Prove decisions with positive negative and adversarial cases.
-  - level: M5
-    status: PLANNED
-    target: Establish a bounded independently reviewed expert-ready slice.
+- level: M0
+  status: COMPLETE_BOUNDED
+  outcomes: [scope_and_non_scope_defined, ontology_defined, source_taxonomy_and_precedence_defined, freshness_conflict_objectivity_and_review_policies_defined]
+- level: M1
+  status: COMPLETE_BOUNDED
+  outcomes: [SOURCE_REGISTRY_with_six_admitted_source_families, version_or_mutability_state_recorded, source_limitations_and_reassessment_triggers_recorded, independent_senior_and_skeptical_source_review_recorded, M1_CI_validation_required]
+  evidence_refs: [professional-knowledge/software-engineering/SOURCE_REGISTRY.yaml, professional-knowledge/software-engineering/audits/M1_SOURCE_REVIEW_2026-08-13.yaml]
+  non_claims: [no_universal_best_practice_claimed, no_expert_ready_claim]
+- level: M2
+  status: COMPLETE_BOUNDED
+  bounded_scope: [HTTP_retry_and_idempotency_semantics, PostgreSQL_17_transaction_isolation_semantics, pyperf_2_10_benchmark_evidence_quality]
+  outcomes:
+  - six atomic knowledge objects with claim-specific provenance
+  - source-bound and derived-rule verification states separated
+  - explicit context limitations and overgeneralization challenges
+  - relation links recorded separately
+  - independent senior and skeptical review with distinct assignments
+  evidence_refs:
+  - professional-knowledge/software-engineering/atomic/HTTP_RETRY_IDEMPOTENCY.yaml
+  - professional-knowledge/software-engineering/atomic/POSTGRES_TRANSACTION_ISOLATION.yaml
+  - professional-knowledge/software-engineering/atomic/BENCHMARK_EVIDENCE_QUALITY.yaml
+  - professional-knowledge/software-engineering/RELATIONS.yaml
+  - professional-knowledge/software-engineering/audits/M2_ATOMIC_KNOWLEDGE_REVIEW_2026-08-13.yaml
+  non_claims: [no_complete_retry_policy, no_database_selection_rule, no_universal_isolation_recommendation, no_production_capacity_claim, no_M3_decision_readiness, no_expert_ready]
+- level: M3
+  status: NEXT
+  target: Build bounded applicability and decision packets using real alternatives and hard constraints.
+  candidate_first_packet: retry_policy_for_bounded_HTTP_client_operation
+  gate: [applicability_logic, requirements_and_constraints, viable_alternatives, hard_gate_elimination, metric_and_criteria_rationale, uncertainty_and_reassessment, independent_senior_review, skeptical_challenge]
+- level: M4
+  status: PLANNED
+  target: Prove decisions with positive negative and adversarial cases.
+- level: M5
+  status: PLANNED
+  target: Establish a bounded independently reviewed expert-ready slice.
 reporting_rule: report_usable_capability_unproven_scope_evidence_and_next_gate_not_file_count
