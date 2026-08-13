@@ -1,0 +1,43 @@
+schema_version: 1
+family_id: CLASSIFICATION_AND_CATEGORIZATION_METHODS
+priority: P0
+family_status: REGISTERED
+checked_at: 2026-08-13
+status_policy: Source registration is not equivalent to completed decision logic.
+sources:
+  - id: PP_RF_1119_2012
+    title: Об утверждении требований к защите персональных данных при их обработке в информационных системах персональных данных
+    authority: Government of the Russian Federation
+    authority_class: OFFICIAL_PUBLICATION
+    official_publication_number: '0001201211060012'
+    source_url: https://publication.pravo.gov.ru/Document/View/0001201211060012
+    coverage: ISPDn protection-level determination and related protection requirements
+    ingestion_status: SOURCE_REGISTERED_REQUIRES_CURRENT_VERSION_CHAIN_AUDIT
+  - id: PP_RF_127_2018
+    title: Об утверждении Правил категорирования объектов критической информационной инфраструктуры Российской Федерации, а также перечня показателей критериев значимости и их значений
+    authority: Government of the Russian Federation
+    authority_class: OFFICIAL_PUBLICATION
+    official_publication_number: '0001201802130006'
+    publication_date: 2018-02-13
+    source_url: https://publication.pravo.gov.ru/Document/View/0001201802130006
+    coverage: CII object categorization and significance criteria
+    ingestion_status: SOURCE_REGISTERED_REQUIRES_AMENDMENT_AND_SECTOR_RULE_AUDIT
+  - id: FSTEK_ORDER_31_2014
+    coverage: ASU TP protection-class and protection-requirement context
+    ingestion_status: SOURCE_ALREADY_PRESENT_ELSEWHERE_REQUIRES_CLASSIFICATION_EXTRACTION
+  - id: FSTEK_GIS_CURRENT_REQUIREMENTS
+    coverage: GIS classification/protection-class logic
+    ingestion_status: SOURCE_PENDING_CURRENT_SUCCESSOR_MAPPING
+required_decision_logic:
+  - ISPDn_protection_level_rules
+  - GIS_classification
+  - CII_subject_object_identification
+  - CII_significance_category_rules
+  - sector_specific_CII_categorization_features
+  - ASU_TP_classification
+  - restricted_information_category_rules
+  - reassessment_and_reclassification_triggers
+red_team_blocks:
+  - PP 127 must be audited against all current amendments and 2025-2026 sector-specific categorization acts before current decision logic is claimed.
+  - No classification result may be derived without storing input facts and provenance.
+  - Reassessment triggers and effective dates must be versioned.
