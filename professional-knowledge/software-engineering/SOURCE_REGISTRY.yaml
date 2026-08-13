@@ -1,0 +1,146 @@
+schema_version: 1
+domain_id: SOFTWARE_ENGINEERING
+registry_id: SWENG-SOURCE-REGISTRY-0001
+status: M1_BOUNDED_SOURCE_SET
+observed_at: 2026-08-13
+scope: first auditable source layer for bounded backend software engineering decisions
+source_policy_ref: professional-knowledge/software-engineering/SOURCE_POLICY.yaml
+review_ref: professional-knowledge/software-engineering/audits/M1_SOURCE_REVIEW_2026-08-13.yaml
+
+sources:
+  - source_id: SWENG-SRC-PYTHON-313-REF
+    source_class: SPECIFICATION
+    title: The Python Language Reference — Python 3.13.14
+    authority: Python Software Foundation / Python documentation
+    url: https://docs.python.org/3.13/reference/
+    version: '3.13.14'
+    admission_state: ADMITTED
+    observed_at: 2026-08-13
+    use_scope:
+      - Python_3_13_language_syntax_and_core_semantics
+    limitations:
+      - does_not_define_nonessential_library_or_third_party_behavior
+      - does_not_generalize_to_other_Python_versions_or_implementations_without_compatibility_evidence
+    freshness:
+      mode: version_pinned
+      reassess_on: [Python_3_13_documentation_revision, target_runtime_version_change]
+
+  - source_id: SWENG-SRC-RFC9110
+    source_class: SPECIFICATION
+    title: RFC 9110 — HTTP Semantics
+    authority: IETF / RFC Editor
+    url: https://www.rfc-editor.org/rfc/rfc9110.html
+    version: RFC_9110_STD_97
+    published: 2022-06
+    admission_state: ADMITTED
+    observed_at: 2026-08-13
+    use_scope:
+      - HTTP_core_semantics
+      - method_and_status_semantics
+      - protocol_conformance_context
+    limitations:
+      - transport_specific_HTTP_1_1_HTTP_2_HTTP_3_message_formats_require_their_companion_specs
+      - application_level_retry_or_business_idempotency_policy_requires_context_beyond_protocol_text
+    supersession:
+      obsoletes: [RFC_2818, RFC_7230_partial, RFC_7231, RFC_7232, RFC_7233, RFC_7235, RFC_7538, RFC_7615, RFC_7694]
+      updates: [RFC_3864]
+    freshness:
+      mode: standards_status
+      reassess_on: [RFC_status_or_successor_change, protocol_scope_change]
+
+  - source_id: SWENG-SRC-PG17-DOC
+    source_class: OFFICIAL_PRODUCT_DOCUMENTATION
+    title: PostgreSQL 17.10 Documentation
+    authority: PostgreSQL Global Development Group
+    url: https://www.postgresql.org/docs/17/index.html
+    version: '17.10'
+    admission_state: ADMITTED
+    observed_at: 2026-08-13
+    use_scope:
+      - PostgreSQL_17_SQL_and_server_behavior
+      - concurrency_and_transaction_documentation_for_version_17
+      - version_specific_operational_and_application_contracts
+    limitations:
+      - documentation_does_not_prove_workload_specific_performance_or_reliability
+      - findings_are_not_automatically_valid_for_other_major_versions
+    freshness:
+      mode: major_and_patch_version_pinned
+      reassess_on: [PostgreSQL_17_patch_update, target_major_version_change, end_of_support_or_lifecycle_change]
+
+  - source_id: SWENG-SRC-SEI-QAW3
+    source_class: PROFESSIONAL_REFERENCE
+    title: Quality Attribute Workshops (QAWs), Third Edition
+    authority: Carnegie Mellon University Software Engineering Institute
+    url: https://www.sei.cmu.edu/library/quality-attribute-workshops-qaws-third-edition/
+    version: CMU_SEI_2003_TR_016
+    published: 2003-10-01
+    admission_state: ADMITTED
+    observed_at: 2026-08-13
+    use_scope:
+      - architecture_quality_attribute_elicitation_methodology
+      - stakeholder_scenario_method_context
+    limitations:
+      - methodology_source_not_a_universal_architecture_decision_rule
+      - old_publication_age_requires_context_review_against_current_practice_before_material_recommendation
+      - does_not_replace_project_specific_requirements_or_measurement
+    freshness:
+      mode: stable_method_reference
+      reassess_on: [newer_authoritative_SEI_method_supersedes_scope, methodology_conflict_discovered]
+
+  - source_id: SWENG-SRC-PYTEST-STABLE
+    source_class: OFFICIAL_PRODUCT_DOCUMENTATION
+    title: pytest stable documentation and release announcements
+    authority: pytest Development Team
+    url: https://docs.pytest.org/en/stable/contents.html
+    version: stable_series_observed_with_9_1_1_listed
+    admission_state: ADMITTED
+    observed_at: 2026-08-13
+    use_scope:
+      - pytest_test_framework_contracts
+      - assertions_fixtures_collection_and_test_execution_documentation
+    limitations:
+      - stable_alias_is_mutable_and_must_not_be_used_for_historical_replay_without_a_version_pin
+      - test_strategy_effectiveness_requires_project_context_and_outcome_evidence
+    freshness:
+      mode: mutable_stable_channel
+      reassess_on: [pytest_release_change, project_pytest_version_change]
+      historical_use_requires: exact_release_pin
+
+  - source_id: SWENG-SRC-PYPERF-210
+    source_class: OFFICIAL_PRODUCT_DOCUMENTATION
+    title: pyperf 2.10.0 documentation
+    authority: pyperf project
+    url: https://pyperf.readthedocs.io/en/stable/index.html
+    version: '2.10.0'
+    admission_state: ADMITTED
+    observed_at: 2026-08-13
+    use_scope:
+      - Python_microbenchmark_tool_contracts
+      - benchmark_metadata_and_reproducibility_mechanics
+    limitations:
+      - tool_guidance_does_not_make_a_microbenchmark_representative_of_a_production_workload
+      - benchmark_interpretation_requires_workload_environment_noise_and_statistical_context
+    freshness:
+      mode: version_pinned
+      reassess_on: [pyperf_version_change, benchmark_environment_change]
+
+coverage:
+  source_family_count: 6
+  covered_families:
+    - language_runtime_contracts
+    - HTTP_protocol_contracts
+    - relational_database_product_contracts
+    - architecture_quality_attribute_methodology
+    - testing_framework_contracts
+    - empirical_measurement_tooling
+  intentionally_not_claimed:
+    - complete_software_engineering_source_coverage
+    - verified_professional_rules
+    - universal_best_practices
+    - workload_independent_performance_claims
+    - expert_ready
+
+admission_rule: >-
+  ADMITTED means the source identity, authority class, version/freshness state, intended use and
+  limitations are explicit enough to support later evidence extraction. It does not mean every
+  statement in the source is VERIFIED knowledge for every context.
