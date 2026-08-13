@@ -1,0 +1,65 @@
+schema_version: 1
+family_id: CLASSIFICATION_AND_CATEGORIZATION_METHODS
+artifact_id: SEC-CLASS-PROOF-FLOOR-0001
+status: PROOF_FLOOR_DEFINED_NOT_VERIFIED
+purpose: >-
+  Define the minimum evidence contract required before any classification or
+  categorization result can be promoted from candidate analysis to a
+  professional decision.
+required_inputs:
+  - id: REGIME
+    description: Applicable legal/security regime (ISPDn, GIS, KII, ASU TP, restricted information).
+    provenance_required: true
+  - id: OBJECT_SCOPE
+    description: Identified information system, process, object, or CII object being classified.
+    provenance_required: true
+  - id: ORGANIZATION_FACTS
+    description: Organization and processing facts used by the governing rule set.
+    provenance_required: true
+  - id: VERSION_CONTEXT
+    description: Effective date and source-version chain used for the decision.
+    provenance_required: true
+  - id: RULE_INPUTS
+    description: All factual inputs consumed by the selected decision table.
+    provenance_required: true
+required_evidence:
+  - authoritative_source_identity
+  - current_version_chain
+  - atomic_rule_locator
+  - effective_date
+  - decision_table_mapping
+  - input_fact_provenance
+  - reassessment_trigger_mapping
+decision_states:
+  - CANDIDATE
+  - INSUFFICIENT_EVIDENCE
+  - APPLICABLE
+  - NOT_APPLICABLE
+  - CLASSIFIED
+  - CATEGORIZED
+fail_closed_rules:
+  - if: current_version_chain is not VERIFIED
+    result: INSUFFICIENT_EVIDENCE
+  - if: any consumed input fact lacks provenance
+    result: INSUFFICIENT_EVIDENCE
+  - if: an applicable sector-specific rule is unresolved
+    result: INSUFFICIENT_EVIDENCE
+  - if: effective date cannot be established
+    result: INSUFFICIENT_EVIDENCE
+  - if: reassessment triggers are not mapped
+    result: CANDIDATE
+promotion_rule: >-
+  REGISTERED sources and a syntactically valid decision table are insufficient
+  for VERIFIED family maturity. Promotion requires authoritative version-chain
+  evidence plus at least one reproducible case with stored inputs, provenance,
+  rule locators, result, and independent review.
+reassessment_triggers:
+  - normative_source_amended_or_replaced
+  - organization_or_operator_scope_changed
+  - system_or_object_scope_changed
+  - processing_or_data_category_changed
+  - CII_significance_inputs_changed
+  - sector_specific_rule_changed
+limitations:
+  - This artifact does not assert that PP RF 1119, PP RF 127, GIS, or ASU TP rules are current or complete.
+  - It intentionally does not encode substantive thresholds until their current authoritative version chains are verified.
