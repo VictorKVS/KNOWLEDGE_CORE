@@ -1,0 +1,139 @@
+schema_version: 1
+model_id: FATHER-PROFESSIONAL-KB-MATURITY-1
+status: ACTIVE
+purpose: >-
+  Define evidence-based maturity gates for every professional knowledge domain consumed by FATHER.
+  Maturity is earned by proven capabilities and evidence, never by file count, token volume or model confidence.
+common_doctrine_ref: father/domain-knowledge/PROFESSIONAL_EVIDENCE_DOCTRINE.md
+common_decision_contract_ref: father/domain-knowledge/professional-decision-schema.yaml
+governance_norm_ref: VictorKVS/PX00/governance/DECISION_MATERIALITY_STANDARD.md
+
+core_invariants:
+  - facts_interpretations_recommendations_and_decisions_are_distinct_objects
+  - verified_status_is_earned_by_domain_specific_proof_rules
+  - source_authority_applicability_freshness_and_limitations_are_explicit
+  - conflicting_evidence_is_preserved_and_resolved_or_escalated_not_silently_averaged
+  - model_output_is_candidate_material_not_primary_authority
+  - vendor_guidance_is_not_independent_evidence_about_the_vendor
+  - hard_constraints_are_not_overridden_by_preferences_or_weighted_scores
+  - decision_criteria_and_weights_require_rationale_and_provenance
+  - unknown_or_materially_unresolved_inputs_produce_INSUFFICIENT_EVIDENCE_or_ESCALATE
+  - historical_decisions_preserve_the_evidence_available_at_decision_time
+  - later_reassessment_supersedes_history_instead_of_rewriting_it
+  - maturity_is_bounded_by_the_weakest_required_gate_for_the_claimed_scope
+  - a_domain_may_have_M5_slices_while_the_overall_domain_remains_below_M5
+
+objectivity_requirements:
+  - distinguish_mandatory_requirements_from_preferences
+  - distinguish_observed_facts_from_assumptions_and_forecasts
+  - compare_multiple_viable_options_for_D2_D3_when_more_than_one_exists
+  - document_elimination_by_hard_gate_before_optional_scoring
+  - expose_uncertainty_and_sensitivity
+  - preserve_rejected_option_reasons_and_material_dissent
+  - use_measured_or_reproducible_evidence_when_a_claim_is_empirical
+  - define_reassessment_triggers_for_material_decisions
+
+levels:
+  M0:
+    name: SCOPE_DEFINED
+    objective: Define what the profession covers and how evidence will be judged.
+    required_capabilities:
+      - explicit_scope_and_non_scope
+      - ontology_or_concept_map
+      - source_taxonomy
+      - source_precedence_policy
+      - freshness_policy
+      - conflict_handling_policy
+      - decision_evidence_policy
+      - legacy_or_candidate_material_admission_policy
+    forbidden_claims:
+      - verified_professional_rules
+      - expert_ready
+      - decision_engine_ready
+  M1:
+    name: SOURCES_ADMITTED
+    objective: Build a governed source layer with provenance and freshness controls.
+    required_capabilities:
+      - source_registry
+      - admitted_source_identity_and_version
+      - source_classification
+      - freshness_or_version_state
+      - source_limitations
+      - conflict_or_supersession_links_where_known
+    forbidden_claims:
+      - atomic_rule_verified_without_locator_or_equivalent_domain_proof
+      - expert_ready
+  M2:
+    name: ATOMIC_KNOWLEDGE
+    objective: Extract atomic professional claims, rules, patterns and metrics with provenance.
+    required_capabilities:
+      - atomic_knowledge_objects
+      - provenance_to_admitted_sources_or_reproducible_measurements
+      - claim_type_and_confidence_or_verification_state
+      - limitations_and_context
+      - relation_links
+      - explicit_metric_definitions_where_metrics_exist
+    forbidden_claims:
+      - general_applicability_without_applicability_logic
+      - material_decision_ready_without_alternatives_and_constraints
+  M3:
+    name: DECISION_LOGIC
+    objective: Turn evidence into bounded professional decisions without hiding trade-offs.
+    required_capabilities:
+      - applicability_logic
+      - requirements_and_constraints_mapping
+      - alternative_generation_or_declared_candidate_set
+      - hard_gate_elimination
+      - criteria_and_metric_selection_rationale
+      - tradeoff_logic
+      - uncertainty_and_sensitivity_handling
+      - reassessment_triggers
+      - PROFESSIONAL_DECISION_RECORD_compatibility
+    forbidden_claims:
+      - expert_ready_without_reproducible_cases_and_independent_review
+  M4:
+    name: VERIFIED_PRACTICE
+    objective: Prove the decision logic on reproducible professional cases.
+    required_capabilities:
+      - checks_and_acceptance_tests
+      - reproducible_cases
+      - positive_and_negative_cases
+      - benchmark_or_measurement_evidence_where_relevant
+      - failure_modes_and_known_limits
+      - outcome_capture
+      - independent_review_for_material_cases
+    forbidden_claims:
+      - domain_wide_expert_ready_from_narrow_cases
+  M5:
+    name: BOUNDED_EXPERT_READY
+    objective: Provide independently reviewed expert-grade capability for an explicitly bounded scope.
+    required_capabilities:
+      - declared_bounded_scope
+      - coverage_and_gap_statement
+      - independent_expert_or_red_team_review
+      - no_unresolved_critical_gap_within_claimed_scope
+      - reproducible_decision_cases
+      - evidence_health_and_freshness_monitoring
+      - outcome_learning_and_reassessment
+    required_claim_wording: BOUNDED_EXPERT_READY
+    prohibited_claim_wording:
+      - COMPLETE_PROFESSION
+      - UNIVERSAL_EXPERT
+      - FULLY_COMPLETE
+
+promotion_rules:
+  - promotion_requires_all_required_capabilities_for_the_claimed_scope
+  - any_required_gate_failure_blocks_promotion
+  - maturity_cannot_be_inferred_from_number_of_sources_files_claims_or_commits
+  - a_verified_slice_does_not_promote_the_whole_domain_without_family_or_scope_evidence
+  - D3_professional_slices_may_require_stricter_domain_specific_proof_than_this_common_model
+
+demotion_and_reopen_triggers:
+  - authoritative_source_superseded_or_withdrawn
+  - material_conflict_discovered
+  - benchmark_or_measurement_invalidated
+  - reproducibility_failure
+  - independent_review_finds_material_gap
+  - decision_rule_uses_unproven_input
+  - freshness_window_expired
+  - operational_outcome_materially_contradicts_the_model
