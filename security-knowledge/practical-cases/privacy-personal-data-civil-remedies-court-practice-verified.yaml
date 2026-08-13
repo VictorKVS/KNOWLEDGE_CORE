@@ -1,0 +1,96 @@
+schema_version: "1.0"
+id: privacy-personal-data-civil-remedies-court-practice-verified
+date_verified: "2026-08-13"
+domain: practical_cases
+subdomain: privacy_personal_data_civil_remedies
+status: VERIFIED_SLICE
+source_policy: "Supreme Court of the Russian Federation official materials only for rule/case-law statements in this slice"
+
+records:
+  - id: PRACTICE-PRIVACY-001
+    status: VERIFIED
+    source_type: supreme_court_plenum
+    source: "Resolution of the Plenum of the Supreme Court of the Russian Federation No. 3 of 24.02.2005"
+    source_url: "https://vsrf.ru/files/10864/"
+    rule: "Disclosure without consent of truthful information about a citizen's private life can support a claim for compensation of moral harm; falsity or defamatory character is not a necessary element of that private-life claim."
+    applicability: "Use when the incident concerns disclosure/dissemination of information belonging to private life; do not automatically map every personal-data processing violation to private-life dissemination."
+    evidence_needed:
+      - "what information was disclosed"
+      - "whether the information related to private life"
+      - "fact and channel of dissemination to third persons"
+      - "presence/absence and scope of consent or other lawful ground"
+      - "claimed non-pecuniary harm and circumstances relevant to amount"
+    guardrail: "Truthfulness does not by itself legalize dissemination of private-life information."
+
+  - id: PRACTICE-PRIVACY-002
+    status: VERIFIED
+    source_type: supreme_court_practice_review
+    source: "Review of Russian court practice on honor, dignity, business reputation and privacy of public persons"
+    source_url: "https://www.vsrf.ru/files/12623/"
+    rule: "The Supreme Court review records examples where courts awarded moral-harm compensation after establishing dissemination of truthful private-life information without consent."
+    applicability: "Use as judicial-practice evidence for private-life dissemination disputes, including public persons; not as a universal tariff or automatic result for any data leak."
+    guardrail: "Public status does not abolish the right to private life; however statutory public-interest exceptions and the concrete context must be tested."
+
+  - id: PRACTICE-PRIVACY-003
+    status: VERIFIED
+    source_type: supreme_court_plenum
+    source: "Resolution of the Plenum of the Supreme Court of the Russian Federation No. 33 of 15.11.2022"
+    source_url: "https://vsrf.ru/documents/own/?year=2022"
+    rule: "Compensation of moral harm requires judicial assessment of the legally relevant circumstances and the nature/degree of physical or moral suffering; the amount is not a mechanical consequence of a technical or regulatory violation."
+    applicability: "Use as the general compensation framework after a legally protected non-property interest or another statutory basis for moral-harm compensation is established."
+    guardrail: "Security incident -> moral harm amount is not a fixed formula and must not be derived from regulatory fine size, number of records, CVSS or internal risk score."
+
+  - id: PRACTICE-PRIVACY-004
+    status: VERIFIED
+    source_type: supreme_court_case
+    source: "Determination of the Civil Chamber of the Supreme Court of the Russian Federation No. 57-KG14-8 of 25.11.2014"
+    source_url: "https://www.vsrf.ru/files/14985/"
+    rule: "Moral harm caused only by infringement of property rights is compensable only where the law provides such compensation; non-property rights and protected intangible benefits must be distinguished from purely property loss."
+    applicability: "Use to separate privacy/personal-data non-property harm from pure economic loss and to prevent double or legally unsupported remedies."
+    guardrail: "Do not infer moral-harm entitlement merely from financial loss caused by an information-security incident."
+
+  - id: PRACTICE-PRIVACY-005
+    status: VERIFIED_METADATA
+    source_type: supreme_court_production_card
+    source: "Supreme Court production card 33-KF25-186-K3, received 03.06.2025"
+    source_url: "https://www.vsrf.ru/lk/practice/appeals/21-36128547"
+    case_subject: "recognition of personal-data processing as unlawful; cessation of processing; moral-harm compensation; destruction of personal data"
+    procedural_result: "On 09.07.2025 transfer of the complaint for consideration in a Supreme Court hearing was refused."
+    evidentiary_value: "Negative/limiting evidence only: the existence of a personal-data claim does not itself establish a Supreme Court substantive rule or successful remedy."
+    guardrail: "Do not cite refusal to transfer as Supreme Court approval of every legal conclusion of lower courts and do not derive a general rule from this production card."
+
+  - id: PRACTICE-PRIVACY-006
+    status: VERIFIED
+    source_type: supreme_court_practice_rule
+    source: "Resolution of the Plenum of the Supreme Court of the Russian Federation No. 3 of 24.02.2005"
+    source_url: "https://vsrf.ru/files/10864/"
+    rule: "For dissemination-type claims the factual event of communication to at least one third person is legally significant; communication only to the person concerned is not dissemination when sufficient confidentiality measures prevented access by third persons."
+    applicability: "Use as a civil-law evidence pattern for disclosure/dissemination analysis; do not substitute it for the distinct definitions and notification duties of Federal Law No. 152-FZ."
+    evidence_needed:
+      - "recipient set"
+      - "whether any third person actually received or could access the information"
+      - "confidentiality measures"
+      - "logs/messages/publication records establishing dissemination"
+    guardrail: "A security control failure with no established disclosure event is not automatically the same legal fact as dissemination in this civil-law doctrine."
+
+case_decision_matrix:
+  - question: "Was there only a technical/security defect?"
+    consequence: "Do not jump directly to civil liability; establish a legally relevant violation, disclosure/processing event, protected interest, causation and remedy basis."
+  - question: "Was truthful private-life information disseminated without a lawful basis?"
+    consequence: "Civil protection and moral-harm compensation may be available even if the information is true."
+  - question: "Is the claimed harm purely financial/property harm?"
+    consequence: "Check a specific statutory basis before allowing moral-harm compensation."
+  - question: "Is there a lower-court or production-card record but no substantive Supreme Court ruling?"
+    consequence: "Store as case metadata/negative evidence, not as terminal precedent."
+
+red_team_findings:
+  - "A personal-data breach, a 152-FZ violation, private-life dissemination and a cybersecurity incident are overlapping but not identical legal facts."
+  - "Regulatory sanction does not mechanically prove civil causation, moral suffering or compensation amount."
+  - "Number of leaked records, severity score or regulator fine must not be used as a statutory compensation formula."
+  - "Court-practice metadata without a substantive ruling must remain lower evidence tier."
+
+maturity:
+  verified_clause_or_practice_records: 5
+  verified_metadata_records: 1
+  family_promotion: false
+  reason: "This is a bounded civil-remedies/privacy practice slice. Practical-cases family still lacks a broader verified corpus for modern security incidents, regulator enforcement, operator/processor causation, damages and appellate outcomes."
