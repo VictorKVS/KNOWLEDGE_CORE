@@ -1,0 +1,140 @@
+schema_version: 1
+domain_id: SYSTEMS_ARCHITECTURE
+title: Enterprise and Systems Architecture
+logical_knowledge_space_ref: KB-SYSTEMS-ARCHITECTURE
+canonical_tree: professional-knowledge/systems-architecture/
+
+maturity:
+  current_level: M0
+  status: SCOPE_DEFINED
+  expert_ready: false
+  decision_engine_ready: false
+  bounded_scope: architecture_decisions_for_software_and_enterprise_systems
+
+scope:
+  - stakeholder_and_system_context_definition
+  - architecture_drivers_and_quality_attributes
+  - system_decomposition_and_interfaces
+  - architecture_views_and_viewpoints
+  - architecture_decision_records_and_tradeoff_analysis
+  - integration_and_dependency_architecture
+  - deployment_and_operational_architecture_at_design_level
+  - architecture_evaluation_against_declared_requirements_constraints_and_risks
+  - transition_architecture_and_evolution_planning
+  - enterprise_boundary_and_capability_alignment_when_material_to_system_design
+
+non_scope:
+  - security_domain_truth_owned_by_SECURITY
+  - implementation_language_best_practices_owned_by_SOFTWARE_ENGINEERING
+  - cloud_provider_product_truth_owned_by_CLOUD_ARCHITECTURE
+  - detailed_network_engineering_owned_by_NETWORK_ENGINEERING
+  - detailed_financial_accounting
+  - project_management_process_ownership
+  - generic_strategy_consulting_without_architecture_decision_context
+
+ontology:
+  entities:
+    - STAKEHOLDER
+    - CONCERN
+    - REQUIREMENT
+    - CONSTRAINT
+    - ARCHITECTURE_DRIVER
+    - QUALITY_ATTRIBUTE
+    - SYSTEM_CONTEXT
+    - BOUNDARY
+    - COMPONENT
+    - INTERFACE
+    - DEPENDENCY
+    - VIEW
+    - VIEWPOINT
+    - ARCHITECTURE_OPTION
+    - TRADEOFF
+    - RISK
+    - ASSUMPTION
+    - ARCHITECTURE_DECISION
+    - FITNESS_CHECK
+    - TRANSITION_STATE
+  core_relations:
+    - STAKEHOLDER_HAS_CONCERN
+    - CONCERN_DRIVES_REQUIREMENT
+    - REQUIREMENT_OR_CONSTRAINT_DRIVES_ARCHITECTURE
+    - OPTION_SATISFIES_OR_VIOLATES_DRIVER
+    - OPTION_CREATES_TRADEOFF
+    - DECISION_SELECTS_OPTION
+    - DECISION_REQUIRES_EVIDENCE
+    - FITNESS_CHECK_VERIFIES_DECISION
+    - CHANGE_TRIGGERS_REASSESSMENT
+
+source_taxonomy:
+  - consensus_or_formal_architecture_standard
+  - official_platform_or_protocol_specification
+  - primary_vendor_product_documentation_for_product_specific_facts
+  - peer_reviewed_or_primary_empirical_research
+  - recognized_professional_methodology_with_explicit_scope
+  - measured_system_evidence_and_experiment
+  - incident_postmortem_or_operational_evidence_with_known_context
+  - secondary_professional_reference_as_candidate_only
+
+source_precedence:
+  rule: context_specific_primary_evidence_over_generic_methodology
+  ordering:
+    - binding_requirements_and_constraints_for_the_actual_system
+    - applicable_formal_standard_or_protocol_specification
+    - measured_evidence_from_the_actual_or_representative_system
+    - primary_product_documentation_for_product_specific_claims
+    - peer_reviewed_or_primary_empirical_research
+    - recognized_professional_methodology
+    - secondary_professional_material
+  caveat: higher_authority_does_not_make_an_out_of_scope_source_applicable
+
+freshness_policy:
+  versioned_sources_must_pin_version_or_observed_date: true
+  product_specific_architecture_claims_require_reassessment_on_major_version_or_service_contract_change: true
+  architecture_decisions_require_reassessment_when_material_driver_constraint_or_dependency_changes: true
+
+conflict_policy:
+  - preserve_material_conflict_instead_of_forcing_consensus
+  - distinguish_normative_requirement_from_methodological_guidance
+  - prefer_direct_measurement_for_system_specific_performance_or_reliability_claims
+  - escalate_cross_domain_conflicts_to_relevant_domain_reviewer
+  - unresolved_material_conflict_blocks_D2_or_D3_acceptance
+
+objectivity_policy:
+  principles:
+    - hard_constraints_before_preferences
+    - no_architecture_style_is_default_best_practice
+    - popularity_is_not_terminal_evidence
+    - vendor_reference_architecture_is_candidate_not_independent_proof
+    - option_comparison_uses_same_declared_criteria_where_applicable
+    - unknown_material_inputs_remain_unknown
+    - dissent_and_reversal_conditions_are_preserved
+
+decision_evidence_policy:
+  D0: local_reversible_structure_choice_with_no_material_external_effect
+  D1: bounded_design_choice_requires_explicit_rationale_and_local_verification
+  D2: architecture_or_product_decision_requires_real_alternatives_evidence_tradeoffs_and_independent_senior_review
+  D3: regulated_safety_irreversible_or_high_consequence_architecture_requires_cross_domain_review_and_accountable_approval
+
+review_policy:
+  common_protocol_ref: father/domain-knowledge/PROFESSIONAL_KB_REVIEW_PROTOCOL.yaml
+  domain_policy_ref: professional-knowledge/systems-architecture/REVIEW_POLICY.yaml
+  material_producer_and_final_senior_reviewer_separate: true
+
+legacy_material_policy:
+  existing_architecture_material_is_candidate_until_admitted: true
+  no_automatic_promotion_from_repository_location: true
+  provenance_required_before_claim_promotion: true
+
+promotion_plan:
+  M1: admit_bounded_source_floor_for_architecture_drivers_views_tradeoffs_and_evaluation
+  M2: atomize_claims_methods_metrics_and_failure_modes_with_exact_provenance
+  M3: build_context_bound_architecture_decision_logic_with_real_alternatives
+  M4: verify_decision_logic_against_reproducible_positive_negative_and_adversarial_cases
+  M5: independent_senior_and_skeptical_red_team_for_a_bounded_expert_ready_slice
+
+non_claims:
+  - any_architecture_framework_is_universally_superior
+  - microservices_are_default_best_architecture
+  - layered_architecture_is_default_best_architecture
+  - cloud_is_default_best_deployment_model
+  - current_domain_is_expert_ready
