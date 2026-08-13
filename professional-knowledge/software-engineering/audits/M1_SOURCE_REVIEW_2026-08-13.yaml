@@ -1,0 +1,117 @@
+schema_version: 1
+domain_id: SOFTWARE_ENGINEERING
+audit_id: SWENG-M1-SOURCE-REVIEW-2026-08-13
+maturity_target: M1
+review_protocol_ref: father/domain-knowledge/PROFESSIONAL_KB_REVIEW_PROTOCOL.yaml
+source_registry_ref: professional-knowledge/software-engineering/SOURCE_REGISTRY.yaml
+
+assignments:
+  producer:
+    role: SOURCE_RESEARCHER
+    assignment_id: SWENG-M1-SOURCE-RESEARCH-001
+  evidence_review:
+    role: EVIDENCE_ENGINEER
+    assignment_id: SWENG-M1-EVIDENCE-CHECK-001
+  final_senior_reviewer:
+    role: SENIOR_PRACTITIONER_REVIEWER
+    assignment_id: SWENG-M1-SENIOR-REVIEW-001
+    independent_from_producer: true
+  skeptical_review:
+    role: SKEPTICAL_CRITIC
+    assignment_id: SWENG-M1-SKEPTICAL-REVIEW-001
+    independent_from_producer: true
+
+producer_summary:
+  admitted_sources:
+    - SWENG-SRC-PYTHON-313-REF
+    - SWENG-SRC-RFC9110
+    - SWENG-SRC-PG17-DOC
+    - SWENG-SRC-SEI-QAW3
+    - SWENG-SRC-PYTEST-STABLE
+    - SWENG-SRC-PYPERF-210
+  admission_basis:
+    - official_or_primary_origin_for_contractual_behavior
+    - explicit_version_or_mutability_state
+    - explicit_intended_use
+    - explicit_limitations
+    - explicit_reassessment_trigger
+
+alternatives_considered:
+  - option: admit_only_vendor_or_project_documentation
+    disposition: REJECTED
+    reason: insufficient_for_protocol_language_architecture_and_measurement_method_coverage
+  - option: admit_only_formal_standards_and_specifications
+    disposition: REJECTED
+    reason: insufficient_for_version_specific_product_behavior_testing_frameworks_and_measurement_tool_contracts
+  - option: admit_books_blogs_and_popular_architecture_guidance_as_equal_authority
+    disposition: REJECTED
+    reason: useful_for_discovery_but_weaker_for_first_auditable_contract_and_method_layer
+  - option: require_complete_profession_wide_source_inventory_before_M1
+    disposition: REJECTED
+    reason: maturity_model_allows_bounded_slices_if_scope_and_gaps_are_explicit
+
+senior_review:
+  verdict: ACCEPT_WITH_RESTRICTIONS
+  strongest_objection: >-
+    The set is intentionally backend-biased and cannot justify domain-wide Software Engineering
+    recommendations. The mutable pytest stable channel is unsafe for historical replay unless an
+    exact release is pinned at decision time. The SEI QAW source is methodologically useful but old
+    and must not be treated as proof that its process is optimal for every architecture context.
+  missing_or_weak_evidence:
+    - no_complete_language_or_runtime_family_beyond_bounded_Python_3_13
+    - no_companion_HTTP_transport_or_caching_specs_admitted_yet
+    - no_general_database_standard_or_cross_database_comparison_source
+    - no_independent_testing_effectiveness_evidence
+    - no_general_performance_measurement_methodology_beyond_pyperf_tool_contracts
+  viable_alternatives:
+    - add_exact_pytest_release_pin_before_extracting_version_sensitive_M2_claims
+    - add_RFC_9111_and_protocol_specific_HTTP_specs_when caching_or_wire_behavior_enters_scope
+    - add_additional_language_runtime_specs_only when a decision requires them
+    - add_reproducible_project_measurements rather_than_generalize tool_documentation into performance_truth
+  improved_option_or_reason_no_better_option_found: >-
+    A narrower bounded source set is preferable to a broad weakly governed inventory at this stage.
+    The improvement is to retain this six-family set but enforce exact pins at evidence-extraction
+    time and expand only against concrete M2/M3 decision needs.
+  conditions_for_reversal:
+    - a_source_is_superseded_or_withdrawn
+    - target_product_or_runtime_versions_change
+    - an_M2_claim_requires_behavior_outside_declared_source_scope
+    - independent_review_finds_a_primary_source_with_materially_conflicting_contract
+  residual_risks:
+    - source_selection_bias_toward_Python_backend_stack
+    - mutable_documentation_aliases
+    - methodology_age_for_SEI_QAW
+  verification_recommendations:
+    - CI must reject M1 if source_registry is absent or any ADMITTED source lacks authority/version_or_observed_at/limitations/freshness
+    - M2 extraction must preserve exact source locator and claim-specific applicability
+
+skeptical_critic:
+  verdict: ACCEPT_WITH_RESTRICTIONS
+  strongest_objection: >-
+    Six reputable sources can create a false sense of breadth. M1 must remain a source-admission
+    claim only and not be converted into statements such as Python/PostgreSQL/pytest are preferred
+    technologies or QAW is the best architecture method.
+  template_thinking_risk:
+    - do_not_convert_source_presence_into_technology_preference
+    - do_not_convert_official_documentation_into_empirical_performance_claims
+    - do_not_convert_methodology_description_into_universal_best_practice
+  missing_option_challenge:
+    - standards_from_other_ecosystems_are_deliberately_not_needed_until_scope_requires_them
+    - direct_project_measurements_may_dominate_generic_sources_for_empirical_D2_decisions
+  better_alternative: >-
+    No broader source dump is better at M1. A demand-driven expansion tied to explicit future claims
+    is more auditable and reduces stale unused evidence. This conclusion reverses if M2 cannot build
+    representative slices without repeatedly discovering missing foundational sources.
+  conditions_for_reversal:
+    - repeated_M2_blockage_due_to_source_coverage
+    - evidence_conflict_not_resolvable_with_current_hierarchy
+    - current_backend_scope_is_expanded
+
+promotion_decision:
+  from: M0_SCOPE_DEFINED
+  to: M1_SOURCES_ADMITTED
+  disposition: APPROVE_BOUNDED
+  proof_statement: >-
+    The bounded Software Engineering domain now has an auditable admitted source layer with
+    authority classification, version/freshness state, limitations, independent senior review and
+    explicit coverage gaps. No M2 professional rule or expert-ready claim is promoted by this audit.
