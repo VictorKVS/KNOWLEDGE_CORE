@@ -1,18 +1,23 @@
-schema_version: 2
+schema_version: 3
 domain_id: SOFTWARE_ENGINEERING
 title: Software engineering and architecture
 logical_knowledge_space_ref: KB-SOFTWARE-ENGINEERING
 canonical_tree: professional-knowledge/software-engineering/
 maturity:
   model_ref: father/domain-knowledge/PROFESSIONAL_KB_MATURITY_MODEL.yaml
-  current_level: M1
-  current_state: SOURCES_ADMITTED
-  claim_scope: bounded_backend_source_layer
+  current_level: M2
+  current_state: ATOMIC_KNOWLEDGE_BOUNDED
+  claim_scope: bounded_backend_atomic_http_postgres_benchmark_evidence
   expert_ready: false
+  decision_engine_ready: false
   evidence_refs:
     - professional-knowledge/software-engineering/SOURCE_REGISTRY.yaml
-    - professional-knowledge/software-engineering/audits/M1_SOURCE_REVIEW_2026-08-13.yaml
-  promotion_blocked_until: M2_atomic_knowledge_has_claim_specific_provenance_and_challenge
+    - professional-knowledge/software-engineering/atomic/HTTP_RETRY_IDEMPOTENCY.yaml
+    - professional-knowledge/software-engineering/atomic/POSTGRES_TRANSACTION_ISOLATION.yaml
+    - professional-knowledge/software-engineering/atomic/BENCHMARK_EVIDENCE_QUALITY.yaml
+    - professional-knowledge/software-engineering/RELATIONS.yaml
+    - professional-knowledge/software-engineering/audits/M2_ATOMIC_KNOWLEDGE_REVIEW_2026-08-13.yaml
+  promotion_blocked_until: M3_applicability_constraints_alternatives_and_decision_rules_are_independently_reviewed
 purpose: evidence-backed software engineering decisions rather than opinion-based technology selection
 scope: [software_architecture_and_design, language_runtime_and_API_contracts, algorithms_data_structures_and_concurrency, persistence_and_data_access, testing_verification_and_measurement, performance_reliability_maintainability, build_packaging_dependency_lifecycle]
 non_scope: [adjacent_domain_regulatory_truth, infrastructure_operations, cloud_platform_operations, product_priority_authority, organizational_authority]
@@ -50,7 +55,7 @@ legacy_material_policy:
   rule: existing_material_is_candidate_only_until_reclassified_and_provenanced
 promotion_plan:
   M1: COMPLETE_BOUNDED
-  M2: atomic_rules_metrics_patterns_and_failure_modes_with_exact_support
-  M3: bounded_decision_packets_with_real_alternatives
+  M2: COMPLETE_BOUNDED
+  M3: applicability_constraints_alternatives_and_decision_rules
   M4: reproducible_positive_negative_and_adversarial_cases
   M5: independent_bounded_expert_review
