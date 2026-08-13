@@ -1,0 +1,37 @@
+schema_version: 1
+scorecard_id: SEC-COVERAGE-2026-08-13-R07
+scope: Russian paper-security P0 core
+previous_scorecard: security-knowledge/audits/coverage-scorecard-2026-08-13-run-06.yaml
+scoring_policy:
+  overall_formula: arithmetic_mean_of_P0_family_status_points_from_master_inventory
+  conservative_rule: Mature sub-slices do not promote a family until family-wide evidence meets the same proof floor.
+metrics:
+  p0_family_count: 12
+  p0_registered_or_better: 12
+  conservative_overall_maturity_percent: 10.0
+  displayed_percent_rounded: 10
+run_verified_work:
+  - artifact: security-knowledge/threat-modeling/bdu-asutp-snapshot-policy.yaml
+    status: VERIFIED_PROCESS_DESIGN
+    details: Defines immutable observed_at/snapshot semantics, stable identifiers, reassessment triggers, provenance and red-team gates for dynamic FSTEK BDU ASU TP consumption.
+research_findings:
+  - item: FSTEK threat methodology 2021
+    status: AUTHORITATIVE_SECONDARY_CORROBORATED_PRIMARY_STILL_PENDING
+    details: GARANT and ConsultantPlus corroborate title, approval date 2021-02-05 and document structure; canonical FSTEK full-text capture was not found in this pass, therefore no methodology rule was promoted to VERIFIED.
+  - item: BDU ASU TP
+    status: PRIMARY_DYNAMIC_SOURCE_CONFIRMED
+    details: Live FSTEK BDU ASU TP pages expose stable catalog identifiers and timestamps for catalog records; detailed snapshot ingestion remains pending.
+red_team:
+  result: FAIL
+  critical_gaps: []
+  high_gap_count: 7
+  this_run_progress:
+    - Dynamic-catalog historical-reproducibility policy is now explicit and committed.
+    - Methodology provenance is deliberately not promoted from secondary legal-system corroboration to primary-source verification.
+  blocked_write_note: Attempts to commit a detailed catalog snapshot/index were blocked by connector safety classification; no completeness credit is assigned for those blocked writes.
+expert_ready: false
+next_bottleneck:
+  - obtain canonical primary FSTEK full text for the 2021 threat methodology
+  - implement safe automated BDU snapshot ingestion outside blocked connector payload patterns
+  - finish exhaustive current CII sector overlay inventory and PP 127 version chain
+  - add GIS and ASU TP classification decision paths
