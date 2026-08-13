@@ -1,0 +1,87 @@
+schema_version: 1
+artifact_id: CII-PP127-VERSION-CHAIN-2026-0001
+family_id: CLASSIFICATION_AND_CATEGORIZATION_METHODS
+checked_at: 2026-08-14
+status: VERIFIED_VERSION_METADATA_BOUNDED
+purpose: Record the current known legal-version chain that must be resolved before using PP RF No. 127 for a 2026 categorization analysis.
+
+sources:
+  - source_id: PP_RF_127_2018
+    title: Постановление Правительства Российской Федерации от 08.02.2018 № 127
+    source_tier: PRIMARY_OFFICIAL_PUBLICATION
+    official_publication_number: '0001201802130006'
+    official_publication_date: 2018-02-13
+    source_url: https://publication.pravo.gov.ru/Document/View/0001201802130006
+    verification_status: VERIFIED_SOURCE_IDENTITY
+
+  - source_id: PP_RF_1762_2025
+    title: Постановление Правительства Российской Федерации от 07.11.2025 № 1762
+    source_tier: PRIMARY_GOVERNMENT_PLUS_AUTHORITATIVE_TEXT
+    official_publication_number: '0001202511080017'
+    official_publication_date: 2025-11-08
+    effective_date: 2025-11-16
+    primary_government_url: https://government.ru/docs/all/161779/
+    authoritative_text_url: https://www.consultant.ru/document/cons_doc_LAW_518358/9f9efbd31a4e9f31924de6eb813cdf8d29553ca8/
+    verification_status: VERIFIED_EFFECTIVE_AMENDMENT
+    verified_effect: >-
+      Amends PP RF No. 127 and changes the categorization framework so that
+      current analysis must take the legally defined lists of typical sectoral
+      CII objects and sector-specific features into account.
+
+  - source_id: GOV_ORDER_360R_2026
+    title: Распоряжение Правительства Российской Федерации от 26.02.2026 № 360-р
+    source_tier: PRIMARY_OFFICIAL_PUBLICATION_PLUS_AUTHORITATIVE_CURRENT_TEXT
+    official_publication_number: '0001202602260020'
+    official_publication_date: 2026-02-26
+    official_url: https://publication.pravo.gov.ru/document/0001202602260020
+    authoritative_current_text_url: https://www.consultant.ru/document/cons_doc_LAW_527541/
+    current_known_revision_date: 2026-05-27
+    verification_status: VERIFIED_CURRENT_LIST_ANCHOR
+    verified_effect: Establishes the Government list of typical sectoral CII objects referenced by the current categorization framework.
+
+  - source_id: GOV_ORDER_1237R_2026
+    title: Распоряжение Правительства Российской Федерации от 27.05.2026 № 1237-р
+    source_tier: AUTHORITATIVE_TEXT_WITH_OFFICIAL_PUBLICATION_METADATA
+    official_publication_number: '0001202605290092'
+    official_publication_date: 2026-05-29
+    authoritative_text_url: https://base.garant.ru/414309602/
+    verification_status: VERIFIED_AMENDMENT_METADATA_AND_CONTENT
+    verified_effect: >-
+      Amends the list approved by Order No. 360-r; in particular, item 98 was
+      revised and item 99 was removed. This proves that the list is versioned
+      and must not be treated as static.
+
+verified_version_rules:
+  - id: CII-VERSION-001
+    statement: A 2026 PP 127 analysis must identify the legal version effective on the decision date.
+    evidence: PP_RF_1762_2025
+    verification_status: VERIFIED
+  - id: CII-VERSION-002
+    statement: The typical-sector-object list is a separate versioned source and must be pinned to the decision date.
+    evidence: GOV_ORDER_360R_2026
+    verification_status: VERIFIED
+  - id: CII-VERSION-003
+    statement: The list approved by No. 360-r changed on 2026-05-27 through No. 1237-r.
+    evidence: GOV_ORDER_1237R_2026
+    verification_status: VERIFIED
+  - id: CII-VERSION-004
+    statement: Historical list content must not be presented as current without transition/date analysis.
+    evidence: GOV_ORDER_1237R_2026
+    verification_status: VERIFIED
+
+red_team_guardrails:
+  - PP RF No. 127 is not treated as a timeless standalone decision source.
+  - The five previously verified 2026 sector acts remain an incomplete slice and are not represented as an exhaustive inventory.
+  - Publication metadata proves identity/date; full operational requirements require clause-level locators in separate artifacts.
+  - The official publication endpoint for No. 1237-r was identified from authoritative metadata but was not successfully fetched during this run, so it is not labelled PRIMARY_FETCH_VERIFIED.
+
+pending:
+  - exhaustive_sector_overlay_inventory_2025_2026
+  - complete_current_pp127_clause_level_extraction
+  - immutable_snapshot_of_current_360r_list
+  - reproducible_case_with_independent_review
+
+maturity_effect:
+  family_promotion_allowed: false
+  family_status: REGISTERED_WITH_VERIFIED_VERSION_CHAIN_SLICE
+  reason: Version metadata is materially stronger, but family-wide proof-floor remains incomplete.
