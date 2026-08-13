@@ -1,0 +1,38 @@
+schema_version: 1
+scorecard_id: SEC-COVERAGE-2026-08-13-R08
+scope: Russian paper-security P0 core
+previous_scorecard: security-knowledge/audits/coverage-scorecard-2026-08-13-run-07.yaml
+scoring_policy:
+  overall_formula: arithmetic_mean_of_P0_family_status_points_from_master_inventory
+  conservative_rule: Mature sub-slices do not promote a family until family-wide evidence meets the same proof floor.
+metrics:
+  p0_family_count: 12
+  p0_registered_or_better: 12
+  conservative_overall_maturity_percent: 10.0
+  displayed_percent_rounded: 10
+run_verified_work:
+  - item: FSTEK BDU ASU TP live catalog
+    status: PRIMARY_DYNAMIC_SOURCE_REVERIFIED
+    details: Primary regulator catalog pages were rechecked on 2026-08-13. Stable catalog identifiers, threat records, vulnerability records, exposed timestamps on selected threat records, and regulator-defined relations between selected vulnerability records, threats and controls were confirmed.
+  - item: FSTEK threat methodology 2021
+    status: PRIMARY_FULL_TEXT_STILL_PENDING
+    details: No canonical open FSTEK full-text capture was obtained in this pass; methodology requirements remain unpromoted and no clause-level rule is counted as VERIFIED.
+verified_catalog_progress:
+  previously_registered_verified_observations: 3
+  additional_primary_records_researched_this_run: 5
+  committed_additional_verified_catalog_records: 0
+  reason_not_committed: Connector safety classification blocked the detailed registry update; no completeness credit is assigned for blocked writes.
+red_team:
+  result: FAIL
+  critical_gaps: []
+  high_gap_count: 7
+  this_run_progress:
+    - Revalidated that BDU ASU TP is a dynamic primary regulator catalog and not a timeless normative source.
+    - Confirmed that catalog relations must not be interpreted as universal legal applicability.
+    - Preserved conservative scoring because detailed catalog expansion could not be committed.
+expert_ready: false
+next_bottleneck:
+  - obtain canonical primary FSTEK full text for the 2021 threat methodology
+  - commit a safe normalized BDU snapshot/index representation through an allowed ingestion path
+  - finish exhaustive current CII sector overlay inventory and PP 127 version chain
+  - add GIS and ASU TP classification decision paths
