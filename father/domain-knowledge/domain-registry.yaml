@@ -1,10 +1,12 @@
-schema_version: 3
+schema_version: 4
 purpose: >-
   Registry of professional knowledge bases used by Father. Each domain is built with the same
   evidence-first discipline while retaining domain-specific laws, standards, calculations,
   tools, metrics, constraints and professional practice.
 common_doctrine_ref: father/domain-knowledge/PROFESSIONAL_EVIDENCE_DOCTRINE.md
 common_decision_contract_ref: father/domain-knowledge/professional-decision-schema.yaml
+common_maturity_model_ref: father/domain-knowledge/PROFESSIONAL_KB_MATURITY_MODEL.yaml
+bootstrap_template_ref: father/domain-knowledge/DOMAIN_BOOTSTRAP_TEMPLATE.yaml
 
 domains:
   - id: SECURITY
@@ -20,7 +22,12 @@ domains:
     reference_domain_role: first evidence-first implementation pattern for other professional domains
   - id: SOFTWARE_ENGINEERING
     title: Software engineering and architecture
-    status: PLANNED
+    status: M0_SCOPE_DEFINED
+    logical_knowledge_space_ref: KB-SOFTWARE-ENGINEERING
+    canonical_tree: professional-knowledge/software-engineering/
+    maturity_ref: professional-knowledge/software-engineering/DOMAIN.yaml
+    roadmap_ref: professional-knowledge/software-engineering/ROADMAP.yaml
+    source_policy_ref: professional-knowledge/software-engineering/SOURCE_POLICY.yaml
   - id: DEVOPS_SRE
     title: DevOps, SRE and platform engineering
     status: PLANNED
@@ -87,9 +94,11 @@ rules:
   - Cross-domain concepts are linked, not copied as conflicting independent truths.
   - Every domain must expose requirements, constraints, metrics, workflows, checklists, evidence, alternatives, decisions, implementations and competency paths where applicable.
   - Every domain must define its own source taxonomy, source precedence, freshness policy and conflict-handling rules.
+  - Every activated non-Security domain follows PROFESSIONAL_KB_MATURITY_MODEL and DOMAIN_BOOTSTRAP_TEMPLATE unless a stricter domain-specific model is declared.
   - Material decisions use PROFESSIONAL_DECISION_RECORD and evidence depth proportional to decision materiality D0-D3.
   - Best practice, industry standard, vendor recommendation or model output is not a terminal justification unless its source, applicability and limitations are explicit.
   - Hard legal, contractual, security or safety constraints cannot be overridden by preference scores or business convenience without an explicit governed exception where such exception is legally and organizationally possible.
   - Historical decisions preserve the knowledge/evidence available at decision time; later reassessment supersedes rather than rewrites history.
   - Logical domain identity is stable even if physical repository/path changes later.
   - FATHER consumes domain knowledge through governed routes and cannot silently rewrite VERIFIED domain truth.
+  - Maturity is earned by passed evidence gates, never by file count, token volume, commit count or model confidence.
