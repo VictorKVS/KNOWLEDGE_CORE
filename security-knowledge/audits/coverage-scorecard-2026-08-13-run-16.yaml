@@ -1,0 +1,76 @@
+schema_version: "1.0"
+id: coverage-scorecard-2026-08-13-run-16
+date: "2026-08-13"
+overall_strict_p0_percent: 10
+p0_families_registered: "12/12"
+critical_gaps: 0
+high_gaps: 4
+red_team: FAIL
+expert_ready: false
+
+family_scores:
+  npa_rf: 10
+  gost_iso: 10
+  classification_categorization: 10
+  threat_modeling_bdu: 10
+  risk_methods: 10
+  legal_consequences: 10
+  szi_skzi_license_lifecycle: 10
+  roles_deadlines_responsibility: 10
+  evidence_audit: 10
+  practical_cases: 10
+
+this_run:
+  committed_verified_records: 7
+  committed_verified_metadata_records: 3
+  committed_file: "security-knowledge/lifecycle/fsb-skzi-license-lifecycle-verified.yaml"
+  commit: "10d34b06f9759ca0f47f94350ff5696a8c65c494"
+  areas:
+    - "ФСБ/СКЗИ: applicability and lifecycle of ordinary crypto-activity licenses under 99-FZ + PP313"
+    - "official CLSZ FSB licensing and certified-product registry entrypoints"
+    - "registry/scope/place-of-activity monitoring model"
+    - "separation of FSB licensing from FSB certification and from FSTEC certificate rules"
+  key_findings:
+    - "ordinary crypto-activity license under the 99-FZ regime is modeled as indefinite; no fictitious renewal countdown"
+    - "license applicability depends on the actual work/service item under PP313, not merely on possession/use of cryptographic software"
+    - "the own-needs exception is bounded and must not be generalized to all crypto-related activity"
+    - "registered work/service scope and places of activity are lifecycle dimensions that can require revalidation/change"
+    - "CLSZ FSB publishes official entrypoints to crypto-activity license registry and certified-SZI list"
+    - "FSB certificate lifecycle remains unproven at clause level; FSTEC validity/suspension rules are explicitly prohibited from inheritance"
+  currentness_check:
+    pp313_authoritative_consolidated_revision: "2023-08-28, effective 2023-09-05"
+    fsb_order_142_amendment:
+      act: "FSB Order N 557 of 2025-12-29"
+      official_publication: "2025-12-30 / 0001202512300057"
+    future_change_watch: "A May 2026 FSB draft proposed PP313 changes; draft is not treated as enacted law."
+  ci_check:
+    commit_combined_status_records: 0
+    interpretation: "No commit status contexts were returned by the connector for this commit; do not claim CI green from absence of statuses."
+
+verified_known_minimum:
+  previous_minimum_cumulative_relevant_verified_records: 113
+  added_this_run: 7
+  minimum_cumulative_relevant_verified_records: 120
+  additional_verified_metadata_records_this_run: 3
+  note: "Minimum only; VERIFIED_METADATA records are not counted as clause-level VERIFIED obligations."
+
+high_gaps_list:
+  - "primary full text of FSTEC Threat Assessment Methodology 2021 and clause-level atomization"
+  - "version-aware CII categorization overlays and full PP127 chain"
+  - "FSB SKZI/SZI certificate clause-level lifecycle plus official machine-readable certificate-list snapshot scheme; FSTEC certificate registry automation endpoint remains unresolved"
+  - "practical cases and court practice for security/personal-data incidents, causation, damage and responsibility"
+
+closed_or_reduced_this_run:
+  - "FSB ordinary crypto-activity license expiry/renewal misconception removed: no renewal-proximity model for indefinite 99-FZ license"
+  - "FSB license applicability now tied to PP313 work/service scope and bounded own-needs exception"
+  - "FSB registry/source ownership and license-control version awareness added"
+  - "lifecycle High gap narrowed from combined FSB license+certificate uncertainty to certificate clause-level lifecycle and registry automation"
+
+next_bottleneck:
+  - "obtain clause-level current FSB rules for SKZI/SZI certificate issue, validity, extension, suspension, termination and continued-use conditions"
+  - "resolve official downloadable certified-product list format and immutable snapshot model"
+  - "then return to primary full text of FSTEC Threat Assessment Methodology 2021"
+
+promotion_decision:
+  family_promotion: false
+  reason: "The FSB license slice is now evidence-backed, but the lifecycle family-wide proof floor is not met because FSB certificate lifecycle and registry automation remain unresolved. Overall strict P0 stays 10%."
