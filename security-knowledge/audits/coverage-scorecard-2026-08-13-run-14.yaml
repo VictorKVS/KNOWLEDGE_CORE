@@ -1,0 +1,66 @@
+schema_version: "1.0"
+id: coverage-scorecard-2026-08-13-run-14
+date: "2026-08-13"
+overall_strict_p0_percent: 10
+p0_families_registered: "12/12"
+critical_gaps: 0
+high_gaps: 4
+red_team: FAIL
+expert_ready: false
+
+family_scores:
+  npa_rf: 10
+  gost_iso: 10
+  classification_categorization: 10
+  threat_modeling_bdu: 10
+  risk_methods: 10
+  legal_consequences: 10
+  szi_skzi_license_lifecycle: 10
+  roles_deadlines_responsibility: 10
+  evidence_audit: 10
+  practical_cases: 10
+
+this_run:
+  committed_verified_records: 9
+  committed_file: "security-knowledge/roles-and-responsibility/gk-1065-1081-regress-and-harm-prevention-verified.yaml"
+  areas:
+    - "ГК РФ ст.1065: предупреждение причинения вреда и судебные превентивные меры"
+    - "ГК РФ ст.1081: общий регресс, совместные причинители и специальные исключения"
+    - "ВС РФ N 14-КГ14-12: предел регресса работодателя к работнику"
+    - "Пленум ВС РФ N 52: трудовой режим и proof set материальной ответственности"
+  routing_matrix_added:
+    - "работодатель возместил вред третьему лицу -> ГК 1068/1081 -> внутреннее взыскание проверяется по ТК РФ"
+    - "административный штраф организации != автоматически долг работника"
+    - "будущий вред -> ст.1065 допускает превентивный иск, но risk score != юридическое доказательство опасности"
+  red_team_guardrails:
+    - "ГК 1081 не обходится вокруг ограничений ТК РФ"
+    - "полная сумма внешнего возмещения не переносится автоматически на работника"
+    - "для взыскания нужны противоправность, вина, причинная связь, прямой действительный ущерб, размер и отсутствие исключающих обстоятельств"
+    - "равные доли при совместном причинении вреда — только если степень вины определить невозможно"
+
+verified_known_minimum:
+  previous_minimum_cumulative_relevant_verified_records: 94
+  added_this_run: 9
+  minimum_cumulative_relevant_verified_records: 103
+  note: "Minimum only; not a full repository recount. Routing interpretations are conservative and tied to cited norms/judicial positions."
+
+high_gaps_list:
+  - "первичный полный текст Методики оценки угроз ФСТЭК 2021 и clause-level atomization"
+  - "version-aware КИИ categorization overlays and full PP127 chain"
+  - "SZI/SKZI/license lifecycle with expiry/renewal monitoring and decision ownership"
+  - "практические кейсы и судебная практика по ИБ/ПДн: ответственность, ущерб, причинная связь, применимость"
+
+closed_or_reduced_this_run:
+  - "ГК РФ ст.1065/1081: базовый verified slice закрыт"
+  - "матрица организация -> работник: внешний вред/выплата -> внутреннее взыскание -> proof requirements добавлена"
+  - "High gaps: 5 -> 4"
+
+next_bottleneck:
+  - "вернуться к family-wide proof floor: первичный полный текст Методики угроз ФСТЭК 2021"
+  - "после него version-aware PP127/CII overlays"
+  - "затем SZI/SKZI/license lifecycle: реестр, срок сертификата/лицензии, renewal proximity, owner/decision matrix"
+  - "параллельно собирать практические судебные кейсы по ИБ/ПДн без превращения единичных решений в универсальные нормы"
+
+promotion_decision:
+  family_promotion: false
+  reason: "High gap по ГК 1065/1081 закрыт и cumulative verified minimum вырос, но ни одно ключевое family-wide направление не прошло полный proof floor. Общий P0 остается 10%."
