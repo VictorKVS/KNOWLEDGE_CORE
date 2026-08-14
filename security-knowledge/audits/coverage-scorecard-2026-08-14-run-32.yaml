@@ -1,0 +1,68 @@
+schema_version: "1.0"
+id: coverage-scorecard-2026-08-14-run-32
+date: "2026-08-14"
+overall_strict_p0_percent: 10
+p0_families_registered: "12/12"
+critical_gaps: 0
+high_gaps: 1
+red_team: FAIL
+expert_ready: false
+
+family_scores:
+  npa_rf: 10
+  gost_iso: 10
+  classification_categorization: 10
+  threat_modeling_bdu: 10
+  risk_methods: 10
+  legal_consequences: 10
+  szi_skzi_license_lifecycle: 10
+  roles_deadlines_responsibility: 10
+  evidence_audit: 10
+  practical_cases: 10
+
+this_run:
+  focus: BDU_ASUTP_FULL_CURRENT_THREAT_INDEX_OBSERVATION
+  added_files:
+    - security-knowledge/threat-modeling/bdu-asutp-threat-index-observed-2026-08-14.yaml
+  commits:
+    threat_index_snapshot: "85abcade5a25a24ae6127ea56d2264f5ae3fbec1"
+  verified_dynamic_catalog_records_added: 10
+  verified_catalog_relation_groups_added: 5
+  immutable_primary_clause_records_added: 0
+  maturity_claim: NO_FAMILY_PROMOTION
+
+verified:
+  - "The current FSTEK BDU ASU TP threat index exposes ten threat families, УТП:01 through УТП:10, including two entries with 2025 source timestamps (УТП:09 and УТП:10)."
+  - "Exact Cyrillic source identifiers and observed source timestamps were preserved."
+  - "Individual regulator vulnerability pages verify catalog relations from BDA:C001/C004/C006/C009/C010 to threat identifiers."
+  - "Catalog membership and catalog relation were not promoted to system-specific applicability or mandatory-control conclusions."
+
+pending:
+  - "acquire raw BDU catalog/API response bytes where technically and legally available and store SHA-256 digests"
+  - "snapshot all object-of-impact and implementation-method relations for the ten threat families"
+  - "add deterministic next-snapshot diff/change-detection and reassessment triggers"
+  - "download and SHA-256 hash-pin NKCKI order No. 2 dated 2026-07-14 and the 2026-07-08 Initial Data artifact"
+  - "extract exact NKCKI reporting fields, technical parameters and attachment/schema requirements"
+  - "preserve immutable/hash-pinned primary snapshots for FSB 539/546/547/548/553/554/161"
+
+red_team_findings:
+  verdict: FAIL
+  positives:
+    - "Threat-modeling coverage now has a complete observed current threat-family index rather than a four-threat partial slice."
+    - "The model preserves source timestamps separately from legal effective dates and applicability decisions."
+  blockers:
+    - "The remaining High blocker is unchanged: immutable/hash-pinned primary provenance is still absent for high-impact current GosSOPKA/NKCKI reporting artifacts and several FSB primary texts."
+    - "The BDU snapshot remains dynamic-web provenance without raw-byte hash and does not yet contain the full object/method relation universe."
+
+next_bottleneck:
+  - "obtain exact downloadable NKCKI artifacts and immutable SHA-256 provenance"
+  - "machine-map field-level reporting schema and evidence completeness rules"
+  - "preserve FSB 539/546/547/548/553/554/161 primary snapshots"
+  - "then build BDU full relation snapshots plus deterministic change detection"
+
+promotion_decision:
+  family_promotion: false
+  reason: >-
+    Ten current regulator threat-index records and five verified vulnerability-to-threat relation groups were added,
+    but no immutable primary artifact was acquired and the remaining High provenance blocker remains open.
+    Overall and family percentages therefore stay unchanged.
