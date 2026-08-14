@@ -1,0 +1,67 @@
+schema_version: "1.0"
+id: coverage-scorecard-2026-08-14-run-22
+date: "2026-08-14"
+overall_strict_p0_percent: 10
+p0_families_registered: "12/12"
+critical_gaps: 0
+high_gaps: 4
+red_team: FAIL
+expert_ready: false
+
+family_scores:
+  npa_rf: 10
+  gost_iso: 10
+  classification_categorization: 10
+  threat_modeling_bdu: 10
+  risk_methods: 10
+  legal_consequences: 10
+  szi_skzi_license_lifecycle: 10
+  roles_deadlines_responsibility: 10
+  evidence_audit: 10
+  practical_cases: 10
+
+this_run:
+  added_file: security-knowledge/legislation/fsb-553-2025-gosopka-installation-operation-authoritative-slice.yaml
+  commit: "8a6c9501a523ce3d27f6985f83b54a588f02755c"
+  authoritative_verified_clause_records: 11
+  primary_verified_clause_records: 0
+  exact_subject_deadlines_verified: 3
+  exact_regulator_deadlines_verified: 1
+  maturity_claim: NO_PROMOTION
+
+verified:
+  - "FSB 553 Appendix 1 section I paragraphs 1-9 captured as 11 atomic authoritative records"
+  - "15 calendar days: subject informs NKTsKI after installation/configuration/testing/connection completion"
+  - "same 15-calendar-day branch: banking/financial-market subject additionally informs Bank of Russia"
+  - "30 calendar days: NKTsKI remark period after receipt where violations of paragraphs 3/4 are detected"
+  - "maximum 30 calendar days: subject remediates NKTsKI remarks and reports remediation"
+  - "24x7 uninterrupted operation, access procedure and control over use are explicit duties"
+
+pending:
+  - "primary/open authenticated full-text provenance for FSB 553 clause slice"
+  - "effective-date conflict for FSB 553 and FSB 554 remains unresolved in open authoritative sources"
+  - "FSB 554 full clause-level technical requirements extraction"
+  - "FSB 548 predecessor/supersession map and current continuous-interaction obligations"
+  - "FSB 546/547 exact current information-exchange and incident-reporting duty/deadline corpus"
+
+red_team_findings:
+  verdict: FAIL
+  positives:
+    - "current-order duties are no longer inferred from superseded FSB 281"
+    - "subject deadlines and regulator deadline are modeled separately"
+    - "financial-sector-only notification branch is explicit"
+    - "effective-date uncertainty is preserved fail-closed"
+  blockers:
+    - "no primary provenance for clause text"
+    - "FSB 553/554 effective-date conflict not resolved"
+    - "family-wide GosSOPKA clause coverage incomplete"
+    - "no reproducible applicability regression pack for the current FSB stack"
+
+next_bottleneck:
+  - "atomize FSB 554 current means requirements, prioritizing requirements that can be evidenced operationally"
+  - "resolve FSB 553/554 transition date only from unambiguous primary/authoritative evidence; otherwise retain conflict"
+  - "then extract FSB 546/547/548 current duties, deadlines, roles and evidence artifacts"
+
+promotion_decision:
+  family_promotion: false
+  reason: "Clause coverage improved materially, but primary provenance, transition conflict and family-wide coverage remain High gaps."
