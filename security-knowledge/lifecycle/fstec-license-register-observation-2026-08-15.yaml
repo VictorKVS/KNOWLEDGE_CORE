@@ -1,0 +1,113 @@
+schema_version: "1.0"
+id: FSTEC-LICENSE-REGISTER-OBSERVATION-2026-08-15
+observed_at: "2026-08-15"
+domain: szi_skzi_license_lifecycle
+scope: >-
+  Time-bounded metadata observations of two state open-data license registers owned by FSTEC Russia.
+  This file deliberately does not assert that any named company currently holds a valid license.
+  Register metadata freshness and an individual license state are separate facts.
+
+sources:
+  - id: SRC-DATAGOV-FSTEC-TZKI-LICENSES
+    authority: STATE_OPEN_DATA_PORTAL
+    dataset_id: "7701350013-licensestpci"
+    owner: FSTEC_RUSSIA
+    title: "Register of licenses for technical protection of confidential information"
+    format: CSV
+    first_published: "2013-06-03"
+    dataset_last_modified: "2025-09-30"
+    dataset_declared_relevance_date: "2030-01-01"
+    direct_storage_resource_id: "ce3ac5f2-4cae-47e0-a916-3f00d650f35f"
+    structure_resource_id: "ac0dff71-8cc4-4430-8cc6-0ab05cf20247"
+    verification_status: STATE_PORTAL_METADATA_VERIFIED
+    raw_bytes_hash_pinned: false
+  - id: SRC-DATAGOV-FSTEC-SZKI-PRODUCTION-LICENSES
+    authority: STATE_OPEN_DATA_PORTAL
+    dataset_id: "7701350013-licensestooperate"
+    owner: FSTEC_RUSSIA
+    title: "Register of licenses for development and production of confidential-information protection tools"
+    format: CSV
+    first_published: "2013-06-03"
+    dataset_last_modified: "2026-06-02"
+    dataset_declared_relevance_date: "2030-01-01"
+    direct_storage_resource_id: "0d284d4f-64c9-45b2-ab3e-608babf50861"
+    structure_resource_id: "141b39d7-cbe4-4d40-9316-ba5a627fd78e"
+    verification_status: STATE_PORTAL_METADATA_VERIFIED
+    raw_bytes_hash_pinned: false
+
+observations:
+  - id: REG-FSTEC-LIC-TZKI-OBS-2026-08-15
+    register_kind: LICENSE_REGISTER
+    licensed_activity: TECHNICAL_PROTECTION_OF_CONFIDENTIAL_INFORMATION
+    regulator: FSTEC_RUSSIA
+    source: SRC-DATAGOV-FSTEC-TZKI-LICENSES
+    observed_at: "2026-08-15"
+    source_last_modified: "2025-09-30"
+    current_state_claim: NOT_PROVEN_BY_METADATA_ONLY
+    confidence: HIGH_FOR_METADATA_ONLY
+    rationale: >-
+      The state portal proves the dataset identity and its last-modified date, but metadata alone does not prove
+      that an individual license is currently valid on 2026-08-15. The snapshot is materially older than the
+      query date and must not be silently treated as a live register lookup.
+  - id: REG-FSTEC-LIC-SZKI-OBS-2026-08-15
+    register_kind: LICENSE_REGISTER
+    licensed_activity: DEVELOPMENT_AND_PRODUCTION_OF_CONFIDENTIAL_INFORMATION_PROTECTION_TOOLS
+    regulator: FSTEC_RUSSIA
+    source: SRC-DATAGOV-FSTEC-SZKI-PRODUCTION-LICENSES
+    observed_at: "2026-08-15"
+    source_last_modified: "2026-06-02"
+    current_state_claim: NOT_PROVEN_BY_METADATA_ONLY
+    confidence: HIGH_FOR_METADATA_ONLY
+    rationale: >-
+      The source is newer than the TZKI dataset but still is a time-bounded open-data publication. A current
+      organization-level answer requires a current register record or authoritative extract, not dataset metadata.
+
+separation_rules:
+  - id: REG-FSTEC-SEP-001
+    rule: "LICENSE_CONTROL_PROCEDURE_STATUS != INDIVIDUAL_LICENSE_STATUS"
+    rationale: "Orders governing control procedures do not prove that a particular organization has a valid license."
+  - id: REG-FSTEC-SEP-002
+    rule: "INDIVIDUAL_LICENSE_STATUS != SZI_CERTIFICATE_STATUS"
+    rationale: "A company license and a product conformity certificate are distinct lifecycle entities."
+  - id: REG-FSTEC-SEP-003
+    rule: "SZI_CERTIFICATE_STATUS != SKZI_APPROVAL_OR_CERTIFICATION_STATUS"
+    rationale: "FSTEC SZI certification must not be conflated with FSB-regulated cryptographic product lifecycle."
+  - id: REG-FSTEC-SEP-004
+    rule: "DATASET_DECLARED_RELEVANCE_DATE != RECORD_CURRENT_VALIDITY"
+    rationale: >-
+      A portal field describing dataset relevance through a future date is not evidence that every contained
+      license remains valid through that date.
+
+fail_closed_rules:
+  - id: REG-FSTEC-GUARD-001
+    if: "query asks whether organization X currently holds a valid FSTEC license"
+    then: REQUIRE_CURRENT_AUTHORITATIVE_LICENSE_RECORD
+  - id: REG-FSTEC-GUARD-002
+    if: "only dataset metadata is available"
+    then: DO_NOT_ASSERT_INDIVIDUAL_LICENSE_VALIDITY
+  - id: REG-FSTEC-GUARD-003
+    if: "snapshot_date < decision_date AND no newer authoritative record has been checked"
+    then: RETURN_TIME_BOUNDED_OR_REQUIRE_LIVE_LOOKUP
+  - id: REG-FSTEC-GUARD-004
+    if: "query concerns a product certificate"
+    then: ROUTE_TO_FSTEC_CERTIFICATE_REGISTER
+
+conflict_and_quality_notes:
+  - >-
+    The open-data portal currently exposes different last-modified dates for the two FSTEC license datasets.
+    Freshness must therefore be tracked per register, not by one global FSTEC timestamp.
+  - >-
+    Direct CSV bytes could not be retrieved during this pass; no SHA-256 or row-level record count is asserted.
+    The file records verified state-portal metadata only.
+
+pending:
+  - "retrieve exact current CSV bytes for both datasets and SHA-256 hash-pin them"
+  - "capture schema definitions and normalize row-level license status fields"
+  - "build change detection between successive snapshots"
+  - "add current FSTEC certified-SZI register observation as a separate lifecycle entity"
+  - "define authoritative organization-level lookup and evidence retention workflow"
+
+promotion: false
+promotion_reason: >-
+  Register identity, ownership and freshness metadata are now modeled, but current row-level license status,
+  immutable bytes and the certificate-register lifecycle are not yet closed.
