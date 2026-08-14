@@ -1,0 +1,80 @@
+schema_version: "1.0"
+id: coverage-scorecard-2026-08-14-run-39
+date: "2026-08-14"
+overall_strict_p0_percent: 10
+p0_families_registered: "12/12"
+critical_gaps: 0
+high_gaps: 1
+red_team: FAIL
+expert_ready: false
+
+family_scores:
+  npa_rf: 10
+  gost_iso: 10
+  classification_categorization: 10
+  threat_modeling_bdu: 10
+  risk_methods: 10
+  legal_consequences: 10
+  szi_skzi_license_lifecycle: 10
+  roles_deadlines_responsibility: 10
+  evidence_audit: 10
+  practical_cases: 10
+
+this_run:
+  focus: CII_2026_SECTOR_OVERLAY_EXPANSION_COMMUNICATIONS_AND_DEFENSE_INDUSTRY
+  added_or_updated_files:
+    - security-knowledge/classification/cii-sector-overlay-effective-dates-2026-verified.yaml
+    - security-knowledge/classification/cii-sector-overlay-temporal-regression-v1.yaml
+    - security-knowledge/classification/cii-sector-overlays-402-796-2026-authoritative-slice.yaml
+  commits:
+    registry_update: "a50057f5ac99e17f1d2a92dc1c0322a2121840d9"
+    temporal_fixtures_update: "fd33383286c9f44de58d85e3e17c5e23c7c91817"
+    authoritative_slice: "b634748aa655c72a0feaf65e741b825b78033462"
+  verified_sector_overlays_added: 2
+  verified_operational_rules_added: 11
+  executable_temporal_fixtures_added: 4
+  immutable_primary_clause_records_added: 0
+  workflow_observation:
+    workflow: CII_Sector_Overlay_Temporal_Gate
+    run_id: 31826728374
+    conclusion: success
+    tested_head_sha: "fd33383286c9f44de58d85e3e17c5e23c7c91817"
+  maturity_claim: NO_FAMILY_PROMOTION
+
+verified:
+  - "PP RF No. 402 dated 2026-04-13 establishes sector categorization features for communications, official publication anchor No. 0001202604130022; it enters into force only on 2026-09-01 and operates until 2032-09-01."
+  - "PP RF No. 402 is therefore published but NOT YET EFFECTIVE as of 2026-08-14; routing before 2026-09-01 remains base-only with historical/transition review."
+  - "PP RF No. 796 dated 2026-06-27 establishes defense-industry sector categorization features, official publication anchor No. 0001202606290031; effective from 2026-07-07."
+  - "PP RF No. 796 contains sector-specific review cadence: no-category at least annually, category III every 2 years, category II every 3 years, category I every 5 years."
+  - "PP RF No. 796 contains a dependency rule that can propagate the higher category to a dependent CII object."
+  - "Temporal regression gate passes after adding day-before/day-of boundaries for both new overlays."
+
+pending:
+  - "prove an exhaustive current national sector-overlay inventory; seven verified overlays are still a slice, not completeness"
+  - "atomize detailed formulas and indicator mappings for PP RF 402 and 796 into executable categorization logic"
+  - "download and SHA-256 hash-pin exact official PDF bytes for high-impact FSB 539/546/547/548/553/554"
+  - "download and SHA-256 hash-pin NKCKI Order No. 2 dated 2026-07-14 and the 2026-07-08 Initial Data artifact"
+  - "store/hash-pin exact official PDF bytes for PP RF 402 and 796 before promoting their clause records to immutable primary"
+
+red_team_findings:
+  verdict: FAIL
+  positives:
+    - "The previously verified five-overlay slice is expanded to seven with communications and defense industry."
+    - "Future-effective PP RF 402 is modeled explicitly as published-but-not-yet-effective, preventing premature routing."
+    - "The temporal gate passes with 16 fixtures, including the new 402/796 boundaries."
+  blockers:
+    - "National sector-overlay completeness remains unproven."
+    - "Detailed sector formulas remain non-executable."
+    - "The single High blocker remains immutable/hash-pinned primary provenance for high-impact FSB/NKCKI artifacts."
+
+next_bottleneck:
+  - "continue exhaustive 2026/current CII sector-overlay discovery beyond seven verified acts"
+  - "atomize PP RF 796 review/dependency logic and PP RF 402 applicable-indicator logic into executable validators"
+  - "close immutable provenance for NKCKI No. 2 / 2026-07-08 artifact and FSB 539/546/547/548/553/554"
+  - "then connect categorization outputs to FSTEC threat methodology and control-profile selection"
+
+promotion_decision:
+  family_promotion: false
+  reason: >-
+    Two important sector overlays were added and temporal CI passes, but the national overlay inventory is not yet proven exhaustive,
+    detailed formulas are not executable, and immutable primary provenance remains open. Overall and family percentages stay unchanged.
