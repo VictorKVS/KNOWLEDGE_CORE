@@ -1,0 +1,162 @@
+system_id: KBRE-000001
+name: Knowledge Base Research & Engineering System
+version: 1.0
+purpose: >
+  Preserve and generalize the methods learned while building Security Knowledge Core,
+  so future domain knowledge bases can reuse the process instead of rediscovering it.
+
+principle:
+  sequence: MVP_FIRST_THEN_EXPANSION
+  core_loop: SOURCE -> EVIDENCE -> ATOMIC_CLAIM -> APPLICABILITY -> DECISION -> ACTION -> ROLE -> DEADLINE -> EVIDENCE_OF_EXECUTION -> CONSEQUENCE -> FEEDBACK
+  decision_policy: FAIL_CLOSED_WHEN_EVIDENCE_OR_APPLICABILITY_IS_INSUFFICIENT
+
+reusable_layers:
+  - source_inventory_and_versioning
+  - provenance_and_immutable_snapshots
+  - atomic_requirement_extraction
+  - ontology_and_stable_identifiers
+  - applicability_and_classification
+  - threat_and_risk_reasoning
+  - control_and_requirement_mapping
+  - roles_RACI_and_decision_rights
+  - temporal_rules_and_deadlines
+  - workflow_and_task_compilation
+  - evidence_and_audit_model
+  - liability_and_consequence_mapping
+  - practical_cases_and_feedback
+  - regression_tests_and_red_team
+  - document_dependency_graph
+  - cost_and_resource_model
+  - regulatory_impact_simulation_future
+
+identifier_architecture:
+  immutable_machine_id_examples: [REQ-0001842, CTL-0000317, ROL-0000018]
+  human_code_examples: [PDN.INC.NOTIFY, IAM.ACCESS.REVIEW]
+  document_code_examples: [SEC-PDN-POL-001, SEC-KII-ORD-003]
+  rule: Human-readable codes may evolve; immutable IDs and graph identity must not.
+
+independent_auditor_constructive_critique:
+  verdict: PROMISING_ARCHITECTURE_NOT_YET_A_REUSABLE_PLATFORM
+  strengths:
+    - Provenance-first rather than document-count-first maturity.
+    - Explicit applicability, temporal routing, roles and evidence.
+    - Fail-closed handling of ambiguity and source conflicts.
+    - Version-aware legal and dynamic catalog reasoning.
+    - Direction toward executable decision graphs rather than static checklists.
+  major_omissions_or_risks:
+    - id: AUD-KBRE-001
+      issue: No formally frozen cross-domain upper ontology yet.
+      risk: Each new knowledge base may invent incompatible entity and relation semantics.
+      action: Define minimal universal entity/relation vocabulary and extension rules before cloning.
+    - id: AUD-KBRE-002
+      issue: No explicit schema migration and backward-compatibility contract.
+      risk: Identifier stability alone will not protect consumers when node schemas change.
+      action: Add schema_version, migration rules, deprecation policy and compatibility tests.
+    - id: AUD-KBRE-003
+      issue: Confidence and evidence quality are not yet a fully calibrated quantitative model.
+      risk: VERIFIED can hide meaningful differences between primary, authoritative secondary and corroborated evidence.
+      action: Separate truth status, provenance tier, freshness, corroboration and reviewer confidence.
+    - id: AUD-KBRE-004
+      issue: Human expert governance is under-specified.
+      risk: Disputes, overrides and interpretation changes may become unauditable.
+      action: Define reviewer roles, four-eyes approval, dissent records, override expiry and re-review triggers.
+    - id: AUD-KBRE-005
+      issue: No complete executable regression harness and CI quality gates.
+      risk: Declarative fixtures do not prove that routing remains correct after changes.
+      action: Build deterministic validators, positive/negative cases, mutation tests and release gates.
+    - id: AUD-KBRE-006
+      issue: Completeness cannot be inferred from verified-record count.
+      risk: Dense easy areas can mask missing critical branches.
+      action: Measure coverage by obligation families, decision paths, applicability branches and evidence closure.
+    - id: AUD-KBRE-007
+      issue: Contradiction management needs first-class semantics.
+      risk: Conflicting sources may be stored but not algorithmically resolved or quarantined.
+      action: Add conflict objects, precedence rules, unresolved-state propagation and decision blocking.
+    - id: AUD-KBRE-008
+      issue: Temporal model needs event-time semantics beyond effective dates.
+      risk: Deadlines depend on detection, receipt, approval, registration and completion events.
+      action: Model trigger_event, clock_start, calendar_type, suspension, extension and timezone explicitly.
+    - id: AUD-KBRE-009
+      issue: Organization facts require provenance just like normative facts.
+      risk: Correct rules applied to stale inventory produce wrong decisions.
+      action: Add observed_at, source, owner, freshness SLA and confidence to organization-state facts.
+    - id: AUD-KBRE-010
+      issue: Cost/resource feasibility layer is not operational yet.
+      risk: System can say what is required without estimating whether execution is realistic.
+      action: Add labor, skills, CAPEX, OPEX, dependencies, market availability and uncertainty ranges.
+    - id: AUD-KBRE-011
+      issue: Privacy, access control and compartmentalization of evidence are not designed for production.
+      risk: A useful evidence graph may itself become a sensitive concentration point.
+      action: Separate public knowledge, organization facts, restricted evidence and secrets; add ABAC/RBAC and audit logging.
+    - id: AUD-KBRE-012
+      issue: Document generation can create false confidence if prose drifts from graph truth.
+      risk: Generated policies may become stale copies of requirements.
+      action: Generate documents from stable node references and maintain reverse dependency/change-impact links.
+    - id: AUD-KBRE-013
+      issue: No benchmark for portability to a second domain.
+      risk: Architecture may be overfit to Russian information-security regulation.
+      action: After Security MVP, clone a deliberately different small domain and measure reuse percentage and required schema changes.
+    - id: AUD-KBRE-014
+      issue: No explicit uncertainty/unknown taxonomy for missing facts.
+      risk: UNKNOWN, NOT_APPLICABLE, NOT_PROVEN and CONFLICT may be conflated.
+      action: Freeze distinct machine states and propagation rules.
+    - id: AUD-KBRE-015
+      issue: No formal separation of normative obligation, recommended practice and internal policy.
+      risk: Recommendations may accidentally become represented as mandatory law.
+      action: Require authority_type and obligation_strength on every actionable rule.
+
+research_program:
+  phase_0_security_mvp:
+    goal: One organization profile compiled end-to-end into classifications, applicable requirements, threats, controls, roles, deadlines, evidence and explanations.
+  phase_1_reliability:
+    goal: Executable validators, CI, immutable snapshots, conflict handling, schema governance and expert review.
+  phase_2_workflow_documentation:
+    goal: Compile graph decisions into tasks, RACI, document dependencies, forms and change-impact analysis.
+  phase_3_portability_experiment:
+    goal: Build a second small knowledge base using this system and quantify reusable versus domain-specific components.
+  phase_4_scale:
+    goal: Multi-domain knowledge factory with reusable acquisition, atomization, validation and audit pipelines.
+  phase_5_regulatory_digital_twin:
+    goal: Simulate proposed rules for applicability, technical feasibility, staffing, cost, deadlines, testability and expected risk reduction.
+
+mandatory_metrics:
+  - source_primary_coverage
+  - atomic_requirement_coverage
+  - applicability_branch_coverage
+  - decision_path_test_coverage
+  - temporal_rule_coverage
+  - role_assignment_coverage
+  - evidence_closure_rate
+  - conflict_resolution_rate
+  - stale_fact_rate
+  - primary_provenance_rate
+  - regression_pass_rate
+  - expert_review_rate
+  - reuse_ratio_across_domains
+  - schema_change_rate_per_new_domain
+  - decision_explainability_closure
+
+clone_protocol:
+  steps:
+    - Freeze domain scope and P0 families.
+    - Register authoritative source universe.
+    - Define domain extension ontology without changing universal core unnecessarily.
+    - Atomize sources with provenance and temporal metadata.
+    - Build applicability and decision paths.
+    - Map actions, roles, deadlines and execution evidence.
+    - Add negative and positive regression fixtures.
+    - Run independent red-team review.
+    - Release only after proof-floor gates pass.
+    - Record lessons learned back into this research system.
+
+future_research:
+  - regulatory_digital_twin
+  - machine_readable_regulation
+  - evidence_graphs
+  - temporal_and_deontic_reasoning
+  - legal_knowledge_graphs
+  - policy_as_code
+  - ontology_alignment
+  - probabilistic_evidence_calibration
+  - cost_of_compliance_modeling
+  - automated_change_impact_analysis
