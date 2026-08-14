@@ -1,0 +1,217 @@
+schema_version: "1.0"
+snapshot_id: BDU-ASUTP-OBS-2026-08-14-S01
+family_id: THREAT_MODELING_AND_THREAT_CATALOGS
+observed_at: "2026-08-14"
+status: PRIMARY_DYNAMIC_CATALOG_VERIFIED
+source_authority: FSTEK_RUSSIA
+source_class: PRIMARY_REGULATOR_DYNAMIC_CATALOG
+catalog_url: https://bduasutp.fstec.ru/threats
+snapshot_scope: PARTIAL_VERIFIED_RELATION_SLICE
+raw_bytes_hash: null
+raw_bytes_hash_status: NOT_ACQUIRED
+parser_version: MANUAL_VERIFIED_WEB_SLICE_V1
+
+semantic_guardrails:
+  - Catalog presence proves existence in the FSTEK BDU ASU TP at observed_at; it does not prove relevance to a specific organization or system.
+  - Threat relevance requires separate system-specific reasoning over assets, interfaces, attacker capabilities, vulnerabilities or preconditions, and consequences.
+  - Control relations below are regulator-catalog relations observed on vulnerability records; they are not by themselves a complete mandatory control baseline for a specific regulated system.
+  - This is a time-bounded observation. Later catalog changes must create a new snapshot and must not overwrite this file.
+  - raw_bytes_hash is intentionally null because exact raw response bytes were not acquired in this pass; no immutable-source claim is made.
+
+records:
+  - stable_catalog_id: "УТП:01"
+    record_type: threat
+    label: "Угроза утечки информации"
+    source_url: https://bduasutp.fstec.ru/threats/41683af3-eccb-4cbb-885c-aceba22a3e6d
+    verification_status: PRIMARY_DYNAMIC_VERIFIED
+    source_last_modified_when_exposed: "2023-10-24T09:24:34Z"
+    normalized_relations:
+      object_of_impact_ids:
+        - OA.001
+        - OA.002
+        - OA.003
+        - OA.004
+        - OA.005
+        - OA.006
+        - OA.007
+        - OA.008
+        - OA.009
+        - OA.010
+        - OA.011
+        - OA.012
+        - OA.013
+      implementation_method_ids_verified_subset:
+        - SPA.23.001
+        - SPA.23.002
+        - SPA.24.001
+        - SPA.24.002
+        - SPA.25.001
+        - SPA.25.002
+        - SPA.25.003
+        - SPA.25.004
+    field_proof_note: "Official record exposes UTP:01, its label, OA.001-OA.013 object links, and the listed implementation-method relations."
+
+  - stable_catalog_id: "УТП:02"
+    record_type: threat
+    label: "Угроза получения информационных ресурсов из недоверенного или скомпрометированного источника"
+    source_url: https://bduasutp.fstec.ru/threats/cc419fd2-0524-450e-89cd-2c23d223c9db
+    verification_status: PRIMARY_DYNAMIC_VERIFIED
+    source_last_modified_when_exposed: "2023-10-24T09:24:34Z"
+    normalized_relations:
+      object_of_impact_ids:
+        - OA.001
+        - OA.002
+        - OA.003
+        - OA.004
+        - OA.005
+        - OA.006
+        - OA.007
+        - OA.008
+        - OA.009
+        - OA.010
+        - OA.011
+        - OA.012
+        - OA.013
+    field_proof_note: "Official record exposes UTP:02 and OA.001-OA.013 as possible objects of impact."
+
+  - stable_catalog_id: "УТП:05"
+    record_type: threat
+    label: "Угроза несанкционированной модификации (искажения)"
+    source_url: https://bduasutp.fstec.ru/threats/f978e564-3734-4e26-b246-04176b47fd01
+    verification_status: PRIMARY_DYNAMIC_VERIFIED
+    normalized_relations: {}
+    field_proof_note: "Official record identity and description were verified; no additional relation completeness is claimed in this slice."
+
+  - stable_catalog_id: "УТП:10"
+    record_type: threat
+    label: "Угроза несанкционированного сбора данных об автоматизированной системе управления"
+    source_url: https://bduasutp.fstec.ru/threats/7da7d27d-b5c3-44ee-b935-8b61dfe48196
+    verification_status: PRIMARY_DYNAMIC_VERIFIED
+    normalized_relations:
+      object_of_impact_ids:
+        - OA.001
+        - OA.002
+        - OA.003
+        - OA.004
+        - OA.005
+        - OA.006
+        - OA.007
+        - OA.008
+        - OA.009
+        - OA.010
+        - OA.011
+        - OA.012
+        - OA.013
+      implementation_method_ids_verified_subset:
+        - SPA.01.001
+        - SPA.01.002
+        - SPA.25.001
+        - SPA.25.002
+    field_proof_note: "Only relations visible in the verified official source result are stored; this is not asserted to be the complete implementation-method set."
+
+  - stable_catalog_id: "BDA:C001"
+    record_type: vulnerability_configuration
+    label: "Открытые порты и сервисы"
+    source_url: https://bduasutp.fstec.ru/vulnerabilities-settings/f7f249d7-b3d0-4c6e-abbd-c57bade8e58e
+    verification_status: PRIMARY_DYNAMIC_VERIFIED
+    normalized_relations:
+      control_ids:
+        - ZIS.31
+        - ZIS.35
+      threat_ids:
+        - "УТП:03"
+        - "УТП:04"
+        - "УТП:08"
+      cwe_ids:
+        - CWE-1263
+        - CWE-15
+        - CWE-552
+        - CWE-284
+    field_proof_note: "Official BDU ASU TP record exposes control and threat relations."
+
+  - stable_catalog_id: "BDA:C004"
+    record_type: vulnerability_configuration
+    label: "Использование нестойких к перебору паролей"
+    source_url: https://bduasutp.fstec.ru/vulnerabilities-settings/75158cda-4ef3-4690-bfc4-cf769b26ecff
+    verification_status: PRIMARY_DYNAMIC_VERIFIED
+    normalized_relations:
+      control_ids:
+        - IAF.0
+        - IAF.1
+        - IAF.4
+      threat_ids:
+        - "УТП:04"
+      cwe_ids:
+        - CWE-521
+    field_proof_note: "Official BDU ASU TP record exposes IAF controls and UTP:04 relation."
+
+  - stable_catalog_id: "BDA:C006"
+    record_type: vulnerability_configuration
+    label: "Наделение пользователей избыточными полномочиями"
+    source_url: https://bduasutp.fstec.ru/vulnerabilities-settings/c842d3db-6558-4cd6-87e3-bed82058ee69
+    verification_status: PRIMARY_DYNAMIC_VERIFIED
+    normalized_relations:
+      control_ids:
+        - IAF.4
+        - OPS.0
+        - OPS.1
+        - UPD.0
+        - UPD.1
+        - UPD.2
+        - UPD.5
+      threat_ids:
+        - "УТП:01"
+        - "УТП:04"
+        - "УТП:05"
+        - "УТП:06"
+        - "УТП:07"
+        - "УТП:10"
+      cwe_ids:
+        - CWE-284
+        - CWE-264
+    field_proof_note: "Official BDU ASU TP record exposes least-privilege/access-control relations and six linked threats."
+
+  - stable_catalog_id: "BDA:C009"
+    record_type: vulnerability_configuration
+    label: "Отсутствие ограничения числа параллельных сеансов доступа"
+    source_url: https://bduasutp.fstec.ru/vulnerabilities-settings/2b558f60-e000-4fe9-9b63-8168d4810bf0
+    verification_status: PRIMARY_DYNAMIC_VERIFIED
+    normalized_relations:
+      control_ids:
+        - UPD.0
+        - UPD.9
+      threat_ids:
+        - "УТП:04"
+      cwe_ids:
+        - CWE-930
+        - CWE-284
+        - CWE-264
+    field_proof_note: "Official record links session-count weakness to UPD.0/UPD.9 and UTP:04."
+
+  - stable_catalog_id: "BDA:C010"
+    record_type: vulnerability_configuration
+    label: "Отсутствие ограничений времени неактивности пользователей"
+    source_url: https://bduasutp.fstec.ru/vulnerabilities-settings/f1646ba6-d934-43d2-807a-b7053e0befb9
+    verification_status: PRIMARY_DYNAMIC_VERIFIED
+    normalized_relations:
+      control_ids:
+        - UPD.10
+      threat_ids:
+        - "УТП:04"
+      cwe_ids:
+        - CWE-284
+        - CWE-264
+        - CWE-613
+    applicability_note: "The regulator record itself notes that absence of such a timeout is not necessarily a vulnerability for some components because of their operating characteristics, for example an operator workstation."
+    field_proof_note: "This conditionality is preserved to prevent blanket applicability."
+
+coverage_statement:
+  records_verified: 9
+  threats_verified: 4
+  configuration_vulnerabilities_verified: 5
+  completeness_claim: NONE
+  pending:
+    - Acquire raw catalog/API bytes where legally and technically available and store SHA-256 digest.
+    - Expand to full threat, object, method, vulnerability and control relation universe.
+    - Resolve regulator Cyrillic control codes to canonical internal IDs without destroying source codes.
+    - Add change-detection against the next observed snapshot.
