@@ -1,0 +1,123 @@
+schema_version: "1.0"
+id: gosopka-nkcki-reporting-evidence-package-2026-v1
+checked_at: "2026-08-14"
+status: PRIMARY_WEB_VERIFIED_LIMITED_SCOPE
+purpose: >-
+  Evidence-package behavior for current NKCKI reporting based only on facts explicitly
+  confirmed on the official cert.gov.ru publication pages. Exact attachment schemas and
+  field-level technical parameters remain pending until the downloadable artifacts are
+  preserved and hash-pinned.
+
+primary_sources:
+  - id: NKCKI-NEWS-2026-07-14
+    authority: NKCKI_CERT_GOV_RU
+    published_at: "2026-07-14"
+    url: "https://cert.gov.ru/news/novosti-nktski/o-sovershenstvovanii-deyatelnosti-po-organizatsii-vzaimodeystviya-natsionalnogo-koordinatsionnogo-ts/"
+    source_type: PRIMARY_WEB_PUBLICATION
+  - id: NKCKI-DOCS-INTERACTION-2026
+    authority: NKCKI_CERT_GOV_RU
+    url: "https://www.cert.gov.ru/materialy/organizatsiya-vzaimodeystviya/reglament-vzaimodeystviya-nktski-"
+    source_type: PRIMARY_WEB_DOCUMENT_INDEX
+  - id: NKCKI-NOTIFICATION-FORM-2026
+    authority: NKCKI_CERT_GOV_RU
+    url: "https://www.cert.gov.ru/uvedomlenie.php"
+    source_type: PRIMARY_WEB_OPERATIONAL_FORM
+
+verified_rules:
+  - id: GOS-EVD-2026-001
+    status: PRIMARY_WEB_VERIFIED
+    rule: >-
+      NKCKI order No. 2 dated 2026-07-14 defines formats for presenting information about
+      computer attacks and computer incidents to GosSOPKA and the composition of technical parameters.
+    provenance: NKCKI-NEWS-2026-07-14
+    guardrail: "Do not infer field names or mandatory attachment schemas until the downloadable artifact is preserved."
+
+  - id: GOS-EVD-2026-002
+    status: PRIMARY_WEB_VERIFIED
+    rule: >-
+      The Initial Data for determining computer-attack type approved on 2026-07-08 are methodological recommendations.
+    provenance: NKCKI-NEWS-2026-07-14
+    obligation_strength: RECOMMENDATION
+    guardrail: "Do not promote the methodology itself into a statutory notification deadline."
+
+  - id: GOS-EVD-2026-003
+    status: PRIMARY_WEB_VERIFIED
+    rule: >-
+      Threshold values contained in the 2026-07-08 Initial Data are examples from general practice.
+    provenance: NKCKI-NEWS-2026-07-14
+    obligation_strength: EXAMPLE_NOT_NORMATIVE_THRESHOLD
+    guardrail: "Example thresholds must not become hard legal thresholds in the decision engine."
+
+  - id: GOS-EVD-2026-004
+    status: PRIMARY_WEB_VERIFIED
+    rule: >-
+      When reporting to NKCKI, an organization should provide the maximum amount of materials it has
+      from the materials identified in paragraph 5 of each relevant section of the Initial Data.
+    provenance: NKCKI-NEWS-2026-07-14
+    evidence_behavior: SEND_MAXIMUM_AVAILABLE
+
+  - id: GOS-EVD-2026-005
+    status: PRIMARY_WEB_VERIFIED
+    rule: >-
+      If one or more materials that are to be sent to NKCKI are unavailable, the organization should
+      still provide the remaining materials it has.
+    provenance: NKCKI-NEWS-2026-07-14
+    evidence_behavior: PARTIAL_PACKAGE_MUST_NOT_BLOCK_AVAILABLE_MATERIALS
+    guardrail: >-
+      This does not prove that every conceivable empty package is sufficient; it only prevents the engine
+      from blocking transmission merely because some expected materials are missing.
+
+  - id: GOS-EVD-2026-006
+    status: PRIMARY_WEB_VERIFIED
+    rule: >-
+      The official NKCKI notification form distinguishes a computer incident from a computer attack:
+      an incident branch concerns disruption of normal operation and/or information security, while the attack
+      branch covers detected attacks that did not lead to such disruption.
+    provenance: NKCKI-NOTIFICATION-FORM-2026
+    guardrail: >-
+      Operational form guidance supports event classification but does not override the legal definitions
+      or deadlines in the applicable FSB orders.
+
+package_states:
+  - id: COMPLETE_OR_MAXIMUM_AVAILABLE
+    behavior: SEND
+  - id: PARTIAL_WITH_AVAILABLE_MATERIALS
+    behavior: SEND_AVAILABLE_MATERIALS
+    missing_materials_status: RECORDED_MISSING_NOT_AUTO_BLOCKING
+  - id: EXACT_SCHEMA_NOT_PRESERVED
+    behavior: FAIL_CLOSED_FOR_FIELD_LEVEL_COMPLETENESS_ASSERTION
+  - id: THRESHOLD_ONLY_MATCH
+    behavior: DO_NOT_TREAT_AS_LEGAL_CLASSIFICATION_PROOF
+
+regression_fixtures:
+  - id: GOS-EVD-REG-01
+    input:
+      expected_materials_known: true
+      available_materials_count: 4
+      missing_materials_count: 2
+    expected_behavior: SEND_AVAILABLE_MATERIALS
+    negative_assertion: MUST_NOT_BLOCK_BECAUSE_PACKAGE_IS_PARTIAL
+
+  - id: GOS-EVD-REG-02
+    input:
+      attack_type_basis: EXAMPLE_THRESHOLD_ONLY
+    expected_behavior: DO_NOT_TREAT_AS_LEGAL_CLASSIFICATION_PROOF
+    negative_assertion: MUST_NOT_PROMOTE_EXAMPLE_THRESHOLD_TO_NORMATIVE_RULE
+
+  - id: GOS-EVD-REG-03
+    input:
+      exact_downloaded_schema_hash_available: false
+      requested_assertion: FIELD_LEVEL_PACKAGE_COMPLETE
+    expected_behavior: FAIL_CLOSED_FOR_FIELD_LEVEL_COMPLETENESS_ASSERTION
+
+pending:
+  - "preserve and SHA-256 hash the downloadable NKCKI order No. 2 artifact"
+  - "preserve and SHA-256 hash the downloadable 2026-07-08 Initial Data document"
+  - "extract exact field names, attachment/parameter requirements and any machine-readable formats"
+  - "bind field-level validation to immutable artifact versions"
+
+red_team:
+  verdict: PARTIAL_PASS
+  blocker: >-
+    Evidence behavior is now fail-closed and the partial-package rule is explicit, but field-level completeness
+    cannot be certified until the exact downloadable artifacts are immutable/hash-pinned and parsed.
