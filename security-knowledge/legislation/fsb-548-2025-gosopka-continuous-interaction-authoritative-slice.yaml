@@ -1,0 +1,178 @@
+schema_version: "1.0"
+id: fsb-548-2025-gosopka-continuous-interaction-authoritative-slice
+checked_at: "2026-08-14"
+status: AUTHORITATIVE_CLAUSE_LEVEL_VERIFIED_PRIMARY_IMMUTABLE_COPY_PENDING
+
+source:
+  source_id: FSB_548_2025
+  act_date: "2025-12-25"
+  number: "548"
+  registration_number: "84872"
+  official_publication_number: "0001202512300058"
+  official_publication_date: "2025-12-30"
+  effective_date: "2026-01-30"
+  official_publication_url: "https://publication.pravo.gov.ru/document/0001202512300058"
+  authoritative_text_urls:
+    - "https://gossopka.ru/doc/npa/normativnye-pravovye-akty-federalnykh-organov-ispolnitelnoy-vlasti/prikaz-fsb-rossii-ot-25-dekabrya-2025g-548-ob-utverjdenii-poryadka-osushchestvleniya-nepreryvnogo-vz-38658/"
+    - "https://rg.ru/documents/2026/01/08/fsb-prikaz548-site-dok.html"
+    - "https://www.consultant.ru/document/cons_doc_LAW_523648/"
+  provenance_note: >-
+    Official publication metadata and the authenticated publication number are primary metadata.
+    Clause text below is cross-checked against authoritative/public legal-text publications.
+    An immutable hash-pinned primary PDF has not yet been committed, so records are not marked PRIMARY_VERIFIED.
+
+applicability:
+  applies_to:
+    - CII subjects that own, lease or otherwise lawfully possess significant CII objects
+    - heads of bodies/organizations carrying duties under 187-FZ article 9 part 4
+  guardrail: >-
+    Do not generalize this order to every organization or every CII object. Applicability depends on the
+    statutory role and the presence of a significant CII object or the article 9 part 4 organizational duty.
+
+records:
+  - id: FSB548-P1-INTERACTION-CHANNEL
+    locator: "Порядок, п. 1"
+    status: AUTHORITATIVE_VERIFIED
+    rule: >-
+      Continuous interaction with GosSOPKA is performed through NCCCI by connection to NCCCI technical infrastructure.
+    evidence_required:
+      - interaction-regulation-or-connection-record
+      - active-NCCCI-technical-infrastructure-access
+
+  - id: FSB548-P2-PURPOSE
+    locator: "Порядок, п. 2"
+    status: AUTHORITATIVE_VERIFIED
+    rule: >-
+      The interaction supports sending attack/incident information and incident response, and receiving threat,
+      impending-attack, incident-sign and countermeasure information from NCCCI.
+
+  - id: FSB548-P3-PERSONAL-ACCOUNT
+    locator: "Порядок, п. 3, абз. 1"
+    status: AUTHORITATIVE_VERIFIED
+    rule: >-
+      Covered subjects and heads must send attack/incident information and receive threat information through the
+      GosSOPKA subject personal account registered in NCCCI infrastructure, using NCCCI-defined formats.
+    evidence_required:
+      - registered-personal-account
+      - approved-message-format-mapping
+
+  - id: FSB548-P3-RESERVE-CHANNEL
+    locator: "Порядок, п. 3, абз. 2"
+    status: AUTHORITATIVE_VERIFIED
+    trigger: technical failure or loss of access to the personal account
+    rule: >-
+      Attack/incident information must be sent through reserve communication channels identified in the personal
+      account, while preserving NCCCI-defined information formats.
+    evidence_required:
+      - tested-reserve-channel
+      - current-reserve-contact-data
+      - fallback-send-log
+    red_team_guardrail: >-
+      A reserve channel is not optional merely because the normal personal-account channel is usually available.
+
+  - id: FSB548-P4-INTERACTION-REGULATION
+    locator: "Порядок, п. 4"
+    status: AUTHORITATIVE_VERIFIED
+    rule: >-
+      Connection to the personal account for continuous interaction is organized after conclusion of the interaction
+      regulation between NCCCI and the owners of the relevant Russian information resources.
+    evidence_required:
+      - concluded-interaction-regulation
+
+  - id: FSB548-P5-DEADLINE-ROUTING
+    locator: "Порядок, п. 5"
+    status: AUTHORITATIVE_VERIFIED
+    rule: >-
+      Deadlines for sending attack and incident information are not defined independently by order 548; they are
+      taken from the current FSB incident-reporting/response procedure.
+    cross_act_dependency:
+      source_id: FSB_547_2025
+    red_team_guardrail: >-
+      Do not invent or copy a generic deadline into order 548. Route the event to the applicable deadline in order 547.
+
+  - id: FSB548-P6-NCCCI-ID
+    locator: "Порядок, п. 6"
+    status: AUTHORITATIVE_VERIFIED
+    actor: NCCCI
+    deadline:
+      value: 24
+      unit: hours
+      trigger: receipt of attack/incident information in the personal account
+    rule: >-
+      NCCCI confirms transfer by assigning an identifier to the computer attack and/or incident within 24 hours.
+    evidence_required:
+      - assigned-NCCCI-identifier
+      - receipt-timestamp
+
+  - id: FSB548-P7-REQUEST-ASSISTANCE
+    locator: "Порядок, п. 7"
+    status: AUTHORITATIVE_VERIFIED
+    rule: >-
+      Covered subjects and heads may request NCCCI assistance in incident response and involvement of GosSOPKA forces
+      through the personal account.
+
+  - id: FSB548-P8-NCCCI-SUPPORT-FUNCTIONS
+    locator: "Порядок, п. 8"
+    status: AUTHORITATIVE_VERIFIED
+    actor: NCCCI
+    rule: >-
+      NCCCI may provide threat and attack-method information, request additional information, assist incident response,
+      and provide methodological and expert support.
+    red_team_guardrail: >-
+      This record describes NCCCI functions; it must not be converted into a mandatory subject-side SLA unless a
+      separate clause expressly sets one.
+
+  - id: FSB548-P9-PREVENTION-ACTION-REPORT
+    locator: "Порядок, п. 9"
+    status: AUTHORITATIVE_VERIFIED
+    actor: covered CII subject or covered head of body/organization
+    deadline:
+      value: 24
+      unit: hours
+      trigger: receipt from NCCCI of information about impending attacks or incident signs related to its resources
+    rule: >-
+      The covered party must send NCCCI information about prevention measures being taken within 24 hours.
+    evidence_required:
+      - NCCCI-input-timestamp
+      - prevention-action-record
+      - outbound-report-timestamp
+
+  - id: FSB548-P10-REQUEST-RESPONSE
+    locator: "Порядок, п. 10"
+    status: AUTHORITATIVE_VERIFIED
+    actor: covered CII subject or covered head of body/organization
+    deadline:
+      value: 24
+      unit: hours
+      trigger: receipt of an NCCCI request for additional information under paragraph 8
+    rule: >-
+      The covered party must provide the requested information, or notify NCCCI that it cannot provide it and state
+      the reasons and the date/period by which it will be provided, within 24 hours.
+    evidence_required:
+      - NCCCI-request-timestamp
+      - response-or-impossibility-notice
+      - outbound-timestamp
+
+cross_act_model:
+  FSB_547_2025:
+    relation: reporting-and-response-deadlines
+  FSB_546_2025:
+    relation: information-exchange-rules
+  FSB_553_2025:
+    relation: installation-and-operation-of-GosSOPKA-technical-means
+  FSB_554_2025:
+    relation: requirements-to-GosSOPKA-technical-means
+  FSB_539_2025:
+    relation: receipt-of-attack-tools-methods-and-prevention-information
+
+red_team:
+  verdict: PARTIAL_PASS_CURRENT_ORDER_CLAUSE_LOGIC
+  authoritative_verified_records: 11
+  primary_verified_records: 0
+  remaining_high_gaps:
+    - immutable hash-pinned primary PDF snapshot
+    - exact predecessor/supersession mapping for the pre-2026 continuous-interaction procedure
+    - cross-order positive and negative applicability regression tests for 539/546/547/548/553/554
+  maturity_effect: >-
+    This materially improves current GosSOPKA clause coverage but does not by itself justify raising the whole
+    legislation or evidence/audit family above the existing conservative family maturity floor.
