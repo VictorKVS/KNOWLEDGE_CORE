@@ -1,0 +1,73 @@
+schema_version: "1.0"
+id: coverage-scorecard-2026-08-14-run-34
+date: "2026-08-14"
+overall_strict_p0_percent: 10
+p0_families_registered: "12/12"
+critical_gaps: 0
+high_gaps: 1
+red_team: FAIL
+expert_ready: false
+
+family_scores:
+  npa_rf: 10
+  gost_iso: 10
+  classification_categorization: 10
+  threat_modeling_bdu: 10
+  risk_methods: 10
+  legal_consequences: 10
+  szi_skzi_license_lifecycle: 10
+  roles_deadlines_responsibility: 10
+  evidence_audit: 10
+  practical_cases: 10
+
+this_run:
+  focus: FSB_546_NEGATIVE_DEADLINE_ROUTING_EXECUTABLE_GUARDRAILS
+  added_files:
+    - security-knowledge/roles-deadlines-responsibility/fsb-546-negative-routing-regression-v1.yaml
+    - security-knowledge/validators/validate_fsb546_negative_routing.py
+    - .github/workflows/fsb546-negative-routing.yml
+  commits:
+    fixtures: "4ec05afd207d398e52a4e48f979ef41066d61321"
+    validator: "2cff53ce0a35bbf6162b7ef4ee657f33c10fa595"
+    workflow: "d2b7be7c884f960b87326cd36172274aec2cbd9f"
+  verified_authoritative_operational_rules_reused: 2
+  executable_negative_regression_fixtures_added: 5
+  dedicated_ci_gate: PASS
+  dedicated_ci_run_id: 31803130627
+  immutable_primary_clause_records_added: 0
+  maturity_claim: NO_FAMILY_PROMOTION
+
+verified:
+  - "FSB 546 paragraph 20 remains modeled as a 24-hour INFORMATION_RECEIPT clock for unsolicited foreign/international attack or incident information related to the subject's CII object."
+  - "FSB 546 paragraph 21 remains modeled as a separate 12-hour INFORMATION_RECEIPT clock for information related to another CII subject's object."
+  - "Five negative cases now execute deterministically: no substitution with the 3-hour significant-CII incident route; no paragraph-20/21 cross-routing; missing receipt timestamp fails closed; unproven CII applicability fails closed; generic incident detection does not trigger paragraph 20/21."
+  - "The dedicated GitHub Actions FSB 546 Negative Routing Gate completed successfully for head d2b7be7c884f960b87326cd36172274aec2cbd9f."
+
+pending:
+  - "download and SHA-256 hash-pin exact official PDF bytes for FSB 539/546/547/548/553/554"
+  - "download and SHA-256 hash-pin NKCKI Order No. 2 dated 2026-07-14 and the 2026-07-08 Initial Data artifact"
+  - "extract exact NKCKI reporting fields, technical parameters and attachment/schema requirements from preserved primary artifacts"
+  - "connect exact NKCKI field schema to evidence validators and FSB 546/547 routing"
+  - "continue BDU raw-byte/change-detection and full object/method relation snapshotting"
+
+red_team_findings:
+  verdict: FAIL
+  positives:
+    - "A previously pending high-risk deadline-routing test subtask is now executable and CI-gated."
+    - "FSB 546 12h and 24h values are protected against accidental reuse as universal incident SLAs."
+    - "Missing trigger time and unproven applicability fail closed."
+  blockers:
+    - "The remaining High blocker is unchanged: immutable/hash-pinned primary provenance is absent for high-impact FSB and NKCKI artifacts."
+    - "Clause-level FSB 546 data remains authoritative-secondary rather than immutable-primary until exact official bytes are preserved and hashed."
+
+next_bottleneck:
+  - "obtain exact downloadable NKCKI Order No. 2 and 2026-07-08 artifact bytes and hash-pin them"
+  - "obtain exact official FSB 539/546/547/548/553/554 PDF bytes and hash-pin them"
+  - "machine-map NKCKI field-level reporting schema and connect it to FSB 546/547 evidence rules"
+
+promotion_decision:
+  family_promotion: false
+  reason: >-
+    The FSB 546 negative deadline-routing subtask is now executable and the dedicated CI gate is green,
+    but no immutable primary artifact was acquired and the remaining High provenance blocker is still open.
+    Overall and family percentages therefore remain unchanged.
