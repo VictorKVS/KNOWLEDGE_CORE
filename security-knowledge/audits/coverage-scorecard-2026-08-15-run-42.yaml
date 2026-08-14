@@ -1,0 +1,83 @@
+schema_version: "1.0"
+id: coverage-scorecard-2026-08-15-run-42
+date: "2026-08-15"
+overall_strict_p0_percent: 10
+p0_families_registered: "12/12"
+critical_gaps: 0
+high_gaps: 1
+red_team: FAIL
+expert_ready: false
+
+family_scores:
+  npa_rf: 10
+  gost_iso: 10
+  classification_categorization: 10
+  threat_modeling_bdu: 10
+  risk_methods: 10
+  legal_consequences: 10
+  szi_skzi_license_lifecycle: 10
+  roles_deadlines_responsibility: 10
+  evidence_audit: 10
+  practical_cases: 10
+
+this_run:
+  focus: FSTEC_LICENSE_REGISTER_TIME_BOUNDED_OBSERVATION_AND_ROUTING
+  added_files:
+    - security-knowledge/lifecycle/fstec-license-register-observation-2026-08-15.yaml
+    - security-knowledge/lifecycle/fstec-license-register-routing-regression-v1.yaml
+    - security-knowledge/validators/validate_fstec_license_register_routing.py
+    - .github/workflows/fstec-license-register-routing.yml
+  commits:
+    observation: "353dbc0a07abce531389ce6fd6e37cd70b0ca127"
+    fixtures: "5355d5be5499a4c2092e0d57bff549c25db03eec"
+    validator: "ea19e12436bf652cc54955c5b91a2c1203108b59"
+    workflow: "9fb6383af5dcb0b5b1c9aa8adebc43a4ed467b47"
+  state_portal_metadata_records_added: 2
+  executable_routing_fixtures_added: 6
+  immutable_primary_clause_records_added: 0
+  ci_status: NOT_YET_OBSERVED
+  maturity_claim: NO_FAMILY_PROMOTION
+
+verified:
+  - "The state open-data portal identifies FSTEC as owner of the TZKI license dataset 7701350013-licensestpci and reports its last modification as 2025-09-30."
+  - "The state open-data portal identifies FSTEC as owner of the development/production license dataset 7701350013-licensestooperate and reports its last modification as 2026-06-02."
+  - "The two FSTEC license datasets have different freshness dates; freshness must be tracked per register rather than by one global regulator timestamp."
+  - "Dataset metadata alone is not sufficient evidence that a named organization currently holds a valid license."
+  - "A product-certificate validity query is now explicitly routed away from license-register evidence to the separate FSTEC certificate-register lifecycle."
+  - "Six deterministic regression cases enforce separation of current organization license status, historical snapshot evaluation, procedural-order evidence and product-certificate status."
+
+pending:
+  - "retrieve exact current CSV bytes for both FSTEC license datasets and SHA-256 hash-pin them"
+  - "capture row schema and normalize individual license status fields"
+  - "add successive-snapshot change detection and historical validity reconstruction"
+  - "add current FSTEC certified-SZI register observation as a separate lifecycle entity"
+  - "verify the new FSTEC License Register Routing Gate after GitHub Actions exposes a completed run"
+  - "download and SHA-256 hash-pin exact official PDF bytes for FSTEC Orders 163/164/487"
+  - "continue proving exhaustive current CII sector-overlay inventory"
+  - "close immutable/hash-pinned primary provenance for high-impact FSB 539/546/547/548/553/554 and NKCKI 2026 artifacts"
+
+red_team_findings:
+  verdict: FAIL
+  positives:
+    - "A stale open-data snapshot can no longer silently answer a current organization-license question."
+    - "The model now distinguishes regulator procedure lifecycle, organization license lifecycle, FSTEC product-certificate lifecycle and FSB cryptographic-product lifecycle."
+    - "No arbitrary freshness SLA was invented; the engine records exact observed and source-modified dates and fails closed for current-status claims without current authoritative evidence."
+    - "No family percentage was increased for metadata-only coverage."
+  blockers:
+    - "The single High blocker remains immutable/hash-pinned primary provenance for high-impact FSB/NKCKI artifacts."
+    - "Exact CSV bytes and row-level license records are not yet hash-pinned."
+    - "The FSTEC certified-SZI register is still not represented by a current authoritative snapshot."
+    - "National CII sector-overlay completeness remains unproven."
+
+next_bottleneck:
+  - "obtain row-level current FSTEC license-register bytes or an authoritative current lookup path and hash-pin the observation"
+  - "add the separate FSTEC certified-SZI register lifecycle and certificate expiration/change semantics"
+  - "verify the new routing CI gate"
+  - "then return to immutable provenance for FSB/NKCKI and exhaustive CII sector overlays"
+
+promotion_decision:
+  family_promotion: false
+  reason: >-
+    Register source identity and freshness semantics are materially improved and current-status overclaiming is now
+    deterministically blocked, but row-level authoritative evidence, immutable bytes, certificate-register coverage
+    and the global high-impact provenance blocker remain open.
