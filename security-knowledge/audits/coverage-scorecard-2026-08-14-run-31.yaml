@@ -1,0 +1,73 @@
+schema_version: "1.0"
+id: coverage-scorecard-2026-08-14-run-31
+date: "2026-08-14"
+overall_strict_p0_percent: 10
+p0_families_registered: "12/12"
+critical_gaps: 0
+high_gaps: 1
+red_team: FAIL
+expert_ready: false
+
+family_scores:
+  npa_rf: 10
+  gost_iso: 10
+  classification_categorization: 10
+  threat_modeling_bdu: 10
+  risk_methods: 10
+  legal_consequences: 10
+  szi_skzi_license_lifecycle: 10
+  roles_deadlines_responsibility: 10
+  evidence_audit: 10
+  practical_cases: 10
+
+this_run:
+  focus: BDU_ASUTP_TIME_BOUNDED_RELATION_SNAPSHOT
+  added_files:
+    - security-knowledge/threat-modeling/bdu-asutp-observed-snapshot-2026-08-14-slice-01.yaml
+  commits:
+    initial_snapshot: "944feeb60d33020cc515c1718d60964d0a1aa914"
+    exact_regulator_code_correction: "0d40f166b0b34c074b016775891b33d0347abbe9"
+  verified_dynamic_catalog_records_added: 9
+  threat_records_added: 4
+  configuration_vulnerability_records_added: 5
+  immutable_primary_clause_records_added: 0
+  maturity_claim: NO_FAMILY_PROMOTION
+
+verified:
+  - "FSTEK BDU ASU TP is currently reachable as a regulator dynamic catalog and identifies itself as a national resource containing current ASU TP vulnerability, threat, implementation-method, consequence and recommended-control information."
+  - "Observed threat records preserved in this slice: УТП:01, УТП:02, УТП:05, УТП:10."
+  - "Observed configuration-vulnerability records preserved in this slice: BDA:C001, BDA:C004, BDA:C006, BDA:C009, BDA:C010."
+  - "The vulnerability records expose direct catalog relations to FSTEK control identifiers and threat identifiers; these relations are preserved as source observations, not promoted to universal mandatory controls."
+  - "BDA:C010 source conditionality is explicitly preserved: lack of inactivity timeout is not necessarily a vulnerability for every ASU TP component due to operating characteristics."
+  - "Exact regulator Cyrillic identifiers are preserved; Latin transliterations are not used as source identifiers."
+
+pending:
+  - "acquire raw BDU catalog/API response bytes where legally and technically available and store SHA-256 digests"
+  - "expand from this partial verified slice to the full BDU ASU TP threat/object/method/vulnerability/control relation universe"
+  - "add next-snapshot diff/change detection and reassessment triggers"
+  - "download and SHA-256 hash-pin NKCKI order No. 2 dated 2026-07-14 and the 2026-07-08 Initial Data artifact"
+  - "extract exact NKCKI reporting fields, technical parameters and attachment/schema requirements"
+  - "preserve immutable/hash-pinned primary snapshots for FSB 539/546/547/548/553/554/161"
+
+red_team_findings:
+  verdict: FAIL
+  positives:
+    - "The existing BDU snapshot policy now has an actual time-bounded verified data slice rather than policy-only design."
+    - "Catalog existence, catalog relation, and system-specific threat applicability remain separate semantic layers."
+    - "Source-code fidelity was checked and corrected to exact Cyrillic regulator identifiers."
+  blockers:
+    - "The remaining High blocker from run 30 is unchanged: immutable/hash-pinned primary provenance remains absent for high-impact current GosSOPKA/NKCKI clause records and reporting artifacts/schemas."
+    - "This BDU slice is partial and has no raw-byte hash; it therefore cannot justify promotion of threat_modeling_bdu above the strict family proof floor."
+
+next_bottleneck:
+  - "acquire exact downloadable NKCKI artifacts and compute immutable SHA-256 provenance"
+  - "extract and machine-map field-level reporting schema and evidence completeness rules"
+  - "preserve primary snapshots of FSB 539/546/547/548/553/554/161"
+  - "then return to BDU for full relation-universe snapshots and change-detection automation"
+
+promotion_decision:
+  family_promotion: false
+  reason: >-
+    Nine primary dynamic-catalog records and their verified relations were added, but the pass is explicitly partial,
+    has no raw-byte hash, and does not close the remaining High immutable-primary-provenance blocker. Overall and family
+    percentages therefore remain unchanged.
