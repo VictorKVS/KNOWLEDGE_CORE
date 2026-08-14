@@ -1,0 +1,98 @@
+schema_version: "1.0"
+id: fsb-546-2025-information-exchange-deadlines-authoritative-slice
+observed_at: "2026-08-14"
+source_class: AUTHORITATIVE_SECONDARY_VERIFIED
+primary_publication_number: "0001202512300066"
+primary_publication_date: "2025-12-30"
+minjust_registration_number: "84870"
+effective_from: "2026-01-30"
+
+source_note: >-
+  Clause text and deadlines below are verified against the current Garant representation of FSB Order No. 546 dated 2025-12-25.
+  Official publication metadata is separately verified on publication.pravo.gov.ru.
+  This slice is not IMMUTABLE_PRIMARY until the official PDF bytes are acquired and hash-pinned.
+
+rules:
+  - id: FSB546-RULE-004
+    paragraph: 4
+    status: AUTHORITATIVE_VERIFIED
+    actor: KII_SUBJECT
+    action: EXCHANGE_ATTACK_AND_INCIDENT_INFORMATION
+    format_basis: NKCKI_DEFINED_GOSSOPKA_FORMATS_AND_TECHNICAL_PARAMETERS
+    applicability: "exchange with other KII subjects under the Order"
+
+  - id: FSB546-RULE-008
+    paragraph: 8
+    status: AUTHORITATIVE_VERIFIED
+    actor: KII_SUBJECT
+    trigger: INFORMATION_SENT_IN_EXCHANGE
+    action: ALSO_SEND_TO_NKCKI
+    timing: SIMULTANEOUS_WITH_EXCHANGE
+
+  - id: FSB546-RULE-015
+    paragraph: 15
+    status: AUTHORITATIVE_VERIFIED
+    actor: NKCKI
+    trigger: RECEIPT_OF_REQUEST_FOR_EXCHANGE_WITH_FOREIGN_OR_INTERNATIONAL_ORGANIZATION
+    action: REVIEW_INFORMATION
+    deadline:
+      value: 24
+      unit: HOURS
+      clock_start: RECEIPT_OF_REQUEST
+    follow_up_if_transfer_approved: SEND_WITHOUT_DELAY_AND_INFORM_KII_SUBJECT
+
+  - id: FSB546-RULE-016
+    paragraph: 16
+    status: AUTHORITATIVE_VERIFIED
+    actor: NKCKI
+    trigger: DECISION_TO_REFUSE_TRANSFER_TO_FOREIGN_OR_INTERNATIONAL_ORGANIZATION
+    action: INFORM_REQUESTING_KII_SUBJECT
+    deadline:
+      value: 24
+      unit: HOURS
+      clock_start: REFUSAL_DECISION
+
+  - id: FSB546-RULE-018
+    paragraph: 18
+    status: AUTHORITATIVE_VERIFIED
+    actor: NKCKI
+    trigger: RECEIPT_OF_RESPONSE_FROM_FOREIGN_OR_INTERNATIONAL_ORGANIZATION
+    action: FORWARD_RESPONSE_TO_REQUESTING_KII_SUBJECT
+    deadline:
+      value: 48
+      unit: HOURS
+      clock_start: RECEIPT_OF_RESPONSE
+
+  - id: FSB546-RULE-020
+    paragraph: 20
+    status: AUTHORITATIVE_VERIFIED
+    actor: KII_SUBJECT
+    trigger: RECEIPT_OF_UNSOLICITED_FOREIGN_OR_INTERNATIONAL_INFORMATION_ABOUT_ATTACK_OR_INCIDENT_RELATED_TO_KII_OBJECT
+    action: SEND_RECEIVED_INFORMATION_TO_NKCKI
+    deadline:
+      value: 24
+      unit: HOURS
+      clock_start: RECEIPT_OF_INFORMATION
+
+  - id: FSB546-RULE-021
+    paragraph: 21
+    status: AUTHORITATIVE_VERIFIED
+    actor: KII_SUBJECT
+    trigger: RECEIPT_OF_INFORMATION_ABOUT_ATTACK_OR_INCIDENT_RELATED_TO_ANOTHER_KII_SUBJECT_OBJECT
+    action: SEND_RECEIVED_INFORMATION_TO_NKCKI
+    deadline:
+      value: 12
+      unit: HOURS
+      clock_start: RECEIPT_OF_INFORMATION
+
+routing_guardrails:
+  - "The 12-hour rule in paragraph 21 is not a universal incident-notification deadline; it applies to receipt of information concerning another KII subject's object."
+  - "The 24-hour rule in paragraph 20 is not a universal incident-notification deadline; it applies to unsolicited information received from a foreign/international organization."
+  - "The 24-hour and 48-hour deadlines in paragraphs 15, 16 and 18 are NKCKI procedural deadlines, not deadlines imposed on the KII subject for initial incident notification."
+  - "Paragraph 3 uses a qualitative operational timing standard for subject-to-subject exchange; it must not be converted into an invented numeric deadline."
+  - "Formats referenced by this Order are delegated to NKCKI-defined GosSOPKA formats/technical parameters and must be version-linked to the current NKCKI artifact set."
+
+pending:
+  - "Hash-pin official FSB 546 PDF and promote clause text to IMMUTABLE_PRIMARY_VERIFIED."
+  - "Link paragraphs 4/9/17 to exact field-level NKCKI Order No. 2 schema after exact artifact acquisition."
+  - "Add executable negative tests proving that paragraph 20/21 deadlines are not routed to unrelated event types."
