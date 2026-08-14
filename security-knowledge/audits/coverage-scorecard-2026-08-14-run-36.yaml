@@ -1,0 +1,70 @@
+schema_version: "1.0"
+id: coverage-scorecard-2026-08-14-run-36
+date: "2026-08-14"
+overall_strict_p0_percent: 10
+p0_families_registered: "12/12"
+critical_gaps: 0
+high_gaps: 1
+red_team: FAIL
+expert_ready: false
+
+family_scores:
+  npa_rf: 10
+  gost_iso: 10
+  classification_categorization: 10
+  threat_modeling_bdu: 10
+  risk_methods: 10
+  legal_consequences: 10
+  szi_skzi_license_lifecycle: 10
+  roles_deadlines_responsibility: 10
+  evidence_audit: 10
+  practical_cases: 10
+
+this_run:
+  focus: CURRENT_RU_STANDARDS_CONTINUITY_MEASUREMENT_LIFECYCLE
+  added_files:
+    - security-knowledge/standards/continuity-measurement-current-status-slice-2026-08-14.yaml
+  commits:
+    standards_slice: "1e77524169653d1dd4b327b39b45127d88faf881"
+  authoritative_verified_current_records_added: 3
+  negative_lifecycle_assertions_added: 2
+  immutable_primary_clause_records_added: 0
+  maturity_claim: NO_FAMILY_PROMOTION
+
+verified:
+  - "Rosstandart currently marks GOST R ISO/IEC 27004-2021 as active; it replaced GOST R ISO/IEC 27004-2011."
+  - "Rosstandart currently marks GOST R ISO 22301-2021 as active; it replaced GOST R ISO 22301-2014."
+  - "Rosstandart currently marks GOST R ISO/IEC 27031-2012 as active."
+  - "The standards slice explicitly separates registry status/scope from mandatory legal applicability."
+  - "Superseded standards are retained for historical audits but must not be routed as current standards."
+
+pending:
+  - "download and SHA-256 hash-pin exact official PDF bytes for FSB 539/546/547/548/553/554"
+  - "download and SHA-256 hash-pin NKCKI Order No. 2 dated 2026-07-14 and the 2026-07-08 Initial Data artifact"
+  - "extract exact NKCKI reporting fields, technical parameters and attachment/schema requirements from preserved primary artifacts"
+  - "map current Russian incident-management standards family from Rosstandart authoritative registry"
+  - "add secure-development and testing/evidence standards families"
+  - "obtain lawful clause-level evidence locators for copyrighted standards before atomization"
+  - "add executable standards lifecycle regression validator"
+
+red_team_findings:
+  verdict: FAIL
+  positives:
+    - "A stale-standard failure mode is now explicitly guarded for GOST R ISO/IEC 27004-2011 and GOST R ISO 22301-2014."
+    - "Business continuity, ICT readiness and ISMS measurement are represented as separate scopes rather than collapsed into one control family."
+    - "No standard is promoted into a mandatory organization requirement merely because Rosstandart marks it active."
+  blockers:
+    - "The single remaining High blocker remains immutable/hash-pinned primary provenance for high-impact FSB and NKCKI artifacts."
+    - "Standards remain metadata/scope verified only; clause-level atomization requires lawful access to normative text and legal incorporation edges."
+
+next_bottleneck:
+  - "obtain exact downloadable NKCKI Order No. 2 and 2026-07-08 artifact bytes and hash-pin them"
+  - "obtain exact official FSB 539/546/547/548/553/554 PDF bytes and hash-pin them"
+  - "then map current Russian incident-management standards family and add standards lifecycle CI"
+
+promotion_decision:
+  family_promotion: false
+  reason: >-
+    This run materially improves current-state standards lifecycle accuracy and prevents two known
+    superseded standards from being treated as current. It does not close clause-level evidence or
+    the remaining High immutable-provenance blocker, so overall and family percentages remain unchanged.
