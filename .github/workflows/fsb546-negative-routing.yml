@@ -1,0 +1,25 @@
+name: FSB 546 Negative Routing Gate
+
+on:
+  push:
+    paths:
+      - 'security-knowledge/roles-deadlines-responsibility/fsb-546-negative-routing-regression-v1.yaml'
+      - 'security-knowledge/validators/validate_fsb546_negative_routing.py'
+      - '.github/workflows/fsb546-negative-routing.yml'
+  pull_request:
+    paths:
+      - 'security-knowledge/roles-deadlines-responsibility/fsb-546-negative-routing-regression-v1.yaml'
+      - 'security-knowledge/validators/validate_fsb546_negative_routing.py'
+      - '.github/workflows/fsb546-negative-routing.yml'
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install pyyaml
+      - run: python security-knowledge/validators/validate_fsb546_negative_routing.py
