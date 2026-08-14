@@ -1,0 +1,62 @@
+schema_version: "1.0"
+id: CII-SECTOR-OVERLAY-ROUTING-REGRESSION-V1
+checked_at: "2026-08-14"
+purpose: >-
+  Prevent the CII categorization engine from treating Government Resolution No. 127 as the only
+  categorization source when a verified sector-specific 2026 overlay applies, while remaining
+  fail-closed for unresolved sector applicability.
+
+verified_overlay_set_reference:
+  file: security-knowledge/classification/cii-sector-overlay-registry-2026-verified-slice.yaml
+  verified_anchor_count: 5
+  anchors:
+    - {sector: ATOMIC_ENERGY, government_resolution_no: "4", official_publication_number: "0001202601160013"}
+    - {sector: BANKING_AND_OTHER_FINANCIAL_MARKET, government_resolution_no: "92", official_publication_number: "0001202602070010"}
+    - {sector: SCIENCE, government_resolution_no: "246", official_publication_number: "0001202603070013"}
+    - {sector: STATE_REGISTRATION_OF_REAL_ESTATE_RIGHTS_AND_TRANSACTIONS, government_resolution_no: "303", official_publication_number: "0001202603240036"}
+    - {sector: ROCKET_AND_SPACE_INDUSTRY, government_resolution_no: "356", official_publication_number: "0001202604010039"}
+
+routing_rule:
+  base_source: PP_RF_127_2018
+  principle: BASE_PLUS_ALL_APPLICABLE_VERIFIED_OVERLAYS
+  unresolved_result: NEEDS_SECTOR_REVIEW
+  guardrails:
+    - Do not infer that this five-anchor slice is exhaustive for all CII sectors.
+    - Do not route a sector overlay solely from organization name or free-text description.
+    - Sector applicability must be backed by organization facts and current legal scope.
+    - If multiple verified sectors apply, all matching overlays must be returned.
+
+fixtures:
+  - id: CII-SR-001
+    facts: {cii_subject_confirmed: true, sectors: [ATOMIC_ENERGY]}
+    expected: {status: ROUTE, sources: [PP_RF_127_2018, PP_RF_4_2026]}
+  - id: CII-SR-002
+    facts: {cii_subject_confirmed: true, sectors: [BANKING_AND_OTHER_FINANCIAL_MARKET]}
+    expected: {status: ROUTE, sources: [PP_RF_127_2018, PP_RF_92_2026]}
+  - id: CII-SR-003
+    facts: {cii_subject_confirmed: true, sectors: [SCIENCE]}
+    expected: {status: ROUTE, sources: [PP_RF_127_2018, PP_RF_246_2026]}
+  - id: CII-SR-004
+    facts: {cii_subject_confirmed: true, sectors: [STATE_REGISTRATION_OF_REAL_ESTATE_RIGHTS_AND_TRANSACTIONS]}
+    expected: {status: ROUTE, sources: [PP_RF_127_2018, PP_RF_303_2026]}
+  - id: CII-SR-005
+    facts: {cii_subject_confirmed: true, sectors: [ROCKET_AND_SPACE_INDUSTRY]}
+    expected: {status: ROUTE, sources: [PP_RF_127_2018, PP_RF_356_2026]}
+  - id: CII-SR-006
+    facts: {cii_subject_confirmed: true, sectors: [SCIENCE, ROCKET_AND_SPACE_INDUSTRY]}
+    expected: {status: ROUTE, sources: [PP_RF_127_2018, PP_RF_246_2026, PP_RF_356_2026]}
+  - id: CII-SR-007
+    facts: {cii_subject_confirmed: true, sectors: []}
+    expected: {status: NEEDS_SECTOR_REVIEW, sources: [PP_RF_127_2018]}
+  - id: CII-SR-008
+    facts: {cii_subject_confirmed: null, sectors: [SCIENCE]}
+    expected: {status: NEEDS_CII_APPLICABILITY_REVIEW, sources: []}
+  - id: CII-SR-009
+    facts: {cii_subject_confirmed: false, sectors: [SCIENCE]}
+    expected: {status: NOT_ROUTED_AS_CII, sources: []}
+  - id: CII-SR-010
+    facts: {cii_subject_confirmed: true, sectors: [HEALTHCARE]}
+    expected: {status: NEEDS_SECTOR_REVIEW, sources: [PP_RF_127_2018]}
+    note: >-
+      Healthcare is within the statutory CII sector universe, but this verified five-anchor slice does not
+      prove a current sector overlay for healthcare; the engine must not invent one.
