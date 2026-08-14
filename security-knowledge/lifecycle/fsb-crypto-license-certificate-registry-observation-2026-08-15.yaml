@@ -1,0 +1,110 @@
+schema_version: "1.0"
+id: fsb-crypto-license-certificate-registry-observation-2026-08-15
+date_observed: "2026-08-15"
+status: AUTHORITATIVE_WEB_OBSERVATION
+scope:
+  - FSB_crypto_activity_license_registry_entrypoint
+  - FSB_certified_SZI_list_entrypoint
+  - licensing_authority_routing
+  - evidence_source_separation
+
+sources:
+  - id: FSB_CLSZ_LICENSING_2026_08_15
+    authority: FSB_CLSZ
+    source_class: PRIMARY_REGULATOR_WEB
+    title: "ЦЛСЗ ФСБ России — Общая информация по лицензированию"
+    url: "https://clsz.fsb.ru/clsz/license.htm!_print=true.html"
+    observed_at: "2026-08-15"
+  - id: FSB_CLSZ_CERTIFICATION_2026_08_15
+    authority: FSB_CLSZ
+    source_class: PRIMARY_REGULATOR_WEB
+    title: "ЦЛСЗ ФСБ России — Сертификация"
+    url: "https://clsz.fsb.ru/clsz/certification.htm"
+    observed_at: "2026-08-15"
+  - id: PP_RF_313_REFERENCE
+    authority: Government_RF
+    source_class: REGULATOR_REFERENCED_NPA
+    title: "Постановление Правительства РФ от 16.04.2012 N 313"
+    referenced_by: FSB_CLSZ_LICENSING_2026_08_15
+
+verified_observations:
+  - id: FSB-REG-OBS-001
+    status: PRIMARY_WEB_VERIFIED
+    fact: >-
+      ЦЛСЗ ФСБ России указывает, что лицензирование деятельности, связанной с шифровальными
+      (криптографическими) средствами, осуществляется по 99-ФЗ и ПП РФ N 313.
+  - id: FSB-REG-OBS-002
+    status: PRIMARY_WEB_VERIFIED
+    fact: >-
+      Для криптографической лицензируемой деятельности лицензии предоставляет ЦЛСЗ ФСБ России
+      для соискателей/лицензиатов Москвы и Московской области, а также территориальные органы
+      безопасности в предусмотренной распределенной компетенции.
+  - id: FSB-REG-OBS-003
+    status: PRIMARY_WEB_VERIFIED
+    fact: >-
+      Официальная страница ЦЛСЗ ФСБ России содержит отдельную ссылку на реестр лицензий на
+      деятельность, связанную с шифровальными (криптографическими) средствами.
+  - id: FSB-REG-OBS-004
+    status: PRIMARY_WEB_VERIFIED
+    fact: >-
+      Официальная страница сертификации ЦЛСЗ ФСБ России сообщает, что ЦЛСЗ организует
+      сертификацию средств защиты информации и публикует выписку из перечня средств защиты
+      информации, сертифицированных ФСБ России.
+
+routing_rules:
+  - id: FSB-REG-ROUTE-001
+    query_type: contractor_crypto_activity_license_status
+    required_source_type: CURRENT_FSB_LICENSE_REGISTRY_RECORD
+    prohibited_substitutes:
+      - FSB_certified_product_list
+      - historical_paper_license_without_current_registry_check
+      - PP_RF_313_text_alone
+    fail_closed_when:
+      - current_registry_record_not_observed
+      - work_service_scope_not_matched
+  - id: FSB-REG-ROUTE-002
+    query_type: product_FSB_certification_status
+    required_source_type: CURRENT_FSB_CERTIFIED_SZI_LIST_OR_CERTIFICATE_RECORD
+    prohibited_substitutes:
+      - FSB_crypto_activity_license_registry
+      - vendor_license_status
+      - FSTEC_certificate_rules
+    fail_closed_when:
+      - product_version_not_matched
+      - certificate_or_list_status_not_currently_observed
+  - id: FSB-REG-ROUTE-003
+    query_type: need_for_crypto_activity_license
+    decision_basis:
+      - actual_work_or_service
+      - PP_RF_313_work_service_item
+      - own_needs_exception_if_exactly_applicable
+    prohibited_inference: "Mere possession or use of SKZI does not by itself prove that the organization must hold a PP313 license."
+
+provenance_and_freshness:
+  registry_nature: DYNAMIC
+  observation_timestamp_required: true
+  immutable_bytes_captured_this_run: false
+  sha256_captured_this_run: false
+  row_level_records_captured_this_run: false
+  current_status_claim_policy: FAIL_CLOSED_WITHOUT_CURRENT_RECORD
+
+red_team_guardrails:
+  - "FSB licensing and FSB product certification must never share one status field."
+  - "A license record proves permission for licensed activity within its scope; it does not prove that a product is certified."
+  - "A certified-product list entry does not prove that a contractor holds the license required for a regulated service."
+  - "Do not import FSTEC certificate expiry/suspension rules into the FSB certificate lifecycle without an FSB authority."
+  - "Do not claim current validity from an un-timestamped historical copy when an official dynamic registry exists."
+
+pending:
+  - id: FSB-REG-BYTES-001
+    severity: HIGH
+    item: "Resolve exact downloadable current crypto-license registry bytes/format, capture immutable snapshot and SHA-256."
+  - id: FSB-CERT-BYTES-001
+    severity: MEDIUM
+    item: "Resolve exact downloadable certified-SZI extract bytes/format and capture immutable snapshot and SHA-256."
+  - id: FSB-CERT-LC-001
+    severity: HIGH
+    item: "Obtain clause-level current FSB rules for certificate validity, extension, suspension, termination and continued-use conditions."
+  - id: PP313-WATCH-001
+    severity: MEDIUM
+    item: "Continue monitoring the 2026 amendment initiative; no draft may be promoted to current law without an enacted official publication chain."
