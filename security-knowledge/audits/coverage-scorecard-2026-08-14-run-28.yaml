@@ -1,0 +1,74 @@
+schema_version: "1.0"
+id: coverage-scorecard-2026-08-14-run-28
+date: "2026-08-14"
+overall_strict_p0_percent: 10
+p0_families_registered: "12/12"
+critical_gaps: 0
+high_gaps: 3
+red_team: FAIL
+expert_ready: false
+
+family_scores:
+  npa_rf: 10
+  gost_iso: 10
+  classification_categorization: 10
+  threat_modeling_bdu: 10
+  risk_methods: 10
+  legal_consequences: 10
+  szi_skzi_license_lifecycle: 10
+  roles_deadlines_responsibility: 10
+  evidence_audit: 10
+  practical_cases: 10
+
+this_run:
+  focus: GOSOPKA_2026_CURRENTNESS_AND_CENTER_ACCREDITATION
+  added_files:
+    - security-knowledge/legislation/fsb-161-2026-gosopka-center-accreditation-authoritative-slice.yaml
+    - security-knowledge/legislation/nkcki-2026-reporting-formats-and-attack-type-guidance-primary-web-slice.yaml
+  commits:
+    fsb161_slice: "c9844dabcf00e1699d9d2eaf0c599bc068206484"
+    nkcki_july2026_slice: "8f4882185ef925e9f9b015acda2303d974eefaae"
+  authoritative_verified_clause_records_added: 16
+  primary_web_verified_operational_records_added: 4
+  immutable_primary_clause_records_added: 0
+  maturity_claim: NO_PROMOTION
+
+verified:
+  - "FSB order 161 dated 2026-04-22 is registered by Minjust under No. 86534 and provides the current accreditation procedure and requirements for GosSOPKA centers."
+  - "The FSB 161 slice keeps GosSOPKA-center accreditation and center-specific technical/security obligations separate from ordinary CII-subject incident-routing duties."
+  - "The FSB 161 slice records verified accreditation lifecycle branches and center-specific operational requirements without generalizing them beyond their applicability."
+  - "NKTsKI order No. 2 dated 2026-07-14 defines current formats for presenting computer-attack/computer-incident information to GosSOPKA and the composition of technical parameters."
+  - "NKTsKI methodological Initial Data approved 2026-07-08 are recommendations; their threshold values are examples from general practice and are not promoted into statutory thresholds."
+  - "The July 2026 operational layer is modeled separately from FSB 547/548 legal deadline routing, preventing silent modification of legal SLAs by reporting-format guidance."
+
+pending:
+  - "download and hash-pin the exact NKTsKI order No. 2 artifact, current reporting schemas and 2026-07-08 Initial Data document"
+  - "map exact NKTsKI payload fields and technical parameters into the GosSOPKA evidence model"
+  - "execute GosSOPKA applicability/timing and evidence-package fixtures with a deterministic validator and CI"
+  - "preserve immutable/hash-pinned primary snapshots for FSB 539/546/547/548/553/554 and FSB 161"
+  - "resolve exact predecessor/supersession mapping for FSB 548"
+  - "complete remaining FSB 161 clause extraction and current accreditation-registry snapshot model"
+
+red_team_findings:
+  verdict: FAIL
+  positives:
+    - "a material July 2026 currentness gap was discovered before the existing GosSOPKA routing layer was treated as complete"
+    - "reporting payload schema, attack-type methodology, legal event classification and legal deadline are explicitly separated"
+    - "center-specific FSB 161 duties are prevented from leaking into generic CII-subject applicability"
+  blockers:
+    - "current NKTsKI reporting schemas are registered but not yet immutable/hash-pinned or machine-mapped"
+    - "regression cases remain non-executable and non-CI-enforced"
+    - "immutable primary provenance is still absent for high-impact current clause records"
+    - "FSB 548 predecessor mapping remains unresolved"
+
+next_bottleneck:
+  - "acquire and hash-pin NKTsKI order No. 2 reporting schemas and 2026-07-08 attack-type Initial Data"
+  - "map reporting fields/evidence completeness and add fail-closed regression cases for incomplete-but-reportable packages"
+  - "implement deterministic validator/CI for the current GosSOPKA routing matrix"
+  - "then close immutable primary snapshots and FSB 548 predecessor mapping"
+
+promotion_decision:
+  family_promotion: false
+  reason: >-
+    Currentness and applicability improved materially, but family-wide proof floors still require executable
+    regression enforcement, immutable primary provenance and complete version/predecessor mapping.
