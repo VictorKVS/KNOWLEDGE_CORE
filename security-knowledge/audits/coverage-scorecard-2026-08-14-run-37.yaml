@@ -1,0 +1,76 @@
+schema_version: "1.0"
+id: coverage-scorecard-2026-08-14-run-37
+date: "2026-08-14"
+overall_strict_p0_percent: 10
+p0_families_registered: "12/12"
+critical_gaps: 0
+high_gaps: 1
+red_team: FAIL
+expert_ready: false
+
+family_scores:
+  npa_rf: 10
+  gost_iso: 10
+  classification_categorization: 10
+  threat_modeling_bdu: 10
+  risk_methods: 10
+  legal_consequences: 10
+  szi_skzi_license_lifecycle: 10
+  roles_deadlines_responsibility: 10
+  evidence_audit: 10
+  practical_cases: 10
+
+this_run:
+  focus: CII_2026_SECTOR_OVERLAY_ROUTING_FAIL_CLOSED
+  added_files:
+    - security-knowledge/classification/cii-sector-overlay-routing-regression-v1.yaml
+    - security-knowledge/validators/validate_cii_sector_overlay_routing.py
+    - .github/workflows/cii-sector-overlay-routing.yml
+  commits:
+    fixtures: "f59bf11dc9ae1bfbf4a806a66fd568e3da2ff0b0"
+    validator: "18a3d8318d7f8f83f017b01c813e39189f436413"
+    workflow: "095d3cd393971ae55bb27248e5acc7699f9359f8"
+  verified_official_overlay_anchors_reused: 5
+  executable_routing_fixtures_added: 10
+  immutable_primary_clause_records_added: 0
+  workflow_run_id: 31817529678
+  workflow_status_observed_during_scorecard_write: IN_PROGRESS
+  maturity_claim: NO_FAMILY_PROMOTION
+
+verified:
+  - "The official publication portal confirms 2026 sector-specific CII categorization acts for atomic energy (PP RF No. 4), banking/other financial market (No. 92), science (No. 246), state registration of real-estate rights/transactions (No. 303), and rocket-space industry (No. 356)."
+  - "The routing model now requires PP RF No. 127 plus every applicable verified sector overlay rather than PP 127 alone."
+  - "A multi-sector organization can route more than one verified overlay simultaneously."
+  - "Unknown CII-subject status fails closed as NEEDS_CII_APPLICABILITY_REVIEW."
+  - "Confirmed CII subject with unresolved/unsupported sector overlay fails closed as NEEDS_SECTOR_REVIEW and no overlay is invented."
+  - "Healthcare is used only as a negative unresolved-sector fixture; this run does not claim a verified 2026 healthcare overlay."
+
+pending:
+  - "observe final CI conclusion for CII Sector Overlay Routing Gate run 31817529678"
+  - "build an exhaustive current sector-overlay inventory instead of treating the five verified anchors as complete"
+  - "extract effective dates and clause-level decision logic from each applicable sector act"
+  - "download and SHA-256 hash-pin exact official PDF bytes for high-impact FSB 539/546/547/548/553/554"
+  - "download and SHA-256 hash-pin NKCKI Order No. 2 dated 2026-07-14 and the 2026-07-08 Initial Data artifact"
+  - "extract exact NKCKI reporting fields and technical parameters from preserved primary artifacts"
+
+red_team_findings:
+  verdict: FAIL
+  positives:
+    - "Sector-specific categorization is now guarded by executable routing cases rather than descriptive notes only."
+    - "The engine is explicitly prevented from inventing an unverified sector overlay."
+    - "Multiple applicable sector overlays are supported by the regression model."
+  blockers:
+    - "The five-anchor overlay registry remains a verified slice, not an exhaustive national sector inventory."
+    - "The single High blocker remains immutable/hash-pinned primary provenance for high-impact FSB and NKCKI artifacts."
+
+next_bottleneck:
+  - "complete current CII sector-overlay inventory and exact effective-date analysis"
+  - "close immutable provenance for NKCKI No. 2 / 2026-07-08 artifact and FSB 539/546/547/548/553/554"
+  - "then connect sector categorization outputs to FSTEC threat methodology and control-profile selection"
+
+promotion_decision:
+  family_promotion: false
+  reason: >-
+    This run improves classification safety by converting sector-overlay applicability into deterministic,
+    fail-closed regression fixtures and CI. It does not prove exhaustive sector coverage or immutable primary
+    provenance, so overall and family percentages remain unchanged.
