@@ -1,0 +1,108 @@
+schema_version: "1.0"
+id: nkcki-2026-reporting-formats-and-attack-type-guidance-primary-web-slice
+checked_at: "2026-08-14"
+status: PRIMARY_WEB_VERIFIED_OPERATIONAL_GUIDANCE
+purpose: >-
+  Register the July 2026 NKTsKI operational layer that sits below the current FSB GosSOPKA orders:
+  reporting formats/technical parameters and methodological guidance for determining computer-attack type.
+  This file deliberately separates binding/order metadata from methodological recommendations.
+
+primary_sources:
+  - source_id: NKCKI_ORDER_2_2026
+    issuer: NATIONAL_COORDINATION_CENTER_FOR_COMPUTER_INCIDENTS
+    date: "2026-07-14"
+    number: "2"
+    title: >-
+      О совершенствовании деятельности по организации взаимодействия Национального координационного
+      центра по компьютерным инцидентам с субъектами критической информационной инфраструктуры,
+      центрами ГосСОПКА и органами (организациями)
+    primary_announcement_url: >-
+      https://cert.gov.ru/news/novosti-nktski/o-sovershenstvovanii-deyatelnosti-po-organizatsii-vzaimodeystviya-natsionalnogo-koordinatsionnogo-ts/
+    primary_materials_index_url: >-
+      https://www.cert.gov.ru/materialy/organizatsiya-vzaimodeystviya/reglament-vzaimodeystviya-nktski-
+    gossopka_registry_url: >-
+      https://gossopka.ru/doc/npa/normativnye-pravovye-akty-federalnykh-organov-ispolnitelnoy-vlasti/
+    verification_status: PRIMARY_WEB_METADATA_VERIFIED
+    exact_download_snapshot: PENDING
+
+  - source_id: NKCKI_ATTACK_TYPE_INPUTS_2026
+    issuer: NATIONAL_COORDINATION_CENTER_FOR_COMPUTER_INCIDENTS
+    approval_date: "2026-07-08"
+    title: "Исходные данные для определения типа компьютерной атаки"
+    document_type: METHODOLOGICAL_RECOMMENDATIONS
+    primary_materials_index_url: >-
+      https://www.cert.gov.ru/materialy/organizatsiya-vzaimodeystviya/reglament-vzaimodeystviya-nktski-
+    gossopka_method_index_url: "https://gossopka.ru/doc/method/"
+    verification_status: PRIMARY_WEB_METADATA_VERIFIED
+    exact_download_snapshot: PENDING
+
+records:
+  - id: NKCKI2-2026-META-001
+    status: PRIMARY_WEB_VERIFIED
+    source_id: NKCKI_ORDER_2_2026
+    rule: >-
+      NKTsKI Order No. 2 dated 2026-07-14 defines the formats for presenting information about
+      computer attacks and computer incidents to GosSOPKA and the composition of their technical parameters.
+    authority_type: OPERATIONAL_ORDER
+
+  - id: NKCKI2-2026-GUIDE-001
+    status: PRIMARY_WEB_VERIFIED
+    source_id: NKCKI_ATTACK_TYPE_INPUTS_2026
+    rule: >-
+      The "Initial data for determining the type of computer attack" approved on 2026-07-08 are
+      methodological recommendations for organizations that report attack information to NKTsKI.
+    authority_type: METHODOLOGICAL_RECOMMENDATION
+    obligation_strength: RECOMMENDATORY_METHOD
+
+  - id: NKCKI2-2026-GUIDE-002
+    status: PRIMARY_WEB_VERIFIED
+    source_id: NKCKI_ATTACK_TYPE_INPUTS_2026
+    rule: >-
+      Threshold values contained in the methodological initial data are examples from general practice.
+    guardrail: >-
+      Example thresholds must not be promoted into statutory/normative applicability thresholds or used
+      as automatic proof that an event is or is not a computer attack.
+
+  - id: NKCKI2-2026-GUIDE-003
+    status: PRIMARY_WEB_VERIFIED_OFFICIAL_GUIDANCE
+    source_id: NKCKI_ORDER_2_2026
+    rule: >-
+      When sending information to NKTsKI, organizations should provide the maximum amount of available
+      materials listed in point 5 of each section of the Initial Data; absence of one or more listed materials
+      does not remove the need to provide the remaining available materials.
+    authority_type: OFFICIAL_OPERATIONAL_GUIDANCE
+    evidence_implication: PARTIAL_EVIDENCE_DOES_NOT_BLOCK_SUBMISSION_OF_AVAILABLE_EVIDENCE
+
+integration_rules:
+  - id: NKCKI2-INTEGRATION-001
+    status: RED_TEAM_GUARDRAIL
+    rule: >-
+      The July 2026 NKTsKI layer controls reporting payload/technical-parameter representation and
+      attack-type methodology. Existing FSB 547/548 legal deadlines must not be changed unless the
+      governing legal text expressly changes them.
+
+  - id: NKCKI2-INTEGRATION-002
+    status: RED_TEAM_GUARDRAIL
+    rule: >-
+      Machine routing must keep separate fields for event legal classification, attack-type methodology,
+      reporting deadline and reporting payload schema. These are related but non-identical decisions.
+
+  - id: NKCKI2-INTEGRATION-003
+    status: RED_TEAM_GUARDRAIL
+    rule: >-
+      If the exact current format/schema from Order No. 2 is unavailable to the engine, the engine may
+      calculate a legal reporting deadline but must mark payload-format validation as PENDING rather than
+      claim that a notification package is format-complete.
+
+red_team:
+  verdict: PARTIAL_PASS_CURRENTNESS_GAP_DISCOVERED_AND_REGISTERED
+  primary_web_verified_records: 4
+  high_risk_prevented:
+    - "treating example attack-type thresholds as mandatory legal thresholds"
+    - "treating a July 2026 reporting-format update as if it silently changed FSB reporting deadlines"
+    - "claiming notification evidence completeness without the current NKTsKI payload schema"
+  pending:
+    - "download and hash-pin the exact Order No. 2 artifact and its schemas"
+    - "download and hash-pin the 2026-07-08 Initial Data document"
+    - "map exact fields/technical parameters into the GosSOPKA evidence model"
+    - "add regression fixtures for incomplete-but-reportable evidence packages"
