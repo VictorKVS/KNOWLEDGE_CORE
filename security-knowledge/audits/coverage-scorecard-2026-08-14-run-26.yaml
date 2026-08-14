@@ -1,0 +1,79 @@
+schema_version: "1.0"
+id: coverage-scorecard-2026-08-14-run-26
+date: "2026-08-14"
+overall_strict_p0_percent: 10
+p0_families_registered: "12/12"
+critical_gaps: 0
+high_gaps: 3
+red_team: FAIL
+expert_ready: false
+
+family_scores:
+  npa_rf: 10
+  gost_iso: 10
+  classification_categorization: 10
+  threat_modeling_bdu: 10
+  risk_methods: 10
+  legal_consequences: 10
+  szi_skzi_license_lifecycle: 10
+  roles_deadlines_responsibility: 10
+  evidence_audit: 10
+  practical_cases: 10
+
+this_run:
+  focus: FSB_539_2025_and_cross_order_GosSOPKA_routing
+  added_files:
+    - security-knowledge/legislation/fsb-539-2025-attack-information-receipt-authoritative-slice.yaml
+    - security-knowledge/legislation/gosopka-current-stack-applicability-timing-matrix-v1.yaml
+  updated_files:
+    - security-knowledge/legislation/cii-fsb-gosopka-2025-current-source-registry.yaml
+  commits:
+    fsb539_clause_slice: "4932783791a1632d03344f2881322bbd78987f2f"
+    registry_sync: "94e70767e1a25d69e8a2854fe600a3e3930d1486"
+    routing_matrix: "4de23620f349ca9860a3ab407c77d70c802d0f25"
+  authoritative_verified_clause_records_added: 6
+  derived_routing_cases_added: 12
+  declarative_regression_fixtures_added: 5
+  primary_verified_clause_records_added: 0
+  maturity_claim: NO_PROMOTION
+
+verified:
+  - "FSB order 539 is effective from 2026-01-30; official publication number 0001202512260014 is confirmed."
+  - "A CII subject receives attack-method/prevention information via cert.gov.ru, request to NKCKI, and information sent by NKCKI."
+  - "A request under order 539 paragraph 1.2 is answered by NKCKI within up to 30 working days from receipt."
+  - "The 30-working-day period is an NKCKI response period, not a subject incident-reporting SLA."
+  - "The superseded order 368 Appendix 2 had a five-day NKCKI response period; it must not be inherited after 2026-01-30."
+  - "The six-order current stack now has an explicit functional routing model across 539/546/547/548/553/554."
+  - "The routing model explicitly distinguishes significant-object incidents (3h), other CII incidents (24h), computer attacks (24h), third-party information receipt (12h/24h branches), and non-numeric operational exchange timing."
+
+pending:
+  - "execute the five declarative GosSOPKA regression fixtures with a deterministic validator and CI"
+  - "preserve immutable/hash-pinned primary PDF snapshots for high-impact current FSB orders"
+  - "resolve exact predecessor/supersession mapping for FSB 548"
+  - "normalize stale FSB 553 evidence-file note to the already resolved 2026-01-10 effective date"
+  - "CI/status validation for generated knowledge artifacts"
+
+red_team_findings:
+  verdict: FAIL
+  positives:
+    - "FSB 539 is no longer only metadata; it has clause-level routing and timing evidence"
+    - "old FSB 368 five-day response timing is explicitly prevented from leaking into the current stack"
+    - "attack versus incident timing is fail-closed and object significance is required before choosing the 3h incident branch"
+    - "regulator/NKCKI deadlines are separated from subject obligations"
+    - "where FSB 546 provides no numeric SLA, the model returns non-numeric operational timing"
+  blockers:
+    - "regression cases are not executable/CI-enforced yet"
+    - "primary immutable provenance is still absent for current high-impact clause records"
+    - "FSB 548 predecessor mapping remains unresolved"
+
+next_bottleneck:
+  - "implement deterministic validator for gosopka-current-stack-applicability-timing-matrix-v1 fixtures and run it in CI"
+  - "normalize FSB 553 stale transition metadata"
+  - "resolve FSB 548 predecessor mapping from pre-2026 legal stack"
+  - "preserve immutable primary snapshots/digests for 539/546/547/548/553/554"
+
+promotion_decision:
+  family_promotion: false
+  reason: >-
+    Current GosSOPKA clause coverage and routing consistency improved materially, but family-wide proof floors
+    still require executable regression enforcement, immutable primary provenance and complete transition mapping.
