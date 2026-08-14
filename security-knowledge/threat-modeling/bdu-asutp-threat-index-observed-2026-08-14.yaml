@@ -1,0 +1,97 @@
+schema_version: "1.0"
+id: bdu-asutp-threat-index-observed-2026-08-14
+observed_at: "2026-08-14T14:03:40+03:00"
+source:
+  authority: "ФСТЭК России"
+  system: "Банк данных угроз АСУ ТП"
+  url: "https://bduasutp.fstec.ru/threats"
+  source_class: PRIMARY_DYNAMIC_WEB
+  verification_status: PRIMARY_DYNAMIC_VERIFIED
+  immutability: NOT_HASH_PINNED
+  note: >-
+    This is an observed regulator dynamic-catalog snapshot. It is not an immutable primary artifact
+    and must not be used as proof that the catalog cannot change after observed_at.
+
+catalog_semantics:
+  regulator_description: >-
+    The resource presents current ASU TP security threat information and related implementation objects/methods,
+    consequences and recommended protection information.
+  applicability_guardrail: >-
+    Presence of a threat in the regulator catalog does not by itself establish relevance to a particular system.
+    System-specific applicability requires architecture, assets, interfaces, threat-source and consequence evidence.
+
+threat_index:
+  - source_id: "УТП:01"
+    title: "Угроза утечки информации"
+    source_observed_timestamp: "2023-10-24T09:24:34Z"
+    status: PRIMARY_DYNAMIC_VERIFIED
+  - source_id: "УТП:02"
+    title: "Угроза получения информационных ресурсов из недоверенного или скомпрометированного источника"
+    source_observed_timestamp: "2023-10-24T09:24:34Z"
+    status: PRIMARY_DYNAMIC_VERIFIED
+  - source_id: "УТП:03"
+    title: "Угроза удаленного несанкционированного подключения к компонентам АСУ ТП"
+    source_observed_timestamp: "2023-10-24T09:24:38Z"
+    status: PRIMARY_DYNAMIC_VERIFIED
+  - source_id: "УТП:04"
+    title: "Угроза несанкционированного доступа"
+    source_observed_timestamp: "2023-10-24T09:24:39Z"
+    status: PRIMARY_DYNAMIC_VERIFIED
+  - source_id: "УТП:05"
+    title: "Угроза несанкционированной модификации (искажения)"
+    source_observed_timestamp: "2023-10-24T09:24:35Z"
+    status: PRIMARY_DYNAMIC_VERIFIED
+  - source_id: "УТП:06"
+    title: "Угроза несанкционированной подмены"
+    source_observed_timestamp: "2023-10-24T09:24:39Z"
+    status: PRIMARY_DYNAMIC_VERIFIED
+  - source_id: "УТП:07"
+    title: "Угроза удаления информационных ресурсов"
+    source_observed_timestamp: "2023-10-24T09:24:38Z"
+    status: PRIMARY_DYNAMIC_VERIFIED
+  - source_id: "УТП:08"
+    title: "Угроза отказа в обслуживании"
+    source_observed_timestamp: "2023-10-24T09:24:39Z"
+    status: PRIMARY_DYNAMIC_VERIFIED
+  - source_id: "УТП:09"
+    title: "Угроза нарушения функционирования (работоспособности)"
+    source_observed_timestamp: "2025-05-29T13:28:25Z"
+    status: PRIMARY_DYNAMIC_VERIFIED
+  - source_id: "УТП:10"
+    title: "Угроза несанкционированного сбора данных об автоматизированной системе управления"
+    source_observed_timestamp: "2025-05-29T13:21:21Z"
+    status: PRIMARY_DYNAMIC_VERIFIED
+
+relations_verified_from_individual_catalog_records:
+  - subject: "BDA:C001"
+    predicate: "catalog_links_to_threat"
+    objects: ["УТП:03", "УТП:04", "УТП:08"]
+    status: PRIMARY_DYNAMIC_VERIFIED
+  - subject: "BDA:C004"
+    predicate: "catalog_links_to_threat"
+    objects: ["УТП:04"]
+    status: PRIMARY_DYNAMIC_VERIFIED
+  - subject: "BDA:C006"
+    predicate: "catalog_links_to_threat"
+    objects: ["УТП:01", "УТП:04", "УТП:05", "УТП:06", "УТП:07", "УТП:10"]
+    status: PRIMARY_DYNAMIC_VERIFIED
+  - subject: "BDA:C009"
+    predicate: "catalog_links_to_threat"
+    objects: ["УТП:04"]
+    status: PRIMARY_DYNAMIC_VERIFIED
+  - subject: "BDA:C010"
+    predicate: "catalog_links_to_threat"
+    objects: ["УТП:04"]
+    status: PRIMARY_DYNAMIC_VERIFIED
+
+quality_controls:
+  - "Exact Cyrillic regulator identifiers are preserved."
+  - "Catalog membership is separate from system-specific threat relevance."
+  - "Dynamic timestamps are source observations, not legal effective dates."
+  - "No mandatory control is inferred solely from a catalog relation."
+  - "No claim of full BDU relation-universe completeness is made."
+
+pending:
+  - "Preserve raw response bytes/API export where technically and legally available and compute SHA-256."
+  - "Snapshot full objects-of-impact and implementation-method relations for all ten threats."
+  - "Add deterministic diff against the next observation and trigger reassessment when title/relations/timestamp changes."
