@@ -1,0 +1,77 @@
+schema_version: "1.0"
+id: coverage-scorecard-2026-08-15-run-43
+date: "2026-08-15"
+overall_strict_p0_percent: 10
+p0_families_registered: "12/12"
+critical_gaps: 0
+high_gaps: 1
+red_team: FAIL
+expert_ready: false
+
+family_scores:
+  npa_rf: 10
+  gost_iso: 10
+  classification_categorization: 10
+  threat_modeling_bdu: 10
+  risk_methods: 10
+  legal_consequences: 10
+  szi_skzi_license_lifecycle: 10
+  roles_deadlines_responsibility: 10
+  evidence_audit: 10
+  practical_cases: 10
+
+this_run:
+  focus: FSB_CRYPTO_LICENSE_VS_CERTIFICATE_REGISTRY_SEPARATION_AND_PRIOR_CI_CONFIRMATION
+  added_files:
+    - security-knowledge/lifecycle/fsb-crypto-license-certificate-registry-observation-2026-08-15.yaml
+  commits:
+    fsb_registry_observation: "36cc2bc087eed79c22d81dd9db6bc3bf988faa65"
+  primary_web_verified_records_added: 4
+  immutable_primary_clause_records_added: 0
+  prior_gate_verified:
+    workflow: FSTEC License Register Routing Gate
+    run_id: 31840817790
+    conclusion: success
+    head_sha: "9fb6383af5dcb0b5b1c9aa8adebc43a4ed467b47"
+  maturity_claim: NO_FAMILY_PROMOTION
+
+verified:
+  - "The FSTEC License Register Routing Gate from the prior pass is now observed completed with conclusion success."
+  - "FSB CLSZ identifies 99-FZ and Government Resolution N 313 as the legal basis for licensing cryptographic activity."
+  - "FSB CLSZ states that it and territorial security bodies provide crypto-activity licenses within distributed competence."
+  - "FSB CLSZ publishes a distinct entry point for the crypto-activity license registry."
+  - "FSB CLSZ separately publishes an extract from the list of information-security products certified by FSB."
+  - "License status and FSB product-certification status are therefore modeled as independent evidence entities."
+
+pending:
+  - "resolve exact downloadable FSB crypto-license registry bytes/format and SHA-256 hash-pin a time-bounded snapshot"
+  - "resolve exact downloadable FSB certified-SZI extract bytes/format and SHA-256 hash-pin a time-bounded snapshot"
+  - "obtain clause-level current FSB rules for certificate validity, extension, suspension, termination and continued-use conditions"
+  - "retrieve exact current CSV bytes for the two FSTEC license datasets and normalize row-level records"
+  - "close immutable/hash-pinned primary provenance for high-impact FSB 539/546/547/548/553/554 and NKCKI 2026 artifacts"
+  - "continue proving exhaustive current CII sector-overlay inventory"
+
+red_team_findings:
+  verdict: FAIL
+  positives:
+    - "The previous FSTEC license-register routing workflow is now confirmed green."
+    - "FSB licensing and FSB certification can no longer be represented as one registry/status dimension in the model."
+    - "Current contractor-license claims require current registry evidence; product certification requires a separate current certificate/list record."
+    - "No FSTEC certificate lifecycle rule was copied into the FSB certificate model."
+    - "No draft PP313 amendment was promoted to current law."
+  blockers:
+    - "The umbrella High blocker remains immutable/hash-pinned primary provenance for high-impact FSB/NKCKI sources, including dynamic FSB registry bytes."
+    - "FSB certificate lifecycle remains metadata-only at the registry-entry level; clause-level validity/suspension/termination rules are still unresolved."
+    - "FSTEC license datasets still lack exact hash-pinned row-level snapshots."
+    - "National CII sector-overlay completeness remains unproven."
+
+next_bottleneck:
+  - "resolve and capture actual FSB crypto-license registry download/list output with observation timestamp and SHA-256"
+  - "capture the FSB certified-SZI extract separately and define product/version/certificate matching fields"
+  - "atomize FSB certificate lifecycle rules only from current FSB/official authority"
+  - "then return to NKCKI/FSB immutable artifacts and field-level evidence schemas"
+
+promotion_decision:
+  family_promotion: false
+  reason: >-
+    The pass materially improves authority routing and prevents license/certificate category errors, and the prior FSTEC routing CI is now confirmed green. However no new immutable primary bytes or clause-level FSB certificate lifecycle rules were obtained, so the strict family score remains unchanged.
