@@ -1,0 +1,31 @@
+name: GosSOPKA Regression Gate
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'security-knowledge/legislation/gosopka-current-stack-applicability-timing-matrix-v1.yaml'
+      - 'security-knowledge/validators/validate_gosopka_matrix.py'
+      - '.github/workflows/gosopka-regression.yml'
+  pull_request:
+    branches: [main]
+    paths:
+      - 'security-knowledge/legislation/gosopka-current-stack-applicability-timing-matrix-v1.yaml'
+      - 'security-knowledge/validators/validate_gosopka_matrix.py'
+      - '.github/workflows/gosopka-regression.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  validate-gosopka-routing:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Install YAML parser
+        run: python -m pip install --disable-pip-version-check PyYAML==6.0.2
+      - name: Execute fail-closed routing fixtures
+        run: python security-knowledge/validators/validate_gosopka_matrix.py
