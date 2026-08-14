@@ -1,0 +1,79 @@
+schema_version: "1.0"
+id: coverage-scorecard-2026-08-14-run-38
+date: "2026-08-14"
+overall_strict_p0_percent: 10
+p0_families_registered: "12/12"
+critical_gaps: 0
+high_gaps: 1
+red_team: FAIL
+expert_ready: false
+
+family_scores:
+  npa_rf: 10
+  gost_iso: 10
+  classification_categorization: 10
+  threat_modeling_bdu: 10
+  risk_methods: 10
+  legal_consequences: 10
+  szi_skzi_license_lifecycle: 10
+  roles_deadlines_responsibility: 10
+  evidence_audit: 10
+  practical_cases: 10
+
+this_run:
+  focus: CII_2026_SECTOR_OVERLAY_EFFECTIVE_DATES_AND_TEMPORAL_ROUTING
+  added_files:
+    - security-knowledge/classification/cii-sector-overlay-effective-dates-2026-verified.yaml
+    - security-knowledge/classification/cii-sector-overlay-temporal-regression-v1.yaml
+    - security-knowledge/validators/validate_cii_sector_overlay_temporal.py
+    - .github/workflows/cii-sector-overlay-temporal.yml
+  commits:
+    registry: "1e2841475a77bf6b4da5c8bb935ee5c0f35d5739"
+    fixtures: "80b28661876d40a6132588cfc9018d7c13a06eed"
+    validator: "397533d9630b335a42143bcbf68d77e045d57d9f"
+    workflow: "1a140cc49125ab1e77e218a3ba611c8847a006e5"
+  verified_effective_date_records_added: 5
+  executable_temporal_fixtures_added: 12
+  immutable_primary_clause_records_added: 0
+  workflow_observation: NOT_YET_OBSERVED_FOR_LATEST_COMMIT
+  maturity_claim: NO_FAMILY_PROMOTION
+
+verified:
+  - "PP RF No. 4 dated 2026-01-16: official publication No. 0001202601160013 on 2026-01-16; effective from 2026-01-24."
+  - "PP RF No. 92 dated 2026-02-06: official publication No. 0001202602070010 on 2026-02-07; effective from 2026-02-15."
+  - "PP RF No. 246 dated 2026-03-07: official publication No. 0001202603070013 on 2026-03-07; effective from 2026-03-15."
+  - "PP RF No. 303 dated 2026-03-23: official publication No. 0001202603240036 on 2026-03-24; effective from 2026-04-01."
+  - "PP RF No. 356 dated 2026-03-31: official publication No. 0001202604010039 on 2026-04-01; effective from 2026-04-09."
+  - "Historical routing now selects the overlay set by event/configuration date rather than present audit date."
+  - "Unknown event date fails closed as NEEDS_TEMPORAL_REVIEW."
+  - "Healthcare remains an unresolved-sector negative fixture; no healthcare overlay is invented."
+
+pending:
+  - "observe the new CII Sector Overlay Temporal Gate and record its actual GitHub Actions conclusion"
+  - "prove an exhaustive current national sector-overlay inventory rather than treating five verified overlays as complete"
+  - "extract clause-level decision logic and sector-specific calculation formulas into executable models"
+  - "download and SHA-256 hash-pin exact official PDF bytes for high-impact FSB 539/546/547/548/553/554"
+  - "download and SHA-256 hash-pin NKCKI Order No. 2 dated 2026-07-14 and the 2026-07-08 Initial Data artifact"
+
+red_team_findings:
+  verdict: FAIL
+  positives:
+    - "Five verified 2026 overlays now have explicit effective dates instead of publication dates being used as a proxy."
+    - "Twelve boundary fixtures cover the day-before/day-of transition for all five overlays plus unknown-date and unresolved-sector cases."
+    - "A dedicated deterministic validator and CI workflow were added."
+  blockers:
+    - "The five-overlay registry remains a verified slice, not an exhaustive national inventory."
+    - "The single High blocker remains immutable/hash-pinned primary provenance for high-impact FSB and NKCKI artifacts."
+    - "The newly added workflow has not yet been observed as completed in this run; no CI-success claim is made."
+
+next_bottleneck:
+  - "observe temporal CI result and fix if needed"
+  - "continue exhaustive current CII sector-overlay discovery and clause-level extraction"
+  - "close immutable provenance for NKCKI No. 2 / 2026-07-08 artifact and FSB 539/546/547/548/553/554"
+  - "then connect sector categorization outputs to FSTEC threat methodology and control-profile selection"
+
+promotion_decision:
+  family_promotion: false
+  reason: >-
+    This run closes a temporal-routing weakness for five verified 2026 sector overlays but does not establish exhaustive
+    national sector coverage or immutable primary provenance. Overall and family percentages therefore remain unchanged.
