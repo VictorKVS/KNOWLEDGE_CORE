@@ -1,0 +1,94 @@
+schema_version: "1.0"
+id: fsb-546-negative-routing-regression-v1
+checked_at: "2026-08-14"
+status: AUTHORITATIVE_SECONDARY_VERIFIED_WITH_OFFICIAL_PUBLICATION_METADATA
+source:
+  act: "Приказ ФСБ России от 25.12.2025 № 546"
+  minjust_registration: "84870"
+  official_publication_number: "0001202512300066"
+  official_publication_date: "2025-12-30"
+  effective_date: "2026-01-30"
+  clause_text_verification:
+    - paragraph: 20
+      actor: CII_SUBJECT
+      trigger: UNSOLICITED_FOREIGN_OR_INTERNATIONAL_INFO_RECEIVED_ABOUT_OWN_CII_OBJECT
+      destination: NKCKI
+      deadline_value: 24
+      deadline_unit: HOURS
+      clock_start: INFORMATION_RECEIPT
+    - paragraph: 21
+      actor: CII_SUBJECT
+      trigger: INFO_RECEIVED_ABOUT_OTHER_CII_SUBJECT_OBJECT
+      destination: NKCKI
+      deadline_value: 12
+      deadline_unit: HOURS
+      clock_start: INFORMATION_RECEIPT
+  provenance_guardrail: >-
+    Exact official PDF bytes are not yet hash-pinned in the repository. Clause values are therefore
+    authoritative-secondary verified and must not be promoted to immutable-primary status.
+
+rules:
+  - id: FSB546-R20
+    paragraph: 20
+    route: ROUTE-06-UNSOLICITED-FOREIGN-INFO-OWN-OBJECT
+    deadline_hours: 24
+    starts_from: INFORMATION_RECEIPT
+  - id: FSB546-R21
+    paragraph: 21
+    route: ROUTE-07-INFO-ABOUT-OTHER-CII-SUBJECT
+    deadline_hours: 12
+    starts_from: INFORMATION_RECEIPT
+
+negative_fixtures:
+  - id: FSB546-NEG-01
+    description: "Paragraph 20 receipt event must not use significant-CII 3h incident deadline."
+    input:
+      entity_scope: CII_SUBJECT
+      trigger: UNSOLICITED_FOREIGN_OR_INTERNATIONAL_INFO_RECEIVED_ABOUT_OWN_CII_OBJECT
+      received_at: "2026-08-14T08:00:00+03:00"
+      object_significance: SIGNIFICANT
+    expected_route: ROUTE-06-UNSOLICITED-FOREIGN-INFO-OWN-OBJECT
+    expected_deadline: "2026-08-15T08:00:00+03:00"
+    forbidden_routes:
+      - ROUTE-02-SIGNIFICANT-CII-INCIDENT
+      - ROUTE-04-COMPUTER-ATTACK
+
+  - id: FSB546-NEG-02
+    description: "Paragraph 21 receipt event must not inherit the 24h paragraph-20 deadline."
+    input:
+      entity_scope: CII_SUBJECT
+      trigger: INFO_RECEIVED_ABOUT_OTHER_CII_SUBJECT_OBJECT
+      received_at: "2026-08-14T08:00:00+03:00"
+    expected_route: ROUTE-07-INFO-ABOUT-OTHER-CII-SUBJECT
+    expected_deadline: "2026-08-14T20:00:00+03:00"
+    forbidden_routes:
+      - ROUTE-06-UNSOLICITED-FOREIGN-INFO-OWN-OBJECT
+
+  - id: FSB546-NEG-03
+    description: "Missing receipt timestamp must fail closed; no inferred deadline."
+    input:
+      entity_scope: CII_SUBJECT
+      trigger: INFO_RECEIVED_ABOUT_OTHER_CII_SUBJECT_OBJECT
+    expected_status: FAIL_CLOSED_MISSING_TRIGGER_TIME
+
+  - id: FSB546-NEG-04
+    description: "A non-CII entity must not receive paragraph 20 or 21 duties through this router."
+    input:
+      entity_scope: UNKNOWN
+      trigger: UNSOLICITED_FOREIGN_OR_INTERNATIONAL_INFO_RECEIVED_ABOUT_OWN_CII_OBJECT
+      received_at: "2026-08-14T08:00:00+03:00"
+    expected_status: APPLICABILITY_NOT_PROVEN
+
+  - id: FSB546-NEG-05
+    description: "Generic detected incident is not enough to invoke paragraph 20 or 21 receipt clocks."
+    input:
+      entity_scope: CII_SUBJECT
+      trigger: GENERIC_INCIDENT_DETECTED
+      received_at: "2026-08-14T08:00:00+03:00"
+    expected_status: FAIL_CLOSED_UNSUPPORTED_TRIGGER
+
+red_team_guardrails:
+  - "12h and 24h values from paragraphs 21 and 20 are event-specific receipt clocks, not universal incident SLAs."
+  - "Object significance does not shorten paragraph 20 to the separate 3h FSB 547 significant-object incident deadline."
+  - "Deadline calculation is forbidden when INFORMATION_RECEIPT timestamp is absent."
+  - "Applicability to a CII subject must be proven before routing."
