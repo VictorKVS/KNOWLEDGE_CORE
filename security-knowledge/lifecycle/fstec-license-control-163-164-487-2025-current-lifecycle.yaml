@@ -1,0 +1,128 @@
+schema_version: "1.0"
+id: FSTEC-LIC-CONTROL-163-164-487-2025-CURRENT-LIFECYCLE
+observed_at: "2026-08-14"
+domain: szi_skzi_license_lifecycle
+scope: >-
+  Current lifecycle of FSTEC license-control procedural orders No. 163 and No. 164 of 2025,
+  including the modifying order No. 487 of 2025. This slice records only verified publication,
+  registration, effective/applicability metadata and amendment consequences. It does not invent
+  clause-level deadlines not extracted from the exact current consolidated text.
+
+sources:
+  - id: SRC-PRAVO-FSTEC-163-2025
+    authority: PRIMARY_OFFICIAL_PUBLICATION_INDEX
+    issuer: FSTEC_RUSSIA
+    act: "Order of FSTEC Russia dated 2025-05-12 No. 163"
+    official_publication_no: "0001202507020008"
+    publication_date: "2025-07-02"
+    ministry_of_justice_registration_no: "82774"
+    ministry_of_justice_registration_date: "2025-07-01"
+    official_index_observed_pdf_pages: 12
+    official_index_observed_pdf_kb: 739
+    verification_status: PRIMARY_METADATA_VERIFIED
+  - id: SRC-PRAVO-FSTEC-164-2025
+    authority: PRIMARY_OFFICIAL_PUBLICATION_INDEX
+    issuer: FSTEC_RUSSIA
+    act: "Order of FSTEC Russia dated 2025-05-12 No. 164"
+    official_publication_no: "0001202507020007"
+    publication_date: "2025-07-02"
+    ministry_of_justice_registration_no: "82775"
+    ministry_of_justice_registration_date: "2025-07-01"
+    official_index_observed_pdf_pages: 11
+    official_index_observed_pdf_kb: 743
+    verification_status: PRIMARY_METADATA_VERIFIED
+  - id: SRC-PRAVO-FSTEC-487-2025
+    authority: PRIMARY_OFFICIAL_PUBLICATION_INDEX
+    issuer: FSTEC_RUSSIA
+    act: "Order of FSTEC Russia dated 2025-12-29 No. 487"
+    title: "On amendments to FSTEC Russia Orders dated 2025-05-12 No. 163 and No. 164"
+    official_publication_no: "0001202512300067"
+    publication_date: "2025-12-30"
+    ministry_of_justice_registration_no: "84884"
+    ministry_of_justice_registration_date: "2025-12-30"
+    official_index_observed_pdf_pages: 2
+    official_index_observed_pdf_kb: 107
+    verification_status: PRIMARY_METADATA_VERIFIED
+
+records:
+  - id: LIC-FSTEC-163-2025
+    machine_status: CURRENT_AS_AMENDED
+    activity: TECHNICAL_PROTECTION_OF_CONFIDENTIAL_INFORMATION
+    regulator: FSTEC_RUSSIA
+    subject: LICENSE_CONTROL_PROCEDURES
+    effective_from: "2025-07-13"
+    original_applicability_through: "2025-12-31"
+    current_applicability_through: "2028-12-31"
+    amendment_chain:
+      - LIC-FSTEC-487-2025
+    confidence: HIGH
+    evidence_tier: AUTHORITATIVE_VERIFIED
+    guardrail: >-
+      Do not classify Order No. 163 as expired after 2025-12-31 without applying Order No. 487.
+      The current applicability end is 2028-12-31.
+  - id: LIC-FSTEC-164-2025
+    machine_status: CURRENT_AS_AMENDED
+    activity: DEVELOPMENT_AND_PRODUCTION_OF_CONFIDENTIAL_INFORMATION_PROTECTION_TOOLS
+    regulator: FSTEC_RUSSIA
+    subject: LICENSE_CONTROL_PROCEDURES
+    effective_from: "2025-07-13"
+    original_applicability_through: "2025-12-31"
+    current_applicability_through: "2028-12-31"
+    amendment_chain:
+      - LIC-FSTEC-487-2025
+    confidence: HIGH
+    evidence_tier: AUTHORITATIVE_VERIFIED
+    guardrail: >-
+      Do not classify Order No. 164 as expired after 2025-12-31 without applying Order No. 487.
+      The current applicability end is 2028-12-31.
+  - id: LIC-FSTEC-487-2025
+    machine_status: EFFECTIVE_AMENDMENT
+    effective_from: "2025-12-31"
+    modifies:
+      - LIC-FSTEC-163-2025
+      - LIC-FSTEC-164-2025
+    verified_effect: "extends the applicability of Orders No. 163 and No. 164 through 2028-12-31"
+    confidence: HIGH
+    evidence_tier: AUTHORITATIVE_VERIFIED
+
+source_fidelity_notes:
+  - >-
+    The official publication index confirms act identity, registration and publication metadata.
+    Exact current clause text has not been hash-pinned in this repository in this pass.
+  - >-
+    An authoritative legal-system page for Orders No. 163/164 may still display their original
+    2025-12-31 limit. Current routing must overlay the later official amendment No. 487 rather than
+    treat an un-consolidated derivative page as the current lifecycle state.
+  - >-
+    License-control procedure applicability is not the same thing as certificate validity,
+    license validity, product certificate lifecycle, or SKZI approval lifecycle. These entities
+    must remain separate in the graph.
+
+fail_closed_rules:
+  - id: LIC-GUARD-001
+    if: "query_date >= 2025-12-31 AND order in [163,164] AND amendment_487_state is UNKNOWN"
+    then: NEEDS_AMENDMENT_REVIEW
+    rationale: "Cannot decide expiration from the original sunset date without evaluating Order No. 487."
+  - id: LIC-GUARD-002
+    if: "query_date between 2025-07-13 and 2028-12-31 inclusive AND amendment_487_state is VERIFIED"
+    then: CURRENT_AS_AMENDED
+  - id: LIC-GUARD-003
+    if: "query asks whether a specific company holds a valid license"
+    then: REQUIRE_CURRENT_LICENSE_REGISTER_LOOKUP
+    rationale: "These procedural orders do not prove an individual licensee's current license status."
+  - id: LIC-GUARD-004
+    if: "query asks whether a specific SZI certificate is valid"
+    then: REQUIRE_CURRENT_CERTIFICATION_REGISTER_LOOKUP
+    rationale: "License-control procedural acts do not establish product-certificate validity."
+
+pending:
+  - "download and SHA-256 hash-pin exact official PDF bytes for Orders 163, 164 and 487"
+  - "extract exact current consolidated procedural deadlines and event triggers clause-by-clause"
+  - "build executable temporal regression tests around 2025-07-12/13, 2025-12-30/31 and 2028-12-31/2029-01-01"
+  - "map the license-control procedural layer to separate current FSTEC license-register observations"
+
+promotion: false
+promotion_reason: >-
+  Current lifecycle is materially improved and an expiration-routing error is prevented, but immutable
+  primary bytes, consolidated clause-level extraction, current license-register snapshots and executable
+  lifecycle tests are still pending.
