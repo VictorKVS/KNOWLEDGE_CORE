@@ -1,0 +1,39 @@
+schema_version: "1.0"
+id: FSTEC-LICENSE-REGISTER-ROUTING-REGRESSION-V1
+cases:
+  - id: LICREG-CASE-001
+    query_kind: CURRENT_ORGANIZATION_LICENSE_VALIDITY
+    source_kind: DATASET_METADATA_ONLY
+    snapshot_date: "2025-09-30"
+    decision_date: "2026-08-15"
+    expected: REQUIRE_CURRENT_AUTHORITATIVE_LICENSE_RECORD
+  - id: LICREG-CASE-002
+    query_kind: CURRENT_ORGANIZATION_LICENSE_VALIDITY
+    source_kind: CURRENT_AUTHORITATIVE_LICENSE_RECORD
+    snapshot_date: "2026-08-15"
+    decision_date: "2026-08-15"
+    expected: ALLOW_RECORD_LEVEL_EVALUATION
+  - id: LICREG-CASE-003
+    query_kind: HISTORICAL_ORGANIZATION_LICENSE_STATUS
+    source_kind: HASH_PINNED_REGISTER_SNAPSHOT
+    snapshot_date: "2025-09-30"
+    decision_date: "2025-09-30"
+    expected: ALLOW_TIME_BOUNDED_EVALUATION
+  - id: LICREG-CASE-004
+    query_kind: CURRENT_SZI_CERTIFICATE_VALIDITY
+    source_kind: FSTEC_LICENSE_REGISTER
+    snapshot_date: "2026-06-02"
+    decision_date: "2026-08-15"
+    expected: ROUTE_TO_FSTEC_CERTIFICATE_REGISTER
+  - id: LICREG-CASE-005
+    query_kind: CURRENT_ORGANIZATION_LICENSE_VALIDITY
+    source_kind: LICENSE_CONTROL_PROCEDURAL_ORDER
+    snapshot_date: "2026-08-15"
+    decision_date: "2026-08-15"
+    expected: REQUIRE_CURRENT_AUTHORITATIVE_LICENSE_RECORD
+  - id: LICREG-CASE-006
+    query_kind: CURRENT_ORGANIZATION_LICENSE_VALIDITY
+    source_kind: DATASET_METADATA_ONLY
+    snapshot_date: null
+    decision_date: "2026-08-15"
+    expected: REQUIRE_CURRENT_AUTHORITATIVE_LICENSE_RECORD
