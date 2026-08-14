@@ -1,0 +1,64 @@
+schema_version: "1.0"
+id: coverage-scorecard-2026-08-14-run-27
+date: "2026-08-14"
+overall_strict_p0_percent: 10
+p0_families_registered: "12/12"
+critical_gaps: 0
+high_gaps: 3
+red_team: FAIL
+expert_ready: false
+
+family_scores:
+  npa_rf: 10
+  gost_iso: 10
+  classification_categorization: 10
+  threat_modeling_bdu: 10
+  risk_methods: 10
+  legal_consequences: 10
+  szi_skzi_license_lifecycle: 10
+  roles_deadlines_responsibility: 10
+  evidence_audit: 10
+  practical_cases: 10
+
+this_run:
+  focus: FSB_553_transition_metadata_consistency
+  updated_files:
+    - security-knowledge/legislation/fsb-553-2025-gosopka-installation-operation-authoritative-slice.yaml
+  commit:
+    fsb553_transition_fix: "5502bb4c8effb5c292006c1c3cdda7a9dcc7fe82"
+  authoritative_verified_metadata_added: 1
+  primary_verified_clause_records_added: 0
+  maturity_claim: NO_PROMOTION
+
+verified:
+  - "FSB order 553 official publication anchor is publication.pravo.gov.ru document 0001202512300059 dated 2025-12-30."
+  - "Independent authoritative publication sources identify 2026-01-10 as the effective date of FSB order 553."
+  - "The clause-level FSB 553 evidence file now matches the already-normalized central registry and no longer contains stale PENDING_CONFLICT_RESOLUTION metadata."
+  - "Events before 2026-01-10 must route to the predecessor legal stack; FSB 553 is not applied retroactively."
+
+pending:
+  - "execute declarative GosSOPKA routing regression fixtures with a deterministic validator and CI"
+  - "preserve immutable/hash-pinned primary snapshots for current high-impact FSB orders 539/546/547/548/553/554"
+  - "resolve exact predecessor/supersession mapping for FSB 548"
+  - "CI/status validation for generated knowledge artifacts"
+
+red_team_findings:
+  verdict: FAIL
+  positives:
+    - "one known internal transition inconsistency was removed without changing substantive duties or deadlines"
+    - "effective-date routing for FSB 553 is now explicit and fail-closed for pre-transition events"
+  blockers:
+    - "regression cases are not executable/CI-enforced yet"
+    - "primary immutable provenance is still absent for current high-impact clause records"
+    - "FSB 548 predecessor mapping remains unresolved; open research did not provide a sufficiently reliable predecessor anchor in this run"
+
+next_bottleneck:
+  - "resolve FSB 548 predecessor mapping from the pre-2026 legal stack using primary/authoritative sources"
+  - "implement deterministic validator for gosopka-current-stack-applicability-timing-matrix-v1 fixtures"
+  - "preserve immutable primary snapshots/digests for 539/546/547/548/553/554"
+
+promotion_decision:
+  family_promotion: false
+  reason: >-
+    Transition metadata consistency improved, but family-wide proof floors still require executable regression
+    enforcement, immutable primary provenance and complete predecessor/version mapping.
