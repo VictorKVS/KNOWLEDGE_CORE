@@ -1,0 +1,60 @@
+schema_version: "1.0"
+id: coverage-scorecard-2026-08-14-run-21
+date: "2026-08-14"
+overall_strict_p0_percent: 10
+p0_families_registered: "12/12"
+critical_gaps: 0
+high_gaps: 4
+red_team: FAIL
+expert_ready: false
+
+family_scores:
+  npa_rf: 10
+  gost_iso: 10
+  classification_categorization: 10
+  threat_modeling_bdu: 10
+  risk_methods: 10
+  legal_consequences: 10
+  szi_skzi_license_lifecycle: 10
+  roles_deadlines_responsibility: 10
+  evidence_audit: 10
+  practical_cases: 10
+
+this_run:
+  updated_file: security-knowledge/legislation/cii-fsb-gosopka-2025-current-source-registry.yaml
+  commit: "132b090b809b4e9032a38b97313bc91b3228837d"
+  verified_exact_effective_dates: 4
+  pending_effective_dates: 2
+  verified_transition_links: 4
+  normative_clause_records_added: 0
+  maturity_claim: NO_PROMOTION
+
+verified_pending_summary:
+  verified:
+    - "orders 539, 546, 547 and 548: exact effective date 2026-01-30"
+    - "order 368 transition split into current orders 539 and 546"
+    - "orders 282 and 348 replaced by current order 547"
+    - "order 281 replaced by order 553; order 196 replaced by order 554"
+  pending:
+    - "authoritative resolution of conflicting reported effective dates for orders 553 and 554"
+    - "exact predecessor/supersession mapping for order 548"
+    - "full clause-level extraction of current duties, roles, deadlines and evidence artifacts"
+
+red_team_findings:
+  verdict: FAIL
+  positives:
+    - "superseded-order deadlines are now explicitly blocked from automatic reuse"
+    - "four effective dates are version-routed to the current legal stack"
+    - "conflicting dates for two orders are preserved as unresolved rather than guessed"
+  blockers:
+    - "orders 553 and 554 still have an unresolved effective-date conflict"
+    - "family-wide clause coverage remains incomplete"
+
+next_bottleneck:
+  - "resolve orders 553 and 554 from authoritative text"
+  - "finish order 548 predecessor mapping"
+  - "then atomize the current GosSOPKA duties and exact deadlines"
+
+promotion_decision:
+  family_promotion: false
+  reason: "Transition metadata improved, but unresolved dates and incomplete clause coverage keep strict maturity at 10%."
