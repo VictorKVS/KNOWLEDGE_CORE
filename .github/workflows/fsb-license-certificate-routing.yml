@@ -1,0 +1,21 @@
+name: FSB License Certificate Routing Gate
+
+on:
+  push:
+    paths:
+      - 'security-knowledge/lifecycle/fsb-crypto-license-certificate-registry-observation-2026-08-15.yaml'
+      - 'security-knowledge/lifecycle/fsb-license-certificate-routing-regression-v1.yaml'
+      - 'security-knowledge/validators/validate_fsb_license_certificate_routing.py'
+      - '.github/workflows/fsb-license-certificate-routing.yml'
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install pyyaml
+      - run: python security-knowledge/validators/validate_fsb_license_certificate_routing.py
