@@ -1,0 +1,81 @@
+schema_version: "1.0"
+id: coverage-scorecard-2026-08-14-run-24
+date: "2026-08-14"
+overall_strict_p0_percent: 10
+p0_families_registered: "12/12"
+critical_gaps: 0
+high_gaps: 3
+red_team: FAIL
+expert_ready: false
+
+family_scores:
+  npa_rf: 10
+  gost_iso: 10
+  classification_categorization: 10
+  threat_modeling_bdu: 10
+  risk_methods: 10
+  legal_consequences: 10
+  szi_skzi_license_lifecycle: 10
+  roles_deadlines_responsibility: 10
+  evidence_audit: 10
+  practical_cases: 10
+
+this_run:
+  added_files:
+    - security-knowledge/legislation/fsb-547-2025-incident-reporting-response-authoritative-slice.yaml
+    - security-knowledge/legislation/fsb-546-2025-information-exchange-authoritative-slice.yaml
+  updated_files:
+    - security-knowledge/legislation/cii-fsb-gosopka-2025-current-source-registry.yaml
+  commits:
+    fsb547: "4632677fce6e87d95ff583090355baea71fa70c8"
+    registry_sync: "a527d0a34f0bb83f58fea8be03b884baa57057af"
+    fsb546: "60847df65af690ec69c254887524c9f98719f1a3"
+  authoritative_verified_clause_records_added: 35
+  primary_verified_clause_records_added: 0
+  transition_conflicts_closed: 2
+  maturity_claim: NO_PROMOTION
+
+verified:
+  - "FSB order 547 is effective from 2026-01-30 and replaces orders 282/2019 and 348/2022."
+  - "For an incident in a significant CII object, reporting to NKTsKI is due no later than 3 hours from detection."
+  - "For incidents in other CII objects and for attacks against CII objects or covered information resources, paragraph 3 establishes 24-hour branches as scoped in the clause file."
+  - "A CII subject with a significant CII object develops the response plan within 90 calendar days after register inclusion and sends the approved-plan copy to NKTsKI within 7 calendar days after approval."
+  - "Exercises on response-plan measures are required at least once per year; identified deficiencies trigger plan changes."
+  - "For significant-object response results, NKTsKI reporting is due no later than 48 hours after completion of measures; covered organ/organization branches contain separate 24-hour result/recovery reporting rules."
+  - "FSB order 546 is effective from 2026-01-30 and replaces order 368/2018."
+  - "Order 546 requires parallel NKTsKI notification when CII subjects exchange attack/incident information."
+  - "Treaty-based direct foreign/international exchange is a bounded exception; otherwise exchange is routed through NKTsKI."
+  - "Order 546 paragraph 20 establishes a 24-hour deadline for forwarding unsolicited foreign/international attack/incident information to NKTsKI; paragraph 21 establishes 12 hours for information concerning another CII subject's object."
+  - "Authoritative sources consistently resolve the FSB 553 and 554 effective date as 2026-01-10; the central registry has been synchronized and predecessor transitions updated."
+
+pending:
+  - "immutable/hash-pinned primary PDF snapshots for clause-level provenance across the current FSB stack"
+  - "full clause-level FSB 548 continuous-interaction extraction plus exact predecessor/supersession mapping"
+  - "complete FSB 539 clause-level extraction if required by the current-stack regression model"
+  - "cross-order fail-closed applicability/regression pack for 539/546/547/548/553/554"
+  - "CI/status validation for generated knowledge artifacts"
+
+red_team_findings:
+  verdict: FAIL
+  positives:
+    - "current incident reporting deadlines are separated by event type, object significance and organization branch"
+    - "regulator review/processing periods are not misrepresented as subject deadlines"
+    - "FSB 553/554 transition-date conflict is closed in the central registry using multiple authoritative anchors"
+    - "numeric deadlines are not invented for FSB 546 paragraph 3, which contains only an operational-timeliness standard"
+    - "international information exchange is fail-closed around treaty applicability and NKTsKI routing"
+  blockers:
+    - "primary immutable provenance is still absent for clause-level records"
+    - "current-stack GosSOPKA coverage is not complete until FSB 548 and remaining 539 coverage are closed"
+    - "no executable cross-order applicability regression suite exists yet"
+
+next_bottleneck:
+  - "atomize FSB 548 continuous-interaction obligations and exact evidence expectations"
+  - "resolve FSB 548 predecessor/supersession map"
+  - "build cross-act applicability matrix for entity role, significant/non-significant CII object, event type, financial-sector branch and international-exchange branch"
+  - "turn that matrix into reproducible positive/negative regression fixtures"
+
+promotion_decision:
+  family_promotion: false
+  reason: >-
+    The current GosSOPKA reporting/exchange stack is materially stronger and one High transition gap is closed,
+    but immutable primary provenance, FSB 548 completion and executable cross-order regression remain High gaps.
