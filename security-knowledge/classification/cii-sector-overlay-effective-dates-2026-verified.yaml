@@ -1,0 +1,73 @@
+schema_version: "1.0"
+id: CII-SECTOR-OVERLAY-EFFECTIVE-DATES-2026-VERIFIED
+checked_at: "2026-08-14"
+status: AUTHORITATIVE_VERIFIED_WITH_PRIMARY_PUBLICATION_ANCHORS
+purpose: >-
+  Preserve exact effective dates for the currently verified 2026 CII sector categorization overlays and
+  prevent present-day overlay routing from being applied to historical events before each act entered into force.
+
+scope_guardrails:
+  - This file is a verified slice, not a claim that five overlays exhaust all Russian CII sectors.
+  - Official publication metadata is anchored to publication.pravo.gov.ru.
+  - Effective dates are cross-checked against authoritative legal-system publication metadata; exact official PDF bytes are not yet hash-pinned in-repository.
+  - Applicability requires both sector match and event/configuration date on or after effective_from.
+  - A sector without a verified overlay in this slice must remain NEEDS_SECTOR_REVIEW; no overlay may be invented.
+
+records:
+  - id: CII-OVL-2026-004
+    sector: ATOMIC_ENERGY
+    act: "Постановление Правительства Российской Федерации от 16.01.2026 № 4"
+    source_id: PP_RF_4_2026
+    official_publication_number: "0001202601160013"
+    official_publication_date: "2026-01-16"
+    effective_from: "2026-01-24"
+    evidence_tier:
+      publication: PRIMARY_OFFICIAL_PORTAL
+      effective_date: AUTHORITATIVE_LEGAL_SYSTEM
+  - id: CII-OVL-2026-092
+    sector: BANKING_AND_OTHER_FINANCIAL_MARKET
+    act: "Постановление Правительства Российской Федерации от 06.02.2026 № 92"
+    source_id: PP_RF_92_2026
+    official_publication_number: "0001202602070010"
+    official_publication_date: "2026-02-07"
+    effective_from: "2026-02-15"
+    evidence_tier:
+      publication: PRIMARY_OFFICIAL_PORTAL
+      effective_date: AUTHORITATIVE_LEGAL_SYSTEM
+  - id: CII-OVL-2026-246
+    sector: SCIENCE
+    act: "Постановление Правительства Российской Федерации от 07.03.2026 № 246"
+    source_id: PP_RF_246_2026
+    official_publication_number: "0001202603070013"
+    official_publication_date: "2026-03-07"
+    effective_from: "2026-03-15"
+    evidence_tier:
+      publication: PRIMARY_OFFICIAL_PORTAL
+      effective_date: AUTHORITATIVE_LEGAL_SYSTEM
+  - id: CII-OVL-2026-303
+    sector: STATE_REGISTRATION_OF_REAL_ESTATE_RIGHTS_AND_TRANSACTIONS
+    act: "Постановление Правительства Российской Федерации от 23.03.2026 № 303"
+    source_id: PP_RF_303_2026
+    official_publication_number: "0001202603240036"
+    official_publication_date: "2026-03-24"
+    effective_from: "2026-04-01"
+    evidence_tier:
+      publication: PRIMARY_OFFICIAL_PORTAL
+      effective_date: AUTHORITATIVE_LEGAL_SYSTEM
+  - id: CII-OVL-2026-356
+    sector: ROCKET_AND_SPACE_INDUSTRY
+    act: "Постановление Правительства Российской Федерации от 31.03.2026 № 356"
+    source_id: PP_RF_356_2026
+    official_publication_number: "0001202604010039"
+    official_publication_date: "2026-04-01"
+    effective_from: "2026-04-09"
+    evidence_tier:
+      publication: PRIMARY_OFFICIAL_PORTAL
+      effective_date: AUTHORITATIVE_LEGAL_SYSTEM
+
+routing_semantics:
+  current_state_rule: "base PP_RF_127_2018 + every verified applicable sector overlay effective on decision_date"
+  historical_state_rule: "select overlay set by event_or_configuration_date, never by audit_date alone"
+  before_effective_date: BASE_ONLY_WITH_HISTORICAL_REVIEW
+  unknown_date: NEEDS_TEMPORAL_REVIEW
+  unknown_sector_overlay: NEEDS_SECTOR_REVIEW
