@@ -1,0 +1,71 @@
+schema_version: "1.0"
+id: coverage-scorecard-2026-08-14-run-40
+date: "2026-08-14"
+overall_strict_p0_percent: 10
+p0_families_registered: "12/12"
+critical_gaps: 0
+high_gaps: 1
+red_team: FAIL
+expert_ready: false
+
+family_scores:
+  npa_rf: 10
+  gost_iso: 10
+  classification_categorization: 10
+  threat_modeling_bdu: 10
+  risk_methods: 10
+  legal_consequences: 10
+  szi_skzi_license_lifecycle: 10
+  roles_deadlines_responsibility: 10
+  evidence_audit: 10
+  practical_cases: 10
+
+this_run:
+  focus: FSTEC_LICENSE_CONTROL_163_164_487_CURRENT_LIFECYCLE
+  added_files:
+    - security-knowledge/lifecycle/fstec-license-control-163-164-487-2025-current-lifecycle.yaml
+  commits:
+    lifecycle_slice: "5040b615ce5c062f503c43ee395911e08f18f030"
+  primary_metadata_records_added: 3
+  verified_current_lifecycle_records_added: 3
+  fail_closed_rules_added: 4
+  immutable_primary_clause_records_added: 0
+  maturity_claim: NO_FAMILY_PROMOTION
+
+verified:
+  - "FSTEC Order No. 163 dated 2025-05-12: official publication No. 0001202507020008 dated 2025-07-02; Ministry of Justice registration No. 82774 dated 2025-07-01."
+  - "FSTEC Order No. 164 dated 2025-05-12: official publication No. 0001202507020007 dated 2025-07-02; Ministry of Justice registration No. 82775 dated 2025-07-01."
+  - "Orders 163 and 164 entered into force on 2025-07-13 and originally stated applicability through 2025-12-31."
+  - "FSTEC Order No. 487 dated 2025-12-29: official publication No. 0001202512300067 dated 2025-12-30; Ministry of Justice registration No. 84884 dated 2025-12-30."
+  - "Order 487 entered into force on 2025-12-31 and extended application of Orders 163 and 164 through 2028-12-31."
+  - "A current-state engine must apply the amendment chain and must not classify Orders 163/164 as expired merely from their original 2025 sunset text."
+
+pending:
+  - "download and SHA-256 hash-pin exact official PDF bytes for Orders 163, 164 and 487"
+  - "extract and verify exact consolidated clause-level procedure deadlines and triggers"
+  - "add executable temporal regression fixtures for the amendment boundary and final sunset boundary"
+  - "connect procedural licensing rules to current FSTEC license-register observations without conflating license, certificate and product lifecycle"
+  - "continue proving exhaustive current CII sector-overlay inventory from the previous run"
+  - "close immutable/hash-pinned primary provenance for high-impact FSB 539/546/547/548/553/554 and NKCKI 2026 artifacts"
+
+red_team_findings:
+  verdict: FAIL
+  positives:
+    - "A concrete stale-law routing failure was identified and prevented: original sunset dates are now overlaid by the later amendment."
+    - "License-control procedures are explicitly separated from individual license validity and SZI certificate validity."
+    - "No unsupported clause-level deadlines were invented."
+  blockers:
+    - "The single High blocker remains immutable/hash-pinned primary provenance for high-impact FSB/NKCKI artifacts."
+    - "The new FSTEC licensing lifecycle slice is not yet immutable-primary or executable in CI."
+    - "National sector-overlay completeness remains unproven."
+
+next_bottleneck:
+  - "make the 163/164/487 lifecycle executable with temporal boundary tests"
+  - "continue current FSTEC license/certificate-register lifecycle observations as separate graph entities"
+  - "then return to the High immutable-provenance blocker and exhaustive CII sector-overlay inventory"
+
+promotion_decision:
+  family_promotion: false
+  reason: >-
+    The licensing lifecycle is more accurate and a real expiration-routing error is guarded against, but exact primary bytes,
+    clause-level consolidated extraction, current register snapshots and executable regression coverage remain open.
