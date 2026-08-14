@@ -1,0 +1,71 @@
+schema_version: "1.0"
+id: coverage-scorecard-2026-08-14-run-30
+date: "2026-08-14"
+overall_strict_p0_percent: 10
+p0_families_registered: "12/12"
+critical_gaps: 0
+high_gaps: 1
+red_team: FAIL
+expert_ready: false
+
+family_scores:
+  npa_rf: 10
+  gost_iso: 10
+  classification_categorization: 10
+  threat_modeling_bdu: 10
+  risk_methods: 10
+  legal_consequences: 10
+  szi_skzi_license_lifecycle: 10
+  roles_deadlines_responsibility: 10
+  evidence_audit: 10
+  practical_cases: 10
+
+this_run:
+  focus: FSB548_STATUTORY_ORIGIN_AND_VERSION_CHAIN
+  added_files:
+    - security-knowledge/legislation/187-fz-article-9-continuous-gosopka-duty-version-origin-verified.yaml
+  updated_files:
+    - security-knowledge/legislation/fsb-548-2025-gosopka-continuous-interaction-authoritative-slice.yaml
+  commits:
+    statutory_origin: "b10bfb3700cababc34853bf4a259f6a47bd83d2a"
+    fsb548_update: "9c67542fa6532364b891fe3ffc411faae33c5980"
+  verified_records_added: 5
+  authoritative_clause_records_reclassified: 0
+  immutable_primary_clause_records_added: 0
+  maturity_claim: NO_FAMILY_PROMOTION
+
+verified:
+  - "Federal Law 58-FZ dated 2025-04-07 was officially published under publication number 0001202504070004."
+  - "58-FZ entered into force on 2025-09-01."
+  - "187-FZ article 9 part 3 point 7 introduced the specific duty for covered significant-CII subjects to continuously interact with GosSOPKA."
+  - "187-FZ article 9 part 4 extends article 9 part 2 and point 7 of part 3 duties to the expressly listed heads of public-sector bodies/organizations for their Russian information resources, subject to statutory scope conditions."
+  - "The previous FSB-548 'mandatory predecessor order' gap is closed as a version-origin issue: the specific point-7 duty did not exist before 58-FZ became effective."
+  - "Historical GosSOPKA interaction and incident-reporting duties remain separate version chains and were not declared nonexistent."
+
+pending:
+  - "download and SHA-256 hash-pin NKCKI order No. 2 dated 2026-07-14 and the 2026-07-08 Initial Data artifact"
+  - "extract exact reporting fields, technical parameters and attachment/schema requirements"
+  - "bind field-level package validation to immutable artifact versions"
+  - "preserve immutable/hash-pinned primary snapshots for FSB 539/546/547/548/553/554/161"
+  - "expand executable regression coverage beyond the current initial routing/evidence fixtures"
+
+red_team_findings:
+  verdict: FAIL
+  positives:
+    - "FSB 548 now has a verified statutory-origin chain instead of a speculative predecessor search"
+    - "the model distinguishes the newly introduced continuous-interaction duty from older GosSOPKA duties"
+    - "effective dates 2025-09-01 for the statutory duty and 2026-01-30 for the implementing procedure are separately modeled"
+  blockers:
+    - "immutable/hash-pinned primary provenance remains absent for high-impact current GosSOPKA clause records and NKCKI reporting artifacts/schemas"
+
+next_bottleneck:
+  - "acquire exact downloadable NKCKI artifacts and compute immutable SHA-256 provenance"
+  - "extract and machine-map field-level reporting schema and evidence completeness rules"
+  - "preserve primary snapshots of FSB 539/546/547/548/553/554/161"
+  - "increase executable cross-order and field-level regression coverage"
+
+promotion_decision:
+  family_promotion: false
+  reason: >-
+    One High versioning blocker is closed, but the remaining immutable-primary-provenance blocker is still material
+    across the current GosSOPKA/NKCKI evidence chain, so no family score or overall P0 score is raised.
