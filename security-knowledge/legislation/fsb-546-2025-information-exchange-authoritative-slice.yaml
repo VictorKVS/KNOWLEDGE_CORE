@@ -1,0 +1,171 @@
+schema_version: "1.0"
+id: fsb-546-2025-information-exchange-authoritative-slice
+checked_at: "2026-08-14"
+source:
+  act: "Приказ ФСБ России от 25.12.2025 № 546"
+  registration_number: "84870"
+  official_publication_number: "0001202512300066"
+  official_publication_date: "2025-12-30"
+  official_url: "https://publication.pravo.gov.ru/document/0001202512300066"
+  authoritative_text_url: "https://www.garant.ru/products/ipo/prime/doc/413295796/"
+  effective_date: "2026-01-30"
+  provenance_status: AUTHORITATIVE_CONSOLIDATED_TEXT_WITH_OFFICIAL_PUBLICATION_METADATA
+  primary_clause_snapshot_status: PENDING_IMMUTABLE_COPY
+  replaces: "Приказ ФСБ России от 24.07.2018 № 368"
+
+requirements:
+  - id: FSB546-P2-CII-EXCHANGE
+    locator: "Порядок, пункт 2"
+    status: AUTHORITATIVE_VERIFIED
+    rule: >-
+      During incident response connected with CII objects, CII subjects exchange attack/incident information with other
+      CII subjects to minimize incident consequences and prevent incidents at other CII objects.
+    guardrail: "The subject may independently determine the circle of CII subjects with which such exchange is conducted."
+
+  - id: FSB546-P3-OPERATIVE-TIMING
+    locator: "Порядок, пункт 3"
+    status: AUTHORITATIVE_VERIFIED
+    rule: >-
+      Information exchange must occur within periods sufficient for operational detection, prevention and attack-consequence
+      elimination and incident response.
+    guardrail: "This is not a numeric SLA; do not invent hours where the act does not specify them."
+
+  - id: FSB546-P4-NKTSKI-FORMATS
+    locator: "Порядок, пункт 4"
+    status: AUTHORITATIVE_VERIFIED
+    rule: >-
+      Mutual notifications must follow NKTsKI-defined GosSOPKA information formats and technical-parameter composition;
+      clarifying requests may also be exchanged.
+    evidence_expected:
+      - notification_payload
+      - format_version
+      - technical_parameter_set
+
+  - id: FSB546-P6-INFRA-CHANNEL
+    locator: "Порядок, пункт 6"
+    status: AUTHORITATIVE_VERIFIED
+    rule: >-
+      If connected to NKTsKI technical infrastructure, notifications and requests are sent through that infrastructure.
+
+  - id: FSB546-P7-STATE-SECRET
+    locator: "Порядок, пункт 7"
+    status: AUTHORITATIVE_VERIFIED
+    applicability: "exchanged information constitutes a state secret"
+    rule: >-
+      Exchange is conducted under Russian state-secret legislation.
+    guardrail: "Do not route state-secret information through ordinary exchange channels merely because paragraph 5 names postal/electronic communication."
+
+  - id: FSB546-P8-PARALLEL-NKTSKI
+    locator: "Порядок, пункт 8"
+    status: AUTHORITATIVE_VERIFIED
+    rule: >-
+      When CII subjects exchange attack/incident information, they must simultaneously send the same information to NKTsKI.
+    evidence_expected:
+      - peer_exchange_record
+      - NKTsKI_parallel_notification
+
+  - id: FSB546-P10-FALLBACK-CHANNEL
+    locator: "Порядок, пункт 10"
+    status: AUTHORITATIVE_VERIFIED
+    applicability: "no connection to NKTsKI technical infrastructure"
+    rule: >-
+      NKTsKI is informed by postal or electronic communication using addresses published on the NKTsKI official website.
+
+  - id: FSB546-P11-INTERNATIONAL-DEFAULT-NKTSKI
+    locator: "Порядок, пункт 11"
+    status: AUTHORITATIVE_VERIFIED
+    rule: >-
+      Exchange with foreign/international incident-response organizations is performed by NKTsKI unless a Russian international
+      treaty expressly provides for direct exchange by the CII subject.
+    guardrail: "Direct foreign exchange is not the default merely because the organization is a trusted CERT/CSIRT."
+
+  - id: FSB546-P12-INTERNATIONAL-REQUEST-CONTENT
+    locator: "Порядок, пункт 12"
+    status: AUTHORITATIVE_VERIFIED
+    trigger: "need to exchange attack/incident information with a foreign/international organization"
+    rule: >-
+      The CII subject must send NKTsKI a request containing justification, full name, location/address and other necessary
+      recipient details, attaching the information constituting the exchange subject.
+
+  - id: FSB546-P15-NKTSKI-REVIEW-24H
+    locator: "Порядок, пункт 15"
+    status: AUTHORITATIVE_VERIFIED
+    responsible_role: "NKTsKI"
+    trigger: "receipt of a CII subject request for foreign/international exchange"
+    deadline:
+      value: 24
+      unit: HOURS
+      starts_from: "receipt of request"
+    rule: >-
+      NKTsKI reviews the attack/incident information within 24 hours after receiving the request; if transfer is approved,
+      it sends the information to the recipient without delay and simultaneously informs the requesting subject.
+    guardrail: "This 24-hour period is NKTsKI's review period, not the CII subject's reporting SLA."
+
+  - id: FSB546-P16-REFUSAL-NOTICE-24H
+    locator: "Порядок, пункт 16"
+    status: AUTHORITATIVE_VERIFIED
+    responsible_role: "NKTsKI"
+    trigger: "decision to refuse transfer to foreign/international organization"
+    deadline:
+      value: 24
+      unit: HOURS
+      starts_from: "decision time"
+    rule: "NKTsKI informs the requesting CII subject about refusal within 24 hours from the decision."
+
+  - id: FSB546-P18-FOREIGN-RESPONSE-48H
+    locator: "Порядок, пункт 18"
+    status: AUTHORITATIVE_VERIFIED
+    responsible_role: "NKTsKI"
+    trigger: "receipt of a response from the foreign/international organization"
+    deadline:
+      value: 48
+      unit: HOURS
+      starts_from: "receipt of foreign/international response"
+    rule: "NKTsKI forwards the received response to the requesting CII subject within 48 hours."
+
+  - id: FSB546-P19-DIRECT-TREATY-NKTSKI-COPY
+    locator: "Порядок, пункт 19"
+    status: AUTHORITATIVE_VERIFIED
+    applicability: "international treaty permits direct exchange"
+    rule: >-
+      Even where direct exchange is permitted by an international treaty, the CII subject must also send the exchanged
+      information to NKTsKI and identify the treaty basis.
+
+  - id: FSB546-P20-FOREIGN-INITIATED-INFO-24H
+    locator: "Порядок, пункт 20"
+    status: AUTHORITATIVE_VERIFIED
+    trigger: "CII subject receives unsolicited foreign/international information about an attack/incident related to its CII object"
+    deadline:
+      value: 24
+      unit: HOURS
+      maximum: true
+      starts_from: "receipt of information"
+    responsible_role: "CII subject"
+    rule: "The CII subject must send the received information to NKTsKI no later than 24 hours after receipt."
+
+  - id: FSB546-P21-OTHER-SUBJECT-INFO-12H
+    locator: "Порядок, пункт 21"
+    status: AUTHORITATIVE_VERIFIED
+    trigger: "CII subject receives information about an attack/incident related to another CII subject's object"
+    deadline:
+      value: 12
+      unit: HOURS
+      maximum: true
+      starts_from: "receipt of information"
+    responsible_role: "CII subject"
+    rule: "The receiving CII subject must send that information to NKTsKI no later than 12 hours after receipt."
+
+red_team_guardrails:
+  - "Paragraph 3 intentionally contains no numeric SLA; numeric deadlines must come only from clauses that state them."
+  - "International exchange normally routes through NKTsKI; treaty-based direct exchange is a bounded exception."
+  - "NKTsKI 24/48-hour processing periods must not be represented as CII-subject deadlines."
+  - "Paragraphs 20 and 21 start from receipt of third-party information, not detection of an incident by the subject itself."
+  - "Current FSB 546 rules replace FSB 368 from 2026-01-30; historical events require event-date routing."
+  - "Clause-level records are authoritative-secondary verified; immutable primary PDF provenance remains pending."
+
+summary:
+  authoritative_verified_records: 15
+  exact_subject_deadlines_verified: 2
+  exact_regulator_processing_deadlines_verified: 3
+  primary_verified_records: 0
+  family_promotion: false
