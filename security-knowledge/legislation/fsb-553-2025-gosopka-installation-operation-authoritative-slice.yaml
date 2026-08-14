@@ -1,4 +1,4 @@
-schema_version: "1.0"
+schema_version: "1.1"
 id: fsb-553-2025-gosopka-installation-operation-authoritative-slice
 checked_at: "2026-08-14"
 source:
@@ -8,12 +8,16 @@ source:
   official_publication_date: "2025-12-30"
   official_url: "https://publication.pravo.gov.ru/document/0001202512300059"
   authoritative_text_url: "https://www.consultant.ru/document/cons_doc_LAW_523646/8827ff96c0f82d1e79d62e432aecddad9ce2b31a/"
+  effective_date: "2026-01-10"
+  effective_date_status: AUTHORITATIVE_VERIFIED
   provenance_status: AUTHORITATIVE_CONSOLIDATED_TEXT
-  effective_date_status: PENDING_CONFLICT_RESOLUTION
+  effective_date_evidence:
+    - "https://rg.ru/documents/2026/01/08/fsb-prikaz553-site-dok.html"
+    - "https://base.garant.ru/413395816/"
   note: >-
-    Open authoritative sources conflict on the exact effective date. Clause-level duties below are
-    recorded from the current consolidated text, but transition routing must remain fail-closed until
-    the date conflict is resolved from primary text or another unambiguous authoritative anchor.
+    The act was officially published on 2025-12-30. Two independent authoritative legal publication
+    sources identify 2026-01-10 as the effective date. The official publication portal remains the
+    primary publication anchor; immutable/hash-pinned primary text is still pending for PRIMARY_VERIFIED status.
 
 scope:
   appendix: "Приложение № 1"
@@ -167,11 +171,12 @@ red_team_guardrails:
   - "Do not reuse deadlines from superseded FSB 281/2019 where current FSB 553 text provides different duties or deadlines."
   - "Do not convert NKTsKI's 30-day remark period into a deadline imposed on the CII subject."
   - "The 15-day Bank of Russia notification applies only to the banking/financial-market applicability branch."
-  - "Effective-date conflict remains open; this slice must not be used to decide whether pre-transition events are governed by FSB 553 until transition routing is resolved."
+  - "For events before 2026-01-10, route to the predecessor version chain; do not apply FSB 553 retroactively."
 
 summary:
   authoritative_verified_records: 11
   exact_subject_deadlines_verified: 3
   regulator_deadline_verified: 1
   primary_verified_records: 0
+  effective_date_verified: true
   family_promotion: false
