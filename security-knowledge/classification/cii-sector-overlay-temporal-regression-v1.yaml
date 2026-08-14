@@ -1,0 +1,44 @@
+schema_version: "1.0"
+id: CII-SECTOR-OVERLAY-TEMPORAL-REGRESSION-V1
+checked_at: "2026-08-14"
+source_registry: security-knowledge/classification/cii-sector-overlay-effective-dates-2026-verified.yaml
+purpose: >-
+  Verify boundary behavior so a 2026 sector overlay is never routed before its effective date and is routed on/after it when sector applicability is confirmed.
+
+fixtures:
+  - id: CII-TIME-001
+    facts: {sector: ATOMIC_ENERGY, event_date: "2026-01-23"}
+    expected: {status: BASE_ONLY_WITH_HISTORICAL_REVIEW, sources: [PP_RF_127_2018]}
+  - id: CII-TIME-002
+    facts: {sector: ATOMIC_ENERGY, event_date: "2026-01-24"}
+    expected: {status: ROUTE, sources: [PP_RF_127_2018, PP_RF_4_2026]}
+  - id: CII-TIME-003
+    facts: {sector: BANKING_AND_OTHER_FINANCIAL_MARKET, event_date: "2026-02-14"}
+    expected: {status: BASE_ONLY_WITH_HISTORICAL_REVIEW, sources: [PP_RF_127_2018]}
+  - id: CII-TIME-004
+    facts: {sector: BANKING_AND_OTHER_FINANCIAL_MARKET, event_date: "2026-02-15"}
+    expected: {status: ROUTE, sources: [PP_RF_127_2018, PP_RF_92_2026]}
+  - id: CII-TIME-005
+    facts: {sector: SCIENCE, event_date: "2026-03-14"}
+    expected: {status: BASE_ONLY_WITH_HISTORICAL_REVIEW, sources: [PP_RF_127_2018]}
+  - id: CII-TIME-006
+    facts: {sector: SCIENCE, event_date: "2026-03-15"}
+    expected: {status: ROUTE, sources: [PP_RF_127_2018, PP_RF_246_2026]}
+  - id: CII-TIME-007
+    facts: {sector: STATE_REGISTRATION_OF_REAL_ESTATE_RIGHTS_AND_TRANSACTIONS, event_date: "2026-03-31"}
+    expected: {status: BASE_ONLY_WITH_HISTORICAL_REVIEW, sources: [PP_RF_127_2018]}
+  - id: CII-TIME-008
+    facts: {sector: STATE_REGISTRATION_OF_REAL_ESTATE_RIGHTS_AND_TRANSACTIONS, event_date: "2026-04-01"}
+    expected: {status: ROUTE, sources: [PP_RF_127_2018, PP_RF_303_2026]}
+  - id: CII-TIME-009
+    facts: {sector: ROCKET_AND_SPACE_INDUSTRY, event_date: "2026-04-08"}
+    expected: {status: BASE_ONLY_WITH_HISTORICAL_REVIEW, sources: [PP_RF_127_2018]}
+  - id: CII-TIME-010
+    facts: {sector: ROCKET_AND_SPACE_INDUSTRY, event_date: "2026-04-09"}
+    expected: {status: ROUTE, sources: [PP_RF_127_2018, PP_RF_356_2026]}
+  - id: CII-TIME-011
+    facts: {sector: SCIENCE, event_date: null}
+    expected: {status: NEEDS_TEMPORAL_REVIEW, sources: [PP_RF_127_2018]}
+  - id: CII-TIME-012
+    facts: {sector: HEALTHCARE, event_date: "2026-08-14"}
+    expected: {status: NEEDS_SECTOR_REVIEW, sources: [PP_RF_127_2018]}
