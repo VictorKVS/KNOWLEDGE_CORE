@@ -1,0 +1,73 @@
+schema_version: "1.0"
+id: coverage-scorecard-2026-08-14-run-23
+date: "2026-08-14"
+overall_strict_p0_percent: 10
+p0_families_registered: "12/12"
+critical_gaps: 0
+high_gaps: 4
+red_team: FAIL
+expert_ready: false
+
+family_scores:
+  npa_rf: 10
+  gost_iso: 10
+  classification_categorization: 10
+  threat_modeling_bdu: 10
+  risk_methods: 10
+  legal_consequences: 10
+  szi_skzi_license_lifecycle: 10
+  roles_deadlines_responsibility: 10
+  evidence_audit: 10
+  practical_cases: 10
+
+this_run:
+  added_file: security-knowledge/legislation/fsb-554-2025-gosopka-tools-requirements-authoritative-slice.yaml
+  commit: "75646349051e06549bb6ec081631926d9a06d497"
+  authoritative_verified_clause_records: 21
+  primary_verified_clause_records: 0
+  exact_minimum_retention_periods: 3
+  exact_update_frequency_requirements: 1
+  explicit_fsb_certificate_requirements: 3
+  maturity_claim: NO_PROMOTION
+
+verified:
+  - "Order FSB 554 is officially published under 0001202512300063 and registered under No. 84874."
+  - "FSB/NKTsKI publishes order 554 in its current legal-basis section."
+  - "Authoritative sources (Rossiyskaya Gazeta and GARANT) consistently state effective date 2026-01-10; previous secondary conflict is materially resolved at authoritative level, but repository registry sync remains pending."
+  - "Order 554 replaces FSB order 196 of 2019."
+  - "Detection tools: aggregated security-event retention not less than 6 months; FSB certificate required."
+  - "Prevention tools: source-update check at least once per 24 hours."
+  - "Telecom-network attack-indicator tools: specified traffic-copy retention not less than 6 months."
+  - "Other attack-indicator search tools: detected-attack traffic-copy retention not less than 7 calendar days; FSB certificate required."
+  - "Cryptographic means used for the specified GosSOPKA information exchange must be FSB-certified."
+  - "Section IX requires identity/authentication, access control, logging, controlled update, backup/recovery, time synchronization and software-integrity controls."
+
+pending:
+  - "immutable/hash-pinned primary PDF snapshot for clause-level provenance"
+  - "synchronize the central 2025 FSB source registry to the authoritative 2026-01-10 dates for 553/554"
+  - "FSB 548 predecessor/supersession map and continuous-interaction obligations"
+  - "FSB 546/547 exact current information-exchange and incident-reporting duties/deadlines"
+  - "cross-order GosSOPKA applicability and regression pack"
+
+red_team_findings:
+  verdict: FAIL
+  positives:
+    - "current technical requirements are separated from installation/operation duties under order 553"
+    - "tool-specific certification requirements are not generalized to unrelated security products"
+    - "retention periods are scoped to the relevant GosSOPKA tool categories and not misrepresented as universal organizational log-retention periods"
+    - "superseded order 196 is excluded from the current baseline except for explicit historical/version analysis"
+  blockers:
+    - "primary clause provenance is not yet preserved immutably"
+    - "family-wide GosSOPKA coverage is incomplete until 546/547/548 and applicability tests are closed"
+    - "central transition registry still contains stale unresolved-date markers for 553/554 and must be synchronized"
+    - "no reproducible current-stack applicability regression pack"
+
+next_bottleneck:
+  - "synchronize 553/554 effective-date metadata in the central source registry"
+  - "atomize current FSB 547 incident/attack reporting duties and exact deadlines"
+  - "atomize FSB 546 information exchange and FSB 548 continuous interaction"
+  - "build fail-closed cross-act applicability/regression tests for 539/546/547/548/553/554"
+
+promotion_decision:
+  family_promotion: false
+  reason: "FSB 554 clause coverage materially improved, but primary provenance and full current-stack GosSOPKA coverage/regression remain High gaps."
