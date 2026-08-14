@@ -1,0 +1,77 @@
+schema_version: "1.0"
+id: coverage-scorecard-2026-08-14-run-35
+date: "2026-08-14"
+overall_strict_p0_percent: 10
+p0_families_registered: "12/12"
+critical_gaps: 0
+high_gaps: 1
+red_team: FAIL
+expert_ready: false
+
+family_scores:
+  npa_rf: 10
+  gost_iso: 10
+  classification_categorization: 10
+  threat_modeling_bdu: 10
+  risk_methods: 10
+  legal_consequences: 10
+  szi_skzi_license_lifecycle: 10
+  roles_deadlines_responsibility: 10
+  evidence_audit: 10
+  practical_cases: 10
+
+this_run:
+  focus: FSB_GOSOPKA_EFFECTIVE_DATE_SUPERSESSION_AND_TIME_TRAVEL_GUARDRAILS
+  added_files:
+    - security-knowledge/roles-deadlines-responsibility/fsb-gosopka-2025-effective-date-and-supersession-matrix-v1.yaml
+    - security-knowledge/roles-deadlines-responsibility/fsb-gosopka-lifecycle-regression-v1.yaml
+    - security-knowledge/validators/validate_fsb_gosopka_lifecycle.py
+    - .github/workflows/fsb-gosopka-lifecycle-regression.yml
+  commits:
+    lifecycle_matrix: "d1d17c2f350489359c752e42f33a09cfa22f760d"
+    regression_fixtures: "32e6c3a7a7b31b0904394886f47d0e54f4d0ea3b"
+    validator: "e8d378ae1dfeeaf9f068dd7e82856fe919e5d8af"
+    workflow: "372d922143b57a482f6cbb8eaea0f3f47fd1dd92"
+  verified_authoritative_lifecycle_records_added: 6
+  executable_temporal_boundary_cases_added: 8
+  dedicated_ci_gate: PASS
+  dedicated_ci_run_id: 31807582033
+  immutable_primary_clause_records_added: 0
+  maturity_claim: NO_FAMILY_PROMOTION
+
+verified:
+  - "FSB Orders 539, 546, 547 and 548 in this slice are modeled as effective from 2026-01-30."
+  - "FSB Orders 553 and 554 are modeled as effective from 2026-01-10; the 20-day transition interval is preserved instead of being collapsed into one release date."
+  - "Order 553 invalidates FSB Order 281/2019; Order 554 invalidates FSB Order 196/2019; Order 547 invalidates FSB Order 282/2019."
+  - "Null predecessor values are explicitly fail-safe: they mean no predecessor relation is asserted from verified evidence in this slice, not that none existed."
+  - "Historical event/configuration dates must resolve the regulatory version that was effective at that time; current audit date alone is insufficient."
+  - "Eight lifecycle boundary fixtures now execute deterministically; the dedicated GitHub Actions lifecycle gate completed successfully."
+
+pending:
+  - "download and SHA-256 hash-pin exact official PDF bytes for FSB 539/546/547/548/553/554"
+  - "download and SHA-256 hash-pin NKCKI Order No. 2 dated 2026-07-14 and the 2026-07-08 Initial Data artifact"
+  - "extract exact NKCKI reporting fields, technical parameters and attachment/schema requirements from preserved primary artifacts"
+  - "connect exact NKCKI field schema to evidence validators and FSB 546/547 routing"
+  - "continue BDU raw-byte/change-detection and full object/method relation snapshotting"
+
+red_team_findings:
+  verdict: FAIL
+  positives:
+    - "The active GosSOPKA FSB set now has an explicit effective-date matrix instead of relying on publication date or current-state assumptions."
+    - "A previously unmodeled 2026-01-10 vs 2026-01-30 transition boundary is now protected by executable tests."
+    - "Verified predecessor invalidation is represented without erasing historical applicability."
+  blockers:
+    - "The remaining High blocker is unchanged: immutable/hash-pinned primary provenance is still absent for high-impact FSB and NKCKI artifacts."
+    - "Current lifecycle records remain authoritative-verified rather than immutable-primary until exact official bytes are preserved and hashed."
+
+next_bottleneck:
+  - "obtain exact downloadable NKCKI Order No. 2 and 2026-07-08 artifact bytes and hash-pin them"
+  - "obtain exact official FSB 539/546/547/548/553/554 PDF bytes and hash-pin them"
+  - "machine-map NKCKI field-level reporting schema and connect it to FSB 546/547 evidence rules"
+
+promotion_decision:
+  family_promotion: false
+  reason: >-
+    The temporal lifecycle model is materially safer and now CI-gated, but this run did not acquire
+    immutable primary artifacts. The single remaining High provenance blocker is therefore still open,
+    so overall and family percentages remain unchanged.
