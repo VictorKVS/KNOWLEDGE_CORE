@@ -1,0 +1,75 @@
+schema_version: "1.0"
+id: coverage-scorecard-2026-08-14-run-25
+date: "2026-08-14"
+overall_strict_p0_percent: 10
+p0_families_registered: "12/12"
+critical_gaps: 0
+high_gaps: 3
+red_team: FAIL
+expert_ready: false
+
+family_scores:
+  npa_rf: 10
+  gost_iso: 10
+  classification_categorization: 10
+  threat_modeling_bdu: 10
+  risk_methods: 10
+  legal_consequences: 10
+  szi_skzi_license_lifecycle: 10
+  roles_deadlines_responsibility: 10
+  evidence_audit: 10
+  practical_cases: 10
+
+this_run:
+  focus: FSB_548_2025_GosSOPKA_continuous_interaction
+  added_files:
+    - security-knowledge/legislation/fsb-548-2025-gosopka-continuous-interaction-authoritative-slice.yaml
+  updated_files:
+    - security-knowledge/legislation/cii-fsb-gosopka-2025-current-source-registry.yaml
+  commits:
+    fsb548_clause_slice: "edec04f569876e0a50750780c8b13d99035bdb95"
+    registry_sync: "b3bea46c31875ad88190a14fe3661c2470451da4"
+  authoritative_verified_clause_records_added: 11
+  primary_verified_clause_records_added: 0
+  maturity_claim: NO_PROMOTION
+
+verified:
+  - "FSB order 548 is effective from 2026-01-30 and governs continuous interaction through NCCCI technical infrastructure for its scoped subjects."
+  - "The GosSOPKA subject personal account is the normal interaction channel; NCCCI-defined message formats apply."
+  - "If the personal account is technically unavailable, attack/incident information must use reserve channels identified in the account rather than waiting for restoration."
+  - "Connection for continuous interaction is organized after conclusion of the NCCCI interaction regulation."
+  - "Order 548 paragraph 5 does not create a duplicate reporting SLA; reporting deadlines are routed to the current incident-reporting/response procedure, currently FSB order 547."
+  - "NCCCI assigns an attack/incident identifier within 24 hours after receipt in the personal account; this is an NCCCI-side deadline, not the subject's reporting SLA."
+  - "A covered subject/head may request NCCCI/GosSOPKA response assistance through the personal account."
+  - "Within 24 hours after NCCCI sends information about impending attacks or incident signs, the covered party must report prevention measures being taken."
+  - "Within 24 hours after an NCCCI additional-information request, the covered party must provide the information or send a reasoned impossibility notice stating when it will be provided."
+
+pending:
+  - "immutable/hash-pinned primary PDF snapshot for FSB 548 clause provenance"
+  - "exact predecessor/supersession mapping for the pre-2026 continuous-interaction procedure"
+  - "complete FSB 539 clause-level extraction and current-stack cross-order regression pack"
+  - "CI/status validation for generated knowledge artifacts"
+
+red_team_findings:
+  verdict: FAIL
+  positives:
+    - "FSB 548 scope is not generalized to every organization or every CII object"
+    - "reserve-channel duty is retained as a real fallback control"
+    - "NCCCI-side 24-hour identifier timing is separated from subject-side reporting timing"
+    - "paragraph 5 correctly delegates reporting deadlines to FSB 547 instead of inventing a generic deadline"
+  blockers:
+    - "primary immutable provenance is still absent for clause-level records"
+    - "exact predecessor mapping for FSB 548 remains unresolved"
+    - "no executable cross-order applicability/timing regression suite exists yet"
+
+next_bottleneck:
+  - "finish FSB 539 clause-level extraction"
+  - "build a single applicability/timing matrix across FSB 539/546/547/548/553/554 and 187-FZ"
+  - "derive fail-closed positive/negative regression fixtures from that matrix"
+  - "preserve immutable primary snapshots/digests for the highest-impact current sources"
+
+promotion_decision:
+  family_promotion: false
+  reason: >-
+    FSB 548 current-order clause coverage is now substantial, but family-wide proof floors remain open.
+    A strong current-order slice does not justify increasing overall P0 or NPA/evidence family maturity.
