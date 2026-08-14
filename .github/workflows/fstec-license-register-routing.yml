@@ -1,0 +1,21 @@
+name: FSTEC License Register Routing Gate
+
+on:
+  push:
+    paths:
+      - 'security-knowledge/lifecycle/fstec-license-register-observation-2026-08-15.yaml'
+      - 'security-knowledge/lifecycle/fstec-license-register-routing-regression-v1.yaml'
+      - 'security-knowledge/validators/validate_fstec_license_register_routing.py'
+      - '.github/workflows/fstec-license-register-routing.yml'
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install pyyaml
+      - run: python security-knowledge/validators/validate_fstec_license_register_routing.py
