@@ -1,0 +1,85 @@
+schema_version: "1.0"
+id: coverage-scorecard-2026-08-14-run-29
+date: "2026-08-14"
+overall_strict_p0_percent: 10
+p0_families_registered: "12/12"
+critical_gaps: 0
+high_gaps: 2
+red_team: FAIL
+expert_ready: false
+
+family_scores:
+  npa_rf: 10
+  gost_iso: 10
+  classification_categorization: 10
+  threat_modeling_bdu: 10
+  risk_methods: 10
+  legal_consequences: 10
+  szi_skzi_license_lifecycle: 10
+  roles_deadlines_responsibility: 10
+  evidence_audit: 10
+  practical_cases: 10
+
+this_run:
+  focus: GOSOPKA_EXECUTABLE_REGRESSION_AND_NKCKI_EVIDENCE_PACKAGE
+  added_files:
+    - security-knowledge/validators/validate_gosopka_matrix.py
+    - .github/workflows/gosopka-regression.yml
+    - security-knowledge/evidence/gosopka-nkcki-reporting-evidence-package-2026-v1.yaml
+  commits:
+    validator: "1d69b09ebab667e5d76f212354eb869fde7e3e47"
+    workflow: "47ff30beb2254bf9024fdf90f3f8896fe179ec4e"
+    evidence_package: "bdf61a9793bc4209ca6f63e5d91e95ed341e3a60"
+  executable_regression_fixtures: 5
+  primary_web_verified_operational_rules_added: 6
+  immutable_primary_clause_records_added: 0
+  maturity_claim: NO_FAMILY_PROMOTION
+
+ci_evidence:
+  workflow: GosSOPKA Regression Gate
+  workflow_path: .github/workflows/gosopka-regression.yml
+  workflow_run_id: 31782419565
+  head_sha: "47ff30beb2254bf9024fdf90f3f8896fe179ec4e"
+  status: completed
+  conclusion: success
+  assertion: >-
+    The five existing GosSOPKA routing fixtures are no longer merely declarative: a deterministic
+    Python validator executes them and the dedicated GitHub Actions gate completed successfully.
+
+verified:
+  - "The current GosSOPKA timing matrix has 5 regression fixtures executed by a deterministic validator."
+  - "A dedicated GitHub Actions GosSOPKA Regression Gate completed successfully for the workflow-introduction commit."
+  - "NKCKI states that order No. 2 dated 2026-07-14 defines current reporting formats and technical-parameter composition for attack/incident information."
+  - "NKCKI states that the 2026-07-08 Initial Data are methodological recommendations and their threshold values are examples from general practice."
+  - "NKCKI requires organizations to provide the maximum amount of available listed materials; absence of one or more materials does not justify withholding the remaining available materials."
+  - "Field-level completeness remains fail-closed because exact downloadable artifacts/schemas are not yet hash-pinned."
+
+pending:
+  - "download and SHA-256 hash-pin NKCKI order No. 2 and the 2026-07-08 Initial Data artifact"
+  - "extract exact reporting fields, technical parameters and attachment/schema requirements"
+  - "bind field-level package validation to immutable artifact versions"
+  - "preserve immutable/hash-pinned primary snapshots for FSB 539/546/547/548/553/554 and FSB 161"
+  - "resolve exact predecessor/supersession mapping for FSB 548"
+  - "expand executable regression coverage beyond the initial five routing fixtures and three evidence-package fixtures"
+
+red_team_findings:
+  verdict: FAIL
+  positives:
+    - "one prior High blocker is materially closed: GosSOPKA routing regression is executable and CI-enforced"
+    - "partial evidence packages are modeled without delaying available-material transmission"
+    - "example methodology thresholds are prevented from becoming normative thresholds"
+    - "field-level completeness is explicitly blocked until exact artifacts are preserved"
+  blockers:
+    - "immutable/hash-pinned primary provenance remains absent for high-impact current GosSOPKA clause records and NKCKI schemas"
+    - "FSB 548 predecessor/supersession mapping remains unresolved"
+
+next_bottleneck:
+  - "acquire exact NKCKI downloadable artifacts and compute immutable SHA-256 provenance"
+  - "extract and machine-map field-level reporting schema and evidence completeness rules"
+  - "then preserve primary snapshots of FSB 539/546/547/548/553/554/161 and close FSB 548 predecessor mapping"
+
+promotion_decision:
+  family_promotion: false
+  reason: >-
+    Executable regression enforcement is now proven for the initial GosSOPKA routing fixtures, but
+    immutable primary provenance and historical predecessor closure remain mandatory High blockers.
