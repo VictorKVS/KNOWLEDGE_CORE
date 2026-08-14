@@ -1,0 +1,177 @@
+schema_version: "1.0"
+id: fsb-553-2025-gosopka-installation-operation-authoritative-slice
+checked_at: "2026-08-14"
+source:
+  act: "Приказ ФСБ России от 26.12.2025 № 553"
+  registration_number: "84873"
+  official_publication_number: "0001202512300059"
+  official_publication_date: "2025-12-30"
+  official_url: "https://publication.pravo.gov.ru/document/0001202512300059"
+  authoritative_text_url: "https://www.consultant.ru/document/cons_doc_LAW_523646/8827ff96c0f82d1e79d62e432aecddad9ce2b31a/"
+  provenance_status: AUTHORITATIVE_CONSOLIDATED_TEXT
+  effective_date_status: PENDING_CONFLICT_RESOLUTION
+  note: >-
+    Open authoritative sources conflict on the exact effective date. Clause-level duties below are
+    recorded from the current consolidated text, but transition routing must remain fail-closed until
+    the date conflict is resolved from primary text or another unambiguous authoritative anchor.
+
+scope:
+  appendix: "Приложение № 1"
+  section: "I. Установка и эксплуатация средств ГосСОПКА"
+  applicability: >-
+    Subject CII or organ/organization within the scope of the order. Applicability to a concrete entity
+    must be resolved against 187-FZ, ownership/control of information resources, significance and role.
+
+requirements:
+  - id: FSB553-A1-P1-COMPOSITION
+    locator: "Приложение №1, раздел I, пункт 1"
+    status: AUTHORITATIVE_VERIFIED
+    rule: >-
+      Installation and operation of GosSOPKA means includes determination of necessary means; installation,
+      configuration, operability testing and connection to information resources; and ensuring continuous operation.
+    evidence_expected:
+      - composition_decision
+      - installation_configuration_records
+      - operability_test_record
+      - continuous_operation_controls
+
+  - id: FSB553-A1-P2-SELF-DETERMINE
+    locator: "Приложение №1, раздел I, пункт 2"
+    status: AUTHORITATIVE_VERIFIED
+    rule: >-
+      The CII subject or covered organ/organization independently determines the composition of GosSOPKA means
+      necessary for full performance of attack detection, prevention, consequence elimination and incident response.
+    responsible_role: "CII subject / covered organ or organization"
+    evidence_expected:
+      - documented_composition_rationale
+      - mapping_to_protected_information_resources
+
+  - id: FSB553-A1-P3-COMPLIANCE
+    locator: "Приложение №1, раздел I, пункт 3"
+    status: AUTHORITATIVE_VERIFIED
+    rule: >-
+      Installed GosSOPKA means must comply with requirements established by the authorized federal executive body
+      under paragraph 9 part 4 article 6 of 187-FZ.
+    evidence_expected:
+      - means_inventory
+      - conformity_mapping_to_current_requirements
+    guardrail: "Do not assume legacy FSB 196 requirements remain current without version routing to FSB 554/2025."
+
+  - id: FSB553-A1-P4-INSTALLATION-PARTIES
+    locator: "Приложение №1, раздел I, пункт 4"
+    status: AUTHORITATIVE_VERIFIED
+    rule: >-
+      Installation, configuration, operability testing and connection may be performed by the subject/organization
+      independently or with an accredited GosSOPKA center or an organization having an interaction agreement with FSB/NKTsKI.
+    evidence_expected:
+      - performer_basis
+      - accreditation_or_interaction_agreement_if_external
+      - change_and_test_records
+
+  - id: FSB553-A1-P4-NONDISRUPTION
+    locator: "Приложение №1, раздел I, пункт 4, абзац после сноски"
+    status: AUTHORITATIVE_VERIFIED
+    rule: >-
+      Installation/configuration/testing/connection activities must not disrupt operation of the subject's information resources.
+    evidence_expected:
+      - implementation_plan
+      - rollback_or_continuity_controls
+      - test_record_showing_no_unacceptable_disruption
+
+  - id: FSB553-A1-P5-NKTSKI-15D
+    locator: "Приложение №1, раздел I, пункт 5"
+    status: AUTHORITATIVE_VERIFIED
+    trigger: "completion of activities under paragraph 4"
+    deadline:
+      value: 15
+      unit: CALENDAR_DAYS
+      starts_from: "day of completion of paragraph-4 activities"
+    rule: >-
+      Within 15 calendar days after completion of installation/configuration/testing/connection activities,
+      the CII subject or covered organization must inform NKTsKI and provide the list of GosSOPKA means used.
+    evidence_expected:
+      - outgoing_notification_to_NKTsKI
+      - submitted_means_list
+      - delivery_confirmation
+
+  - id: FSB553-A1-P5-BR-15D
+    locator: "Приложение №1, раздел I, пункт 5, абзац 2"
+    status: AUTHORITATIVE_VERIFIED
+    applicability: "banking sphere or other financial-market sphere"
+    deadline:
+      value: 15
+      unit: CALENDAR_DAYS
+      starts_from: "day of completion of paragraph-4 activities"
+    rule: >-
+      A covered subject operating in banking or other financial-market spheres must additionally inform the Bank of Russia
+      within the same 15-calendar-day period.
+    evidence_expected:
+      - outgoing_notification_to_Bank_of_Russia
+      - delivery_confirmation
+
+  - id: FSB553-A1-P6-NKTSKI-REMARKS-30D
+    locator: "Приложение №1, раздел I, пункт 6"
+    status: AUTHORITATIVE_VERIFIED
+    responsible_role: "NKTsKI"
+    trigger: "receipt and review of paragraph-5 information"
+    deadline:
+      value: 30
+      unit: CALENDAR_DAYS
+      starts_from: "day NKTsKI receives paragraph-5 information"
+    rule: >-
+      If violations of paragraphs 3 or 4 are detected, NKTsKI sends remarks within 30 calendar days from receipt of the information.
+    evidence_expected:
+      - incoming_NKTsKI_remarks_or_no_remarks_record
+
+  - id: FSB553-A1-P7-REMEDIATE-30D
+    locator: "Приложение №1, раздел I, пункт 7"
+    status: AUTHORITATIVE_VERIFIED
+    trigger: "receipt of NKTsKI remarks"
+    deadline:
+      value: 30
+      unit: CALENDAR_DAYS
+      maximum: true
+      starts_from: "day of receipt of remarks"
+    rule: >-
+      The CII subject or covered organization must eliminate NKTsKI remarks and send information about remediation
+      within a period not exceeding 30 calendar days from receipt of the remarks.
+    evidence_expected:
+      - remediation_record
+      - outgoing_remediation_notification
+      - delivery_confirmation
+
+  - id: FSB553-A1-P8-CONTINUOUS-OPERATION-PURPOSE
+    locator: "Приложение №1, раздел I, пункт 8"
+    status: AUTHORITATIVE_VERIFIED
+    rule: >-
+      Continuous operation of GosSOPKA means is maintained for detection, prevention and elimination of attack consequences,
+      incident response and continuous interaction with GosSOPKA.
+    evidence_expected:
+      - availability_monitoring
+      - interaction_monitoring
+
+  - id: FSB553-A1-P9-24X7
+    locator: "Приложение №1, раздел I, пункт 9"
+    status: AUTHORITATIVE_VERIFIED
+    rule: >-
+      The CII subject or covered organization must ensure round-the-clock uninterrupted operation of GosSOPKA means,
+      define access procedures and define controls over their use.
+    evidence_expected:
+      - 24x7_availability_evidence
+      - access_procedure
+      - use_control_procedure
+      - monitoring_logs
+
+red_team_guardrails:
+  - "Do not treat publication metadata as proof of applicability to every organization."
+  - "Do not reuse deadlines from superseded FSB 281/2019 where current FSB 553 text provides different duties or deadlines."
+  - "Do not convert NKTsKI's 30-day remark period into a deadline imposed on the CII subject."
+  - "The 15-day Bank of Russia notification applies only to the banking/financial-market applicability branch."
+  - "Effective-date conflict remains open; this slice must not be used to decide whether pre-transition events are governed by FSB 553 until transition routing is resolved."
+
+summary:
+  authoritative_verified_records: 11
+  exact_subject_deadlines_verified: 3
+  regulator_deadline_verified: 1
+  primary_verified_records: 0
+  family_promotion: false
