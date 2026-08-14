@@ -1,0 +1,63 @@
+schema_version: "1.0"
+id: fsb-license-certificate-routing-regression-v1
+source_model: fsb-crypto-license-certificate-registry-observation-2026-08-15
+cases:
+  - id: FSB-ROUTE-T01
+    query_type: contractor_crypto_activity_license_status
+    inputs:
+      current_fsb_license_registry_record: true
+      scope_matched: true
+    expected: VALIDATABLE_FROM_LICENSE_REGISTRY
+  - id: FSB-ROUTE-T02
+    query_type: contractor_crypto_activity_license_status
+    inputs:
+      current_fsb_license_registry_record: false
+      certified_product_list_entry: true
+    expected: FAIL_CLOSED_NEEDS_CURRENT_LICENSE_RECORD
+  - id: FSB-ROUTE-T03
+    query_type: contractor_crypto_activity_license_status
+    inputs:
+      current_fsb_license_registry_record: true
+      scope_matched: false
+    expected: FAIL_CLOSED_SCOPE_MISMATCH
+  - id: FSB-ROUTE-T04
+    query_type: product_FSB_certification_status
+    inputs:
+      current_fsb_certified_szi_record: true
+      product_version_matched: true
+    expected: VALIDATABLE_FROM_CERTIFIED_SZI_RECORD
+  - id: FSB-ROUTE-T05
+    query_type: product_FSB_certification_status
+    inputs:
+      current_fsb_certified_szi_record: false
+      contractor_license_record: true
+    expected: FAIL_CLOSED_NEEDS_CURRENT_CERTIFICATE_RECORD
+  - id: FSB-ROUTE-T06
+    query_type: product_FSB_certification_status
+    inputs:
+      current_fsb_certified_szi_record: true
+      product_version_matched: false
+    expected: FAIL_CLOSED_PRODUCT_VERSION_MISMATCH
+  - id: FSB-ROUTE-T07
+    query_type: need_for_crypto_activity_license
+    inputs:
+      actual_work_or_service_identified: false
+      mere_skzi_possession: true
+    expected: NEEDS_WORK_SERVICE_CLASSIFICATION
+  - id: FSB-ROUTE-T08
+    query_type: need_for_crypto_activity_license
+    inputs:
+      actual_work_or_service_identified: true
+      pp313_item_matched: false
+    expected: NEEDS_PP313_APPLICABILITY_REVIEW
+  - id: FSB-ROUTE-T09
+    query_type: need_for_crypto_activity_license
+    inputs:
+      actual_work_or_service_identified: true
+      pp313_item_matched: true
+      own_needs_exception_status: unknown
+    expected: FAIL_CLOSED_NEEDS_EXCEPTION_REVIEW
+  - id: FSB-ROUTE-T10
+    query_type: unknown
+    inputs: {}
+    expected: FAIL_CLOSED_UNKNOWN_QUERY_TYPE
