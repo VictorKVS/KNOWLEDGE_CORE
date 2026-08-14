@@ -1,0 +1,87 @@
+schema_version: "1.0"
+id: 187-fz-article-9-continuous-gosopka-duty-version-origin-verified
+checked_at: "2026-08-14"
+status: PRIMARY_METADATA_AND_AUTHORITATIVE_CLAUSE_VERIFIED
+
+sources:
+  - source_id: FZ_58_2025
+    type: federal_law_amendment
+    date: "2025-04-07"
+    number: "58-FZ"
+    official_publication_number: "0001202504070004"
+    official_publication_date: "2025-04-07"
+    official_publication_url: "https://publication.pravo.gov.ru/Document/View/0001202504070004"
+    effective_date: "2025-09-01"
+    status: PRIMARY_METADATA_VERIFIED
+  - source_id: FZ_187_ART9_CURRENT
+    type: consolidated_current_text
+    authoritative_url: "https://www.consultant.ru/document/cons_doc_LAW_220885/8ac70f442b8809f10366c04e229238b7d8c9e493/"
+    status: AUTHORITATIVE_CLAUSE_VERIFIED
+
+records:
+  - id: CII-ART9-P3-7-CONTINUOUS-GOSOPKA
+    locator: "187-FZ article 9 part 3 point 7"
+    status: AUTHORITATIVE_VERIFIED
+    effective_from: "2025-09-01"
+    rule: >-
+      A CII subject that lawfully possesses a significant CII object must continuously interact with GosSOPKA
+      in the procedure established by the federal authority responsible for GosSOPKA operation.
+    statutory_origin:
+      introduced_by: FZ_58_2025
+    guardrail: >-
+      Do not project this specific point-7 statutory duty into periods before 2025-09-01.
+
+  - id: CII-ART9-P4-EXTENDED-ACTOR-SCOPE
+    locator: "187-FZ article 9 part 4"
+    status: AUTHORITATIVE_VERIFIED
+    effective_from: "2025-09-01"
+    rule: >-
+      Duties under article 9 part 2 and point 7 of part 3 also extend to the heads of the state bodies and
+      controlled public-sector organizations listed in part 4, for Russian information resources lawfully
+      belonging to those bodies and organizations, subject to the statutory exclusions and control test.
+    guardrail: >-
+      This extended actor scope is not equivalent to saying that every Russian organization is a CII subject.
+
+  - id: CII-ART9-P4-CONTROL-TEST
+    locator: "187-FZ article 9 part 4"
+    status: AUTHORITATIVE_VERIFIED
+    rule: >-
+      For the extended actor scope in part 4, control means the ability to determine decisions through the right
+      to directly or indirectly dispose of more than fifty percent of votes attributable to voting shares/interests.
+    evidence_required:
+      - ownership-or-control-structure
+      - legal-entity-status
+
+  - id: FZ58-2025-EFFECTIVE-DATE
+    locator: "58-FZ article 2 part 1"
+    status: PRIMARY_METADATA_AND_AUTHORITATIVE_TEXT_VERIFIED
+    rule: "Federal Law 58-FZ enters into force on 2025-09-01."
+
+  - id: FSB548-NO-DIRECT-STATUTORY-PREDECESSOR-REQUIRED
+    status: VERIFIED_REASONING_FROM_VERSION_CHAIN
+    rule: >-
+      For the specific continuous-interaction duty implemented by FSB Order 548, a direct pre-2026 order need not
+      be presumed as a predecessor: the underlying article 9 part 3 point 7 duty itself was introduced by 58-FZ
+      and became effective only on 2025-09-01. Historical GosSOPKA duties and older incident-reporting orders remain
+      separate predecessor chains and must not be conflated with this newly introduced continuous-interaction duty.
+    red_team_guardrail: >-
+      This is not a claim that GosSOPKA interaction did not exist before 2025-09-01. It is a narrower versioning
+      conclusion about the specific statutory obligation now implemented by FSB Order 548.
+
+version_chain:
+  - from: FZ_58_2025
+    relation: INTRODUCED_STATUTORY_DUTY
+    to: CII-ART9-P3-7-CONTINUOUS-GOSOPKA
+  - from: CII-ART9-P3-7-CONTINUOUS-GOSOPKA
+    relation: IMPLEMENTED_BY_PROCEDURE
+    to: FSB_548_2025
+
+red_team:
+  verdict: PARTIAL_PASS_VERSION_ORIGIN
+  closed_gap: >-
+    The former search for a mandatory direct predecessor order to FSB 548 is replaced with the verified statutory
+    origin chain. The specific point-7 continuous-interaction duty starts on 2025-09-01 and is procedurally implemented
+    by FSB 548 from 2026-01-30.
+  remaining_limits:
+    - immutable hash-pinned primary copies are not yet committed
+    - historical GosSOPKA interaction/reporting duties still retain their own separate version chains
