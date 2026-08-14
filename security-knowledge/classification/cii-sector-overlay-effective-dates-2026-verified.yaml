@@ -1,4 +1,4 @@
-schema_version: "1.0"
+schema_version: "1.1"
 id: CII-SECTOR-OVERLAY-EFFECTIVE-DATES-2026-VERIFIED
 checked_at: "2026-08-14"
 status: AUTHORITATIVE_VERIFIED_WITH_PRIMARY_PUBLICATION_ANCHORS
@@ -7,10 +7,11 @@ purpose: >-
   prevent present-day overlay routing from being applied to historical events before each act entered into force.
 
 scope_guardrails:
-  - This file is a verified slice, not a claim that five overlays exhaust all Russian CII sectors.
-  - Official publication metadata is anchored to publication.pravo.gov.ru.
+  - This file is a verified slice, not a claim that seven overlays exhaust all Russian CII sectors.
+  - Official publication metadata is anchored to publication.pravo.gov.ru where an official publication number has been identified.
   - Effective dates are cross-checked against authoritative legal-system publication metadata; exact official PDF bytes are not yet hash-pinned in-repository.
   - Applicability requires both sector match and event/configuration date on or after effective_from.
+  - A future-effective overlay must not be treated as current before its effective_from date.
   - A sector without a verified overlay in this slice must remain NEEDS_SECTOR_REVIEW; no overlay may be invented.
 
 records:
@@ -21,9 +22,8 @@ records:
     official_publication_number: "0001202601160013"
     official_publication_date: "2026-01-16"
     effective_from: "2026-01-24"
-    evidence_tier:
-      publication: PRIMARY_OFFICIAL_PORTAL
-      effective_date: AUTHORITATIVE_LEGAL_SYSTEM
+    observed_status_at_check: EFFECTIVE
+    evidence_tier: {publication: PRIMARY_OFFICIAL_PORTAL, effective_date: AUTHORITATIVE_LEGAL_SYSTEM}
   - id: CII-OVL-2026-092
     sector: BANKING_AND_OTHER_FINANCIAL_MARKET
     act: "Постановление Правительства Российской Федерации от 06.02.2026 № 92"
@@ -31,9 +31,8 @@ records:
     official_publication_number: "0001202602070010"
     official_publication_date: "2026-02-07"
     effective_from: "2026-02-15"
-    evidence_tier:
-      publication: PRIMARY_OFFICIAL_PORTAL
-      effective_date: AUTHORITATIVE_LEGAL_SYSTEM
+    observed_status_at_check: EFFECTIVE
+    evidence_tier: {publication: PRIMARY_OFFICIAL_PORTAL, effective_date: AUTHORITATIVE_LEGAL_SYSTEM}
   - id: CII-OVL-2026-246
     sector: SCIENCE
     act: "Постановление Правительства Российской Федерации от 07.03.2026 № 246"
@@ -41,9 +40,8 @@ records:
     official_publication_number: "0001202603070013"
     official_publication_date: "2026-03-07"
     effective_from: "2026-03-15"
-    evidence_tier:
-      publication: PRIMARY_OFFICIAL_PORTAL
-      effective_date: AUTHORITATIVE_LEGAL_SYSTEM
+    observed_status_at_check: EFFECTIVE
+    evidence_tier: {publication: PRIMARY_OFFICIAL_PORTAL, effective_date: AUTHORITATIVE_LEGAL_SYSTEM}
   - id: CII-OVL-2026-303
     sector: STATE_REGISTRATION_OF_REAL_ESTATE_RIGHTS_AND_TRANSACTIONS
     act: "Постановление Правительства Российской Федерации от 23.03.2026 № 303"
@@ -51,9 +49,8 @@ records:
     official_publication_number: "0001202603240036"
     official_publication_date: "2026-03-24"
     effective_from: "2026-04-01"
-    evidence_tier:
-      publication: PRIMARY_OFFICIAL_PORTAL
-      effective_date: AUTHORITATIVE_LEGAL_SYSTEM
+    observed_status_at_check: EFFECTIVE
+    evidence_tier: {publication: PRIMARY_OFFICIAL_PORTAL, effective_date: AUTHORITATIVE_LEGAL_SYSTEM}
   - id: CII-OVL-2026-356
     sector: ROCKET_AND_SPACE_INDUSTRY
     act: "Постановление Правительства Российской Федерации от 31.03.2026 № 356"
@@ -61,13 +58,40 @@ records:
     official_publication_number: "0001202604010039"
     official_publication_date: "2026-04-01"
     effective_from: "2026-04-09"
-    evidence_tier:
-      publication: PRIMARY_OFFICIAL_PORTAL
-      effective_date: AUTHORITATIVE_LEGAL_SYSTEM
+    observed_status_at_check: EFFECTIVE
+    evidence_tier: {publication: PRIMARY_OFFICIAL_PORTAL, effective_date: AUTHORITATIVE_LEGAL_SYSTEM}
+  - id: CII-OVL-2026-402
+    sector: COMMUNICATIONS
+    act: "Постановление Правительства Российской Федерации от 13.04.2026 № 402"
+    source_id: PP_RF_402_2026
+    official_publication_number: "0001202604130022"
+    official_publication_date: "2026-04-13"
+    effective_from: "2026-09-01"
+    effective_until: "2032-09-01"
+    observed_status_at_check: NOT_YET_EFFECTIVE
+    authoritative_facts:
+      - "Sector-specific significance feature: number of subscribers, including legal-entity service users, served through the CII object."
+      - "The act explicitly enters into force on 2026-09-01 and remains in force until 2032-09-01."
+    evidence_tier: {publication: PRIMARY_OFFICIAL_PORTAL_METADATA_CROSSCHECKED, effective_date: AUTHORITATIVE_LEGAL_SYSTEM}
+  - id: CII-OVL-2026-796
+    sector: DEFENSE_INDUSTRY
+    act: "Постановление Правительства Российской Федерации от 27.06.2026 № 796"
+    source_id: PP_RF_796_2026
+    official_publication_number: "0001202606290031"
+    official_publication_date: "2026-06-29"
+    effective_from: "2026-07-07"
+    observed_status_at_check: EFFECTIVE
+    authoritative_facts:
+      - "Requires a permanent categorization commission under the base Rules."
+      - "Review cadence is sector-specific: no-category objects at least annually; category III at least every 2 years; category II every 3 years; category I every 5 years."
+      - "If one CII object depends on another CII object, the dependent object receives the higher significance category determined by the base list or by the dependency result."
+      - "Sector significance features include use in state defense-order performance and certain defense-industry/industrial-safety contexts."
+    evidence_tier: {publication: PRIMARY_OFFICIAL_PORTAL_METADATA_CROSSCHECKED, effective_date: AUTHORITATIVE_LEGAL_SYSTEM}
 
 routing_semantics:
   current_state_rule: "base PP_RF_127_2018 + every verified applicable sector overlay effective on decision_date"
   historical_state_rule: "select overlay set by event_or_configuration_date, never by audit_date alone"
+  future_effective_rule: "published does not mean effective; do not route before effective_from"
   before_effective_date: BASE_ONLY_WITH_HISTORICAL_REVIEW
   unknown_date: NEEDS_TEMPORAL_REVIEW
   unknown_sector_overlay: NEEDS_SECTOR_REVIEW
