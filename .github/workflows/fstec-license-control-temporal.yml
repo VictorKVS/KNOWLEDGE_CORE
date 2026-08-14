@@ -1,0 +1,26 @@
+name: FSTEC License Control Temporal Gate
+
+on:
+  push:
+    paths:
+      - 'security-knowledge/lifecycle/fstec-license-control-163-164-487-2025-current-lifecycle.yaml'
+      - 'security-knowledge/lifecycle/fstec-license-control-163-164-487-temporal-regression-v1.yaml'
+      - 'security-knowledge/validators/validate_fstec_license_control_temporal.py'
+      - '.github/workflows/fstec-license-control-temporal.yml'
+  pull_request:
+    paths:
+      - 'security-knowledge/lifecycle/fstec-license-control-163-164-487-2025-current-lifecycle.yaml'
+      - 'security-knowledge/lifecycle/fstec-license-control-163-164-487-temporal-regression-v1.yaml'
+      - 'security-knowledge/validators/validate_fstec_license_control_temporal.py'
+      - '.github/workflows/fstec-license-control-temporal.yml'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install --disable-pip-version-check pyyaml
+      - run: python security-knowledge/validators/validate_fstec_license_control_temporal.py
