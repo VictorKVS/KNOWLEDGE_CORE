@@ -1,0 +1,302 @@
+schema_version: "1.0"
+id: fsb-547-2025-incident-reporting-response-authoritative-slice
+checked_at: "2026-08-14"
+source:
+  act: "Приказ ФСБ России от 25.12.2025 № 547"
+  registration_number: "84871"
+  official_publication_number: "0001202512300064"
+  official_publication_date: "2025-12-30"
+  official_url: "https://publication.pravo.gov.ru/document/0001202512300064"
+  authoritative_text_url: "https://www.garant.ru/products/ipo/prime/doc/413295820/"
+  effective_date: "2026-01-30"
+  provenance_status: AUTHORITATIVE_CONSOLIDATED_TEXT_WITH_OFFICIAL_PUBLICATION_METADATA
+  primary_clause_snapshot_status: PENDING_IMMUTABLE_COPY
+
+scope:
+  applicability: >-
+    Current reporting/response procedure for CII subjects and the organs/organizations expressly covered by
+    part 4 article 9 of 187-FZ. Applicability must be resolved by entity role, information-resource ownership/control,
+    object significance and event type; this file does not make every requirement universal.
+  replaces:
+    - "Приказ ФСБ России от 19.06.2019 № 282"
+    - "Приказ ФСБ России от 07.07.2022 № 348"
+
+requirements:
+  - id: FSB547-P1-CII-SCOPE
+    locator: "Порядок, пункт 1"
+    status: AUTHORITATIVE_VERIFIED
+    rule: >-
+      CII subjects must inform FSB Russia about computer attacks and computer incidents, respond to them and take
+      measures to eliminate attack consequences in relation to significant CII objects lawfully belonging to them.
+    evidence_expected:
+      - incident_attack_register
+      - notification_records
+      - response_records
+      - consequence_elimination_records
+
+  - id: FSB547-P1-ORG-SCOPE
+    locator: "Порядок, пункт 1, абзац 2"
+    status: AUTHORITATIVE_VERIFIED
+    rule: >-
+      Heads of organs and organizations covered by part 4 article 9 of 187-FZ must inform FSB Russia about computer
+      attacks and incidents connected with functioning of Russian information resources lawfully belonging to them.
+    guardrail: "Do not generalize this branch to every legal entity; statutory scope under part 4 article 9 must be resolved first."
+
+  - id: FSB547-P2-NKTSKI-CHANNEL
+    locator: "Порядок, пункт 2"
+    status: AUTHORITATIVE_VERIFIED
+    rule: >-
+      Reporting to FSB Russia is performed by sending information to NKTsKI using NKTsKI-defined GosSOPKA formats and
+      technical infrastructure; if the entity is not connected, postal or electronic communication to NKTsKI addresses is used.
+    evidence_expected:
+      - reporting_channel_configuration
+      - submitted_payload
+      - delivery_confirmation
+
+  - id: FSB547-P3-SIGNIFICANT-CII-INCIDENT-3H
+    locator: "Порядок, пункт 3, абзац 1"
+    status: AUTHORITATIVE_VERIFIED
+    trigger: "detection of a computer incident in a significant CII object"
+    deadline:
+      value: 3
+      unit: HOURS
+      maximum: true
+      starts_from: "moment of incident detection"
+    responsible_role: "CII subject"
+    rule: >-
+      Information about a computer incident in a significant CII object must be sent to NKTsKI no later than 3 hours
+      from the moment the incident is detected.
+    evidence_expected:
+      - detection_timestamp
+      - outgoing_notification_timestamp
+      - NKTsKI_delivery_confirmation
+
+  - id: FSB547-P3-OTHER-CII-INCIDENT-24H
+    locator: "Порядок, пункт 3, абзац 1"
+    status: AUTHORITATIVE_VERIFIED
+    trigger: "detection of a computer incident in another CII object"
+    deadline:
+      value: 24
+      unit: HOURS
+      maximum: true
+      starts_from: "moment of incident detection"
+    responsible_role: "CII subject"
+    rule: >-
+      Information about a computer incident in a CII object that is not a significant CII object must be sent to NKTsKI
+      no later than 24 hours from the moment of detection.
+
+  - id: FSB547-P3-ORG-RESOURCE-INCIDENT-24H
+    locator: "Порядок, пункт 3, абзац 2"
+    status: AUTHORITATIVE_VERIFIED
+    trigger: "detection of a computer incident on a Russian information resource of a covered organ/organization"
+    deadline:
+      value: 24
+      unit: HOURS
+      maximum: true
+      starts_from: "moment of incident detection"
+    responsible_role: "head of covered organ/organization"
+    rule: >-
+      Information about a computer incident on the covered organ/organization information resource must be sent to NKTsKI
+      no later than 24 hours from detection.
+
+  - id: FSB547-P3-ATTACK-24H
+    locator: "Порядок, пункт 3, абзац 3"
+    status: AUTHORITATIVE_VERIFIED
+    trigger: "detection of a computer attack against a CII object or covered Russian information resource"
+    deadline:
+      value: 24
+      unit: HOURS
+      maximum: true
+      starts_from: "moment of attack detection"
+    responsible_role: "CII subject or head of covered organ/organization"
+    rule: >-
+      Information about a detected computer attack must be sent to NKTsKI no later than 24 hours from detection.
+    guardrail: "Do not substitute the 3-hour significant-object incident SLA for the separate 24-hour computer-attack SLA."
+
+  - id: FSB547-P4-FINANCIAL-BANK-RUSSIA-PARALLEL
+    locator: "Порядок, пункт 4"
+    status: AUTHORITATIVE_VERIFIED
+    applicability: "CII subject operating in banking or other financial-market sphere"
+    rule: >-
+      Where the attack or incident relates to such a subject's CII object, the same information must also be sent to the
+      Bank of Russia through its technical infrastructure or reserve interaction method within the paragraph-3 deadlines.
+    evidence_expected:
+      - Bank_of_Russia_notification
+      - delivery_confirmation
+
+  - id: FSB547-P5-PLAN-90D
+    locator: "Порядок, пункт 5"
+    status: AUTHORITATIVE_VERIFIED
+    applicability: "CII subject owning/holding a significant CII object"
+    trigger: "inclusion of the significant CII object in the register of significant CII objects"
+    deadline:
+      value: 90
+      unit: CALENDAR_DAYS
+      maximum: true
+      starts_from: "date of inclusion in the register"
+    rule: >-
+      A response and attack-consequence-elimination plan must be developed within no more than 90 calendar days after
+      the significant CII object is entered into the register.
+    evidence_expected:
+      - approved_response_plan
+      - register_inclusion_date
+      - plan_version_history
+
+  - id: FSB547-P5-PLAN-CONTENT
+    locator: "Порядок, пункт 5"
+    status: AUTHORITATIVE_VERIFIED
+    rule: >-
+      The plan must cover technical characteristics/composition of significant CII objects, activation events/conditions,
+      response and consequence-elimination measures with allotted execution time, and responsible units/officials.
+    evidence_expected:
+      - object_inventory
+      - activation_conditions
+      - response_actions_with_time_budgets
+      - role_assignment_matrix
+
+  - id: FSB547-P6-HEAD-APPROVAL
+    locator: "Порядок, пункт 6, абзац 1"
+    status: AUTHORITATIVE_VERIFIED
+    rule: "The response plan is approved by the head of the CII subject."
+    evidence_expected:
+      - signed_approval
+
+  - id: FSB547-P6-NKTSKI-COPY-7D
+    locator: "Порядок, пункт 6, абзац 2"
+    status: AUTHORITATIVE_VERIFIED
+    trigger: "approval of the response plan"
+    deadline:
+      value: 7
+      unit: CALENDAR_DAYS
+      maximum: true
+      starts_from: "date of plan approval"
+    rule: >-
+      A copy of the approved response plan must be sent to NKTsKI within no more than 7 calendar days after approval.
+    evidence_expected:
+      - approved_plan_copy
+      - outgoing_transmittal
+      - delivery_confirmation
+
+  - id: FSB547-P8-FSB-PLAN-REVIEW-30D
+    locator: "Порядок, пункт 8"
+    status: AUTHORITATIVE_VERIFIED
+    responsible_role: "FSB Russia Center for Information Protection and Special Communications"
+    trigger: "receipt of a draft plan containing FSB participation provisions"
+    deadline:
+      value: 30
+      unit: CALENDAR_DAYS
+      starts_from: "date of receipt"
+    rule: >-
+      The FSB reviewing body considers such draft plan or amendments within up to 30 calendar days and either agrees them
+      in the absence of remarks or returns them for revision.
+    guardrail: "This is a regulator-review period, not a deadline imposed on the CII subject."
+
+  - id: FSB547-P9-BR-PLAN-REVIEW-30D
+    locator: "Порядок, пункт 9"
+    status: AUTHORITATIVE_VERIFIED
+    responsible_role: "Bank of Russia"
+    applicability: "financial-sector branch described in paragraph 9"
+    deadline:
+      value: 30
+      unit: CALENDAR_DAYS
+      starts_from: "date of receipt"
+    rule: >-
+      The Bank of Russia reviews the draft plan or amendments within up to 30 calendar days and either agrees them or
+      returns them for revision.
+    guardrail: "This deadline belongs to the Bank of Russia review process and is not a subject remediation SLA."
+
+  - id: FSB547-P10-ANNUAL-EXERCISE
+    locator: "Порядок, пункт 10"
+    status: AUTHORITATIVE_VERIFIED
+    frequency:
+      minimum: 1
+      unit: PER_YEAR
+    rule: >-
+      A CII subject with significant CII objects must organize and conduct exercises on response-plan measures at least once a year.
+    evidence_expected:
+      - exercise_plan
+      - exercise_report
+      - corrective_action_records
+    guardrail: "Do not interpret 'at least once a year' as exactly once per calendar year if more frequent exercises are warranted."
+
+  - id: FSB547-P10-EXERCISE-DEFECT-CORRECTION
+    locator: "Порядок, пункт 10, абзац 3"
+    status: AUTHORITATIVE_VERIFIED
+    trigger: "deficiencies identified during exercises"
+    rule: "The response plan must be amended where exercises reveal deficiencies in plan measures."
+    evidence_expected:
+      - finding_register
+      - plan_change_record
+
+  - id: FSB547-P14-CII-RESULTS-48H
+    locator: "Порядок, пункт 14, абзац 1"
+    status: AUTHORITATIVE_VERIFIED
+    applicability: "CII subject with significant CII objects"
+    trigger: "completion of incident-response and attack-consequence-elimination measures"
+    deadline:
+      value: 48
+      unit: HOURS
+      maximum: true
+      starts_from: "completion of measures"
+    rule: >-
+      The CII subject must inform NKTsKI about results no later than 48 hours after completion of response and attack-consequence-elimination measures.
+    evidence_expected:
+      - completion_timestamp
+      - results_notification
+      - delivery_confirmation
+
+  - id: FSB547-P14-FINANCIAL-RESULTS-48H
+    locator: "Порядок, пункт 14, абзац 2"
+    status: AUTHORITATIVE_VERIFIED
+    applicability: "banking or other financial-market sphere"
+    deadline:
+      value: 48
+      unit: HOURS
+      maximum: true
+      starts_from: "completion of measures"
+    rule: >-
+      Financial-sector CII subjects within paragraph 14 must also inform the Bank of Russia about response results within
+      the same 48-hour period.
+
+  - id: FSB547-P15-ORG-RESULTS-24H
+    locator: "Порядок, пункт 15"
+    status: AUTHORITATIVE_VERIFIED
+    applicability: "covered organ/organization information-resource branch"
+    trigger: "completion of response and attack-consequence-elimination measures"
+    deadline:
+      value: 24
+      unit: HOURS
+      maximum: true
+      starts_from: "completion of measures"
+    rule: >-
+      Covered organs/organizations must send NKTsKI information about response results within 24 hours after completing the measures.
+
+  - id: FSB547-P17-ORG-RECOVERY-24H
+    locator: "Порядок, пункт 17"
+    status: AUTHORITATIVE_VERIFIED
+    applicability: "covered organ/organization information-resource branch"
+    trigger: "completion of attack-consequence elimination and recovery/operability checks"
+    deadline:
+      value: 24
+      unit: HOURS
+      maximum: true
+      starts_from: "completion of recovery/operability-check measures"
+    rule: >-
+      After eliminating attack consequences and completing restoration and operability checks, covered organs/organizations
+      must inform NKTsKI within 24 hours.
+
+red_team_guardrails:
+  - "The 3-hour deadline is only for incidents in significant CII objects; it is not a universal cyber-incident deadline."
+  - "Computer-attack reporting in paragraph 3 has a separate 24-hour deadline even where the affected object is significant."
+  - "The 90-calendar-day plan-development deadline starts from register inclusion, not object commissioning or internal classification date."
+  - "The 30-day periods in paragraphs 8 and 9 are review periods of FSB/Bank of Russia, not subject deadlines."
+  - "Financial-sector Bank of Russia reporting is an additional applicability branch, not a replacement for NKTsKI reporting."
+  - "Do not reuse superseded deadlines from FSB orders 282/2019 or 348/2022 after 2026-01-30 without explicit historical-event routing."
+  - "Clause-level records are authoritative-secondary verified; immutable primary PDF provenance is still pending."
+
+summary:
+  authoritative_verified_records: 20
+  exact_subject_deadlines_or_frequencies_verified: 10
+  regulator_review_deadlines_verified: 2
+  primary_verified_records: 0
+  family_promotion: false
