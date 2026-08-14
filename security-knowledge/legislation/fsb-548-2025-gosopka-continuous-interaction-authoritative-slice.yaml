@@ -21,6 +21,19 @@ source:
     Clause text below is cross-checked against authoritative/public legal-text publications.
     An immutable hash-pinned primary PDF has not yet been committed, so records are not marked PRIMARY_VERIFIED.
 
+statutory_origin:
+  source_id: FZ_58_2025
+  official_publication_number: "0001202504070004"
+  official_publication_date: "2025-04-07"
+  effective_date: "2025-09-01"
+  introduced_duty: "187-FZ article 9 part 3 point 7"
+  relation: >-
+    The specific statutory duty to continuously interact with GosSOPKA was introduced by Federal Law 58-FZ
+    and became effective on 2025-09-01. Order 548 supplies the procedure for that duty from 2026-01-30.
+  guardrail: >-
+    This does not mean GosSOPKA interaction or incident-reporting duties did not exist before 2025-09-01;
+    it only closes the version-origin question for the specific article 9 part 3 point 7 continuous-interaction duty.
+
 applicability:
   applies_to:
     - CII subjects that own, lease or otherwise lawfully possess significant CII objects
@@ -154,6 +167,8 @@ records:
       - outbound-timestamp
 
 cross_act_model:
+  FZ_58_2025:
+    relation: statutory-origin-of-continuous-interaction-duty
   FSB_547_2025:
     relation: reporting-and-response-deadlines
   FSB_546_2025:
@@ -166,13 +181,16 @@ cross_act_model:
     relation: receipt-of-attack-tools-methods-and-prevention-information
 
 red_team:
-  verdict: PARTIAL_PASS_CURRENT_ORDER_CLAUSE_LOGIC
+  verdict: PARTIAL_PASS_CURRENT_ORDER_CLAUSE_LOGIC_AND_VERSION_ORIGIN
   authoritative_verified_records: 11
   primary_verified_records: 0
+  closed_gap:
+    - >-
+      The former mandatory-predecessor search for Order 548 is closed as a version-origin issue: the specific
+      article 9 part 3 point 7 continuous-interaction duty was introduced by 58-FZ effective 2025-09-01.
   remaining_high_gaps:
     - immutable hash-pinned primary PDF snapshot
-    - exact predecessor/supersession mapping for the pre-2026 continuous-interaction procedure
-    - cross-order positive and negative applicability regression tests for 539/546/547/548/553/554
+    - executable cross-order coverage remains incomplete beyond current initial regression set
   maturity_effect: >-
-    This materially improves current GosSOPKA clause coverage but does not by itself justify raising the whole
+    This materially improves current GosSOPKA clause/version coverage but does not by itself justify raising the whole
     legislation or evidence/audit family above the existing conservative family maturity floor.
