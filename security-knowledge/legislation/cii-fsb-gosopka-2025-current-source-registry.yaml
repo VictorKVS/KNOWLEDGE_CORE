@@ -1,7 +1,7 @@
-schema_version: "1.2"
+schema_version: "1.3"
 id: cii-fsb-gosopka-2025-current-source-registry
 checked_at: "2026-08-14"
-status: VERIFIED_TRANSITION_METADATA_PARTIAL_CLAUSE_EXTRACTION
+status: VERIFIED_TRANSITION_METADATA_SUBSTANTIAL_CLAUSE_EXTRACTION
 purpose: >-
   Register and version the late-2025 FSB source stack governing GosSOPKA interaction,
   incident/attack reporting, information exchange, attack-information receipt and
@@ -58,7 +58,7 @@ sources:
       source_id: FSB_368_2018
       transition: REPEALED_WITH_EFFECT_FROM_2026_01_30
     verification_status: VERIFIED_OFFICIAL_PUBLICATION_AND_AUTHORITATIVE_TEXT
-    clause_extraction: PARTIAL
+    clause_extraction: SUBSTANTIAL
 
   - source_id: FSB_547_2025
     act_type: ORDER_FSB_RUSSIA
@@ -106,11 +106,13 @@ sources:
     official_publication_date: "2025-12-30"
     official_url: "https://publication.pravo.gov.ru/document/0001202512300058"
     authoritative_text_url: "https://base.garant.ru/413395826/"
+    authoritative_effective_date_anchor: "https://rg.ru/documents/2026/01/08/fsb-prikaz548-site-dok.html"
     effective_date: "2026-01-30"
-    effective_date_status: AUTHORITATIVE_TEXT_VERIFIED
+    effective_date_status: AUTHORITATIVE_MULTISOURCE_VERIFIED
     predecessor_status: PENDING_EXACT_SUPERSESSION_MAPPING
     verification_status: VERIFIED_OFFICIAL_PUBLICATION_AND_AUTHORITATIVE_TEXT
-    clause_extraction: PARTIAL
+    clause_extraction: SUBSTANTIAL
+    clause_evidence_file: security-knowledge/legislation/fsb-548-2025-gosopka-continuous-interaction-authoritative-slice.yaml
 
   - source_id: FSB_553_2025
     act_type: ORDER_FSB_RUSSIA
@@ -178,6 +180,8 @@ transition_summary:
     - "FSB_282_2019 + FSB_348_2022 -> FSB_547_2025"
     - "FSB_281_2019 -> FSB_553_2025"
     - "FSB_196_2019 -> FSB_554_2025"
+  unresolved_replacement_mapping:
+    - FSB_548_2025
 
 applicability_guardrails:
   - >-
@@ -194,11 +198,11 @@ applicability_guardrails:
     the 2025/2026 orders are not retroactive merely because they are current now.
 
 red_team:
-  verdict: PARTIAL_PASS_TRANSITION_METADATA
+  verdict: PARTIAL_PASS_CURRENT_STACK_SUBSTANTIAL_CLAUSE_COVERAGE
   verified_source_count: 6
   exact_effective_date_verified_count: 6
   exact_effective_date_pending_count: 0
-  substantial_clause_extraction_count: 3
+  substantial_clause_extraction_count: 5
   high_gap: >-
-    Finish predecessor/supersession mapping for 548; complete clause-level duties for 546 and 548;
-    preserve immutable primary snapshots and build cross-order applicability/regression tests.
+    Finish predecessor/supersession mapping for 548; finish clause-level extraction for 539;
+    preserve immutable primary snapshots and build cross-order applicability/regression tests for 539/546/547/548/553/554.
