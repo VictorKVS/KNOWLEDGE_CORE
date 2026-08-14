@@ -1,0 +1,25 @@
+name: FSB GosSOPKA Lifecycle Regression Gate
+
+on:
+  push:
+    paths:
+      - 'security-knowledge/roles-deadlines-responsibility/fsb-gosopka-2025-effective-date-and-supersession-matrix-v1.yaml'
+      - 'security-knowledge/roles-deadlines-responsibility/fsb-gosopka-lifecycle-regression-v1.yaml'
+      - 'security-knowledge/validators/validate_fsb_gosopka_lifecycle.py'
+      - '.github/workflows/fsb-gosopka-lifecycle-regression.yml'
+  pull_request:
+    paths:
+      - 'security-knowledge/roles-deadlines-responsibility/fsb-gosopka-2025-effective-date-and-supersession-matrix-v1.yaml'
+      - 'security-knowledge/roles-deadlines-responsibility/fsb-gosopka-lifecycle-regression-v1.yaml'
+      - 'security-knowledge/validators/validate_fsb_gosopka_lifecycle.py'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate FSB GosSOPKA lifecycle boundaries
+        run: python security-knowledge/validators/validate_fsb_gosopka_lifecycle.py
