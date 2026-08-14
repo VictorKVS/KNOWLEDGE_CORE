@@ -1,0 +1,211 @@
+schema_version: "1.0"
+id: fsb-161-2026-gosopka-center-accreditation-authoritative-slice
+checked_at: "2026-08-14"
+status: AUTHORITATIVE_VERIFIED_PRIMARY_PUBLICATION_ANCHORED
+scope: >-
+  Current 2026 accreditation procedure and selected requirements for GosSOPKA centers.
+  Clause records are grounded in the registered text and authoritative consolidated copies;
+  the official publication portal is retained as the primary publication anchor. No claim is
+  made that every CII subject is required to create or accredit its own GosSOPKA center.
+
+source:
+  source_id: FSB_161_2026
+  act_type: ORDER_FSB_RUSSIA
+  act_date: "2026-04-22"
+  number: "161"
+  title: >-
+    Об утверждении Порядка аккредитации центров государственной системы обнаружения,
+    предупреждения и ликвидации последствий компьютерных атак на информационные ресурсы
+    Российской Федерации и Требований к центрам государственной системы обнаружения,
+    предупреждения и ликвидации последствий компьютерных атак на информационные ресурсы
+    Российской Федерации, а также к аккредитованным центрам
+  minjust_registration_date: "2026-05-20"
+  minjust_registration_number: "86534"
+  official_publication_number: "0001202605200018"
+  official_publication_date: "2026-05-20"
+  official_url: "https://publication.pravo.gov.ru/document/0001202605200018"
+  minjust_publication_anchor: "https://minjust.consultant.ru/documents/59194"
+  authoritative_text_url: "https://www.consultant.ru/document/cons_doc_LAW_534836/"
+  effective_date: "2026-05-31"
+  effective_date_status: AUTHORITATIVE_METADATA_VERIFIED
+
+records:
+  - id: FSB161-ACC-001
+    status: AUTHORITATIVE_VERIFIED
+    locator: "Appendix 1, clause 1"
+    rule: >-
+      Accreditation of GosSOPKA centers is performed by the FSB of Russia through the FSB Center
+      for Information Protection and Special Communications by assessing conformity with the
+      requirements in Appendix 2.
+    actor: FSB_ACCREDITING_BODY
+
+  - id: FSB161-ACC-002
+    status: AUTHORITATIVE_VERIFIED
+    locator: "Appendix 1, clause 2"
+    rule: >-
+      Accreditation is tied to defined activity directions: attack detection and incident
+      registration; incident response and consequence elimination; attack prevention; and
+      coordination/analysis activities within the stated scope.
+    guardrail: "Do not treat accreditation as an undifferentiated single capability without checking accredited directions."
+
+  - id: FSB161-ACC-003
+    status: AUTHORITATIVE_VERIFIED
+    locator: "Appendix 1, clause 11"
+    rule: "Suspension of the accreditation procedure may not exceed 30 working days from the suspension decision."
+    duration:
+      value: 30
+      unit: WORKING_DAYS
+      start_event: ACCREDITATION_PROCEDURE_SUSPENSION_DECISION
+
+  - id: FSB161-ACC-004
+    status: AUTHORITATIVE_VERIFIED
+    locator: "Appendix 1, clause 10"
+    rule: >-
+      When the procedure is suspended because required interagency information was not received,
+      the accrediting body must notify the applicant within 5 working days from the suspension decision.
+    duration:
+      value: 5
+      unit: WORKING_DAYS
+      start_event: ACCREDITATION_PROCEDURE_SUSPENSION_DECISION
+    actor: FSB_ACCREDITING_BODY
+
+  - id: FSB161-ACC-005
+    status: AUTHORITATIVE_VERIFIED
+    locator: "Appendix 1, clause 13"
+    rule: "A refusal notification is sent no later than 5 working days from the refusal decision."
+    duration:
+      value: 5
+      unit: WORKING_DAYS
+      start_event: ACCREDITATION_REFUSAL_DECISION
+    actor: FSB_ACCREDITING_BODY
+
+  - id: FSB161-ACC-006
+    status: AUTHORITATIVE_VERIFIED
+    locator: "Appendix 1, clause 15"
+    rule: >-
+      After refusal for an incomplete submission under clause 14(a), a repeat application is allowed
+      no earlier than 5 working days; for the grounds in clauses 14(b)-14(e), no earlier than 50 working days.
+    branches:
+      - condition: REFUSAL_REASON_14A_INCOMPLETE_SUBMISSION
+        minimum_wait: {value: 5, unit: WORKING_DAYS}
+      - condition: REFUSAL_REASON_14B_TO_14E
+        minimum_wait: {value: 50, unit: WORKING_DAYS}
+
+  - id: FSB161-ACC-007
+    status: AUTHORITATIVE_VERIFIED
+    locator: "Appendix 1, clause 16"
+    rule: >-
+      The accreditation record on gossopka.ru and email notification are made on the next working day
+      after the accreditation decision.
+    actor: FSB_ACCREDITING_BODY
+    deadline: NEXT_WORKING_DAY
+
+  - id: FSB161-ACC-008
+    status: AUTHORITATIVE_VERIFIED
+    locator: "Appendix 1, clause 17"
+    rule: "The accreditation certificate is sent or handed over no later than 5 working days from the accreditation decision."
+    duration:
+      value: 5
+      unit: WORKING_DAYS
+      start_event: ACCREDITATION_DECISION
+
+  - id: FSB161-ACC-009
+    status: AUTHORITATIVE_VERIFIED
+    locator: "Appendix 1, clause 21"
+    rule: >-
+      An organization whose center accreditation has been suspended must provide information/documents
+      confirming remediation within 30 working days after the suspension decision.
+    actor: ORGANIZATION_OPERATING_GOSOPKA_CENTER
+    duration:
+      value: 30
+      unit: WORKING_DAYS
+      start_event: ACCREDITATION_SUSPENSION_DECISION
+
+  - id: FSB161-ACC-010
+    status: AUTHORITATIVE_VERIFIED
+    locator: "Appendix 1, clause 21"
+    rule: >-
+      The accrediting body checks submitted remediation information/documents within no more than
+      10 working days from receipt.
+    actor: FSB_ACCREDITING_BODY
+    duration:
+      value: 10
+      unit: WORKING_DAYS
+      start_event: REMEDIATION_DOCUMENTS_RECEIVED
+
+  - id: FSB161-ACC-011
+    status: AUTHORITATIVE_VERIFIED
+    locator: "Appendix 1, clauses 22-24"
+    rule: >-
+      Failure to provide remediation evidence in time, failure to eliminate the causes of suspension,
+      and other enumerated grounds can lead to withdrawal of accreditation; for specified withdrawal
+      grounds, notification and the registry change are performed within 5 working days from the ground arising.
+    duration:
+      value: 5
+      unit: WORKING_DAYS
+      applicability: SPECIFIED_WITHDRAWAL_GROUNDS_ONLY
+
+  - id: FSB161-REQ-001
+    status: AUTHORITATIVE_VERIFIED
+    locator: "Appendix 2, clause 5"
+    rule: >-
+      A GosSOPKA center must perform the functions assigned by the Requirements, including continuous
+      automated interaction with NKTsKI, inventory of information resources and security assessment
+      of information resources against computer attacks, including penetration testing.
+    actor: GOSOPKA_CENTER
+
+  - id: FSB161-REQ-002
+    status: AUTHORITATIVE_VERIFIED
+    locator: "Appendix 2, clauses 12-13"
+    rule: >-
+      The center's information-security implementation and operation include organizational measures,
+      security-tool deployment/configuration, effectiveness verification, responsible persons,
+      configuration/update management, backup, security control and analysis of changing threats and vulnerabilities.
+    actor: GOSOPKA_CENTER
+
+  - id: FSB161-REQ-003
+    status: AUTHORITATIVE_VERIFIED
+    locator: "Appendix 2, clause 14"
+    rule: >-
+      Access to center information resources must be registered in an electronic journal and that journal
+      must be reviewed by personnel responsible for center information security at least once per month.
+    frequency:
+      minimum: ONCE_PER_MONTH
+    evidence_examples:
+      - ACCESS_LOG
+      - MONTHLY_LOG_REVIEW_RECORD
+
+  - id: FSB161-REQ-004
+    status: AUTHORITATIVE_VERIFIED
+    locator: "Appendix 2, clause 15"
+    rule: >-
+      When access-order violations are discovered, the center head must organize cause identification
+      and remediation; information-security mechanisms must support information recovery within 8 hours.
+    actor: GOSOPKA_CENTER_HEAD
+    recovery_time:
+      maximum: 8
+      unit: HOURS
+    guardrail: "The 8-hour value is a recovery requirement in this center context, not a universal incident-response SLA."
+
+  - id: FSB161-REQ-005
+    status: AUTHORITATIVE_VERIFIED
+    locator: "Appendix 2, clause 16"
+    rule: >-
+      The specified center security-tool classes include FSB-certified antivirus, computer-attack detection,
+      traffic filtering/firewall and cryptographic protection tools within the scope stated by the Requirement.
+    actor: GOSOPKA_CENTER
+    guardrail: "Do not generalize this certification rule to systems outside the applicability of Appendix 2."
+
+applicability_guardrails:
+  - "FSB 161 regulates GosSOPKA-center accreditation and center requirements; it is not proof that every CII subject must create its own center."
+  - "Center-specific deadlines and recovery requirements must not be copied into ordinary CII-subject incident routing."
+  - "Accreditation status and accredited activity directions must be verified from the current registry when relied upon operationally."
+  - "The official publication anchor proves publication metadata; immutable repository snapshot/digest remains pending."
+
+red_team:
+  verdict: PARTIAL_PASS
+  verified_records: 16
+  pending:
+    - "immutable/hash-pinned primary copy"
+    - "full clause extraction, including complete accreditation decision timing and all center technical requirements"
+    - "registry snapshot model for current accredited centers and accredited activity directions"
