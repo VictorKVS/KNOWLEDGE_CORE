@@ -1,0 +1,72 @@
+schema_version: "1.0"
+id: coverage-scorecard-2026-08-14-run-33
+date: "2026-08-14"
+overall_strict_p0_percent: 10
+p0_families_registered: "12/12"
+critical_gaps: 0
+high_gaps: 1
+red_team: FAIL
+expert_ready: false
+
+family_scores:
+  npa_rf: 10
+  gost_iso: 10
+  classification_categorization: 10
+  threat_modeling_bdu: 10
+  risk_methods: 10
+  legal_consequences: 10
+  szi_skzi_license_lifecycle: 10
+  roles_deadlines_responsibility: 10
+  evidence_audit: 10
+  practical_cases: 10
+
+this_run:
+  focus: FSB_GOSSOPKA_PUBLICATION_METADATA_AND_ORDER_546_DEADLINE_ROUTING
+  added_files:
+    - security-knowledge/legislation/fsb-2025-gosopka-primary-publication-registry-slice.yaml
+    - security-knowledge/roles-deadlines-responsibility/fsb-546-2025-information-exchange-deadlines-authoritative-slice.yaml
+  commits:
+    publication_registry: "d35acb7e912ca7a6b9ef4b739012e500122e1540"
+    fsb_546_deadlines: "2fe1cde008f4deeaaf9a323e96b51fc92ab0c036"
+  verified_authoritative_metadata_records_added: 6
+  verified_authoritative_operational_rules_added: 7
+  immutable_primary_clause_records_added: 0
+  maturity_claim: NO_FAMILY_PROMOTION
+
+verified:
+  - "Official publication metadata is now normalized for FSB Orders 539/546/547/548/553/554, including publication number/date, Minjust registration and observed official PDF page/size metadata."
+  - "FSB 546 effective date is verified as 2026-01-30 through an authoritative secondary representation; publication metadata is official-primary."
+  - "FSB 546 paragraph 20: unsolicited foreign/international attack/incident information related to a KII object must be sent by the KII subject to NKCKI no later than 24 hours from receipt."
+  - "FSB 546 paragraph 21: information received about an attack/incident related to another KII subject's object must be sent to NKCKI no later than 12 hours from receipt."
+  - "FSB 546 paragraphs 15/16/18 contain 24h/24h/48h NKCKI procedural clocks and are explicitly separated from subject initial-notification deadlines."
+  - "No numeric deadline was invented from paragraph 3's qualitative requirement for operationally sufficient timing."
+
+pending:
+  - "acquire exact official PDF bytes for FSB 539/546/547/548/553/554 and store SHA-256 digests"
+  - "verify FSB 553 effective date from exact primary text or authoritative representation before populating it"
+  - "download and SHA-256 hash-pin NKCKI Order No. 2 dated 2026-07-14 and the 2026-07-08 Initial Data artifact"
+  - "extract exact NKCKI reporting fields, technical parameters and attachment/schema requirements"
+  - "add executable negative routing tests for FSB 546 paragraphs 20 and 21"
+  - "continue BDU raw-byte/change-detection and full object/method relation snapshotting"
+
+red_team_findings:
+  verdict: FAIL
+  positives:
+    - "High-impact FSB GosSOPKA orders now have a single normalized authoritative publication registry instead of scattered metadata."
+    - "Order 546 deadlines are modeled with actor, trigger and clock_start, reducing the risk of reusing 12/24/48-hour values as universal incident deadlines."
+  blockers:
+    - "The remaining High blocker is unchanged: immutable/hash-pinned primary provenance is still absent for high-impact FSB and NKCKI artifacts."
+    - "Clause-level FSB 546 data remains authoritative-secondary rather than immutable-primary until the official PDF is preserved and hashed."
+
+next_bottleneck:
+  - "obtain exact downloadable NKCKI Order No. 2 and 2026-07-08 artifact bytes and hash-pin them"
+  - "obtain exact official FSB 539/546/547/548/553/554 PDF bytes and hash-pin them"
+  - "machine-map NKCKI field-level reporting schema and connect it to FSB 546/547 evidence rules"
+  - "add deterministic negative routing tests for FSB 546 event-specific deadlines"
+
+promotion_decision:
+  family_promotion: false
+  reason: >-
+    Six authoritative publication metadata records and seven operational deadline/routing rules were added,
+    but no immutable primary artifact was acquired and the remaining High provenance blocker is still open.
+    Overall and family percentages therefore remain unchanged.
