@@ -1,0 +1,244 @@
+schema_version: "1.0"
+id: gosopka-current-stack-applicability-timing-matrix-v1
+checked_at: "2026-08-14"
+status: AUTHORITATIVE_DERIVED_FROM_VERIFIED_CLAUSE_SLICES
+purpose: >-
+  Fail-closed routing matrix for the current FSB GosSOPKA/CII source stack.
+  This file does not create new legal duties: it routes events and controls to clause-level
+  evidence already recorded for orders 539, 546, 547, 548, 553 and 554.
+
+sources:
+  FSB_539_2025:
+    effective_date: "2026-01-30"
+    function: RECEIVE_ATTACK_METHOD_INFORMATION
+    evidence_file: security-knowledge/legislation/fsb-539-2025-attack-information-receipt-authoritative-slice.yaml
+  FSB_546_2025:
+    effective_date: "2026-01-30"
+    function: EXCHANGE_ATTACK_INCIDENT_INFORMATION
+    evidence_file: security-knowledge/legislation/fsb-546-2025-information-exchange-authoritative-slice.yaml
+  FSB_547_2025:
+    effective_date: "2026-01-30"
+    function: REPORT_RESPOND_AND_ELIMINATE_CONSEQUENCES
+    evidence_file: security-knowledge/legislation/fsb-547-2025-incident-reporting-response-authoritative-slice.yaml
+  FSB_548_2025:
+    effective_date: "2026-01-30"
+    function: CONTINUOUS_GOSSOPKA_INTERACTION
+    evidence_file: security-knowledge/legislation/fsb-548-2025-gosopka-continuous-interaction-authoritative-slice.yaml
+  FSB_553_2025:
+    effective_date: "2026-01-10"
+    function: INSTALL_AND_OPERATE_GOSSOPKA_MEANS
+    evidence_file: security-knowledge/legislation/fsb-553-2025-gosopka-installation-operation-authoritative-slice.yaml
+  FSB_554_2025:
+    effective_date: "2026-01-10"
+    function: TECHNICAL_REQUIREMENTS_FOR_GOSSOPKA_MEANS
+    evidence_file: security-knowledge/legislation/fsb-554-2025-gosopka-tools-requirements-authoritative-slice.yaml
+
+routing:
+  - id: ROUTE-01-RECEIVE-THREAT-INFO
+    trigger: "CII subject needs information about attack means/methods and prevention/detection methods"
+    primary_source: FSB_539_2025
+    routes:
+      - cert.gov.ru
+      - NKCKI_REQUEST
+      - NKCKI_PROACTIVE_INFORMATION
+    numeric_deadline:
+      actor: NKCKI
+      value: 30
+      unit: WORKING_DAYS
+      trigger: "receipt of subject request under FSB 539 p.1.2"
+    guardrail: "Not an incident-reporting SLA and not a deadline imposed on the CII subject."
+
+  - id: ROUTE-02-SIGNIFICANT-CII-INCIDENT
+    trigger: "computer incident detected in significant CII object"
+    primary_source: FSB_547_2025
+    subject_deadline:
+      value: 3
+      unit: HOURS
+      starts_from: INCIDENT_DETECTION
+      destination: NKCKI
+    continuous_interaction_source: FSB_548_2025
+    guardrail: "Do not replace the 3-hour incident deadline with the separate 24-hour attack deadline."
+
+  - id: ROUTE-03-OTHER-CII-INCIDENT
+    trigger: "computer incident detected in CII object that is not significant"
+    primary_source: FSB_547_2025
+    subject_deadline:
+      value: 24
+      unit: HOURS
+      starts_from: INCIDENT_DETECTION
+      destination: NKCKI
+
+  - id: ROUTE-04-COMPUTER-ATTACK
+    trigger: "computer attack detected against CII object or covered Russian information resource"
+    primary_source: FSB_547_2025
+    subject_deadline:
+      value: 24
+      unit: HOURS
+      starts_from: ATTACK_DETECTION
+      destination: NKCKI
+    guardrail: "Attack reporting and incident reporting are separate event branches."
+
+  - id: ROUTE-05-PEER-CII-EXCHANGE
+    trigger: "CII subject exchanges attack/incident information with another CII subject"
+    primary_source: FSB_546_2025
+    rule: "Exchange timing must be operationally sufficient; the act does not set a universal numeric SLA in paragraph 3."
+    parallel_action:
+      destination: NKCKI
+      timing: SIMULTANEOUS_WITH_PEER_EXCHANGE
+    guardrail: "Do not invent a numeric deadline for FSB 546 paragraph 3."
+
+  - id: ROUTE-06-UNSOLICITED-FOREIGN-INFO-OWN-OBJECT
+    trigger: "CII subject receives unsolicited foreign/international attack/incident information related to its own CII object"
+    primary_source: FSB_546_2025
+    subject_deadline:
+      value: 24
+      unit: HOURS
+      starts_from: INFORMATION_RECEIPT
+      destination: NKCKI
+
+  - id: ROUTE-07-INFO-ABOUT-OTHER-CII-SUBJECT
+    trigger: "CII subject receives attack/incident information related to another CII subject's object"
+    primary_source: FSB_546_2025
+    subject_deadline:
+      value: 12
+      unit: HOURS
+      starts_from: INFORMATION_RECEIPT
+      destination: NKCKI
+
+  - id: ROUTE-08-NKCKI-IMPENDING-ATTACK-NOTICE
+    trigger: "covered party receives from NKCKI information about impending attack or incident signs"
+    primary_source: FSB_548_2025
+    subject_deadline:
+      value: 24
+      unit: HOURS
+      starts_from: NKCKI_INFORMATION_RECEIPT
+      action: REPORT_PREVENTION_MEASURES
+
+  - id: ROUTE-09-NKCKI-ADDITIONAL-INFO-REQUEST
+    trigger: "covered party receives NKCKI request for additional information"
+    primary_source: FSB_548_2025
+    subject_deadline:
+      value: 24
+      unit: HOURS
+      starts_from: NKCKI_REQUEST_RECEIPT
+      action: PROVIDE_INFO_OR_REASONED_IMPOSSIBILITY_NOTICE
+
+  - id: ROUTE-10-RESPONSE-PLAN-SIGNIFICANT-CII
+    trigger: "significant CII object entered in register"
+    primary_source: FSB_547_2025
+    subject_deadline:
+      value: 90
+      unit: CALENDAR_DAYS
+      starts_from: REGISTER_INCLUSION_DATE
+      action: DEVELOP_RESPONSE_PLAN
+    follow_up:
+      trigger: PLAN_APPROVAL
+      deadline_value: 7
+      deadline_unit: CALENDAR_DAYS
+      action: SEND_APPROVED_PLAN_COPY_TO_NKCKI
+    recurring_control:
+      minimum_frequency: "1 per year"
+      action: RESPONSE_PLAN_EXERCISE
+
+  - id: ROUTE-11-GOSSOPKA-MEANS-INSTALLATION
+    trigger: "completion of installation/configuration/testing/connection activities under FSB 553"
+    primary_source: FSB_553_2025
+    subject_deadline:
+      value: 15
+      unit: CALENDAR_DAYS
+      starts_from: COMPLETION_OF_INSTALLATION_ACTIVITIES
+      action: NOTIFY_NKCKI_AND_PROVIDE_MEANS_LIST
+    financial_branch: "also notify Bank of Russia within same 15-calendar-day period when applicable"
+    remediation_branch:
+      trigger: NKCKI_REMARKS_RECEIVED
+      subject_deadline_value: 30
+      subject_deadline_unit: CALENDAR_DAYS
+      action: REMEDIATE_AND_REPORT
+
+  - id: ROUTE-12-GOSSOPKA-MEANS-CONTROLS
+    trigger: "selection/operation of GosSOPKA technical/software means"
+    primary_source: FSB_554_2025
+    controls:
+      - "detection event storage >= 6 months where paragraph 11 applies"
+      - "warning/prevention source update check >= once per 24 hours where paragraph 17 applies"
+      - "telecom traffic copy retention >= 6 months where paragraph 23 applies"
+      - "other attack-indicator traffic copy retention >= 7 calendar days where paragraph 25 applies"
+      - "FSB certification for tool categories expressly named in paragraphs 12, 26 and 28"
+    guardrail: "These periods and certification duties are tool-category specific, not universal organizational log-retention rules."
+
+fail_closed_rules:
+  - "If event_date is before the relevant current order effective_date, route to historical law stack; do not apply current order retroactively."
+  - "If object significance is unknown, do not choose 3h versus 24h incident branch until significance is established."
+  - "If event type is ambiguous between attack and incident, preserve both candidate routes and require classification evidence before choosing SLA."
+  - "If entity is not proven to be within the statutory/order scope, status is APPLICABILITY_NOT_PROVEN, not COMPLIANT or NONCOMPLIANT."
+  - "Regulator/NKCKI processing deadlines must not be represented as deadlines imposed on the subject."
+  - "Where an act contains no numeric time (for example FSB 546 p.3), the engine must return NON_NUMERIC_OPERATIONAL_TIMING rather than inventing hours."
+
+regression_fixtures:
+  - id: GOS-REG-01
+    input:
+      event_date: "2026-08-14"
+      entity_scope: CII_SUBJECT
+      object_significance: SIGNIFICANT
+      event_type: INCIDENT
+      detected_at: "2026-08-14T08:00:00+03:00"
+    expected_route: ROUTE-02-SIGNIFICANT-CII-INCIDENT
+    expected_deadline: "2026-08-14T11:00:00+03:00"
+    expected_status: ROUTED
+
+  - id: GOS-REG-02
+    input:
+      event_date: "2026-08-14"
+      entity_scope: CII_SUBJECT
+      object_significance: SIGNIFICANT
+      event_type: ATTACK
+      detected_at: "2026-08-14T08:00:00+03:00"
+    expected_route: ROUTE-04-COMPUTER-ATTACK
+    expected_deadline: "2026-08-15T08:00:00+03:00"
+    expected_status: ROUTED
+    negative_assertion: "must_not_route_to_3h_incident_deadline"
+
+  - id: GOS-REG-03
+    input:
+      event_date: "2026-08-14"
+      entity_scope: CII_SUBJECT
+      object_significance: UNKNOWN
+      event_type: INCIDENT
+    expected_status: FAIL_CLOSED_MISSING_SIGNIFICANCE
+
+  - id: GOS-REG-04
+    input:
+      event_date: "2026-08-14"
+      entity_scope: CII_SUBJECT
+      action: PEER_INFORMATION_EXCHANGE
+    expected_route: ROUTE-05-PEER-CII-EXCHANGE
+    expected_timing_type: NON_NUMERIC_OPERATIONAL_TIMING
+    negative_assertion: "must_not_invent_numeric_sla"
+
+  - id: GOS-REG-05
+    input:
+      event_date: "2025-12-20"
+      entity_scope: CII_SUBJECT
+      event_type: ATTACK_INFORMATION_REQUEST
+    expected_status: HISTORICAL_STACK_REQUIRED
+    negative_assertion: "must_not_apply_FSB_539_2025"
+
+red_team:
+  verdict: PARTIAL_PASS_DERIVED_ROUTING_MODEL
+  positives:
+    - "six current orders have an explicit functional boundary"
+    - "subject deadlines are separated from NKCKI/regulator processing periods"
+    - "attack and incident event branches are separated"
+    - "non-numeric timing remains non-numeric"
+    - "historical event routing is fail-closed"
+  blockers:
+    - "regression fixtures are declarative and not yet executed by a deterministic validator in CI"
+    - "immutable/hash-pinned primary PDF snapshots are not yet preserved for the high-impact orders"
+    - "exact predecessor/supersession mapping for FSB 548 remains unresolved"
+    - "FSB 553 evidence file still contains stale historical note about an effective-date conflict and needs normalization to the resolved 2026-01-10 date"
+
+summary:
+  current_orders_mapped: 6
+  routing_cases: 12
+  declarative_regression_fixtures: 5
+  family_promotion: false
