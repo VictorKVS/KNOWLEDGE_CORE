@@ -1,0 +1,74 @@
+schema_version: "1.0"
+id: coverage-scorecard-2026-08-15-run-44
+date: "2026-08-15"
+overall_strict_p0_percent: 10
+p0_families_registered: "12/12"
+critical_gaps: 0
+high_gaps: 1
+red_team: FAIL
+expert_ready: false
+
+family_scores:
+  npa_rf: 10
+  gost_iso: 10
+  classification_categorization: 10
+  threat_modeling_bdu: 10
+  risk_methods: 10
+  legal_consequences: 10
+  szi_skzi_license_lifecycle: 10
+  roles_deadlines_responsibility: 10
+  evidence_audit: 10
+  practical_cases: 10
+
+this_run:
+  focus: FSB_LICENSE_CERTIFICATE_NEED_ROUTING_EXECUTABLE_REGRESSION
+  added_files:
+    - security-knowledge/lifecycle/fsb-license-certificate-routing-regression-v1.yaml
+    - security-knowledge/validators/validate_fsb_license_certificate_routing.py
+    - .github/workflows/fsb-license-certificate-routing.yml
+  commits:
+    fixtures: "e782f01ca21653c49ce7b54ecbf7088104414d10"
+    validator: "d459af6d9fc3d08a2b41996e8844446b5cc63d04"
+    workflow: "9f37f9e22006dc09ad099ccc53ff4ef45b6c0c53"
+  executable_regression_cases_added: 10
+  immutable_primary_clause_records_added: 0
+  ci_status_observed: NOT_YET_RETURNED
+  maturity_claim: NO_FAMILY_PROMOTION
+
+verified:
+  - "FSB CLSZ continues to expose separate official entry points for crypto-activity license registries and FSB-certified SZI information."
+  - "The model now has executable negative routing for the category error: contractor license status cannot be proven from a certified-product record."
+  - "The model now has executable negative routing for the inverse category error: product certification cannot be proven from a contractor license record."
+  - "Product-version mismatch is fail-closed."
+  - "License scope mismatch is fail-closed."
+  - "Mere possession of SKZI is not enough to decide that a PP RF N 313 license is required; actual work/service and applicability must be classified."
+
+pending:
+  - "observe completion of FSB License Certificate Routing Gate and record success/failure"
+  - "resolve exact downloadable FSB crypto-license registry bytes/format and SHA-256 hash-pin a time-bounded snapshot"
+  - "resolve exact downloadable FSB certified-SZI extract bytes/format and SHA-256 hash-pin a time-bounded snapshot"
+  - "obtain clause-level current FSB rules for certificate validity, extension, suspension, termination and continued-use conditions"
+  - "retrieve exact current CSV bytes for FSTEC license datasets and normalize row-level records"
+  - "close immutable/hash-pinned primary provenance for FSB 539/546/547/548/553/554 and NKCKI 2026 artifacts"
+
+red_team_findings:
+  verdict: FAIL
+  positives:
+    - "License/certificate/source separation is now guarded by deterministic regression cases, not only prose guardrails."
+    - "Unknown query type, missing current record, scope mismatch and product-version mismatch all fail closed."
+    - "No unsupported inference was added about PP RF N 313 applicability."
+  blockers:
+    - "The umbrella High blocker remains immutable/hash-pinned primary provenance for high-impact FSB/NKCKI sources and dynamic registry bytes."
+    - "The new workflow has been committed but a completed status is not yet observed."
+    - "FSB certificate lifecycle remains unresolved at clause level."
+
+next_bottleneck:
+  - "confirm the new CI gate result"
+  - "capture immutable time-bounded bytes of the FSB crypto-license registry and certified-SZI extract with SHA-256"
+  - "normalize row/product/version/status fields and add change detection"
+  - "then return to immutable NKCKI/FSB artifacts and exact field-level evidence schemas"
+
+promotion_decision:
+  family_promotion: false
+  reason: >-
+    Executable safeguards were added against three high-risk reasoning errors: mixing contractor licensing with product certification, accepting scope/version mismatch, and deciding PP313 licensing need from SKZI possession alone. However no immutable primary bytes were captured and the new CI completion is not yet observed, so strict readiness remains unchanged.
