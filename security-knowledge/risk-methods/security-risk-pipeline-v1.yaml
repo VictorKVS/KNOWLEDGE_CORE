@@ -1,0 +1,149 @@
+schema_version: "1.0"
+id: security-risk-pipeline-v1
+status: DRAFT_EXECUTABLE_CORE
+purpose: >-
+  Connect verified threat-model outputs to a generic risk-management decision pipeline without inventing a universal numeric formula or treating guidance standards as automatically binding.
+
+source_anchors:
+  - id: SRC-RISK-31000-2019
+    source: "ГОСТ Р ИСО 31000-2019"
+    authority: ROSSTANDART_OFFICIAL_PORTAL
+    use: "general risk-management guidance"
+    verification: AUTHORITATIVE_VERIFIED
+  - id: SRC-RISK-58771-2019
+    source: "ГОСТ Р 58771-2019"
+    authority: ROSSTANDART_OFFICIAL_PORTAL
+    use: "selection and application of risk-assessment techniques"
+    verification: AUTHORITATIVE_VERIFIED
+  - id: SRC-RISK-72254-2025
+    source: "ГОСТ Р 72254-2025"
+    authority: ROSSTANDART_OFFICIAL_PORTAL
+    use: "guidance for applying 31000 in management systems"
+    verification: AUTHORITATIVE_VERIFIED
+  - id: SRC-THREAT-FSTEC-2021
+    source: "Методика оценки угроз безопасности информации, ФСТЭК России, 05.02.2021"
+    authority: FSTEC_METHODICAL_DOCUMENT
+    use: "threat assessment: negative consequences, objects of impact, threat sources, implementation methods, threat relevance and threat model"
+    verification: AUTHORITATIVE_TEXT_VERIFIED
+    primary_bytes: PENDING
+
+semantic_separation:
+  THREAT_RELEVANCE: "Whether a security threat is considered relevant under the applicable threat-assessment methodology."
+  RISK_ASSESSMENT: "A separate decision process using defined risk criteria and an explicitly selected assessment technique."
+  CONTROL_REQUIREMENT: "A requirement/control decision supported by its own binding or governance edge; not implied solely by threat relevance."
+  RISK_ACCEPTANCE: "A management decision requiring an identified authority and evidence of approval."
+
+pipeline:
+  - id: RSK-STAGE-001
+    code: RISK.SCOPE_CONTEXT_CRITERIA
+    required_inputs:
+      - organization_scope
+      - system_or_process_scope
+      - risk_criteria_source
+      - decision_horizon
+    fail_closed_if_missing: NEEDS_RISK_CRITERIA
+  - id: RSK-STAGE-002
+    code: RISK.THREAT_INPUT
+    required_inputs:
+      - threat_model_reference
+      - relevant_threats_or_explicit_none
+      - negative_consequence_evidence
+      - affected_objects
+    note: "FSTEC threat-method outputs feed this stage; threat relevance is not itself a final risk level."
+    fail_closed_if_missing: NEEDS_THREAT_EVIDENCE
+  - id: RSK-STAGE-003
+    code: RISK.IDENTIFICATION
+    required_inputs:
+      - risk_statement
+      - cause_or_threat_reference
+      - consequence_reference
+      - owner_or_responsible_function
+    fail_closed_if_missing: NEEDS_RISK_IDENTIFICATION
+  - id: RSK-STAGE-004
+    code: RISK.ANALYSIS
+    required_inputs:
+      - assessment_technique
+      - technique_source_or_internal_method
+      - input_evidence
+    prohibited_assumption: "Do not default to likelihood_x_impact unless the selected methodology explicitly defines that calculation."
+    fail_closed_if_missing: NEEDS_ASSESSMENT_METHOD
+  - id: RSK-STAGE-005
+    code: RISK.EVALUATION
+    required_inputs:
+      - risk_criteria
+      - analyzed_result
+      - comparison_result
+    fail_closed_if_missing: NEEDS_RISK_CRITERIA
+  - id: RSK-STAGE-006
+    code: RISK.TREATMENT
+    required_inputs:
+      - treatment_decision
+      - selected_controls_or_actions
+      - responsible_role
+      - target_date_or_trigger
+    fail_closed_if_missing: NEEDS_TREATMENT_DECISION
+  - id: RSK-STAGE-007
+    code: RISK.RESIDUAL_DECISION
+    required_inputs:
+      - residual_risk_result
+      - acceptance_or_escalation_decision
+      - decision_authority
+      - decision_evidence
+    fail_closed_if_missing: NEEDS_DECISION_RIGHT
+  - id: RSK-STAGE-008
+    code: RISK.MONITOR_REVIEW
+    required_inputs:
+      - review_trigger_or_period
+      - monitored_facts
+      - change_detection_route
+    fail_closed_if_missing: NEEDS_REVIEW_RULE
+  - id: RSK-STAGE-009
+    code: RISK.RECORD_REPORT
+    required_inputs:
+      - provenance
+      - calculation_or_reasoning_trace
+      - reviewer
+      - observed_at
+    fail_closed_if_missing: NEEDS_EVIDENCE_CLOSURE
+
+allowed_assessment_modes:
+  - QUALITATIVE
+  - SEMI_QUANTITATIVE
+  - QUANTITATIVE
+  - SCENARIO_BASED
+  - EXPERT_ASSESSMENT
+  - OTHER_EXPLICITLY_DEFINED_METHOD
+
+model_rules:
+  - id: RSK-RULE-001
+    rule: "No risk score may be emitted when risk criteria are absent or unversioned."
+  - id: RSK-RULE-002
+    rule: "No universal likelihood × impact formula is embedded in the core."
+  - id: RSK-RULE-003
+    rule: "A relevant FSTEC threat may create a risk-analysis input but does not by itself determine the organization's final risk level."
+  - id: RSK-RULE-004
+    rule: "A current GOST/GOST R status is guidance evidence unless a separate binding applicability edge exists."
+  - id: RSK-RULE-005
+    rule: "Risk acceptance requires a named/identified decision authority; analyst output alone cannot equal acceptance."
+  - id: RSK-RULE-006
+    rule: "All organization-state facts used by risk analysis require provenance and freshness metadata."
+  - id: RSK-RULE-007
+    rule: "Changed threat model, architecture, applicable requirements, material incident or stale critical facts must route to re-evaluation according to a defined review rule."
+
+explicit_unknown_states:
+  - NEEDS_RISK_CRITERIA
+  - NEEDS_THREAT_EVIDENCE
+  - NEEDS_RISK_IDENTIFICATION
+  - NEEDS_ASSESSMENT_METHOD
+  - NEEDS_TREATMENT_DECISION
+  - NEEDS_DECISION_RIGHT
+  - NEEDS_REVIEW_RULE
+  - NEEDS_EVIDENCE_CLOSURE
+  - CONFLICT
+
+red_team_guardrails:
+  - "Never infer legal obligation solely from a risk-management standard."
+  - "Never convert a BDU/FSTEC threat catalog relation directly into a mandatory control without applicability/control-source reasoning."
+  - "Never silently substitute missing risk criteria with an implementation default."
+  - "Never mark residual risk ACCEPTED without decision-authority evidence."
+  - "Never use stale organization facts without a freshness decision."
