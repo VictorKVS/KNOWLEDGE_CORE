@@ -1,0 +1,24 @@
+{
+  "suite_id": "PDN-TURNOVER-SANCTION-REGRESSION-001",
+  "model": "pdn-turnover-sanction-outcome-router-v1.yaml",
+  "cases": [
+    {"id":"T01","part":15,"prior":true,"base_type":"PREVIOUS_CALENDAR_YEAR_REVENUE","base":1000000000,"mitigation":false,"expected":{"ordinary_min":20000000,"ordinary_max":30000000,"mitigated":null}},
+    {"id":"T02","part":18,"prior":true,"base_type":"PREVIOUS_CALENDAR_YEAR_REVENUE","base":1000000000,"mitigation":false,"expected":{"ordinary_min":25000000,"ordinary_max":30000000,"mitigated":null}},
+    {"id":"T03","part":15,"prior":true,"base_type":"PREVIOUS_CALENDAR_YEAR_REVENUE","base":10000000000,"mitigation":false,"expected":{"ordinary_min":100000000,"ordinary_max":300000000,"mitigated":null}},
+    {"id":"T04","part":18,"prior":true,"base_type":"PREVIOUS_CALENDAR_YEAR_REVENUE","base":10000000000,"mitigation":false,"expected":{"ordinary_min":100000000,"ordinary_max":300000000,"mitigated":null}},
+    {"id":"T05","part":15,"prior":true,"base_type":"PREVIOUS_CALENDAR_YEAR_REVENUE","base":100000000000,"mitigation":false,"expected":{"ordinary_min":500000000,"ordinary_max":500000000,"mitigated":null}},
+    {"id":"T06","part":18,"prior":true,"base_type":"PREVIOUS_CALENDAR_YEAR_REVENUE","base":100000000000,"mitigation":false,"expected":{"ordinary_min":500000000,"ordinary_max":500000000,"mitigated":null}},
+    {"id":"T07","part":15,"prior":true,"base_type":"PREVIOUS_CALENDAR_YEAR_REVENUE","base":1000000000,"mitigation":true,"expected":{"ordinary_min":20000000,"ordinary_max":30000000,"mitigated":15000000}},
+    {"id":"T08","part":18,"prior":true,"base_type":"PREVIOUS_CALENDAR_YEAR_REVENUE","base":1000000000,"mitigation":true,"expected":{"ordinary_min":25000000,"ordinary_max":30000000,"mitigated":15000000}},
+    {"id":"T09","part":15,"prior":false,"base_type":"PREVIOUS_CALENDAR_YEAR_REVENUE","base":1000000000,"mitigation":false,"expected_state":"NEEDS_PRIOR_PUNISHMENT_EVIDENCE"},
+    {"id":"T10","part":15,"prior":true,"base_type":"PROFIT","base":1000000000,"mitigation":false,"expected_state":"INVALID_TURNOVER_BASE_TYPE"},
+    {"id":"T11","part":18,"prior":true,"base_type":"CONTRACT_VALUE","base":1000000000,"mitigation":false,"expected_state":"INVALID_TURNOVER_BASE_TYPE"},
+    {"id":"T12","part":15,"prior":true,"base_type":"CURRENT_YEAR_PARTIAL_REVENUE_WHEN_NO_PREVIOUS_YEAR_SALES","base":500000000,"mitigation":false,"expected":{"ordinary_min":20000000,"ordinary_max":20000000,"mitigated":null}},
+    {"id":"T13","part":18,"prior":true,"base_type":"CREDIT_INSTITUTION_CAPITAL","base":4000000000,"mitigation":false,"expected":{"ordinary_min":40000000,"ordinary_max":120000000,"mitigated":null}},
+    {"id":"T14","part":15,"prior":true,"base_type":"PREVIOUS_CALENDAR_YEAR_REVENUE","base":1000000000,"mitigation":true,"missing_condition":"INFOSEC_EXPENSES_3Y","expected_state":"MITIGATION_NOT_PROVEN"},
+    {"id":"T15","part":18,"prior":true,"base_type":"PREVIOUS_CALENDAR_YEAR_REVENUE","base":1000000000,"mitigation":true,"missing_condition":"PDN_PROTECTION_COMPLIANCE_12M","expected_state":"MITIGATION_NOT_PROVEN"},
+    {"id":"T16","part":18,"prior":true,"base_type":"PREVIOUS_CALENDAR_YEAR_REVENUE","base":1000000000,"mitigation":true,"aggravating":"UNKNOWN","expected_state":"NEEDS_AGGRAVATING_CIRCUMSTANCE_REVIEW"},
+    {"id":"T17","part":15,"prior":true,"base_type":"PREVIOUS_CALENDAR_YEAR_REVENUE","base":1000000000,"mitigation":true,"evidence_after_decision":true,"expected_state":"MITIGATION_NOT_PROVEN"},
+    {"id":"T18","part":12,"prior":true,"base_type":"PREVIOUS_CALENDAR_YEAR_REVENUE","base":1000000000,"mitigation":true,"expected_state":"OUT_OF_SCOPE_PART"}
+  ]
+}
