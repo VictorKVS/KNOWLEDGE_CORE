@@ -1,0 +1,84 @@
+policy_id: PROV-OFFICIAL-PUBLICATION-PRECEDENCE-001
+observed_at: "2026-08-15"
+status: INTERNAL_EXECUTABLE_POLICY
+purpose: >-
+  Prevent metadata from adjacent records on aggregate official-publication index/search pages from being silently
+  attached to the wrong legal act. Preserve direct document identity as the stronger discovery anchor, while
+  keeping immutable-primary promotion gated on exact bytes + retrieval timestamp + SHA-256.
+
+source_precedence:
+  - rank: 1
+    source_type: OFFICIAL_DIRECT_DOCUMENT_PAGE
+    use_for:
+      - title
+      - issuing_authority
+      - act_number
+      - act_date
+      - minjust_registration_number
+      - official_publication_id
+      - publication_date
+    limitation: DOES_NOT_PROVE_EXACT_PDF_BYTES
+  - rank: 2
+    source_type: OFFICIAL_AGGREGATE_INDEX_OR_SEARCH_PAGE
+    use_for:
+      - discovery
+      - cross_check
+      - observed_pdf_size
+      - observed_page_count
+    limitation: >-
+      Parsed/snippet output may shift adjacent record metadata. Conflicts with a direct document page require
+      provenance review; aggregate metadata must not overwrite direct publication identity automatically.
+  - rank: 3
+    source_type: AUTHORITATIVE_SECONDARY_LEGAL_SYSTEM
+    use_for:
+      - corroboration
+      - effective_date_cross_check
+    limitation: NOT_OFFICIAL_PUBLICATION_IDENTITY
+  - rank: 4
+    source_type: SEARCH_SNIPPET_OR_MIRROR
+    use_for:
+      - discovery_only
+    limitation: NEVER_PROMOTE_TO_PRIMARY
+
+conflict_rules:
+  - id: PROV-PREC-001
+    when: direct_document_publication_id_conflicts_with_aggregate_association
+    result: NEEDS_PROVENANCE_REVIEW
+    action: retain_direct_document_identity_and_quarantine_conflicting_aggregate_fields
+  - id: PROV-PREC-002
+    when: aggregate_size_or_page_count_conflicts_across_observations
+    result: NEEDS_ARTIFACT_ACQUISITION
+    action: do_not_infer_wrong_document_until_exact_bytes_are_acquired
+  - id: PROV-PREC-003
+    when: same_order_number_but_different_publication_id
+    result: BLOCK_AUTOMATIC_BINDING
+    action: require_title_date_authority_and_publication_id_match
+  - id: PROV-PREC-004
+    when: direct_document_page_is_unavailable_but_previous_direct_identity_is_pinned
+    result: RETAIN_PINNED_METADATA_PENDING_REOBSERVATION
+    action: timeout_does_not_equal_repeal_or_absence
+  - id: PROV-PREC-005
+    when: exact_bytes_sha256_and_retrieved_at_are_missing
+    result: NOT_IMMUTABLE_PRIMARY
+    action: metadata_tier_only
+
+observed_discrepancy_example:
+  act: FSB_ORDER_553_2025
+  direct_document_page:
+    official_publication_id: "0001202512300059"
+    minjust_registration_number: "84873"
+    status: DIRECT_IDENTITY_CONFIRMED
+  aggregate_search_snippet_observation:
+    note: >-
+      One aggregate result rendered adjacent metadata in a way that associated publication 0001202512300066 / 415 KB / 8 pages
+      near Order 553, while the direct official document page identifies Order 553 as publication 0001202512300059.
+    interpretation: PARSER_OR_ADJACENCY_RISK_NOT_LEGAL_CONFLICT
+  canonical_discovery_identity: "0001202512300059"
+  immutable_status: PENDING_BYTES
+
+promotion_rule:
+  immutable_primary_requires_all:
+    - exact_official_artifact_bytes_preserved
+    - retrieved_at_recorded
+    - sha256_valid_and_recorded
+  source_precedence_does_not_relax_promotion_gate: true
