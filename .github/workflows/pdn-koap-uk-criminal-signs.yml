@@ -1,0 +1,24 @@
+name: PDn KoAP UK Criminal Signs Gate
+
+on:
+  push:
+    paths:
+      - 'security-knowledge/legal-consequences/pdn-koap-uk-criminal-signs-*.yaml'
+      - 'security-knowledge/validators/validate_pdn_koap_uk_criminal_signs.py'
+      - '.github/workflows/pdn-koap-uk-criminal-signs.yml'
+  pull_request:
+    paths:
+      - 'security-knowledge/legal-consequences/pdn-koap-uk-criminal-signs-*.yaml'
+      - 'security-knowledge/validators/validate_pdn_koap_uk_criminal_signs.py'
+      - '.github/workflows/pdn-koap-uk-criminal-signs.yml'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate PDn KoAP/UK routing
+        run: python security-knowledge/validators/validate_pdn_koap_uk_criminal_signs.py
