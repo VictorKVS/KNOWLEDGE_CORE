@@ -1,0 +1,27 @@
+name: PDn KoAP 4.1 3.4-2 Mitigation Gate
+
+on:
+  push:
+    paths:
+      - 'security-knowledge/evidence/pdn-koap-4-1-3-4-2-mitigation-model-v1.yaml'
+      - 'security-knowledge/evidence/pdn-koap-4-1-3-4-2-mitigation-regression-v1.json'
+      - 'security-knowledge/validators/validate_pdn_koap_4_1_3_4_2_mitigation.py'
+      - '.github/workflows/pdn-koap-4-1-3-4-2-mitigation.yml'
+  pull_request:
+    paths:
+      - 'security-knowledge/evidence/pdn-koap-4-1-3-4-2-mitigation-model-v1.yaml'
+      - 'security-knowledge/evidence/pdn-koap-4-1-3-4-2-mitigation-regression-v1.json'
+      - 'security-knowledge/validators/validate_pdn_koap_4_1_3_4_2_mitigation.py'
+      - '.github/workflows/pdn-koap-4-1-3-4-2-mitigation.yml'
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate KoAP 4.1 part 3.4-2 mitigation model
+        run: python security-knowledge/validators/validate_pdn_koap_4_1_3_4_2_mitigation.py
