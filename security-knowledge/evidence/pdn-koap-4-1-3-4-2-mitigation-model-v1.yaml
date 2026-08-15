@@ -1,0 +1,140 @@
+model_id: PDN-KOAP-MITIGATION-0001
+version: 1.0
+observed_at: 2026-08-15
+scope:
+  - KOAP_RF_ART_4_1_PART_3_4_2
+  - KOAP_RF_ART_13_11_PART_15
+  - KOAP_RF_ART_13_11_PART_18
+purpose: >
+  Represent the special statutory reduction mechanism for legal-entity turnover fines under KoAP RF article 4.1 part 3.4-2.
+  The model is fail-closed, evidence-backed and does not predict the adjudicator beyond the statutory rule.
+
+sources:
+  - source_id: KOAP-4.1-CURRENT-2026-08-15
+    authority: AUTHORITATIVE_SECONDARY
+    locator: ConsultantPlus / KoAP RF article 4.1 part 3.4-2, edition observed 2026-08-15
+    verified_points:
+      - Applies only to administrative offenses under article 13.11 parts 15 and 18.
+      - All three statutory conditions must be satisfied before the punishment decision.
+      - When applicable, the fine is one tenth of the statutory minimum fine for the offense, but not less than 15,000,000 RUB and not more than 50,000,000 RUB.
+  - source_id: KOAP-13.11-CURRENT-2026-08-15
+    authority: AUTHORITATIVE_SECONDARY
+    locator: ConsultantPlus / KoAP RF article 13.11, edition observed 2026-08-15
+    verified_points:
+      - Part 15 ordinary legal-entity sanction is 1-3 percent of the statutory turnover/capital base, not less than 20,000,000 RUB and not more than 500,000,000 RUB.
+      - Part 18 ordinary legal-entity sanction is 1-3 percent of the statutory turnover/capital base, not less than 25,000,000 RUB and not more than 500,000,000 RUB.
+      - Note 5 defines aggravating circumstances relevant to parts 15 and 18, including KoAP article 4.3 part 1 point 1 and specified prior punishments.
+  - source_id: KOAP-4.3-CURRENT-2026-08-15
+    authority: AUTHORITATIVE_SECONDARY
+    locator: ConsultantPlus / KoAP RF article 4.3 part 1 point 1, edition observed 2026-08-15
+    verified_points:
+      - Continuing unlawful conduct despite an authorized demand to stop is an aggravating circumstance.
+  - source_id: FZ-420-2024-OFFICIAL
+    authority: PRIMARY_WEB_VERIFIED
+    publication_id: '0001202411300011'
+    locator: Official publication portal
+
+entities:
+  INFOSEC_EXPENDITURE_HISTORY:
+    immutable_id_pattern: ISE-########
+    required_fields:
+      - operator_id
+      - offense_detected_year
+      - three_prior_calendar_years
+      - annual_records
+      - evidence_sources
+      - observed_at
+      - reviewer
+    annual_record_required_fields:
+      - calendar_year
+      - infosec_expense_rub
+      - denominator_type
+      - denominator_amount_rub
+      - licensed_performer_evidence_or_operator_license
+    allowed_denominator_types:
+      - ANNUAL_AGGREGATE_REVENUE_FROM_ALL_GOODS_WORKS_SERVICES
+      - CREDIT_INSTITUTION_OWN_FUNDS_CAPITAL_STATUTORY_BASIS
+    rule: >
+      For each of the three calendar years preceding the year in which the offense was detected, the annual information-security expenditure must be at least 0.1 percent of the applicable annual statutory denominator.
+      Expenditure is eligible only where the work was performed by organizations holding a license covered by article 4.1 part 3.4-2 or independently by an operator holding such a license.
+    fail_closed_states:
+      - NEEDS_THREE_YEAR_HISTORY
+      - NEEDS_EXPENSE_EVIDENCE
+      - NEEDS_DENOMINATOR_EVIDENCE
+      - NEEDS_LICENSE_EVIDENCE
+      - NEEDS_CREDIT_INSTITUTION_DENOMINATOR_REVIEW
+      - BELOW_STATUTORY_RATIO
+      - CONFLICT
+
+  PDN_PROTECTION_COMPLIANCE_CONFIRMATION:
+    immutable_id_pattern: PCC-########
+    required_fields:
+      - operator_id
+      - offense_detected_date
+      - confirmation_date
+      - confirmation_scope
+      - documentary_evidence
+      - observed_at
+      - reviewer
+    rule: >
+      Documentary confirmation that the operator complied with personal-data protection requirements in personal-data information systems must have been conducted within the 12 months preceding detection of the offense.
+      This model does not invent a universal document type or assessment method where the statute does not specify one.
+    fail_closed_states:
+      - NEEDS_DOCUMENTARY_CONFIRMATION
+      - OUTSIDE_12_MONTH_WINDOW
+      - SCOPE_NOT_PDN_INFORMATION_SYSTEMS
+      - CONFLICT
+
+  AGGRAVATING_CIRCUMSTANCES_NOTE5:
+    immutable_id_pattern: AGR-########
+    required_fields:
+      - operator_id
+      - offense_date
+      - decision_date
+      - continued_unlawful_behavior_after_authorized_demand
+      - relevant_prior_punishment_note5
+      - evidence_sources
+      - reviewer
+    rule: >
+      The special reduction is blocked if aggravating circumstances described by note 5 to article 13.11 are present.
+      Absence must be evidenced; UNKNOWN is not equivalent to ABSENT.
+    fail_closed_states:
+      - NEEDS_AGGRAVATING_REVIEW
+      - AGGRAVATING_PRESENT
+      - CONFLICT
+
+mitigation_gate:
+  supported_parts: [15, 18]
+  required_conditions_all:
+    - INFOSEC_EXPENDITURE_HISTORY_VERIFIED
+    - PDN_PROTECTION_COMPLIANCE_CONFIRMATION_VERIFIED
+    - AGGRAVATING_CIRCUMSTANCES_NOTE5_ABSENT_VERIFIED
+    - CONDITIONS_SATISFIED_BEFORE_DECISION
+  states:
+    - ELIGIBLE_FOR_STATUTORY_REDUCTION
+    - NOT_ELIGIBLE
+    - NEEDS_EVIDENCE
+    - UNSUPPORTED_PART
+    - CONFLICT
+
+calculation:
+  ordinary_minimum:
+    part_15: max(1_percent_of_verified_turnover_base, 20000000_RUB), capped_by_statutory_maximum_500000000_RUB
+    part_18: max(1_percent_of_verified_turnover_base, 25000000_RUB), capped_by_statutory_maximum_500000000_RUB
+  special_reduced_fine:
+    formula: clamp(one_tenth_of_ordinary_statutory_minimum, 15000000_RUB, 50000000_RUB)
+    rule: >
+      Calculate only after target part, repeat-offense qualification, turnover/capital base and all mitigation evidence are VERIFIED.
+      Do not apply the reduction to parts other than 15 or 18.
+
+red_team_guardrails:
+  - The three mitigation conditions are conjunctive, not alternatives.
+  - A security budget percentage without license evidence does not satisfy condition 1.
+  - One or two qualifying years do not satisfy the three-year condition.
+  - A generic audit report does not satisfy condition 2 unless its scope and date prove the statutory personal-data protection confirmation.
+  - Unknown aggravating circumstances do not mean that aggravating circumstances are absent.
+  - The reduction must not be applied if the required conditions were completed only after the punishment decision.
+  - The engine must not treat 15-50 million RUB as a discretionary range; article 4.1 part 3.4-2 defines a calculation bounded by those limits.
+
+status: INTERNAL_EXECUTABLE_MODEL_READY_FOR_REGRESSION
+normative_claims_added: 0
