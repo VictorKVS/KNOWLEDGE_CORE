@@ -1,0 +1,21 @@
+name: Decision Right Gate
+
+on:
+  push:
+    paths:
+      - 'security-knowledge/governance/decision-right-entity-v1.yaml'
+      - 'security-knowledge/governance/decision-right-regression-v1.yaml'
+      - 'security-knowledge/validators/validate_decision_right.py'
+      - '.github/workflows/decision-right.yml'
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install pyyaml
+      - run: python security-knowledge/validators/validate_decision_right.py
