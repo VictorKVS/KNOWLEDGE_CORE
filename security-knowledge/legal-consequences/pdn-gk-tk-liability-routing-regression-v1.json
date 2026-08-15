@@ -1,0 +1,21 @@
+{
+  "suite": "PDN_GK_TK_LIABILITY_ROUTING_V1",
+  "cases": [
+    {"id":"CIV-001","facts":{"pdn_rights_violation":true,"moral_harm_claim":true},"expected":"CIVIL_MORAL_HARM_REVIEW"},
+    {"id":"CIV-002","facts":{"property_damage":true},"expected":"CIVIL_DAMAGE_REVIEW"},
+    {"id":"CIV-003","facts":{"employee_caused_harm":true,"in_course_of_duties":true},"expected":"EMPLOYER_CIVIL_LIABILITY_REVIEW"},
+    {"id":"DISC-001","facts":{"disciplinary_action":true,"assigned_duty":false},"expected":"NEEDS_DUTY_AND_FAULT_PROOF"},
+    {"id":"DISC-002","facts":{"disciplinary_action":true,"assigned_duty":true,"fault_proven":false},"expected":"NEEDS_DUTY_AND_FAULT_PROOF"},
+    {"id":"DISC-003","facts":{"disciplinary_action":true,"assigned_duty":true,"fault_proven":true,"written_explanation_requested":false},"expected":"NEEDS_DISCIPLINARY_PROCEDURE"},
+    {"id":"DISC-004","facts":{"disciplinary_action":true,"assigned_duty":true,"fault_proven":true,"written_explanation_requested":true,"disciplinary_month_deadline_ok":false},"expected":"DISCIPLINARY_DEADLINE_REVIEW"},
+    {"id":"DISC-005","facts":{"disciplinary_action":true,"assigned_duty":true,"fault_proven":true,"written_explanation_requested":true,"disciplinary_month_deadline_ok":true},"expected":"DISCIPLINARY_SANCTION_REVIEW"},
+    {"id":"MAT-001","facts":{"employee_recovery":true,"direct_actual_damage_proven":false},"expected":"NEEDS_DIRECT_ACTUAL_DAMAGE_PROOF"},
+    {"id":"MAT-002","facts":{"employee_recovery":true,"direct_actual_damage_proven":true,"full_liability_ground":false},"expected":"LIMITED_MATERIAL_LIABILITY"},
+    {"id":"MAT-003","facts":{"employee_recovery":true,"direct_actual_damage_proven":true,"full_liability_ground":true,"ground_type":"intentional_damage"},"expected":"FULL_MATERIAL_LIABILITY_REVIEW"},
+    {"id":"MAT-004","facts":{"employee_recovery":true,"direct_actual_damage_proven":true,"org_fine_only":true,"full_liability_ground":false},"expected":"NEEDS_DAMAGE_CAUSATION_REVIEW"},
+    {"id":"MAT-005","facts":{"employee_recovery":true,"direct_actual_damage_proven":true,"lost_profit_only":true},"expected":"NOT_RECOVERABLE_AS_EMPLOYEE_MATERIAL_DAMAGE"},
+    {"id":"MAT-006","facts":{"employee_recovery":true,"direct_actual_damage_proven":true,"full_liability_ground":true,"ground_type":"administrative_offense","administrative_offense_established":false},"expected":"NEEDS_FULL_LIABILITY_GROUND_PROOF"},
+    {"id":"MAT-007","facts":{"employee_recovery":true,"direct_actual_damage_proven":true,"full_liability_ground":true,"ground_type":"crime","court_judgment_established":false},"expected":"NEEDS_FULL_LIABILITY_GROUND_PROOF"},
+    {"id":"MIX-001","facts":{"regulator_notification_due":true,"disciplinary_action":true,"assigned_duty":true,"fault_proven":true,"written_explanation_requested":false},"expected":"REGULATOR_CLOCK_INDEPENDENT_DISCIPLINE_PENDING"}
+  ]
+}
