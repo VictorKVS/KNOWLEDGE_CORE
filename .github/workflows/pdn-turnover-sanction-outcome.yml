@@ -1,0 +1,26 @@
+name: PDn Turnover Sanction Outcome Gate
+
+on:
+  push:
+    paths:
+      - 'security-knowledge/legal-consequences/pdn-turnover-sanction-outcome-router-v1.yaml'
+      - 'security-knowledge/legal-consequences/pdn-turnover-sanction-outcome-regression-v1.json'
+      - 'security-knowledge/validators/validate_pdn_turnover_sanction_outcome.py'
+      - '.github/workflows/pdn-turnover-sanction-outcome.yml'
+  pull_request:
+    paths:
+      - 'security-knowledge/legal-consequences/pdn-turnover-sanction-outcome-router-v1.yaml'
+      - 'security-knowledge/legal-consequences/pdn-turnover-sanction-outcome-regression-v1.json'
+      - 'security-knowledge/validators/validate_pdn_turnover_sanction_outcome.py'
+      - '.github/workflows/pdn-turnover-sanction-outcome.yml'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate turnover sanction outcome routing
+        run: python security-knowledge/validators/validate_pdn_turnover_sanction_outcome.py
