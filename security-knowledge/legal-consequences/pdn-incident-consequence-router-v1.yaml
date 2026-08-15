@@ -1,0 +1,128 @@
+router_id: LEGAL-PDN-CONSEQUENCE-ROUTER-V1
+version: 1.0
+status: INTERNAL_EXECUTABLE_MODEL
+observed_at: 2026-08-15
+purpose: >
+  Route one PDn/security incident into independent administrative, criminal,
+  civil, disciplinary and employee-material-liability review branches without
+  treating any branch as proof of another.
+
+verified_inputs:
+  administrative_criminal_slice: pdn-koap-13-11-parts-1-9-and-13-11-3-uk-272-1-current-slice-2026-08-15.yaml
+  civil_labor_slice: pdn-gk-tk-liability-routing-slice-2026-08-15.yaml
+
+required_event_facts:
+  - event_date
+  - personal_data_involved
+  - operator_or_covered_actor
+
+optional_event_facts:
+  - processing_without_legal_basis
+  - written_consent_required_and_missing
+  - policy_publication_failure
+  - data_subject_information_failure
+  - correction_blocking_destruction_failure
+  - nonautomated_media_security_failure
+  - localization_failure
+  - biometric_ebs_context
+  - biometric_security_failure
+  - accreditation_required
+  - accreditation_current
+  - breach_or_leak
+  - affected_subject_count
+  - special_category_data
+  - biometric_data
+  - minor_data
+  - illegal_access_or_interference
+  - unlawfully_obtained_personal_data
+  - unlawful_use_transfer_collection_storage
+  - profit_motive
+  - large_damage
+  - prior_conspiracy
+  - official_position_used
+  - cross_border_transfer_or_media_movement
+  - grave_consequences
+  - organized_group
+  - illegal_resource_created
+  - subject_rights_harm
+  - property_damage
+  - employee_action_in_course_of_duties
+  - employee_duty_defined
+  - employee_breach_proven
+  - employee_fault_proven
+  - misconduct_detected_at
+  - misconduct_occurred_at
+  - written_explanation_requested
+  - direct_actual_damage
+  - lost_profit_only
+  - full_material_liability_ground
+
+branch_order:
+  - CRIMINAL_SIGN_GATE
+  - ADMINISTRATIVE_REVIEW
+  - CIVIL_REVIEW
+  - LABOR_DISCIPLINARY_REVIEW
+  - LABOR_MATERIAL_REVIEW
+
+routing_rules:
+  - id: PCR-001
+    branch: CRIMINAL_SIGN_GATE
+    when: criminal_signs_not_assessed
+    result: NEEDS_CRIMINAL_SIGNS_REVIEW
+    effect: administrative_finalization_blocked_for_criminal-gated_compositions
+  - id: PCR-002
+    branch: CRIMINAL_SIGN_GATE
+    when: facts_support_UK_272_1_review
+    result: ROUTE_UK_272_1_REVIEW
+    effect: no_automatic_criminal_liability_finding
+  - id: PCR-003
+    branch: ADMINISTRATIVE_REVIEW
+    when: facts_support_KoAP_13_11_or_13_11_3_and_required_criminal_gate_resolved
+    result: ROUTE_ADMINISTRATIVE_REVIEW
+    effect: sanction_range_is_not_guilt_finding
+  - id: PCR-004
+    branch: CIVIL_REVIEW
+    when: subject_rights_harm_or_property_damage
+    result: ROUTE_CIVIL_REVIEW
+    effect: may_run_in_parallel_with_administrative_or_criminal_review
+  - id: PCR-005
+    branch: LABOR_DISCIPLINARY_REVIEW
+    when: employee_involvement
+    result: NEEDS_EMPLOYEE_DUTY_FACT_FAULT_AND_PROCEDURE
+    effect: incident_event_alone_is_insufficient
+  - id: PCR-006
+    branch: LABOR_MATERIAL_REVIEW
+    when: employer_seeks_recovery_from_employee
+    result: NEEDS_DIRECT_ACTUAL_DAMAGE_AND_LIABILITY_GROUND
+    effect: fine_or_lost_profit_is_not_automatically_recoverable_damage
+
+independence_guards:
+  - id: PCR-GR-001
+    rule: Criminal review does not automatically eliminate civil, labor or administrative evidence-preservation duties.
+  - id: PCR-GR-002
+    rule: Administrative fine against an organization is not proof of employee material liability.
+  - id: PCR-GR-003
+    rule: Civil compensation to a data subject is not proof of employee fault or a full-liability ground.
+  - id: PCR-GR-004
+    rule: A SIEM/DLP alert, incident ticket or audit finding is evidence input, not a disciplinary finding by itself.
+  - id: PCR-GR-005
+    rule: Large breach volume, special-category data or biometrics do not by themselves prove UK RF article 272.1.
+  - id: PCR-GR-006
+    rule: A criminal-gated KoAP composition cannot be finalized until the criminal-signs gate is resolved.
+  - id: PCR-GR-007
+    rule: Legal version selection is event-date-specific; this router must not apply a current edition blindly to historic facts.
+  - id: PCR-GR-008
+    rule: Unknown material facts propagate UNKNOWN/NEEDS_REVIEW, never a guessed liability outcome.
+
+outputs:
+  - branch
+  - route_status
+  - candidate_authorities
+  - missing_facts
+  - evidence_needed
+  - blocking_gate
+  - explanation_refs
+
+completion_rule: >
+  The consequence assessment is CLOSED only when every applicable branch is either
+  resolved with evidence or explicitly marked NOT_APPLICABLE with a supported reason.
