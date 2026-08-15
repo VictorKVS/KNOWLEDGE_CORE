@@ -1,0 +1,64 @@
+run_id: 48
+observed_at: "2026-08-15"
+strict_scope_policy: FIXED_MASTER_INVENTORY_NO_INFLATION
+
+overall_strict_percent: 10
+key_domains_percent:
+  russian_npa: 10
+  gost_gost_r_iso: 10
+  classification_categorization: 10
+  fstec_threat_method_bdu: 10
+  risk_methods: 10
+  koap_uk_gk_tk: 10
+  szi_skzi_license_lifecycle: 10
+  roles_deadlines_liability: 10
+  evidence_audit: 10
+  practical_cases: 10
+
+quality_state:
+  critical_gaps: 0
+  high_gaps: 1
+  red_team: FAIL
+  expert_ready: false
+
+verified_this_run:
+  normative_records: 0
+  internal_executable_models: 1
+  executable_regression_cases: 15
+  deterministic_validators: 1
+  ci_gates_added: 1
+  ci_result:
+    workflow: Risk Criteria Governance Gate
+    run_id: 31860718021
+    conclusion: success
+
+added_files:
+  - security-knowledge/risk-methods/risk-criteria-governance-lifecycle-v1.yaml
+  - security-knowledge/risk-methods/risk-criteria-governance-regression-v1.yaml
+  - security-knowledge/validators/validate_risk_criteria_governance.py
+  - .github/workflows/risk-criteria-governance.yml
+
+closed_or_reduced_gaps:
+  - approval, review_due, supersession and residual-risk decision-right are now executable governance states rather than schema-only fields
+  - overdue review no longer silently means legal invalidity; it routes to NEEDS_REVIEW unless an explicit expiry rule exists
+  - criteria approval and residual-risk acceptance authority are explicitly separated
+  - broken supersession chain and concurrent active versions fail closed
+  - unauthorized actor, scope mismatch, future/expired authority and authority ceiling are executable acceptance gates
+
+pending:
+  - bind organization-specific approval/review rules to proven policy/evidence nodes
+  - build reusable DECISION_RIGHT entity schema shared beyond risk management
+  - connect valid residual-risk acceptance to treatment/control/evidence closure
+  - add quantitative, scenario-based and expert-assessment adapters only with proven method configuration
+  - immutable/hash-pinned primary provenance for high-value FSB/NKTsKI sources and dynamic registers
+
+high_gap:
+  id: HIGH-IMMUTABLE-PROVENANCE
+  statement: >-
+    High-value FSB/NKTsKI source artifacts and dynamic registers are not yet consistently preserved as exact immutable bytes with timestamp and SHA-256, so Red Team PASS and expert-ready status remain blocked.
+
+next_bottleneck: >-
+  Generalize DECISION_RIGHT as a reusable role/scope/time/evidence entity, connect it to residual-risk acceptance and treatment closure, then return to the remaining High by obtaining immutable hash-pinned primary FSB/NKTsKI artifacts and registry snapshots.
+
+readiness_guardrail: >-
+  Percentages are deliberately unchanged. This run adds executable internal governance and tests, not broad family-wide normative coverage.
