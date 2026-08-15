@@ -1,0 +1,29 @@
+name: Official Publication Precedence Gate
+
+on:
+  push:
+    paths:
+      - 'security-knowledge/provenance/official-publication-precedence-regression-v1.yaml'
+      - 'security-knowledge/provenance/official-publication-source-precedence-v1.yaml'
+      - 'security-knowledge/provenance/fsb-2025-gosopka-artifact-acquisition-manifest-v1.yaml'
+      - 'security-knowledge/validators/validate_official_publication_precedence.py'
+      - '.github/workflows/official-publication-precedence.yml'
+  pull_request:
+    paths:
+      - 'security-knowledge/provenance/official-publication-precedence-regression-v1.yaml'
+      - 'security-knowledge/provenance/official-publication-source-precedence-v1.yaml'
+      - 'security-knowledge/provenance/fsb-2025-gosopka-artifact-acquisition-manifest-v1.yaml'
+      - 'security-knowledge/validators/validate_official_publication_precedence.py'
+      - '.github/workflows/official-publication-precedence.yml'
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install pyyaml
+      - run: python security-knowledge/validators/validate_official_publication_precedence.py
