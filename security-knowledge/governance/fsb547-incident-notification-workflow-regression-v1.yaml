@@ -1,0 +1,172 @@
+schema_version: "1.0"
+id: fsb547-incident-notification-workflow-regression-v1
+cases:
+  - id: INC-001-significant-cii-incident-3h-pass
+    input:
+      entity_is_cii_subject: true
+      affected_resource_kind: CII_OBJECT
+      cii_object_is_significant: true
+      event_kind: COMPUTER_INCIDENT
+      detection_timestamp_present: true
+      hours_to_initial_notification: 2.5
+      initial_delivery_evidence_present: true
+    expected: PASS_INITIAL
+  - id: INC-002-significant-cii-incident-overdue
+    input:
+      entity_is_cii_subject: true
+      affected_resource_kind: CII_OBJECT
+      cii_object_is_significant: true
+      event_kind: COMPUTER_INCIDENT
+      detection_timestamp_present: true
+      hours_to_initial_notification: 3.1
+      initial_delivery_evidence_present: true
+    expected: INITIAL_NOTIFICATION_OVERDUE
+  - id: INC-003-other-cii-incident-24h-pass
+    input:
+      entity_is_cii_subject: true
+      affected_resource_kind: CII_OBJECT
+      cii_object_is_significant: false
+      event_kind: COMPUTER_INCIDENT
+      detection_timestamp_present: true
+      hours_to_initial_notification: 23.9
+      initial_delivery_evidence_present: true
+    expected: PASS_INITIAL
+  - id: INC-004-attack-on-significant-cii-still-24h
+    input:
+      entity_is_cii_subject: true
+      affected_resource_kind: CII_OBJECT
+      cii_object_is_significant: true
+      event_kind: COMPUTER_ATTACK
+      detection_timestamp_present: true
+      hours_to_initial_notification: 10
+      initial_delivery_evidence_present: true
+    expected: PASS_INITIAL
+  - id: INC-005-attack-over-24h
+    input:
+      entity_is_cii_subject: true
+      affected_resource_kind: CII_OBJECT
+      cii_object_is_significant: true
+      event_kind: COMPUTER_ATTACK
+      detection_timestamp_present: true
+      hours_to_initial_notification: 24.1
+      initial_delivery_evidence_present: true
+    expected: INITIAL_NOTIFICATION_OVERDUE
+  - id: INC-006-covered-org-resource-incident
+    input:
+      entity_is_covered_part4_article9_organ_or_org: true
+      affected_resource_kind: RUSSIAN_INFORMATION_RESOURCE
+      event_kind: COMPUTER_INCIDENT
+      detection_timestamp_present: true
+      hours_to_initial_notification: 20
+      initial_delivery_evidence_present: true
+    expected: PASS_INITIAL
+  - id: INC-007-missing-detection-time
+    input:
+      entity_is_cii_subject: true
+      affected_resource_kind: CII_OBJECT
+      cii_object_is_significant: true
+      event_kind: COMPUTER_INCIDENT
+      detection_timestamp_present: false
+    expected: NEEDS_DETECTION_TIMESTAMP
+  - id: INC-008-cii-incident-significance-unknown
+    input:
+      entity_is_cii_subject: true
+      affected_resource_kind: CII_OBJECT
+      event_kind: COMPUTER_INCIDENT
+      detection_timestamp_present: true
+      cii_object_is_significant: null
+    expected: NEEDS_SIGNIFICANCE_STATUS
+  - id: INC-009-applicability-unknown
+    input:
+      affected_resource_kind: CII_OBJECT
+      event_kind: COMPUTER_INCIDENT
+      detection_timestamp_present: true
+      cii_object_is_significant: false
+    expected: NEEDS_APPLICABILITY_FACTS
+  - id: INC-010-no-delivery-evidence
+    input:
+      entity_is_cii_subject: true
+      affected_resource_kind: CII_OBJECT
+      cii_object_is_significant: false
+      event_kind: COMPUTER_INCIDENT
+      detection_timestamp_present: true
+      hours_to_initial_notification: 2
+      initial_delivery_evidence_present: false
+    expected: NEEDS_NOTIFICATION_EVIDENCE
+  - id: INC-011-financial-parallel-missing
+    input:
+      entity_is_cii_subject: true
+      financial_sector_branch: true
+      affected_resource_kind: CII_OBJECT
+      cii_object_is_significant: true
+      event_kind: COMPUTER_INCIDENT
+      detection_timestamp_present: true
+      hours_to_initial_notification: 2
+      initial_delivery_evidence_present: true
+      bank_of_russia_delivery_evidence_present: false
+    expected: NEEDS_FINANCIAL_PARALLEL_REPORTING_EVIDENCE
+  - id: INC-012-significant-cii-results-48h-pass
+    input:
+      post_response_check: true
+      entity_is_cii_subject: true
+      affected_resource_kind: CII_OBJECT
+      cii_object_is_significant: true
+      response_completion_timestamp_present: true
+      hours_to_results_notification: 47
+      results_delivery_evidence_present: true
+    expected: PASS_RESULTS
+  - id: INC-013-significant-cii-results-overdue
+    input:
+      post_response_check: true
+      entity_is_cii_subject: true
+      affected_resource_kind: CII_OBJECT
+      cii_object_is_significant: true
+      response_completion_timestamp_present: true
+      hours_to_results_notification: 49
+      results_delivery_evidence_present: true
+    expected: RESULTS_NOTIFICATION_OVERDUE
+  - id: INC-014-covered-org-results-24h
+    input:
+      post_response_check: true
+      entity_is_covered_part4_article9_organ_or_org: true
+      affected_resource_kind: RUSSIAN_INFORMATION_RESOURCE
+      response_completion_timestamp_present: true
+      hours_to_results_notification: 23
+      results_delivery_evidence_present: true
+    expected: PASS_RESULTS
+  - id: INC-015-covered-org-results-overdue
+    input:
+      post_response_check: true
+      entity_is_covered_part4_article9_organ_or_org: true
+      affected_resource_kind: RUSSIAN_INFORMATION_RESOURCE
+      response_completion_timestamp_present: true
+      hours_to_results_notification: 25
+      results_delivery_evidence_present: true
+    expected: RESULTS_NOTIFICATION_OVERDUE
+  - id: INC-016-covered-org-recovery-notice
+    input:
+      recovery_check: true
+      entity_is_covered_part4_article9_organ_or_org: true
+      recovery_completion_timestamp_present: true
+      hours_to_recovery_notification: 20
+      recovery_delivery_evidence_present: true
+    expected: PASS_RECOVERY
+  - id: INC-017-covered-org-recovery-overdue
+    input:
+      recovery_check: true
+      entity_is_covered_part4_article9_organ_or_org: true
+      recovery_completion_timestamp_present: true
+      hours_to_recovery_notification: 25
+      recovery_delivery_evidence_present: true
+    expected: RECOVERY_NOTIFICATION_OVERDUE
+  - id: INC-018-internal-approval-does-not-extend-deadline
+    input:
+      entity_is_cii_subject: true
+      affected_resource_kind: CII_OBJECT
+      cii_object_is_significant: true
+      event_kind: COMPUTER_INCIDENT
+      detection_timestamp_present: true
+      hours_to_initial_notification: 5
+      internal_approval_delay_hours: 4
+      initial_delivery_evidence_present: true
+    expected: INITIAL_NOTIFICATION_OVERDUE
