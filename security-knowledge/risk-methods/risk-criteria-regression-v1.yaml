@@ -1,0 +1,273 @@
+schema_version: "1.0"
+id: risk-criteria-regression-v1
+cases:
+  - id: RKC-REG-001
+    input:
+      criteria_id: RKC-000001
+      version: "3"
+      status: APPROVED
+      authority_type: ORGANIZATION_DEFINED
+      source_reference: POLICY-RISK-001-v3
+      source_provenance: EVD-SRC-001
+      approval_evidence: EVD-APR-001
+      approved_by_role: ROL-RISK-COMMITTEE-001
+      approval_date: "2026-01-10"
+      effective_from: "2026-02-01"
+      assessment_date: "2026-08-15"
+      observed_at: "2026-08-15"
+      scope: SYS-001
+      requested_scope: SYS-001
+      assessment_mode: QUALITATIVE
+      dimensions:
+        likelihood: [LOW, MEDIUM, HIGH]
+        impact: [LOW, MEDIUM, HIGH]
+      mapping_table:
+        LOW|LOW: LOW
+        LOW|MEDIUM: LOW
+        LOW|HIGH: MEDIUM
+        MEDIUM|LOW: LOW
+        MEDIUM|MEDIUM: MEDIUM
+        MEDIUM|HIGH: HIGH
+        HIGH|LOW: MEDIUM
+        HIGH|MEDIUM: HIGH
+        HIGH|HIGH: HIGH
+      decision_bands: [LOW, MEDIUM, HIGH]
+      values:
+        likelihood: HIGH
+        impact: MEDIUM
+    expected_status: ASSESSED_HIGH
+
+  - id: RKC-REG-002
+    input:
+      criteria_id: null
+    expected_status: NEEDS_RISK_CRITERIA
+
+  - id: RKC-REG-003
+    input:
+      criteria_id: RKC-000001
+      version: "3"
+      status: DRAFT
+      source_reference: POLICY-RISK-001-v3
+      source_provenance: EVD-SRC-001
+      approval_evidence: null
+      approved_by_role: null
+    expected_status: NEEDS_CRITERIA_APPROVAL
+
+  - id: RKC-REG-004
+    input:
+      criteria_id: RKC-000001
+      version: "3"
+      status: APPROVED
+      source_reference: POLICY-RISK-001-v3
+      source_provenance: null
+      approval_evidence: EVD-APR-001
+      approved_by_role: ROL-RISK-COMMITTEE-001
+      observed_at: null
+    expected_status: NEEDS_CRITERIA_PROVENANCE
+
+  - id: RKC-REG-005
+    input:
+      criteria_id: RKC-000001
+      version: "3"
+      status: APPROVED
+      source_reference: POLICY-RISK-001-v3
+      source_provenance: EVD-SRC-001
+      approval_evidence: EVD-APR-001
+      approved_by_role: ROL-RISK-COMMITTEE-001
+      effective_from: "2026-09-01"
+      assessment_date: "2026-08-15"
+      observed_at: "2026-08-15"
+      scope: SYS-001
+      requested_scope: SYS-001
+    expected_status: CRITERIA_NOT_YET_EFFECTIVE
+
+  - id: RKC-REG-006
+    input:
+      criteria_id: RKC-000001
+      version: "2"
+      status: APPROVED
+      source_reference: POLICY-RISK-001-v2
+      source_provenance: EVD-SRC-002
+      approval_evidence: EVD-APR-002
+      approved_by_role: ROL-RISK-COMMITTEE-001
+      effective_from: "2025-01-01"
+      effective_to: "2026-01-31"
+      assessment_date: "2026-08-15"
+      observed_at: "2026-08-15"
+      scope: SYS-001
+      requested_scope: SYS-001
+    expected_status: STALE_CRITERIA
+
+  - id: RKC-REG-007
+    input:
+      criteria_id: RKC-000001
+      version: "3"
+      status: APPROVED
+      source_reference: POLICY-RISK-001-v3
+      source_provenance: EVD-SRC-001
+      approval_evidence: EVD-APR-001
+      approved_by_role: ROL-RISK-COMMITTEE-001
+      effective_from: "2026-02-01"
+      assessment_date: null
+      observed_at: "2026-08-15"
+      multiple_temporal_versions: true
+      scope: SYS-001
+      requested_scope: SYS-001
+    expected_status: NEEDS_TEMPORAL_RESOLUTION
+
+  - id: RKC-REG-008
+    input:
+      criteria_id: RKC-000001
+      version: "3"
+      status: APPROVED
+      source_reference: POLICY-RISK-001-v3
+      source_provenance: EVD-SRC-001
+      approval_evidence: EVD-APR-001
+      approved_by_role: ROL-RISK-COMMITTEE-001
+      effective_from: "2026-02-01"
+      assessment_date: "2026-08-15"
+      observed_at: "2026-08-15"
+      scope: SYS-001
+      requested_scope: SYS-002
+    expected_status: CRITERIA_SCOPE_MISMATCH
+
+  - id: RKC-REG-009
+    input:
+      criteria_id: RKC-000001
+      version: "3"
+      status: APPROVED
+      source_reference: POLICY-RISK-001-v3
+      source_provenance: EVD-SRC-001
+      approval_evidence: EVD-APR-001
+      approved_by_role: ROL-RISK-COMMITTEE-001
+      effective_from: "2026-02-01"
+      assessment_date: "2026-08-15"
+      observed_at: "2026-08-15"
+      scope: SYS-001
+      requested_scope: SYS-001
+      assessment_mode: QUALITATIVE
+      dimensions:
+        likelihood: [LOW, MEDIUM, HIGH]
+        impact: [LOW, MEDIUM, HIGH]
+      mapping_table:
+        LOW|LOW: LOW
+      decision_bands: [LOW, MEDIUM, HIGH]
+      values:
+        likelihood: HIGH
+        impact: HIGH
+    expected_status: NEEDS_MAPPING_CELL
+
+  - id: RKC-REG-010
+    input:
+      criteria_id: RKC-000001
+      version: "3"
+      status: APPROVED
+      source_reference: POLICY-RISK-001-v3
+      source_provenance: EVD-SRC-001
+      approval_evidence: EVD-APR-001
+      approved_by_role: ROL-RISK-COMMITTEE-001
+      effective_from: "2026-02-01"
+      assessment_date: "2026-08-15"
+      observed_at: "2026-08-15"
+      scope: SYS-001
+      requested_scope: SYS-001
+      assessment_mode: QUALITATIVE
+      dimensions:
+        likelihood: [LOW, MEDIUM, HIGH]
+        impact: [LOW, MEDIUM, HIGH]
+      mapping_table:
+        HIGH|HIGH: HIGH
+      decision_bands: [LOW, MEDIUM, HIGH]
+      values:
+        likelihood: VERY_HIGH
+        impact: HIGH
+    expected_status: VALUE_OUT_OF_SCALE
+
+  - id: RKC-REG-011
+    input:
+      criteria_id: RKC-000002
+      version: "1"
+      status: APPROVED
+      source_reference: POLICY-RISK-002-v1
+      source_provenance: EVD-SRC-003
+      approval_evidence: EVD-APR-003
+      approved_by_role: ROL-RISK-COMMITTEE-001
+      effective_from: "2026-02-01"
+      assessment_date: "2026-08-15"
+      observed_at: "2026-08-15"
+      scope: SYS-001
+      requested_scope: SYS-001
+      assessment_mode: SEMI_QUANTITATIVE
+      dimensions:
+        exposure: {min: 0, max: 5}
+        consequence: {min: 0, max: 5}
+      calculation_definition:
+        type: WEIGHTED_SUM
+        expression: "0.4 * exposure + 0.6 * consequence"
+        variables: [exposure, consequence]
+        units: "organization-defined points"
+        source_reference: POLICY-RISK-002-v1
+      decision_bands:
+        - {min: 0, max_exclusive: 2, label: LOW}
+        - {min: 2, max_exclusive: 4, label: MEDIUM}
+        - {min: 4, max_inclusive: 5, label: HIGH}
+      values:
+        exposure: 5
+        consequence: 5
+    expected_status: ASSESSED_HIGH
+
+  - id: RKC-REG-012
+    input:
+      criteria_id: RKC-000002
+      version: "1"
+      status: APPROVED
+      source_reference: POLICY-RISK-002-v1
+      source_provenance: EVD-SRC-003
+      approval_evidence: EVD-APR-003
+      approved_by_role: ROL-RISK-COMMITTEE-001
+      effective_from: "2026-02-01"
+      assessment_date: "2026-08-15"
+      observed_at: "2026-08-15"
+      scope: SYS-001
+      requested_scope: SYS-001
+      assessment_mode: SEMI_QUANTITATIVE
+      dimensions:
+        exposure: {min: 0, max: 5}
+        consequence: {min: 0, max: 5}
+      calculation_definition: null
+    expected_status: NEEDS_CALCULATION_DEFINITION
+
+  - id: RKC-REG-013
+    input:
+      criteria_id: RKC-000003
+      version: "1"
+      status: APPROVED
+      source_reference: POLICY-RISK-003-v1
+      source_provenance: EVD-SRC-004
+      approval_evidence: EVD-APR-004
+      approved_by_role: ROL-RISK-COMMITTEE-001
+      effective_from: "2026-02-01"
+      assessment_date: "2026-08-15"
+      observed_at: "2026-08-15"
+      scope: SYS-001
+      requested_scope: SYS-001
+      assessment_mode: LIKELIHOOD_X_IMPACT_DEFAULT
+    expected_status: NEEDS_ASSESSMENT_METHOD
+
+  - id: RKC-REG-014
+    input:
+      criteria_id: RKC-000001
+      version: "3"
+      status: APPROVED
+      source_reference: POLICY-RISK-001-v3
+      source_provenance: EVD-SRC-001
+      approval_evidence: EVD-APR-001
+      approved_by_role: ROL-RISK-COMMITTEE-001
+      effective_from: "2026-02-01"
+      assessment_date: "2026-08-15"
+      observed_at: "2026-08-15"
+      scope: SYS-001
+      requested_scope: SYS-001
+      assessment_mode: QUALITATIVE
+      concurrent_conflicting_current_criteria: true
+    expected_status: CONFLICT
