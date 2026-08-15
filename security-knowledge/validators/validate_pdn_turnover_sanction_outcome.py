@@ -34,7 +34,7 @@ def route(case):
             return {"state": "NEEDS_AGGRAVATING_CIRCUMSTANCE_REVIEW"}
         if case.get("missing_condition") or case.get("evidence_after_decision"):
             return {"state": "MITIGATION_NOT_PROVEN"}
-        mitigated = max(15_000_000, min(50_000_000, floor // 10))
+        mitigated = max(15_000_000, min(50_000_000, ordinary_min // 10))
     else:
         mitigated = None
     return {"ordinary_min": ordinary_min, "ordinary_max": ordinary_max, "mitigated": mitigated}
