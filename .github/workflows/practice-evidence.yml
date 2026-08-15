@@ -1,0 +1,29 @@
+name: Judicial Regulatory Practice Evidence Gate
+
+on:
+  push:
+    paths:
+      - 'security-knowledge/practical-cases/judicial-regulatory-practice-evidence-model-v1.yaml'
+      - 'security-knowledge/practical-cases/judicial-regulatory-practice-evidence-regression-v1.json'
+      - 'security-knowledge/validators/validate_practice_evidence.py'
+      - '.github/workflows/practice-evidence.yml'
+  pull_request:
+    paths:
+      - 'security-knowledge/practical-cases/judicial-regulatory-practice-evidence-model-v1.yaml'
+      - 'security-knowledge/practical-cases/judicial-regulatory-practice-evidence-regression-v1.json'
+      - 'security-knowledge/validators/validate_practice_evidence.py'
+      - '.github/workflows/practice-evidence.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  practice-evidence:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate judicial and regulatory practice evidence routing
+        run: python security-knowledge/validators/validate_practice_evidence.py
