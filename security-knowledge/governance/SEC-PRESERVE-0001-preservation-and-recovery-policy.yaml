@@ -1,0 +1,145 @@
+schema_version: 1
+policy_id: SEC-PRESERVE-0001
+title: Security Knowledge Preservation and Recovery Policy
+title_ru: Политика сохранности, резервирования и восстановления Security Knowledge
+status: REQUIRED
+effective_from: 2026-08-16
+owner: Viktor Kulichenko
+applies_to:
+  - SEC-PROD-0001
+  - SEC-COMP-0001
+  - SEC-1C-0001
+  - all future Security Knowledge derived products
+objective: >
+  Ни один подтвержденный источник, атомарное требование, связь, решение, отрицательный
+  результат, аудит, паспорт, метрика, версия или доказательство не должно быть утрачено
+  из-за ошибки человека, сбоя платформы, повреждения данных, неудачной миграции,
+  прекращения работы поставщика или ошибочного автоматического действия.
+current_truth:
+  github_version_history: AVAILABLE
+  independent_backup: NOT_YET_VERIFIED
+  restore_drill: NOT_YET_VERIFIED
+  production_readiness: BLOCKED_UNTIL_VERIFIED
+invariants:
+  - Stable object identifiers must never be silently reused or changed
+  - Verified knowledge is append-only; corrections create a new version
+  - No silent merge, overwrite or deletion of evidence
+  - Rejected and failed evidence is preserved with status and reason
+  - Physical storage location may change, but IDs and lineage must remain stable
+  - Every material object retains source, version, timestamp and integrity metadata
+  - Backup existence is not proof until restoration is tested
+  - Public code, private expertise, secrets and production data must be separated
+preservation_model:
+  strategy: 3-2-1-1-0
+  requirements:
+    - at least 3 copies of material data
+    - at least 2 different storage technologies or administrative domains
+    - at least 1 offsite copy
+    - at least 1 immutable or offline copy
+    - 0 unverified errors after scheduled integrity and restore checks
+copy_classes:
+  working:
+    purpose: active development and controlled writes
+    current_candidate: Git repository
+  mirror:
+    purpose: independent repository mirror with full history tags releases and LFS objects
+    status: PLANNED
+  archive:
+    purpose: versioned export of corpus graph schemas evidence and manifests
+    status: PLANNED
+  immutable:
+    purpose: write-once or object-lock copy protected from account compromise and automation
+    status: PLANNED
+  offline:
+    purpose: encrypted periodically disconnected recovery copy
+    status: PLANNED
+required_backup_contents:
+  - full Git history branches tags and releases
+  - source and evidence artifacts where legally permitted
+  - canonical YAML JSON schemas and validators
+  - knowledge graph export
+  - relational and vector indexes with rebuild instructions
+  - object manifests and SHA-256 bindings
+  - architecture decisions and file passports
+  - audit findings including failed and rejected evidence
+  - configuration templates without secrets
+  - dependency lockfiles and reproducible environment metadata
+  - restoration instructions and recovery keys custody records
+integrity:
+  algorithms:
+    - SHA-256
+  controls:
+    - manifest generation
+    - scheduled checksum verification
+    - repository and object count comparison
+    - lineage and orphan-node validation
+    - signed release or equivalent integrity evidence where justified
+recovery:
+  required_metrics:
+    rpo: TO_BE_DEFINED_BY_DATA_CLASS
+    rto: TO_BE_DEFINED_BY_PRODUCT
+  mandatory_tests:
+    - clean-room repository restore
+    - knowledge graph rebuild
+    - validator and CI execution
+    - random evidence object verification
+    - application read-only recovery test
+    - 1C integration contract replay when SEC-1C-0001 is activated
+  rule: A backup is marked VERIFIED only after a successful documented restore drill
+retention_and_deletion:
+  default: RETAIN
+  deletion_requires:
+    - explicit authorized decision
+    - exact object scope
+    - legal and contractual retention check
+    - dependency and lineage impact analysis
+    - verified independent backup
+    - deletion record with reason actor time and evidence
+  automatic_destructive_cleanup: FORBIDDEN
+security:
+  - encrypt backup data in transit and at rest
+  - isolate backup credentials from development credentials
+  - apply least privilege and separation of duties
+  - exclude secrets from Git and ordinary exports
+  - maintain protected key recovery procedure
+  - monitor backup failures and unauthorized access
+  - separate Dev Test and Prod
+migration_gate:
+  all_required:
+    - source and destination inventories match
+    - hashes are verified
+    - stable IDs and lineage are preserved
+    - rollback is tested
+    - restore drill passes
+    - authorized acceptance record exists
+future_storage_decision:
+  candidates:
+    - protected private Git service
+    - protected Russian cloud object storage with versioning and immutability
+    - independent encrypted offsite storage
+    - offline encrypted archive
+  status: ALTERNATIVES_NOT_YET_SELECTED
+  note: >
+    Selection requires threat model, jurisdiction, confidentiality classification,
+    cost, RPO/RTO, provider dependency and restoration testing. GitHub alone is not
+    accepted as the final production preservation architecture.
+implementation_phases:
+  - id: P0
+    name: Policy and inventory
+    gate: Define data classes owners retention RPO and RTO
+  - id: P1
+    name: Independent mirror
+    gate: Full-history mirror and automated integrity report
+  - id: P2
+    name: Versioned archive
+    gate: Corpus graph evidence and manifest export
+  - id: P3
+    name: Immutable and offline copies
+    gate: Object-lock or write-once plus disconnected encrypted copy
+  - id: P4
+    name: Recovery proof
+    gate: Successful clean-room restore and documented acceptance
+activation_priority: >
+  Preservation controls must be implemented before private expertise, production
+  weights, sensitive graphs or customer evidence are moved out of the current public
+  development skeleton.
