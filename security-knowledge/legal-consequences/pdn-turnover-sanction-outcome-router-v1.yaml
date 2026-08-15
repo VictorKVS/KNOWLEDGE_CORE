@@ -1,0 +1,144 @@
+model_id: PDN-TURNOVER-SANCTION-ROUTER-001
+version: 1.0
+status: VERIFIED_LOGIC_FROM_AUTHORITATIVE_RULES
+scope:
+  articles:
+    - KOAP_13_11_15
+    - KOAP_13_11_18
+    - KOAP_4_1_3_4_2
+purpose: >
+  Deterministically route evidence for repeated personal-data offenses to the ordinary
+  turnover-fine range and, only when every statutory mitigation condition is proven,
+  to the special reduced fine outcome under KoAP 4.1 part 3.4-2.
+
+source_anchors:
+  - source_id: KOAP-13.11-current
+    authority: ConsultantPlus consolidated current text
+    observed_redaction: 2026-07-26
+    rules:
+      part_15:
+        legal_entity_percent_range: [1, 3]
+        minimum_rub: 20000000
+        maximum_rub: 500000000
+      part_18:
+        legal_entity_percent_range: [1, 3]
+        minimum_rub: 25000000
+        maximum_rub: 500000000
+  - source_id: KOAP-4.1-3.4-2-current
+    authority: ConsultantPlus consolidated current text
+    special_mitigation:
+      applies_only_to_parts: [15, 18]
+      result_formula: ONE_TENTH_OF_STATUTORY_MINIMUM
+      floor_rub: 15000000
+      ceiling_rub: 50000000
+      conditions_must_be_simultaneous: true
+  - source_id: FZ-420-2024
+    authority: Official Publication Portal
+    publication_id: '0001202411300011'
+    publication_date: 2024-11-30
+
+evidence_nodes:
+  prior_admin_punishment:
+    required_fields:
+      - decision_id
+      - article
+      - part
+      - entered_into_force_at
+      - punishment_status
+      - authoritative_source
+  turnover_base:
+    allowed_types:
+      - PREVIOUS_CALENDAR_YEAR_REVENUE
+      - CURRENT_YEAR_PARTIAL_REVENUE_WHEN_NO_PREVIOUS_YEAR_SALES
+      - CREDIT_INSTITUTION_CAPITAL
+    required_fields:
+      - base_type
+      - amount_rub
+      - accounting_period
+      - authoritative_accounting_source
+  mitigation_evidence:
+    required_conditions:
+      - id: INFOSEC_EXPENSES_3Y
+        rule: >
+          Annual information-security expenditures for each of the three calendar years
+          preceding the year in which the offense was identified must meet the statutory
+          threshold and satisfy the licensing condition in KoAP 4.1 part 3.4-2.
+      - id: PDN_PROTECTION_COMPLIANCE_12M
+        rule: >
+          Documented compliance with personal-data protection requirements in ISPDn must
+          be evidenced within the twelve months preceding identification of the offense.
+      - id: NO_NOTE5_AGGRAVATING_CIRCUMSTANCES
+        rule: >
+          Absence of aggravating circumstances referenced by Note 5 to Article 13.11 must
+          be affirmatively established; UNKNOWN is not equivalent to absent.
+
+routing:
+  - step: REPEAT_OFFENSE_GATE
+    pass_when:
+      - relevant_prior_punishment_proven
+      - prior_decision_entered_into_force
+      - repeatability_period_applicable
+    fail_closed_states:
+      - NEEDS_PRIOR_PUNISHMENT_EVIDENCE
+      - NEEDS_REPEATABILITY_PERIOD_REVIEW
+  - step: TURNOVER_BASE_GATE
+    pass_when:
+      - allowed_base_type
+      - amount_proven
+      - accounting_source_proven
+    fail_closed_states:
+      - NEEDS_TURNOVER_BASE
+      - INVALID_TURNOVER_BASE_TYPE
+  - step: ORDINARY_SANCTION_RANGE
+    formula: >
+      statutory_percent_range applied to proven turnover base, then statutory minimum and
+      maximum bounds for the relevant part are applied.
+    output:
+      - ordinary_min_rub
+      - ordinary_max_rub
+  - step: MITIGATION_GATE
+    pass_when:
+      - all_three_conditions_proven_before_decision
+    fail_closed_states:
+      - MITIGATION_NOT_PROVEN
+      - NEEDS_LICENSE_EVIDENCE
+      - NEEDS_12M_COMPLIANCE_EVIDENCE
+      - NEEDS_AGGRAVATING_CIRCUMSTANCE_REVIEW
+  - step: MITIGATED_STATUTORY_OUTCOME
+    formula: >
+      one tenth of the statutory minimum fine for the applicable offense, but not less than
+      15,000,000 RUB and not more than 50,000,000 RUB.
+    output:
+      - mitigated_statutory_amount_rub
+
+non_equivalence_guards:
+  - Profit is not a turnover base.
+  - Contract value is not a turnover base.
+  - Incident loss is not a turnover base.
+  - Group revenue is not automatically the offender legal entity's revenue.
+  - Prior incident history is not equivalent to a prior administrative punishment.
+  - Two years of security spending do not satisfy a three-year condition.
+  - Generic security audit does not automatically prove ISPDn protection compliance.
+  - UNKNOWN aggravating circumstances do not satisfy the absence condition.
+  - Mitigation evidence produced after the sanction decision does not satisfy the statutory timing gate.
+
+red_team_guards:
+  - id: RT-TURN-001
+    attack: calculate turnover fine before proving repeat offense
+    expected: BLOCK
+  - id: RT-TURN-002
+    attack: use profit instead of revenue
+    expected: BLOCK
+  - id: RT-TURN-003
+    attack: apply 4.1-3.4-2 with one missing condition
+    expected: BLOCK
+  - id: RT-TURN-004
+    attack: treat mitigation as discretionary percentage discount
+    expected: BLOCK
+  - id: RT-TURN-005
+    attack: use part_15 minimum for part_18
+    expected: BLOCK
+
+provenance_status:
+  immutable_primary: false
+  reason: exact primary bytes and SHA-256 not yet bound to these clause-level records
