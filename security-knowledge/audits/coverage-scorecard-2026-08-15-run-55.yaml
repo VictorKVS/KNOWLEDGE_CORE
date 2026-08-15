@@ -1,0 +1,86 @@
+run_id: 55
+observed_at: "2026-08-15"
+strict_scope_policy: FIXED_MASTER_INVENTORY_NO_INFLATION
+
+overall_strict_percent: 10
+key_domains_percent:
+  russian_npa: 10
+  gost_gost_r_iso: 10
+  classification_categorization: 10
+  fstec_threat_method_bdu: 10
+  risk_methods: 10
+  koap_uk_gk_tk: 10
+  szi_skzi_license_lifecycle: 10
+  roles_deadlines_liability: 10
+  evidence_audit: 10
+  practical_cases: 10
+
+quality_state:
+  critical_gaps: 0
+  high_gaps: 1
+  red_team: FAIL
+  expert_ready: false
+
+verified_this_run:
+  newly_added_normative_records: 0
+  authoritative_direct_publication_identities_reconfirmed: 3
+  authoritative_aggregate_publication_identities_reconfirmed: 3
+  immutable_primary_records_added: 0
+  provenance_policies_added: 1
+
+added_files:
+  - security-knowledge/provenance/official-publication-source-precedence-v1.yaml
+
+confirmed_current_external_facts:
+  - "FSB Order 547/2025 direct official document page identifies publication 0001202512300064 and MinJust registration 84871."
+  - "FSB Order 548/2025 direct official document page identifies publication 0001202512300058 and MinJust registration 84872."
+  - "FSB Order 553/2025 direct official document page identifies publication 0001202512300059 and MinJust registration 84873."
+  - "Official aggregate publication index identifies FSB Order 539/2025 as publication 0001202512260014."
+  - "Official aggregate publication index identifies FSB Order 546/2025 as publication 0001202512300066."
+  - "Official aggregate publication index identifies FSB Order 554/2025 as publication 0001202512300063."
+
+important_provenance_finding:
+  id: PROV-AGGREGATE-ADJACENCY-RISK
+  statement: >-
+    Aggregate official-publication search output can render metadata from neighboring records in a way that is unsafe for
+    automatic act-to-metadata binding. In this pass an aggregate result placed publication 0001202512300066 / 415 KB / 8 pages
+    adjacent to Order 553, while the direct official document page identifies Order 553 as publication 0001202512300059.
+  resolution: >-
+    Direct official document identity now outranks aggregate search association for act identity. Conflicting aggregate fields
+    are quarantined for provenance review and cannot overwrite a pinned direct publication ID.
+  legal_interpretation: >-
+    This is treated as a parser/adjacency provenance risk, not evidence that the legal act itself is inconsistent.
+
+acquisition_results:
+  direct_official_document_open_attempts: 2
+  direct_open_timeouts: 2
+  exact_bytes_preserved: 0
+  sha256_added: 0
+
+closed_or_reduced_gaps:
+  - >-
+    Wrong-document binding risk from aggregate official search/index parsing is now explicitly controlled by a source-precedence policy.
+  - >-
+    Same-number and neighboring-record collisions are blocked from automatic promotion or evidence binding.
+
+pending:
+  - resolve working official byte-download paths for FSB 539/546/547/548/553/554
+  - resolve exact downloadable artifacts for NKTsKI Order No. 2 dated 2026-07-14 and Initial Data dated 2026-07-08
+  - preserve exact bytes, retrieved_at and SHA-256
+  - bind clause-level evidence to artifact_id + sha256
+  - add automated validation that manifest publication IDs cannot be overwritten by lower-precedence discovery sources
+  - continue hash-pinned snapshots for dynamic FSTEC/FSB registers
+
+high_gap:
+  id: HIGH-IMMUTABLE-PROVENANCE
+  statement: >-
+    High-value FSB/NKTsKI artifacts and dynamic registers are not yet consistently preserved as exact immutable bytes with
+    retrieval timestamp and SHA-256. Source-precedence controls reduce wrong-binding risk but do not satisfy immutable-primary evidence requirements.
+
+next_bottleneck: >-
+  Obtain exact official bytes for at least one pinned FSB publication or NKTsKI 2026 artifact, record retrieval timestamp and
+  SHA-256, then bind an existing clause-level rule to that immutable artifact and red-team the acquisition pattern.
+
+readiness_guardrail: >-
+  Percentages remain unchanged. No immutable bytes were obtained; the single High blocker remains open, Red Team remains FAIL,
+  and EXPERT_READY remains false.
