@@ -1,0 +1,50 @@
+scorecard_id: SKB-COVERAGE-2026-08-15-RUN-64
+observed_at: 2026-08-15
+strict_scope_percent: 10
+key_domains_percent:
+  russian_npa: 10
+  gost_gost_r_iso: 10
+  classification_categorization: 10
+  fstec_threat_method_bdu: 10
+  risk_methods: 10
+  koap_uk_gk_tk: 10
+  szi_skzi_license_lifecycle: 10
+  roles_deadlines_responsibility: 10
+  evidence_audit: 10
+  practical_cases: 10
+verified_this_run:
+  new_normative_records: 0
+  statutory_rules_reverified: 4
+  primary_web_metadata_reverified: 1
+  internal_evidence_models: 1
+  executable_regression_cases: 18
+  validators: 1
+  ci_gates: 1
+  ci_pass: true
+  immutable_primary: 0
+critical_gaps: 0
+high_gaps: 1
+high_gap_ids:
+  - HIGH-IMMUTABLE-PROVENANCE
+red_team: FAIL
+expert_ready: false
+added:
+  - Added structured PRIOR_ADMIN_PUNISHMENT evidence entity for repeat-offense qualification under KoAP article 13.11 parts 15 and 18.
+  - Added TURNOVER_BASE accounting-evidence entity with separate routing for ordinary legal entities and credit institutions.
+  - Added fail-closed checks for prior-decision relevance, entry into force, execution timing, accounting source, reporting period, entity type and currency.
+  - Added ordinary turnover-range calculation only after repeat-offense and turnover evidence are verified.
+  - Red-team review caught the special KoAP article 4.1 part 3.4-2 reduction mechanism; therefore the ordinary 1-3 percent range is explicitly not represented as the complete final-sanction universe.
+ci:
+  workflow: PDn Repeat Offense Turnover Evidence Gate
+  run_id: 31902805093
+  head_sha: 95cab1fe544f147981f86d4c810b94a52d5fe71d
+  conclusion: success
+pending:
+  - Implement full KoAP article 4.6 lifecycle semantics including the special early-payment case and exact boundary tests.
+  - Implement the KoAP article 4.1 part 3.4-2 mitigation-evidence gate with all statutory conditions and regression tests.
+  - Integrate PRIOR_ADMIN_PUNISHMENT and TURNOVER_BASE nodes into the unified PDn Incident Consequence Router.
+  - Add authoritative current judicial/regulator practice for turnover sanctions as a separate evidence layer.
+  - Continue exact-bytes plus retrieved_at plus SHA-256 provenance for high-value FSB/NKTsKI sources and dynamic registers.
+next_bottleneck: >
+  Build the executable KoAP article 4.1 part 3.4-2 mitigation gate and bind PRIOR_ADMIN_PUNISHMENT/TURNOVER_BASE into the unified consequence router;
+  then add authoritative practice cases while keeping HIGH-IMMUTABLE-PROVENANCE open until exact primary bytes are preserved and hash-bound.
