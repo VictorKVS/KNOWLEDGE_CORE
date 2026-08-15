@@ -1,0 +1,177 @@
+schema_version: "1.0"
+id: fsb547-incident-notification-workflow-v1
+purpose: >-
+  End-to-end operational workflow for current FSB Order No. 547 incident/attack reporting,
+  evidence capture, response completion and results reporting without conflating distinct 3h/24h/48h branches.
+source_refs:
+  - security-knowledge/legislation/fsb-547-2025-incident-reporting-response-authoritative-slice.yaml
+normative_anchors:
+  - requirement_id: FSB547-P2-NKTSKI-CHANNEL
+    status: AUTHORITATIVE_VERIFIED
+  - requirement_id: FSB547-P3-SIGNIFICANT-CII-INCIDENT-3H
+    status: AUTHORITATIVE_VERIFIED
+  - requirement_id: FSB547-P3-OTHER-CII-INCIDENT-24H
+    status: AUTHORITATIVE_VERIFIED
+  - requirement_id: FSB547-P3-ORG-RESOURCE-INCIDENT-24H
+    status: AUTHORITATIVE_VERIFIED
+  - requirement_id: FSB547-P3-ATTACK-24H
+    status: AUTHORITATIVE_VERIFIED
+  - requirement_id: FSB547-P4-FINANCIAL-BANK-RUSSIA-PARALLEL
+    status: AUTHORITATIVE_VERIFIED
+  - requirement_id: FSB547-P14-CII-RESULTS-48H
+    status: AUTHORITATIVE_VERIFIED
+  - requirement_id: FSB547-P15-ORG-RESULTS-24H
+    status: AUTHORITATIVE_VERIFIED
+  - requirement_id: FSB547-P17-ORG-RECOVERY-24H
+    status: AUTHORITATIVE_VERIFIED
+routing:
+  applicability_inputs:
+    - entity_is_cii_subject
+    - entity_is_covered_part4_article9_organ_or_org
+    - affected_resource_kind
+    - cii_object_is_significant
+    - event_kind
+    - financial_sector_branch
+  initial_notification:
+    - branch: significant_cii_incident
+      when:
+        entity_is_cii_subject: true
+        affected_resource_kind: CII_OBJECT
+        cii_object_is_significant: true
+        event_kind: COMPUTER_INCIDENT
+      deadline:
+        maximum: 3
+        unit: HOURS
+        starts_from: detection_timestamp
+      recipient: NKTSKI
+    - branch: other_cii_incident
+      when:
+        entity_is_cii_subject: true
+        affected_resource_kind: CII_OBJECT
+        cii_object_is_significant: false
+        event_kind: COMPUTER_INCIDENT
+      deadline:
+        maximum: 24
+        unit: HOURS
+        starts_from: detection_timestamp
+      recipient: NKTSKI
+    - branch: covered_org_resource_incident
+      when:
+        entity_is_covered_part4_article9_organ_or_org: true
+        affected_resource_kind: RUSSIAN_INFORMATION_RESOURCE
+        event_kind: COMPUTER_INCIDENT
+      deadline:
+        maximum: 24
+        unit: HOURS
+        starts_from: detection_timestamp
+      recipient: NKTSKI
+    - branch: computer_attack
+      when:
+        event_kind: COMPUTER_ATTACK
+        affected_resource_kind_one_of: [CII_OBJECT, RUSSIAN_INFORMATION_RESOURCE]
+      deadline:
+        maximum: 24
+        unit: HOURS
+        starts_from: detection_timestamp
+      recipient: NKTSKI
+      guardrail: >-
+        The 3-hour significant-CII incident deadline must not be copied onto the separate computer-attack branch.
+  financial_parallel_reporting:
+    applies_when:
+      entity_is_cii_subject: true
+      financial_sector_branch: true
+      affected_resource_kind: CII_OBJECT
+    recipient: BANK_OF_RUSSIA
+    deadline_reference: same_as_initial_paragraph_3_branch
+    guardrail: >-
+      Bank of Russia reporting is additional and does not replace NKTsKI reporting.
+workflow:
+  - id: WF-FSB547-INC-01
+    action: capture_detection_fact
+    required_evidence:
+      - detection_timestamp
+      - event_kind
+      - affected_resource_identity
+      - entity_applicability_facts
+      - significance_status_if_cii
+  - id: WF-FSB547-INC-02
+    action: route_initial_notification
+    required_evidence:
+      - selected_normative_branch
+      - computed_deadline
+      - routing_reason
+    fail_closed_if:
+      - detection_timestamp_missing
+      - event_kind_unknown
+      - applicability_unknown
+      - significance_unknown_for_cii_incident
+  - id: WF-FSB547-INC-03
+    action: submit_initial_notification
+    required_evidence:
+      - submitted_payload
+      - outgoing_notification_timestamp
+      - delivery_confirmation_or_channel_evidence
+    guardrail: >-
+      Internal approval may not be treated as a legal basis to suspend or extend the external reporting deadline.
+  - id: WF-FSB547-INC-04
+    action: conduct_response_and_consequence_elimination
+    required_evidence:
+      - response_actions
+      - containment_or_recovery_records
+      - completion_timestamp
+  - id: WF-FSB547-INC-05
+    action: submit_results_notification
+    branches:
+      - when: significant_cii_response_completed
+        deadline:
+          maximum: 48
+          unit: HOURS
+          starts_from: completion_timestamp
+        recipient: NKTSKI
+      - when: covered_org_response_completed
+        deadline:
+          maximum: 24
+          unit: HOURS
+          starts_from: completion_timestamp
+        recipient: NKTSKI
+    required_evidence:
+      - results_notification
+      - outgoing_results_timestamp
+      - delivery_confirmation_or_channel_evidence
+  - id: WF-FSB547-INC-06
+    action: submit_covered_org_recovery_completion_notice
+    applies_when: covered_org_recovery_and_operability_checks_completed
+    deadline:
+      maximum: 24
+      unit: HOURS
+      starts_from: recovery_completion_timestamp
+    recipient: NKTSKI
+    required_evidence:
+      - recovery_completion_timestamp
+      - operability_check_evidence
+      - recovery_completion_notification
+      - delivery_confirmation_or_channel_evidence
+fail_closed_states:
+  - NEEDS_APPLICABILITY_FACTS
+  - NEEDS_EVENT_KIND
+  - NEEDS_DETECTION_TIMESTAMP
+  - NEEDS_SIGNIFICANCE_STATUS
+  - NEEDS_ROUTING_DECISION
+  - INITIAL_NOTIFICATION_OVERDUE
+  - NEEDS_NOTIFICATION_EVIDENCE
+  - NEEDS_FINANCIAL_PARALLEL_REPORTING_EVIDENCE
+  - NEEDS_RESPONSE_COMPLETION_TIMESTAMP
+  - RESULTS_NOTIFICATION_OVERDUE
+  - NEEDS_RESULTS_NOTIFICATION_EVIDENCE
+  - NEEDS_RECOVERY_COMPLETION_TIMESTAMP
+  - RECOVERY_NOTIFICATION_OVERDUE
+  - NEEDS_RECOVERY_NOTIFICATION_EVIDENCE
+expert_guardrails:
+  - Incident and attack are separate event kinds with separate routing rules.
+  - A significant CII incident has a 3-hour initial deadline; an attack has a separate 24-hour initial deadline.
+  - An incident in another CII object has a 24-hour initial deadline.
+  - A covered organ/organization information-resource incident has a 24-hour initial deadline.
+  - CII response results and covered-organ response results use different post-completion deadlines: 48h versus 24h.
+  - Historical events before 2026-01-30 must not be evaluated using this workflow without historical-rule routing.
+  - Missing evidence creates an evidence gap; it does not by itself prove that the underlying action did not occur.
+  - Field-level payload completeness remains dependent on immutable NKTsKI format artifacts and is intentionally not invented here.
