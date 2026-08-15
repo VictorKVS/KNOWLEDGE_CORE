@@ -1,0 +1,94 @@
+{
+  "fixture_set_id": "PDN-KOAP-MITIGATION-REGRESSION-0001",
+  "version": "1.0",
+  "cases": [
+    {
+      "id": "MIT-001",
+      "input": {"target_part": 15, "three_years_verified": true, "licenses_verified": true, "compliance_confirmation_verified": true, "aggravating_absent_verified": true, "conditions_before_decision": true},
+      "expected": "ELIGIBLE_FOR_STATUTORY_REDUCTION"
+    },
+    {
+      "id": "MIT-002",
+      "input": {"target_part": 18, "three_years_verified": true, "licenses_verified": true, "compliance_confirmation_verified": true, "aggravating_absent_verified": true, "conditions_before_decision": true},
+      "expected": "ELIGIBLE_FOR_STATUTORY_REDUCTION"
+    },
+    {
+      "id": "MIT-003",
+      "input": {"target_part": 14, "three_years_verified": true, "licenses_verified": true, "compliance_confirmation_verified": true, "aggravating_absent_verified": true, "conditions_before_decision": true},
+      "expected": "UNSUPPORTED_PART"
+    },
+    {
+      "id": "MIT-004",
+      "input": {"target_part": 15, "three_years_verified": false, "licenses_verified": true, "compliance_confirmation_verified": true, "aggravating_absent_verified": true, "conditions_before_decision": true},
+      "expected": "NEEDS_EVIDENCE"
+    },
+    {
+      "id": "MIT-005",
+      "input": {"target_part": 15, "three_years_verified": true, "licenses_verified": false, "compliance_confirmation_verified": true, "aggravating_absent_verified": true, "conditions_before_decision": true},
+      "expected": "NEEDS_EVIDENCE"
+    },
+    {
+      "id": "MIT-006",
+      "input": {"target_part": 15, "three_years_verified": true, "licenses_verified": true, "compliance_confirmation_verified": false, "aggravating_absent_verified": true, "conditions_before_decision": true},
+      "expected": "NEEDS_EVIDENCE"
+    },
+    {
+      "id": "MIT-007",
+      "input": {"target_part": 15, "three_years_verified": true, "licenses_verified": true, "compliance_confirmation_verified": true, "aggravating_absent_verified": false, "conditions_before_decision": true},
+      "expected": "NEEDS_EVIDENCE"
+    },
+    {
+      "id": "MIT-008",
+      "input": {"target_part": 15, "three_years_verified": true, "licenses_verified": true, "compliance_confirmation_verified": true, "aggravating_absent_verified": true, "conditions_before_decision": false},
+      "expected": "NOT_ELIGIBLE"
+    },
+    {
+      "id": "MIT-009",
+      "type": "expense_ratio",
+      "input": {"years": [{"expense": 100000, "denominator": 100000000}, {"expense": 120000, "denominator": 100000000}, {"expense": 150000, "denominator": 100000000}], "licenses_verified": true},
+      "expected": "VERIFIED"
+    },
+    {
+      "id": "MIT-010",
+      "type": "expense_ratio",
+      "input": {"years": [{"expense": 100000, "denominator": 100000000}, {"expense": 90000, "denominator": 100000000}, {"expense": 150000, "denominator": 100000000}], "licenses_verified": true},
+      "expected": "BELOW_STATUTORY_RATIO"
+    },
+    {
+      "id": "MIT-011",
+      "type": "expense_ratio",
+      "input": {"years": [{"expense": 100000, "denominator": 100000000}, {"expense": 120000, "denominator": 100000000}], "licenses_verified": true},
+      "expected": "NEEDS_THREE_YEAR_HISTORY"
+    },
+    {
+      "id": "MIT-012",
+      "type": "expense_ratio",
+      "input": {"years": [{"expense": 100000, "denominator": 100000000}, {"expense": 120000, "denominator": 100000000}, {"expense": 150000, "denominator": 100000000}], "licenses_verified": false},
+      "expected": "NEEDS_LICENSE_EVIDENCE"
+    },
+    {
+      "id": "MIT-013",
+      "type": "reduced_fine",
+      "input": {"target_part": 15, "base_amount": 1000000000, "mitigation_state": "ELIGIBLE_FOR_STATUTORY_REDUCTION"},
+      "expected": {"state": "STATUTORY_REDUCED_FINE", "amount_rub": 15000000}
+    },
+    {
+      "id": "MIT-014",
+      "type": "reduced_fine",
+      "input": {"target_part": 18, "base_amount": 5000000000, "mitigation_state": "ELIGIBLE_FOR_STATUTORY_REDUCTION"},
+      "expected": {"state": "STATUTORY_REDUCED_FINE", "amount_rub": 15000000}
+    },
+    {
+      "id": "MIT-015",
+      "type": "reduced_fine",
+      "input": {"target_part": 15, "base_amount": 100000000000, "mitigation_state": "ELIGIBLE_FOR_STATUTORY_REDUCTION"},
+      "expected": {"state": "STATUTORY_REDUCED_FINE", "amount_rub": 50000000}
+    },
+    {
+      "id": "MIT-016",
+      "type": "reduced_fine",
+      "input": {"target_part": 15, "base_amount": 1000000000, "mitigation_state": "NEEDS_EVIDENCE"},
+      "expected": {"state": "BLOCKED_MITIGATION_EVIDENCE"}
+    }
+  ]
+}
