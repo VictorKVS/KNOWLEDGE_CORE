@@ -1,0 +1,112 @@
+model_id: PDN-CONSEQUENCE-EVIDENCE-0001
+version: 1.0
+scope:
+  - KOAP_RF_13_11_PART_15
+  - KOAP_RF_13_11_PART_18
+purpose: >
+  Provide fail-closed evidence entities for repeat-offense qualification and turnover-based fine calculations.
+  This model does not decide guilt and does not substitute a court or regulator decision.
+
+sources:
+  - source_id: KOAP-13.11-CURRENT-2026-08-15
+    authority: AUTHORITATIVE_SECONDARY
+    locator: ConsultantPlus / KoAP RF art. 13.11, current edition observed 2026-08-15
+    verified_points:
+      - Part 15 applies when parts 12-14 are committed by a person subjected to administrative punishment for parts 12-14, 16-18 or part 15.
+      - Part 18 applies when part 16 or 17 is committed by a person subjected to administrative punishment for parts 12-17 or part 18.
+      - For legal entities parts 15 and 18 use 1-3 percent of the statutory turnover/capital base, with separate minimums and a 500 million ruble maximum.
+  - source_id: KOAP-4.6-CURRENT-2026-08-15
+    authority: AUTHORITATIVE_SECONDARY
+    locator: ConsultantPlus / KoAP RF art. 4.6
+    verified_points:
+      - subjected status begins when the punishment decision enters into legal force.
+      - general endpoint is one year after completion of execution of the decision, subject to statutory exceptions.
+  - source_id: FZ-420-2024-OFFICIAL
+    authority: PRIMARY_WEB_VERIFIED
+    publication_id: '0001202411300011'
+    locator: Official publication portal
+
+entities:
+  PRIOR_ADMIN_PUNISHMENT:
+    immutable_id_pattern: PAP-########
+    required_fields:
+      - subject_id
+      - decision_number
+      - authority_or_court
+      - koap_article
+      - koap_part
+      - decision_date
+      - entered_into_force_date
+      - execution_status
+      - evidence_source
+      - observed_at
+    conditionally_required_fields:
+      fine_paid_before_entry_into_force_date: required_if early_payment_before_entry_into_force == true
+      execution_completed_date: required_if execution_status == COMPLETED and early_payment_before_entry_into_force != true
+    allowed_states:
+      - VERIFIED_ACTIVE_SUBJECTED_PERIOD
+      - VERIFIED_OUTSIDE_SUBJECTED_PERIOD
+      - NEEDS_DECISION_FORCE_DATE
+      - NEEDS_EXECUTION_EVIDENCE
+      - NEEDS_RELEVANCE_REVIEW
+      - CONFLICT
+    rules:
+      - A historic fine, incident, claim, protocol or case number alone does not prove repeat-offense status.
+      - Repeat qualification requires a relevant prior punished offense and a time test under KoAP article 4.6.
+      - For part 15, prior qualifying parts are 12-14, 16-18 and 15.
+      - For part 18, prior qualifying parts are 12-17 and 18.
+      - If entry-into-force or execution timing cannot be proved, do not classify as repeat.
+
+  TURNOVER_BASE:
+    immutable_id_pattern: TOV-########
+    required_fields:
+      - subject_id
+      - entity_type
+      - violation_detected_date
+      - source_document_id
+      - source_period
+      - source_currency
+      - source_amount
+      - evidence_source
+      - observed_at
+      - reviewer
+    allowed_base_types:
+      - PRIOR_CALENDAR_YEAR_REVENUE_FROM_ALL_GOODS_WORKS_SERVICES
+      - CURRENT_YEAR_PRE_DETECTION_PERIOD_REVENUE_IF_NO_PRIOR_YEAR_SALES
+      - CREDIT_INSTITUTION_OWN_FUNDS_CAPITAL_AT_VIOLATION_DATE
+    allowed_states:
+      - VERIFIED
+      - NEEDS_ACCOUNTING_SOURCE
+      - NEEDS_PERIOD_REVIEW
+      - NEEDS_ENTITY_TYPE_REVIEW
+      - NEEDS_CURRENCY_REVIEW
+      - CONFLICT
+    rules:
+      - Do not use profit, taxable income, contract value, incident loss or market capitalization as turnover base merely because available.
+      - Use the prior calendar year's aggregate sales revenue unless the statutory current-year exception applies.
+      - For a credit institution use own funds/capital at the violation date under the statute instead of ordinary turnover base.
+      - A calculated fine is provisional until the evidence node for the base is VERIFIED.
+
+fine_calculation_guardrails:
+  part_15:
+    percentage_range: [1, 3]
+    minimum_rub: 20000000
+    maximum_rub: 500000000
+  part_18:
+    percentage_range: [1, 3]
+    minimum_rub: 25000000
+    maximum_rub: 500000000
+  rule: >
+    The engine may calculate a statutory range only after both the repeat-offense gate and TURNOVER_BASE evidence are VERIFIED.
+    It must not choose the final percentage within the statutory range or predict the adjudicator's final sanction.
+
+red_team_guardrails:
+  - PRIOR_ADMIN_PUNISHMENT is evidence about prior punishment status, not evidence that the new offense occurred.
+  - TURNOVER_BASE is accounting evidence, not a liability finding.
+  - Company group revenue must not be substituted for the punished legal entity's statutory base without an explicit legal basis.
+  - A prior punishment from an irrelevant article/part cannot trigger parts 15 or 18.
+  - Missing execution-completion evidence blocks the default article 4.6 end-date calculation.
+  - Conflicting accounting statements or corrected reporting require CONFLICT/REVIEW rather than silent selection.
+
+status: INTERNAL_EXECUTABLE_MODEL
+normative_claims_added: 0
