@@ -1,0 +1,174 @@
+slice_id: LEGAL-PDN-2026-08-15-01
+observed_at: "2026-08-15"
+scope: "Current Russian administrative/criminal consequence routing for personal-data incidents"
+status: AUTHORITATIVE_VERIFIED
+
+sources:
+  - id: SRC-420FZ-OFFICIAL
+    authority: PRIMARY_PUBLICATION_METADATA
+    title: "Federal Law No. 420-FZ dated 2024-11-30"
+    official_publication_id: "0001202411300011"
+    official_publication_date: "2024-11-30"
+    effective_from: "2025-05-30"
+    note: "Article 2: effective after 180 days following official publication; current legal systems confirm 2025-05-30."
+  - id: SRC-KOAP-13-11-CURRENT
+    authority: AUTHORITATIVE_CURRENT_TEXT
+    title: "KoAP RF Article 13.11"
+    observed_code_revision: "2026-07-26"
+  - id: SRC-421FZ-OFFICIAL
+    authority: PRIMARY_PUBLICATION_METADATA
+    title: "Federal Law No. 421-FZ dated 2024-11-30"
+    official_publication_id: "0001202411300012"
+    official_publication_date: "2024-11-30"
+    effective_from: "2024-12-11"
+  - id: SRC-UK-272-1-CURRENT
+    authority: AUTHORITATIVE_CURRENT_TEXT
+    title: "UK RF Article 272.1"
+    observed_code_revision: "2026-06-10 with amendments observed through 2026-06-29"
+
+routing_guardrails:
+  - id: PDN-LIAB-G01
+    rule: >-
+      Do not route an event to KoAP Article 13.11 where the applicable part itself excludes conduct containing signs of a criminal offense.
+      Criminal-law review must be performed first when facts potentially match UK Article 272.1 or another criminal offense.
+  - id: PDN-LIAB-G02
+    rule: >-
+      A personal-data incident does not automatically establish liability. The engine must separately establish actor, conduct,
+      protected object/data class, causal consequence, quantity thresholds where applicable, repeat-offense status and exclusions.
+  - id: PDN-LIAB-G03
+    rule: >-
+      Administrative turnover-based penalties require the statutory repeat-offense conditions; do not infer recurrence merely because
+      multiple subjects or identifiers were affected in one event.
+  - id: PDN-LIAB-G04
+    rule: >-
+      Special-category and biometric branches are separate from quantity-based ordinary-data branches and must not be collapsed into one scale.
+
+koap_13_11_current_branches:
+  - id: KOAP-13.11-P10
+    trigger: "failure or untimely performance of duty to notify the authorized personal-data authority of intent to process personal data"
+    sanctions_rub:
+      citizen: [5000, 10000]
+      official: [30000, 50000]
+      legal_entity: [100000, 300000]
+    effective_from: "2025-05-30"
+  - id: KOAP-13.11-P11
+    trigger: "failure or untimely notification of the authorized authority when an unlawful or accidental transfer/provision/distribution/access incident causing violation of data-subject rights is established"
+    sanctions_rub:
+      citizen: [50000, 100000]
+      official: [400000, 800000]
+      legal_entity: [1000000, 3000000]
+    effective_from: "2025-05-30"
+  - id: KOAP-13.11-P12
+    trigger: "unlawful transfer/provision/distribution/access affecting 1,000-10,000 subjects and/or 10,000-100,000 identifiers, absent signs of a criminal offense"
+    sanctions_rub:
+      citizen: [100000, 200000]
+      official: [200000, 400000]
+      legal_entity: [3000000, 5000000]
+    effective_from: "2025-05-30"
+  - id: KOAP-13.11-P13
+    trigger: "unlawful transfer/provision/distribution/access affecting 10,000-100,000 subjects and/or 100,000-1,000,000 identifiers, absent signs of a criminal offense"
+    sanctions_rub:
+      citizen: [200000, 300000]
+      official: [300000, 500000]
+      legal_entity: [5000000, 10000000]
+    effective_from: "2025-05-30"
+  - id: KOAP-13.11-P14
+    trigger: "unlawful transfer/provision/distribution/access affecting more than 100,000 subjects and/or more than 1,000,000 identifiers, absent signs of a criminal offense"
+    sanctions_rub:
+      citizen: [300000, 400000]
+      official: [400000, 600000]
+      legal_entity: [10000000, 15000000]
+    effective_from: "2025-05-30"
+  - id: KOAP-13.11-P15
+    trigger: "repeat offense under the statutory recurrence set covering parts 12-14, 16-18 and part 15"
+    sanctions:
+      citizen_rub: [400000, 600000]
+      official_rub: [800000, 1200000]
+      legal_entity_turnover_percent: [1, 3]
+      legal_entity_min_rub: 20000000
+      legal_entity_max_rub: 500000000
+    effective_from: "2025-05-30"
+  - id: KOAP-13.11-P16
+    trigger: "unlawful transfer/provision/distribution/access involving special categories of personal data"
+    sanctions_rub:
+      citizen: [300000, 400000]
+      official: [1000000, 1300000]
+      legal_entity: [10000000, 15000000]
+    effective_from: "2025-05-30"
+  - id: KOAP-13.11-P17
+    trigger: "unlawful transfer/provision/distribution/access involving biometric personal data, except cases covered by KoAP Article 13.11.3"
+    sanctions_rub:
+      citizen: [400000, 500000]
+      official: [1300000, 1500000]
+      legal_entity: [15000000, 20000000]
+    effective_from: "2025-05-30"
+  - id: KOAP-13.11-P18
+    trigger: "repeat offense under part 16 or 17 meeting the statutory recurrence condition"
+    sanctions:
+      citizen_rub: [500000, 800000]
+      official_rub: [1500000, 2000000]
+      legal_entity_turnover_percent: [1, 3]
+      legal_entity_min_rub: 25000000
+      legal_entity_max_rub: 500000000
+    effective_from: "2025-05-30"
+
+uk_272_1_current_branches:
+  - id: UK-272.1-P1
+    rule: >-
+      Illegal use and/or transfer, collection and/or storage of computer information containing personal data obtained through unlawful access,
+      interference with processing/storage means or another unlawful method, except data cases covered by part 2.
+    maximum_imprisonment_years: 4
+    effective_from: "2024-12-11"
+  - id: UK-272.1-P2
+    rule: >-
+      Same conduct involving personal data of minors, special categories of personal data and/or biometric personal data.
+    maximum_imprisonment_years: 5
+    effective_from: "2024-12-11"
+  - id: UK-272.1-P5
+    rule: "Conduct under parts 1-4 causing grave consequences or committed by an organized group."
+    maximum_imprisonment_years: 10
+    maximum_additional_fine_rub: 3000000
+    effective_from: "2024-12-11"
+  - id: UK-272.1-P6
+    rule: >-
+      Creation and/or operation of an information resource knowingly intended for illegal storage or transfer/distribution/provision/access
+      of computer information containing personal data obtained unlawfully.
+    maximum_imprisonment_years: 5
+    effective_from: "2024-12-11"
+
+exclusion_and_boundary_rules:
+  - "UK 272.1 does not apply to processing by natural persons exclusively for personal and family needs."
+  - "UK 272 part 1 now expressly excludes cases covered by UK 272.1."
+  - "KoAP 13.11 quantity-based parts 12-14 expressly require absence of signs of a criminal offense."
+  - "KoAP 13.11 biometric branch part 17 excludes cases covered by KoAP 13.11.3."
+
+required_facts_for_engine:
+  - actor_type
+  - operator_status
+  - event_time
+  - conduct_type
+  - acquisition_origin
+  - personal_data_present
+  - minors_data_present
+  - special_category_present
+  - biometric_present
+  - affected_subject_count
+  - affected_identifier_count
+  - rights_violation_from_incident
+  - notification_required
+  - notification_sent_at
+  - prior_administrative_punishment_relevant
+  - criminal_signs_review_status
+  - resource_created_for_illegal_storage_or_distribution
+
+decision_states:
+  - ADMIN_BRANCH_CANDIDATE
+  - CRIMINAL_REVIEW_REQUIRED
+  - CRIMINAL_BRANCH_CANDIDATE
+  - NEEDS_FACTS
+  - NOT_APPLICABLE
+  - CONFLICT
+
+provenance_limit: >-
+  This slice is AUTHORITATIVE_VERIFIED, not IMMUTABLE_PRIMARY. Official publication identities for amendment laws are verified,
+  while current article text is taken from authoritative current legal systems. Exact immutable official code/article bytes are not preserved here.
