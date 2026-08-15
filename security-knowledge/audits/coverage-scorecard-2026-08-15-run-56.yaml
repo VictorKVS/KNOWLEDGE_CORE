@@ -1,0 +1,91 @@
+run_id: 56
+observed_at: "2026-08-15"
+strict_scope_policy: FIXED_MASTER_INVENTORY_NO_INFLATION
+
+overall_strict_percent: 10
+key_domains_percent:
+  russian_npa: 10
+  gost_gost_r_iso: 10
+  classification_categorization: 10
+  fstec_threat_method_bdu: 10
+  risk_methods: 10
+  koap_uk_gk_tk: 10
+  szi_skzi_license_lifecycle: 10
+  roles_deadlines_liability: 10
+  evidence_audit: 10
+  practical_cases: 10
+
+quality_state:
+  critical_gaps: 0
+  high_gaps: 1
+  red_team: FAIL
+  expert_ready: false
+
+verified_this_run:
+  newly_added_normative_records: 0
+  official_publication_identities_reconfirmed: 3
+  immutable_primary_records_added: 0
+  executable_provenance_regression_cases_added: 9
+  validators_added_or_hardened: 1
+  ci_gates_added: 1
+
+added_files:
+  - security-knowledge/provenance/official-publication-precedence-regression-v1.yaml
+  - security-knowledge/validators/validate_official_publication_precedence.py
+  - .github/workflows/official-publication-precedence.yml
+
+confirmed_current_external_facts:
+  - "Direct official publication page identifies FSB Order 547/2025 as publication 0001202512300064 and MinJust registration 84871."
+  - "Direct official publication page identifies FSB Order 548/2025 as publication 0001202512300058 and MinJust registration 84872."
+  - "Direct official publication page identifies FSB Order 553/2025 as publication 0001202512300059 and MinJust registration 84873."
+
+provenance_controls_now_executable:
+  - aggregate official-search metadata cannot silently overwrite a conflicting direct/pinned publication identity
+  - a pinned direct identity is retained when the direct page is temporarily unavailable
+  - metadata cannot promote a record to IMMUTABLE_PRIMARY without exact bytes + retrieved_at + valid SHA-256
+  - FSB acquisition-manifest publication IDs must be unique and syntactically valid
+  - official_document_url must contain the exact pinned publication ID
+  - a manifest row marked IMMUTABLE_PRIMARY must itself contain bytes_preserved=true, retrieved_at and a valid SHA-256
+
+acquisition_results:
+  direct_official_byte_acquisition_attempted: true
+  exact_bytes_preserved: 0
+  sha256_added: 0
+  environment_observation: >-
+    Direct acquisition remained unavailable in this pass: web open timed out and the execution environment could not resolve
+    publication.pravo.gov.ru for direct byte retrieval. This is treated as an acquisition failure, not evidence of repeal or absence.
+
+ci_status:
+  workflow: Official Publication Precedence Gate
+  state_at_scorecard_write: NOT_OBSERVED
+  pass_claimed: false
+
+closed_or_reduced_gaps:
+  - >-
+    Pending control from run 55 is implemented: manifest publication IDs now have deterministic CI validation against silent
+    lower-precedence overwrite, duplicate publication IDs and URL/ID mismatch.
+  - >-
+    Promotion to IMMUTABLE_PRIMARY is mechanically blocked when bytes, retrieval timestamp or valid SHA-256 are missing.
+
+pending:
+  - obtain exact official bytes for FSB 539/546/547/548/553/554
+  - obtain exact downloadable artifacts for NKTsKI Order No. 2 dated 2026-07-14 and Initial Data dated 2026-07-08
+  - preserve exact bytes, retrieved_at and SHA-256
+  - bind existing clause-level evidence to artifact_id + sha256
+  - observe and record completion status of Official Publication Precedence Gate
+  - continue hash-pinned snapshots for dynamic FSTEC/FSB registers
+
+high_gap:
+  id: HIGH-IMMUTABLE-PROVENANCE
+  statement: >-
+    High-value FSB/NKTsKI artifacts and dynamic registers are not yet consistently preserved as exact immutable bytes with
+    retrieval timestamp and SHA-256. Executable source-precedence and manifest-integrity gates reduce wrong-binding risk but
+    do not satisfy immutable-primary evidence requirements.
+
+next_bottleneck: >-
+  Acquire exact official bytes for at least one pinned FSB or NKTsKI artifact, record retrieved_at + SHA-256, bind an existing
+  clause-level rule to artifact_id + hash, then red-team the complete acquisition-to-claim chain.
+
+readiness_guardrail: >-
+  Percentages remain unchanged. No immutable bytes were obtained; the single High blocker remains open, Red Team remains FAIL,
+  and EXPERT_READY remains false.
