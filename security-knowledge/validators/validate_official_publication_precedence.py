@@ -6,7 +6,7 @@ ROOT = Path(__file__).resolve().parents[2]
 FIXTURES = ROOT / 'security-knowledge/provenance/official-publication-precedence-regression-v1.yaml'
 MANIFEST = ROOT / 'security-knowledge/provenance/fsb-2025-gosopka-artifact-acquisition-manifest-v1.yaml'
 SHA256_RE = re.compile(r'^[0-9a-fA-F]{64}$')
-PUB_ID_RE = re.compile(r'^\d{19}$')
+PUB_ID_RE = re.compile(r'^\d{16}$')
 
 
 def evaluate(case):
