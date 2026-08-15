@@ -1,0 +1,21 @@
+name: Security Risk Pipeline Gate
+
+on:
+  push:
+    paths:
+      - 'security-knowledge/risk-methods/security-risk-pipeline-v1.yaml'
+      - 'security-knowledge/risk-methods/security-risk-pipeline-regression-v1.yaml'
+      - 'security-knowledge/validators/validate_security_risk_pipeline.py'
+      - '.github/workflows/security-risk-pipeline.yml'
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install pyyaml
+      - run: python security-knowledge/validators/validate_security_risk_pipeline.py
