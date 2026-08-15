@@ -1,0 +1,161 @@
+schema_version: "1.0"
+id: RISK-CRITERIA-SCHEMA-0001
+human_code: RISK.CRITERIA
+status: DRAFT_EXECUTABLE_CORE
+entity_type: RISK_CRITERIA
+purpose: >-
+  Define a stable, versioned, provenance-aware organization risk-criteria node. The core must not invent risk scales, thresholds, formulas, appetite, tolerance, or acceptance authority when an organization has not explicitly defined and approved them.
+
+authority_model:
+  default_authority_type: ORGANIZATION_DEFINED
+  external_guidance_may_inform: true
+  external_guidance_is_binding_by_default: false
+  binding_requires_separate_edge: true
+
+identity:
+  immutable_id_pattern: "RKC-[0-9]{6}"
+  human_code_pattern: "RISK.CRITERIA.<SCOPE>.<NAME>"
+  immutable_identity_rule: >-
+    Material changes to scale semantics, decision thresholds, assessment mapping, scope, or approval authority create a new version; the immutable entity identity remains stable and version history is retained.
+
+required_fields:
+  - immutable_id
+  - human_code
+  - version
+  - status
+  - authority_type
+  - source_reference
+  - source_provenance
+  - approval_evidence
+  - approved_by_role
+  - effective_from
+  - scope
+  - assessment_mode
+  - dimensions
+  - decision_bands
+  - review_rule
+  - observed_at
+
+optional_temporal_fields:
+  - effective_to
+  - review_due
+  - supersedes_version
+  - superseded_by_version
+
+scope_model:
+  required:
+    - organization_or_unit
+    - system_process_or_asset_scope
+  optional:
+    - risk_category
+    - information_type
+    - regulatory_context
+    - threat_family
+
+assessment_modes:
+  QUALITATIVE:
+    required_configuration:
+      - dimensions
+      - allowed_values_per_dimension
+      - explicit_mapping_table
+      - decision_bands
+    rule: >-
+      The mapping table is organization-defined or explicitly sourced. The engine must not synthesize a likelihood-impact matrix.
+  SEMI_QUANTITATIVE:
+    required_configuration:
+      - dimensions
+      - value_ranges_or_scales
+      - explicit_calculation_or_mapping
+      - decision_bands
+    rule: >-
+      A formula is executable only when its complete expression, variables, units, bounds, version and source are recorded. No universal probability-times-impact formula is embedded.
+  QUANTITATIVE:
+    required_configuration:
+      - quantities_and_units
+      - explicit_model_reference
+      - model_parameters_with_provenance
+      - uncertainty_treatment
+      - decision_bands
+    rule: "Missing units, parameters, model provenance or uncertainty treatment blocks a quantitative result."
+  SCENARIO_BASED:
+    required_configuration:
+      - scenario_definition_rules
+      - consequence_evaluation_rules
+      - comparison_rules
+      - decision_bands
+  EXPERT_ASSESSMENT:
+    required_configuration:
+      - expert_selection_rule
+      - elicitation_method
+      - aggregation_or_resolution_rule
+      - conflict_handling_rule
+      - decision_bands
+
+approval_and_decision_rights:
+  criteria_approval:
+    requires:
+      - approved_by_role
+      - approval_evidence
+      - approval_date
+  risk_acceptance:
+    separate_from_criteria_approval: true
+    requires_explicit_decision_authority: true
+    rule: >-
+      Approval of risk criteria does not itself authorize acceptance of a particular residual risk unless a separate governance edge says so.
+
+temporal_rules:
+  - id: RKC-TEMP-001
+    rule: "Criteria cannot be used before effective_from."
+    fail_state: CRITERIA_NOT_YET_EFFECTIVE
+  - id: RKC-TEMP-002
+    rule: "Criteria cannot be used after effective_to when effective_to is defined."
+    fail_state: STALE_CRITERIA
+  - id: RKC-TEMP-003
+    rule: "A superseded version cannot be used for assessments performed after the successor version becomes effective."
+    fail_state: STALE_CRITERIA
+  - id: RKC-TEMP-004
+    rule: "Historical assessment must use the criteria version effective on assessment_date unless a documented retrospective rule explicitly requires otherwise."
+    fail_state: NEEDS_TEMPORAL_RESOLUTION
+  - id: RKC-TEMP-005
+    rule: "Unknown assessment_date blocks version routing when multiple temporal versions exist."
+    fail_state: NEEDS_TEMPORAL_RESOLUTION
+
+provenance_rules:
+  - id: RKC-PROV-001
+    rule: "Source reference alone is insufficient; source provenance and observed_at are required."
+  - id: RKC-PROV-002
+    rule: "Approval must be evidenced; an unapproved draft cannot emit an authoritative organizational risk decision."
+  - id: RKC-PROV-003
+    rule: "Every dimension, scale, threshold, matrix cell or calculation used by an adapter must resolve to the selected criteria version."
+
+explicit_machine_states:
+  - CRITERIA_READY
+  - NEEDS_RISK_CRITERIA
+  - NEEDS_CRITERIA_APPROVAL
+  - NEEDS_CRITERIA_PROVENANCE
+  - NEEDS_TEMPORAL_RESOLUTION
+  - CRITERIA_NOT_YET_EFFECTIVE
+  - STALE_CRITERIA
+  - CRITERIA_SCOPE_MISMATCH
+  - NEEDS_ASSESSMENT_METHOD
+  - NEEDS_MAPPING_CELL
+  - NEEDS_CALCULATION_DEFINITION
+  - VALUE_OUT_OF_SCALE
+  - NEEDS_DECISION_RIGHT
+  - CONFLICT
+
+red_team_guardrails:
+  - "Never upgrade an external guidance standard into a mandatory organizational risk threshold without an explicit binding or governance edge."
+  - "Never substitute a default matrix for missing organizational criteria."
+  - "Never silently clamp a value outside a declared scale."
+  - "Never choose between two concurrently effective conflicting criteria versions without a conflict-resolution record."
+  - "Never reuse current criteria for a historical assessment solely because they are current today."
+  - "Never treat criteria approver and residual-risk acceptance authority as identical unless explicitly modeled."
+
+integration:
+  upstream:
+    - security-knowledge/risk-methods/security-risk-pipeline-v1.yaml
+  downstream_expected:
+    - risk-assessment-adapter-qualitative
+    - risk-assessment-adapter-semi-quantitative
+    - treatment-and-acceptance-governance
