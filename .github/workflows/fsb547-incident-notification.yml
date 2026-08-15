@@ -1,0 +1,21 @@
+name: FSB 547 Incident Notification Gate
+
+on:
+  push:
+    paths:
+      - 'security-knowledge/governance/fsb547-incident-notification-workflow-v1.yaml'
+      - 'security-knowledge/governance/fsb547-incident-notification-workflow-regression-v1.yaml'
+      - 'security-knowledge/validators/validate_fsb547_incident_notification_workflow.py'
+      - '.github/workflows/fsb547-incident-notification.yml'
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install pyyaml
+      - run: python security-knowledge/validators/validate_fsb547_incident_notification_workflow.py
