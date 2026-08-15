@@ -1,0 +1,66 @@
+schema_version: "1.0"
+id: nkcki-2026-artifact-provenance-regression-v1
+cases:
+  - id: NKTSKI-PROV-REG-01
+    input:
+      bytes_preserved: false
+      sha256: null
+      retrieved_at: null
+      requested_status: IMMUTABLE_PRIMARY
+    expected: BLOCK_IMMUTABLE_PRIMARY
+  - id: NKTSKI-PROV-REG-02
+    input:
+      bytes_preserved: true
+      sha256: null
+      retrieved_at: "2026-08-15T10:00:00+03:00"
+      requested_status: IMMUTABLE_PRIMARY
+    expected: BLOCK_IMMUTABLE_PRIMARY
+  - id: NKTSKI-PROV-REG-03
+    input:
+      bytes_preserved: true
+      sha256: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      retrieved_at: null
+      requested_status: IMMUTABLE_PRIMARY
+    expected: BLOCK_IMMUTABLE_PRIMARY
+  - id: NKTSKI-PROV-REG-04
+    input:
+      bytes_preserved: true
+      sha256: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      retrieved_at: "2026-08-15T10:00:00+03:00"
+      requested_status: IMMUTABLE_PRIMARY
+    expected: ALLOW_IMMUTABLE_PRIMARY
+  - id: NKTSKI-PROV-REG-05
+    input:
+      source_kind: OFFICIAL_WEB_INDEX
+      bytes_preserved: false
+      requested_assertion: FIELD_LEVEL_SCHEMA_COMPLETE
+    expected: BLOCK_FIELD_LEVEL_COMPLETENESS
+  - id: NKTSKI-PROV-REG-06
+    input:
+      source_kind: SEARCH_ENGINE_EXCERPT
+      requested_status: IMMUTABLE_PRIMARY
+    expected: BLOCK_IMMUTABLE_PRIMARY
+  - id: NKTSKI-PROV-REG-07
+    input:
+      source_kind: THIRD_PARTY_MIRROR
+      requested_status: IMMUTABLE_PRIMARY
+    expected: BLOCK_IMMUTABLE_PRIMARY
+  - id: NKTSKI-PROV-REG-08
+    input:
+      source_kind: DYNAMIC_OFFICIAL_WEB_FORM
+      observed_at: null
+      requested_status: PRIMARY_WEB_OPERATIONAL_GUIDANCE
+    expected: REQUIRE_OBSERVATION_TIME
+  - id: NKTSKI-PROV-REG-09
+    input:
+      source_kind: DYNAMIC_OFFICIAL_WEB_FORM
+      observed_at: "2026-08-15T10:00:00+03:00"
+      requested_status: PRIMARY_WEB_OPERATIONAL_GUIDANCE
+    expected: ALLOW_TIME_BOUNDED_WEB_OBSERVATION
+  - id: NKTSKI-PROV-REG-10
+    input:
+      bytes_preserved: true
+      sha256: "not-a-sha256"
+      retrieved_at: "2026-08-15T10:00:00+03:00"
+      requested_status: IMMUTABLE_PRIMARY
+    expected: BLOCK_IMMUTABLE_PRIMARY
