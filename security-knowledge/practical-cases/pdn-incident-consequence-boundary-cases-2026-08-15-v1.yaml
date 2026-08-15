@@ -1,0 +1,271 @@
+case_pack_id: PDN-CONSEQUENCE-BOUNDARY-2026-08-15-V1
+observed_at: 2026-08-15
+status: EVIDENCE_BACKED_SYNTHETIC_CASES
+purpose: >
+  Practical boundary scenarios for testing the PDn incident consequence router. These are synthetic fact patterns
+  derived from verified statutory rules, not judicial precedents and not legal advice.
+source_anchors:
+  - id: 152FZ-ART21-P3_1
+    authority: Federal Law 152-FZ article 21 part 3.1
+    rule: initial regulator notification within 24 hours and internal-investigation results within 72 hours from incident detection as defined by the statute
+  - id: KOAP-13_11-P11
+    authority: KoAP RF article 13.11 part 11
+    rule: separate liability branch for failure or delay in incident notification
+  - id: KOAP-13_11-P12-14
+    authority: KoAP RF article 13.11 parts 12-14
+    rule: volume-based unlawful-transfer/access branches apply only absent signs of a criminal offense
+  - id: KOAP-13_11-P15
+    authority: KoAP RF article 13.11 part 15
+    rule: repeat-offense turnover branch requires proven prior administrative punishment predicate
+  - id: KOAP-13_11-P16
+    authority: KoAP RF article 13.11 part 16
+    rule: special-category PDn has a distinct branch
+  - id: KOAP-13_11-P17
+    authority: KoAP RF article 13.11 part 17
+    rule: biometric PDn has a distinct branch, except cases governed by article 13.11.3
+  - id: KOAP-13_11-P18
+    authority: KoAP RF article 13.11 part 18
+    rule: repeat-offense turnover branch for part 16/17 requires proven prior-punishment predicate
+  - id: UK-272_1
+    authority: UK RF article 272.1
+    rule: criminal-sign review requires facts of illegal use/transfer/collection/storage of computer information containing PDn obtained by unlawful access/interference or otherwise illegally
+
+routing_principles:
+  - Notification liability and liability for the underlying unlawful transfer/access are separate predicates; assess separately and never merge automatically.
+  - Large volume alone does not prove UK 272.1; criminal-sign facts must be established independently.
+  - Special-category and biometric facts must be tested before ordinary volume routing.
+  - Repeat-offense turnover sanctions require evidence of the legally relevant prior administrative punishment; similarity of incidents alone is insufficient.
+  - Civil, disciplinary and employee material-liability branches remain independent from KoAP/UK routing and require their own predicates and evidence.
+  - Unknown facts produce NEEDS_FACTS or NEEDS_CRIMINAL_REVIEW, never a guessed sanction.
+
+cases:
+  - id: CASE-PDN-001
+    title: Timely notification, ordinary PDn, 1500 subjects
+    facts:
+      breach_confirmed: true
+      rights_violation: true
+      initial_notification_hours: 8
+      investigation_notification_hours: 60
+      subjects: 1500
+      identifiers: 4000
+      special_category: false
+      biometric: false
+      criminal_signs_status: ABSENT_AFTER_REVIEW
+      prior_punishment_proven: false
+    expected:
+      notification_branch: COMPLIANT_NO_P11
+      underlying_branch: ASSESS_KOAP_13_11_P12
+      criminal_branch: CLOSED_AFTER_REVIEW
+      repeat_branch: NOT_APPLICABLE
+
+  - id: CASE-PDN-002
+    title: Late notification plus ordinary leak
+    facts:
+      breach_confirmed: true
+      rights_violation: true
+      initial_notification_hours: 30
+      subjects: 2500
+      identifiers: 12000
+      special_category: false
+      biometric: false
+      criminal_signs_status: ABSENT_AFTER_REVIEW
+    expected:
+      notification_branch: ASSESS_KOAP_13_11_P11
+      underlying_branch: ASSESS_KOAP_13_11_P12
+      composition_rule: ASSESS_SEPARATELY_DO_NOT_DEDUP_AUTOMATICALLY
+
+  - id: CASE-PDN-003
+    title: Volume threshold with criminal signs unresolved
+    facts:
+      breach_confirmed: true
+      subjects: 50000
+      identifiers: 300000
+      special_category: false
+      biometric: false
+      criminal_signs_status: NOT_REVIEWED
+    expected:
+      ordinary_volume_candidate: KOAP_13_11_P13
+      final_administrative_routing: BLOCKED
+      criminal_branch: NEEDS_CRIMINAL_REVIEW
+
+  - id: CASE-PDN-004
+    title: Large leak does not itself prove crime
+    facts:
+      breach_confirmed: true
+      subjects: 300000
+      identifiers: 2500000
+      evidence_of_illegal_acquisition_use_transfer_by_person: false
+      criminal_signs_status: INSUFFICIENT_FACTS
+    expected:
+      volume_candidate: KOAP_13_11_P14
+      uk_272_1: NOT_PROVEN_FROM_VOLUME_ALONE
+      next_state: NEEDS_CRIMINAL_REVIEW_OR_FACTS
+
+  - id: CASE-PDN-005
+    title: Special-category PDn overrides ordinary volume routing
+    facts:
+      breach_confirmed: true
+      subjects: 1500
+      identifiers: 1500
+      special_category: true
+      biometric: false
+      criminal_signs_status: ABSENT_AFTER_REVIEW
+    expected:
+      ordinary_volume_candidate: KOAP_13_11_P12
+      selected_underlying_branch: KOAP_13_11_P16
+      guard: DO_NOT_ROUTE_AS_ORDINARY_VOLUME_ONLY
+
+  - id: CASE-PDN-006
+    title: Biometric PDn requires biometric branch review
+    facts:
+      breach_confirmed: true
+      subjects: 900
+      identifiers: 900
+      special_category: false
+      biometric: true
+      article_13_11_3_facts: false
+      criminal_signs_status: ABSENT_AFTER_REVIEW
+    expected:
+      selected_underlying_branch: KOAP_13_11_P17
+      guard: CHECK_13_11_3_EXCEPTION_BEFORE_FINALIZATION
+
+  - id: CASE-PDN-007
+    title: Biometric case potentially governed by article 13.11.3
+    facts:
+      breach_confirmed: true
+      biometric: true
+      article_13_11_3_facts: UNKNOWN
+    expected:
+      part_17_finalization: BLOCKED
+      next_state: NEEDS_13_11_3_APPLICABILITY_REVIEW
+
+  - id: CASE-PDN-008
+    title: Alleged repeat incident without prior-punishment evidence
+    facts:
+      breach_confirmed: true
+      subjects: 20000
+      special_category: false
+      biometric: false
+      prior_similar_incident: true
+      prior_punishment_proven: false
+      criminal_signs_status: ABSENT_AFTER_REVIEW
+    expected:
+      turnover_branch_p15: NOT_PROVEN
+      underlying_branch: KOAP_13_11_P13
+      guard: INCIDENT_HISTORY_IS_NOT_PRIOR_PUNISHMENT
+
+  - id: CASE-PDN-009
+    title: Proven prior punishment allows repeat-offense review
+    facts:
+      breach_confirmed: true
+      subjects: 20000
+      prior_punishment_proven: true
+      prior_punishment_qualifies_for_p15: true
+      criminal_signs_status: ABSENT_AFTER_REVIEW
+    expected:
+      turnover_branch_p15: ASSESS_APPLICABILITY
+      turnover_base: NEEDS_FINANCIAL_EVIDENCE
+      guard: DO_NOT_CALCULATE_FROM_UNVERIFIED_REVENUE
+
+  - id: CASE-PDN-010
+    title: Special-category repeat requires part 18 predicate evidence
+    facts:
+      breach_confirmed: true
+      special_category: true
+      prior_punishment_proven: true
+      prior_punishment_qualifies_for_p18: UNKNOWN
+    expected:
+      underlying_branch: KOAP_13_11_P16
+      turnover_branch_p18: BLOCKED_NEEDS_PRIOR_PUNISHMENT_CLASSIFICATION
+
+  - id: CASE-PDN-011
+    title: Unknown detection time blocks notification SLA conclusion
+    facts:
+      breach_confirmed: true
+      rights_violation: true
+      detection_timestamp: UNKNOWN
+      notification_timestamp: KNOWN
+    expected:
+      notification_compliance: NEEDS_TRIGGER_TIME
+      guard: DO_NOT_INFER_24H_COMPLIANCE_FROM_CALENDAR_DATE_ONLY
+
+  - id: CASE-PDN-012
+    title: Primary notice timely, investigation notice late
+    facts:
+      breach_confirmed: true
+      initial_notification_hours: 10
+      investigation_notification_hours: 90
+    expected:
+      initial_24h_obligation: COMPLIANT
+      investigation_72h_obligation: NONCOMPLIANT_OR_LATE_FACT_PATTERN
+      koap_p11_final_qualification: NEEDS_LEGAL_REVIEW
+      guard: DO_NOT_COLLAPSE_24H_AND_72H_OBLIGATIONS
+
+  - id: CASE-PDN-013
+    title: Employee suspected from SIEM alert only
+    facts:
+      breach_confirmed: true
+      employee_alert: true
+      employee_fault_proven: false
+      direct_actual_damage_proven: false
+      full_material_liability_basis_proven: false
+    expected:
+      disciplinary_branch: NEEDS_EMPLOYEE_FACT_INVESTIGATION
+      material_liability_branch: NOT_PROVEN
+      guard: SIEM_ALERT_IS_EVIDENCE_INPUT_NOT_FINAL_EMPLOYEE_LIABILITY
+
+  - id: CASE-PDN-014
+    title: Organization fined; employee recovery not automatic
+    facts:
+      organization_administrative_penalty: true
+      employee_fault_proven: true
+      direct_actual_damage_proven: UNKNOWN
+      full_material_liability_basis_proven: UNKNOWN
+    expected:
+      employee_material_liability: NEEDS_TK_PREDICATES
+      guard: ORGANIZATION_FINE_DOES_NOT_AUTOMATICALLY_EQUAL_EMPLOYEE_DEBT
+
+  - id: CASE-PDN-015
+    title: Civil claim remains independent of administrative branch
+    facts:
+      breach_confirmed: true
+      subject_claimed_harm: true
+      administrative_branch_status: PENDING
+    expected:
+      civil_branch: ASSESS_INDEPENDENTLY
+      guard: DO_NOT_BLOCK_CIVIL_ANALYSIS_WAITING_FOR_KOAP_OUTCOME
+
+  - id: CASE-PDN-016
+    title: Processor discovers incident before operator
+    facts:
+      processing_on_behalf_of_operator: true
+      processor_detection_time_known: true
+      operator_awareness_later: true
+    expected:
+      statutory_trigger_analysis: NEEDS_EARLIEST_LEGALLY_RELEVANT_DETECTION_TIME
+      guard: DO_NOT_DEFAULT_CLOCK_START_TO_OPERATOR_INTERNAL_TICKET_TIME
+
+red_team_findings:
+  critical: []
+  high:
+    - id: HIGH-IMMUTABLE-PROVENANCE
+      status: OPEN
+      finding: High-value FSB/NKTsKI and dynamic-register sources still lack exact preserved bytes plus retrieved_at plus SHA-256 binding.
+  medium:
+    - id: MED-PDN-COMPOSITION-001
+      finding: The router must not assume whether part 11 and parts 12-18 merge, exclude or cumulate without qualification-specific legal review; machine action is separate assessment.
+    - id: MED-PDN-RKN-72H-001
+      finding: The 72-hour investigation obligation is statutory, but exact administrative qualification of every failure pattern must not be invented beyond verified KoAP text.
+    - id: MED-PDN-REPEAT-001
+      finding: Repeat-offense routing needs structured evidence of prior punishment, effective dates and qualifying article/part, not a boolean from incident history.
+    - id: MED-PDN-TURNOVER-001
+      finding: Turnover-sanction calculation requires provenance for revenue/capital base and period selection; no numeric sanction should be produced from unverified accounting inputs.
+    - id: MED-PDN-CASELAW-001
+      finding: Synthetic cases are not substitutes for court practice. Representative current judicial/administrative decisions remain PENDING and must be separately sourced and versioned.
+
+next_actions:
+  - Add structured PRIOR_ADMIN_PUNISHMENT evidence entity with article_part, decision_id, effective_date, status and provenance.
+  - Add TURNOVER_BASE evidence schema with accounting source, reporting period, currency, retrieval timestamp and reviewer.
+  - Add current court/practice cases only from authoritative judicial or regulator sources; keep them separate from normative rules.
+  - Convert this case pack into executable regression fixtures after validating expected state names against the current consequence-router validator.
+  - Keep HIGH-IMMUTABLE-PROVENANCE open until exact primary bytes are hash-pinned.
