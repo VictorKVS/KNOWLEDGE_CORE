@@ -1,0 +1,22 @@
+name: PDn GK TK Liability Routing Gate
+
+on:
+  push:
+    paths:
+      - 'security-knowledge/legal-consequences/pdn-gk-tk-liability-routing-regression-v1.json'
+      - 'security-knowledge/validators/validate_pdn_gk_tk_liability_routing.py'
+      - '.github/workflows/pdn-gk-tk-liability-routing.yml'
+  pull_request:
+    paths:
+      - 'security-knowledge/legal-consequences/pdn-gk-tk-liability-routing-regression-v1.json'
+      - 'security-knowledge/validators/validate_pdn_gk_tk_liability_routing.py'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python security-knowledge/validators/validate_pdn_gk_tk_liability_routing.py
