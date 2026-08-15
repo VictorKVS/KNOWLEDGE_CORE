@@ -1,0 +1,25 @@
+name: FSB 547 Response Plan Workflow Gate
+
+on:
+  push:
+    paths:
+      - 'security-knowledge/governance/fsb547-response-plan-decision-workflow-v1.yaml'
+      - 'security-knowledge/governance/fsb547-response-plan-decision-workflow-regression-v1.yaml'
+      - 'security-knowledge/validators/validate_fsb547_response_plan_workflow.py'
+      - '.github/workflows/fsb547-response-plan-workflow.yml'
+  pull_request:
+    paths:
+      - 'security-knowledge/governance/fsb547-response-plan-decision-workflow-v1.yaml'
+      - 'security-knowledge/governance/fsb547-response-plan-decision-workflow-regression-v1.yaml'
+      - 'security-knowledge/validators/validate_fsb547_response_plan_workflow.py'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install pyyaml
+      - run: python security-knowledge/validators/validate_fsb547_response_plan_workflow.py
