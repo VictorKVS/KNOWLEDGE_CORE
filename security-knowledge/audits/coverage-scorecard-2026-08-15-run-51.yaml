@@ -1,0 +1,71 @@
+run_id: 51
+observed_at: "2026-08-15"
+strict_scope_policy: FIXED_MASTER_INVENTORY_NO_INFLATION
+
+overall_strict_percent: 10
+key_domains_percent:
+  russian_npa: 10
+  gost_gost_r_iso: 10
+  classification_categorization: 10
+  fstec_threat_method_bdu: 10
+  risk_methods: 10
+  koap_uk_gk_tk: 10
+  szi_skzi_license_lifecycle: 10
+  roles_deadlines_liability: 10
+  evidence_audit: 10
+  practical_cases: 10
+
+quality_state:
+  critical_gaps: 0
+  high_gaps: 1
+  red_team: FAIL
+  expert_ready: false
+
+verified_this_run:
+  newly_added_normative_records: 0
+  reused_authoritative_verified_normative_rules: 9
+  internal_executable_models: 1
+  executable_regression_cases: 18
+  deterministic_validators: 1
+  ci_gates_added: 1
+  prior_ci_result:
+    workflow: FSB 547 Response Plan Workflow Gate
+    run_id: 31865824182
+    conclusion: success
+  new_ci_result:
+    workflow: FSB 547 Incident Notification Gate
+    conclusion: IN_PROGRESS_AT_OBSERVATION
+
+added_files:
+  - security-knowledge/governance/fsb547-incident-notification-workflow-v1.yaml
+  - security-knowledge/governance/fsb547-incident-notification-workflow-regression-v1.yaml
+  - security-knowledge/validators/validate_fsb547_incident_notification_workflow.py
+  - .github/workflows/fsb547-incident-notification.yml
+
+closed_or_reduced_gaps:
+  - The FSB 547 response-plan workflow from run 50 is now observed successful.
+  - Initial notification routing now distinguishes significant-CII incident 3h, other-CII incident 24h, covered-organ information-resource incident 24h and computer-attack 24h branches.
+  - Computer attack and computer incident are explicit distinct event types; significance does not incorrectly force the attack branch to 3h.
+  - Bank of Russia parallel reporting for the financial-sector branch is modeled as additional evidence, not a substitute for NKTsKI reporting.
+  - Post-response reporting is separated into 48h for significant-CII response results and 24h for covered-organ response results.
+  - Covered-organ recovery/operability completion has its own 24h notification branch.
+  - Internal approval delay is explicitly prohibited from extending external notification deadlines.
+  - Field-level payload completeness is not invented; exact NKTsKI format artifacts remain a provenance dependency.
+
+pending:
+  - observe final result of FSB 547 Incident Notification Gate before claiming CI PASS for this workflow
+  - bind notification workflow to exact NKTsKI 2026 field-level reporting formats and technical parameters
+  - connect submitted payload evidence to immutable source/schema versions
+  - add actual organization-specific escalation/decision-right instances without making them a condition that can suspend statutory deadlines
+  - immutable/hash-pinned primary provenance for high-value FSB/NKTsKI sources and dynamic registers
+
+high_gap:
+  id: HIGH-IMMUTABLE-PROVENANCE
+  statement: >-
+    High-value FSB/NKTsKI source artifacts and dynamic registers are not yet consistently preserved as exact immutable bytes with timestamp and SHA-256, so Red Team PASS and expert-ready status remain blocked.
+
+next_bottleneck: >-
+  Observe the incident-notification CI result, then bind the workflow to the exact NKTsKI 2026 reporting format/schema and evidence-package completeness without inventing unavailable field requirements; in parallel continue immutable SHA-256 provenance acquisition.
+
+readiness_guardrail: >-
+  Percentages remain unchanged because this run deepens executable workflow coverage but does not close family-wide provenance or master-inventory completeness. Red Team remains FAIL while the single High provenance blocker is open.
