@@ -1,0 +1,139 @@
+schema_version: "1.0"
+id: fsb547-response-plan-decision-workflow-regression-v1
+cases:
+  - id: FSB547-WF-001
+    input:
+      register_inclusion_date_present: false
+    expected: NEEDS_REGISTER_INCLUSION_DATE
+  - id: FSB547-WF-002
+    input:
+      register_inclusion_date_present: true
+      plan_age_days: 91
+      plan_present: false
+    expected: PLAN_90D_OVERDUE
+  - id: FSB547-WF-003
+    input:
+      register_inclusion_date_present: true
+      plan_age_days: 30
+      plan_present: true
+      plan_content_complete: false
+    expected: NEEDS_PLAN_CONTENT_EVIDENCE
+  - id: FSB547-WF-004
+    input:
+      register_inclusion_date_present: true
+      plan_age_days: 30
+      plan_present: true
+      plan_content_complete: true
+      approval_required: true
+      head_role_assignment_present: false
+    expected: NEEDS_HEAD_ROLE_ASSIGNMENT
+  - id: FSB547-WF-005
+    input:
+      register_inclusion_date_present: true
+      plan_age_days: 30
+      plan_present: true
+      plan_content_complete: true
+      approval_required: true
+      head_role_assignment_present: true
+      actor_is_head: false
+      valid_delegation_present: false
+    expected: NEEDS_DECISION_RIGHT
+  - id: FSB547-WF-006
+    input:
+      register_inclusion_date_present: true
+      plan_age_days: 30
+      plan_present: true
+      plan_content_complete: true
+      approval_required: true
+      head_role_assignment_present: true
+      actor_is_head: true
+      signed_approval_present: false
+    expected: NEEDS_SIGNED_APPROVAL
+  - id: FSB547-WF-007
+    input:
+      register_inclusion_date_present: true
+      plan_age_days: 30
+      plan_present: true
+      plan_content_complete: true
+      approval_required: true
+      head_role_assignment_present: true
+      actor_is_head: true
+      signed_approval_present: true
+      approval_date_present: false
+    expected: NEEDS_APPROVAL_DATE
+  - id: FSB547-WF-008
+    input:
+      register_inclusion_date_present: true
+      plan_age_days: 30
+      plan_present: true
+      plan_content_complete: true
+      approval_required: true
+      head_role_assignment_present: true
+      actor_is_head: true
+      signed_approval_present: true
+      approval_date_present: true
+      days_since_approval: 8
+      delivery_confirmation_present: false
+    expected: NKTSKI_COPY_7D_OVERDUE
+  - id: FSB547-WF-009
+    input:
+      register_inclusion_date_present: true
+      plan_age_days: 30
+      plan_present: true
+      plan_content_complete: true
+      approval_required: true
+      head_role_assignment_present: true
+      actor_is_head: true
+      signed_approval_present: true
+      approval_date_present: true
+      days_since_approval: 3
+      delivery_confirmation_present: false
+    expected: NEEDS_DELIVERY_EVIDENCE
+  - id: FSB547-WF-010
+    input:
+      register_inclusion_date_present: true
+      plan_age_days: 30
+      plan_present: true
+      plan_content_complete: true
+      approval_required: true
+      head_role_assignment_present: true
+      actor_is_head: true
+      signed_approval_present: true
+      approval_date_present: true
+      days_since_approval: 3
+      delivery_confirmation_present: true
+      annual_exercise_evidence_present: false
+    expected: NEEDS_ANNUAL_EXERCISE_EVIDENCE
+  - id: FSB547-WF-011
+    input:
+      register_inclusion_date_present: true
+      plan_age_days: 30
+      plan_present: true
+      plan_content_complete: true
+      approval_required: true
+      head_role_assignment_present: true
+      actor_is_head: true
+      signed_approval_present: true
+      approval_date_present: true
+      days_since_approval: 3
+      delivery_confirmation_present: true
+      annual_exercise_evidence_present: true
+      exercise_deficiencies_found: true
+      amendment_evidence_present: false
+    expected: NEEDS_PLAN_AMENDMENT_EVIDENCE
+  - id: FSB547-WF-012
+    input:
+      register_inclusion_date_present: true
+      plan_age_days: 30
+      plan_present: true
+      plan_content_complete: true
+      approval_required: true
+      head_role_assignment_present: true
+      actor_is_head: true
+      signed_approval_present: true
+      approval_date_present: true
+      days_since_approval: 3
+      delivery_confirmation_present: true
+      annual_exercise_evidence_present: true
+      exercise_deficiencies_found: false
+    expected: PASS
