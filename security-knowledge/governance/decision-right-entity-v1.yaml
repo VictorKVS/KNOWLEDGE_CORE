@@ -1,0 +1,152 @@
+schema_version: 1
+entity_type: DECISION_RIGHT
+purpose: >-
+  Model who is formally allowed to make a specific security-relevant decision, for which scope, during which time window, under which authority, with which limits and required evidence. This entity is reusable across risk, incidents, categorization, exceptions, product acceptance and document workflows.
+required_fields:
+  - decision_right_id
+  - decision_type
+  - actor_role
+  - scope
+  - authority_source
+  - provenance_type
+  - effective_from
+  - status
+  - evidence_refs
+fields:
+  decision_right_id:
+    rule: immutable_internal_id
+  decision_type:
+    examples:
+      - accept_residual_risk
+      - categorize_CII_object
+      - approve_security_exception
+      - declare_security_incident
+      - notify_regulator
+      - select_security_product
+      - approve_document
+      - destroy_document_or_data
+  actor_role:
+    rule: role_reference_not_job_title_text_only
+  actor_person:
+    optional: true
+    rule: person assignment may change without changing the stable decision-right identity
+  scope:
+    dimensions:
+      - organization
+      - legal_entity
+      - system
+      - information_asset
+      - business_process
+      - risk_class
+      - incident_class
+      - monetary_or_risk_ceiling
+      - geography
+  authority_source:
+    rule: reference_to_normative_internal_contractual_or_delegation_source
+  provenance_type:
+    allowed:
+      - NORMATIVE
+      - INTERNAL_DELEGATION
+      - CONTRACTUAL
+      - EMERGENCY_DELEGATION
+      - RECOMMENDATION_ONLY
+  effective_from:
+    type: date_or_datetime
+  effective_to:
+    optional: true
+  review_due:
+    optional: true
+  status:
+    allowed:
+      - DRAFT
+      - ACTIVE
+      - SUSPENDED
+      - EXPIRED
+      - REVOKED
+      - SUPERSEDED
+  authority_ceiling:
+    optional: true
+    examples:
+      - maximum_risk_level
+      - maximum_financial_impact
+      - allowed_decision_classes
+  conditions:
+    optional: true
+    examples:
+      - required_inputs_present
+      - quorum_met
+      - independent_review_present
+      - emergency_condition_active
+  prohibited_decisions:
+    optional: true
+  delegation:
+    optional: true
+    fields:
+      - delegation_allowed
+      - delegate_role
+      - delegation_source
+      - delegation_effective_from
+      - delegation_effective_to
+  substitute:
+    optional: true
+    rule: substitute authority must be separately evidenced or explicitly inherited by source
+  segregation_of_duties:
+    optional: true
+    rule: enforce only when proven by governing source or adopted control
+  evidence_refs:
+    examples:
+      - appointment_order
+      - power_of_attorney
+      - board_minutes
+      - approved_policy
+      - role_assignment_record
+      - contract_clause
+      - emergency_order
+  supersedes:
+    optional: true
+  superseded_by:
+    optional: true
+  notes:
+    optional: true
+fail_closed_states:
+  - NEEDS_AUTHORITY_SOURCE
+  - NEEDS_ROLE_ASSIGNMENT
+  - NEEDS_SCOPE_MATCH
+  - NEEDS_EFFECTIVE_DATE
+  - NEEDS_DECISION_RIGHT
+  - AUTHORITY_EXPIRED
+  - AUTHORITY_SUSPENDED
+  - AUTHORITY_REVOKED
+  - AUTHORITY_CEILING_EXCEEDED
+  - DECISION_NOT_ALLOWED
+  - NEEDS_DELEGATION_EVIDENCE
+  - NEEDS_SUBSTITUTE_EVIDENCE
+  - NEEDS_REQUIRED_INPUTS
+  - CONFLICTING_ACTIVE_AUTHORITIES
+expert_rules:
+  - Job title alone never proves decision authority.
+  - Responsibility for execution is not equivalent to authority to approve or accept risk.
+  - A normative obligation to perform an action does not automatically identify the internal person authorized to approve it.
+  - Delegation and substitution require their own provenance unless explicitly inherited from the authority source.
+  - Historical decisions are evaluated against the authority state effective at the decision timestamp.
+  - Missing effective_to does not by itself prove perpetual authority; review and revocation events must still be checked.
+  - Internal decision authority cannot override a mandatory external legal requirement.
+  - RECOMMENDATION_ONLY never creates binding approval authority.
+relations:
+  - ROLE_HAS_DECISION_RIGHT
+  - DECISION_RIGHT_APPLIES_TO_SCOPE
+  - DECISION_RIGHT_DERIVED_FROM_SOURCE
+  - DECISION_RIGHT_EVIDENCED_BY
+  - DECISION_RIGHT_SUPERSEDES
+  - DECISION_RIGHT_DELEGATED_TO
+  - DECISION_REQUIRES_RIGHT
+  - DECISION_EXERCISED_BY
+  - DECISION_VERIFIED_BY
+outputs:
+  - authorized_decision
+  - denied_decision
+  - missing_authority_finding
+  - authority_scope_conflict
+  - excessive_authority_finding
+  - expired_authority_finding
+  - decision_evidence_chain
