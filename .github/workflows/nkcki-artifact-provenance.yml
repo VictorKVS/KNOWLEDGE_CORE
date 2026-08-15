@@ -1,0 +1,26 @@
+name: NKTsKI Artifact Provenance Gate
+
+on:
+  push:
+    paths:
+      - 'security-knowledge/provenance/nkcki-2026-artifact-acquisition-manifest-v1.yaml'
+      - 'security-knowledge/provenance/nkcki-2026-artifact-provenance-regression-v1.yaml'
+      - 'security-knowledge/validators/validate_nkcki_artifact_provenance.py'
+      - '.github/workflows/nkcki-artifact-provenance.yml'
+  pull_request:
+    paths:
+      - 'security-knowledge/provenance/nkcki-2026-artifact-acquisition-manifest-v1.yaml'
+      - 'security-knowledge/provenance/nkcki-2026-artifact-provenance-regression-v1.yaml'
+      - 'security-knowledge/validators/validate_nkcki_artifact_provenance.py'
+      - '.github/workflows/nkcki-artifact-provenance.yml'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install pyyaml
+      - run: python security-knowledge/validators/validate_nkcki_artifact_provenance.py
