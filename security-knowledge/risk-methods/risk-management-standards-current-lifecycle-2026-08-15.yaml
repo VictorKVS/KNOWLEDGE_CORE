@@ -1,0 +1,78 @@
+schema_version: "1.0"
+id: risk-management-standards-current-lifecycle-2026-08-15
+observed_at: "2026-08-15"
+source_authority: ROSSTANDART_OFFICIAL_PORTAL
+scope: RISK_METHODS
+
+records:
+  - id: STD-RISK-31000-2019
+    designation: "ГОСТ Р ИСО 31000-2019"
+    title: "Менеджмент риска. Принципы и руководство"
+    status: CURRENT
+    effective_from: "2020-03-01"
+    replaces: "ГОСТ Р ИСО 31000-2010"
+    authority_type: NATIONAL_STANDARD_GUIDANCE
+    obligation_strength: GUIDANCE_UNLESS_INCORPORATED_BY_BINDING_SOURCE
+    source_url: "https://protect.gost.ru/gost/details/6a383140-61f9-458c-8663-e919a5782434"
+    verification: AUTHORITATIVE_VERIFIED
+
+  - id: STD-RISK-58771-2019
+    designation: "ГОСТ Р 58771-2019"
+    title: "Менеджмент риска. Технологии оценки риска"
+    status: CURRENT
+    effective_from: "2020-03-01"
+    replaces: "ГОСТ Р ИСО/МЭК 31010-2011"
+    authority_type: NATIONAL_STANDARD_GUIDANCE
+    obligation_strength: GUIDANCE_UNLESS_INCORPORATED_BY_BINDING_SOURCE
+    source_url: "https://protect.gost.ru/gost/details/f35f83b7-a9fd-453b-b1bd-e05035a5009c"
+    verification: AUTHORITATIVE_VERIFIED
+
+  - id: STD-RISK-31073-2024
+    designation: "ГОСТ Р ИСО 31073-2024"
+    title: "Менеджмент риска. Словарь"
+    status: CURRENT
+    effective_from: "2025-03-01"
+    replaces: "ГОСТ Р 51897-2021"
+    authority_type: NATIONAL_STANDARD_TERMINOLOGY
+    obligation_strength: TERMINOLOGY_REFERENCE_UNLESS_INCORPORATED_BY_BINDING_SOURCE
+    source_url: "https://protect.gost.ru/gost/details/727b82ca-119b-4d6e-bcd1-e2b422bae966"
+    verification: AUTHORITATIVE_VERIFIED
+
+  - id: STD-RISK-51897-2021
+    designation: "ГОСТ Р 51897-2021"
+    title: "Менеджмент риска. Термины и определения"
+    status: REPLACED
+    effective_from: "2022-03-01"
+    replaced_by: "ГОСТ Р ИСО 31073-2024"
+    current_for_new_decisions: false
+    historical_use: true
+    source_url: "https://protect.gost.ru/gost/details/d1cf8e2e-65aa-4fd0-975b-f0faf0971a49"
+    verification: AUTHORITATIVE_VERIFIED
+
+  - id: STD-RISK-31022-2025
+    designation: "ГОСТ Р ИСО 31022-2025"
+    title: "Менеджмент риска. Руководство по менеджменту правовых рисков"
+    status: CURRENT
+    effective_from: "2026-03-01"
+    authority_type: NATIONAL_STANDARD_GUIDANCE
+    obligation_strength: GUIDANCE_UNLESS_INCORPORATED_BY_BINDING_SOURCE
+    source_url: "https://protect.gost.ru/gost/details/ec0b035e-4832-4ba5-9eb0-f1ad59061d73"
+    verification: AUTHORITATIVE_VERIFIED
+
+model_rules:
+  - id: RISK-STD-RULE-001
+    rule: "For a current terminology decision on or after 2025-03-01, route to ГОСТ Р ИСО 31073-2024, not ГОСТ Р 51897-2021."
+  - id: RISK-STD-RULE-002
+    rule: "For historical evidence before 2025-03-01, do not rewrite the contemporaneous terminology reference to 31073-2024; preserve event-time context."
+  - id: RISK-STD-RULE-003
+    rule: "ГОСТ Р 58771-2019 is a current risk-assessment-techniques source, but its existence alone does not make a particular technique mandatory for an organization."
+  - id: RISK-STD-RULE-004
+    rule: "ГОСТ Р ИСО 31022-2025 may inform legal-risk management from 2026-03-01, but legal obligation requires a separate binding applicability edge."
+  - id: RISK-STD-RULE-005
+    rule: "Never convert CURRENT standard status into MANDATORY_FOR_ORG without an incorporated-by-law, contract, internal-policy or other binding edge."
+
+red_team_guardrails:
+  - "Do not use replaced ГОСТ Р 51897-2021 as the default current terminology source after 2025-03-01."
+  - "Do not use publication/current status of a national standard as proof of statutory obligation."
+  - "Do not collapse general risk-management guidance, assessment-technique guidance and legal-risk guidance into one obligation type."
+  - "Historical audit must select the standard state by event/configuration date, not audit date."
