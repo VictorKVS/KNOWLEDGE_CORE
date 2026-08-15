@@ -1,0 +1,62 @@
+scorecard_id: SECURITY-KB-RU-RUN-67
+observed_at: 2026-08-16
+scope_policy: STRICT_MASTER_INVENTORY_NO_INFLATION
+overall_percent: 10
+key_domains_percent:
+  npa_rf: 10
+  gost_iso: 10
+  classification_categorization: 10
+  threat_methodology_bdu: 10
+  risk_methods: 10
+  legal_consequences_koap_uk_gk_tk: 10
+  szi_skzi_license_lifecycle: 10
+  roles_deadlines_responsibility: 10
+  evidence_audit: 10
+  practical_cases: 10
+status:
+  critical_gaps: 0
+  high_gaps: 1
+  red_team: FAIL
+  expert_ready: false
+verified_this_run:
+  new_normative_records: 0
+  reverified_authoritative_rules: 4
+  executable_models: 1
+  regression_cases: 20
+  validators_added: 1
+  validators_corrected: 1
+  ci_gates_added: 1
+  immutable_primary_added: 0
+red_team_findings_fixed_this_run:
+  - id: RT-FIX-KOAP-4.1-3.4-2-001
+    severity_if_unfixed: HIGH
+    description: >
+      Existing turnover-sanction validator calculated the special mitigation amount from the
+      fixed 20/25 million statutory floor. KoAP 4.1 part 3.4-2 requires one tenth of the
+      case-specific minimum fine for the corresponding offense; where 1% of the proven
+      turnover/capital base exceeds the fixed floor, the case-specific minimum is higher.
+    correction: >
+      Mitigation now uses ordinary_min_rub / 10 and then applies the special 15 million floor
+      and 50 million ceiling. High-base boundary fixtures verify 40 million and 50 million outcomes.
+added:
+  - security-knowledge/legal-consequences/pdn-incident-consequence-router-v2.yaml
+  - security-knowledge/legal-consequences/pdn-incident-consequence-router-v2-regression-v1.json
+  - security-knowledge/validators/validate_pdn_incident_consequence_turnover_integration.py
+  - .github/workflows/pdn-consequence-turnover-integration.yml
+corrected:
+  - security-knowledge/legal-consequences/pdn-turnover-sanction-outcome-router-v1.yaml
+  - security-knowledge/validators/validate_pdn_turnover_sanction_outcome.py
+open_high:
+  - id: HIGH-IMMUTABLE-PROVENANCE
+    description: >
+      Exact primary bytes, retrieved_at timestamps and SHA-256 bindings are still missing
+      for high-value FSB/NKTsKI artifacts and selected dynamic registers.
+pending:
+  - completed status of PDn Consequence Turnover Integration Gate
+  - add the same high-base mitigation boundary cases to the legacy turnover-sanction regression suite
+  - authoritative judicial/regulatory practice for turnover sanctions
+  - immutable primary artifacts and hash binding
+next_bottleneck: >
+  Confirm CI for the integrated consequence-turnover route, then harden the legacy turnover-sanction
+  suite with high-base mitigation boundaries and proceed to authoritative judicial/regulatory practice;
+  in parallel continue the immutable-provenance High.
