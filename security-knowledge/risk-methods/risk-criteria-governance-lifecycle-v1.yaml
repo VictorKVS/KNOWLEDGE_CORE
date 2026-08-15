@@ -1,0 +1,76 @@
+schema_version: "1.0"
+id: RISK-CRITERIA-GOV-0001
+status: DRAFT_EXECUTABLE_CORE
+purpose: >-
+  Execute governance around organization-defined risk criteria without inventing legal review frequencies, approval roles, expiry, or residual-risk authority.
+
+entity_links:
+  criteria: RISK_CRITERIA
+  approval_evidence: EVIDENCE
+  approver_role: ROLE
+  decision_right: DECISION_RIGHT
+  residual_risk_acceptance: DECISION
+
+principles:
+  - approval of criteria and acceptance of a particular residual risk are separate decisions
+  - review_due is a review trigger, not automatic legal invalidity, unless an explicit governing rule defines expiry
+  - supersession is explicit and temporal; version number alone never proves which version governs an assessment
+  - ambiguous overlapping active criteria for the same scope fail closed as CONFLICT
+  - authority is proven by an applicable decision-right edge, not inferred from job title text
+
+criteria_states:
+  DRAFT: NEEDS_CRITERIA_APPROVAL
+  APPROVED: GOVERNANCE_CHECK_REQUIRED
+  RETIRED: STALE_CRITERIA
+  REVOKED: STALE_CRITERIA
+
+review_rules:
+  due_and_not_completed: NEEDS_REVIEW
+  due_with_completed_review_evidence: CONTINUE_GOVERNANCE_CHECK
+  no_review_due: CONTINUE_GOVERNANCE_CHECK
+  explicit_expiry_rule_reached: STALE_CRITERIA
+
+supersession_rules:
+  - id: RKC-GOV-SUP-001
+    rule: A successor must identify the predecessor and its effective date; the predecessor-to-successor link must be reciprocal when both records are available.
+    fail_state: NEEDS_VERSION_REVIEW
+  - id: RKC-GOV-SUP-002
+    rule: Two approved criteria versions simultaneously governing the same scope and date without an explicit precedence/resolution record are a conflict.
+    fail_state: CONFLICT
+  - id: RKC-GOV-SUP-003
+    rule: Historical assessment routing uses the version effective on assessment date and does not silently rewrite history with the current version.
+    fail_state: NEEDS_TEMPORAL_RESOLUTION
+
+decision_right_model:
+  required_for_residual_risk_acceptance:
+    - decision_right_id
+    - authority_scope
+    - authorized_role
+    - effective_from
+    - source_reference
+    - evidence_reference
+  optional:
+    - effective_to
+    - maximum_risk_band
+    - system_or_process_scope
+    - escalation_role
+  rules:
+    - actor role must match an applicable current decision-right edge
+    - authority scope must cover the requested risk acceptance
+    - if maximum_risk_band is defined, acceptance above it requires escalation
+    - criteria approver is not assumed to be residual-risk acceptance authority
+
+machine_states:
+  - GOVERNANCE_READY
+  - NEEDS_CRITERIA_APPROVAL
+  - NEEDS_REVIEW
+  - NEEDS_VERSION_REVIEW
+  - NEEDS_TEMPORAL_RESOLUTION
+  - NEEDS_DECISION_RIGHT
+  - NEEDS_ESCALATION
+  - STALE_CRITERIA
+  - CONFLICT
+  - ACCEPTANCE_VALID
+
+non_normative_notice: >-
+  This file is an internal executable governance model. It does not assert a universal statutory review interval, mandatory approver, acceptance threshold, or expiry rule. Such values require a separately proven applicable source or organization governance record.
