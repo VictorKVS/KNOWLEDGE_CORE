@@ -1,0 +1,23 @@
+{
+  "suite_id": "LEGAL-PDN-CONSEQUENCE-ROUTER-REGRESSION-V1",
+  "cases": [
+    {"id":"PCR-T01","facts":{"personal_data_involved":true,"criminal_signs_assessed":false,"processing_without_legal_basis":true},"expected":{"contains":["NEEDS_CRIMINAL_SIGNS_REVIEW"],"must_not_contain":["ADMIN_FINAL"]}},
+    {"id":"PCR-T02","facts":{"personal_data_involved":true,"criminal_signs_assessed":true,"criminal_signs_present":false,"processing_without_legal_basis":true},"expected":{"contains":["ROUTE_ADMINISTRATIVE_REVIEW"]}},
+    {"id":"PCR-T03","facts":{"personal_data_involved":true,"criminal_signs_assessed":true,"criminal_signs_present":true,"unlawfully_obtained_personal_data":true,"unlawful_use_transfer_collection_storage":true},"expected":{"contains":["ROUTE_UK_272_1_REVIEW"]}},
+    {"id":"PCR-T04","facts":{"personal_data_involved":true,"breach_or_leak":true,"special_category_data":true,"criminal_signs_assessed":false},"expected":{"contains":["NEEDS_CRIMINAL_SIGNS_REVIEW"],"must_not_contain":["ROUTE_UK_272_1_REVIEW"]}},
+    {"id":"PCR-T05","facts":{"personal_data_involved":true,"subject_rights_harm":true},"expected":{"contains":["ROUTE_CIVIL_REVIEW"]}},
+    {"id":"PCR-T06","facts":{"personal_data_involved":true,"employee_action_in_course_of_duties":true,"employee_duty_defined":false},"expected":{"contains":["NEEDS_EMPLOYEE_DUTY_FACT_FAULT_AND_PROCEDURE"]}},
+    {"id":"PCR-T07","facts":{"personal_data_involved":true,"employee_action_in_course_of_duties":true,"employee_duty_defined":true,"employee_breach_proven":true,"employee_fault_proven":false},"expected":{"contains":["NEEDS_EMPLOYEE_DUTY_FACT_FAULT_AND_PROCEDURE"]}},
+    {"id":"PCR-T08","facts":{"personal_data_involved":true,"employer_seeks_recovery_from_employee":true,"lost_profit_only":true},"expected":{"contains":["NEEDS_DIRECT_ACTUAL_DAMAGE_AND_LIABILITY_GROUND"],"must_not_contain":["FULL_EMPLOYEE_LIABILITY"]}},
+    {"id":"PCR-T09","facts":{"personal_data_involved":true,"employer_seeks_recovery_from_employee":true,"direct_actual_damage":true,"full_material_liability_ground":false},"expected":{"contains":["NEEDS_DIRECT_ACTUAL_DAMAGE_AND_LIABILITY_GROUND"],"must_not_contain":["FULL_EMPLOYEE_LIABILITY"]}},
+    {"id":"PCR-T10","facts":{"personal_data_involved":true,"criminal_signs_assessed":true,"criminal_signs_present":false,"processing_without_legal_basis":true,"subject_rights_harm":true},"expected":{"contains":["ROUTE_ADMINISTRATIVE_REVIEW","ROUTE_CIVIL_REVIEW"]}},
+    {"id":"PCR-T11","facts":{"personal_data_involved":true,"criminal_signs_assessed":true,"criminal_signs_present":true,"unlawfully_obtained_personal_data":true,"unlawful_use_transfer_collection_storage":true,"subject_rights_harm":true},"expected":{"contains":["ROUTE_UK_272_1_REVIEW","ROUTE_CIVIL_REVIEW"]}},
+    {"id":"PCR-T12","facts":{"personal_data_involved":true,"biometric_ebs_context":true,"biometric_security_failure":true},"expected":{"contains":["ROUTE_ADMINISTRATIVE_REVIEW"]}},
+    {"id":"PCR-T13","facts":{"personal_data_involved":true,"employee_action_in_course_of_duties":true,"employee_duty_defined":true,"employee_breach_proven":true,"employee_fault_proven":true,"written_explanation_requested":false},"expected":{"contains":["NEEDS_EMPLOYEE_DUTY_FACT_FAULT_AND_PROCEDURE"],"must_not_contain":["DISCIPLINARY_COMPLETE"]}},
+    {"id":"PCR-T14","facts":{"personal_data_involved":true,"employer_seeks_recovery_from_employee":true,"direct_actual_damage":true,"full_material_liability_ground":true},"expected":{"contains":["MATERIAL_LIABILITY_REVIEW_READY"],"must_not_contain":["FULL_EMPLOYEE_LIABILITY"]}},
+    {"id":"PCR-T15","facts":{"personal_data_involved":false},"expected":{"contains":["NOT_APPLICABLE_PDN_ROUTER"]}},
+    {"id":"PCR-T16","facts":{"personal_data_involved":true},"expected":{"contains":["NEEDS_FACTS"]}},
+    {"id":"PCR-T17","facts":{"personal_data_involved":true,"event_date":null,"processing_without_legal_basis":true},"expected":{"contains":["NEEDS_EVENT_DATE"]}},
+    {"id":"PCR-T18","facts":{"personal_data_involved":true,"criminal_signs_assessed":true,"criminal_signs_present":false,"processing_without_legal_basis":true,"employee_action_in_course_of_duties":true,"employee_duty_defined":true,"employee_breach_proven":true,"employee_fault_proven":true,"written_explanation_requested":true,"employer_seeks_recovery_from_employee":true,"direct_actual_damage":true,"full_material_liability_ground":false},"expected":{"contains":["ROUTE_ADMINISTRATIVE_REVIEW","DISCIPLINARY_REVIEW_READY","NEEDS_DIRECT_ACTUAL_DAMAGE_AND_LIABILITY_GROUND"]}}
+  ]
+}
