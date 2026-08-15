@@ -1,0 +1,78 @@
+slice_id: LEGAL-PDN-KOAP-13-11-10-18-2026-08-15
+status: AUTHORITATIVE_VERIFIED
+observed_at: 2026-08-15
+current_code_edition_observed: 2026-07-26
+primary_amending_law:
+  law: Federal Law 420-FZ of 2024-11-30
+  official_publication_id: '0001202411300011'
+  publication_date: 2024-11-30
+sources:
+  - authority: Official publication portal
+    ref: publication_id_0001202411300011
+  - authority: ConsultantPlus consolidated KoAP RF article 13.11
+    ref: current_article_text_observed_2026-08-15
+rules:
+  - id: KOAP-13.11-P10
+    part: 10
+    trigger: failure_or_late_notice_of_intent_to_process_personal_data_to_supervisory_authority
+    criminal_gate: false
+    legal_person_fine_rub: [100000, 300000]
+  - id: KOAP-13.11-P11
+    part: 11
+    trigger: failure_or_late_breach_notice_to_supervisory_authority_after_personal_data_transfer_access_event_affecting_subject_rights
+    criminal_gate: false
+    legal_person_fine_rub: [1000000, 3000000]
+  - id: KOAP-13.11-P12
+    part: 12
+    trigger: unlawful_transfer_access_1000_to_10000_subjects_or_10000_to_100000_identifiers
+    criminal_gate: true
+    legal_person_fine_rub: [3000000, 5000000]
+  - id: KOAP-13.11-P13
+    part: 13
+    trigger: unlawful_transfer_access_10000_to_100000_subjects_or_100000_to_1000000_identifiers
+    criminal_gate: true
+    legal_person_fine_rub: [5000000, 10000000]
+  - id: KOAP-13.11-P14
+    part: 14
+    trigger: unlawful_transfer_access_more_than_100000_subjects_or_more_than_1000000_identifiers
+    criminal_gate: true
+    legal_person_fine_rub: [10000000, 15000000]
+  - id: KOAP-13.11-P15
+    part: 15
+    trigger: repeat_after_prior_administrative_punishment_for_parts_12_14_16_18_or_part_15
+    criminal_gate: depends_on_underlying_composition
+    legal_person_sanction: turnover_1_to_3_percent
+    legal_person_min_rub: 20000000
+    legal_person_max_rub: 500000000
+  - id: KOAP-13.11-P16
+    part: 16
+    trigger: unlawful_transfer_access_of_special_category_personal_data
+    criminal_gate: false_in_article_text_but_separate_criminal_review_may_still_be_needed_on_facts
+    legal_person_fine_rub: [10000000, 15000000]
+  - id: KOAP-13.11-P17
+    part: 17
+    trigger: unlawful_transfer_access_of_biometric_personal_data_except_article_13_11_3_cases
+    criminal_gate: false_in_article_text_but_separate_criminal_review_may_still_be_needed_on_facts
+    legal_person_fine_rub: [15000000, 20000000]
+  - id: KOAP-13.11-P18
+    part: 18
+    trigger: repeat_after_prior_administrative_punishment_for_parts_12_17_or_part_18_where_current_event_is_part_16_or_17
+    criminal_gate: depends_on_underlying_facts
+    legal_person_sanction: turnover_1_to_3_percent
+    legal_person_min_rub: 25000000
+    legal_person_max_rub: 500000000
+guards:
+  - id: K10-18-G1
+    rule: Parts 12-14 explicitly require absence of criminally punishable conduct before administrative finalization.
+  - id: K10-18-G2
+    rule: Part 11 breach-notification liability is distinct from parts 12-18 liability for the underlying unlawful transfer/access event; both may require separate review.
+  - id: K10-18-G3
+    rule: Subject-count and identifier-count thresholds are alternative threshold dimensions and must not be merged into one guessed metric.
+  - id: K10-18-G4
+    rule: Special-category and biometric branches must not be reduced to ordinary volume brackets solely because affected counts are known.
+  - id: K10-18-G5
+    rule: Turnover sanctions require proof of repeat-offense predicates; a previous security incident alone is not sufficient.
+  - id: K10-18-G6
+    rule: Article 13.11.3 EBS/biometric-specific violations remain a separate applicability branch from part 17.
+  - id: K10-18-G7
+    rule: Sanction ranges are candidate legal consequences, not findings of guilt or final sanction calculations.
