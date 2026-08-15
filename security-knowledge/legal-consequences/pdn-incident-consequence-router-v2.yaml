@@ -1,0 +1,114 @@
+router_id: LEGAL-PDN-CONSEQUENCE-ROUTER-V2
+version: 2.0
+status: INTERNAL_EXECUTABLE_MODEL
+observed_at: 2026-08-16
+purpose: >
+  Extend the PDn incident consequence router with evidence-gated turnover-sanction routing
+  for KoAP 13.11 parts 15 and 18 while preserving independent criminal, civil and labor branches.
+
+verified_inputs:
+  base_router: pdn-incident-consequence-router-v1.yaml
+  turnover_router: pdn-turnover-sanction-outcome-router-v1.yaml
+  repeat_turnover_evidence: pdn-repeat-offense-turnover-evidence-model-v1.yaml
+  mitigation_model: pdn-koap-4-1-3-4-2-mitigation-model-v1.yaml
+
+source_anchors:
+  - source_id: FZ-420-2024
+    publication_id: '0001202411300011'
+    publication_date: 2024-11-30
+    status: AUTHORITATIVE_VERIFIED_METADATA
+  - source_id: KOAP-13.11-current
+    status: AUTHORITATIVE_CONSOLIDATED_TEXT
+  - source_id: KOAP-4.1-3.4-2-current
+    status: AUTHORITATIVE_CONSOLIDATED_TEXT
+
+required_event_facts:
+  - event_date
+  - personal_data_involved
+  - operator_or_covered_actor
+
+turnover_branch_inputs:
+  - koap_candidate_part
+  - prior_admin_punishment
+  - repeatability_period_status
+  - turnover_base
+  - mitigation_requested
+  - mitigation_conditions
+  - sanction_decision_at
+
+branch_order:
+  - CRIMINAL_SIGN_GATE
+  - ADMINISTRATIVE_COMPOSITION_REVIEW
+  - REPEAT_OFFENSE_GATE
+  - TURNOVER_BASE_GATE
+  - ORDINARY_TURNOVER_RANGE
+  - SPECIAL_MITIGATION_GATE
+  - CIVIL_REVIEW
+  - LABOR_DISCIPLINARY_REVIEW
+  - LABOR_MATERIAL_REVIEW
+
+routing_rules:
+  - id: PCR2-001
+    when: criminal_gated_composition_and_criminal_signs_unresolved
+    result: NEEDS_CRIMINAL_SIGNS_REVIEW
+    effect: block_administrative_finalization
+  - id: PCR2-002
+    when: koap_candidate_part_not_in_15_18
+    result: USE_NON_TURNOVER_ADMINISTRATIVE_ROUTE
+  - id: PCR2-003
+    when: koap_candidate_part_in_15_18_and_prior_punishment_not_proven
+    result: NEEDS_PRIOR_PUNISHMENT_EVIDENCE
+  - id: PCR2-004
+    when: prior_punishment_proven_but_repeatability_period_unresolved
+    result: NEEDS_REPEATABILITY_PERIOD_REVIEW
+  - id: PCR2-005
+    when: repeat_offense_proven_and_turnover_base_missing
+    result: NEEDS_TURNOVER_BASE
+  - id: PCR2-006
+    when: turnover_base_type_invalid
+    result: INVALID_TURNOVER_BASE_TYPE
+  - id: PCR2-007
+    when: repeat_offense_and_valid_turnover_base_proven
+    result: CALCULATE_ORDINARY_TURNOVER_RANGE
+    effect: range_is_not_a_guilt_finding_or_final_court_amount
+  - id: PCR2-008
+    when: mitigation_not_requested
+    result: ORDINARY_RANGE_ONLY
+  - id: PCR2-009
+    when: mitigation_requested_and_any_condition_unknown_or_missing
+    result: MITIGATION_NOT_PROVEN
+  - id: PCR2-010
+    when: aggravating_circumstances_unknown
+    result: NEEDS_AGGRAVATING_CIRCUMSTANCE_REVIEW
+  - id: PCR2-011
+    when: mitigation_evidence_created_after_sanction_decision
+    result: MITIGATION_NOT_PROVEN
+  - id: PCR2-012
+    when: all_special_mitigation_conditions_proven_before_decision
+    result: CALCULATE_SPECIAL_MITIGATED_OUTCOME
+  - id: PCR2-013
+    when: civil_harm_facts_present
+    result: ROUTE_CIVIL_REVIEW_IN_PARALLEL
+  - id: PCR2-014
+    when: employee_involvement_present
+    result: ROUTE_LABOR_BRANCHES_IN_PARALLEL
+
+non_equivalence_guards:
+  - Prior incident history is not prior administrative punishment.
+  - A prior punishment outside the applicable repeatability period does not establish repeat offense.
+  - Profit, contract value and incident loss are not turnover bases.
+  - Group revenue is not automatically the offender legal entity turnover base.
+  - A calculated statutory range is not a guilt finding and not a prediction of the exact final sanction.
+  - Mitigation is not a discretionary percentage discount; it requires every statutory condition.
+  - UNKNOWN aggravating circumstances are not equivalent to their absence.
+  - Administrative turnover sanctions do not prove civil liability or employee material liability.
+  - Civil compensation, labor discipline and material recovery remain independent evidence branches.
+
+completion_rule: >
+  The incident consequence assessment is CLOSED only when every applicable legal branch is
+  either resolved with evidence or explicitly NOT_APPLICABLE with a supported reason; turnover
+  sanction routing may not close while repeat-offense, turnover-base or mitigation evidence is unresolved.
+
+provenance_status:
+  immutable_primary: false
+  reason: exact primary bytes and SHA-256 are not yet bound to all clause-level records
