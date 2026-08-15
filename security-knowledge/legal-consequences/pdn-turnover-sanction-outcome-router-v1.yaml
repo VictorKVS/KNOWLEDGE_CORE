@@ -1,5 +1,5 @@
 model_id: PDN-TURNOVER-SANCTION-ROUTER-001
-version: 1.0
+version: 1.1
 status: VERIFIED_LOGIC_FROM_AUTHORITATIVE_RULES
 scope:
   articles:
@@ -28,7 +28,7 @@ source_anchors:
     authority: ConsultantPlus consolidated current text
     special_mitigation:
       applies_only_to_parts: [15, 18]
-      result_formula: ONE_TENTH_OF_STATUTORY_MINIMUM
+      result_formula: ONE_TENTH_OF_CASE_SPECIFIC_STATUTORY_MINIMUM
       floor_rub: 15000000
       ceiling_rub: 50000000
       conditions_must_be_simultaneous: true
@@ -91,8 +91,9 @@ routing:
       - INVALID_TURNOVER_BASE_TYPE
   - step: ORDINARY_SANCTION_RANGE
     formula: >
-      statutory_percent_range applied to proven turnover base, then statutory minimum and
-      maximum bounds for the relevant part are applied.
+      Apply the 1%-3% range to the proven turnover/capital base, then apply the statutory
+      minimum and maximum bounds for the relevant part. The resulting ordinary_min_rub is
+      the case-specific minimum fine for purposes of KoAP 4.1 part 3.4-2.
     output:
       - ordinary_min_rub
       - ordinary_max_rub
@@ -106,8 +107,8 @@ routing:
       - NEEDS_AGGRAVATING_CIRCUMSTANCE_REVIEW
   - step: MITIGATED_STATUTORY_OUTCOME
     formula: >
-      one tenth of the statutory minimum fine for the applicable offense, but not less than
-      15,000,000 RUB and not more than 50,000,000 RUB.
+      One tenth of the case-specific statutory minimum fine (ordinary_min_rub), then apply
+      the special floor of 15,000,000 RUB and ceiling of 50,000,000 RUB.
     output:
       - mitigated_statutory_amount_rub
 
@@ -121,6 +122,7 @@ non_equivalence_guards:
   - Generic security audit does not automatically prove ISPDn protection compliance.
   - UNKNOWN aggravating circumstances do not satisfy the absence condition.
   - Mitigation evidence produced after the sanction decision does not satisfy the statutory timing gate.
+  - The special mitigation amount must not be calculated from the fixed 20/25 million statutory floor alone when 1% of the proven base produces a higher case-specific minimum.
 
 red_team_guards:
   - id: RT-TURN-001
@@ -137,6 +139,9 @@ red_team_guards:
     expected: BLOCK
   - id: RT-TURN-005
     attack: use part_15 minimum for part_18
+    expected: BLOCK
+  - id: RT-TURN-006
+    attack: calculate mitigation from the fixed statutory floor instead of case-specific ordinary_min_rub
     expected: BLOCK
 
 provenance_status:
