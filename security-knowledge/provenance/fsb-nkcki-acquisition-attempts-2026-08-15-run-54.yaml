@@ -1,0 +1,93 @@
+run_id: 54
+observed_at: "2026-08-15T12:00:17+03:00"
+policy: FAIL_CLOSED_NO_STATUS_INFLATION
+purpose: >-
+  Record primary-artifact acquisition attempts separately from publication metadata so transient retrieval failures cannot be
+  mistaken for missing documents and cannot promote authoritative metadata to immutable primary evidence.
+
+source_state_rules:
+  - OFFICIAL_METADATA_VERIFIED does not imply BYTES_PRESERVED
+  - RETRIEVAL_TIMEOUT does not imply SOURCE_UNAVAILABLE_OR_REPEALED
+  - SEARCH_NO_RESULT does not imply DOCUMENT_ABSENT
+  - IMMUTABLE_PRIMARY requires exact official bytes, retrieved_at, and SHA-256
+  - third-party mirrors may assist discovery but may not satisfy the immutable-primary promotion gate
+
+fsb_attempts:
+  - artifact_id: FSB-539-2025-OFFICIAL-PDF
+    official_publication_id: "0001202512260014"
+    official_metadata_state: VERIFIED
+    acquisition_attempt: OFFICIAL_DOCUMENT_PAGE_OPEN
+    result: RETRIEVAL_TIMEOUT
+    bytes_preserved: false
+    sha256: null
+    immutable_status: PENDING_BYTES
+  - artifact_id: FSB-546-2025-OFFICIAL-PDF
+    official_publication_id: "0001202512300066"
+    official_metadata_state: VERIFIED
+    acquisition_attempt: OFFICIAL_DOCUMENT_PAGE_OPEN
+    result: RETRIEVAL_TIMEOUT
+    bytes_preserved: false
+    sha256: null
+    immutable_status: PENDING_BYTES
+  - artifact_id: FSB-547-2025-OFFICIAL-PDF
+    official_publication_id: "0001202512300064"
+    official_metadata_state: VERIFIED
+    acquisition_attempt: OFFICIAL_DOCUMENT_PAGE_OPEN
+    result: RETRIEVAL_TIMEOUT
+    bytes_preserved: false
+    sha256: null
+    immutable_status: PENDING_BYTES
+  - artifact_id: FSB-548-2025-OFFICIAL-PDF
+    official_publication_id: "0001202512300058"
+    official_metadata_state: VERIFIED
+    acquisition_attempt: OFFICIAL_DOCUMENT_PAGE_OPEN
+    result: RETRIEVAL_TIMEOUT
+    bytes_preserved: false
+    sha256: null
+    immutable_status: PENDING_BYTES
+  - artifact_id: FSB-553-2025-OFFICIAL-PDF
+    official_publication_id: "0001202512300059"
+    official_metadata_state: VERIFIED
+    acquisition_attempt: OFFICIAL_DOCUMENT_PAGE_OPEN
+    result: RETRIEVAL_TIMEOUT
+    bytes_preserved: false
+    sha256: null
+    immutable_status: PENDING_BYTES
+  - artifact_id: FSB-554-2025-OFFICIAL-PDF
+    official_publication_id: "0001202512300063"
+    official_metadata_state: VERIFIED
+    acquisition_attempt: OFFICIAL_DOCUMENT_PAGE_OPEN
+    result: RETRIEVAL_TIMEOUT
+    bytes_preserved: false
+    sha256: null
+    immutable_status: PENDING_BYTES
+
+nkcki_attempts:
+  - artifact_id: NKTSKI-ORDER-2-2026
+    artifact_date: "2026-07-14"
+    prior_inventory_state: OFFICIAL_INDEX_OBSERVED
+    acquisition_attempt: OFFICIAL_DOMAIN_TARGETED_SEARCH
+    result: SEARCH_NO_RESULT_IN_THIS_RUN
+    bytes_preserved: false
+    sha256: null
+    immutable_status: PENDING_BYTES
+  - artifact_id: NKTSKI-ATTACK-TYPE-INITIAL-DATA-2026-07-08
+    artifact_date: "2026-07-08"
+    prior_inventory_state: OFFICIAL_INDEX_OBSERVED
+    acquisition_attempt: OFFICIAL_DOMAIN_TARGETED_SEARCH
+    result: SEARCH_NO_RESULT_IN_THIS_RUN
+    bytes_preserved: false
+    sha256: null
+    immutable_status: PENDING_BYTES
+
+retry_and_review_policy:
+  - preserve exact publication IDs for FSB artifacts between attempts
+  - retry only against official publication resources or official redirects before considering archival fallback
+  - if official bytes are later obtained, compute SHA-256 before clause binding
+  - if observed page count or size differs from pinned metadata, open provenance review instead of silently accepting or rejecting
+  - for NKTsKI, resolve the official downloadable target before deriving any field-level reporting schema
+  - never convert a transient HTTP timeout into a legal-currentness conclusion
+
+red_team_effect: >-
+  This run improves evidence acquisition traceability and blocks false closure. It does not reduce the High gap count because
+  no exact official bytes were preserved and no immutable-primary record was created.
