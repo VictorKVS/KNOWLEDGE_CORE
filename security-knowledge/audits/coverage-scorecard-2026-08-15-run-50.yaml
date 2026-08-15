@@ -1,0 +1,70 @@
+run_id: 50
+observed_at: "2026-08-15"
+strict_scope_policy: FIXED_MASTER_INVENTORY_NO_INFLATION
+
+overall_strict_percent: 10
+key_domains_percent:
+  russian_npa: 10
+  gost_gost_r_iso: 10
+  classification_categorization: 10
+  fstec_threat_method_bdu: 10
+  risk_methods: 10
+  koap_uk_gk_tk: 10
+  szi_skzi_license_lifecycle: 10
+  roles_deadlines_liability: 10
+  evidence_audit: 10
+  practical_cases: 10
+
+quality_state:
+  critical_gaps: 0
+  high_gaps: 1
+  red_team: FAIL
+  expert_ready: false
+
+verified_this_run:
+  newly_added_normative_records: 0
+  reused_authoritative_verified_normative_rules: 6
+  internal_executable_models: 1
+  executable_regression_cases: 12
+  deterministic_validators: 1
+  ci_gates_added: 1
+  prior_ci_result:
+    workflow: Decision Right Gate
+    run_id: 31863283607
+    conclusion: success
+  new_ci_result:
+    workflow: FSB 547 Response Plan Workflow Gate
+    run_id: 31865824182
+    conclusion: IN_PROGRESS_AT_OBSERVATION
+
+added_files:
+  - security-knowledge/governance/fsb547-response-plan-decision-workflow-v1.yaml
+  - security-knowledge/governance/fsb547-response-plan-decision-workflow-regression-v1.yaml
+  - security-knowledge/validators/validate_fsb547_response_plan_workflow.py
+  - .github/workflows/fsb547-response-plan-workflow.yml
+
+closed_or_reduced_gaps:
+  - Decision Right Gate from run 49 is now observed successful.
+  - DECISION_RIGHT is reused in an end-to-end real normative workflow instead of remaining an isolated governance model.
+  - FSB 547 plan lifecycle now connects register inclusion, 90-calendar-day plan creation, head approval, seven-calendar-day NKTsKI transmittal, annual exercises and amendment evidence.
+  - The normative head-of-CII-subject approver role is separated from the organization-specific evidence proving which person currently occupies that role.
+  - Internal approval routing is explicitly prohibited from extending the external post-approval transmittal deadline.
+  - No numeric deadline is invented for amendment after exercise deficiencies because the verified source slice does not establish one for that trigger.
+
+pending:
+  - observe final result of FSB 547 Response Plan Workflow Gate before claiming CI PASS for this new workflow
+  - bind organization-specific head/delegation evidence to actual DECISION_RIGHT instances
+  - add document dependency/change-impact edges for response-plan amendments
+  - connect incident detection/reporting deadlines under FSB 547 to evidence-package completeness and regulator-notification workflow
+  - immutable/hash-pinned primary provenance for high-value FSB/NKTsKI sources and dynamic registers
+
+high_gap:
+  id: HIGH-IMMUTABLE-PROVENANCE
+  statement: >-
+    High-value FSB/NKTsKI source artifacts and dynamic registers are not yet consistently preserved as exact immutable bytes with timestamp and SHA-256, so Red Team PASS and expert-ready status remain blocked.
+
+next_bottleneck: >-
+  Observe the new FSB 547 workflow CI result, then extend the same end-to-end pattern to incident detection -> notification -> delivery evidence while preserving trigger-specific 3h/24h deadlines; in parallel continue attempts to obtain exact official FSB/NKTsKI bytes for immutable SHA-256 provenance.
+
+readiness_guardrail: >-
+  Percentages remain unchanged because this run improves executable depth and cross-layer integration, not family-wide completion. The single High provenance blocker remains open and Red Team remains FAIL.
