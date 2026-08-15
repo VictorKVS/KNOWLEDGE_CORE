@@ -1,0 +1,121 @@
+manifest_id: PROV-FSB-GOSOPKA-2025-001
+observed_at: "2026-08-15"
+status: AUTHORITATIVE_PUBLICATION_METADATA_VERIFIED
+purpose: >-
+  Pin the exact official publication identities that must be acquired as immutable bytes before any record may be
+  promoted to IMMUTABLE_PRIMARY. Publication metadata is authoritative discovery evidence, not a substitute for the PDF bytes.
+
+promotion_rule:
+  immutable_primary_requires_all:
+    - exact_official_artifact_bytes_preserved
+    - retrieved_at_recorded
+    - sha256_valid_and_recorded
+  metadata_only_max_claim: AUTHORITATIVE_PUBLICATION_METADATA_VERIFIED
+  forbidden_shortcuts:
+    - publication_page_metadata_as_pdf_hash
+    - search_snippet_as_primary_clause_evidence
+    - third_party_mirror_as_official_bytes
+    - same_order_number_without_matching_publication_id
+
+artifacts:
+  - artifact_id: FSB-539-2025-OFFICIAL-PDF
+    authority: FSB_RUSSIA
+    order_number: 539
+    order_date: "2025-12-23"
+    registration_date: "2025-12-25"
+    minjust_registration_number: "84782"
+    official_publication_id: "0001202512260014"
+    publication_date: "2025-12-26"
+    observed_pdf_kb: 136
+    observed_pages: 4
+    official_document_url: "https://publication.pravo.gov.ru/document/0001202512260014"
+    bytes_preserved: false
+    sha256: null
+    immutable_status: PENDING_BYTES
+
+  - artifact_id: FSB-546-2025-OFFICIAL-PDF
+    authority: FSB_RUSSIA
+    order_number: 546
+    order_date: "2025-12-25"
+    registration_date: "2025-12-30"
+    minjust_registration_number: "84870"
+    official_publication_id: "0001202512300066"
+    publication_date: "2025-12-30"
+    observed_pdf_kb: 415
+    observed_pages: 8
+    official_document_url: "https://publication.pravo.gov.ru/document/0001202512300066"
+    bytes_preserved: false
+    sha256: null
+    immutable_status: PENDING_BYTES
+
+  - artifact_id: FSB-547-2025-OFFICIAL-PDF
+    authority: FSB_RUSSIA
+    order_number: 547
+    order_date: "2025-12-25"
+    registration_date: "2025-12-30"
+    minjust_registration_number: "84871"
+    official_publication_id: "0001202512300064"
+    publication_date: "2025-12-30"
+    observed_pdf_kb: 667
+    observed_pages: 12
+    official_document_url: "https://publication.pravo.gov.ru/document/0001202512300064"
+    bytes_preserved: false
+    sha256: null
+    immutable_status: PENDING_BYTES
+
+  - artifact_id: FSB-548-2025-OFFICIAL-PDF
+    authority: FSB_RUSSIA
+    order_number: 548
+    order_date: "2025-12-25"
+    registration_date: "2025-12-30"
+    minjust_registration_number: "84872"
+    official_publication_id: "0001202512300058"
+    publication_date: "2025-12-30"
+    observed_pdf_kb: 405
+    observed_pages: 8
+    official_document_url: "https://publication.pravo.gov.ru/document/0001202512300058"
+    bytes_preserved: false
+    sha256: null
+    immutable_status: PENDING_BYTES
+
+  - artifact_id: FSB-553-2025-OFFICIAL-PDF
+    authority: FSB_RUSSIA
+    order_number: 553
+    order_date: "2025-12-26"
+    registration_date: "2025-12-30"
+    minjust_registration_number: "84873"
+    official_publication_id: "0001202512300059"
+    publication_date: "2025-12-30"
+    observed_pdf_kb: 663
+    observed_pages: 12
+    official_document_url: "https://publication.pravo.gov.ru/document/0001202512300059"
+    bytes_preserved: false
+    sha256: null
+    immutable_status: PENDING_BYTES
+
+  - artifact_id: FSB-554-2025-OFFICIAL-PDF
+    authority: FSB_RUSSIA
+    order_number: 554
+    order_date: "2025-12-26"
+    registration_date: "2025-12-30"
+    minjust_registration_number: "84874"
+    official_publication_id: "0001202512300063"
+    publication_date: "2025-12-30"
+    observed_pdf_kb: 846
+    observed_pages: 17
+    official_document_url: "https://publication.pravo.gov.ru/document/0001202512300063"
+    bytes_preserved: false
+    sha256: null
+    immutable_status: PENDING_BYTES
+
+acquisition_acceptance_checks:
+  - downloaded artifact must originate from the official publication resource or an official redirect it controls
+  - publication_id must exactly match manifest
+  - page_count should match observed metadata; mismatch requires manual provenance review
+  - file size mismatch is a change signal, not automatic corruption, and requires re-observation
+  - sha256 must be computed over preserved exact bytes after acquisition
+  - extracted clause evidence must reference the artifact_id and sha256
+
+red_team_note: >-
+  This manifest reduces wrong-document and same-number collision risk but DOES NOT close HIGH-IMMUTABLE-PROVENANCE.
+  All six artifacts remain PENDING_BYTES until exact official bytes are preserved and hash-pinned.
