@@ -4,7 +4,9 @@ import yaml
 
 ROOT = Path(__file__).resolve().parents[2]
 FIXTURES = ROOT / 'security-knowledge/provenance/official-publication-precedence-regression-v1.yaml'
+MANIFEST = ROOT / 'security-knowledge/provenance/fsb-2025-gosopka-artifact-acquisition-manifest-v1.yaml'
 SHA256_RE = re.compile(r'^[0-9a-fA-F]{64}$')
+PUB_ID_RE = re.compile(r'^\d{19}$')
 
 
 def evaluate(case):
@@ -31,6 +33,41 @@ def evaluate(case):
     return 'AUTHORITATIVE_PUBLICATION_METADATA_VERIFIED'
 
 
+def validate_manifest():
+    manifest = yaml.safe_load(MANIFEST.read_text(encoding='utf-8'))
+    artifacts = manifest.get('artifacts', [])
+    if not artifacts:
+        return ['Manifest contains no artifacts']
+
+    failures = []
+    seen_ids = set()
+    for artifact in artifacts:
+        aid = artifact.get('artifact_id', '<missing-artifact-id>')
+        pub_id = str(artifact.get('official_publication_id', ''))
+        url = artifact.get('official_document_url', '')
+        if not PUB_ID_RE.fullmatch(pub_id):
+            failures.append(f'{aid}: invalid official_publication_id {pub_id!r}')
+        if pub_id in seen_ids:
+            failures.append(f'{aid}: duplicate official_publication_id {pub_id}')
+        seen_ids.add(pub_id)
+        expected_suffix = f'/document/{pub_id}'
+        if not url.startswith('https://publication.pravo.gov.ru/') or expected_suffix not in url:
+            failures.append(f'{aid}: official_document_url does not bind to pinned publication id {pub_id}')
+
+        immutable = artifact.get('immutable_status') == 'IMMUTABLE_PRIMARY'
+        bytes_preserved = artifact.get('bytes_preserved') is True
+        sha256 = artifact.get('sha256')
+        retrieved_at = artifact.get('retrieved_at')
+        if immutable and not (
+            bytes_preserved
+            and retrieved_at
+            and isinstance(sha256, str)
+            and SHA256_RE.fullmatch(sha256)
+        ):
+            failures.append(f'{aid}: IMMUTABLE_PRIMARY without bytes + retrieved_at + valid SHA-256')
+    return failures
+
+
 def main():
     data = yaml.safe_load(FIXTURES.read_text(encoding='utf-8'))
     cases = data.get('cases', [])
@@ -44,9 +81,11 @@ def main():
         if got != expected:
             failures.append(f"{case['id']}: expected {expected}, got {got}")
 
+    failures.extend(validate_manifest())
+
     if failures:
         raise SystemExit('\n'.join(failures))
-    print(f'PASS: {len(cases)} official-publication provenance regression cases')
+    print(f'PASS: {len(cases)} provenance cases + pinned manifest identity checks')
 
 
 if __name__ == '__main__':
