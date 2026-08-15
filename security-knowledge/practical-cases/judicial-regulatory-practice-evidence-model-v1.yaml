@@ -1,0 +1,118 @@
+model_id: PRACTICE-EVIDENCE-0001
+version: 1.0
+status: INTERNAL_EXECUTABLE_MODEL
+purpose: >
+  Prevent secondary retellings, press articles, vendor notes, search snippets and synthetic examples
+  from being represented as authoritative judicial or regulator practice.
+
+practice_types:
+  - JUDICIAL_DECISION
+  - REGULATOR_DECISION
+  - REGULATOR_GUIDANCE
+  - ENFORCEMENT_STATISTICS
+  - SYNTHETIC_BOUNDARY_CASE
+
+required_common_fields:
+  - practice_id
+  - practice_type
+  - authority_name
+  - source_url
+  - source_tier
+  - observed_at
+  - status
+  - facts_scope
+  - legal_anchors
+  - proposition_limits
+
+judicial_decision_required_fields:
+  - court_name
+  - case_number
+  - decision_date
+  - document_type
+  - procedural_stage
+  - disposition
+  - cited_norms
+  - holding_summary
+  - appeal_status
+
+regulator_decision_required_fields:
+  - regulator_name
+  - decision_or_protocol_number
+  - decision_date
+  - cited_norms
+  - factual_basis
+  - disposition
+  - appeal_status
+
+source_tiers:
+  PRIMARY_OFFICIAL:
+    examples:
+      - official court document/card
+      - official regulator decision/publication
+    allowed_claim_level: AUTHORITATIVE_PRACTICE_VERIFIED
+  AUTHORITATIVE_SECONDARY:
+    examples:
+      - recognized legal database reproducing the act
+    allowed_claim_level: AUTHORITATIVE_SECONDARY_ONLY
+  SECONDARY:
+    examples:
+      - legal commentary
+      - media report
+      - vendor article
+    allowed_claim_level: DISCOVERY_ONLY
+  SEARCH_SNIPPET:
+    allowed_claim_level: DISCOVERY_ONLY
+  SYNTHETIC:
+    allowed_claim_level: TEST_ONLY
+
+immutable_promotion:
+  required:
+    - exact_bytes_preserved
+    - retrieved_at
+    - sha256
+  promoted_claim_level: IMMUTABLE_PRIMARY_PRACTICE
+
+fail_closed_rules:
+  - id: PRACTICE-GUARD-001
+    rule: Search result snippets MUST NOT establish case facts, holding or disposition.
+  - id: PRACTICE-GUARD-002
+    rule: Media or vendor summaries MUST NOT be labeled judicial practice.
+  - id: PRACTICE-GUARD-003
+    rule: A lower-court ruling MUST NOT be generalized as settled national practice without appeal/status context.
+  - id: PRACTICE-GUARD-004
+    rule: An appealed or cancelled act MUST retain its historical identity but MUST NOT be routed as current authoritative outcome.
+  - id: PRACTICE-GUARD-005
+    rule: Similar facts MUST NOT be treated as legally identical facts without explicit comparison dimensions.
+  - id: PRACTICE-GUARD-006
+    rule: A synthetic boundary case MUST NEVER be relabeled as a real enforcement case.
+  - id: PRACTICE-GUARD-007
+    rule: Absence of an accessible official case in a search pass MUST NOT be represented as absence of practice.
+  - id: PRACTICE-GUARD-008
+    rule: Sanction amount MUST retain the legal version and event date used by the deciding authority.
+  - id: PRACTICE-GUARD-009
+    rule: Turnover-sanction cases require explicit turnover-base evidence and repeat-offense evidence when relevant.
+  - id: PRACTICE-GUARD-010
+    rule: Practice facts and normative rules are separate graph entities; practice may interpret/application-test a rule but does not rewrite it.
+
+comparison_dimensions:
+  - event_date
+  - legal_version_at_event
+  - operator_role
+  - data_category
+  - affected_subject_count
+  - affected_record_count
+  - notification_behavior
+  - criminal_signs_gate
+  - prior_admin_punishment
+  - turnover_base
+  - mitigation_evidence
+  - aggravating_circumstances
+  - procedural_stage
+
+current_acquisition_note:
+  observed_at: 2026-08-16T02:04:17+03:00
+  finding: >
+    Targeted public search did not yield a directly verifiable official court decision for the new
+    turnover-sanction branches in this pass. This is recorded as NO_VERIFIED_OFFICIAL_CASE_ACQUIRED,
+    not as evidence that no such judicial practice exists.
+  status: NO_VERIFIED_OFFICIAL_CASE_ACQUIRED
