@@ -1,0 +1,64 @@
+run_id: 49
+observed_at: "2026-08-15"
+strict_scope_policy: FIXED_MASTER_INVENTORY_NO_INFLATION
+
+overall_strict_percent: 10
+key_domains_percent:
+  russian_npa: 10
+  gost_gost_r_iso: 10
+  classification_categorization: 10
+  fstec_threat_method_bdu: 10
+  risk_methods: 10
+  koap_uk_gk_tk: 10
+  szi_skzi_license_lifecycle: 10
+  roles_deadlines_liability: 10
+  evidence_audit: 10
+  practical_cases: 10
+
+quality_state:
+  critical_gaps: 0
+  high_gaps: 1
+  red_team: FAIL
+  expert_ready: false
+
+verified_this_run:
+  normative_records: 0
+  internal_executable_models: 1
+  executable_regression_cases: 14
+  deterministic_validators: 1
+  ci_gates_added: 1
+  ci_result:
+    workflow: Decision Right Gate
+    conclusion: NOT_YET_OBSERVED
+
+added_files:
+  - security-knowledge/governance/decision-right-entity-v1.yaml
+  - security-knowledge/governance/decision-right-regression-v1.yaml
+  - security-knowledge/validators/validate_decision_right.py
+  - .github/workflows/decision-right.yml
+
+closed_or_reduced_gaps:
+  - DECISION_RIGHT is now a reusable stable entity rather than a risk-only field
+  - role, scope, effective time, authority source, evidence and authority ceiling are separately testable
+  - delegation and substitution require explicit evidence and fail closed when absent
+  - recommendation-only provenance cannot create binding decision authority
+  - job title or executor responsibility alone cannot prove approval authority
+  - historical decisions are evaluated against authority effective at the decision timestamp
+
+pending:
+  - observe successful Decision Right Gate run before claiming CI PASS
+  - bind DECISION_RIGHT nodes to proven organization-specific appointment/delegation evidence
+  - connect decision-right checks to incident, categorization, exception, product acceptance and document workflows
+  - connect valid residual-risk acceptance to treatment/control/evidence closure
+  - immutable/hash-pinned primary provenance for high-value FSB/NKTsKI sources and dynamic registers
+
+high_gap:
+  id: HIGH-IMMUTABLE-PROVENANCE
+  statement: >-
+    High-value FSB/NKTsKI source artifacts and dynamic registers are not yet consistently preserved as exact immutable bytes with timestamp and SHA-256, so Red Team PASS and expert-ready status remain blocked.
+
+next_bottleneck: >-
+  Reuse DECISION_RIGHT in one end-to-end operational workflow (preferably incident/regulator notification or CII categorization) and verify the new CI gate, then return to the remaining High by obtaining immutable hash-pinned primary FSB/NKTsKI artifacts and registry snapshots.
+
+readiness_guardrail: >-
+  Percentages are deliberately unchanged. This run adds executable internal governance, not broad family-wide normative coverage, and CI success has not yet been observed.
