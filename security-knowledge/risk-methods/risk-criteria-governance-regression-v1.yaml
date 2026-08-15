@@ -1,0 +1,206 @@
+schema_version: "1.0"
+id: risk-criteria-governance-regression-v1
+cases:
+  - id: RKC-GOV-REG-001
+    input:
+      criteria_status: APPROVED
+      approval_evidence: EVD-APR-001
+      approval_date: "2026-01-10"
+      effective_from: "2026-02-01"
+      assessment_date: "2026-08-15"
+      review_due: "2027-01-10"
+      review_completed_evidence: null
+      conflicting_active_version: false
+      supersession_chain_valid: true
+      action: ASSESS
+    expected_status: GOVERNANCE_READY
+
+  - id: RKC-GOV-REG-002
+    input:
+      criteria_status: DRAFT
+      approval_evidence: null
+      action: ASSESS
+    expected_status: NEEDS_CRITERIA_APPROVAL
+
+  - id: RKC-GOV-REG-003
+    input:
+      criteria_status: APPROVED
+      approval_evidence: EVD-APR-001
+      effective_from: "2026-01-01"
+      assessment_date: "2026-08-15"
+      review_due: "2026-07-01"
+      review_completed_evidence: null
+      action: ASSESS
+    expected_status: NEEDS_REVIEW
+
+  - id: RKC-GOV-REG-004
+    input:
+      criteria_status: APPROVED
+      approval_evidence: EVD-APR-001
+      effective_from: "2026-01-01"
+      assessment_date: "2026-08-15"
+      review_due: "2026-07-01"
+      review_completed_evidence: EVD-REV-001
+      action: ASSESS
+    expected_status: GOVERNANCE_READY
+
+  - id: RKC-GOV-REG-005
+    input:
+      criteria_status: APPROVED
+      approval_evidence: EVD-APR-001
+      effective_from: "2026-01-01"
+      assessment_date: "2026-08-15"
+      conflicting_active_version: true
+      action: ASSESS
+    expected_status: CONFLICT
+
+  - id: RKC-GOV-REG-006
+    input:
+      criteria_status: APPROVED
+      approval_evidence: EVD-APR-001
+      effective_from: "2026-01-01"
+      assessment_date: "2026-08-15"
+      supersedes_version: "2"
+      supersession_chain_valid: false
+      action: ASSESS
+    expected_status: NEEDS_VERSION_REVIEW
+
+  - id: RKC-GOV-REG-007
+    input:
+      criteria_status: APPROVED
+      approval_evidence: EVD-APR-001
+      effective_from: "2026-09-01"
+      assessment_date: "2026-08-15"
+      action: ASSESS
+    expected_status: NEEDS_TEMPORAL_RESOLUTION
+
+  - id: RKC-GOV-REG-008
+    input:
+      criteria_status: RETIRED
+      approval_evidence: EVD-APR-OLD
+      assessment_date: "2026-08-15"
+      action: ASSESS
+    expected_status: STALE_CRITERIA
+
+  - id: RKC-GOV-REG-009
+    input:
+      criteria_status: APPROVED
+      approval_evidence: EVD-APR-001
+      effective_from: "2026-01-01"
+      assessment_date: "2026-08-15"
+      action: ACCEPT_RESIDUAL_RISK
+      actor_role: ROL-CISO-001
+      risk_band: HIGH
+      decision_right: null
+    expected_status: NEEDS_DECISION_RIGHT
+
+  - id: RKC-GOV-REG-010
+    input:
+      criteria_status: APPROVED
+      approval_evidence: EVD-APR-001
+      effective_from: "2026-01-01"
+      assessment_date: "2026-08-15"
+      action: ACCEPT_RESIDUAL_RISK
+      actor_role: ROL-CISO-001
+      requested_scope: SYS-001
+      risk_band: MEDIUM
+      decision_right:
+        decision_right_id: DR-0001
+        authorized_role: ROL-CISO-001
+        authority_scope: SYS-001
+        effective_from: "2026-01-01"
+        source_reference: POLICY-RISK-001
+        evidence_reference: EVD-DR-001
+        maximum_risk_band: HIGH
+    expected_status: ACCEPTANCE_VALID
+
+  - id: RKC-GOV-REG-011
+    input:
+      criteria_status: APPROVED
+      approval_evidence: EVD-APR-001
+      effective_from: "2026-01-01"
+      assessment_date: "2026-08-15"
+      action: ACCEPT_RESIDUAL_RISK
+      actor_role: ROL-RISK-COMMITTEE-001
+      requested_scope: SYS-001
+      risk_band: MEDIUM
+      decision_right:
+        decision_right_id: DR-0001
+        authorized_role: ROL-CISO-001
+        authority_scope: SYS-001
+        effective_from: "2026-01-01"
+        source_reference: POLICY-RISK-001
+        evidence_reference: EVD-DR-001
+        maximum_risk_band: HIGH
+    expected_status: NEEDS_DECISION_RIGHT
+
+  - id: RKC-GOV-REG-012
+    input:
+      criteria_status: APPROVED
+      approval_evidence: EVD-APR-001
+      effective_from: "2026-01-01"
+      assessment_date: "2026-08-15"
+      action: ACCEPT_RESIDUAL_RISK
+      actor_role: ROL-CISO-001
+      requested_scope: SYS-002
+      risk_band: MEDIUM
+      decision_right:
+        decision_right_id: DR-0001
+        authorized_role: ROL-CISO-001
+        authority_scope: SYS-001
+        effective_from: "2026-01-01"
+        source_reference: POLICY-RISK-001
+        evidence_reference: EVD-DR-001
+        maximum_risk_band: HIGH
+    expected_status: NEEDS_DECISION_RIGHT
+
+  - id: RKC-GOV-REG-013
+    input:
+      criteria_status: APPROVED
+      approval_evidence: EVD-APR-001
+      effective_from: "2026-01-01"
+      assessment_date: "2026-08-15"
+      action: ACCEPT_RESIDUAL_RISK
+      actor_role: ROL-CISO-001
+      requested_scope: SYS-001
+      risk_band: CRITICAL
+      decision_right:
+        decision_right_id: DR-0001
+        authorized_role: ROL-CISO-001
+        authority_scope: SYS-001
+        effective_from: "2026-01-01"
+        source_reference: POLICY-RISK-001
+        evidence_reference: EVD-DR-001
+        maximum_risk_band: HIGH
+    expected_status: NEEDS_ESCALATION
+
+  - id: RKC-GOV-REG-014
+    input:
+      criteria_status: APPROVED
+      approval_evidence: EVD-APR-001
+      effective_from: "2026-01-01"
+      assessment_date: "2026-08-15"
+      action: ACCEPT_RESIDUAL_RISK
+      actor_role: ROL-CISO-001
+      requested_scope: SYS-001
+      risk_band: LOW
+      decision_right:
+        decision_right_id: DR-0001
+        authorized_role: ROL-CISO-001
+        authority_scope: SYS-001
+        effective_from: "2026-09-01"
+        source_reference: POLICY-RISK-001
+        evidence_reference: EVD-DR-001
+        maximum_risk_band: HIGH
+    expected_status: NEEDS_DECISION_RIGHT
+
+  - id: RKC-GOV-REG-015
+    input:
+      criteria_status: APPROVED
+      approval_evidence: EVD-APR-001
+      effective_from: "2026-01-01"
+      assessment_date: "2026-08-15"
+      explicit_expiry_rule: true
+      effective_to: "2026-07-31"
+      action: ASSESS
+    expected_status: STALE_CRITERIA
