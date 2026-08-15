@@ -1,0 +1,78 @@
+schema_version: "1.0"
+id: coverage-scorecard-2026-08-15-run-45
+date: "2026-08-15"
+overall_strict_p0_percent: 10
+p0_families_registered: "12/12"
+critical_gaps: 0
+high_gaps: 1
+red_team: FAIL
+expert_ready: false
+
+family_scores:
+  npa_rf: 10
+  gost_iso: 10
+  classification_categorization: 10
+  threat_modeling_bdu: 10
+  risk_methods: 10
+  legal_consequences: 10
+  szi_skzi_license_lifecycle: 10
+  roles_deadlines_responsibility: 10
+  evidence_audit: 10
+  practical_cases: 10
+
+this_run:
+  focus: RISK_METHODS_CURRENT_STANDARDS_LIFECYCLE_AND_TEMPORAL_ROUTING
+  added_files:
+    - security-knowledge/risk-methods/risk-management-standards-current-lifecycle-2026-08-15.yaml
+    - security-knowledge/risk-methods/risk-management-standards-temporal-regression-v1.yaml
+    - security-knowledge/validators/validate_risk_management_standards_temporal.py
+    - .github/workflows/risk-management-standards-temporal.yml
+  commits:
+    lifecycle_slice: "851bdc73849af5184bee5dc04fd543361d3ecb44"
+    fixtures: "0afb8e213d8cba2cea92191838be83f20464d181"
+    validator: "879b8aca6b24d83c069b6036b235019d76f03eba"
+    workflow: "2ba01bcd03a3dcba775b17ff20848cb496b42d41"
+  authoritative_verified_records_added: 5
+  executable_regression_cases_added: 10
+  immutable_primary_clause_records_added: 0
+  prior_fsb_license_certificate_ci: "PASS run 31848798587"
+  new_risk_temporal_ci: "IN_PROGRESS run 31852517669"
+  maturity_claim: NO_FAMILY_PROMOTION
+
+verified:
+  - "ГОСТ Р ИСО 31000-2019 is CURRENT on the official Rosstandart portal, effective 2020-03-01, replacing ГОСТ Р ИСО 31000-2010."
+  - "ГОСТ Р 58771-2019 is CURRENT, effective 2020-03-01, replacing ГОСТ Р ИСО/МЭК 31010-2011."
+  - "ГОСТ Р ИСО 31073-2024 is CURRENT, effective 2025-03-01, replacing ГОСТ Р 51897-2021."
+  - "ГОСТ Р 51897-2021 is therefore not the default current terminology source after 2025-03-01, but remains relevant for historical event-time review."
+  - "ГОСТ Р ИСО 31022-2025 is CURRENT from 2026-03-01 and provides general legal-risk management guidance."
+  - "A standard's CURRENT status is not by itself proof that it is legally mandatory for a particular organization."
+  - "Previously added FSB License Certificate Routing Gate completed successfully: run 31848798587."
+
+pending:
+  - "observe completion of Risk Management Standards Temporal Gate run 31852517669"
+  - "add clause-level risk-process nodes: context, identification, analysis, evaluation, treatment, monitoring/review, recording/reporting with source-specific evidence"
+  - "map concrete security-risk methodologies and FSTEC threat methodology outputs into the generic risk-process graph without claiming a mandated formula where none exists"
+  - "capture immutable/hash-pinned standard artifacts where legally/technically obtainable"
+  - "resolve exact downloadable FSB/NKCKI primary bytes and SHA-256 for the umbrella High provenance blocker"
+
+red_team_findings:
+  verdict: FAIL
+  positives:
+    - "Current-versus-replaced terminology routing is now represented explicitly rather than relying on memory."
+    - "Legal-risk guidance is separated from statutory obligation and from technical risk-assessment methods."
+    - "Temporal fixtures include the exact 2025-03-01 and 2026-03-01 boundaries plus missing-date fail-closed behavior."
+  blockers:
+    - "The umbrella High blocker remains immutable/hash-pinned primary provenance for high-impact FSB/NKCKI sources and dynamic registry bytes."
+    - "Risk-methods family still lacks full clause-level method decomposition and mappings to security-specific risk decisions."
+    - "The new risk temporal workflow is not yet observed completed in this run."
+
+next_bottleneck:
+  - "confirm Risk Management Standards Temporal Gate result"
+  - "decompose current generic risk process and assessment-technique selection into atomic graph nodes with provenance"
+  - "map FSTEC threat-model outputs to risk inputs and decision evidence without inventing a universal numeric risk formula"
+  - "continue immutable FSB/NKCKI provenance work in parallel"
+
+promotion_decision:
+  family_promotion: false
+  reason: >-
+    Five authoritative lifecycle records and ten executable temporal/applicability fixtures were added, including correction of the obsolete current terminology reference ГОСТ Р 51897-2021. However this is still a current-status and routing slice rather than complete clause-level risk methodology coverage, and the umbrella immutable-primary provenance High remains open.
