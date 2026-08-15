@@ -1,0 +1,21 @@
+name: Risk Management Standards Temporal Gate
+
+on:
+  push:
+    paths:
+      - 'security-knowledge/risk-methods/risk-management-standards-current-lifecycle-2026-08-15.yaml'
+      - 'security-knowledge/risk-methods/risk-management-standards-temporal-regression-v1.yaml'
+      - 'security-knowledge/validators/validate_risk_management_standards_temporal.py'
+      - '.github/workflows/risk-management-standards-temporal.yml'
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install pyyaml
+      - run: python security-knowledge/validators/validate_risk_management_standards_temporal.py
