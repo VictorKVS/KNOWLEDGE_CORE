@@ -1,0 +1,85 @@
+schema_version: "1.0"
+id: coverage-scorecard-2026-08-15-run-47
+date: "2026-08-15"
+overall_strict_p0_percent: 10
+p0_families_registered: "12/12"
+critical_gaps: 0
+high_gaps: 1
+red_team: FAIL
+expert_ready: false
+
+family_scores:
+  npa_rf: 10
+  gost_iso: 10
+  classification_categorization: 10
+  threat_modeling_bdu: 10
+  risk_methods: 10
+  legal_consequences: 10
+  szi_skzi_license_lifecycle: 10
+  roles_deadlines_responsibility: 10
+  evidence_audit: 10
+  practical_cases: 10
+
+this_run:
+  focus: VERSIONED_RISK_CRITERIA_AND_TWO_EXECUTABLE_ASSESSMENT_ADAPTERS
+  added_files:
+    - security-knowledge/risk-methods/risk-criteria-schema-v1.yaml
+    - security-knowledge/risk-methods/risk-criteria-regression-v1.yaml
+    - security-knowledge/validators/validate_risk_criteria.py
+    - .github/workflows/risk-criteria.yml
+  commits:
+    schema: "ea751ce1f791e536b18a68bb07f7ba89783e363c"
+    fixtures: "d543aafb71f65494a9b5ad82f1fab1532cbd1c70"
+    validator: "dfb5a7354df6ae0b9df86681501120acbbc7c0f5"
+    workflow: "a5f8db9af9c9a524bb97cea5adb9917b234a3ea1"
+  executable_regression_cases_added: 14
+  executable_adapters_added: 2
+  authoritative_normative_records_added: 0
+  immutable_primary_clause_records_added: 0
+  risk_criteria_ci: "PASS run 31858244726"
+  maturity_claim: NO_FAMILY_PROMOTION
+
+verified:
+  - "RISK_CRITERIA is now a first-class versioned entity rather than a free-text field inside a risk assessment."
+  - "Organization-defined criteria require provenance and explicit approval evidence; external guidance is not treated as binding by default."
+  - "Temporal routing distinguishes not-yet-effective, expired/stale, historical-version ambiguity and scope mismatch."
+  - "The qualitative adapter consumes only an explicitly supplied organization mapping table; absent cells fail closed."
+  - "The semi-quantitative adapter executes only an explicitly supplied, source-referenced arithmetic definition with declared variables, units and bounds; no universal likelihood-times-impact formula exists in the core."
+  - "Conflicting simultaneously current criteria fail closed as CONFLICT."
+  - "Risk Criteria Gate completed successfully: run 31858244726."
+
+verified_counts:
+  internal_schema_records: 1
+  executable_regression_cases: 14
+  executable_adapter_types: 2
+  normative_claims_new_this_run: 0
+
+pending:
+  - "add approval-date and review-due boundary tests and make approval lifecycle fully executable"
+  - "add explicit supersedes/superseded-by version-chain regression cases"
+  - "add quantitative/scenario/expert adapters only when their method configuration and provenance are explicit"
+  - "connect criteria approval and residual-risk acceptance to the role/decision-right graph"
+  - "connect risk treatment to control applicability without converting guidance into binding requirements"
+  - "continue immutable/hash-pinned primary provenance for high-impact FSB/NKCKI sources and dynamic registry bytes"
+
+red_team_findings:
+  verdict: FAIL
+  positives:
+    - "Missing, draft, unprovenanced, temporally invalid, out-of-scope and conflicting criteria now have distinct fail-closed states."
+    - "Two different assessment styles are executable without embedding an undocumented universal scoring rule."
+    - "The validator safely restricts arithmetic expressions for the semi-quantitative adapter to declared variables and basic arithmetic."
+    - "The deterministic Risk Criteria Gate passed in GitHub Actions."
+  blockers:
+    - "The umbrella High blocker remains immutable/hash-pinned primary provenance for high-impact FSB/NKCKI sources and dynamic registry bytes."
+    - "Risk criteria governance is not complete until approval/review/supersession lifecycle and decision-right links are fully tested."
+    - "Fixed risk-method scope still lacks evidenced coverage of quantitative, scenario and expert-assessment adapters."
+
+next_bottleneck:
+  - "make risk-criteria approval, review_due and supersession lifecycle executable, including historical assessment routing"
+  - "link approved criteria to role/decision-right evidence for residual-risk acceptance"
+  - "then resume immutable FSB/NKCKI provenance work and dynamic-registry hash snapshots"
+
+promotion_decision:
+  family_promotion: false
+  reason: >-
+    The run materially improves risk-method safety by introducing a first-class versioned criteria entity, fourteen regression cases and two explicit executable adapters, and the dedicated CI gate passed. However approval/supersession governance, remaining assessment modes and the umbrella immutable-provenance High are still open; therefore no readiness percentage or family score is increased.
