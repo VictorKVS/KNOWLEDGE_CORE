@@ -1,0 +1,206 @@
+schema_version: 1
+fixture_set: DECISION_RIGHT_REGRESSION_V1
+cases:
+  - id: DR-001
+    description: active right, matching role, scope and time
+    input:
+      status: ACTIVE
+      actor_role: CISO_or_security_head
+      required_role: CISO_or_security_head
+      scope_match: true
+      decision_time: 2026-08-15T06:00:00+03:00
+      effective_from: 2026-01-01T00:00:00+03:00
+      effective_to: null
+      authority_source_present: true
+      evidence_present: true
+      authority_ceiling_ok: true
+      decision_allowed: true
+    expected: AUTHORIZED
+  - id: DR-002
+    description: job title or role mismatch cannot prove authority
+    input:
+      status: ACTIVE
+      actor_role: system_administrator
+      required_role: CISO_or_security_head
+      scope_match: true
+      decision_time: 2026-08-15T06:00:00+03:00
+      effective_from: 2026-01-01T00:00:00+03:00
+      authority_source_present: true
+      evidence_present: true
+      authority_ceiling_ok: true
+      decision_allowed: true
+    expected: NEEDS_DECISION_RIGHT
+  - id: DR-003
+    description: matching role but wrong system scope
+    input:
+      status: ACTIVE
+      actor_role: system_owner
+      required_role: system_owner
+      scope_match: false
+      decision_time: 2026-08-15T06:00:00+03:00
+      effective_from: 2026-01-01T00:00:00+03:00
+      authority_source_present: true
+      evidence_present: true
+      authority_ceiling_ok: true
+      decision_allowed: true
+    expected: NEEDS_SCOPE_MATCH
+  - id: DR-004
+    description: authority source missing
+    input:
+      status: ACTIVE
+      actor_role: risk_owner
+      required_role: risk_owner
+      scope_match: true
+      decision_time: 2026-08-15T06:00:00+03:00
+      effective_from: 2026-01-01T00:00:00+03:00
+      authority_source_present: false
+      evidence_present: true
+      authority_ceiling_ok: true
+      decision_allowed: true
+    expected: NEEDS_AUTHORITY_SOURCE
+  - id: DR-005
+    description: evidence of assignment missing
+    input:
+      status: ACTIVE
+      actor_role: risk_owner
+      required_role: risk_owner
+      scope_match: true
+      decision_time: 2026-08-15T06:00:00+03:00
+      effective_from: 2026-01-01T00:00:00+03:00
+      authority_source_present: true
+      evidence_present: false
+      authority_ceiling_ok: true
+      decision_allowed: true
+    expected: NEEDS_ROLE_ASSIGNMENT
+  - id: DR-006
+    description: decision before authority effective_from
+    input:
+      status: ACTIVE
+      actor_role: risk_owner
+      required_role: risk_owner
+      scope_match: true
+      decision_time: 2025-12-31T23:59:59+03:00
+      effective_from: 2026-01-01T00:00:00+03:00
+      authority_source_present: true
+      evidence_present: true
+      authority_ceiling_ok: true
+      decision_allowed: true
+    expected: NEEDS_EFFECTIVE_DATE
+  - id: DR-007
+    description: decision after explicit authority expiry
+    input:
+      status: EXPIRED
+      actor_role: risk_owner
+      required_role: risk_owner
+      scope_match: true
+      decision_time: 2026-08-15T06:00:00+03:00
+      effective_from: 2026-01-01T00:00:00+03:00
+      effective_to: 2026-07-31T23:59:59+03:00
+      authority_source_present: true
+      evidence_present: true
+      authority_ceiling_ok: true
+      decision_allowed: true
+    expected: AUTHORITY_EXPIRED
+  - id: DR-008
+    description: suspended authority cannot be exercised
+    input:
+      status: SUSPENDED
+      actor_role: incident_response_lead
+      required_role: incident_response_lead
+      scope_match: true
+      decision_time: 2026-08-15T06:00:00+03:00
+      effective_from: 2026-01-01T00:00:00+03:00
+      authority_source_present: true
+      evidence_present: true
+      authority_ceiling_ok: true
+      decision_allowed: true
+    expected: AUTHORITY_SUSPENDED
+  - id: DR-009
+    description: revoked authority cannot be exercised
+    input:
+      status: REVOKED
+      actor_role: CII_responsible_person
+      required_role: CII_responsible_person
+      scope_match: true
+      decision_time: 2026-08-15T06:00:00+03:00
+      effective_from: 2026-01-01T00:00:00+03:00
+      authority_source_present: true
+      evidence_present: true
+      authority_ceiling_ok: true
+      decision_allowed: true
+    expected: AUTHORITY_REVOKED
+  - id: DR-010
+    description: risk ceiling exceeded
+    input:
+      status: ACTIVE
+      actor_role: risk_owner
+      required_role: risk_owner
+      scope_match: true
+      decision_time: 2026-08-15T06:00:00+03:00
+      effective_from: 2026-01-01T00:00:00+03:00
+      authority_source_present: true
+      evidence_present: true
+      authority_ceiling_ok: false
+      decision_allowed: true
+    expected: AUTHORITY_CEILING_EXCEEDED
+  - id: DR-011
+    description: explicit prohibited decision blocks action
+    input:
+      status: ACTIVE
+      actor_role: security_administrator
+      required_role: security_administrator
+      scope_match: true
+      decision_time: 2026-08-15T06:00:00+03:00
+      effective_from: 2026-01-01T00:00:00+03:00
+      authority_source_present: true
+      evidence_present: true
+      authority_ceiling_ok: true
+      decision_allowed: false
+    expected: DECISION_NOT_ALLOWED
+  - id: DR-012
+    description: delegated actor without delegation evidence fails closed
+    input:
+      status: ACTIVE
+      actor_role: deputy_head_responsible_for_security
+      required_role: CISO_or_security_head
+      scope_match: true
+      decision_time: 2026-08-15T06:00:00+03:00
+      effective_from: 2026-01-01T00:00:00+03:00
+      authority_source_present: true
+      evidence_present: true
+      delegated: true
+      delegation_evidence_present: false
+      authority_ceiling_ok: true
+      decision_allowed: true
+    expected: NEEDS_DELEGATION_EVIDENCE
+  - id: DR-013
+    description: substitute without substitute evidence fails closed
+    input:
+      status: ACTIVE
+      actor_role: deputy_head_responsible_for_security
+      required_role: CISO_or_security_head
+      scope_match: true
+      decision_time: 2026-08-15T06:00:00+03:00
+      effective_from: 2026-01-01T00:00:00+03:00
+      authority_source_present: true
+      evidence_present: true
+      substitute: true
+      substitute_evidence_present: false
+      authority_ceiling_ok: true
+      decision_allowed: true
+    expected: NEEDS_SUBSTITUTE_EVIDENCE
+  - id: DR-014
+    description: recommendation-only provenance cannot create binding authority
+    input:
+      status: ACTIVE
+      actor_role: internal_audit
+      required_role: internal_audit
+      scope_match: true
+      decision_time: 2026-08-15T06:00:00+03:00
+      effective_from: 2026-01-01T00:00:00+03:00
+      authority_source_present: true
+      evidence_present: true
+      provenance_type: RECOMMENDATION_ONLY
+      authority_ceiling_ok: true
+      decision_allowed: true
+    expected: NEEDS_DECISION_RIGHT
