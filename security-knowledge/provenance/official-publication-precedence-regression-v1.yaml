@@ -1,0 +1,76 @@
+fixture_id: PROV-OFFICIAL-PUBLICATION-PRECEDENCE-REGRESSION-001
+policy_ref: security-knowledge/provenance/official-publication-source-precedence-v1.yaml
+manifest_ref: security-knowledge/provenance/fsb-2025-gosopka-artifact-acquisition-manifest-v1.yaml
+cases:
+  - id: direct_identity_matches_manifest
+    direct_publication_id: "0001202512300064"
+    aggregate_publication_id: "0001202512300064"
+    pinned_publication_id: "0001202512300064"
+    exact_bytes: false
+    retrieved_at: null
+    sha256: null
+    expected: AUTHORITATIVE_PUBLICATION_METADATA_VERIFIED
+  - id: aggregate_cannot_overwrite_direct_identity
+    direct_publication_id: "0001202512300059"
+    aggregate_publication_id: "0001202512300066"
+    pinned_publication_id: "0001202512300059"
+    exact_bytes: false
+    retrieved_at: null
+    sha256: null
+    expected: NEEDS_PROVENANCE_REVIEW
+  - id: same_order_number_different_publication_id_blocked
+    direct_publication_id: "0001202512300058"
+    aggregate_publication_id: "0001202512300064"
+    pinned_publication_id: "0001202512300058"
+    exact_bytes: false
+    retrieved_at: null
+    sha256: null
+    expected: NEEDS_PROVENANCE_REVIEW
+  - id: direct_unavailable_pinned_identity_retained
+    direct_publication_id: null
+    aggregate_publication_id: "0001202512300066"
+    pinned_publication_id: "0001202512300059"
+    exact_bytes: false
+    retrieved_at: null
+    sha256: null
+    expected: RETAIN_PINNED_METADATA_PENDING_REOBSERVATION
+  - id: metadata_never_promotes_without_bytes
+    direct_publication_id: "0001202512300064"
+    aggregate_publication_id: "0001202512300064"
+    pinned_publication_id: "0001202512300064"
+    exact_bytes: false
+    retrieved_at: "2026-08-15T13:58:30+03:00"
+    sha256: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    expected: AUTHORITATIVE_PUBLICATION_METADATA_VERIFIED
+  - id: bytes_without_timestamp_not_immutable
+    direct_publication_id: "0001202512300064"
+    aggregate_publication_id: "0001202512300064"
+    pinned_publication_id: "0001202512300064"
+    exact_bytes: true
+    retrieved_at: null
+    sha256: "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    expected: NOT_IMMUTABLE_PRIMARY
+  - id: bytes_without_hash_not_immutable
+    direct_publication_id: "0001202512300064"
+    aggregate_publication_id: "0001202512300064"
+    pinned_publication_id: "0001202512300064"
+    exact_bytes: true
+    retrieved_at: "2026-08-15T13:58:30+03:00"
+    sha256: null
+    expected: NOT_IMMUTABLE_PRIMARY
+  - id: malformed_hash_not_immutable
+    direct_publication_id: "0001202512300064"
+    aggregate_publication_id: "0001202512300064"
+    pinned_publication_id: "0001202512300064"
+    exact_bytes: true
+    retrieved_at: "2026-08-15T13:58:30+03:00"
+    sha256: "1234"
+    expected: NOT_IMMUTABLE_PRIMARY
+  - id: complete_immutable_evidence_promotes
+    direct_publication_id: "0001202512300064"
+    aggregate_publication_id: "0001202512300064"
+    pinned_publication_id: "0001202512300064"
+    exact_bytes: true
+    retrieved_at: "2026-08-15T13:58:30+03:00"
+    sha256: "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+    expected: IMMUTABLE_PRIMARY
