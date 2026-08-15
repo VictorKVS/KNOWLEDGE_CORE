@@ -1,4 +1,4 @@
-schema_version: "1.0"
+schema_version: "1.1"
 id: risk-management-standards-current-lifecycle-2026-08-15
 observed_at: "2026-08-15"
 source_authority: ROSSTANDART_OFFICIAL_PORTAL
@@ -59,6 +59,17 @@ records:
     source_url: "https://protect.gost.ru/gost/details/ec0b035e-4832-4ba5-9eb0-f1ad59061d73"
     verification: AUTHORITATIVE_VERIFIED
 
+  - id: STD-RISK-72254-2025
+    designation: "ГОСТ Р 72254-2025"
+    title: "Менеджмент риска. Руководящие указания по применению ГОСТ Р ИСО 31000-2019 в системах менеджмента"
+    status: CURRENT
+    effective_from: "2026-03-01"
+    authority_type: NATIONAL_STANDARD_GUIDANCE
+    obligation_strength: GUIDANCE_UNLESS_INCORPORATED_BY_BINDING_SOURCE
+    source_url: "https://protect.gost.ru/gost/details/6782022b-2fdc-45db-a9a0-f419bf25ec10"
+    verification: AUTHORITATIVE_VERIFIED
+    scope_note: "Guidance for integration/application of ГОСТ Р ИСО 31000-2019 in organizations using or implementing ISO/IEC management-system standards; does not itself define MSS requirements."
+
 model_rules:
   - id: RISK-STD-RULE-001
     rule: "For a current terminology decision on or after 2025-03-01, route to ГОСТ Р ИСО 31073-2024, not ГОСТ Р 51897-2021."
@@ -70,9 +81,12 @@ model_rules:
     rule: "ГОСТ Р ИСО 31022-2025 may inform legal-risk management from 2026-03-01, but legal obligation requires a separate binding applicability edge."
   - id: RISK-STD-RULE-005
     rule: "Never convert CURRENT standard status into MANDATORY_FOR_ORG without an incorporated-by-law, contract, internal-policy or other binding edge."
+  - id: RISK-STD-RULE-006
+    rule: "ГОСТ Р 72254-2025 is implementation guidance for applying 31000 in management systems; it must not be represented as a standalone statutory security-risk calculation formula."
 
 red_team_guardrails:
   - "Do not use replaced ГОСТ Р 51897-2021 as the default current terminology source after 2025-03-01."
   - "Do not use publication/current status of a national standard as proof of statutory obligation."
   - "Do not collapse general risk-management guidance, assessment-technique guidance and legal-risk guidance into one obligation type."
+  - "Do not infer a universal numeric risk formula from ГОСТ Р ИСО 31000-2019, ГОСТ Р 58771-2019 or ГОСТ Р 72254-2025."
   - "Historical audit must select the standard state by event/configuration date, not audit date."
