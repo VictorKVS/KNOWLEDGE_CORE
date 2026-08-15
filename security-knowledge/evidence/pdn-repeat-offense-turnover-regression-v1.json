@@ -1,0 +1,253 @@
+{
+  "fixture_set_id": "PDN-REPEAT-TURNOVER-REGRESSION-0001",
+  "version": "1.0",
+  "cases": [
+    {
+      "id": "PAP-01",
+      "type": "prior_admin_punishment",
+      "input": {
+        "target_part": 15,
+        "prior_part": 12,
+        "entered_into_force_date": "2026-01-10",
+        "execution_completed_date": "2026-02-01",
+        "new_offense_date": "2026-08-15"
+      },
+      "expected": "VERIFIED_ACTIVE_SUBJECTED_PERIOD"
+    },
+    {
+      "id": "PAP-02",
+      "type": "prior_admin_punishment",
+      "input": {
+        "target_part": 15,
+        "prior_part": 11,
+        "entered_into_force_date": "2026-01-10",
+        "execution_completed_date": "2026-02-01",
+        "new_offense_date": "2026-08-15"
+      },
+      "expected": "NEEDS_RELEVANCE_REVIEW"
+    },
+    {
+      "id": "PAP-03",
+      "type": "prior_admin_punishment",
+      "input": {
+        "target_part": 18,
+        "prior_part": 17,
+        "entered_into_force_date": "2026-01-10",
+        "execution_completed_date": "2026-02-01",
+        "new_offense_date": "2026-08-15"
+      },
+      "expected": "VERIFIED_ACTIVE_SUBJECTED_PERIOD"
+    },
+    {
+      "id": "PAP-04",
+      "type": "prior_admin_punishment",
+      "input": {
+        "target_part": 18,
+        "prior_part": 10,
+        "entered_into_force_date": "2026-01-10",
+        "execution_completed_date": "2026-02-01",
+        "new_offense_date": "2026-08-15"
+      },
+      "expected": "NEEDS_RELEVANCE_REVIEW"
+    },
+    {
+      "id": "PAP-05",
+      "type": "prior_admin_punishment",
+      "input": {
+        "target_part": 15,
+        "prior_part": 14,
+        "execution_completed_date": "2026-02-01",
+        "new_offense_date": "2026-08-15"
+      },
+      "expected": "NEEDS_DECISION_FORCE_DATE"
+    },
+    {
+      "id": "PAP-06",
+      "type": "prior_admin_punishment",
+      "input": {
+        "target_part": 15,
+        "prior_part": 14,
+        "entered_into_force_date": "2024-01-10",
+        "execution_completed_date": "2024-02-01",
+        "new_offense_date": "2026-08-15"
+      },
+      "expected": "VERIFIED_OUTSIDE_SUBJECTED_PERIOD"
+    },
+    {
+      "id": "PAP-07",
+      "type": "prior_admin_punishment",
+      "input": {
+        "target_part": 15,
+        "prior_part": 12,
+        "entered_into_force_date": "2026-01-10",
+        "new_offense_date": "2026-08-15"
+      },
+      "expected": "NEEDS_EXECUTION_EVIDENCE"
+    },
+    {
+      "id": "TOV-01",
+      "type": "turnover_base",
+      "input": {
+        "entity_type": "LEGAL_ENTITY",
+        "violation_detected_date": "2026-08-15",
+        "has_prior_year_sales": true,
+        "base_type": "PRIOR_CALENDAR_YEAR_REVENUE_FROM_ALL_GOODS_WORKS_SERVICES",
+        "source_period": "2025",
+        "source_amount": 1000000000,
+        "source_currency": "RUB",
+        "source_document_id": "FS-2025-001",
+        "reviewer": "REV-001"
+      },
+      "expected": "VERIFIED"
+    },
+    {
+      "id": "TOV-02",
+      "type": "turnover_base",
+      "input": {
+        "entity_type": "LEGAL_ENTITY",
+        "violation_detected_date": "2026-08-15",
+        "has_prior_year_sales": true,
+        "base_type": "CURRENT_YEAR_PRE_DETECTION_PERIOD_REVENUE_IF_NO_PRIOR_YEAR_SALES",
+        "source_period": "2026-01-01/2026-08-15",
+        "source_amount": 100000000,
+        "source_currency": "RUB",
+        "source_document_id": "FS-2026-YTD",
+        "reviewer": "REV-001"
+      },
+      "expected": "NEEDS_PERIOD_REVIEW"
+    },
+    {
+      "id": "TOV-03",
+      "type": "turnover_base",
+      "input": {
+        "entity_type": "LEGAL_ENTITY",
+        "violation_detected_date": "2026-08-15",
+        "has_prior_year_sales": false,
+        "base_type": "CURRENT_YEAR_PRE_DETECTION_PERIOD_REVENUE_IF_NO_PRIOR_YEAR_SALES",
+        "source_period": "2026-01-01/2026-08-15",
+        "source_amount": 100000000,
+        "source_currency": "RUB",
+        "source_document_id": "FS-2026-YTD",
+        "reviewer": "REV-001"
+      },
+      "expected": "VERIFIED"
+    },
+    {
+      "id": "TOV-04",
+      "type": "turnover_base",
+      "input": {
+        "entity_type": "CREDIT_INSTITUTION",
+        "violation_detected_date": "2026-08-15",
+        "base_type": "PRIOR_CALENDAR_YEAR_REVENUE_FROM_ALL_GOODS_WORKS_SERVICES",
+        "source_period": "2025",
+        "source_amount": 1000000000,
+        "source_currency": "RUB",
+        "source_document_id": "FS-2025-001",
+        "reviewer": "REV-001"
+      },
+      "expected": "NEEDS_ENTITY_TYPE_REVIEW"
+    },
+    {
+      "id": "TOV-05",
+      "type": "turnover_base",
+      "input": {
+        "entity_type": "CREDIT_INSTITUTION",
+        "violation_detected_date": "2026-08-15",
+        "base_type": "CREDIT_INSTITUTION_OWN_FUNDS_CAPITAL_AT_VIOLATION_DATE",
+        "source_period": "2026-08-15",
+        "source_amount": 1000000000,
+        "source_currency": "RUB",
+        "source_document_id": "CAP-2026-08-15",
+        "reviewer": "REV-001"
+      },
+      "expected": "VERIFIED"
+    },
+    {
+      "id": "TOV-06",
+      "type": "turnover_base",
+      "input": {
+        "entity_type": "LEGAL_ENTITY",
+        "violation_detected_date": "2026-08-15",
+        "has_prior_year_sales": true,
+        "base_type": "PRIOR_CALENDAR_YEAR_REVENUE_FROM_ALL_GOODS_WORKS_SERVICES",
+        "source_period": "2025",
+        "source_amount": 1000000000,
+        "source_currency": "USD",
+        "source_document_id": "FS-2025-001",
+        "reviewer": "REV-001"
+      },
+      "expected": "NEEDS_CURRENCY_REVIEW"
+    },
+    {
+      "id": "TOV-07",
+      "type": "turnover_base",
+      "input": {
+        "entity_type": "LEGAL_ENTITY",
+        "violation_detected_date": "2026-08-15",
+        "has_prior_year_sales": true,
+        "base_type": "PRIOR_CALENDAR_YEAR_REVENUE_FROM_ALL_GOODS_WORKS_SERVICES",
+        "source_period": "2025",
+        "source_amount": 1000000000,
+        "source_currency": "RUB",
+        "reviewer": "REV-001"
+      },
+      "expected": "NEEDS_ACCOUNTING_SOURCE"
+    },
+    {
+      "id": "CALC-01",
+      "type": "fine_range",
+      "input": {
+        "target_part": 15,
+        "repeat_status": "VERIFIED_ACTIVE_SUBJECTED_PERIOD",
+        "turnover_status": "VERIFIED",
+        "base_amount": 1000000000
+      },
+      "expected": {
+        "state": "STATUTORY_RANGE_ONLY",
+        "min_rub": 20000000,
+        "max_rub": 30000000
+      }
+    },
+    {
+      "id": "CALC-02",
+      "type": "fine_range",
+      "input": {
+        "target_part": 18,
+        "repeat_status": "VERIFIED_ACTIVE_SUBJECTED_PERIOD",
+        "turnover_status": "VERIFIED",
+        "base_amount": 1000000000
+      },
+      "expected": {
+        "state": "STATUTORY_RANGE_ONLY",
+        "min_rub": 25000000,
+        "max_rub": 30000000
+      }
+    },
+    {
+      "id": "CALC-03",
+      "type": "fine_range",
+      "input": {
+        "target_part": 15,
+        "repeat_status": "NEEDS_EXECUTION_EVIDENCE",
+        "turnover_status": "VERIFIED",
+        "base_amount": 1000000000
+      },
+      "expected": {
+        "state": "BLOCKED_REPEAT_EVIDENCE"
+      }
+    },
+    {
+      "id": "CALC-04",
+      "type": "fine_range",
+      "input": {
+        "target_part": 18,
+        "repeat_status": "VERIFIED_ACTIVE_SUBJECTED_PERIOD",
+        "turnover_status": "NEEDS_ACCOUNTING_SOURCE",
+        "base_amount": 1000000000
+      },
+      "expected": {
+        "state": "BLOCKED_TURNOVER_EVIDENCE"
+      }
+    }
+  ]
+}
