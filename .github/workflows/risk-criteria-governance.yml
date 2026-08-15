@@ -1,0 +1,21 @@
+name: Risk Criteria Governance Gate
+
+on:
+  push:
+    paths:
+      - 'security-knowledge/risk-methods/risk-criteria-governance-lifecycle-v1.yaml'
+      - 'security-knowledge/risk-methods/risk-criteria-governance-regression-v1.yaml'
+      - 'security-knowledge/validators/validate_risk_criteria_governance.py'
+      - '.github/workflows/risk-criteria-governance.yml'
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install pyyaml
+      - run: python security-knowledge/validators/validate_risk_criteria_governance.py
