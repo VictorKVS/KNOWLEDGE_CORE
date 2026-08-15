@@ -1,0 +1,107 @@
+model_id: LEG-PDN-ROUTING-0001
+version: 1.0
+observed_at: 2026-08-15
+purpose: >
+  Fail-closed routing between administrative consequences under KoAP RF article 13.11
+  and criminal-sign review under UK RF article 272.1 for personal-data incidents.
+
+sources:
+  - id: SRC-KOAP-13.11-CURRENT
+    authority: authoritative_legal_system
+    title: "КоАП РФ, статья 13.11"
+    observed_revision: "ред. от 26.07.2026"
+    url: "https://www.consultant.ru/document/cons_doc_LAW_34661/1f421640c6775ff67079ebde06a7d2f6d17b96db/"
+  - id: SRC-UK-272.1-CURRENT
+    authority: authoritative_legal_system
+    title: "УК РФ, статья 272.1"
+    observed_revision: "current as observed 2026-08-15"
+    url: "https://www.consultant.ru/document/cons_doc_LAW_10699/deefead19003ba8266e85fbf42fc31f60ed3c698/"
+  - id: SRC-420-FZ-2024
+    authority: official_publication
+    publication_id: "0001202411300011"
+  - id: SRC-421-FZ-2024
+    authority: official_publication
+    publication_id: "0001202411300012"
+
+routing_order:
+  - FACT_COMPLETENESS_GATE
+  - CRIMINAL_SIGNS_GATE
+  - ADMINISTRATIVE_PART_SELECTION
+  - RECIDIVISM_AND_SPECIAL_CATEGORY_GATE
+  - SANCTION_RANGE_LOOKUP
+  - HUMAN_LEGAL_REVIEW
+
+criminal_signs_gate:
+  rule: >
+    If facts may indicate illegal use, transfer, collection or storage of computer information
+    containing personal data obtained through unlawful access/interference or another illegal way,
+    the engine MUST return NEEDS_CRIMINAL_LAW_REVIEW before finalizing an administrative sanction.
+  reasons:
+    - KoAP 13.11 parts 12-14 expressly exclude acts containing signs of a criminally punishable act.
+    - UK 272.1 establishes criminal liability for specified illegal dealings with computer information containing personal data.
+  prohibited_inference: >
+    Presence of a leak, a large subject count, special-category data or biometric data alone does not prove UK 272.1.
+    Criminal qualification requires fact-specific legal assessment of the statutory elements.
+
+administrative_routes:
+  notification_of_processing:
+    koap_part: "13.11(10)"
+    trigger: failure_or_late_notice_of_intent_to_process
+  incident_notification:
+    koap_part: "13.11(11)"
+    trigger: failure_or_late_incident_notice_to_authority
+  unlawful_transfer_1k_10k_subjects_or_10k_100k_identifiers:
+    koap_part: "13.11(12)"
+    prerequisite: criminal_signs_absent_or_reviewed_not_established
+  unlawful_transfer_10k_100k_subjects_or_100k_1m_identifiers:
+    koap_part: "13.11(13)"
+    prerequisite: criminal_signs_absent_or_reviewed_not_established
+  unlawful_transfer_over_100k_subjects_or_over_1m_identifiers:
+    koap_part: "13.11(14)"
+    prerequisite: criminal_signs_absent_or_reviewed_not_established
+  repeat_large_transfer:
+    koap_part: "13.11(15)"
+    prerequisite: prior_administrative_punishment_in_referenced_parts
+  special_category_transfer:
+    koap_part: "13.11(16)"
+    guardrail: do_not_infer_criminal_offense_from_data_category_alone
+  biometric_transfer:
+    koap_part: "13.11(17)"
+    guardrail: check_exclusion_for_article_13_11_3
+  repeat_special_or_biometric_transfer:
+    koap_part: "13.11(18)"
+    prerequisite: prior_administrative_punishment_in_referenced_parts
+
+uk_272_1_fact_dimensions:
+  - computer_information_contains_personal_data
+  - source_or_acquisition_illegality
+  - unlawful_access_or_interference_or_other_illegal_way
+  - conduct_use_transfer_collection_storage
+  - minor_special_category_or_biometric_data
+  - qualifying_circumstances_parts_3_4
+  - grave_consequences_or_organized_group_part_5
+  - illegal_resource_creation_or_operation_part_6
+  - personal_family_needs_exclusion
+
+machine_states:
+  - ADMIN_ROUTE_AVAILABLE
+  - NEEDS_CRIMINAL_LAW_REVIEW
+  - NEEDS_FACTS
+  - NEEDS_RECURRENCE_EVIDENCE
+  - NEEDS_BIOMETRIC_SCOPE_REVIEW
+  - OUT_OF_SCOPE
+
+fail_closed_rules:
+  - id: LEG-GUARD-001
+    rule: Never output a final KoAP fine range when criminal-sign facts are unresolved for a route that excludes criminally punishable conduct.
+  - id: LEG-GUARD-002
+    rule: Never infer UK 272.1 solely from record count, special-category status, biometric status or existence of a security incident.
+  - id: LEG-GUARD-003
+    rule: Never infer repeat-offense parts without evidence of prior administrative punishment satisfying the statutory reference set.
+  - id: LEG-GUARD-004
+    rule: Keep KoAP 13.11(11) incident-notification failure separate from KoAP 13.11(12-18) unlawful-transfer consequences.
+  - id: LEG-GUARD-005
+    rule: Biometric routing must check the statutory exclusion referring to KoAP article 13.11.3.
+
+status: AUTHORITATIVE_VERIFIED_MODEL
+immutable_primary: false
