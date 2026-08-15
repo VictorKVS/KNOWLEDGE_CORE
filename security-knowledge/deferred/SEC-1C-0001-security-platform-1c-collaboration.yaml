@@ -1,0 +1,131 @@
+schema_version: 1
+initiative_id: SEC-1C-0001
+title: Security Regulation Platform and 1C Collaboration
+title_ru: Интеграция веб-платформы Security Knowledge с контуром 1С
+status: DEFERRED
+parent_product: SEC-PROD-0001
+related_initiatives:
+  - SEC-APP-0001
+  - SEC-GAP-0001
+  - SEC-DEADLINE-0001
+  - SEC-ROLE-0001
+  - SEC-EVIDENCE-0001
+  - SEC-AUTODOC-0001
+  - SEC-DOCFLOW-0001
+  - SEC-COMP-0001
+decision:
+  recorded_at: 2026-08-16
+  owner: Viktor Kulichenko
+  intent: >
+    Построить публичный или корпоративный веб-интерфейс поверх доказательной Security Knowledge
+    и интегрировать его с подходящей системой на платформе 1С. Веб-платформа отвечает за
+    нормативную аналитику, применимость, расчеты, архитектурные варианты и объяснимые решения.
+    Контур 1С отвечает за управляемое исполнение: документы, поручения, роли, сроки, согласование,
+    ознакомление, контроль и доказательства выполнения.
+product_boundary:
+  web_platform:
+    responsibilities:
+      - organization profiling and applicability analysis
+      - requirement and obligation navigation
+      - compliance gap analysis
+      - role deadline and liability analytics
+      - architecture MIN OPTIMAL MAX comparison
+      - competency team equipment and TCO analytics
+      - regulatory change impact
+      - dashboards and management reports
+  one_c_contour:
+    responsibilities:
+      - document lifecycle
+      - orders instructions policies acts and protocols
+      - tasks assignments and deadlines
+      - approval and familiarization
+      - role and employee references
+      - execution confirmation
+      - evidence registration
+      - escalation and overdue control
+      - audit trail and management reporting
+  canonical_boundary: >
+    SEC-PROD-0001 remains the authoritative evidence and normative knowledge core.
+    1C is not the source of legal truth; it is the execution and document workflow system.
+integration_model:
+  preferred: API_AND_EVENT_DRIVEN
+  patterns_to_compare:
+    - REST API
+    - OData where justified
+    - asynchronous event exchange
+    - scheduled registry synchronization
+    - signed export import packages for isolated installations
+  required_controls:
+    - stable identifiers
+    - versioned contracts
+    - RBAC and ABAC
+    - least privilege
+    - mutual authentication where supported
+    - encryption in transit
+    - integrity and replay protection
+    - idempotency
+    - audit logging
+    - personal data minimization
+    - secret isolation
+    - conflict and retry handling
+    - Dev Prod separation
+one_c_candidates:
+  first_candidate:
+    name: 1C:Документооборот
+    rationale: >
+      Наиболее естественный первый кандидат для приказов, согласований, поручений,
+      ознакомления, сроков и подтверждений выполнения.
+    status: CANDIDATE_NOT_SELECTED
+  alternatives_to_assess:
+    - 1C:ERP
+    - 1C:ЗУП
+    - 1C:ITILIUM or another service management configuration
+    - existing customer-specific 1C configuration
+    - separate integration module for several 1C configurations
+selection_criteria:
+  - actual customer process map
+  - supported 1C version and configuration
+  - licensing and implementation cost
+  - API and extension capabilities
+  - data classes and security requirements
+  - on-premise and isolated deployment requirements
+  - vendor and integrator support
+  - upgrade compatibility
+  - customization and lock-in risk
+  - evidence and audit requirements
+activation_gate:
+  all_required:
+    - SEC-PROD-0001 normative MVP scope is complete and approved
+    - red-team has no unresolved CRITICAL or HIGH findings for the integration scope
+    - canonical Knowledge API contract exists
+    - target customer and 1C configuration are identified
+    - process and data-flow models are approved
+    - security threat model is approved
+    - TCO and alternatives analysis is completed
+  activation_authority: USER_EXPLICIT_DECISION
+  automatic_activation_forbidden: true
+planned_mvp:
+  flow:
+    - requirement selected in web platform
+    - applicable duty converted to controlled action
+    - draft document or task created in 1C
+    - responsible and accountable roles assigned
+    - deadline and required evidence transferred
+    - execution status and evidence returned
+    - compliance state recalculated in web platform
+  first_use_case: >
+    Нормативное требование → проект приказа/поручения → согласование и назначение в 1С
+    → контроль срока → доказательство выполнения → обновление статуса соответствия.
+risks:
+  - turning 1C into a duplicate normative knowledge source
+  - excessive customization of customer configurations
+  - weak API versioning
+  - personal data overcollection
+  - mismatch between legal responsibility and workflow assignment
+  - unreliable synchronization and duplicate tasks
+  - vendor lock-in
+  - unsupported extension after 1C platform update
+  - underestimation of implementation and support cost
+current_action: >
+  Preserve this plan only. Do not divert the active Security Knowledge automation.
+  Return to SEC-1C-0001 after completion of the normative Security Knowledge MVP.
