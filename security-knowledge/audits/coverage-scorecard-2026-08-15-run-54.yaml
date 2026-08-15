@@ -1,0 +1,76 @@
+run_id: 54
+observed_at: "2026-08-15"
+strict_scope_policy: FIXED_MASTER_INVENTORY_NO_INFLATION
+
+overall_strict_percent: 10
+key_domains_percent:
+  russian_npa: 10
+  gost_gost_r_iso: 10
+  classification_categorization: 10
+  fstec_threat_method_bdu: 10
+  risk_methods: 10
+  koap_uk_gk_tk: 10
+  szi_skzi_license_lifecycle: 10
+  roles_deadlines_liability: 10
+  evidence_audit: 10
+  practical_cases: 10
+
+quality_state:
+  critical_gaps: 0
+  high_gaps: 1
+  red_team: FAIL
+  expert_ready: false
+
+verified_this_run:
+  newly_added_normative_records: 0
+  authoritative_publication_metadata_records_reconfirmed: 6
+  immutable_primary_records_added: 0
+  acquisition_attempt_events_recorded: 8
+
+added_files:
+  - security-knowledge/provenance/fsb-nkcki-acquisition-attempts-2026-08-15-run-54.yaml
+
+confirmed_current_external_facts:
+  - "Official publication metadata still identifies FSB Order 539/2025 as publication 0001202512260014, 136 KB / 4 pages."
+  - "Official publication metadata still identifies FSB Order 546/2025 as publication 0001202512300066, 415 KB / 8 pages."
+  - "Official publication metadata still identifies FSB Order 547/2025 as publication 0001202512300064, 667 KB / 12 pages."
+  - "Official publication metadata still identifies FSB Order 548/2025 as publication 0001202512300058, 405 KB / 8 pages."
+  - "Official publication metadata still identifies FSB Order 553/2025 as publication 0001202512300059, 663 KB / 12 pages."
+  - "Official publication metadata still identifies FSB Order 554/2025 as publication 0001202512300063, 846 KB / 17 pages."
+
+acquisition_results:
+  fsb_official_page_attempts: 6
+  fsb_timeouts: 6
+  nkcki_targeted_search_attempts: 2
+  nkcki_search_no_result_this_run: 2
+  exact_bytes_preserved: 0
+  sha256_added: 0
+
+closed_or_reduced_gaps:
+  - >-
+    Acquisition failures are now first-class provenance events. A timeout or empty targeted search can no longer be interpreted
+    as document absence, repeal, or justification for promoting metadata-only evidence.
+  - >-
+    The immutable-primary gate remains explicit and unchanged: exact official bytes + retrieval timestamp + SHA-256 are mandatory.
+
+pending:
+  - retry exact official bytes acquisition for FSB 539/546/547/548/553/554
+  - resolve direct official downloadable targets for NKTsKI Order No. 2 dated 2026-07-14 and Initial Data dated 2026-07-08
+  - record retrieved_at and calculate SHA-256 after exact byte acquisition
+  - bind existing FSB/NKTsKI clause evidence to artifact_id + sha256
+  - derive NKTsKI field-level reporting schema only after the source artifact is immutable
+  - continue hash-pinned snapshots for dynamic FSTEC/FSB registers
+
+high_gap:
+  id: HIGH-IMMUTABLE-PROVENANCE
+  statement: >-
+    High-value FSB/NKTsKI artifacts and dynamic registers are not yet consistently preserved as exact immutable bytes with
+    retrieval timestamp and SHA-256. This run records failed acquisition attempts without changing legal status or evidence tier.
+
+next_bottleneck: >-
+  Resolve a working official download path for at least one pinned FSB publication and both NKTsKI 2026 artifacts, preserve exact
+  bytes, timestamp and hash them, then use that pattern to batch the remaining high-value artifacts.
+
+readiness_guardrail: >-
+  Percentages remain unchanged. No immutable bytes were obtained, so the single High blocker remains open; Red Team remains FAIL
+  and EXPERT_READY remains false.
