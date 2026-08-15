@@ -1,0 +1,93 @@
+schema_version: "1.0"
+id: nkcki-2026-artifact-acquisition-manifest-v1
+observed_at: "2026-08-15"
+status: PRIMARY_WEB_VERIFIED_ARTIFACT_BYTES_PENDING
+purpose: >-
+  Track exact acquisition state for high-value NKTsKI 2026 reporting artifacts without
+  promoting web-index metadata or search excerpts to immutable primary-source status.
+
+authority: NKTSKI_CERT_GOV_RU
+
+artifacts:
+  - artifact_id: NKTSKI-2026-ORDER-2
+    title: >-
+      Приказ НКЦКИ от 14 июля 2026 года № 2 "О совершенствовании деятельности по организации
+      взаимодействия Национального координационного центра по компьютерным инцидентам с субъектами
+      критической информационной инфраструктуры, центрами ГосСОПКА и органами (организациями)"
+    document_date: "2026-07-14"
+    document_number: "2"
+    authoritative_index_url: "https://www.cert.gov.ru/materialy/organizatsiya-vzaimodeystviya/reglament-vzaimodeystviya-nktski-"
+    authoritative_news_url: "https://cert.gov.ru/news/novosti-nktski/o-sovershenstvovanii-deyatelnosti-po-organizatsii-vzaimodeystviya-natsionalnogo-koordinatsionnogo-ts/"
+    verified_web_fact: >-
+      Official NKTsKI material index states that the order defines formats for presenting
+      information about computer attacks and computer incidents to GosSOPKA and the composition
+      of technical parameters.
+    bytes_preserved: false
+    sha256: null
+    retrieved_at: null
+    immutable_status: PENDING
+    allowed_claim_level: PRIMARY_WEB_VERIFIED_METADATA_ONLY
+
+  - artifact_id: NKTSKI-2026-ATTACK-TYPE-INITIAL-DATA
+    title: "Исходные данные для определения типа компьютерной атаки"
+    approved_at: "2026-07-08"
+    authoritative_index_url: "https://www.cert.gov.ru/materialy/organizatsiya-vzaimodeystviya/reglament-vzaimodeystviya-nktski-"
+    authoritative_news_url: "https://cert.gov.ru/news/novosti-nktski/o-sovershenstvovanii-deyatelnosti-po-organizatsii-vzaimodeystviya-natsionalnogo-koordinatsionnogo-ts/"
+    verified_web_fact: >-
+      Official NKTsKI publication describes this document as methodological recommendations;
+      its threshold values are examples from general practice. Organizations are instructed to
+      provide the maximum available materials identified in paragraph 5 of relevant sections,
+      and missing one or more materials must not block transmission of the remaining available materials.
+    bytes_preserved: false
+    sha256: null
+    retrieved_at: null
+    immutable_status: PENDING
+    allowed_claim_level: PRIMARY_WEB_VERIFIED_METADATA_AND_EXPLICIT_WEB_RULES
+
+  - artifact_id: NKTSKI-2026-NOTIFICATION-FORM
+    title: "Форма составления уведомления об атаке или инциденте"
+    authoritative_url: "https://www.cert.gov.ru/uvedomlenie.php"
+    verified_web_fact: >-
+      Official operational form distinguishes a computer-incident category from a computer-attack category
+      and directs the formed notification to incident@cert.gov.ru.
+    bytes_preserved: false
+    sha256: null
+    retrieved_at: null
+    immutable_status: DYNAMIC_WEB_FORM_NOT_SNAPSHOTTED
+    allowed_claim_level: PRIMARY_WEB_OPERATIONAL_GUIDANCE_ONLY
+
+provenance_rules:
+  - id: PROV-NKTSKI-001
+    rule: >-
+      A web page or document index confirming that a downloadable artifact exists is not equivalent
+      to preserving the artifact bytes.
+  - id: PROV-NKTSKI-002
+    rule: >-
+      IMMUTABLE_PRIMARY requires exact bytes, retrieval timestamp and SHA-256; all three are mandatory.
+  - id: PROV-NKTSKI-003
+    rule: >-
+      Field-level reporting-schema claims must remain PENDING until the relevant artifact is preserved
+      and the fields are extracted from that preserved version.
+  - id: PROV-NKTSKI-004
+    rule: >-
+      Dynamic web-form observations must carry observation time and must not be treated as a permanent
+      substitute for the normative source defining reporting formats.
+  - id: PROV-NKTSKI-005
+    rule: >-
+      Search-engine excerpts and third-party mirrors may support discovery but cannot satisfy the
+      immutable-primary evidence floor.
+
+retrieval_attempt_2026_08_15:
+  index_visibility: CONFIRMED_ON_OFFICIAL_NKTSKI_SITE
+  downloadable_links_exist_on_index: CONFIRMED_BY_OFFICIAL_INDEX_TEXT
+  exact_download_target_resolved_in_this_run: false
+  exact_bytes_retrieved_in_this_run: false
+  reason: >-
+    The official index is externally visible and exposes download actions, but the execution environment
+    did not yield a resolvable exact download target/bytes in this run. No SHA-256 is fabricated.
+
+red_team_guardrail:
+  verdict: FAIL_CLOSED
+  statement: >-
+    Do not close HIGH-IMMUTABLE-PROVENANCE for NKTsKI 2026 until exact artifacts are stored or otherwise
+    pinned by exact bytes plus retrieval timestamp plus SHA-256.
