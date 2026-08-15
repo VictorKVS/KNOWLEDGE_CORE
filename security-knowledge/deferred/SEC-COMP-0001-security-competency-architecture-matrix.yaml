@@ -1,0 +1,82 @@
+schema_version: 1
+initiative_id: SEC-COMP-0001
+title: Security Competency & Architecture Matrix
+title_ru: Матрица компетенций, ответственности и архитектуры информационной безопасности
+status: DEFERRED
+priority_after_activation: P1
+parent_product: SEC-PROD-0001
+repository: VictorKVS/KNOWLEDGE_CORE
+decision:
+  recorded_at: 2026-08-16
+  owner: Viktor Kulichenko
+  rationale: >
+    Сначала должна быть завершена доказательная нормативная Security Knowledge Base.
+    Проектирование компетенций, команды, архитектуры, аппаратуры и стоимости без полного
+    основания обязанностей, применимости, сроков и ответственности создаст ложную точность.
+activation_gate:
+  all_required:
+    - SEC-PROD-0001 declared master inventory scope is complete
+    - overall security knowledge red-team verdict is PASSED
+    - unresolved CRITICAL findings equal 0
+    - unresolved HIGH findings equal 0
+    - P0 normative sources are expert-reviewed
+    - mandatory duties have exact source, applicability, role, deadline and evidence mapping
+  activation_authority: USER_EXPLICIT_DECISION
+  automatic_activation_forbidden: true
+scope_after_activation:
+  chain:
+    - NORMATIVE_REQUIREMENT
+    - APPLICABILITY
+    - DUTY
+    - RESPONSIBILITY
+    - AUTHORITY
+    - DEADLINE
+    - REQUIRED_EVIDENCE
+    - COMPETENCY
+    - SPECIALIST_LEVEL
+    - TEAM_COMPOSITION
+    - ARCHITECTURE_OPTION
+    - SOFTWARE
+    - HARDWARE
+    - IMPLEMENTATION_COST
+    - OPERATING_COST
+    - RESIDUAL_RISK
+  competency_model:
+    levels: L1-L10
+    evidence_chain:
+      - KNOWS
+      - CAN_PERFORM
+      - HAS_PERFORMED
+      - CAN_PROVE_RESULT
+  organization_maturity:
+    levels: M0-M5
+    solution_profiles:
+      - MIN
+      - OPTIMAL
+      - MAX
+  cost_horizons_years:
+    - 1
+    - 3
+    - 5
+required_outputs:
+  - duty-to-competency matrix
+  - competency level profiles
+  - minimum and recommended team model
+  - role authority and segregation-of-duties matrix
+  - architecture alternatives by organization maturity
+  - software and hardware bill of materials
+  - CAPEX OPEX and TCO model
+  - salary and responsibility comparison
+  - implementation timeline
+  - residual-risk statement
+hard_constraints:
+  - Do not assign liability from job title alone
+  - Do not assign a duty without authority, resources and evidence requirements
+  - Do not treat one aggregate seniority label as proof across all competencies
+  - Do not recommend products before organization facts and applicability are known
+  - Separate legal force, technical effectiveness, cost and implementation priority
+  - Prices, licenses, certificates and vendor status must be time-stamped and reverified
+  - Do not activate or expand this initiative before the activation gate
+current_action: >
+  Preserve this record only. Continue SEC-PROD-0001 normative knowledge work without
+  diverting the active Security Knowledge automation into SEC-COMP-0001.
