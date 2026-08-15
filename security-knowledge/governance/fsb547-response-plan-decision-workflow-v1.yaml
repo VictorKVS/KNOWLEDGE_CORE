@@ -1,0 +1,105 @@
+schema_version: "1.0"
+id: fsb547-response-plan-decision-workflow-v1
+purpose: >-
+  End-to-end operational workflow connecting a verified external obligation, internal decision authority,
+  deadlines and evidence for the response plan required by FSB Order No. 547.
+source_refs:
+  - security-knowledge/legislation/fsb-547-2025-incident-reporting-response-authoritative-slice.yaml
+normative_anchors:
+  - requirement_id: FSB547-P5-PLAN-90D
+    status: AUTHORITATIVE_VERIFIED
+    meaning: develop response/consequence-elimination plan within 90 calendar days from inclusion of significant CII object in register
+  - requirement_id: FSB547-P5-PLAN-CONTENT
+    status: AUTHORITATIVE_VERIFIED
+    meaning: plan contains object characteristics, activation conditions, response actions with execution time and responsible units/officials
+  - requirement_id: FSB547-P6-HEAD-APPROVAL
+    status: AUTHORITATIVE_VERIFIED
+    meaning: response plan is approved by head of CII subject
+  - requirement_id: FSB547-P6-NKTSKI-COPY-7D
+    status: AUTHORITATIVE_VERIFIED
+    meaning: approved plan copy is sent to NKTsKI within 7 calendar days from approval
+  - requirement_id: FSB547-P10-ANNUAL-EXERCISE
+    status: AUTHORITATIVE_VERIFIED
+    meaning: exercises on response-plan measures are organized at least once a year
+  - requirement_id: FSB547-P10-EXERCISE-DEFECT-CORRECTION
+    status: AUTHORITATIVE_VERIFIED
+    meaning: plan is amended when exercises reveal deficiencies
+workflow:
+  trigger:
+    event: significant_cii_object_entered_in_register
+    required_fact: register_inclusion_date
+  steps:
+    - id: WF-FSB547-01
+      action: create_or_update_response_plan
+      deadline:
+        maximum: 90
+        unit: CALENDAR_DAYS
+        starts_from: register_inclusion_date
+      required_evidence:
+        - register_inclusion_date
+        - object_inventory
+        - activation_conditions
+        - response_actions_with_time_budgets
+        - responsible_units_and_officials
+      decision_right_required: false
+    - id: WF-FSB547-02
+      action: approve_response_plan
+      actor_requirement:
+        normative_role: head_of_cii_subject
+        decision_type: approve_document
+      decision_right_required: true
+      authority_rule: >-
+        The normative source identifies the head of the CII subject as approver. An organization-specific
+        person assignment still requires current evidence linking a person to that role; a security officer,
+        executor or document author may not approve solely because they prepared or execute the plan.
+      required_evidence:
+        - current_head_role_assignment
+        - signed_approval
+    - id: WF-FSB547-03
+      action: send_approved_plan_copy_to_nktski
+      deadline:
+        maximum: 7
+        unit: CALENDAR_DAYS
+        starts_from: plan_approval_date
+      decision_right_required: false
+      guardrail: >-
+        Internal approval routing must not extend the external seven-calendar-day deadline after approval.
+      required_evidence:
+        - approved_plan_copy
+        - outgoing_transmittal
+        - delivery_confirmation
+    - id: WF-FSB547-04
+      action: conduct_response_plan_exercise
+      frequency:
+        minimum: 1
+        unit: PER_YEAR
+      required_evidence:
+        - exercise_plan
+        - exercise_report
+        - finding_register
+    - id: WF-FSB547-05
+      action: amend_plan_if_exercise_deficiencies_found
+      trigger: exercise_deficiencies_found
+      required_evidence:
+        - finding_register
+        - plan_change_record
+      guardrail: >-
+        No numeric amendment deadline is invented here because the verified source slice does not establish one for this trigger.
+fail_closed_states:
+  - NEEDS_REGISTER_INCLUSION_DATE
+  - PLAN_90D_OVERDUE
+  - NEEDS_PLAN_CONTENT_EVIDENCE
+  - NEEDS_HEAD_ROLE_ASSIGNMENT
+  - NEEDS_DECISION_RIGHT
+  - NEEDS_SIGNED_APPROVAL
+  - NEEDS_APPROVAL_DATE
+  - NKTSKI_COPY_7D_OVERDUE
+  - NEEDS_DELIVERY_EVIDENCE
+  - NEEDS_ANNUAL_EXERCISE_EVIDENCE
+  - NEEDS_PLAN_AMENDMENT_EVIDENCE
+expert_guardrails:
+  - External statutory/regulatory deadlines cannot be paused by an internal approval queue unless a source explicitly permits it.
+  - The head-of-subject approval requirement is not interchangeable with generic CISO approval.
+  - A role named by a normative act still requires organization-specific evidence identifying the current person occupying that role.
+  - Missing evidence does not prove noncompliance automatically; it produces an evidence gap unless the underlying fact is otherwise proven.
+  - Annual exercise frequency and remediation after deficiencies are separate obligations.
