@@ -1,0 +1,86 @@
+run_id: 52
+observed_at: "2026-08-15"
+strict_scope_policy: FIXED_MASTER_INVENTORY_NO_INFLATION
+
+overall_strict_percent: 10
+key_domains_percent:
+  russian_npa: 10
+  gost_gost_r_iso: 10
+  classification_categorization: 10
+  fstec_threat_method_bdu: 10
+  risk_methods: 10
+  koap_uk_gk_tk: 10
+  szi_skzi_license_lifecycle: 10
+  roles_deadlines_liability: 10
+  evidence_audit: 10
+  practical_cases: 10
+
+quality_state:
+  critical_gaps: 0
+  high_gaps: 1
+  red_team: FAIL
+  expert_ready: false
+
+verified_this_run:
+  newly_added_normative_records: 0
+  primary_web_artifact_inventory_records: 3
+  internal_executable_models: 1
+  executable_regression_cases: 10
+  deterministic_validators: 1
+  ci_gates_added: 1
+  new_ci_result:
+    workflow: NKTsKI Artifact Provenance Gate
+    conclusion: NOT_YET_OBSERVED
+
+added_files:
+  - security-knowledge/provenance/nkcki-2026-artifact-acquisition-manifest-v1.yaml
+  - security-knowledge/provenance/nkcki-2026-artifact-provenance-regression-v1.yaml
+  - security-knowledge/validators/validate_nkcki_artifact_provenance.py
+  - .github/workflows/nkcki-artifact-provenance.yml
+
+confirmed_current_external_facts:
+  - >-
+    Official NKTsKI material index currently lists Order No. 2 dated 2026-07-14 and states that it defines
+    reporting formats for computer attacks/incidents and the composition of technical parameters.
+  - >-
+    The same official index lists the 2026-07-08 Initial Data for determining computer-attack type as
+    methodological recommendations.
+  - >-
+    Official NKTsKI publication states that threshold values in the Initial Data are examples from general
+    practice and that missing one or more materials must not block sending the remaining available materials.
+  - >-
+    The official NKTsKI notification form is a dynamic operational source and therefore requires time-bounded
+    observation rather than being treated as an immutable substitute for the normative format artifact.
+
+closed_or_reduced_gaps:
+  - >-
+    The High provenance blocker is now decomposed into explicit artifact-level acquisition states instead of a
+    single generic TODO.
+  - >-
+    IMMUTABLE_PRIMARY is now executable-gated on exact bytes + retrieval timestamp + valid SHA-256.
+  - >-
+    Search excerpts, third-party mirrors and official index metadata cannot accidentally satisfy the immutable-primary floor.
+  - >-
+    Field-level schema completeness remains blocked when the underlying downloadable artifact has not been preserved.
+
+pending:
+  - resolve the exact official download target for NKTsKI Order No. 2 dated 2026-07-14
+  - preserve exact Order No. 2 bytes and calculate SHA-256
+  - resolve and preserve exact 2026-07-08 Initial Data bytes and calculate SHA-256
+  - extract exact field/technical-parameter schema only from the preserved artifacts
+  - bind FSB 547 submitted-payload evidence to the immutable NKTsKI schema version
+  - continue immutable provenance for FSB 539/546/547/548/553/554 and dynamic FSTEC/FSB registers
+
+high_gap:
+  id: HIGH-IMMUTABLE-PROVENANCE
+  statement: >-
+    High-value FSB/NKTsKI source artifacts and dynamic registers are not yet consistently preserved as exact immutable
+    bytes with timestamp and SHA-256. The NKTsKI 2026 sub-gap is now explicitly inventoried and fail-closed but remains open.
+
+next_bottleneck: >-
+  Obtain exact official bytes for NKTsKI Order No. 2 (2026-07-14) and the Initial Data document (2026-07-08), hash-pin
+  both artifacts, then derive the exact field-level reporting schema and connect it to the executable FSB 547 incident workflow.
+
+readiness_guardrail: >-
+  Percentages remain unchanged. This run improves provenance controls and auditability but does not yet add immutable primary
+  bytes or close the single High blocker. Red Team remains FAIL and EXPERT_READY remains false.
