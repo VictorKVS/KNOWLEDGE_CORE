@@ -1,0 +1,71 @@
+model_id: ACCESS-SOURCE-RECONCILIATION-V1
+as_of: "2026-08-16"
+status: INTERNAL_EXECUTABLE_EVIDENCE_MODEL
+purpose: >
+  Reconcile declared access state with technically effective permissions across HR/IdM/IAM,
+  AD/LDAP, databases and applications without assuming any one source is authoritative for all questions.
+
+source_classes:
+  HR:
+    proves: [employment_state, organizational_role, manager, transfer_or_termination_event]
+    does_not_prove: [technical_revocation, effective_acl]
+  IDM_IAM:
+    proves: [declared_entitlement, workflow_approval, requested_revocation]
+    does_not_prove: [effective_downstream_permission_without_observation]
+  AD_LDAP:
+    proves: [directory_account_state, group_membership_observed]
+    does_not_prove: [database_or_application_effective_permission]
+  DATABASE:
+    proves: [database_role_or_grant_observed]
+  APPLICATION:
+    proves: [application_role_or_permission_observed]
+
+required_fact_metadata:
+  - source_system
+  - observed_at
+  - subject_or_account_id
+  - collector_or_evidence_ref
+  - freshness_policy_ref
+
+states:
+  CONSISTENT_CURRENT: declared and effective rights agree and observations are fresh
+  DECLARED_ONLY: declared right exists but no fresh effective-right evidence exists
+  EFFECTIVE_ONLY: technical right exists without matching declared entitlement
+  REVOCATION_DRIFT: revocation requested/declared but effective right still observed
+  TERMINATION_DRIFT: HR inactive but active technical access remains
+  STALE_EVIDENCE: one or more required facts exceed source-specific freshness threshold
+  IDENTITY_CONFLICT: subject/account mapping conflicts across sources
+  PRIVILEGED_REVIEW_REQUIRED: privileged account/right requires stronger evidence path
+  SERVICE_ACCOUNT_REVIEW_REQUIRED: service/shared account lacks accountable owner/purpose or uses person-style assumptions
+
+invariants:
+  - id: RECON-001
+    rule: "HR termination is a trigger for reconciliation, not proof of technical revocation."
+  - id: RECON-002
+    rule: "IAM declared state is not proof of downstream effective state."
+  - id: RECON-003
+    rule: "Absence of an entitlement in one source is not proof of absence elsewhere."
+  - id: RECON-004
+    rule: "Source observations older than their proven freshness policy cannot support CURRENT compliance."
+  - id: RECON-005
+    rule: "Effective-only privileged rights are high-priority review findings."
+  - id: RECON-006
+    rule: "Service/shared accounts require accountable owner, purpose and non-person identity handling."
+  - id: RECON-007
+    rule: "Conflicting account-to-subject mappings block automated authorization conclusions."
+  - id: RECON-008
+    rule: "A disabled AD account does not prove database/application sessions, API keys or local accounts are removed."
+
+red_team_guardrails:
+  - "Do not declare access revoked from ticket closure alone."
+  - "Do not declare access current from a stale export."
+  - "Do not infer person ownership of a service account from naming conventions."
+  - "Do not collapse nested groups, database grants and application roles into one entitlement without provenance."
+  - "Do not use generic freshness windows unless organization policy/source characteristics define them."
+
+pending:
+  - organization-specific freshness policies
+  - connectors/parsers for concrete source systems
+  - nested-group and transitive-permission expansion
+  - session/token/API-key evidence
+  - SoD conflict model
