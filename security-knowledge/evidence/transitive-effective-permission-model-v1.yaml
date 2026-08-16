@@ -1,0 +1,86 @@
+model_id: TRANSITIVE-EFFECTIVE-PERMISSION-V1
+as_of: "2026-08-16"
+status: INTERNAL_EXECUTABLE_EVIDENCE_MODEL
+purpose: >
+  Expand indirect and transitive access paths across nested directory groups, database roles,
+  application roles, local accounts, service accounts, API keys, tokens and active sessions
+  without collapsing declared entitlements into proven effective permissions.
+
+path_model:
+  node_types:
+    - SUBJECT
+    - ACCOUNT
+    - DIRECTORY_GROUP
+    - DATABASE_ROLE
+    - APPLICATION_ROLE
+    - LOCAL_ACCOUNT
+    - SERVICE_ACCOUNT
+    - API_KEY
+    - TOKEN
+    - SESSION
+    - OBJECT
+  edge_types:
+    - OWNS_OR_USES
+    - MEMBER_OF
+    - NESTED_IN
+    - GRANTS_ROLE
+    - GRANTS_PERMISSION
+    - AUTHENTICATES_AS
+    - ISSUED_TO
+    - SESSION_FOR
+    - EFFECTIVE_ON
+
+required_edge_metadata:
+  - source_system
+  - observed_at
+  - evidence_ref
+  - freshness_policy_ref
+  - valid_from
+  - valid_to
+
+states:
+  EFFECTIVE_PATH_CONFIRMED: all path edges are observed, fresh and temporally valid
+  TRANSITIVE_RIGHT_UNDECLARED: effective path exists but no matching declared entitlement exists
+  STALE_TRANSITIVE_PATH: one or more path edges are outside their freshness policy
+  PATH_IDENTITY_CONFLICT: path contains unresolved subject/account ownership conflict
+  CYCLE_REVIEW_REQUIRED: nested graph cycle prevents safe automatic expansion
+  PRIVILEGED_PATH_REVIEW_REQUIRED: transitive path yields privileged access and requires stronger review
+  SERVICE_ACCOUNT_OWNER_REQUIRED: service account participates in path without accountable owner/purpose
+  TOKEN_OR_SESSION_RESIDUAL: account entitlement is revoked/disabled but token/session remains effective
+  LOCAL_ACCOUNT_UNMANAGED: effective local account exists outside declared central identity path
+  PATH_NOT_PROVEN: declared or inferred path lacks sufficient observed edge evidence
+
+invariants:
+  - id: TEP-001
+    rule: "Nested-group membership must be expanded transitively; direct membership alone is insufficient to describe effective rights."
+  - id: TEP-002
+    rule: "Every effective-permission conclusion must retain the full provenance path from subject/account to object."
+  - id: TEP-003
+    rule: "A cycle in nested groups must not be silently flattened; it requires deterministic cycle handling and review."
+  - id: TEP-004
+    rule: "Revoking an account entitlement does not prove existing API keys, tokens or sessions are invalidated."
+  - id: TEP-005
+    rule: "Disabled central identity does not prove local accounts are disabled."
+  - id: TEP-006
+    rule: "Service/shared accounts require accountable owner, purpose, scope and credential lifecycle evidence."
+  - id: TEP-007
+    rule: "Privileged paths require stronger evidence and cannot be auto-cleared solely because a declared role exists."
+  - id: TEP-008
+    rule: "Transitive paths are evaluated at an observation time; stale or temporally invalid edges cannot support CURRENT compliance."
+  - id: TEP-009
+    rule: "Absence from one graph source is not proof of absence from other identity or authorization planes."
+
+red_team_guardrails:
+  - "Do not stop expansion at the first directory group."
+  - "Do not infer database/application permissions from AD group names without observed grant edges."
+  - "Do not treat token issuance as current validity without observed expiry/revocation state."
+  - "Do not treat ticket closure as token/session revocation evidence."
+  - "Do not classify local administrator or break-glass accounts through person-role assumptions without direct evidence."
+  - "Do not use a transitive path if any identity mapping conflict remains unresolved."
+
+pending:
+  - organization-specific connector adapters
+  - cryptographic credential/token lifecycle evidence
+  - effective permission computation for deny/allow precedence
+  - SoD conflict model over expanded paths
+  - risk scoring for privileged residual paths
