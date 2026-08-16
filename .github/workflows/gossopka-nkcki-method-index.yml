@@ -1,0 +1,25 @@
+name: GosSOPKA NKTsKI Method Index Gate
+
+on:
+  push:
+    paths:
+      - 'security-knowledge/evidence/gossopka-nkcki-official-method-document-index-2026-08-16.yaml'
+      - 'security-knowledge/evidence/gossopka-nkcki-method-index-regression-v1.json'
+      - 'security-knowledge/validators/validate_gossopka_nkcki_method_index.py'
+      - '.github/workflows/gossopka-nkcki-method-index.yml'
+  pull_request:
+    paths:
+      - 'security-knowledge/evidence/gossopka-nkcki-official-method-document-index-2026-08-16.yaml'
+      - 'security-knowledge/evidence/gossopka-nkcki-method-index-regression-v1.json'
+      - 'security-knowledge/validators/validate_gossopka_nkcki_method_index.py'
+      - '.github/workflows/gossopka-nkcki-method-index.yml'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python security-knowledge/validators/validate_gossopka_nkcki_method_index.py
