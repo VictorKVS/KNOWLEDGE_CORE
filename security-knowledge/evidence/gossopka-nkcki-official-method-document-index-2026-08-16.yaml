@@ -1,0 +1,130 @@
+inventory_id: GOSSOPKA-NKTSKI-METHOD-INDEX-2026-08-16
+observed_at: 2026-08-16T09:18:00+03:00
+scope: official_web_index_only
+source_classification: PRIMARY_WEB_INDEX_VERIFIED
+sources:
+  - url: https://www.cert.gov.ru/materialy/organizatsiya-vzaimodeystviya/reglament-vzaimodeystviya-nktski-
+    authority: NKTsKI_official
+  - url: https://gossopka.ru/doc/method/
+    authority: GosSOPKA_official
+
+records:
+  - id: METH-NKTSKI-2026-ORDER-002
+    title: Приказ НКЦКИ от 14 июля 2026 года № 2 "О совершенствовании деятельности по организации взаимодействия Национального координационного центра по компьютерным инцидентам с субъектами критической информационной инфраструктуры, центрами ГосСОПКА и органами (организациями)"
+    index_presence: VERIFIED
+    index_description_verified:
+      - defines_formats_for_submission_to_GosSOPKA_of_information_about_computer_attacks_and_incidents
+      - defines_composition_of_technical_parameters
+    downloadable_entry_observed: true
+    exact_artifact_acquired: false
+    immutable_primary: false
+    allowed_claim_level: OFFICIAL_INDEX_METADATA_AND_SCOPE_ONLY
+
+  - id: METH-NKTSKI-2026-ATTACK-TYPE-INITIAL-DATA
+    title: Исходные данные для определения типа компьютерной атаки
+    index_presence: VERIFIED
+    index_description_verified:
+      - methodological_recommendations_for_classifying_an_event_as_a_computer_attack
+      - threshold_values_are_examples_from_general_practice
+    operational_rule_verified_from_official_news:
+      - organizations_should_send_the_maximum_amount_of_available_materials
+      - absence_of_some_materials_must_not_block_submission_of_other_available_materials
+    downloadable_entry_observed: true
+    exact_artifact_acquired: false
+    immutable_primary: false
+    allowed_claim_level: OFFICIAL_INDEX_AND_OFFICIAL_NEWS_BEHAVIOR_ONLY
+
+  - id: METH-NKTSKI-DIRECT-INTERACTION
+    title: Методические рекомендации по организации прямого взаимодействия с Национальным координационным центром по компьютерным инцидентам
+    index_presence: VERIFIED
+    index_description_verified:
+      - describes_procedure_for_organizing_interaction_by_accession_method
+      - describes_interaction_goals_information_categories_possible_channels_and_establishment_procedure
+    downloadable_entry_observed: true
+    exact_artifact_acquired: false
+    allowed_claim_level: OFFICIAL_INDEX_DESCRIPTION_ONLY
+
+  - id: METH-NKTSKI-CENTER-INTERACTION-REGULATION
+    title: Регламент взаимодействия НКЦКИ и [наименование ведомства/организации] при осуществлении информационного обмена в области обнаружения, предупреждения и ликвидации последствий компьютерных атак
+    index_presence: VERIFIED
+    index_description_verified:
+      - describes_interaction_of_GosSOPKA_centers_with_NKTsKI_for_informing_FSB_about_incidents_and_attacks_in_their_responsibility_zone
+    downloadable_entry_observed: true
+    exact_artifact_acquired: false
+    allowed_claim_level: OFFICIAL_INDEX_DESCRIPTION_ONLY
+
+  - id: METH-NKTSKI-EMAIL-NOTIFICATION-INSTRUCTION
+    title: Инструкция по формированию электронного письма уведомления о компьютерном инциденте или атаке
+    index_presence: VERIFIED
+    index_description_verified:
+      - rules_for_forming_incident_and_attack_notifications_sent_to_NKTsKI_email
+    downloadable_entry_observed: true
+    exact_artifact_acquired: false
+    allowed_claim_level: TITLE_AND_INDEX_DESCRIPTION_ONLY
+
+  - id: METH-NKTSKI-RESOURCE-OWNER-INTERACTION-REGULATION
+    title: Регламент взаимодействия НКЦКИ и владельцев информационных ресурсов Российской Федерации при информировании ФСБ России о компьютерных инцидентах, реагировании на компьютерные инциденты и принятии мер по ликвидации последствий компьютерных атак
+    index_presence: VERIFIED
+    index_description_verified:
+      - describes_interaction_of_information_resource_owners_with_NKTsKI_for_incident_information_response_and_consequence_elimination
+    downloadable_entry_observed: true
+    exact_artifact_acquired: false
+    allowed_claim_level: OFFICIAL_INDEX_DESCRIPTION_ONLY
+
+  - id: METH-NKTSKI-RESPONSE-PLAN-GUIDANCE
+    title: Методические рекомендации по разработке Плана реагирования на компьютерные инциденты и принятия мер по ликвидации последствий компьютерных атак, проведенных в отношении значимых объектов критической информационной инфраструктуры Российской Федерации
+    index_presence: VERIFIED
+    downloadable_entry_observed: true
+    exact_artifact_acquired: false
+    allowed_claim_level: TITLE_AND_EXISTENCE_ONLY
+
+  - id: METH-NKTSKI-PROTECTEDNESS-ASSESSMENT-GUIDANCE
+    title: Методические рекомендации по проведению мероприятий по оценке степени защищённости от компьютерных атак
+    index_presence: VERIFIED
+    index_description_verified:
+      - defines_main_tasks_procedure_and_stages_of_assessing_protection_against_computer_attacks
+    downloadable_entry_observed: true
+    exact_artifact_acquired: false
+    allowed_claim_level: OFFICIAL_INDEX_DESCRIPTION_ONLY
+
+model_rules:
+  - id: MR-METHOD-INDEX-001
+    rule: OFFICIAL_INDEX_ENTRY_DOES_NOT_EQUAL_EXACT_ARTIFACT
+    effect: Do not create clause-level claims, fields, deadlines, hash bindings or exact schemas until the referenced downloadable artifact is acquired or separately verified from a stronger source.
+  - id: MR-METHOD-INDEX-002
+    rule: METHODICAL_DOCUMENT_DOES_NOT_AUTOMATICALLY_CREATE_LEGAL_OBLIGATION
+    effect: A separate binding/applicability edge is required before a methodological recommendation is treated as mandatory for a specific organization.
+  - id: MR-METHOD-INDEX-003
+    rule: NOTIFICATION_FORMATION_INSTRUCTION_DOES_NOT_PROVE_DELIVERY
+    effect: Email/message formatting evidence is distinct from submission and delivery-confirmation evidence.
+  - id: MR-METHOD-INDEX-004
+    rule: RESPONSE_PLAN_GUIDANCE_DOES_NOT_OVERRIDE_FSB547_DEADLINES
+    effect: Regulatory timelines remain sourced from applicable NPA; methodological guidance cannot silently extend them.
+  - id: MR-METHOD-INDEX-005
+    rule: PROTECTEDNESS_ASSESSMENT_GUIDANCE_DOES_NOT_EQUAL_ATTESTATION_OR_CERTIFICATION
+    effect: Keep protectedness assessment, penetration testing, conformity assessment, attestation and certification as separate graph concepts unless an authoritative source links them.
+
+red_team_findings:
+  - id: RT-METHOD-075-001
+    severity_if_unfixed: HIGH
+    finding: Search/index text could be mistaken for the exact downloadable document.
+    correction: Every record carries exact_artifact_acquired=false and a restricted allowed_claim_level.
+  - id: RT-METHOD-075-002
+    severity_if_unfixed: HIGH
+    finding: Methodological recommendations could be routed as universally mandatory law.
+    correction: Mandatory status requires a separate binding/applicability edge.
+  - id: RT-METHOD-075-003
+    severity_if_unfixed: MEDIUM
+    finding: Notification formatting could be treated as proof that the regulator received the notification.
+    correction: Formatting, submission and delivery remain separate evidence nodes.
+  - id: RT-METHOD-075-004
+    severity_if_unfixed: MEDIUM
+    finding: A response-plan methodology could overwrite externally fixed statutory or regulatory deadlines.
+    correction: FSB/NPA deadline source has precedence.
+
+pending:
+  - resolve_exact_download_href_for_each_entry
+  - preserve_exact_bytes_and_retrieved_at
+  - record_MIME_and_byte_length
+  - compute_SHA256
+  - extract_clause_or_field_level_content_only_after_artifact_acquisition
