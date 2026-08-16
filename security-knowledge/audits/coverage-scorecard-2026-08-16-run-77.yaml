@@ -1,0 +1,69 @@
+scorecard_id: SECURITY-KB-RU-RUN-77
+observed_at: 2026-08-16T11:00:00+03:00
+scope_policy: STRICT_MASTER_INVENTORY_NO_INFLATION
+overall_percent: 10
+key_domains_percent:
+  npa_rf: 10
+  gost_iso: 10
+  classification_categorization: 10
+  threat_methodology_bdu: 10
+  risk_methods: 10
+  legal_consequences_koap_uk_gk_tk: 10
+  szi_skzi_license_lifecycle: 10
+  roles_deadlines_responsibility: 10
+  evidence_audit: 10
+  practical_cases: 10
+status:
+  critical_gaps: 0
+  high_gaps: 1
+  red_team: FAIL
+  expert_ready: false
+verified_this_run:
+  new_normative_records: 3
+  lifecycle_relation_records: 4
+  executable_regression_cases_added: 14
+  validator_added: 1
+  ci_gate_added: 1
+  immutable_primary_added: 0
+  new_ci_pass_claimed: false
+added_or_updated:
+  - security-knowledge/legislation/fsb-incident-reporting-historical-routing-2019-2026-v1.yaml
+  - security-knowledge/legislation/fsb-incident-reporting-historical-routing-regression-v1.json
+  - security-knowledge/validators/validate_fsb_incident_historical_routing.py
+  - .github/workflows/fsb-incident-historical-routing.yml
+proof_floor_notes:
+  - Official publication metadata confirms FSB Order No.282 dated 2019-06-19, publication 0001201907170025, MinJust registration 55284.
+  - Official publication metadata confirms FSB Order No.348 dated 2022-07-07, publication 0001202208050004, MinJust registration 69513; it amends No.282 rather than forming a standalone complete regime.
+  - FSB Order No.547 expressly repeals No.282 and No.348 and enters into force on 2026-01-30.
+  - Authoritative lifecycle metadata places the original No.282 routing from 2019-07-28 and the No.348-amended version from 2022-08-16 through 2026-01-29.
+  - Official publication metadata confirms FSB Order No.77 dated 2023-02-13, publication 0001202302200021, MinJust registration 72404; authoritative current-status metadata observed 2026-08-16 marks it active from 2023-03-01.
+  - FSB No.77 uses NKTsKI-determined formats and a 24-hour clock from detection for the covered PD-operator incident route.
+  - No evidence found that FSB No.547 repealed FSB No.77; therefore the PD route is modeled as potentially parallel where both applicability conditions are met.
+red_team_findings_fixed_this_run:
+  - id: RT-HIST-077-001
+    severity_if_unfixed: HIGH
+    description: Current FSB No.547 rules could be backcast to incidents before 2026-01-30.
+    correction: Added explicit historical routing through No.282 and the No.348-amended version.
+  - id: RT-HIST-077-002
+    severity_if_unfixed: HIGH
+    description: Amendment No.348 could be mistakenly treated as an independent complete reporting regime.
+    correction: Validator rejects standalone No.348 routing.
+  - id: RT-HIST-077-003
+    severity_if_unfixed: HIGH
+    description: Repeal of No.282/348 could be incorrectly generalized to FSB No.77 PD-operator interaction.
+    correction: No.77 remains a separate applicability branch until a repeal/supersession edge is proven.
+  - id: RT-HIST-077-004
+    severity_if_unfixed: MEDIUM
+    description: The 24-hour No.77 deadline could overwrite a stricter applicable CII deadline.
+    correction: Parallel deadline routing selects the stricter binding deadline and preserves both legal bases.
+open_high:
+  - id: HIGH-IMMUTABLE-PROVENANCE
+    description: Exact primary bytes, retrieved_at timestamps and SHA-256 bindings remain missing for high-value FSB/NKTsKI artifacts, selected dynamic registers and tracked judicial acts.
+pending:
+  - completed GitHub Actions status for FSB Incident Historical Routing Gate
+  - exact primary bytes and SHA-256 for FSB 282/348/547/77 if promoted to immutable clause evidence
+  - predecessor review before 2019-07-28 where historical routing is required
+  - clause-level comparison of FSB 282 original vs 348-amended wording before using historical operational fields beyond verified lifecycle routing
+  - exact NKTsKI Order No.2 and 2026-07-08 artifact bytes
+next_bottleneck: >
+  Verify the historical-routing CI gate, then build a clause-level delta for FSB No.282 original versus the No.348-amended version without importing current No.547 semantics backward. In parallel continue acquisition of exact NKTsKI 2026 bytes for immutable provenance.
