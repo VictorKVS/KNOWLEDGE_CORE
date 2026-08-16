@@ -1,0 +1,80 @@
+scorecard_id: SECURITY-KB-RU-RUN-74
+observed_at: 2026-08-16T08:08:00+03:00
+scope_policy: STRICT_MASTER_INVENTORY_NO_INFLATION
+overall_percent: 10
+key_domains_percent:
+  npa_rf: 10
+  gost_iso: 10
+  classification_categorization: 10
+  threat_methodology_bdu: 10
+  risk_methods: 10
+  legal_consequences_koap_uk_gk_tk: 10
+  szi_skzi_license_lifecycle: 10
+  roles_deadlines_responsibility: 10
+  evidence_audit: 10
+  practical_cases: 10
+status:
+  critical_gaps: 0
+  high_gaps: 1
+  red_team: FAIL
+  expert_ready: false
+verified_this_run:
+  new_normative_records: 0
+  new_standard_records: 0
+  immutable_primary_added: 0
+  primary_web_behavior_rules_reused: 5
+  evidence_node_types_added: 5
+  executable_regression_cases_added: 12
+  validator_added: 1
+  ci_gate_added: 1
+  previous_crosswalk_ci_observed_success: true
+  new_evidence_gate_ci_pass_claimed: false
+added_or_updated:
+  - security-knowledge/evidence/nkcki-incident-evidence-node-contract-v1.yaml
+  - security-knowledge/evidence/nkcki-incident-evidence-node-contract-regression-v1.json
+  - security-knowledge/validators/validate_nkcki_incident_evidence_nodes.py
+  - .github/workflows/nkcki-incident-evidence-nodes.yml
+proof_floor_notes:
+  - Official NKTsKI publication rechecked on 2026-08-16: order No. 2 dated 2026-07-14 defines GosSOPKA reporting formats and technical-parameter composition.
+  - Official NKTsKI publication rechecked: 2026-07-08 Initial Data are methodological recommendations and their threshold values are examples from general practice.
+  - Official NKTsKI publication rechecked: organizations should send the maximum amount of available materials; missing some materials must not block sending the remainder.
+  - Official document indexes on cert.gov.ru and gossopka.ru expose download entries, but exact href/bytes were not acquired in this run.
+  - No exact field names or machine-readable reporting schemas were invented.
+  - Previous Incident Standards FSB547 crosswalk related repository workflows were observed completed successfully; the new evidence-node gate was still in progress when checked.
+red_team_findings_fixed_this_run:
+  - id: RT-EVD-074-001
+    severity_if_unfixed: HIGH
+    description: Internal incident detection/registration could be misrepresented as regulator notification.
+    correction: Detection and submission are different evidence node types; detection alone cannot prove regulator notification.
+  - id: RT-EVD-074-002
+    severity_if_unfixed: HIGH
+    description: An outgoing submission could be misrepresented as delivered to NKTsKI without delivery evidence.
+    correction: SUBMITTED_WITHOUT_CONFIRMED_DELIVERY is a first-class state.
+  - id: RT-EVD-074-003
+    severity_if_unfixed: HIGH
+    description: Partial package could be blocked until all materials become available, increasing deadline risk.
+    correction: SEND_AVAILABLE_MATERIALS is mandatory model behavior when some materials exist and some are missing, within the scope proven by the official NKTsKI publication.
+  - id: RT-EVD-074-004
+    severity_if_unfixed: HIGH
+    description: Delivery evidence could be confused with field-level completeness.
+    correction: Delivery may be confirmed while completeness remains unknown; exact completeness claims are blocked until immutable schema evidence exists.
+  - id: RT-EVD-074-005
+    severity_if_unfixed: MEDIUM
+    description: Later supplementation could rewrite the original submission timestamp and hide deadline evidence.
+    correction: Original and supplementary transmissions are separate immutable timeline events.
+open_high:
+  - id: HIGH-IMMUTABLE-PROVENANCE
+    description: >
+      Exact primary bytes, retrieved_at timestamps and SHA-256 bindings remain missing for high-value
+      FSB/NKTsKI artifacts, selected dynamic registers and tracked judicial acts.
+pending:
+  - exact download href/bytes for NKTsKI order No. 2 dated 2026-07-14
+  - exact download href/bytes for the 2026-07-08 Initial Data document
+  - retrieved_at, MIME, byte_length and SHA-256 for both artifacts
+  - immutable field-level reporting schema and technical-parameter extraction
+  - bind exact fields to FSB547 incident workflow and evidence nodes
+  - completed CI status for NKTsKI Incident Evidence Node Gate
+next_bottleneck: >
+  Acquire at least one exact official NKTsKI artifact from the exposed download entry, preserve bytes,
+  timestamp and SHA-256, then extract only the actual reporting fields/conditional parameters and bind them
+  to EVD-NKTSKI-SUBMISSION/PACKAGE-STATE. Keep HIGH-IMMUTABLE-PROVENANCE open until exact bytes exist.
