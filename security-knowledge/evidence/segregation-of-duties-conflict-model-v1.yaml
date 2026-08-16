@@ -1,0 +1,67 @@
+model_id: SOD-CONFLICT-MODEL-V1
+status: INTERNAL_EVIDENCE_MODEL
+purpose: >
+  Detect incompatible effective capabilities after transitive permission expansion.
+  This model is an engineering/audit control and does not by itself assert that every
+  listed conflict is a universal legal obligation.
+
+principles:
+  - "Evaluate effective capabilities, not only declared roles."
+  - "A conflict may arise through nested groups, delegated roles, service accounts, residual sessions or local accounts."
+  - "Unknown or stale effective-permission paths fail closed to review, not to a clean result."
+  - "A documented compensating control may reduce disposition only when its evidence is present and current."
+
+conflict_classes:
+  SOD-C01:
+    name: REQUEST_AND_APPROVE
+    incompatible_capabilities: [REQUEST_CHANGE, APPROVE_CHANGE]
+    default_disposition: SOD_CONFLICT
+  SOD-C02:
+    name: DEVELOP_AND_PROD_DEPLOY
+    incompatible_capabilities: [MODIFY_CODE, DEPLOY_PRODUCTION]
+    default_disposition: SOD_CONFLICT
+  SOD-C03:
+    name: ADMINISTER_AND_AUDIT
+    incompatible_capabilities: [ADMINISTER_SECURITY_CONTROL, AUDIT_SAME_CONTROL]
+    default_disposition: SOD_CONFLICT
+  SOD-C04:
+    name: CREATE_AND_CERTIFY_EVIDENCE
+    incompatible_capabilities: [CREATE_AUDIT_EVIDENCE, CERTIFY_AUDIT_EVIDENCE]
+    default_disposition: SOD_CONFLICT
+  SOD-C05:
+    name: GRANT_AND_REVIEW_ACCESS
+    incompatible_capabilities: [GRANT_ACCESS, REVIEW_OWN_ACCESS_GRANTS]
+    default_disposition: SOD_CONFLICT
+  SOD-C06:
+    name: BACKUP_AND_DELETE
+    incompatible_capabilities: [CONTROL_BACKUP, DELETE_PRIMARY_AND_BACKUP]
+    default_disposition: SOD_CONFLICT
+
+states:
+  - SOD_CLEAR
+  - SOD_CONFLICT
+  - SOD_CONFLICT_COMPENSATED
+  - SOD_PATH_NOT_PROVEN
+  - SOD_PATH_STALE
+  - SOD_IDENTITY_CONFLICT
+  - SOD_COMPENSATING_CONTROL_NOT_PROVEN
+
+required_evidence_for_compensation:
+  - compensating_control_id
+  - independent_approver_or_reviewer
+  - evidence_locator
+  - evidence_fresh: true
+  - temporal_valid: true
+
+integration_contract:
+  input: transitive_effective_permission_path
+  required_fields:
+    - subject_id
+    - capabilities
+    - observed_path
+    - fresh
+    - temporal_valid
+  output:
+    - conflict_class
+    - disposition
+    - evidence_reason
