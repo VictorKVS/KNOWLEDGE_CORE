@@ -1,8 +1,8 @@
 schema_version: 1
 family_id: CLASSIFICATION_AND_CATEGORIZATION_METHODS
 priority: P0
-family_status: REGISTERED
-checked_at: 2026-08-13
+family_status: REGISTERED_WITH_VERIFIED_CII_CURRENT_SEMANTICS_SLICE
+checked_at: 2026-08-16
 status_policy: Source registration is not equivalent to completed decision logic.
 sources:
   - id: PP_RF_1119_2012
@@ -21,7 +21,21 @@ sources:
     publication_date: 2018-02-13
     source_url: https://publication.pravo.gov.ru/Document/View/0001201802130006
     coverage: CII object categorization and significance criteria
-    ingestion_status: SOURCE_REGISTERED_REQUIRES_AMENDMENT_AND_SECTOR_RULE_AUDIT
+    ingestion_status: CURRENT_TRANSITION_AND_DECISION_SEMANTICS_VERIFIED_BOUNDED; EXHAUSTIVE_SECTOR_AND_CLAUSE_AUDIT_PENDING
+    verified_artifacts:
+      - security-knowledge/classification/cii-pp127-version-chain-2026-verified-metadata.yaml
+      - security-knowledge/classification/cii-187fz-58fz-current-transition-and-decision-semantics-2026-verified.yaml
+      - security-knowledge/classification/cii-sector-overlay-registry-2026-verified-slice.yaml
+  - id: FZ_58_2025
+    title: О внесении изменений в Федеральный закон О безопасности критической информационной инфраструктуры Российской Федерации
+    authority: Federal Law / official publication
+    authority_class: OFFICIAL_PUBLICATION
+    official_publication_number: '0001202504070004'
+    source_url: https://publication.pravo.gov.ru/Document/View/0001202504070004
+    effective_date: 2025-09-01
+    current_known_revision_date: 2026-07-26
+    coverage: statutory CII reform, typical-sector lists, sector categorization features, transition
+    ingestion_status: VERIFIED_CURRENT_TRANSITION_SLICE; FULL_CURRENT_AMENDMENT_CHAIN_PENDING
   - id: FSTEK_ORDER_31_2014
     coverage: ASU TP protection-class and protection-requirement context
     ingestion_status: SOURCE_ALREADY_PRESENT_ELSEWHERE_REQUIRES_CLASSIFICATION_EXTRACTION
@@ -32,12 +46,21 @@ required_decision_logic:
   - ISPDn_protection_level_rules
   - GIS_classification
   - CII_subject_object_identification
+  - CII_typical_sector_object_match
   - CII_significance_category_rules
   - sector_specific_CII_categorization_features
   - ASU_TP_classification
   - restricted_information_category_rules
   - reassessment_and_reclassification_triggers
+verified_cii_invariant:
+  id: CII-CAT-INVARIANT-001
+  statement: >-
+    A match to a current typical-sector-object type routes an object into categorization but does not,
+    by itself, assign significance category 1, 2 or 3; significance criteria/indicator values and all
+    applicable sector-specific categorization features must be evaluated.
+  artifact: security-knowledge/classification/cii-187fz-58fz-current-transition-and-decision-semantics-2026-verified.yaml
 red_team_blocks:
-  - PP 127 must be audited against all current amendments and 2025-2026 sector-specific categorization acts before current decision logic is claimed.
+  - PP 127 must be audited against all current amendments and 2025-2026 sector-specific categorization acts before current decision logic is claimed complete.
   - No classification result may be derived without storing input facts and provenance.
   - Reassessment triggers and effective dates must be versioned.
+  - A typical-sector-object match must never be represented as an automatic significance-category assignment.
