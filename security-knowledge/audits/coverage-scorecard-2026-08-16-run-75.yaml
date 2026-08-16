@@ -1,0 +1,74 @@
+scorecard_id: SECURITY-KB-RU-RUN-75
+observed_at: 2026-08-16T09:24:00+03:00
+scope_policy: STRICT_MASTER_INVENTORY_NO_INFLATION
+overall_percent: 10
+key_domains_percent:
+  npa_rf: 10
+  gost_iso: 10
+  classification_categorization: 10
+  threat_methodology_bdu: 10
+  risk_methods: 10
+  legal_consequences_koap_uk_gk_tk: 10
+  szi_skzi_license_lifecycle: 10
+  roles_deadlines_responsibility: 10
+  evidence_audit: 10
+  practical_cases: 10
+status:
+  critical_gaps: 0
+  high_gaps: 1
+  red_team: FAIL
+  expert_ready: false
+verified_this_run:
+  new_normative_records: 0
+  immutable_primary_added: 0
+  official_method_index_records_added: 8
+  model_rules_added: 5
+  executable_regression_cases_added: 12
+  validator_added: 1
+  ci_gate_added: 1
+  new_ci_pass_claimed: false
+added_or_updated:
+  - security-knowledge/evidence/gossopka-nkcki-official-method-document-index-2026-08-16.yaml
+  - security-knowledge/evidence/gossopka-nkcki-method-index-regression-v1.json
+  - security-knowledge/validators/validate_gossopka_nkcki_method_index.py
+  - .github/workflows/gossopka-nkcki-method-index.yml
+proof_floor_notes:
+  - Official cert.gov.ru publication rechecked on 2026-08-16: NKTsKI order No. 2 dated 2026-07-14 defines GosSOPKA reporting formats and composition of technical parameters.
+  - Official cert.gov.ru publication rechecked: 2026-07-08 Initial Data are methodological recommendations; thresholds are examples from general practice; available materials should be sent even when some materials are missing.
+  - Official gossopka.ru method-document index currently exposes entries for attack-type Initial Data, center/owner interaction regulations, direct-interaction guidance, notification-email instruction, response-plan guidance and protectedness-assessment guidance.
+  - Index descriptions are stored only at PRIMARY_WEB_INDEX_VERIFIED level; exact documents were not promoted to immutable primary evidence.
+  - Direct open of official pages remained unreliable/time-out prone in this run; search-indexed official pages were used only for discovery/index-level claims.
+  - No exact notification fields, file formats, technical parameter names or methodology clauses were invented.
+red_team_findings_fixed_this_run:
+  - id: RT-METHOD-075-001
+    severity_if_unfixed: HIGH
+    description: Official index/search text could be mistaken for exact downloadable artifact content.
+    correction: exact_artifact_acquired=false and restricted allowed_claim_level on every indexed record.
+  - id: RT-METHOD-075-002
+    severity_if_unfixed: HIGH
+    description: Methodological recommendation could become a universal legal obligation without a binding source.
+    correction: mandatory routing requires an independent binding/applicability edge.
+  - id: RT-METHOD-075-003
+    severity_if_unfixed: MEDIUM
+    description: Notification formatting evidence could be misrepresented as submission/delivery evidence.
+    correction: formatting, submission and delivery are separate evidence states and executable regression cases.
+  - id: RT-METHOD-075-004
+    severity_if_unfixed: MEDIUM
+    description: Methodological response-plan timing could override a stricter regulatory deadline.
+    correction: applicable FSB/NPA deadline has precedence in routing.
+open_high:
+  - id: HIGH-IMMUTABLE-PROVENANCE
+    description: >
+      Exact primary bytes, retrieved_at timestamps and SHA-256 bindings remain missing for high-value
+      FSB/NKTsKI artifacts, selected dynamic registers and tracked judicial acts.
+pending:
+  - exact download href/bytes for NKTsKI order No. 2 dated 2026-07-14
+  - exact download href/bytes for the 2026-07-08 Initial Data document
+  - exact artifacts for indexed notification/interaction/response-plan method documents where needed
+  - retrieved_at, MIME, byte_length and SHA-256
+  - field/clause-level extraction after artifact acquisition
+  - completed GitHub Actions status for GosSOPKA NKTsKI Method Index Gate
+next_bottleneck: >
+  Resolve the exact official download target for NKTsKI order No. 2 or the 2026-07-08 Initial Data document;
+  preserve bytes, timestamp, MIME, length and SHA-256; then extract only actual field-level content and bind it
+  to the existing incident evidence/workflow model. Keep HIGH-IMMUTABLE-PROVENANCE open until exact bytes exist.
