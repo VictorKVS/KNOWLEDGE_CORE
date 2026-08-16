@@ -1,0 +1,128 @@
+slice_id: ISMS-LIFECYCLE-FSTEC-NON-EQUIV-2026-08-16
+as_of: "2026-08-16"
+status: AUTHORITATIVE_VERIFIED_PLUS_INTERNAL_EXECUTABLE_POLICY
+purpose: >
+  Provide deterministic lifecycle routing for replaced Russian ISMS standards and a fail-closed
+  crosswalk policy between ISMS guidance/controls and FSTEC regulatory measures. This crosswalk
+  must never assert one-to-one legal or technical equivalence without clause-level evidence.
+
+verified_lifecycle:
+  - old: "ГОСТ Р ИСО/МЭК 27001-2006"
+    old_status: "Заменен"
+    old_effective_from: "2008-02-01"
+    replacement: "ГОСТ Р ИСО/МЭК 27001-2021"
+    replacement_effective_from: "2022-01-01"
+    source: "https://protect.gost.ru/gost/details/7abaece1-8af2-4bd8-81b8-faebdeda1e01"
+  - old: "ГОСТ Р ИСО/МЭК 27002-2012"
+    old_status: "Заменен"
+    old_effective_from: "2014-01-01"
+    replacement: "ГОСТ Р ИСО/МЭК 27002-2021"
+    replacement_effective_from: "2021-11-30"
+    source: "https://protect.gost.ru/gost/details/2fc21dfe-baa5-4963-8c5a-a23da6381ffb"
+  - old: "ГОСТ Р ИСО/МЭК 27003-2012"
+    old_status: "Заменен"
+    old_effective_from: "2013-12-01"
+    replacement: "ГОСТ Р ИСО/МЭК 27003-2021"
+    replacement_effective_from: "2021-11-30"
+    source: "https://protect.gost.ru/gost/details/f6284984-6089-4d83-8ccb-86282d78641c"
+  - old: "ГОСТ Р ИСО/МЭК 27000-2012"
+    old_status: "Заменен"
+    old_effective_from: "2013-12-01"
+    replacement: "ГОСТ Р ИСО/МЭК 27000-2021"
+    replacement_effective_from: "2021-11-30"
+    source: "https://protect.gost.ru/gost/details/eaf27602-9a9e-48eb-b9bf-9caa74472651"
+
+fstec_current_context:
+  - id: FSTEC-117-2025
+    designation: "Приказ ФСТЭК России от 11.04.2025 №117"
+    publication_id: "0001202506170011"
+    minjust_registration: "82619"
+    effective_from: "2026-03-01"
+    replaces_regulatory_act: "Приказ ФСТЭК России от 11.02.2013 №17"
+    source: "https://publication.pravo.gov.ru/document/0001202506170011"
+  - id: FSTEC-117-INTERIM-METHOD-GUIDANCE-2026
+    authority_level: AUTHORITATIVE_SECONDARY_PENDING_PRIMARY_WEB_CAPTURE
+    claim: >
+      An FSTEC information message dated 12.03.2026 No. 240/22/1492 states that, until approval
+      of the new methodological document on the composition/content of protection activities and
+      measures, implementation of measures under Order 117 should use the FSTEC methodological
+      document "Меры защиты информации в государственных информационных системах" dated 11.02.2014.
+    guardrail: >
+      This interim methodological linkage is not evidence that any ISO/IEC 27002 control is
+      legally or technically equivalent to a particular FSTEC measure.
+
+crosswalk_semantics:
+  allowed_relation_types:
+    - THEMATIC_OVERLAP
+    - SUPPORTS_OBJECTIVE
+    - POSSIBLE_IMPLEMENTATION_EVIDENCE
+    - REQUIRES_EXPERT_MAPPING
+    - BINDING_EDGE_SEPARATE
+  forbidden_relation_types_without_clause_evidence:
+    - LEGALLY_EQUIVALENT
+    - TECHNICALLY_EQUIVALENT
+    - SATISFIES_AUTOMATICALLY
+    - REPLACES_FSTEC_MEASURE
+    - REPLACES_ISO_CONTROL
+
+mapping_policy:
+  - id: MAP-ISMS-FSTEC-001
+    rule: >
+      An ISMS standard being current does not create a mandatory FSTEC requirement and a FSTEC
+      requirement does not make the whole ISMS standard mandatory.
+  - id: MAP-ISMS-FSTEC-002
+    rule: >
+      Similar names such as access control, logging, incident management, vulnerability management,
+      continuity or configuration management establish at most THEMATIC_OVERLAP until source clauses,
+      scope, implementation conditions and evidence requirements are compared.
+  - id: MAP-ISMS-FSTEC-003
+    rule: >
+      A control implemented for ISO/GOST conformity may be reused as POSSIBLE_IMPLEMENTATION_EVIDENCE
+      for a FSTEC measure only after an assessor confirms the required properties and applicability.
+  - id: MAP-ISMS-FSTEC-004
+    rule: >
+      BDU references to FSTEC measure codes demonstrate catalog relations between threats/vulnerabilities
+      and recommended measures, not equivalence to ISO/IEC controls and not automatic legal applicability.
+  - id: MAP-ISMS-FSTEC-005
+    rule: >
+      Historical audits route the standard edition by the audit/event date. A replaced standard is
+      preserved as historical evidence and must not be silently rewritten to the current edition.
+  - id: MAP-ISMS-FSTEC-006
+    rule: >
+      If a mapping lacks clause-level evidence on either side, the decision state is REQUIRES_EXPERT_MAPPING.
+
+example_safe_family_relations:
+  - theme: ACCESS_CONTROL
+    gost_iso_role: "27002 control guidance"
+    fstec_observed_family_codes: ["УПД", "ИАФ"]
+    relation: THEMATIC_OVERLAP
+    equivalence: NOT_PROVEN
+  - theme: SECURITY_EVENT_LOGGING
+    gost_iso_role: "ISMS control guidance / ГОСТ Р 59548 event-registration guidance"
+    fstec_observed_family_codes: ["АУД"]
+    relation: THEMATIC_OVERLAP
+    equivalence: NOT_PROVEN
+  - theme: INCIDENT_MANAGEMENT
+    gost_iso_role: "ГОСТ Р 59709-59712 / ISMS guidance"
+    fstec_context: "regulatory and methodological incident/security measures depend on applicable FSTEC source"
+    relation: SUPPORTS_OBJECTIVE
+    equivalence: NOT_PROVEN
+  - theme: LEAST_PRIVILEGE
+    gost_iso_role: "access-control guidance"
+    fstec_observed_evidence: "BDU ASU TP BDA:C006 links excessive privileges to УПД.5 and related measures"
+    relation: THEMATIC_OVERLAP
+    equivalence: NOT_PROVEN
+
+fail_closed_states:
+  - UNKNOWN_STANDARD_EDITION
+  - NEEDS_BINDING_EDGE
+  - REQUIRES_EXPERT_MAPPING
+  - CLAUSE_EVIDENCE_MISSING
+  - FSTEC_APPLICABILITY_UNKNOWN
+  - HISTORICAL_DATE_MISSING
+
+pending:
+  - exact clause-level extraction for selected ISO/GOST controls where licensing/contract/regulation makes the standard binding
+  - exact clause-level current FSTEC measure catalog under Order 117 and its interim 2014 methodology linkage
+  - immutable/hash-pinned artifacts where access and redistribution allow
+  - expert-reviewed many-to-many crosswalk with explicit evidence and non-equivalence notes
