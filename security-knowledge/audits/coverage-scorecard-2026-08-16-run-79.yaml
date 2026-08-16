@@ -1,0 +1,58 @@
+scorecard_id: SECURITY-KB-RUN-79
+as_of: "2026-08-16"
+overall_strict_scope_percent: 10
+expert_ready: false
+red_team: FAIL
+critical_gaps: 0
+high_gaps: 1
+high_gap_ids:
+  - HIGH-IMMUTABLE-PROVENANCE
+
+domains:
+  russian_npa: 10
+  gost_iso: 10
+  classification_categorization: 10
+  fstec_threat_method_bdu: 10
+  risk_methods: 10
+  legal_consequences_koap_uk_gk_tk: 10
+  szi_skzi_license_lifecycle: 10
+  roles_deadlines_responsibility: 10
+  evidence_audit: 10
+  practical_cases: 10
+
+verified_this_run:
+  new_normative_rules: 0
+  historical_rules_rechecked: 6
+  executable_fixtures_existing: 12
+  validators_added: 1
+  ci_gates_added: 1
+  ci_status: PASS
+  ci_run_id: 31940515176
+  immutable_primary_added: 0
+  provenance_targets_resolved: 2
+  findings:
+    - "The 12 FSB 282/348 historical boundary fixtures are now executed by a deterministic validator and dedicated GitHub Actions gate."
+    - "FSB 282/2019 official publication identity remains 0001201907170025; Minjust registration 55284."
+    - "FSB 348/2022 official publication identity remains 0001202208050004; Minjust registration 69513."
+    - "Minjust-distribution exact PDF target resolved for FSB 282: https://minjust.consultant.ru/files/43452 (observed PDF, 9 pages)."
+    - "Minjust-distribution exact PDF target resolved for FSB 348: https://minjust.consultant.ru/files/32006 (observed PDF, 4 pages)."
+    - "Runtime byte acquisition still failed; target resolution is not promoted to immutable evidence."
+
+added_files:
+  - path: security-knowledge/validators/validate_fsb_282_348_historical_delta.py
+    commit: da291035c1c844ec28c4096a80677036b667abfc
+  - path: .github/workflows/fsb-282-348-historical-delta.yml
+    commit: 7a9fe946955985a24eb1714dddbea6bed99a9008
+  - path: security-knowledge/provenance/fsb-282-348-minjust-pdf-targets-2026-08-16.yaml
+    commit: f6d8d8a28cbb18510cf3f4b327fb18ff81278294
+
+pending:
+  - "preserve exact PDF bytes for FSB 282/348"
+  - "record retrieved_at + exact byte_length + SHA-256"
+  - "bind historical clause claims to artifact_id + sha256"
+  - "clause-by-clause immutable historical snapshots"
+  - "HIGH-IMMUTABLE-PROVENANCE for high-value FSB/NKTsKI sources and dynamic registries"
+
+next_bottleneck: >
+  Acquire the already-resolved exact PDF target bytes for FSB 282 or 348, hash-pin them and bind existing historical claims;
+  then reuse the acquisition pattern for FSB/NKTsKI high-value sources. Do not raise readiness until immutable provenance closes.
