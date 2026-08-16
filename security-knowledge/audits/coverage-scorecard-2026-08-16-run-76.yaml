@@ -1,0 +1,74 @@
+scorecard_id: SECURITY-KB-RU-RUN-76
+observed_at: 2026-08-16T10:14:00+03:00
+scope_policy: STRICT_MASTER_INVENTORY_NO_INFLATION
+overall_percent: 10
+key_domains_percent:
+  npa_rf: 10
+  gost_iso: 10
+  classification_categorization: 10
+  threat_methodology_bdu: 10
+  risk_methods: 10
+  legal_consequences_koap_uk_gk_tk: 10
+  szi_skzi_license_lifecycle: 10
+  roles_deadlines_responsibility: 10
+  evidence_audit: 10
+  practical_cases: 10
+status:
+  critical_gaps: 0
+  high_gaps: 1
+  red_team: FAIL
+  expert_ready: false
+verified_this_run:
+  new_normative_records: 1
+  immutable_primary_added: 0
+  authority_chain_relations_added: 3
+  executable_regression_cases_added: 12
+  validator_added: 1
+  ci_gate_added: 1
+  new_ci_pass_claimed: false
+added_or_updated:
+  - security-knowledge/evidence/nkcki-reporting-format-authority-chain-2025-2026-v1.yaml
+  - security-knowledge/evidence/nkcki-reporting-format-authority-regression-v1.json
+  - security-knowledge/validators/validate_nkcki_reporting_format_authority.py
+  - .github/workflows/nkcki-reporting-format-authority.yml
+proof_floor_notes:
+  - Official publication portal identifies FSB Order No.540 dated 2025-12-24 as publication 0001202512250025, published 2025-12-25 and registered by Ministry of Justice No.84777.
+  - Authoritative GosSOPKA reproduction states FSB Order No.540 enters into force on 2026-01-30.
+  - The amended NKTsKI Regulation function 4.10 authorizes NKTsKI to determine the composition of technical parameters of computer attacks/incidents indicated when information is submitted to GosSOPKA.
+  - Authoritative GosSOPKA materials for FSB Order No.546 state information exchange follows formats and technical-parameter composition determined by NKTsKI.
+  - Official NKTsKI/GosSOPKA pages confirm NKTsKI Order No.2 dated 2026-07-14 defines GosSOPKA reporting formats and technical parameters.
+  - Exact NKTsKI Order No.2 artifact bytes are still not preserved; exact field schema remains blocked.
+  - The 2026-07-08 Initial Data document remains methodological guidance; example thresholds are not universal mandatory thresholds.
+red_team_findings_fixed_this_run:
+  - id: RT-AUTH-076-001
+    severity_if_unfixed: HIGH
+    description: NKTsKI Order No.2 could be treated as a free-standing format rule without an explicit authority/binding chain.
+    correction: Added FSB-540 authority edge and FSB-546 binding-to-NKTsKI-format edge.
+  - id: RT-AUTH-076-002
+    severity_if_unfixed: HIGH
+    description: The existence of NKTsKI authority could be mistaken for proof of guessed current fields or parameter names.
+    correction: Exact schema requires artifact acquisition and valid hash/timestamp evidence.
+  - id: RT-AUTH-076-003
+    severity_if_unfixed: MEDIUM
+    description: Current 2026 authority chain could be backcast to historical events before its effective date.
+    correction: Events before 2026-01-30 route to predecessor-law review.
+  - id: RT-AUTH-076-004
+    severity_if_unfixed: MEDIUM
+    description: Methodological thresholds could become mandatory by association with the binding reporting framework.
+    correction: Methodology requires an independent binding edge for mandatory routing.
+open_high:
+  - id: HIGH-IMMUTABLE-PROVENANCE
+    description: >
+      Exact primary bytes, retrieved_at timestamps and SHA-256 bindings remain missing for high-value
+      FSB/NKTsKI artifacts, selected dynamic registers and tracked judicial acts.
+pending:
+  - exact download href/bytes for NKTsKI Order No.2 dated 2026-07-14
+  - exact download href/bytes for the 2026-07-08 Initial Data document
+  - retrieved_at, MIME, byte_length and SHA-256
+  - field/clause-level extraction after artifact acquisition
+  - predecessor review for historical reporting-format authority before 2026-01-30 if such routing is needed
+  - completed GitHub Actions status for NKTsKI Reporting Format Authority Gate
+next_bottleneck: >
+  Acquire exact official bytes for NKTsKI Order No.2 or the 2026-07-08 Initial Data document; preserve timestamp,
+  MIME, byte length and SHA-256; then extract only actual fields/technical parameters and bind them to the existing
+  SUBMISSION/PACKAGE_STATE/DELIVERY evidence nodes and FSB547 workflow. Keep HIGH-IMMUTABLE-PROVENANCE open until exact bytes exist.
