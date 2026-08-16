@@ -1,0 +1,115 @@
+schema_version: 1
+slice_id: RU-STANDARDS-INCIDENT-MANAGEMENT-2026-08-16
+observed_at: 2026-08-16
+scope: Current-status and applicability metadata for Russian national standards relevant to computer-incident management and security-event logging.
+authority:
+  organization: Rosstandart
+  service: Federal information fund for standards / protect.gost.ru
+status_policy: >
+  A standard being current does not by itself prove that a specific organization is legally obliged to comply with it.
+  Mandatory applicability requires a separate binding edge from legislation, regulation, contract, accreditation/certification scope,
+  procurement terms, or an adopted internal policy.
+records:
+  - id: STD-RU-59709-2022
+    designation: ГОСТ Р 59709-2022
+    title: Защита информации. Управление компьютерными инцидентами. Термины и определения
+    status_observed: Действует
+    order_number: 1375-ст
+    order_date: 2022-11-29
+    effective_date: 2023-02-01
+    oks: '35.020'
+    role_in_family: terminology
+    scope_verified: >
+      Terms and definitions for detection, prevention and remediation of computer attacks and response to computer incidents in GosSOPKA-related documentation.
+    source_url: https://protect.gost.ru/gost/details/9aacb55e-f8f2-40a7-adf4-e322cf32e8d2
+    evidence_class: AUTHORITATIVE_VERIFIED_METADATA_AND_SCOPE
+  - id: STD-RU-59710-2022
+    designation: ГОСТ Р 59710-2022
+    title: Защита информации. Управление компьютерными инцидентами. Общие положения
+    status_observed: Действует
+    order_number: 1376-ст
+    order_date: 2022-11-29
+    effective_date: 2023-02-01
+    oks: '35.020'
+    role_in_family: foundational_lifecycle
+    scope_verified: >
+      Foundational standard for the GosSOPKA computer-incident-management series; defines the content of incident-management stages.
+    intended_population_verified: >
+      GosSOPKA subjects managing incidents for their own information resources and subjects whose responsibility zone includes resources of other GosSOPKA subjects.
+    source_url: https://protect.gost.ru/gost/details/3dcc47c2-d28d-4a0d-a7cc-6f4ad8609b7c
+    evidence_class: AUTHORITATIVE_VERIFIED_METADATA_AND_SCOPE
+  - id: STD-RU-59711-2022
+    designation: ГОСТ Р 59711-2022
+    title: Защита информации. Управление компьютерными инцидентами. Организация деятельности по управлению компьютерными инцидентами
+    status_observed: Действует
+    order_number: 1377-ст
+    order_date: 2022-11-29
+    effective_date: 2023-02-01
+    oks: '35.020'
+    role_in_family: organization_and_process_setup
+    scope_verified: >
+      Defines the content of stages for organizing computer-incident-management activities for relevant GosSOPKA subjects.
+    source_url: https://protect.gost.ru/gost/details/45281d05-ebb9-4819-ae17-f8efa45b69fa
+    evidence_class: AUTHORITATIVE_VERIFIED_METADATA_AND_SCOPE
+  - id: STD-RU-59712-2022
+    designation: ГОСТ Р 59712-2022
+    title: Защита информации. Управление компьютерными инцидентами. Руководство по реагированию на компьютерные инциденты
+    status_observed: Действует
+    order_number: 1378-ст
+    order_date: 2022-11-29
+    effective_date: 2023-02-01
+    oks: '35.020'
+    role_in_family: response_operations
+    scope_verified: >
+      Defines the content of stages for detection and registration, response, and analysis of incident-management results.
+    source_url: https://protect.gost.ru/gost/details/5eb2da92-c6e0-46ef-b260-051a7b6daf09
+    evidence_class: AUTHORITATIVE_VERIFIED_METADATA_AND_SCOPE
+  - id: STD-RU-59548-2022
+    designation: ГОСТ Р 59548-2022
+    title: Защита информации. Регистрация событий безопасности. Требования к регистрируемой информации
+    status_observed: Действует
+    order_number: 2-ст
+    order_date: 2022-01-13
+    effective_date: 2022-02-01
+    oks: '35.020'
+    role_in_family: security_event_evidence_input
+    scope_verified: >
+      Establishes requirements for the composition and content of information registered by protection/security and other software or technical means in information/automated systems.
+    explicit_scope_limit_verified: >
+      Does not establish technical implementation requirements or the storage format for security events.
+    source_url: https://protect.gost.ru/gost/details/d5008460-671b-4563-9388-d1d0f9ecdbbf
+    evidence_class: AUTHORITATIVE_VERIFIED_METADATA_AND_SCOPE
+  - id: STD-RU-18044-2007
+    designation: ГОСТ Р ИСО/МЭК ТО 18044-2007
+    title: Информационная технология. Методы и средства обеспечения безопасности. Менеджмент инцидентов информационной безопасности
+    status_observed: Действует
+    order_number: 513-ст
+    order_date: 2007-12-27
+    effective_date: 2008-07-01
+    role_in_family: legacy_general_information_security_incident_guidance
+    coexistence_note: >
+      Rosstandart still marks this older general information-security-incident-management standard as current. It must not be assumed to be superseded merely because the 59709-59712 GosSOPKA-oriented series exists.
+    source_url: https://protect.gost.ru/gost/details/037ee6f5-1b9f-4c52-b1ea-fa35a8ba46cb
+    evidence_class: AUTHORITATIVE_VERIFIED_METADATA_AND_SCOPE
+routing_guardrails:
+  - id: STD-INC-GUARD-001
+    rule: CURRENT_STANDARD_DOES_NOT_EQUAL_MANDATORY_FOR_ORGANIZATION
+    action: REQUIRE_BINDING_APPLICABILITY_EDGE
+  - id: STD-INC-GUARD-002
+    rule: GOST_R_59710_59712_SCOPE_IS_GOSSOPKA_ORIENTED
+    action: DO_NOT_ROUTE_TO_NON_GOSSOPKA_CONTEXT_WITHOUT_SEPARATE_BASIS
+  - id: STD-INC-GUARD-003
+    rule: GOST_R_59548_DEFINES_REGISTERED_INFORMATION_NOT_STORAGE_FORMAT
+    action: DO_NOT_INVENT_TECHNICAL_FORMAT_REQUIREMENTS
+  - id: STD-INC-GUARD-004
+    rule: LEGACY_18044_IS_STILL_MARKED_CURRENT
+    action: DO_NOT_AUTO_RETIRE_OR_AUTO_PREFER_WITHOUT_APPLICABILITY_CONTEXT
+  - id: STD-INC-GUARD-005
+    rule: STANDARD_METADATA_IS_NOT_FULL_NORMATIVE_TEXT
+    action: CLAUSE_LEVEL_REQUIREMENTS_REMAIN_PENDING_UNTIL_LAWFUL_TEXT_EVIDENCE_IS_ACQUIRED
+pending:
+  - lawful clause-level evidence locators for 59709-59712 and 59548
+  - explicit mapping between the 59709-59712 stages and current FSB/NKTsKI regulatory workflows
+  - applicability edges proving when a regulator, contract or internal policy makes a standard binding
+  - incident evidence mapping from 59548 to SIEM/logging evidence nodes
+  - lifecycle/replacement monitoring for all six standards
