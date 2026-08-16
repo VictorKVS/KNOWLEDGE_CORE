@@ -1,0 +1,21 @@
+name: Access Control FSTEC BDU Versioned Crosswalk Gate
+
+on:
+  push:
+    paths:
+      - 'security-knowledge/standards/access-control-fstec-bdu-versioned-crosswalk-2026-08-16.yaml'
+      - 'security-knowledge/regression/access-control-fstec-bdu-versioned-crosswalk-regression-v1.json'
+      - 'security-knowledge/validators/validate_access_control_fstec_bdu_versioned_crosswalk.py'
+      - '.github/workflows/access-control-fstec-bdu-versioned-crosswalk.yml'
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate versioned access-control crosswalk
+        run: python security-knowledge/validators/validate_access_control_fstec_bdu_versioned_crosswalk.py
