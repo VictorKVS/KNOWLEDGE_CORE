@@ -1,5 +1,5 @@
 model_id: PRACTICE-EVIDENCE-0001
-version: 1.0
+version: 1.1
 status: INTERNAL_EXECUTABLE_MODEL
 purpose: >
   Prevent secondary retellings, press articles, vendor notes, search snippets and synthetic examples
@@ -50,6 +50,10 @@ source_tiers:
       - official court document/card
       - official regulator decision/publication
     allowed_claim_level: AUTHORITATIVE_PRACTICE_VERIFIED
+  PRIMARY_OFFICIAL_PRESS_REFERENCE:
+    examples:
+      - official court press page referencing a case
+    allowed_claim_level: CASE_DISCOVERY_CONFIRMED_ONLY
   AUTHORITATIVE_SECONDARY:
     examples:
       - recognized legal database reproducing the act
@@ -93,6 +97,10 @@ fail_closed_rules:
     rule: Turnover-sanction cases require explicit turnover-base evidence and repeat-offense evidence when relevant.
   - id: PRACTICE-GUARD-010
     rule: Practice facts and normative rules are separate graph entities; practice may interpret/application-test a rule but does not rewrite it.
+  - id: PRACTICE-GUARD-011
+    rule: An official court press-page reference confirms discovery of a case but MUST NOT substitute for the judicial act's holding or reasoning.
+  - id: PRACTICE-GUARD-012
+    rule: Discovery of a direct official document URL without successful retrieval MUST NOT create bytes, hash, immutable or primary-act claims.
 
 comparison_dimensions:
   - event_date
@@ -110,9 +118,12 @@ comparison_dimensions:
   - procedural_stage
 
 current_acquisition_note:
-  observed_at: 2026-08-16T02:04:17+03:00
+  observed_at: 2026-08-16T03:00:50+03:00
   finding: >
-    Targeted public search did not yield a directly verifiable official court decision for the new
-    turnover-sanction branches in this pass. This is recorded as NO_VERIFIED_OFFICIAL_CASE_ACQUIRED,
-    not as evidence that no such judicial practice exists.
-  status: NO_VERIFIED_OFFICIAL_CASE_ACQUIRED
+    Two identifiable early-2026 cases under the new Article 13.11 leak-sanction branches were found.
+    Case A40-351064/2025 has an authoritative legal-database reproduction of the appellate act and is
+    therefore recorded at AUTHORITATIVE_SECONDARY_ONLY. Case A56-4733/2026 is referenced by an official
+    sudrf.ru court press page and a direct kad.arbitr.ru PDF target was discovered through a secondary
+    reproduction, but the official PDF could not be fetched in this run. No case is promoted to
+    PRIMARY_OFFICIAL or IMMUTABLE_PRIMARY_PRACTICE on that basis.
+  status: AUTHORITATIVE_SECONDARY_CASE_ACQUIRED_PRIMARY_PENDING
