@@ -1,0 +1,19 @@
+{
+  "suite_id": "SOD-CONFLICT-REGRESSION-V1",
+  "cases": [
+    {"id":"SOD-001","subject_id":"u1","capabilities":["REQUEST_CHANGE","APPROVE_CHANGE"],"observed_path":true,"fresh":true,"temporal_valid":true,"expected":"SOD_CONFLICT"},
+    {"id":"SOD-002","subject_id":"u2","capabilities":["MODIFY_CODE","DEPLOY_PRODUCTION"],"observed_path":true,"fresh":true,"temporal_valid":true,"expected":"SOD_CONFLICT"},
+    {"id":"SOD-003","subject_id":"u3","capabilities":["ADMINISTER_SECURITY_CONTROL","AUDIT_SAME_CONTROL"],"observed_path":true,"fresh":true,"temporal_valid":true,"expected":"SOD_CONFLICT"},
+    {"id":"SOD-004","subject_id":"u4","capabilities":["CREATE_AUDIT_EVIDENCE","CERTIFY_AUDIT_EVIDENCE"],"observed_path":true,"fresh":true,"temporal_valid":true,"expected":"SOD_CONFLICT"},
+    {"id":"SOD-005","subject_id":"u5","capabilities":["GRANT_ACCESS","REVIEW_OWN_ACCESS_GRANTS"],"observed_path":true,"fresh":true,"temporal_valid":true,"expected":"SOD_CONFLICT"},
+    {"id":"SOD-006","subject_id":"u6","capabilities":["CONTROL_BACKUP","DELETE_PRIMARY_AND_BACKUP"],"observed_path":true,"fresh":true,"temporal_valid":true,"expected":"SOD_CONFLICT"},
+    {"id":"SOD-007","subject_id":"u7","capabilities":["REQUEST_CHANGE"],"observed_path":true,"fresh":true,"temporal_valid":true,"expected":"SOD_CLEAR"},
+    {"id":"SOD-008","subject_id":"u8","capabilities":["REQUEST_CHANGE","APPROVE_CHANGE"],"observed_path":false,"fresh":true,"temporal_valid":true,"expected":"SOD_PATH_NOT_PROVEN"},
+    {"id":"SOD-009","subject_id":"u9","capabilities":["REQUEST_CHANGE","APPROVE_CHANGE"],"observed_path":true,"fresh":false,"temporal_valid":true,"expected":"SOD_PATH_STALE"},
+    {"id":"SOD-010","subject_id":"u10","capabilities":["REQUEST_CHANGE","APPROVE_CHANGE"],"observed_path":true,"fresh":true,"temporal_valid":false,"expected":"SOD_PATH_STALE"},
+    {"id":"SOD-011","subject_id":"u11","identity_conflict":true,"capabilities":["REQUEST_CHANGE","APPROVE_CHANGE"],"observed_path":true,"fresh":true,"temporal_valid":true,"expected":"SOD_IDENTITY_CONFLICT"},
+    {"id":"SOD-012","subject_id":"u12","capabilities":["REQUEST_CHANGE","APPROVE_CHANGE"],"observed_path":true,"fresh":true,"temporal_valid":true,"compensating_control":true,"independent_approver_or_reviewer":true,"evidence_locator":"EV-12","evidence_fresh":true,"expected":"SOD_CONFLICT_COMPENSATED"},
+    {"id":"SOD-013","subject_id":"u13","capabilities":["REQUEST_CHANGE","APPROVE_CHANGE"],"observed_path":true,"fresh":true,"temporal_valid":true,"compensating_control":true,"independent_approver_or_reviewer":true,"evidence_locator":"EV-13","evidence_fresh":false,"expected":"SOD_COMPENSATING_CONTROL_NOT_PROVEN"},
+    {"id":"SOD-014","subject_id":"u14","capabilities":["REQUEST_CHANGE","APPROVE_CHANGE"],"observed_path":true,"fresh":true,"temporal_valid":true,"compensating_control":true,"independent_approver_or_reviewer":false,"evidence_locator":"EV-14","evidence_fresh":true,"expected":"SOD_COMPENSATING_CONTROL_NOT_PROVEN"}
+  ]
+}
