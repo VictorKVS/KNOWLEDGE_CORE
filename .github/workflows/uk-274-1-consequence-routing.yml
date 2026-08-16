@@ -1,0 +1,27 @@
+name: UK 274.1 consequence routing
+
+on:
+  push:
+    paths:
+      - "security-knowledge/legal-consequences/uk-274-1-consequence-routing-regression-v1.json"
+      - "security-knowledge/legal-consequences/uk-274-1-kii-76-fz-2026-verified.yaml"
+      - "security-knowledge/validators/validate_uk_274_1_consequence_routing.py"
+      - ".github/workflows/uk-274-1-consequence-routing.yml"
+  pull_request:
+    paths:
+      - "security-knowledge/legal-consequences/uk-274-1-consequence-routing-regression-v1.json"
+      - "security-knowledge/legal-consequences/uk-274-1-kii-76-fz-2026-verified.yaml"
+      - "security-knowledge/validators/validate_uk_274_1_consequence_routing.py"
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Validate fail-closed Article 274.1 routing boundaries
+        run: >-
+          python security-knowledge/validators/validate_uk_274_1_consequence_routing.py
+          security-knowledge/legal-consequences/uk-274-1-consequence-routing-regression-v1.json
