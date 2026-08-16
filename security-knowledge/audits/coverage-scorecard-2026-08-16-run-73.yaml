@@ -1,0 +1,70 @@
+scorecard_id: SECURITY-KB-RU-RUN-73
+observed_at: 2026-08-16T07:01:00+03:00
+scope_policy: STRICT_MASTER_INVENTORY_NO_INFLATION
+overall_percent: 10
+key_domains_percent:
+  npa_rf: 10
+  gost_iso: 10
+  classification_categorization: 10
+  threat_methodology_bdu: 10
+  risk_methods: 10
+  legal_consequences_koap_uk_gk_tk: 10
+  szi_skzi_license_lifecycle: 10
+  roles_deadlines_responsibility: 10
+  evidence_audit: 10
+  practical_cases: 10
+status:
+  critical_gaps: 0
+  high_gaps: 1
+  red_team: FAIL
+  expert_ready: false
+verified_this_run:
+  new_normative_records: 0
+  new_standard_records: 0
+  immutable_primary_added: 0
+  crosswalk_relations_added: 5
+  executable_regression_cases_added: 12
+  validator_added: 1
+  ci_gate_added: 1
+  ci_pass_claimed: false
+added_or_updated:
+  - security-knowledge/standards/incident-management-fsb547-crosswalk-v1.yaml
+  - security-knowledge/standards/incident-management-fsb547-crosswalk-regression-v1.json
+  - security-knowledge/validators/validate_incident_standards_fsb547_crosswalk.py
+  - .github/workflows/incident-standards-fsb547-crosswalk.yml
+proof_floor_notes:
+  - Rosstandart status/scope metadata was rechecked for ГОСТ Р 59710-2022, ГОСТ Р 59711-2022, ГОСТ Р 59712-2022 and ГОСТ Р 59548-2022.
+  - ГОСТ Р 59710-2022 is foundational for the GosSOPKA incident-management series; 59712 covers detection/registration, response and analysis stages.
+  - ГОСТ Р 59548-2022 defines composition/content of registered security-event information but explicitly does not prescribe technical implementation or event-storage format.
+  - FSB 547 deadlines remain sourced only from verified FSB 547 rules; standards do not create or extend those deadlines.
+red_team_findings_fixed_this_run:
+  - id: RT-XW-073-001
+    severity_if_unfixed: HIGH
+    description: A relevant/current ГОСТ could be silently promoted to a mandatory legal obligation.
+    correction: Crosswalk default is GUIDANCE_ONLY unless a separate binding applicability edge is proven.
+  - id: RT-XW-073-002
+    severity_if_unfixed: HIGH
+    description: Internal standard-based incident process timing could extend a shorter FSB 547 regulatory maximum deadline.
+    correction: Regulatory deadline has precedence; stricter internal target allowed, extension blocked.
+  - id: RT-XW-073-003
+    severity_if_unfixed: MEDIUM
+    description: A local event log or incident-registration record could be misused as evidence of NKTsKI notification/delivery.
+    correction: Internal registration, outgoing notification and delivery confirmation are separate evidence nodes.
+  - id: RT-XW-073-004
+    severity_if_unfixed: MEDIUM
+    description: ГОСТ Р 59548 metadata could be used to invent mandatory SIEM fields or storage format.
+    correction: Field-level output blocked until lawful clause-level evidence is acquired.
+open_high:
+  - id: HIGH-IMMUTABLE-PROVENANCE
+    description: >
+      Exact primary bytes, retrieved_at timestamps and SHA-256 bindings remain missing for high-value
+      FSB/NKTsKI artifacts, selected dynamic registers and tracked judicial acts.
+pending:
+  - lawful clause-level evidence for ГОСТ Р 59709-59712 and ГОСТ Р 59548
+  - explicit organization-specific binding edges for standards
+  - exact NKTsKI 2026 reporting field schema
+  - executable EVENT/LOG field mapping only after clause evidence
+  - completed CI status for Incident Standards FSB547 Crosswalk Gate
+  - immutable provenance acquisition for FSB/NKTsKI and dynamic registers
+next_bottleneck: >
+  Resolve exact NKTsKI 2026 reporting artifact bytes/fields and bind them to the FSB 547 workflow; then use lawful clause-level evidence from ГОСТ Р 59548 to create EVENT/LOG evidence fields without inventing storage formats. Keep HIGH-IMMUTABLE-PROVENANCE open until exact bytes + timestamp + SHA-256 exist.
