@@ -1,0 +1,58 @@
+scorecard_id: SECURITY-KB-RUN-80
+as_of: "2026-08-16"
+overall_strict_scope_percent: 10
+expert_ready: false
+red_team: FAIL
+critical_gaps: 0
+high_gaps: 1
+high_gap_ids:
+  - HIGH-IMMUTABLE-PROVENANCE
+
+domains:
+  russian_npa: 10
+  gost_iso: 10
+  classification_categorization: 10
+  fstec_threat_method_bdu: 10
+  risk_methods: 10
+  legal_consequences_koap_uk_gk_tk: 10
+  szi_skzi_license_lifecycle: 10
+  roles_deadlines_responsibility: 10
+  evidence_audit: 10
+  practical_cases: 10
+
+verified_this_run:
+  new_normative_rules: 0
+  authoritative_standard_records_added: 9
+  standard_guardrails_added: 5
+  immutable_primary_added: 0
+  acquisition_attempts:
+    - artifact: "ФСБ №282/2019 Minjust PDF"
+      target: "https://minjust.consultant.ru/files/43452"
+      observed_via_web: "application/pdf, 9 pages"
+      byte_download_result: FAILED
+    - artifact: "ФСБ №348/2022 Minjust PDF"
+      target: "https://minjust.consultant.ru/files/32006"
+      observed_via_web: "application/pdf, 4 pages"
+      byte_download_result: NOT_ACQUIRED
+  findings:
+    - "Added a current Russian ISMS role map for ГОСТ Р ИСО/МЭК 27000/27001/27002/27003/27004/27017/27021, ГОСТ ISO/IEC 27014 and ГОСТ Р 56045."
+    - "Rosstandart status pages are used for current status, effective dates, replacement relations and scope metadata."
+    - "CURRENT_STANDARD is explicitly separated from MANDATORY_LEGAL_REQUIREMENT."
+    - "ГОСТ Р ИСО/МЭК 27001-2021 requirements in clauses 4-10 are non-excludable only in the context of a claimed conformity to that standard; this must not be generalized into statutory applicability."
+    - "Exact Minjust PDF targets for FSB 282/348 still resolve through web tooling, but runtime byte preservation failed; no SHA-256 or immutable promotion was claimed."
+
+added_files:
+  - path: security-knowledge/standards/isms-core-current-status-and-role-map-2026-08-16.yaml
+    commit: ac306e6575788f0e2f7a15e7508859eeb7e0c9c4
+
+pending:
+  - "clause-level ISMS crosswalk only where a separate binding edge exists"
+  - "executable lifecycle tests for replaced ISMS standards"
+  - "preserve exact PDF bytes for FSB 282/348"
+  - "record retrieved_at + exact byte_length + SHA-256"
+  - "bind historical clause claims to artifact_id + sha256"
+  - "HIGH-IMMUTABLE-PROVENANCE for high-value FSB/NKTsKI sources and dynamic registries"
+
+next_bottleneck: >
+  Build executable lifecycle/applicability tests for the ISMS standards and a non-equivalence crosswalk to FSTEC control families;
+  in parallel, continue exact-byte acquisition for already-resolved FSB/NKTsKI artifacts. Do not raise readiness until immutable provenance closes.
