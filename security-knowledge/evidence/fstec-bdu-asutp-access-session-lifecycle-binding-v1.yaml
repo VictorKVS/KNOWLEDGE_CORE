@@ -1,0 +1,86 @@
+record_id: SEC-EVID-FSTEC-BDU-ASUTP-ACCESS-SESSION-001
+status: VERIFIED_WEB_DYNAMIC
+as_of: "2026-08-17"
+domain: fstec_threat_method_bdu
+scope:
+  applies_to: "АСУ ТП / components described by the official FSTEC BDU ASU TP resource"
+  does_not_assert:
+    - "universal applicability to every information system"
+    - "that BDU entries alone create a statutory duty"
+    - "that a technical vulnerability automatically establishes legal liability"
+source_authority:
+  operator: "ФСТЭК России"
+  resource: "Банк данных угроз АСУ ТП"
+  provenance_tier: PRIMARY_WEB_VERIFIED_DYNAMIC
+  exact_artifact_acquired: false
+  immutable_hash_available: false
+  note: "Official live FSTEC subdomain verified; this record does not promote dynamic pages to PRIMARY_IMMUTABLE."
+
+bindings:
+  - source_id: "BDA:C006"
+    title: "Наделение пользователей избыточными полномочиями"
+    official_url: "https://bduasutp.fstec.ru/vulnerabilities-settings/c842d3db-6558-4cd6-87e3-bed82058ee69"
+    verified_facts:
+      - "The configuration vulnerability is defined as granting users permissions not needed for their job duties."
+      - "The page maps the vulnerability to access-control weaknesses and to measure УПД.5 (minimum necessary rights and privileges), among other measures."
+    kb_binding:
+      classes:
+        - EXCESSIVE_PRIVILEGE_RISK
+        - LEAST_PRIVILEGE_CONTROL
+      relation: "supports technical/control rationale within ASU TP scope"
+
+  - source_id: "BDA:C008"
+    title: "Отсутствие ограничений на количество попыток доступа"
+    official_url: "https://bduasutp.fstec.ru/vulnerabilities-settings/d38423fd-0723-431b-9913-68169c9ad989"
+    verified_facts:
+      - "The vulnerability is absence of temporary blocking of password entry after a configured number of failed attempts."
+      - "The page maps it to measure УПД.6 and threat УТП:04 unauthorized access."
+    kb_binding:
+      classes:
+        - AUTHENTICATION_ATTEMPT_LIMIT_MISSING
+        - BRUTE_FORCE_EXPOSURE
+      relation: "supports access-attempt lifecycle checks within ASU TP scope"
+
+  - source_id: "BDA:C009"
+    title: "Отсутствие ограничения числа параллельных сеансов доступа"
+    official_url: "https://bduasutp.fstec.ru/vulnerabilities-settings/2b558f60-e000-4fe9-9b63-8168d4810bf0"
+    verified_facts:
+      - "The vulnerability is absence of a per-account parallel-session limit for components where regular remote connection is used."
+      - "The page maps it to measure УПД.9 and threat УТП:04 unauthorized access."
+    kb_binding:
+      classes:
+        - PARALLEL_SESSION_LIMIT_MISSING
+        - SESSION_CONTROL_RISK
+      relation: "authoritative technical binding for session-control checks within ASU TP scope"
+
+  - source_id: "BDA:C010"
+    title: "Отсутствие ограничений времени неактивности пользователей"
+    official_url: "https://bduasutp.fstec.ru/vulnerabilities-settings/f1646ba6-d934-43d2-807a-b7053e0befb9"
+    verified_facts:
+      - "The vulnerability is absence of session locking after a configured inactivity period."
+      - "The page explicitly notes that for some components, for example an operator workstation, absence of this limit may not be a vulnerability because of functional specifics."
+      - "The page maps it to measure УПД.10 and threat УТП:04 unauthorized access."
+    kb_binding:
+      classes:
+        - INACTIVITY_SESSION_LOCK_MISSING
+        - SESSION_TIMEOUT_CONTROL
+      relation: "supports session-lifecycle evaluation but requires component-specific applicability"
+
+threat_context:
+  official_threat_catalog_url: "https://bduasutp.fstec.ru/threats"
+  verified_fact: "The official FSTEC BDU ASU TP threat catalog presents unauthorized-access and other threat classes as part of the national ASU TP threat/vulnerability resource."
+
+reasoning_guards:
+  - "Do not infer that every active session after credential revocation is directly named by these BDU entries. Residual-session classes remain an internal derived control state unless separately bound to a source that proves that exact rule."
+  - "Do not infer fixed timeout or failed-attempt numeric thresholds where the cited BDU page does not provide one."
+  - "Do not convert BDU vulnerability presence into automatic non-compliance or liability; applicability and governing requirements must be evaluated separately."
+  - "C010 contains an explicit functional-context exception; fail closed on applicability when the component role is unknown."
+
+research_result:
+  outcome: "PARTIAL_AUTHORITATIVE_BINDING"
+  closes_or_reduces:
+    - "authoritative Russian binding gap for access/session lifecycle classes in ASU TP scope"
+  remains_open:
+    - "exact-byte immutable provenance for dynamic BDU pages"
+    - "binding of credential revocation/residual-session semantics to exact primary requirements where applicable"
+    - "cross-domain applicability outside ASU TP"
