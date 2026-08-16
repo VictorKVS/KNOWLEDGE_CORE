@@ -1,0 +1,70 @@
+scorecard_id: SECURITY-KB-RUN-83
+as_of: "2026-08-16"
+overall_strict_scope_percent: 10
+expert_ready: false
+red_team: FAIL
+critical_gaps: 0
+high_gaps: 1
+high_gap_ids:
+  - HIGH-IMMUTABLE-PROVENANCE
+
+domains:
+  russian_npa: 10
+  gost_iso: 10
+  classification_categorization: 10
+  fstec_threat_method_bdu: 10
+  risk_methods: 10
+  legal_consequences_koap_uk_gk_tk: 10
+  szi_skzi_license_lifecycle: 10
+  roles_deadlines_responsibility: 10
+  evidence_audit: 10
+  practical_cases: 10
+
+verified_this_run:
+  new_normative_rules: 0
+  primary_dynamic_bdu_records_reverified: 1
+  internal_evidence_models_added: 1
+  executable_regression_cases_added: 16
+  validators_added: 1
+  ci_gates_added: 1
+  previous_access_control_crosswalk_ci: PASS
+  previous_access_control_crosswalk_run_id: 31948935592
+  new_access_entitlement_ci: QUEUED_AT_SCORECARD_CREATION
+  new_access_entitlement_run_id: 31951512226
+  immutable_primary_added: 0
+  findings:
+    - "Organization-side least-privilege evidence is now represented as ROLE -> ACCOUNT -> ENTITLEMENT -> OBJECT -> APPROVAL -> EFFECTIVE INTERVAL -> REVIEW -> REVOCATION."
+    - "Account ownership, role title, access-review spreadsheet and HR termination are not independently sufficient proof of correct technical entitlement state."
+    - "Revocation requested and revocation executed are separate evidence states."
+    - "BDU ASU TP BDA:C006 remains a current dynamic vulnerability signal for excessive privileges, but does not prove that a particular organization's entitlement is excessive without duty/need evidence."
+    - "Current FSTEC applicability remains independently gated; organization evidence cannot manufacture a regulatory obligation."
+
+red_team_guardrails_added:
+  - "Do not infer least privilege from generic RBAC labels such as user/admin."
+  - "Do not infer technical revocation from dismissal/transfer alone."
+  - "Do not treat account disablement, entitlement expiry, review and revocation as interchangeable events."
+  - "Do not infer correct access merely because no BDU vulnerability signal was observed."
+  - "Do not treat review evidence as a substitute for original approval/authority evidence."
+
+added_files:
+  - path: security-knowledge/evidence/access-entitlement-evidence-chain-v1.yaml
+    commit: 5f671ef7cb2b531d629398bf9fa083c463393e8c
+  - path: security-knowledge/regression/access-entitlement-evidence-chain-regression-v1.json
+    commit: 6a8ce2a5ca3b4795a6c155d5bd5efa2f3e3f4753
+  - path: security-knowledge/validators/validate_access_entitlement_evidence_chain.py
+    commit: 8668155a2cbfc450f6de27897eb1590fd6d0b0ac
+  - path: .github/workflows/access-entitlement-evidence-chain.yml
+    commit: 66e608c45b1c9ead973204e44f6ac2ae219a71d8
+
+verified_sources:
+  - "https://bduasutp.fstec.ru/vulnerabilities-settings/c842d3db-6558-4cd6-87e3-bed82058ee69"
+
+pending:
+  - "final CI conclusion for Access Entitlement Evidence Chain Gate"
+  - "organization source provenance adapters for HR/IdM/AD/DB/application entitlement facts"
+  - "privileged and service-account evidence profiles"
+  - "source-system reconciliation model: declared IAM rights vs effective technical rights"
+  - "primary/hash-pinned FSTEC methodology artifact and exact-byte provenance for high-value FSB/NKTsKI/dynamic registers"
+
+next_bottleneck: >
+  Build source-system reconciliation evidence that compares declared entitlement state against effective rights observed in IAM/AD/database/application systems, with stale-fact detection and privileged/service-account exceptions. In parallel continue HIGH-IMMUTABLE-PROVENANCE acquisition.
