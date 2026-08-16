@@ -1,6 +1,6 @@
-schema_version: "1.0"
+schema_version: "1.1"
 id: nkcki-2026-artifact-acquisition-manifest-v1
-observed_at: "2026-08-15"
+observed_at: "2026-08-16T05:00:19+03:00"
 status: PRIMARY_WEB_VERIFIED_ARTIFACT_BYTES_PENDING
 purpose: >-
   Track exact acquisition state for high-value NKTsKI 2026 reporting artifacts without
@@ -22,6 +22,7 @@ artifacts:
       Official NKTsKI material index states that the order defines formats for presenting
       information about computer attacks and computer incidents to GosSOPKA and the composition
       of technical parameters.
+    official_index_download_action_observed: true
     bytes_preserved: false
     sha256: null
     retrieved_at: null
@@ -38,6 +39,7 @@ artifacts:
       its threshold values are examples from general practice. Organizations are instructed to
       provide the maximum available materials identified in paragraph 5 of relevant sections,
       and missing one or more materials must not block transmission of the remaining available materials.
+    official_index_download_action_observed: true
     bytes_preserved: false
     sha256: null
     retrieved_at: null
@@ -76,15 +78,27 @@ provenance_rules:
     rule: >-
       Search-engine excerpts and third-party mirrors may support discovery but cannot satisfy the
       immutable-primary evidence floor.
+  - id: PROV-NKTSKI-006
+    rule: >-
+      Presence of an official "Download" action is stronger discovery evidence than a search snippet,
+      but still does not establish the downloaded filename, bytes, MIME type or hash until the target is resolved and acquired.
 
-retrieval_attempt_2026_08_15:
+retrieval_attempt_2026_08_16_run_71:
   index_visibility: CONFIRMED_ON_OFFICIAL_NKTSKI_SITE
+  official_news_visibility: CONFIRMED_ON_OFFICIAL_NKTSKI_SITE
   downloadable_links_exist_on_index: CONFIRMED_BY_OFFICIAL_INDEX_TEXT
   exact_download_target_resolved_in_this_run: false
   exact_bytes_retrieved_in_this_run: false
-  reason: >-
-    The official index is externally visible and exposes download actions, but the execution environment
-    did not yield a resolvable exact download target/bytes in this run. No SHA-256 is fabricated.
+  web_open_result: TIMEOUT_ON_DIRECT_INDEX_OPEN
+  direct_runtime_fetch_result: DNS_RESOLUTION_FAILURE_FOR_CERT_GOV_RU
+  interpretation: >-
+    These are acquisition-environment failures, not evidence that the official artifacts are absent,
+    repealed or unavailable to external users. No SHA-256 or filename is fabricated.
+  next_retry_strategy:
+    - resolve exact href through an official-page fetch path that exposes link targets
+    - preserve response bytes before parsing
+    - record retrieved_at, MIME type, byte length and SHA-256
+    - bind field-level claims only after preserved-artifact extraction
 
 red_team_guardrail:
   verdict: FAIL_CLOSED
