@@ -1,0 +1,105 @@
+slice_id: ISMS-CORE-CURRENT-STATUS-2026-08-16
+as_of: "2026-08-16"
+source_authority: Rosstandart Federal Information Fund
+status: AUTHORITATIVE_VERIFIED_METADATA_SCOPE
+purpose: >
+  Establish a current Russian ISMS standards role map without converting standards into mandatory legal requirements.
+
+standards:
+  - id: GOST-R-ISOIEC-27000-2021
+    designation: "ГОСТ Р ИСО/МЭК 27000-2021"
+    status: "Действует"
+    effective_from: "2021-11-30"
+    role: ISMS_VOCABULARY_AND_OVERVIEW
+    authoritative_url: "https://protect.gost.ru/gost/details/7953a549-28c8-4d1b-bd37-8476bb27853c"
+    claim: "Overview and vocabulary for information security management systems."
+  - id: GOST-R-ISOIEC-27001-2021
+    designation: "ГОСТ Р ИСО/МЭК 27001-2021"
+    status: "Действует"
+    effective_from: "2022-01-01"
+    replaces: "ГОСТ Р ИСО/МЭК 27001-2006"
+    role: ISMS_REQUIREMENTS
+    authoritative_url: "https://protect.gost.ru/gost/details/5e4acc56-cecf-41d4-a64f-95b3bac0d54f"
+    claim: >
+      Establishes general requirements for creation, implementation, maintenance and continual improvement of an ISMS,
+      including information-security risk assessment and treatment. If an organization claims conformity to this standard,
+      requirements in clauses 4-10 may not be excluded.
+  - id: GOST-R-ISOIEC-27002-2021
+    designation: "ГОСТ Р ИСО/МЭК 27002-2021"
+    status: "Действует"
+    effective_from: "2021-11-30"
+    replaces: "ГОСТ Р ИСО/МЭК 27002-2012"
+    role: ISMS_CONTROL_GUIDANCE
+    authoritative_url: "https://protect.gost.ru/gost/details/be00167c-6e26-4042-ac31-36be8a9d6b2e"
+    claim: "Guidance for selection, implementation and use of information-security controls aligned with organizational risks."
+  - id: GOST-R-ISOIEC-27003-2021
+    designation: "ГОСТ Р ИСО/МЭК 27003-2021"
+    status: "Действует"
+    effective_from: "2021-11-30"
+    replaces: "ГОСТ Р ИСО/МЭК 27003-2012"
+    role: ISMS_IMPLEMENTATION_GUIDANCE
+    authoritative_url: "https://protect.gost.ru/gost/details/498e739d-c0e1-4f67-8c70-c7b2c1f795ee"
+    claim: "Provides explanations and implementation guidance for ISO/IEC 27001."
+  - id: GOST-R-ISOIEC-27004-2021
+    designation: "ГОСТ Р ИСО/МЭК 27004-2021"
+    status: "Действует"
+    effective_from: "2021-11-30"
+    role: ISMS_MONITORING_MEASUREMENT_EVALUATION
+    authoritative_url: "https://protect.gost.ru/gost/details/263f79cd-423d-425b-9dc6-a0019110f13f"
+    claim: "Guidance for monitoring, measurement, analysis and evaluation of ISMS performance and effectiveness."
+  - id: GOST-ISOIEC-27014-2021
+    designation: "ГОСТ ISO/IEC 27014-2021"
+    status: "Действует"
+    effective_from: "2021-11-30"
+    role: INFORMATION_SECURITY_GOVERNANCE
+    authoritative_url: "https://protect.gost.ru/gost/details/ec8a1a7d-6e2a-4a01-9b4b-3161d5e51a79"
+    claim: "Governance concepts, objectives and processes for evaluating, directing, monitoring and communicating information-security activities."
+  - id: GOST-R-ISOIEC-27017-2021
+    designation: "ГОСТ Р ИСО/МЭК 27017-2021"
+    status: "Действует"
+    effective_from: "2021-11-30"
+    role: CLOUD_SECURITY_CONTROL_GUIDANCE
+    authoritative_url: "https://protect.gost.ru/gost/details/45ba3c1b-e9a9-43b4-9365-a608ed81aa02"
+    claim: "Cloud-specific implementation guidance and additional information-security controls for cloud services."
+  - id: GOST-R-ISOIEC-27021-2021
+    designation: "ГОСТ Р ИСО/МЭК 27021-2021"
+    status: "Действует"
+    effective_from: "2021-11-30"
+    role: ISMS_SPECIALIST_COMPETENCE
+    authoritative_url: "https://protect.gost.ru/gost/details/1702a523-a249-4e45-958c-33c206aa20bb"
+    claim: "Requirements for competence of specialists performing or participating in ISMS processes."
+  - id: GOST-R-56045-2021
+    designation: "ГОСТ Р 56045-2021"
+    status: "Действует"
+    role: SECURITY_CONTROL_ASSESSMENT_GUIDANCE
+    authoritative_url: "https://protect.gost.ru/gost/details/897416ef-4b50-4c57-aa81-6df5140e7e74"
+    claim: "Guidance for analysis and assessment of information-security controls used within an ISMS."
+
+relations:
+  - "27000 -> common terminology for the ISMS family"
+  - "27001 -> requirements baseline for an organization claiming conformity"
+  - "27002 -> control guidance supporting risk treatment and control selection"
+  - "27003 -> implementation guidance for 27001"
+  - "27004 -> monitoring and effectiveness measurement supporting 27001 clause 9.1"
+  - "27014 -> governance layer above and around ISMS management"
+  - "27017 -> cloud-specific control guidance; does not replace general applicability analysis"
+  - "27021 -> competence evidence for ISMS specialist roles"
+  - "56045 -> control assessment guidance; assessment result is separate from legal compliance conclusion"
+
+guardrails:
+  - id: STD-ISMS-001
+    rule: "CURRENT_STANDARD != MANDATORY_LEGAL_REQUIREMENT. A binding edge must be proven separately."
+  - id: STD-ISMS-002
+    rule: "A recommendation in 27002/27003/27004/27014/27017/56045 must not be represented as a statutory obligation without an external binding source."
+  - id: STD-ISMS-003
+    rule: "For an organization explicitly claiming conformity to ГОСТ Р ИСО/МЭК 27001-2021, exclusion of requirements in clauses 4-10 is not allowed according to the Rosstandart scope statement."
+  - id: STD-ISMS-004
+    rule: "Replacement lifecycle is explicit: 27001-2021 replaces 27001-2006; 27002-2021 replaces 27002-2012; 27003-2021 replaces 27003-2012. Historical audits must route by event/audit date."
+  - id: STD-ISMS-005
+    rule: "Control assessment, certification/conformity assessment and regulator compliance are distinct decision types and require separate evidence and authority."
+
+pending:
+  - "clause-level extraction where legally/licensing/contractually binding applicability exists"
+  - "crosswalk to FSTEC control families without assuming equivalence"
+  - "executable lifecycle regression for replacement boundaries"
+  - "immutable/hash-pinned standard artifact snapshots where redistribution/access permits"
