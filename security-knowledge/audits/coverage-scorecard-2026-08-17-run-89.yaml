@@ -1,0 +1,61 @@
+scorecard_id: SECURITY-KB-RUN-89
+as_of: "2026-08-17"
+overall_strict_scope_percent: 10
+expert_ready: false
+red_team: FAIL
+critical_gaps: 0
+high_gaps: 1
+high_gap_ids:
+  - HIGH-IMMUTABLE-PROVENANCE
+
+domains:
+  russian_npa: 10
+  gost_iso: 10
+  classification_categorization: 10
+  fstec_threat_method_bdu: 10
+  risk_methods: 10
+  legal_consequences_koap_uk_gk_tk: 10
+  szi_skzi_license_lifecycle: 10
+  roles_deadlines_responsibility: 10
+  evidence_audit: 10
+  practical_cases: 10
+
+inventory_counts_carried_forward:
+  verified: 293
+  pending: 31
+  note: >
+    Master source-inventory counts are carried forward because this run did not promote a source record
+    between PENDING and VERIFIED inventory states. A new verified legal-consequence knowledge object was
+    added for 76-FZ/UK Article 274.1, but the exact official artifact remains non-immutable and therefore
+    is not used to manufacture a source-inventory promotion or readiness increase.
+
+verified_this_run:
+  new_normative_knowledge_objects: 1
+  verified_atomic_legal_changes: 3
+  immutable_primary_added: 0
+  acquisition_evidence_runs_added: 1
+  findings:
+    - "Federal Law 76-FZ of 2026-04-09 amends Article 274.1 parts 2 and 3 of the Criminal Code and is effective from 2026-04-20."
+    - "For parts 2 and 3, the amended consequence wording enumerates destruction, blocking, modification or copying of computer information contained in Russian CII."
+    - "A new note to Article 274.1 provides release from criminal liability for the part 3 offense when the statutory active-assistance conditions are satisfied, including preservation of traces of unlawful CII impact, and no other corpus delicti is present."
+    - "The KB explicitly prevents audit/control failure from being automatically equated with criminal liability."
+    - "NKTsKI/GosSOPKA exact-byte acquisition still fails closed: official web identity is confirmed, but no exact bytes or SHA-256 were obtained."
+
+added_files:
+  - path: security-knowledge/legal-consequences/uk-274-1-kii-76-fz-2026-verified.yaml
+    commit: 78cdd3d318fc699c653315d756ba0cb6d91a1e38
+  - path: security-knowledge/evidence/immutable-provenance-acquisition-run-89.yaml
+    commit: 17f5f9b6d1121dae321cef422fc69467e25b2763
+
+pending:
+  - "exact primary bytes + retrieved_at + MIME + byte length + SHA-256 for high-value FSB/NKTsKI/dynamic-register sources"
+  - "bind the verified Article 274.1 amendment into consequence-routing regression fixtures without inferring guilt from technical findings"
+  - "organization-specific source connectors and freshness policies"
+  - "authoritative Russian requirement binding for credential/token/session lifecycle classes where applicable"
+  - "bind SoD conflict classes to domain-specific authoritative requirements only where primary evidence proves applicability"
+
+next_bottleneck: >
+  HIGH-IMMUTABLE-PROVENANCE remains the only High. The next pass should obtain and preserve exact
+  official bytes for priority FSB/NKTsKI/dynamic-register sources, then bind SHA-256 and retrieval metadata
+  to exact source versions. In parallel, add boundary regression for UK Article 274.1 versus non-criminal
+  control/audit failures so legal consequence routing remains fail-closed and evidence-driven.
