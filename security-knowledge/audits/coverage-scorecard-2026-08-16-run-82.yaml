@@ -1,0 +1,73 @@
+scorecard_id: SECURITY-KB-RUN-82
+as_of: "2026-08-16"
+overall_strict_scope_percent: 10
+expert_ready: false
+red_team: FAIL
+critical_gaps: 0
+high_gaps: 1
+high_gap_ids:
+  - HIGH-IMMUTABLE-PROVENANCE
+
+domains:
+  russian_npa: 10
+  gost_iso: 10
+  classification_categorization: 10
+  fstec_threat_method_bdu: 10
+  risk_methods: 10
+  legal_consequences_koap_uk_gk_tk: 10
+  szi_skzi_license_lifecycle: 10
+  roles_deadlines_responsibility: 10
+  evidence_audit: 10
+  practical_cases: 10
+
+verified_this_run:
+  new_normative_rules: 0
+  authoritative_standard_metadata_records: 3
+  authoritative_secondary_current_fstec_measure_records: 4
+  primary_dynamic_bdu_records_reused: 1
+  executable_regression_cases_added: 18
+  validators_added: 1
+  ci_gates_added: 1
+  ci_status: PENDING_NOT_OBSERVED
+  immutable_primary_added: 0
+  findings:
+    - "Current FSTEC methodology dated 12.04.2026 places least-privilege/minimization semantics in УПД.2 (Разграничение и контроль прав доступа)."
+    - "Current 2026 УПД.5 is Предупреждение пользователя при его доступе к информационной системе, not the historical least-privilege measure."
+    - "BDU ASU TP record BDA:C006 still exposes a relation to code УПД.5 together with excessive-privilege semantics; therefore measure codes are version-scoped and cannot be joined by code alone."
+    - "A potentially HIGH semantic-code collision was detected and mitigated in this run by introducing immutable semantic IDs that include source catalog/version."
+    - "ГОСТ Р ИСО/МЭК 27002-2021, ГОСТ Р 59383-2021 and ГОСТ Р 59453.1-2021 are current Rosstandart access-control-related standards, but no legal/technical equivalence to FSTEC measures is asserted."
+    - "BDU links remain threat/vulnerability-to-measure evidence and do not prove legal applicability or current-catalog identity."
+
+fixed_red_team_findings:
+  - id: FIND-ACCESS-CODE-COLLISION-001
+    severity_if_unmitigated: HIGH
+    status: FIXED
+    description: "Unversioned join on FSTEC measure code УПД.5 could map legacy least-privilege semantics to the current 2026 user-warning measure."
+
+added_files:
+  - path: security-knowledge/standards/access-control-fstec-bdu-versioned-crosswalk-2026-08-16.yaml
+    commit: eedd288b410f6546546f7965f4686794ba0be46f
+  - path: security-knowledge/regression/access-control-fstec-bdu-versioned-crosswalk-regression-v1.json
+    commit: c3301aa8e2b5f3264b2017ff663717940fd3adac
+  - path: security-knowledge/validators/validate_access_control_fstec_bdu_versioned_crosswalk.py
+    commit: 7ba5cf946f95d15c8a2148938a5a6db150b356e3
+  - path: .github/workflows/access-control-fstec-bdu-versioned-crosswalk.yml
+    commit: 029d754825ecbb608fb5e99298bd2a99fb508a1a
+
+verified_sources:
+  - "https://protect.gost.ru/gost/details/be00167c-6e26-4042-ac31-36be8a9d6b2e"
+  - "https://protect.gost.ru/gost/details/89a3da3d-068d-4ea1-8130-f5d912f6ecdb"
+  - "https://protect.gost.ru/gost/details/3fa98ad7-e0ac-4f80-8fe2-5eebace2b3f7"
+  - "https://www.garant.ru/products/ipo/prime/doc/413970697/"
+  - "https://www.consultant.ru/document/cons_doc_LAW_531896/0c38ad7dd911afc861bcdac604db9ed1ed8f8fe1/"
+  - "https://bduasutp.fstec.ru/vulnerabilities-settings/c842d3db-6558-4cd6-87e3-bed82058ee69"
+
+pending:
+  - "primary/hash-pinned artifact for FSTEC methodology dated 12.04.2026"
+  - "determine whether and when BDU ASU TP measure references migrate from legacy catalog semantics to the 2026 catalog"
+  - "clause-level licensed/accessible GOST/ISO evidence before any stronger mapping than thematic/support relations"
+  - "organization-specific evidence model for role -> account -> right -> object -> approval -> review -> revocation"
+  - "exact-byte + retrieved_at + SHA-256 acquisition for high-value FSB/NKTsKI and dynamic registry artifacts"
+
+next_bottleneck: >
+  Build the organization-side access evidence chain role -> account -> entitlement -> object -> approval -> effective interval -> review/revocation and connect it to current FSTEC УПД.2/УПД.3 plus BDU excessive-privilege signals. Keep BDU measure codes version-scoped. In parallel continue HIGH-IMMUTABLE-PROVENANCE acquisition.
