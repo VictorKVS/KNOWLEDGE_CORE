@@ -1,0 +1,74 @@
+scorecard_id: SECURITY-KB-RU-RUN-71
+observed_at: 2026-08-16T05:00:19+03:00
+scope_policy: STRICT_MASTER_INVENTORY_NO_INFLATION
+overall_percent: 10
+key_domains_percent:
+  npa_rf: 10
+  gost_iso: 10
+  classification_categorization: 10
+  threat_methodology_bdu: 10
+  risk_methods: 10
+  legal_consequences_koap_uk_gk_tk: 10
+  szi_skzi_license_lifecycle: 10
+  roles_deadlines_responsibility: 10
+  evidence_audit: 10
+  practical_cases: 10
+status:
+  critical_gaps: 0
+  high_gaps: 1
+  red_team: FAIL
+  expert_ready: false
+verified_this_run:
+  new_normative_records: 0
+  immutable_primary_added: 0
+  official_nkcki_download_entries_reconfirmed: 2
+  official_fsb_publication_identity_reconfirmed: 1
+  provenance_rules_added: 1
+  acquisition_failures_classified_without_false_absence_claims: 2
+added_or_updated:
+  - security-knowledge/provenance/nkcki-2026-artifact-acquisition-manifest-v1.yaml
+source_observations:
+  nkcki_order_2_2026:
+    official_index: CONFIRMED
+    official_download_action: CONFIRMED
+    exact_download_href: PENDING
+    exact_bytes: PENDING
+    sha256: PENDING
+  nkcki_attack_type_initial_data_2026_07_08:
+    official_index: CONFIRMED
+    official_download_action: CONFIRMED
+    exact_download_href: PENDING
+    exact_bytes: PENDING
+    sha256: PENDING
+  fsb_order_547_2025:
+    official_publication_id: '0001202512300064'
+    official_page_count_observed: 12
+    exact_pdf_bytes: PENDING
+    sha256: PENDING
+acquisition_diagnostics:
+  official_nkcki_index_web_open: TIMEOUT
+  direct_runtime_fetch_cert_gov_ru: DNS_RESOLUTION_FAILURE
+  interpretation: >
+    Acquisition transport failed in this run. This does not prove absence, repeal, or withdrawal of the artifacts.
+red_team_findings_fixed_this_run:
+  - id: RT-PROV-071-001
+    severity_if_unfixed: HIGH
+    description: >
+      Presence of an official Download control could be mistaken for possession of the underlying primary artifact.
+    correction: >
+      Added an explicit provenance state: official download action observed, but filename/href/bytes/MIME/hash remain PENDING until resolved.
+open_high:
+  - id: HIGH-IMMUTABLE-PROVENANCE
+    description: >
+      Exact primary bytes, retrieved_at timestamps and SHA-256 bindings remain missing for high-value
+      FSB/NKTsKI artifacts, selected dynamic registers and tracked judicial acts.
+pending:
+  - resolve exact official href for NKTsKI Order 2 dated 2026-07-14
+  - resolve exact official href for NKTsKI attack-type initial data dated 2026-07-08
+  - preserve exact bytes and compute SHA-256
+  - hash-bind field-level reporting claims only after artifact preservation
+  - continue official judicial-act acquisition for A40-351064/2025 and A56-4733/2026
+next_bottleneck: >
+  Resolve one exact official NKTsKI download target from the confirmed Download entries, preserve exact bytes,
+  record retrieved_at/MIME/length/SHA-256, then bind the existing incident-reporting schema to that artifact.
+  Do not increase coverage or close the High gap before immutable evidence exists.
