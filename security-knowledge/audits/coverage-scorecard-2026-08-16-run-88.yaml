@@ -1,0 +1,67 @@
+scorecard_id: SECURITY-KB-RUN-88
+as_of: "2026-08-16"
+overall_strict_scope_percent: 10
+expert_ready: false
+red_team: FAIL
+critical_gaps: 0
+high_gaps: 1
+high_gap_ids:
+  - HIGH-IMMUTABLE-PROVENANCE
+
+domains:
+  russian_npa: 10
+  gost_iso: 10
+  classification_categorization: 10
+  fstec_threat_method_bdu: 10
+  risk_methods: 10
+  legal_consequences_koap_uk_gk_tk: 10
+  szi_skzi_license_lifecycle: 10
+  roles_deadlines_responsibility: 10
+  evidence_audit: 10
+  practical_cases: 10
+
+inventory_counts_carried_forward:
+  verified: 293
+  pending: 31
+  note: >
+    No normative/source inventory record was promoted in this run. The additions are internal
+    executable lifecycle/audit controls, so VERIFIED/PENDING source counts are carried forward.
+
+verified_this_run:
+  new_normative_rules: 0
+  internal_evidence_models_added: 1
+  executable_regression_cases_added: 12
+  validators_added: 1
+  ci_gates_added: 1
+  immutable_primary_added: 0
+  local_fixture_validation: "PASS 12 credential lifecycle cases"
+  findings:
+    - "Credential/token/session lifecycle is now modeled independently of declared account status."
+    - "Revocation does not imply session termination; revoked-but-active sessions are classified as RESIDUAL_SESSION_RISK."
+    - "Expired-but-active credentials/sessions are distinguished from expired-and-closed states."
+    - "Owner departure or role removal does not prove technical credential closure."
+    - "Stale lifecycle evidence fails closed to NOT_PROVEN."
+    - "Contradictory states such as active session without activation evidence are classified as STATE_CONFLICT."
+    - "The model is explicitly internal engineering/audit logic and is not promoted to a legal obligation without authoritative applicability binding."
+
+added_files:
+  - path: security-knowledge/evidence/credential-token-session-lifecycle-model-v1.yaml
+    commit: f5df05612836ee59006ac8b8db78b98d52a9c91f
+  - path: security-knowledge/regression/credential-token-session-lifecycle-regression-v1.json
+    commit: c8ca7de7aeeb3a66bc8a42e5484764a376534f57
+  - path: security-knowledge/validators/validate_credential_token_session_lifecycle.py
+    commit: 01d064c58bf9cbbe7e119353fd897c76f62d9300
+  - path: .github/workflows/credential-token-session-lifecycle.yml
+    commit: 70a995bd1eb1b63eb3d8b35b359fbd8f4bff5ad5
+
+pending:
+  - "exact primary bytes + retrieved_at + MIME + byte length + SHA-256 for high-value FSB/NKTsKI/dynamic-register sources"
+  - "organization-specific source connectors and freshness policies"
+  - "authoritative Russian requirement binding for credential/token/session lifecycle classes where applicable"
+  - "bind SoD conflict classes to domain-specific authoritative requirements only where primary evidence proves applicability"
+
+next_bottleneck: >
+  HIGH-IMMUTABLE-PROVENANCE remains the only High. The next evidence pass should resolve exact
+  official download artifacts for high-value FSB/NKTsKI/dynamic-register sources and preserve
+  retrieval metadata plus SHA-256. In parallel, bind credential lifecycle risk states to specific
+  Russian requirements only where scope, effective dates and primary evidence are proven.
