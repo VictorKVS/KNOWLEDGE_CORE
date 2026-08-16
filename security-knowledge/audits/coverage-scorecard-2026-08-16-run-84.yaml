@@ -1,0 +1,62 @@
+scorecard_id: SECURITY-KB-RUN-84
+as_of: "2026-08-16"
+overall_strict_scope_percent: 10
+expert_ready: false
+red_team: FAIL
+critical_gaps: 0
+high_gaps: 1
+high_gap_ids:
+  - HIGH-IMMUTABLE-PROVENANCE
+
+domains:
+  russian_npa: 10
+  gost_iso: 10
+  classification_categorization: 10
+  fstec_threat_method_bdu: 10
+  risk_methods: 10
+  legal_consequences_koap_uk_gk_tk: 10
+  szi_skzi_license_lifecycle: 10
+  roles_deadlines_responsibility: 10
+  evidence_audit: 10
+  practical_cases: 10
+
+verified_this_run:
+  new_normative_rules: 0
+  internal_evidence_models_added: 1
+  executable_regression_cases_added: 14
+  validators_added: 1
+  ci_gates_added: 1
+  immutable_primary_added: 0
+  findings:
+    - "Declared access state is now reconciled separately against effective observations from AD/LDAP, databases and applications."
+    - "HR, IAM, AD/LDAP, DB and application sources have explicit proof boundaries; no single source is treated as universally authoritative."
+    - "Freshness is a required property of organization facts; stale exports cannot support CURRENT compliance."
+    - "Termination drift, revocation drift, effective-only rights, identity conflicts and privileged/service-account review are distinct machine states."
+
+red_team_guardrails_added:
+  - "HR termination is not proof of technical revocation."
+  - "IAM declared state is not proof of downstream effective state."
+  - "Disabled AD does not prove DB/application sessions, local accounts or API keys are removed."
+  - "Service/shared accounts cannot inherit person ownership by naming convention."
+  - "Generic freshness windows are forbidden without organization/source policy."
+
+added_files:
+  - path: security-knowledge/evidence/access-source-reconciliation-model-v1.yaml
+    commit: eff1273f24acd28561545b7c83dfaaa561ed3ed8
+  - path: security-knowledge/regression/access-source-reconciliation-regression-v1.json
+    commit: 20afb32c5e0cc991a08706df942ae90de3186e25
+  - path: security-knowledge/validators/validate_access_source_reconciliation.py
+    commit: 52e03aeaeca16972300bec3aa3bfdfe363a4b20f
+  - path: .github/workflows/access-source-reconciliation.yml
+    commit: 69e6256a95b6aa6d5a69f30503f2fe6b8df4076f
+
+pending:
+  - "completed CI status for Access Source Reconciliation Gate"
+  - "organization-specific freshness policies and source adapters"
+  - "nested group/transitive effective-permission expansion"
+  - "sessions, tokens, API keys and local-account evidence"
+  - "segregation-of-duties conflict model"
+  - "exact primary bytes + retrieved_at + SHA-256 for high-value FSB/NKTsKI/dynamic registers"
+
+next_bottleneck: >
+  Add transitive effective-permission expansion and privileged/service-account evidence profiles, then connect source reconciliation to concrete organization facts. In parallel continue HIGH-IMMUTABLE-PROVENANCE acquisition.
