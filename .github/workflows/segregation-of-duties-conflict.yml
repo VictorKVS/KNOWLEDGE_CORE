@@ -1,0 +1,26 @@
+name: Segregation of Duties Conflict Gate
+
+on:
+  push:
+    paths:
+      - 'security-knowledge/evidence/segregation-of-duties-conflict-model-v1.yaml'
+      - 'security-knowledge/regression/segregation-of-duties-conflict-regression-v1.json'
+      - 'security-knowledge/validators/validate_segregation_of_duties_conflicts.py'
+      - '.github/workflows/segregation-of-duties-conflict.yml'
+  pull_request:
+    paths:
+      - 'security-knowledge/evidence/segregation-of-duties-conflict-model-v1.yaml'
+      - 'security-knowledge/regression/segregation-of-duties-conflict-regression-v1.json'
+      - 'security-knowledge/validators/validate_segregation_of_duties_conflicts.py'
+      - '.github/workflows/segregation-of-duties-conflict.yml'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate segregation-of-duties conflicts
+        run: python security-knowledge/validators/validate_segregation_of_duties_conflicts.py
