@@ -1,0 +1,26 @@
+name: NKTsKI Incident Evidence Node Gate
+
+on:
+  push:
+    paths:
+      - 'security-knowledge/evidence/nkcki-incident-evidence-node-contract-v1.yaml'
+      - 'security-knowledge/evidence/nkcki-incident-evidence-node-contract-regression-v1.json'
+      - 'security-knowledge/validators/validate_nkcki_incident_evidence_nodes.py'
+      - '.github/workflows/nkcki-incident-evidence-nodes.yml'
+  pull_request:
+    paths:
+      - 'security-knowledge/evidence/nkcki-incident-evidence-node-contract-v1.yaml'
+      - 'security-knowledge/evidence/nkcki-incident-evidence-node-contract-regression-v1.json'
+      - 'security-knowledge/validators/validate_nkcki_incident_evidence_nodes.py'
+      - '.github/workflows/nkcki-incident-evidence-nodes.yml'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate NKTsKI incident evidence nodes
+        run: python security-knowledge/validators/validate_nkcki_incident_evidence_nodes.py
