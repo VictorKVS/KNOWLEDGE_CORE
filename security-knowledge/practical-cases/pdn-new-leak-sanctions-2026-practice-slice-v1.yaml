@@ -1,0 +1,127 @@
+slice_id: PRACTICE-PDN-LEAK-2026-0001
+observed_at: 2026-08-16T03:00:50+03:00
+status: MIXED_SOURCE_TIER_EVIDENCE
+purpose: >
+  Record the first directly identifiable 2026 judicial practice candidates under the new
+  Article 13.11 KoAP leak-sanction branches without promoting secondary reproductions or
+  press references to PRIMARY_OFFICIAL judicial evidence.
+
+records:
+  - practice_id: PRACTICE-PDN-A40-351064-2025
+    practice_type: JUDICIAL_DECISION
+    court_name: Ninth Arbitration Court of Appeal
+    case_number: A40-351064/2025
+    appellate_number: 09AP-15707/2026
+    decision_date: 2026-06-03
+    lower_court_decision_date: 2026-03-05
+    procedural_stage: APPEAL
+    disposition: LOWER_COURT_DECISION_LEFT_UNCHANGED_APPEAL_DISMISSED
+    cited_norms:
+      - KoAP_RF_13.11_part_14
+    facts_scope:
+      affected_subject_count: MORE_THAN_300000
+      compromised_database_rows: ABOUT_500000
+      system_reference: BITRIX24
+      data_examples:
+        - surname
+        - name
+        - phone
+        - email
+        - date_of_birth
+        - position
+      attribution_evidence_summary: >
+        The reproduced appellate text describes an inspection and sample comparison of 31 records
+        from the compromised dataset against the operator's information system, with matches used
+        to support attribution of the leaked database to the operator.
+    sanction_observed:
+      amount_rub: 400000
+      source_statement_scope: >
+        Amount is stated in the authoritative legal-database reproduction of the appellate act.
+        This slice does not infer the legal mechanism that produced the amount unless separately
+        evidenced from the act.
+    source_url: https://base.garant.ru/66892160/
+    source_tier: AUTHORITATIVE_SECONDARY
+    allowed_claim_level: AUTHORITATIVE_SECONDARY_ONLY
+    appeal_status: APPELLATE_DECISION_OBSERVED
+    holding_summary: >
+      The authoritative legal-database reproduction states that the appellate court upheld the
+      first-instance finding of an Article 13.11 part 14 violation concerning a leak affecting more
+      than 100,000 data subjects and left the appeal without satisfaction.
+    proposition_limits:
+      - MUST_NOT_BE_LABELED_PRIMARY_OFFICIAL_UNTIL_OFFICIAL_COURT_DOCUMENT_IS_ACQUIRED
+      - MUST_NOT_GENERALIZE_TO_SETTLED_NATIONAL_PRACTICE
+      - MUST_NOT_INFER_TURNOVER_SANCTION_REPEAT_OFFENSE_BECAUSE_PART_14_IS_NOT_A_TURNOVER_BRANCH
+      - MUST_RETAIN_EVENT_DATE_AND_LEGAL_VERSION_FOR_ANY_COMPARATIVE_USE
+    primary_acquisition_status: PENDING
+
+  - practice_id: PRACTICE-PDN-A56-4733-2026
+    practice_type: JUDICIAL_DECISION
+    court_name: Arbitration Court of Saint Petersburg and Leningrad Region
+    case_number: A56-4733/2026
+    decision_date: 2026-03-10
+    procedural_stage: FIRST_INSTANCE
+    cited_norms:
+      - KoAP_RF_13.11_part_13
+    facts_scope:
+      affected_subject_count: ABOUT_70000
+      incident_type: UNAUTHORIZED_ACCESS_AFTER_CYBERATTACK
+    disposition: WARNING_REPORTED_BY_SECONDARY_REPRODUCTION
+    discovery_sources:
+      - url: https://n-pdn.ru/judical/content/nepravomerniy-dostup-k-personalnim-dannim-obrabativaemim-operatorom-v-rezultate-hakerskoy-ataki-na-informatsionnie-sistemi-operatora/
+        source_tier: SECONDARY
+        note: >
+          This source reproduces the case header and publishes a direct kad.arbitr.ru PDF target.
+          The direct official PDF target could not be fetched in this run and therefore is not
+          treated as acquired primary evidence.
+      - url: https://hunzahskiy--dag.sudrf.ru/modules.php?did=76&name=press_dep&op=1
+        source_tier: PRIMARY_OFFICIAL_PRESS_REFERENCE
+        note: >
+          An official sudrf.ru court press page references this case among early cases under the
+          new Article 13.11 leak-sanction regime. The press page is not the judicial act itself.
+    official_pdf_target_discovered: https://kad.arbitr.ru/Document/Pdf/3df02f01-829b-4f1b-b93a-7edb424129b2/7e8bb589-9fe8-478a-b550-521d99279f52/A56-4733-2026_20260310_Reshenie.pdf?isAddStamp=True
+    official_pdf_fetch_status: FAILED_THIS_RUN
+    source_tier: SECONDARY_PLUS_OFFICIAL_PRESS_REFERENCE
+    allowed_claim_level: DISCOVERY_ONLY_UNTIL_OFFICIAL_ACT_ACQUIRED
+    appeal_status: NOT_VERIFIED_IN_THIS_SLICE
+    proposition_limits:
+      - WARNING_OUTCOME_MUST_NOT_BE_TREATED_AS_PRIMARY_VERIFIED_FROM_THIS_SLICE
+      - OFFICIAL_PRESS_REFERENCE_CONFIRMS_CASE_DISCOVERY_NOT_FULL_HOLDING
+      - DIRECT_KAD_PDF_TARGET_IS_NOT_EQUIVALENT_TO_ACQUIRED_BYTES
+      - MUST_NOT_GENERALIZE_FIRST_INSTANCE_RESULT_WITHOUT_APPEAL_STATUS
+    primary_acquisition_status: PENDING
+
+cross_case_guardrails:
+  - id: PRACTICE-2026-GUARD-001
+    rule: >
+      A recognized legal database reproduction may support AUTHORITATIVE_SECONDARY_ONLY claims but
+      MUST NOT be upgraded to PRIMARY_OFFICIAL or IMMUTABLE_PRIMARY without the official act.
+  - id: PRACTICE-2026-GUARD-002
+    rule: >
+      A court press-page reference to a case is evidence that the case is being referenced by an
+      official court source; it is not a substitute for the operative judicial act or its reasoning.
+  - id: PRACTICE-2026-GUARD-003
+    rule: >
+      Discovery of a direct kad.arbitr.ru document URL without successful retrieval MUST preserve
+      status PENDING and MUST NOT create a hash, byte-size claim or immutable evidence record.
+  - id: PRACTICE-2026-GUARD-004
+    rule: >
+      Part 13/14 leak cases MUST NOT be represented as turnover-fine cases under parts 15/18 unless
+      repeat-offense and turnover-base statutory conditions are separately proven.
+  - id: PRACTICE-2026-GUARD-005
+    rule: >
+      Different outcomes in early cases must trigger comparison of entity status, event facts,
+      sanction rules, procedural stage and mitigation evidence rather than a claim of inconsistency.
+
+acquisition_log:
+  - target: A56-4733/2026 official kad.arbitr.ru PDF
+    result: FETCH_FAILED
+    interpretation: TRANSIENT_OR_ACCESS_FAILURE_NOT_DOCUMENT_ABSENCE
+  - target: A40-351064/2025 official court act
+    result: OFFICIAL_ACT_NOT_ACQUIRED_IN_THIS_RUN
+    interpretation: AUTHORITATIVE_SECONDARY_RECORD_ONLY
+
+next_actions:
+  - Acquire official court document/card for A40-351064/2025 and bind stage/appeal chain.
+  - Acquire official kad.arbitr.ru PDF bytes for A56-4733/2026 and compute retrieved_at plus SHA-256.
+  - Verify appeal status for A56-4733/2026.
+  - Compare evidence and mitigation factors only after both primary acts are acquired.
