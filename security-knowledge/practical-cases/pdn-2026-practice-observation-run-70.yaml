@@ -1,0 +1,96 @@
+observation_id: PRACTICE-PDN-2026-RUN-70
+observed_at: 2026-08-16T04:02:50+03:00
+scope: EARLY_2026_ARTICLE_13_11_LEAK_CASES
+status: AUTHORITATIVE_SECONDARY_PLUS_OFFICIAL_REFERENCE
+
+sources:
+  - source_id: SRC-GARANT-A40-351064-2025
+    url: https://base.garant.ru/66892160/
+    source_tier: AUTHORITATIVE_SECONDARY
+    case_number: A40-351064/2025
+    appellate_number: 09AP-15707/2026
+  - source_id: SRC-SUDRF-PRESS-A56-4733-2026
+    url: https://hunzahskiy--dag.sudrf.ru/modules.php?did=76&name=press_dep&op=1
+    source_tier: PRIMARY_OFFICIAL_PRESS_REFERENCE
+    case_number: A56-4733/2026
+
+verified_observations:
+  - id: PRACTICE-OBS-070-001
+    case_number: A40-351064/2025
+    evidence_level: AUTHORITATIVE_SECONDARY_ONLY
+    proposition: >
+      The Ninth Arbitration Court of Appeal decision dated 2026-06-03, appellate number
+      09AP-15707/2026, is reproduced by a recognized legal information system and records
+      that the first-instance decision dated 2026-03-05 was left unchanged and the appeal
+      was dismissed.
+  - id: PRACTICE-OBS-070-002
+    case_number: A40-351064/2025
+    evidence_level: AUTHORITATIVE_SECONDARY_ONLY
+    proposition: >
+      The reproduced appellate act concerns Article 13.11 part 14 KoAP RF and describes
+      a compromised database containing about 500,000 rows and personal data of more than
+      300,000 data subjects.
+  - id: PRACTICE-OBS-070-003
+    case_number: A40-351064/2025
+    evidence_level: AUTHORITATIVE_SECONDARY_ONLY
+    proposition: >
+      The reproduced act describes attribution evidence that included inspection of the
+      operator's information system and a sample comparison of 31 data-subject records;
+      the appellate court treated the evidence in aggregate rather than the sample alone.
+  - id: PRACTICE-OBS-070-004
+    case_number: A40-351064/2025
+    evidence_level: AUTHORITATIVE_SECONDARY_ONLY
+    proposition: >
+      The reproduced act records a 400,000-ruble administrative fine imposed by the
+      first-instance court and upheld on appeal.
+  - id: PRACTICE-OBS-070-005
+    case_number: A40-351064/2025
+    evidence_level: AUTHORITATIVE_SECONDARY_ONLY
+    proposition: >
+      The reproduced act records that the operator sent a notification through the
+      Roskomnadzor portal on 2025-06-24 and identified 2025-06-23 as the incident-detection date.
+    limits:
+      - This observation does not by itself prove every statutory timing element of the notification workflow.
+  - id: PRACTICE-OBS-070-006
+    case_number: A56-4733/2026
+    evidence_level: CASE_DISCOVERY_CONFIRMED_ONLY
+    proposition: >
+      An official sudrf.ru court press page references the Arbitration Court of Saint Petersburg
+      and Leningrad Region decision dated 2026-03-10 in case A56-4733/2026 among early cases under
+      the new Article 13.11 leak-sanction regime.
+    limits:
+      - The press reference is not the operative judicial act.
+      - The outcome, reasoning, sanction and appeal status remain non-primary until the act is acquired.
+
+red_team_guardrails:
+  - id: RT-PRACTICE-070-001
+    rule: >
+      A detailed reproduction by an authoritative legal database remains secondary evidence and
+      MUST NOT be labeled PRIMARY_OFFICIAL or IMMUTABLE_PRIMARY without acquisition of the official act.
+  - id: RT-PRACTICE-070-002
+    rule: >
+      A sample-match evidentiary method observed in one case MUST NOT be converted into a universal
+      numerical sufficiency rule for proving ownership of a compromised database.
+  - id: RT-PRACTICE-070-003
+    rule: >
+      A 400,000-ruble outcome in a part-14 case MUST NOT be used as a generic sanction forecast for
+      another organization without separately proving the applicable sanction-reduction mechanism,
+      entity status and case-specific circumstances.
+  - id: RT-PRACTICE-070-004
+    rule: >
+      An official press reference confirms case existence/reference only; it does not establish the
+      full holding, operative part, appeal history or immutable evidence.
+
+acquisition_status:
+  A40-351064-2025:
+    official_primary_act_bytes: PENDING
+    immutable_hash_binding: PENDING
+  A56-4733-2026:
+    official_primary_act_bytes: PENDING
+    immutable_hash_binding: PENDING
+    appeal_status: PENDING
+
+next_actions:
+  - Acquire official court act/card for A40-351064/2025 and bind the appellate chain to exact bytes.
+  - Acquire the discovered official kad.arbitr.ru PDF for A56-4733/2026; record retrieved_at and SHA-256.
+  - Do not derive general evidentiary thresholds from the 31-record sample in A40-351064/2025.
