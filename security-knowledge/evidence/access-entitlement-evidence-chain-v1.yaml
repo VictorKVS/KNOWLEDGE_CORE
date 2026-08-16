@@ -1,0 +1,143 @@
+model_id: ACCESS-ENTITLEMENT-EVIDENCE-CHAIN-V1
+as_of: "2026-08-16"
+status: INTERNAL_EXECUTABLE_EVIDENCE_MODEL
+purpose: >
+  Represent organization-specific access rights as auditable evidence rather than inferred compliance.
+  The model connects role, account, entitlement, object, approval, effective interval, review and revocation.
+
+external_evidence_anchors:
+  fstec_current:
+    source_family: FSTEC_METHOD_2026
+    measures:
+      - semantic_id: FSTEC-M2026-UPD-2
+        code: "УПД.2"
+        relation: EVIDENCE_SUPPORT_TARGET
+        note: "Current verified slice places minimization/separation of access rights here."
+      - semantic_id: FSTEC-M2026-UPD-3
+        code: "УПД.3"
+        relation: EVIDENCE_SUPPORT_TARGET
+        note: "Current verified slice contains dedicated account-management measure."
+  bdu_dynamic:
+    record: "BDA:C006"
+    source: "https://bduasutp.fstec.ru/vulnerabilities-settings/c842d3db-6558-4cd6-87e3-bed82058ee69"
+    relation: EXCESSIVE_PRIVILEGE_SIGNAL
+    note: >
+      BDU states that excessive privileges are permissions not required for official duties. BDU measure-code
+      references remain version-scoped and are not used here as proof of current FSTEC applicability.
+
+entity_types:
+  ROLE:
+    required: [role_id, title, source, effective_from]
+  ACCOUNT:
+    required: [account_id, subject_id, system_id, account_type, status, observed_at, source]
+  OBJECT:
+    required: [object_id, system_id, object_type, owner]
+  ENTITLEMENT:
+    required: [entitlement_id, account_id, object_id, access_type, business_need, effective_from, source]
+    optional: [effective_to, privilege_level]
+  APPROVAL:
+    required: [approval_id, entitlement_id, approver_role, approved_at, authority_source, evidence]
+  REVIEW:
+    required: [review_id, entitlement_id, reviewed_at, reviewer_role, outcome, evidence]
+  REVOCATION:
+    required: [revocation_id, entitlement_id, requested_at, executed_at, evidence]
+
+relations:
+  - ROLE -> JUSTIFIES -> ENTITLEMENT
+  - ACCOUNT -> HOLDS -> ENTITLEMENT
+  - ENTITLEMENT -> APPLIES_TO -> OBJECT
+  - APPROVAL -> AUTHORIZES -> ENTITLEMENT
+  - REVIEW -> REVALIDATES -> ENTITLEMENT
+  - REVOCATION -> TERMINATES -> ENTITLEMENT
+
+invariants:
+  - id: ACCESS-EVD-001
+    rule: "Account ownership does not prove entitlement necessity."
+  - id: ACCESS-EVD-002
+    rule: "Role title alone does not authorize access; entitlement requires explicit approval evidence or another proven authority edge."
+  - id: ACCESS-EVD-003
+    rule: "Every active entitlement must have a proven business_need tied to current duties/role scope."
+  - id: ACCESS-EVD-004
+    rule: "An entitlement outside its effective interval is not current evidence of authorized access."
+  - id: ACCESS-EVD-005
+    rule: "Expired/disabled account status and active entitlement are a conflict requiring review, not automatic compliance."
+  - id: ACCESS-EVD-006
+    rule: "Review evidence does not substitute for original approval evidence."
+  - id: ACCESS-EVD-007
+    rule: "Revocation requested is not revocation executed; executed_at plus evidence is required to prove removal."
+  - id: ACCESS-EVD-008
+    rule: "Privileged access requires explicit privilege classification and stronger review path; generic user role is insufficient evidence."
+  - id: ACCESS-EVD-009
+    rule: "Shared/service accounts cannot be mapped to a person by assumption; accountable owner and purpose evidence are required."
+  - id: ACCESS-EVD-010
+    rule: "If role/duty changed after approval, prior approval becomes stale until entitlement is revalidated."
+  - id: ACCESS-EVD-011
+    rule: "BDU C006 is a vulnerability signal; it does not prove that a particular entitlement is excessive until duty/need evidence is evaluated."
+  - id: ACCESS-EVD-012
+    rule: "Current FSTEC applicability must be resolved independently; this evidence model cannot create a regulatory obligation by itself."
+
+computed_states:
+  AUTHORIZED_CURRENT:
+    conditions:
+      - account_status_active
+      - role_or_duty_current
+      - business_need_proven
+      - approval_current_and_proven
+      - entitlement_within_effective_interval
+      - no_executed_revocation
+  NEEDS_APPROVAL_EVIDENCE:
+    when: approval_missing_or_unproven
+  NEEDS_BUSINESS_NEED:
+    when: duty_or_need_missing
+  NEEDS_REVIEW:
+    when: role_changed_or_review_due_or_conflict_detected
+  EXCESSIVE_PRIVILEGE_SUSPECTED:
+    when: entitlement_not_supported_by_current_duties
+  REVOCATION_PENDING:
+    when: revocation_requested_but_not_executed
+  UNAUTHORIZED_OR_STALE:
+    when: account_disabled_or_entitlement_expired_or_executed_revocation_exists
+
+minimal_audit_output:
+  fields:
+    - subject_id
+    - account_id
+    - role_id
+    - entitlement_id
+    - object_id
+    - access_type
+    - privilege_level
+    - business_need
+    - approval_evidence
+    - effective_from
+    - effective_to
+    - last_review_at
+    - review_outcome
+    - revocation_state
+    - evidence_state
+    - fstec_mapping_state
+    - bdu_signal_state
+
+fail_closed_states:
+  - ACCOUNT_OWNER_UNKNOWN
+  - ROLE_SCOPE_UNKNOWN
+  - BUSINESS_NEED_UNPROVEN
+  - APPROVAL_UNPROVEN
+  - APPROVER_AUTHORITY_UNKNOWN
+  - EFFECTIVE_INTERVAL_UNKNOWN
+  - REVIEW_STATE_UNKNOWN
+  - REVOCATION_STATE_UNKNOWN
+  - OBJECT_OWNER_UNKNOWN
+  - FSTEC_APPLICABILITY_UNKNOWN
+
+red_team_notes:
+  - "Do not infer least privilege from an RBAC label such as user/admin."
+  - "Do not infer revocation from HR termination alone; technical removal needs evidence."
+  - "Do not treat a quarterly access-review spreadsheet as proof that all source-system rights match it."
+  - "Do not treat absence of a BDU signal as proof that access is correct."
+
+pending:
+  - connect organization HR/identity source provenance to ROLE and subject facts
+  - define review_due policy only where organization or binding source actually establishes one
+  - add source-system reconciliation evidence for IAM/AD/DB/application entitlements
+  - connect privileged/service account lifecycle to stronger audit patterns
