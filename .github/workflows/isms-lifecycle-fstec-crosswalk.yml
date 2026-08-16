@@ -1,0 +1,25 @@
+name: ISMS Lifecycle FSTEC Non-Equivalence Gate
+
+on:
+  push:
+    paths:
+      - 'security-knowledge/standards/isms-lifecycle-fstec-non-equivalence-crosswalk-v1.yaml'
+      - 'security-knowledge/standards/isms-lifecycle-fstec-crosswalk-regression-v1.json'
+      - 'security-knowledge/validators/validate_isms_lifecycle_fstec_crosswalk.py'
+      - '.github/workflows/isms-lifecycle-fstec-crosswalk.yml'
+  pull_request:
+    paths:
+      - 'security-knowledge/standards/isms-lifecycle-fstec-non-equivalence-crosswalk-v1.yaml'
+      - 'security-knowledge/standards/isms-lifecycle-fstec-crosswalk-regression-v1.json'
+      - 'security-knowledge/validators/validate_isms_lifecycle_fstec_crosswalk.py'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run lifecycle and non-equivalence regression
+        run: python security-knowledge/validators/validate_isms_lifecycle_fstec_crosswalk.py
