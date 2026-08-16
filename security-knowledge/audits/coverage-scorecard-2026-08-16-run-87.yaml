@@ -1,0 +1,68 @@
+scorecard_id: SECURITY-KB-RUN-87
+as_of: "2026-08-16"
+overall_strict_scope_percent: 10
+expert_ready: false
+red_team: FAIL
+critical_gaps: 0
+high_gaps: 1
+high_gap_ids:
+  - HIGH-IMMUTABLE-PROVENANCE
+
+domains:
+  russian_npa: 10
+  gost_iso: 10
+  classification_categorization: 10
+  fstec_threat_method_bdu: 10
+  risk_methods: 10
+  legal_consequences_koap_uk_gk_tk: 10
+  szi_skzi_license_lifecycle: 10
+  roles_deadlines_responsibility: 10
+  evidence_audit: 10
+  practical_cases: 10
+
+inventory_counts_carried_forward:
+  verified: 293
+  pending: 31
+  note: >
+    No normative/source inventory record was promoted in this run. The additions are
+    executable internal audit/evidence controls, so VERIFIED/PENDING source counts are carried forward.
+
+verified_this_run:
+  new_normative_rules: 0
+  internal_evidence_models_added: 1
+  executable_regression_cases_added: 14
+  validators_added: 1
+  ci_gates_added: 1
+  immutable_primary_added: 0
+  ci_result:
+    workflow: "Segregation of Duties Conflict Gate"
+    run_id: 31966406448
+    validation_step: SUCCESS
+    cases_passed: 14
+  findings:
+    - "SoD analysis now evaluates incompatible effective capabilities after transitive permission expansion rather than declared role names only."
+    - "Negative/boundary states cover unproven paths, stale/temporally invalid paths and identity conflicts."
+    - "Compensating controls do not suppress a conflict unless independent review evidence exists and is fresh."
+    - "The model is explicitly classified as an internal engineering/audit control and does not invent a universal legal obligation."
+
+added_files:
+  - path: security-knowledge/evidence/segregation-of-duties-conflict-model-v1.yaml
+    commit: 6e56df1e0b9dcb19b65792bbb7ea874e1f3b856a
+  - path: security-knowledge/regression/segregation-of-duties-conflict-regression-v1.json
+    commit: ea0a2dc4c11d2d34a436d32b68d4b53471dda359
+  - path: security-knowledge/validators/validate_segregation_of_duties_conflicts.py
+    commit: ab82b21cc804bb37e0b74247916648e4a8b85a37
+  - path: .github/workflows/segregation-of-duties-conflict.yml
+    commit: 9b470953bfbc8dd7a10229442955c200e9cd51df
+
+pending:
+  - "exact primary bytes + retrieved_at + MIME + byte length + SHA-256 for high-value FSB/NKTsKI/dynamic-register sources"
+  - "organization-specific source connectors and freshness policies"
+  - "cryptographic credential/token/session lifecycle evidence"
+  - "bind SoD conflict classes to domain-specific authoritative requirements only where primary evidence proves applicability"
+
+next_bottleneck: >
+  The only High remains HIGH-IMMUTABLE-PROVENANCE. Resolve exact official download hrefs for
+  high-value FSB/NKTsKI/dynamic-register sources, preserve exact bytes and record retrieval metadata
+  plus SHA-256. Separately, begin authoritative applicability binding for SoD classes without
+  upgrading internal audit patterns into legal obligations by assumption.
