@@ -1,0 +1,102 @@
+slice_id: FSB-282-348-HIST-DELTA-2026-08-16
+status: AUTHORITATIVE_VERIFIED
+purpose: Historical routing for incident-response-plan obligations before FSB Order 547/2025 took effect.
+
+sources:
+  - id: FSB-282-2019
+    title: "Приказ ФСБ России от 19.06.2019 № 282"
+    official_publication_id: "0001201907170025"
+    minjust_registration: "55284"
+    published_at: "2019-07-17"
+    effective_from: "2019-07-28"
+    source_tier: PRIMARY_OFFICIAL_METADATA_PLUS_AUTHORITATIVE_TEXT
+    official_url: "https://publication.pravo.gov.ru/Document/View/0001201907170025"
+  - id: FSB-348-2022
+    title: "Приказ ФСБ России от 07.07.2022 № 348"
+    official_publication_id: "0001202208050004"
+    minjust_registration: "69513"
+    published_at: "2022-08-05"
+    effective_from: "2022-08-16"
+    source_tier: PRIMARY_OFFICIAL_METADATA_PLUS_AUTHORITATIVE_TEXT
+    official_url: "https://publication.pravo.gov.ru/Document/View/0001202208050004"
+
+historical_windows:
+  - window_id: HIST-FSB282-ORIGINAL
+    from: "2019-07-28"
+    to: "2022-08-15"
+    governing_state: "FSB_282_ORIGINAL"
+  - window_id: HIST-FSB282-AS-AMENDED-BY-348
+    from: "2022-08-16"
+    to: "2026-01-29"
+    governing_state: "FSB_282_PLUS_348"
+  - window_id: HIST-FSB547-CURRENT
+    from: "2026-01-30"
+    governing_state: "FSB_547_2025"
+    note: "Current regime is modeled elsewhere; this slice must not back-project FSB 547 into earlier periods."
+
+verified_delta:
+  unchanged_by_348:
+    - rule_id: FSB282-P4-SIGNIFICANT-CII-INCIDENT
+      actor: "субъект КИИ"
+      trigger: "обнаружен компьютерный инцидент, связанный с функционированием значимого объекта КИИ"
+      action: "направить информацию в НКЦКИ"
+      deadline: "не позднее 3 часов с момента обнаружения"
+      historical_status: "unchanged_by_order_348"
+    - rule_id: FSB282-P4-OTHER-CII-INCIDENT
+      actor: "субъект КИИ"
+      trigger: "обнаружен компьютерный инцидент, связанный с функционированием иного объекта КИИ"
+      action: "направить информацию в НКЦКИ"
+      deadline: "не позднее 24 часов с момента обнаружения"
+      historical_status: "unchanged_by_order_348"
+    - rule_id: FSB282-P14-RESULTS
+      actor: "субъект КИИ, которому принадлежат значимые объекты КИИ"
+      trigger: "завершены мероприятия по реагированию и ликвидации последствий"
+      action: "проинформировать НКЦКИ о результатах"
+      deadline: "не позднее 48 часов после завершения мероприятий"
+      historical_status: "unchanged_by_order_348"
+  added_or_changed_from_2022_08_16:
+    - rule_id: FSB348-P2-PLAN-APPROVAL
+      target: "пункт 6 приказа 282"
+      actor: "руководитель субъекта КИИ; для ИП — сам ИП-субъект КИИ"
+      trigger: "План разработан"
+      action: "утвердить План"
+      effective_from: "2022-08-16"
+      before_2022_08_16: "этот explicit approval rule отсутствовал в тексте исходной редакции пункта 6"
+    - rule_id: FSB348-P2-COPY-TO-NKTSKI
+      target: "пункт 6 приказа 282"
+      actor: "субъект КИИ"
+      trigger: "План утвержден"
+      action: "направить копию утвержденного Плана в НКЦКИ"
+      deadline: "до 7 календарных дней со дня утверждения"
+      effective_from: "2022-08-16"
+      before_2022_08_16: "не применять ретроактивно"
+    - rule_id: FSB348-P3-METHODOLOGICAL-SUPPORT
+      target: "пункт 8 приказа 282"
+      change: "формулировка 'совместно с НКЦКИ и' заменена на 'при методическом обеспечении НКЦКИ и до его утверждения'"
+      effect: "проект Плана с положениями пункта 7 разрабатывается субъектом КИИ при методическом обеспечении НКЦКИ и до утверждения направляется на согласование в ФСБ России"
+      effective_from: "2022-08-16"
+    - rule_id: FSB348-REFERENCE-UPDATES
+      change: "обновлены ссылки на Положение о НКЦКИ и порядок ведения реестра значимых объектов КИИ"
+      effective_from: "2022-08-16"
+
+routing_guards:
+  - id: HIST-GUARD-001
+    rule: "Для события до 2022-08-16 не требовать 7-дневное направление копии утвержденного Плана на основании приказа 348."
+  - id: HIST-GUARD-002
+    rule: "Для события с 2022-08-16 по 2026-01-29 применять приказ 282 в редакции 348, а не реконструировать обязанности из приказа 547."
+  - id: HIST-GUARD-003
+    rule: "Приказ 348 не является доказательством изменения сроков 3/24/48 часов; эти сроки в проверенном delta не изменялись."
+  - id: HIST-GUARD-004
+    rule: "Наличие современного аналогичного правила в приказе 547 не доказывает его существование в исходной редакции 282."
+  - id: HIST-GUARD-005
+    rule: "Исторический аудит выбирает норму по дате события/обязанности и effective date акта, а не по дате текущей проверки."
+
+provenance_notes:
+  - "Official publication metadata for 282 and 348 verified on publication.pravo.gov.ru."
+  - "Clause text of the 2019 original and 2022 amendment cross-checked against authoritative legal-system reproductions."
+  - "Exact official PDF bytes and SHA-256 are not preserved in this slice; therefore status is not IMMUTABLE_PRIMARY."
+
+pending:
+  - "hash-pinned exact PDF bytes for FSB 282 and FSB 348"
+  - "full clause-by-clause historical snapshot of 282 original and consolidated 282+348"
+  - "executable regression gate for 2022-08-15 / 2022-08-16 and 2026-01-29 / 2026-01-30 boundaries"
