@@ -1,0 +1,63 @@
+scorecard_id: SECURITY-KB-RUN-85
+as_of: "2026-08-16"
+overall_strict_scope_percent: 10
+expert_ready: false
+red_team: FAIL
+critical_gaps: 0
+high_gaps: 1
+high_gap_ids:
+  - HIGH-IMMUTABLE-PROVENANCE
+
+domains:
+  russian_npa: 10
+  gost_iso: 10
+  classification_categorization: 10
+  fstec_threat_method_bdu: 10
+  risk_methods: 10
+  legal_consequences_koap_uk_gk_tk: 10
+  szi_skzi_license_lifecycle: 10
+  roles_deadlines_responsibility: 10
+  evidence_audit: 10
+  practical_cases: 10
+
+verified_this_run:
+  new_normative_rules: 0
+  internal_evidence_models_added: 1
+  executable_regression_cases_added: 16
+  validators_added: 1
+  ci_gates_added: 1
+  immutable_primary_added: 0
+  findings:
+    - "Transitive effective rights are now modeled as provenance-preserving paths rather than flat entitlements."
+    - "Nested directory groups must be expanded through observed edges; AD group names alone do not prove downstream DB/application permissions."
+    - "Residual API keys, tokens and sessions remain independent evidence after entitlement or account revocation."
+    - "Local accounts are a separate authorization plane and are not proven revoked by central identity disablement."
+    - "Privileged and service-account paths have stronger review requirements and cannot be auto-cleared from declared role data alone."
+
+red_team_guardrails_added:
+  - "Do not stop effective-right expansion at the first nested group."
+  - "Do not infer DB/application permission from directory naming conventions."
+  - "Do not equate disabled account or closed ticket with token/session revocation."
+  - "Do not infer local-account state from central IAM/AD state."
+  - "Do not flatten graph cycles or unresolved identity conflicts into a positive access conclusion."
+
+added_files:
+  - path: security-knowledge/evidence/transitive-effective-permission-model-v1.yaml
+    commit: 25ee04e584f3adb20c85802470a29f9d6ec1d1d3
+  - path: security-knowledge/regression/transitive-effective-permission-regression-v1.json
+    commit: a33f338168c1d23b6494c20b8d4129c812f1fbd1
+  - path: security-knowledge/validators/validate_transitive_effective_permission.py
+    commit: 587dcc19d38af41c5b6fe5768fd097846dacfd7f
+  - path: .github/workflows/transitive-effective-permission.yml
+    commit: cf627b2a7653cb09ef05364ff5f7e1885f372136
+
+pending:
+  - "completed CI status for Transitive Effective Permission Gate"
+  - "organization-specific source connectors and freshness policies"
+  - "allow/deny precedence and platform-specific effective-right semantics"
+  - "cryptographic credential/token/session lifecycle evidence"
+  - "segregation-of-duties conflict analysis over expanded paths"
+  - "exact primary bytes + retrieved_at + SHA-256 for high-value FSB/NKTsKI/dynamic registers"
+
+next_bottleneck: >
+  Add executable segregation-of-duties and privileged-path conflict analysis over transitive effective permissions, then connect the model to organization-specific identity sources. In parallel continue HIGH-IMMUTABLE-PROVENANCE acquisition.
