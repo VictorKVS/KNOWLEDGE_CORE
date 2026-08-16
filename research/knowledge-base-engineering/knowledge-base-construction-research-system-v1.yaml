@@ -1,14 +1,16 @@
 system_id: KBRE-000001
 name: Knowledge Base Research & Engineering System
-version: 1.0
+version: 1.1
 purpose: >
-  Preserve and generalize the methods learned while building Security Knowledge Core,
-  so future domain knowledge bases can reuse the process instead of rediscovering it.
+  Preserve, measure and generalize the methods learned while building Security Knowledge Core,
+  so future domain knowledge bases can reuse proven processes instead of rediscovering them.
 
 principle:
   sequence: MVP_FIRST_THEN_EXPANSION
   core_loop: SOURCE -> EVIDENCE -> ATOMIC_CLAIM -> APPLICABILITY -> DECISION -> ACTION -> ROLE -> DEADLINE -> EVIDENCE_OF_EXECUTION -> CONSEQUENCE -> FEEDBACK
   decision_policy: FAIL_CLOSED_WHEN_EVIDENCE_OR_APPLICABILITY_IS_INSUFFICIENT
+  research_rule: EVERY_BUILD_STEP_MUST_BE_MEASURABLE_AND_REPLAYABLE
+  factory_goal: IMPROVE_SPEED_COST_QUALITY_AND_REUSE_WITH_EACH_NEW_DOMAIN
 
 reusable_layers:
   - source_inventory_and_versioning
@@ -34,6 +36,163 @@ identifier_architecture:
   human_code_examples: [PDN.INC.NOTIFY, IAM.ACCESS.REVIEW]
   document_code_examples: [SEC-PDN-POL-001, SEC-KII-ORD-003]
   rule: Human-readable codes may evolve; immutable IDs and graph identity must not.
+
+measurement_system:
+  objective: >
+    Treat every knowledge-base build as an engineering experiment. Record inputs, outputs,
+    elapsed effort, defects, rework, provenance quality, test coverage and reuse so future
+    bases can be planned from empirical evidence.
+  mandatory_counters:
+    sources:
+      - total_sources_discovered
+      - total_sources_registered
+      - primary_sources
+      - authoritative_secondary_sources
+      - rejected_sources
+      - superseded_sources
+      - pending_sources
+      - immutable_hash_pinned_sources
+    extraction:
+      - atomic_claims_extracted
+      - atomic_requirements_extracted
+      - applicability_rules_extracted
+      - temporal_rules_extracted
+      - roles_extracted
+      - evidence_requirements_extracted
+      - consequence_rules_extracted
+      - relations_created
+    quality:
+      - verified_records
+      - pending_records
+      - conflicts_detected
+      - conflicts_resolved
+      - red_team_findings_by_severity
+      - regression_cases_total
+      - regression_cases_passed
+      - ci_gates_total
+      - ci_gates_passed
+      - stale_records
+      - claims_without_primary_provenance
+    productivity:
+      - source_discovery_minutes
+      - source_verification_minutes
+      - extraction_minutes
+      - modeling_minutes
+      - regression_minutes
+      - red_team_minutes
+      - rework_minutes
+      - total_elapsed_minutes
+      - human_review_minutes
+      - machine_processing_minutes
+    efficiency:
+      - verified_claims_per_source
+      - verified_claims_per_hour
+      - requirements_per_hour
+      - relations_per_hour
+      - regression_cases_per_hour
+      - cost_per_verified_record
+      - rework_ratio
+      - first_pass_acceptance_rate
+      - provenance_acquisition_success_rate
+    reuse:
+      - reused_schema_objects
+      - new_schema_objects
+      - reused_validators
+      - new_validators
+      - reused_workflows
+      - new_workflows
+      - reused_ontology_terms
+      - new_ontology_terms
+      - reuse_ratio_across_domains
+      - schema_change_rate_per_new_domain
+    coverage:
+      - source_primary_coverage
+      - atomic_requirement_coverage
+      - applicability_branch_coverage
+      - decision_path_test_coverage
+      - temporal_rule_coverage
+      - role_assignment_coverage
+      - evidence_closure_rate
+      - conflict_resolution_rate
+      - primary_provenance_rate
+      - expert_review_rate
+      - decision_explainability_closure
+  required_dimensions:
+    - domain
+    - source_family
+    - authority
+    - source_type
+    - provenance_tier
+    - build_phase
+    - agent_or_reviewer
+    - tool_or_method
+    - date_interval
+    - complexity_class
+  rule: Never report a cumulative total by memory when it can be computed from the repository.
+
+build_experiment_record:
+  required_fields:
+    - experiment_id
+    - domain
+    - objective
+    - scope_before
+    - method_version
+    - tools_used
+    - started_at
+    - finished_at
+    - source_counts_before
+    - source_counts_after
+    - records_before
+    - records_after
+    - defects_found
+    - defects_fixed
+    - red_team_findings
+    - regressions_added
+    - ci_result
+    - rework_events
+    - lessons_learned
+    - proposed_method_changes
+  purpose: >
+    Make every construction pass comparable with prior passes and with future domains.
+
+method_benchmarking:
+  rule: Competing construction methods should be A/B tested where feasible.
+  candidate_methods:
+    - manual_source_first
+    - inventory_first
+    - ontology_first
+    - graph_first
+    - clause_first
+    - retrieval_assisted_atomization
+    - schema_guided_extraction
+    - validator_first
+    - red_team_first
+    - hybrid_pipeline
+  compare_on:
+    - time_to_first_verified_record
+    - time_to_family_proof_floor
+    - verified_records_per_hour
+    - defect_escape_rate
+    - provenance_quality
+    - regression_coverage
+    - rework_ratio
+    - human_review_load
+    - portability_to_next_domain
+  selection_rule: Adopt a method as preferred only after repeated evidence of superiority, not intuition.
+
+learning_loop:
+  sequence: BUILD -> MEASURE -> AUDIT -> COMPARE -> UPDATE_METHOD -> REPLAY -> PROMOTE_BEST_METHOD
+  knowledge_products:
+    - golden_patterns
+    - anti_patterns
+    - source_acquisition_recipes
+    - ontology_templates
+    - extraction_prompts
+    - validation_rules
+    - regression_templates
+    - red_team_checklists
+    - domain_clone_playbooks
+  rule: Proven methods become reusable factory assets with versioned IDs and measured performance.
 
 independent_auditor_constructive_critique:
   verdict: PROMISING_ARCHITECTURE_NOT_YET_A_REUSABLE_PLATFORM
@@ -104,6 +263,10 @@ independent_auditor_constructive_critique:
       issue: No formal separation of normative obligation, recommended practice and internal policy.
       risk: Recommendations may accidentally become represented as mandatory law.
       action: Require authority_type and obligation_strength on every actionable rule.
+    - id: AUD-KBRE-016
+      issue: Construction telemetry was not previously a first-class artifact.
+      risk: Future domains could repeat the same expensive discovery, extraction and validation mistakes.
+      action: Record per-pass counters, elapsed effort, defects, rework, method version and reuse metrics.
 
 research_program:
   phase_0_security_mvp:
@@ -120,6 +283,11 @@ research_program:
     goal: Simulate proposed rules for applicability, technical feasibility, staffing, cost, deadlines, testability and expected risk reduction.
 
 mandatory_metrics:
+  - total_sources_discovered
+  - total_sources_registered
+  - verified_records
+  - pending_records
+  - immutable_hash_pinned_sources
   - source_primary_coverage
   - atomic_requirement_coverage
   - applicability_branch_coverage
@@ -132,6 +300,9 @@ mandatory_metrics:
   - primary_provenance_rate
   - regression_pass_rate
   - expert_review_rate
+  - verified_records_per_hour
+  - rework_ratio
+  - provenance_acquisition_success_rate
   - reuse_ratio_across_domains
   - schema_change_rate_per_new_domain
   - decision_explainability_closure
@@ -139,6 +310,7 @@ mandatory_metrics:
 clone_protocol:
   steps:
     - Freeze domain scope and P0 families.
+    - Capture baseline construction metrics before first extraction.
     - Register authoritative source universe.
     - Define domain extension ontology without changing universal core unnecessarily.
     - Atomize sources with provenance and temporal metadata.
@@ -146,8 +318,21 @@ clone_protocol:
     - Map actions, roles, deadlines and execution evidence.
     - Add negative and positive regression fixtures.
     - Run independent red-team review.
+    - Record time, defects, rework and throughput for each phase.
     - Release only after proof-floor gates pass.
+    - Compare results against prior domains and prior method versions.
     - Record lessons learned back into this research system.
+
+future_domains_for_portability_tests:
+  - electronics
+  - robotics
+  - medicine
+  - agriculture
+  - industrial_engineering
+  - energy
+  - construction
+  - finance
+  - education
 
 future_research:
   - regulatory_digital_twin
@@ -160,3 +345,7 @@ future_research:
   - probabilistic_evidence_calibration
   - cost_of_compliance_modeling
   - automated_change_impact_analysis
+  - knowledge_factory_telemetry
+  - method_ab_testing
+  - autonomous_source_acquisition
+  - incremental_graph_rebuild
