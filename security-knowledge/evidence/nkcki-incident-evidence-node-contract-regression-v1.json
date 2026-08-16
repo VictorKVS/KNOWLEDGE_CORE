@@ -1,0 +1,18 @@
+{
+  "schema_version": 1,
+  "suite_id": "NKTSKI-INCIDENT-EVIDENCE-NODES-REGRESSION-V1",
+  "cases": [
+    {"id":"EVD-REG-001","input":{"internal_detection":true,"submission":false,"delivery":false},"expected":"NOT_REGULATOR_NOTIFIED"},
+    {"id":"EVD-REG-002","input":{"internal_detection":true,"submission":true,"delivery":false},"expected":"SUBMITTED_WITHOUT_CONFIRMED_DELIVERY"},
+    {"id":"EVD-REG-003","input":{"internal_detection":true,"submission":true,"delivery":true},"expected":"DELIVERY_CONFIRMED"},
+    {"id":"EVD-REG-004","input":{"available_materials_count":4,"missing_materials_count":2},"expected":"SEND_AVAILABLE_MATERIALS"},
+    {"id":"EVD-REG-005","input":{"available_materials_count":0,"missing_materials_count":3},"expected":"NO_AVAILABLE_MATERIALS_REQUIRES_REVIEW"},
+    {"id":"EVD-REG-006","input":{"exact_schema_hash_bound":false,"requested_claim":"FIELD_LEVEL_COMPLETE"},"expected":"BLOCK_FIELD_LEVEL_COMPLETENESS"},
+    {"id":"EVD-REG-007","input":{"exact_schema_hash_bound":true,"requested_claim":"FIELD_LEVEL_COMPLETE"},"expected":"REQUIRES_FIELD_VALIDATION_NOT_AUTO_PASS"},
+    {"id":"EVD-REG-008","input":{"attack_type_basis":"EXAMPLE_THRESHOLD_ONLY"},"expected":"DO_NOT_TREAT_AS_NORMATIVE_CLASSIFICATION"},
+    {"id":"EVD-REG-009","input":{"submission":true,"supplement":true,"original_submitted_at":"2026-08-16T08:00:00+03:00","supplement_submitted_at":"2026-08-16T09:00:00+03:00"},"expected":"PRESERVE_ORIGINAL_SUBMISSION_TIMESTAMP"},
+    {"id":"EVD-REG-010","input":{"submission":true,"delivery":false,"local_ticket_closed":true},"expected":"DELIVERY_STILL_UNCONFIRMED"},
+    {"id":"EVD-REG-011","input":{"submission":false,"delivery":true},"expected":"INCONSISTENT_EVIDENCE_REQUIRES_REVIEW"},
+    {"id":"EVD-REG-012","input":{"submission":true,"delivery":true,"field_schema_known":false},"expected":"DELIVERY_CONFIRMED_BUT_COMPLETENESS_UNKNOWN"}
+  ]
+}
