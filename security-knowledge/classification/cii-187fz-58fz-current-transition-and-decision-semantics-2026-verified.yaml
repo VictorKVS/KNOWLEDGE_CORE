@@ -1,0 +1,168 @@
+schema_version: 1
+artifact_id: CII-187FZ-58FZ-CURRENT-TRANSITION-2026-0001
+family_id: CLASSIFICATION_AND_CATEGORIZATION_METHODS
+checked_at: 2026-08-16
+status: VERIFIED_BOUNDED_CURRENT_LEGAL_SEMANTICS
+purpose: >-
+  Pin the statutory transition introduced by Federal Law No. 58-FZ and prevent
+  a categorization engine from equating a match to the Government list of typical
+  sectoral CII objects with automatic assignment of a significance category.
+
+sources:
+  - source_id: FZ_58_2025
+    title: Федеральный закон от 07.04.2025 № 58-ФЗ "О внесении изменений в Федеральный закон "О безопасности критической информационной инфраструктуры Российской Федерации""
+    source_tier: PRIMARY_OFFICIAL_PUBLICATION_PLUS_AUTHORITATIVE_CURRENT_TEXT
+    official_publication_number: '0001202504070004'
+    official_publication_date: 2025-04-07
+    official_url: https://publication.pravo.gov.ru/Document/View/0001202504070004
+    authoritative_current_text_url: https://www.consultant.ru/document/cons_doc_LAW_502581/
+    effective_date: 2025-09-01
+    current_known_revision_date: 2026-07-26
+    verification_status: VERIFIED_IDENTITY_EFFECTIVE_DATE_AND_CURRENT_REVISION_METADATA
+
+  - source_id: FZ_187_2017_CURRENT
+    title: Федеральный закон от 26.07.2017 № 187-ФЗ "О безопасности критической информационной инфраструктуры Российской Федерации"
+    source_tier: PRIMARY_OFFICIAL_PUBLICATION_PLUS_AUTHORITATIVE_CURRENT_TEXT
+    official_publication_number: '0001201707260023'
+    official_url: https://publication.pravo.gov.ru/Document/View/0001201707260023
+    authoritative_current_article6_url: https://www.consultant.ru/document/cons_doc_LAW_220885/7205f08fadb066337590cdfaeb8bf656f381bf79/
+    verification_status: VERIFIED_CURRENT_STATUTORY_ANCHOR
+
+  - source_id: PP_RF_1762_2025
+    title: Постановление Правительства Российской Федерации от 07.11.2025 № 1762
+    source_tier: PRIMARY_GOVERNMENT_TEXT_PLUS_AUTHORITATIVE_CURRENT_TEXT
+    government_url: https://government.ru/docs/all/161779/
+    authoritative_text_url: https://www.consultant.ru/document/cons_doc_LAW_518358/9f9efbd31a4e9f31924de6eb813cdf8d29553ca8/
+    effective_date: 2025-11-16
+    verification_status: VERIFIED_EFFECTIVE_AMENDMENT_TO_PP127
+
+  - source_id: PP_RF_127_2018_CURRENT
+    title: Постановление Правительства Российской Федерации от 08.02.2018 № 127
+    source_tier: PRIMARY_OFFICIAL_PUBLICATION_PLUS_AUTHORITATIVE_CURRENT_TEXT
+    official_publication_number: '0001201802130006'
+    official_url: https://publication.pravo.gov.ru/Document/View/0001201802130006
+    authoritative_current_text_url: https://base.garant.ru/71876120/
+    current_known_revision_date: 2025-11-07
+    verification_status: VERIFIED_CURRENT_RULE_TEXT_BY_AUTHORITATIVE_CURRENT_SOURCE
+
+  - source_id: FZ_265_2026
+    title: Федеральный закон от 26.07.2026 № 265-ФЗ
+    source_tier: AUTHORITATIVE_CURRENT_TEXT_REQUIRES_PRIMARY_PUBLICATION_PIN
+    authoritative_text_url: https://www.consultant.ru/document/cons_doc_LAW_512845/c7f5c2cb61bc903740b05ad94137b13b2d188a45/
+    effective_date_for_relevant_article: 2026-07-26
+    verification_status: VERIFIED_CURRENT_AMENDMENT_EFFECT_ON_FZ58_PART_2_4
+    note: >-
+      Article 6 amends part 4 of article 2 of Federal Law No. 58-FZ. This is a current-version
+      dependency of No. 58-FZ, but it does not by itself change the categorization invariant below.
+
+verified_rules:
+  - id: CII-58FZ-001
+    statement: Federal Law No. 58-FZ entered into force on 2025-09-01.
+    legal_locator: FZ 58-FZ, article 2 part 1
+    evidence: FZ_58_2025
+    verification_status: VERIFIED
+
+  - id: CII-58FZ-002
+    statement: >-
+      Until the lists of typical sectoral CII objects and sector-specific categorization features
+      contemplated by article 6 part 2 paragraphs 4 and 5 of Federal Law No. 187-FZ are established,
+      categorization continues under the Government-established categorization procedure.
+    legal_locator: FZ 58-FZ, article 2 part 2
+    evidence: FZ_58_2025
+    verification_status: VERIFIED
+
+  - id: CII-187FZ-006-004
+    statement: The Government establishes lists of typical sectoral CII objects.
+    legal_locator: FZ 187-FZ, article 6 part 2 paragraph 4
+    evidence: FZ_187_2017_CURRENT
+    verification_status: VERIFIED
+
+  - id: CII-187FZ-006-005
+    statement: >-
+      The Government establishes sector-specific categorization features that define how conformity
+      to significance criteria/indicators is established and how indicator values are calculated with
+      sector-specific operating characteristics taken into account.
+    legal_locator: FZ 187-FZ, article 6 part 2 paragraph 5
+    evidence: FZ_187_2017_CURRENT
+    verification_status: VERIFIED
+
+  - id: CII-PP127-003-CURRENT
+    statement: >-
+      Under current PP RF No. 127, categorization applies to CII objects corresponding to types of
+      information systems, information-telecommunication networks and automated control systems
+      included in the lists of typical sectoral CII objects.
+    legal_locator: PP RF 127, Rules, paragraph 3, as amended by PP RF 1762 of 2025
+    evidence: [PP_RF_1762_2025, PP_RF_127_2018_CURRENT]
+    verification_status: VERIFIED
+
+  - id: CII-PP127-CATEGORY-NOT-AUTOMATIC
+    statement: >-
+      A match to a type in the typical-sector-object list is a routing condition into categorization;
+      it is not sufficient by itself to assign significance category 1, 2 or 3. Assignment or non-assignment
+      of a category follows evaluation against significance criteria/indicator values under PP RF No. 127
+      and applicable sector-specific categorization features.
+    legal_locators:
+      - PP RF 127, Rules, paragraphs 3-6 and 6(1), current text
+      - FZ 187-FZ, article 6 part 2 paragraphs 4-5
+    evidence: [PP_RF_127_2018_CURRENT, PP_RF_1762_2025, FZ_187_2017_CURRENT]
+    verification_status: VERIFIED_DERIVED_FROM_EXPLICIT_RULE_SEQUENCE
+
+machine_decision_invariant:
+  id: CII-CAT-INVARIANT-001
+  rule: >-
+    typical_sector_object_match=true MUST NOT directly emit SIGNIFICANCE_CATEGORY_1,
+    SIGNIFICANCE_CATEGORY_2 or SIGNIFICANCE_CATEGORY_3.
+  required_next_stage: SIGNIFICANCE_CRITERIA_AND_SECTOR_FEATURE_EVALUATION
+  allowed_intermediate_state: CATEGORIZATION_REQUIRED
+  fail_closed_states:
+    - NEEDS_CURRENT_LIST_VERSION
+    - NEEDS_SECTOR_OVERLAY
+    - NEEDS_SIGNIFICANCE_INPUT_FACTS
+    - NOT_PROVEN
+
+regression_expectations:
+  - id: CII-CAT-SEM-001
+    facts:
+      cii_subject_confirmed: true
+      typical_sector_object_match: true
+      significance_input_facts_complete: false
+    expected:
+      status: NEEDS_SIGNIFICANCE_INPUT_FACTS
+      category: null
+
+  - id: CII-CAT-SEM-002
+    facts:
+      cii_subject_confirmed: true
+      typical_sector_object_match: false
+    expected:
+      status: NOT_ROUTED_TO_CATEGORIZATION_BY_CURRENT_PP127_PARAGRAPH_3
+      category: null
+
+  - id: CII-CAT-SEM-003
+    facts:
+      cii_subject_confirmed: true
+      typical_sector_object_match: true
+      significance_input_facts_complete: true
+      significance_threshold_met: false
+    expected:
+      status: NO_SIGNIFICANCE_CATEGORY
+      category: null
+
+red_team_guardrails:
+  - Do not equate inclusion in a typical-sector-object list with automatic legal status as a significant CII object.
+  - Do not use a stale version of Government Order No. 360-r or a sector overlay without decision-date routing.
+  - Do not apply a sector-specific formula unless the sector applicability and effective date are proven.
+  - Current amendment dependencies of Federal Law No. 58-FZ must be checked independently of the original 2025 publication.
+  - The primary official publication identity for Federal Law No. 265-FZ remains to be pinned in this artifact before PRIMARY_OFFICIAL verification is claimed.
+
+pending:
+  - pin_primary_official_publication_number_for_FZ_265_2026
+  - complete_clause_level_current_text_snapshot_for_PP127
+  - exhaustive_sector_overlay_inventory
+  - executable_regression_harness_binding_for_CII_CAT_SEM_001_003
+
+maturity_effect:
+  family_promotion_allowed: false
+  reason: >-
+    Current statutory transition and a high-impact decision invariant are verified, but exhaustive sector
+    overlays, immutable source snapshots and full executable decision coverage remain incomplete.
