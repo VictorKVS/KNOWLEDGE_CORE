@@ -1,0 +1,68 @@
+scorecard_id: SECURITY-KB-RU-RUN-72
+observed_at: 2026-08-16T06:02:16+03:00
+scope_policy: STRICT_MASTER_INVENTORY_NO_INFLATION
+overall_percent: 10
+key_domains_percent:
+  npa_rf: 10
+  gost_iso: 10
+  classification_categorization: 10
+  threat_methodology_bdu: 10
+  risk_methods: 10
+  legal_consequences_koap_uk_gk_tk: 10
+  szi_skzi_license_lifecycle: 10
+  roles_deadlines_responsibility: 10
+  evidence_audit: 10
+  practical_cases: 10
+status:
+  critical_gaps: 0
+  high_gaps: 1
+  red_team: FAIL
+  expert_ready: false
+verified_this_run:
+  new_normative_records: 0
+  new_standard_status_scope_records: 6
+  immutable_primary_added: 0
+  incident_management_family_metadata_covered: true
+  standards_guardrails_added: 5
+added_or_updated:
+  - security-knowledge/standards/incident-management-current-status-slice-2026-08-16.yaml
+verified_standard_records:
+  - ГОСТ Р 59709-2022
+  - ГОСТ Р 59710-2022
+  - ГОСТ Р 59711-2022
+  - ГОСТ Р 59712-2022
+  - ГОСТ Р 59548-2022
+  - ГОСТ Р ИСО/МЭК ТО 18044-2007
+proof_floor_notes:
+  - Rosstandart currently marks all six observed standards as active.
+  - ГОСТ Р 59709-59712 form the current GosSOPKA-oriented computer-incident-management family observed in the official standards registry.
+  - ГОСТ Р 59548-2022 is separately relevant to security-event logging evidence and explicitly does not prescribe technical implementation or storage format.
+  - The older ГОСТ Р ИСО/МЭК ТО 18044-2007 is still marked active and therefore must not be silently treated as repealed.
+  - Current status of a standard is not proof of mandatory applicability to a specific organization.
+red_team_findings_fixed_this_run:
+  - id: RT-STD-072-001
+    severity_if_unfixed: HIGH
+    description: A current national standard could be incorrectly converted into a mandatory legal requirement without a binding applicability source.
+    correction: Added explicit REQUIRE_BINDING_APPLICABILITY_EDGE policy.
+  - id: RT-STD-072-002
+    severity_if_unfixed: MEDIUM
+    description: ГОСТ Р 59548 could be misread as defining a required SIEM/log storage format.
+    correction: Preserved the official scope limitation that the standard does not establish technical implementation or storage-format requirements.
+  - id: RT-STD-072-003
+    severity_if_unfixed: MEDIUM
+    description: The 2007 incident-management standard could be auto-retired merely because a newer GosSOPKA-oriented series exists.
+    correction: Preserve coexistence until an authoritative replacement/withdrawal relation is proven.
+open_high:
+  - id: HIGH-IMMUTABLE-PROVENANCE
+    description: >
+      Exact primary bytes, retrieved_at timestamps and SHA-256 bindings remain missing for high-value
+      FSB/NKTsKI artifacts, selected dynamic registers and tracked judicial acts.
+pending:
+  - lawful clause-level evidence for ГОСТ Р 59709-59712 and ГОСТ Р 59548
+  - map incident-management stages to FSB/NKTsKI regulatory workflows without merging standard guidance and legal obligations
+  - build explicit standard-binding applicability edges
+  - map ГОСТ Р 59548 event fields into evidence/SIEM model only after clause-level evidence is acquired
+  - continue immutable provenance acquisition for FSB/NKTsKI and dynamic registers
+next_bottleneck: >
+  Build the incident-management standards applicability matrix: separate voluntary/current-standard guidance from legally or contractually binding use,
+  then connect verified stages to existing FSB 547/NKTsKI incident workflows. In parallel keep HIGH-IMMUTABLE-PROVENANCE open until exact bytes + timestamp + SHA-256 exist.
