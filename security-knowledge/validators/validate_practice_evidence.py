@@ -20,6 +20,8 @@ def classify(x):
         return "TEST_ONLY"
     if tier in {"SEARCH_SNIPPET", "SECONDARY"}:
         return "DISCOVERY_ONLY"
+    if tier == "PRIMARY_OFFICIAL_PRESS_REFERENCE":
+        return "CASE_DISCOVERY_CONFIRMED_ONLY"
     if tier == "AUTHORITATIVE_SECONDARY":
         return "AUTHORITATIVE_SECONDARY_ONLY"
     if status == "CANCELLED":
