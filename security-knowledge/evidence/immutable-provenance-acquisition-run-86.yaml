@@ -1,0 +1,84 @@
+record_id: IMMUTABLE-PROVENANCE-ACQ-RUN-86
+as_of: "2026-08-16"
+status: PARTIAL_NOT_CLOSED
+finding_id: HIGH-IMMUTABLE-PROVENANCE
+purpose: >
+  Advance the remaining High provenance gap without overstating evidence quality.
+  Official NKTsKI/GosSOPKA web indexes are verified for current metadata, but exact
+  downloadable document bytes are not promoted to immutable primary evidence until
+  acquisition, retrieved_at, MIME, byte_length and SHA-256 are captured.
+
+targets:
+  - id: NKTSKI-ORDER-2026-07-14-N2
+    official_index_url: https://www.cert.gov.ru/materialy/organizatsiya-vzaimodeystviya/reglament-vzaimodeystviya-nktski-
+    official_news_url: https://cert.gov.ru/news/novosti-nktski/o-sovershenstvovanii-deyatelnosti-po-organizatsii-vzaimodeystviya-natsionalnogo-koordinatsionnogo-ts/
+    title: >
+      Приказ НКЦКИ от 14 июля 2026 года № 2 "О совершенствовании деятельности по
+      организации взаимодействия Национального координационного центра по компьютерным
+      инцидентам с субъектами критической информационной инфраструктуры, центрами
+      ГосСОПКА и органами (организациями)"
+    current_web_metadata_verified: true
+    verified_scope_from_official_web:
+      - defines_formats_for_submission_to_GosSOPKA_of_information_about_computer_attacks_and_incidents
+      - defines_composition_of_technical_parameters
+    exact_downloaded_artifact_acquired: false
+    sha256: null
+    immutable_primary: false
+    allowed_claim_level: OFFICIAL_WEB_METADATA_AND_SCOPE_ONLY
+
+  - id: NKTSKI-ATTACK-TYPE-INITIAL-DATA-2026-07-08
+    official_index_url: https://www.cert.gov.ru/materialy/organizatsiya-vzaimodeystviya/reglament-vzaimodeystviya-nktski-
+    official_method_index_url: https://gossopka.ru/doc/method/
+    title: Исходные данные для определения типа компьютерной атаки
+    current_web_metadata_verified: true
+    verified_scope_from_official_web:
+      - methodological_recommendations_for_classifying_an_event_as_a_computer_attack
+      - threshold_values_are_examples_from_general_practice
+      - organizations_should_send_maximum_available_materials
+      - absence_of_some_materials_does_not_block_submission_of_other_available_materials
+    exact_downloaded_artifact_acquired: false
+    sha256: null
+    immutable_primary: false
+    allowed_claim_level: OFFICIAL_WEB_METADATA_AND_BEHAVIOR_ONLY
+
+acquisition_attempt:
+  runtime_direct_download:
+    target: https://gossopka.ru/doc/method/
+    result: FAILED_IN_CURRENT_RUNTIME
+    exact_bytes_obtained: false
+    interpretation: >
+      A failed direct-byte acquisition is not evidence that the official resource is
+      unavailable to ordinary clients. It only proves that this acquisition path did not
+      yield bytes in this run.
+  search_verification:
+    result: VERIFIED_OFFICIAL_WEB_INDEX_AND_NEWS_METADATA
+    immutable_snapshot: false
+
+proof_rules:
+  - id: IP-R86-001
+    rule: WEB_SEARCH_OR_INDEX_TEXT_IS_NOT_AN_IMMUTABLE_ARTIFACT
+  - id: IP-R86-002
+    rule: DO_NOT_COMPUTE_OR_INVENT_A_SHA256_WITHOUT_EXACT_BYTES
+  - id: IP-R86-003
+    rule: EXACT_ARTIFACT_ACQUIRED_MUST_REMAIN_FALSE_UNTIL_BYTES_ARE_PRESERVED
+  - id: IP-R86-004
+    rule: OFFICIAL_METHODICAL_GUIDANCE_DOES_NOT_AUTOMATICALLY_CREATE_A_BINDING_LEGAL_OBLIGATION
+
+result:
+  high_gap_closed: false
+  readiness_change_allowed: false
+  new_normative_rule_count: 0
+  new_immutable_primary_count: 0
+  research_value: >
+    The remaining High is narrowed to exact-byte acquisition rather than source discovery
+    or metadata identification. The official current index and news descriptions are
+    independently re-verified, while the proof ceiling remains explicit.
+
+next_actions:
+  - resolve_exact_download_href_for_each_target
+  - acquire_exact_bytes_with_a_client_that_can_follow_the_official_download_path
+  - capture_retrieved_at_UTC_and_local_offset
+  - capture_HTTP_status_content_type_content_length_or_measured_byte_length
+  - compute_SHA256_over_preserved_exact_bytes
+  - store_or_reference_preserved_artifact_under_repository_preservation_policy
+  - only_then_promote_source_tier_to_PRIMARY_IMMUTABLE
