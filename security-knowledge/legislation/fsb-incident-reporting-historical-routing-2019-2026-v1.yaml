@@ -1,0 +1,98 @@
+slice_id: FSB-INCIDENT-HIST-2019-2026-V1
+observed_at: 2026-08-16T11:00:00+03:00
+scope: historical_and_parallel_GosSOPKA_incident_reporting_routing
+status: AUTHORITATIVE_VERIFIED_WITH_PRIMARY_METADATA
+
+records:
+  - id: FSB-282-2019
+    title: Приказ ФСБ России от 19.06.2019 № 282
+    publication_id: '0001201907170025'
+    published_at: 2019-07-17
+    minjust_registration: '55284'
+    authoritative_effective_from: 2019-07-28
+    authoritative_effective_to: 2026-01-29
+    scope: significant_CII_objects_incident_reporting_response_consequence_elimination
+    amended_by:
+      - FSB-348-2022
+    repealed_by:
+      - FSB-547-2025
+    provenance:
+      primary_metadata: publication.pravo.gov.ru/Document/View/0001201907170025
+      current_lifecycle_confirmation: authoritative_legal_system
+    immutable_primary: false
+
+  - id: FSB-348-2022
+    title: Приказ ФСБ России от 07.07.2022 № 348
+    publication_id: '0001202208050004'
+    published_at: 2022-08-05
+    minjust_registration: '69513'
+    authoritative_effective_from: 2022-08-16
+    authoritative_effective_to: 2026-01-29
+    relation: amends_FSB-282-2019
+    repealed_by:
+      - FSB-547-2025
+    provenance:
+      primary_metadata: official_publication_index
+      minjust_authoritative_reproduction: minjust.consultant.ru/documents/32006
+    immutable_primary: false
+
+  - id: FSB-547-2025
+    title: Приказ ФСБ России от 25.12.2025 № 547
+    publication_id: '0001202512300064'
+    published_at: 2025-12-30
+    minjust_registration: '84871'
+    effective_from: 2026-01-30
+    explicit_repeals:
+      - FSB-282-2019
+      - FSB-348-2022
+    scope: current_CII_and_covered_org_incident_attack_reporting_response
+    immutable_primary: false
+
+  - id: FSB-77-2023
+    title: Приказ ФСБ России от 13.02.2023 № 77
+    publication_id: '0001202302200021'
+    published_at: 2023-02-20
+    minjust_registration: '72404'
+    effective_from: 2023-03-01
+    observed_current_status_at: 2026-08-16
+    current_status: ACTIVE_AUTHORITATIVE_SECONDARY
+    scope: personal_data_operators_GosSOPKA_interaction_for_incidents_causing_unlawful_PD_transfer_access
+    verified_operational_rule:
+      trigger: detection_of_computer_incident_causing_unlawful_PD_transfer_provision_distribution_or_access
+      actor: personal_data_operator_with_applicable_interaction
+      destination: NKTsKI
+      deadline: PT24H
+      clock_start: incident_detection
+      format_rule: formats_determined_by_NKTsKI
+    relationship_to_FSB-547-2025: PARALLEL_SPECIAL_PD_OPERATOR_ROUTE_NOT_PROVEN_REPEALED
+    immutable_primary: false
+
+temporal_routing_rules:
+  - id: HIST-FSB-001
+    if: significant_CII_incident_date_between_2019-07-28_and_2022-08-15
+    route: FSB-282-2019_original_version
+  - id: HIST-FSB-002
+    if: significant_CII_incident_date_between_2022-08-16_and_2026-01-29
+    route: FSB-282-2019_as_amended_by_FSB-348-2022
+  - id: HIST-FSB-003
+    if: applicable_current_incident_date_on_or_after_2026-01-30
+    route: FSB-547-2025
+  - id: HIST-FSB-004
+    if: PD_operator_incident_date_on_or_after_2023-03-01_and_FSB77_applicable
+    route_additionally: FSB-77-2023
+  - id: HIST-FSB-005
+    if: event_before_effective_date_of_candidate_rule
+    result: NEEDS_PREDECESSOR_REVIEW
+
+fail_closed_guardrails:
+  - FSB-547-2025 MUST NOT be backcast to events before 2026-01-30.
+  - FSB-348-2022 is an amendment, not an independent full incident-reporting regime.
+  - Repeal of FSB-282/348 by FSB-547 does NOT prove repeal of FSB-77-2023.
+  - FSB-77-2023 MUST NOT be treated as a general replacement for CII reporting rules; its applicability is tied to personal-data operator incidents within its scope.
+  - The 24-hour FSB-77 deadline MUST NOT overwrite a stricter applicable CII deadline from another binding route.
+  - Publication metadata and authoritative reproductions do not qualify as IMMUTABLE_PRIMARY without exact bytes + retrieved_at + SHA-256.
+
+source_quality_notes:
+  - FSB-282, FSB-348, FSB-547 and FSB-77 publication identities are supported by official publication sources.
+  - Exact effective dates for the historical FSB-282/348 versions are recorded from authoritative legal-system lifecycle metadata and remain non-immutable until exact artifacts are acquired.
+  - FSB-77 current status is supported by authoritative legal-system status metadata observed 2026-08-16; absence of an explicit repeal edge is not promoted beyond that evidence.
