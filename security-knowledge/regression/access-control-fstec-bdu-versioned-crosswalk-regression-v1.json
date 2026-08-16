@@ -1,0 +1,24 @@
+{
+  "suite_id": "ACCESS-FSTEC-BDU-VERSIONED-CROSSWALK-REGRESSION-V1",
+  "as_of": "2026-08-16",
+  "cases": [
+    {"id":"ACX-001","input":{"query":"least_privilege","fstec_catalog":"2026"},"expected":{"target":"FSTEC-M2026-UPD-2","state":"ROUTED"}},
+    {"id":"ACX-002","input":{"query":"least_privilege","fstec_catalog":"2014"},"expected":{"target":"FSTEC-M2014-UPD-5","state":"HISTORICAL_ROUTED"}},
+    {"id":"ACX-003","input":{"measure_code":"УПД.5","fstec_catalog":null},"expected":{"state":"FSTEC_MEASURE_VERSION_UNKNOWN"}},
+    {"id":"ACX-004","input":{"measure_code":"УПД.5","fstec_catalog":"2026"},"expected":{"meaning":"USER_WARNING","state":"ROUTED"}},
+    {"id":"ACX-005","input":{"measure_code":"УПД.5","fstec_catalog":"2014"},"expected":{"meaning":"LEAST_PRIVILEGE","state":"HISTORICAL_ROUTED"}},
+    {"id":"ACX-006","input":{"bdu_record":"BDA:C006","observed_code":"УПД.5","bdu_measure_version":null},"expected":{"state":"BDU_MEASURE_VERSION_UNRESOLVED"}},
+    {"id":"ACX-007","input":{"bdu_record":"BDA:C006","infer_current_fstec_measure_from_code_only":true},"expected":{"state":"CODE_COLLISION_DETECTED"}},
+    {"id":"ACX-008","input":{"gost":"ГОСТ Р ИСО/МЭК 27002-2021","theme":"least_privilege","fstec_target":"FSTEC-M2026-UPD-2","clause_evidence":false},"expected":{"relation":"THEMATIC_OVERLAP","equivalence":"NOT_PROVEN"}},
+    {"id":"ACX-009","input":{"gost":"ГОСТ Р 59383-2021","theme":"access_control_model","fstec_target":"FSTEC-M2026-UPD-1","clause_evidence":false},"expected":{"relation":"SUPPORTS_OBJECTIVE","equivalence":"NOT_PROVEN"}},
+    {"id":"ACX-010","input":{"bdu_record":"BDA:C006","fstec_target":"FSTEC-M2026-UPD-2","regulatory_applicability":null},"expected":{"state":"FSTEC_APPLICABILITY_UNKNOWN"}},
+    {"id":"ACX-011","input":{"iso_implemented":true,"fstec_exact_properties_verified":false},"expected":{"state":"REQUIRES_EXPERT_MAPPING"}},
+    {"id":"ACX-012","input":{"iso_implemented":true,"fstec_exact_properties_verified":true,"fstec_applicable":true},"expected":{"relation":"POSSIBLE_IMPLEMENTATION_EVIDENCE","equivalence":"NOT_PROVEN"}},
+    {"id":"ACX-013","input":{"historical_evidence":{"date":"2020-01-01","code":"УПД.5","catalog":"2014"},"rewrite_to_current":true},"expected":{"state":"REJECT_SILENT_MIGRATION"}},
+    {"id":"ACX-014","input":{"current_fstec_measure":"FSTEC-M2026-UPD-5","claim":"least_privilege"},"expected":{"state":"CODE_COLLISION_DETECTED"}},
+    {"id":"ACX-015","input":{"current_fstec_measure":"FSTEC-M2026-UPD-2","claim":"least_privilege"},"expected":{"state":"ROUTED"}},
+    {"id":"ACX-016","input":{"bdu_record":"BDA:C006","claim":"vulnerability proves legal obligation"},"expected":{"state":"REJECT_AUTOMATIC_LEGAL_APPLICABILITY"}},
+    {"id":"ACX-017","input":{"gost_status":"Действует","claim":"mandatory_by_law"},"expected":{"state":"NEEDS_BINDING_EDGE"}},
+    {"id":"ACX-018","input":{"join_key":"measure_code_only","codes":["УПД.5"]},"expected":{"state":"REJECT_UNVERSIONED_JOIN"}}
+  ]
+}
