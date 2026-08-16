@@ -1,0 +1,85 @@
+slice_id: NKTSKI-REPORTING-FORMAT-AUTHORITY-CHAIN-2025-2026-V1
+observed_at: 2026-08-16T10:10:00+03:00
+scope: >
+  Authority and binding chain for NKTsKI-defined GosSOPKA reporting formats and technical parameters.
+  This slice does not claim exact field names or file schemas because exact 2026 artifact bytes are not preserved.
+
+sources:
+  - id: FSB-540-2025
+    type: NPA_RF
+    title: Приказ ФСБ России от 24.12.2025 № 540
+    registration: Минюст России 25.12.2025 № 84777
+    publication_id: '0001202512250025'
+    publication_date: 2025-12-25
+    effective_from: 2026-01-30
+    evidence_level: AUTHORITATIVE_VERIFIED
+    authority_effect:
+      - amended NKTsKI Regulation paragraph 4.10 so NKTsKI determines the composition of technical parameters of a computer attack and computer incident indicated when information is submitted to GosSOPKA and communicates it to covered actors
+      - added authority to develop interaction regulations needed for NKTsKI functions
+  - id: FSB-546-2025
+    type: NPA_RF
+    title: Приказ ФСБ России от 25.12.2025 № 546
+    effective_from: 2026-01-30
+    evidence_level: AUTHORITATIVE_VERIFIED
+    binding_effect:
+      - information exchange is performed in accordance with GosSOPKA attack/incident reporting formats and composition of technical parameters determined by NKTsKI
+  - id: NKTSKI-ORDER-2-2026
+    type: REGULATOR_ACT
+    title: Приказ НКЦКИ от 14.07.2026 № 2
+    observed_on_official_index: true
+    evidence_level: PRIMARY_WEB_INDEX_VERIFIED
+    described_effect:
+      - defines GosSOPKA formats for information about computer attacks and computer incidents
+      - defines composition of technical parameters
+    exact_artifact_acquired: false
+  - id: NKTSKI-INITIAL-DATA-2026-07-08
+    type: METHODOLOGY
+    title: Исходные данные для определения типа компьютерной атаки
+    approval_date: 2026-07-08
+    evidence_level: PRIMARY_WEB_INDEX_VERIFIED
+    legal_character: METHODOLOGICAL_RECOMMENDATION
+    exact_artifact_acquired: false
+
+authority_chain:
+  - from: FSB-540-2025
+    relation: GRANTS_FUNCTION_TO
+    to: NKTSKI
+    function: DETERMINE_TECHNICAL_PARAMETER_COMPOSITION
+    effective_from: 2026-01-30
+  - from: FSB-546-2025
+    relation: BINDS_EXCHANGE_TO_FORMATS_DETERMINED_BY
+    to: NKTSKI
+    effective_from: 2026-01-30
+  - from: NKTSKI-ORDER-2-2026
+    relation: EXERCISES_AUTHORITY_FOR
+    to: GOSSOPKA_REPORTING_FORMATS_AND_TECHNICAL_PARAMETERS
+    observed_at: 2026-07-14
+
+machine_rules:
+  - id: AUTH-NKTSKI-001
+    rule: A current NKTsKI reporting-format rule must have both an authority edge and an applicable regulator act/version.
+  - id: AUTH-NKTSKI-002
+    rule: FSB-540 authority is temporally applicable only from 2026-01-30; historical routing before that date requires predecessor-law review.
+  - id: AUTH-NKTSKI-003
+    rule: Official index confirmation of NKTsKI Order No.2 supports title/purpose/authority-chain claims but not exact field schema.
+  - id: AUTH-NKTSKI-004
+    rule: Exact field names, conditionality, encodings and technical parameter values require exact artifact bytes or equivalent clause-level primary evidence.
+  - id: AUTH-NKTSKI-005
+    rule: The 2026-07-08 Initial Data document remains methodology; example thresholds are not universal mandatory thresholds without an independent binding rule.
+  - id: AUTH-NKTSKI-006
+    rule: A method document cannot extend or replace a stricter applicable NPA deadline.
+  - id: AUTH-NKTSKI-007
+    rule: Authority to define technical parameters does not itself prove that any guessed parameter is part of the current format.
+
+red_team_guardrails:
+  - authority_exists_does_not_mean_exact_schema_known
+  - current_rule_must_be_version_and_time_bounded
+  - regulator_methodology_does_not_equal_binding_npa
+  - index_metadata_does_not_equal_immutable_artifact
+  - do_not_backcast_2026_authority_chain_to_historical_events_without_predecessor_review
+
+provenance_notes:
+  - Official publication portal identifies FSB Order No.540 as publication 0001202512250025, published 2025-12-25, registered No.84777, 5 pages, effective 2026-01-30 according to authoritative GosSOPKA publication.
+  - Official GosSOPKA text of FSB Order No.540 reproduces amended NKTsKI function 4.10 concerning technical parameters.
+  - Official GosSOPKA/NKTsKI pages identify NKTsKI Order No.2 dated 2026-07-14 and the 2026-07-08 Initial Data methodology.
+  - IMMUTABLE_PRIMARY is not claimed for NKTsKI 2026 artifacts in this slice.
