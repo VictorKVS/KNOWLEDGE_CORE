@@ -1,0 +1,63 @@
+manifest_id: FSB-282-348-MINJUST-PDF-TARGETS-2026-08-16
+status: TARGET_RESOLVED_BYTES_NOT_ACQUIRED
+purpose: >
+  Record exact authoritative Minjust-distribution PDF targets for historical FSB Orders 282/2019 and 348/2022,
+  without falsely promoting them to immutable evidence before local bytes, retrieval timestamp and SHA-256 exist.
+
+artifacts:
+  - artifact_id: FSB-282-2019-MINJUST-PDF
+    act: "Приказ ФСБ России от 19.06.2019 № 282"
+    minjust_registration: "55284"
+    official_publication_id: "0001201907170025"
+    authoritative_record_url: "https://minjust.consultant.ru/documents/43452"
+    exact_pdf_target: "https://minjust.consultant.ru/files/43452"
+    observed_content_type: "application/pdf"
+    observed_pages: 9
+    observed_display_size_kb: 454
+    acquisition_state: BYTE_TARGET_RESOLVED
+    bytes_preserved: false
+    retrieved_at: null
+    byte_length: null
+    sha256: null
+    immutable_status: PENDING
+    allowed_claim_level: AUTHORITATIVE_DISTRIBUTION_TARGET_VERIFIED
+
+  - artifact_id: FSB-348-2022-MINJUST-PDF
+    act: "Приказ ФСБ России от 07.07.2022 № 348"
+    minjust_registration: "69513"
+    official_publication_id: "0001202208050004"
+    authoritative_record_url: "https://minjust.consultant.ru/documents/32006"
+    exact_pdf_target: "https://minjust.consultant.ru/files/32006"
+    observed_content_type: "application/pdf"
+    observed_pages: 4
+    observed_display_size_kb: 145
+    acquisition_state: BYTE_TARGET_RESOLVED
+    bytes_preserved: false
+    retrieved_at: null
+    byte_length: null
+    sha256: null
+    immutable_status: PENDING
+    allowed_claim_level: AUTHORITATIVE_DISTRIBUTION_TARGET_VERIFIED
+
+rules:
+  - id: PROV-FSB-HIST-001
+    rule: "Exact PDF target resolution is not equivalent to byte acquisition."
+  - id: PROV-FSB-HIST-002
+    rule: "Do not assign IMMUTABLE_PRIMARY unless exact bytes are preserved together with retrieved_at and SHA-256."
+  - id: PROV-FSB-HIST-003
+    rule: "Minjust registration identity and official publication identity must both match the intended act before hash binding."
+  - id: PROV-FSB-HIST-004
+    rule: "Observed page count or display size is a transport sanity signal only; it is not a cryptographic identity."
+  - id: PROV-FSB-HIST-005
+    rule: "Failure of the runtime to download an otherwise resolved target is a transport failure, not evidence that the act or PDF is absent."
+
+acquisition_observation:
+  observed_on: "2026-08-16"
+  result: "Both exact PDF targets resolved through the Minjust document cards. Runtime direct download remained unavailable in this run."
+
+pending:
+  - "preserve exact PDF bytes"
+  - "record retrieved_at in UTC"
+  - "record exact byte_length"
+  - "compute SHA-256"
+  - "bind historical clause claims to artifact_id + sha256"
