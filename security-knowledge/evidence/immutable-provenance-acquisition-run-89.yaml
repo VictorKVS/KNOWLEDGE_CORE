@@ -1,0 +1,60 @@
+schema_version: 1
+run_id: SECURITY-KB-RUN-89-IMMUTABLE
+as_of: 2026-08-17
+objective: >
+  Re-attempt exact-byte acquisition for high-value NKTsKI/GosSOPKA primary sources and preserve
+  fail-closed provenance state where exact artifacts cannot be acquired.
+
+targets:
+  - id: NKTSKI-ORDER-2-2026-07-14
+    title: "Приказ НКЦКИ № 2 от 14.07.2026"
+    official_family: NKTsKI / GosSOPKA
+    web_identity_verified: true
+    exact_download_href_resolved: false
+    exact_artifact_acquired: false
+    sha256: null
+    resulting_provenance_state: PRIMARY_WEB_VERIFIED_PENDING_IMMUTABLE
+  - id: NKTSKI-ATTACK-TYPE-INPUT-2026-07-08
+    title: "Исходные данные для определения типа компьютерной атаки"
+    official_family: NKTsKI / GosSOPKA
+    web_identity_verified: true
+    exact_download_href_resolved: false
+    exact_artifact_acquired: false
+    sha256: null
+    resulting_provenance_state: PRIMARY_WEB_VERIFIED_PENDING_IMMUTABLE
+
+attempt_result:
+  official_index_confirmation: PASS
+  normal_page_fetch: FAILED_TRANSIENT_OR_UPSTREAM_502
+  exact_download_resolution: NOT_RESOLVED
+  immutable_promotion: BLOCKED
+  fabricated_hashes: 0
+
+quality_decision: >
+  Do not promote either target to PRIMARY_IMMUTABLE. Official index/search evidence proves document
+  identity/existence at the web-verification level, but immutable provenance requires exact source bytes,
+  acquisition timestamp, MIME type, byte length, SHA-256 and preserved artifact. Those conditions are
+  not satisfied in this run.
+
+additional_verified_legal_update:
+  record: RU-UK-274.1-76FZ-2026
+  file: security-knowledge/legal-consequences/uk-274-1-kii-76-fz-2026-verified.yaml
+  status: VERIFIED
+  immutable_primary: false
+  note: >
+    Federal Law 76-FZ of 2026-04-09 and its amendment of UK RF Article 274.1 were verified through
+    official publication identity plus authoritative consolidated texts. Effective date is 2026-04-20.
+    This adds verified normative knowledge without claiming an immutable official artifact.
+
+high_gap_effect:
+  high_gap_id: HIGH-IMMUTABLE-PROVENANCE
+  before: OPEN
+  after: OPEN
+  severity_changed: false
+
+next_acquisition_action:
+  - resolve the official portal's exact PDF/download endpoint from a client capable of completing the current interaction flow
+  - preserve returned bytes without normalization
+  - record retrieved_at, final URL, HTTP status, MIME type and byte length
+  - calculate SHA-256 over original bytes
+  - bind artifact hash to exact source/version before promotion
