@@ -1,0 +1,131 @@
+schema_version: 1
+contract_id: NKTSKI-INCIDENT-EVIDENCE-NODES-V1
+observed_at: 2026-08-16
+status: PRIMARY_WEB_VERIFIED_BEHAVIOR_PLUS_INTERNAL_EXECUTABLE_MODEL
+purpose: >
+  Separate internal incident evidence, regulator submission evidence, delivery evidence,
+  package-completeness assertions and later supplementation. Do not infer exact NKTsKI
+  order No. 2 fields until the downloadable artifact is preserved and hash-bound.
+
+source_basis:
+  - id: NKTSKI-NEWS-2026-07-14
+    type: PRIMARY_WEB
+    authority: NKTsKI
+    url: https://cert.gov.ru/news/novosti-nktski/o-sovershenstvovanii-deyatelnosti-po-organizatsii-vzaimodeystviya-natsionalnogo-koordinatsionnogo-ts/
+    verified_facts:
+      - NKTsKI order No. 2 dated 2026-07-14 defines GosSOPKA reporting formats and technical-parameter composition.
+      - 2026-07-08 Initial Data are methodological recommendations.
+      - Example threshold values are not universal normative thresholds.
+      - Organizations should provide the maximum amount of available materials from paragraph 5 of each relevant section.
+      - Missing one or more materials does not justify withholding the other available materials.
+  - id: NKTSKI-DOC-INDEX-2026
+    type: PRIMARY_WEB_DOCUMENT_INDEX
+    authority: NKTsKI
+    url: https://www.cert.gov.ru/materialy/organizatsiya-vzaimodeystviya/reglament-vzaimodeystviya-nktski-
+    verified_fact: Official index exposes download entries for order No. 2 and the 2026-07-08 Initial Data document.
+    limitation: Download-entry discovery is not immutable artifact acquisition.
+
+node_types:
+  - id: EVD-INC-DETECTION
+    meaning: Internal evidence that an event/incident/attack was detected or registered.
+    minimum_fields:
+      - evidence_id
+      - observed_at
+      - source_system_or_actor
+      - event_reference
+    cannot_prove:
+      - regulator_submission
+      - regulator_delivery
+      - field_level_package_completeness
+
+  - id: EVD-NKTSKI-SUBMISSION
+    meaning: Evidence that an outgoing notification/material package was submitted toward NKTsKI.
+    minimum_fields:
+      - evidence_id
+      - submitted_at
+      - channel
+      - package_reference
+      - sender_actor
+    cannot_prove:
+      - confirmed_delivery
+      - field_level_package_completeness
+
+  - id: EVD-NKTSKI-DELIVERY
+    meaning: Evidence that the regulator-facing transmission was delivered/accepted by the relevant channel.
+    minimum_fields:
+      - evidence_id
+      - delivery_observed_at
+      - channel
+      - delivery_reference
+    cannot_be_inferred_from:
+      - local_incident_ticket
+      - siem_event
+      - outgoing_message_created_without_delivery_evidence
+
+  - id: EVD-NKTSKI-PACKAGE-STATE
+    meaning: State of materials available at submission time.
+    allowed_states:
+      - MAXIMUM_AVAILABLE_SENT
+      - PARTIAL_AVAILABLE_SENT
+      - NO_AVAILABLE_MATERIALS_REQUIRES_REVIEW
+      - FIELD_SCHEMA_UNKNOWN
+    rules:
+      - Missing some expected materials does not block sending remaining available materials.
+      - FIELD_SCHEMA_UNKNOWN blocks any claim of exact field-level completeness.
+
+  - id: EVD-NKTSKI-SUPPLEMENT
+    meaning: Evidence of a later supplementary transmission tied to an earlier package.
+    minimum_fields:
+      - evidence_id
+      - submitted_at
+      - parent_package_reference
+      - added_material_references
+    guardrail: >
+      Supplementation does not retroactively prove that the original package was field-complete,
+      and does not erase the original submission/delivery timestamps.
+
+state_machine:
+  - from: DETECTED
+    to: SUBMISSION_PREPARED
+    requires: [EVD-INC-DETECTION]
+  - from: SUBMISSION_PREPARED
+    to: SUBMITTED
+    requires: [EVD-NKTSKI-SUBMISSION]
+  - from: SUBMITTED
+    to: DELIVERY_CONFIRMED
+    requires: [EVD-NKTSKI-DELIVERY]
+  - from: SUBMITTED
+    to: SUBMITTED_WITHOUT_CONFIRMED_DELIVERY
+    condition: delivery_evidence_absent
+  - from: SUBMITTED
+    to: SUPPLEMENTED
+    requires: [EVD-NKTSKI-SUPPLEMENT]
+
+fail_closed_rules:
+  - id: EVD-GUARD-001
+    if: exact_nktski_schema_hash_bound == false
+    prohibit: CLAIM_FIELD_LEVEL_COMPLETE
+  - id: EVD-GUARD-002
+    if: available_materials_count > 0 and missing_materials_count > 0
+    required_behavior: SEND_AVAILABLE_MATERIALS
+    prohibit: BLOCK_ALL_BECAUSE_PARTIAL
+  - id: EVD-GUARD-003
+    if: submission_evidence_present == true and delivery_evidence_present == false
+    result: SUBMITTED_WITHOUT_CONFIRMED_DELIVERY
+    prohibit: CLAIM_DELIVERY_CONFIRMED
+  - id: EVD-GUARD-004
+    if: only_internal_detection_evidence_present == true
+    prohibit: CLAIM_REGULATOR_NOTIFIED
+  - id: EVD-GUARD-005
+    if: attack_type_basis == EXAMPLE_THRESHOLD_ONLY
+    prohibit: CLAIM_NORMATIVE_ATTACK_CLASSIFICATION
+  - id: EVD-GUARD-006
+    if: supplement_present == true
+    prohibit: REWRITE_ORIGINAL_SUBMISSION_TIMESTAMP
+
+pending:
+  - exact downloadable bytes for NKTsKI order No. 2 dated 2026-07-14
+  - exact downloadable bytes for 2026-07-08 Initial Data
+  - retrieved_at, MIME, byte_length and SHA-256 for both artifacts
+  - exact field names, conditional fields and technical parameters from immutable artifacts
+  - channel-specific delivery evidence contracts once authoritative channel behavior is pinned
