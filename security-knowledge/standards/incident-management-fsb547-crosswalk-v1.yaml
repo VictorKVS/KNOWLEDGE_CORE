@@ -1,0 +1,109 @@
+schema_version: 1
+crosswalk_id: RU-INCIDENT-STANDARDS-FSB547-V1
+observed_at: 2026-08-16
+purpose: >
+  Connect verified Rosstandart scope metadata for ГОСТ Р 59709-59712-2022 and ГОСТ Р 59548-2022
+  to already verified FSB 547 incident workflow stages without converting standards into legal obligations.
+source_layers:
+  standards_metadata:
+    file: security-knowledge/standards/incident-management-current-status-slice-2026-08-16.yaml
+    evidence_level: AUTHORITATIVE_VERIFIED_METADATA_AND_SCOPE
+  fsb547_rules:
+    file: security-knowledge/legislation/fsb-547-2025-incident-reporting-response-authoritative-slice.yaml
+    evidence_level: AUTHORITATIVE_VERIFIED
+binding_policy:
+  default_standard_effect: GUIDANCE_ONLY
+  mandatory_only_if:
+    - legislation_binding_edge
+    - regulator_binding_edge
+    - contract_binding_edge
+    - accreditation_or_certification_binding_edge
+    - procurement_binding_edge
+    - approved_internal_policy_binding_edge
+  prohibition: CURRENT_OR_RELEVANT_STANDARD_DOES_NOT_EQUAL_LEGAL_DUTY
+crosswalk:
+  - id: XW-INC-001
+    standard: ГОСТ Р 59709-2022
+    standard_role: terminology
+    workflow_stage: terminology_normalization
+    related_fsb547:
+      - FSB547-P1-CII-SCOPE
+      - FSB547-P1-ORG-SCOPE
+    relation: TERMINOLOGY_SUPPORT_ONLY
+    legal_deadline_inherited: false
+  - id: XW-INC-002
+    standard: ГОСТ Р 59710-2022
+    standard_role: foundational_lifecycle
+    workflow_stage: incident_management_lifecycle
+    related_fsb547:
+      - FSB547-P3-SIGNIFICANT-CII-INCIDENT-3H
+      - FSB547-P3-OTHER-CII-INCIDENT-24H
+      - FSB547-P3-ORG-RESOURCE-INCIDENT-24H
+      - FSB547-P3-ATTACK-24H
+      - FSB547-P14-CII-RESULTS-48H
+    relation: PROCESS_STAGE_CROSSWALK
+    legal_deadline_source: FSB_547_ONLY
+  - id: XW-INC-003
+    standard: ГОСТ Р 59711-2022
+    standard_role: organization_and_process_setup
+    workflow_stage: governance_and_preparation
+    related_fsb547:
+      - FSB547-P5-PLAN-90D
+      - FSB547-P5-PLAN-CONTENT
+      - FSB547-P6-HEAD-APPROVAL
+      - FSB547-P6-NKTSKI-COPY-7D
+      - FSB547-P10-ANNUAL-EXERCISE
+      - FSB547-P10-EXERCISE-DEFECT-CORRECTION
+    relation: ORGANIZATION_PROCESS_SUPPORT
+    legal_deadline_source: FSB_547_ONLY
+  - id: XW-INC-004
+    standard: ГОСТ Р 59712-2022
+    standard_role: response_operations
+    workflow_stage:
+      - detection_and_registration
+      - response
+      - post_incident_analysis
+    related_fsb547:
+      - FSB547-P3-SIGNIFICANT-CII-INCIDENT-3H
+      - FSB547-P3-OTHER-CII-INCIDENT-24H
+      - FSB547-P3-ORG-RESOURCE-INCIDENT-24H
+      - FSB547-P3-ATTACK-24H
+      - FSB547-P14-CII-RESULTS-48H
+    relation: RESPONSE_PROCESS_SUPPORT
+    legal_deadline_source: FSB_547_ONLY
+  - id: XW-INC-005
+    standard: ГОСТ Р 59548-2022
+    standard_role: security_event_evidence_input
+    workflow_stage:
+      - detection_evidence
+      - incident_reconstruction
+      - audit_evidence
+    related_fsb547:
+      - FSB547-P3-SIGNIFICANT-CII-INCIDENT-3H
+      - FSB547-P3-OTHER-CII-INCIDENT-24H
+      - FSB547-P3-ATTACK-24H
+    relation: EVIDENCE_SUPPORT_ONLY
+    explicit_limit: >
+      This crosswalk does not define mandatory SIEM fields, log schema, transport protocol or storage format.
+      Clause-level registered-information fields remain pending lawful clause evidence.
+workflow_precedence:
+  - id: XW-GUARD-001
+    rule: FSB547_DEADLINE_OVERRIDES_INTERNAL_STANDARD_BASED_PROCESS_TIMING
+    effect: Internal process design may be stricter but may not extend a statutory or regulatory maximum deadline.
+  - id: XW-GUARD-002
+    rule: STANDARD_STAGE_DOES_NOT_CREATE_FSB547_APPLICABILITY
+    effect: Resolve CII/covered-organization scope first.
+  - id: XW-GUARD-003
+    rule: STANDARD_METADATA_DOES_NOT_PROVE_CLAUSE_LEVEL_FIELD
+    effect: Do not generate required event/log field names from metadata-only evidence.
+  - id: XW-GUARD-004
+    rule: EVENT_LOG_IS_NOT_DELIVERY_EVIDENCE
+    effect: A local security-event record does not prove that a notification was delivered to NKTsKI.
+  - id: XW-GUARD-005
+    rule: INCIDENT_REGISTRATION_IS_NOT_REGULATOR_NOTIFICATION
+    effect: Keep internal detection/registration timestamp, outgoing notification timestamp and delivery confirmation as separate evidence nodes.
+pending:
+  - lawful clause-level text for ГОСТ Р 59709-59712 and ГОСТ Р 59548
+  - exact NKTsKI 2026 reporting-field schema
+  - explicit binding edges for organizations that adopt or are required to use these standards
+  - executable field-level EVENT/LOG evidence mapping after clause evidence is acquired
