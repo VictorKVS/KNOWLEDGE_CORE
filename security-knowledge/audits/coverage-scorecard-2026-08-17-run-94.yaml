@@ -1,0 +1,64 @@
+scorecard_id: SECURITY-KB-RUN-94
+as_of: "2026-08-17"
+overall_strict_scope_percent: 10
+expert_ready: false
+red_team: FAIL
+critical_gaps: 0
+high_gaps: 1
+high_gap_ids:
+  - HIGH-IMMUTABLE-PROVENANCE
+
+domains:
+  russian_npa: 10
+  gost_iso: 10
+  classification_categorization: 10
+  fstec_threat_method_bdu: 10
+  risk_methods: 10
+  legal_consequences_koap_uk_gk_tk: 10
+  szi_skzi_license_lifecycle: 10
+  roles_deadlines_responsibility: 10
+  evidence_audit: 10
+  practical_cases: 10
+
+inventory_counts_carried_forward:
+  verified: 293
+  pending: 31
+  note: >
+    Master source-inventory state was not modified in this pass. A new PRIMARY_WEB_VERIFIED knowledge object was added
+    for six officially published FSB/GosSOPKA-related orders, but no exact source artifact was preserved and no record
+    was promoted to PRIMARY_IMMUTABLE. Therefore strict inventory counts remain carried forward.
+
+verified_this_run:
+  new_source_records: 0
+  new_normative_knowledge_objects: 1
+  official_publication_anchors_registered: 6
+  immutable_artifacts_acquired: 0
+  regression_cases_added: 0
+  validators_added: 0
+  ci_gates_added: 0
+  findings:
+    - "Official publication confirms FSB Order 539/2025: KII subjects obtaining information about attack means/methods and prevention/detection methods; registered 25.12.2025 No. 84782; publication 0001202512260014 on 26.12.2025."
+    - "Official publication confirms FSB Order 546/2025: information exchange on attacks/incidents in its stated KII/international-response scope; registered 30.12.2025 No. 84870; publication 0001202512300066."
+    - "Official publication confirms FSB Order 547/2025: FSB notification/response/consequence-mitigation procedure for resources identified in the title; registered 30.12.2025 No. 84871; publication 0001202512300064."
+    - "Official publication confirms FSB Order 548/2025: continuous interaction with GosSOPKA for the actors identified in the title; registered 30.12.2025 No. 84872; publication 0001202512300058."
+    - "Official publication confirms FSB Order 553/2025: installation/operation procedure and technical conditions for identified attack/incident-response means; registered 30.12.2025 No. 84873; publication 0001202512300059."
+    - "Official publication confirms FSB Order 554/2025: requirements for identified attack detection/prevention/consequence-mitigation and incident-response means; registered 30.12.2025 No. 84874; publication 0001202512300063."
+    - "No clause-level deadlines, channels, technical parameters, applicability predicates or transitional rules were inferred from titles alone."
+
+added_files:
+  - path: security-knowledge/npa/fsb-gossopka-orders-2025-authoritative-publication-anchors-v1.yaml
+    commit: afb4e00660c1a5c7abb7fe5372f65daeeed36997
+
+pending:
+  - "exact primary bytes + retrieved_at + MIME + byte length + SHA-256 for FSB orders 539/546/547/548/553/554 and other high-value FSB/NKTsKI/FSTEC/dynamic-register sources"
+  - "extract effective dates, repeal/transitional clauses, applicability predicates, exact actions/deadlines/channels from preserved primary text"
+  - "build positive/negative GosSOPKA routing regression fixtures"
+  - "exact primary bytes for 2026 sector categorization acts and atomization of their object/process/indicator rules"
+  - "organization-specific source connectors and freshness policies"
+  - "authoritative Russian requirement binding for credential revocation/residual-session and SoD classes where applicable"
+
+next_bottleneck: >
+  HIGH-IMMUTABLE-PROVENANCE remains the only High. The highest-value next pass is exact artifact acquisition for the
+  newly anchored FSB 539/546/547/548/553/554 package and the 2026 sector-categorization acts. After exact bytes are
+  hashed and preserved, extract effective dates/applicability/deadlines and compile positive/negative GosSOPKA and KII
+  routing regressions. Strict readiness must not increase until that proof floor changes.
