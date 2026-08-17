@@ -1,0 +1,23 @@
+name: FSTEC KII 2025 organization completeness
+
+on:
+  push:
+    paths:
+      - 'security-knowledge/classification/fstec-kii-2025-organization-completeness-regression-v1.json'
+      - 'security-knowledge/validators/validate_fstec_kii_2025_organization_completeness.py'
+      - '.github/workflows/fstec-kii-2025-organization-completeness.yml'
+  pull_request:
+    paths:
+      - 'security-knowledge/classification/fstec-kii-2025-organization-completeness-regression-v1.json'
+      - 'security-knowledge/validators/validate_fstec_kii_2025_organization_completeness.py'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate FSTEC KII organization-level completeness
+        run: python security-knowledge/validators/validate_fstec_kii_2025_organization_completeness.py
