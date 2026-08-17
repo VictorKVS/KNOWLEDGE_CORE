@@ -1,0 +1,52 @@
+run_id: SECURITY-KB-RUN-102
+run_date: 2026-08-17
+strict_readiness:
+  overall_percent: 10
+  domains:
+    russian_npa: 10
+    gost_iso: 10
+    classification_categorization: 10
+    fstec_bdu: 10
+    risk_methods: 10
+    legal_consequences_koap_uk_gk_tk: 10
+    szi_skzi_licenses_lifecycle: 10
+    roles_deadlines_responsibility: 10
+    evidence_audit: 10
+    practical_cases: 10
+inventory:
+  verified: 293
+  pending: 31
+red_team:
+  critical_gaps: 0
+  high_gaps: 1
+  status: FAIL
+  high_gap_ids:
+    - HIGH-IMMUTABLE-PROVENANCE
+added_this_run:
+  - "Acquired exact official PDF bytes for Government Resolution 303/2026 through the official read-only publication API/file route."
+  - "Preserved the 1,351,967-byte PDF in GitHub; API and observed byte length both equal 1,351,967, pages both equal 6, MIME is application/pdf, magic is %PDF-1.5."
+  - "Recorded SHA-256 e93e8a0cba5bc7817c53b2f6a233ed2283e1cf9e1ee2a01e30281a4dced91079 and GitHub blob SHA 22571d0d96d2517eecddd747cfc379a7d439236e."
+  - "Promoted PP 303/2026 source/overlay only from PRIMARY_WEB_VERIFIED to PRIMARY_IMMUTABLE; no family-wide promotion."
+  - "Visually verified primary-page formulas for indicators 2 and 4 and added 10 numeric/invalid-input/boundary regression cases."
+  - "Added Decimal-based validator and GitHub Actions gate; workflow run 32018551485 completed successfully."
+source_quality:
+  exact_primary_artifacts_added: 1
+  promoted_source_ids:
+    - "PP-RF-303-2026"
+  family_wide_primary_immutable: false
+readiness_change: 0
+reason_no_increase: "One high-value source is now primary immutable, but the master inventory is family-level and the remaining FSTEC/FSB/NKTsKI/sectoral acts keep HIGH-IMMUTABLE-PROVENANCE open."
+commits:
+  preserved_pdf: "bbed56bbc93e27b8a7c7ee46f58f41bcc06d55e8"
+  provenance_manifest: "d3aa789e4fa1d05a29c998ef79d73179d28c2eb5"
+  promoted_overlay: "4d4c53554151f739c4a01466e1311287c0b741cf"
+  formula_regression: "0457ae6b15c2ac38210df442b9848f1024f72dcc"
+  formula_validator: "63680ea2ea917a3197380b9b2c141d01ad5b6fad"
+  workflow: "8981587f74b3bf03dfeadc4aae2faaff37b76cfe"
+verification:
+  workflow_run_id: 32018551485
+  workflow_url: "https://github.com/VictorKVS/KNOWLEDGE_CORE/actions/runs/32018551485"
+  conclusion: success
+next_bottleneck:
+  primary: "Apply the now-working official API acquisition pipeline to FSTEC Orders 254/2025 and 247/2025, the FSB 539/546/547/548/553/554 package, and the four remaining 2026 sector overlays."
+  secondary: "Add an automated provenance validator that recomputes repository artifact SHA-256 and compares API byte length, page count, MIME and canonical identity on every change."
