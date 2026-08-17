@@ -1,0 +1,56 @@
+document_id: SEC-KII-FSTEC-2025-REGISTRY-REPORTING-ANCHORS-V1
+status: VERIFIED
+provenance_tier: PRIMARY_WEB_VERIFIED
+scope: Russian KII categorization/registry/reporting lifecycle
+verified_on: 2026-08-17
+
+sources:
+  - id: FSTEC-ORDER-254-2025
+    authority: Federal Service for Technical and Export Control of Russia (FSTEC)
+    act_type: order
+    date: 2025-07-17
+    number: "254"
+    title: "On amendments to the Procedure for maintaining the register of significant objects of critical information infrastructure of the Russian Federation, approved by FSTEC Order No. 227 of 6 December 2017"
+    state_registration_number: "83245"
+    state_registration_date: 2025-08-20
+    official_publication_number: "0001202508210006"
+    official_publication_date: 2025-08-21
+    official_source: "https://publication.pravo.gov.ru/documents/block/foiv041"
+    exact_primary_bytes_preserved: false
+    immutable_hash: null
+
+  - id: FSTEC-ORDER-247-2025
+    authority: Federal Service for Technical and Export Control of Russia (FSTEC)
+    act_type: order
+    date: 2025-07-11
+    number: "247"
+    title: "On amendments to the form for submitting information on the results of assigning a critical information infrastructure object one of the significance categories or on the absence of the need to assign such a category, approved by FSTEC Order No. 236 of 22 December 2017"
+    state_registration_number: "83246"
+    state_registration_date: 2025-08-20
+    official_publication_number: "0001202508210016"
+    official_publication_date: 2025-08-21
+    official_source: "https://publication.pravo.gov.ru/documents/block/foiv041"
+    exact_primary_bytes_preserved: false
+    immutable_hash: null
+
+verified_claims:
+  - claim_id: KII-REG-2025-001
+    claim: "FSTEC Order No. 254 of 17 July 2025 amended the procedure for maintaining the register of significant CII objects established by FSTEC Order No. 227 of 6 December 2017."
+    evidence: FSTEC-ORDER-254-2025
+  - claim_id: KII-REP-2025-001
+    claim: "FSTEC Order No. 247 of 11 July 2025 amended the reporting form established by FSTEC Order No. 236 of 22 December 2017 for communicating categorization results or the absence of a need to assign a significance category."
+    evidence: FSTEC-ORDER-247-2025
+
+routing_effect:
+  - "Any engine modeling the current CII registry lifecycle must version-route Order 227 through the 2025 amendment anchor before using its register-maintenance rules."
+  - "Any engine producing or validating categorization-result submissions under Order 236 must version-route the form through the 2025 amendment anchor."
+
+fail_closed_guards:
+  - "Do not infer the exact amended fields, deadlines, data composition, transition rules or submission semantics from the act titles alone."
+  - "Do not treat official-publication identity as immutable evidence until exact bytes are preserved and hashed."
+  - "Do not apply these amendments outside the proven scope of the KII register/reporting lifecycle."
+
+pending_extraction:
+  - "Acquire and preserve exact official bytes for Orders 254/2025 and 247/2025."
+  - "Extract changed clauses/fields against pre-amendment Orders 227 and 236."
+  - "Build positive/negative regression fixtures for old-vs-current form and register semantics."
