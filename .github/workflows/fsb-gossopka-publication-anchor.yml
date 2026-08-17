@@ -1,0 +1,26 @@
+name: FSB GosSOPKA publication anchor validation
+
+on:
+  push:
+    paths:
+      - 'security-knowledge/evidence/fsb-gossopka-publication-anchor-regression-v1.json'
+      - 'security-knowledge/validators/validate_fsb_gossopka_publication_anchors.py'
+      - 'security-knowledge/npa/fsb-gossopka-orders-2025-authoritative-publication-anchors-v1.yaml'
+  pull_request:
+    paths:
+      - 'security-knowledge/evidence/fsb-gossopka-publication-anchor-regression-v1.json'
+      - 'security-knowledge/validators/validate_fsb_gossopka_publication_anchors.py'
+      - 'security-knowledge/npa/fsb-gossopka-orders-2025-authoritative-publication-anchors-v1.yaml'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate FSB/GosSOPKA publication identity tuples
+        run: >-
+          python security-knowledge/validators/validate_fsb_gossopka_publication_anchors.py
+          security-knowledge/evidence/fsb-gossopka-publication-anchor-regression-v1.json
