@@ -1,5 +1,5 @@
 record_id: PP-RF-303-2026-EGRN-KII-OVERLAY-V1
-status: VERIFIED_IDENTITY_WITH_CORROBORATED_CLAUSE_SEMANTICS
+status: VERIFIED_PRIMARY_IMMUTABLE
 as_of: "2026-08-17"
 title: "Sector-specific CII categorization overlay for state registration of real-estate rights and transactions"
 act:
@@ -8,25 +8,17 @@ act:
   act_date: "2026-03-23"
   official_publication_number: "0001202603240036"
   official_publication_date: "2026-03-24"
-  reported_pdf_pages: 6
-  reported_pdf_size_kb: 1320
   effective_from: "2026-04-01"
-  effective_date_evidence: "Authoritative secondary legal monitoring; exact primary artifact bytes remain pending."
 sources:
-  official_identity:
-    url: "https://publication.pravo.gov.ru/document/0001202603240036"
-    quality: PRIMARY_WEB_VERIFIED
-  corroborated_full_text:
-    - "https://www.consultant.ru/document/cons_doc_LAW_529733/"
-    - "https://base.garant.ru/413949504/"
-    - "https://pravo.ppt.ru/postanovlenie/pravitelstvo/n-303-331273"
-    quality: AUTHORITATIVE_SECONDARY_CORROBORATED
+  official_document_url: "https://publication.pravo.gov.ru/document/0001202603240036"
+  official_api_url: "http://publication.pravo.gov.ru/api/Document?eoNumber=0001202603240036"
+  official_pdf_url: "http://publication.pravo.gov.ru/file/pdf?eoNumber=0001202603240036"
+  preserved_artifact: "security-knowledge/evidence/primary-artifacts/2026/pp-rf-303-2026-0001202603240036.pdf"
+  provenance_manifest: "security-knowledge/evidence/primary-artifact-pp-rf-303-2026.yaml"
 scope:
   subjects:
     clause: 3
-    allowed:
-      - ROSREESTR
-      - ROSKADASTR
+    allowed: [ROSREESTR, ROSKADASTR]
   objects:
     clause: 4
     allowed:
@@ -46,14 +38,10 @@ base_layer:
 indicators:
   clause_6:
     applied_pp127_positions:
-      - id: INDICATOR_1
-        source_position: "position 5 subposition a"
-      - id: INDICATOR_2
-        source_position: "position 5 subposition b"
-      - id: INDICATOR_3
-        source_position: "position 6"
-      - id: INDICATOR_4
-        source_position: "position 9"
+      - {id: INDICATOR_1, source_position: "position 5 subposition a"}
+      - {id: INDICATOR_2, source_position: "position 5 subposition b"}
+      - {id: INDICATOR_3, source_position: "position 6"}
+      - {id: INDICATOR_4, source_position: "position 9"}
   industry_significance:
     clause: 7
     semantics:
@@ -63,46 +51,54 @@ indicators:
       - "Provision of information contained in EGRN."
   assignment_rule:
     clause: 8
-    rule: "The subject calculates applicable indicator values and assigns a category using the criteria, indicator values, sector significance feature, PP 127 rules, and statutory typical-sector-object lists."
+    rule: "Calculate applicable indicators and assign category using criteria, values, sector feature, PP 127 and statutory typical-sector-object lists."
   no_category:
     clause: 9
     rule: "If the object matches no significance indicator and value, no significance category is assigned."
 calculation_semantics:
   indicator_1:
     clause: 10
-    value: "Maximum permissible loss-of-access time to a state service, measured by restoration procedures and recovery of access to processed information after a computer incident, in hours."
+    value: "Restoration and processed-information access recovery time after a computer incident, in hours."
   indicator_2:
     clause: 11
-    inputs:
-      - "Statutory service-delivery time under the Federal Law on State Registration of Real Estate, in hours."
-      - "Service downtime caused by restoration and information-access recovery after a computer incident, in hours."
-    binding: "Downtime input is equal to indicator 1."
-    exact_formula: NOT_PROVEN_FROM_MACHINE_READABLE_PRIMARY
+    formula: "((T_service - T_downtime) / T_service) * 100"
+    unit: percent
+    variables:
+      T_service: "Statutory state-service delivery time under the Federal Law on State Registration of Real Estate, hours."
+      T_downtime: "State-service downtime caused by restoration and information-access recovery, hours; equals indicator 1."
+    validation:
+      - "T_service must be greater than zero."
+      - "Inputs and result must not be silently clamped; anomalous values require review."
   indicator_3:
     clause: 12
     rule: "Category II is assigned when cessation or disruption of the object may cause the subject to cease or disrupt performance of its assigned function/power."
   indicator_4:
     clauses: [13, 14]
     method: "Expert assessment of maximum possible economic harm from cessation or disruption after a computer incident."
-    inputs:
-      - "Reduction of federal-budget collections."
-      - "Average forecast annual federal-budget revenue over the planned three-year period."
-      - "Average forecast annual receipts from the subject's state services related to the object over the planned three-year period."
-      - "Maximum permissible cessation/disruption time in days."
-    exact_formula: NOT_PROVEN_FROM_MACHINE_READABLE_PRIMARY
+    formula: "(delta_budget_revenue / average_federal_budget_revenue) * 100"
+    delta_formula: "(annual_state_service_revenue / 365) * max_disruption_days"
+    unit: percent
+    variables:
+      delta_budget_revenue: "Reduction of Russian Federation budget collections, rubles."
+      average_federal_budget_revenue: "Forecast annual federal-budget revenue averaged over the planned three-year period, rubles."
+      annual_state_service_revenue: "Forecast annual receipts from related state services averaged over the planned three-year period, rubles."
+      max_disruption_days: "Maximum permissible cessation/disruption time, days."
+    validation:
+      - "average_federal_budget_revenue must be greater than zero."
+      - "annual_state_service_revenue and max_disruption_days must be non-negative."
 guardrails:
   - "Subject identity alone does not prove that every information system is in scope."
   - "Object identity alone does not prove significance or a category."
   - "Category II under clause 12 requires the stated functional-consequence condition."
-  - "Do not reconstruct image-rendered formulas without preserved exact primary text or a verified transcription."
-  - "Do not generalize this overlay to healthcare, finance, science, atomic energy, rocket/space, or unrelated real-estate systems."
+  - "Do not generalize this overlay to unrelated sectors, organizations, or systems."
 provenance_state:
-  official_identity: PRIMARY_WEB_VERIFIED
-  clause_semantics: AUTHORITATIVE_SECONDARY_CORROBORATED
-  exact_official_bytes: PENDING
-  sha256: null
-  primary_immutable: false
+  official_identity: PRIMARY_IMMUTABLE
+  clause_semantics: PRIMARY_IMMUTABLE
+  exact_official_bytes: VERIFIED
+  byte_length: 1351967
+  mime: "application/pdf"
+  sha256: "e93e8a0cba5bc7817c53b2f6a233ed2283e1cf9e1ee2a01e30281a4dced91079"
+  primary_immutable: true
 not_proven:
-  - "Byte-for-byte official PDF and SHA-256."
-  - "Exact machine-readable formula glyphs for clauses 11 and 14."
   - "Application to any organization other than the subjects expressly listed in clause 3."
+  - "Any category outcome without complete facts and the applicable PP 127 threshold comparison."
