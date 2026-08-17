@@ -1,0 +1,23 @@
+name: KII 2026 organization sector-overlay profiles
+
+on:
+  push:
+    paths:
+      - 'security-knowledge/classification/kii-2026-organization-sector-overlay-profiles-v1.json'
+      - 'security-knowledge/validators/validate_kii_2026_organization_sector_overlay_profiles.py'
+      - '.github/workflows/kii-2026-organization-sector-overlay-profiles.yml'
+  pull_request:
+    paths:
+      - 'security-knowledge/classification/kii-2026-organization-sector-overlay-profiles-v1.json'
+      - 'security-knowledge/validators/validate_kii_2026_organization_sector_overlay_profiles.py'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate organization-to-sector overlay routing
+        run: python security-knowledge/validators/validate_kii_2026_organization_sector_overlay_profiles.py
