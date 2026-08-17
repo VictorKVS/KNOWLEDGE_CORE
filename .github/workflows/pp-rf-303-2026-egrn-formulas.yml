@@ -1,0 +1,27 @@
+name: PP 303 2026 EGRN formulas
+
+on:
+  push:
+    paths:
+      - 'security-knowledge/evidence/primary-artifact-pp-rf-303-2026.yaml'
+      - 'security-knowledge/classification/pp-rf-303-2026-egrn-kii-overlay-v1.yaml'
+      - 'security-knowledge/classification/pp-rf-303-2026-egrn-formula-regression-v1.json'
+      - 'security-knowledge/validators/validate_pp_rf_303_2026_egrn_formulas.py'
+      - '.github/workflows/pp-rf-303-2026-egrn-formulas.yml'
+  pull_request:
+    paths:
+      - 'security-knowledge/evidence/primary-artifact-pp-rf-303-2026.yaml'
+      - 'security-knowledge/classification/pp-rf-303-2026-egrn-kii-overlay-v1.yaml'
+      - 'security-knowledge/classification/pp-rf-303-2026-egrn-formula-regression-v1.json'
+      - 'security-knowledge/validators/validate_pp_rf_303_2026_egrn_formulas.py'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate primary-backed PP 303 formulas
+        run: python security-knowledge/validators/validate_pp_rf_303_2026_egrn_formulas.py
