@@ -1,0 +1,23 @@
+name: FSTEC KII 2025 version routing
+
+on:
+  push:
+    paths:
+      - 'security-knowledge/classification/fstec-kii-2025-version-routing-regression-v1.json'
+      - 'security-knowledge/validators/validate_fstec_kii_2025_version_routing.py'
+      - '.github/workflows/fstec-kii-2025-version-routing.yml'
+  pull_request:
+    paths:
+      - 'security-knowledge/classification/fstec-kii-2025-version-routing-regression-v1.json'
+      - 'security-knowledge/validators/validate_fstec_kii_2025_version_routing.py'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate FSTEC KII 2025 temporal boundary
+        run: python security-knowledge/validators/validate_fstec_kii_2025_version_routing.py
