@@ -1,0 +1,81 @@
+record_id: FSTEC-KII-2025-AMENDMENT-SEMANTIC-DIFF-V1
+status: VERIFIED_WITH_AUTHORITATIVE_SECONDARY_TEXT
+as_of: 2026-08-17
+scope: "Executable/version-aware semantic anchors for FSTEC Orders 254/2025 and 247/2025; exact official artifact bytes remain pending."
+
+sources:
+  primary_publication_index:
+    authority: "Official Internet Portal of Legal Information"
+    order_254:
+      publication_number: "0001202508210006"
+      registration_number: "83245"
+      publication_date: "2025-08-21"
+      effective_from: "2025-09-01"
+    order_247:
+      publication_number: "0001202508210016"
+      registration_number: "83246"
+      publication_date: "2025-08-21"
+      effective_from: "2025-09-01"
+  authoritative_secondary_full_text:
+    provider: "GARANT legal information system"
+    caveat: "Used to verify amendment semantics while exact official PDF bytes are not preserved. Do not promote to PRIMARY_IMMUTABLE."
+
+order_254_2025:
+  amends: "FSTEC Order 227/2017"
+  verified_changes:
+    - id: F254-C1
+      target: "Order 227 point 5 subpoint a"
+      current_semantics: "Registry information about a significant CII object includes its name, domain name and network address."
+      effective_from: "2025-09-01"
+    - id: F254-C2
+      target: "Order 227 point 6"
+      current_semantics: "Registration number structure is changed; current format is groups separated by slashes: XXXXXX/X/XX/X."
+      effective_from: "2025-09-01"
+    - id: F254-C3
+      target: "Order 227 point 12"
+      current_semantics: "Registry information is sent to GosSOPKA at least monthly; specified state bodies/Russian legal entities receive relevant-sector registry information monthly or on request."
+      effective_from: "2025-09-01"
+  guardrails:
+    - "Do not use pre-2025 registry field semantics for records effective on/after 2025-09-01."
+    - "Do not infer that every registry recipient receives the entire registry; sector/competence limitation applies where specified."
+
+order_247_2025:
+  amends: "FSTEC Order 236/2017 categorization-result form"
+  verified_changes:
+    - id: F247-C1
+      target: "Form item 1.3"
+      current_semantics: "Record the sphere/field of activity in which the subject performs functions/powers or operates under Article 2(8) of 187-FZ."
+    - id: F247-C2
+      target: "New form item 1.7"
+      current_semantics: "Record the name of the typical sectoral CII object from the lists under Article 6(2)(4) of 187-FZ to which the object corresponds."
+    - id: F247-C3
+      target: "New form item 1.8"
+      current_semantics: "Record domain name and external network address of information resources belonging to or used by the body/organization."
+    - id: F247-C4
+      target: "Form item 4.3"
+      current_semantics: "Record the object element/component operated by a person, including whole object, data center, server equipment, technological/production equipment or other component."
+    - id: F247-C5
+      target: "Form item 5.1"
+      current_semantics: "Record names, models/manufacturers and quantity of relevant hardware/software-hardware means including user computers, servers, telecom equipment, wireless access means and others."
+    - id: F247-C6
+      target: "Form item 5.4"
+      current_semantics: "Record applied information-security means, including embedded means, with model/manufacturer and conformity-assessment certificate/document details, or information that assessment was not performed, or that security means are absent."
+  effective_from: "2025-09-01"
+  guardrails:
+    - "Typical-sector-object matching is a required reporting datum where applicable; it is not by itself proof of significance/category."
+    - "Absence/non-assessment of a security means is reportable data in the current form and must not be silently normalized to a certified-control state."
+
+version_router:
+  before_2025_09_01: "Use prior effective editions of Orders 227/2017 and 236/2017."
+  on_or_after_2025_09_01: "Apply Orders 254/2025 and 247/2025 amendments."
+
+provenance_state:
+  identity_and_effective_date: PRIMARY_WEB_VERIFIED
+  amendment_semantics: AUTHORITATIVE_SECONDARY
+  exact_official_bytes: PENDING
+  primary_immutable: false
+
+not_proven:
+  - "Exact byte-for-byte official PDF artifact and SHA-256."
+  - "Any semantics not explicitly represented above."
+  - "Organization-specific applicability without subject/object facts."
