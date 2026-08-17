@@ -1,0 +1,27 @@
+{
+  "record_id": "PP-RF-303-2026-EGRN-FORMULA-REGRESSION-V1",
+  "as_of": "2026-08-17",
+  "primary_artifact_sha256": "e93e8a0cba5bc7817c53b2f6a233ed2283e1cf9e1ee2a01e30281a4dced91079",
+  "formulas": {
+    "indicator_2": "((T_service - T_downtime) / T_service) * 100",
+    "indicator_4": "(delta_budget_revenue / average_federal_budget_revenue) * 100",
+    "delta_budget_revenue": "(annual_state_service_revenue / 365) * max_disruption_days"
+  },
+  "cases": [
+    {"id":"F303-01","formula":"indicator_2","T_service":"10","T_downtime":"2","expected":{"status":"CALCULATED","value":"80"}},
+    {"id":"F303-02","formula":"indicator_2","T_service":"10","T_downtime":"0","expected":{"status":"CALCULATED","value":"100"}},
+    {"id":"F303-03","formula":"indicator_2","T_service":"10","T_downtime":"10","expected":{"status":"CALCULATED","value":"0"}},
+    {"id":"F303-04","formula":"indicator_2","T_service":"0","T_downtime":"0","expected":{"status":"INVALID_ZERO_DENOMINATOR"}},
+    {"id":"F303-05","formula":"indicator_2","T_service":"10","T_downtime":"-1","expected":{"status":"INVALID_NEGATIVE_INPUT"}},
+    {"id":"F303-06","formula":"indicator_2","T_service":"10","T_downtime":"12","expected":{"status":"NEGATIVE_RESULT_REQUIRES_REVIEW","value":"-20"}},
+    {"id":"F303-07","formula":"indicator_4","annual_state_service_revenue":"365000","max_disruption_days":"2","average_federal_budget_revenue":"1000000","expected":{"status":"CALCULATED","delta_budget_revenue":"2000","value":"0.2"}},
+    {"id":"F303-08","formula":"indicator_4","annual_state_service_revenue":"365000","max_disruption_days":"0","average_federal_budget_revenue":"1000000","expected":{"status":"CALCULATED","delta_budget_revenue":"0","value":"0"}},
+    {"id":"F303-09","formula":"indicator_4","annual_state_service_revenue":"365000","max_disruption_days":"2","average_federal_budget_revenue":"0","expected":{"status":"INVALID_ZERO_DENOMINATOR"}},
+    {"id":"F303-10","formula":"indicator_4","annual_state_service_revenue":"-1","max_disruption_days":"2","average_federal_budget_revenue":"1000000","expected":{"status":"INVALID_NEGATIVE_INPUT"}}
+  ],
+  "guardrails": [
+    "The formula result is an indicator value, not an automatic category assignment.",
+    "Values outside an expected factual range are surfaced for review and are not silently clamped.",
+    "Threshold comparison remains governed by the current applicable PP 127 values."
+  ]
+}
