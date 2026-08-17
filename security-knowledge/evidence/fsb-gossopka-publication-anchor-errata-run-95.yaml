@@ -1,0 +1,43 @@
+errata_id: SECURITY-KB-ERRATA-RUN-95
+as_of: "2026-08-17"
+status: VERIFIED_CORRECTION
+scope: "FSB/GosSOPKA official-publication metadata"
+
+finding:
+  affected_historical_record: "security-knowledge/audits/coverage-scorecard-2026-08-17-run-94.yaml"
+  field_context: "verified_this_run.findings entry describing FSB Order 553/2025"
+  incorrect_value_in_historical_scorecard: "publication 0001202512300066"
+  correct_value: "publication 0001202512300059"
+  explanation: >
+    The canonical knowledge object already stores Order 553/2025 correctly as publication 0001202512300059.
+    The defect is limited to narrative metadata in RUN-94. Historical scorecards are not silently rewritten;
+    this errata preserves the original benchmark and records the correction explicitly.
+
+primary_authoritative_confirmation:
+  act: "Приказ ФСБ России от 26.12.2025 № 553"
+  registration: "30.12.2025 № 84873"
+  publication_number: "0001202512300059"
+  publication_date: "2025-12-30"
+  official_url: "https://publication.pravo.gov.ru/document/0001202512300059"
+
+cross_check:
+  order_546_2025:
+    registration: "30.12.2025 № 84870"
+    publication_number: "0001202512300066"
+    note: "0001202512300066 belongs to Order 546/2025, not Order 553/2025."
+
+impact:
+  normative_claims_changed: false
+  canonical_anchor_changed: false
+  inventory_counts_changed: false
+  high_gap_changed: false
+  readiness_changed: false
+  risk: >
+    If uncorrected, a downstream resolver could route Order 553 to the publication artifact for Order 546.
+    Publication identity therefore requires deterministic cross-checks before immutable acquisition and hashing.
+
+control_response:
+  - "Preserve this errata rather than silently rewriting the historical RUN-94 scorecard."
+  - "Add regression fixtures binding act number + registration number + publication number."
+  - "Reject publication metadata when a known tuple mismatches."
+  - "Before PRIMARY_IMMUTABLE promotion, verify exact artifact identity against the canonical tuple."
