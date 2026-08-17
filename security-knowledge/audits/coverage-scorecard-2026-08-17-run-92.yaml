@@ -1,0 +1,64 @@
+scorecard_id: SECURITY-KB-RUN-92
+as_of: "2026-08-17"
+overall_strict_scope_percent: 10
+expert_ready: false
+red_team: FAIL
+critical_gaps: 0
+high_gaps: 1
+high_gap_ids:
+  - HIGH-IMMUTABLE-PROVENANCE
+
+domains:
+  russian_npa: 10
+  gost_iso: 10
+  classification_categorization: 10
+  fstec_threat_method_bdu: 10
+  risk_methods: 10
+  legal_consequences_koap_uk_gk_tk: 10
+  szi_skzi_license_lifecycle: 10
+  roles_deadlines_responsibility: 10
+  evidence_audit: 10
+  practical_cases: 10
+
+inventory_counts_carried_forward:
+  verified: 293
+  pending: 31
+  note: >
+    No master source-inventory state changed in this pass. New authoritative dynamic threat evidence was added,
+    but exact source bytes were not acquired; therefore no source was promoted to PRIMARY_IMMUTABLE and strict
+    VERIFIED/PENDING inventory counts remain unchanged.
+
+verified_this_run:
+  new_source_records: 0
+  new_normative_knowledge_objects: 0
+  new_dynamic_authoritative_evidence_objects: 1
+  immutable_acquisition_attempts: 1
+  immutable_artifacts_acquired: 0
+  regression_cases_added: 0
+  validators_added: 0
+  ci_gates_added: 0
+  findings:
+    - "Official FSTEC BDU ASU TP UTP:01 lists Session Hijacking and weaknesses of session termination as possible threat-realization methods."
+    - "UTP:05 and UTP:10 provide the same session-related attack-method linkage for unauthorized modification and unauthorized ASU TP information collection."
+    - "This supports threat-relevant routing of uncontrolled/reusable sessions inside proven ASU TP scope, but does not establish a universal legal duty or automatic non-compliance."
+    - "Credential revocation -> session invalidation remains separately NOT_PROVEN as a universal statutory requirement pending exact applicable authoritative binding."
+    - "An exact-byte acquisition attempt against the official FSTEC BDU ASU TP record failed because the available byte-fetch runtime could not resolve the official host; SHA-256/MIME/size were not invented."
+
+added_files:
+  - path: security-knowledge/evidence/fstec-bdu-asutp-session-threat-binding-v1.yaml
+    commit: 4b615e5db4f598b57be9040fc15a4c58a4a05e71
+  - path: security-knowledge/evidence/immutable-provenance-acquisition-run-92.yaml
+    commit: 1179234d7f75b6c4e65c99c6bb205adec84a0ba8
+
+pending:
+  - "exact primary bytes + retrieved_at + MIME + byte length + SHA-256 for high-value FSB/NKTsKI/dynamic-register sources"
+  - "organization-specific source connectors and freshness policies"
+  - "authoritative Russian requirement binding for credential revocation/residual-session lifecycle classes where applicable"
+  - "bind SoD conflict classes to domain-specific authoritative requirements only where primary evidence proves applicability"
+  - "expand criminal/administrative/civil/labor consequence routers only from verified statutory elements and current editions"
+
+next_bottleneck: >
+  HIGH-IMMUTABLE-PROVENANCE remains the only High. The immediate blocker is a byte-capable acquisition path for
+  official FSB/NKTsKI/FSTEC dynamic sources so exact artifacts can be preserved with retrieval timestamp, MIME,
+  byte length and SHA-256. In parallel, continue authoritative domain-scoped binding of session and SoD states,
+  preserving NOT_PROVEN wherever a primary requirement is not established.
