@@ -1,0 +1,79 @@
+object_id: SEC-EVID-FSTEC-BDU-ASUTP-SESSION-THREAT-0001
+version: 1
+status: VERIFIED_DYNAMIC_AUTHORITATIVE
+as_of: "2026-08-17"
+domain: fstec_threat_method_bdu
+scope:
+  applies_to: "FSTEC BDU ASU TP threat-analysis context"
+  does_not_assert:
+    - "universal legal duty for every Russian information system"
+    - "a fixed numeric session timeout"
+    - "that every residual session after credential revocation is automatically a statutory violation"
+
+sources:
+  - source_id: FSTEC-BDU-ASUTP-UTP01
+    authority: FSTEC_RUSSIA_BDU_ASUTP
+    provenance_state: PRIMARY_WEB_VERIFIED
+    title: "УТП:01 Угроза утечки информации"
+    url: "https://bduasutp.fstec.ru/threats/41683af3-eccb-4cbb-885c-aceba22a3e6d"
+    verified_on: "2026-08-17"
+    relevant_attack_methods:
+      - "СПА.22.023 Захват сеанса пользователя (Session Hijacking)"
+      - "СПА.22.031 Использование недостатков механизма завершения сессии"
+      - "СПА.02.002 Использование недостатков, связанных с управлением учетными данными"
+  - source_id: FSTEC-BDU-ASUTP-UTP05
+    authority: FSTEC_RUSSIA_BDU_ASUTP
+    provenance_state: PRIMARY_WEB_VERIFIED
+    title: "УТП:05 Угроза несанкционированной модификации (искажения)"
+    url: "https://bduasutp.fstec.ru/threats/f978e564-3734-4e26-b246-04176b47fd01"
+    verified_on: "2026-08-17"
+    relevant_attack_methods:
+      - "СПА.22.023 Захват сеанса пользователя (Session Hijacking)"
+      - "СПА.22.031 Использование недостатков механизма завершения сессии"
+  - source_id: FSTEC-BDU-ASUTP-UTP10
+    authority: FSTEC_RUSSIA_BDU_ASUTP
+    provenance_state: PRIMARY_WEB_VERIFIED
+    title: "УТП:10 Угроза несанкционированного сбора данных об автоматизированной системе управления"
+    url: "https://bduasutp.fstec.ru/threats/7da7d27d-b5c3-44ee-b935-8b61dfe48196"
+    verified_on: "2026-08-17"
+    relevant_attack_methods:
+      - "СПА.22.023 Захват сеанса пользователя (Session Hijacking)"
+      - "СПА.22.031 Использование недостатков механизма завершения сессии"
+
+verified_claims:
+  - claim_id: SEC-CLM-ASUTP-SESSION-THREAT-001
+    statement: >
+      In the official FSTEC BDU ASU TP threat model, session hijacking and weaknesses in session-termination
+      mechanisms are listed as possible methods for realization of multiple ASU TP threats, including information
+      leakage, unauthorized modification and unauthorized collection of ASU TP information.
+    evidence:
+      - FSTEC-BDU-ASUTP-UTP01
+      - FSTEC-BDU-ASUTP-UTP05
+      - FSTEC-BDU-ASUTP-UTP10
+  - claim_id: SEC-CLM-ASUTP-SESSION-THREAT-002
+    statement: >
+      Therefore, an active or reusable session whose continued validity is not proven to be intended and controlled
+      may be routed as threat-relevant evidence in ASU TP analysis when the relevant system/component and attack path
+      are applicable; this is a derived analytical routing rule, not a declaration of automatic legal non-compliance.
+    evidence:
+      - FSTEC-BDU-ASUTP-UTP01
+      - FSTEC-BDU-ASUTP-UTP05
+      - FSTEC-BDU-ASUTP-UTP10
+    inference_type: DERIVED_ANALYTICAL_BINDING
+
+routing_guards:
+  - "Do not infer statutory violation solely from existence of an active session."
+  - "Do not infer applicability outside ASU TP without separate authoritative evidence."
+  - "Do not equate source count with independent evidence; these are three threat records in the same authoritative resource family."
+  - "If session purpose, ownership, termination semantics or component applicability are unknown, retain NOT_PROVEN/PENDING."
+  - "Credential revocation -> session invalidation remains a separate requirement question unless an applicable primary requirement is independently proven."
+
+integration_targets:
+  - credential_token_session_lifecycle
+  - threat_model
+  - evidence_audit
+  - practical_cases
+
+provenance_note: >
+  These are live official FSTEC BDU ASU TP web records verified on 2026-08-17. They are not represented as
+  PRIMARY_IMMUTABLE artifacts because exact preserved source bytes and SHA-256 were not acquired in this pass.
