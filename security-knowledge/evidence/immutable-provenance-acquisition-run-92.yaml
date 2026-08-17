@@ -1,0 +1,43 @@
+run_id: SECURITY-KB-IMMUTABLE-ACQ-92
+as_of: "2026-08-17"
+status: PARTIAL_FAIL
+objective: >
+  Acquire exact source bytes for an official dynamic FSTEC BDU ASU TP record and preserve retrieval metadata
+  sufficient for a PRIMARY_DYNAMIC_SNAPSHOT / immutable snapshot object.
+
+target:
+  authority: FSTEC_RUSSIA_BDU_ASUTP
+  title: "УТП:01 Угроза утечки информации"
+  url: "https://bduasutp.fstec.ru/threats/41683af3-eccb-4cbb-885c-aceba22a3e6d"
+
+web_verification:
+  result: SUCCESS
+  verified_on: "2026-08-17"
+  evidence_state: PRIMARY_WEB_VERIFIED
+  facts_confirmed:
+    - "The official FSTEC BDU ASU TP record is accessible to web verification."
+    - "The record lists СПА.22.023 Session Hijacking and СПА.22.031 weaknesses of session termination among possible realization methods."
+
+exact_byte_acquisition:
+  result: FAILED
+  methods_attempted:
+    - method: container_download
+      result: FAILED
+      detail: "download failed"
+    - method: direct_http_requests
+      result: FAILED
+      detail: "runtime DNS resolution failure for bduasutp.fstec.ru"
+  exact_artifact_acquired: false
+  mime: null
+  byte_length: null
+  sha256: null
+  preserved_artifact_path: null
+
+classification_guard:
+  - "Do not promote the live web record to PRIMARY_IMMUTABLE."
+  - "Do not fabricate MIME, byte length or SHA-256."
+  - "Keep PRIMARY_WEB_VERIFIED until exact bytes can be acquired and preserved."
+
+next_action: >
+  Retry through a runtime/network path capable of resolving the official host; on success preserve exact bytes,
+  retrieval timestamp, response MIME, byte length, SHA-256 and repository artifact before promotion.
