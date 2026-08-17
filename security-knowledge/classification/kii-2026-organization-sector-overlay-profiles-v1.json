@@ -1,0 +1,35 @@
+{
+  "record_id": "KII-2026-ORGANIZATION-SECTOR-OVERLAY-PROFILES-V1",
+  "as_of": "2026-08-17",
+  "scope": "Synthetic, non-identifying organization profiles for executable routing. These fixtures prove engine behavior only and are not findings about real organizations.",
+  "base_sources": ["PP_RF_127_2018", "FSTEC_ORDER_247_2025_CURRENT_FORM"],
+  "verified_overlay_anchors": {
+    "ATOMIC_ENERGY": "PP_RF_4_2026",
+    "BANKING_AND_OTHER_FINANCIAL_MARKET": "PP_RF_92_2026",
+    "SCIENCE": "PP_RF_246_2026",
+    "STATE_REGISTRATION_OF_REAL_ESTATE_RIGHTS_AND_TRANSACTIONS": "PP_RF_303_2026",
+    "ROCKET_AND_SPACE_INDUSTRY": "PP_RF_356_2026"
+  },
+  "guardrails": [
+    "A routed overlay is an input to categorization, not proof that an object is significant or has a category.",
+    "Unknown CII-subject status, missing sector facts, or a sector outside the verified overlay slice must fail closed.",
+    "ABSENT and NOT_ASSESSED security-means states are reportable current-form values and must not be normalized to CERTIFIED.",
+    "The fixture set does not claim that the five verified overlays are exhaustive."
+  ],
+  "cases": [
+    {"id":"OP-01","date":"2026-08-17","subject_state":"CONFIRMED","sectors":["ATOMIC_ENERGY"],"sphere_present":true,"typical_sector_object_present":true,"external_network_identity_present":true,"component_present":true,"hardware_inventory_present":true,"security_means_state":"CERTIFIED","expected":{"status":"ROUTE","sources":["PP_RF_127_2018","FSTEC_ORDER_247_2025_CURRENT_FORM","PP_RF_4_2026"]}},
+    {"id":"OP-02","date":"2026-08-17","subject_state":"CONFIRMED","sectors":["BANKING_AND_OTHER_FINANCIAL_MARKET"],"sphere_present":true,"typical_sector_object_present":true,"external_network_identity_present":true,"component_present":true,"hardware_inventory_present":true,"security_means_state":"NOT_ASSESSED","expected":{"status":"ROUTE","sources":["PP_RF_127_2018","FSTEC_ORDER_247_2025_CURRENT_FORM","PP_RF_92_2026"]}},
+    {"id":"OP-03","date":"2026-08-17","subject_state":"CONFIRMED","sectors":["SCIENCE"],"sphere_present":true,"typical_sector_object_present":true,"external_network_identity_present":true,"component_present":true,"hardware_inventory_present":true,"security_means_state":"ABSENT","expected":{"status":"ROUTE","sources":["PP_RF_127_2018","FSTEC_ORDER_247_2025_CURRENT_FORM","PP_RF_246_2026"]}},
+    {"id":"OP-04","date":"2026-08-17","subject_state":"CONFIRMED","sectors":["STATE_REGISTRATION_OF_REAL_ESTATE_RIGHTS_AND_TRANSACTIONS"],"sphere_present":true,"typical_sector_object_present":true,"external_network_identity_present":true,"component_present":true,"hardware_inventory_present":true,"security_means_state":"CERTIFIED","expected":{"status":"ROUTE","sources":["PP_RF_127_2018","FSTEC_ORDER_247_2025_CURRENT_FORM","PP_RF_303_2026"]}},
+    {"id":"OP-05","date":"2026-08-17","subject_state":"CONFIRMED","sectors":["ROCKET_AND_SPACE_INDUSTRY"],"sphere_present":true,"typical_sector_object_present":true,"external_network_identity_present":true,"component_present":true,"hardware_inventory_present":true,"security_means_state":"CERTIFIED","expected":{"status":"ROUTE","sources":["PP_RF_127_2018","FSTEC_ORDER_247_2025_CURRENT_FORM","PP_RF_356_2026"]}},
+    {"id":"OP-06","date":"2026-08-17","subject_state":"CONFIRMED","sectors":["SCIENCE","ROCKET_AND_SPACE_INDUSTRY"],"sphere_present":true,"typical_sector_object_present":true,"external_network_identity_present":true,"component_present":true,"hardware_inventory_present":true,"security_means_state":"CERTIFIED","expected":{"status":"ROUTE","sources":["PP_RF_127_2018","FSTEC_ORDER_247_2025_CURRENT_FORM","PP_RF_246_2026","PP_RF_356_2026"]}},
+    {"id":"OP-07","date":"2026-08-17","subject_state":"NOT_PROVEN","sectors":["SCIENCE"],"sphere_present":true,"typical_sector_object_present":true,"external_network_identity_present":true,"component_present":true,"hardware_inventory_present":true,"security_means_state":"CERTIFIED","expected":{"status":"NOT_PROVEN_CII_SUBJECT","sources":[]}},
+    {"id":"OP-08","date":"2026-08-17","subject_state":"NOT_CII","sectors":["SCIENCE"],"sphere_present":true,"typical_sector_object_present":true,"external_network_identity_present":true,"component_present":true,"hardware_inventory_present":true,"security_means_state":"CERTIFIED","expected":{"status":"NOT_ROUTED_AS_CII","sources":[]}},
+    {"id":"OP-09","date":"2026-08-17","subject_state":"CONFIRMED","sectors":[],"sphere_present":true,"typical_sector_object_present":true,"external_network_identity_present":true,"component_present":true,"hardware_inventory_present":true,"security_means_state":"CERTIFIED","expected":{"status":"NEEDS_SECTOR_FACTS","sources":["PP_RF_127_2018","FSTEC_ORDER_247_2025_CURRENT_FORM"]}},
+    {"id":"OP-10","date":"2026-08-17","subject_state":"CONFIRMED","sectors":["HEALTHCARE"],"sphere_present":true,"typical_sector_object_present":true,"external_network_identity_present":true,"component_present":true,"hardware_inventory_present":true,"security_means_state":"CERTIFIED","expected":{"status":"NEEDS_SECTOR_OVERLAY_REVIEW","sources":["PP_RF_127_2018","FSTEC_ORDER_247_2025_CURRENT_FORM"]}},
+    {"id":"OP-11","date":"2026-08-17","subject_state":"CONFIRMED","sectors":["SCIENCE","HEALTHCARE"],"sphere_present":true,"typical_sector_object_present":true,"external_network_identity_present":true,"component_present":true,"hardware_inventory_present":true,"security_means_state":"CERTIFIED","expected":{"status":"NEEDS_SECTOR_OVERLAY_REVIEW","sources":["PP_RF_127_2018","FSTEC_ORDER_247_2025_CURRENT_FORM","PP_RF_246_2026"]}},
+    {"id":"OP-12","date":"2026-08-17","subject_state":"CONFIRMED","sectors":["SCIENCE"],"sphere_present":true,"typical_sector_object_present":true,"external_network_identity_present":false,"component_present":true,"hardware_inventory_present":true,"security_means_state":"CERTIFIED","expected":{"status":"INCOMPLETE_EXTERNAL_NETWORK_IDENTITY","sources":["PP_RF_127_2018","FSTEC_ORDER_247_2025_CURRENT_FORM"]}},
+    {"id":"OP-13","date":"2026-08-17","subject_state":"CONFIRMED","sectors":["SCIENCE"],"sphere_present":true,"typical_sector_object_present":true,"external_network_identity_present":true,"component_present":true,"hardware_inventory_present":true,"security_means_state":"UNKNOWN","expected":{"status":"INCOMPLETE_SECURITY_MEANS_STATE","sources":["PP_RF_127_2018","FSTEC_ORDER_247_2025_CURRENT_FORM"]}},
+    {"id":"OP-14","date":"2026-08-17","subject_state":"CONFIRMED","sectors":["SCIENCE"],"sphere_present":true,"typical_sector_object_present":true,"external_network_identity_present":true,"component_present":true,"hardware_inventory_present":true,"security_means_state":"CERTIFIED","category_claim":"AUTO_FROM_TYPICAL_OBJECT","expected":{"status":"REJECT_AUTOMATIC_CATEGORY_INFERENCE","sources":["PP_RF_127_2018","FSTEC_ORDER_247_2025_CURRENT_FORM","PP_RF_246_2026"]}}
+  ]
+}
