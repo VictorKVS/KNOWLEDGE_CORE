@@ -1,0 +1,24 @@
+name: FSB Order 539 information receipt
+
+on:
+  push:
+    paths:
+      - 'security-knowledge/roles/fsb-order-539-2025-information-receipt-*.json'
+      - 'security-knowledge/validators/validate_fsb_order_539_information_receipt.py'
+      - '.github/workflows/fsb-order-539-information-receipt.yml'
+  pull_request:
+    paths:
+      - 'security-knowledge/roles/fsb-order-539-2025-information-receipt-*.json'
+      - 'security-knowledge/validators/validate_fsb_order_539_information_receipt.py'
+      - '.github/workflows/fsb-order-539-information-receipt.yml'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate Order 539 routing and deadline guards
+        run: python security-knowledge/validators/validate_fsb_order_539_information_receipt.py
