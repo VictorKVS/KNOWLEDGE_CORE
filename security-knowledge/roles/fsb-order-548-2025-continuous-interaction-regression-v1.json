@@ -1,0 +1,18 @@
+{
+  "fixture_id": "FSB-ORDER-548-2025-CONTINUOUS-INTERACTION-REGRESSION-V1",
+  "matrix_id": "FSB-ORDER-548-2025-CONTINUOUS-INTERACTION-ROUTING-V1",
+  "positive_cases": [
+    {"case": "NCCCI identifier assignment after personal-account receipt", "rule_id": "FSB548-C6-NCCCI-ASSIGN-ATTACK-OR-INCIDENT-ID-24H", "value": 24, "unit": "HOUR", "trigger": "RECEIPT_OF_ATTACK_AND_INCIDENT_INFORMATION_IN_PERSONAL_ACCOUNT"},
+    {"case": "preventive-measures report after NCCCI threat information", "rule_id": "FSB548-C9-SUBJECT-REPORT-PREVENTIVE-MEASURES-24H", "value": 24, "unit": "HOUR", "trigger": "RECEIPT_OF_RELEVANT_THREAT_INFORMATION_FROM_NCCCI"},
+    {"case": "requested information or compliant inability notice", "rule_id": "FSB548-C10-SUBJECT-RESPOND-TO-ADDITIONAL-INFORMATION-REQUEST-24H", "value": 24, "unit": "HOUR", "trigger": "RECEIPT_OF_NCCCI_ADDITIONAL_INFORMATION_REQUEST"}
+  ],
+  "negative_cases": [
+    {"case": "clause 5 deadlines are not invented", "rule_id": "FSB548-C5-PRIMARY-INFORMING-DEADLINES-EXTERNAL-ORDER", "forbidden_numeric_deadline": true},
+    {"case": "reserve channel only on personal-account failure", "required_route_rule": "FSB548-C3-RESERVE-CHANNEL-FAILOVER"},
+    {"case": "identifier clock not widened to reserve-channel receipt", "rule_id": "FSB548-C6-NCCCI-ASSIGN-ATTACK-OR-INCIDENT-ID-24H", "forbidden_trigger": "RECEIPT_THROUGH_ANY_CHANNEL"},
+    {"case": "identifier is not resolution confirmation", "rule_id": "FSB548-C6-IDENTIFIER-CONFIRMS-TRANSFER", "forbidden_action": "CONFIRM_INCIDENT_RESOLUTION"},
+    {"case": "assistance request remains optional", "rule_id": "FSB548-C7-SUBJECT-MAY-REQUEST-GOSSOPKA-ASSISTANCE", "required_obligation_type": "RIGHT_NOT_DUTY"},
+    {"case": "later delivery time does not extend initial response", "rule_id": "FSB548-C10-SUBJECT-RESPOND-TO-ADDITIONAL-INFORMATION-REQUEST-24H", "required_response_branch": "INABILITY_NOTICE_WITH_REASON_AND_TIME_WHEN_INFORMATION_WILL_BE_PROVIDED"},
+    {"case": "clause 8 functions have no invented clock", "rule_id": "FSB548-C8-NCCCI-INFORMATION-REQUEST-AND-ASSISTANCE-FUNCTIONS", "forbidden_numeric_deadline": true}
+  ]
+}
