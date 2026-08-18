@@ -1,0 +1,19 @@
+{
+  "fixture_id": "FSB-ORDER-546-2025-INFORMATION-EXCHANGE-REGRESSION-V1",
+  "matrix_id": "FSB-ORDER-546-2025-INFORMATION-EXCHANGE-ROUTING-V1",
+  "positive_cases": [
+    {"case": "NCCCI review of reasoned foreign exchange request", "rule_id": "FSB546-C15-NCCCI-REVIEW-FOREIGN-EXCHANGE-REQUEST-24H", "value": 24, "unit": "HOUR", "trigger": "RECEIPT_OF_FOREIGN_EXCHANGE_REQUEST_BY_NCCCI"},
+    {"case": "refusal notice", "rule_id": "FSB546-C16-NCCCI-NOTIFY-REFUSAL-24H", "value": 24, "unit": "HOUR", "trigger": "NCCCI_REFUSAL_DECISION"},
+    {"case": "forward foreign response", "rule_id": "FSB546-C18-NCCCI-FORWARD-FOREIGN-RESPONSE-48H", "value": 48, "unit": "HOUR", "trigger": "RECEIPT_OF_FOREIGN_RESPONSE_BY_NCCCI"},
+    {"case": "unsolicited foreign information", "rule_id": "FSB546-C20-KII-SUBJECT-FORWARD-UNSOLICITED-FOREIGN-INFO-24H", "value": 24, "unit": "HOUR", "trigger": "RECEIPT_OF_UNSOLICITED_FOREIGN_INFORMATION_BY_KII_SUBJECT"},
+    {"case": "information about another subject's object", "rule_id": "FSB546-C21-KII-SUBJECT-FORWARD-OTHER-SUBJECT-INFO-12H", "value": 12, "unit": "HOUR", "trigger": "RECEIPT_OF_OTHER_SUBJECT_OBJECT_INFORMATION_BY_KII_SUBJECT"}
+  ],
+  "negative_cases": [
+    {"case": "no direct foreign exchange without treaty", "required_route_rule": "FSB546-C11-C13-FOREIGN-EXCHANGE-VIA-NCCCI"},
+    {"case": "peer exchange does not replace NCCCI", "required_temporal_rule": "FSB546-C8-SIMULTANEOUS-PARALLEL-NCCCI-NOTIFICATION"},
+    {"case": "immediately is not assigned an arbitrary clock", "rule_id": "FSB546-C14-NCCCI-ACKNOWLEDGE-REQUEST-IMMEDIATELY", "forbidden_numeric_deadline": true},
+    {"case": "operative timing is not assigned an arbitrary clock", "rule_id": "FSB546-C3-EXCHANGE-OPERATIVE-SUFFICIENT-TIMING", "forbidden_numeric_deadline": true},
+    {"case": "review is not automatic approval", "rule_id": "FSB546-C15-NCCCI-REVIEW-FOREIGN-EXCHANGE-REQUEST-24H", "forbidden_action": "APPROVE_AND_TRANSMIT_AUTOMATICALLY"},
+    {"case": "state secret gate retained", "required_route_rule": "FSB546-C7-STATE-SECRET-GATE"}
+  ]
+}
