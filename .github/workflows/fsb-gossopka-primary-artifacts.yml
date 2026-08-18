@@ -1,0 +1,28 @@
+name: FSB GosSOPKA primary artifacts
+
+on:
+  push:
+    paths:
+      - 'security-knowledge/evidence/primary-artifacts/2025/fsb-order-*-2025-*.pdf'
+      - 'security-knowledge/evidence/primary-artifacts-fsb-gossopka-package-2025.json'
+      - 'security-knowledge/lifecycle/fsb-gossopka-package-lifecycle-2025-v1.yaml'
+      - 'security-knowledge/validators/validate_fsb_gossopka_primary_artifacts.py'
+      - '.github/workflows/fsb-gossopka-primary-artifacts.yml'
+  pull_request:
+    paths:
+      - 'security-knowledge/evidence/primary-artifacts/2025/fsb-order-*-2025-*.pdf'
+      - 'security-knowledge/evidence/primary-artifacts-fsb-gossopka-package-2025.json'
+      - 'security-knowledge/lifecycle/fsb-gossopka-package-lifecycle-2025-v1.yaml'
+      - 'security-knowledge/validators/validate_fsb_gossopka_primary_artifacts.py'
+      - '.github/workflows/fsb-gossopka-primary-artifacts.yml'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate exact FSB GosSOPKA artifacts
+        run: python security-knowledge/validators/validate_fsb_gossopka_primary_artifacts.py
