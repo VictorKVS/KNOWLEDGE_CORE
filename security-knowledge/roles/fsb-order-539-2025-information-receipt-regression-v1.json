@@ -1,0 +1,30 @@
+{
+  "fixture_id": "FSB-ORDER-539-2025-INFORMATION-RECEIPT-REGRESSION-V1",
+  "matrix_id": "FSB-ORDER-539-2025-INFORMATION-RECEIPT-ROUTING-V1",
+  "positive_cases": [
+    {
+      "case": "connected subject response route",
+      "rule_id": "FSB539-C2-NCCCI-REPLY-CONNECTED-30WD",
+      "expected_actor": "NCCCI",
+      "expected_recipient": "KII_SUBJECT",
+      "expected_channel": "NCCCI_TECHNICAL_INFRASTRUCTURE",
+      "expected_deadline": {"value": 30, "unit": "WORKING_DAY", "trigger": "RECEIPT_OF_REQUEST_BY_NCCCI"}
+    },
+    {
+      "case": "subject without technical connection response route",
+      "rule_id": "FSB539-C2-NCCCI-REPLY-NOT-CONNECTED-30WD",
+      "expected_actor": "NCCCI",
+      "expected_recipient": "KII_SUBJECT",
+      "expected_channel": "POSTAL_OR_EMAIL_TO_ADDRESS_SPECIFIED_IN_REQUEST",
+      "expected_deadline": {"value": 30, "unit": "WORKING_DAY", "trigger": "RECEIPT_OF_REQUEST_BY_NCCCI"}
+    }
+  ],
+  "negative_cases": [
+    {"case": "do not use calendar days", "forbidden_deadline_unit": "CALENDAR_DAY"},
+    {"case": "do not start at dispatch", "forbidden_trigger": "DISPATCH_OF_REQUEST_BY_KII_SUBJECT"},
+    {"case": "do not use fallback when connected", "connected_subject_forbidden_channel": "POSTAL_OR_EMAIL_TO_ADDRESS_SPECIFIED_IN_REQUEST"},
+    {"case": "do not invent cert.gov.ru visit frequency", "untimed_rule_id": "FSB539-C1-KII-SUBJECT-OBTAIN-ATTACK-INFORMATION-NO-DEADLINE", "required_status": "NO_EXPLICIT_NUMERICAL_DEADLINE_OR_FREQUENCY_IN_ORDER_539"},
+    {"case": "do not invent proactive delivery period", "untimed_rule_id": "FSB539-C3-NCCCI-SEND-CONTEXT-RELEVANT-INFORMATION-NO-DEADLINE", "required_status": "NO_EXPLICIT_NUMERICAL_DEADLINE_IN_ORDER_539"},
+    {"case": "do not import Order 547 incident clocks", "forbidden_values_with_unit_hour": [3, 24, 48]}
+  ]
+}
