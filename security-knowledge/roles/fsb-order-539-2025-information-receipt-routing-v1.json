@@ -1,0 +1,87 @@
+{
+  "matrix_id": "FSB-ORDER-539-2025-INFORMATION-RECEIPT-ROUTING-V1",
+  "status": "PRIMARY_VERIFIED",
+  "as_of": "2026-08-18",
+  "source": {
+    "source_id": "FSB-ORDER-539-2025",
+    "title": "Порядок получения субъектами критической информационной инфраструктуры Российской Федерации информации о средствах и способах проведения компьютерных атак и о методах их предупреждения и обнаружения",
+    "order_date": "2025-12-23",
+    "order_number": "539",
+    "justice_registration_number": "84782",
+    "justice_registration_date": "2025-12-25",
+    "publication_date": "2025-12-26",
+    "effective_date": "2026-01-30",
+    "official_document_url": "https://publication.pravo.gov.ru/document/0001202512260014",
+    "repository_artifact": "security-knowledge/evidence/primary-artifacts/2025/fsb-order-539-2025-0001202512260014.pdf",
+    "sha256": "d930504f21e10efc73f670fa7ffa1cb0594f402ec550767ec7ba99e7539a8710",
+    "pages": 4
+  },
+  "extraction": {
+    "method": "OCR_DISCOVERY_THEN_VISUAL_PRIMARY_PDF_VERIFICATION",
+    "ocr_is_evidence": false,
+    "page_and_clause_references_are_controlling": true
+  },
+  "timed_rules": [
+    {
+      "id": "FSB539-C2-NCCCI-REPLY-CONNECTED-30WD",
+      "clause": "2 sentence 1",
+      "pages": [4],
+      "actor": "NCCCI",
+      "action": "PROVIDE_RESPONSE_TO_INFORMATION_REQUEST",
+      "recipient": "KII_SUBJECT",
+      "condition": "The KII subject sent a request under clause 1.2 and is connected to the NCCCI technical infrastructure.",
+      "channel": "NCCCI_TECHNICAL_INFRASTRUCTURE",
+      "deadline": {"kind": "MAXIMUM", "value": 30, "unit": "WORKING_DAY", "trigger": "RECEIPT_OF_REQUEST_BY_NCCCI"},
+      "confidence": "PRIMARY_VERIFIED"
+    },
+    {
+      "id": "FSB539-C2-NCCCI-REPLY-NOT-CONNECTED-30WD",
+      "clause": "2 sentence 2",
+      "pages": [4],
+      "actor": "NCCCI",
+      "action": "PROVIDE_RESPONSE_TO_INFORMATION_REQUEST",
+      "recipient": "KII_SUBJECT",
+      "condition": "The KII subject sent a request under clause 1.2 and is not connected to the NCCCI technical infrastructure.",
+      "channel": "POSTAL_OR_EMAIL_TO_ADDRESS_SPECIFIED_IN_REQUEST",
+      "deadline": {"kind": "MAXIMUM", "value": 30, "unit": "WORKING_DAY", "trigger": "RECEIPT_OF_REQUEST_BY_NCCCI"},
+      "confidence": "PRIMARY_VERIFIED"
+    }
+  ],
+  "untimed_rules": [
+    {
+      "id": "FSB539-C1-KII-SUBJECT-OBTAIN-ATTACK-INFORMATION-NO-DEADLINE",
+      "clause": "1 and clauses 1.1-1.3",
+      "pages": [3],
+      "actor": "KII_SUBJECT",
+      "action": "OBTAIN_ATTACK_MEANS_METHODS_PREVENTION_AND_DETECTION_INFORMATION",
+      "statutory_methods": [
+        {"method": "ACCESS_OFFICIAL_SITE", "endpoint_as_printed": "http://cert.gov.ru"},
+        {"method": "SEND_REQUEST_TO_NCCCI", "primary_channel": "NCCCI_TECHNICAL_INFRASTRUCTURE", "fallback_condition": "NO_CONNECTION_TO_NCCCI_TECHNICAL_INFRASTRUCTURE", "fallback_channel": "POSTAL_OR_EMAIL_TO_NCCCI_ADDRESSES_ON_OFFICIAL_SITE"},
+        {"method": "RECEIVE_INFORMATION_FROM_NCCCI"}
+      ],
+      "deadline_status": "NO_EXPLICIT_NUMERICAL_DEADLINE_OR_FREQUENCY_IN_ORDER_539",
+      "confidence": "PRIMARY_VERIFIED"
+    },
+    {
+      "id": "FSB539-C3-NCCCI-SEND-CONTEXT-RELEVANT-INFORMATION-NO-DEADLINE",
+      "clause": "3",
+      "pages": [4],
+      "actor": "NCCCI",
+      "action": "SEND_ATTACK_MEANS_METHODS_PREVENTION_AND_DETECTION_INFORMATION",
+      "recipient": "KII_SUBJECTS",
+      "condition": "Information is selected according to the functioning characteristics of KII objects lawfully held by the relevant subjects.",
+      "deadline_status": "NO_EXPLICIT_NUMERICAL_DEADLINE_IN_ORDER_539",
+      "confidence": "PRIMARY_VERIFIED"
+    }
+  ],
+  "guards": [
+    "The 30-working-day period starts when NCCCI receives the request, not when the KII subject sends it.",
+    "Do not convert 30 working days into 30 calendar days or hours.",
+    "Postal or email delivery is the response fallback only when the requesting subject lacks connection to NCCCI technical infrastructure.",
+    "Order 539 does not set a periodicity for accessing cert.gov.ru or a deadline for a KII subject to send a request.",
+    "Clause 3 contains no numerical period for proactive NCCCI information delivery.",
+    "Do not import the 3-hour, 24-hour or 48-hour incident deadlines from FSB Order 547 into Order 539.",
+    "Order 539 governs receipt of information about attack means/methods and prevention/detection methods; it is not the incident-notification procedure.",
+    "The order does not define a working-day calendar; calendar calculation is an implementation concern that must not alter the stated unit."
+  ]
+}
