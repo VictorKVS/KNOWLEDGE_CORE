@@ -1,0 +1,29 @@
+name: PP RF 92 financial-market CII overlay
+
+on:
+  push:
+    paths:
+      - 'security-knowledge/classification/pp-rf-92-2026-financial-market-kii-overlay-v1.json'
+      - 'security-knowledge/classification/pp-rf-92-2026-financial-market-kii-overlay-regression-v1.json'
+      - 'security-knowledge/evidence/primary-artifact-pp-rf-92-2026.json'
+      - 'security-knowledge/evidence/primary-artifacts/2026/pp-rf-92-2026-0001202602070010.pdf'
+      - 'security-knowledge/validators/validate_pp_rf_92_financial_market_kii_overlay.py'
+      - '.github/workflows/pp-rf-92-financial-market-kii-overlay.yml'
+  pull_request:
+    paths:
+      - 'security-knowledge/classification/pp-rf-92-2026-financial-market-kii-overlay-v1.json'
+      - 'security-knowledge/classification/pp-rf-92-2026-financial-market-kii-overlay-regression-v1.json'
+      - 'security-knowledge/evidence/primary-artifact-pp-rf-92-2026.json'
+      - 'security-knowledge/evidence/primary-artifacts/2026/pp-rf-92-2026-0001202602070010.pdf'
+      - 'security-knowledge/validators/validate_pp_rf_92_financial_market_kii_overlay.py'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate PP RF 92 financial-market CII overlay and source bytes
+        run: python security-knowledge/validators/validate_pp_rf_92_financial_market_kii_overlay.py
