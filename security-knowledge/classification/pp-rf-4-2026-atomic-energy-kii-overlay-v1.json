@@ -1,0 +1,79 @@
+{
+  "record_id": "PP-RF-4-2026-ATOMIC-ENERGY-KII-OVERLAY-V1",
+  "status": "VERIFIED_PRIMARY_IMMUTABLE",
+  "as_of": "2026-08-18",
+  "title": "Sector-specific CII categorization overlay for atomic energy",
+  "act": {
+    "type": "Government Resolution",
+    "number": "4",
+    "act_date": "2026-01-16",
+    "official_publication_number": "0001202601160013",
+    "official_publication_date": "2026-01-16",
+    "effective_from": "2026-01-24",
+    "effective_date_confidence": "DERIVED_FROM_PRIMARY_PUBLICATION_AND_GENERAL_RULE",
+    "effective_date_note": "The act states no special commencement rule; 2026-01-24 is derived from first official publication on 2026-01-16 and the general seven-day rule."
+  },
+  "source": {
+    "official_document_url": "https://publication.pravo.gov.ru/document/0001202601160013",
+    "official_pdf_url": "http://publication.pravo.gov.ru/file/pdf?eoNumber=0001202601160013",
+    "preserved_artifact": "security-knowledge/evidence/primary-artifacts/2026/pp-rf-4-2026-0001202601160013.pdf",
+    "mime": "application/pdf",
+    "byte_length": 2895018,
+    "sha256": "65815147d515721d4fadaa251fb33f61c3259a1c4feed562afb50c0f1b087df4",
+    "pdf_pages": 12,
+    "encrypted": false,
+    "javascript": false,
+    "retrieved_at": "2026-08-18T22:32:37+03:00"
+  },
+  "scope_and_routing": [
+    {"id":"PP4-C1-SCOPE","clause":"1","rule":"Defines sector-specific establishment and calculation of PP 127 significance indicators for CII objects operating in atomic energy."},
+    {"id":"PP4-C2-SUBJECTS","clause":"2","rule":"Applies to listed Russian public bodies, institutions and legal entities lawfully owning or operating covered systems or providing their interaction in atomic energy."},
+    {"id":"PP4-C3-COMPOSITE-LAYER","clause":"3","rule":"Categorization uses Federal Law 187-FZ article 7, PP 127 and this overlay together."},
+    {"id":"PP4-C4-COMMISSION","clause":"4","rule":"The subject head creates a permanent categorization commission under PP 127; specified Rosatom-system representatives may be included by decision and agreement."},
+    {"id":"PP4-C5-EXCLUDED-INDICATORS","clause":"5","excluded_pp127_positions":["4","10","10^1","10^2","10^3","10^4","10^5","10^6","10^7","14"]},
+    {"id":"PP4-C6-INDICATOR-ROUTING","clause":"6","routes":[
+      {"positions":["1","2","3","11"],"subjects":"ALL_COVERED_SUBJECTS_EXCEPT_ROSATOM"},
+      {"positions":["5"],"subjects":"ROSATOM_RELEVANT_FEDERAL_EXECUTIVE_BODIES_AND_SUBORDINATE_LEGAL_ENTITIES_PARTICIPATING_IN_ATOMIC_ENERGY_PUBLIC_SERVICES"},
+      {"positions":["6","7","12"],"subjects":"ROSATOM"},
+      {"positions":["8","9"],"subjects":"ALL_COVERED_SUBJECTS"},
+      {"positions":["13"],"subjects":"COVERED_STATE_DEFENCE_ORDER_CUSTOMERS_HEAD_SUPPLIERS_AND_PARTICIPATING_EXECUTORS"},
+      {"positions":["13^1"],"subjects":"COVERED_STATE_DEFENCE_ORDER_COOPERATION_PARTICIPANTS_LISTED_IN_CLAUSE_6E"}
+    ]},
+    {"id":"PP4-C7-ADDITIONAL-INPUTS","clause":"7","required_input_groups":["TECHNICAL_AND_DESIGN_DOCUMENTATION","SERVICE_CONTRACTS","OPERATION_MAINTENANCE_AND_REPAIR_DOCUMENTS","POSSIBLE_ATTACK_AND_INCIDENT_TYPES_CAUSING_HARM","FORECAST_ATTACK_AND_INCIDENT_SCENARIOS_CAUSING_HARM","PRIOR_ATTACK_AND_INCIDENT_HARM_INFORMATION_FROM_RELEVANT_WORKER_SURVEYS"]},
+    {"id":"PP4-C8-C10-CONSEQUENCE-MAPPING","clauses":["8","9","10"],"steps":["COLLECT_PROCESS_AND_HARM_CONTEXT","ANALYZE_HARM_AND_SCENARIOS","ASSESS_HARM","COMPARE_WITH_PP127_VALUES"],"allowed_outcomes":["INDICATOR_NOT_APPLICABLE","INDICATOR_APPLICABLE_AND_MATCHES_A_CATEGORY_VALUE","INDICATOR_APPLICABLE_AND_MATCHES_NO_CATEGORY_VALUE"]}
+  ],
+  "calculation_rules": [
+    {"id":"PP4-C11-METHODS","clause":"11","methods":["EXPERT","ANALOGY_OR_COMPARISON","ATTACK_MODELLING","QUANTITATIVE_ACCIDENT_RISK_CALCULATION"]},
+    {"id":"PP4-C12-POSITION-1","clause":"12","position":"1","methods":"ALL_AVAILABLE_CLAUSE_11_METHODS","sector_factors":["HAZARDOUS_PRODUCTION_OR_TECHNOLOGICAL_EQUIPMENT_OR_MATERIALS","HAZARDOUS_PROCESSING_PARAMETERS_OR_CONDITIONS","PEOPLE_POTENTIALLY_IN_AFFECTED_ZONE"]},
+    {"id":"PP4-C13-POSITION-2","clause":"13","position":"2","methods":["EXPERT","CALCULATION"],"sector_factors":["AFFECTED_MUNICIPAL_OR_REGIONAL_BOUNDARIES","AFFECTED_POPULATION","ELECTRIC_OR_HEAT_ENERGY_USERS","MUNICIPALITIES_CONNECTED_TO_SUPPORTED_ELECTRIC_OR_HEAT_NETWORKS"]},
+    {"id":"PP4-C14-POSITION-3","clause":"14","position":"3","methods":"ALL_AVAILABLE_CLAUSE_11_METHODS","sector_factors":["PASSENGER_AND_FREIGHT_TRANSPORT_TERRITORY","TRANSPORT_SERVICE_USERS","DANGEROUS_OR_HIGH_RISK_CARGO_HANDLING_TERRITORY"]},
+    {"id":"PP4-C15-POSITION-5","clause":"15","position":"5","methods":["MODELLING","ANALOGY_OR_COMPARISON"],"rule":"Use the minimum permissible time during which the public service may be unavailable as the consequence-elimination period."},
+    {"id":"PP4-C16-POSITION-6","clause":"16","position":"6","methods":["EXPERT"],"rule":"Assess probability of complete cessation or disruption of the competent federal executive body or Rosatom because the supported process cannot be performed."},
+    {"id":"PP4-C17-POSITION-7","clause":"17","position":"7","methods":["EXPERT"],"rule":"Assess applicable international-treaty level and effects on treaty performance, negotiations or signing."},
+    {"id":"PP4-C18-POSITION-8","clause":"18","position":"8","methods":["CALCULATION"],"formula":"(income_reduction / average_subject_income_previous_5_years) * 100","numeric_rules":[
+      {"kind":"LOOKBACK_PERIOD","value":5,"unit":"YEAR","scope":"AVERAGE_SUBJECT_INCOME_AND_FALLBACK_STATISTICS"},
+      {"kind":"FALLBACK_VALUE","value":10,"unit":"DAY","trigger":"NO_OPERATIONAL_TECHNICAL_CONTRACTUAL_OTHER_DOCUMENTS_AND_NO_STATISTICS_FOR_PREVIOUS_5_YEARS","scope":"TIME_TO_ELIMINATE_ATTACK_CONSEQUENCES_FOR_POSITION_8_CALCULATION"}
+    ]},
+    {"id":"PP4-C19-POSITION-9","clause":"19","position":"9","methods":["CALCULATION"],"formula":"(reduction_of_federal_budget_payments / forecast_average_annual_federal_budget_revenue) * 100","numeric_rules":[{"kind":"AVERAGING_PERIOD","value":3,"unit":"YEAR","scope":"PLANNED_FEDERAL_BUDGET_REVENUE"}]},
+    {"id":"PP4-C20-POSITION-11","clause":"20","position":"11","methods":"ALL_AVAILABLE_CLAUSE_11_METHODS","numeric_rules":[{"kind":"MUNICIPALITY_POPULATION_FLOOR","value":2000,"unit":"PERSON","scope":"MUNICIPALITIES_POTENTIALLY_EXPOSED_TO_HARM_BEYOND_SUBJECT_TERRITORY"}],"rule":"Also assess exposed population and physical accident effects using suitable accident models."},
+    {"id":"PP4-C21-POSITION-12","clause":"21","position":"12","methods":["EXPERT","MODELLING"],"rule":"Assess probability of complete cessation of Rosatom or deviation from timing of its performed, controlled or supported processes or functions."},
+    {"id":"PP4-C22-POSITION-13","clause":"22","position":"13","methods":"ALL_AVAILABLE_CLAUSE_11_METHODS","rule":"Use project, operational, technical-assignment, threat-model and other requirements documents to determine production-volume reduction or unit-production-time increase."},
+    {"id":"PP4-C23-POSITION-13-1","clause":"23","position":"13^1","methods":["EXPERT","ANALOGY_OR_COMPARISON","MODELLING"],"rule":"Calculate using the CII subject's status in the head defence-order supplier cooperation chain."}
+  ],
+  "guardrails": [
+    "Do not route the overlay outside atomic-energy subject and object facts.",
+    "Do not omit PP 127 or Federal Law 187-FZ article 7 from the composite legal layer.",
+    "Do not apply PP 127 positions excluded by clause 5.",
+    "Do not treat every remaining PP 127 indicator as applicable to every atomic-energy subject; clause 6 routes by subject role.",
+    "The ten-day fallback in clause 18 is a calculation input for position 8, not an incident notification or remediation deadline.",
+    "The five-year and three-year values are averaging or fallback evidence periods, not retention duties.",
+    "Commission inclusion of Rosatom-system representatives under clause 4 is permitted, not universally mandatory.",
+    "No category is proven until complete facts and PP 127 threshold comparison are documented."
+  ],
+  "extraction": {
+    "method": "OCR_DISCOVERY_THEN_VISUAL_PRIMARY_PDF_AND_AUTHORITATIVE_TEXT_CROSSCHECK",
+    "ocr_is_evidence": false,
+    "primary_pages_visually_checked": [1,4,7,10],
+    "authoritative_text_crosschecks": ["https://rulaws.ru/goverment/Postanovlenie-Pravitelstva-RF-ot-16.01.2026-N-4/","https://base.garant.ru/413452752/"]
+  }
+}
