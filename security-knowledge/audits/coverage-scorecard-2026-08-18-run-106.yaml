@@ -1,0 +1,75 @@
+run_id: SECURITY-KB-RUN-106
+run_date: "2026-08-18"
+strict_readiness:
+  overall_percent: 10
+  domains:
+    russian_npa: 10
+    gost_iso: 10
+    classification_categorization: 10
+    fstec_bdu: 10
+    risk_methods: 10
+    legal_consequences_koap_uk_gk_tk: 10
+    szi_skzi_licenses_lifecycle: 10
+    roles_deadlines_responsibility: 10
+    evidence_audit: 10
+    practical_cases: 10
+inventory:
+  verified: 293
+  pending: 31
+  count_change: 0
+  count_guard: "Clause-level rules enrich an existing verified inventory source; no synthetic inventory rows were added."
+red_team:
+  critical_gaps: 0
+  high_gaps: 1
+  status: FAIL
+  high_gap_ids:
+    - HIGH-IMMUTABLE-PROVENANCE
+added_this_run:
+  - "Extracted and visually verified the Order 539 information-receipt and response-routing rules against the preserved official PDF."
+  - "Encoded two channel branches for the NCCCI response: technical infrastructure when connected and post/email fallback when not connected."
+  - "Preserved the single numerical limit exactly as up to 30 working days from NCCCI receipt of the request."
+  - "Recorded explicit no-deadline guards for the KII subject acquisition methods and proactive context-specific NCCCI delivery."
+  - "Added regressions blocking conversion to calendar days, wrong trigger selection, unconditional fallback routing and import of Order 547 incident clocks."
+  - "Added a standard-library validator and dedicated GitHub Actions gate; specialized and repository-wide runs succeeded."
+source_quality:
+  source_id: FSB-ORDER-539-2025
+  primary_pdf_sha256: "d930504f21e10efc73f670fa7ffa1cb0594f402ec550767ec7ba99e7539a8710"
+  timed_rules_primary_verified: 2
+  untimed_rules_primary_verified: 2
+  extraction_method: OCR_DISCOVERY_THEN_VISUAL_PRIMARY_PDF_VERIFICATION
+  ocr_treated_as_evidence: false
+  orders_in_package_with_regression_protected_clause_matrix: 2
+  remaining_orders_in_package_without_equivalent_clause_matrix: 4
+readiness_change: 0
+reason_no_increase: >-
+  Orders 539 and 547 now have regression-protected clause matrices, but equivalent
+  extraction is still missing for Orders 546, 548, 553 and 554, four sector overlays
+  remain unpreserved, and the family-wide immutable-provenance gap remains open.
+commits:
+  routing_matrix: "c25ff06dfc59714417ee2a96549030e3e2b2ac40"
+  regression_fixture: "c0301707226bceab97c282cd83aac20bad414ba2"
+  validator: "01ba166fbb662499dacec2ebabbec8d96b3aaaf8"
+  workflow: "267ef997c61ce6cfffbb3afb578ff14234c18c08"
+verification:
+  local_validator: PASS
+  specialized_workflow:
+    run_id: 32152245778
+    url: "https://github.com/VictorKVS/KNOWLEDGE_CORE/actions/runs/32152245778"
+    conclusion: success
+  repository_wide_runs:
+    knowledge_quality_gate:
+      run_id: 32152245668
+      conclusion: success
+    knowledge_graph_index:
+      run_id: 32152245847
+      conclusion: success
+    knowledge_core_ci:
+      run_id: 32152246732
+      conclusion: success
+next_bottleneck:
+  primary: >-
+    Extract and regression-protect actor/action/deadline/routing rules from FSB
+    Orders 546, 548, 553 and 554, preserving every explicit no-deadline branch.
+  secondary: >-
+    Acquire and preserve the four remaining 2026 sector overlays, then rerun the
+    family-wide immutable-provenance red-team gate.
