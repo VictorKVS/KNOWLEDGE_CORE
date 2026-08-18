@@ -1,0 +1,78 @@
+run_id: SECURITY-KB-RUN-109
+run_date: "2026-08-18"
+strict_readiness:
+  overall_percent: 10
+  domains:
+    russian_npa: 10
+    gost_iso: 10
+    classification_categorization: 10
+    fstec_bdu: 10
+    risk_methods: 10
+    legal_consequences_koap_uk_gk_tk: 10
+    szi_skzi_licenses_lifecycle: 10
+    roles_deadlines_responsibility: 10
+    evidence_audit: 10
+    practical_cases: 10
+inventory:
+  verified: 293
+  pending: 31
+  count_change: 0
+  count_guard: "Clause-level rules enrich an existing verified inventory source; no synthetic inventory rows were added."
+red_team:
+  critical_gaps: 0
+  high_gaps: 1
+  status: FAIL
+  high_gap_ids:
+    - HIGH-IMMUTABLE-PROVENANCE
+added_this_run:
+  - "Extracted and visually verified the Order 553 installation, operation, acceptance, maintenance, replacement and dismantling lifecycle for GosSOPKA means and PPKA."
+  - "Encoded fourteen timed rules with exact calendar-day/calendar-month units and triggers, including parallel Bank of Russia routes."
+  - "Distinguished maximum periods from minimum lead times before planned work and reorganization/liquidation/cessation."
+  - "Encoded thirteen routing/lifecycle/technical-condition rules, including the FSB/subject responsibility split and round-the-clock operating modes."
+  - "Preserved the clause 15 alternative decision branches and the two distinct clause 16 constraints without inventing a post-additional-request clock."
+  - "Recorded Order 281 of 2019 as superseded and the 2026-01-10 effective date as derived, not explicit."
+  - "Added regression guards, a standard-library validator and a dedicated GitHub Actions gate; specialized and repository-wide runs succeeded."
+source_quality:
+  source_id: FSB-ORDER-553-2025
+  primary_pdf_sha256: "3d825579897e4f06021c8cee9e3ff49e323f2ae833cb7658145ec9ddc54eb7ba"
+  effective_date: "2026-01-10"
+  effective_date_confidence: DERIVED_FROM_PRIMARY_AND_GENERAL_RULE
+  timed_rules_primary_verified: 14
+  routing_lifecycle_rules_primary_verified: 13
+  extraction_method: OCR_DISCOVERY_THEN_VISUAL_PRIMARY_PDF_VERIFICATION
+  ocr_treated_as_evidence: false
+  orders_in_package_with_regression_protected_clause_matrix: 5
+  remaining_orders_in_package_without_equivalent_clause_matrix: 1
+readiness_change: 0
+reason_no_increase: >-
+  Orders 539, 546, 547, 548 and 553 now have regression-protected clause
+  matrices, but equivalent extraction is still missing for Order 554, four sector
+  overlays remain unpreserved, and the family-wide immutable-provenance gap remains open.
+commits:
+  lifecycle_matrix: "db266aad4f6f7e485452e37afffb435ec8dabf1d"
+  regression_fixture: "d9d7e290a7bf1f0271fb3a619de48aa293d82fdb"
+  validator: "d72dfc5598945adb854266d8ba318809bb81ff87"
+  workflow: "76c213c98b100e159528a22588c5891c83e58cc8"
+verification:
+  local_validator: PASS
+  specialized_workflow:
+    run_id: 32168981261
+    url: "https://github.com/VictorKVS/KNOWLEDGE_CORE/actions/runs/32168981261"
+    conclusion: success
+  repository_wide_runs:
+    knowledge_graph_index:
+      run_id: 32168981062
+      conclusion: success
+    knowledge_quality_gate:
+      run_id: 32168981114
+      conclusion: success
+    knowledge_core_ci:
+      run_id: 32168981088
+      conclusion: success
+next_bottleneck:
+  primary: >-
+    Extract and regression-protect actor/action/deadline/routing and technical
+    conditions from FSB Order 554 without fabricating quantitative limits.
+  secondary: >-
+    Acquire and preserve the four remaining 2026 sector overlays, then rerun the
+    family-wide immutable-provenance red-team gate.
