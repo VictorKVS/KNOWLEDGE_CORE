@@ -1,0 +1,24 @@
+name: FSB Order 553 Gossopka means lifecycle
+
+on:
+  push:
+    paths:
+      - 'security-knowledge/roles/fsb-order-553-2025-gossopka-means-lifecycle-*.json'
+      - 'security-knowledge/validators/validate_fsb_order_553_gossopka_means_lifecycle.py'
+      - '.github/workflows/fsb-order-553-gossopka-means-lifecycle.yml'
+  pull_request:
+    paths:
+      - 'security-knowledge/roles/fsb-order-553-2025-gossopka-means-lifecycle-*.json'
+      - 'security-knowledge/validators/validate_fsb_order_553_gossopka_means_lifecycle.py'
+      - '.github/workflows/fsb-order-553-gossopka-means-lifecycle.yml'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate Order 553 means lifecycle and deadlines
+        run: python security-knowledge/validators/validate_fsb_order_553_gossopka_means_lifecycle.py
