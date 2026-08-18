@@ -1,0 +1,79 @@
+run_id: SECURITY-KB-RUN-110
+run_date: "2026-08-18"
+strict_readiness:
+  overall_percent: 10
+  domains:
+    russian_npa: 10
+    gost_iso: 10
+    classification_categorization: 10
+    fstec_bdu: 10
+    risk_methods: 10
+    legal_consequences_koap_uk_gk_tk: 10
+    szi_skzi_licenses_lifecycle: 10
+    roles_deadlines_responsibility: 10
+    evidence_audit: 10
+    practical_cases: 10
+inventory:
+  verified: 293
+  pending: 31
+  count_change: 0
+  count_guard: "Clause-level controls enrich an existing verified inventory source; no synthetic inventory rows were added."
+red_team:
+  critical_gaps: 0
+  high_gaps: 1
+  status: FAIL
+  high_gap_ids:
+    - HIGH-IMMUTABLE-PROVENANCE
+added_this_run:
+  - "Extracted and visually verified Order 554 requirements for detection, prevention, consequence-elimination, telecom PPKA, other PPKA, exchange and cryptographic means."
+  - "Encoded four numerical requirements: two scoped six-month retention rules, a 24-hour maximum update-check interval and a seven-calendar-day PPKA traffic-copy minimum."
+  - "Encoded twenty-one capability/control groups covering supply-chain restrictions, remote-control and transfer boundaries, NCCCI exchange, certification and security functions."
+  - "Preserved user-configurable intervals in clauses 11, 31 and 32 without inventing numerical values."
+  - "Separated telecom PPKA from other PPKA retention and certification scopes and prevented the 24-hour update check from becoming an incident deadline."
+  - "Recorded Order 196 of 2019 as superseded and the 2026-01-10 effective date as derived, not explicit."
+  - "Added regression guards, a standard-library validator and a dedicated GitHub Actions gate; specialized and repository-wide runs succeeded."
+source_quality:
+  source_id: FSB-ORDER-554-2025
+  primary_pdf_sha256: "818c6d2774bdccda0167f81c8c94fae2d4a2939a5a2c1290322c7783fba9e3f9"
+  effective_date: "2026-01-10"
+  effective_date_confidence: DERIVED_FROM_PRIMARY_AND_GENERAL_RULE
+  numeric_requirements_primary_verified: 4
+  capability_control_groups_primary_verified: 21
+  extraction_method: OCR_DISCOVERY_THEN_VISUAL_PRIMARY_PDF_VERIFICATION
+  ocr_treated_as_evidence: false
+  orders_in_package_with_regression_protected_clause_matrix: 6
+  remaining_orders_in_package_without_equivalent_clause_matrix: 0
+  primary_fsb_package_clause_matrix_status: COMPLETE
+readiness_change: 0
+reason_no_increase: >-
+  The six-order primary FSB GosSOPKA package now has regression-protected
+  clause matrices, but four sector overlays remain unpreserved and the
+  family-wide immutable-provenance high gap has not yet passed red-team review.
+commits:
+  technical_requirements_matrix: "04250eab7b65693e26c22a943ca868b277edc69e"
+  regression_fixture: "fb58f8840c18ab2269b0b5be799edb17093b3262"
+  validator: "d5fe5c47e75f9e891a7fdf2504d3bdca4cadd9a2"
+  workflow: "d8764e079d1c065529952799df987ee6d2cde849"
+verification:
+  local_validator: PASS
+  specialized_workflow:
+    run_id: 32174980480
+    url: "https://github.com/VictorKVS/KNOWLEDGE_CORE/actions/runs/32174980480"
+    conclusion: success
+  repository_wide_runs:
+    knowledge_graph_index:
+      run_id: 32174980511
+      conclusion: success
+    knowledge_quality_gate:
+      run_id: 32174980444
+      conclusion: success
+    knowledge_core_ci:
+      run_id: 32174980380
+      conclusion: success
+next_bottleneck:
+  primary: >-
+    Acquire, preserve and clause-map the four remaining 2026 sector overlays,
+    then run the family-wide immutable-provenance red-team gate.
+  secondary: >-
+    After the FSB family gate passes, resume the master inventory in strict
+    priority order without promoting unrelated domains.
