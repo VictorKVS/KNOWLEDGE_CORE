@@ -1,0 +1,70 @@
+run_id: SECURITY-KB-RUN-104
+run_date: "2026-08-18"
+strict_readiness:
+  overall_percent: 10
+  domains:
+    russian_npa: 10
+    gost_iso: 10
+    classification_categorization: 10
+    fstec_bdu: 10
+    risk_methods: 10
+    legal_consequences_koap_uk_gk_tk: 10
+    szi_skzi_licenses_lifecycle: 10
+    roles_deadlines_responsibility: 10
+    evidence_audit: 10
+    practical_cases: 10
+inventory:
+  verified: 293
+  pending: 31
+  count_change: 0
+  count_guard: "Six sources were promoted inside existing family-level inventory scope; no synthetic inventory rows were added."
+red_team:
+  critical_gaps: 0
+  high_gaps: 1
+  status: FAIL
+  high_gap_ids:
+    - HIGH-IMMUTABLE-PROVENANCE
+added_this_run:
+  - "Preserved exact official PDFs for FSB Orders 539/546/547/548/553/554 of 2025."
+  - "Matched API and repository byte length/page count for all six artifacts: 61 pages and 3210205 bytes total."
+  - "Recorded canonical eoNumbers, document/authority GUIDs, Justice Ministry registrations, SHA-256 and Git blob SHA values."
+  - "Separated explicit effective dates (2026-01-30 for 539/546/547/548) from derived dates under Decree 763 clause 12 (2026-01-10 for 553/554)."
+  - "Recorded replacement lifecycle: 368/2018, 282/2019 plus 348/2022, 281/2019 and 196/2019."
+  - "Added a six-artifact provenance validator and CI gate; all specialized and repository-wide runs succeeded."
+source_quality:
+  exact_primary_artifacts_added: 6
+  promoted_source_ids:
+    - FSB-ORDER-539-2025
+    - FSB-ORDER-546-2025
+    - FSB-ORDER-547-2025
+    - FSB-ORDER-548-2025
+    - FSB-ORDER-553-2025
+    - FSB-ORDER-554-2025
+  family_wide_primary_immutable: false
+readiness_change: 0
+reason_no_increase: >-
+  The exact FSB package is now immutable, but clause-level deadlines, roles,
+  negative routing cases and four remaining sector overlays are not yet fully
+  extracted and red-team validated; HIGH-IMMUTABLE-PROVENANCE remains open.
+commits:
+  preserved_pdfs: "264020b6273ebb8a318059b803793ce1db077209"
+  provenance_manifest: "9b27f60455d4cad5aafc5c9d5478ba7eab43dfe2"
+  lifecycle_map: "9a9428b29a509a7ef53e73a18ac4d1fd0b7fc8f7"
+  provenance_validator: "369a55d7a6c78f4d4ba0e44e5e10c4c0f808b8f3"
+  workflow: "bba48e69f387a590c2a5dda922d63bcc65fe0b42"
+verification:
+  local_validator: PASS
+  workflow_run_id: 32140863306
+  workflow_url: "https://github.com/VictorKVS/KNOWLEDGE_CORE/actions/runs/32140863306"
+  workflow_conclusion: success
+  repository_wide_runs:
+    knowledge_quality_gate: success
+    knowledge_graph_index: success
+    knowledge_core_ci: success
+next_bottleneck:
+  primary: >-
+    Extract clause-level actor/action/deadline/evidence rules and replacement-safe
+    routing from the six preserved FSB PDFs, including explicit negative cases.
+  secondary: >-
+    Acquire and preserve the four remaining 2026 sector overlays and then rerun the
+    family-wide immutable-provenance red-team gate.
