@@ -1,0 +1,24 @@
+name: FSB Order 548 continuous interaction
+
+on:
+  push:
+    paths:
+      - 'security-knowledge/roles/fsb-order-548-2025-continuous-interaction-*.json'
+      - 'security-knowledge/validators/validate_fsb_order_548_continuous_interaction.py'
+      - '.github/workflows/fsb-order-548-continuous-interaction.yml'
+  pull_request:
+    paths:
+      - 'security-knowledge/roles/fsb-order-548-2025-continuous-interaction-*.json'
+      - 'security-knowledge/validators/validate_fsb_order_548_continuous_interaction.py'
+      - '.github/workflows/fsb-order-548-continuous-interaction.yml'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate Order 548 continuous-interaction routes and deadlines
+        run: python security-knowledge/validators/validate_fsb_order_548_continuous_interaction.py
