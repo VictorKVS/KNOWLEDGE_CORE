@@ -1,0 +1,75 @@
+run_id: SECURITY-KB-RUN-105
+run_date: "2026-08-18"
+strict_readiness:
+  overall_percent: 10
+  domains:
+    russian_npa: 10
+    gost_iso: 10
+    classification_categorization: 10
+    fstec_bdu: 10
+    risk_methods: 10
+    legal_consequences_koap_uk_gk_tk: 10
+    szi_skzi_licenses_lifecycle: 10
+    roles_deadlines_responsibility: 10
+    evidence_audit: 10
+    practical_cases: 10
+inventory:
+  verified: 293
+  pending: 31
+  count_change: 0
+  count_guard: "Clause-level rules enrich an existing verified inventory source; no synthetic inventory rows were added."
+red_team:
+  critical_gaps: 0
+  high_gaps: 1
+  status: FAIL
+  high_gap_ids:
+    - HIGH-IMMUTABLE-PROVENANCE
+added_this_run:
+  - "Extracted and visually verified 16 timed actor/action/recipient rules from FSB Order 547/2025 against the preserved official PDF."
+  - "Separated initial 3-hour and 24-hour notification routes from 48-hour post-response result reporting."
+  - "Encoded additional Bank of Russia routing for financial-sector KII subjects without replacing the parallel NCCCI route."
+  - "Encoded plan lifecycle periods: 90 calendar days from register inclusion, 7 calendar days from approval, and 30-calendar-day FSB Center/Bank of Russia review periods."
+  - "Recorded the annual training minimum and an explicit no-deadline guard for the clause 16 information-submission obligation."
+  - "Added positive and negative regression fixtures, a standard-library validator and a dedicated GitHub Actions gate."
+source_quality:
+  source_id: FSB-ORDER-547-2025
+  primary_pdf_sha256: "43c702947771d36afe5a28e0487fc75d315f713466d66aea71538eee8c49946d"
+  timed_rules_primary_verified: 16
+  untimed_obligations_primary_verified: 1
+  extraction_method: OCR_DISCOVERY_THEN_VISUAL_PRIMARY_PDF_VERIFICATION
+  ocr_treated_as_evidence: false
+  remaining_orders_in_package_without_equivalent_deadline_matrix: 5
+readiness_change: 0
+reason_no_increase: >-
+  Order 547 now has a regression-protected deadline matrix, but equivalent
+  clause-level extraction is still missing for Orders 539, 546, 548, 553 and 554,
+  four sector overlays remain unpreserved, and the family-wide immutable-provenance
+  red-team gap therefore remains open.
+commits:
+  deadline_matrix: "dff7ae34de00bc07fd2cdaad180fce9d1fc56aec"
+  regression_fixture: "9bba2a430f4b7807c491b0979c31a2cc9ac401b8"
+  validator: "eef086eb410701a82c1a3ae513270c198c5cbca0"
+  workflow: "1907cf88e5fbf3d7165ae3eadddda110bc5be78b"
+verification:
+  local_validator: PASS
+  specialized_workflow:
+    run_id: 32146259554
+    url: "https://github.com/VictorKVS/KNOWLEDGE_CORE/actions/runs/32146259554"
+    conclusion: success
+  repository_wide_runs:
+    knowledge_core_ci:
+      run_id: 32146259545
+      conclusion: success
+    knowledge_graph_index:
+      run_id: 32146259696
+      conclusion: success
+    knowledge_quality_gate:
+      run_id: 32146259576
+      conclusion: success
+next_bottleneck:
+  primary: >-
+    Extract and regression-protect actor/action/deadline/routing rules from FSB
+    Orders 539, 546, 548, 553 and 554, preserving explicit no-deadline cases.
+  secondary: >-
+    Acquire and preserve the four remaining 2026 sector overlays, then rerun the
+    family-wide immutable-provenance red-team gate.
