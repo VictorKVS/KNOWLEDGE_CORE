@@ -1,0 +1,31 @@
+{
+  "fixture_id": "FSB-ORDER-553-2025-GOSSOPKA-MEANS-LIFECYCLE-REGRESSION-V1",
+  "matrix_id": "FSB-ORDER-553-2025-GOSSOPKA-MEANS-LIFECYCLE-MATRIX-V1",
+  "positive_cases": [
+    {"rule_id": "FSB553-C5-SUBJECT-INFORM-NCCCI-USED-GOSSOPKA-MEANS-15CD", "value": 15, "unit": "CALENDAR_DAY", "kind": "MAXIMUM", "trigger": "COMPLETION_OF_CLAUSE_4_MEASURES"},
+    {"rule_id": "FSB553-C5-FINANCIAL-SUBJECT-ALSO-INFORM-CBR-15CD", "value": 15, "unit": "CALENDAR_DAY", "kind": "MAXIMUM", "trigger": "COMPLETION_OF_CLAUSE_4_MEASURES"},
+    {"rule_id": "FSB553-C6-NCCCI-SEND-NONCOMPLIANCE-REMARKS-30CD", "value": 30, "unit": "CALENDAR_DAY", "kind": "MAXIMUM", "trigger": "RECEIPT_OF_CLAUSE_5_INFORMATION_BY_NCCCI"},
+    {"rule_id": "FSB553-C7-SUBJECT-REMEDIATE-NCCCI-REMARKS-30CD", "value": 30, "unit": "CALENDAR_DAY", "kind": "MAXIMUM", "trigger": "RECEIPT_OF_NCCCI_REMARKS"},
+    {"rule_id": "FSB553-C13-SUBJECT-APPOINT-INTERACTION-OFFICIALS-10CD", "value": 10, "unit": "CALENDAR_DAY", "kind": "MAXIMUM", "trigger": "RECEIPT_OF_CLAUSE_12_NOTICE"},
+    {"rule_id": "FSB553-C14-SUBJECT-SEND-REGULATION-AND-RESOURCE-DOCUMENTS-30CD", "value": 30, "unit": "CALENDAR_DAY", "kind": "MAXIMUM", "trigger": "RECEIPT_OF_CLAUSE_12_INFORMATION"},
+    {"rule_id": "FSB553-C15-FSB-DETERMINE-PPKA-LOCATIONS-OR-REQUEST-MORE-45CD", "value": 45, "unit": "CALENDAR_DAY", "kind": "MAXIMUM", "trigger": "RECEIPT_OF_CLAUSE_14_DOCUMENTS_AND_INFORMATION_BY_FSB"},
+    {"rule_id": "FSB553-C16-SUBJECT-NOTIFY-PREPARATION-TIME-30CD", "value": 30, "unit": "CALENDAR_DAY", "kind": "MAXIMUM", "trigger": "RECEIPT_OF_APPROVED_REGULATION"},
+    {"rule_id": "FSB553-C16-PREPARATION-TIME-CAP-6CM", "value": 6, "unit": "CALENDAR_MONTH", "kind": "MAXIMUM", "trigger": "SENDING_OF_CLAUSE_16_PREPARATION_NOTICE"},
+    {"rule_id": "FSB553-C21-SUBJECT-SEND-PPKA-ACCEPTANCE-ACT-COPY-FSB-7CD", "value": 7, "unit": "CALENDAR_DAY", "kind": "MAXIMUM", "trigger": "EXECUTION_OF_PPKA_ACCEPTANCE_ACT"},
+    {"rule_id": "FSB553-C21-FINANCIAL-SUBJECT-ALSO-SEND-ACT-CBR-7CD", "value": 7, "unit": "CALENDAR_DAY", "kind": "MAXIMUM", "trigger": "EXECUTION_OF_PPKA_ACCEPTANCE_ACT"},
+    {"rule_id": "FSB553-C26-SUBJECT-NOTIFY-PLANNED-WORKS-MIN-7CD", "value": 7, "unit": "CALENDAR_DAY", "kind": "MINIMUM_LEAD_TIME", "trigger": "START_OF_PLANNED_INFRASTRUCTURE_WORK"},
+    {"rule_id": "FSB553-C31-PPKA-DISMANTLING-BEFORE-REORGANIZATION-45CD", "value": 45, "unit": "CALENDAR_DAY", "kind": "MINIMUM_LEAD_TIME", "trigger": "COMPLETION_OF_REORGANIZATION_LIQUIDATION_OR_CESSATION"},
+    {"rule_id": "FSB553-C32-FSB-DECISION-PPKA-DISMANTLING-30CD", "value": 30, "unit": "CALENDAR_DAY", "kind": "MAXIMUM", "trigger": "NOTIFICATION_OF_FSB_DISMANTLING_DECISION"}
+  ],
+  "negative_cases": [
+    {"case": "no business-day conversion", "forbidden_units": ["BUSINESS_DAY"]},
+    {"case": "financial routes remain additional", "required_parallel_recipients": ["NCCCI", "BANK_OF_RUSSIA"]},
+    {"case": "clause 15 request does not create a synthetic second clock", "rule_id": "FSB553-C15-FSB-DETERMINE-PPKA-LOCATIONS-OR-REQUEST-MORE-45CD", "required_branch": "REQUEST_ADDITIONAL_INFORMATION_FOR_LOCATION_DETERMINATION"},
+    {"case": "six months is preparation-time cap", "rule_id": "FSB553-C16-PREPARATION-TIME-CAP-6CM", "required_action": "SET_INFORMATION_RESOURCE_PREPARATION_TIME_NO_LATER_THAN_CAP"},
+    {"case": "planned-work notice is a lead time", "rule_id": "FSB553-C26-SUBJECT-NOTIFY-PLANNED-WORKS-MIN-7CD", "required_kind": "MINIMUM_LEAD_TIME"},
+    {"case": "reorganization dismantling is a lead time", "rule_id": "FSB553-C31-PPKA-DISMANTLING-BEFORE-REORGANIZATION-45CD", "required_kind": "MINIMUM_LEAD_TIME"},
+    {"case": "round-the-clock is not a reporting deadline", "rule_id": "FSB553-A1-C34-FSB-PPKA-MONITORING-ROUND-THE-CLOCK", "forbidden_numeric_deadline": true},
+    {"case": "effective date remains derived", "required_effective_date_confidence": "DERIVED_FROM_PRIMARY_AND_GENERAL_RULE"},
+    {"case": "Order 281 is superseded", "required_lifecycle_rule": "FSB553-ORDER-C2-SUPERSEDE-ORDER-281-2019"}
+  ]
+}
