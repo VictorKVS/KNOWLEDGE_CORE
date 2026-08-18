@@ -1,0 +1,24 @@
+name: FSB Order 546 information exchange
+
+on:
+  push:
+    paths:
+      - 'security-knowledge/roles/fsb-order-546-2025-information-exchange-*.json'
+      - 'security-knowledge/validators/validate_fsb_order_546_information_exchange.py'
+      - '.github/workflows/fsb-order-546-information-exchange.yml'
+  pull_request:
+    paths:
+      - 'security-knowledge/roles/fsb-order-546-2025-information-exchange-*.json'
+      - 'security-knowledge/validators/validate_fsb_order_546_information_exchange.py'
+      - '.github/workflows/fsb-order-546-information-exchange.yml'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate Order 546 exchange routing and deadlines
+        run: python security-knowledge/validators/validate_fsb_order_546_information_exchange.py
