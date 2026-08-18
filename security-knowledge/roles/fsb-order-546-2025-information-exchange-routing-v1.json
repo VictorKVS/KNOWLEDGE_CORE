@@ -1,0 +1,207 @@
+{
+  "matrix_id": "FSB-ORDER-546-2025-INFORMATION-EXCHANGE-ROUTING-V1",
+  "status": "PRIMARY_VERIFIED",
+  "as_of": "2026-08-18",
+  "source": {
+    "source_id": "FSB-ORDER-546-2025",
+    "order_date": "2025-12-25",
+    "order_number": "546",
+    "justice_registration_number": "84870",
+    "justice_registration_date": "2025-12-30",
+    "publication_date": "2025-12-30",
+    "effective_date": "2026-01-30",
+    "official_document_url": "https://publication.pravo.gov.ru/document/0001202512300066",
+    "repository_artifact": "security-knowledge/evidence/primary-artifacts/2025/fsb-order-546-2025-0001202512300066.pdf",
+    "sha256": "30d1128e75ab07cab4b60d050d5ff14f41fc75e09c0dbb086929a5e92f0c0b81",
+    "pages": 8
+  },
+  "extraction": {
+    "method": "OCR_DISCOVERY_THEN_VISUAL_PRIMARY_PDF_VERIFICATION",
+    "ocr_is_evidence": false,
+    "page_and_clause_references_are_controlling": true
+  },
+  "numeric_rules": [
+    {
+      "id": "FSB546-C15-NCCCI-REVIEW-FOREIGN-EXCHANGE-REQUEST-24H",
+      "clause": "15 sentence 1",
+      "pages": [6],
+      "actor": "NCCCI",
+      "action": "REVIEW_ATTACK_OR_INCIDENT_INFORMATION_IN_FOREIGN_EXCHANGE_REQUEST",
+      "recipient": "INTERNAL_DECISION_GATE",
+      "condition": "NCCCI received a KII subject's reasoned request under clauses 12-13.",
+      "deadline": {"kind": "MAXIMUM", "value": 24, "unit": "HOUR", "trigger": "RECEIPT_OF_FOREIGN_EXCHANGE_REQUEST_BY_NCCCI"},
+      "confidence": "PRIMARY_VERIFIED"
+    },
+    {
+      "id": "FSB546-C16-NCCCI-NOTIFY-REFUSAL-24H",
+      "clause": "16",
+      "pages": [6],
+      "actor": "NCCCI",
+      "action": "NOTIFY_KII_SUBJECT_OF_REFUSAL_TO_TRANSMIT_INCIDENT_INFORMATION",
+      "recipient": "REQUESTING_KII_SUBJECT",
+      "condition": "NCCCI decided not to transmit computer-incident information to the foreign or international organization.",
+      "deadline": {"kind": "MAXIMUM", "value": 24, "unit": "HOUR", "trigger": "NCCCI_REFUSAL_DECISION"},
+      "routing_reference": "CLAUSE_14_CHANNEL_SELECTION",
+      "confidence": "PRIMARY_VERIFIED"
+    },
+    {
+      "id": "FSB546-C18-NCCCI-FORWARD-FOREIGN-RESPONSE-48H",
+      "clause": "18",
+      "pages": [7],
+      "actor": "NCCCI",
+      "action": "FORWARD_FOREIGN_OR_INTERNATIONAL_ORGANIZATION_RESPONSE",
+      "recipient": "REQUESTING_KII_SUBJECT",
+      "condition": "NCCCI received a response from the foreign or international organization.",
+      "deadline": {"kind": "MAXIMUM", "value": 48, "unit": "HOUR", "trigger": "RECEIPT_OF_FOREIGN_RESPONSE_BY_NCCCI"},
+      "routing_reference": "CLAUSE_14_CHANNEL_SELECTION",
+      "confidence": "PRIMARY_VERIFIED"
+    },
+    {
+      "id": "FSB546-C20-KII-SUBJECT-FORWARD-UNSOLICITED-FOREIGN-INFO-24H",
+      "clause": "20 paragraph 1",
+      "pages": [7],
+      "actor": "KII_SUBJECT",
+      "action": "FORWARD_UNSOLICITED_FOREIGN_ATTACK_OR_INCIDENT_INFORMATION",
+      "recipient": "NCCCI",
+      "condition": "The subject received, on a foreign or international organization's initiative, information related to functioning of a KII object.",
+      "deadline": {"kind": "MAXIMUM", "value": 24, "unit": "HOUR", "trigger": "RECEIPT_OF_UNSOLICITED_FOREIGN_INFORMATION_BY_KII_SUBJECT"},
+      "routing_reference": "CLAUSES_9_AND_10",
+      "confidence": "PRIMARY_VERIFIED"
+    },
+    {
+      "id": "FSB546-C21-KII-SUBJECT-FORWARD-OTHER-SUBJECT-INFO-12H",
+      "clause": "21",
+      "pages": [8],
+      "actor": "KII_SUBJECT",
+      "action": "FORWARD_INFORMATION_RELATED_TO_ANOTHER_KII_SUBJECT_OBJECT",
+      "recipient": "NCCCI",
+      "condition": "The subject received attack or incident information related to a KII object of another KII subject.",
+      "deadline": {"kind": "MAXIMUM", "value": 12, "unit": "HOUR", "trigger": "RECEIPT_OF_OTHER_SUBJECT_OBJECT_INFORMATION_BY_KII_SUBJECT"},
+      "routing_reference": "CLAUSES_9_AND_10",
+      "confidence": "PRIMARY_VERIFIED"
+    }
+  ],
+  "qualitative_temporal_rules": [
+    {
+      "id": "FSB546-C3-EXCHANGE-OPERATIVE-SUFFICIENT-TIMING",
+      "clause": "3",
+      "pages": [4],
+      "actor": "KII_SUBJECTS",
+      "action": "EXCHANGE_ATTACK_AND_INCIDENT_INFORMATION",
+      "temporal_constraint": "SUFFICIENT_FOR_OPERATIVE_DETECTION_PREVENTION_CONSEQUENCE_ELIMINATION_AND_RESPONSE",
+      "numeric_deadline_status": "NO_EXPLICIT_NUMERICAL_DEADLINE_IN_ORDER_546",
+      "confidence": "PRIMARY_VERIFIED"
+    },
+    {
+      "id": "FSB546-C8-SIMULTANEOUS-PARALLEL-NCCCI-NOTIFICATION",
+      "clause": "8",
+      "pages": [5],
+      "actor": "KII_SUBJECT",
+      "action": "ALSO_SEND_EXCHANGED_ATTACK_OR_INCIDENT_INFORMATION",
+      "recipient": "NCCCI",
+      "temporal_constraint": "SIMULTANEOUS_WITH_EXCHANGE_TRANSMISSION",
+      "numeric_deadline_status": "RELATIVE_SIMULTANEITY_NO_NUMERICAL_DURATION",
+      "confidence": "PRIMARY_VERIFIED"
+    },
+    {
+      "id": "FSB546-C14-NCCCI-ACKNOWLEDGE-REQUEST-IMMEDIATELY",
+      "clause": "14",
+      "pages": [6],
+      "actor": "NCCCI",
+      "action": "ACKNOWLEDGE_RECEIPT_OF_FOREIGN_EXCHANGE_REQUEST",
+      "recipient": "REQUESTING_KII_SUBJECT",
+      "temporal_constraint": "IMMEDIATELY",
+      "numeric_deadline_status": "NO_NUMERICAL_EQUIVALENT_STATED_IN_ORDER_546",
+      "channel_if_connected": "NCCCI_TECHNICAL_INFRASTRUCTURE",
+      "channel_if_not_connected": "POSTAL_OR_EMAIL_TO_ADDRESS_IN_REQUEST",
+      "confidence": "PRIMARY_VERIFIED"
+    },
+    {
+      "id": "FSB546-C15-APPROVED-TRANSFER-IMMEDIATE-SUBJECT-INFORMED-SIMULTANEOUSLY",
+      "clause": "15 sentence 2",
+      "pages": [6],
+      "actor": "NCCCI",
+      "action": "TRANSMIT_APPROVED_INFORMATION_TO_FOREIGN_OR_INTERNATIONAL_ORGANIZATION_AND_INFORM_REQUESTING_SUBJECT",
+      "temporal_constraint": "TRANSMIT_IMMEDIATELY_AFTER_APPROVAL_AND_INFORM_REQUESTING_SUBJECT_SIMULTANEOUSLY",
+      "numeric_deadline_status": "NO_NUMERICAL_EQUIVALENT_STATED_IN_ORDER_546",
+      "confidence": "PRIMARY_VERIFIED"
+    }
+  ],
+  "routing_rules": [
+    {
+      "id": "FSB546-C2-DOMESTIC-EXCHANGE-DURING-RESPONSE",
+      "clause": "2",
+      "pages": [3, 4],
+      "actor": "KII_SUBJECT",
+      "action": "EXCHANGE_INFORMATION_WITH_SELECTED_KII_SUBJECTS",
+      "condition": "Response measures concern incidents connected with KII-object functioning.",
+      "purpose": "MINIMIZE_INCIDENT_CONSEQUENCES_AND_PREVENT_INCIDENTS_AT_OTHER_KII_OBJECTS",
+      "counterparty_selection": "DETERMINED_BY_KII_SUBJECT",
+      "confidence": "PRIMARY_VERIFIED"
+    },
+    {
+      "id": "FSB546-C4-C6-EXCHANGE-CHANNEL-SELECTION",
+      "clause": "4-6",
+      "pages": [4, 5],
+      "actor": "KII_SUBJECT",
+      "action": "SEND_MUTUAL_NOTIFICATIONS_AND_CLARIFICATION_REQUESTS",
+      "base_channel": "POSTAL_OR_EMAIL",
+      "channel_if_connected": "NCCCI_TECHNICAL_INFRASTRUCTURE",
+      "format": "NCCCI_DEFINED_GOSSOPKA_FORMATS_AND_TECHNICAL_PARAMETERS",
+      "confidence": "PRIMARY_VERIFIED"
+    },
+    {
+      "id": "FSB546-C7-STATE-SECRET-GATE",
+      "clause": "7",
+      "pages": [5],
+      "actor": "EXCHANGE_PARTICIPANT",
+      "action": "APPLY_STATE_SECRET_LEGISLATION_TO_EXCHANGE",
+      "condition": "Transferred information constitutes a state secret.",
+      "confidence": "PRIMARY_VERIFIED"
+    },
+    {
+      "id": "FSB546-C11-C13-FOREIGN-EXCHANGE-VIA-NCCCI",
+      "clause": "11-13",
+      "pages": [5, 6],
+      "actor": "KII_SUBJECT",
+      "action": "SUBMIT_REASONED_FOREIGN_EXCHANGE_REQUEST_WITH_TARGET_DETAILS_AND_INFORMATION_ATTACHMENT",
+      "recipient": "NCCCI",
+      "condition": "Foreign or international exchange is needed and no treaty authorizes direct exchange.",
+      "routing_reference": "CLAUSES_9_AND_10",
+      "required_content": ["NECESSITY_JUSTIFICATION", "FULL_ORGANIZATION_NAME", "LOCATION", "ADDRESS", "OTHER_TRANSFER_DETAILS", "INFORMATION_FORMING_SUBJECT_OF_EXCHANGE"],
+      "confidence": "PRIMARY_VERIFIED"
+    },
+    {
+      "id": "FSB546-C19-TREATY-DIRECT-EXCHANGE-PARALLEL-NCCCI",
+      "clause": "19",
+      "pages": [7],
+      "actor": "KII_SUBJECT",
+      "action": "ALSO_SEND_DIRECTLY_EXCHANGED_INFORMATION_AND_TREATY_DETAILS",
+      "recipient": "NCCCI",
+      "condition": "A Russian Federation international treaty with the foreign or international organization expressly provides for direct exchange.",
+      "routing_reference": "CLAUSES_9_AND_10",
+      "numeric_deadline_status": "NO_SEPARATE_NUMERICAL_DEADLINE_IN_CLAUSE_19",
+      "confidence": "PRIMARY_VERIFIED"
+    },
+    {
+      "id": "FSB546-C20-FURTHER-FOREIGN-EXCHANGE-ROUTE",
+      "clause": "20 paragraph 2",
+      "pages": [7],
+      "actor": "KII_SUBJECT_AND_NCCCI",
+      "action": "CONTINUE_EXCHANGE_AFTER_UNSOLICITED_FOREIGN_INFORMATION",
+      "route": "CLAUSES_12_THROUGH_18",
+      "confidence": "PRIMARY_VERIFIED"
+    }
+  ],
+  "guards": [
+    "Do not assign a numerical duration to 'immediately', 'simultaneously' or the operative-sufficiency standard in clause 3.",
+    "The clause 15 24-hour rule is a review deadline, not automatic approval or a 24-hour transmission allowance after approval.",
+    "The clause 16 24-hour refusal-notice period starts at the refusal decision, not receipt of the request.",
+    "The clause 18 48-hour period starts when NCCCI receives the foreign response, not when the original request was submitted.",
+    "Direct subject-to-foreign exchange requires an international treaty that expressly provides for it; otherwise exchange is through NCCCI.",
+    "Even during exchange, information is also sent to NCCCI; the NCCCI route is not replaced by peer or foreign transmission.",
+    "The 12-hour clause 21 rule concerns information about a KII object of another subject and must not be widened to every received item.",
+    "The 24-hour clause 20 rule concerns information initiated by a foreign or international organization.",
+    "State-secret information remains subject to Russian state-secret legislation; Order 546 is not a declassification basis."
+  ]
+}
