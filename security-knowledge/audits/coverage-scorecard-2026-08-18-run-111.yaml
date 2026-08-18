@@ -1,0 +1,77 @@
+run_id: SECURITY-KB-RUN-111
+run_date: "2026-08-18"
+strict_readiness:
+  overall_percent: 10
+  domains:
+    russian_npa: 10
+    gost_iso: 10
+    classification_categorization: 10
+    fstec_bdu: 10
+    risk_methods: 10
+    legal_consequences_koap_uk_gk_tk: 10
+    szi_skzi_licenses_lifecycle: 10
+    roles_deadlines_responsibility: 10
+    evidence_audit: 10
+    practical_cases: 10
+inventory:
+  verified: 293
+  pending: 31
+  count_change: 0
+  count_guard: "Clause-level and immutable-source enrichment of an existing verified source; no synthetic inventory row added."
+red_team:
+  critical_gaps: 0
+  high_gaps: 1
+  status: FAIL
+  high_gap_ids: [HIGH-IMMUTABLE-PROVENANCE]
+added_this_run:
+  - "Acquired and preserved the exact official PDF for Government Resolution 4/2026 (atomic-energy CII categorization overlay)."
+  - "Recorded official eoNumber, 2895018 bytes, 12 PDF pages and SHA-256 65815147d515721d4fadaa251fb33f61c3259a1c4feed562afb50c0f1b087df4."
+  - "Encoded eight scope/routing groups and thirteen indicator-calculation groups from clauses 1-23."
+  - "Separated clause 5 exclusions from clause 6 subject-role routing and preserved the six additional evidence-input groups in clause 7."
+  - "Guarded the ten-day clause 18 fallback from being misrepresented as an incident deadline and the five-/three-year calculation periods from being treated as retention duties."
+  - "Added an immutable-byte validator, regression fixture and dedicated GitHub Actions gate."
+source_quality:
+  source_id: PP_RF_4_2026
+  exact_primary_artifacts_added: 1
+  primary_pdf_sha256: "65815147d515721d4fadaa251fb33f61c3259a1c4feed562afb50c0f1b087df4"
+  effective_date: "2026-01-24"
+  effective_date_confidence: DERIVED_FROM_PRIMARY_PUBLICATION_AND_GENERAL_RULE
+  overlay_scope_routing_groups: 8
+  overlay_calculation_groups: 13
+  fixed_five_overlay_slice_primary_immutable: "2/5"
+  remaining_fixed_slice_overlays_without_primary_immutable_clause_map: 3
+readiness_change: 0
+reason_no_increase: >-
+  One of the four remaining fixed-slice overlays is now immutable and clause-mapped,
+  but PP RF 92/2026, 246/2026 and 356/2026 remain open and the family-wide
+  immutable-provenance High gap has not passed red-team review.
+verification:
+  local_validator: PASS
+  specialized_workflow:
+    run_id: 32180815649
+    url: "https://github.com/VictorKVS/KNOWLEDGE_CORE/actions/runs/32180815649"
+    conclusion: success
+  repository_wide_runs:
+    knowledge_quality_gate:
+      run_id: 32180815645
+      conclusion: success
+    knowledge_graph_index:
+      run_id: 32180815660
+      conclusion: success
+    knowledge_core_ci:
+      run_id: 32180815663
+      conclusion: success
+commits:
+  preserved_pdf: "3620bdcc842d2b24fa669a229569a250c3d98b0b"
+  clause_matrix: "cc1665bd1bca7c098cb7dfa141b6e0cc8d6b71fa"
+  regression_fixture: "2117bf825b448389ee2ea90111dbe304ad980ec5"
+  provenance_manifest: "81692958d2727140f698cece2fce5cad6fa652b7"
+  validator: "a8d280380e3628a25a276e9bf1c2205c70cbbe56"
+  workflow: "11277cc41e94ace20739068da887f0b901173bcc"
+next_bottleneck:
+  primary: >-
+    Acquire, preserve and clause-map PP RF 92/2026 for banking and other financial-market CII,
+    then continue with PP RF 246/2026 and 356/2026.
+  secondary: >-
+    After the fixed five-overlay slice is immutable, reconcile PP RF 402/2026 and 796/2026
+    against the family scope and run the family-wide immutable-provenance red-team gate.
