@@ -1,0 +1,68 @@
+run_id: SECURITY-KB-RUN-103
+run_date: "2026-08-18"
+strict_readiness:
+  overall_percent: 10
+  domains:
+    russian_npa: 10
+    gost_iso: 10
+    classification_categorization: 10
+    fstec_bdu: 10
+    risk_methods: 10
+    legal_consequences_koap_uk_gk_tk: 10
+    szi_skzi_licenses_lifecycle: 10
+    roles_deadlines_responsibility: 10
+    evidence_audit: 10
+    practical_cases: 10
+inventory:
+  verified: 293
+  pending: 31
+  count_change: 0
+  count_guard: "The master inventory is family-level; two source artifacts were promoted without inventing two new inventory rows."
+red_team:
+  critical_gaps: 0
+  high_gaps: 1
+  status: FAIL
+  high_gap_ids:
+    - HIGH-IMMUTABLE-PROVENANCE
+added_this_run:
+  - "Acquired and preserved exact official PDFs for FSTEC Orders 254/2025 and 247/2025."
+  - "Matched official API and observed bytes/pages: Order 254 = 190225 bytes/4 pages; Order 247 = 166352 bytes/5 pages."
+  - "Recorded canonical eoNumbers, Justice Ministry registration data, authority/document GUIDs, SHA-256 and GitHub blob SHA for both artifacts."
+  - "Visually inspected every primary page and confirmed that both amendments entered into force on 2025-09-01."
+  - "Added an exact amendment overlay for the significant-KII register number structure, monthly information frequency, and new categorization-form fields."
+  - "Added a standard-library provenance validator for identity, repository bytes, SHA-256, PDF magic, page count, encryption and JavaScript markers."
+  - "GitHub Actions provenance gate and all repository-wide gates completed successfully."
+source_quality:
+  exact_primary_artifacts_added: 2
+  promoted_source_ids:
+    - FSTEC-ORDER-254-2025
+    - FSTEC-ORDER-247-2025
+  family_wide_primary_immutable: false
+readiness_change: 0
+reason_no_increase: >-
+  Two priority FSTEC sources are now primary immutable, but family-level coverage
+  remains incomplete and HIGH-IMMUTABLE-PROVENANCE stays open for the FSB package,
+  remaining sector overlays and their consolidated compatibility checks.
+commits:
+  preserved_pdfs: "9b022533ed33be297bb7ecd96805f8b83f395d24"
+  provenance_manifest: "8653363bfa4bf775c4791b78bfda1a352e6a68e7"
+  amendment_overlay: "20dced07f129d4c757eb4aae676e8d1da9c9997f"
+  provenance_validator: "826e94eeb7397a045196b3df6bb297a430c04a25"
+  workflow: "4b24ee614307c88a8a8563f8c8c3de8cf7b8c054"
+verification:
+  local_validator: PASS
+  workflow_run_id: 32135457928
+  workflow_url: "https://github.com/VictorKVS/KNOWLEDGE_CORE/actions/runs/32135457928"
+  workflow_conclusion: success
+  repository_wide_runs:
+    knowledge_quality_gate: success
+    knowledge_graph_index: success
+    knowledge_core_ci: success
+next_bottleneck:
+  primary: >-
+    Acquire and preserve the official FSB 539/546/547/548/553/554 package, then
+    build clause-level lifecycle/incident-routing overlays with exact effective dates.
+  secondary: >-
+    Add compatibility regression proving that the FSTEC 254/247 deltas are applied
+    to the current consolidated Orders 227/236 without treating amendment scans as
+    standalone procedures.
