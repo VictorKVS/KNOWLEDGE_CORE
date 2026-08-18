@@ -1,0 +1,30 @@
+name: FSTEC 254 and 247 primary artifacts
+
+on:
+  push:
+    paths:
+      - 'security-knowledge/evidence/primary-artifacts/2025/fstec-order-254-2025-0001202508210006.pdf'
+      - 'security-knowledge/evidence/primary-artifacts/2025/fstec-order-247-2025-0001202508210016.pdf'
+      - 'security-knowledge/evidence/primary-artifacts-fstec-254-247-2025.json'
+      - 'security-knowledge/classification/fstec-orders-254-247-2025-kii-amendment-overlay-v1.yaml'
+      - 'security-knowledge/validators/validate_fstec_254_247_primary_artifacts.py'
+      - '.github/workflows/fstec-254-247-primary-artifacts.yml'
+  pull_request:
+    paths:
+      - 'security-knowledge/evidence/primary-artifacts/2025/fstec-order-254-2025-0001202508210006.pdf'
+      - 'security-knowledge/evidence/primary-artifacts/2025/fstec-order-247-2025-0001202508210016.pdf'
+      - 'security-knowledge/evidence/primary-artifacts-fstec-254-247-2025.json'
+      - 'security-knowledge/classification/fstec-orders-254-247-2025-kii-amendment-overlay-v1.yaml'
+      - 'security-knowledge/validators/validate_fstec_254_247_primary_artifacts.py'
+      - '.github/workflows/fstec-254-247-primary-artifacts.yml'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate exact FSTEC primary artifacts
+        run: python security-knowledge/validators/validate_fstec_254_247_primary_artifacts.py
