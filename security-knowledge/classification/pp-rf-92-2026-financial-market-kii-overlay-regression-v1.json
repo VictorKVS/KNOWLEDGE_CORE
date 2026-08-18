@@ -1,0 +1,20 @@
+{
+  "fixture_id": "PP-RF-92-2026-FINANCIAL-MARKET-KII-OVERLAY-REGRESSION-V1",
+  "matrix_id": "PP-RF-92-2026-FINANCIAL-MARKET-KII-OVERLAY-V1",
+  "required_counts": {"governance_rules":12,"indicator_routing_rules":23,"calculation_rules":20},
+  "required_deadlines": [
+    {"rule_id":"PP92-C5-REVIEW-AND-POST-CONFIRMATION-REPORT","kind":"MAXIMUM_INTERVAL","value":10,"unit":"WORKING_DAY","starts_from":"RECEIPT_OF_FSTEC_CONFIRMATION_OF_REVIEW_RESULTS"},
+    {"rule_id":"PP92-C6-ANNUAL-INVENTORY-REPORT","kind":"ANNUAL_DUE_POINT","value":10,"unit":"WORKING_DAY_OF_CALENDAR_YEAR","starts_from":"START_OF_CALENDAR_YEAR"}
+  ],
+  "required_recipient_routes": ["MINISTRY_OF_FINANCE_RF","BANK_OF_RUSSIA"],
+  "required_formula": "((P_avg / (365 * 24)) * (C_max / D) + (0.2 * Y / D)) * 100",
+  "negative_cases": [
+    {"case":"working days are not calendar days","forbidden_unit":"CALENDAR_DAY"},
+    {"case":"annual due point is not January 10","forbidden_interpretation":"JANUARY_10"},
+    {"case":"clauses 50-52 are snapshots","forbidden_interpretation":"REPORTING_DEADLINE"},
+    {"case":"three-year and twelve-month periods are calculation windows","forbidden_interpretation":"RETENTION_DUTY"},
+    {"case":"clause 55 remains recommendatory","required_normative_strength":"RECOMMENDED"},
+    {"case":"objects outside type list are reviewed, not automatically excluded","required_rule_id":"PP92-C9-NEW-OR-CROSS-SECTOR-OBJECTS"},
+    {"case":"effective date remains derived","required_effective_date":"2026-02-15","required_confidence":"DERIVED_FROM_PRIMARY_PUBLICATION_AND_GENERAL_RULE"}
+  ]
+}
