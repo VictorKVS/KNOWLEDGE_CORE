@@ -1,0 +1,21 @@
+{
+  "fixture_id": "FSB-ORDER-554-2025-GOSSOPKA-MEANS-TECHNICAL-REGRESSION-V1",
+  "matrix_id": "FSB-ORDER-554-2025-GOSSOPKA-MEANS-TECHNICAL-REQUIREMENTS-V1",
+  "positive_cases": [
+    {"rule_id": "FSB554-C11-DETECTION-STORE-AGGREGATED-SECURITY-EVENTS-MIN-6CM", "field": "retention", "kind": "MINIMUM_RETENTION", "value": 6, "unit": "CALENDAR_MONTH", "trigger": "EVENT_AGGREGATION"},
+    {"rule_id": "FSB554-C17-PREVENTION-CHECK-SOURCE-UPDATES-EVERY-24H", "field": "frequency", "kind": "MAXIMUM_INTERVAL", "value": 24, "unit": "HOUR", "trigger": "ONGOING_OPERATION"},
+    {"rule_id": "FSB554-C23-TELECOM-PPKA-STORE-DETECTED-TRAFFIC-COPIES-MIN-6CM", "field": "retention", "kind": "MINIMUM_RETENTION", "value": 6, "unit": "CALENDAR_MONTH", "trigger": "DETECTION_AND_COPY_CAPTURE"},
+    {"rule_id": "FSB554-C25-PPKA-STORE-DETECTED-TRAFFIC-COPIES-MIN-7CD", "field": "retention", "kind": "MINIMUM_RETENTION", "value": 7, "unit": "CALENDAR_DAY", "trigger": "DETECTION_AND_COPY_CAPTURE"}
+  ],
+  "negative_cases": [
+    {"case": "24 hours is not incident notification", "rule_id": "FSB554-C17-PREVENTION-CHECK-SOURCE-UPDATES-EVERY-24H", "forbidden_action": "NOTIFY_INCIDENT"},
+    {"case": "six-month aggregate-event scope not widened", "rule_id": "FSB554-C11-DETECTION-STORE-AGGREGATED-SECURITY-EVENTS-MIN-6CM", "required_scope": "AGGREGATED_INFORMATION_SECURITY_EVENTS"},
+    {"case": "telecom PPKA traffic retention remains six months", "rule_id": "FSB554-C23-TELECOM-PPKA-STORE-DETECTED-TRAFFIC-COPIES-MIN-6CM", "required_component": "TELECOMMUNICATION_NETWORK_PPKA"},
+    {"case": "other PPKA traffic retention remains seven calendar days", "rule_id": "FSB554-C25-PPKA-STORE-DETECTED-TRAFFIC-COPIES-MIN-7CD", "required_component": "PPKA_EXCLUDING_TELECOMMUNICATION_NETWORK_PPKA"},
+    {"case": "no invented inactivity timeout", "rule_id": "FSB554-C31-ROLE_ACCESS-SESSION-ACCOUNT-AND-USER-AUDIT", "forbidden_numeric_deadline": true},
+    {"case": "no invented log retention", "rule_id": "FSB554-C32-SECURITY-AND-TECHNICAL-STATE-LOGGING", "forbidden_numeric_deadline": true},
+    {"case": "no invented software registry requirement", "rule_id": "FSB554-C4-RUSSIAN-LEGAL-ENTITY-SUPPLY-CHAIN", "forbidden_requirement_fragment": "SOFTWARE_REGISTRY"},
+    {"case": "effective date remains derived", "required_effective_date_confidence": "DERIVED_FROM_PRIMARY_AND_GENERAL_RULE"},
+    {"case": "Order 196 is superseded", "required_lifecycle_rule": "FSB554-ORDER-C2-SUPERSEDE-ORDER-196-2019"}
+  ]
+}
