@@ -1,0 +1,21 @@
+{
+  "fixture_id": "PP-RF-356-2026-ROCKET-SPACE-KII-OVERLAY-REGRESSION-V1",
+  "matrix_id": "PP-RF-356-2026-ROCKET-SPACE-KII-OVERLAY-V1",
+  "required_counts": {"governance_rules":7,"submission_rules":1,"indicator_routing_rules":5,"assessment_rules":4,"calculation_rules":5},
+  "required_indicator_positions": ["1","8","9","11","13","13^1"],
+  "required_formulas": {
+    "percentage":"U_pct = (U / R_annual_avg) * 100",
+    "damage":"U = ((R_annual_avg + R_tax_avg) / 365) * (t_remediation - t_maintenance)"
+  },
+  "required_lookbacks": {"PP356-C12-POSITION-8":5,"PP356-C13-POSITION-9":3},
+  "negative_cases": [
+    {"case":"interaction-channel merge is discretionary","rule_id":"PP356-C6-INTERACTION-MERGE","required_normative_strength":"DISCRETIONARY"},
+    {"case":"modernization split is discretionary","rule_id":"PP356-C7-MODERNIZATION-SPLIT","required_normative_strength":"DISCRETIONARY"},
+    {"case":"Roscosmos route has no numeric deadline","rule_id":"PP356-C8-ROSCOSMOS-SUBMISSION","required_timing_kind":"NO_EXPLICIT_NUMERIC_DEADLINE"},
+    {"case":"Roscosmos exclusions do not apply to positions 8 and 9","rule_id":"PP356-C9B-POSITIONS-8-9","required_subjects":"ALL_ROCKET_SPACE_CII_SUBJECTS"},
+    {"case":"five-year and three-year values are lookbacks","forbidden_interpretation":"RETENTION_DUTY"},
+    {"case":"negative delta is not silently clamped to zero","forbidden_interpretation":"ZERO_CLAMP"},
+    {"case":"positions 13 and 13^1 remain delegated","rule_id":"PP356-C15-POSITIONS-13-13-1","required_calculation_source":"SECTOR_SPECIFIC_CATEGORIZATION_FEATURES_FOR_DEFENCE_INDUSTRY_CII"},
+    {"case":"effective date remains derived","required_effective_date":"2026-04-09","required_confidence":"DERIVED_FROM_PRIMARY_PUBLICATION_AND_GENERAL_RULE"}
+  ]
+}

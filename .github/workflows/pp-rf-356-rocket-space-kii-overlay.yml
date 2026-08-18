@@ -1,0 +1,29 @@
+name: PP RF 356 rocket-space CII overlay
+
+on:
+  push:
+    paths:
+      - 'security-knowledge/classification/pp-rf-356-2026-rocket-space-kii-overlay-v1.json'
+      - 'security-knowledge/classification/pp-rf-356-2026-rocket-space-kii-overlay-regression-v1.json'
+      - 'security-knowledge/evidence/primary-artifact-pp-rf-356-2026.json'
+      - 'security-knowledge/evidence/primary-artifacts/2026/pp-rf-356-2026-0001202604010039.pdf'
+      - 'security-knowledge/validators/validate_pp_rf_356_rocket_space_kii_overlay.py'
+      - '.github/workflows/pp-rf-356-rocket-space-kii-overlay.yml'
+  pull_request:
+    paths:
+      - 'security-knowledge/classification/pp-rf-356-2026-rocket-space-kii-overlay-v1.json'
+      - 'security-knowledge/classification/pp-rf-356-2026-rocket-space-kii-overlay-regression-v1.json'
+      - 'security-knowledge/evidence/primary-artifact-pp-rf-356-2026.json'
+      - 'security-knowledge/evidence/primary-artifacts/2026/pp-rf-356-2026-0001202604010039.pdf'
+      - 'security-knowledge/validators/validate_pp_rf_356_rocket_space_kii_overlay.py'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate PP RF 356 rocket-space CII overlay and source bytes
+        run: python security-knowledge/validators/validate_pp_rf_356_rocket_space_kii_overlay.py

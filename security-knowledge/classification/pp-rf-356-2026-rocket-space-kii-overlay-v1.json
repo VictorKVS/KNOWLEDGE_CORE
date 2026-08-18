@@ -1,0 +1,79 @@
+{
+  "record_id": "PP-RF-356-2026-ROCKET-SPACE-KII-OVERLAY-V1",
+  "status": "VERIFIED_PRIMARY_IMMUTABLE",
+  "as_of": "2026-08-19",
+  "title": "Sector-specific CII categorization overlay for the rocket and space industry",
+  "act": {
+    "type": "Government Resolution",
+    "number": "356",
+    "act_date": "2026-03-31",
+    "official_publication_number": "0001202604010039",
+    "official_publication_date": "2026-04-01",
+    "effective_from": "2026-04-09",
+    "effective_date_confidence": "DERIVED_FROM_PRIMARY_PUBLICATION_AND_GENERAL_RULE",
+    "effective_date_note": "The act states no special commencement rule; 2026-04-09 is derived from first official publication on 2026-04-01 and the general seven-day rule."
+  },
+  "source": {
+    "official_document_url": "https://publication.pravo.gov.ru/document/0001202604010039",
+    "official_pdf_url": "http://publication.pravo.gov.ru/file/pdf?eoNumber=0001202604010039",
+    "preserved_artifact": "security-knowledge/evidence/primary-artifacts/2026/pp-rf-356-2026-0001202604010039.pdf",
+    "mime": "application/pdf",
+    "byte_length": 1686133,
+    "sha256": "830efe29784ac04b57b9d6f56ab2d3c9a7cf4c75c2ddc6f18ba9efbbd8d9df1b",
+    "pdf_pages": 8,
+    "encrypted": false,
+    "javascript": false,
+    "retrieved_at": "2026-08-19T01:28:40+03:00"
+  },
+  "governance_rules": [
+    {"id":"PP356-C1-SCOPE","clause":"1","rule":"Applies to information systems, telecommunication networks and industrial control systems functioning in the rocket and space industry and lawfully owned or operated by CII subjects."},
+    {"id":"PP356-C2-PURPOSE","clause":"2","rule":"Defines sector-specific establishment and calculation of significance indicators for assigning a CII category."},
+    {"id":"PP356-C3-COMPOSITE-LAYER","clause":"3","rule":"Categorization uses article 7 of Federal Law 187-FZ, PP 127 base rules and indicator thresholds, and this overlay together."},
+    {"id":"PP356-C4-PERMANENT-COMMISSION","clause":"4","rule":"The subject head creates a permanent categorization commission under PP 127 clauses 11-13; its work is governed by the subject's internal normative act."},
+    {"id":"PP356-C5-OBJECTS-AND-PROCESSES","clause":"5","rule":"Identify the CII objects to be categorized and the processes whose disruption or termination may disrupt or terminate operation of those objects."},
+    {"id":"PP356-C6-INTERACTION-MERGE","clause":"6","normative_strength":"DISCRETIONARY","rule":"When interaction channels between different systems are identified, the subject may decide to combine those systems into one CII object."},
+    {"id":"PP356-C7-MODERNIZATION-SPLIT","clause":"7","normative_strength":"DISCRETIONARY","rule":"When CII objects are modernized, the subject may decide to divide an object into several separate CII objects."}
+  ],
+  "submission_rules": [
+    {"id":"PP356-C8-ROSCOSMOS-SUBMISSION","clause":"8","actor":"CII_SUBJECT","recipient":"ROSCOSMOS_STATE_CORPORATION","trigger":"COMPLETION_OF_CATEGORY_ASSIGNMENT_TO_CII_OBJECTS","documents":["COPIES_OF_CATEGORIZATION_COMMISSION_MEETING_MINUTES","COPIES_OF_CII_OBJECT_CATEGORIZATION_ACTS"],"timing":{"kind":"NO_EXPLICIT_NUMERIC_DEADLINE","text":"after completion of category assignment"}}
+  ],
+  "indicator_routing_rules": [
+    {"id":"PP356-C9A-POSITION-1","clause":"9(a)","positions":["1"],"subjects":"ALL_ROCKET_SPACE_CII_SUBJECTS_EXCEPT_ROSCOSMOS"},
+    {"id":"PP356-C9B-POSITIONS-8-9","clause":"9(b)","positions":["8","9"],"subjects":"ALL_ROCKET_SPACE_CII_SUBJECTS"},
+    {"id":"PP356-C9C-POSITION-11","clause":"9(c)","positions":["11"],"subjects":"SUBJECTS_WITH_CII_OBJECTS_CLASSIFIED_AS_HAZARDOUS_PRODUCTION_FACILITIES_EXCEPT_ROSCOSMOS_OBJECTS"},
+    {"id":"PP356-C9D-POSITION-13","clause":"9(d)","positions":["13"],"subjects":"STATE_DEFENCE_ORDER_STATE_CUSTOMERS_HEAD_CONTRACTORS_CONTRACTORS_AND_CO_CONTRACTORS"},
+    {"id":"PP356-C9E-POSITION-13-1","clause":"9(e)","positions":["13^1"],"subjects":"STATE_DEFENCE_ORDER_HEAD_CONTRACTORS_DIRECT_CONTRACTORS_CO_CONTRACTORS_SUBCONTRACTORS_OR_SUPPLIERS_WITH_THE_STATED_CONTRACTUAL_RELATION"}
+  ],
+  "assessment_rules": [
+    {"id":"PP356-C10A-PROCESS-PARTICIPATION","clause":"10(a)","rule":"Determine the object's participation in its owner's processes and in processes performed for or belonging to another CII subject."},
+    {"id":"PP356-C10B-STATE-DEFENCE-ORDER","clause":"10(b)","rule":"Determine the object's participation in performing or supporting the subject's state defence order."},
+    {"id":"PP356-C10C-INCIDENT-PROBABILITY","clause":"10(c)","rule":"Assess the probability of object disruption or termination if a computer incident occurs."},
+    {"id":"PP356-C10D-CONSEQUENCE-SCALE","clause":"10(d)","rule":"Assess the scale of consequences from object disruption or termination if a computer incident occurs."}
+  ],
+  "calculation_rules": [
+    {"id":"PP356-C11-POSITION-1","clause":"11","position":"1","inputs":["PROJECT_AND_OPERATIONAL_DOCUMENTATION_FOR_HAZARDOUS_FACTORS","MODELED_LIFE_AND_HEALTH_HARM_FROM_INCIDENT_CONSEQUENCES","HISTORICAL_ABNORMAL_EVENT_STATISTICS","PERSONS_POTENTIALLY_IN_THE_EMERGENCY_AFFECTED_ZONE"]},
+    {"id":"PP356-C12-POSITION-8","clause":"12","position":"8","percentage_formula":"U_pct = (U / R_annual_avg) * 100","damage_formula":"U = ((R_annual_avg + R_tax_avg) / 365) * (t_remediation - t_maintenance)","lookback":{"value":5,"unit":"YEAR","applies_to":["R_annual_avg","R_tax_avg"]},"negative_delta_rule":{"condition":"t_remediation - t_maintenance < 0","stated_basis":"t_maintenance","interpretation_guard":"The act states that t_maintenance is used as the calculation basis; do not silently replace this with zero or invent a transformed formula."}},
+    {"id":"PP356-C13-POSITION-9","clause":"13","position":"9","percentage_formula":"U_pct = (U / R_annual_avg) * 100","damage_formula":"U = ((R_annual_avg + R_tax_avg) / 365) * (t_remediation - t_maintenance)","lookback":{"value":3,"unit":"YEAR","applies_to":["R_annual_avg","R_tax_avg"]},"negative_delta_rule":{"condition":"t_remediation - t_maintenance < 0","stated_basis":"t_maintenance","interpretation_guard":"The act states that t_maintenance is used as the calculation basis; do not silently replace this with zero or invent a transformed formula."}},
+    {"id":"PP356-C14-POSITION-11","clause":"14","position":"11","inputs":["PRESENCE_OF_CII_OBJECTS_CLASSIFIED_AS_HAZARDOUS_PRODUCTION_FACILITIES","OBJECTS_SUPPORTING_CONTROL_OR_MONITORING_OF_HAZARDOUS_PRODUCTION_FACILITIES","ENVIRONMENTAL_IMPACT_TERRITORY_COMPARED_WITH_POSITION_11_SUBPOSITION_A","POTENTIALLY_AFFECTED_PERSONS_COMPARED_WITH_POSITION_11_SUBPOSITION_B"]},
+    {"id":"PP356-C15-POSITIONS-13-13-1","clause":"15","positions":["13","13^1"],"calculation_source":"SECTOR_SPECIFIC_CATEGORIZATION_FEATURES_FOR_DEFENCE_INDUSTRY_CII","rule":"Use the defence-industry sector overlay for calculation; PP 356 does not reproduce or replace those calculation rules."}
+  ],
+  "guardrails": [
+    "Do not route this overlay outside proven rocket and space industry object facts.",
+    "Do not omit Federal Law 187-FZ or PP 127 base categorization requirements.",
+    "Clauses 6 and 7 permit consolidation or division by subject decision but do not require either action.",
+    "Clause 8 creates a Roscosmos document route after category assignment but states no number of hours or days.",
+    "Roscosmos is excluded from positions 1 and 11 under clauses 9(a) and 9(c), but not from positions 8 and 9 under clause 9(b).",
+    "Positions 13 and 13^1 have different state-defence-order role boundaries and must not be merged.",
+    "The five-year window in clause 12 and three-year window in clause 13 are calculation lookbacks, not evidence-retention periods.",
+    "Do not convert the negative-delta fallback wording into a zero clamp or a new formula not stated by the act.",
+    "Do not invent position 13 or 13^1 formulas: clause 15 delegates calculation to the defence-industry sector overlay.",
+    "No category is proven until complete facts and the applicable PP 127 threshold comparison are documented."
+  ],
+  "extraction": {
+    "method": "OCR_DISCOVERY_THEN_VISUAL_PRIMARY_PDF_AND_AUTHORITATIVE_TEXT_CROSSCHECK",
+    "ocr_is_evidence": false,
+    "all_primary_pages_rendered": true,
+    "primary_pages_visually_checked": [1,4,6,7,8],
+    "authoritative_text_crosschecks": ["https://www.consultant.ru/document/cons_doc_LAW_530539/","https://pravo.ppt.ru/postanovlenie/pravitelstvo/n-356-332139"]
+  }
+}
