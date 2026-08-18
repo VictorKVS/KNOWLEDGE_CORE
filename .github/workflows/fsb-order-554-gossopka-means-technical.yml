@@ -1,0 +1,24 @@
+name: FSB Order 554 Gossopka means technical requirements
+
+on:
+  push:
+    paths:
+      - 'security-knowledge/controls/fsb-order-554-2025-gossopka-means-technical-*.json'
+      - 'security-knowledge/validators/validate_fsb_order_554_gossopka_means_technical.py'
+      - '.github/workflows/fsb-order-554-gossopka-means-technical.yml'
+  pull_request:
+    paths:
+      - 'security-knowledge/controls/fsb-order-554-2025-gossopka-means-technical-*.json'
+      - 'security-knowledge/validators/validate_fsb_order_554_gossopka_means_technical.py'
+      - '.github/workflows/fsb-order-554-gossopka-means-technical.yml'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate Order 554 technical requirements
+        run: python security-knowledge/validators/validate_fsb_order_554_gossopka_means_technical.py
