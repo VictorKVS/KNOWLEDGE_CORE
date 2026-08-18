@@ -1,0 +1,154 @@
+{
+  "matrix_id": "FSB-ORDER-548-2025-CONTINUOUS-INTERACTION-ROUTING-V1",
+  "status": "PRIMARY_VERIFIED",
+  "as_of": "2026-08-18",
+  "source": {
+    "source_id": "FSB-ORDER-548-2025",
+    "order_date": "2025-12-25",
+    "order_number": "548",
+    "justice_registration_number": "84872",
+    "justice_registration_date": "2025-12-30",
+    "publication_date": "2025-12-30",
+    "effective_date": "2026-01-30",
+    "official_document_url": "https://publication.pravo.gov.ru/document/0001202512300058",
+    "repository_artifact": "security-knowledge/evidence/primary-artifacts/2025/fsb-order-548-2025-0001202512300058.pdf",
+    "sha256": "61b0d81c56cfa8aa76ac335d98237efd9a4768ae05c0cdf7fe83a2137ca79430",
+    "pages": 8
+  },
+  "extraction": {
+    "method": "OCR_DISCOVERY_THEN_VISUAL_PRIMARY_PDF_VERIFICATION",
+    "ocr_is_evidence": false,
+    "page_and_clause_references_are_controlling": true
+  },
+  "numeric_rules": [
+    {
+      "id": "FSB548-C6-NCCCI-ASSIGN-ATTACK-OR-INCIDENT-ID-24H",
+      "clause": "6 paragraph 2",
+      "pages": [6],
+      "actor": "NCCCI",
+      "action": "ASSIGN_IDENTIFIER_TO_COMPUTER_ATTACK_AND_OR_COMPUTER_INCIDENT",
+      "recipient": "KII_SUBJECT_OR_HEAD_OF_BODY_OR_ORGANIZATION",
+      "condition": "Information about the computer attack and computer incident was received in the personal account.",
+      "deadline": {"kind": "MAXIMUM", "value": 24, "unit": "HOUR", "trigger": "RECEIPT_OF_ATTACK_AND_INCIDENT_INFORMATION_IN_PERSONAL_ACCOUNT"},
+      "confidence": "PRIMARY_VERIFIED"
+    },
+    {
+      "id": "FSB548-C9-SUBJECT-REPORT-PREVENTIVE-MEASURES-24H",
+      "clause": "9",
+      "pages": [7],
+      "actor": "KII_SUBJECT_OR_HEAD_OF_BODY_OR_ORGANIZATION",
+      "action": "SEND_INFORMATION_ABOUT_MEASURES_TO_PREVENT_PREPARING_ATTACKS_OR_INCIDENTS",
+      "recipient": "NCCCI",
+      "condition": "The actor received from NCCCI information about preparing computer attacks and signs of computer incidents connected with its significant KII objects or Russian information resources.",
+      "deadline": {"kind": "MAXIMUM", "value": 24, "unit": "HOUR", "trigger": "RECEIPT_OF_RELEVANT_THREAT_INFORMATION_FROM_NCCCI"},
+      "confidence": "PRIMARY_VERIFIED"
+    },
+    {
+      "id": "FSB548-C10-SUBJECT-RESPOND-TO-ADDITIONAL-INFORMATION-REQUEST-24H",
+      "clause": "10",
+      "pages": [8],
+      "actor": "KII_SUBJECT_OR_HEAD_OF_BODY_OR_ORGANIZATION",
+      "action": "SEND_REQUESTED_INFORMATION_OR_INABILITY_NOTICE_WITH_REASON_AND_FUTURE_DELIVERY_TIME",
+      "recipient": "NCCCI",
+      "condition": "The actor received the NCCCI request described in clause 8 paragraph 4.",
+      "deadline": {"kind": "MAXIMUM", "value": 24, "unit": "HOUR", "trigger": "RECEIPT_OF_NCCCI_ADDITIONAL_INFORMATION_REQUEST"},
+      "response_branches": [
+        "REQUESTED_INFORMATION",
+        "INABILITY_NOTICE_WITH_REASON_AND_TIME_WHEN_INFORMATION_WILL_BE_PROVIDED"
+      ],
+      "confidence": "PRIMARY_VERIFIED"
+    }
+  ],
+  "routing_rules": [
+    {
+      "id": "FSB548-C1-CONTINUOUS-INTERACTION-VIA-NCCCI-INFRASTRUCTURE",
+      "clause": "1",
+      "pages": [3, 4],
+      "actor": "KII_SUBJECT_OR_HEAD_OF_BODY_OR_ORGANIZATION",
+      "action": "PERFORM_CONTINUOUS_GOSSOPKA_INTERACTION_VIA_NCCCI",
+      "route": "PERSONAL_ACCOUNT_ON_NCCCI_TECHNICAL_INFRASTRUCTURE",
+      "confidence": "PRIMARY_VERIFIED"
+    },
+    {
+      "id": "FSB548-C3-PERSONAL-ACCOUNT-AND-NCCCI-FORMAT",
+      "clause": "3 paragraph 1",
+      "pages": [4, 5],
+      "actor": "KII_SUBJECT_OR_HEAD_OF_BODY_OR_ORGANIZATION",
+      "action": "SEND_ATTACK_AND_INCIDENT_INFORMATION_AND_RECEIVE_SECURITY_THREAT_INFORMATION",
+      "channel": "REGISTERED_GOSSOPKA_SUBJECT_PERSONAL_ACCOUNT",
+      "format": "NCCCI_DEFINED_GOSSOPKA_INFORMATION_FORMATS",
+      "confidence": "PRIMARY_VERIFIED"
+    },
+    {
+      "id": "FSB548-C3-RESERVE-CHANNEL-FAILOVER",
+      "clause": "3 paragraph 2",
+      "pages": [5],
+      "actor": "KII_SUBJECT_OR_HEAD_OF_BODY_OR_ORGANIZATION",
+      "action": "SEND_ATTACK_AND_INCIDENT_INFORMATION_TO_NCCCI",
+      "condition": "Technical failure and/or absence of communication with the personal account.",
+      "channel": "POSTAL_ADDRESS_OR_EMAIL_ADDRESS_RECORDED_IN_PERSONAL_ACCOUNT",
+      "format": "NCCCI_DEFINED_GOSSOPKA_INFORMATION_FORMATS",
+      "numeric_deadline_status": "NO_SEPARATE_NUMERICAL_DEADLINE_IN_CLAUSE_3",
+      "confidence": "PRIMARY_VERIFIED"
+    },
+    {
+      "id": "FSB548-C4-PERSONAL-ACCOUNT-CONNECTION-AFTER-INTERACTION-REGULATION",
+      "clause": "4",
+      "pages": [5],
+      "actor": "NCCCI_AND_INFORMATION_RESOURCE_OWNER",
+      "action": "ORGANIZE_CONNECTION_TO_PERSONAL_ACCOUNT",
+      "condition": "The interaction regulation referenced by clause 4 has been concluded.",
+      "sequence": "AFTER_CONCLUSION_OF_INTERACTION_REGULATION",
+      "numeric_deadline_status": "NO_NUMERICAL_DURATION_IN_CLAUSE_4",
+      "confidence": "PRIMARY_VERIFIED"
+    },
+    {
+      "id": "FSB548-C5-PRIMARY-INFORMING-DEADLINES-EXTERNAL-ORDER",
+      "clause": "5",
+      "pages": [5, 6],
+      "actor": "KII_SUBJECT_OR_HEAD_OF_BODY_OR_ORGANIZATION",
+      "action": "SEND_ATTACK_AND_INCIDENT_INFORMATION_TO_NCCCI",
+      "deadline_source": "SEPARATE_FSB_ORDER_APPROVING_THE_INFORMING_RESPONSE_AND_CONSEQUENCE_ELIMINATION_PROCEDURE_UNDER_187_FZ_ARTICLE_6_PART_4_POINT_6_AND_ARTICLE_9_PART_6",
+      "numeric_deadline_status": "NO_NUMERICAL_DEADLINE_STATED_IN_ORDER_548_CLAUSE_5",
+      "confidence": "PRIMARY_VERIFIED"
+    },
+    {
+      "id": "FSB548-C6-IDENTIFIER-CONFIRMS-TRANSFER",
+      "clause": "6 paragraph 1",
+      "pages": [6],
+      "actor": "NCCCI",
+      "action": "CONFIRM_TRANSFER_BY_ASSIGNING_ATTACK_AND_OR_INCIDENT_IDENTIFIER",
+      "recipient": "KII_SUBJECT_OR_HEAD_OF_BODY_OR_ORGANIZATION",
+      "confidence": "PRIMARY_VERIFIED"
+    },
+    {
+      "id": "FSB548-C7-SUBJECT-MAY-REQUEST-GOSSOPKA-ASSISTANCE",
+      "clause": "7",
+      "pages": [6],
+      "actor": "KII_SUBJECT_OR_HEAD_OF_BODY_OR_ORGANIZATION",
+      "action": "REQUEST_INCIDENT_RESPONSE_ASSISTANCE_AND_GOSSOPKA_FORCES",
+      "channel": "PERSONAL_ACCOUNT",
+      "obligation_type": "RIGHT_NOT_DUTY",
+      "confidence": "PRIMARY_VERIFIED"
+    },
+    {
+      "id": "FSB548-C8-NCCCI-INFORMATION-REQUEST-AND-ASSISTANCE-FUNCTIONS",
+      "clause": "8",
+      "pages": [6, 7],
+      "actor": "NCCCI",
+      "action": "INFORM_ABOUT_THREATS_AND_ATTACK_METHODS_REQUEST_ADDITIONAL_INFORMATION_ASSIST_RESPONSE_AND_PROVIDE_METHODICAL_EXPERT_SUPPORT",
+      "numeric_deadline_status": "NO_NUMERICAL_DEADLINE_FOR_NCCCI_FUNCTIONS_IN_CLAUSE_8",
+      "confidence": "PRIMARY_VERIFIED"
+    }
+  ],
+  "guards": [
+    "Do not import or invent the initial attack/incident reporting deadlines: clause 5 points to a separate FSB procedure and states no number.",
+    "The clause 6 24-hour identifier clock expressly starts when information is received in the personal account; Order 548 does not state an equivalent trigger for reserve-channel receipt.",
+    "Clause 6 treats the identifier as confirmation of transfer; it must not be represented as a conclusion that the incident is resolved or the report is substantively complete.",
+    "Reserve postal/email channels apply only upon technical failure and/or absence of communication with the personal account and use addresses recorded in that account.",
+    "Clause 7 creates a right to request assistance, not a mandatory request for every incident.",
+    "Clause 9 applies only to relevant threat information received from NCCCI and requires information about preventive measures, not proof that prevention succeeded.",
+    "Under clause 10, requested information or a compliant inability notice is due within 24 hours; naming a later delivery time does not postpone the initial response deadline.",
+    "Do not assign arbitrary numerical durations to the sequencing rule in clause 4 or the functions listed in clause 8."
+  ]
+}
