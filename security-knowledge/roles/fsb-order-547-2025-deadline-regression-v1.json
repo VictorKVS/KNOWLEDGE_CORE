@@ -1,0 +1,25 @@
+{
+  "fixture_id": "FSB-ORDER-547-2025-DEADLINE-REGRESSION-V1",
+  "matrix_id": "FSB-ORDER-547-2025-DEADLINE-MATRIX-V1",
+  "positive_cases": [
+    {"case": "significant KII incident to NCCCI", "rule_id": "FSB547-C3-SIGNIFICANT-KII-INCIDENT-NCCCI-3H", "value": 3, "unit": "HOUR", "trigger": "DETECTION_OF_COMPUTER_INCIDENT"},
+    {"case": "other KII incident to NCCCI", "rule_id": "FSB547-C3-OTHER-KII-INCIDENT-NCCCI-24H", "value": 24, "unit": "HOUR", "trigger": "DETECTION_OF_COMPUTER_INCIDENT"},
+    {"case": "RF information resource incident to NCCCI", "rule_id": "FSB547-C3-RF-RESOURCE-INCIDENT-NCCCI-24H", "value": 24, "unit": "HOUR", "trigger": "DETECTION_OF_COMPUTER_INCIDENT"},
+    {"case": "computer attack to NCCCI", "rule_id": "FSB547-C3-COMPUTER-ATTACK-NCCCI-24H", "value": 24, "unit": "HOUR", "trigger": "DETECTION_OF_COMPUTER_ATTACK"},
+    {"case": "financial significant KII incident additional CBR route", "rule_id": "FSB547-C4-FINANCIAL-SIGNIFICANT-KII-INCIDENT-CBR-3H", "value": 3, "unit": "HOUR", "trigger": "DETECTION_OF_COMPUTER_INCIDENT"},
+    {"case": "develop plan after register inclusion", "rule_id": "FSB547-C5-DEVELOP-RESPONSE-PLAN-90CD", "value": 90, "unit": "CALENDAR_DAY", "trigger": "INCLUSION_OF_OBJECT_IN_SIGNIFICANT_KII_REGISTER"},
+    {"case": "send approved plan copy", "rule_id": "FSB547-C6-SEND-APPROVED-PLAN-COPY-NCCCI-7CD", "value": 7, "unit": "CALENDAR_DAY", "trigger": "APPROVAL_OF_RESPONSE_PLAN"},
+    {"case": "FSB Center review", "rule_id": "FSB547-C8-FSB-REVIEW-PLAN-DRAFT-30CD", "value": 30, "unit": "CALENDAR_DAY", "trigger": "RECEIPT_OF_DRAFT"},
+    {"case": "Bank of Russia review", "rule_id": "FSB547-C9-CBR-REVIEW-FINANCIAL-PLAN-DRAFT-30CD", "value": 30, "unit": "CALENDAR_DAY", "trigger": "RECEIPT_OF_DRAFT"},
+    {"case": "significant KII post-response results", "rule_id": "FSB547-C14-SIGNIFICANT-KII-RESULTS-NCCCI-48H", "value": 48, "unit": "HOUR", "trigger": "COMPLETION_OF_RESPONSE_AND_CONSEQUENCE_ELIMINATION_MEASURES"},
+    {"case": "covered body post-response results", "rule_id": "FSB547-C15-RF-RESOURCE-RESPONSE-RESULTS-NCCCI-24H", "value": 24, "unit": "HOUR", "trigger": "END_OF_RESPONSE_AND_CONSEQUENCE_ELIMINATION_MEASURES"},
+    {"case": "covered body restoration completed", "rule_id": "FSB547-C17-RF-RESOURCE-RESTORATION-COMPLETE-NCCCI-24H", "value": 24, "unit": "HOUR", "trigger": "COMPLETION_OF_RESTORATION_AND_OPERABILITY_VERIFICATION"}
+  ],
+  "negative_cases": [
+    {"case": "do not route every significant-KII attack at 3 hours", "forbidden_rule_id": "FSB547-C3-SIGNIFICANT-KII-INCIDENT-NCCCI-3H", "reason": "Clause 3 assigns attacks a separate 24-hour rule."},
+    {"case": "do not replace NCCCI with Bank of Russia", "required_parallel_recipients": ["NCCCI", "BANK_OF_RUSSIA"], "reason": "Clause 4 says the information is also sent to the Bank of Russia."},
+    {"case": "do not convert hour limits into business days", "forbidden_units": ["BUSINESS_DAY"], "reason": "The order states hours."},
+    {"case": "do not assign a number to clause 16", "untimed_rule_id": "FSB547-C16-RF-RESOURCE-RESPONSE-DESIGN-NCCCI-NO-EXPLICIT-DEADLINE", "required_deadline_status": "NO_EXPLICIT_NUMERICAL_DEADLINE_IN_ORDER_547"},
+    {"case": "do not use 48 hours for initial notification", "rule_id": "FSB547-C14-SIGNIFICANT-KII-RESULTS-NCCCI-48H", "required_action": "SEND_RESPONSE_AND_CONSEQUENCE_ELIMINATION_RESULTS"}
+  ]
+}
