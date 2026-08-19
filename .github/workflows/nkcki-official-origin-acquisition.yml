@@ -261,7 +261,7 @@ jobs:
             --slurpfile initial "${initial_pdf}.record.json" \
             --arg workflow_run "https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" \
             --arg source_commit "$GITHUB_SHA" \
-            '{schema_version:$schema_version, retrieved_at:$retrieved_at, provenance_state:"OFFICIAL_ORIGIN_BYTES_ACQUIRED", acquisition:{workflow_run:$workflow_run, source_commit:$source_commit}, artifacts:[$order[0],$initial[0]], guardrail:"Receipt records direct fixed official URLs with validated Russian national TLS trust chain; viewer, proxy, mirror, and TLS-insecure bytes are not accepted."}' > "$receipt"
+            '{schema_version:$schema_version, retrieved_at:$retrieved_at, provenance_state:"OFFICIAL_ORIGIN_BYTES_ACQUIRED", acquisition:{workflow_run:$workflow_run, source_commit:$source_commit}, artifacts:[$order[0],$initial[0]], guardrail:"Receipt records direct fixed official URLs with a validated GlobalSign TLS chain and hostname; viewer, proxy, mirror, and TLS-insecure bytes are not accepted."}' > "$receipt"
 
           rm -f "${order_pdf}.record.json" "${initial_pdf}.record.json"
 

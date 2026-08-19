@@ -1,0 +1,65 @@
+run_id: SECURITY-KB-RUN-118
+run_date: "2026-08-19"
+strict_readiness:
+  overall_percent: 10
+  domains:
+    russian_npa: 10
+    gost_iso: 10
+    classification_categorization: 10
+    fstec_bdu: 10
+    risk_methods: 10
+    legal_consequences_koap_uk_gk_tk: 10
+    szi_skzi_licenses_lifecycle: 10
+    roles_deadlines_responsibility: 10
+    evidence_audit: 10
+    practical_cases: 10
+inventory:
+  verified: 293
+  pending: 31
+  count_change: 0
+  count_guard: >-
+    Two already-registered NKTsKI sources are promoted from web-verified acquisition state to
+    PRIMARY_IMMUTABLE. The master inventory is family-level, so no row count is changed.
+red_team:
+  critical_gaps: 0
+  high_gaps: 0
+  status: FAIL_SCOPE_INCOMPLETE
+  high_gap_ids: []
+  immutable_provenance_gate: PASS
+  reason_global_not_pass: >-
+    The last fixed-scope High finding is closed, but 31 inventory items and multiple field-level
+    mappings remain pending; a global PASS would overstate the current 10% readiness.
+added_this_run:
+  - "Preserved exact official-origin bytes for NKTsKI Order No. 2 dated 2026-07-14: 486106 bytes, 20 pages, SHA-256 704473892479161e244a6c6a71bfdae479ae4b9be5bcd49ccacf563ab009d686."
+  - "Preserved exact official-origin bytes for the Initial Data approved 2026-07-08: 4363083 bytes, 12 pages, SHA-256 69ee2551baf1b1e1a9468fefeb9897460e1e4fd472531937486d0e8a488a68d0."
+  - "Recorded direct cert.gov.ru URLs, retrieval timestamp, MIME, response-header hashes, TLS chain evidence and the successful GitHub workflow run in a machine-readable receipt."
+  - "Diagnosed the omitted GlobalSign intermediate and HTTP 403 WAF boundary; completed the chain from leaf AIA and bootstrapped only the official landing-page session without disabling TLS."
+  - "Promoted both manifest entries to IMMUTABLE_PRIMARY and strengthened the provenance validator to recompute repository hashes, sizes, PDF magic and receipt bindings."
+source_quality:
+  official_origin_artifacts_added: 2
+  primary_immutable_promotions: 2
+  acquisition_transport: DIRECT_GITHUB_ACTIONS_CURL_OFFICIAL_ORIGIN
+  tls_chain_and_hostname: PASS
+  viewer_derivatives_promoted: 0
+  immutable_provenance_high_gap: CLOSED
+readiness_change: 0
+reason_no_increase: >-
+  Immutable acquisition is now proven, but the strict readiness score measures completion of
+  the full master scope. Payload-field extraction, taxonomy mapping and 31 pending inventory
+  items remain, so no domain percentage is increased.
+verification:
+  acquisition_workflow:
+    run_id: 32212729518
+    conclusion: success
+  acquisition_commit: d3f2333e76c4003bae88f51f4a233ac2a00ec0e2
+  local_repository_sha256_compare: PASS_2_OF_2
+  local_pdf_structure_check: PASS_2_OF_2
+  local_yaml_json_parse: PASS
+  local_nkcki_provenance_validator: PASS_13_CASES_2_ARTIFACTS_AND_RECEIPT
+next_bottleneck:
+  primary: >-
+    Extract and regression-protect the complete attack and incident payload schemas plus technical
+    parameter composition from Order No. 2.
+  secondary: >-
+    Extract the Initial Data evidence taxonomy and example thresholds with explicit
+    RECOMMENDATORY/EXAMPLE semantics, then bind both documents to FSB 547/548 workflows.

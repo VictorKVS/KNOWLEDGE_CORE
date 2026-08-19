@@ -1,7 +1,7 @@
-schema_version: "1.1"
+schema_version: "1.2"
 id: nkcki-2026-artifact-acquisition-manifest-v1
-observed_at: "2026-08-19T05:18:50+03:00"
-status: PRIMARY_DOWNLOAD_TARGETS_RESOLVED_ORIGIN_BYTES_PENDING
+observed_at: "2026-08-19T03:36:48Z"
+status: PRIMARY_ARTIFACTS_IMMUTABLE
 purpose: >-
   Track exact acquisition state for high-value NKTsKI 2026 reporting artifacts without
   promoting web-index metadata or search excerpts to immutable primary-source status.
@@ -28,11 +28,15 @@ artifacts:
       of technical parameters.
     official_index_download_action_observed: true
     exact_download_target_resolved: true
-    bytes_preserved: false
-    sha256: null
-    retrieved_at: null
-    immutable_status: PENDING
-    allowed_claim_level: PRIMARY_WEB_VERIFIED_METADATA_ONLY
+    repository_path: security-knowledge/evidence/primary-artifacts/2026/nkcki-order-2-2026-07-14.pdf
+    acquisition_receipt: security-knowledge/evidence/nkcki-2026-official-origin-acquisition-receipt.json
+    bytes_preserved: true
+    bytes: 486106
+    pages: 20
+    sha256: "704473892479161e244a6c6a71bfdae479ae4b9be5bcd49ccacf563ab009d686"
+    retrieved_at: "2026-08-19T03:36:48Z"
+    immutable_status: IMMUTABLE_PRIMARY
+    allowed_claim_level: PRIMARY_IMMUTABLE_METADATA_AND_CONTENT
     non_primary_render_observation:
       observed_at: "2026-08-19T05:11:44+03:00"
       transport: GOOGLE_DOCUMENT_VIEWER_SECURE_PDF
@@ -61,11 +65,15 @@ artifacts:
       and missing one or more materials must not block transmission of the remaining available materials.
     official_index_download_action_observed: true
     exact_download_target_resolved: true
-    bytes_preserved: false
-    sha256: null
-    retrieved_at: null
-    immutable_status: PENDING
-    allowed_claim_level: PRIMARY_WEB_VERIFIED_METADATA_AND_EXPLICIT_WEB_RULES
+    repository_path: security-knowledge/evidence/primary-artifacts/2026/nkcki-attack-type-initial-data-2026-07-08.pdf
+    acquisition_receipt: security-knowledge/evidence/nkcki-2026-official-origin-acquisition-receipt.json
+    bytes_preserved: true
+    bytes: 4363083
+    pages: 12
+    sha256: "69ee2551baf1b1e1a9468fefeb9897460e1e4fd472531937486d0e8a488a68d0"
+    retrieved_at: "2026-08-19T03:36:48Z"
+    immutable_status: IMMUTABLE_PRIMARY
+    allowed_claim_level: PRIMARY_IMMUTABLE_METADATA_AND_CONTENT
     non_primary_render_observation:
       observed_at: "2026-08-19T05:11:44+03:00"
       transport: GOOGLE_DOCUMENT_VIEWER_SECURE_PDF
@@ -161,8 +169,27 @@ retrieval_attempt_2026_08_19_run_117:
     - hash the official-origin response before parsing
     - compare the two official copies where both are available
 
+retrieval_attempt_2026_08_19_run_118:
+  workflow_run: https://github.com/VictorKVS/KNOWLEDGE_CORE/actions/runs/32212729518
+  source_commit: daa2cf6e323f32018c853629acd651f283e3e220
+  official_origin: https://www.cert.gov.ru
+  transport: DIRECT_GITHUB_ACTIONS_CURL_OFFICIAL_ORIGIN
+  tls_chain_and_hostname: VERIFIED
+  observed_leaf_issuer: GlobalSign GCC R6 AlphaSSL CA 2025
+  missing_intermediate_recovered_from_leaf_aia: true
+  origin_http_result: SUCCESS_AFTER_OFFICIAL_WAF_SESSION_BOOTSTRAP
+  exact_origin_bytes_retrieved_in_this_run: true
+  artifact_count: 2
+  receipt: security-knowledge/evidence/nkcki-2026-official-origin-acquisition-receipt.json
+  interpretation: >-
+    Both fixed cert.gov.ru attachment URLs returned application/pdf through a byte-preserving
+    direct request. The stored repository bytes match the acquisition receipt by SHA-256 and size.
+    Document-viewer derivatives remain recorded only as non-primary controls.
+
 red_team_guardrail:
-  verdict: FAIL_CLOSED
+  verdict: PASS_FOR_DECLARED_NKTSKI_2026_ARTIFACT_SCOPE
   statement: >-
-    Do not close HIGH-IMMUTABLE-PROVENANCE for NKTsKI 2026 until exact official-origin artifacts are
-    stored or otherwise pinned by byte-fidelity evidence, retrieval timestamp plus SHA-256.
+    The exact official-origin artifacts are stored with retrieval timestamp, byte length, PDF
+    validation and SHA-256. This closes the NKTsKI artifact component of
+    HIGH-IMMUTABLE-PROVENANCE; field-level schema completeness still requires extraction and its
+    own regression evidence.

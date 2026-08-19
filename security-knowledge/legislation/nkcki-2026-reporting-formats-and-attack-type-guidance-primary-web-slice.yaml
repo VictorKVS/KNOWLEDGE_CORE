@@ -1,7 +1,7 @@
 schema_version: "1.0"
 id: nkcki-2026-reporting-formats-and-attack-type-guidance-primary-web-slice
 checked_at: "2026-08-19"
-status: PRIMARY_WEB_VERIFIED_EXACT_DOWNLOAD_TARGETS_RESOLVED
+status: PRIMARY_IMMUTABLE_ARTIFACTS_PRESERVED
 purpose: >-
   Register the July 2026 NKTsKI operational layer that sits below the current FSB GosSOPKA orders:
   reporting formats/technical parameters and methodological guidance for determining computer-attack type.
@@ -26,9 +26,12 @@ primary_sources:
       - >-
         https://www.cert.gov.ru/upload/iblock/d05/zolkvvbc00ofpybc0tplhwdkcmlt7252/O-sovershenstvovanii-deyatelnosti-po-organizatsii-vzaimodeystviya-Natsionalnogo-koordinatsionnogo-tsentra-po-kompyuternym-intsidentam-s-subektami-kriticheskoy-informatsionnoy-infrastruktury_-tsentrami-GosSOPKA-i-organami-_org.pdf
       - https://gossopka.ru/upload/iblock/995/y8i5wz6c2zdstnnbgxa317esmql8eak1/Prikaz-NKTSKI-N-2-ot-14_07_2026.pdf
-    verification_status: PRIMARY_WEB_METADATA_VERIFIED
+    repository_artifact: security-knowledge/evidence/primary-artifacts/2026/nkcki-order-2-2026-07-14.pdf
+    sha256: "704473892479161e244a6c6a71bfdae479ae4b9be5bcd49ccacf563ab009d686"
+    retrieved_at: "2026-08-19T03:36:48Z"
+    verification_status: PRIMARY_IMMUTABLE
     exact_download_target: VERIFIED
-    exact_official_origin_snapshot: PENDING
+    exact_official_origin_snapshot: VERIFIED
 
   - source_id: NKCKI_ATTACK_TYPE_INPUTS_2026
     issuer: NATIONAL_COORDINATION_CENTER_FOR_COMPUTER_INCIDENTS
@@ -41,9 +44,12 @@ primary_sources:
     official_download_urls:
       - https://www.cert.gov.ru/upload/iblock/333/q3w0bnth1cxtnhskh5xi9s0zmimqymoq/Iskhodnye-dannye-dlya-opredeleniya-tipa-kompyuternoy-ataki.pdf
       - https://gossopka.ru/upload/iblock/6e8/14xffkb0nlecz44gpaz5ywq66fj5gk2x/2026_iskhodnye-dannye.pdf
-    verification_status: PRIMARY_WEB_METADATA_VERIFIED
+    repository_artifact: security-knowledge/evidence/primary-artifacts/2026/nkcki-attack-type-initial-data-2026-07-08.pdf
+    sha256: "69ee2551baf1b1e1a9468fefeb9897460e1e4fd472531937486d0e8a488a68d0"
+    retrieved_at: "2026-08-19T03:36:48Z"
+    verification_status: PRIMARY_IMMUTABLE
     exact_download_target: VERIFIED
-    exact_official_origin_snapshot: PENDING
+    exact_official_origin_snapshot: VERIFIED
 
 records:
   - id: NKCKI2-2026-META-001
@@ -111,14 +117,14 @@ integration_rules:
       until the official download response is preserved with byte-fidelity evidence and SHA-256.
 
 red_team:
-  verdict: PARTIAL_PASS_DOWNLOAD_TARGETS_RESOLVED_ORIGIN_BYTES_PENDING
+  verdict: PASS_IMMUTABLE_PROVENANCE_SCHEMA_EXTRACTION_PENDING
   primary_web_verified_records: 4
   high_risk_prevented:
     - "treating example attack-type thresholds as mandatory legal thresholds"
     - "treating a July 2026 reporting-format update as if it silently changed FSB reporting deadlines"
     - "claiming notification evidence completeness without the current NKTsKI payload schema"
   pending:
-    - "fetch and hash-pin the exact official-origin Order No. 2 artifact and its schemas"
-    - "fetch and hash-pin the official-origin 2026-07-08 Initial Data document"
+    - "extract and map the exact Order No. 2 attack and incident payload fields from the preserved artifact"
+    - "extract the full attack-type evidence taxonomy without promoting example thresholds to legal rules"
     - "map exact fields/technical parameters into the GosSOPKA evidence model"
     - "add regression fixtures for incomplete-but-reportable evidence packages"

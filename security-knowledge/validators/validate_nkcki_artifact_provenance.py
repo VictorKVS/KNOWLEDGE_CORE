@@ -1,5 +1,7 @@
 from __future__ import annotations
 
+import hashlib
+import json
 import re
 import sys
 from pathlib import Path
@@ -9,6 +11,7 @@ import yaml
 ROOT = Path(__file__).resolve().parents[2]
 FIXTURES = ROOT / "security-knowledge" / "provenance" / "nkcki-2026-artifact-provenance-regression-v1.yaml"
 MANIFEST = ROOT / "security-knowledge" / "provenance" / "nkcki-2026-artifact-acquisition-manifest-v1.yaml"
+RECEIPT = ROOT / "security-knowledge" / "evidence" / "nkcki-2026-official-origin-acquisition-receipt.json"
 SHA256_RE = re.compile(r"^[0-9a-fA-F]{64}$")
 
 
@@ -58,8 +61,14 @@ def main() -> int:
             failures.append((case.get("id"), expected, actual))
 
     manifest = yaml.safe_load(MANIFEST.read_text(encoding="utf-8"))
-    if manifest.get("status") != "PRIMARY_DOWNLOAD_TARGETS_RESOLVED_ORIGIN_BYTES_PENDING":
-        failures.append(("MANIFEST-STATUS", "resolved targets with origin bytes pending", manifest.get("status")))
+    if manifest.get("status") != "PRIMARY_ARTIFACTS_IMMUTABLE":
+        failures.append(("MANIFEST-STATUS", "PRIMARY_ARTIFACTS_IMMUTABLE", manifest.get("status")))
+    receipt = json.loads(RECEIPT.read_text(encoding="utf-8"))
+    receipt_by_id = {item.get("logical_id"): item for item in receipt.get("artifacts", [])}
+    logical_ids = {
+        "NKTSKI-2026-ORDER-2": "NKTSKI-ORDER-2-2026-07-14",
+        "NKTSKI-2026-ATTACK-TYPE-INITIAL-DATA": "NKTSKI-ATTACK-TYPE-INITIAL-DATA-2026-07-08",
+    }
     for artifact in manifest.get("artifacts", [])[:2]:
         artifact_id = artifact.get("artifact_id")
         for key in ("authoritative_download_url", "authoritative_gossopka_download_url"):
@@ -68,8 +77,38 @@ def main() -> int:
                 failures.append((f"{artifact_id}-{key}", "exact official PDF URL", value))
         if artifact.get("exact_download_target_resolved") is not True:
             failures.append((f"{artifact_id}-href", True, artifact.get("exact_download_target_resolved")))
-        if artifact.get("bytes_preserved") is not False or artifact.get("immutable_status") != "PENDING":
-            failures.append((f"{artifact_id}-fail-closed", "bytes=false/status=PENDING", artifact))
+        if artifact.get("bytes_preserved") is not True or artifact.get("immutable_status") != "IMMUTABLE_PRIMARY":
+            failures.append((f"{artifact_id}-immutable", "bytes=true/status=IMMUTABLE_PRIMARY", artifact))
+        path_value = artifact.get("repository_path")
+        path = ROOT / path_value if isinstance(path_value, str) else None
+        if path is None or not path.is_file():
+            failures.append((f"{artifact_id}-path", "existing repository artifact", path_value))
+        else:
+            payload = path.read_bytes()
+            observed_sha = hashlib.sha256(payload).hexdigest()
+            observed_bytes = len(payload)
+            if payload[:5] != b"%PDF-":
+                failures.append((f"{artifact_id}-magic", "%PDF-", payload[:5]))
+            if observed_sha != artifact.get("sha256"):
+                failures.append((f"{artifact_id}-sha", artifact.get("sha256"), observed_sha))
+            if observed_bytes != artifact.get("bytes"):
+                failures.append((f"{artifact_id}-bytes", artifact.get("bytes"), observed_bytes))
+            receipt_item = receipt_by_id.get(logical_ids.get(artifact_id))
+            if not receipt_item:
+                failures.append((f"{artifact_id}-receipt", "matching receipt entry", None))
+            else:
+                if receipt_item.get("sha256") != observed_sha:
+                    failures.append((f"{artifact_id}-receipt-sha", observed_sha, receipt_item.get("sha256")))
+                if receipt_item.get("bytes") != observed_bytes:
+                    failures.append((f"{artifact_id}-receipt-bytes", observed_bytes, receipt_item.get("bytes")))
+                if receipt_item.get("effective_url") != artifact.get("authoritative_download_url"):
+                    failures.append((f"{artifact_id}-receipt-url", artifact.get("authoritative_download_url"), receipt_item.get("effective_url")))
+                if receipt_item.get("content_type") != "application/pdf":
+                    failures.append((f"{artifact_id}-receipt-mime", "application/pdf", receipt_item.get("content_type")))
+                if receipt_item.get("tls", {}).get("verification") != "OPENSSL_CA_CHAIN_AND_HOSTNAME":
+                    failures.append((f"{artifact_id}-receipt-tls", "OPENSSL_CA_CHAIN_AND_HOSTNAME", receipt_item.get("tls")))
+        if not artifact.get("retrieved_at"):
+            failures.append((f"{artifact_id}-retrieved-at", "non-empty retrieval timestamp", artifact.get("retrieved_at")))
         render = artifact.get("non_primary_render_observation", {})
         render_sha = render.get("sha256") or render.get("sha256_from_each_origin")
         if not isinstance(render_sha, str) or not SHA256_RE.fullmatch(render_sha):
@@ -84,7 +123,7 @@ def main() -> int:
             print(f"FAIL {case_id}: expected={expected} actual={actual}")
         return 1
 
-    print(f"PASS: {len(data.get('cases', []))} NKTsKI provenance regression cases and resolved-target fail-closed manifest")
+    print(f"PASS: {len(data.get('cases', []))} NKTsKI provenance cases plus two immutable official-origin artifacts and receipt")
     return 0
 
 

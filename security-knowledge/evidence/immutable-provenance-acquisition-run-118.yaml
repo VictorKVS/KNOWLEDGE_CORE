@@ -1,0 +1,64 @@
+schema_version: "1.0"
+id: immutable-provenance-acquisition-run-118
+observed_at: "2026-08-19T03:36:48Z"
+finding_id: HIGH-IMMUTABLE-PROVENANCE
+scope: NKTSKI_2026_ORDER_2_AND_ATTACK_TYPE_INITIAL_DATA
+
+result:
+  verdict: PASS_FOR_DECLARED_ARTIFACT_SCOPE
+  official_origin: https://www.cert.gov.ru
+  artifact_count: 2
+  acquisition_workflow_run: https://github.com/VictorKVS/KNOWLEDGE_CORE/actions/runs/32212729518
+  acquisition_commit: d3f2333e76c4003bae88f51f4a233ac2a00ec0e2
+  receipt: security-knowledge/evidence/nkcki-2026-official-origin-acquisition-receipt.json
+
+transport_findings:
+  - stage: DEFAULT_RUNNER_TLS
+    result: FAIL
+    evidence: curl_60_unable_to_get_local_issuer_certificate
+  - stage: NATIONAL_CA_BUNDLE
+    result: NOT_APPLICABLE_TO_PRESENTED_LEAF
+    evidence: >-
+      Both hosts presented GlobalSign GCC R6 AlphaSSL CA 2025 leaf issuers, not the
+      Russian national subordinate CA.
+  - stage: PRESENTED_CHAIN_INSPECTION
+    result: PASS
+    cert_gov_leaf_sha256: e066bf330993a91d8551b4e3a39d3e48d1bb1df06e5ae6a636e95915dd39cc51
+    gossopka_leaf_sha256: e31ea3df64bff1d980efc3ad51a4762c256ee1b59976d46ecd957956467d0d37
+    aia_intermediate: https://secure.globalsign.com/cacert/gsgccr6alphasslca2025.crt
+  - stage: GLOBALSIGN_AIA_CHAIN_COMPLETION
+    result: PASS
+    intermediate_certificate_fingerprint_sha256: a883559231f8388daf35ce41c8101040ae8fd9b656434247b9475af592cc08ca
+    intermediate_file_sha256: c5e33c47ffb2b81739dc8003611c251241f663712ac628787d6d48e4ed6799cd
+  - stage: OFFICIAL_WAF_SESSION_BOOTSTRAP
+    result: PASS
+    controls: [OFFICIAL_LANDING_PAGE, COOKIE_JAR, BROWSER_USER_AGENT, REFERER]
+  - stage: DIRECT_FIXED_ATTACHMENT_FETCH
+    result: PASS
+    controls: [TLS_CA_CHAIN, TLS_HOSTNAME, APPLICATION_PDF, PDF_MAGIC, PDFINFO, NONTRIVIAL_SIZE]
+
+artifacts:
+  - id: NKTSKI-ORDER-2-2026-07-14
+    repository_path: security-knowledge/evidence/primary-artifacts/2026/nkcki-order-2-2026-07-14.pdf
+    bytes: 486106
+    pages: 20
+    sha256: 704473892479161e244a6c6a71bfdae479ae4b9be5bcd49ccacf563ab009d686
+  - id: NKTSKI-ATTACK-TYPE-INITIAL-DATA-2026-07-08
+    repository_path: security-knowledge/evidence/primary-artifacts/2026/nkcki-attack-type-initial-data-2026-07-08.pdf
+    bytes: 4363083
+    pages: 12
+    sha256: 69ee2551baf1b1e1a9468fefeb9897460e1e4fd472531937486d0e8a488a68d0
+
+guardrails:
+  - Viewer-derived PDFs remain non-primary even when text and page count match.
+  - TLS verification was never disabled.
+  - Missing-server intermediate handling used the exact leaf AIA target and verified it against the runner public root store.
+  - Artifact preservation closes immutable provenance only; it does not imply field-level schema extraction completeness.
+
+finding_effect:
+  high_gap_status: CLOSED_FOR_FIXED_MASTER_SCOPE
+  global_readiness_effect: NONE_UNTIL_NEXT_SCORE_GATE
+  next_bottleneck: >-
+    Extract every attack/incident payload field and technical parameter from the preserved
+    Order No. 2, extract the attack-type evidence taxonomy from the preserved Initial Data,
+    and add regression tests without treating example thresholds as binding legal norms.
