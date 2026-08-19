@@ -1,0 +1,93 @@
+schema_version: "1.0"
+kind: ru-protected-information-stream-run
+stream: 3
+checked_at: "2026-08-19T23:15:15+03:00"
+status: PARTIAL_PROGRESS
+scope:
+  - healthcare
+  - public_sector
+  - civil_status_records
+  - protected_information_overlaps
+reconciliation:
+  repository_checked: "VictorKVS/KNOWLEDGE_CORE"
+  new_source_ids:
+    - SEC-SRC-RU-FZ-326-2010
+    - SEC-SRC-RU-FZ-143-1997
+  duplicate_source_ids_created: 0
+  stale_anchors_rejected:
+    - source: "143-ФЗ"
+      locator: "статья 12"
+      finding: "Утратила силу с 2018-10-01."
+      replacement_route: "статьи 13.1-13.2; для PDN overlap — статья 13.2 пункт 9"
+      classification: VERSION_CONFLICT_STALE_ANCHOR
+primary_publication_events_verified:
+  - act: "Федеральный закон от 11.02.2026 № 22-ФЗ"
+    affects: "143-ФЗ статья 13.2"
+    official_publication_number: "0001202602110017"
+    official_publication_date: "2026-02-11"
+    portal_display_pdf_size: "81 KB"
+    portal_display_pages: 2
+    source_url: "https://publication.pravo.gov.ru/document/0001202602110017"
+    exact_binary_captured: false
+  - act: "Федеральный закон от 28.11.2025 № 430-ФЗ"
+    affects: "326-ФЗ"
+    official_publication_number: "0001202511280092"
+    official_publication_date: "2025-11-28"
+    portal_display_pdf_size: "709 KB"
+    portal_display_pages: 14
+    source_url: "https://publication.pravo.gov.ru/document/0001202511280092"
+    exact_binary_captured: false
+  - act: "Федеральный закон от 20.02.2026 № 29-ФЗ"
+    affects: "326-ФЗ"
+    official_publication_number: "0001202602200050"
+    official_publication_date: "2026-02-20"
+    portal_display_pdf_size: "2716 KB"
+    portal_display_pages: 54
+    source_url: "https://publication.pravo.gov.ru/document/0001202602200050"
+    exact_binary_captured: false
+current_text_findings:
+  - source_id: SEC-SRC-RU-FZ-326-2010
+    locator: "статья 44"
+    finding: >-
+      Current consolidated text treats insured-person information and information about medical care
+      provided to the insured person as restricted-access information subject to protection under Russian law.
+    proof_state: SECONDARY_CURRENT_TEXT_PLUS_PRIMARY_AMENDMENT_EVENTS
+    executable_use_allowed: false
+  - source_id: SEC-SRC-RU-FZ-143-1997
+    locator: "статья 13.2 пункт 9"
+    finding: >-
+      Current consolidated text requires recipients of EGR ZAGS information to protect supplied civil-status
+      registration data under 149-ФЗ and 152-ФЗ.
+    proof_state: SECONDARY_CURRENT_TEXT_PLUS_PRIMARY_AMENDMENT_EVENT
+    executable_use_allowed: false
+acquisition:
+  attempts: 2
+  exact_binary_successes: 0
+  downloaded: 0
+  immutable: 0
+  bytes_downloaded: 0
+  hashes_recorded: 0
+  blocker: >-
+    Official publication metadata and publication numbers were reachable, but the runtime did not expose
+    exact consolidated-law binary bytes suitable for MIME, exact byte length and SHA-256 capture.
+metrics:
+  master_sources_found_total: 13
+  new_sources_this_pass: 2
+  reused_sources_total: 1
+  pending_immutable_total: 12
+  primary_publication_verified_total: 3
+  primary_amendment_events_verified_this_pass: 3
+  overlap_edges_added_this_pass: 2
+  stale_or_repealed_anchors_rejected_this_pass: 1
+  download_success_rate_this_pass: 0.0
+  immutable_rate_total: 0.0
+quality_gate:
+  source_acquired_promotions: 0
+  immutable_promotions: 0
+  executable_relation_promotions: 0
+  reason: "Proof floor preserved: no exact bytes/hash and incomplete current version chains."
+next:
+  - "Acquire exact current 326-ФЗ artifact; fingerprint; then compile Article 44 structure/chunks/concepts/requirements."
+  - "Acquire exact current 143-ФЗ artifact; fingerprint; compile Article 13.2; preserve stale Article 12 as version-conflict evidence only."
+  - "Verify 04.08.2026 № 329-ФЗ primary publication event affecting 326-ФЗ Article 44 and 26.07.2026 № 264-ФЗ affecting 143-ФЗ Article 13.2."
+  - "Continue sector discovery only after reconciliation against existing source IDs; no duplicate nodes."
