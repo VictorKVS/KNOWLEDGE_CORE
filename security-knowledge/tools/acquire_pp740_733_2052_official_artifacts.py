@@ -4,6 +4,7 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
+import signal
 import ssl
 import time
 import urllib.parse
@@ -39,19 +40,28 @@ TARGETS = (
 )
 
 
-def fetch(url: str, attempts: int = 4) -> tuple[bytes, dict[str, str], str]:
+def fetch(url: str, attempts: int = 2) -> tuple[bytes, dict[str, str], str]:
     last_error: Exception | None = None
     context = ssl.create_default_context()
     for attempt in range(1, attempts + 1):
         try:
+            signal.signal(
+                signal.SIGALRM,
+                lambda *_: (_ for _ in ()).throw(TimeoutError("60-second total fetch limit")),
+            )
+            signal.alarm(60)
+            print(f"FETCH attempt={attempt}/{attempts} url={url}", flush=True)
             request = urllib.request.Request(
                 url,
                 headers={"User-Agent": "KNOWLEDGE_CORE provenance acquisition/1.0"},
             )
             with urllib.request.urlopen(request, timeout=45, context=context) as response:
                 headers = {key.lower(): value for key, value in response.headers.items()}
-                return response.read(), headers, response.geturl()
+                payload = response.read()
+                signal.alarm(0)
+                return payload, headers, response.geturl()
         except Exception as exc:  # network errors must remain visible after bounded retries
+            signal.alarm(0)
             last_error = exc
             if attempt < attempts:
                 time.sleep(attempt * 2)
