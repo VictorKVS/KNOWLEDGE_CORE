@@ -3,6 +3,7 @@
 **Product ID:** `FATHER-AC-0001`  
 **Тип:** самостоятельный аналитический продукт и мыслительный контур FATHER  
 **Статус:** `M0 — SYSTEM DESIGN`  
+**Сайт:** https://father-analytical-center.cocmosxx2.chatgpt.site  
 **Связь:** Search & OSINT Center добывает и проверяет информацию; Analytical Center превращает её в решения и ценность.
 
 ## 1. Назначение
