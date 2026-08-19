@@ -8,6 +8,7 @@ import yaml
 SCHEMA = Path("security-knowledge/evidence/nkcki-order-2-2026-payload-schema-v1.yaml")
 METHOD = Path("security-knowledge/threat-modeling/nkcki-attack-type-initial-data-2026-taxonomy-v1.yaml")
 FIXTURES = Path("security-knowledge/evidence/nkcki-order-2-2026-payload-schema-regression-v1.json")
+PUBLICATION_STATUS = Path("security-knowledge/evidence/nkcki-automated-interaction-protocol-publication-status-2026-08-19.yaml")
 
 
 def load_yaml(path):
@@ -23,7 +24,7 @@ def field_map(schema):
     return {row["id"]: row for row in rows}
 
 
-def evaluate(case, schema, method):
+def evaluate(case, schema, method, publication_status):
     query = case["query"]
     fields = field_map(schema)
     if query == "expanded_field_count":
@@ -59,10 +60,26 @@ def evaluate(case, schema, method):
         return "PENDING_DO_NOT_INFER_FROM_LABEL" if schema["extraction"]["machine_serialization_status"].startswith("PENDING") else "VALIDATE_PROTOCOL"
     if query == "partial_method_evidence":
         return "SEND_AVAILABLE_MATERIALS" if case["available"] > 0 and case["missing"] > 0 else "REQUIRES_REVIEW"
+    if query == "public_connection_page_authority":
+        if case["connection_steps_published"] and not case["protocol_artifact_located"]:
+            return "BLOCK_AS_TRANSPORT_SCHEMA"
+        return "REQUIRES_PROTOCOL_VALIDATION"
+    if query == "vendor_serialization_claim":
+        if case["vendor_says_xml"] and not case["authoritative_protocol_bound"]:
+            return "BLOCK_UNAUTHORITATIVE_VENDOR_MAPPING"
+        return "REQUIRES_REVIEW"
+    if query == "authenticated_instruction_status":
+        if case["request_route_known"] and not case["artifact_acquired"]:
+            return "PENDING_AUTHORIZED_ACQUISITION"
+        return "REQUIRES_REVIEW"
+    if query == "printed_schema_without_protocol":
+        if case["order2_hash_bound"] and not case["protocol_acquired"]:
+            return "ALLOW_PRINTED_TABLE_VALIDATION_ONLY"
+        return "REQUIRES_REVIEW"
     raise AssertionError(f"Unhandled query: {query}")
 
 
-def structural_checks(schema, method):
+def structural_checks(schema, method, publication_status):
     assert len(schema["shared_fields"]) == 35
     assert len(schema["attack_specific_fields"]) == 3
     assert len(schema["incident_specific_fields"]) == 18
@@ -97,23 +114,31 @@ def structural_checks(schema, method):
     method_pdf = Path(method["source"]["repository_artifact"])
     assert sha256(order_pdf) == schema["source"]["sha256"]
     assert sha256(method_pdf) == method["source"]["sha256"]
+    assert publication_status["status"] == "AUTHORITATIVE_PUBLIC_DISCOVERY_COMPLETE_PROTOCOL_NOT_LOCATED_PUBLICLY"
+    assert len(publication_status["official_public_surfaces_checked"]) == 4
+    assert all(not row["protocol_artifact_link_observed"] for row in publication_status["official_public_surfaces_checked"])
+    assert publication_status["machine_behavior"]["automated_transport_serialization"].startswith("PENDING")
+    assert publication_status["machine_behavior"]["guessed_json_xml_keys"] == "BLOCK"
+    assert publication_status["red_team"]["critical_gap_created"] is False
+    assert publication_status["red_team"]["high_gap_created"] is False
 
 
 def main():
     schema = load_yaml(SCHEMA)
     method = load_yaml(METHOD)
+    publication_status = load_yaml(PUBLICATION_STATUS)
     fixtures = json.loads(FIXTURES.read_text(encoding="utf-8"))
-    structural_checks(schema, method)
+    structural_checks(schema, method, publication_status)
     failures = []
     for case in fixtures["cases"]:
-        actual = evaluate(case, schema, method)
+        actual = evaluate(case, schema, method, publication_status)
         if actual != case["expected"]:
             failures.append((case["id"], case["expected"], actual))
     if failures:
         for failure in failures:
             print("FAIL", failure)
         raise SystemExit(1)
-    print("PASS: 38 attack fields; 53 incident fields; 7 method types; " f"{len(fixtures['cases'])} regression cases")
+    print("PASS: 38 attack fields; 53 incident fields; 7 method types; " f"{len(fixtures['cases'])} regression cases; public protocol boundary fail-closed")
 
 
 if __name__ == "__main__":
