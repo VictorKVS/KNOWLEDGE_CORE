@@ -16,6 +16,36 @@ Every important engineering choice should be traceable through:
 
 `Problem → Context → Constraints → Alternatives → Evidence → Decision → Implementation → Tests → Security Review → Measurement → Decision Memory`
 
+## Knowledge Intelligence Core — мозг FATHER
+
+Поисковые, исследовательские и OSINT-структуры FATHER образуют его **интеллектуальное ядро**. Они непрерывно отслеживают современные исследования, новые стандарты, технологии, библиотеки, алгоритмы, уязвимости, практики и отраслевой опыт. Их задача — не просто собирать информацию, а превращать её в проверяемую инженерную память.
+
+> Новизна обнаруживается быстро, но в рабочий контур допускаются прежде всего устойчивые, надёжные и воспроизводимые решения. Передовые методы сохраняются как кандидаты и проходят сравнение с проверенными альтернативами в конкретной задаче и среде.
+
+Рабочий принцип:
+
+```
+SEARCH / OSINT / SCIENCE
+→ provenance и legal check
+→ claims, условия и ограничения
+→ сравнение алгоритмов и комбинаций
+→ sandbox / benchmark / reproduction
+→ verified pattern или rejected hypothesis
+→ skill / agent / workflow
+→ production outcome
+→ обновлённая Decision Memory
+```
+
+FATHER не ищет один «лучший алгоритм вообще». Он выбирает **подходящую комбинацию для конкретной задачи** с учётом качества, безопасности, устойчивости, стоимости, задержки, оборудования, данных и возможности отката. Лучшие подтверждённые комбинации становятся Golden Patterns; отрицательные результаты и границы применимости сохраняются, чтобы агенты не повторяли уже исследованные ошибки.
+
+Это наиболее ценный слой системы — её **мозг, знания и интеллектуальные активы**. Поэтому для каждого знания обязательны стабильный ID, источник, версия, доказательство, область применимости, уровень зрелости и история проверок. Популярность, GitHub stars или громкое название не заменяют доказательств.
+
+Подробности:
+
+- [Конвейер знаний, обучения и фабрика агентов](docs/FATHER_KNOWLEDGE_ACQUISITION_AND_AGENT_FACTORY_PLAN.md) — что ищем, как извлекаем, храним, связываем, проверяем, комбинируем и превращаем в навыки и агентов.
+- [Реестр библиотек и источников FATHER](docs/FATHER_LIBRARY_REGISTRY.md) — нормативные, научные, инженерные, OSINT, ML/RL, orchestration и eval-источники.
+- [Модульный продуктовый план FATHER](docs/FATHER_MODULAR_PRODUCT_PLAN.md) — как интеллектуальное ядро превращается в самостоятельные продукты и компоненты.
+
 ## Knowledge domains
 
 - [**Security Knowledge Base**](security-knowledge/README.md) — document-first regulatory knowledge graph: complete source/version history, structural chunks, definitions, atomic requirements, intra/inter-document links, applicability, controls, checks, evidence, audit, FSTEC/FSB solution registries, future security architecture and development roadmap.
