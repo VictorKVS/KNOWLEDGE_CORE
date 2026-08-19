@@ -92,6 +92,34 @@ jobs:
           openssl x509 -in "$root_ca" -noout -subject -issuer -dates -fingerprint -sha256
           openssl x509 -in "$sub_ca" -noout -subject -issuer -dates -fingerprint -sha256
 
+      - name: Inspect current official TLS certificate chains
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          for host in www.cert.gov.ru gossopka.ru; do
+            chain="$RUNNER_TEMP/${host}.presented-chain.pem"
+            timeout 30 openssl s_client \
+              -connect "${host}:443" -servername "$host" -showcerts \
+              </dev/null > "$chain" 2>"${chain}.stderr" || true
+
+            echo "TLS endpoint: $host"
+            awk \
+              '/-----BEGIN CERTIFICATE-----/{n++; out=sprintf("%s.%02d.pem", base, n)} n{print > out} /-----END CERTIFICATE-----/{close(out)}' \
+              base="$chain" "$chain"
+
+            found=0
+            for cert in "${chain}".*.pem; do
+              [[ -f "$cert" ]] || continue
+              found=1
+              openssl x509 -in "$cert" -noout \
+                -subject -issuer -dates -fingerprint -sha256
+              openssl x509 -in "$cert" -noout -text \
+                | sed -n 's/^[[:space:]]*CA Issuers - URI:/CA Issuers URI: /p'
+            done
+            [[ "$found" -eq 1 ]]
+          done
+
       - name: Fetch and validate exact official-origin PDFs
         id: acquire
         shell: bash
