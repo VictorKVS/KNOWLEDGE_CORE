@@ -42,6 +42,7 @@ FATHER не ищет один «лучший алгоритм вообще». О
 
 Подробности:
 
+- [**FATHER Search & Analytics Center**](docs/FATHER_SEARCH_ANALYTICS_CENTER_PRODUCT.md) — самостоятельный поисково-аналитический центр, научно-OSINT полигон и фабрика проверенных знаний.
 - [Конвейер знаний, обучения и фабрика агентов](docs/FATHER_KNOWLEDGE_ACQUISITION_AND_AGENT_FACTORY_PLAN.md) — что ищем, как извлекаем, храним, связываем, проверяем, комбинируем и превращаем в навыки и агентов.
 - [Реестр библиотек и источников FATHER](docs/FATHER_LIBRARY_REGISTRY.md) — нормативные, научные, инженерные, OSINT, ML/RL, orchestration и eval-источники.
 - [Модульный продуктовый план FATHER](docs/FATHER_MODULAR_PRODUCT_PLAN.md) — как интеллектуальное ядро превращается в самостоятельные продукты и компоненты.
