@@ -1,0 +1,28 @@
+name: PP 740 733 2052 Official Artifact Acquisition
+
+on:
+  pull_request:
+    paths:
+      - "security-knowledge/tools/acquire_pp740_733_2052_official_artifacts.py"
+      - ".github/workflows/pp740-733-2052-official-artifact-acquisition.yml"
+  workflow_dispatch:
+
+jobs:
+  acquire:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Acquire exact official-origin records and PDF bytes
+        run: |
+          python security-knowledge/tools/acquire_pp740_733_2052_official_artifacts.py \
+            --output-dir /tmp/pp740-733-2052-official
+      - name: Upload byte-preserving acquisition bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: pp740-733-2052-official-origin
+          path: /tmp/pp740-733-2052-official/
+          if-no-files-found: error
+          retention-days: 30
