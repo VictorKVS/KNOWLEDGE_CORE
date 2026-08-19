@@ -46,8 +46,11 @@ targets:
     allowed_claim_level: CURRENT_TEXT_AND_EFFECTIVE_DATE
 
 acquisition_attempt:
-  github_workflow_run: https://github.com/VictorKVS/KNOWLEDGE_CORE/actions/runs/32256545021
-  source_commit: 5cb437ae98ceec8e3f04d7d4139c817070ba075d
+  github_workflow_run: https://github.com/VictorKVS/KNOWLEDGE_CORE/actions/runs/32257398513
+  source_commit: 511fcd5e7208b0806d670e861145d6e6cdd64436
+  workflow_conclusion: success
+  artifact_id: 9366904639
+  receipt_path: security-knowledge/evidence/pp740-733-2052-official-origin-acquisition-receipt.json
   transport: DIRECT_GITHUB_ACTIONS_HTTPS
   exact_query_fields:
     - Block=government
@@ -63,6 +66,15 @@ acquisition_attempt:
     The official API transport did not return before the bounded timeout. This is not
     evidence that the decree is absent, unpublished, repealed or assigned any guessed
     electronic publication number.
+
+prior_attempt:
+  github_workflow_run: https://github.com/VictorKVS/KNOWLEDGE_CORE/actions/runs/32256545021
+  source_commit: 5cb437ae98ceec8e3f04d7d4139c817070ba075d
+  workflow_conclusion: failure
+  result: OFFICIAL_API_TOTAL_TIMEOUT_2_ATTEMPTS_X_60_SECONDS_ON_FIRST_TARGET
+  significance: >-
+    This attempt exposed the transport failure before the workflow was changed to emit
+    a fail-closed receipt and upload diagnostics without promoting evidence status.
 
 provenance_rules:
   - id: PP-PROV-001

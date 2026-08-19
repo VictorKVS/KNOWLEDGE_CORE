@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 from __future__ import annotations
 
+import json
 import re
 from pathlib import Path
 
@@ -10,6 +11,7 @@ import yaml
 ROOT = Path(__file__).resolve().parents[2]
 MANIFEST = ROOT / "security-knowledge/provenance/pp740-733-2052-official-artifact-acquisition-manifest-v1.yaml"
 FIXTURES = ROOT / "security-knowledge/provenance/pp740-733-2052-official-artifact-provenance-regression-v1.yaml"
+RECEIPT = ROOT / "security-knowledge/evidence/pp740-733-2052-official-origin-acquisition-receipt.json"
 SHA256 = re.compile(r"^[0-9a-f]{64}$")
 
 
@@ -40,6 +42,7 @@ def evaluate(case: dict) -> str:
 def main() -> int:
     manifest = yaml.safe_load(MANIFEST.read_text(encoding="utf-8"))
     fixtures = yaml.safe_load(FIXTURES.read_text(encoding="utf-8"))
+    receipt = json.loads(RECEIPT.read_text(encoding="utf-8"))
     assert manifest["status"] == "PRIMARY_METADATA_PARTIAL_IMMUTABLE_BYTES_PENDING"
     assert len(manifest["targets"]) == 3
     assert len(manifest["provenance_rules"]) == 6
@@ -49,6 +52,21 @@ def main() -> int:
     attempt = manifest["acquisition_attempt"]
     assert attempt["result"] == "OFFICIAL_API_TOTAL_TIMEOUT_2_ATTEMPTS_X_60_SECONDS_ON_FIRST_TARGET"
     assert attempt["later_targets_attempted"] is False
+    assert attempt["workflow_conclusion"] == "success"
+    assert attempt["receipt_path"] == str(RECEIPT.relative_to(ROOT))
+    assert receipt["status"] == "PARTIAL_OR_TRANSPORT_BLOCKED"
+    assert len(receipt["artifacts"]) == 3
+    assert receipt["artifacts"][0]["acquisition_status"] == "PENDING_TRANSPORT_OR_EXACT_MATCH_UNAVAILABLE"
+    assert all(
+        row["eo_number"] is None
+        and row["bytes_preserved"] is False
+        and row["sha256"] is None
+        for row in receipt["artifacts"]
+    )
+    assert all(
+        row["acquisition_status"] == "PENDING_NOT_ATTEMPTED_AFTER_SHARED_ORIGIN_FAILURE"
+        for row in receipt["artifacts"][1:]
+    )
     assert len(fixtures["cases"]) == 12
     failures = []
     for case in fixtures["cases"]:
@@ -59,7 +77,7 @@ def main() -> int:
         for failure in failures:
             print("FAIL", failure)
         return 1
-    print("PASS: 3 acquisition targets; 6 provenance rules; 12 fail-closed cases")
+    print("PASS: 3 acquisition targets; 6 provenance rules; 12 fail-closed cases; diagnostic receipt preserved")
     return 0
 
 
