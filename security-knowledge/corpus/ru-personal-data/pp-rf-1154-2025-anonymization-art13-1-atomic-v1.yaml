@@ -1,0 +1,213 @@
+schema_version: "1.0"
+id: RU-PP-1154-2025-ANONYMIZATION-ART13-1-ATOMIC-V1
+title: Clause-level requirements, methods and rules under Government Decree No. 1154 of 1 August 2025
+scope: >-
+  Anonymization performed after an operator receives a Ministry of Digital Development
+  requirement under Federal Law No. 152-FZ article 13.1 part 2, including the separately
+  named authorized Moscow executive body. The model must fail closed outside this trigger.
+
+source:
+  authority: Government_of_the_Russian_Federation
+  document_number: "1154"
+  signed_date: "2025-08-01"
+  official_publication:
+    publication_number: "0001202508050011"
+    publication_date: "2025-08-05"
+    page_count: 12
+    url: https://publication.pravo.gov.ru/document/0001202508050011
+  current_text_interfaces:
+    decree: https://www.consultant.ru/document/cons_doc_LAW_511607/92d969e26a4326c5d02fa79b8f9cf4994ee5633b/
+    requirements: https://www.consultant.ru/document/cons_doc_LAW_511607/831f4af4eebb4fe9de29e6dc54aeee734de3a0a5/
+    methods: https://www.consultant.ru/document/cons_doc_LAW_511607/a5004457c8f4a4e6fac596f43bc19eea4f57967d/
+    rules: https://www.consultant.ru/document/cons_doc_LAW_511607/d3d38cd263a833779d35b1d4892762b85632b1b4/
+  effective_from:
+    date: "2025-09-01"
+    basis: DECREE_CLAUSE_2_EXPLICIT
+  legal_basis: FEDERAL_LAW_152_FZ_ARTICLE_13_1
+
+verification_boundary:
+  identity_publication_date_and_page_count: VERIFIED_PRIMARY
+  clause_text: CROSS_CHECKED_WITH_CURRENT_LEGAL_TEXT_SECTION_INTERFACES
+  immutable_official_pdf_bytes: PENDING
+  status_search_as_of: "2026-08-19"
+  amendment_or_repeal_located: false
+  status_caution: >-
+    A bounded official-domain and current-text search did not locate a later amendment or
+    repeal. This is not proof that no such act exists; lifecycle monitoring remains required.
+
+applicability:
+  trigger: RECEIPT_OF_MINDIGITAL_REQUIREMENT_UNDER_152FZ_ART13_1_PART2_OR_AUTHORIZED_MOSCOW_BODY
+  fail_closed_rule: >-
+    Do not apply this decree merely because personal data are anonymized or because
+    Roskomnadzor Order No. 140 also became effective on 2025-09-01.
+
+requirements:
+  - id: PP1154-REQ-2A
+    locator: requirements.clause_2.subclause_a
+    obligation: >-
+      Apply the approved rules and methods while taking the individualized Ministry of
+      Digital Development requirement into account.
+    evidence_examples: [received_requirement, method_selection_record]
+  - id: PP1154-REQ-2B
+    locator: requirements.clause_2.subclause_b
+    obligation: Store personal data separately from the personal data produced by anonymization.
+    evidence_examples: [storage_separation_architecture, access_matrix]
+  - id: PP1154-REQ-2C
+    locator: requirements.clause_2.subclause_c
+    obligation: Apply personal-data security measures required by Federal Law No. 152-FZ to the anonymized data.
+    evidence_examples: [security_control_mapping, control_operation_records]
+  - id: PP1154-REQ-2D
+    locator: requirements.clause_2.subclause_d
+    obligation: Exclude information whose access is restricted by federal law from the data to be provided.
+    evidence_examples: [restricted_information_filter, exclusion_test]
+  - id: PP1154-REQ-2E
+    locator: requirements.clause_2.subclause_e
+    obligation: >-
+      Ensure that the selected algorithms and software permit delivery to the Ministry's
+      information system without loss or alteration of the anonymized data.
+    evidence_examples: [delivery_integrity_test, transformation_reconciliation]
+  - id: PP1154-REQ-2F
+    locator: requirements.clause_2.subclause_f
+    obligation: >-
+      Support modification, supplementation, maintenance of relevance and repeated
+      anonymization while preventing restoration of identifiable source data and preserving
+      integrity and conformity with the individualized requirement.
+    evidence_examples: [update_procedure, reanonymization_test, non_restoration_test]
+
+method_catalog:
+  methods:
+    - id: IDENTIFIER_INTRODUCTION
+      locator: methods.clause_2.subclause_a
+      semantics: Replace part of the data with identifiers and maintain a correspondence table.
+    - id: COMPOSITION_OR_SEMANTICS_CHANGE
+      locator: methods.clause_2.subclause_b
+      semantics: Replace data with statistical results or delete data elements.
+    - id: DECOMPOSITION
+      locator: methods.clause_2.subclause_c
+      semantics: Divide the array into parts and store those parts separately.
+    - id: SHUFFLING
+      locator: methods.clause_2.subclause_d
+      semantics: Permute individual records or groups of records within the array.
+    - id: TRANSFORMATION
+      locator: methods.clause_2.subclause_e
+      semantics: >-
+        Aggregate or generalize data elements, including setting a number of distinct values,
+        while preserving the distribution of the original values.
+
+workflow_rules:
+  - id: PP1154-RULE-1
+    locator: rules.clause_1
+    rule: Apply these rules only to the article 13.1 part 2 demand route or the named Moscow route.
+  - id: PP1154-RULE-2
+    locator: rules.clause_2
+    actor: Ministry_of_Digital_Development
+    rule: Prepare the individualized requirement, including its purpose, on the basis of research materials.
+  - id: PP1154-RULE-3
+    locator: rules.clause_3
+    actor: Ministry_of_Digital_Development
+    rule: >-
+      Research materials must substantiate methods and parameters, element contents and formats,
+      sampling criteria considering threat types under Government Decree No. 961, and a quantitative
+      re-identification assessment under Ministry recommendations coordinated with the FSB.
+  - id: PP1154-RULE-4
+    locator: rules.clause_4
+    actor: Ministry_of_Digital_Development
+    rule: >-
+      Send research materials to the FSB and, for the listed financial entities, the Bank of Russia
+      before the draft requirement is sent for approval.
+    deadline_ref: PRE_APPROVAL_RESEARCH_LEAD_TIME
+  - id: PP1154-RULE-5
+    locator: rules.clause_5
+    actors: [FSB, Roskomnadzor, Bank_of_Russia_when_applicable]
+    rule: Agree the individualized requirement within the stated coordination period after receipt.
+    deadline_ref: REGULATOR_AGREEMENT_CLOCK
+  - id: PP1154-RULE-6
+    locator: rules.clause_6
+    actor: Operator_or_authorized_Moscow_body
+    rule: >-
+      Apply the methods, parameters and data-provision deadline stated in the individualized
+      requirement, prepared with the relevant recommendations and Decree No. 961 threat types.
+    deadline_ref: OPERATOR_DELIVERY_CLOCK
+  - id: PP1154-RULE-7
+    locator: rules.clause_7
+    actor: Operator_or_authorized_Moscow_body
+    condition: METHODS_A_THROUGH_D
+    rule: >-
+      Use free Ministry software or other software implementing methods (a)-(d), only after
+      conformity with Ministry requirements coordinated with the FSB has been confirmed.
+  - id: PP1154-RULE-8
+    locator: rules.clause_8
+    actor: Operator_or_authorized_Moscow_body
+    condition: METHODS_A_THROUGH_D
+    rule: Provide the resulting anonymized data to the Ministry information system under article 13.1.
+  - id: PP1154-RULE-9
+    locator: rules.clause_9
+    actor: Operator_or_authorized_Moscow_body
+    condition: METHOD_E_TRANSFORMATION
+    routes:
+      - id: OWN_SOFTWARE_OR_HARDWARE
+        obligations:
+          - Make the anonymized data available for automated provision through the unified data-access service or SMEV under Decree No. 966.
+          - Send the method parameters to the Ministry of Digital Development.
+      - id: FREE_MINDIGITAL_SOFTWARE
+        obligations:
+          - Use the free software referenced in clause 7.
+          - Provide the anonymized data to the Ministry information system.
+
+deadlines:
+  - id: PRE_APPROVAL_RESEARCH_LEAD_TIME
+    value: 30
+    unit: CALENDAR_DAYS
+    trigger: BEFORE_DRAFT_REQUIREMENT_SENT_FOR_APPROVAL
+    actor: Ministry_of_Digital_Development
+    exception: DIFFERENT_PERIOD_IN_ENUMERATED_HIGH_LEVEL_INSTRUCTION_OR_DECISION
+    not_operator_delivery_deadline: true
+  - id: REGULATOR_AGREEMENT_CLOCK
+    value: 15
+    unit: CALENDAR_DAYS
+    trigger: RECEIPT_OF_DRAFT_REQUIREMENT_FOR_APPROVAL
+    actors: [FSB, Roskomnadzor, Bank_of_Russia_when_applicable]
+    exception: DIFFERENT_PERIOD_IN_ENUMERATED_HIGH_LEVEL_INSTRUCTION_OR_DECISION
+    not_operator_delivery_deadline: true
+  - id: OPERATOR_DELIVERY_CLOCK
+    value_source: INDIVIDUALIZED_MINDIGITAL_REQUIREMENT
+    actor: Operator_or_authorized_Moscow_body
+
+dependencies:
+  - id: RU_GOV_PP_961_2025
+    relation: DEFINES_THREAT_TYPES_AND_DATASET_FORMATION_CONTEXT
+    official_publication:
+      publication_number: "0001202506270025"
+      publication_date: "2025-06-27"
+      url: https://publication.pravo.gov.ru/document/0001202506270025
+    atomization_status: PENDING
+  - id: RU_GOV_PP_966_2025
+    relation: DEFINES_INFORMATION_SYSTEM_INTERACTION_ROUTE
+    official_publication:
+      publication_number: "0001202506260044"
+      publication_date: "2025-06-26"
+      url: https://publication.pravo.gov.ru/document/0001202506260044
+    atomization_status: PENDING
+  - id: RU_MINDIGITAL_ORDER_173_2026
+    signed_date: "2026-03-03"
+    relation: METHODOLOGICAL_RECOMMENDATIONS_FOR_REQUIREMENT_PREPARATION
+    current_text_url: https://www.consultant.ru/document/cons_doc_LAW_528407/
+    official_publication_identity: PENDING
+    atomization_status: PENDING
+
+non_requirements:
+  - No general applicability exists absent the article 13.1 part 2 demand trigger or the named Moscow route.
+  - The 30-calendar-day clock is not an operator delivery deadline.
+  - The 15-calendar-day clock is not an operator delivery deadline.
+  - The operator deadline comes from the individualized Ministry requirement, not a universal value in Decree No. 1154.
+  - Roskomnadzor Order No. 140 requirements must not be imported into this regime solely because the effective date is the same.
+  - The method-(e) delivery routes differ from the methods-(a)-(d) route.
+  - No fixed retention period is stated by this decree.
+
+red_team:
+  verdict: PASS_CLAUSE_MAP_FAIL_CLOSED_PROVENANCE
+  critical_gap_created: false
+  high_gap_created: false
+  residuals:
+    - MEDIUM_IMMUTABLE_OFFICIAL_PDF_BYTES_PENDING
+    - MEDIUM_DEPENDENCY_ATOMIZATION_PENDING

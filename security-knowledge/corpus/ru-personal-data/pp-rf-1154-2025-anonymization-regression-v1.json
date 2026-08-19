@@ -1,0 +1,25 @@
+{
+  "schema_version": "1.0",
+  "suite_id": "PP1154-ANONYMIZATION-REGRESSION-V1",
+  "cases": [
+    {"id":"PP1154-REG-001","query":"scope","mindigital_requirement_received":false,"authorized_moscow_body":false,"expected":"OUT_OF_SCOPE"},
+    {"id":"PP1154-REG-002","query":"scope","mindigital_requirement_received":true,"authorized_moscow_body":false,"expected":"IN_SCOPE"},
+    {"id":"PP1154-REG-003","query":"cross_regime_import","source":"RKN_ORDER_140","expected":"BLOCK_CROSS_REGIME_IMPORT"},
+    {"id":"PP1154-REG-004","query":"source_result_storage","joint_storage":true,"expected":"BLOCK"},
+    {"id":"PP1154-REG-005","query":"restricted_information","included":true,"expected":"BLOCK"},
+    {"id":"PP1154-REG-006","query":"delivery_integrity","loss_or_change":true,"expected":"BLOCK"},
+    {"id":"PP1154-REG-007","query":"restore_identity","restores_identifiable_source":true,"expected":"BLOCK"},
+    {"id":"PP1154-REG-008","query":"software_conformity","method":"IDENTIFIER_INTRODUCTION","confirmed":false,"expected":"BLOCK"},
+    {"id":"PP1154-REG-009","query":"software_conformity","method":"SHUFFLING","confirmed":true,"expected":"ALLOW_METHODS_A_THROUGH_D"},
+    {"id":"PP1154-REG-010","query":"method_e_route","route":"OWN_SOFTWARE_OR_HARDWARE","expected":"AUTOMATED_AVAILABILITY_AND_PARAMETER_NOTICE"},
+    {"id":"PP1154-REG-011","query":"method_e_route","route":"FREE_MINDIGITAL_SOFTWARE","expected":"PROVIDE_TO_MINDIGITAL_INFORMATION_SYSTEM"},
+    {"id":"PP1154-REG-012","query":"operator_deadline","claimed_days":30,"expected":"BLOCK_NOT_OPERATOR_DEADLINE"},
+    {"id":"PP1154-REG-013","query":"operator_deadline","claimed_days":15,"expected":"BLOCK_NOT_OPERATOR_DEADLINE"},
+    {"id":"PP1154-REG-014","query":"operator_deadline_source","expected":"INDIVIDUALIZED_MINDIGITAL_REQUIREMENT"},
+    {"id":"PP1154-REG-015","query":"bank_of_russia_coordination","listed_financial_entity":false,"expected":"NOT_AUTOMATICALLY_REQUIRED"},
+    {"id":"PP1154-REG-016","query":"dependency","topic":"threat_types","expected":"ROUTE_TO_PP_961"},
+    {"id":"PP1154-REG-017","query":"dependency","topic":"method_e_interaction","expected":"ROUTE_TO_PP_966"},
+    {"id":"PP1154-REG-018","query":"retention_period","expected":"NOT_STATED_DO_NOT_INVENT"},
+    {"id":"PP1154-REG-019","query":"effective_date","expected":"2025-09-01_EXPLICIT"}
+  ]
+}
