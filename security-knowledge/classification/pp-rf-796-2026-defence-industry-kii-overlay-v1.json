@@ -1,0 +1,99 @@
+{
+  "record_id": "PP-RF-796-2026-DEFENCE-INDUSTRY-KII-OVERLAY-V1",
+  "status": "VERIFIED_PRIMARY_IMMUTABLE",
+  "as_of": "2026-08-19",
+  "title": "Sector-specific CII categorization overlay for the defence industry",
+  "lifecycle": {
+    "state_as_of": "IN_FORCE",
+    "effective_from": "2026-07-07",
+    "effective_date_confidence": "DERIVED_FROM_PRIMARY_PUBLICATION_AND_GENERAL_RULE",
+    "note": "The act states no special commencement rule; the date follows first official publication on 2026-06-29 and the general seven-day rule."
+  },
+  "act": {
+    "type": "Government Resolution",
+    "number": "796",
+    "act_date": "2026-06-27",
+    "official_publication_number": "0001202606290031",
+    "official_publication_date": "2026-06-29",
+    "legal_basis": "Federal Law 187-FZ article 6 part 2 point 5"
+  },
+  "source": {
+    "official_document_url": "https://publication.pravo.gov.ru/document/0001202606290031",
+    "official_pdf_url": "http://publication.pravo.gov.ru/file/pdf?eoNumber=0001202606290031",
+    "preserved_artifact": "security-knowledge/evidence/primary-artifacts/2026/pp-rf-796-2026-0001202606290031.pdf",
+    "mime": "application/pdf",
+    "byte_length": 3722073,
+    "sha256": "6237b4167295d12b35115f65690e449528a06b0be6c9deac747a1395c23e74c4",
+    "pdf_pages": 16,
+    "encrypted": false,
+    "javascript": false,
+    "retrieved_at": "2026-08-19T03:07:57+03:00"
+  },
+  "governance_rules": [
+    {"id":"PP796-C1-SCOPE","clause":"1","rule":"Applies to IS, telecommunication networks and industrial control systems functioning in the defence industry."},
+    {"id":"PP796-C2-PURPOSE","clause":"2","rule":"Defines sector-specific establishment and calculation of significance indicators for assigning a CII category."},
+    {"id":"PP796-C3-COMPOSITE-LAYER","clause":"3","required_sources":["FEDERAL_LAW_187_FZ_ARTICLE_7","PP_RF_127_2018","PP_RF_796_2026"]},
+    {"id":"PP796-C4-PERMANENT-COMMISSION","clause":"4","rule":"The CII-subject head creates a permanent categorization commission under PP 127 clauses 11-13."},
+    {"id":"PP796-C5-OBJECTS-AND-PROCESSES","clause":"5","rule":"Identify objects to be categorized and processes whose disruption or termination may disrupt or terminate those objects."}
+  ],
+  "submission_and_lifecycle_rules": [
+    {"id":"PP796-C6-MINPROMTORG-ROUTE","clause":"6","actor":"CII_SUBJECT","trigger":"AFTER_COMPLETION_OF_CATEGORY_ASSIGNMENT","recipient":"ORGANIZATION_DESIGNATED_BY_MINPROMTORG_UNDER_PP127_CLAUSE_19_3_PARAGRAPH_3","documents":["COPIES_OF_COMMISSION_MEETING_MINUTES","COPIES_OF_OBJECT_CATEGORIZATION_ACTS"],"timing":{"kind":"NO_EXPLICIT_NUMERIC_DEADLINE"}},
+    {"id":"PP796-C9-REVIEW-CADENCE","clause":"9","minimum_review_intervals":[{"decision":"NO_CATEGORY_REQUIRED","value":1,"unit":"YEAR"},{"category":"THIRD","value":2,"unit":"YEAR"},{"category":"SECOND","value":3,"unit":"YEAR"},{"category":"FIRST","value":5,"unit":"YEAR"}],"additional_triggers":"PP127_CLAUSE_19_1"}
+  ],
+  "indicator_and_dependency_rules": [
+    {"id":"PP796-C7-APPLICABLE-POSITIONS","clause":"7","positions":["1","2","3","4","6","7","8","9","10","10^1","10^2","10^3","10^4","10^5","10^6","10^7","11","12","13","13^1"]},
+    {"id":"PP796-C8-DEPENDENCY-HIGHEST","clause":"8","rule":"When one CII object depends on another, including another subject's object, assign the highest category resulting from its own categorization or the depended-on object's categorization."},
+    {"id":"PP796-C10-SECTOR-SIGNS","clause":"10","signs":["OBJECT_USED_FOR_STATE_DEFENCE_ORDER_GOODS_WORKS_OR_SERVICES","OBJECT_USED_FOR_CONTRACTS_WITH_QUALITY_CONTROL_AND_ACCEPTANCE_BY_MINISTRY_OF_DEFENCE_MILITARY_REPRESENTATIVES","OBJECT_SUPPORTS_HAZARDOUS_PRODUCTION_WITH_INDUSTRIAL_SAFETY_DECLARATION"]},
+    {"id":"PP796-C11-OBJECT-ASSESSMENT","clause":"11","steps":["MATCH_CLAUSE_10_SECTOR_SIGNS","ASSESS_INCIDENT_DISRUPTION_OR_TERMINATION_PROBABILITY","ASSESS_INCIDENT_CONSEQUENCE_SCALE"]}
+  ],
+  "calculation_rules": [
+    {"id":"PP796-C12-POSITION-1","clause":"12","position":"1","inputs":["OBJECT_INSPECTION","PERSONNEL_INTERVIEW","HAZARDOUS_OBJECT_SAFETY_AND_INDUSTRIAL_SAFETY_DECLARATIONS","PROJECT_AND_OPERATIONAL_DOCUMENTATION","MODELED_LIFE_AND_HEALTH_HARM","EMERGENCY_PLANS_AND_ABNORMAL_EVENT_STATISTICS","HAZARDOUS_FACTORS_AND_SAFE_ZONES","POTENTIALLY_AFFECTED_PERSONS","POTENTIAL_PRODUCT_OR_SERVICE_CONSUMERS"]},
+    {"id":"PP796-C13-POSITION-2","clause":"13","position":"2","method":"WORST_CASE_EXPERT_ASSESSMENT","territory_rule":"Use Russian-region and municipality boundaries for 2(a); use number of residents for 2(b)."},
+    {"id":"PP796-C14-POSITION-3-DELEGATION","clause":"14","position":"3","calculation_source":"TRANSPORT_SECTOR_CII_CATEGORIZATION_OVERLAY"},
+    {"id":"PP796-C15-POSITION-4-DELEGATION","clause":"15","position":"4","calculation_source":"COMMUNICATIONS_SECTOR_CII_CATEGORIZATION_OVERLAY_PP_RF_402_2026"},
+    {"id":"PP796-C16-POSITION-6","clause":"16","position":"6","rule":"Assess contracts and whether the object supports performance of functions of a public body or organization created by federal law."},
+    {"id":"PP796-C17-POSITION-7","clause":"17","position":"7","rule":"Assess contracts and the object's role in negotiations or signing a planned Russian international treaty, by treaty level."},
+    {"id":"PP796-C18-POSITION-8-PERCENT","clause":"18","position":"8","formula":"U8 = U_loss8 / R_annual * 100","lookback":{"value":5,"unit":"YEAR","applies_to":"R_annual"}},
+    {"id":"PP796-C19-POSITION-8-DAMAGE","clause":"19","position":"8","formula":"U_loss8 = C + A + X","zero_rules":["A = 0 when object failure causes no compensable harm","X = 0 when no recorded prior incident data exist"]},
+    {"id":"PP796-C20-FIVE-YEAR-INCOME","clause":"20","position":"8","formula":"R_annual = sum(D_i, i=n..n+4) / 5"},
+    {"id":"PP796-C21-POSITION-8-COMPARE","clause":"21","position":"8","rule":"Compare U8 with PP 127 position 8 thresholds and conclude category or no-category necessity."},
+    {"id":"PP796-C22-OBJECT-COST","clause":"22","position":"8","formula":"C = C_object + C_commissioning + C_other"},
+    {"id":"PP796-C23-COMPENSATION","clause":"23","position":"8","formula":"A = sum(3000000, i=1..m) + sum(300000, i=1..p) + sum(750000, i=1..t) + sum(1000000, i=1..u)","population_source":"INDUSTRIAL_SAFETY_DECLARATION_OR_EXPERT_MAXIMUM_CONSEQUENCE_ANALYSIS"},
+    {"id":"PP796-C24-POSITION-9-PERCENT","clause":"24","position":"9","formula":"U9 = U_loss9 / N_average * 100","budget_window":{"value":3,"unit":"YEAR","text_conflict_guard":"Clause text describes both preceding and planned periods; preserve the text and do not silently normalize the direction."}},
+    {"id":"PP796-C25-BUDGET-AVERAGE","clause":"25","position":"9","formula":"N_average = sum(N_i, i=b..b+2) / 3"},
+    {"id":"PP796-C26-POSITION-9-LOSS","clause":"26","position":"9","formula":"U_loss9 = U_loss8 * K_tax"},
+    {"id":"PP796-C27-TAX-COEFFICIENT","clause":"27","position":"9","formula":"K_tax = R_tax / D","lookback":{"value":3,"unit":"YEAR"}},
+    {"id":"PP796-C28-THREE-YEAR-INCOME","clause":"28","position":"9","formula":"D = sum(D_i, i=b..b+2) / 3","source_wording_guard":"The source describes D_i as forecast income while also calling D a preceding-period average; preserve this drafting tension."},
+    {"id":"PP796-C29-POSITION-9-COMPARE","clause":"29","position":"9","rule":"Compare U9 with PP 127 position 9 thresholds and conclude category or no-category necessity."},
+    {"id":"PP796-C30-POSITIONS-10-10_7-DELEGATION","clause":"30","positions":["10","10^1","10^2","10^3","10^4","10^5","10^6","10^7"],"calculation_source":"BANKING_AND_OTHER_FINANCIAL_MARKET_CII_CATEGORIZATION_OVERLAY_PP_RF_92_2026"},
+    {"id":"PP796-C31-C32-POSITION-11","clauses":["31","32"],"position":"11","method":"WORST_CASE_ENVIRONMENTAL_IMPACT_EXPERT_ASSESSMENT","territory_rule":"Use region or municipality boundaries for 11(a); use residents on affected territories for 11(b)."},
+    {"id":"PP796-C33-POSITION-12","clause":"33","position":"12","rule":"Assess contracts and whether the object supports normal or reserve operation and performance of a command post or situation centre, by its level."},
+    {"id":"PP796-C34-POSITION-13A","clause":"34","position":"13(a)","formula":"DeltaV = (1 - (V_max - V_incident) / V_SDO) * 100"},
+    {"id":"PP796-C35-NONPOSITIVE-STOP","clause":"35","position":"13(a)","condition":"1 - (V_max - V_incident) / V_SDO <= 0","rule":"Do not continue the clause 34 calculation."},
+    {"id":"PP796-C36-V_MAX","clause":"36","position":"13(a)","formula":"V_max = B_max * T_SDO","B_max_lookback":{"value":3,"unit":"YEAR"}},
+    {"id":"PP796-C37-V_INCIDENT","clause":"37","position":"13(a)","formula":"V_incident = T_incident * B_max"},
+    {"id":"PP796-C38-POSITION-13B","clause":"38","position":"13(b)","formula":"T = (1 - t_normal / t_abnormal) * 100","t_normal_lookback":{"value":3,"unit":"YEAR"}},
+    {"id":"PP796-C39-T_ABNORMAL","clause":"39","position":"13(b)","formula":"t_abnormal = sum(T_abnormal_i, i=1..c)","stop_rule":"If the incident completely stops SDO production and no alternative method can replace the object's work, do not calculate the clause 37 and 38 values."},
+    {"id":"PP796-C40-POSITION-13_1","clause":"40","position":"13^1","rule":"Assess contracts and assign based on the subject's status in the head contractor's state-defence-order cooperation chain."}
+  ],
+  "guardrails": [
+    "The overlay is in force from 2026-07-07; this date is derived, not expressly stated in the resolution.",
+    "Clause 6 creates a document route after category assignment but states no number of days or hours.",
+    "Clause 8 requires the highest category when a dependency is found; it is not a permission to downgrade either object.",
+    "Clause 9 intervals are maximum elapsed review intervals, not evidence-retention periods.",
+    "Positions 3, 4 and 10-10^7 delegate calculation to transport, communications and financial-sector overlays respectively; do not invent local formulas.",
+    "Clause 23 compensation constants must not be generalized outside this indicator calculation.",
+    "Preserve the clause 24-28 preceding/planned and actual/forecast drafting tensions; do not silently rewrite the act.",
+    "Clause 35 is a nonpositive-calculation stop condition, not an automatic no-category decision for the whole object.",
+    "The three-year values in clauses 27, 28, 36 and 38 are calculation lookbacks, not retention requirements.",
+    "The clause 39 full-stop/no-alternative condition suppresses the specified calculations; it does not prove absence of significance.",
+    "No category is proven until applicable PP 127 thresholds and all relevant sector dependencies are evaluated."
+  ],
+  "extraction": {
+    "method": "PRIMARY_PDF_VISUAL_REVIEW_WITH_AUTHORITATIVE_TEXT_CROSSCHECK",
+    "ocr_is_evidence": false,
+    "all_primary_pages_rendered": true,
+    "primary_pages_visually_checked": [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16],
+    "authoritative_text_crosschecks": ["https://www.consultant.ru/document/cons_doc_LAW_538143/","https://base.garant.ru/414453089/"]
+  }
+}

@@ -1,0 +1,35 @@
+name: KII sector overlay family scope 2026
+
+on:
+  push:
+    paths:
+      - 'security-knowledge/classification/pp-rf-402-2026-communications-kii-overlay-v1.json'
+      - 'security-knowledge/classification/pp-rf-796-2026-defence-industry-kii-overlay-v1.json'
+      - 'security-knowledge/classification/kii-sector-overlay-family-scope-2026-v1.json'
+      - 'security-knowledge/classification/kii-sector-overlay-family-scope-2026-regression-v1.json'
+      - 'security-knowledge/evidence/primary-artifact-pp-rf-402-2026.json'
+      - 'security-knowledge/evidence/primary-artifact-pp-rf-796-2026.json'
+      - 'security-knowledge/evidence/primary-artifacts/2026/pp-rf-402-2026-0001202604130022.pdf'
+      - 'security-knowledge/evidence/primary-artifacts/2026/pp-rf-796-2026-0001202606290031.pdf'
+      - 'security-knowledge/validators/validate_kii_sector_overlay_family_scope_2026.py'
+      - '.github/workflows/kii-sector-overlay-family-scope-2026.yml'
+  pull_request:
+    paths:
+      - 'security-knowledge/classification/pp-rf-402-2026-communications-kii-overlay-v1.json'
+      - 'security-knowledge/classification/pp-rf-796-2026-defence-industry-kii-overlay-v1.json'
+      - 'security-knowledge/classification/kii-sector-overlay-family-scope-2026-v1.json'
+      - 'security-knowledge/classification/kii-sector-overlay-family-scope-2026-regression-v1.json'
+      - 'security-knowledge/evidence/primary-artifact-pp-rf-402-2026.json'
+      - 'security-knowledge/evidence/primary-artifact-pp-rf-796-2026.json'
+      - 'security-knowledge/validators/validate_kii_sector_overlay_family_scope_2026.py'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Validate PP 402, PP 796 and family-scope reconciliation
+        run: python security-knowledge/validators/validate_kii_sector_overlay_family_scope_2026.py

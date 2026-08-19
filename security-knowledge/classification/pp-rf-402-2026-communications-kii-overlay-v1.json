@@ -1,0 +1,82 @@
+{
+  "record_id": "PP-RF-402-2026-COMMUNICATIONS-KII-OVERLAY-V1",
+  "status": "VERIFIED_PRIMARY_IMMUTABLE",
+  "as_of": "2026-08-19",
+  "title": "Sector-specific CII categorization overlay for communications",
+  "lifecycle": {
+    "state_as_of": "ADOPTED_NOT_IN_FORCE",
+    "effective_from": "2026-09-01",
+    "effective_until_exclusive": "2032-09-01",
+    "basis": "Resolution clause 2 expressly states both dates"
+  },
+  "act": {
+    "type": "Government Resolution",
+    "number": "402",
+    "act_date": "2026-04-13",
+    "official_publication_number": "0001202604130022",
+    "official_publication_date": "2026-04-13"
+  },
+  "source": {
+    "official_document_url": "https://publication.pravo.gov.ru/document/0001202604130022",
+    "official_pdf_url": "http://publication.pravo.gov.ru/file/pdf?eoNumber=0001202604130022",
+    "preserved_artifact": "security-knowledge/evidence/primary-artifacts/2026/pp-rf-402-2026-0001202604130022.pdf",
+    "mime": "application/pdf",
+    "byte_length": 2443943,
+    "sha256": "f666ccb125601dcf0b413ff7aed8f04dba1a74cd0f14655c98fb4f4277c345fc",
+    "pdf_pages": 10,
+    "encrypted": false,
+    "javascript": false,
+    "retrieved_at": "2026-08-19T03:07:57+03:00"
+  },
+  "governance_rules": [
+    {"id":"PP402-C1-PURPOSE","clause":"1","rule":"Defines the sector-specific correspondence and calculation layer used to assign a significance category to a communications-sector CII object."},
+    {"id":"PP402-C2-SUBJECT-SCOPE","clause":"2","subjects":["STATE_BODIES","STATE_INSTITUTIONS","RUSSIAN_LEGAL_ENTITIES_WITH_LAWFUL_CONTROL_OF_COMMUNICATIONS_IS_NETWORKS_OR_ICS","RUSSIAN_LEGAL_ENTITIES_ENABLING_INTERACTION_OF_SUCH_SYSTEMS_OR_NETWORKS"]},
+    {"id":"PP402-C3-COMPOSITE-LAYER","clause":"3","required_sources":["FEDERAL_LAW_187_FZ_ARTICLE_7","PP_RF_127_2018","GOVERNMENT_ORDER_360_R_2026","PP_RF_402_2026"]},
+    {"id":"PP402-C4-SECTOR-SIGN","clause":"4","rule":"Sector significance sign is the number of subscribers, including legal-entity communications-service users, served through the object."}
+  ],
+  "commission_and_assessment_rules": [
+    {"id":"PP402-C5-PERMANENT-COMMISSION","clause":"5","rule":"The subject head establishes a permanent commission under PP 127; specified MinTsifry or Roskomnadzor representatives are included for the listed subordinate entities and universal-service operators only by agreement with the relevant authority."},
+    {"id":"PP402-C6-CONSEQUENCE-ASSESSMENT","clause":"6","steps":["ANALYZE_TECHNOLOGICAL_AND_INFORMATION_PROCESSES","ANALYZE_POTENTIAL_DAMAGE_FROM_ATTACK_CAUSED_INCIDENT","RELATE_PROCESS_DAMAGE_TO_APPLICABLE_PP127_INDICATORS_AND_THRESHOLDS"]},
+    {"id":"PP402-C7-APPLICABILITY-DECISION","clause":"7","outcomes":["INDICATOR_NOT_APPLICABLE","INDICATOR_APPLICABLE"]}
+  ],
+  "indicator_routing_rules": [
+    {"id":"PP402-C8A-POSITIONS-4A-9","clause":"8(a)","positions":["4(a)","9"],"subjects":"ALL_COMMUNICATIONS_CII_SUBJECTS"},
+    {"id":"PP402-C8B-POSITION-4B","clause":"8(b)","positions":["4(b)"],"subjects":"PROCUREMENT_PARTICIPANTS_WITH_CURRENT_COMMUNICATIONS_SERVICE_CONTRACTS_INCLUDING_PUBLIC_CONTRACTS_OR_CBR_CONTRACTS"},
+    {"id":"PP402-C8C-POSITION-6","clause":"8(c)","positions":["6"],"subjects":"C8B_SUBJECTS_WHERE_SERVICE_ABSENCE_PREVENTS_THE_STATED_PUBLIC_BODY_OR_STATUTORY_ORGANIZATION_FUNCTION"},
+    {"id":"PP402-C8D-POSITION-8","clause":"8(d)","positions":["8"],"subjects":"STATE_CORPORATIONS_STATE_UNITARY_ENTERPRISES_STATE_COMPANIES_DEFENCE_INDUSTRY_ORGANIZATIONS_AND_UKAZ_1009_STRATEGIC_ENTITIES"},
+    {"id":"PP402-C9-OTHER-INDICATORS","clause":"9","rule":"Indicators outside clause 8 are considered only in the case provided by PP 127 clause 14^2; this is not a blanket route."}
+  ],
+  "input_and_method_rules": [
+    {"id":"PP402-C10-ADDITIONAL-INPUTS","clause":"10","inputs":["TECHNICAL_AND_PROJECT_DOCUMENTATION_IF_AVAILABLE","CURRENT_ATTACK_SOURCES_AND_METHODS","ATTACK_CAPABLE_SOFTWARE_OR_HARDWARE_CONFIGURATION","POSSIBLE_EXPLOITED_VULNERABILITIES","RANGE_OF_POTENTIAL_RESULTING_INCIDENTS"]},
+    {"id":"PP402-C11-METHODS","clause":"11","methods":["WORST_CONSEQUENCE_QUANTITATIVE_OR_QUALITATIVE_METHOD","ATTACK_INCIDENT_AND_NEGATIVE_CONSEQUENCE_SCENARIO_MODELING_USING_ORDER_360_R_TYPICAL_OBJECT_DATA"]},
+    {"id":"PP402-C12-HIGHEST-VALUE","clause":"12","rule":"Assign the object category by the highest applicable indicator value obtained with the clause 11 methods."}
+  ],
+  "calculation_rules": [
+    {"id":"PP402-C13-POSITION-4A","clause":"13","position":"4(a)","rule":"Count subscribers, including legal entities, with communications-service contracts; when one object supports several services, calculate each service separately and assign by the aggregate of those values."},
+    {"id":"PP402-C14-POSITION-4B","clause":"14","position":"4(b)","rule":"Calculate by the level and number of listed public bodies or organizations for which communications services may be disrupted or unavailable."},
+    {"id":"PP402-C15-POSITION-6","clause":"15","position":"6","rule":"Assess probability that a listed public body or statutory organization cannot perform its function because the object-supported process cannot be realized."},
+    {"id":"PP402-C16-POSITION-8-FORMULA","clause":"16","position":"8","formula":"P8 = abs((D_actual - D_average) / D_average) * 100","units":"PERCENT","D_actual":"Income including VAT, excise and other mandatory payments for the assessed period","D_average":"Annual income averaged over the preceding five-year period"},
+    {"id":"PP402-C17-POSITION-8-INPUTS","clause":"17","position":"8","lookback":{"value":5,"unit":"YEAR"},"inputs":["AVERAGE_ANNUAL_FEDERAL_TAXES_FROM_TAX_REPORTING","AVERAGE_ANNUAL_INCOME_FROM_MANAGEMENT_AND_ACCOUNTING_RECORDS","MAXIMUM_TOLERABLE_DOWNTIME_FROM_PREVENTIVE_MAINTENANCE_RULES","ATTACK_CONSEQUENCE_REMEDIATION_TIME_FROM_DOCUMENTS_OR_FIVE_YEAR_STATISTICS"],"fallback":{"trigger":"NO_DOCUMENTS_AND_NO_FIVE_YEAR_STATISTICS_FOR_REMEDIATION_TIME","value":10,"unit":"DAY"}},
+    {"id":"PP402-C18-POSITION-9-FORMULA","clause":"18","position":"9","formula":"P9 = Delta_payments / B_average * 100","units":"PERCENT","Delta_payments":"Reduction of the subject's payments to budgets of the Russian budget system","B_average":"Forecast annual federal-budget income averaged over the planned three-year period"},
+    {"id":"PP402-C19-POSITION-9-INPUTS","clause":"19","position":"9","budget_window":{"value":3,"unit":"YEAR","direction":"PLANNED"},"rules":["Derive B_average under the federal budget law and other Russian legislation","Derive annual taxes from Federal Tax Service data and fully account for the listed incident-response, downtime, overtime and contract-penalty costs","Determine the maximum possible communications-service interruption period and maximum possible profit reduction for that period"]}
+  ],
+  "guardrails": [
+    "As of 2026-08-19 this act is adopted but not yet in force; do not present it as currently operative before 2026-09-01.",
+    "The act ceases to operate at 2026-09-01; preserve this lifecycle boundary.",
+    "Commission representatives in clause 5 apply only to the listed subject classes and require agreement with the named authority.",
+    "Do not apply positions 4(b), 6 or 8 outside their clause 8 subject conditions.",
+    "Clause 9 does not make every unlisted indicator automatically applicable.",
+    "For position 4(a), separate per-service calculations and their aggregate must both be preserved.",
+    "The five-year periods in clauses 16-17 are calculation and fallback-data lookbacks, not evidence-retention duties.",
+    "The 10-day value in clause 17 is a calculation fallback for remediation time, not a remediation SLA or incident-reporting deadline.",
+    "The three-year period for B_average is planned, not historical.",
+    "No category is proven until applicable PP 127 thresholds are compared against complete object facts."
+  ],
+  "extraction": {
+    "method": "PRIMARY_PDF_VISUAL_REVIEW_WITH_AUTHORITATIVE_TEXT_CROSSCHECK",
+    "ocr_is_evidence": false,
+    "all_primary_pages_rendered": true,
+    "primary_pages_visually_checked": [1,2,3,4,5,6,7,8,9,10],
+    "authoritative_text_crosschecks": ["https://www.consultant.ru/document/cons_doc_LAW_531667/","https://pravo.ppt.ru/postanovlenie/pravitelstvo/n-402-333889"]
+  }
+}
