@@ -1,0 +1,75 @@
+run_id: SECURITY-KB-RUN-117
+run_date: "2026-08-19"
+strict_readiness:
+  overall_percent: 10
+  domains:
+    russian_npa: 10
+    gost_iso: 10
+    classification_categorization: 10
+    fstec_bdu: 10
+    risk_methods: 10
+    legal_consequences_koap_uk_gk_tk: 10
+    szi_skzi_licenses_lifecycle: 10
+    roles_deadlines_responsibility: 10
+    evidence_audit: 10
+    practical_cases: 10
+inventory:
+  verified: 293
+  pending: 31
+  count_change: 0
+  count_guard: >-
+    This run resolves exact official download targets and strengthens provenance controls;
+    it does not promote a master-inventory row because official-origin byte identity is not yet proven.
+red_team:
+  critical_gaps: 0
+  high_gaps: 1
+  status: FAIL
+  high_gap_ids: [HIGH-IMMUTABLE-PROVENANCE]
+  href_resolution_subgate: PASS
+  official_origin_byte_subgate: FAIL_CLOSED
+added_this_run:
+  - "Resolved both exact official PDF targets for NKTsKI Order No. 2 dated 2026-07-14 on cert.gov.ru and gossopka.ru."
+  - "Resolved both exact official PDF targets for the attack-type Initial Data approved 2026-07-08 on cert.gov.ru and gossopka.ru."
+  - "Confirmed document identity through viewer renders: Order No. 2 is a 20-page PDF containing both reporting-format appendices; Initial Data is a 12-page PDF and produced byte-identical renders from both official origins."
+  - "Ran a transport-fidelity control against an archived official NKTsKI PDF and proved that the available document-viewer normalizes PDF bytes even when extracted text matches."
+  - "Added two regression cases and manifest assertions that block a resolved href or document-viewer derivative from being promoted to IMMUTABLE_PRIMARY."
+source_quality:
+  official_download_targets_resolved: "4/4"
+  target_artifacts_with_dual_official_urls: "2/2"
+  direct_official_origin_fetch: HTTP_502_UPSTREAM_ENVIRONMENT
+  derivative_render_identity_checks: PASS
+  derivative_byte_fidelity_to_origin: UNPROVEN
+  immutable_primary_promotions: 0
+readiness_change: 0
+reason_no_increase: >-
+  Href resolution is real progress but is not origin-byte preservation. The only successful
+  PDF path normalized the byte stream, as demonstrated by an explicit fidelity control; its
+  hashes therefore cannot close HIGH-IMMUTABLE-PROVENANCE or support a VERIFIED promotion.
+verification:
+  local_yaml_parse: PASS
+  local_nkcki_provenance_validator: PASS_12_CASES_AND_MANIFEST
+  local_atomic_requirement_quality_gate: PASS
+  github_commit: "fed2a191ac474a65052c50afafe0636367148b25"
+  github_workflows:
+    nktski_artifact_provenance:
+      run_id: 32208272417
+      conclusion: success
+    gossopka_nktski_method_index:
+      run_id: 32208272491
+      conclusion: success
+    knowledge_quality_gate:
+      run_id: 32208272389
+      conclusion: success
+    knowledge_graph_index:
+      run_id: 32208272399
+      conclusion: success
+    knowledge_core_ci:
+      run_id: 32208272350
+      conclusion: success
+next_bottleneck:
+  primary: >-
+    Fetch one official copy of each resolved PDF through a demonstrably byte-preserving path,
+    retain response metadata, and compute the SHA-256 of the official-origin bytes.
+  after_primary: >-
+    Compare dual official copies where available, preserve the accepted artifacts, then extract
+    the complete Order No. 2 attack/incident payload schemas and rerun the global immutable-provenance red-team gate.
