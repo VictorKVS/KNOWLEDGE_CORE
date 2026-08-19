@@ -1,11 +1,12 @@
-schema_version: "1.2"
+schema_version: "1.3"
 kind: ru-protected-information-master-inventory
 status: ACTIVE_DISCOVERY
-updated_at: "2026-08-19T23:15:15+03:00"
+updated_at: "2026-08-20T02:16:59+03:00"
 purpose: >-
   Authoritative discovery and reconciliation inventory for Russian sector-specific
   confidentiality/protected-information regimes intersecting with the PDN corpus.
   Inclusion is a research lead, not proof of applicability to any organization.
+
 proof_floor:
   - A taxonomy or secondary source may create a discovery lead only.
   - Legal force, scope and applicability require a primary authoritative act.
@@ -15,6 +16,8 @@ proof_floor:
   - Exact source bytes are required before SOURCE_ACQUIRED or IMMUTABLE promotion.
   - Portal-displayed PDF size/page count is discovery metadata, not an immutable fingerprint.
   - Repealed provisions are conflict/version evidence and must never be reused as current anchors.
+  - Retention periods and access-restriction periods are separate concepts even when their numeric duration is identical.
+
 status_values:
   - DISCOVERED
   - REUSED
@@ -27,6 +30,7 @@ status_values:
   - ATOMIZED
   - LINKED
   - EXPERT_REVIEWED
+
 sources:
   - id: SEC-SRC-RU-FZ-323
     sector: healthcare
@@ -42,30 +46,24 @@ sources:
     version_chain:
       state: VERSION_CHAIN_PARTIAL
       evidence:
-        - "Федеральный закон от 23.07.2025 № 261-ФЗ — изменения 323-ФЗ"
-        - "Федеральный закон от 28.12.2025 № 515-ФЗ — изменения 323-ФЗ"
-        - "Федеральный закон от 29.12.2025 № 550-ФЗ — изменения статей 14 и 42.1 323-ФЗ"
-      pending: "Полная цепочка изменений до 2026-08-19 не сверена."
-    artifact:
-      state: SOURCE_PENDING
-      reason: "Exact official binary has not yet been acquired and fingerprinted."
+        - "261-ФЗ от 23.07.2025 — изменения 323-ФЗ"
+        - "515-ФЗ от 28.12.2025 — изменения 323-ФЗ"
+        - "550-ФЗ от 29.12.2025 — изменения статей 14 и 42.1"
+      pending: "Полная цепочка изменений до 2026-08-20."
+    artifact: {state: SOURCE_PENDING}
 
   - id: SEC-SRC-RU-FZ-572-2022
     sector: biometrics
     regime: biometric_identification_authentication
     number: "572-ФЗ"
     date: "2022-12-29"
-    title: "Об осуществлении идентификации и (или) аутентификации физических лиц с использованием биометрических персональных данных, о внесении изменений в отдельные законодательные акты Российской Федерации и признании утратившими силу отдельных положений законодательных актов Российской Федерации"
+    title: "Об осуществлении идентификации и (или) аутентификации физических лиц с использованием биометрических персональных данных..."
     status: PRIMARY_PUBLICATION_VERIFIED
     official_publication_number: "0001202212290024"
     official_publication_date: "2022-12-29"
     source_url: "https://publication.pravo.gov.ru/Document/View/0001202212290024"
-    version_chain:
-      state: SOURCE_PENDING
-      pending: "Полная цепочка изменений до 2026-08-19 не сверена."
-    artifact:
-      state: SOURCE_PENDING
-      reason: "Exact official binary has not yet been acquired and fingerprinted."
+    version_chain: {state: SOURCE_PENDING, pending: "Полная цепочка изменений до 2026-08-20. Проверить до atomization."}
+    artifact: {state: SOURCE_PENDING}
 
   - id: SEC-SRC-RU-FZ-126
     sector: communications
@@ -75,10 +73,7 @@ sources:
     title: "О связи"
     status: REUSED
     reuse_path: "security-knowledge/legislation/RU/federal-laws/126-FZ/document.yaml"
-    reuse_note: >-
-      Existing source node is retained. Current repository record already carries
-      source fingerprint and a working-source change list through 2026-08-04;
-      no duplicate source node is created here.
+    reuse_note: "Existing source node and fingerprint are reused; no duplicate node."
 
   - id: SEC-SRC-RU-FZ-218
     sector: financial
@@ -90,17 +85,12 @@ sources:
     current_regulator_evidence:
       authority: "Банк России"
       checked_at: "2026-08-19"
-      note: >-
-        Bank of Russia current materials updated 2026-07-03 apply 218-ФЗ and
-        current BKI data-transfer rules; this confirms an active regulatory context
-        but does not substitute for acquisition of the exact primary consolidated text.
+      note: "Current regulator materials confirm active context but do not replace the exact primary consolidated text."
     version_chain:
       state: VERSION_CHAIN_PARTIAL
-      evidence:
-        - "Федеральный закон от 15.12.2025 № 476-ФЗ — изменение статьи 6 218-ФЗ"
+      evidence: ["476-ФЗ от 15.12.2025 — изменение статьи 6"]
       pending: "Primary exact text and complete amendment chain."
-    artifact:
-      state: SOURCE_PENDING
+    artifact: {state: SOURCE_PENDING}
 
   - id: SEC-SRC-RU-LAW-395-1
     sector: financial
@@ -113,12 +103,11 @@ sources:
     version_chain:
       state: VERSION_CHAIN_PARTIAL
       evidence:
-        - "Федеральный закон от 24.06.2025 № 163-ФЗ — изменение статьи 26"
-        - "Федеральный закон от 23.07.2025 № 259-ФЗ — изменения закона"
-        - "Федеральный закон от 31.07.2025 № 279-ФЗ — изменение статьи 26"
-      pending: "Primary exact text and complete amendment chain through 2026-08-19."
-    artifact:
-      state: SOURCE_PENDING
+        - "163-ФЗ от 24.06.2025 — изменение статьи 26"
+        - "259-ФЗ от 23.07.2025 — изменения закона"
+        - "279-ФЗ от 31.07.2025 — изменение статьи 26"
+      pending: "Primary exact text and complete amendment chain through 2026-08-20."
+    artifact: {state: SOURCE_PENDING}
 
   - id: SEC-SRC-RU-FZ-125
     sector: archives
@@ -127,13 +116,65 @@ sources:
     date: "2004-10-22"
     title: "Об архивном деле в Российской Федерации"
     status: SOURCE_PENDING
+    discovery_anchors:
+      - "статья 22.1 — сроки временного хранения документов по личному составу"
+      - "статья 25 часть 3 — 75-летнее ограничение доступа к документам о личной/семейной тайне, частной жизни и безопасности гражданина"
+    semantic_model:
+      - concept: RECORD_RETENTION_PERIOD
+        locator: "статья 22.1"
+      - concept: ACCESS_RESTRICTION_PERIOD
+        locator: "статья 25 часть 3"
+      - rule: "Не объединять retention и access restriction даже при одинаковом значении 75 лет."
     version_chain:
       state: VERSION_CHAIN_PARTIAL
-      evidence:
-        - "Федеральный закон от 13.12.2024 № 469-ФЗ — изменение статьи 24 125-ФЗ"
-      pending: "Primary exact text, confidentiality/access anchors and complete amendment chain."
-    artifact:
-      state: SOURCE_PENDING
+      evidence: ["469-ФЗ от 13.12.2024 — изменение статьи 24"]
+      pending: "Primary exact current text and complete amendment chain."
+    artifact: {state: SOURCE_PENDING}
+
+  - id: SEC-SRC-RU-ROSARCHIVE-ORDER-24-2020
+    sector: archives
+    regime: archive_custody_access_rules
+    number: "Приказ Росархива № 24"
+    date: "2020-03-02"
+    title: "Об утверждении Правил организации хранения, комплектования, учета и использования документов Архивного фонда РФ и других архивных документов в государственных и муниципальных архивах, музеях и библиотеках, научных организациях"
+    status: PRIMARY_PUBLICATION_VERIFIED
+    official_publication_number: "0001202005210021"
+    official_publication_date: "2020-05-21"
+    minjust_registration: "58396"
+    source_url: "https://publication.pravo.gov.ru/Document/View/0001202005210021"
+    current_authority_text:
+      authority: "Федеральное архивное агентство"
+      revision: "в редакции приказа Росархива от 26.09.2022 № 117"
+      state: CURRENT_AUTHORITY_TEXT_IDENTIFIED
+    relation_candidates:
+      - {target: "125-ФЗ", type: IMPLEMENTS_ARCHIVE_CUSTODY_AND_ACCESS_FRAMEWORK, status: CANDIDATE_PENDING_PRIMARY_REVIEW}
+    version_chain:
+      state: VERSION_CHAIN_PARTIAL
+      evidence: ["Приказ Росархива от 26.09.2022 № 117, рег. Минюста № 70716"]
+      pending: "Check subsequent amendments and acquire exact current artifact."
+    artifact: {state: SOURCE_PENDING}
+
+  - id: SEC-SRC-RU-ROSARCHIVE-ORDER-77-2023
+    sector: archives
+    regime: organization_archive_retention_rules
+    number: "Приказ Росархива № 77"
+    date: "2023-07-31"
+    title: "Об утверждении Правил организации хранения, комплектования, учета и использования документов Архивного фонда РФ и других архивных документов в государственных органах, органах местного самоуправления и организациях"
+    status: PRIMARY_PUBLICATION_VERIFIED
+    official_publication_number: "0001202309060005"
+    official_publication_date: "2023-09-06"
+    minjust_registration: "75119"
+    source_url: "https://publication.pravo.gov.ru/document/0001202309060005"
+    current_authority_use:
+      authority: "Федеральное архивное агентство"
+      checked_context: "Планирование работы архивных учреждений на 2026 год"
+      state: CURRENT_AUTHORITY_USE_CONFIRMED
+    relation_candidates:
+      - {target: "125-ФЗ", type: IMPLEMENTS_ORGANIZATION_RETENTION_FRAMEWORK, status: CANDIDATE_PENDING_PRIMARY_REVIEW}
+    version_chain:
+      state: VERSION_CHAIN_PARTIAL
+      pending: "Check complete amendment chain and acquire exact current artifact."
+    artifact: {state: SOURCE_PENDING}
 
   - id: SEC-SRC-RU-FZ-38-2006
     sector: advertising_marketing
@@ -146,11 +187,10 @@ sources:
     version_chain:
       state: VERSION_CHAIN_PARTIAL
       evidence:
-        - "Федеральный закон от 07.04.2025 № 72-ФЗ — изменения закона о рекламе"
-        - "Федеральный закон от 20.02.2026 № 41-ФЗ — изменения статей 27 и 38 закона о рекламе"
-      pending: "Primary exact text, Article 18 current wording and complete amendment chain."
-    artifact:
-      state: SOURCE_PENDING
+        - "72-ФЗ от 07.04.2025 — изменения закона"
+        - "41-ФЗ от 20.02.2026 — изменения статей 27 и 38"
+      pending: "Primary exact text, current Article 18 and complete amendment chain."
+    artifact: {state: SOURCE_PENDING}
 
   - id: SEC-SRC-RU-FZ-273-2012
     sector: education_children
@@ -165,19 +205,15 @@ sources:
     discovery_anchor: "статья 59 — материалы государственной итоговой аттестации содержат информацию ограниченного доступа"
     current_text_check:
       checked_at: "2026-08-19"
-      secondary_consolidated_evidence: "КонсультантПлюс: редакция от 04.08.2026"
-      note: "Secondary current-text check does not replace primary version-chain proof."
+      state: SECONDARY_CURRENT_TEXT_ONLY
     version_chain:
       state: VERSION_CHAIN_PARTIAL
-      evidence:
-        - "В текущем консолидированном перечне изменений присутствуют 45-ФЗ от 08.03.2026, 107-ФЗ от 25.04.2026, 259-ФЗ от 26.07.2026, 330-ФЗ и 334-ФЗ от 04.08.2026."
-      pending: "Reconcile each 2026 amendment against its primary publication before VERSION_CHAIN_VERIFIED."
+      evidence: ["45-ФЗ от 08.03.2026", "107-ФЗ от 25.04.2026", "259-ФЗ от 26.07.2026", "330-ФЗ и 334-ФЗ от 04.08.2026"]
+      pending: "Reconcile each 2026 amendment against primary publication."
     artifact:
       state: SOURCE_PENDING
       portal_pdf_display_size: "20017 KB"
       portal_page_count: 404
-      acquisition_attempted_at: "2026-08-19T20:20:00+03:00"
-      reason: "Exact official PDF bytes were not retrievable from the acquisition runtime; SHA-256/byte length therefore remain unset."
 
   - id: SEC-SRC-RU-FZ-16-2007
     sector: transport
@@ -188,21 +224,16 @@ sources:
     status: SOURCE_PENDING
     primary_anchors:
       - "статья 11 часть 2 — централизованные базы персональных данных пассажиров и персонала транспортных средств"
-      - "статья 11 часть 4 — информационные ресурсы ЕГИС ОТБ являются информацией ограниченного доступа"
-      - "статья 11 часть 7 — передача данных выполняется в соответствии с 152-ФЗ и 16-ФЗ"
-    current_text_check:
-      checked_at: "2026-08-19"
-      secondary_consolidated_evidence: "КонсультантПлюс: редакция от 04.08.2026"
-      note: "Explicit 152-ФЗ cross-reference is present in Article 11; primary exact artifact is still pending."
+      - "статья 11 часть 4 — ресурсы ЕГИС ОТБ являются информацией ограниченного доступа"
+      - "статья 11 часть 7 — передача данных в соответствии с 152-ФЗ и 16-ФЗ"
     version_chain:
       state: VERSION_CHAIN_PARTIAL
       evidence:
-        - "Федеральный закон от 08.03.2026 № 51-ФЗ — изменение 16-ФЗ"
-        - "Федеральный закон от 04.08.2026 № 325-ФЗ — изменения статей 1 и 2 16-ФЗ"
-        - "Федеральный закон от 30.01.2026 № 13-ФЗ — изменение статьи 1, отдельная будущая редакция с 01.09.2026"
-      pending: "Acquire primary consolidated text and reconcile complete amendment chain."
-    artifact:
-      state: SOURCE_PENDING
+        - "51-ФЗ от 08.03.2026 — изменение 16-ФЗ"
+        - "325-ФЗ от 04.08.2026 — изменения статей 1 и 2; publication metadata candidate 0001202608040071, exact primary artifact pending"
+        - "13-ФЗ от 30.01.2026 — будущая редакция с 01.09.2026"
+      pending: "Acquire exact primary current text and reconcile complete chain."
+    artifact: {state: SOURCE_PENDING}
 
   - id: SEC-SRC-RU-FZ-79-2004
     sector: public_sector
@@ -212,17 +243,13 @@ sources:
     title: "О государственной гражданской службе Российской Федерации"
     status: SOURCE_PENDING
     discovery_anchor: "статья 42 — персональные данные гражданского служащего и ведение личного дела"
-    overlap_note: >-
-      Article 42 explicitly requires the state body's HR service to observe Russian
-      personal-data legislation and regulates collection, automated decisions,
-      protection and transfer of a civil servant's personal data.
+    relation_candidates:
+      - {target: "personal-data legislation", type: EXPLICIT_LEGISLATIVE_CONTEXT, status: CANDIDATE_PENDING_PRIMARY_REVIEW}
     version_chain:
       state: VERSION_CHAIN_PARTIAL
-      evidence:
-        - "Пункт 4 части 1 статьи 42 изменён Федеральным законом от 12.12.2023 № 594-ФЗ."
-      pending: "Acquire authoritative current primary text and the current Presidential implementing regulation for civil-servant personal files."
-    artifact:
-      state: SOURCE_PENDING
+      evidence: ["594-ФЗ от 12.12.2023 — изменение пункта 4 части 1 статьи 42"]
+      pending: "Acquire current primary text and implementing presidential regulation."
+    artifact: {state: SOURCE_PENDING}
 
   - id: SEC-SRC-RU-GK2-1996-A946
     sector: insurance
@@ -231,20 +258,10 @@ sources:
     date: "1996-01-26"
     title: "Гражданский кодекс Российской Федерации (часть вторая), статья 946 — тайна страхования"
     status: SOURCE_PENDING
-    discovery_anchor: >-
-      статья 946 — страховщик не вправе разглашать сведения о страхователе,
-      застрахованном лице, выгодоприобретателе, состоянии их здоровья и имущественном положении
-    current_text_check:
-      checked_at: "2026-08-19"
-      secondary_consolidated_evidence: "КонсультантПлюс: ГК РФ часть вторая, статья 946"
-    relation_note: >-
-      Protected information substantially overlaps personal, health and property data,
-      but no direct 152-ФЗ applicability edge is inferred at discovery stage.
-    version_chain:
-      state: SOURCE_PENDING
-      pending: "Acquire authoritative current primary text and reconcile Article 946 amendment history."
-    artifact:
-      state: SOURCE_PENDING
+    discovery_anchor: "статья 946 — сведения о страхователе, застрахованном, выгодоприобретателе, здоровье и имущественном положении"
+    relation_note: "No direct 152-ФЗ applicability edge is inferred at discovery stage."
+    version_chain: {state: SOURCE_PENDING, pending: "Acquire authoritative current primary text and Article 946 history."}
+    artifact: {state: SOURCE_PENDING}
 
   - id: SEC-SRC-RU-FZ-326-2010
     sector: healthcare
@@ -254,32 +271,19 @@ sources:
     title: "Об обязательном медицинском страховании в Российской Федерации"
     status: SOURCE_PENDING
     discovery_anchors:
-      - "статья 44 — персонифицированный учет сведений о застрахованных лицах и медицинской помощи"
-      - "статья 44 — сведения о застрахованном лице и оказанной медицинской помощи относятся к информации ограниченного доступа"
-    current_text_check:
-      checked_at: "2026-08-19"
-      secondary_consolidated_evidence: "КонсультантПлюс: редакция от 04.08.2026"
-      note: >-
-        Current consolidated text confirms restricted-access status for insured-person and medical-care data;
-        it also shows a future Article 44 change from 2027-06-01 under 329-ФЗ of 2026.
+      - "статья 44 — персонифицированный учет застрахованных лиц и медицинской помощи"
+      - "статья 44 — сведения о застрахованном и медицинской помощи как информация ограниченного доступа"
     version_chain:
       state: VERSION_CHAIN_PARTIAL
       evidence:
-        - "Федеральный закон от 28.11.2025 № 430-ФЗ; primary publication № 0001202511280092 verified on the official publication portal."
-        - "Федеральный закон от 20.02.2026 № 29-ФЗ; primary publication № 0001202602200050 verified on the official publication portal."
-        - "Федеральный закон от 04.08.2026 № 329-ФЗ changes Article 44 with effect from 2027-06-01; exact primary publication artifact still pending."
-      pending: "Acquire authoritative current consolidated artifact and reconcile the complete amendment chain through 2026-08-19."
+        - "430-ФЗ от 28.11.2025; primary publication № 0001202511280092"
+        - "29-ФЗ от 20.02.2026; primary publication № 0001202602200050"
+        - "329-ФЗ от 04.08.2026; publication metadata candidate № 0001202608040072; exact primary artifact pending"
+      pending: "Acquire authoritative current artifact and complete chain."
     overlap_candidates:
-      - target: "152-ФЗ"
-        type: "PROTECTED_PERSONAL_DATA_CONTEXT"
-        status: "CANDIDATE_PENDING_PRIMARY_REVIEW"
-      - target: "323-ФЗ"
-        type: "MEDICAL_DATA_CONTEXT"
-        status: "CANDIDATE_PENDING_PRIMARY_REVIEW"
-    artifact:
-      state: SOURCE_PENDING
-      acquisition_attempted_at: "2026-08-19T23:15:15+03:00"
-      reason: "Official publication metadata for amendment events was reachable, but exact current 326-ФЗ bytes were not captured for MIME/byte-length/SHA-256."
+      - {target: "152-ФЗ", type: PROTECTED_PERSONAL_DATA_CONTEXT, status: CANDIDATE_PENDING_PRIMARY_REVIEW}
+      - {target: "323-ФЗ", type: MEDICAL_DATA_CONTEXT, status: CANDIDATE_PENDING_PRIMARY_REVIEW}
+    artifact: {state: SOURCE_PENDING}
 
   - id: SEC-SRC-RU-FZ-143-1997
     sector: public_sector
@@ -289,35 +293,22 @@ sources:
     title: "Об актах гражданского состояния"
     status: SOURCE_PENDING
     discovery_anchors:
-      - "статья 13.1 — Единый государственный реестр записей актов гражданского состояния"
+      - "статья 13.1 — ЕГР ЗАГС"
       - "статья 13.2 — предоставление сведений из ЕГР ЗАГС"
-      - "статья 13.2 пункт 9 — получатели обеспечивают защиту сведений по требованиям 149-ФЗ и 152-ФЗ"
+      - "статья 13.2 пункт 9 — защита сведений по требованиям 149-ФЗ и 152-ФЗ"
     stale_anchor_rejected:
       locator: "статья 12"
-      reason: "Статья 12 утратила силу с 2018-10-01; прежнее использование ее как текущего confidentiality anchor запрещено."
-    current_text_check:
-      checked_at: "2026-08-19"
-      secondary_consolidated_evidence: "ГАРАНТ: статья 13.2 с изменениями по состоянию на 26.07.2026"
-      note: >-
-        Current Article 13.2 explicitly routes civil-status registry data to public bodies and organizations;
-        paragraph 9 requires protection under 149-ФЗ and 152-ФЗ. This is a strong overlap candidate but still awaits exact primary current artifact.
+      reason: "Утратила силу с 2018-10-01; current-anchor reuse forbidden."
     version_chain:
       state: VERSION_CHAIN_PARTIAL
       evidence:
-        - "Федеральный закон от 11.02.2026 № 22-ФЗ amended Article 13.2; primary publication № 0001202602110017 verified on the official publication portal."
-        - "Федеральный закон от 26.07.2026 № 264-ФЗ changed Article 13.2; current-text delta identified, exact primary publication artifact pending."
-      pending: "Acquire authoritative current artifact and reconcile complete Article 13.2 version chain."
+        - "22-ФЗ от 11.02.2026; primary publication № 0001202602110017"
+        - "264-ФЗ от 26.07.2026; publication metadata candidate № 0001202607260023; exact primary artifact pending"
+      pending: "Acquire authoritative current artifact and complete Article 13.2 chain."
     overlap_candidates:
-      - target: "152-ФЗ"
-        type: "EXPLICIT_REFERENCE_IN_CURRENT_CONSOLIDATED_TEXT"
-        status: "CANDIDATE_PENDING_PRIMARY_REVIEW"
-      - target: "149-ФЗ"
-        type: "EXPLICIT_REFERENCE_IN_CURRENT_CONSOLIDATED_TEXT"
-        status: "CANDIDATE_PENDING_PRIMARY_REVIEW"
-    artifact:
-      state: SOURCE_PENDING
-      acquisition_attempted_at: "2026-08-19T23:15:15+03:00"
-      reason: "Primary amendment publication card is verified; exact current 143-ФЗ binary has not been captured and fingerprinted."
+      - {target: "152-ФЗ", type: EXPLICIT_REFERENCE_IN_CURRENT_CONSOLIDATED_TEXT, status: CANDIDATE_PENDING_PRIMARY_REVIEW}
+      - {target: "149-ФЗ", type: EXPLICIT_REFERENCE_IN_CURRENT_CONSOLIDATED_TEXT, status: CANDIDATE_PENDING_PRIMARY_REVIEW}
+    artifact: {state: SOURCE_PENDING}
 
 coverage:
   healthcare: DISCOVERED
@@ -325,36 +316,50 @@ coverage:
   credit_histories: DISCOVERED
   communications: REUSED
   biometrics: DISCOVERED
-  archives_retention: DISCOVERED
+  archives_retention: PRIMARY_PUBLICATION_VERIFIED
   advertising_marketing: DISCOVERED
   insurance: DISCOVERED
   education_children: PRIMARY_PUBLICATION_VERIFIED
   public_sector: DISCOVERED
   transport: DISCOVERED
   civil_status_records: DISCOVERED
+
+conflict_registry:
+  - id: STREAM3-CONFLICT-CHECK-RETENTION-ACCESS-001
+    classification: SEMANTIC_COLLISION_AVOIDED
+    status: NOT_A_LEGAL_CONFLICT
+    source: "125-ФЗ"
+    compared:
+      - "статья 22.1 — retention of personnel records"
+      - "статья 25 часть 3 — access restriction for private/family-life archive records"
+    finding: "Одинаковая длительность 75 лет не делает эти нормы одной обязанностью; хранение и доступ моделируются раздельно."
+
 counters:
-  found: 13
+  found: 15
   new_this_pass: 2
   downloaded: 0
   immutable: 0
-  pending: 12
+  pending: 14
   reused: 1
-  primary_publication_verified: 3
-  primary_amendment_events_verified_this_pass: 3
-  exact_binary_acquisition_attempts_this_pass: 2
+  primary_publication_verified: 5
+  exact_binary_acquisition_attempts_this_pass: 4
   exact_binary_acquisition_success_this_pass: 0
-  stale_or_repealed_anchors_rejected_this_pass: 1
+  semantic_collision_checks_this_pass: 1
+  legal_conflicts_confirmed_this_pass: 0
+
 production_telemetry:
-  checked_at: "2026-08-19T23:15:15+03:00"
-  acquisition_bottleneck: "Official publication metadata is reachable, but exact consolidated-law binaries are still not capturable in the acquisition runtime."
+  checked_at: "2026-08-20T02:16:59+03:00"
+  acquisition_bottleneck: >-
+    Official publication identities and the public PDF endpoint pattern are known, but exact binary retrieval
+    still failed in this runtime. No MIME, byte length or SHA-256 was fabricated.
   analysis_note: >-
-    Discovery advanced by two source families. One stale legal anchor was detected and rejected:
-    Article 12 of 143-ФЗ is repealed; the live civil-status data overlap is now tracked through Articles 13.1-13.2.
-    No source was promoted to SOURCE_ACQUIRED/IMMUTABLE without MIME, exact byte length and SHA-256.
+    Discovery/reconciliation added two archive implementation sources and sharpened 125-ФЗ semantics.
+    The compiler must keep record-retention periods separate from archive-access restriction periods.
+
 next_actions:
-  - Acquire exact official binaries for SEC-SRC-RU-FZ-323, SEC-SRC-RU-FZ-572-2022 and SEC-SRC-RU-FZ-273-2012; record MIME, byte length and SHA-256.
-  - Acquire exact current artifacts for SEC-SRC-RU-FZ-326-2010 and SEC-SRC-RU-FZ-143-1997 before chunking or executable applicability.
-  - Resolve authoritative exact texts for 218-ФЗ, Law 395-1, 125-ФЗ, 38-ФЗ, 16-ФЗ, 79-ФЗ and GK Part II Article 946 before atomization.
-  - Reconcile full amendment chains to 2026-08-19 before any status is raised to VERSION_CHAIN_VERIFIED.
-  - Only after primary acquisition run document structure/chunk/concept/definition/requirement compilers.
-  - Expand education/children discovery to special protected student-testing and health-related records, but keep taxonomy-only leads outside executable logic.
+  - "Acquire exact official/current binaries for 125-ФЗ, Rosarchive Order 24 and Order 77; record MIME, byte length and SHA-256."
+  - "Compile 125-ФЗ Articles 22.1 and 25(3) into separate structure/chunks/concepts/requirements."
+  - "Acquire exact binaries for 323-ФЗ, 572-ФЗ and 273-ФЗ."
+  - "Resolve exact primary artifacts for 2026 amendment events 329-ФЗ, 264-ФЗ and 325-ФЗ."
+  - "Resolve authoritative exact texts for 218-ФЗ, Law 395-1, 38-ФЗ, 16-ФЗ, 79-ФЗ and GK Article 946 before atomization."
+  - "Only after primary acquisition run document structure/chunk/concept/definition/requirement compilers."
