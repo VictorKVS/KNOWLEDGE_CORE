@@ -105,7 +105,7 @@ jobs:
 
             echo "TLS endpoint: $host"
             awk \
-              '/-----BEGIN CERTIFICATE-----/{n++; out=sprintf("%s.%02d.pem", base, n)} n{print > out} /-----END CERTIFICATE-----/{close(out)}' \
+              '/-----BEGIN CERTIFICATE-----/{inside=1; count++; out=sprintf("%s.%02d.pem", base, count)} inside{print > out} /-----END CERTIFICATE-----/{close(out); inside=0}' \
               base="$chain" "$chain"
 
             found=0
