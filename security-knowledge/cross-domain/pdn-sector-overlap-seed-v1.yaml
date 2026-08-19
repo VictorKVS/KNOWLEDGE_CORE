@@ -1,7 +1,7 @@
-schema_version: "1.2"
+schema_version: "1.3"
 kind: pdn-sector-overlap-discovery-seed
 status: PROPOSED
-checked_at: "2026-08-19"
+checked_at: "2026-08-20"
 root: PDN-RU-FZ-0152
 rule: >-
   These are discovery-routing edges only. They do not prove organizational
@@ -12,6 +12,13 @@ stale_anchors_rejected:
     locator: "статья 12"
     reason: "Утратила силу с 2018-10-01; запрещено использовать как текущий confidentiality/PDN anchor."
     replacement_candidate: "статьи 13.1-13.2, включая пункт 9 статьи 13.2"
+semantic_collision_guards:
+  - source: "125-ФЗ"
+    compared:
+      - "статья 22.1 — срок хранения документов по личному составу"
+      - "статья 25 часть 3 — срок ограничения доступа к архивным документам"
+    guard: "RETENTION_PERIOD != ACCESS_RESTRICTION_PERIOD"
+    reason: "Одинаковое значение 75 лет не означает одинаковую юридическую обязанность."
 edges:
   - from: PDN-RU-FZ-0323-A13
     to: PDN-RU-FZ-0152
@@ -51,12 +58,18 @@ edges:
     verified_anchor: "Закон 395-1, статья 26 — банковская тайна; amendment acts for article 26 identified."
     pending: "Acquire exact current primary text of article 26 and test overlap conditions."
 
-  - from: PDN-RU-FZ-0125
+  - from: PDN-RU-FZ-0125-A25-P3
     to: PDN-RU-FZ-0152
     type: candidate_overlap
-    overlap_dimension: [archives, retention, restricted_access]
-    proof_state: DISCOVERY_ONLY
-    pending: "Verify current access-restriction anchors before any retention rule is derived."
+    overlap_dimension: [archives, private_life, family_secrecy, restricted_access]
+    proof_state: PARTIAL_AUTHORITY_ANCHOR
+    verified_anchor: >-
+      125-ФЗ, статья 25 часть 3 establishes a 75-year restriction on access to archive documents
+      containing private/family-life information and information creating a threat to a citizen's safety;
+      current Rosarchive guidance anchors this requirement to Article 25(3).
+    pending: >-
+      Acquire exact authoritative current 125-ФЗ artifact and do not infer a direct 152-ФЗ applicability
+      edge merely from semantic overlap.
 
   - from: PDN-RU-FZ-0038-2006
     to: PDN-RU-FZ-0152
@@ -129,6 +142,21 @@ edges:
     pending: >-
       Acquire the exact authoritative current 143-ФЗ artifact and reconcile Article 13.2 amendments,
       including 22-ФЗ of 2026 and 264-ФЗ of 2026, before VERIFIED promotion.
+
+supporting_regime_edges:
+  - from: SEC-SRC-RU-ROSARCHIVE-ORDER-24-2020
+    to: SEC-SRC-RU-FZ-125
+    type: IMPLEMENTS_ARCHIVE_CUSTODY_AND_ACCESS_FRAMEWORK
+    proof_state: AUTHORITY_CURRENT_TEXT_PLUS_PRIMARY_PUBLICATION_IDENTITY
+    executable_use_allowed: false
+    pending: "Acquire exact current Order 24 artifact and complete amendment chain."
+  - from: SEC-SRC-RU-ROSARCHIVE-ORDER-77-2023
+    to: SEC-SRC-RU-FZ-125
+    type: IMPLEMENTS_ORGANIZATION_RETENTION_FRAMEWORK
+    proof_state: AUTHORITY_CURRENT_USE_PLUS_PRIMARY_PUBLICATION_IDENTITY
+    executable_use_allowed: false
+    pending: "Acquire exact current Order 77 artifact and complete amendment chain."
+
 quality_gates:
   - no_candidate_edge_is_applicability_proof
   - no_inferred_edge_is_promoted_without_primary_anchor
@@ -136,3 +164,4 @@ quality_gates:
   - explicit_legal_reference_has_higher_provenance_than_semantic_overlap
   - semantic_overlap_must_not_be_upgraded_to_explicit_legal_reference
   - repealed_locator_must_not_be_reused_as_current_anchor
+  - retention_period_must_not_be_merged_with_access_restriction_period
