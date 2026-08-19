@@ -48,6 +48,30 @@ FATHER не ищет один «лучший алгоритм вообще». О
 - [Реестр библиотек и источников FATHER](docs/FATHER_LIBRARY_REGISTRY.md) — нормативные, научные, инженерные, OSINT, ML/RL, orchestration и eval-источники.
 - [Модульный продуктовый план FATHER](docs/FATHER_MODULAR_PRODUCT_PLAN.md) — как интеллектуальное ядро превращается в самостоятельные продукты и компоненты.
 
+## Центральные интеллектуальные продукты
+
+| Продукт | Роль в FATHER | Что принимает | Что производит | Текущий этап |
+|---|---|---|---|---|
+| [Search & Analytics Center](docs/FATHER_SEARCH_ANALYTICS_CENTER_PRODUCT.md) | органы чувств и разведка | Web, science, standards, code, lawful OSINT | verified information packages, sources, evidence | M0 → полигон 152-ФЗ |
+| [Analytical Center](docs/FATHER_ANALYTICAL_CENTER_PRODUCT.md) | мышление и Decision Intelligence | документы, таблицы, события, графы, verified OSINT | выводы, гипотезы, сценарии, экономика, dashboards, решения | M0 → workbench |
+| Knowledge Bases | доказательная память | sources, claims, requirements, experiments | связанные версионированные узлы | Security KB build |
+| Decision Memory | производственный опыт | решения и фактические outcomes | Golden Patterns, ограничения, negative results | architecture |
+| Agent Factory | исполнение и масштабирование | skills, KB, tools, eval | проверенные версии агентов и workflows | planned integration |
+
+### Непрерывное совершенствование FATHER
+
+| Анализируем | Метрики | Проверяемое улучшение |
+|---|---|---|
+| код | defects, coverage, complexity, performance, dependency risk | refactoring, алгоритмы, библиотеки |
+| архитектуру | coupling, latency, reliability, cost, security | контракты, topology, decomposition |
+| базы знаний | coverage, freshness, conflicts, retrieval quality | источники, ontology, chunking, links |
+| агентов и навыки | task success, factuality, safety, cost, stability | prompt, tools, workflow, SFT/RL candidate |
+| технологии | benchmark, maturity, compatibility, TCO | adopt, adapt, retain или reject |
+
+`OBSERVE → HYPOTHESIS → BASELINE → A/B + GOLDEN/ADVERSARIAL TESTS → INDEPENDENT VERIFY → HUMAN GATE → CANARY → OUTCOME → GOLDEN PATTERN / ROLLBACK`
+
+Самоизменение без независимой проверки, журнала, canary и human approval запрещено.
+
 ## Knowledge domains
 
 - [**Security Knowledge Base**](security-knowledge/README.md) — document-first regulatory knowledge graph: complete source/version history, structural chunks, definitions, atomic requirements, intra/inter-document links, applicability, controls, checks, evidence, audit, FSTEC/FSB solution registries, future security architecture and development roadmap.
