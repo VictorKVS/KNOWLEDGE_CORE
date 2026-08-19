@@ -1,0 +1,232 @@
+schema_version: "1.0"
+id: RU-PP740-PP733-EIP-NSUD-PLATFORM-ATOMIC-V1
+title: Decree No. 740 designation and current Decree No. 733 EIP NSUD Article 13.1 platform crosswalk
+scope: >-
+  Government Decree No. 740 of 28 May 2025, its ten amendments to the EIP NSUD
+  regulation approved by Government Decree No. 733 of 14 May 2021, and the
+  current consolidated effect after Government Decree No. 2052 of 17 December 2025.
+
+sources:
+  pp740:
+    authority: Government_of_the_Russian_Federation
+    signed_date: "2025-05-28"
+    number: "740"
+    current_text: https://www.consultant.ru/document/cons_doc_LAW_506693/
+    changes_text: https://www.consultant.ru/document/cons_doc_LAW_506693/5e6ea44d940b87b21a6aa9a4c2059e3537f3c39a/
+    official_publication:
+      publication_date: "2025-05-30"
+      publication_number: PENDING_NOT_LOCATED_IN_BOUNDED_SEARCH
+      official_portal_named_as_publication_source: true
+      collection_of_legislation: "2025 No. 22, article 2866"
+    effective_dates:
+      clause_3: "2025-05-28"
+      other_provisions: "2025-09-01"
+  pp733_current:
+    authority: Government_of_the_Russian_Federation
+    signed_date: "2021-05-14"
+    number: "733"
+    current_edition_checked: "2025-12-17"
+    current_text: https://www.consultant.ru/document/cons_doc_LAW_384215/
+  pp2052_overlay:
+    authority: Government_of_the_Russian_Federation
+    signed_date: "2025-12-17"
+    number: "2052"
+    effective_from: "2026-01-01"
+    current_text: https://www.consultant.ru/document/cons_doc_LAW_521978/
+    changes_text: https://www.consultant.ru/document/cons_doc_LAW_521978/5e6ea44d940b87b21a6aa9a4c2059e3537f3c39a/
+
+verification_boundary:
+  pp740_identity_and_clauses: VERIFIED_CURRENT_TEXT
+  pp740_official_publication_date_and_collection_citation: AUTHORITATIVE_CROSS_CHECK
+  pp740_official_publication_number: PENDING
+  pp733_current_edition: VERIFIED_CURRENT_CONSOLIDATED_TEXT
+  pp2052_change_effect: VERIFIED_CURRENT_TEXT
+  immutable_official_pdf_bytes: PENDING
+  checked_at: "2026-08-19"
+  pp740_repeal_located: false
+  later_amendment_to_pp733_located: RU_GOV_PP_2052_2025
+  caution: >-
+    Decree No. 2052 later amended Decree No. 733. The current-state model therefore
+    does not treat the text inserted by Decree No. 740 as an immutable September 2025 snapshot.
+
+decree_rules:
+  - id: PP740-DECREE-01
+    locator: decree.clause_1
+    rule: >-
+      Designate the federal state information system EIP NSUD as the state information
+      system of the federal executive authority referred to in article 13.1 of Federal Law No. 152-FZ.
+    effective_from: "2025-09-01"
+  - id: PP740-DECREE-02
+    locator: decree.clause_2
+    rule: Approve the ten modeled amendments to the Decree No. 733 regulation.
+    effective_from: "2025-09-01"
+  - id: PP740-DECREE-03
+    locator: decree.clause_3
+    actor: Ministry_of_Digital_Development
+    rule: >-
+      Ensure creation and operation of the Unified Trusted Platform for Data Exchange
+      and Analysis component within EIP NSUD.
+    effective_from: "2025-05-28"
+  - id: PP740-DECREE-04
+    locator: decree.clause_4
+    rule: Apply the split effective-date rule; clause 3 starts on signature and the rest on 1 September 2025.
+
+amendment_crosswalk:
+  - id: PP740-AMEND-01
+    source_locator: changes.item_1
+    target_locator: pp733.regulation.clause_2
+    effect: REPLACE_DATASET_DEFINITION_AND_ADD_TWO_DEFINITIONS
+    introduced:
+      - DATASET_DEFINITION
+      - DATA_COMPOSITION_DEFINITION
+      - ANONYMIZED_DATA_DEFINITION
+    current_state_after_pp2052: REENACTED_IN_FULL_CLAUSE_REPLACEMENT
+    current_semantics:
+      data_composition: >-
+        Grouped personal-data compositions obtained through anonymization, whose later
+        processing cannot determine attribution to a specific data subject.
+      anonymized_data: Personal data obtained through anonymization under article 13.1 of Federal Law No. 152-FZ.
+  - id: PP740-AMEND-02
+    source_locator: changes.item_2
+    target_locator: pp733.regulation.clause_3
+    effect: ADD_ARTICLE_13_1_PURPOSE
+    rule: >-
+      Add processing of anonymized data, formation of data compositions and access to
+      them under article 13.1 to the platform purposes.
+    current_state_after_pp2052: RETAINED_INSIDE_FURTHER_AMENDED_CLAUSE
+  - id: PP740-AMEND-03
+    source_locator: changes.item_3
+    target_locator: pp733.regulation.clause_4
+    effect: ADD_TWO_PLATFORM_TASKS
+    tasks:
+      - PROCESS_ANONYMIZED_DATA
+      - FORM_DATA_COMPOSITIONS_AND_PROVIDE_ACCESS_UNDER_ARTICLE_13_1
+    current_state_after_pp2052: RETAINED_WITH_ADDITIONAL_LATER_TASKS
+  - id: PP740-AMEND-04
+    source_locator: changes.item_4
+    target_locator: pp733.regulation.clause_5
+    effect: ADD_SUBSYSTEM_AND_COMPONENT
+    additions:
+      - ANONYMIZED_DATA_PROCESSING_SUBSYSTEM
+      - UNIFIED_TRUSTED_DATA_EXCHANGE_AND_ANALYSIS_PLATFORM_COMPONENT
+    current_state_after_pp2052: RETAINED
+  - id: PP740-AMEND-05
+    source_locator: changes.item_5
+    target_locator: pp733.regulation.clause_5_1
+    effect: ADD_COMPONENT_PURPOSE
+    component_bases:
+      - INFORMATION_ANALYTICAL_SUPPORT_SUBSYSTEM
+      - ANONYMIZED_DATA_PROCESSING_SUBSYSTEM
+    rule: The component is intended, among other things, for dataset processing and access provision.
+    current_state_after_pp2052: RETAINED
+  - id: PP740-AMEND-06
+    source_locator: changes.item_6
+    target_locator: pp733.regulation.clause_6
+    effect: REPLACE_PARTICIPANT_ROLE_TAXONOMY
+    article_13_1_roles:
+      provider: PERSONAL_DATA_OPERATOR_THAT_RECEIVED_ARTICLE_13_1_PART_2_REQUIREMENT
+      public_users: ARTICLE_13_1_PART_7_ITEM_1_CLASS
+      private_users: RUSSIAN_CITIZENS_AND_LEGAL_ENTITIES_MEETING_ARTICLE_13_1_PART_7
+    current_state_after_pp2052: ARTICLE_13_1_ROLES_RETAINED
+  - id: PP740-AMEND-07
+    source_locator: changes.item_7
+    target_locator: pp733.regulation.clause_6_1
+    effect: ADD_CONDITIONAL_PUBLIC_BODY_REPRESENTATION
+    rule: >-
+      An executive body with ICT and federal-interaction powers may act for specified
+      regional, territorial fund or local bodies only where the relevant regional law
+      or municipal legal act provides for it.
+    current_state_after_pp2052: RETAINED
+  - id: PP740-AMEND-08
+    source_locator: changes.item_8
+    target_locator: pp733.regulation.clauses_8_1_and_8_2
+    effect: ADD_PROVIDER_AND_USER_OPERATIONS
+    provider_rule: Provide anonymized data to the subsystem under the individualized article 13.1 part-2 requirement.
+    user_rule: >-
+      Only users that obtained access under article 13.1 process data compositions and
+      obtain results from compositions placed in the anonymized-data subsystem.
+    current_state_after_pp2052: RETAINED
+  - id: PP740-AMEND-09
+    source_locator: changes.item_9
+    target_locator: pp733.regulation.clause_9
+    effect: ADD_OPERATOR_OBLIGATIONS
+    operator_rules:
+      - PROCESS_ANONYMIZED_DATA_IN_THE_ANONYMIZED_DATA_SUBSYSTEM_UNDER_ARTICLE_13_1
+      - FORM_DATA_COMPOSITIONS_AND_PROVIDE_ACCESS_UNDER_ARTICLE_13_1
+    current_state_after_pp2052: RETAINED_WITH_ADDITIONAL_LATER_OPERATOR_FUNCTIONS
+  - id: PP740-AMEND-10
+    source_locator: changes.item_10
+    target_locator: pp733.regulation.clause_12
+    effect: REPLACE_ORGANIZATIONAL_MEASURE
+    rule: >-
+      Participants must take organizational measures that designate authorized persons
+      responsible for platform work and performance of duties under the regulation.
+    current_state_after_pp2052: RETAINED
+
+current_platform_boundaries:
+  - id: PP733-CURRENT-01
+    locator: regulation.clause_13
+    rule: Processing information constituting a state secret in EIP NSUD is prohibited.
+    introduced_by_pp740: false
+  - id: PP733-CURRENT-02
+    locator: regulation.clause_14
+    rule: >-
+      Protect platform information under Federal Law No. 149-FZ and legislation on
+      personal data, commercial secrets and other legally protected secrets.
+    introduced_by_pp740: false
+  - id: PP733-CURRENT-03
+    locator: regulation.clause_10
+    rule: Platform access is provided by the operator under the connection procedure approved by the Ministry.
+    introduced_by_pp740: false
+
+temporal_model:
+  - event: PP740_SIGNATURE_AND_CLAUSE_3_START
+    date: "2025-05-28"
+  - event: PP740_DESIGNATION_AND_AMENDMENTS_START
+    date: "2025-09-01"
+  - event: PP2052_LATER_AMENDMENT_START
+    signed_date: "2025-12-17"
+    date: "2026-01-01"
+    effect: >-
+      Replaced clause 2 and further amended clauses 3, 4, 6 and 9, while retaining the
+      modeled article 13.1 definitions, roles, tasks and operator functions.
+
+evidence_model:
+  - {id: EVIDENCE_DESIGNATED_GIS, proves: [PP740-DECREE-01]}
+  - {id: EVIDENCE_COMPONENT_CREATION_AND_OPERATION, proves: [PP740-DECREE-03]}
+  - {id: EVIDENCE_EFFECTIVE_DATE_ROUTE, proves: [PP740-DECREE-04]}
+  - {id: EVIDENCE_CURRENT_PP733_EDITION, proves: [PP2052_overlay_applied]}
+  - {id: EVIDENCE_SUBSYSTEM_AND_COMPONENT_INVENTORY, proves: [PP740-AMEND-04, PP740-AMEND-05]}
+  - {id: EVIDENCE_PARTICIPANT_ROLE, proves: [PP740-AMEND-06]}
+  - {id: EVIDENCE_REGIONAL_OR_MUNICIPAL_AUTHORIZATION, proves: [PP740-AMEND-07]}
+  - {id: EVIDENCE_INDIVIDUALIZED_REQUIREMENT_AND_PROVISION, proves: [PP740-AMEND-08_provider]}
+  - {id: EVIDENCE_USER_ACCESS_DECISION, proves: [PP740-AMEND-08_user]}
+  - {id: EVIDENCE_PLATFORM_OPERATOR_PROCESSING_LOG, proves: [PP740-AMEND-09]}
+  - {id: EVIDENCE_AUTHORIZED_PERSON_APPOINTMENT, proves: [PP740-AMEND-10]}
+  - {id: EVIDENCE_STATE_SECRET_EXCLUSION_AND_PROTECTION_CONTROLS, proves: [PP733-CURRENT-01, PP733-CURRENT-02]}
+
+dependencies:
+  - {id: RU_FL_152_FZ_ARTICLE_13_1, relation: DEFINES_SUBSTANTIVE_ANONYMIZATION_AND_ACCESS_REGIME, status: REGRESSION_PROTECTED}
+  - {id: RU_GOV_PP_702_2025, relation: VERIFIES_PRIVATE_USER_ELIGIBILITY, status: REGRESSION_PROTECTED}
+  - {id: RU_GOV_PP_961_2025, relation: IMPLEMENTS_FORMATION_AND_ACCESS_PROCEDURE, status: REGRESSION_PROTECTED}
+  - {id: RU_GOV_PP_966_2025, relation: IMPLEMENTS_OPERATOR_INTERACTION, status: REGRESSION_PROTECTED}
+  - {id: RU_GOV_PP_2052_2025, relation: LATER_AMENDS_PP733_CURRENT_STATE, status: CURRENT_TEXT_VERIFIED}
+
+non_requirements:
+  - Decree No. 740 designates the platform and amends its regulation; it does not itself grant a user access to a data composition.
+  - The component-creation duty in clause 3 started on 28 May 2025; the designation and ten amendments started on 1 September 2025.
+  - A personal-data operator becomes a platform provider through receipt of the individualized article 13.1 part-2 requirement, not merely because it is an operator.
+  - A private Russian citizen or legal entity is not an eligible platform user merely by nationality or incorporation; article 13.1 part-7 criteria and the access procedure still apply.
+  - A regional or municipal ICT body does not receive universal representation authority; a regional law or municipal legal act is required for the modeled branch.
+  - Decree No. 2052 AI and general dataset provisions do not displace the specific article 13.1 access regime.
+  - No numeric access, retention or response deadline is stated in Decree No. 740 or the modeled Decree No. 733 platform clauses.
+  - State-secret information is prohibited in EIP NSUD; the platform designation is not permission to process it.
+
+red_team:
+  critical_gap_created: false
+  high_gap_created: false
+  medium_gap_closed_this_run: PP740_PP733_CROSSWALK_AND_PP2052_TEMPORAL_OVERLAY
+  residuals:
+    - MEDIUM_PP740_OFFICIAL_PUBLICATION_NUMBER_PENDING
+    - MEDIUM_IMMUTABLE_OFFICIAL_ARTIFACTS_PENDING
+    - MEDIUM_EXPERT_REVIEW_PENDING

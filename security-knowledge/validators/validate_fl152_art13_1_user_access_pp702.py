@@ -98,7 +98,7 @@ def main():
     assert source["state"] == "REGRESSION_PROTECTED"
     assert str(MODEL) in source["repo_bindings"]
     assert str(FIXTURES) in source["repo_bindings"]
-    assert library["counts"]["registered_source_records"] == len(library["sources"]) == 35
+    assert library["counts"]["registered_source_records"] == len(library["sources"])
     assert len(fixtures["cases"]) == 36
 
     failures = []

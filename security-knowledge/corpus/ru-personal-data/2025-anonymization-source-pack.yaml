@@ -163,6 +163,61 @@ sources:
     atomization_status: CLAUSE_LEVEL_REGRESSION_PROTECTED_IMMUTABLE_OFFICIAL_PDF_PENDING
     atomic_model: fl-152-art13-1-user-access-pp702-atomic-v1.yaml
     regression_fixture: fl-152-art13-1-user-access-pp702-regression-v1.json
+  - source_id: RU_GOV_PP_740_2025
+    authority: Government_of_Russian_Federation
+    document_type: government_decree
+    number: "740"
+    signed_date: 2025-05-28
+    title: "EIP NSUD designation and Article 13.1 platform amendments"
+    official_publication:
+      publication_number: PENDING_NOT_LOCATED_IN_BOUNDED_SEARCH
+      publication_date: 2025-05-30
+      collection_of_legislation: "2025 No. 22, article 2866"
+    admitted_text_source:
+      provider: ConsultantPlus current text
+      url: "https://www.consultant.ru/document/cons_doc_LAW_506693/"
+    effective_from:
+      clause_3: 2025-05-28
+      other_provisions: 2025-09-01
+    legal_basis: "Federal Law 152-FZ article 13.1 part 2"
+    verification_status: CURRENT_TEXT_AND_PUBLICATION_DATE_VERIFIED_PUBLICATION_NUMBER_PENDING
+    atomization_status: CLAUSE_LEVEL_REGRESSION_PROTECTED_IMMUTABLE_OFFICIAL_PDF_PENDING
+    atomic_model: pp-rf-740-733-eip-nsud-platform-atomic-v1.yaml
+    regression_fixture: pp-rf-740-733-eip-nsud-platform-regression-v1.json
+  - source_id: RU_GOV_PP_733_2021_CURRENT
+    authority: Government_of_Russian_Federation
+    document_type: government_decree_current_consolidated
+    number: "733"
+    signed_date: 2021-05-14
+    title: "Current EIP NSUD regulation after Decrees No. 740 and No. 2052"
+    admitted_text_source:
+      provider: ConsultantPlus current consolidated text
+      url: "https://www.consultant.ru/document/cons_doc_LAW_384215/"
+      edition_checked: 2025-12-17
+    version_chain:
+      - {amending_decree: "740", signed_date: 2025-05-28, article_13_1_route: INTRODUCED}
+      - {amending_decree: "2052", signed_date: 2025-12-17, effective_from: 2026-01-01, article_13_1_route: RETAINED_WITH_CURRENT_OVERLAY}
+    verification_status: CURRENT_CONSOLIDATED_TEXT_VERIFIED
+    atomization_status: ARTICLE_13_1_PLATFORM_SLICE_REGRESSION_PROTECTED
+    atomic_model: pp-rf-740-733-eip-nsud-platform-atomic-v1.yaml
+    regression_fixture: pp-rf-740-733-eip-nsud-platform-regression-v1.json
+  - source_id: RU_GOV_PP_2052_2025
+    authority: Government_of_Russian_Federation
+    document_type: government_decree
+    number: "2052"
+    signed_date: 2025-12-17
+    effective_from: 2026-01-01
+    title: "Later amendments to the EIP NSUD regulation"
+    admitted_text_source:
+      provider: ConsultantPlus current text
+      url: "https://www.consultant.ru/document/cons_doc_LAW_521978/"
+    legal_effect: >-
+      Replaces clause 2 and further amends clauses 3, 4, 6 and 9 of the Decree 733
+      regulation while retaining the specific article 13.1 anonymized-data route.
+    verification_status: CURRENT_TEXT_AND_EFFECTIVE_DATE_VERIFIED
+    atomization_status: ARTICLE_13_1_PLATFORM_SLICE_REGRESSION_PROTECTED
+    atomic_model: pp-rf-740-733-eip-nsud-platform-atomic-v1.yaml
+    regression_fixture: pp-rf-740-733-eip-nsud-platform-regression-v1.json
 atomic_facts:
   - fact_id: RU_RKN140_F001
     source_id: RU_RKN_ORDER_140_2025
@@ -284,6 +339,36 @@ atomic_facts:
     source_quote: "вступает в силу с 1 сентября 2025 г."
     statement: "Government Decree 702 enters into force on 2025-09-01."
     verification_status: VERIFIED
+  - fact_id: RU_PP740_F001
+    source_id: RU_GOV_PP_740_2025
+    locator: "decree, clause 1"
+    source_quote: "определить федеральную государственную информационную систему"
+    statement: "Decree 740 designates EIP NSUD as the state information system referred to in article 13.1."
+    verification_status: VERIFIED_CURRENT_TEXT
+  - fact_id: RU_PP740_F002
+    source_id: RU_GOV_PP_740_2025
+    locator: "decree, clauses 3-4"
+    source_quote: "вступает в силу со дня подписания"
+    statement: "The Ministry component duty starts on 2025-05-28; the designation and amendments start on 2025-09-01."
+    verification_status: VERIFIED_CURRENT_TEXT
+  - fact_id: RU_PP740_F003
+    source_id: RU_GOV_PP_740_2025
+    locator: "approved changes, items 1-10"
+    source_quote: "подсистема обработки обезличенных данных"
+    statement: "The ten amendments add the article 13.1 definitions, purposes, tasks, platform elements, roles, operations and accountable-person measure."
+    verification_status: VERIFIED_CURRENT_TEXT
+  - fact_id: RU_PP733_F001
+    source_id: RU_GOV_PP_733_2021_CURRENT
+    locator: "current regulation, clauses 2-12; edition 2025-12-17"
+    source_quote: "в ред. Постановления Правительства РФ от 17.12.2025 N 2052"
+    statement: "The current Decree 733 edition retains the Decree 740 article 13.1 route after the later Decree 2052 overlay."
+    verification_status: VERIFIED_CURRENT_CONSOLIDATED_TEXT
+  - fact_id: RU_PP733_F002
+    source_id: RU_GOV_PP_733_2021_CURRENT
+    locator: "current regulation, clauses 13-14"
+    source_quote: "не допускается обработка сведений, составляющих государственную тайну"
+    statement: "State-secret processing is prohibited and platform information remains subject to statutory information-protection regimes."
+    verification_status: VERIFIED_CURRENT_CONSOLIDATED_TEXT
 relations:
   - from: RU_RKN_ORDER_996_2013
     to: RU_RKN_ORDER_140_2025
@@ -340,6 +425,15 @@ relations:
   - from: RU_GOV_PP_702_2025
     to: RU_GOV_PP_961_2025
     type: PRECONDITION_FOR_PRIVATE_USER_ACCESS_ROUTE
+  - from: RU_GOV_PP_740_2025
+    to: RU_GOV_PP_733_2021_CURRENT
+    type: DESIGNATES_EIP_NSUD_AND_INTRODUCES_ARTICLE_13_1_PLATFORM_ROUTE
+  - from: RU_GOV_PP_733_2021_CURRENT
+    to: Federal_Law_152_FZ_article_13_1
+    type: HOSTS_DESIGNATED_GIS_PLATFORM_ROUTE
+  - from: RU_GOV_PP_2052_2025
+    to: RU_GOV_PP_733_2021_CURRENT
+    type: LATER_CURRENT_VERSION_OVERLAY_RETAINING_ARTICLE_13_1_ROUTE
 red_team_notes:
   - "Do not merge the two anonymization regimes merely because both became effective on 2025-09-01; applicability must be resolved from 152-FZ and the respective source scope."
   - "Order 140 now has clause-level requirements and method mapping, but expert review and immutable official PDF-byte acquisition remain pending."
@@ -350,6 +444,8 @@ red_team_notes:
   - "Order 173 is methodological guidance: its 30-day value is an internal project lead time; operator data and deadlines come from the individualized requirement; appendix examples 5/k are not universal thresholds."
   - "Article 13.1 part 9 has two independent clocks anchored to source-data provision to the state system; neither is anchored to dataset formation or the user's access request."
   - "Decree 702's annual reverification, 15-working-day initial check and change-notice clocks must not be substituted for Decree 961 access-request deadlines."
+  - "Decree 740 designates and configures EIP NSUD but does not independently grant access; article 13.1 and Decree 961 gates remain mandatory."
+  - "Decree 733 must be evaluated in its 17.12.2025 edition: Decree 2052 re-enacted definitions and expanded general data/AI functions without removing the specific article 13.1 route."
 next_actions:
   - acquire_and_hash_RKN140_immutable_official_pdf_bytes
   - expert_review_RKN140_clause_level_model
@@ -365,6 +461,8 @@ next_actions:
   - expert_review_PP966_clause_level_model
   - acquire_and_hash_PP702_immutable_official_pdf_bytes
   - expert_review_FL152_article13_1_parts7_to12_and_PP702_model
-  - verify_and_atomize_PP740_EIP_NSUD_designation_and_PP733_amendments
+  - acquire_and_hash_PP740_PP733_PP2052_immutable_official_artifacts
+  - resolve_PP740_official_publication_number
+  - expert_review_PP740_PP733_PP2052_temporal_crosswalk
   - map_each_atomic_requirement_to_152FZ_applicability
   - map_evidence_controls_roles_and_consequences
