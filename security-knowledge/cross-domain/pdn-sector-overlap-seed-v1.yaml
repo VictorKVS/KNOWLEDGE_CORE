@@ -1,4 +1,4 @@
-schema_version: "1.1"
+schema_version: "1.2"
 kind: pdn-sector-overlap-discovery-seed
 status: PROPOSED
 checked_at: "2026-08-19"
@@ -7,6 +7,11 @@ rule: >-
   These are discovery-routing edges only. They do not prove organizational
   applicability and must not feed executable decisions until both endpoint
   versions and a legal anchor are verified.
+stale_anchors_rejected:
+  - source: "143-ФЗ"
+    locator: "статья 12"
+    reason: "Утратила силу с 2018-10-01; запрещено использовать как текущий confidentiality/PDN anchor."
+    replacement_candidate: "статьи 13.1-13.2, включая пункт 9 статьи 13.2"
 edges:
   - from: PDN-RU-FZ-0323-A13
     to: PDN-RU-FZ-0152
@@ -100,9 +105,34 @@ edges:
     pending: >-
       Do not infer 152-ФЗ applicability from semantic overlap alone; acquire primary current text
       and derive any PDN edge only from an explicit legal basis or an identified processing scenario.
+
+  - from: PDN-RU-FZ-0326-2010-A44
+    to: PDN-RU-FZ-0152
+    type: protected_personal_data_context_candidate
+    overlap_dimension: [healthcare, insured_person_data, medical_care_data, restricted_access]
+    proof_state: PARTIAL_CURRENT_TEXT
+    verified_anchor: >-
+      Current consolidated Article 44 classifies information about an insured person and medical care
+      provided to that person as restricted-access information subject to protection under Russian law.
+    pending: >-
+      Acquire the exact authoritative current 326-ФЗ artifact and prove the precise 152-ФЗ edge before
+      executable applicability; current semantic/legal-context overlap alone is not sufficient.
+
+  - from: PDN-RU-FZ-0143-1997-A13_2-P9
+    to: PDN-RU-FZ-0152
+    type: explicit_cross_reference_candidate
+    overlap_dimension: [public_sector, civil_status_registry, interagency_exchange, personal_data_protection]
+    proof_state: PARTIAL_EXPLICIT_REFERENCE
+    verified_anchor: >-
+      Current consolidated Article 13.2 paragraph 9 requires recipients of EGR ZAGS civil-status data
+      to protect the supplied information under 149-ФЗ and 152-ФЗ.
+    pending: >-
+      Acquire the exact authoritative current 143-ФЗ artifact and reconcile Article 13.2 amendments,
+      including 22-ФЗ of 2026 and 264-ФЗ of 2026, before VERIFIED promotion.
 quality_gates:
   - no_candidate_edge_is_applicability_proof
   - no_inferred_edge_is_promoted_without_primary_anchor
   - current_version_of_both_endpoints_required_for_verified_edge
   - explicit_legal_reference_has_higher_provenance_than_semantic_overlap
   - semantic_overlap_must_not_be_upgraded_to_explicit_legal_reference
+  - repealed_locator_must_not_be_reused_as_current_anchor
