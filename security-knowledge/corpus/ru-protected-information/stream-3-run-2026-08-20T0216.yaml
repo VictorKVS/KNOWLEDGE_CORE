@@ -1,0 +1,149 @@
+schema_version: "1.0"
+kind: ru-protected-information-stream-run
+stream: 3
+checked_at: "2026-08-20T02:16:59+03:00"
+status: PARTIAL_PROGRESS
+scope:
+  - archives_retention
+  - protected_personal_information
+  - version_chain_reconciliation
+  - conflict_detection
+
+reconciliation:
+  repository_checked: "VictorKVS/KNOWLEDGE_CORE"
+  existing_master_sources_before_run: 13
+  new_source_ids:
+    - SEC-SRC-RU-ROSARCHIVE-ORDER-24-2020
+    - SEC-SRC-RU-ROSARCHIVE-ORDER-77-2023
+  duplicate_source_ids_created: 0
+
+new_sources:
+  - source_id: SEC-SRC-RU-ROSARCHIVE-ORDER-24-2020
+    sector: archives
+    regime: archive_custody_access_rules
+    act: "Приказ Росархива от 02.03.2020 № 24"
+    title: "Об утверждении Правил организации хранения, комплектования, учета и использования документов Архивного фонда Российской Федерации и других архивных документов в государственных и муниципальных архивах, музеях и библиотеках, научных организациях"
+    official_publication_number: "0001202005210021"
+    official_publication_date: "2020-05-21"
+    minjust_registration: "58396"
+    primary_publication_url: "https://publication.pravo.gov.ru/Document/View/0001202005210021"
+    current_authority_text:
+      authority: "Федеральное архивное агентство"
+      state: "CURRENT_AUTHORITY_TEXT_IDENTIFIED"
+      revision: "в редакции приказа Росархива от 26.09.2022 № 117"
+      note: "Росархив продолжает публиковать правила как действующий нормативный материал; полный subsequent amendment-chain требует отдельной сверки."
+    relation_candidates:
+      - target: "125-ФЗ"
+        type: "IMPLEMENTS_ARCHIVE_CUSTODY_AND_ACCESS_FRAMEWORK"
+        proof_state: "AUTHORITY_CURRENT_TEXT_PLUS_PRIMARY_PUBLICATION_IDENTITY"
+        executable_use_allowed: false
+    artifact:
+      state: SOURCE_PENDING
+      exact_binary_captured: false
+
+  - source_id: SEC-SRC-RU-ROSARCHIVE-ORDER-77-2023
+    sector: archives
+    regime: organization_archive_retention_rules
+    act: "Приказ Росархива от 31.07.2023 № 77"
+    title: "Об утверждении Правил организации хранения, комплектования, учета и использования документов Архивного фонда Российской Федерации и других архивных документов в государственных органах, органах местного самоуправления и организациях"
+    official_publication_number: "0001202309060005"
+    official_publication_date: "2023-09-06"
+    minjust_registration: "75119"
+    primary_publication_url: "https://publication.pravo.gov.ru/document/0001202309060005"
+    current_authority_use:
+      authority: "Федеральное архивное агентство"
+      checked_context: "Планирование работы архивных учреждений на 2026 год"
+      state: "CURRENT_AUTHORITY_USE_CONFIRMED"
+      note: "Росархив в актуальных материалах на 2026 год продолжает ссылаться на Правила 2023 года; полная цепочка изменений все равно подлежит проверке."
+    relation_candidates:
+      - target: "125-ФЗ"
+        type: "IMPLEMENTS_ORGANIZATION_RETENTION_FRAMEWORK"
+        proof_state: "AUTHORITY_CURRENT_USE_PLUS_PRIMARY_PUBLICATION_IDENTITY"
+        executable_use_allowed: false
+    artifact:
+      state: SOURCE_PENDING
+      exact_binary_captured: false
+
+existing_source_enrichment:
+  - source_id: SEC-SRC-RU-FZ-125
+    anchors_identified:
+      - locator: "статья 22.1"
+        concept: "personnel_record_retention"
+        finding: "Для документов по личному составу сроки хранения зависят от даты создания и категории документа; 50 и 75 лет относятся к retention semantics."
+        proof_state: "CURRENT_AUTHORITY_GUIDANCE_ANCHORED_TO_125_FZ"
+      - locator: "статья 25 часть 3"
+        concept: "private_family_life_archive_access_restriction"
+        finding: "Доступ к архивным документам со сведениями о личной/семейной тайне, частной жизни и безопасности гражданина ограничивается на 75 лет со дня создания документа."
+        proof_state: "CURRENT_AUTHORITY_GUIDANCE_ANCHORED_TO_125_FZ"
+    primary_current_artifact_required_before_atomization: true
+
+conflict_detection:
+  - id: STREAM3-CONFLICT-CHECK-RETENTION-ACCESS-001
+    classification: "SEMANTIC_COLLISION_AVOIDED"
+    status: "NOT_A_LEGAL_CONFLICT"
+    source: "125-ФЗ"
+    compared:
+      - "статья 22.1 — сроки хранения документов по личному составу"
+      - "статья 25 часть 3 — срок ограничения доступа к архивным документам"
+    finding: >-
+      Одинаковые числовые значения (в частности 75 лет) относятся к разным юридическим объектам:
+      retention period и access restriction period. Их запрещено сливать в один deadline/retention node.
+    required_modeling:
+      - "CONCEPT: RECORD_RETENTION_PERIOD"
+      - "CONCEPT: ACCESS_RESTRICTION_PERIOD"
+      - "separate requirement nodes and separate evidence"
+
+version_chain_reconciliation:
+  - target: "326-ФЗ статья 44"
+    event: "Федеральный закон от 04.08.2026 № 329-ФЗ"
+    publication_number_candidate: "0001202608040072"
+    state: "PUBLICATION_METADATA_CROSS_IDENTIFIED_EXACT_PRIMARY_ARTIFACT_PENDING"
+    promotion_allowed: false
+  - target: "143-ФЗ статья 13.2"
+    event: "Федеральный закон от 26.07.2026 № 264-ФЗ"
+    publication_number_candidate: "0001202607260023"
+    state: "PUBLICATION_METADATA_CROSS_IDENTIFIED_EXACT_PRIMARY_ARTIFACT_PENDING"
+    promotion_allowed: false
+  - target: "16-ФЗ статьи 1 и 2"
+    event: "Федеральный закон от 04.08.2026 № 325-ФЗ"
+    publication_number_candidate: "0001202608040071"
+    state: "PUBLICATION_METADATA_CROSS_IDENTIFIED_EXACT_PRIMARY_ARTIFACT_PENDING"
+    promotion_allowed: false
+
+acquisition:
+  exact_binary_attempts_this_pass: 4
+  exact_binary_successes_this_pass: 0
+  downloaded_this_pass: 0
+  immutable_this_pass: 0
+  bytes_downloaded: 0
+  hashes_recorded: 0
+  discovered_official_pdf_endpoint_pattern: "https://publication.pravo.gov.ru/File/Pdf?eoNumber=<publication-number>"
+  blocker: >-
+    The official portal publication cards and public API/file endpoint pattern were identified,
+    but the runtime could not fetch the constructed exact binary URLs in this run. No MIME,
+    exact byte length or SHA-256 was invented.
+
+metrics:
+  master_sources_found_total_after_run: 15
+  new_sources_this_pass: 2
+  reused_sources_total: 1
+  pending_immutable_total: 14
+  primary_publication_verified_total_after_run: 5
+  archive_primary_publications_verified_this_pass: 2
+  current_authority_use_or_text_confirmations_this_pass: 2
+  semantic_collision_checks_this_pass: 1
+  legal_conflicts_confirmed_this_pass: 0
+  download_success_rate_this_pass: 0.0
+  immutable_rate_total: 0.0
+
+quality_gate:
+  source_acquired_promotions: 0
+  immutable_promotions: 0
+  executable_relation_promotions: 0
+  reason: "Proof floor preserved: no exact bytes/hash; applicability and complete version chains remain pending."
+
+next:
+  - "Acquire exact current 125-ФЗ, Rosarchive Order 24 and Order 77 binaries; fingerprint before atomization."
+  - "Compile 125-ФЗ Articles 22.1 and 25(3) into separate retention/access concepts, chunks and atomic requirements."
+  - "Resolve exact primary artifacts for 2026 amendment events 329-ФЗ, 264-ФЗ and 325-ФЗ."
+  - "Continue sector discovery only after source-ID reconciliation; preserve no-duplicate rule."
