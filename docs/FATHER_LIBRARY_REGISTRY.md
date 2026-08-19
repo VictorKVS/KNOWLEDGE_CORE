@@ -322,3 +322,44 @@ DISCOVER
 - первичные источники выше пересказов;
 - старые версии сохраняются, но помечаются;
 - каждый verified-вывод должен воспроизводиться.
+
+
+## Контур обучения, RL и фабрики агентов
+
+Полный порядок поиска, извлечения, хранения, связывания, экспериментов, обучения и выпуска описан в [FATHER: конвейер знаний, обучения и фабрика агентов](./FATHER_KNOWLEDGE_ACQUISITION_AND_AGENT_FACTORY_PLAN.md).
+
+### Дополнительные направления
+
+| Код | Направление | Приоритет | Целевые базы/реестры |
+|---|---|---:|---|
+| LIB-DIR-ML | deep learning и fine-tuning | P0 | MODEL_REGISTRY, AI_AGENTS_KB |
+| LIB-DIR-RL | RL, RLHF и preference optimization | P0 | EXPERIMENT_REGISTRY, MODEL_REGISTRY |
+| LIB-DIR-MARL | multi-agent RL и self-play | P1 | AGENT_REGISTRY, ENVIRONMENT_REGISTRY |
+| LIB-DIR-ORCH | оркестрация и durable workflows | P0 | WORKFLOW_REGISTRY |
+| LIB-DIR-EVAL | eval, benchmark и воспроизводимость | P0 | EVAL_REGISTRY |
+| LIB-DIR-OBS | tracing, metrics, logs и стоимость | P0 | OBSERVABILITY_KB |
+
+### Зарегистрированные технологические семейства
+
+| ID | Официальный источник | Назначение | Статус |
+|---|---|---|---|
+| LIB-FATHER-ML-0001 | https://github.com/pytorch/pytorch | базовый deep learning runtime | `CANDIDATE_CORE` |
+| LIB-FATHER-ML-0002 | https://github.com/huggingface/transformers | модели и training APIs | `PRIORITY_RESEARCH` |
+| LIB-FATHER-ML-0003 | https://github.com/huggingface/datasets | datasets и обработка | `PRIORITY_RESEARCH` |
+| LIB-FATHER-ML-0004 | https://github.com/huggingface/peft | LoRA/QLoRA/adapters | `PRIORITY_LAB` |
+| LIB-FATHER-ML-0005 | https://github.com/huggingface/accelerate | распределённый запуск обучения | `PRIORITY_RESEARCH` |
+| LIB-FATHER-RL-0001 | https://github.com/huggingface/trl | SFT, reward, DPO и RL post-training | `PRIORITY_LAB` |
+| LIB-FATHER-RL-0002 | https://github.com/OpenRLHF/OpenRLHF | масштабируемый RLHF | `CANDIDATE_COMPARE` |
+| LIB-FATHER-RLENV-0001 | https://github.com/Farama-Foundation/Gymnasium | single-agent RL environments | `PRIORITY_LAB` |
+| LIB-FATHER-MARL-0001 | https://github.com/Farama-Foundation/PettingZoo | multi-agent RL environments | `PRIORITY_LAB` |
+| LIB-FATHER-RL-0003 | https://github.com/ray-project/ray | RLlib и distributed execution | `CANDIDATE_COMPARE` |
+| LIB-FATHER-ORCH-0001 | https://github.com/openai/openai-agents-python | agents, tools, guardrails, handoffs | `PRIORITY_PROTOTYPE` |
+| LIB-FATHER-ORCH-0002 | https://github.com/langchain-ai/langgraph | stateful agent graphs | `CANDIDATE_COMPARE` |
+| LIB-FATHER-ORCH-0003 | https://github.com/microsoft/autogen | multi-agent orchestration | `CANDIDATE_COMPARE` |
+| LIB-FATHER-ORCH-0004 | https://github.com/temporalio/temporal | durable workflows | `PRIORITY_ARCHITECTURE` |
+| LIB-FATHER-EVAL-0001 | https://github.com/UKGovernmentBEIS/inspect_ai | agent/model evaluation | `PRIORITY_RESEARCH` |
+| LIB-FATHER-EVAL-0002 | https://github.com/openai/evals | eval patterns and datasets | `PRIORITY_RESEARCH` |
+| LIB-FATHER-EVAL-0003 | https://github.com/mlflow/mlflow | experiment/model registry | `PRIORITY_PROTOTYPE` |
+| LIB-FATHER-OBS-0001 | https://github.com/open-telemetry | traces, metrics and logs | `PRIORITY_ARCHITECTURE` |
+
+Правило выбора: ни одна библиотека не включается в production только по популярности. Нужны проверка лицензии, maintenance, supply chain/SBOM, sandbox-тест, benchmark на задачах FATHER, стоимость владения, совместимость и план выхода.
