@@ -172,7 +172,9 @@ retrieval_attempt_2026_08_19_run_117:
 retrieval_attempt_2026_08_19_run_118:
   workflow_run: https://github.com/VictorKVS/KNOWLEDGE_CORE/actions/runs/32212729518
   source_commit: daa2cf6e323f32018c853629acd651f283e3e220
-  official_origin: https://www.cert.gov.ru
+  official_origins:
+    - https://www.cert.gov.ru
+    - https://gossopka.ru
   transport: DIRECT_GITHUB_ACTIONS_CURL_OFFICIAL_ORIGIN
   tls_chain_and_hostname: VERIFIED
   observed_leaf_issuer: GlobalSign GCC R6 AlphaSSL CA 2025
@@ -182,9 +184,14 @@ retrieval_attempt_2026_08_19_run_118:
   artifact_count: 2
   receipt: security-knowledge/evidence/nkcki-2026-official-origin-acquisition-receipt.json
   interpretation: >-
-    Both fixed cert.gov.ru attachment URLs returned application/pdf through a byte-preserving
-    direct request. The stored repository bytes match the acquisition receipt by SHA-256 and size.
-    Document-viewer derivatives remain recorded only as non-primary controls.
+    The fixed official attachment URLs returned application/pdf through a byte-preserving direct
+    request. A reproducibility run also succeeded and used the approved gossopka.ru fallback for
+    one artifact while producing the same stored SHA-256. The repository bytes match the receipt
+    by SHA-256 and size. Document-viewer derivatives remain non-primary controls.
+  reproducibility_run:
+    workflow_run: https://github.com/VictorKVS/KNOWLEDGE_CORE/actions/runs/32213183177
+    evidence_commit: 2a99ab2d9b589fc77000db28bdcaf01456280d2e
+    result: PASS_SAME_ARTIFACT_HASHES
 
 red_team_guardrail:
   verdict: PASS_FOR_DECLARED_NKTSKI_2026_ARTIFACT_SCOPE

@@ -101,8 +101,12 @@ def main() -> int:
                     failures.append((f"{artifact_id}-receipt-sha", observed_sha, receipt_item.get("sha256")))
                 if receipt_item.get("bytes") != observed_bytes:
                     failures.append((f"{artifact_id}-receipt-bytes", observed_bytes, receipt_item.get("bytes")))
-                if receipt_item.get("effective_url") != artifact.get("authoritative_download_url"):
-                    failures.append((f"{artifact_id}-receipt-url", artifact.get("authoritative_download_url"), receipt_item.get("effective_url")))
+                allowed_urls = {
+                    artifact.get("authoritative_download_url"),
+                    artifact.get("authoritative_gossopka_download_url"),
+                }
+                if receipt_item.get("effective_url") not in allowed_urls:
+                    failures.append((f"{artifact_id}-receipt-url", sorted(allowed_urls), receipt_item.get("effective_url")))
                 if receipt_item.get("content_type") != "application/pdf":
                     failures.append((f"{artifact_id}-receipt-mime", "application/pdf", receipt_item.get("content_type")))
                 if receipt_item.get("tls", {}).get("verification") != "OPENSSL_CA_CHAIN_AND_HOSTNAME":
