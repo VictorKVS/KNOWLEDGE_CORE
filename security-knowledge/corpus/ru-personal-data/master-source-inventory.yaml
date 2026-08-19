@@ -2,7 +2,7 @@ schema_version: 1
 inventory_id: RU_PD_MASTER_SOURCE_INVENTORY
 scope: Russian personal-data regulation and directly applicable technical/cryptographic overlays
 parent_inventory: "../master-source-inventory.yaml"
-updated_at: "2026-08-19T23:15:15+03:00"
+updated_at: "2026-08-20T02:16:59+03:00"
 status_values:
   - DISCOVERED
   - REGISTERED
@@ -27,6 +27,7 @@ policy:
   - "Technical, cryptographic, GosSOPKA/CII/GIS and sector overlays require explicit applicability edges before their requirements enter PDn decision logic."
   - "Every later document-compilation pass must preserve traceability source -> structure -> chunk -> concept/definition -> atomic requirement -> typed relation -> conflict -> decision rule -> test."
   - "A repealed provision is conflict/version evidence only; it cannot be reused as a current semantic or applicability anchor."
+  - "Retention periods and access-restriction periods are separate legal concepts and must not be merged merely because a duration such as 75 years is numerically identical."
 
 sources:
   - source_id: RU_RKN_ORDER_180_2022
@@ -167,24 +168,29 @@ stream_progress:
     status: ACTIVE
     inventory: "../ru-protected-information/master-inventory.yaml"
     overlap_graph: "../../cross-domain/pdn-sector-overlap-seed-v1.yaml"
-    sources_found_total: 13
+    sources_found_total: 15
     new_sources_this_pass: 2
     reused_existing_sources: 1
-    primary_publication_verified_total: 3
-    primary_amendment_events_verified_this_pass: 3
+    primary_publication_verified_total: 5
     immutable_artifacts: 0
-    pending_immutable: 12
-    exact_binary_acquisition_attempts_this_pass: 2
+    pending_immutable: 14
+    exact_binary_acquisition_attempts_this_pass: 4
     exact_binary_acquisition_success_this_pass: 0
     sectors_registered: 12
-    stale_or_repealed_anchors_rejected_this_pass: 1
+    semantic_collision_checks_this_pass: 1
+    legal_conflicts_confirmed_this_pass: 0
     explicit_or_direct_legal_overlap_candidates:
       - "16-ФЗ article 11 -> 152-ФЗ"
       - "79-ФЗ article 42 -> personal-data legislation"
       - "143-ФЗ article 13.2(9) -> 149-ФЗ + 152-ФЗ (current consolidated text; primary-current artifact pending)"
       - "326-ФЗ article 44 -> restricted-access insured-person/medical-care data; PDN/health applicability review pending"
+      - "125-ФЗ article 25(3) -> protected private/family-life archive information; do not infer direct 152-ФЗ applicability without anchor review"
     conflict_notes:
       - "143-ФЗ article 12 is repealed since 2018-10-01 and was rejected as a stale current anchor; live routing moved to articles 13.1-13.2."
+      - "125-ФЗ article 22.1 retention periods and article 25(3) access-restriction period are separate semantics; identical 75-year values must not be merged."
+    source_extensions:
+      - "Приказ Росархива от 02.03.2020 № 24; primary publication 0001202005210021; current authority text identified in revision of Order 117/2022; exact binary pending"
+      - "Приказ Росархива от 31.07.2023 № 77; primary publication 0001202309060005; current authority use confirmed in Rosarchive 2026 planning; exact binary pending"
     note: >-
       Sector/special protected-information overlays are isolated from executable PDN logic until
       authoritative current artifacts, version chains and anchored applicability edges pass review.
@@ -220,6 +226,9 @@ next_priority:
   - RU_FSB_ORDER_378_2014_exact_official_artifact
   - RU_FSB_ORDER_66_2005
   - RU_FAPSI_ORDER_152_2001
+  - STREAM3_SEC_SRC_RU_FZ_125_current_artifact_and_articles_22_1_25_3_compilation
+  - STREAM3_SEC_SRC_RU_ROSARCHIVE_ORDER_24_2020_exact_current_artifact
+  - STREAM3_SEC_SRC_RU_ROSARCHIVE_ORDER_77_2023_exact_current_artifact
   - STREAM3_SEC_SRC_RU_FZ_273_2012_immutable_artifact
   - STREAM3_SEC_SRC_RU_FZ_16_2007_primary_artifact_and_version_chain
   - STREAM3_SEC_SRC_RU_FZ_79_2004_primary_artifact_and_presidential_dependency
