@@ -26,7 +26,9 @@ sources:
         relation: repeals
         effective_from: 2025-09-01
     verification_status: STATUS_VERIFIED
-    atomization_status: PARTIAL
+    atomization_status: CLAUSE_LEVEL_ATOMIZED_IMMUTABLE_OFFICIAL_PDF_PENDING
+    atomic_model: rkn-order-140-2025-anonymization-atomic-v1.yaml
+    regression_fixture: rkn-order-140-2025-anonymization-regression-v1.json
   - source_id: RU_GOV_PP_1154_2025
     authority: Government_of_Russian_Federation
     document_type: government_decree
@@ -94,11 +96,11 @@ relations:
     type: ISSUED_UNDER
 red_team_notes:
   - "Do not merge the two anonymization regimes merely because both became effective on 2025-09-01; applicability must be resolved from 152-FZ and the respective source scope."
-  - "Order 140 atomization is incomplete until every requirement/method in both annexes has a locator and proof text."
+  - "Order 140 now has clause-level requirements and method mapping, but expert review and immutable official PDF-byte acquisition remain pending."
   - "Government Decree 1154 annexes require separate atomization; source registration alone is not compliance coverage."
 next_actions:
-  - atomize_RKN140_annex_1_requirements
-  - atomize_RKN140_annex_2_methods
+  - acquire_and_hash_RKN140_immutable_official_pdf_bytes
+  - expert_review_RKN140_clause_level_model
   - atomize_PP1154_requirements_methods_rules
   - map_each_atomic_requirement_to_152FZ_applicability
   - map_evidence_controls_roles_and_consequences
