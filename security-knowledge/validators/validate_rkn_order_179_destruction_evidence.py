@@ -8,6 +8,7 @@ import yaml
 
 MODEL = Path("security-knowledge/corpus/ru-personal-data/rkn-order-179-destruction-evidence-atomic-v1.yaml")
 FIXTURES = Path("security-knowledge/corpus/ru-personal-data/rkn-order-179-destruction-evidence-regression-v1.json")
+ARTICLE21 = Path("security-knowledge/corpus/ru-personal-data/fl-152-article-21-remediation-destruction-atomic-v1.yaml")
 LIBRARY = Path("security-knowledge/pdn/pdn-master-source-library-v1.yaml")
 MATRIX = Path("security-knowledge/pdn/pdn-direction-coverage-matrix-v1.yaml")
 
@@ -92,6 +93,7 @@ def evaluate(case):
 def main():
     model = yaml.safe_load(MODEL.read_text(encoding="utf-8"))
     fixtures = json.loads(FIXTURES.read_text(encoding="utf-8"))
+    article21 = yaml.safe_load(ARTICLE21.read_text(encoding="utf-8"))
     library = yaml.safe_load(LIBRARY.read_text(encoding="utf-8"))
     matrix = yaml.safe_load(MATRIX.read_text(encoding="utf-8"))
 
@@ -110,7 +112,8 @@ def main():
     assert source["state"] == "REGRESSION_PROTECTED"
     assert str(MODEL) in source["repo_bindings"] and str(FIXTURES) in source["repo_bindings"]
     direction = next(row for row in matrix["directions"] if row["id"] == "PDN-DIR-22")
-    assert direction["maturity"] == "EXECUTABLE"
+    assert direction["maturity"] == "REGRESSION_PROTECTED"
+    assert article21["id"] == "RU-FL152-ARTICLE21-REMEDIATION-DESTRUCTION-ATOMIC-V1"
     assert library["counts"]["registered_source_records"] == len(library["sources"]) == 37
     assert len(fixtures["cases"]) == 44
 
