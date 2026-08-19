@@ -164,7 +164,31 @@ FATHER не должен превращаться в неразделимый м
 - поиск разрывов и противоречий;
 - анализ влияния изменений.
 
-### 4.6 OSINT Intelligence Platform
+### 4.6 FATHER Search & Analytics Center
+
+**Product ID:** `FATHER-SAC-0001`  
+**Назначение:** самостоятельный поисково-аналитический центр, исследовательский полигон и интеллектуальное ядро FATHER.
+
+Возможности:
+
+- непрерывный поиск по нормативным, научным, инженерным и OSINT-источникам;
+- постановка и декомпозиция поисковых заданий;
+- два независимых потока Research / Verification;
+- provenance, версии, лицензии и corroboration;
+- A/B-сравнение поиска, retrieval, моделей и агентных цепочек;
+- benchmark и воспроизведение комбинаций алгоритмов;
+- сохранение положительных и отрицательных результатов;
+- производство claims, evidence, Golden Patterns, skills и eval datasets;
+- мониторинг изменений и impact analysis;
+- выпуск аналитических отчётов, evidence packs и API.
+
+Ценность: центр превращает поток информации в защищённый «алмазный фонд» доказательных знаний и Decision Memory. Он работает автономно как исследовательский продукт и снабжает Security KB, OSINT Platform, Agent Factory и остальные продукты FATHER.
+
+Первый полигон: 152-ФЗ — `официальный источник → requirement → applicability → control → check → evidence`.
+
+Полный паспорт: [FATHER Search & Analytics Center](./FATHER_SEARCH_ANALYTICS_CENTER_PRODUCT.md).
+
+### 4.7 OSINT Intelligence Platform
 
 **Назначение:** сбор, верификация, связывание и аналитическое распределение открытой информации.
 
@@ -179,7 +203,7 @@ FATHER не должен превращаться в неразделимый м
 - фишинг и имперсонация;
 - маршрутизация подтверждённых данных в профильные базы знаний.
 
-### 4.7 Agent Factory
+### 4.8 Agent Factory
 
 **Назначение:** производство специализированных агентов.
 
@@ -197,7 +221,7 @@ FATHER не должен превращаться в неразделимый м
 - выпуск версии;
 - мониторинг качества.
 
-### 4.8 LLM Security / Antivirus
+### 4.9 LLM Security / Antivirus
 
 **Назначение:** защита агентных и LLM-систем.
 
@@ -214,7 +238,7 @@ FATHER не должен превращаться в неразделимый м
 - red-team;
 - quarantine и human approval.
 
-### 4.9 Engineering Competency Lab
+### 4.10 Engineering Competency Lab
 
 **Назначение:** обучение программистов, архитекторов, тестировщиков и агентов на доказательных решениях.
 
@@ -230,7 +254,7 @@ FATHER не должен превращаться в неразделимый м
 - журнал роста;
 - перенос опыта между проектами.
 
-### 4.10 Media and Knowledge Studio
+### 4.11 Media and Knowledge Studio
 
 **Назначение:** работа с книгами, текстом, изображениями, голосом и видео.
 
@@ -247,7 +271,7 @@ FATHER не должен превращаться в неразделимый м
 - мультимедийный экспорт;
 - контроль безопасности и авторства.
 
-### 4.11 Organization Process and Appeals CRM
+### 4.12 Organization Process and Appeals CRM
 
 **Назначение:** обработка обращений, жалоб и регулируемых процессов.
 
@@ -359,11 +383,12 @@ updated_at: null
 
 ### Волна 1 — флагманское ядро
 
-1. Security Knowledge MVP с приоритетом 152-ФЗ.
-2. Веб-лицо Security Knowledge.
-3. Decision and Applicability Engine.
-4. Минимальный Security Audit Engine.
-5. Базовые контракты FATHER Core.
+1. FATHER Search & Analytics Center: M0 регламент → M1 полигон на 152-ФЗ.
+2. Security Knowledge MVP с приоритетом 152-ФЗ.
+3. Веб-лицо Security Knowledge.
+4. Decision and Applicability Engine.
+5. Минимальный Security Audit Engine.
+6. Базовые контракты FATHER Core.
 
 ### Волна 2 — производственные инструменты
 
