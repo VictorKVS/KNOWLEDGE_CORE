@@ -1,0 +1,199 @@
+schema_version: 1
+inventory_id: RU_PD_MASTER_SOURCE_INVENTORY
+scope: Russian personal-data regulation and directly applicable technical/cryptographic overlays
+parent_inventory: "../master-source-inventory.yaml"
+updated_at: "2026-08-19T20:06:01+03:00"
+status_values:
+  - DISCOVERED
+  - REGISTERED
+  - PRIMARY_URL_IDENTIFIED
+  - STATUS_VERIFIED
+  - SOURCE_PENDING
+  - SOURCE_ACQUIRED
+  - IMMUTABLE
+  - STRUCTURED
+  - CHUNKED
+  - CONCEPTS_EXTRACTED
+  - ATOMIZED
+  - LINKED
+  - CONFLICT_CHECKED
+  - EXPERT_REVIEWED
+  - COMPLETE
+
+policy:
+  - "A source is not SOURCE_ACQUIRED or IMMUTABLE until exact bytes are captured with MIME, byte length and SHA-256."
+  - "Existing nodes and source cards must be reused before new analysis is started."
+  - "A source may have a verified identity/status while its immutable artifact is still pending."
+  - "Technical, cryptographic, GosSOPKA/CII/GIS and sector overlays require explicit applicability edges before their requirements enter PDn decision logic."
+  - "Every later document-compilation pass must preserve traceability source -> structure -> chunk -> concept/definition -> atomic requirement -> typed relation -> conflict -> decision rule -> test."
+
+sources:
+  - source_id: RU_RKN_ORDER_180_2022
+    domain: ROSKOMNADZOR_NOTIFICATION_FORMS
+    priority: P0
+    local_record: "rkn-order-180-2022-source-card.yaml"
+    registration_status: STATUS_VERIFIED
+    immutable_status: SOURCE_PENDING
+    analysis_status: REGISTERED
+    reuse: true
+
+  - source_id: RU_RKN_ORDER_140_2025
+    domain: ANONYMIZATION
+    priority: P0
+    local_record: "2025-anonymization-source-pack.yaml"
+    registration_status: STATUS_VERIFIED
+    immutable_status: SOURCE_PENDING
+    analysis_status: PARTIAL
+    reuse: true
+
+  - source_id: RU_GOV_PP_1154_2025
+    domain: ANONYMIZATION
+    priority: P0
+    local_record: "2025-anonymization-source-pack.yaml"
+    registration_status: STATUS_VERIFIED
+    immutable_status: SOURCE_PENDING
+    analysis_status: REGISTERED
+    reuse: true
+
+  - source_id: RU_GOV_PP_1119_2012
+    domain: ISPDN_PROTECTION_LEVELS_AND_REQUIREMENTS
+    priority: P0
+    local_record: "technical-security-source-pack.yaml"
+    registration_status: STATUS_VERIFIED
+    immutable_status: SOURCE_PENDING
+    analysis_status: REGISTERED
+    reuse: true
+
+  - source_id: RU_FSTEC_ORDER_21_2013
+    domain: ISPDN_TECHNICAL_MEASURES
+    priority: P0
+    local_record: "technical-security-source-pack.yaml"
+    registration_status: STATUS_VERIFIED
+    immutable_status: SOURCE_PENDING
+    analysis_status: REGISTERED
+    reuse: true
+    version_chain_status: "2013 base -> 2017 Order 49 -> 2020 Order 68; primary amendment events registered"
+
+  - source_id: RU_FSTEC_THREAT_METHOD_2021
+    domain: THREAT_MODELING
+    priority: P0
+    local_record: "technical-security-source-pack.yaml"
+    registration_status: PRIMARY_URL_IDENTIFIED
+    immutable_status: SOURCE_PENDING
+    analysis_status: REGISTERED
+    reuse: true
+
+  - source_id: RU_FSB_ORDER_378_2014
+    domain: ISPDN_CRYPTO_MEASURES
+    priority: P0
+    local_record: "technical-security-source-pack.yaml"
+    registration_status: STATUS_VERIFIED
+    immutable_status: SOURCE_PENDING
+    analysis_status: REGISTERED
+    applicability_gate: SKZI_USED_IN_ISPDN
+    reuse: true
+
+  - source_id: RU_GOV_PP_313_2012
+    domain: CRYPTO_LICENSING
+    priority: P1
+    local_record: "technical-security-source-pack.yaml"
+    registration_status: DISCOVERED
+    immutable_status: SOURCE_PENDING
+    analysis_status: REGISTERED
+    applicability_gate: CRYPTO_ACTIVITY_REQUIRES_LICENSING
+    reuse: true
+
+  - source_id: RU_FSTEC_BDU_GENERAL
+    domain: THREAT_CATALOG
+    priority: P0
+    local_record: "technical-security-source-pack.yaml"
+    registration_status: REGISTERED
+    immutable_status: SOURCE_PENDING
+    analysis_status: REGISTERED_LIVE_REFERENCE
+    snapshot_required: true
+    reuse: true
+
+  - source_id: RU_FSB_ORDER_66_2005
+    domain: CRYPTO_OPERATIONAL_RULES
+    priority: P1
+    local_record: "technical-security-source-pack.yaml"
+    registration_status: DISCOVERED
+    immutable_status: SOURCE_PENDING
+    analysis_status: SOURCE_PENDING
+    applicability_gate: SKZI_CONTEXT
+
+  - source_id: RU_FAPSI_ORDER_152_2001
+    domain: CRYPTO_OPERATIONAL_RULES
+    priority: P1
+    local_record: "technical-security-source-pack.yaml"
+    registration_status: DISCOVERED
+    immutable_status: SOURCE_PENDING
+    analysis_status: SOURCE_PENDING
+    applicability_gate: SKZI_CONTEXT
+
+  - source_id: RU_FSB_PD_THREAT_RECOMMENDATIONS_2015
+    domain: PDN_CRYPTO_THREAT_MODELING
+    priority: P1
+    local_record: "technical-security-source-pack.yaml"
+    registration_status: DISCOVERED
+    immutable_status: SOURCE_PENDING
+    analysis_status: SOURCE_PENDING
+    applicability_gate: PDN_THREAT_MODELING_WITH_FSB_CRYPTO_CONTEXT
+
+excluded_from_core_until_applicability_proved:
+  - source_family: GOSSOPKA_NKTSKI
+    reason: "No direct personal-data incident applicability edge proved in current technical-security pass."
+  - source_id: RU_FSTEC_BDU_ASU_TP
+    reason: "Industrial-control overlay; not a substitute for the general FSTEK threat catalog in ordinary ISPDn."
+
+stream_progress:
+  stream_1_core_regulation:
+    status: RUNNING_SEPARATELY
+    note: "General 152-FZ/Roskomnadzor core is owned by the core acquisition stream."
+  stream_2_technical_crypto:
+    status: ACTIVE
+    source_pack: "technical-security-source-pack.yaml"
+    sources_reconciled: 6
+    sources_registered_in_pack: 6
+    related_sources_discovered: 3
+    primary_amendment_events_verified: 2
+    immutable_artifacts: 0
+    pending_immutable_or_snapshot: 6
+    bytes_downloaded: 0
+    hashes_recorded: 0
+    applicability_guards: 2
+  stream_3_sector_overlays:
+    status: RUNNING_SEPARATELY
+    note: "Sector/special protected-information overlays are owned by the sector acquisition stream."
+
+quality_gates:
+  acquisition_gate:
+    pass_when:
+      - exact_primary_artifact_present
+      - source_url_present
+      - retrieved_at_present
+      - mime_present
+      - byte_length_present
+      - sha256_present
+  document_compiler_gate:
+    pass_when:
+      - legal_structure_present
+      - chunks_have_stable_locators
+      - concepts_and_definitions_extracted
+      - atomic_requirements_trace_to_chunks
+      - typed_relations_have_provenance
+      - conflict_check_completed
+  publication_gate:
+    pass_when:
+      - applicability_proved
+      - version_chain_checked
+      - regression_tests_pass
+      - red_team_pass
+
+next_priority:
+  - RU_GOV_PP_1119_2012_immutable_artifact
+  - RU_FSTEC_ORDER_21_2013_current_artifact
+  - RU_FSTEC_THREAT_METHOD_2021_attachment_2919
+  - RU_FSB_ORDER_378_2014_exact_official_artifact
+  - RU_FSB_ORDER_66_2005
+  - RU_FAPSI_ORDER_152_2001
