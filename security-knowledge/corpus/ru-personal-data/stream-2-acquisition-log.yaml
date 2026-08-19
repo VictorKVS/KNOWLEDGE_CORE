@@ -1,0 +1,54 @@
+schema_version: 1
+stream_id: RU_PD_STREAM_2_TECHNICAL_CRYPTO
+purpose: Append-only acquisition and analysis telemetry for PDn technical/cryptographic sources
+runs:
+  - run_date: 2026-08-19
+    retrieved_at: "2026-08-19T20:06:01+03:00"
+    reconciliation:
+      sources_reconciled: 6
+      parent_family_entries_reused: 6
+      related_sources_discovered: 3
+      neighboring_regimes_not_promoted: 2
+    primary_status_checks:
+      government_pp1119_current_page_identified: true
+      fstec21_amendment_49_2017_primary_publication_identified: true
+      fstec21_amendment_68_2020_primary_publication_identified: true
+      fstec_2021_method_primary_url_identified: true
+      fsb378_official_agency_reference_identified: true
+      fsb378_exact_official_publication_artifact_identified: false
+    artifact_acquisition:
+      attempts: 4
+      successes: 0
+      bytes_downloaded: 0
+      sha256_recorded: 0
+      immutable_artifacts_created: 0
+      pending_immutable_or_snapshot: 6
+      failure_classes:
+        official_endpoint_timeout_or_unresolved: 4
+      integrity_rule: "No MIME, byte length or SHA-256 is populated without exact acquired bytes."
+    version_analysis:
+      version_edges_primary_verified: 2
+      edges:
+        - from: RU_FSTEC_ORDER_21_2013
+          to: RU_FSTEC_ORDER_49_2017
+          type: AMENDED_BY
+          official_publication_number: "0001201704260010"
+        - from: RU_FSTEC_ORDER_21_2013
+          to: RU_FSTEC_ORDER_68_2020
+          type: AMENDED_BY
+          official_publication_number: "0001202007100002"
+    applicability_analysis:
+      guards_added: 2
+      rules:
+        - "RU_FSB_ORDER_378_2014 applies only in the ISPDn + SKZI context; it is not a universal PDn rule."
+        - "GosSOPKA/NKTsKI and ASU-TP overlays are not promoted into PDn core without a proved applicability edge."
+    conflict_detection:
+      candidates_checked: 2
+      confirmed_legal_contradictions: 0
+      context_splits: 1
+      scope_guards: 1
+      note: "The FSTEK technical-measures branch and FSB cryptographic-measures branch are context-separated rather than treated as contradictory."
+    outputs:
+      - "technical-security-source-pack.yaml"
+      - "master-source-inventory.yaml"
+    next_bottleneck: "Exact immutable primary bytes from official endpoints; once acquired, start document compiler stages (structure -> chunks -> concepts/definitions -> requirements -> typed relations -> conflict checks)."
