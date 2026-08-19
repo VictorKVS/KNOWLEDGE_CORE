@@ -1,0 +1,100 @@
+schema_version: "1.0"
+id: RU-FL152-ARTICLE16-AUTOMATED-DECISIONS-RIGHTS-ATOMIC-V1
+title: Federal Law No. 152-FZ Article 16 solely automated decisions and subject safeguards
+scope: >-
+  Current Article 16 prohibition, exceptions, explanation, objection and review duties
+  for decisions based solely on automated personal-data processing that produce legal
+  consequences or otherwise affect a subject's rights and legitimate interests. This is
+  a technology-neutral personal-data rule, not a universal artificial-intelligence regime.
+
+source:
+  authority: Federal Legislature of the Russian Federation
+  law_number: "152-FZ"
+  signed_date: "2006-07-27"
+  current_edition_checked: "2026-07-26"
+  current_text: https://www.consultant.ru/document/cons_doc_LAW_61801/22e884a41450dcb5cb62d956583ad32abe2bbbe9/
+  official_integrated_bank_reference:
+    snapshot_date: "2025-09-01"
+    url: https://ips.pravo.gov.ru/api/ips/legislation/document?baseid=None&hash=98490812b3409e2a8d78a11ca9010f434ea3d9250a11dbbdb78690cd5551bdd6
+  dependencies:
+    - FL152_ARTICLE6_PROCESSING_BASIS
+    - FL152_ARTICLE9_GENERAL_CONSENT
+    - APPLICABLE_FEDERAL_LAW_EXCEPTION_WITH_SUBJECT_SAFEGUARDS
+
+verification_boundary:
+  current_article_text: VERIFIED_AUTHORITATIVE_SECONDARY_CURRENT_TEXT
+  current_law_edition: VERIFIED_2026_07_26_CONSOLIDATED_HEADER
+  official_integrated_bank_snapshot: VERIFIED_2025_09_01_REFERENCE
+  immutable_current_consolidated_bytes: PENDING
+  independent_expert_review: PENDING
+  checked_at: "2026-08-20"
+
+atomic_rules:
+  - {id: FL152-A16-R001, locator: article_16.part_1.scope, class: SOLELY_AUTOMATED_SCOPE, rule: "Apply Article 16 where the decision is based solely on automated processing of the subject's personal data."}
+  - {id: FL152-A16-R002, locator: article_16.part_1.effect_1, class: LEGAL_CONSEQUENCE_DECISION_PROHIBITION, rule: "Prohibit a solely automated decision that produces legal consequences for the subject unless a part 2 exception is established."}
+  - {id: FL152-A16-R003, locator: article_16.part_1.effect_2, class: RIGHTS_INTERESTS_DECISION_PROHIBITION, rule: "Prohibit a solely automated decision that otherwise affects the subject's rights or legitimate interests unless a part 2 exception is established."}
+  - {id: FL152-A16-R004, locator: article_16.part_2.exception_1, class: WRITTEN_CONSENT_EXCEPTION, rule: "Permit the decision under the consent exception only where the subject has consented in written form."}
+  - {id: FL152-A16-R005, locator: article_16.part_2.exception_2, class: FEDERAL_LAW_EXCEPTION, rule: "Permit the decision under a federal-law exception only where that federal law provides for the decision."}
+  - {id: FL152-A16-R006, locator: article_16.part_2.exception_2_safeguards, class: FEDERAL_LAW_SAFEGUARDS, rule: "Require the same federal-law route also to establish measures ensuring observance of the subject's rights and legitimate interests."}
+  - {id: FL152-A16-R007, locator: article_16.part_3.duty_1, class: DECISION_PROCEDURE_EXPLANATION, rule: "Explain to the subject the procedure used to make the solely automated decision."}
+  - {id: FL152-A16-R008, locator: article_16.part_3.duty_2, class: LEGAL_CONSEQUENCES_EXPLANATION, rule: "Explain the possible legal consequences of that decision."}
+  - {id: FL152-A16-R009, locator: article_16.part_3.duty_3, class: OBJECTION_OPPORTUNITY, rule: "Provide the subject an opportunity to object to the decision."}
+  - {id: FL152-A16-R010, locator: article_16.part_3.duty_4, class: RIGHTS_PROTECTION_PROCEDURE, rule: "Explain how the subject may protect their rights and legitimate interests."}
+  - {id: FL152-A16-R011, locator: article_16.part_4.duty_1, class: OBJECTION_REVIEW_DEADLINE, rule: "Consider the part 3 objection within thirty days from receipt."}
+  - {id: FL152-A16-R012, locator: article_16.part_4.duty_2, class: OBJECTION_RESULT_NOTICE, rule: "Notify the subject of the result of considering the objection."}
+
+deadlines:
+  - {id: FL152-A16-D001, locator: article_16.part_4, value: 30, unit: DAYS, origin: SUBJECT_OBJECTION_RECEIPT, action: CONSIDER_OBJECTION}
+
+event_deadlines_without_separate_numeric_value:
+  - id: FL152-A16-E001
+    locator: article_16.part_4
+    trigger: OBJECTION_REVIEW_RESULT_AVAILABLE
+    action: NOTIFY_SUBJECT_OF_RESULT
+    guard: NO_SEPARATE_NOTICE_PERIOD_STATED_IN_ARTICLE16
+
+temporal_model:
+  - {event: FEDERAL_LAW_SIGNED, date: "2006-07-27"}
+  - {event: OFFICIAL_INTEGRATED_BANK_SNAPSHOT_REFERENCED, date: "2025-09-01"}
+  - {event: CURRENT_CONSOLIDATED_EDITION_CHECKED, date: "2026-07-26"}
+
+evidence_model:
+  - {id: EVIDENCE_A16_DECISION_AND_PROCESSING_FLOW, proves: [FL152-A16-R001]}
+  - {id: EVIDENCE_A16_AUTOMATION_AND_HUMAN_INVOLVEMENT_ANALYSIS, proves: [FL152-A16-R001]}
+  - {id: EVIDENCE_A16_LEGAL_CONSEQUENCE_ANALYSIS, proves: [FL152-A16-R002]}
+  - {id: EVIDENCE_A16_RIGHTS_AND_LEGITIMATE_INTERESTS_IMPACT_ANALYSIS, proves: [FL152-A16-R003]}
+  - {id: EVIDENCE_A16_WRITTEN_CONSENT_AND_SUBJECT_BINDING, proves: [FL152-A16-R004]}
+  - {id: EVIDENCE_A16_FEDERAL_LAW_EXCEPTION_LOCATOR, proves: [FL152-A16-R005]}
+  - {id: EVIDENCE_A16_FEDERAL_LAW_SAFEGUARDS_CROSSWALK, proves: [FL152-A16-R006]}
+  - {id: EVIDENCE_A16_DECISION_PROCEDURE_EXPLANATION, proves: [FL152-A16-R007]}
+  - {id: EVIDENCE_A16_POSSIBLE_LEGAL_CONSEQUENCES_EXPLANATION, proves: [FL152-A16-R008]}
+  - {id: EVIDENCE_A16_OBJECTION_CHANNEL_AVAILABILITY, proves: [FL152-A16-R009]}
+  - {id: EVIDENCE_A16_RIGHTS_PROTECTION_INSTRUCTION, proves: [FL152-A16-R010]}
+  - {id: EVIDENCE_A16_OBJECTION_INTAKE_TIMESTAMP, proves: [FL152-A16-R011]}
+  - {id: EVIDENCE_A16_OBJECTION_REVIEW_RECORD, proves: [FL152-A16-R011, FL152-A16-R012]}
+  - {id: EVIDENCE_A16_RESULT_NOTICE_DELIVERY, proves: [FL152-A16-R012]}
+
+conflict_and_definition_checks:
+  - {id: FL152-A16-C001, type: SOLELY_AUTOMATED_REQUIRED, resolution: "Article 16 does not govern every decision supported by automation; the decision must be based solely on automated personal-data processing."}
+  - {id: FL152-A16-C002, type: HUMAN_INVOLVEMENT_THRESHOLD_NOT_DEFINED, resolution: "Article 16 does not define the quality threshold for human involvement; do not treat a nominal approval click as conclusive without documented analysis."}
+  - {id: FL152-A16-C003, type: EFFECT_THRESHOLD, resolution: "The prohibition requires legal consequences or another effect on rights or legitimate interests; routine automation without that effect is not automatically routed here."}
+  - {id: FL152-A16-C004, type: TWO_EXCEPTIONS_ONLY, resolution: "Part 2 supplies written consent or a qualifying federal-law route; internal policy, contract or generic legitimate interest is not encoded as an Article 16 exception."}
+  - {id: FL152-A16-C005, type: WRITTEN_CONSENT_SPECIFICITY, resolution: "The consent exception expressly requires written form; do not downgrade it to merely provable or implied consent."}
+  - {id: FL152-A16-C006, type: FEDERAL_LAW_PLUS_SAFEGUARDS, resolution: "A federal-law locator is insufficient unless the route also establishes measures protecting the subject's rights and legitimate interests."}
+  - {id: FL152-A16-C007, type: EXCEPTION_NOT_PROCESSING_BASIS, resolution: "A part 2 exception removes the Article 16 prohibition but does not replace the separate legal basis and principles required for personal-data processing."}
+  - {id: FL152-A16-C008, type: FOUR_DISTINCT_PART3_DUTIES, resolution: "Procedure explanation, possible-consequence explanation, objection opportunity and rights-protection procedure are independent duties and cannot be collapsed into a generic notice."}
+  - {id: FL152-A16-C009, type: THIRTY_DAYS_NOT_WORKING_DAYS, resolution: "Part 4 states thirty days, not thirty working days."}
+  - {id: FL152-A16-C010, type: RESULT_NOTICE_NO_SEPARATE_NUMBER, resolution: "Part 4 requires result notice but states no separate numeric period after the result; do not invent one."}
+  - {id: FL152-A16-C011, type: OBJECTION_NOT_AUTOMATIC_REVERSAL, resolution: "Article 16 requires consideration and result notice; it does not state that every objection automatically reverses the decision."}
+  - {id: FL152-A16-C012, type: TECHNOLOGY_NEUTRAL_NOT_GENERAL_AI_LAW, resolution: "Route by solely automated personal-data decision and protected effect, not by an AI label alone."}
+
+red_team:
+  critical_gap_created: false
+  high_gap_created: false
+  status: PASS_MODEL_FAIL_GLOBAL_SCOPE_INCOMPLETE
+  residuals:
+    - MEDIUM_ARTICLE17_APPEAL_RIGHTS_PENDING
+    - MEDIUM_HUMAN_INVOLVEMENT_THRESHOLD_EXPERT_REVIEW_PENDING
+    - MEDIUM_ARTICLES6_AND9_CROSSWALK_PENDING
+    - MEDIUM_IMMUTABLE_CURRENT_CONSOLIDATED_BYTES_PENDING
+    - MEDIUM_INDEPENDENT_EXPERT_REVIEW_PENDING
