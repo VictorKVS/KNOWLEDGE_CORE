@@ -1,4 +1,4 @@
-schema_version: "1.0"
+schema_version: "1.1"
 kind: pdn-sector-overlap-discovery-seed
 status: PROPOSED
 checked_at: "2026-08-19"
@@ -59,8 +59,50 @@ edges:
     overlap_dimension: [marketing, telecom, consent]
     proof_state: DISCOVERY_ONLY
     pending: "Verify current Article 18 text and distinguish advertising consent from personal-data processing consent."
+
+  - from: PDN-RU-FZ-0273
+    to: PDN-RU-FZ-0152
+    type: candidate_overlap
+    overlap_dimension: [education, children, restricted_information]
+    proof_state: DISCOVERY_ONLY
+    verified_anchor: "273-ФЗ, статья 59 — отдельные материалы государственной итоговой аттестации содержат информацию ограниченного доступа."
+    pending: >-
+      The restricted-information rule does not by itself establish a PDN relation.
+      Find a primary provision connecting the relevant educational information set to identifiable persons before promotion.
+
+  - from: PDN-RU-FZ-0016-2007
+    to: PDN-RU-FZ-0152
+    type: explicit_cross_reference_candidate
+    overlap_dimension: [transport, passenger_personal_data, personnel_personal_data, restricted_access]
+    proof_state: PARTIAL_EXPLICIT_REFERENCE
+    verified_anchor: >-
+      16-ФЗ, статья 11: часть 2 establishes centralized personal-data databases;
+      часть 4 marks EGIS OTB information resources as restricted access;
+      часть 7 explicitly requires transfer under 152-ФЗ and 16-ФЗ.
+    pending: "Acquire exact authoritative current artifact and complete version-chain before VERIFIED promotion."
+
+  - from: PDN-RU-FZ-0079-2004
+    to: PDN-RU-FZ-0152
+    type: explicit_legal_regime_overlap_candidate
+    overlap_dimension: [public_sector, civil_service, employee_personal_data, personal_files]
+    proof_state: PARTIAL_EXPLICIT_REFERENCE
+    verified_anchor: >-
+      79-ФЗ, статья 42 directly regulates civil-servant personal data and requires compliance
+      with Russian legislation in the field of personal data.
+    pending: "Acquire authoritative current primary artifact and Presidential implementing regulation before VERIFIED promotion."
+
+  - from: PDN-RU-GK2-A946
+    to: PDN-RU-FZ-0152
+    type: candidate_overlap
+    overlap_dimension: [insurance_secrecy, health_information, property_information, personal_information]
+    proof_state: DISCOVERY_ONLY
+    verified_anchor: "ГК РФ часть вторая, статья 946 — тайна страхования."
+    pending: >-
+      Do not infer 152-ФЗ applicability from semantic overlap alone; acquire primary current text
+      and derive any PDN edge only from an explicit legal basis or an identified processing scenario.
 quality_gates:
   - no_candidate_edge_is_applicability_proof
   - no_inferred_edge_is_promoted_without_primary_anchor
   - current_version_of_both_endpoints_required_for_verified_edge
   - explicit_legal_reference_has_higher_provenance_than_semantic_overlap
+  - semantic_overlap_must_not_be_upgraded_to_explicit_legal_reference
