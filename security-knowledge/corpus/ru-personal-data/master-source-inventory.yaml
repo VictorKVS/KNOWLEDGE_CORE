@@ -2,7 +2,7 @@ schema_version: 1
 inventory_id: RU_PD_MASTER_SOURCE_INVENTORY
 scope: Russian personal-data regulation and directly applicable technical/cryptographic overlays
 parent_inventory: "../master-source-inventory.yaml"
-updated_at: "2026-08-19T20:23:27+03:00"
+updated_at: "2026-08-19T23:15:15+03:00"
 status_values:
   - DISCOVERED
   - REGISTERED
@@ -26,6 +26,7 @@ policy:
   - "A source may have a verified identity/status while its immutable artifact is still pending."
   - "Technical, cryptographic, GosSOPKA/CII/GIS and sector overlays require explicit applicability edges before their requirements enter PDn decision logic."
   - "Every later document-compilation pass must preserve traceability source -> structure -> chunk -> concept/definition -> atomic requirement -> typed relation -> conflict -> decision rule -> test."
+  - "A repealed provision is conflict/version evidence only; it cannot be reused as a current semantic or applicability anchor."
 
 sources:
   - source_id: RU_RKN_ORDER_180_2022
@@ -166,18 +167,24 @@ stream_progress:
     status: ACTIVE
     inventory: "../ru-protected-information/master-inventory.yaml"
     overlap_graph: "../../cross-domain/pdn-sector-overlap-seed-v1.yaml"
-    sources_found_total: 11
-    new_sources_this_pass: 4
+    sources_found_total: 13
+    new_sources_this_pass: 2
     reused_existing_sources: 1
     primary_publication_verified_total: 3
+    primary_amendment_events_verified_this_pass: 3
     immutable_artifacts: 0
-    pending_immutable: 10
-    exact_binary_acquisition_attempts_this_pass: 1
+    pending_immutable: 12
+    exact_binary_acquisition_attempts_this_pass: 2
     exact_binary_acquisition_success_this_pass: 0
-    sectors_registered: 11
+    sectors_registered: 12
+    stale_or_repealed_anchors_rejected_this_pass: 1
     explicit_or_direct_legal_overlap_candidates:
       - "16-ФЗ article 11 -> 152-ФЗ"
       - "79-ФЗ article 42 -> personal-data legislation"
+      - "143-ФЗ article 13.2(9) -> 149-ФЗ + 152-ФЗ (current consolidated text; primary-current artifact pending)"
+      - "326-ФЗ article 44 -> restricted-access insured-person/medical-care data; PDN/health applicability review pending"
+    conflict_notes:
+      - "143-ФЗ article 12 is repealed since 2018-10-01 and was rejected as a stale current anchor; live routing moved to articles 13.1-13.2."
     note: >-
       Sector/special protected-information overlays are isolated from executable PDN logic until
       authoritative current artifacts, version chains and anchored applicability edges pass review.
@@ -217,3 +224,5 @@ next_priority:
   - STREAM3_SEC_SRC_RU_FZ_16_2007_primary_artifact_and_version_chain
   - STREAM3_SEC_SRC_RU_FZ_79_2004_primary_artifact_and_presidential_dependency
   - STREAM3_SEC_SRC_RU_GK2_1996_A946_primary_artifact
+  - STREAM3_SEC_SRC_RU_FZ_326_2010_current_primary_artifact_and_article_44_chain
+  - STREAM3_SEC_SRC_RU_FZ_143_1997_current_primary_artifact_and_article_13_2_chain
