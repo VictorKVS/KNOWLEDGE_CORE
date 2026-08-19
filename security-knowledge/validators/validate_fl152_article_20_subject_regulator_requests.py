@@ -93,7 +93,7 @@ def main():
     source = next(x for x in library["sources"] if x["id"] == "PDN-SRC-0001")
     assert str(MODEL) in source["repo_bindings"] and str(FIXTURES) in source["repo_bindings"]
     direction = next(x for x in matrix["directions"] if x["id"] == "PDN-DIR-11")
-    assert direction["maturity"] == "EXECUTABLE"
+    assert direction["maturity"] == "REGRESSION_PROTECTED"
     assert len(fixtures["cases"]) == 44
     failures = []
     for case in fixtures["cases"]:

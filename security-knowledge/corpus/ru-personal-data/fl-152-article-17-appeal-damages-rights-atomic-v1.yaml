@@ -1,0 +1,86 @@
+schema_version: "1.0"
+id: RU-FL152-ARTICLE17-APPEAL-DAMAGES-RIGHTS-ATOMIC-V1
+title: Federal Law No. 152-FZ Article 17 operator appeal and judicial-remedy rights
+scope: >-
+  Current Article 17 rights to challenge an operator's action or omission before the
+  authorized personal-data authority or in court and to seek judicial protection,
+  including losses and moral-harm compensation. Procedural periods, proof standards,
+  award amounts and other-liability regimes remain separate legal dependencies.
+
+source:
+  authority: Federal Legislature of the Russian Federation
+  law_number: "152-FZ"
+  signed_date: "2006-07-27"
+  current_edition_checked: "2026-07-26"
+  current_text: https://www.consultant.ru/document/cons_doc_LAW_61801/6e5393e540b36ceae1c79921be1b9e8e3fe0ec23/
+  official_integrated_bank_reference:
+    snapshot_date: "2025-09-01"
+    url: https://ips.pravo.gov.ru/api/ips/legislation/document?baseid=None&hash=98490812b3409e2a8d78a11ca9010f434ea3d9250a11dbbdb78690cd5551bdd6
+  dependencies:
+    - FL152_ARTICLE23_AUTHORIZED_BODY_POWERS
+    - APPLICABLE_PROCEDURAL_LAW
+    - CIVIL_LAW_LOSSES_AND_MORAL_HARM_RULES
+
+verification_boundary:
+  current_article_text: VERIFIED_AUTHORITATIVE_SECONDARY_CURRENT_TEXT
+  current_law_edition: VERIFIED_2026_07_26_CONSOLIDATED_HEADER
+  official_integrated_bank_snapshot: VERIFIED_2025_09_01_REFERENCE
+  immutable_current_consolidated_bytes: PENDING
+  independent_expert_review: PENDING
+  checked_at: "2026-08-20"
+
+atomic_rules:
+  - {id: FL152-A17-R001, locator: article_17.part_1.trigger_1, class: STATUTORY_VIOLATION_BELIEF_TRIGGER, rule: "Recognize the appeal right where the subject considers that the operator processes their personal data in violation of 152-FZ."}
+  - {id: FL152-A17-R002, locator: article_17.part_1.trigger_2, class: RIGHTS_FREEDOMS_VIOLATION_BELIEF_TRIGGER, rule: "Recognize the appeal right where the subject considers that the operator otherwise violates their rights and freedoms."}
+  - {id: FL152-A17-R003, locator: article_17.part_1.object_1, class: OPERATOR_ACTION_APPEAL, rule: "Permit challenge of an operator action through an Article 17 route."}
+  - {id: FL152-A17-R004, locator: article_17.part_1.object_2, class: OPERATOR_OMISSION_APPEAL, rule: "Permit challenge of an operator omission through an Article 17 route."}
+  - {id: FL152-A17-R005, locator: article_17.part_1.route_1, class: AUTHORIZED_BODY_APPEAL, rule: "Permit appeal to the authorized body for protection of personal-data subjects' rights."}
+  - {id: FL152-A17-R006, locator: article_17.part_1.route_2, class: JUDICIAL_APPEAL, rule: "Permit appeal in judicial proceedings."}
+  - {id: FL152-A17-R007, locator: article_17.part_2.chapeau, class: JUDICIAL_RIGHTS_PROTECTION, rule: "Recognize the subject's right to judicial protection of rights and legitimate interests."}
+  - {id: FL152-A17-R008, locator: article_17.part_2.remedy_1, class: LOSSES_REMEDY, rule: "Recognize compensation of losses as an included judicial-protection remedy."}
+  - {id: FL152-A17-R009, locator: article_17.part_2.remedy_2, class: MORAL_HARM_REMEDY, rule: "Recognize compensation for moral harm as an included judicial-protection remedy, available alone or together with a losses claim as indicated by and/or."}
+
+numeric_deadlines: []
+event_deadlines_without_numeric_value: []
+
+temporal_model:
+  - {event: FEDERAL_LAW_SIGNED, date: "2006-07-27"}
+  - {event: OFFICIAL_INTEGRATED_BANK_SNAPSHOT_REFERENCED, date: "2025-09-01"}
+  - {event: CURRENT_CONSOLIDATED_EDITION_CHECKED, date: "2026-07-26"}
+
+evidence_model:
+  - {id: EVIDENCE_A17_SUBJECT_ALLEGATION_AND_ROUTE_REQUEST, proves: [FL152-A17-R001, FL152-A17-R002]}
+  - {id: EVIDENCE_A17_PROCESSING_FACTS_AND_152FZ_LOCATORS, proves: [FL152-A17-R001]}
+  - {id: EVIDENCE_A17_RIGHTS_AND_FREEDOMS_IMPACT_STATEMENT, proves: [FL152-A17-R002]}
+  - {id: EVIDENCE_A17_OPERATOR_ACTION_RECORD, proves: [FL152-A17-R003]}
+  - {id: EVIDENCE_A17_OPERATOR_OMISSION_TIMELINE, proves: [FL152-A17-R004]}
+  - {id: EVIDENCE_A17_AUTHORIZED_BODY_COMPLAINT_PACKAGE, proves: [FL152-A17-R005]}
+  - {id: EVIDENCE_A17_AUTHORIZED_BODY_DELIVERY_RECEIPT, proves: [FL152-A17-R005]}
+  - {id: EVIDENCE_A17_COURT_FILING_PACKAGE, proves: [FL152-A17-R006, FL152-A17-R007]}
+  - {id: EVIDENCE_A17_RIGHTS_AND_LEGITIMATE_INTERESTS_PROTECTION_CLAIMS, proves: [FL152-A17-R007]}
+  - {id: EVIDENCE_A17_ASSERTED_LOSSES_AND_SUPPORTING_RECORDS, proves: [FL152-A17-R008]}
+  - {id: EVIDENCE_A17_ASSERTED_MORAL_HARM_AND_SUPPORTING_RECORDS, proves: [FL152-A17-R009]}
+
+conflict_and_definition_checks:
+  - {id: FL152-A17-C001, type: SUBJECT_BELIEF_TRIGGERS_ROUTE, resolution: "A prior final finding of violation is not stated as a prerequisite to invoke the appeal right; the subject's asserted belief opens the route."}
+  - {id: FL152-A17-C002, type: TWO_TRIGGER_LIMBS, resolution: "A claimed 152-FZ processing violation and another claimed violation of rights or freedoms are alternative trigger limbs."}
+  - {id: FL152-A17-C003, type: ACTION_AND_OMISSION, resolution: "Both operator action and inaction are appealable; do not require an affirmative decision document."}
+  - {id: FL152-A17-C004, type: AUTHORITY_OR_COURT, resolution: "Part 1 supplies an authorized-body route or a judicial route and does not state mandatory administrative exhaustion before court."}
+  - {id: FL152-A17-C005, type: ROUTES_NOT_DECLARED_MUTUALLY_EXCLUSIVE, resolution: "The word or identifies available routes; Article 17 does not itself bar sequential or otherwise procedurally permitted use of both."}
+  - {id: FL152-A17-C006, type: INTERNAL_COMPLAINT_NOT_PREREQUISITE, resolution: "Article 17 does not require a prior internal complaint to the operator before the authority or court route."}
+  - {id: FL152-A17-C007, type: DAMAGES_ROUTE_IS_JUDICIAL, resolution: "Part 2 places losses and moral-harm remedies in judicial proceedings; do not encode the authorized body as awarding compensation under Article 17."}
+  - {id: FL152-A17-C008, type: AND_OR_REMEDIES, resolution: "Losses and moral-harm compensation may be pleaded separately or together; neither is silently collapsed into the other."}
+  - {id: FL152-A17-C009, type: NO_AUTOMATIC_AWARD, resolution: "The right to seek a remedy is not a guarantee that a court will award it."}
+  - {id: FL152-A17-C010, type: NO_AMOUNT_OR_FORMULA, resolution: "Article 17 states no compensation amount, tariff or calculation formula."}
+  - {id: FL152-A17-C011, type: NO_ARTICLE17_PROCEDURAL_PERIOD, resolution: "Article 17 states no complaint, limitation, authority-response or court-processing period; applicable procedural law must supply any such period."}
+  - {id: FL152-A17-C012, type: NO_SANCTION_CREATION, resolution: "Article 17 does not itself create an administrative or criminal sanction or determine operator liability under other provisions."}
+
+red_team:
+  critical_gap_created: false
+  high_gap_created: false
+  status: PASS_MODEL_FAIL_GLOBAL_SCOPE_INCOMPLETE
+  residuals:
+    - MEDIUM_ARTICLE23_AUTHORIZED_BODY_CROSSWALK_PENDING
+    - MEDIUM_PROCEDURAL_AND_CIVIL_REMEDY_CROSSWALK_PENDING
+    - MEDIUM_IMMUTABLE_CURRENT_CONSOLIDATED_BYTES_PENDING
+    - MEDIUM_INDEPENDENT_EXPERT_REVIEW_PENDING

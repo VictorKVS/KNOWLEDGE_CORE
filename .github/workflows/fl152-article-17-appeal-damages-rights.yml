@@ -1,0 +1,30 @@
+name: FL152 Article 17 Appeal and Damages Rights Gate
+
+on:
+  push:
+    paths:
+      - "security-knowledge/corpus/ru-personal-data/fl-152-article-17-appeal-damages-rights-atomic-v1.yaml"
+      - "security-knowledge/corpus/ru-personal-data/fl-152-article-17-appeal-damages-rights-regression-v1.json"
+      - "security-knowledge/pdn/pdn-master-source-library-v1.yaml"
+      - "security-knowledge/pdn/pdn-direction-coverage-matrix-v1.yaml"
+      - "security-knowledge/validators/validate_fl152_article_17_appeal_damages_rights.py"
+      - ".github/workflows/fl152-article-17-appeal-damages-rights.yml"
+  pull_request:
+    paths:
+      - "security-knowledge/corpus/ru-personal-data/fl-152-article-17-appeal-damages-rights-atomic-v1.yaml"
+      - "security-knowledge/corpus/ru-personal-data/fl-152-article-17-appeal-damages-rights-regression-v1.json"
+      - "security-knowledge/pdn/pdn-master-source-library-v1.yaml"
+      - "security-knowledge/pdn/pdn-direction-coverage-matrix-v1.yaml"
+      - "security-knowledge/validators/validate_fl152_article_17_appeal_damages_rights.py"
+      - ".github/workflows/fl152-article-17-appeal-damages-rights.yml"
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pyyaml
+      - run: python security-knowledge/validators/validate_fl152_article_17_appeal_damages_rights.py

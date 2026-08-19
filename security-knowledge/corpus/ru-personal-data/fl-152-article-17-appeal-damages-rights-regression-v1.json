@@ -1,0 +1,50 @@
+{
+  "schema_version": "1.0",
+  "model_id": "RU-FL152-ARTICLE17-APPEAL-DAMAGES-RIGHTS-ATOMIC-V1",
+  "cases": [
+    {"id":"A17-T001","query":"trigger","subject_believes_152_violation":true,"subject_believes_rights_violation":false,"violation_already_proven":false,"expected":"ARTICLE17_STATUTORY_VIOLATION_APPEAL_ROUTE"},
+    {"id":"A17-T002","query":"trigger","subject_believes_152_violation":false,"subject_believes_rights_violation":true,"violation_already_proven":false,"expected":"ARTICLE17_RIGHTS_FREEDOMS_APPEAL_ROUTE"},
+    {"id":"A17-T003","query":"trigger","subject_believes_152_violation":true,"subject_believes_rights_violation":true,"violation_already_proven":false,"expected":"ARTICLE17_COMBINED_TRIGGER_ROUTE"},
+    {"id":"A17-T004","query":"trigger","subject_believes_152_violation":false,"subject_believes_rights_violation":false,"violation_already_proven":false,"expected":"NO_ARTICLE17_TRIGGER_ASSERTED"},
+    {"id":"A17-T005","query":"trigger","subject_believes_152_violation":true,"subject_believes_rights_violation":false,"violation_already_proven":true,"expected":"ARTICLE17_STATUTORY_VIOLATION_APPEAL_ROUTE"},
+    {"id":"A17-T006","query":"trigger","subject_believes_152_violation":false,"subject_believes_rights_violation":true,"violation_already_proven":true,"expected":"ARTICLE17_RIGHTS_FREEDOMS_APPEAL_ROUTE"},
+    {"id":"A17-T007","query":"prior_finding","subject_belief":true,"prior_final_finding":false,"expected":"PASS_NO_PRIOR_FINAL_FINDING_REQUIRED_TO_APPEAL"},
+    {"id":"A17-T008","query":"prior_finding","subject_belief":false,"prior_final_finding":true,"expected":"ROUTE_ON_ESTABLISHED_VIOLATION_CHECK_CLAIM_CONTEXT"},
+
+    {"id":"A17-T009","query":"appeal_object","object":"ACTION","expected":"PASS_OPERATOR_ACTION_APPEAL"},
+    {"id":"A17-T010","query":"appeal_object","object":"OMISSION","expected":"PASS_OPERATOR_OMISSION_APPEAL"},
+    {"id":"A17-T011","query":"appeal_object","object":"DECISION_DOCUMENT","expected":"ROUTE_AS_OPERATOR_ACTION"},
+    {"id":"A17-T012","query":"appeal_object","object":"THIRD_PARTY_ONLY","expected":"ARTICLE17_OPERATOR_OBJECT_NOT_ESTABLISHED"},
+    {"id":"A17-T013","query":"appeal_route","target":"AUTHORIZED_BODY","expected":"PASS_AUTHORIZED_BODY_APPEAL"},
+    {"id":"A17-T014","query":"appeal_route","target":"COURT","expected":"PASS_JUDICIAL_APPEAL"},
+    {"id":"A17-T015","query":"appeal_route","target":"OPERATOR_INTERNAL","expected":"INTERNAL_ROUTE_NOT_REQUIRED_BY_ARTICLE17"},
+    {"id":"A17-T016","query":"appeal_route","target":"OTHER_REGULATOR","expected":"BLOCK_ARTICLE17_TARGET_NOT_ESTABLISHED"},
+    {"id":"A17-T017","query":"appeal_route","target":"AUTHORIZED_BODY_THEN_COURT","expected":"ARTICLE17_DOES_NOT_BAR_SEQUENTIAL_ROUTES"},
+    {"id":"A17-T018","query":"appeal_route","target":"COURT_THEN_AUTHORIZED_BODY","expected":"CHECK_PROCEDURAL_LAW_ARTICLE17_NOT_MUTUALLY_EXCLUSIVE"},
+
+    {"id":"A17-T019","query":"precondition","route":"COURT","internal_complaint_filed":false,"authority_complaint_filed":false,"expected":"PASS_NO_MANDATORY_PRETRIAL_EXHAUSTION_IN_ARTICLE17"},
+    {"id":"A17-T020","query":"precondition","route":"COURT","internal_complaint_filed":true,"authority_complaint_filed":false,"expected":"PASS_JUDICIAL_ROUTE"},
+    {"id":"A17-T021","query":"precondition","route":"COURT","internal_complaint_filed":false,"authority_complaint_filed":true,"expected":"PASS_JUDICIAL_ROUTE"},
+    {"id":"A17-T022","query":"precondition","route":"AUTHORIZED_BODY","internal_complaint_filed":false,"authority_complaint_filed":false,"expected":"PASS_NO_INTERNAL_COMPLAINT_PREREQUISITE"},
+    {"id":"A17-T023","query":"precondition","route":"AUTHORIZED_BODY","internal_complaint_filed":true,"authority_complaint_filed":false,"expected":"PASS_AUTHORIZED_BODY_ROUTE"},
+    {"id":"A17-T024","query":"precondition","route":"UNKNOWN","internal_complaint_filed":false,"authority_complaint_filed":false,"expected":"BLOCK_ROUTE_NOT_ESTABLISHED"},
+
+    {"id":"A17-T025","query":"remedy","venue":"COURT","claim":"RIGHTS_PROTECTION","expected":"PASS_JUDICIAL_RIGHTS_PROTECTION"},
+    {"id":"A17-T026","query":"remedy","venue":"COURT","claim":"LOSSES","expected":"PASS_JUDICIAL_LOSSES_CLAIM"},
+    {"id":"A17-T027","query":"remedy","venue":"COURT","claim":"MORAL_HARM","expected":"PASS_JUDICIAL_MORAL_HARM_CLAIM"},
+    {"id":"A17-T028","query":"remedy","venue":"COURT","claim":"LOSSES_AND_MORAL_HARM","expected":"PASS_COMBINED_JUDICIAL_CLAIMS"},
+    {"id":"A17-T029","query":"remedy","venue":"AUTHORIZED_BODY","claim":"LOSSES","expected":"BLOCK_ARTICLE17_COMPENSATION_ROUTE_IS_JUDICIAL"},
+    {"id":"A17-T030","query":"remedy","venue":"AUTHORIZED_BODY","claim":"MORAL_HARM","expected":"BLOCK_ARTICLE17_COMPENSATION_ROUTE_IS_JUDICIAL"},
+    {"id":"A17-T031","query":"remedy","venue":"AUTHORIZED_BODY","claim":"COMPLAINT","expected":"PASS_AUTHORIZED_BODY_COMPLAINT"},
+    {"id":"A17-T032","query":"remedy","venue":"COURT","claim":"ADMINISTRATIVE_FINE","expected":"ARTICLE17_DOES_NOT_CREATE_ADMINISTRATIVE_SANCTION"},
+    {"id":"A17-T033","query":"award","right_to_claim":true,"court_award_already_made":false,"expected":"NO_AUTOMATIC_AWARD"},
+    {"id":"A17-T034","query":"award","right_to_claim":true,"court_award_already_made":true,"expected":"ROUTE_TO_COURT_AWARD_RECORD"},
+
+    {"id":"A17-T035","query":"deadline","deadline_type":"COMPLAINT","expected":"NOT_STATED_CHECK_APPLICABLE_PROCEDURAL_LAW"},
+    {"id":"A17-T036","query":"deadline","deadline_type":"LIMITATION","expected":"NOT_STATED_CHECK_APPLICABLE_PROCEDURAL_LAW"},
+    {"id":"A17-T037","query":"deadline","deadline_type":"AUTHORITY_RESPONSE","expected":"NOT_STATED_CHECK_APPLICABLE_PROCEDURAL_LAW"},
+    {"id":"A17-T038","query":"compensation_amount","expected":"NOT_STATED_DO_NOT_INVENT"},
+    {"id":"A17-T039","query":"proof_standard","expected":"NOT_STATED_CHECK_APPLICABLE_PROCEDURAL_AND_CIVIL_LAW"},
+    {"id":"A17-T040","query":"operator_liability","expected":"ARTICLE17_RIGHTS_ROUTE_NOT_COMPLETE_LIABILITY_REGIME"}
+  ]
+}

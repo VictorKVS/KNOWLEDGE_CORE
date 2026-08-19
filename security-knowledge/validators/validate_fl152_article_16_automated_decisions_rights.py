@@ -105,7 +105,7 @@ def main():
     automated = next(item for item in matrix["directions"] if item["id"] == "PDN-DIR-12")
     assert automated["maturity"] == "REGRESSION_PROTECTED"
     subject_rights = next(item for item in matrix["directions"] if item["id"] == "PDN-DIR-11")
-    assert subject_rights["maturity"] == "EXECUTABLE"
+    assert subject_rights["maturity"] == "REGRESSION_PROTECTED"
     assert len(fixtures["cases"]) == 48
     failures = []
     for case in fixtures["cases"]:
