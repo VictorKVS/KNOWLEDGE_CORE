@@ -31,6 +31,54 @@ jobs:
             sudo apt-get install -y poppler-utils
           fi
 
+      - name: Install and validate Russian national TLS trust anchors
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          ca_dir="$RUNNER_TEMP/russian-national-tls-ca"
+          mkdir -p "$ca_dir"
+          root_ca="$ca_dir/russian_trusted_root_ca_pem.crt"
+          sub_ca="$ca_dir/russian_trusted_sub_ca_pem.crt"
+
+          # These are the certificate files linked from the Gosuslugi trust
+          # instructions.  The gu-st.ru transfer itself must validate against
+          # the stock runner trust store; --insecure is deliberately forbidden.
+          curl --fail --location --silent --show-error \
+            --proto '=https' --tlsv1.2 \
+            --connect-timeout 20 --max-time 90 \
+            --output "$root_ca" \
+            https://gu-st.ru/content/lending/russian_trusted_root_ca_pem.crt
+          curl --fail --location --silent --show-error \
+            --proto '=https' --tlsv1.2 \
+            --connect-timeout 20 --max-time 90 \
+            --output "$sub_ca" \
+            https://gu-st.ru/content/lending/russian_trusted_sub_ca_pem.crt
+
+          root_subject="$(openssl x509 -in "$root_ca" -noout -subject -nameopt RFC2253)"
+          root_issuer="$(openssl x509 -in "$root_ca" -noout -issuer -nameopt RFC2253)"
+          sub_subject="$(openssl x509 -in "$sub_ca" -noout -subject -nameopt RFC2253)"
+          sub_issuer="$(openssl x509 -in "$sub_ca" -noout -issuer -nameopt RFC2253)"
+
+          [[ "$root_subject" == *"CN=Russian Trusted Root CA"* ]]
+          [[ "$root_subject" == "${root_issuer/issuer=/subject=}" ]]
+          [[ "$sub_subject" == *"CN=Russian Trusted Sub CA"* ]]
+          [[ "$sub_issuer" == *"CN=Russian Trusted Root CA"* ]]
+          openssl x509 -in "$root_ca" -noout -checkend 86400
+          openssl x509 -in "$sub_ca" -noout -checkend 86400
+          openssl verify -CAfile "$root_ca" "$sub_ca"
+
+          bundle="$ca_dir/ca-bundle.pem"
+          cat /etc/ssl/certs/ca-certificates.crt "$root_ca" "$sub_ca" > "$bundle"
+          {
+            echo "NKCKI_CA_BUNDLE=$bundle"
+            echo "NKCKI_ROOT_CA_SHA256=$(sha256sum "$root_ca" | awk '{print $1}')"
+            echo "NKCKI_SUB_CA_SHA256=$(sha256sum "$sub_ca" | awk '{print $1}')"
+          } >> "$GITHUB_ENV"
+
+          openssl x509 -in "$root_ca" -noout -subject -issuer -dates -fingerprint -sha256
+          openssl x509 -in "$sub_ca" -noout -subject -issuer -dates -fingerprint -sha256
+
       - name: Fetch and validate exact official-origin PDFs
         id: acquire
         shell: bash
@@ -53,6 +101,7 @@ jobs:
               meta="${output}.curlmeta"
 
               if curl --fail --location --silent --show-error \
+                --cacert "$NKCKI_CA_BUNDLE" --proto '=https' --tlsv1.2 \
                 --connect-timeout 20 --max-time 180 \
                 --retry 3 --retry-all-errors --retry-delay 3 \
                 --dump-header "$headers" \
@@ -77,7 +126,9 @@ jobs:
                     --argjson pages "$pages" \
                     --arg sha256 "$sha" \
                     --arg response_headers_sha256 "$headers_sha" \
-                    '{logical_id:$logical_id, requested_url:$requested_url, effective_url:$effective_url, content_type:$content_type, bytes:$bytes, pages:$pages, sha256:$sha256, response_headers_sha256:$response_headers_sha256, transport:"DIRECT_GITHUB_ACTIONS_CURL_OFFICIAL_ORIGIN", validation:["PDF_MAGIC","PDFINFO","NONTRIVIAL_SIZE"]}' > "${output}.record.json"
+                    --arg tls_root_ca_sha256 "$NKCKI_ROOT_CA_SHA256" \
+                    --arg tls_sub_ca_sha256 "$NKCKI_SUB_CA_SHA256" \
+                    '{logical_id:$logical_id, requested_url:$requested_url, effective_url:$effective_url, content_type:$content_type, bytes:$bytes, pages:$pages, sha256:$sha256, response_headers_sha256:$response_headers_sha256, transport:"DIRECT_GITHUB_ACTIONS_CURL_OFFICIAL_ORIGIN", tls:{verification:"OPENSSL_CA_CHAIN_AND_HOSTNAME", root_ca_source:"https://gu-st.ru/content/lending/russian_trusted_root_ca_pem.crt", root_ca_sha256:$tls_root_ca_sha256, sub_ca_source:"https://gu-st.ru/content/lending/russian_trusted_sub_ca_pem.crt", sub_ca_sha256:$tls_sub_ca_sha256}, validation:["TLS_CA_CHAIN","TLS_HOSTNAME","PDF_MAGIC","PDFINFO","NONTRIVIAL_SIZE"]}' > "${output}.record.json"
                   rm -f "$headers" "$meta"
                   return 0
                 fi
@@ -112,7 +163,9 @@ jobs:
             --arg retrieved_at "$retrieved_at" \
             --slurpfile order "${order_pdf}.record.json" \
             --slurpfile initial "${initial_pdf}.record.json" \
-            '{schema_version:$schema_version, retrieved_at:$retrieved_at, provenance_state:"OFFICIAL_ORIGIN_BYTES_ACQUIRED", artifacts:[$order[0],$initial[0]], guardrail:"Receipt records direct fixed official URLs; viewer or mirror bytes are not accepted."}' > "$receipt"
+            --arg workflow_run "https://github.com/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}" \
+            --arg source_commit "$GITHUB_SHA" \
+            '{schema_version:$schema_version, retrieved_at:$retrieved_at, provenance_state:"OFFICIAL_ORIGIN_BYTES_ACQUIRED", acquisition:{workflow_run:$workflow_run, source_commit:$source_commit}, artifacts:[$order[0],$initial[0]], guardrail:"Receipt records direct fixed official URLs with validated Russian national TLS trust chain; viewer, proxy, mirror, and TLS-insecure bytes are not accepted."}' > "$receipt"
 
           rm -f "${order_pdf}.record.json" "${initial_pdf}.record.json"
 
