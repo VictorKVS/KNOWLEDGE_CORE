@@ -153,16 +153,52 @@ jobs:
             local output="$2"
             shift 2
             local url tmp headers meta size magic pages sha content_type effective_url headers_sha
+            local landing cookie user_agent
+
+            user_agent='Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36'
 
             for url in "$@"; do
               tmp="${output}.download"
               headers="${output}.headers"
               meta="${output}.curlmeta"
+              cookie="${output}.cookies"
+
+              case "$url" in
+                https://www.cert.gov.ru/*)
+                  landing='https://www.cert.gov.ru/materialy/organizatsiya-vzaimodeystviya/reglament-vzaimodeystviya-nktski-'
+                  ;;
+                https://gossopka.ru/*)
+                  landing='https://gossopka.ru/doc/method/'
+                  ;;
+                *)
+                  echo "Unapproved acquisition origin: $url" >&2
+                  return 1
+                  ;;
+              esac
+
+              # Bootstrap the official Bitrix/WAF session. Failure here is not
+              # accepted silently: the subsequent fixed attachment request is
+              # still fail-closed and must return a valid PDF.
+              curl --location --silent --show-error \
+                --cacert "$NKCKI_CA_BUNDLE" --proto '=https' --tlsv1.2 \
+                --connect-timeout 20 --max-time 90 \
+                --user-agent "$user_agent" \
+                --header 'Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8' \
+                --header 'Accept-Language: ru-RU,ru;q=0.9,en;q=0.5' \
+                --cookie-jar "$cookie" \
+                --output /dev/null \
+                "$landing" || true
 
               if curl --fail --location --silent --show-error \
                 --cacert "$NKCKI_CA_BUNDLE" --proto '=https' --tlsv1.2 \
                 --connect-timeout 20 --max-time 180 \
-                --retry 3 --retry-all-errors --retry-delay 3 \
+                --retry 1 --retry-all-errors --retry-delay 3 \
+                --user-agent "$user_agent" \
+                --referer "$landing" \
+                --header 'Accept: application/pdf,application/octet-stream;q=0.9,*/*;q=0.8' \
+                --header 'Accept-Language: ru-RU,ru;q=0.9,en;q=0.5' \
+                --compressed \
+                --cookie "$cookie" --cookie-jar "$cookie" \
                 --dump-header "$headers" \
                 --output "$tmp" \
                 --write-out '%{url_effective}\t%{content_type}\t%{size_download}\n' \
@@ -189,12 +225,12 @@ jobs:
                     --arg tls_sub_ca_sha256 "$NKCKI_SUB_CA_SHA256" \
                     --arg tls_globalsign_ca_sha256 "$NKCKI_GLOBALSIGN_CA_SHA256" \
                     '{logical_id:$logical_id, requested_url:$requested_url, effective_url:$effective_url, content_type:$content_type, bytes:$bytes, pages:$pages, sha256:$sha256, response_headers_sha256:$response_headers_sha256, transport:"DIRECT_GITHUB_ACTIONS_CURL_OFFICIAL_ORIGIN", tls:{verification:"OPENSSL_CA_CHAIN_AND_HOSTNAME", observed_leaf_issuer:"GlobalSign GCC R6 AlphaSSL CA 2025", aia_intermediate_source:"https://secure.globalsign.com/cacert/gsgccr6alphasslca2025.crt", aia_intermediate_sha256:$tls_globalsign_ca_sha256, supplemental_national_root_ca_source:"https://gu-st.ru/content/lending/russian_trusted_root_ca_pem.crt", supplemental_national_root_ca_sha256:$tls_root_ca_sha256, supplemental_national_sub_ca_source:"https://gu-st.ru/content/lending/russian_trusted_sub_ca_pem.crt", supplemental_national_sub_ca_sha256:$tls_sub_ca_sha256}, validation:["TLS_CA_CHAIN","TLS_HOSTNAME","PDF_MAGIC","PDFINFO","NONTRIVIAL_SIZE"]}' > "${output}.record.json"
-                  rm -f "$headers" "$meta"
+                  rm -f "$headers" "$meta" "$cookie"
                   return 0
                 fi
               fi
 
-              rm -f "$tmp" "$headers" "$meta"
+              rm -f "$tmp" "$headers" "$meta" "$cookie"
               echo "Fetch rejected for ${logical_id}: ${url}" >&2
             done
 
