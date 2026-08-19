@@ -1,0 +1,30 @@
+name: FL152 Article 20 Subject and Regulator Requests Gate
+
+on:
+  push:
+    paths:
+      - "security-knowledge/corpus/ru-personal-data/fl-152-article-20-subject-regulator-requests-atomic-v1.yaml"
+      - "security-knowledge/corpus/ru-personal-data/fl-152-article-20-subject-regulator-requests-regression-v1.json"
+      - "security-knowledge/pdn/pdn-master-source-library-v1.yaml"
+      - "security-knowledge/pdn/pdn-direction-coverage-matrix-v1.yaml"
+      - "security-knowledge/validators/validate_fl152_article_20_subject_regulator_requests.py"
+      - ".github/workflows/fl152-article-20-subject-regulator-requests.yml"
+  pull_request:
+    paths:
+      - "security-knowledge/corpus/ru-personal-data/fl-152-article-20-subject-regulator-requests-atomic-v1.yaml"
+      - "security-knowledge/corpus/ru-personal-data/fl-152-article-20-subject-regulator-requests-regression-v1.json"
+      - "security-knowledge/pdn/pdn-master-source-library-v1.yaml"
+      - "security-knowledge/pdn/pdn-direction-coverage-matrix-v1.yaml"
+      - "security-knowledge/validators/validate_fl152_article_20_subject_regulator_requests.py"
+      - ".github/workflows/fl152-article-20-subject-regulator-requests.yml"
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pyyaml
+      - run: python security-knowledge/validators/validate_fl152_article_20_subject_regulator_requests.py
