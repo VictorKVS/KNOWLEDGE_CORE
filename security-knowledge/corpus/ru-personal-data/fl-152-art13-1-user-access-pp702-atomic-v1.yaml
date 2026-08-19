@@ -1,0 +1,251 @@
+schema_version: "1.0"
+id: RU-FL152-ART13-1-USER-ACCESS-PP702-ATOMIC-V1
+title: Article 13.1 user eligibility, temporal access, use restrictions and Decree No. 702 verification workflow
+scope: >-
+  Federal Law No. 152-FZ article 13.1 parts 7 through 12 and Government Decree
+  No. 702 of 22 May 2025. The model connects statutory user classes and access/use
+  restrictions to the class-2 applicant verification and reverification procedure.
+
+federal_law_source:
+  authority: Federal_Assembly_and_President_of_the_Russian_Federation
+  document: Federal_Law_152_FZ_On_Personal_Data
+  article: "13.1"
+  current_edition_checked: "2026-07-26"
+  current_text_url: https://www.consultant.ru/document/cons_doc_LAW_61801/27d43d2bcea5c961cbcc538f0de794dc4646e0c3/
+  introduced_by:
+    document: Federal_Law_233_FZ_of_2024_08_08
+    official_publication:
+      publication_number: "0001202408080031"
+      publication_date: "2024-08-08"
+      page_count: 26
+      url: https://publication.pravo.gov.ru/document/0001202408080031
+  effective_from:
+    date: "2025-09-01"
+    basis: FEDERAL_LAW_233_FZ_ARTICLE_3_PART_2
+
+decree_702_source:
+  authority: Government_of_the_Russian_Federation
+  document_number: "702"
+  signed_date: "2025-05-22"
+  official_publication:
+    publication_number: "0001202505280017"
+    publication_date: "2025-05-28"
+    url: https://publication.pravo.gov.ru/document/0001202505280017
+  government_text: https://government.ru/docs/all/159151/
+  current_text_interfaces:
+    consultant: https://www.consultant.ru/document/cons_doc_LAW_506350/
+    garant: https://base.garant.ru/412081900/
+    rulaws: https://rulaws.ru/goverment/Postanovlenie-Pravitelstva-RF-ot-22.05.2025-N-702/
+  effective_from:
+    date: "2025-09-01"
+    basis: DECREE_CLAUSE_2_EXPLICIT
+
+verification_boundary:
+  federal_law_insertion_identity_and_publication: VERIFIED_PRIMARY
+  federal_law_current_parts_7_through_12: VERIFIED_CURRENT_CONSOLIDATED_TEXT
+  decree_identity_and_text: CROSS_CHECKED_GOVERNMENT_AND_CURRENT_TEXT_INTERFACES
+  decree_official_publication_identity: VERIFIED_AUTHORITATIVE_CROSS_CHECK
+  immutable_official_pdf_bytes: PENDING
+  status_search_as_of: "2026-08-19"
+  amendment_or_repeal_located: false
+  caution: >-
+    A bounded status search found no amendment to these clauses. That is not proof of
+    absence; current-version monitoring and immutable official artifact acquisition remain required.
+
+statutory_user_classes:
+  - id: ARTICLE13_1_PART7_ITEM1_PUBLIC_USER
+    members:
+      - STATE_BODY
+      - ORGANIZATION_SUBORDINATE_TO_STATE_BODY
+      - MUNICIPAL_BODY
+      - ORGANIZATION_SUBORDINATE_TO_MUNICIPAL_BODY
+      - STATE_EXTRA_BUDGETARY_FUND_BODY
+    pp702_check_required: false
+  - id: ARTICLE13_1_PART7_ITEM2_PRIVATE_USER
+    members: [RUSSIAN_CITIZEN, RUSSIAN_LEGAL_ENTITY]
+    pp702_check_required: true
+    all_applicable_criteria_required: true
+
+private_user_eligibility_criteria:
+  - id: ART13_1_7_2_A_OPERATOR_REGISTER
+    applies_to: [RUSSIAN_CITIZEN, RUSSIAN_LEGAL_ENTITY]
+    rule: Applicant information is present in the article 22 operator register.
+  - id: ART13_1_7_2_B_RUSSIAN_CONTROL
+    applies_to: [RUSSIAN_LEGAL_ENTITY]
+    rule: >-
+      Unless a Russian treaty provides otherwise, the entity is controlled by the Russian
+      Federation, a Russian region, a municipality, a Russian citizen without another
+      citizenship, or persons controlled by them jointly or separately.
+    control_definition:
+      voting_rights: MORE_THAN_50_PERCENT
+      direct_or_indirect: true
+      consequence_of_exactly_50_percent: NOT_SUFFICIENT_BY_THIS_DEFINITION
+  - id: ART13_1_7_2_V_EGRUL_RELIABILITY
+    applies_to: [RUSSIAN_LEGAL_ENTITY]
+    rule: EGRUL contains no record that information about the legal entity is unreliable.
+  - id: ART13_1_7_2_G_LIST_SCREENING
+    applies_to: [RUSSIAN_CITIZEN, RUSSIAN_LEGAL_ENTITY_AND_GOVERNANCE]
+    rule: >-
+      The citizen or entity, its sole executive body and collegial executive-body members
+      are absent from the listed terrorism, extremism and proliferation-related lists.
+  - id: ART13_1_7_2_D_FOREIGN_CITIZENSHIP
+    applies_to: [RUSSIAN_CITIZEN, SOLE_EXECUTIVE_BODY_OF_LEGAL_ENTITY]
+    rule: The relevant citizen has no citizenship of a foreign state.
+  - id: ART13_1_7_2_E_CONVICTION
+    applies_to: [RUSSIAN_CITIZEN, SOLE_EXECUTIVE_BODY_OF_LEGAL_ENTITY]
+    rule: The relevant citizen has no unexpunged or outstanding conviction for a crime.
+  - id: ART13_1_7_2_ZH_FIVE_YEAR_PROSECUTION
+    applies_to: [RUSSIAN_CITIZEN, SOLE_EXECUTIVE_BODY_OF_LEGAL_ENTITY]
+    rule: >-
+      During the five years preceding the access date, the relevant citizen was not brought
+      to criminal liability under Criminal Code articles 183, 272, 273, 274.1, 283 or 283.1.
+    exact_date_calculation_required: true
+    not_equivalent_to: UNEXPUNGED_CONVICTION_TEST
+
+article_13_1_access_and_use_rules:
+  - id: ART13_1_PART8
+    locator: article_13_1.part_8
+    rule: Government rules coordinated with the security authority govern checking part-7 eligibility.
+    implementation: RU_GOV_PP_702_2025
+  - id: ART13_1_PART9_RECENT_PRIVATE_SOURCE
+    locator: article_13_1.part_9
+    trigger_all:
+      - SOURCE_OPERATOR_IS_NOT_PUBLIC_CLASS_OPERATOR
+      - SOURCE_DATA_WERE_COLLECTED_OR_UPDATED_WITHIN_3_YEARS_BEFORE_GIS_PROVISION
+    rules:
+      public_user: NO_PART9_ONE_YEAR_EMBARGO_SUBJECT_TO_OTHER_GATES
+      private_user_before_anniversary: BLOCK_UNTIL_ONE_YEAR_AFTER_SOURCE_DATA_PROVISION_TO_GIS
+      private_user_after_anniversary: CONTINUE_OTHER_ACCESS_GATES
+    clocks:
+      data_recency_lookback: {value: 3, unit: YEARS, anchor: SOURCE_DATA_PROVISION_TO_GIS}
+      private_user_embargo: {value: 1, unit: YEAR, anchor: SOURCE_DATA_PROVISION_TO_GIS}
+  - id: ART13_1_PART10_IN_SYSTEM_ONLY
+    locator: article_13_1.part_10
+    rule: >-
+      Process datasets only in the designated state system; do not record, extract or transfer
+      them from the system, including dissemination, provision or access outside it.
+  - id: ART13_1_PART11_PROTECTED_HARM
+    locator: article_13_1.part_11
+    rule: >-
+      Block processing and obtaining results where use of datasets or results may cause harm
+      to life or health, offend morality, violate rights or lawful interests, or harm the
+      environment, defense, state security, cultural heritage or other protected values.
+    security_authority_branch: >-
+      Where use of results may harm defense or state security, the security authority may
+      decide to prohibit provision of those results.
+  - id: ART13_1_PART12_FOREIGN_RESULTS
+    locator: article_13_1.part_12
+    rule: >-
+      Do not provide processing results to foreign legal entities, foreign non-legal entities,
+      foreign citizens or stateless persons unless a Russian treaty, federal law or Presidential
+      decision defines an exception.
+
+pp702_request_schema:
+  channels: [DIRECT_PAPER, POSTAL_PAPER, EPGU_PERSONAL_ACCOUNT_IF_TECHNICALLY_AVAILABLE]
+  electronic_signature_routes:
+    - ENHANCED_QUALIFIED_SIGNATURE
+    - QUALIFYING_GOV_INFRASTRUCTURE_ENHANCED_UNQUALIFIED_SIGNATURE
+  citizen_required_fields:
+    - FULL_NAME
+    - DATE_AND_PLACE_OF_BIRTH
+    - SNILS
+    - INN
+    - RUSSIAN_PASSPORT_SERIES_NUMBER_AND_ISSUE_DATE
+    - EMAIL_OR_POSTAL_ADDRESS
+  legal_entity_required_fields:
+    - FULL_NAME_AND_REGISTERED_LOCATION_ADDRESS
+    - INN
+    - OGRN
+    - GOVERNANCE_PERSON_DETAILS
+    - EMAIL_OR_POSTAL_ADDRESS
+  governance_person_details: [FULL_NAME, SNILS, POSITION, DATE_AND_PLACE_OF_BIRTH, RUSSIAN_PASSPORT_SERIES_AND_NUMBER]
+  legal_entity_attachments:
+    - RUSSIAN_CONTROL_EVIDENCE
+    - REPRESENTATIVE_AUTHORITY_EVIDENCE_IF_APPLICABLE
+    - OPTIONAL_OTHER_ELIGIBILITY_EVIDENCE
+
+pp702_workflow_rules:
+  - {id: PP702-01, locator: rules.clause_1, rule: "Apply the procedure only to Russian citizens and Russian legal entities in the part-7 item-2 class."}
+  - {id: PP702-02, locator: rules.clause_2, actor: Ministry_of_Digital_Development, rule: "Conduct the eligibility check."}
+  - {id: PP702-03, locator: rules.clause_3, rule: "Accept a signed request through a modeled paper route or, if available, EPGU electronic route."}
+  - {id: PP702-04, locator: rules.clause_4, rule: "Require the modeled citizen request fields."}
+  - {id: PP702-05, locator: rules.clause_5, rule: "Require the modeled legal-entity request fields and governance-person details."}
+  - {id: PP702-06, locator: rules.clause_6, rule: "Require control and representative-authority evidence; allow other voluntary eligibility evidence."}
+  - {id: PP702-07, locator: rules.clause_7, rule: "Review the request and check eligibility within 15 working days after receipt."}
+  - id: PP702-08
+    locator: rules.clause_8
+    rule: >-
+      For incomplete or unreliable information, send a reasoned clarification request, suspend
+      the check for 15 working days and refuse confirmation if the response is not provided in time.
+  - {id: PP702-09, locator: rules.clause_9, rule: "Send a signed reasoned refusal when the applicant does not meet the requirements."}
+  - {id: PP702-10, locator: rules.clause_10, rule: "Send a signed conformity notice when the applicant meets the requirements."}
+  - id: PP702-11
+    locator: rules.clause_11
+    rule: >-
+      Require a fresh request no later than one year after the conformity notice; suspend system
+      access if it is not filed before the anniversary.
+  - id: PP702-12
+    locator: rules.clause_12
+    rule: >-
+      Require notice of changed request information within five working days after awareness
+      and recheck the changed information under clauses 7 through 10.
+  - id: PP702-13
+    locator: rules.clause_13
+    rule: >-
+      If the change notice shows nonconformity, send a signed reasoned refusal to confirm
+      conformity within three working days after receipt.
+  - {id: PP702-14, locator: rules.clause_14, rule: "Obtain operator-register, EGRUL, identity, criminal-history and citizenship data from competent bodies, including via SMEV."}
+  - {id: PP702-15, locator: rules.clause_15, rule: "Competent federal bodies provide requested clause-14 information within five working days unless law provides otherwise."}
+  - {id: PP702-16, locator: rules.clause_16, rule: "Obtain statutory terrorism, extremism and proliferation list information from the competent AML/CFT authority via SMEV."}
+
+deadlines:
+  - {id: INITIAL_ELIGIBILITY_CHECK, value: 15, unit: WORKING_DAYS, trigger: REQUEST_RECEIPT, actor: Ministry_of_Digital_Development}
+  - {id: CLARIFICATION_SUSPENSION_AND_RESPONSE, value: 15, unit: WORKING_DAYS, trigger: REASONED_CLARIFICATION_REQUEST_SENT, consequence_on_no_response: SIGNED_REASONED_REFUSAL}
+  - {id: PERIODIC_REVERIFICATION, value: 1, unit: YEAR, trigger: CONFORMITY_NOTICE_SENT, semantics: FILE_FRESH_REQUEST_NO_LATER_THAN_ANNIVERSARY, consequence_on_no_request: SUSPEND_SYSTEM_ACCESS}
+  - {id: CHANGED_INFORMATION_NOTICE, value: 5, unit: WORKING_DAYS, trigger: USER_BECOMES_AWARE_OF_CHANGE, actor: User}
+  - {id: POST_CHANGE_NONCONFORMITY_REFUSAL, value: 3, unit: WORKING_DAYS, trigger: CHANGE_NOTICE_RECEIPT_SHOWING_NONCONFORMITY, actor: Ministry_of_Digital_Development}
+  - {id: INTERAGENCY_INFORMATION_RESPONSE, value: 5, unit: WORKING_DAYS, trigger: COMPETENT_BODY_RECEIVES_MINISTRY_REQUEST, exception: OTHER_PERIOD_SET_BY_LAW}
+
+evidence_model:
+  - {id: EVIDENCE_USER_CLASS, proves: [part7_item1_or_item2_route]}
+  - {id: EVIDENCE_OPERATOR_REGISTER_ENTRY, proves: [criterion_a]}
+  - {id: EVIDENCE_CONTROL_CHAIN, proves: [criterion_b_more_than_50_percent]}
+  - {id: EVIDENCE_EGRUL_RELIABILITY, proves: [criterion_v]}
+  - {id: EVIDENCE_LIST_SCREENING, proves: [criterion_g]}
+  - {id: EVIDENCE_CITIZENSHIP_CONVICTION_AND_PROSECUTION, proves: [criteria_d_e_zh, five_year_exact_date]}
+  - {id: EVIDENCE_SOURCE_OPERATOR_CLASS_AND_DATA_DATES, proves: [part9_three_year_trigger]}
+  - {id: EVIDENCE_GIS_PROVISION_DATE, proves: [part9_three_year_anchor, part9_one_year_anchor]}
+  - {id: EVIDENCE_PP702_REQUEST_AND_SIGNATURE, proves: [request_completeness, receipt_trigger]}
+  - {id: EVIDENCE_CLARIFICATION_EXCHANGE, proves: [suspension, response_or_refusal]}
+  - {id: EVIDENCE_CONFORMITY_DECISION, proves: [eligibility_result, notice_or_reasoned_refusal]}
+  - {id: EVIDENCE_REVERIFICATION_AND_CHANGE_NOTICE, proves: [annual_request, five_day_change_notice, access_suspension_or_recheck]}
+  - {id: EVIDENCE_IN_SYSTEM_PROCESSING_AND_EXPORT_PREVENTION, proves: [part10_compliance]}
+  - {id: EVIDENCE_HARM_AND_FOREIGN_RESULT_GATE, proves: [parts11_and_12_compliance]}
+
+dependencies:
+  - {id: RU_GOV_PP_961_2025, relation: IMPLEMENTS_ACCESS_REQUEST_GRANT_REFUSAL_TERMINATION_AND_IMMEDIATE_BLOCKING, atomization_status: REGRESSION_PROTECTED}
+  - {id: RU_GOV_PP_538_2025, relation: SUPPLIES_ADDITIONAL_CASE_BASED_PRIVATE_USER_RESTRICTIONS, atomization_status: REGRESSION_PROTECTED}
+  - {id: RU_GOV_PP_740_2025, relation: DESIGNATES_EIP_NSUD_AND_UPDATES_PLATFORM_RULES, atomization_status: AUTHORITATIVE_SECONDARY_PENDING_DEDICATED_MODEL}
+
+non_requirements:
+  - Public-class users are not subject to the Decree No. 702 class-2 applicant procedure, but other access and use gates still apply.
+  - A class-2 applicant must pass every criterion applicable to its type; Russian status alone is insufficient.
+  - Exactly 50 percent of voting rights is not more than 50 percent.
+  - The conviction test and the five-year specified-article criminal-liability test are separate.
+  - Part 9 does not impose a one-year embargo unless both the non-public-source and three-year-recency conditions hold.
+  - Part 9 clocks are anchored to source-data provision to the state system, not dataset formation or access-request dates.
+  - Expiry of a part-9 embargo only continues other access gates; it does not automatically grant access.
+  - The 15-working-day Decree No. 702 check is not the five-working-day Decree No. 961 access-request review.
+  - The one-year Decree No. 702 reverification cycle is not the one-year part-9 private-user embargo.
+  - No general permission to export datasets or results follows from a conformity notice.
+  - No retention period or automatic reinstatement period is stated in this slice.
+
+red_team:
+  critical_gap_created: false
+  high_gap_created: false
+  high_gap_closed_this_run: MISSING_PP702_USER_VERIFICATION_DEPENDENCY
+  residuals:
+    - MEDIUM_IMMUTABLE_OFFICIAL_PDF_BYTES_PENDING
+    - MEDIUM_PP740_PLATFORM_DESIGNATION_MODEL_PENDING
+    - MEDIUM_EXPERT_REVIEW_PENDING
+

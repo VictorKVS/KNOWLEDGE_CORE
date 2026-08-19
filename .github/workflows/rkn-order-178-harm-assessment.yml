@@ -1,0 +1,30 @@
+name: RKN Order 178 Harm Assessment Gate
+
+on:
+  push:
+    paths:
+      - "security-knowledge/corpus/ru-personal-data/rkn-order-178-harm-assessment-atomic-v1.yaml"
+      - "security-knowledge/corpus/ru-personal-data/rkn-order-178-harm-assessment-regression-v1.json"
+      - "security-knowledge/pdn/pdn-master-source-library-v1.yaml"
+      - "security-knowledge/pdn/pdn-direction-coverage-matrix-v1.yaml"
+      - "security-knowledge/validators/validate_rkn_order_178_harm_assessment.py"
+      - ".github/workflows/rkn-order-178-harm-assessment.yml"
+  pull_request:
+    paths:
+      - "security-knowledge/corpus/ru-personal-data/rkn-order-178-harm-assessment-atomic-v1.yaml"
+      - "security-knowledge/corpus/ru-personal-data/rkn-order-178-harm-assessment-regression-v1.json"
+      - "security-knowledge/pdn/pdn-master-source-library-v1.yaml"
+      - "security-knowledge/pdn/pdn-direction-coverage-matrix-v1.yaml"
+      - "security-knowledge/validators/validate_rkn_order_178_harm_assessment.py"
+      - ".github/workflows/rkn-order-178-harm-assessment.yml"
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pyyaml
+      - run: python security-knowledge/validators/validate_rkn_order_178_harm_assessment.py

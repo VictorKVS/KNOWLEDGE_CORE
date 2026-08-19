@@ -1,0 +1,168 @@
+schema_version: "1.0"
+id: RU-RKN-ORDER-140-2025-ANONYMIZATION-ATOMIC-V1
+title: Clause-level requirements and methods under Roskomnadzor Order No. 140 of 19 June 2025
+scope: >-
+  Anonymization of personal data except the cases specified in Federal Law No. 152-FZ,
+  article 6 part 1 clause 9.1. Applicability outside this boundary must not be inferred.
+
+source:
+  authority: Roskomnadzor
+  document_number: "140"
+  signed_date: "2025-06-19"
+  justice_registration:
+    date: "2025-07-31"
+    number: "83110"
+  official_publication:
+    publication_number: "0001202508010002"
+    publication_date: "2025-08-01"
+    page_count: 10
+    url: https://publication.pravo.gov.ru/document/0001202508010002
+  authoritative_text_interface:
+    authority: Ministry_of_Justice_of_the_Russian_Federation
+    url: https://minjust.consultant.ru/documents/55878
+  effective_from:
+    date: "2025-09-01"
+    basis: ORDER_CLAUSE_3_EXPLICIT
+  repeals:
+    document: Roskomnadzor_Order_996_2013
+    basis: ORDER_CLAUSE_2_EXPLICIT
+
+verification_boundary:
+  identity_registration_publication_pages: VERIFIED_PRIMARY
+  clause_text: CROSS_CHECKED_WITH_AUTHORITATIVE_PAGE_INTERFACE_AND_TWO_RENDERINGS
+  immutable_official_pdf_bytes: PENDING
+  status_search_as_of: "2026-08-19"
+  amendment_or_repeal_located: false
+  status_caution: >-
+    A bounded official-domain search did not locate a later amendment or repeal. This is
+    not proof that no such act exists; lifecycle monitoring remains required.
+
+operator_requirements:
+  - id: RKN140-A1-P1-S1
+    locator: appendix_1.clause_1.subclause_1
+    pages: [3]
+    obligation: Use one or more methods provided by appendix 2 within the order's scope.
+    evidence_examples: [approved_method_record, processing_design]
+  - id: RKN140-A1-P1-S2
+    locator: appendix_1.clause_1.subclause_2
+    pages: [3]
+    obligation: Before anonymization, determine the data composition and the subjects whose data are to be anonymized.
+    timing: BEFORE_ANONYMIZATION_ACTIONS
+    evidence_examples: [input_dataset_scope, subject_category_record]
+  - id: RKN140-A1-P1-S3
+    locator: appendix_1.clause_1.subclause_3
+    pages: [3]
+    obligation: Assess method sufficiency against processing purpose, subject categories, data categories and legal grounds.
+    evidence_examples: [method_sufficiency_assessment]
+  - id: RKN140-A1-P1-S4
+    locator: appendix_1.clause_1.subclause_4
+    pages: [3, 4]
+    obligation: Ensure a subject cannot be determined from the anonymized data without additional information.
+    evidence_examples: [reidentification_test, additional_information_separation]
+  - id: RKN140-A1-P1-S5
+    locator: appendix_1.clause_1.subclause_5
+    pages: [4]
+    obligation: When automation is used, use systems or software that ensure security and confidentiality of source and anonymized data.
+    condition: AUTOMATED_ANONYMIZATION
+    evidence_examples: [system_security_controls, confidentiality_controls]
+  - id: RKN140-A1-P1-S6
+    locator: appendix_1.clause_1.subclause_6
+    pages: [4]
+    obligation: Exclude joint storage of the source array and the resulting anonymized data.
+    evidence_examples: [storage_separation_architecture]
+  - id: RKN140-A1-P1-S7
+    locator: appendix_1.clause_1.subclause_7
+    pages: [4]
+    obligation: Account for anonymization actions and operations on anonymized data in an operator-defined form that can confirm the actions performed.
+    evidence_examples: [action_ledger, operation_log]
+  - id: RKN140-A1-P2-S1
+    locator: appendix_1.clause_2.subclause_1
+    pages: [4]
+    obligation: Adopt local acts covering source-data processing, anonymization activity, method-sufficiency assessment and processing of anonymized data.
+    evidence_examples: [local_acts_register]
+  - id: RKN140-A1-P2-S2
+    locator: appendix_1.clause_2.subclause_2
+    pages: [4, 5]
+    obligation: Exclude third-party access to local acts and information about methods, systems, software and the anonymization procedure.
+    evidence_examples: [access_matrix, access_log]
+  - id: RKN140-A1-P2-S3
+    locator: appendix_1.clause_2.subclause_3
+    pages: [5]
+    obligation: Adopt a local act defining deletion, distortion and change rules when the appendix 2 clause 4 method is used.
+    condition: METHOD_COMPOSITION_OR_SEMANTICS_CHANGE
+    evidence_examples: [method_specific_local_act]
+  - id: RKN140-A1-P2-S4
+    locator: appendix_1.clause_2.subclause_4
+    pages: [5]
+    obligation: Adopt a local act defining the permutation algorithm and operator-selected offset when the appendix 2 clause 10 method is used.
+    condition: METHOD_SHUFFLING
+    evidence_examples: [shuffling_local_act]
+  - id: RKN140-A1-P2-S5
+    locator: appendix_1.clause_2.subclause_5
+    pages: [5]
+    obligation: Adopt a local act defining array partition rules and storage locations when the appendix 2 clause 11 method is used.
+    condition: METHOD_DECOMPOSITION
+    evidence_examples: [decomposition_local_act]
+  - id: RKN140-A1-P2-S6
+    locator: appendix_1.clause_2.subclause_6
+    pages: [5]
+    obligation: Store the method-specific local acts in subclauses 3-5 separately from the corresponding anonymized data and exclude third-party access.
+    evidence_examples: [document_storage_separation, access_matrix]
+  - id: RKN140-A1-P2-S7
+    locator: appendix_1.clause_2.subclause_7
+    pages: [5, 6]
+    obligation: For appendix 2 clause 12, select subjects for aggregation and define replacement-value computation and grouping rules.
+    condition: METHOD_TRANSFORMATION_AGGREGATION
+    evidence_examples: [aggregation_design]
+
+method_catalog:
+  selection_rule:
+    locator: appendix_2.clause_1
+    pages: [7]
+    rule: Methods in clauses 2, 4, 10, 11 and 12 are applied separately or in combination.
+  methods:
+    - id: IDENTIFIER_INTRODUCTION
+      locator: appendix_2.clauses_2_3
+      pages: [7, 8]
+      semantics: Replace directly identifying data with an operator-algorithm identifier having a constant or variable value.
+      safeguards:
+        - Create a key mapping identifiers to the data.
+        - Store the key separately from the anonymized array.
+        - Do not transfer the key to third parties.
+    - id: COMPOSITION_OR_SEMANTICS_CHANGE
+      locator: appendix_2.clauses_4_9
+      pages: [8, 9]
+      semantics: Change, distort or remove qualitative or quantitative attributes based on subject and data categories.
+      operations:
+        - deletion_of_unnecessary_attributes
+        - distortion_by_additional_information_or_random_values
+        - replacement_by_generalized_values
+        - replacement_by_symbolic_markers_including_partial_asterisk_masking
+        - replacement_by_random_values_not_belonging_to_the_subject
+    - id: SHUFFLING
+      locator: appendix_2.clause_10
+      pages: [9]
+      semantics: Permute individual attribute values or groups of attribute values.
+    - id: DECOMPOSITION
+      locator: appendix_2.clause_11
+      pages: [9]
+      semantics: Divide the array into an operator-selected number of parts and store them separately.
+    - id: TRANSFORMATION_AGGREGATION
+      locator: appendix_2.clause_12
+      pages: [9, 10]
+      modality: OPTIONAL_ADDITIONAL_METHOD_FOR_CLAUSES_2_4_10_11
+      semantics: Aggregate subject attributes, optionally constrain the number of distinct values, and optionally preserve the original distribution.
+
+non_requirements:
+  - No fixed retention period is stated by this order.
+  - No fixed reassessment frequency is stated by this order.
+  - Clause 12 does not make aggregation mandatory for every use of clauses 2, 4, 10 or 11.
+  - Appendix 1 clause 2 subclause 7 does not expressly require a separate local act.
+  - The methods do not by themselves prove that re-identification risk is acceptable; appendix 1 clause 1 subclauses 3-4 still apply.
+
+red_team:
+  verdict: PASS_CLAUSE_MAP_FAIL_CLOSED_PROVENANCE
+  critical_gap_created: false
+  high_gap_created: false
+  residual: MEDIUM_IMMUTABLE_OFFICIAL_PDF_BYTES_PENDING
+

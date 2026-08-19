@@ -1,0 +1,269 @@
+schema_version: "1.0"
+id: RU-PP-961-2025-ART13-1-FORMATION-ACCESS-ATOMIC-V1
+title: Dataset formation and user-access rules under Government Decree No. 961 of 26 June 2025
+scope: >-
+  Formation of grouped anonymized personal-data datasets in the article 13.1 state
+  information system and provision, termination or blocking of user access to them.
+
+source:
+  authority: Government_of_the_Russian_Federation
+  document_number: "961"
+  signed_date: "2025-06-26"
+  official_publication:
+    publication_number: "0001202506270025"
+    publication_date: "2025-06-27"
+    page_count: 7
+    url: https://publication.pravo.gov.ru/document/0001202506270025
+  current_text_interfaces:
+    consultant: https://www.consultant.ru/document/cons_doc_LAW_508821/92d969e26a4326c5d02fa79b8f9cf4994ee5633b/
+    garant: https://base.garant.ru/412251904/
+    meganorm: https://meganorm.ru/mega_doc/dop1/18/federalnyy_zakon_ot_27_07_2006_N_152-fz_red_ot_24_06_2025_o/0/postanovlenie_pravitelstva_rf_ot_26_06_2025_N_961_o.html
+    mvd_authority_mirror: https://mvd.consultant.ru/documents/1058926
+  effective_from:
+    date: "2025-09-01"
+    basis: DECREE_CLAUSE_2_EXPLICIT
+  legal_basis: FEDERAL_LAW_152_FZ_ARTICLE_13_1
+
+verification_boundary:
+  official_publication_identity_and_date: VERIFIED_PRIMARY_LOCATOR_CROSS_CHECKED
+  page_count: VERIFIED_AUTHORITY_MIRROR
+  clause_text: CROSS_CHECKED_CURRENT_AND_AUTHORITY_FULL_TEXT_RENDERINGS
+  immutable_official_pdf_bytes: PENDING
+  status_search_as_of: "2026-08-19"
+  amendment_or_repeal_located: false
+  status_caution: >-
+    Current text interfaces expose the original edition effective from 2025-09-01.
+    A bounded search found no amendment or repeal; lifecycle monitoring is still required.
+
+roles:
+  authorized_body: Ministry_of_Digital_Development
+  security_body: FEDERAL_EXECUTIVE_BODY_AUTHORIZED_IN_SECURITY
+  data_supplier: OPERATOR_RECEIVING_ARTICLE_13_1_PART_2_REQUIREMENT
+  access_requester: ARTICLE_13_1_ELIGIBLE_USER
+
+formation_applicability:
+  system: ARTICLE_13_1_STATE_INFORMATION_SYSTEM
+  required_inputs:
+    - ANONYMIZED_DATA_RECEIVED_FROM_OPERATOR
+    - OPERATOR_RECEIVED_ARTICLE_13_1_PART_2_REQUIREMENT
+    - PP538_ENUMERATED_FORMATION_CASE
+  fail_closed_rule: >-
+    Do not treat Decree No. 961 as a general authority to collect or form datasets.
+    The individualized requirement and an enumerated Decree No. 538 case must be proved.
+
+formation_rules:
+  - id: PP961-FORM-1
+    locator: formation_rules.clause_1
+    rule: Limit the formation procedure to grouped anonymized datasets in the article 13.1 state information system.
+  - id: PP961-FORM-2
+    locator: formation_rules.clause_2
+    rule: >-
+      Form datasets only from anonymized data supplied by operators that received the
+      article 13.1 part 2 requirement, and only for Government-defined formation cases.
+  - id: PP961-FORM-3
+    locator: formation_rules.clause_3.subclauses_a_v
+    rule: Consider all three modeled security threat types when forming a dataset.
+  - id: PP961-FORM-4
+    locator: formation_rules.clause_4
+    actor: Ministry_of_Digital_Development
+    rule: Complete dataset formation no later than 30 working days after operator data arrive.
+  - id: PP961-FORM-5A
+    locator: formation_rules.clause_5.paragraph_1
+    actor: Ministry_of_Digital_Development
+    rule: >-
+      Where necessary for the formation purpose and threat neutralization, exclude or
+      correct inaccurate, incomplete, duplicate or incorrectly formatted anonymized data
+      and transform their format or structure.
+  - id: PP961-FORM-5B
+    locator: formation_rules.clause_5.paragraph_2_sentence_1
+    actor: Ministry_of_Digital_Development
+    rule: Check operator-supplied anonymized data for conformity with the clause 2 requirement route.
+  - id: PP961-FORM-5C
+    locator: formation_rules.clause_5.paragraph_2_sentence_2
+    actor: Ministry_of_Digital_Development
+    rule: >-
+      Send the check results to the security body no later than 10 calendar days after
+      receipt of that body's corresponding request.
+  - id: PP961-FORM-6
+    locator: formation_rules.clause_6
+    rule: >-
+      Do not form datasets from article 10 special-category personal data, except data
+      covered by article 10 part 2.1, or from article 11 biometric personal data.
+
+formation_threat_types:
+  - id: MEMBERSHIP_INFERENCE
+    locator: formation_rules.clause_3.a
+    description: Isolating information in the dataset corresponding to a specific subject.
+  - id: LINKAGE_OR_ENRICHMENT
+    locator: formation_rules.clause_3.b
+    description: Isolating information relating to one or more specific subjects by linking data.
+  - id: VALUE_INFERENCE
+    locator: formation_rules.clause_3.v
+    description: Determining original anonymized-data values relating to a subject.
+
+access_request_schema:
+  channel: USER_CABINET_IN_ARTICLE_13_1_STATE_INFORMATION_SYSTEM
+  required_fields:
+    - ACCESS_PURPOSE
+    - PLANNED_RESULT_OR_ITS_CONTENT
+    - DATASET_PROCESSING_PERIOD
+    - LEGAL_GROUNDS_FOR_ACCESS
+  signature_routes:
+    russian_citizen:
+      any_of: [ENHANCED_QUALIFIED_SIGNATURE, QUALIFYING_GOV_INFRASTRUCTURE_ENHANCED_UNQUALIFIED_SIGNATURE]
+    organization_or_public_body_representative:
+      required: ENHANCED_QUALIFIED_SIGNATURE
+    legal_entity_proxy:
+      additional_evidence: POWER_OF_ATTORNEY_INCLUDING_MACHINE_READABLE_FORM_WHERE_USED
+
+access_rules:
+  - id: PP961-ACCESS-1
+    locator: access_rules.clause_1
+    rule: Limit access to datasets processed in the article 13.1 state information system.
+  - id: PP961-ACCESS-2
+    locator: access_rules.clause_2
+    rule: Require the modeled request fields through the user cabinet.
+  - id: PP961-ACCESS-3A
+    locator: access_rules.clause_3.paragraph_1
+    rule: Apply the modeled citizen signature route.
+  - id: PP961-ACCESS-3B
+    locator: access_rules.clause_3.paragraph_2
+    rule: Apply the enhanced-qualified-signature route to listed organization and public-body requesters.
+  - id: PP961-ACCESS-3C
+    locator: access_rules.clause_3.paragraph_3
+    rule: Require the legal-entity representative's power of attorney with the request.
+  - id: PP961-ACCESS-4
+    locator: access_rules.clause_4
+    actor: Ministry_of_Digital_Development
+    rule: Review and check the request against clauses 2 and 3 no later than 5 working days after receipt.
+  - id: PP961-ACCESS-5
+    locator: access_rules.clause_5
+    rule: >-
+      If compliant, send a user-cabinet access notice signed with the enhanced qualified
+      signature of the official designated by the head of the authorized body.
+  - id: PP961-ACCESS-6
+    locator: access_rules.clause_6
+    rule: >-
+      For remediable clause 2 information defects, send a reasoned signed clarification
+      request; do not use this remediation branch for the direct-refusal clause 10 case.
+  - id: PP961-ACCESS-7
+    locator: access_rules.clause_7
+    rule: Suspend request consideration until the requested information is received.
+  - id: PP961-ACCESS-8
+    locator: access_rules.clause_8
+    rule: >-
+      If the requested information is not supplied within 15 working days from the
+      clarification request, send a signed refusal notice through the user cabinet.
+  - id: PP961-ACCESS-9
+    locator: access_rules.clause_9
+    rule: >-
+      After information is supplied and clause 2 conformity confirmed, grant access to an
+      existing dataset or, if absent, initiate the article 13.1 part 2 operator-requirement route.
+  - id: PP961-ACCESS-10
+    locator: access_rules.clause_10
+    rule: >-
+      Refuse directly if the stated purpose is outside article 13.1 part 1 purposes or
+      access would violate article 13.1 part 9.
+  - id: PP961-ACCESS-11
+    locator: access_rules.clause_11
+    rule: >-
+      Do not provide article 13.1 part 7 item 2 users access to datasets formed under
+      Decree No. 538 cases а through г.
+  - id: PP961-ACCESS-12
+    locator: access_rules.clause_12
+    rule: Terminate access when the access purpose is achieved.
+  - id: PP961-ACCESS-13
+    locator: access_rules.clause_13.subclauses_a_v
+    rule: Block access immediately when any modeled blocking ground is established.
+
+access_blocking_grounds:
+  - id: USER_NO_LONGER_MEETS_ARTICLE_13_1_PART_7
+    locator: access_rules.clause_13.a
+  - id: ATTEMPT_TO_RECORD_EXTRACT_OR_TRANSFER_DATASET_FROM_SYSTEM
+    locator: access_rules.clause_13.b
+  - id: ACTUAL_OR_POTENTIAL_LEGALLY_PROTECTED_HARM_FROM_USE_OR_RESULTS
+    locator: access_rules.clause_13.v
+
+deadlines:
+  - id: DATASET_FORMATION
+    value: 30
+    unit: WORKING_DAYS
+    trigger: RECEIPT_OF_ANONYMIZED_DATA_FROM_OPERATORS
+    actor: Ministry_of_Digital_Development
+    semantics: NOT_LATER_THAN
+  - id: SECURITY_BODY_CHECK_RESULTS
+    value: 10
+    unit: CALENDAR_DAYS
+    trigger: RECEIPT_OF_CORRESPONDING_REQUEST_FROM_SECURITY_BODY
+    actor: Ministry_of_Digital_Development
+    semantics: NOT_LATER_THAN
+  - id: ACCESS_REQUEST_REVIEW
+    value: 5
+    unit: WORKING_DAYS
+    trigger: RECEIPT_OF_ACCESS_REQUEST
+    actor: Ministry_of_Digital_Development
+    semantics: NOT_LATER_THAN
+  - id: CLARIFICATION_RESPONSE_BEFORE_REFUSAL
+    value: 15
+    unit: WORKING_DAYS
+    trigger: CLARIFICATION_REQUEST_SENT
+    actor: User
+    consequence_on_expiry: SIGNED_ACCESS_REFUSAL_NOTICE
+
+evidence_model:
+  - id: EVIDENCE_OPERATOR_REQUIREMENT_AND_PP538_CASE
+    proves: [formation_applicability, lawful_input_route]
+  - id: EVIDENCE_OPERATOR_DATA_RECEIPT
+    proves: [formation_30_working_day_trigger]
+  - id: EVIDENCE_THREAT_ASSESSMENT
+    proves: [three_threat_types_considered]
+  - id: EVIDENCE_TRANSFORMATION_AND_QUALITY_LOG
+    proves: [corrections, exclusions, format_or_structure_transformations]
+  - id: EVIDENCE_SECURITY_BODY_REQUEST_AND_RESPONSE
+    proves: [security_body_10_calendar_day_clock]
+  - id: EVIDENCE_EXCLUDED_CATEGORY_CHECK
+    proves: [article_10_and_11_gate]
+  - id: EVIDENCE_ACCESS_REQUEST_AND_SIGNATURE
+    proves: [request_fields, requester_route, request_receipt]
+  - id: EVIDENCE_CLARIFICATION_EXCHANGE
+    proves: [suspension, user_15_working_day_window]
+  - id: EVIDENCE_ACCESS_DECISION_NOTICE
+    proves: [grant_or_refusal_basis, official_signature]
+  - id: EVIDENCE_ACCESS_SESSION_AND_PURPOSE_COMPLETION
+    proves: [access_start, purpose_completion, termination]
+  - id: EVIDENCE_IMMEDIATE_BLOCK_EVENT
+    proves: [blocking_ground, detection_time, block_time]
+
+dependencies:
+  - id: RU_GOV_PP_538_2025
+    relation: DEFINES_FORMATION_CASES_AND_RESTRICTED_A_THROUGH_G_ACCESS_BRANCH
+    atomization_status: REGRESSION_PROTECTED
+  - id: RU_GOV_PP_966_2025
+    relation: DEFINES_OPERATOR_REQUIREMENT_AND_TRANSMISSION_INTERACTION
+    atomization_status: REGRESSION_PROTECTED
+  - id: RU_GOV_PP_1154_2025
+    relation: DEFINES_ANONYMIZATION_REQUIREMENTS_METHODS_AND_RULES
+    atomization_status: REGRESSION_PROTECTED
+  - id: ARTICLE_13_1_PARTS_7_AND_9
+    relation: DEFINES_USER_ELIGIBILITY_AND_ACCESS_USE_RESTRICTIONS
+    atomization_status: REGRESSION_PROTECTED
+    model: fl-152-art13-1-user-access-pp702-atomic-v1.yaml
+    regression_fixture: fl-152-art13-1-user-access-pp702-regression-v1.json
+
+non_requirements:
+  - The 30-working-day formation clock belongs to the authorized body, not to the operator.
+  - The 10-day clock is calendar days and starts only on a corresponding security-body request.
+  - The 15-working-day value is the user's clarification window before refusal, not an access-grant deadline.
+  - Immediate blocking has no invented numeric hour or day value.
+  - Purpose achievement causes access termination; the decree states no universal dataset retention period.
+  - Access to an existing dataset and initiation of an operator requirement are distinct clause 9 branches.
+  - Clause 6 does not create a blanket exception for every special-category datum.
+
+red_team:
+  verdict: PASS_FORMATION_ACCESS_FAIL_CLOSED_PROVENANCE
+  critical_gap_created: false
+  high_gap_created: false
+  residuals:
+    - MEDIUM_IMMUTABLE_OFFICIAL_PDF_BYTES_PENDING
+    - MEDIUM_ARTICLE_13_1_USER_ELIGIBILITY_AND_USE_ATOMIZATION_PENDING
+    - MEDIUM_EXPERT_REVIEW_PENDING

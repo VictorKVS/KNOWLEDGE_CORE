@@ -1,0 +1,519 @@
+schema_version: 1
+library_id: RU-PDN-LIB-0001
+checked_at: 2026-08-19
+status: EXPANDING_FAIL_CLOSED
+scope_statement: >-
+  Russian personal-data compliance source universe around 152-FZ. This file is intentionally broader than the Roskomnadzor mandatory-requirements list and narrower than a final all-sector universe. Records are counted only when explicitly registered here.
+
+counts:
+  registered_source_records: 37
+  roscomnadzor_supervisory_core_records: 7
+  sector_discovery_families_pending: 14
+  final_universe_complete: false
+  note: "These are source records, not atomic requirements. Family groups such as codes are one source record each."
+
+source_states:
+  allowed:
+    - DISCOVERED
+    - REGISTERED
+    - PRIMARY_WEB_VERIFIED
+    - PRIMARY_IMMUTABLE
+    - AUTHORITATIVE_SECONDARY
+    - ATOMIZED
+    - EXECUTABLE
+    - REGRESSION_PROTECTED
+    - EXPERT_REVIEWED
+    - STATUS_RECHECK_REQUIRED
+
+sources:
+  - id: PDN-SRC-0001
+    title: "Federal Law No. 152-FZ On Personal Data"
+    authority: FEDERAL_LEGISLATURE
+    kind: FEDERAL_LAW
+    scope: GENERAL_CORE
+    state: ATOMIZED
+    rkn_supervisory_core: true
+    repo_bindings:
+      - security-knowledge/legislation/requirements/152-fz-core-operator-obligations-verified.yaml
+      - security-knowledge/applicability/152-fz-article-22-notification-exceptions-verified.yaml
+      - security-knowledge/corpus/ru-personal-data/fl-152-art13-1-user-access-pp702-atomic-v1.yaml
+      - security-knowledge/corpus/ru-personal-data/fl-152-art13-1-user-access-pp702-regression-v1.json
+      - security-knowledge/corpus/ru-personal-data/fl-152-article-21-remediation-destruction-atomic-v1.yaml
+      - security-knowledge/corpus/ru-personal-data/fl-152-article-21-remediation-destruction-regression-v1.json
+    gaps:
+      - "Article 13.1 parts 7-12 and Article 21 are regression-protected; full atomic coverage of Articles 5, 6, 7-18 and 20 remains incomplete relative to the consultant MVP."
+
+  - id: PDN-SRC-0002
+    title: "Labour Code of the Russian Federation — employee personal-data provisions"
+    authority: FEDERAL_LEGISLATURE
+    kind: CODE
+    scope: HR_EMPLOYMENT
+    state: ATOMIZED
+    rkn_supervisory_core: true
+    repo_bindings:
+      - security-knowledge/roles-and-responsibility/gk-tk-liability-compliance-slice.yaml
+      - security-knowledge/roles-and-responsibility/tk-material-damage-recovery-and-251n-applicability-verified.yaml
+    gaps:
+      - "Dedicated Article 86-90 employee-PDn decision pack still required."
+
+  - id: PDN-SRC-0003
+    title: "Federal Law No. 79-FZ On the State Civil Service — personal-data related provisions"
+    authority: FEDERAL_LEGISLATURE
+    kind: FEDERAL_LAW
+    scope: PUBLIC_SECTOR_HR
+    state: REGISTERED
+    rkn_supervisory_core: true
+    gaps:
+      - "Clause-level PDn extraction pending."
+
+  - id: PDN-SRC-0004
+    title: "Government Decree No. 211 of 21.03.2012 — measures for state and municipal operators"
+    authority: GOVERNMENT_RF
+    kind: GOVERNMENT_DECREE
+    scope: STATE_MUNICIPAL_OPERATORS
+    state: REGRESSION_PROTECTED
+    rkn_supervisory_core: true
+    current_edition: "2019-04-15"
+    current_edition_effective_from: "2019-04-25"
+    current_text: https://www.consultant.ru/document/cons_doc_LAW_127610/
+    repo_bindings:
+      - security-knowledge/corpus/ru-personal-data/pp-rf-211-state-municipal-operators-atomic-v1.yaml
+      - security-knowledge/corpus/ru-personal-data/pp-rf-211-state-municipal-operators-regression-v1.json
+    gaps:
+      - "Immutable official original/amendment artifacts and expert review remain pending."
+
+  - id: PDN-SRC-0005
+    title: "Government Decree No. 687 of 15.09.2008 — non-automated personal-data processing"
+    authority: GOVERNMENT_RF
+    kind: GOVERNMENT_DECREE
+    scope: NON_AUTOMATED_PROCESSING
+    state: REGRESSION_PROTECTED
+    rkn_supervisory_core: true
+    current_edition: "2025-01-18"
+    current_edition_effective_from: "2025-01-26"
+    valid_until_exclusive: "2030-09-01"
+    repo_bindings:
+      - security-knowledge/corpus/ru-personal-data/pp-rf-687-non-automated-processing-atomic-v1.yaml
+      - security-knowledge/corpus/ru-personal-data/pp-rf-687-non-automated-processing-regression-v1.json
+    gaps:
+      - "Immutable original/amendment PDF bytes and expert review remain pending."
+
+  - id: PDN-SRC-0006
+    title: "Roskomnadzor Order No. 140 of 19.06.2025 — anonymization requirements and methods"
+    authority: ROSKOMNADZOR
+    kind: FOIV_ORDER
+    scope: ANONYMIZATION_GENERAL
+    state: REGRESSION_PROTECTED
+    rkn_supervisory_core: true
+    repo_bindings:
+      - security-knowledge/anonymization/rkn-order-140-2025-anonymization-requirements-v1.json
+    notes:
+      - "Separate from the Article 13.1 individualized-demand regime under Government Decree 1154."
+
+  - id: PDN-SRC-0007
+    title: "Roskomnadzor Order No. 18 of 24.02.2021 — consent for dissemination"
+    authority: ROSKOMNADZOR
+    kind: FOIV_ORDER
+    scope: CONSENT_FOR_DISSEMINATION
+    state: PRIMARY_WEB_VERIFIED
+    rkn_supervisory_core: true
+    gaps:
+      - "Immutable artifact and executable consent schema pending."
+
+  - id: PDN-SRC-0008
+    title: "Government Decree No. 1119 of 01.11.2012 — ISPDN protection requirements"
+    authority: GOVERNMENT_RF
+    kind: GOVERNMENT_DECREE
+    scope: ISPDN_SECURITY
+    state: REGRESSION_PROTECTED
+    repo_bindings:
+      - security-knowledge/classification/ispdn-protection-level-decision-table-pp1119-verified.yaml
+
+  - id: PDN-SRC-0009
+    title: "FSTEC Order No. 21 of 18.02.2013 — organizational and technical measures for ISPDN"
+    authority: FSTEC
+    kind: FOIV_ORDER
+    scope: ISPDN_SECURITY
+    state: REGISTERED
+    gaps:
+      - "Current version-chain, immutable provenance and clause-level control map require dedicated replay."
+
+  - id: PDN-SRC-0010
+    title: "FSTEC Methodology for assessing information-security threats of 05.02.2021"
+    authority: FSTEC
+    kind: METHODOLOGY
+    scope: THREAT_MODELING
+    state: ATOMIZED
+    repo_bindings:
+      - security-knowledge/threat-modeling/fstec-threat-assessment-methodology-2021-authoritative-slice.yaml
+      - security-knowledge/threat-modeling/fstec-threat-assessment-methodology-2021-decision-logic-slice-02.yaml
+    gaps:
+      - "Primary authenticated full-text provenance remains a separate quality objective."
+
+  - id: PDN-SRC-0011
+    title: "FSTEC BDU threat/vulnerability catalogs"
+    authority: FSTEC
+    kind: DYNAMIC_REGISTER
+    scope: THREAT_INTELLIGENCE
+    state: REGRESSION_PROTECTED
+    repo_bindings:
+      - security-knowledge/threat-modeling/bdu-asutp-snapshot-policy.yaml
+      - security-knowledge/threat-modeling/threat-modeling-and-catalogs-source-registry.yaml
+
+  - id: PDN-SRC-0012
+    title: "FSB Order No. 378 of 10.07.2014 — cryptographic protection measures for PDn processing"
+    authority: FSB
+    kind: FOIV_ORDER
+    scope: ISPDN_CRYPTO
+    state: STATUS_RECHECK_REQUIRED
+    gaps:
+      - "Current status/version-chain and exact applicability must be independently verified before consultant use."
+
+  - id: PDN-SRC-0013
+    title: "Roskomnadzor Order No. 178 of 27.10.2022 — harm assessment requirements"
+    authority: ROSKOMNADZOR
+    kind: FOIV_ORDER
+    scope: HARM_ASSESSMENT
+    state: REGRESSION_PROTECTED
+    official_publication: 0001202211290004
+    minjust_registration: "71166"
+    effective_from: "2023-03-01"
+    valid_until_exclusive: "2029-03-01"
+    current_text: https://www.consultant.ru/document/cons_doc_LAW_432555/
+    repo_bindings:
+      - security-knowledge/corpus/ru-personal-data/rkn-order-178-harm-assessment-atomic-v1.yaml
+      - security-knowledge/corpus/ru-personal-data/rkn-order-178-harm-assessment-regression-v1.json
+    gaps:
+      - "Immutable official PDF bytes, harm-to-control mapping and expert review remain pending."
+
+  - id: PDN-SRC-0014
+    title: "Roskomnadzor Order No. 179 of 28.10.2022 — confirmation of personal-data destruction"
+    authority: ROSKOMNADZOR
+    kind: FOIV_ORDER
+    scope: DESTRUCTION_EVIDENCE
+    state: REGRESSION_PROTECTED
+    official_publication: 0001202211290008
+    repo_bindings:
+      - security-knowledge/corpus/ru-personal-data/rkn-order-179-destruction-evidence-atomic-v1.yaml
+      - security-knowledge/corpus/ru-personal-data/rkn-order-179-destruction-evidence-regression-v1.json
+    gaps:
+      - "Immutable official PDF bytes, complete 152-FZ article 21 trigger/deadline model and expert review remain pending."
+
+  - id: PDN-SRC-0015
+    title: "Roskomnadzor Order No. 180 of 28.10.2022 — operator notification forms"
+    authority: ROSKOMNADZOR
+    kind: FOIV_ORDER
+    scope: OPERATOR_REGISTRY_NOTIFICATIONS
+    state: ATOMIZED
+    official_publication: 0001202212150022
+
+  - id: PDN-SRC-0016
+    title: "Roskomnadzor Order No. 128 of 05.08.2022 — adequate-protection foreign states"
+    authority: ROSKOMNADZOR
+    kind: FOIV_ORDER
+    scope: CROSS_BORDER
+    state: PRIMARY_WEB_VERIFIED
+    official_publication: 0001202209200008
+    gaps:
+      - "Current country-list/version replay and cross-border router binding pending."
+
+  - id: PDN-SRC-0017
+    title: "Government Decree No. 2526 of 29.12.2022 — exceptions to parts of Article 12 for specified public functions"
+    authority: GOVERNMENT_RF
+    kind: GOVERNMENT_DECREE
+    scope: CROSS_BORDER_PUBLIC_FUNCTION_EXCEPTION
+    state: PRIMARY_WEB_VERIFIED
+    official_publication: 0001202212310018
+
+  - id: PDN-SRC-0018
+    title: "Government Decree No. 1154 of 01.08.2025 — Article 13.1 anonymization regime"
+    authority: GOVERNMENT_RF
+    kind: GOVERNMENT_DECREE
+    scope: ANONYMIZATION_ARTICLE_13_1
+    state: REGRESSION_PROTECTED
+    notes:
+      - "Distinct from Roskomnadzor Order 140 general anonymization route."
+
+  - id: PDN-SRC-0019
+    title: "Government Decree No. 961/2025 — dependency of Article 13.1 anonymization regime"
+    authority: GOVERNMENT_RF
+    kind: GOVERNMENT_DECREE
+    scope: ANONYMIZATION_DEPENDENCY
+    state: REGRESSION_PROTECTED
+    official_publication: 0001202506270025
+    repo_bindings:
+      - security-knowledge/corpus/ru-personal-data/pp-rf-961-2025-art13-1-formation-access-atomic-v1.yaml
+      - security-knowledge/corpus/ru-personal-data/pp-rf-961-2025-art13-1-formation-access-regression-v1.json
+    gaps:
+      - "Immutable official PDF bytes, dedicated article 13.1 user-eligibility/use atomization and expert review remain pending."
+
+  - id: PDN-SRC-0020
+    title: "Government Decree No. 966/2025 — dependency of Article 13.1 anonymization regime"
+    authority: GOVERNMENT_RF
+    kind: GOVERNMENT_DECREE
+    scope: ANONYMIZATION_DEPENDENCY
+    state: REGRESSION_PROTECTED
+    official_publication: 0001202506260044
+    repo_bindings:
+      - security-knowledge/corpus/ru-personal-data/pp-rf-966-2025-art13-1-interaction-atomic-v1.yaml
+      - security-knowledge/corpus/ru-personal-data/pp-rf-966-2025-art13-1-interaction-regression-v1.json
+    gaps:
+      - "Immutable official PDF bytes and expert review remain pending."
+
+  - id: PDN-SRC-0021
+    title: "Ministry of Digital Development Order No. 173 of 03.03.2026 — Article 13.1 requirement-preparation guidance"
+    authority: MINDIGITAL
+    kind: FOIV_ORDER_APPROVING_METHODOLOGICAL_RECOMMENDATIONS
+    scope: ANONYMIZATION_DEPENDENCY
+    state: REGRESSION_PROTECTED
+    current_text: https://www.consultant.ru/document/cons_doc_LAW_528407/
+    official_publication: NOT_LOCATED_IN_BOUNDED_SEARCH
+    minjust_registration: NOT_LOCATED_IN_BOUNDED_SEARCH
+    repo_bindings:
+      - security-knowledge/corpus/ru-personal-data/mindigital-order-173-2026-requirement-guidance-atomic-v1.yaml
+      - security-knowledge/corpus/ru-personal-data/mindigital-order-173-2026-requirement-guidance-regression-v1.json
+    gaps:
+      - "Immutable official artifact, official-publication/registration resolution and expert review remain pending."
+
+  - id: PDN-SRC-0022
+    title: "FSB Order No. 77 of 13.02.2023 — GosSOPKA interaction for PDn incidents"
+    authority: FSB
+    kind: FOIV_ORDER
+    scope: PDN_INCIDENT_GOSSOPKA
+    state: ATOMIZED
+    official_publication: 0001202302200021
+
+  - id: PDN-SRC-0023
+    title: "NKTsKI Order No. 2 of 14.07.2026 — formats and technical parameters for GosSOPKA reporting"
+    authority: NKTSKI
+    kind: TECHNICAL_ORDER
+    scope: INCIDENT_REPORTING_FORMAT
+    state: PRIMARY_IMMUTABLE
+    gaps:
+      - "Full field-level mapping remains incomplete."
+
+  - id: PDN-SRC-0024
+    title: "NKTsKI initial data for determining computer-attack type of 08.07.2026"
+    authority: NKTSKI
+    kind: METHODOLOGICAL_DOCUMENT
+    scope: INCIDENT_CLASSIFICATION_GUIDANCE
+    state: PRIMARY_IMMUTABLE
+    notes:
+      - "Example thresholds remain guidance unless separately bound by a mandatory rule."
+
+  - id: PDN-SRC-0025
+    title: "Code of Administrative Offences — Article 13.11 personal-data offences"
+    authority: FEDERAL_LEGISLATURE
+    kind: CODE
+    scope: ADMINISTRATIVE_LIABILITY
+    state: REGRESSION_PROTECTED
+    repo_bindings:
+      - security-knowledge/legal-consequences/koap-13-11-personal-data-sanctions-verified.yaml
+      - security-knowledge/legal-consequences/koap-13-11-parts-1-9-duty-mapping-verified.yaml
+
+  - id: PDN-SRC-0026
+    title: "Criminal Code of the Russian Federation — privacy/personal-data/cyber routes including Article 272.1"
+    authority: FEDERAL_LEGISLATURE
+    kind: CODE
+    scope: CRIMINAL_LIABILITY
+    state: REGRESSION_PROTECTED
+    repo_bindings:
+      - security-knowledge/legal-consequences/uk-272-1-personal-data-criminal-liability-verified.yaml
+      - security-knowledge/legal-consequences/uk-neighboring-cyber-and-privacy-routing-verified.yaml
+
+  - id: PDN-SRC-0027
+    title: "Civil Code of the Russian Federation — privacy, damages, moral harm and regress routes"
+    authority: FEDERAL_LEGISLATURE
+    kind: CODE
+    scope: CIVIL_LIABILITY
+    state: ATOMIZED
+    repo_bindings:
+      - security-knowledge/roles-and-responsibility/gk-tk-liability-compliance-slice.yaml
+      - security-knowledge/roles-and-responsibility/gk-1065-1081-regress-and-harm-prevention-verified.yaml
+
+  - id: PDN-SRC-0028
+    title: "Federal Law No. 149-FZ On Information, Information Technologies and Information Protection"
+    authority: FEDERAL_LEGISLATURE
+    kind: FEDERAL_LAW
+    scope: INFORMATION_CONFIDENTIALITY_BACKGROUND
+    state: REGISTERED
+    notes:
+      - "Applicable only through concrete information/confidentiality routes; not a substitute for 152-FZ."
+
+  - id: PDN-SRC-0029
+    title: "Federal Law No. 572-FZ — biometric identification/authentication regime"
+    authority: FEDERAL_LEGISLATURE
+    kind: FEDERAL_LAW
+    scope: BIOMETRICS_EBS
+    state: DISCOVERED
+    gaps:
+      - "Full biometric/EBS library not yet integrated."
+
+  - id: PDN-SRC-0030
+    title: "Government Decree No. 408 of 01.04.2024 — biometric data types under 572-FZ"
+    authority: GOVERNMENT_RF
+    kind: GOVERNMENT_DECREE
+    scope: BIOMETRICS_EBS
+    state: PRIMARY_WEB_VERIFIED
+    official_publication: 0001202404050032
+
+  - id: PDN-SRC-0031
+    title: "Ministry of Digital Development Order No. 1024 of 29.11.2023 — conformity forms for biometric technologies"
+    authority: MINDIGITAL
+    kind: FOIV_ORDER
+    scope: BIOMETRICS_EBS
+    state: PRIMARY_WEB_VERIFIED
+    official_publication: 0001202401120014
+
+  - id: PDN-SRC-0032
+    title: "Joint FSB/SVR/MOD/FSO/MVD Order No. 245/56/399/85/441 of 25.06.2025 — special Article 6(1.1/1.2) database-access procedure"
+    authority: MULTI_AGENCY
+    kind: JOINT_FOIV_ORDER
+    scope: SPECIAL_LAW_ENFORCEMENT_ACCESS
+    state: PRIMARY_WEB_VERIFIED
+    official_publication: 0001202506300007
+
+  - id: PDN-SRC-0033
+    title: "Government Decree No. 538 of 24.04.2025 — Article 13.1 cases for forming grouped anonymized datasets"
+    authority: GOVERNMENT_RF
+    kind: GOVERNMENT_DECREE
+    scope: ANONYMIZATION_ARTICLE_13_1_CASE_TAXONOMY
+    state: REGRESSION_PROTECTED
+    official_publication: 0001202504250043
+    repo_bindings:
+      - security-knowledge/corpus/ru-personal-data/pp-rf-538-2025-art13-1-cases-atomic-v1.yaml
+      - security-knowledge/corpus/ru-personal-data/pp-rf-538-2025-art13-1-cases-regression-v1.json
+    notes:
+      - "Defines seven case-bound Ministry formation routes; it does not independently create a standing operator-transfer duty."
+      - "PP 966 supplies per-case requirement-frequency controls: items а-г daily and items д-ж monthly."
+    gaps:
+      - "Immutable official PDF bytes and expert review remain pending; PP 961 and MinDigital Order 173 dependencies are regression-protected."
+
+  - id: PDN-SRC-0034
+    title: "Government Decree No. 702 of 22.05.2025 — Article 13.1 private-user eligibility verification"
+    authority: GOVERNMENT_RF
+    kind: GOVERNMENT_DECREE
+    scope: ANONYMIZATION_ARTICLE_13_1_USER_ELIGIBILITY
+    state: REGRESSION_PROTECTED
+    official_publication: 0001202505280017
+    repo_bindings:
+      - security-knowledge/corpus/ru-personal-data/fl-152-art13-1-user-access-pp702-atomic-v1.yaml
+      - security-knowledge/corpus/ru-personal-data/fl-152-art13-1-user-access-pp702-regression-v1.json
+    gaps:
+      - "Immutable official PDF bytes and expert review remain pending."
+
+  - id: PDN-SRC-0035
+    title: "Government Decree No. 740 of 28.05.2025 — EIP NSUD designation and platform-rule amendments"
+    authority: GOVERNMENT_RF
+    kind: GOVERNMENT_DECREE
+    scope: ANONYMIZATION_ARTICLE_13_1_DESIGNATED_GIS
+    state: REGRESSION_PROTECTED
+    current_text: https://www.consultant.ru/document/cons_doc_LAW_506693/
+    repo_bindings:
+      - security-knowledge/corpus/ru-personal-data/pp-rf-740-733-eip-nsud-platform-atomic-v1.yaml
+      - security-knowledge/corpus/ru-personal-data/pp-rf-740-733-eip-nsud-platform-regression-v1.json
+      - security-knowledge/provenance/pp740-733-2052-official-artifact-acquisition-manifest-v1.yaml
+      - security-knowledge/provenance/pp740-733-2052-official-artifact-provenance-regression-v1.yaml
+      - security-knowledge/evidence/pp740-733-2052-official-origin-acquisition-receipt.json
+    gaps:
+      - "Official-publication number, immutable official artifact and expert review remain pending; publication date 30.05.2025 and Collection citation are cross-checked."
+
+  - id: PDN-SRC-0036
+    title: "Government Decree No. 733 of 14.05.2021 — current EIP NSUD regulation"
+    authority: GOVERNMENT_RF
+    kind: GOVERNMENT_DECREE_CURRENT_CONSOLIDATED
+    scope: ANONYMIZATION_ARTICLE_13_1_DESIGNATED_GIS_PLATFORM
+    state: REGRESSION_PROTECTED
+    current_edition: "2025-12-17"
+    current_text: https://www.consultant.ru/document/cons_doc_LAW_384215/
+    repo_bindings:
+      - security-knowledge/corpus/ru-personal-data/pp-rf-740-733-eip-nsud-platform-atomic-v1.yaml
+      - security-knowledge/corpus/ru-personal-data/pp-rf-740-733-eip-nsud-platform-regression-v1.json
+      - security-knowledge/provenance/pp740-733-2052-official-artifact-acquisition-manifest-v1.yaml
+      - security-knowledge/provenance/pp740-733-2052-official-artifact-provenance-regression-v1.yaml
+      - security-knowledge/evidence/pp740-733-2052-official-origin-acquisition-receipt.json
+    notes:
+      - "Current state includes the PP 740 article 13.1 route and the later PP 2052 overlay of 17.12.2025."
+    gaps:
+      - "Immutable official version-chain artifacts and expert review remain pending."
+
+  - id: PDN-SRC-0037
+    title: "Government Decree No. 2052 of 17.12.2025 — later EIP NSUD regulation amendments"
+    authority: GOVERNMENT_RF
+    kind: GOVERNMENT_DECREE
+    scope: EIP_NSUD_CURRENT_OVERLAY_WITH_ARTICLE_13_1_ROUTE_RETAINED
+    state: REGRESSION_PROTECTED
+    signed_date: "2025-12-17"
+    effective_from: "2026-01-01"
+    current_text: https://www.consultant.ru/document/cons_doc_LAW_521978/
+    repo_bindings:
+      - security-knowledge/corpus/ru-personal-data/pp-rf-740-733-eip-nsud-platform-atomic-v1.yaml
+      - security-knowledge/corpus/ru-personal-data/pp-rf-740-733-eip-nsud-platform-regression-v1.json
+      - security-knowledge/provenance/pp740-733-2052-official-artifact-acquisition-manifest-v1.yaml
+      - security-knowledge/provenance/pp740-733-2052-official-artifact-provenance-regression-v1.yaml
+      - security-knowledge/evidence/pp740-733-2052-official-origin-acquisition-receipt.json
+    notes:
+      - "The 17.12.2025 edition took effect on 01.01.2026; it retains the specific article 13.1 route while adding general data and AI functions."
+      - "General AI and dataset functions are not an independent article 13.1 access grant."
+    gaps:
+      - "Immutable official artifact, publication metadata and expert review remain pending."
+
+sector_discovery_families:
+  - id: PDN-SECTOR-HEALTH
+    name: HEALTHCARE_MEDICAL_SECRECY
+    status: PENDING_UNIVERSE_DISCOVERY
+  - id: PDN-SECTOR-FIN
+    name: BANKING_FINANCE_PAYMENTS_AML
+    status: PENDING_UNIVERSE_DISCOVERY
+  - id: PDN-SECTOR-INS
+    name: INSURANCE
+    status: PENDING_UNIVERSE_DISCOVERY
+  - id: PDN-SECTOR-TELCO
+    name: TELECOM_COMMUNICATIONS_SECRECY
+    status: PENDING_UNIVERSE_DISCOVERY
+  - id: PDN-SECTOR-EDU
+    name: EDUCATION_AND_MINORS
+    status: PENDING_UNIVERSE_DISCOVERY
+  - id: PDN-SECTOR-PUBLIC
+    name: STATE_MUNICIPAL_SERVICES
+    status: PENDING_UNIVERSE_DISCOVERY
+  - id: PDN-SECTOR-BIO
+    name: BIOMETRICS_EBS
+    status: IN_PROGRESS
+  - id: PDN-SECTOR-TRANSPORT
+    name: TRANSPORT
+    status: PENDING_UNIVERSE_DISCOVERY
+  - id: PDN-SECTOR-ADS
+    name: ADVERTISING_MARKETING
+    status: PENDING_UNIVERSE_DISCOVERY
+  - id: PDN-SECTOR-ARCHIVE
+    name: ARCHIVES_STATUTORY_RETENTION
+    status: PENDING_UNIVERSE_DISCOVERY
+  - id: PDN-SECTOR-CREDIT
+    name: CREDIT_HISTORIES
+    status: PENDING_UNIVERSE_DISCOVERY
+  - id: PDN-SECTOR-KII
+    name: KII_GOSSOPKA_OVERLAP
+    status: IN_PROGRESS
+  - id: PDN-SECTOR-CLOUD
+    name: CLOUD_SAAS_PROCESSORS
+    status: PENDING_UNIVERSE_DISCOVERY
+  - id: PDN-SECTOR-CROSSBORDER
+    name: CROSS_BORDER_RECIPIENTS_AND_FOREIGN_OFFICES
+    status: IN_PROGRESS
+
+red_team_rules:
+  - "The seven-act Roskomnadzor list is the supervisory core, not proof that only seven documents matter to an operator."
+  - "Sector-specific acts must not be applied without proving sector/process applicability."
+  - "Guidance, letters and examples are never promoted to mandatory requirements without a binding edge."
+  - "A source count is not a requirement count; a code or law may contain hundreds of atomic rules."
+  - "Historical amendment laws are tracked in version chains but are not double-counted as current standalone operator obligations unless they create a live independent regime."
+
+next_actions:
+  - "Replay Roskomnadzor current mandatory-requirements catalog directly against this library."
+  - "Build dedicated Articles 5/6/9/10/10.1/11/12/14-18/20 atomic packs for 152-FZ."
+  - "Acquire and atomize RKN 179, RKN 18 and RKN 128."
+  - "Map the RKN 178 harm degrees to evidence and control decisions without inventing a numeric risk formula."
+  - "Preserve immutable official version-chain artifacts for PP 211 and PP 687 and complete expert review."
+  - "Verify current version-chain and applicability of FSTEC 21 and FSB 378."
+  - "Run sector-universe discovery one family at a time and count exact current sources."

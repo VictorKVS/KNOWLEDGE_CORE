@@ -1,0 +1,28 @@
+name: PP RF 966 Article 13.1 Interaction Gate
+
+on:
+  push:
+    paths:
+      - 'security-knowledge/corpus/ru-personal-data/pp-rf-966-2025-art13-1-interaction-atomic-v1.yaml'
+      - 'security-knowledge/corpus/ru-personal-data/pp-rf-966-2025-art13-1-interaction-regression-v1.json'
+      - 'security-knowledge/pdn/pdn-master-source-library-v1.yaml'
+      - 'security-knowledge/validators/validate_pp_rf_966_art13_1_interaction.py'
+      - '.github/workflows/pp-rf-966-art13-1-interaction.yml'
+  pull_request:
+    paths:
+      - 'security-knowledge/corpus/ru-personal-data/pp-rf-966-2025-art13-1-interaction-atomic-v1.yaml'
+      - 'security-knowledge/corpus/ru-personal-data/pp-rf-966-2025-art13-1-interaction-regression-v1.json'
+      - 'security-knowledge/pdn/pdn-master-source-library-v1.yaml'
+      - 'security-knowledge/validators/validate_pp_rf_966_art13_1_interaction.py'
+      - '.github/workflows/pp-rf-966-art13-1-interaction.yml'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install pyyaml
+      - run: python security-knowledge/validators/validate_pp_rf_966_art13_1_interaction.py

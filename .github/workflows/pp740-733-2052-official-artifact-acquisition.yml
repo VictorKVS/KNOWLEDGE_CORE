@@ -1,0 +1,40 @@
+name: PP 740 733 2052 Official Artifact Acquisition
+
+on:
+  pull_request:
+    paths:
+      - "security-knowledge/tools/acquire_pp740_733_2052_official_artifacts.py"
+      - "security-knowledge/provenance/pp740-733-2052-official-artifact-acquisition-manifest-v1.yaml"
+      - "security-knowledge/provenance/pp740-733-2052-official-artifact-provenance-regression-v1.yaml"
+      - "security-knowledge/evidence/pp740-733-2052-official-origin-acquisition-receipt.json"
+      - "security-knowledge/validators/validate_pp740_733_2052_artifact_provenance.py"
+      - ".github/workflows/pp740-733-2052-official-artifact-acquisition.yml"
+  workflow_dispatch:
+
+concurrency:
+  group: pp740-733-2052-official-${{ github.event.pull_request.number || github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  acquire:
+    runs-on: ubuntu-latest
+    timeout-minutes: 4
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pyyaml
+      - name: Validate fail-closed provenance model
+        run: python security-knowledge/validators/validate_pp740_733_2052_artifact_provenance.py
+      - name: Acquire exact official-origin records and PDF bytes
+        run: |
+          python security-knowledge/tools/acquire_pp740_733_2052_official_artifacts.py \
+            --output-dir /tmp/pp740-733-2052-official
+      - name: Upload byte-preserving acquisition bundle
+        uses: actions/upload-artifact@v4
+        with:
+          name: pp740-733-2052-official-origin
+          path: /tmp/pp740-733-2052-official/
+          if-no-files-found: error
+          retention-days: 30

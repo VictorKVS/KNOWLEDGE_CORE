@@ -1,0 +1,32 @@
+name: FL152 Article 13.1 user access and PP702
+
+on:
+  push:
+    paths:
+      - "security-knowledge/corpus/ru-personal-data/fl-152-art13-1-user-access-pp702-atomic-v1.yaml"
+      - "security-knowledge/corpus/ru-personal-data/fl-152-art13-1-user-access-pp702-regression-v1.json"
+      - "security-knowledge/corpus/ru-personal-data/pp-rf-961-2025-art13-1-formation-access-atomic-v1.yaml"
+      - "security-knowledge/corpus/ru-personal-data/2025-anonymization-source-pack.yaml"
+      - "security-knowledge/pdn/pdn-master-source-library-v1.yaml"
+      - "security-knowledge/validators/validate_fl152_art13_1_user_access_pp702.py"
+      - ".github/workflows/fl152-art13-1-user-access-pp702.yml"
+  pull_request:
+    paths:
+      - "security-knowledge/corpus/ru-personal-data/fl-152-art13-1-user-access-pp702-atomic-v1.yaml"
+      - "security-knowledge/corpus/ru-personal-data/fl-152-art13-1-user-access-pp702-regression-v1.json"
+      - "security-knowledge/corpus/ru-personal-data/pp-rf-961-2025-art13-1-formation-access-atomic-v1.yaml"
+      - "security-knowledge/corpus/ru-personal-data/2025-anonymization-source-pack.yaml"
+      - "security-knowledge/pdn/pdn-master-source-library-v1.yaml"
+      - "security-knowledge/validators/validate_fl152_art13_1_user_access_pp702.py"
+      - ".github/workflows/fl152-art13-1-user-access-pp702.yml"
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pyyaml
+      - run: python security-knowledge/validators/validate_fl152_art13_1_user_access_pp702.py

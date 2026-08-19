@@ -1,0 +1,26 @@
+name: PP RF 1154 Anonymization Gate
+
+on:
+  push:
+    paths:
+      - 'security-knowledge/corpus/ru-personal-data/pp-rf-1154-2025-anonymization-art13-1-atomic-v1.yaml'
+      - 'security-knowledge/corpus/ru-personal-data/pp-rf-1154-2025-anonymization-regression-v1.json'
+      - 'security-knowledge/validators/validate_pp_rf_1154_anonymization.py'
+      - '.github/workflows/pp-rf-1154-anonymization.yml'
+  pull_request:
+    paths:
+      - 'security-knowledge/corpus/ru-personal-data/pp-rf-1154-2025-anonymization-art13-1-atomic-v1.yaml'
+      - 'security-knowledge/corpus/ru-personal-data/pp-rf-1154-2025-anonymization-regression-v1.json'
+      - 'security-knowledge/validators/validate_pp_rf_1154_anonymization.py'
+      - '.github/workflows/pp-rf-1154-anonymization.yml'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install pyyaml
+      - run: python security-knowledge/validators/validate_pp_rf_1154_anonymization.py
