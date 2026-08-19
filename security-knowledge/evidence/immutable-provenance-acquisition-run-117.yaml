@@ -1,0 +1,93 @@
+schema_version: "1.0"
+run_id: SECURITY-KB-RUN-117
+observed_at: "2026-08-19T05:18:50+03:00"
+purpose: >-
+  Resolve the official download targets for the two NKTsKI 2026 artifacts that block
+  HIGH-IMMUTABLE-PROVENANCE, test available acquisition transports, and preserve a
+  fail-closed distinction between official-origin bytes and document-viewer derivatives.
+
+official_pages_rechecked:
+  - url: https://www.cert.gov.ru/materialy/organizatsiya-vzaimodeystviya/reglament-vzaimodeystviya-nktski-
+    authority: NKTSKI_OFFICIAL
+    result: BOTH_DOWNLOAD_TARGETS_RESOLVED
+  - url: https://gossopka.ru/doc/method/
+    authority: GOSSOPKA_OFFICIAL
+    result: INITIAL_DATA_DOWNLOAD_TARGET_RESOLVED
+  - url: https://gossopka.ru/doc/npa/normativnye-pravovye-akty-federalnykh-organov-ispolnitelnoy-vlasti/
+    authority: GOSSOPKA_OFFICIAL
+    result: ORDER_2_DOWNLOAD_TARGET_RESOLVED
+
+targets:
+  - id: NKTSKI-ORDER-2-2026-07-14
+    official_download_urls:
+      - https://www.cert.gov.ru/upload/iblock/d05/zolkvvbc00ofpybc0tplhwdkcmlt7252/O-sovershenstvovanii-deyatelnosti-po-organizatsii-vzaimodeystviya-Natsionalnogo-koordinatsionnogo-tsentra-po-kompyuternym-intsidentam-s-subektami-kriticheskoy-informatsionnoy-infrastruktury_-tsentrami-GosSOPKA-i-organami-_org.pdf
+      - https://gossopka.ru/upload/iblock/995/y8i5wz6c2zdstnnbgxa317esmql8eak1/Prikaz-NKTSKI-N-2-ot-14_07_2026.pdf
+    direct_origin_result: HTTP_502_FROM_EXECUTION_ENVIRONMENT_UPSTREAM
+    document_viewer_render:
+      source_official_url: https://gossopka.ru/upload/iblock/995/y8i5wz6c2zdstnnbgxa317esmql8eak1/Prikaz-NKTSKI-N-2-ot-14_07_2026.pdf
+      mime: application/pdf
+      bytes: 623031
+      pages: 20
+      sha256: "49e4f568dd643678c87ee56a0927e39d06e493f977991f214ce7ed39f714e135"
+      content_checks:
+        - title_matches_order_2
+        - date_is_2026_07_14
+        - number_is_2
+        - contains_appendix_1_attack_reporting_format
+        - contains_appendix_2_incident_reporting_format
+      byte_fidelity_to_origin: UNPROVEN
+    resulting_provenance_state: OFFICIAL_HREF_VERIFIED_ORIGIN_BYTES_PENDING
+
+  - id: NKTSKI-ATTACK-TYPE-INITIAL-DATA-2026-07-08
+    official_download_urls:
+      - https://www.cert.gov.ru/upload/iblock/333/q3w0bnth1cxtnhskh5xi9s0zmimqymoq/Iskhodnye-dannye-dlya-opredeleniya-tipa-kompyuternoy-ataki.pdf
+      - https://gossopka.ru/upload/iblock/6e8/14xffkb0nlecz44gpaz5ywq66fj5gk2x/2026_iskhodnye-dannye.pdf
+    direct_origin_result: HTTP_502_FROM_EXECUTION_ENVIRONMENT_UPSTREAM
+    document_viewer_renders:
+      official_origins_tested: 2
+      cross_origin_result: BYTE_IDENTICAL_RENDER_OUTPUT
+      mime: application/pdf
+      bytes_each: 4364059
+      pages_each: 12
+      sha256_each: "4bcc1e21f3309b4058aefcc77bde395c9553873de217019b2d91ffdbbe931012"
+      content_checks:
+        - methodological_character_matches_official_news
+        - example_threshold_guardrail_present
+        - maximum_available_materials_rule_present
+        - seven_attack_type_sections_present
+      byte_fidelity_to_origins: UNPROVEN
+    resulting_provenance_state: OFFICIAL_HREFS_VERIFIED_ORIGIN_BYTES_PENDING
+
+transport_fidelity_control:
+  test_source: https://cert.gov.ru/upload/iblock/0b4/d0rdh6brbfnb8y0cafkpxwzexqriqlal.pdf
+  authoritative_archive_capture:
+    archive: COMMON_CRAWL_CC_MAIN_2026_30
+    captured_at: "2026-07-17T13:53:54Z"
+    bytes: 331290
+    sha256: "d38a4ba73d37d75bf28470e25d81573b60d6a759efc0e625af67d570f11106ae"
+  document_viewer_render:
+    bytes: 502720
+    sha256: "6aeb62427217fb3a71b12c5e304ec2ba38ead5c0065023e6b78ddbe9295f7dd2"
+  text_extraction_compare: MATCH
+  byte_compare: DIFFERENT
+  conclusion: DOCUMENT_VIEWER_IS_CONTENT_PRESERVING_FOR_THIS_CONTROL_BUT_NOT_BYTE_PRESERVING
+  immutable_primary_policy_effect: BLOCK_VIEWER_RENDER_AS_PRIMARY
+
+red_team:
+  critical_gaps_closed: 0
+  high_gaps_closed: 0
+  verdict: FAIL_CLOSED
+  remaining_high: HIGH-IMMUTABLE-PROVENANCE
+  reason: >-
+    Exact official hrefs are now known, but a normalized viewer render cannot establish the
+    SHA-256 of the official-origin response. No derivative hash is promoted to immutable primary.
+
+next_step:
+  required: BYTE_PRESERVING_FETCH_OF_EITHER_OFFICIAL_COPY_PER_ARTIFACT
+  completion_evidence:
+    - retrieval_timestamp
+    - final_official_url
+    - response_MIME
+    - byte_length
+    - SHA256
+    - PDF_identity_and_page_validation

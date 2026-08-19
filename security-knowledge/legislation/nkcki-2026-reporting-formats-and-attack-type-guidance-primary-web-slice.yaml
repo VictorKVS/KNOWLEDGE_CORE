@@ -1,7 +1,7 @@
 schema_version: "1.0"
 id: nkcki-2026-reporting-formats-and-attack-type-guidance-primary-web-slice
-checked_at: "2026-08-14"
-status: PRIMARY_WEB_VERIFIED_OPERATIONAL_GUIDANCE
+checked_at: "2026-08-19"
+status: PRIMARY_WEB_VERIFIED_EXACT_DOWNLOAD_TARGETS_RESOLVED
 purpose: >-
   Register the July 2026 NKTsKI operational layer that sits below the current FSB GosSOPKA orders:
   reporting formats/technical parameters and methodological guidance for determining computer-attack type.
@@ -22,8 +22,13 @@ primary_sources:
       https://www.cert.gov.ru/materialy/organizatsiya-vzaimodeystviya/reglament-vzaimodeystviya-nktski-
     gossopka_registry_url: >-
       https://gossopka.ru/doc/npa/normativnye-pravovye-akty-federalnykh-organov-ispolnitelnoy-vlasti/
+    official_download_urls:
+      - >-
+        https://www.cert.gov.ru/upload/iblock/d05/zolkvvbc00ofpybc0tplhwdkcmlt7252/O-sovershenstvovanii-deyatelnosti-po-organizatsii-vzaimodeystviya-Natsionalnogo-koordinatsionnogo-tsentra-po-kompyuternym-intsidentam-s-subektami-kriticheskoy-informatsionnoy-infrastruktury_-tsentrami-GosSOPKA-i-organami-_org.pdf
+      - https://gossopka.ru/upload/iblock/995/y8i5wz6c2zdstnnbgxa317esmql8eak1/Prikaz-NKTSKI-N-2-ot-14_07_2026.pdf
     verification_status: PRIMARY_WEB_METADATA_VERIFIED
-    exact_download_snapshot: PENDING
+    exact_download_target: VERIFIED
+    exact_official_origin_snapshot: PENDING
 
   - source_id: NKCKI_ATTACK_TYPE_INPUTS_2026
     issuer: NATIONAL_COORDINATION_CENTER_FOR_COMPUTER_INCIDENTS
@@ -33,8 +38,12 @@ primary_sources:
     primary_materials_index_url: >-
       https://www.cert.gov.ru/materialy/organizatsiya-vzaimodeystviya/reglament-vzaimodeystviya-nktski-
     gossopka_method_index_url: "https://gossopka.ru/doc/method/"
+    official_download_urls:
+      - https://www.cert.gov.ru/upload/iblock/333/q3w0bnth1cxtnhskh5xi9s0zmimqymoq/Iskhodnye-dannye-dlya-opredeleniya-tipa-kompyuternoy-ataki.pdf
+      - https://gossopka.ru/upload/iblock/6e8/14xffkb0nlecz44gpaz5ywq66fj5gk2x/2026_iskhodnye-dannye.pdf
     verification_status: PRIMARY_WEB_METADATA_VERIFIED
-    exact_download_snapshot: PENDING
+    exact_download_target: VERIFIED
+    exact_official_origin_snapshot: PENDING
 
 records:
   - id: NKCKI2-2026-META-001
@@ -94,15 +103,22 @@ integration_rules:
       calculate a legal reporting deadline but must mark payload-format validation as PENDING rather than
       claim that a notification package is format-complete.
 
+  - id: NKCKI2-INTEGRATION-004
+    status: RED_TEAM_GUARDRAIL
+    rule: >-
+      A PDF normalized by a document-viewer is not an immutable official-origin snapshot. Content
+      inspection from that render may guide acquisition, but field-level schema completeness stays PENDING
+      until the official download response is preserved with byte-fidelity evidence and SHA-256.
+
 red_team:
-  verdict: PARTIAL_PASS_CURRENTNESS_GAP_DISCOVERED_AND_REGISTERED
+  verdict: PARTIAL_PASS_DOWNLOAD_TARGETS_RESOLVED_ORIGIN_BYTES_PENDING
   primary_web_verified_records: 4
   high_risk_prevented:
     - "treating example attack-type thresholds as mandatory legal thresholds"
     - "treating a July 2026 reporting-format update as if it silently changed FSB reporting deadlines"
     - "claiming notification evidence completeness without the current NKTsKI payload schema"
   pending:
-    - "download and hash-pin the exact Order No. 2 artifact and its schemas"
-    - "download and hash-pin the 2026-07-08 Initial Data document"
+    - "fetch and hash-pin the exact official-origin Order No. 2 artifact and its schemas"
+    - "fetch and hash-pin the official-origin 2026-07-08 Initial Data document"
     - "map exact fields/technical parameters into the GosSOPKA evidence model"
     - "add regression fixtures for incomplete-but-reportable evidence packages"

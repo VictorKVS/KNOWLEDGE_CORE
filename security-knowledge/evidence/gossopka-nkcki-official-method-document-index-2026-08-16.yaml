@@ -1,7 +1,7 @@
 inventory_id: GOSSOPKA-NKTSKI-METHOD-INDEX-2026-08-16
-observed_at: 2026-08-16T09:18:00+03:00
-scope: official_web_index_only
-source_classification: PRIMARY_WEB_INDEX_VERIFIED
+observed_at: 2026-08-19T05:18:50+03:00
+scope: official_web_index_and_exact_download_target_resolution
+source_classification: PRIMARY_WEB_INDEX_AND_OFFICIAL_HREF_VERIFIED
 sources:
   - url: https://www.cert.gov.ru/materialy/organizatsiya-vzaimodeystviya/reglament-vzaimodeystviya-nktski-
     authority: NKTsKI_official
@@ -16,6 +16,10 @@ records:
       - defines_formats_for_submission_to_GosSOPKA_of_information_about_computer_attacks_and_incidents
       - defines_composition_of_technical_parameters
     downloadable_entry_observed: true
+    exact_download_href_resolved: true
+    official_download_urls:
+      - https://www.cert.gov.ru/upload/iblock/d05/zolkvvbc00ofpybc0tplhwdkcmlt7252/O-sovershenstvovanii-deyatelnosti-po-organizatsii-vzaimodeystviya-Natsionalnogo-koordinatsionnogo-tsentra-po-kompyuternym-intsidentam-s-subektami-kriticheskoy-informatsionnoy-infrastruktury_-tsentrami-GosSOPKA-i-organami-_org.pdf
+      - https://gossopka.ru/upload/iblock/995/y8i5wz6c2zdstnnbgxa317esmql8eak1/Prikaz-NKTSKI-N-2-ot-14_07_2026.pdf
     exact_artifact_acquired: false
     immutable_primary: false
     allowed_claim_level: OFFICIAL_INDEX_METADATA_AND_SCOPE_ONLY
@@ -30,6 +34,10 @@ records:
       - organizations_should_send_the_maximum_amount_of_available_materials
       - absence_of_some_materials_must_not_block_submission_of_other_available_materials
     downloadable_entry_observed: true
+    exact_download_href_resolved: true
+    official_download_urls:
+      - https://www.cert.gov.ru/upload/iblock/333/q3w0bnth1cxtnhskh5xi9s0zmimqymoq/Iskhodnye-dannye-dlya-opredeleniya-tipa-kompyuternoy-ataki.pdf
+      - https://gossopka.ru/upload/iblock/6e8/14xffkb0nlecz44gpaz5ywq66fj5gk2x/2026_iskhodnye-dannye.pdf
     exact_artifact_acquired: false
     immutable_primary: false
     allowed_claim_level: OFFICIAL_INDEX_AND_OFFICIAL_NEWS_BEHAVIOR_ONLY
@@ -103,6 +111,9 @@ model_rules:
   - id: MR-METHOD-INDEX-005
     rule: PROTECTEDNESS_ASSESSMENT_GUIDANCE_DOES_NOT_EQUAL_ATTESTATION_OR_CERTIFICATION
     effect: Keep protectedness assessment, penetration testing, conformity assessment, attestation and certification as separate graph concepts unless an authoritative source links them.
+  - id: MR-METHOD-INDEX-006
+    rule: DOCUMENT_VIEWER_RENDER_DOES_NOT_EQUAL_OFFICIAL_ORIGIN_BYTES
+    effect: A viewer-rendered PDF may confirm content identity for acquisition triage, but cannot close immutable-primary provenance without byte-fidelity proof.
 
 red_team_findings:
   - id: RT-METHOD-075-001
@@ -123,8 +134,8 @@ red_team_findings:
     correction: FSB/NPA deadline source has precedence.
 
 pending:
-  - resolve_exact_download_href_for_each_entry
-  - preserve_exact_bytes_and_retrieved_at
+  - resolve_exact_download_href_for_remaining_entries
+  - preserve_exact_official_origin_bytes_and_retrieved_at
   - record_MIME_and_byte_length
   - compute_SHA256
   - extract_clause_or_field_level_content_only_after_artifact_acquisition

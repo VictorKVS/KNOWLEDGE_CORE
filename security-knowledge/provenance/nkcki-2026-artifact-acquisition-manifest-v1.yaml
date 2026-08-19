@@ -1,7 +1,7 @@
 schema_version: "1.1"
 id: nkcki-2026-artifact-acquisition-manifest-v1
-observed_at: "2026-08-16T05:00:19+03:00"
-status: PRIMARY_WEB_VERIFIED_ARTIFACT_BYTES_PENDING
+observed_at: "2026-08-19T05:18:50+03:00"
+status: PRIMARY_DOWNLOAD_TARGETS_RESOLVED_ORIGIN_BYTES_PENDING
 purpose: >-
   Track exact acquisition state for high-value NKTsKI 2026 reporting artifacts without
   promoting web-index metadata or search excerpts to immutable primary-source status.
@@ -17,22 +17,42 @@ artifacts:
     document_date: "2026-07-14"
     document_number: "2"
     authoritative_index_url: "https://www.cert.gov.ru/materialy/organizatsiya-vzaimodeystviya/reglament-vzaimodeystviya-nktski-"
+    authoritative_download_url: >-
+      https://www.cert.gov.ru/upload/iblock/d05/zolkvvbc00ofpybc0tplhwdkcmlt7252/O-sovershenstvovanii-deyatelnosti-po-organizatsii-vzaimodeystviya-Natsionalnogo-koordinatsionnogo-tsentra-po-kompyuternym-intsidentam-s-subektami-kriticheskoy-informatsionnoy-infrastruktury_-tsentrami-GosSOPKA-i-organami-_org.pdf
+    authoritative_gossopka_download_url: >-
+      https://gossopka.ru/upload/iblock/995/y8i5wz6c2zdstnnbgxa317esmql8eak1/Prikaz-NKTSKI-N-2-ot-14_07_2026.pdf
     authoritative_news_url: "https://cert.gov.ru/news/novosti-nktski/o-sovershenstvovanii-deyatelnosti-po-organizatsii-vzaimodeystviya-natsionalnogo-koordinatsionnogo-ts/"
     verified_web_fact: >-
       Official NKTsKI material index states that the order defines formats for presenting
       information about computer attacks and computer incidents to GosSOPKA and the composition
       of technical parameters.
     official_index_download_action_observed: true
+    exact_download_target_resolved: true
     bytes_preserved: false
     sha256: null
     retrieved_at: null
     immutable_status: PENDING
     allowed_claim_level: PRIMARY_WEB_VERIFIED_METADATA_ONLY
+    non_primary_render_observation:
+      observed_at: "2026-08-19T05:11:44+03:00"
+      transport: GOOGLE_DOCUMENT_VIEWER_SECURE_PDF
+      official_origin_used: >-
+        https://gossopka.ru/upload/iblock/995/y8i5wz6c2zdstnnbgxa317esmql8eak1/Prikaz-NKTSKI-N-2-ot-14_07_2026.pdf
+      mime: application/pdf
+      bytes: 623031
+      pages: 20
+      sha256: "49e4f568dd643678c87ee56a0927e39d06e493f977991f214ce7ed39f714e135"
+      byte_fidelity_to_official_origin: UNPROVEN
+      immutable_primary_effect: NONE
 
   - artifact_id: NKTSKI-2026-ATTACK-TYPE-INITIAL-DATA
     title: "Исходные данные для определения типа компьютерной атаки"
     approved_at: "2026-07-08"
     authoritative_index_url: "https://www.cert.gov.ru/materialy/organizatsiya-vzaimodeystviya/reglament-vzaimodeystviya-nktski-"
+    authoritative_download_url: >-
+      https://www.cert.gov.ru/upload/iblock/333/q3w0bnth1cxtnhskh5xi9s0zmimqymoq/Iskhodnye-dannye-dlya-opredeleniya-tipa-kompyuternoy-ataki.pdf
+    authoritative_gossopka_download_url: >-
+      https://gossopka.ru/upload/iblock/6e8/14xffkb0nlecz44gpaz5ywq66fj5gk2x/2026_iskhodnye-dannye.pdf
     authoritative_news_url: "https://cert.gov.ru/news/novosti-nktski/o-sovershenstvovanii-deyatelnosti-po-organizatsii-vzaimodeystviya-natsionalnogo-koordinatsionnogo-ts/"
     verified_web_fact: >-
       Official NKTsKI publication describes this document as methodological recommendations;
@@ -40,11 +60,25 @@ artifacts:
       provide the maximum available materials identified in paragraph 5 of relevant sections,
       and missing one or more materials must not block transmission of the remaining available materials.
     official_index_download_action_observed: true
+    exact_download_target_resolved: true
     bytes_preserved: false
     sha256: null
     retrieved_at: null
     immutable_status: PENDING
     allowed_claim_level: PRIMARY_WEB_VERIFIED_METADATA_AND_EXPLICIT_WEB_RULES
+    non_primary_render_observation:
+      observed_at: "2026-08-19T05:11:44+03:00"
+      transport: GOOGLE_DOCUMENT_VIEWER_SECURE_PDF
+      official_origins_used:
+        - https://www.cert.gov.ru/upload/iblock/333/q3w0bnth1cxtnhskh5xi9s0zmimqymoq/Iskhodnye-dannye-dlya-opredeleniya-tipa-kompyuternoy-ataki.pdf
+        - https://gossopka.ru/upload/iblock/6e8/14xffkb0nlecz44gpaz5ywq66fj5gk2x/2026_iskhodnye-dannye.pdf
+      mime: application/pdf
+      bytes: 4364059
+      pages: 12
+      sha256_from_each_origin: "4bcc1e21f3309b4058aefcc77bde395c9553873de217019b2d91ffdbbe931012"
+      cross_origin_render_byte_compare: MATCH
+      byte_fidelity_to_official_origin: UNPROVEN
+      immutable_primary_effect: NONE
 
   - artifact_id: NKTSKI-2026-NOTIFICATION-FORM
     title: "Форма составления уведомления об атаке или инциденте"
@@ -82,6 +116,11 @@ provenance_rules:
     rule: >-
       Presence of an official "Download" action is stronger discovery evidence than a search snippet,
       but still does not establish the downloaded filename, bytes, MIME type or hash until the target is resolved and acquired.
+  - id: PROV-NKTSKI-007
+    rule: >-
+      A PDF emitted by a document-viewer or normalization proxy is a derivative transport object unless
+      byte identity with the official origin is independently proven. Its hash cannot satisfy
+      IMMUTABLE_PRIMARY even when its content and page count match the official document.
 
 retrieval_attempt_2026_08_16_run_71:
   index_visibility: CONFIRMED_ON_OFFICIAL_NKTSKI_SITE
@@ -100,8 +139,30 @@ retrieval_attempt_2026_08_16_run_71:
     - record retrieved_at, MIME type, byte length and SHA-256
     - bind field-level claims only after preserved-artifact extraction
 
+retrieval_attempt_2026_08_19_run_117:
+  official_index_and_registry_targets_resolved: true
+  exact_download_targets:
+    order_2:
+      - https://www.cert.gov.ru/upload/iblock/d05/zolkvvbc00ofpybc0tplhwdkcmlt7252/O-sovershenstvovanii-deyatelnosti-po-organizatsii-vzaimodeystviya-Natsionalnogo-koordinatsionnogo-tsentra-po-kompyuternym-intsidentam-s-subektami-kriticheskoy-informatsionnoy-infrastruktury_-tsentrami-GosSOPKA-i-organami-_org.pdf
+      - https://gossopka.ru/upload/iblock/995/y8i5wz6c2zdstnnbgxa317esmql8eak1/Prikaz-NKTSKI-N-2-ot-14_07_2026.pdf
+    attack_type_initial_data:
+      - https://www.cert.gov.ru/upload/iblock/333/q3w0bnth1cxtnhskh5xi9s0zmimqymoq/Iskhodnye-dannye-dlya-opredeleniya-tipa-kompyuternoy-ataki.pdf
+      - https://gossopka.ru/upload/iblock/6e8/14xffkb0nlecz44gpaz5ywq66fj5gk2x/2026_iskhodnye-dannye.pdf
+  direct_origin_fetch_result: HTTP_502_UPSTREAM_PROXY
+  derivative_render_result: CONTENT_AND_DOCUMENT_IDENTITY_CONFIRMED_BYTE_FIDELITY_UNPROVEN
+  exact_origin_bytes_retrieved_in_this_run: false
+  interpretation: >-
+    The href-resolution blocker is closed. The immutable-byte blocker is not: the available
+    document-viewer path demonstrably normalizes PDFs, so its byte stream is not promoted to an
+    official-origin artifact or used to close the High finding.
+  next_retry_strategy:
+    - fetch either official download URL through a byte-preserving transport
+    - retain response headers, MIME, byte length and retrieval timestamp
+    - hash the official-origin response before parsing
+    - compare the two official copies where both are available
+
 red_team_guardrail:
   verdict: FAIL_CLOSED
   statement: >-
-    Do not close HIGH-IMMUTABLE-PROVENANCE for NKTsKI 2026 until exact artifacts are stored or otherwise
-    pinned by exact bytes plus retrieval timestamp plus SHA-256.
+    Do not close HIGH-IMMUTABLE-PROVENANCE for NKTsKI 2026 until exact official-origin artifacts are
+    stored or otherwise pinned by byte-fidelity evidence, retrieval timestamp plus SHA-256.
