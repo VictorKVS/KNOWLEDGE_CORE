@@ -72,6 +72,10 @@ FATHER не ищет один «лучший алгоритм вообще». О
 
 Самоизменение без независимой проверки, журнала, canary и human approval запрещено.
 
+## Role Knowledge System
+
+Каждая роль FATHER получает управляемую проекцию общей доказательной памяти: знания, методы, tools, decision rights, tests, anti-patterns и verified experience. [Матрица ролей и слои зрелости L0–L5](docs/FATHER_ROLE_KNOWLEDGE_SYSTEM.md).
+
 ## Knowledge domains
 
 - [**Security Knowledge Base**](security-knowledge/README.md) — document-first regulatory knowledge graph: complete source/version history, structural chunks, definitions, atomic requirements, intra/inter-document links, applicability, controls, checks, evidence, audit, FSTEC/FSB solution registries, future security architecture and development roadmap.
