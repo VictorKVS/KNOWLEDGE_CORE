@@ -1,0 +1,240 @@
+schema_version: 1
+pack_id: RU_PD_TECHNICAL_SECURITY
+scope: Russian personal-data technical and cryptographic protection sources for ISPDn
+pipeline_stage: DISCOVERY_ACQUISITION_RECONCILIATION
+retrieved_at: "2026-08-19T20:06:01+03:00"
+verification_policy: >-
+  Prefer authoritative publication and regulator sources. Never synthesize MIME, byte length,
+  SHA-256, amendment state, applicability or legal force when the original bytes or authoritative
+  evidence were not obtained. Source registration is not atomization and does not prove applicability.
+
+sources:
+  - source_id: RU_GOV_PP_1119_2012
+    authority: Government_of_Russian_Federation
+    document_type: government_decree
+    number: "1119"
+    signed_date: 2012-11-01
+    title: "Об утверждении требований к защите персональных данных при их обработке в информационных системах персональных данных"
+    official_source:
+      provider: Government_of_Russian_Federation
+      url: "https://government.ru/docs/6339/"
+      page_status: CURRENT_EDITION_PAGE_IDENTIFIED
+    version_chain:
+      - event: BASE_ACT
+        date: 2012-11-01
+      - event: CURRENT_EDITION_PAGE_RECONCILED
+        date: 2026-08-19
+        note: "Government page exposes a current-edition download; exact artifact bytes remain pending in this worker."
+    applicability: CORE_ISPDN
+    verification_status: STATUS_VERIFIED
+    artifact:
+      status: PENDING_IMMUTABLE
+      mime: null
+      byte_length: null
+      sha256: null
+      reason: "Official artifact bytes were not obtained during this pass; no hash may be fabricated."
+    relations:
+      - to: Federal_Law_152_FZ_article_19
+        type: IMPLEMENTS_PROTECTION_REQUIREMENTS
+        status: VERIFIED_SCOPE
+      - to: RU_FSTEC_ORDER_21_2013
+        type: BASIS_FOR_TECHNICAL_MEASURES
+        status: VERIFIED_SCOPE
+      - to: RU_FSB_ORDER_378_2014
+        type: BASIS_FOR_CRYPTO_MEASURES_WHEN_SKZI_USED
+        status: VERIFIED_SCOPE
+
+  - source_id: RU_FSTEC_ORDER_21_2013
+    authority: FSTEK_Russia
+    document_type: order
+    number: "21"
+    signed_date: 2013-02-18
+    title: "Об утверждении Состава и содержания организационных и технических мер по обеспечению безопасности персональных данных при их обработке в информационных системах персональных данных"
+    justice_registration:
+      date: 2013-05-14
+      number: "28375"
+    version_chain:
+      - event: BASE_ACT
+        date: 2013-02-18
+      - source_id: RU_FSTEC_ORDER_49_2017
+        event: AMENDED_BY
+        signed_date: 2017-03-23
+        justice_registration:
+          date: 2017-04-25
+          number: "46487"
+        official_publication:
+          publication_number: "0001201704260010"
+          publication_date: 2017-04-26
+          url: "https://publication.pravo.gov.ru/Document/View/0001201704260010"
+      - source_id: RU_FSTEC_ORDER_68_2020
+        event: AMENDED_BY
+        signed_date: 2020-05-14
+        justice_registration:
+          date: 2020-07-08
+          number: "58877"
+        official_publication:
+          publication_number: "0001202007100002"
+          publication_date: 2020-07-10
+          url: "https://publication.pravo.gov.ru/Document/View/0001202007100002"
+    current_chain_status: "Current published amendment chain identified in this pass ends with Order 68 of 2020; later changes were not promoted without primary evidence."
+    applicability: ISPDN_TECHNICAL_MEASURES
+    verification_status: STATUS_VERIFIED
+    artifact:
+      status: PENDING_IMMUTABLE
+      mime: null
+      byte_length: null
+      sha256: null
+      reason: "Exact consolidated authoritative bytes were not obtained in this worker."
+    applicability_warning: "Do not use this order as the cryptographic-measures source; SKZI measures are routed to FSB sources when cryptography is actually used."
+
+  - source_id: RU_FSTEC_THREAT_METHOD_2021
+    authority: FSTEK_Russia
+    document_type: methodological_document
+    approved_date: 2021-02-05
+    title: "Методика оценки угроз безопасности информации"
+    official_source:
+      page_url: "https://fstec.ru/tekhnicheskaya-zashchita-informatsii/dokumenty/114-spetsialnye-normativnye-dokumenty/2170-metodicheskij-dokument-utverzhden-fstek-rossii-5-fevralya-2021-g"
+      file_url: "https://fstec.ru/component/attachments/download/2919"
+      page_status: PRIMARY_URL_IDENTIFIED
+    applicability: THREAT_ASSESSMENT_FOR_INFORMATION_SYSTEMS_INCLUDING_ISPDN_WHERE_APPLICABLE
+    verification_status: PRIMARY_URL_IDENTIFIED
+    artifact:
+      status: PENDING_IMMUTABLE
+      mime: null
+      byte_length: null
+      sha256: null
+      reason: "FSTEK official endpoint timed out/unresolved from this worker."
+    relations:
+      - to: RU_FSTEC_BDU_GENERAL
+        type: USES_THREAT_CATALOG
+        status: TEXT_EVIDENCE_IDENTIFIED_PRIMARY_BYTES_PENDING
+    version_notes:
+      - "The 2021 methodology replaces use of earlier FSTEK personal-data threat-assessment methodology in the covered assessment context; exact supersession locators require primary-byte capture before atomization."
+
+  - source_id: RU_FSB_ORDER_378_2014
+    authority: FSB_Russia
+    document_type: order
+    number: "378"
+    signed_date: 2014-07-10
+    title: "Об утверждении состава и содержания организационных и технических мер по обеспечению безопасности персональных данных при их обработке в информационных системах персональных данных с использованием средств криптографической защиты информации, необходимых для выполнения установленных Правительством Российской Федерации требований к защите персональных данных для каждого из уровней защищенности"
+    justice_registration:
+      date: 2014-08-18
+      number: "33620"
+    official_agency_reference:
+      provider: FSB_Russia
+      url: "https://www.fsb.ru/fsb/science/single.htm%21id%3D10437725%40fsbResearchart.html"
+      note: "FSB lists Order 378 among the regulatory-methodological documents operating in personal-data security."
+    publication_reference:
+      provider: Rossiyskaya_Gazeta
+      url: "https://rg.ru/documents/2014/09/17/zashita-dok.html"
+    applicability: CONDITIONAL_SKZI_IN_ISPDN
+    verification_status: STATUS_VERIFIED_SCOPE
+    artifact:
+      status: PENDING_IMMUTABLE
+      mime: null
+      byte_length: null
+      sha256: null
+      reason: "Exact official-publication artifact identifier/bytes were not resolved in this pass."
+    applicability_warning: "Never promote Order 378 to a universal PDn obligation: its scope is ISPDn processing with cryptographic protection means."
+
+  - source_id: RU_GOV_PP_313_2012
+    authority: Government_of_Russian_Federation
+    document_type: government_decree
+    number: "313"
+    signed_date: 2012-04-16
+    title: "Лицензирование деятельности в области шифровальных (криптографических) средств"
+    current_reference_status: CURRENT_GOVERNMENT_ACTS_REFERENCE_THIS_LICENSING_REGULATION
+    applicability: CONDITIONAL_CRYPTO_ACTIVITY_BASED
+    verification_status: DISCOVERED_CURRENT_REFERENCE
+    artifact:
+      status: PENDING_IMMUTABLE
+      mime: null
+      byte_length: null
+      sha256: null
+      reason: "Original authoritative artifact and complete current version chain still require acquisition."
+    applicability_warning: "Licensing applicability is activity-based; do not infer a licensing duty merely because an organization uses personal data or cryptography."
+
+  - source_id: RU_FSTEC_BDU_GENERAL
+    authority: FSTEK_Russia
+    document_type: live_threat_vulnerability_catalog
+    title: "Банк данных угроз безопасности информации ФСТЭК России"
+    official_source:
+      url: "https://bdu.fstec.ru/"
+    applicability: THREAT_ASSESSMENT_REFERENCE_WHEN_CALLED_BY_METHOD
+    verification_status: REGISTERED_LIVE_REFERENCE
+    artifact:
+      status: PENDING_SNAPSHOT
+      mime: null
+      byte_length: null
+      sha256: null
+      snapshot_policy: "Capture dated immutable snapshots/export metadata; do not pretend a live catalog has one permanent hash."
+
+related_sources_discovered_from_fsb_official_material:
+  - source_id: RU_FSB_ORDER_66_2005
+    title: "Положение ПКЗ-2005"
+    status: DISCOVERED_NOT_YET_ACQUIRED
+    applicability: CONDITIONAL_SKZI
+  - source_id: RU_FAPSI_ORDER_152_2001
+    title: "Инструкция об организации и обеспечении безопасности хранения, обработки и передачи с использованием СКЗИ информации ограниченного доступа, не содержащей государственную тайну"
+    status: DISCOVERED_NOT_YET_ACQUIRED
+    applicability: CONDITIONAL_SKZI
+  - source_id: RU_FSB_PD_THREAT_RECOMMENDATIONS_2015
+    reference: "149/7/2/6-432 от 31.03.2015"
+    status: DISCOVERED_NOT_YET_ACQUIRED
+    applicability: THREAT_MODELING_PD_CONTEXT
+
+deferred_or_not_promoted:
+  - family: GOSSOPKA_NKTSKI
+    status: NOT_PROMOTED_THIS_PASS
+    reason: "No direct PDn-incident applicability edge was proved in this pass; neighboring-regime requirements must not leak into PDn core."
+  - source: RU_FSTEC_BDU_ASU_TP
+    status: NOT_PROMOTED_TO_PDN_CORE
+    reason: "Industrial-control catalog is a separate overlay; use only when the organization/system profile proves applicability."
+
+relations:
+  - from: Federal_Law_152_FZ_article_19
+    to: RU_GOV_PP_1119_2012
+    type: IMPLEMENTED_BY
+  - from: RU_GOV_PP_1119_2012
+    to: RU_FSTEC_ORDER_21_2013
+    type: TECHNICAL_MEASURES_DETAILED_BY
+  - from: RU_GOV_PP_1119_2012
+    to: RU_FSB_ORDER_378_2014
+    type: CRYPTO_MEASURES_DETAILED_BY_WHEN_SKZI_USED
+  - from: RU_FSTEC_THREAT_METHOD_2021
+    to: RU_FSTEC_BDU_GENERAL
+    type: USES_THREAT_CATALOG
+
+conflict_checks:
+  - check_id: RU_PD_TECH_CONFLICT_001
+    type: SCOPE_CONFLICT_GUARD
+    objects: [RU_FSTEC_ORDER_21_2013, RU_FSB_ORDER_378_2014]
+    result: CONTEXT_SPLIT_REQUIRED
+    rule: "Technical measures and cryptographic measures must not be merged into one universal obligation set."
+  - check_id: RU_PD_TECH_CONFLICT_002
+    type: NEIGHBORING_REGIME_GUARD
+    objects: [GOSSOPKA_NKTSKI, RU_FSTEC_BDU_ASU_TP]
+    result: NOT_PROMOTED_WITHOUT_APPLICABILITY_EVIDENCE
+
+run_metrics:
+  sources_reconciled: 6
+  family_entries_reused_from_parent_inventory: 6
+  source_pack_entries_registered: 6
+  related_crypto_sources_discovered: 3
+  primary_amendment_events_verified: 2
+  immutable_artifacts_created: 0
+  pending_immutable_or_snapshot: 6
+  bytes_downloaded: 0
+  sha256_recorded: 0
+  applicability_guards_added: 2
+  neighboring_regimes_not_promoted: 2
+
+next_actions:
+  - acquire_exact_current_PP1119_artifact_and_hash
+  - acquire_base_and_consolidated_FSTEC21_artifacts_and_hash
+  - retry_FSTEK_2021_methodology_attachment_2919_and_hash
+  - resolve_and_acquire_exact_official_publication_artifact_for_FSB378
+  - acquire_and_version_PP313_only_as_conditional_crypto_licensing_source
+  - acquire_FSB66_FAPSI152_and_2015_PDn_threat_recommendations_from authoritative sources
+  - snapshot_general_FSTEK_BDU_with_retrieval_metadata
+  - after immutable acquisition_run_DOCUMENT_COMPILER_structure_chunks_terms_definitions_relations_conflicts
