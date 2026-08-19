@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0",
+  "model_id": "RU-FL152-ARTICLE15-MARKETING-AGITATION-RIGHTS-ATOMIC-V1",
+  "cases": [
+    {"id":"A15-T001","query":"scope","purpose":"MARKET_PROMOTION","direct_contact":true,"communication_means":true,"expected":"ARTICLE15_MARKETING_ROUTE"},
+    {"id":"A15-T002","query":"scope","purpose":"MARKET_PROMOTION","direct_contact":false,"communication_means":true,"expected":"ARTICLE15_MARKETING_LIMB_NOT_ESTABLISHED_CHECK_OTHER_LAW"},
+    {"id":"A15-T003","query":"scope","purpose":"MARKET_PROMOTION","direct_contact":true,"communication_means":false,"expected":"ARTICLE15_MARKETING_LIMB_NOT_ESTABLISHED_CHECK_OTHER_LAW"},
+    {"id":"A15-T004","query":"scope","purpose":"MARKET_PROMOTION","direct_contact":false,"communication_means":false,"expected":"ARTICLE15_MARKETING_LIMB_NOT_ESTABLISHED_CHECK_OTHER_LAW"},
+    {"id":"A15-T005","query":"scope","purpose":"POLITICAL_AGITATION","direct_contact":false,"communication_means":false,"expected":"ARTICLE15_POLITICAL_AGITATION_ROUTE"},
+    {"id":"A15-T006","query":"scope","purpose":"POLITICAL_AGITATION","direct_contact":true,"communication_means":true,"expected":"ARTICLE15_POLITICAL_AGITATION_ROUTE"},
+    {"id":"A15-T007","query":"scope","purpose":"SERVICE_DELIVERY","direct_contact":true,"communication_means":true,"expected":"OUTSIDE_ARTICLE15_CHECK_OTHER_BASIS"},
+    {"id":"A15-T008","query":"scope","purpose":"SECURITY_NOTICE","direct_contact":true,"communication_means":true,"expected":"OUTSIDE_ARTICLE15_CHECK_OTHER_BASIS"},
+
+    {"id":"A15-T009","query":"marketing_consent","operator_proves_consent":true,"obtained_before":true,"contract":false,"expected":"PASS_PRIOR_CONSENT"},
+    {"id":"A15-T010","query":"marketing_consent","operator_proves_consent":false,"obtained_before":false,"contract":false,"expected":"BLOCK_DEEMED_WITHOUT_PRIOR_CONSENT"},
+    {"id":"A15-T011","query":"marketing_consent","operator_proves_consent":true,"obtained_before":false,"contract":false,"expected":"BLOCK_CONSENT_NOT_PRIOR"},
+    {"id":"A15-T012","query":"marketing_consent","operator_proves_consent":false,"obtained_before":false,"contract":true,"expected":"BLOCK_CONTRACT_DOES_NOT_REPLACE_PRIOR_CONSENT"},
+    {"id":"A15-T013","query":"marketing_consent","operator_proves_consent":true,"obtained_before":true,"contract":true,"expected":"PASS_PRIOR_CONSENT"},
+    {"id":"A15-T014","query":"marketing_consent","operator_proves_consent":false,"obtained_before":true,"contract":false,"expected":"BLOCK_DEEMED_WITHOUT_PRIOR_CONSENT"},
+    {"id":"A15-T015","query":"marketing_consent","operator_proves_consent":true,"obtained_before":false,"contract":true,"expected":"BLOCK_CONSENT_NOT_PRIOR"},
+    {"id":"A15-T016","query":"consent_form","written":false,"otherwise_valid_and_provable":true,"expected":"DO_NOT_INVENT_UNIVERSAL_WRITTEN_FORM"},
+
+    {"id":"A15-T017","query":"agitation_consent","operator_proves_consent":true,"obtained_before":true,"direct_contact":false,"communication_means":false,"expected":"PASS_PRIOR_CONSENT"},
+    {"id":"A15-T018","query":"agitation_consent","operator_proves_consent":false,"obtained_before":false,"direct_contact":false,"communication_means":false,"expected":"BLOCK_DEEMED_WITHOUT_PRIOR_CONSENT"},
+    {"id":"A15-T019","query":"agitation_consent","operator_proves_consent":true,"obtained_before":false,"direct_contact":true,"communication_means":true,"expected":"BLOCK_CONSENT_NOT_PRIOR"},
+    {"id":"A15-T020","query":"agitation_consent","operator_proves_consent":true,"obtained_before":true,"direct_contact":true,"communication_means":false,"expected":"PASS_PRIOR_CONSENT"},
+    {"id":"A15-T021","query":"agitation_consent","operator_proves_consent":true,"obtained_before":true,"direct_contact":false,"communication_means":true,"expected":"PASS_PRIOR_CONSENT"},
+    {"id":"A15-T022","query":"agitation_consent","operator_proves_consent":false,"obtained_before":true,"direct_contact":true,"communication_means":true,"expected":"BLOCK_DEEMED_WITHOUT_PRIOR_CONSENT"},
+
+    {"id":"A15-T023","query":"proof_burden","operator_has_proof":true,"subject_disproves":false,"expected":"PASS_OPERATOR_PROOF_PRESENT"},
+    {"id":"A15-T024","query":"proof_burden","operator_has_proof":false,"subject_disproves":false,"expected":"DEEMED_WITHOUT_PRIOR_CONSENT"},
+    {"id":"A15-T025","query":"proof_burden","operator_has_proof":false,"subject_disproves":true,"expected":"DEEMED_WITHOUT_PRIOR_CONSENT"},
+    {"id":"A15-T026","query":"proof_burden","operator_has_proof":true,"subject_disproves":true,"expected":"ROUTE_TO_CONSENT_VALIDITY_REVIEW"},
+
+    {"id":"A15-T027","query":"cessation","demand_received":true,"article15_processing_stopped":true,"at_demand":true,"expected":"PASS_IMMEDIATE_CESSATION"},
+    {"id":"A15-T028","query":"cessation","demand_received":true,"article15_processing_stopped":false,"at_demand":false,"expected":"BLOCK_IMMEDIATE_CESSATION_REQUIRED"},
+    {"id":"A15-T029","query":"cessation","demand_received":true,"article15_processing_stopped":true,"at_demand":false,"expected":"BLOCK_CESSATION_NOT_IMMEDIATE"},
+    {"id":"A15-T030","query":"cessation","demand_received":false,"article15_processing_stopped":false,"at_demand":false,"expected":"NO_ARTICLE15_CESSATION_TRIGGER"},
+    {"id":"A15-T031","query":"cessation_scope","article15_processing_stopped":true,"unrelated_lawful_processing_continues":true,"expected":"PASS_SCOPED_CESSATION"},
+    {"id":"A15-T032","query":"cessation_scope","article15_processing_stopped":false,"unrelated_lawful_processing_continues":true,"expected":"BLOCK_ARTICLE15_PROCESSING_MUST_STOP"},
+    {"id":"A15-T033","query":"cessation_scope","article15_processing_stopped":true,"unrelated_lawful_processing_continues":false,"expected":"DO_NOT_REQUIRE_UNRELATED_CESSATION_WITHOUT_SEPARATE_TRIGGER"},
+    {"id":"A15-T034","query":"destruction_deadline","expected":"NOT_STATED_DO_NOT_INVENT"},
+
+    {"id":"A15-T035","query":"immediate_semantics","expected":"EVENT_AT_DEMAND_NOT_NUMERIC_DAYS"},
+    {"id":"A15-T036","query":"cross_law_boundary","expected":"ARTICLE15_DOES_NOT_REPLACE_OTHER_APPLICABLE_LAWS"}
+  ]
+}

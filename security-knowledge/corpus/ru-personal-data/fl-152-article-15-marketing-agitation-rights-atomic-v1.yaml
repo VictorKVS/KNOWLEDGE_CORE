@@ -1,0 +1,162 @@
+schema_version: "1.0"
+id: RU-FL152-ARTICLE15-MARKETING-AGITATION-RIGHTS-ATOMIC-V1
+title: Federal Law No. 152-FZ Article 15 direct-marketing and political-agitation subject rights
+scope: >-
+  Current Article 15 prior-consent, operator-proof and immediate-cessation duties for
+  personal-data processing used for direct market promotion through communications and
+  for political agitation. Advertising, election and general consent regimes remain
+  separate dependencies and are not silently absorbed into this model.
+
+source:
+  authority: Federal Legislature of the Russian Federation
+  law_number: "152-FZ"
+  signed_date: "2006-07-27"
+  current_edition_checked: "2026-07-26"
+  current_text: https://www.consultant.ru/document/cons_doc_LAW_61801/5656527e0713bf229a6932ac7084dec50d0ebe1f/
+  official_integrated_bank_reference:
+    snapshot_date: "2025-09-01"
+    url: https://ips.pravo.gov.ru/api/ips/legislation/document?baseid=None&hash=98490812b3409e2a8d78a11ca9010f434ea3d9250a11dbbdb78690cd5551bdd6
+  dependencies:
+    - FL152_ARTICLE9_GENERAL_CONSENT
+    - FEDERAL_LAW_38_FZ_ADVERTISING
+    - ELECTION_AND_REFERENDUM_LEGISLATION_WHERE_APPLICABLE
+
+verification_boundary:
+  current_article_text: VERIFIED_AUTHORITATIVE_SECONDARY_CURRENT_TEXT
+  current_law_edition: VERIFIED_2026_07_26_CONSOLIDATED_HEADER
+  official_integrated_bank_snapshot: VERIFIED_2025_09_01_REFERENCE
+  immutable_current_consolidated_bytes: PENDING
+  independent_expert_review: PENDING
+  checked_at: "2026-08-19"
+
+atomic_rules:
+  - id: FL152-A15-R001
+    locator: article_15.part_1.marketing_limb
+    class: DIRECT_MARKETING_SCOPE
+    rule: >-
+      Apply the Article 15 marketing limb when personal data are processed to promote
+      goods, works or services through direct contacts with a potential consumer using
+      means of communication.
+  - id: FL152-A15-R002
+    locator: article_15.part_1.marketing_limb
+    class: MARKETING_PRIOR_CONSENT
+    rule: >-
+      Permit processing in the direct-marketing route only after prior consent of the
+      personal-data subject has been obtained.
+  - id: FL152-A15-R003
+    locator: article_15.part_1.agitation_limb
+    class: POLITICAL_AGITATION_SCOPE
+    rule: >-
+      Treat processing for political agitation as an independent Article 15 route; the
+      direct-contact-by-communications qualifiers belong to the marketing limb.
+  - id: FL152-A15-R004
+    locator: article_15.part_1.agitation_limb
+    class: AGITATION_PRIOR_CONSENT
+    rule: >-
+      Permit processing for political agitation only after prior consent of the subject
+      has been obtained.
+  - id: FL152-A15-R005
+    locator: article_15.part_1.sentence_2
+    class: OPERATOR_PROOF_BURDEN
+    rule: >-
+      Require the operator to prove that prior consent was obtained; absent that proof,
+      treat the processing as performed without prior consent.
+  - id: FL152-A15-R006
+    locator: article_15.part_2
+    class: IMMEDIATE_CESSATION_ON_DEMAND
+    rule: >-
+      Immediately cease the Article 15 part 1 processing when the subject demands
+      cessation.
+  - id: FL152-A15-R007
+    locator: article_15.part_2.scope
+    class: CESSATION_SCOPE
+    rule: >-
+      Scope the immediate cessation duty to processing specified in part 1; do not infer
+      automatic cessation or destruction of unrelated processing supported by another
+      lawful purpose and basis.
+
+numeric_deadlines: []
+
+event_deadlines_without_numeric_value:
+  - id: FL152-A15-E001
+    locator: article_15.part_2
+    trigger: SUBJECT_CESSATION_DEMAND_RECEIVED
+    action: CEASE_ARTICLE15_PART1_PROCESSING
+    event_semantics: IMMEDIATELY_AT_TRIGGER
+
+temporal_model:
+  - {event: FEDERAL_LAW_SIGNED, date: "2006-07-27"}
+  - {event: OFFICIAL_INTEGRATED_BANK_SNAPSHOT_REFERENCED, date: "2025-09-01"}
+  - {event: CURRENT_CONSOLIDATED_EDITION_CHECKED, date: "2026-07-26"}
+
+evidence_model:
+  - {id: EVIDENCE_A15_PROCESSING_PURPOSE_CLASSIFICATION, proves: [FL152-A15-R001, FL152-A15-R003]}
+  - {id: EVIDENCE_A15_DIRECT_CONTACT_AND_COMMUNICATION_CHANNEL, proves: [FL152-A15-R001]}
+  - {id: EVIDENCE_A15_MARKETING_PRIOR_CONSENT, proves: [FL152-A15-R002, FL152-A15-R005]}
+  - {id: EVIDENCE_A15_POLITICAL_AGITATION_PRIOR_CONSENT, proves: [FL152-A15-R004, FL152-A15-R005]}
+  - {id: EVIDENCE_A15_CONSENT_TIMESTAMP, proves: [FL152-A15-R002, FL152-A15-R004]}
+  - {id: EVIDENCE_A15_CONSENT_SCOPE_AND_SUBJECT_BINDING, proves: [FL152-A15-R002, FL152-A15-R004, FL152-A15-R005]}
+  - {id: EVIDENCE_A15_SUBJECT_CESSATION_DEMAND_INTAKE, proves: [FL152-A15-R006]}
+  - {id: EVIDENCE_A15_IMMEDIATE_CESSATION_LOG, proves: [FL152-A15-R006]}
+  - {id: EVIDENCE_A15_REMAINING_PROCESSING_PURPOSE_AND_BASIS, proves: [FL152-A15-R007]}
+
+conflict_and_definition_checks:
+  - id: FL152-A15-C001
+    type: MARKETING_LIMB_QUALIFIERS
+    resolution: >-
+      Promotion of goods, works or services enters this limb only where direct contacts
+      with a potential consumer use means of communication; other marketing may remain
+      regulated elsewhere.
+  - id: FL152-A15-C002
+    type: POLITICAL_AGITATION_INDEPENDENT_LIMB
+    resolution: >-
+      Do not require the marketing limb's direct-contact or communications qualifiers to
+      establish the separately stated political-agitation route.
+  - id: FL152-A15-C003
+    type: PRIOR_NOT_RETROSPECTIVE
+    resolution: "Consent obtained after processing starts does not satisfy the word prior."
+  - id: FL152-A15-C004
+    type: OPERATOR_BURDEN
+    resolution: >-
+      The subject does not bear the burden of disproving consent; inability of the
+      operator to prove prior consent triggers the statutory no-consent presumption.
+  - id: FL152-A15-C005
+    type: CONSENT_FORM_NOT_INVENTED
+    resolution: >-
+      Article 15 does not itself state a universal written-form requirement; consent form
+      and validity are resolved through Article 9 and any applicable special law.
+  - id: FL152-A15-C006
+    type: CONTRACT_NOT_SUBSTITUTE
+    resolution: >-
+      A customer relationship or contract is not encoded as a substitute for the express
+      Article 15 prior-consent condition.
+  - id: FL152-A15-C007
+    type: IMMEDIATE_IS_EVENT_NOT_NUMBER
+    resolution: >-
+      Immediately is protected as an event deadline at demand receipt; no zero-day,
+      twenty-four-hour or other numeric period is invented.
+  - id: FL152-A15-C008
+    type: CESSATION_NOT_DESTRUCTION
+    resolution: >-
+      Part 2 requires cessation of specified processing; it does not itself state a data-
+      destruction deadline.
+  - id: FL152-A15-C009
+    type: SCOPED_CESSATION
+    resolution: >-
+      The demand stops part 1 processing and does not automatically invalidate unrelated
+      processing with a separately established purpose and legal basis.
+  - id: FL152-A15-C010
+    type: ADVERTISING_AND_ELECTION_LAW_SEPARATION
+    resolution: >-
+      Article 15 compliance does not replace independent advertising, communications,
+      election or referendum requirements and prohibitions.
+
+red_team:
+  critical_gap_created: false
+  high_gap_created: false
+  status: PASS_MODEL_FAIL_GLOBAL_SCOPE_INCOMPLETE
+  residuals:
+    - MEDIUM_ARTICLES16_TO17_SUBJECT_RIGHTS_PENDING
+    - MEDIUM_ARTICLE9_GENERAL_CONSENT_CROSSWALK_PENDING
+    - MEDIUM_IMMUTABLE_CURRENT_CONSOLIDATED_BYTES_PENDING
+    - MEDIUM_INDEPENDENT_EXPERT_REVIEW_PENDING
