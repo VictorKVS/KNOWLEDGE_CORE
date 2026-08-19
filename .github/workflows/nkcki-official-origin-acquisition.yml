@@ -40,8 +40,10 @@ jobs:
           mkdir -p "$ca_dir"
           root_raw="$ca_dir/russian_trusted_root_ca_download.crt"
           sub_raw="$ca_dir/russian_trusted_sub_ca_download.crt"
+          globalsign_raw="$ca_dir/gsgccr6alphasslca2025.crt"
           root_ca="$ca_dir/russian_trusted_root_ca.pem"
           sub_ca="$ca_dir/russian_trusted_sub_ca.pem"
+          globalsign_ca="$ca_dir/gsgccr6alphasslca2025.pem"
 
           # These are the certificate files linked from the Gosuslugi trust
           # instructions.  The gu-st.ru transfer itself must validate against
@@ -56,11 +58,21 @@ jobs:
             --connect-timeout 20 --max-time 90 \
             --output "$sub_raw" \
             https://gu-st.ru/content/lending/russian_trusted_sub_ca_pem.crt
+          # Both NKTsKI hosts currently advertise this issuer in the leaf AIA
+          # but omit it from the TLS handshake. Fetch the same GlobalSign
+          # intermediate over validated HTTPS, then verify it below.
+          curl --fail --location --silent --show-error \
+            --proto '=https' --tlsv1.2 \
+            --connect-timeout 20 --max-time 90 \
+            --output "$globalsign_raw" \
+            https://secure.globalsign.com/cacert/gsgccr6alphasslca2025.crt
 
           # Canonical PEM output prevents CRLF/concatenation differences in the
           # downloaded files from becoming a curl CAfile parsing failure.
           openssl x509 -in "$root_raw" -out "$root_ca" -outform PEM
           openssl x509 -in "$sub_raw" -out "$sub_ca" -outform PEM
+          openssl x509 -inform DER -in "$globalsign_raw" \
+            -out "$globalsign_ca" -outform PEM
 
           root_subject="$(openssl x509 -in "$root_ca" -noout -subject -nameopt RFC2253)"
           root_issuer="$(openssl x509 -in "$root_ca" -noout -issuer -nameopt RFC2253)"
@@ -73,13 +85,17 @@ jobs:
           [[ "$sub_issuer" == *"CN=Russian Trusted Root CA"* ]]
           openssl x509 -in "$root_ca" -noout -checkend 86400
           openssl x509 -in "$sub_ca" -noout -checkend 86400
+          openssl x509 -in "$globalsign_ca" -noout -checkend 86400
           openssl verify -CAfile "$root_ca" "$sub_ca"
+          openssl verify \
+            -CAfile /etc/ssl/certs/ca-certificates.crt "$globalsign_ca"
 
           bundle="$ca_dir/ca-bundle.pem"
-          cat "$root_ca" "$sub_ca" > "$bundle"
+          cat /etc/ssl/certs/ca-certificates.crt \
+            "$globalsign_ca" "$root_ca" "$sub_ca" > "$bundle"
           # Parse every certificate in the bundle and verify the subordinate
           # certificate using the exact CAfile that curl will consume.
-          [[ "$(grep -c 'BEGIN CERTIFICATE' "$bundle")" -eq 2 ]]
+          [[ "$(grep -c 'BEGIN CERTIFICATE' "$bundle")" -gt 3 ]]
           openssl crl2pkcs7 -nocrl -certfile "$bundle" \
             | openssl pkcs7 -print_certs -noout >/dev/null
           openssl verify -CAfile "$bundle" "$sub_ca"
@@ -87,10 +103,12 @@ jobs:
             echo "NKCKI_CA_BUNDLE=$bundle"
             echo "NKCKI_ROOT_CA_SHA256=$(sha256sum "$root_ca" | awk '{print $1}')"
             echo "NKCKI_SUB_CA_SHA256=$(sha256sum "$sub_ca" | awk '{print $1}')"
+            echo "NKCKI_GLOBALSIGN_CA_SHA256=$(sha256sum "$globalsign_ca" | awk '{print $1}')"
           } >> "$GITHUB_ENV"
 
           openssl x509 -in "$root_ca" -noout -subject -issuer -dates -fingerprint -sha256
           openssl x509 -in "$sub_ca" -noout -subject -issuer -dates -fingerprint -sha256
+          openssl x509 -in "$globalsign_ca" -noout -subject -issuer -dates -fingerprint -sha256
 
       - name: Inspect current official TLS certificate chains
         shell: bash
@@ -169,7 +187,8 @@ jobs:
                     --arg response_headers_sha256 "$headers_sha" \
                     --arg tls_root_ca_sha256 "$NKCKI_ROOT_CA_SHA256" \
                     --arg tls_sub_ca_sha256 "$NKCKI_SUB_CA_SHA256" \
-                    '{logical_id:$logical_id, requested_url:$requested_url, effective_url:$effective_url, content_type:$content_type, bytes:$bytes, pages:$pages, sha256:$sha256, response_headers_sha256:$response_headers_sha256, transport:"DIRECT_GITHUB_ACTIONS_CURL_OFFICIAL_ORIGIN", tls:{verification:"OPENSSL_CA_CHAIN_AND_HOSTNAME", root_ca_source:"https://gu-st.ru/content/lending/russian_trusted_root_ca_pem.crt", root_ca_sha256:$tls_root_ca_sha256, sub_ca_source:"https://gu-st.ru/content/lending/russian_trusted_sub_ca_pem.crt", sub_ca_sha256:$tls_sub_ca_sha256}, validation:["TLS_CA_CHAIN","TLS_HOSTNAME","PDF_MAGIC","PDFINFO","NONTRIVIAL_SIZE"]}' > "${output}.record.json"
+                    --arg tls_globalsign_ca_sha256 "$NKCKI_GLOBALSIGN_CA_SHA256" \
+                    '{logical_id:$logical_id, requested_url:$requested_url, effective_url:$effective_url, content_type:$content_type, bytes:$bytes, pages:$pages, sha256:$sha256, response_headers_sha256:$response_headers_sha256, transport:"DIRECT_GITHUB_ACTIONS_CURL_OFFICIAL_ORIGIN", tls:{verification:"OPENSSL_CA_CHAIN_AND_HOSTNAME", observed_leaf_issuer:"GlobalSign GCC R6 AlphaSSL CA 2025", aia_intermediate_source:"https://secure.globalsign.com/cacert/gsgccr6alphasslca2025.crt", aia_intermediate_sha256:$tls_globalsign_ca_sha256, supplemental_national_root_ca_source:"https://gu-st.ru/content/lending/russian_trusted_root_ca_pem.crt", supplemental_national_root_ca_sha256:$tls_root_ca_sha256, supplemental_national_sub_ca_source:"https://gu-st.ru/content/lending/russian_trusted_sub_ca_pem.crt", supplemental_national_sub_ca_sha256:$tls_sub_ca_sha256}, validation:["TLS_CA_CHAIN","TLS_HOSTNAME","PDF_MAGIC","PDFINFO","NONTRIVIAL_SIZE"]}' > "${output}.record.json"
                   rm -f "$headers" "$meta"
                   return 0
                 fi
