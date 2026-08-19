@@ -1,0 +1,62 @@
+schema_version: "1.0"
+kind: sector-acquisition-run-telemetry
+stream: 3
+started_at: "2026-08-19T20:18:48+03:00"
+recorded_at: "2026-08-19T20:26:02+03:00"
+elapsed_seconds_at_record: 434
+scope: [education_children, transport, public_sector, insurance]
+results:
+  sources_reconciled: 4
+  new_source_nodes_registered: 4
+  reused_source_nodes: 0
+  primary_publication_pages_verified: 1
+  exact_binary_acquisition_attempts: 1
+  exact_binary_acquisition_successes: 0
+  immutable_artifacts_created: 0
+  sha256_recorded: 0
+  exact_byte_lengths_recorded: 0
+  source_artifact_pending: 4
+  explicit_or_direct_legal_overlap_candidates: 2
+  semantic_or_restricted_information_discovery_edges: 2
+sources:
+  - id: SEC-SRC-RU-FZ-273-2012
+    discovery: PASS
+    primary_publication_identity: PASS
+    primary_publication_number: "0001201212300007"
+    portal_pdf_display_size: "20017 KB"
+    portal_page_count: 404
+    acquisition: FAIL
+    immutable: FAIL
+    analysis: DISCOVERY_ANCHOR_REGISTERED
+    note: "Exact PDF bytes unavailable in acquisition runtime; portal display metadata is not used as byte length or hash."
+  - id: SEC-SRC-RU-FZ-16-2007
+    discovery: PASS
+    acquisition: PENDING
+    immutable: PENDING
+    analysis: EXPLICIT_152FZ_CROSS_REFERENCE_CANDIDATE
+    anchors: [article_11_part_2, article_11_part_4, article_11_part_7]
+  - id: SEC-SRC-RU-FZ-79-2004
+    discovery: PASS
+    acquisition: PENDING
+    immutable: PENDING
+    analysis: DIRECT_PERSONAL_DATA_REGIME_OVERLAP_CANDIDATE
+    anchors: [article_42]
+  - id: SEC-SRC-RU-GK2-1996-A946
+    discovery: PASS
+    acquisition: PENDING
+    immutable: PENDING
+    analysis: SEMANTIC_OVERLAP_ONLY
+    anchors: [article_946]
+quality:
+  false_promotion_prevented: true
+  source_pending_blocked_from_executable_rules: true
+  semantic_overlap_not_treated_as_applicability: true
+  primary_artifact_gate_enforced: true
+bottlenecks:
+  - exact_official_binary_retrieval
+  - primary_version_chain_reconciliation_for_legacy_acts
+next:
+  - retry exact official binary acquisition using a retrievable official binary endpoint
+  - obtain authoritative consolidated/current artifacts for 16-ФЗ and 79-ФЗ
+  - obtain authoritative current GK Part II Article 946 artifact
+  - once immutable, run structure -> legal chunks -> concepts/definitions -> requirements -> typed relations -> conflict check
