@@ -1,0 +1,40 @@
+{
+  "audit_run_id": "KII-SECTOR-OVERLAY-FAMILY-RED-TEAM-2026-08-19-V1",
+  "status": "PASSED_FOR_DECLARED_OFFICIAL_PUBLICATION_SCOPE",
+  "as_of": "2026-08-19",
+  "reviewed_commit": "d12286f5fc48a4f6fe6343c0e58478d23ca93920",
+  "declared_scope": "Government resolutions officially published from 2026-01-01 through 2026-08-19 whose titles approve sector-specific CII categorization features, plus explicit dependency edges among those resolutions.",
+  "findings": [
+    {
+      "id": "HIGH-SECTOR-PP303-CORRUPT-ARTIFACT",
+      "severity": "HIGH",
+      "state": "FIXED_IN_RUN_116",
+      "evidence": {
+        "previous_git_blob_sha": "22571d0d96d2517eecddd747cfc379a7d439236e",
+        "previous_byte_length": 786444,
+        "previous_sha256": "fe8a967507c783328c19edd6517d0afc22f36906ce3556434d138e5d27cad320",
+        "manifest_expected_byte_length": 1351967,
+        "manifest_expected_sha256": "e93e8a0cba5bc7817c53b2f6a233ed2283e1cf9e1ee2a01e30281a4dced91079",
+        "parser_result": "INVALID_XREF_OR_TRAILER"
+      },
+      "remediation": "Re-fetched exact official PDF bytes, replaced the repository artifact and bound the new Git blob SHA to the existing official hash, byte length and six-page identity."
+    }
+  ],
+  "tests": [
+    {"id":"RT-CATALOG-01","result":"PASS","assertion":"Three independent official title queries yield the same seven publication numbers; preserved response bytes are hash-pinned."},
+    {"id":"RT-ARTIFACT-02","result":"PASS","assertion":"All seven PDFs match recorded SHA-256, byte length, page-object count and PDF magic after PP 303 repair."},
+    {"id":"RT-METADATA-03","result":"PASS","assertion":"Every family member points to a matching primary manifest and clause matrix; publication identities are unique."},
+    {"id":"RT-TEMPORAL-04","result":"PASS","assertion":"PP 402 remains adopted but not in force before 2026-09-01 and has an exclusive 2032-09-01 end boundary."},
+    {"id":"RT-DEPENDENCY-05","result":"PASS","assertion":"Transport is not silently resolved: no official publication match was found, adoption remains NOT_PROVEN and project formulas are forbidden operational inputs."},
+    {"id":"RT-MUTATION-06","result":"PASS","assertion":"The validator rejects byte tampering, missing family members, catalogue/member divergence, invented transport adoption and PP 402 lifecycle drift."}
+  ],
+  "findings_by_severity_after_remediation": {"critical":0,"high":0,"medium":0,"low":0},
+  "scope_decision": "PASSED",
+  "global_decision": {
+    "status": "FAILED",
+    "critical_gaps": 0,
+    "high_gaps": 1,
+    "high_gap_ids": ["HIGH-IMMUTABLE-PROVENANCE"],
+    "reason": "The sector-overlay publication family now passes its bounded gate, but exact immutable NKTsKI 2026 artifacts remain unresolved in the master source scope. A sub-scope PASS cannot close the global High gap."
+  }
+}

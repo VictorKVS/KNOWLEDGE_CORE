@@ -1,0 +1,37 @@
+name: KII sector overlay family red-team 2026
+
+on:
+  push:
+    paths:
+      - 'security-knowledge/classification/kii-sector-overlay-family-scope-2026-v1.json'
+      - 'security-knowledge/classification/transport-kii-sector-overlay-status-2026-08-19-v1.json'
+      - 'security-knowledge/classification/pp-rf-*-2026-*-kii-overlay-v1.*'
+      - 'security-knowledge/evidence/official-catalog-kii-sector-overlay-replay-2026-08-19.json'
+      - 'security-knowledge/evidence/official-catalog-replays/2026/**'
+      - 'security-knowledge/evidence/primary-artifact-pp-rf-*-2026.*'
+      - 'security-knowledge/evidence/primary-artifacts/2026/pp-rf-*-2026-*.pdf'
+      - 'security-knowledge/audits/kii-sector-overlay-family-red-team-2026-08-19-v1.json'
+      - 'security-knowledge/validators/validate_kii_sector_overlay_family_red_team_2026.py'
+      - '.github/workflows/kii-sector-overlay-family-red-team-2026.yml'
+  pull_request:
+    paths:
+      - 'security-knowledge/classification/kii-sector-overlay-family-scope-2026-v1.json'
+      - 'security-knowledge/classification/transport-kii-sector-overlay-status-2026-08-19-v1.json'
+      - 'security-knowledge/classification/pp-rf-*-2026-*-kii-overlay-v1.*'
+      - 'security-knowledge/evidence/official-catalog-kii-sector-overlay-replay-2026-08-19.json'
+      - 'security-knowledge/evidence/official-catalog-replays/2026/**'
+      - 'security-knowledge/evidence/primary-artifact-pp-rf-*-2026.*'
+      - 'security-knowledge/evidence/primary-artifacts/2026/pp-rf-*-2026-*.pdf'
+      - 'security-knowledge/audits/kii-sector-overlay-family-red-team-2026-08-19-v1.json'
+      - 'security-knowledge/validators/validate_kii_sector_overlay_family_red_team_2026.py'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Run seven-member catalogue, immutable provenance and dependency red-team
+        run: python security-knowledge/validators/validate_kii_sector_overlay_family_red_team_2026.py

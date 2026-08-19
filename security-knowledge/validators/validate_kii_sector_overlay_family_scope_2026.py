@@ -121,7 +121,7 @@ def main() -> int:
     family = json.loads(FAMILY_PATH.read_text(encoding="utf-8"))
     fixture = json.loads(FIXTURE_PATH.read_text(encoding="utf-8"))
     check(family.get("record_id") == fixture.get("family_matrix_id"), "family fixture mismatch")
-    check(family.get("family_definition", {}).get("exhaustiveness_state") == "PENDING_FAMILY_WIDE_RED_TEAM", "family prematurely declared exhaustive")
+    check(family.get("family_definition", {}).get("exhaustiveness_state") == "VERIFIED_OFFICIAL_PUBLICATION_SET_AS_OF_DATE", "family official-publication scope drift")
     members = family.get("members", [])
     member_ids = [member.get("act_id") for member in members]
     publications = [member.get("publication_number") for member in members]
@@ -132,7 +132,7 @@ def main() -> int:
     check(states.get("PP_RF_402_2026") == "ADOPTED_NOT_IN_FORCE", "family loses PP 402 temporal state")
     check(states.get("PP_RF_796_2026") == "IN_FORCE", "family loses PP 796 temporal state")
     pending_transport = [edge for edge in family.get("dependency_edges", []) if edge.get("to", "").startswith("TRANSPORT_")]
-    check(len(pending_transport) == 1 and pending_transport[0].get("status") == "PENDING_EXTERNAL_DEPENDENCY_SCOPE", "transport dependency silently resolved or lost")
+    check(len(pending_transport) == 1 and pending_transport[0].get("status") == "PENDING_EXTERNAL_DEPENDENCY_NOT_OFFICIALLY_PUBLISHED", "transport dependency silently resolved or lost")
     decisions = {row.get("candidate"): row.get("decision") for row in family.get("candidate_reconciliation", [])}
     check(decisions == {"PP_RF_402_2026": "INCLUDE", "PP_RF_796_2026": "INCLUDE"}, "candidate reconciliation drift")
 
@@ -140,7 +140,7 @@ def main() -> int:
         for failure in failures:
             print(f"FAIL {failure}")
         return 1
-    print("PASS KII overlay family: PP 402 and PP 796 immutable sources, 61 mapped rules, identified 7-member scope and unresolved transport dependency")
+    print("PASS KII overlay family: PP 402 and PP 796 immutable sources, 61 mapped rules, verified 7-member official-publication scope and fail-closed transport dependency")
     return 0
 
 
