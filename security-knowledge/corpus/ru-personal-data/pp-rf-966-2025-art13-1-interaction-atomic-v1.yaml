@@ -1,0 +1,202 @@
+schema_version: "1.0"
+id: RU-PP-966-2025-ART13-1-INTERACTION-ATOMIC-V1
+title: Clause-level operator and Ministry interaction rules under Government Decree No. 966 of 26 June 2025
+scope: >-
+  Interaction between the Ministry of Digital Development and an operator, and between
+  their information systems, after an individualized requirement under Federal Law
+  No. 152-FZ article 13.1. This model does not create a general anonymization duty.
+
+source:
+  authority: Government_of_the_Russian_Federation
+  document_number: "966"
+  signed_date: "2025-06-26"
+  official_publication:
+    publication_number: "0001202506260044"
+    publication_date: "2025-06-26"
+    page_count: 6
+    url: https://publication.pravo.gov.ru/document/0001202506260044
+  current_text_interfaces:
+    consultant: https://www.consultant.ru/document/cons_doc_LAW_508712/c7785aa1d42afcc0d7ce8e7286b119361e0a344b/
+    kontur: https://normativ.kontur.ru/document/1/500293-postanovlenie-pravitelstva-rf-ot-26-06-2025-n-966
+  full_text_cross_check:
+    provider: RU_LAWS
+    url: https://rulaws.ru/goverment/Postanovlenie-Pravitelstva-RF-ot-26.06.2025-N-966/
+  effective_from:
+    date: "2025-09-01"
+    basis: DECREE_CLAUSE_2_EXPLICIT
+  legal_basis: FEDERAL_LAW_152_FZ_ARTICLE_13_1
+
+verification_boundary:
+  identity_publication_date_and_page_count: VERIFIED_PRIMARY
+  clause_text: CROSS_CHECKED_CURRENT_TEXT_INTERFACES_AND_FULL_TEXT_RENDERING
+  immutable_official_pdf_bytes: PENDING
+  status_search_as_of: "2026-08-19"
+  amendment_or_repeal_located: false
+  status_caution: >-
+    Current text interfaces identify the original 2025-06-26 edition as effective. A
+    bounded search did not locate a later amendment or repeal, but this is not proof that
+    no such act exists; lifecycle monitoring remains required.
+
+applicability:
+  trigger: INDIVIDUALIZED_REQUIREMENT_UNDER_152FZ_ARTICLE_13_1
+  excluded_data:
+    - ANONYMIZED_DATA_OF_FOREIGN_CITIZENS_OR_STATELESS_PERSONS_COLLECTED_OUTSIDE_RUSSIA
+  fail_closed_rule: >-
+    Do not apply the transmission workflow merely because an operator processes or
+    anonymizes personal data; receipt of the article 13.1 requirement must be established.
+
+interaction_rules:
+  - id: PP966-RULE-1
+    locator: rules.clause_1
+    rule: Define Ministry-operator interaction and information-system interaction for the article 13.1 route.
+  - id: PP966-RULE-2A
+    locator: rules.clause_2.paragraphs_1_2
+    actor: Ministry_and_operator
+    rule: >-
+      Use the operator cabinet in the Ministry system, the Gosuslugi cabinet when technically
+      available, postal communication, or direct removable-media delivery where applicable;
+      system interaction uses direct connection or SMEV, including the unified data-access service.
+  - id: PP966-RULE-2B
+    locator: rules.clause_2.paragraph_3
+    actor: Ministry_of_Digital_Development
+    condition: SMEV_INTERACTION
+    rule: Provide typical reusable software free of charge and assist the operator with configuration and adaptation.
+  - id: PP966-RULE-2C
+    locator: rules.clause_2.paragraph_4
+    actor: Operator
+    condition: CABINET_INTERACTION
+    rule: >-
+      Use FSB-certified cryptographic protection in accordance with applicable Russian
+      national-standard rules and principles for cryptographic protection.
+  - id: PP966-RULE-2D
+    locator: rules.clause_2.paragraphs_5_6
+    actors: [Ministry_of_Digital_Development, Operator]
+    rule: >-
+      The Ministry sends the article 13.1 requirement within the stated scope; after receipt,
+      the operator connects using suitable FSB-certified cryptographic protection or interacts through SMEV.
+  - id: PP966-RULE-2E
+    locator: rules.clause_2.paragraph_7
+    actors: [Ministry_of_Digital_Development, Operator]
+    rule: >-
+      Protect information in interacting systems and channels against unlawful destruction,
+      blocking, modification or copying through organizational and technical measures and
+      operational control under applicable FSB and FSTEC requirements.
+  - id: PP966-RULE-3A
+    locator: rules.clause_3.paragraphs_1_3
+    actors: [Ministry_of_Digital_Development, Operator]
+    rule: >-
+      The operator reviews the requirement within the period stated in it. The Ministry sets
+      that period considering requested volume and the applicable case under Decree No. 538,
+      subject to the minimum periods modeled below.
+  - id: PP966-RULE-3B
+    locator: rules.clause_3.paragraphs_4_5
+    actor: Ministry_of_Digital_Development
+    rule: Limit the frequency of requirements according to the Decree No. 538 case group.
+  - id: PP966-RULE-4
+    locator: rules.clause_4.subclauses_a_b
+    actor: Operator
+    rule: >-
+      Sign the anonymized data with an enhanced qualified electronic signature and provide
+      them through the operator cabinet or SMEV; if neither connection route is technically
+      available, deliver them directly on removable media with organizational and technical protection.
+  - id: PP966-RULE-5
+    locator: rules.clause_5
+    actor: Operator
+    rule: >-
+      If all requested data are absent, send a reasoned refusal; if only part is absent, refuse
+      that part and provide the available remainder under clause 4. Use a signed paper document
+      by post or an enhanced-qualified-signature electronic document through the permitted cabinet route.
+  - id: PP966-RULE-6
+    locator: rules.clause_6
+    actor: Ministry_of_Digital_Development
+    rule: >-
+      On finding unreliable or incomplete data or noncompliance with Government requirements,
+      methods or procedure, send a repeat requirement identifying the discrepancies.
+  - id: PP966-RULE-7
+    locator: rules.clause_7
+    actor: Operator
+    rule: Provide corrected or supplemented data after a repeat requirement using the clause 4 procedure.
+
+deadlines:
+  - id: REQUIREMENT_REVIEW_MINIMUM_NO_GIS_ACCESS_AND_NO_SMEV
+    value: 30
+    unit: WORKING_DAYS
+    actor: Operator
+    semantics: MINIMUM_PERIOD_TO_BE_SET_IN_INDIVIDUAL_REQUIREMENT
+    condition: NO_MINISTRY_SYSTEM_ACCESS_AND_NOT_CONNECTED_TO_SMEV
+  - id: REQUIREMENT_REVIEW_MINIMUM_OTHER_CASES
+    value: 5
+    unit: WORKING_DAYS
+    actor: Operator
+    semantics: MINIMUM_PERIOD_TO_BE_SET_IN_INDIVIDUAL_REQUIREMENT
+    condition: OTHER_CONNECTION_CASES
+  - id: REASONED_REFUSAL
+    value: 5
+    unit: WORKING_DAYS
+    actor: Operator
+    trigger: RECEIPT_OF_REQUIREMENT
+    condition: ALL_OR_PART_OF_REQUESTED_DATA_ABSENT
+  - id: REPEAT_REQUIREMENT_BY_MINISTRY
+    value: 15
+    unit: WORKING_DAYS
+    actor: Ministry_of_Digital_Development
+    trigger: RECEIPT_OF_OPERATOR_DATA
+    semantics: NOT_LATER_THAN
+    condition: UNRELIABLE_OR_INCOMPLETE_DATA_OR_ANONYMIZATION_NONCOMPLIANCE
+
+frequency_limits:
+  - id: CASES_A_THROUGH_G
+    decree_538_case_group: A_THROUGH_G
+    maximum: 1
+    period: DAY
+    actor: Ministry_of_Digital_Development
+  - id: CASES_D_THROUGH_ZH
+    decree_538_case_group: D_THROUGH_ZH
+    maximum: 1
+    period: MONTH
+    actor: Ministry_of_Digital_Development
+
+evidence_model:
+  - id: EVIDENCE_REQUIREMENT_RECEIPT
+    proves: [applicability_trigger, deadline_trigger]
+  - id: EVIDENCE_CONNECTION_ROUTE
+    proves: [minimum_review_period_branch, transmission_route]
+  - id: EVIDENCE_CRYPTO_CERTIFICATE_AND_CONFIGURATION
+    proves: [certified_crypto_use, channel_protection]
+  - id: EVIDENCE_UKEP_SIGNATURE
+    proves: [operator_signature, data_integrity]
+  - id: EVIDENCE_TRANSMISSION_RECEIPT
+    proves: [data_delivery, delivery_time]
+  - id: EVIDENCE_REASONED_REFUSAL
+    proves: [absent_data_branch, refusal_time, signing_route]
+  - id: EVIDENCE_REPEAT_REQUIREMENT
+    proves: [discrepancy_notice, ministry_15_day_clock]
+
+dependencies:
+  - id: RU_GOV_PP_538_2025
+    relation: DEFINES_CASES_AND_FREQUENCY_BRANCHES
+    atomization_status: PENDING
+  - id: RU_GOV_PP_1154_2025
+    relation: DEFINES_ANONYMIZATION_REQUIREMENTS_METHODS_AND_PROCEDURE
+    atomization_status: REGRESSION_PROTECTED
+  - id: FSB_AND_FSTEC_INFORMATION_PROTECTION_REQUIREMENTS
+    relation: DEFINES_SYSTEM_AND_CHANNEL_PROTECTION_CONTROLS
+    atomization_status: ROUTE_REQUIRES_CONCRETE_SYSTEM_PROFILE
+
+non_requirements:
+  - The 15-working-day clock belongs to the Ministry's repeat requirement, not to operator correction.
+  - Clause 7 states no universal operator deadline for corrected or supplemented data.
+  - The 30- and 5-working-day values are minimum periods for the individualized requirement, not universal maximums.
+  - A removable-media route is conditional on lack of technical ability to use both connection routes.
+  - The decree does not authorize transmission of unrequested data.
+  - The decree does not replace the anonymization requirements and methods in Decree No. 1154.
+  - No fixed retention period is stated by this decree.
+
+red_team:
+  verdict: PASS_CLAUSE_MAP_FAIL_CLOSED_PROVENANCE
+  critical_gap_created: false
+  high_gap_created: false
+  residuals:
+    - MEDIUM_IMMUTABLE_OFFICIAL_PDF_BYTES_PENDING
+    - MEDIUM_PP538_CASE_ATOMIZATION_PENDING
+    - MEDIUM_EXPERT_REVIEW_PENDING
