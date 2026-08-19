@@ -1,0 +1,101 @@
+run_id: SECURITY-KB-RUN-129
+run_date: "2026-08-19"
+
+strict_readiness:
+  overall_percent: 10
+  domains:
+    russian_npa: 10
+    gost_iso: 10
+    classification_categorization: 10
+    fstec_bdu: 10
+    risk_methods: 10
+    legal_consequences_koap_uk_gk_tk: 10
+    szi_skzi_licenses_lifecycle: 10
+    roles_deadlines_responsibility: 10
+    evidence_audit: 10
+    practical_cases: 10
+
+inventory:
+  verified: 293
+  pending: 31
+  count_change: 0
+  count_guard: >-
+    This run hardens acquisition and provenance for three already registered decrees;
+    it does not close another fixed global inventory family.
+
+pdn_library:
+  registered_source_records: 37
+  source_records_added: 0
+  final_source_universe_complete: false
+
+red_team:
+  critical_gaps: 0
+  high_gaps: 0
+  status: FAIL_SCOPE_INCOMPLETE
+  pp740_pp733_pp2052_provenance_gate: PASS_FAIL_CLOSED_PENDING
+  residuals:
+    - MEDIUM_PP740_OFFICIAL_PUBLICATION_NUMBER_PENDING
+    - MEDIUM_PP740_PP733_PP2052_IMMUTABLE_OFFICIAL_ARTIFACTS_PENDING
+    - MEDIUM_PP740_PP733_PP2052_EXPERT_REVIEW_PENDING
+  reason_global_not_pass: >-
+    Thirty-one global inventory items remain pending, the PDN universe is incomplete,
+    and the three immutable official artifacts plus expert review remain open.
+
+added_this_run:
+  - "Added an exact official API acquisition tool for PP 740, PP 733 and PP 2052."
+  - "Added a bounded GitHub Actions acquisition gate with two 60-second attempts, shared-origin short-circuiting and a byte-preserving artifact bundle."
+  - "Captured the official API timeout as a transport result, not as evidence of absence, non-publication or repeal."
+  - "Added a three-target provenance manifest, six fail-closed provenance rules and twelve regression cases."
+  - "Bound the provenance manifest and regression suite to all three PDN source records and the platform source pack."
+  - "Kept every unknown electronic publication identifier and SHA-256 value null; no adjacent identifier was inferred."
+
+source_quality:
+  official_api_documentation: https://publication.pravo.gov.ru/help
+  government_authority_id: 8005d8c9-4b6d-48d3-861a-2a37e69fccb3
+  pp740_identity_and_clause_text: VERIFIED_CURRENT_TEXT
+  pp740_publication_date: "2025-05-30"
+  pp740_collection_citation: "2025 No. 22, article 2866"
+  pp740_official_publication_number: PENDING_EXACT_OFFICIAL_API_MATCH
+  pp733_current_edition_checked: "2025-12-17"
+  pp2052_effective_from: "2026-01-01"
+  immutable_official_artifacts: PENDING_TRANSPORT_UNAVAILABLE
+  immutable_hashes_recorded: 0
+
+acquisition_evidence:
+  failed_run: https://github.com/VictorKVS/KNOWLEDGE_CORE/actions/runs/32256545021
+  source_commit: 5cb437ae98ceec8e3f04d7d4139c817070ba075d
+  exact_query_target: RU-GOV-PP-740-2025
+  result: OFFICIAL_API_TOTAL_TIMEOUT_2_ATTEMPTS_X_60_SECONDS
+  later_targets_attempted: false
+  interpretation: >-
+    The official origin did not return before the bounded timeout. The result does not
+    establish that any target is absent, unpublished or repealed and does not authorize
+    an inferred electronic publication number.
+
+readiness_change: 0
+reason_no_increase: >-
+  The provenance boundary and retry path are now executable, but immutable bytes were not
+  acquired and no fixed-inventory item moved from PENDING to VERIFIED.
+
+verification:
+  local_yaml_json_parse: PASS
+  provenance_validator: PASS_3_TARGETS_6_RULES_12_CASES
+  acquisition_timeout_semantics: PASS_FAIL_CLOSED_RECEIPT
+  pp740_pp733_platform_validator: PASS_4_DECREE_RULES_10_AMENDMENTS_3_TEMPORAL_EVENTS_12_EVIDENCE_34_CASES
+  security_source_pack: PASS
+  repository_structure_protection: PASS
+  github_actions: PENDING_POST_PUSH
+
+github_publication:
+  pull_request: https://github.com/VictorKVS/KNOWLEDGE_CORE/pull/5
+  substantive_commit: PENDING_POST_PUSH
+  mergeable_after_push: PENDING_POST_PUSH
+
+next_bottleneck:
+  primary: >-
+    Obtain responsive byte-preserving access to the official API and File/Pdf endpoint,
+    then preserve exact electronic publication identifiers, official PDF bytes, retrieval
+    timestamps and SHA-256 values for PP 740, PP 733 and PP 2052.
+  secondary: >-
+    Complete expert review of the full article 13.1 dependency chain and resume the next
+    fixed-inventory source family without increasing readiness prematurely.

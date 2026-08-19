@@ -4,6 +4,9 @@ on:
   pull_request:
     paths:
       - "security-knowledge/tools/acquire_pp740_733_2052_official_artifacts.py"
+      - "security-knowledge/provenance/pp740-733-2052-official-artifact-acquisition-manifest-v1.yaml"
+      - "security-knowledge/provenance/pp740-733-2052-official-artifact-provenance-regression-v1.yaml"
+      - "security-knowledge/validators/validate_pp740_733_2052_artifact_provenance.py"
       - ".github/workflows/pp740-733-2052-official-artifact-acquisition.yml"
   workflow_dispatch:
 
@@ -14,11 +17,15 @@ concurrency:
 jobs:
   acquire:
     runs-on: ubuntu-latest
+    timeout-minutes: 4
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
+      - run: pip install pyyaml
+      - name: Validate fail-closed provenance model
+        run: python security-knowledge/validators/validate_pp740_733_2052_artifact_provenance.py
       - name: Acquire exact official-origin records and PDF bytes
         run: |
           python security-knowledge/tools/acquire_pp740_733_2052_official_artifacts.py \

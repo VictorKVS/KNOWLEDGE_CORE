@@ -1,0 +1,86 @@
+schema_version: "1.0"
+id: PP740-733-2052-OFFICIAL-ARTIFACT-ACQUISITION-MANIFEST-V1
+checked_at: "2026-08-19"
+status: PRIMARY_METADATA_PARTIAL_IMMUTABLE_BYTES_PENDING
+authority: OFFICIAL_INTERNET_PORTAL_OF_LEGAL_INFORMATION
+official_api_documentation: https://publication.pravo.gov.ru/help
+purpose: >-
+  Preserve exact acquisition state for Decrees No. 740, No. 733 and No. 2052
+  without converting current-text interfaces, collection citations, search excerpts,
+  guessed publication identifiers or transport failures into immutable primary evidence.
+
+targets:
+  - logical_id: RU-GOV-PP-740-2025
+    document_number: "740"
+    document_date: "2025-05-28"
+    publication_date: "2025-05-30"
+    collection_of_legislation: "2025 No. 22, article 2866"
+    official_publication_id: null
+    official_record_state: PENDING_EXACT_API_MATCH
+    current_text_url: https://www.consultant.ru/document/cons_doc_LAW_506693/
+    bytes_preserved: false
+    sha256: null
+    immutable_status: PENDING
+    allowed_claim_level: CURRENT_TEXT_PLUS_AUTHORITATIVE_PUBLICATION_CROSS_CHECK
+  - logical_id: RU-GOV-PP-733-2021
+    document_number: "733"
+    document_date: "2021-05-14"
+    current_edition_checked: "2025-12-17"
+    official_publication_id: null
+    official_record_state: PENDING_EXACT_API_MATCH
+    current_text_url: https://www.consultant.ru/document/cons_doc_LAW_384215/
+    bytes_preserved: false
+    sha256: null
+    immutable_status: PENDING_VERSION_CHAIN
+    allowed_claim_level: CURRENT_CONSOLIDATED_TEXT
+  - logical_id: RU-GOV-PP-2052-2025
+    document_number: "2052"
+    document_date: "2025-12-17"
+    effective_from: "2026-01-01"
+    official_publication_id: null
+    official_record_state: PENDING_EXACT_API_MATCH
+    current_text_url: https://www.consultant.ru/document/cons_doc_LAW_521978/
+    bytes_preserved: false
+    sha256: null
+    immutable_status: PENDING
+    allowed_claim_level: CURRENT_TEXT_AND_EFFECTIVE_DATE
+
+acquisition_attempt:
+  github_workflow_run: https://github.com/VictorKVS/KNOWLEDGE_CORE/actions/runs/32256545021
+  source_commit: 5cb437ae98ceec8e3f04d7d4139c817070ba075d
+  transport: DIRECT_GITHUB_ACTIONS_HTTPS
+  exact_query_fields:
+    - Block=government
+    - SignatoryAuthorityId=8005d8c9-4b6d-48d3-861a-2a37e69fccb3
+    - NumberSearchType=0
+    - Number
+    - DocumentDateFrom
+    - DocumentDateTo
+  result: OFFICIAL_API_TOTAL_TIMEOUT_2_ATTEMPTS_X_60_SECONDS_ON_FIRST_TARGET
+  first_target: RU-GOV-PP-740-2025
+  later_targets_attempted: false
+  interpretation: >-
+    The official API transport did not return before the bounded timeout. This is not
+    evidence that the decree is absent, unpublished, repealed or assigned any guessed
+    electronic publication number.
+
+provenance_rules:
+  - id: PP-PROV-001
+    rule: IMMUTABLE_PRIMARY requires official-origin bytes, retrieval time and SHA-256.
+  - id: PP-PROV-002
+    rule: A current consolidated text is not an immutable official version-chain artifact.
+  - id: PP-PROV-003
+    rule: A Collection of Legislation citation does not prove an electronic publication number.
+  - id: PP-PROV-004
+    rule: A transport timeout does not prove absence, non-publication or repeal.
+  - id: PP-PROV-005
+    rule: Electronic publication identifiers must be returned by an exact official query and never inferred from adjacent numbers.
+  - id: PP-PROV-006
+    rule: Proxy or document-viewer bytes cannot satisfy the official-origin byte identity floor without equality proof.
+
+next_retry:
+  - rerun the exact official API query through a responsive byte-preserving transport
+  - require one exact authority-number-date-title match for each target
+  - download each PDF through the official File/Pdf endpoint
+  - verify PDF magic, API byte length, retrieval timestamp and SHA-256
+  - preserve receipt and bytes before promoting immutable_status

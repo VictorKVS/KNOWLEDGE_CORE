@@ -124,47 +124,83 @@ def main() -> int:
         "retrieved_at": retrieved_at,
         "source": BASE,
         "transport": "DIRECT_HTTPS_PYTHON_DEFAULT_CA_AND_HOSTNAME_VERIFICATION",
+        "status": "COMPLETE",
         "artifacts": [],
     }
 
-    for target in TARGETS:
-        item, query_url = exact_document(target)
-        eo_number = str(item.get("eoNumber", ""))
-        if not eo_number.isdigit() or len(eo_number) != 19:
-            raise RuntimeError(f"invalid eoNumber for {target['logical_id']}: {eo_number!r}")
-        pdf_url = f"{BASE}/File/Pdf?{urllib.parse.urlencode({'eoNumber': eo_number})}"
-        payload, headers, effective_url = fetch(pdf_url)
-        if not payload.startswith(b"%PDF-"):
-            raise RuntimeError(
-                f"non-PDF payload for {target['logical_id']}: {payload[:32]!r}"
-            )
-        expected_bytes = item.get("pdfFileLength")
-        if isinstance(expected_bytes, int) and expected_bytes != len(payload):
-            raise RuntimeError(
-                f"byte length mismatch for {target['logical_id']}: "
-                f"API={expected_bytes} downloaded={len(payload)}"
-            )
-        path = output / target["filename"]
-        path.write_bytes(payload)
-        record = {
-            "logical_id": target["logical_id"],
-            "document_number": target["number"],
-            "document_date": target["document_date"],
-            "eo_number": eo_number,
-            "publication_date": str(item.get("publishDateShort", ""))[:10],
-            "title": item.get("complexName") or item.get("title") or item.get("name"),
-            "api_query_url": query_url,
-            "official_document_url": f"{BASE}/document/{eo_number}",
-            "official_pdf_url": pdf_url,
-            "effective_url": effective_url,
-            "content_type": headers.get("content-type"),
-            "bytes": len(payload),
-            "pages": item.get("pagesCount"),
-            "sha256": hashlib.sha256(payload).hexdigest(),
-            "artifact_filename": target["filename"],
-        }
-        receipt["artifacts"].append(record)
-        print(json.dumps(record, ensure_ascii=False, sort_keys=True))
+    for index, target in enumerate(TARGETS):
+        try:
+            item, query_url = exact_document(target)
+            eo_number = str(item.get("eoNumber", ""))
+            if not eo_number.isdigit() or len(eo_number) != 19:
+                raise RuntimeError(
+                    f"invalid eoNumber for {target['logical_id']}: {eo_number!r}"
+                )
+            pdf_url = f"{BASE}/File/Pdf?{urllib.parse.urlencode({'eoNumber': eo_number})}"
+            payload, headers, effective_url = fetch(pdf_url)
+            if not payload.startswith(b"%PDF-"):
+                raise RuntimeError(
+                    f"non-PDF payload for {target['logical_id']}: {payload[:32]!r}"
+                )
+            expected_bytes = item.get("pdfFileLength")
+            if isinstance(expected_bytes, int) and expected_bytes != len(payload):
+                raise RuntimeError(
+                    f"byte length mismatch for {target['logical_id']}: "
+                    f"API={expected_bytes} downloaded={len(payload)}"
+                )
+            path = output / target["filename"]
+            path.write_bytes(payload)
+            record = {
+                "logical_id": target["logical_id"],
+                "document_number": target["number"],
+                "document_date": target["document_date"],
+                "eo_number": eo_number,
+                "publication_date": str(item.get("publishDateShort", ""))[:10],
+                "title": item.get("complexName") or item.get("title") or item.get("name"),
+                "api_query_url": query_url,
+                "official_document_url": f"{BASE}/document/{eo_number}",
+                "official_pdf_url": pdf_url,
+                "effective_url": effective_url,
+                "content_type": headers.get("content-type"),
+                "bytes": len(payload),
+                "pages": item.get("pagesCount"),
+                "sha256": hashlib.sha256(payload).hexdigest(),
+                "artifact_filename": target["filename"],
+                "acquisition_status": "IMMUTABLE_PRIMARY_ACQUIRED",
+                "bytes_preserved": True,
+            }
+            receipt["artifacts"].append(record)
+            print(json.dumps(record, ensure_ascii=False, sort_keys=True), flush=True)
+        except Exception as exc:
+            receipt["status"] = "PARTIAL_OR_TRANSPORT_BLOCKED"
+            record = {
+                "logical_id": target["logical_id"],
+                "document_number": target["number"],
+                "document_date": target["document_date"],
+                "acquisition_status": "PENDING_TRANSPORT_OR_EXACT_MATCH_UNAVAILABLE",
+                "eo_number": None,
+                "bytes_preserved": False,
+                "sha256": None,
+                "error_type": type(exc).__name__,
+                "error": str(exc),
+            }
+            receipt["artifacts"].append(record)
+            print(json.dumps(record, ensure_ascii=False, sort_keys=True), flush=True)
+            # The three requests share one official origin. After a bounded origin
+            # failure, do not multiply a known transport stall across later targets.
+            for remaining in TARGETS[index + 1 :]:
+                deferred = {
+                    "logical_id": remaining["logical_id"],
+                    "document_number": remaining["number"],
+                    "document_date": remaining["document_date"],
+                    "acquisition_status": "PENDING_NOT_ATTEMPTED_AFTER_SHARED_ORIGIN_FAILURE",
+                    "eo_number": None,
+                    "bytes_preserved": False,
+                    "sha256": None,
+                }
+                receipt["artifacts"].append(deferred)
+                print(json.dumps(deferred, ensure_ascii=False, sort_keys=True), flush=True)
+            break
 
     (output / "pp740-733-2052-official-origin-receipt.json").write_text(
         json.dumps(receipt, ensure_ascii=False, indent=2) + "\n",
