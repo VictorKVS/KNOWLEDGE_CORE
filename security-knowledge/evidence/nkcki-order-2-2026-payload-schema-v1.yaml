@@ -1,0 +1,249 @@
+schema_version: "1.0"
+id: NKTSKI-ORDER-2-2026-PAYLOAD-SCHEMA-V1
+checked_at: "2026-08-19"
+status: PRIMARY_IMMUTABLE_TABLE_SCHEMA_EXTRACTED
+purpose: >-
+  Clause- and page-bound transcription of the human-readable attack and incident
+  reporting tables in appendices 1 and 2 to NKTsKI Order No. 2 dated 2026-07-14.
+  This record does not invent JSON/XML keys or an automated protocol serialization.
+
+source:
+  source_id: NKTSKI-ORDER-2-2026
+  repository_artifact: security-knowledge/evidence/primary-artifacts/2026/nkcki-order-2-2026-07-14.pdf
+  sha256: "704473892479161e244a6c6a71bfdae479ae4b9be5bcd49ccacf563ab009d686"
+  pages: 20
+  order_date: "2026-07-14"
+  order_number: "2"
+  attack_appendix_pages: [4, 5, 6, 7, 8, 9, 10, 11]
+  incident_appendix_pages: [12, 13, 14, 15, 16, 17, 18, 19, 20]
+  official_download_urls:
+    - https://www.cert.gov.ru/upload/iblock/d05/zolkvvbc00ofpybc0tplhwdkcmlt7252/O-sovershenstvovanii-deyatelnosti-po-organizatsii-vzaimodeystviya-Natsionalnogo-koordinatsionnogo-tsentra-po-kompyuternym-intsidentam-s-subektami-kriticheskoy-informatsionnoy-infrastruktury_-tsentrami-GosSOPKA-i-organami-_org.pdf
+    - https://gossopka.ru/upload/iblock/995/y8i5wz6c2zdstnnbgxa317esmql8eak1/Prikaz-NKTSKI-N-2-ot-14_07_2026.pdf
+
+authority_and_time:
+  authority_basis:
+    - "Order No. 2 preamble: NKTsKI Regulation paragraphs 4.9 and 4.10."
+    - "FSB Order No. 540 dated 2025-12-24 amended the NKTsKI Regulation."
+  explicit_effective_date_in_artifact: NOT_STATED
+  current_use: CURRENT_OFFICIALLY_PUBLISHED_FORMAT_AS_OF_CHECKED_AT
+  historical_guard: >-
+    Do not backcast this version to a submission made before its official publication
+    without separately verified version-applicability evidence.
+
+extraction:
+  method: PDF_TEXT_DISCOVERY_PLUS_VISUAL_TABLE_VERIFICATION
+  visual_pages_checked: [4, 5, 12, 14, 15]
+  row_count_semantics: ONE_NAMED_TABLE_FIELD_EQUALS_ONE_FIELD
+  attack_expanded_field_count: 38
+  incident_expanded_field_count: 53
+  shared_field_count: 35
+  attack_specific_field_count: 3
+  incident_specific_field_count: 18
+  machine_serialization_status: PENDING_SEPARATE_AUTOMATED_INTERACTION_PROTOCOL
+  guard: >-
+    The printed field name is preserved as the authoritative label. Stable internal IDs
+    below are repository identifiers, not regulator-defined transport keys.
+
+requiredness_codes:
+  MANDATORY: "Обязательно"
+  OPTIONAL: "Не обязательно"
+  CONDITIONAL_MANDATORY_PDN_LEAK: "Обязательно, если заполнено поле Утечка ПДн"
+  SEND_AS_DETERMINED: "Направляется по мере определения"
+  SEND_AS_DETECTED: "Направляется по мере выявления"
+
+reference_values:
+  attack_types:
+    - DDoS-атака
+    - Неудачные попытки авторизации
+    - Попытки внедрения вредоносного программного обеспечения (ВПО)
+    - Попытки эксплуатации уязвимости
+    - Публикация мошеннической информации
+    - Сетевое сканирование
+    - Социальная инженерия
+  incident_types:
+    - Использование контролируемого ресурса для проведения атак
+    - Замедление работы ресурса в результате DDoS-атаки
+    - Заражение ВПО
+    - Захват сетевого трафика
+    - Компрометация учетной записи
+    - Несанкционированное изменение информации
+    - Несанкционированное разглашение информации
+    - Публикация на ресурсе запрещенной законодательством РФ информации
+    - Событие не связано с компьютерной атакой
+    - Успешная эксплуатация уязвимости
+  response_statuses:
+    - Меры приняты
+    - Проводятся мероприятия по реагированию
+    - Возобновлены мероприятия по реагированию
+  tlp_markers: ["TLP:WHITE", "TLP:RED", "TLP:GREEN", "TLP:AMBER"]
+  impact_values: [Высокое, Низкое, Отсутствует]
+  categorization_values:
+    - Информационный ресурс не является объектом КИИ
+    - Объект КИИ без категории значимости
+    - Объект КИИ третьей категории значимости
+    - Объект КИИ второй категории значимости
+    - Объект КИИ первой категории значимости
+  sector_values:
+    - Здравоохранение
+    - Наука
+    - Транспорт
+    - Связь
+    - Энергетика
+    - Государственная регистрация права на недвижимое имущество и сделок с ним
+    - Банковская сфера и иные сферы финансового рынка
+    - Топливно-энергетический комплекс
+    - Атомная энергетика
+    - Оборонная промышленность
+    - Ракетно-космическая промышленность
+    - Горнодобывающая промышленность
+    - Металлургическая промышленность
+    - Химическая промышленность
+    - СМИ
+    - Государственная/муниципальная власть
+    - Образование
+    - Иная
+  hash_formats:
+    - sha256
+    - sha512
+    - sha1
+    - md5
+    - GOST-R-34.11-2018
+    - GOST-R-34.11-2012
+    - GOST-R-34.11-94
+
+shared_fields:
+  - {id: owner_short_name, exact_name_ru: "Сокращенное наименование организации владельца информационного ресурса", requiredness: MANDATORY, attack_pages: [4], incident_pages: [13]}
+  - {id: owner_full_name, exact_name_ru: "Полное наименование организации владельца информационного ресурса", requiredness: MANDATORY, attack_pages: [4], incident_pages: [13]}
+  - {id: owner_inn, exact_name_ru: "ИНН", requiredness: MANDATORY, attack_pages: [4], incident_pages: [13], constraint: "10 digits for a legal entity; 12 digits for an individual entrepreneur."}
+  - {id: owner_kpp, exact_name_ru: "КПП", requiredness: MANDATORY, attack_pages: [5], incident_pages: [13], constraint: "9 digits; use 000000000 when absent."}
+  - {id: owner_ogrn, exact_name_ru: "ОГРН", requiredness: MANDATORY, attack_pages: [5], incident_pages: [13], constraint: "13 digits."}
+  - id: applicant
+    exact_name_ru: "Заявитель"
+    requiredness: MANDATORY
+    attack_pages: [5]
+    incident_pages: [13]
+    constraint: >-
+      The row is marked mandatory. The filling rule specifically describes the case where
+      applicant and resource owner differ; this wording is not used to downgrade the row.
+  - {id: fsb_assistance_needed, exact_name_ru: "Необходимость привлечения сил ФСБ России", requiredness: MANDATORY, attack_pages: [5], incident_pages: [14], value_type: BOOLEAN}
+  - {id: detection_means, exact_name_ru: "Сведения о средстве или способе выявления", requiredness: OPTIONAL, attack_pages: [5], incident_pages: [14]}
+  - {id: tlp_marker, exact_name_ru: "Ограничительный маркер TLP", requiredness: MANDATORY, attack_pages: [5], incident_pages: [14], reference_values: tlp_markers}
+  - id: detected_at
+    exact_name_ru: "Дата и время выявления"
+    requiredness: MANDATORY
+    attack_pages: [5]
+    incident_pages: [14]
+    printed_format_token: "YYYY-MM DDTH:M:SGMT"
+    guard: "Preserve the printed token; do not invent a stricter transport regex without the automated protocol specification."
+  - id: ended_at
+    exact_name_ru: "Дата и время завершения"
+    requiredness: OPTIONAL
+    attack_pages: [5]
+    incident_pages: [14]
+    printed_format_token: "YYYY-MM DDTH:M:SGMT"
+    guard: "Preserve the printed token; do not invent a stricter transport regex without the automated protocol specification."
+  - {id: resource_name, exact_name_ru: "Наименование", requiredness: MANDATORY, attack_pages: [5], incident_pages: [15]}
+  - {id: resource_categorization, exact_name_ru: "Информация о категорировании", requiredness: MANDATORY, attack_pages: [6], incident_pages: [16], reference_values: categorization_values}
+  - {id: resource_sector, exact_name_ru: "Сфера функционирования", requiredness: MANDATORY, attack_pages: [6, 7], incident_pages: [16], reference_values: sector_values}
+  - {id: resource_internet_connected, exact_name_ru: "Наличие подключения к сети Интернет", requiredness: MANDATORY, attack_pages: [7], incident_pages: [16, 17], value_type: BOOLEAN}
+  - {id: resource_location, exact_name_ru: "Локация", requiredness: MANDATORY, attack_pages: [7], incident_pages: [17], constraint: "First- and second-level administrative territorial geocode under ISO 3166-2."}
+  - {id: resource_settlement_or_coordinates, exact_name_ru: "Населенный пункт или геокоординаты", requiredness: OPTIONAL, attack_pages: [7], incident_pages: [17]}
+  - {id: resource_ipv4, exact_name_ru: "IPv4-адрес", requiredness: SEND_AS_DETERMINED, attack_pages: [7], incident_pages: [17], multiplicity: MULTIPLE, constraint: "No network-mask notation."}
+  - {id: resource_ipv6, exact_name_ru: "IPv6-адрес", requiredness: SEND_AS_DETERMINED, attack_pages: [8], incident_pages: [17], multiplicity: MULTIPLE}
+  - {id: resource_domain, exact_name_ru: "Доменное имя", requiredness: SEND_AS_DETERMINED, attack_pages: [8], incident_pages: [17], multiplicity: MULTIPLE, constraint: "Hyperlink notation is not allowed."}
+  - {id: resource_uri, exact_name_ru: "URI-адрес", requiredness: SEND_AS_DETERMINED, attack_pages: [8], incident_pages: [17], multiplicity: MULTIPLE, constraint: "Hyperlink notation is not allowed."}
+  - {id: resource_email, exact_name_ru: "Email-адрес атакованного ресурса", requiredness: SEND_AS_DETERMINED, attack_pages: [8], incident_pages: [17, 18], multiplicity: MULTIPLE, constraint: "Hyperlink notation is not allowed."}
+  - {id: resource_network_service, exact_name_ru: "Сетевая служба и порт/протокол", requiredness: SEND_AS_DETERMINED, attack_pages: [8], incident_pages: [18], multiplicity: MULTIPLE, value_type: OBJECT_SERVICE_AND_PORT_PROTOCOL}
+  - {id: resource_as_path, exact_name_ru: "AS-Path до атакованной Автономной системы (ASN)", requiredness: SEND_AS_DETERMINED, attack_pages: [8], incident_pages: [18]}
+  - {id: malicious_ipv4, exact_name_ru: "IPv4-адрес вредоносной системы", requiredness: SEND_AS_DETECTED, attack_pages: [8, 9], incident_pages: [18], multiplicity: MULTIPLE, indicator_limit: 30}
+  - {id: malicious_ipv6, exact_name_ru: "IPv6-адрес вредоносной системы", requiredness: SEND_AS_DETECTED, attack_pages: [9], incident_pages: [18, 19], multiplicity: MULTIPLE, indicator_limit: 30}
+  - {id: malicious_domain, exact_name_ru: "Доменное имя вредоносной системы", requiredness: SEND_AS_DETECTED, attack_pages: [9], incident_pages: [19], multiplicity: MULTIPLE, indicator_limit: 30, constraint: "Hyperlink notation is not allowed."}
+  - {id: malicious_uri, exact_name_ru: "URI-адрес вредоносной системы", requiredness: SEND_AS_DETECTED, attack_pages: [9, 10], incident_pages: [19], multiplicity: MULTIPLE, indicator_limit: 30, constraint: "Hyperlink notation is not allowed."}
+  - {id: malicious_email, exact_name_ru: "Email-адрес вредоносного объекта", requiredness: SEND_AS_DETECTED, attack_pages: [10], incident_pages: [19], multiplicity: MULTIPLE, indicator_limit: 30, constraint: "Hyperlink notation is not allowed."}
+  - {id: malicious_hash, exact_name_ru: "Хеш-сумма вредоносного модуля", requiredness: SEND_AS_DETECTED, attack_pages: [10], incident_pages: [20], multiplicity: MULTIPLE, reference_values: hash_formats}
+  - {id: exploited_vulnerabilities, exact_name_ru: "Описание используемых уязвимостей", requiredness: SEND_AS_DETECTED, attack_pages: [10], incident_pages: [20], multiplicity: MULTIPLE}
+  - {id: spoofed_asn, exact_name_ru: "Номер подставной Автономной системы (ASN)", requiredness: SEND_AS_DETECTED, attack_pages: [10], incident_pages: [20]}
+  - {id: as_name, exact_name_ru: "Наименование AS", requiredness: SEND_AS_DETECTED, attack_pages: [10], incident_pages: [20]}
+  - {id: lir_name, exact_name_ru: "Наименование LIR", requiredness: SEND_AS_DETECTED, attack_pages: [11], incident_pages: [20]}
+  - id: security_and_network_artifacts
+    exact_name_ru: "Записи с журналов средств защиты информации, log-файлы сетевых служб, образцы трафика, электронные образы email-сообщений"
+    requiredness: SEND_AS_DETECTED
+    attack_pages: [11]
+    incident_pages: [20]
+    constraint: "Provide in a separate file."
+
+attack_specific_fields:
+  - {id: attack_category, exact_name_ru: "Категория", requiredness: MANDATORY, pages: [4], fixed_value: "Уведомление о компьютерной атаке"}
+  - {id: attack_type, exact_name_ru: "Тип компьютерной атаки", requiredness: MANDATORY, pages: [4], reference_values: attack_types}
+  - {id: attack_short_description, exact_name_ru: "Краткое описание компьютерной атаки", requiredness: MANDATORY, pages: [5]}
+
+incident_specific_fields:
+  - {id: incident_category, exact_name_ru: "Категория", requiredness: MANDATORY, pages: [12], fixed_value: "Уведомление о компьютерном инциденте"}
+  - {id: incident_type, exact_name_ru: "Тип компьютерного инцидента", requiredness: MANDATORY, pages: [12], reference_values: incident_types}
+  - {id: incident_short_description, exact_name_ru: "Краткое описание события ИБ", requiredness: MANDATORY, pages: [13]}
+  - {id: response_status, exact_name_ru: "Статус реагирования", requiredness: MANDATORY, pages: [13], reference_values: response_statuses}
+  - id: response_forces
+    exact_name_ru: "Привлеченные силы реагирования"
+    requiredness: MANDATORY
+    pages: [14]
+    constraint: >-
+      Name the engaged organization consistently with the GosSOPKA center list; when
+      response is internal, state that third-party engagement is not required.
+  - {id: confidentiality_impact, exact_name_ru: "Влияние на конфиденциальность", requiredness: OPTIONAL, pages: [14], reference_values: impact_values}
+  - {id: integrity_impact, exact_name_ru: "Влияние на целостность", requiredness: OPTIONAL, pages: [14], reference_values: impact_values}
+  - {id: availability_impact, exact_name_ru: "Влияние на доступность", requiredness: OPTIONAL, pages: [14], reference_values: impact_values}
+  - {id: other_consequence_description, exact_name_ru: "Краткое описание иной формы последствий компьютерного инцидента", requiredness: OPTIONAL, pages: [14]}
+  - {id: pdn_leak, exact_name_ru: "Утечка ПДн", requiredness: OPTIONAL, pages: [14, 15], value_type: BOOLEAN}
+  - {id: pdn_operator_address, exact_name_ru: "Адрес оператора", requiredness: CONDITIONAL_MANDATORY_PDN_LEAK, pages: [15], constraint: "Index, Region, Settlement, Street, House."}
+  - {id: pdn_notification_email, exact_name_ru: "Адрес электронной почты для отправки информации об уведомлении", requiredness: CONDITIONAL_MANDATORY_PDN_LEAK, pages: [15]}
+  - {id: pdn_presumed_causes, exact_name_ru: "Предполагаемые причины, повлекшие нарушение прав субъектов ПД", requiredness: CONDITIONAL_MANDATORY_PDN_LEAK, pages: [15]}
+  - {id: pdn_characteristics, exact_name_ru: "Характеристики персональных данных", requiredness: CONDITIONAL_MANDATORY_PDN_LEAK, pages: [15]}
+  - {id: pdn_presumed_harm, exact_name_ru: "Предполагаемый вред, нанесенный правам субъектов ПД", requiredness: CONDITIONAL_MANDATORY_PDN_LEAK, pages: [15]}
+  - {id: incident_consequence_measures, exact_name_ru: "Принятые меры по устранению последствий инцидента", requiredness: OPTIONAL, pages: [15]}
+  - {id: additional_information, exact_name_ru: "Дополнительный сведения", requiredness: OPTIONAL, pages: [15], transcription_note: "Label preserved as printed."}
+  - {id: internal_investigation_results, exact_name_ru: "Информация о результатах внутреннего расследования инцидента", requiredness: OPTIONAL, pages: [15]}
+
+cross_field_rules:
+  - id: INDICATOR-OVERFLOW-001
+    applies_to: [malicious_ipv4, malicious_ipv6, malicious_domain, malicious_uri, malicious_email]
+    rule: >-
+      At most 30 indicators may be placed in each named field. If there are more than 30,
+      provide them in indicators.txt, one indicator per line without separators.
+  - id: PDN-CONDITIONAL-001
+    if: pdn_leak == true
+    require:
+      - pdn_operator_address
+      - pdn_notification_email
+      - pdn_presumed_causes
+      - pdn_characteristics
+      - pdn_presumed_harm
+  - id: REFERENCE-VALUE-CLOSED-001
+    rule: "Where the table says strictly reference value, unlisted values are not allowed."
+
+workflow_bindings:
+  fsb_order_547:
+    role: DEADLINES_AND_RESPONSE_PROCEDURE
+    binding: >-
+      Use the appropriate attack or incident schema for the information sent under clause 3;
+      the payload schema does not modify the 3-hour/24-hour clocks in Order No. 547.
+    payload_schema_does_not_modify_deadlines: true
+  fsb_order_548:
+    role: CONTINUOUS_INTERACTION_CHANNEL_AND_DELIVERY_CONFIRMATION
+    binding: >-
+      Clause 3 routes the NKTsKI-defined format through the registered personal account;
+      the reserve postal/email route retains the same format. Clause 6 identifier evidence
+      confirms transfer but does not prove field completeness.
+    reserve_channel_retains_schema: true
+    identifier_is_not_completeness_proof: true
+
+red_team:
+  verdict: PASS_TABLE_SCHEMA_EXTRACTION_PROTOCOL_SERIALIZATION_PENDING
+  blocked_overclaims:
+    - "No machine transport key is inferred from a printed Russian field label."
+    - "No effective date absent from the order is invented."
+    - "Applicant is not silently downgraded from the printed mandatory status."
+    - "Delivery confirmation is not equated with field-level completeness."
+    - "Order No. 2 does not alter Order No. 547 deadlines."
+  pending:
+    - "Acquire and version the separate automated-interaction rules/protocol description referenced in Order No. 2 clause 3."
+    - "Resolve exact historical applicability start only from authoritative version evidence."
