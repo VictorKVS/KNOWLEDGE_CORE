@@ -67,6 +67,25 @@ sources:
     atomization_status: CLAUSE_LEVEL_ATOMIZED_IMMUTABLE_OFFICIAL_PDF_PENDING
     atomic_model: pp-rf-966-2025-art13-1-interaction-atomic-v1.yaml
     regression_fixture: pp-rf-966-2025-art13-1-interaction-regression-v1.json
+  - source_id: RU_GOV_PP_538_2025
+    authority: Government_of_Russian_Federation
+    document_type: government_decree
+    number: "538"
+    signed_date: 2025-04-24
+    title: "Article 13.1 cases for forming grouped anonymized personal-data datasets"
+    official_publication:
+      publication_number: "0001202504250043"
+      publication_date: 2025-04-25
+      url: "https://publication.pravo.gov.ru/document/0001202504250043"
+    admitted_text_source:
+      provider: Garant / Sudact current full-text renderings
+      url: "https://www.garant.ru/products/ipo/prime/doc/411833426/"
+    effective_from: 2025-09-01
+    legal_basis: "Federal Law 152-FZ, article 13.1"
+    verification_status: STATUS_VERIFIED
+    atomization_status: CLAUSE_LEVEL_ATOMIZED_IMMUTABLE_OFFICIAL_PDF_PENDING
+    atomic_model: pp-rf-538-2025-art13-1-cases-atomic-v1.yaml
+    regression_fixture: pp-rf-538-2025-art13-1-cases-regression-v1.json
 atomic_facts:
   - fact_id: RU_RKN140_F001
     source_id: RU_RKN_ORDER_140_2025
@@ -104,6 +123,18 @@ atomic_facts:
     source_quote: "вступает в силу с 1 сентября 2025 г."
     statement: "Government Decree 1154 enters into force on 2025-09-01."
     verification_status: VERIFIED
+  - fact_id: RU_PP538_F001
+    source_id: RU_GOV_PP_538_2025
+    locator: "decree, clause 1 and approved list, items а-ж"
+    source_quote: "в следующих случаях"
+    statement: "Government Decree 538 defines a closed list of seven case-bound dataset-formation routes."
+    verification_status: VERIFIED
+  - fact_id: RU_PP538_F002
+    source_id: RU_GOV_PP_538_2025
+    locator: "decree, clause 2"
+    source_quote: "вступает в силу с 1 сентября 2025 г."
+    statement: "Government Decree 538 enters into force on 2025-09-01."
+    verification_status: VERIFIED
 relations:
   - from: RU_RKN_ORDER_996_2013
     to: RU_RKN_ORDER_140_2025
@@ -121,17 +152,26 @@ relations:
   - from: RU_GOV_PP_966_2025
     to: RU_GOV_PP_1154_2025
     type: TRANSPORTS_RESULTS_OF
+  - from: RU_GOV_PP_538_2025
+    to: Federal_Law_152_FZ_article_13_1
+    type: DEFINES_FORMATION_CASES_FOR
+  - from: RU_GOV_PP_966_2025
+    to: RU_GOV_PP_538_2025
+    type: APPLIES_REQUIREMENT_FREQUENCY_BY_CASE_GROUP
 red_team_notes:
   - "Do not merge the two anonymization regimes merely because both became effective on 2025-09-01; applicability must be resolved from 152-FZ and the respective source scope."
   - "Order 140 now has clause-level requirements and method mapping, but expert review and immutable official PDF-byte acquisition remain pending."
   - "Government Decree 1154 now has a separate fail-closed clause map; expert review, immutable official PDF bytes and dependency atomization remain pending."
   - "Government Decree 966 now has a separate fail-closed interaction map; its 15-working-day clock belongs to the Ministry repeat-requirement route, not operator correction."
+  - "Government Decree 538 now has a closed seven-case map; it does not itself impose a standing operator-transfer duty or authorize unrelated dataset attributes."
 next_actions:
   - acquire_and_hash_RKN140_immutable_official_pdf_bytes
   - expert_review_RKN140_clause_level_model
   - acquire_and_hash_PP1154_immutable_official_pdf_bytes
   - expert_review_PP1154_clause_level_model
-  - atomize_PP538_PP961_and_Mindigital_Order173_dependencies
+  - atomize_PP961_and_Mindigital_Order173_dependencies
+  - acquire_and_hash_PP538_immutable_official_pdf_bytes
+  - expert_review_PP538_case_level_model
   - acquire_and_hash_PP966_immutable_official_pdf_bytes
   - expert_review_PP966_clause_level_model
   - map_each_atomic_requirement_to_152FZ_applicability

@@ -1,0 +1,28 @@
+name: PP RF 538 Article 13.1 Cases Gate
+
+on:
+  push:
+    paths:
+      - 'security-knowledge/corpus/ru-personal-data/pp-rf-538-2025-art13-1-cases-atomic-v1.yaml'
+      - 'security-knowledge/corpus/ru-personal-data/pp-rf-538-2025-art13-1-cases-regression-v1.json'
+      - 'security-knowledge/pdn/pdn-master-source-library-v1.yaml'
+      - 'security-knowledge/validators/validate_pp_rf_538_art13_1_cases.py'
+      - '.github/workflows/pp-rf-538-art13-1-cases.yml'
+  pull_request:
+    paths:
+      - 'security-knowledge/corpus/ru-personal-data/pp-rf-538-2025-art13-1-cases-atomic-v1.yaml'
+      - 'security-knowledge/corpus/ru-personal-data/pp-rf-538-2025-art13-1-cases-regression-v1.json'
+      - 'security-knowledge/pdn/pdn-master-source-library-v1.yaml'
+      - 'security-knowledge/validators/validate_pp_rf_538_art13_1_cases.py'
+      - '.github/workflows/pp-rf-538-art13-1-cases.yml'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install pyyaml
+      - run: python security-knowledge/validators/validate_pp_rf_538_art13_1_cases.py
