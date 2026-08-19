@@ -1,0 +1,138 @@
+schema_version: "1.0"
+id: RU-RKN179-DESTRUCTION-EVIDENCE-ATOMIC-V1
+title: Roskomnadzor Order No. 179 personal-data destruction confirmation requirements
+scope: >-
+  Requirements approved by Roskomnadzor Order No. 179 of 28 October 2022 for
+  confirming destruction of personal data under part 7 of article 21 of Federal
+  Law No. 152-FZ. The model covers evidence form and content, processing-mode
+  branches, missing log fields and evidence retention; it does not invent a new
+  destruction trigger, deadline or destruction technology.
+
+source:
+  authority: Roskomnadzor
+  signed_date: "2022-10-28"
+  number: "179"
+  legal_basis: Federal_Law_152_FZ_article_21_part_7
+  minjust_registration:
+    number: "71167"
+    date: "2022-11-28"
+  official_publication:
+    number: "0001202211290008"
+    date: "2022-11-29"
+    url: https://publication.pravo.gov.ru/Document/View/0001202211290008
+  current_text: https://www.consultant.ru/document/cons_doc_LAW_432556/
+  full_text_mirror: https://www.v2b.ru/documents/prikaz-roskomnadzora-rf-ot-28-10-2022-g-179/
+  current_edition: "2022-10-28"
+  effective_from: "2023-03-01"
+  valid_until_exclusive: "2029-03-01"
+
+verification_boundary:
+  identity_registration_publication_and_dates: VERIFIED_OFFICIAL_RECORD
+  clause_text: VERIFIED_AUTHORITATIVE_CURRENT_TEXT_AND_FULL_TEXT_MIRROR
+  amendments_after_signature: NONE_LISTED_IN_CURRENT_TEXT
+  immutable_official_pdf_bytes: PENDING_OFFICIAL_PORTAL_TIMEOUT
+  federal_law_destruction_triggers_and_deadlines: PENDING_SEPARATE_152_FZ_MODEL
+  expert_review: PENDING
+  checked_at: "2026-08-19"
+
+atomic_rules:
+  - {id: RKN179-R001, locator: order.preamble, class: SCOPE, rule: "Use these requirements to confirm destruction performed under part 7 of article 21 of Federal Law No. 152-FZ."}
+  - {id: RKN179-R002, locator: requirements.clause_1, class: NON_AUTOMATED_EVIDENCE_ROUTE, rule: "For processing without automation, use a personal-data destruction act as the confirming document."}
+  - {id: RKN179-R003, locator: requirements.clause_2, class: AUTOMATED_EVIDENCE_ROUTE, rule: "For processing using automation, use both a destruction act compliant with clauses 3 and 4 and an extract from the event log of the personal-data information system."}
+  - {id: RKN179-R004, locator: requirements.clause_3.a, class: ACT_FIELD, rule: "Record the operator legal entity name, or operator individual's surname, name and patronymic if any, and address."}
+  - {id: RKN179-R005, locator: requirements.clause_3.b, class: ACT_FIELD_CONDITIONAL, rule: "Where processing was entrusted, record each processor's legal entity name or individual's surname, name and patronymic if any, and address."}
+  - {id: RKN179-R006, locator: requirements.clause_3.v, class: ACT_FIELD, rule: "Record each subject's surname, name and patronymic if any, or other information relating to the identified individual whose personal data were destroyed."}
+  - {id: RKN179-R007, locator: requirements.clause_3.g, class: ACT_FIELD, rule: "Record the surname, name and patronymic if any, position and signature of each person who destroyed the personal data."}
+  - {id: RKN179-R008, locator: requirements.clause_3.d, class: ACT_FIELD, rule: "Record the list of categories of destroyed personal data."}
+  - {id: RKN179-R009, locator: requirements.clause_3.e, class: ACT_FIELD_CONDITIONAL, rule: "For processing without automation, identify each destroyed physical medium and the number of sheets for each medium."}
+  - {id: RKN179-R010, locator: requirements.clause_3.zh, class: ACT_FIELD_CONDITIONAL, rule: "For processing using automation, identify each personal-data information system from which the personal data were destroyed."}
+  - {id: RKN179-R011, locator: requirements.clause_3.z, class: ACT_FIELD, rule: "Record the method of personal-data destruction."}
+  - {id: RKN179-R012, locator: requirements.clause_3.i, class: ACT_FIELD, rule: "Record the reason for personal-data destruction."}
+  - {id: RKN179-R013, locator: requirements.clause_3.k, class: ACT_FIELD, rule: "Record the date of personal-data destruction."}
+  - {id: RKN179-R014, locator: requirements.clause_4, class: ELECTRONIC_ACT, rule: "Treat an electronic act signed in accordance with Russian legislation on electronic signatures as equivalent to the paper act signed by the persons named under clause 3(g)."}
+  - {id: RKN179-R015, locator: requirements.clause_5.a, class: LOG_EXTRACT_FIELD, rule: "Record each subject's surname, name and patronymic if any, or other information relating to the identified individual whose personal data were destroyed."}
+  - {id: RKN179-R016, locator: requirements.clause_5.b, class: LOG_EXTRACT_FIELD, rule: "Record the list of categories of destroyed personal data."}
+  - {id: RKN179-R017, locator: requirements.clause_5.v, class: LOG_EXTRACT_FIELD, rule: "Record the personal-data information system from which the personal data were destroyed."}
+  - {id: RKN179-R018, locator: requirements.clause_5.g, class: LOG_EXTRACT_FIELD, rule: "Record the reason for personal-data destruction."}
+  - {id: RKN179-R019, locator: requirements.clause_5.d, class: LOG_EXTRACT_FIELD, rule: "Record the date of personal-data destruction."}
+  - {id: RKN179-R020, locator: requirements.clause_6, class: LOG_FIELD_FALLBACK, rule: "If the log extract cannot contain an item required by clause 5, place that missing item in the destruction act."}
+  - {id: RKN179-R021, locator: requirements.clause_7, class: MIXED_EVIDENCE_ROUTE, rule: "For simultaneous automated and non-automated processing, use both a compliant destruction act and a compliant log extract."}
+  - {id: RKN179-R022, locator: requirements.clause_8, class: RETENTION, rule: "Retain the destruction act and log extract for three years from the personal-data destruction date."}
+
+temporal_model:
+  - {event: ORDER_SIGNED, date: "2022-10-28"}
+  - {event: OFFICIALLY_PUBLISHED, date: "2022-11-29", publication_number: "0001202211290008"}
+  - {event: REQUIREMENTS_EFFECTIVE, date: "2023-03-01"}
+  - {event: REQUIREMENTS_VALIDITY_END, date: "2029-03-01", semantics: VALID_UNTIL_EXCLUSIVE}
+
+evidence_model:
+  - {id: EVIDENCE_DESTRUCTION_TRIGGER_AND_152_FZ_ART21_ROUTE, proves: [RKN179-R001]}
+  - {id: EVIDENCE_PROCESSING_MODE_CLASSIFICATION, proves: [RKN179-R002, RKN179-R003, RKN179-R021]}
+  - {id: EVIDENCE_DESTRUCTION_ACT, proves: [RKN179-R002, RKN179-R003, RKN179-R021]}
+  - {id: EVIDENCE_OPERATOR_AND_PROCESSOR_IDENTITIES_ADDRESSES, proves: [RKN179-R004, RKN179-R005]}
+  - {id: EVIDENCE_DESTROYED_SUBJECT_IDENTIFIERS, proves: [RKN179-R006, RKN179-R015]}
+  - {id: EVIDENCE_DESTROYING_PERSON_IDENTITY_POSITION_SIGNATURE, proves: [RKN179-R007]}
+  - {id: EVIDENCE_DESTROYED_DATA_CATEGORY_INVENTORY, proves: [RKN179-R008, RKN179-R016]}
+  - {id: EVIDENCE_PHYSICAL_MEDIA_AND_SHEET_COUNTS, proves: [RKN179-R009]}
+  - {id: EVIDENCE_ISPDN_IDENTIFIERS, proves: [RKN179-R010, RKN179-R017]}
+  - {id: EVIDENCE_DESTRUCTION_METHOD_REASON_DATE, proves: [RKN179-R011, RKN179-R012, RKN179-R013, RKN179-R018, RKN179-R019]}
+  - {id: EVIDENCE_ELECTRONIC_SIGNATURE_VALIDATION, proves: [RKN179-R014]}
+  - {id: EVIDENCE_EVENT_LOG_EXTRACT, proves: [RKN179-R003, RKN179-R015, RKN179-R016, RKN179-R017, RKN179-R018, RKN179-R019, RKN179-R021]}
+  - {id: EVIDENCE_LOG_TO_ACT_MISSING_FIELD_CROSSWALK, proves: [RKN179-R020]}
+  - {id: EVIDENCE_THREE_YEAR_RETENTION_CONTROL, proves: [RKN179-R022]}
+
+conflict_and_definition_checks:
+  - id: RKN179-C001
+    type: CONFIRMATION_NOT_DESTRUCTION_DUTY
+    resolution: >-
+      The order specifies proof after destruction under article 21 part 7. It does not
+      create a new destruction trigger or replace the article 21 deadlines and exceptions.
+  - id: RKN179-C002
+    type: MODE_SPECIFIC_DOCUMENT_SET
+    resolution: >-
+      An act alone is sufficient only for the non-automated route. Automated and mixed
+      routes require both the act and the event-log extract.
+  - id: RKN179-C003
+    type: LOG_GAP_IS_RELOCATED_NOT_WAIVED
+    resolution: >-
+      A field the log cannot contain is moved to the act under clause 6; it is not omitted
+      from the evidence package and the inability must not be generalized to every field.
+  - id: RKN179-C004
+    type: CONDITIONAL_ACT_FIELDS
+    resolution: >-
+      Processor identity applies when processing was entrusted; physical-medium details
+      apply to non-automated processing; ISPDN names apply to automated processing.
+  - id: RKN179-C005
+    type: EVIDENCE_RETENTION_NOT_DATA_RETENTION
+    resolution: >-
+      The three-year clock applies to the destruction act and log extract from the
+      destruction date. It does not authorize retaining the destroyed personal data.
+  - id: RKN179-C006
+    type: METHOD_RECORDED_NOT_PRESCRIBED
+    resolution: >-
+      The act records the destruction method. The order does not prescribe shredding,
+      wiping, cryptographic erasure or another universal destruction technology.
+  - id: RKN179-C007
+    type: TEMPORAL_SCOPE
+    resolution: >-
+      The requirements apply from 1 March 2023 and only through 28 February 2029;
+      post-sunset use requires a successor or extension check.
+
+red_team_boundaries:
+  - "Do not accept an act alone for an automated or mixed route."
+  - "Do not accept a log extract alone for any route."
+  - "Do not waive a mandatory log field merely because the information system cannot export it; relocate it to the act."
+  - "Do not require processor identity when processing was not entrusted or omit it when it was."
+  - "Do not confuse the three-year evidence-retention period with a right to retain destroyed personal data."
+  - "Do not invent a destruction deadline or technique from this order."
+  - "Do not reuse the order on or after 1 March 2029 without a current-status check."
+
+red_team:
+  critical_gap_created: false
+  high_gap_created: false
+  status: PASS_MODEL_FAIL_GLOBAL_SCOPE_INCOMPLETE
+  residuals:
+    - MEDIUM_IMMUTABLE_OFFICIAL_PDF_BYTES_PENDING
+    - MEDIUM_ARTICLE_21_TRIGGER_AND_DEADLINE_MODEL_PENDING
+    - MEDIUM_EXPERT_REVIEW_PENDING
+    - MEDIUM_SUCCESSOR_OR_EXTENSION_MONITOR_REQUIRED_BEFORE_2029_03_01
