@@ -1,0 +1,131 @@
+name: NKTsKI Official Origin Acquisition
+
+on:
+  push:
+    paths:
+      - '.github/workflows/nkcki-official-origin-acquisition.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: nkcki-official-origin-acquisition
+  cancel-in-progress: false
+
+jobs:
+  acquire:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Ensure PDF inspection tools
+        shell: bash
+        run: |
+          set -euo pipefail
+          if ! command -v pdfinfo >/dev/null 2>&1; then
+            sudo apt-get update
+            sudo apt-get install -y poppler-utils
+          fi
+
+      - name: Fetch and validate exact official-origin PDFs
+        id: acquire
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          target_dir="security-knowledge/evidence/primary-artifacts/2026"
+          receipt="security-knowledge/evidence/nkcki-2026-official-origin-acquisition-receipt.json"
+          mkdir -p "$target_dir"
+
+          fetch_pdf() {
+            local logical_id="$1"
+            local output="$2"
+            shift 2
+            local url tmp headers meta size magic pages sha content_type effective_url headers_sha
+
+            for url in "$@"; do
+              tmp="${output}.download"
+              headers="${output}.headers"
+              meta="${output}.curlmeta"
+
+              if curl --fail --location --silent --show-error \
+                --connect-timeout 20 --max-time 180 \
+                --retry 3 --retry-all-errors --retry-delay 3 \
+                --dump-header "$headers" \
+                --output "$tmp" \
+                --write-out '%{url_effective}\t%{content_type}\t%{size_download}\n' \
+                "$url" > "$meta"; then
+                size="$(stat -c '%s' "$tmp")"
+                magic="$(head -c 5 "$tmp")"
+                if [[ "$magic" == '%PDF-' ]] && [[ "$size" -ge 10000 ]] && pdfinfo "$tmp" >/dev/null 2>&1; then
+                  pages="$(pdfinfo "$tmp" | awk -F: '/^Pages:/ {gsub(/ /,"",$2); print $2}')"
+                  sha="$(sha256sum "$tmp" | awk '{print $1}')"
+                  effective_url="$(cut -f1 "$meta")"
+                  content_type="$(cut -f2 "$meta")"
+                  headers_sha="$(sha256sum "$headers" | awk '{print $1}')"
+                  mv "$tmp" "$output"
+                  jq -n \
+                    --arg logical_id "$logical_id" \
+                    --arg requested_url "$url" \
+                    --arg effective_url "$effective_url" \
+                    --arg content_type "$content_type" \
+                    --argjson bytes "$size" \
+                    --argjson pages "$pages" \
+                    --arg sha256 "$sha" \
+                    --arg response_headers_sha256 "$headers_sha" \
+                    '{logical_id:$logical_id, requested_url:$requested_url, effective_url:$effective_url, content_type:$content_type, bytes:$bytes, pages:$pages, sha256:$sha256, response_headers_sha256:$response_headers_sha256, transport:"DIRECT_GITHUB_ACTIONS_CURL_OFFICIAL_ORIGIN", validation:["PDF_MAGIC","PDFINFO","NONTRIVIAL_SIZE"]}' > "${output}.record.json"
+                  rm -f "$headers" "$meta"
+                  return 0
+                fi
+              fi
+
+              rm -f "$tmp" "$headers" "$meta"
+              echo "Fetch rejected for ${logical_id}: ${url}" >&2
+            done
+
+            echo "No official source produced a valid PDF for ${logical_id}" >&2
+            return 1
+          }
+
+          order_pdf="$target_dir/nkcki-order-2-2026-07-14.pdf"
+          initial_pdf="$target_dir/nkcki-attack-type-initial-data-2026-07-08.pdf"
+
+          fetch_pdf \
+            "NKTSKI-ORDER-2-2026-07-14" \
+            "$order_pdf" \
+            "https://www.cert.gov.ru/upload/iblock/d05/zolkvvbc00ofpybc0tplhwdkcmlt7252/O-sovershenstvovanii-deyatelnosti-po-organizatsii-vzaimodeystviya-Natsionalnogo-koordinatsionnogo-tsentra-po-kompyuternym-intsidentam-s-subektami-kriticheskoy-informatsionnoy-infrastruktury_-tsentrami-GosSOPKA-i-organami-_org.pdf" \
+            "https://gossopka.ru/upload/iblock/995/y8i5wz6c2zdstnnbgxa317esmql8eak1/Prikaz-NKTSKI-N-2-ot-14_07_2026.pdf"
+
+          fetch_pdf \
+            "NKTSKI-ATTACK-TYPE-INITIAL-DATA-2026-07-08" \
+            "$initial_pdf" \
+            "https://www.cert.gov.ru/upload/iblock/333/q3w0bnth1cxtnhskh5xi9s0zmimqymoq/Iskhodnye-dannye-dlya-opredeleniya-tipa-kompyuternoy-ataki.pdf" \
+            "https://gossopka.ru/upload/iblock/6e8/14xffkb0nlecz44gpaz5ywq66fj5gk2x/2026_iskhodnye-dannye.pdf"
+
+          retrieved_at="$(date -u +'%Y-%m-%dT%H:%M:%SZ')"
+          jq -n \
+            --arg schema_version "1.0" \
+            --arg retrieved_at "$retrieved_at" \
+            --slurpfile order "${order_pdf}.record.json" \
+            --slurpfile initial "${initial_pdf}.record.json" \
+            '{schema_version:$schema_version, retrieved_at:$retrieved_at, provenance_state:"OFFICIAL_ORIGIN_BYTES_ACQUIRED", artifacts:[$order[0],$initial[0]], guardrail:"Receipt records direct fixed official URLs; viewer or mirror bytes are not accepted."}' > "$receipt"
+
+          rm -f "${order_pdf}.record.json" "${initial_pdf}.record.json"
+
+      - name: Commit exact bytes and receipt
+        shell: bash
+        run: |
+          set -euo pipefail
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add \
+            security-knowledge/evidence/primary-artifacts/2026/nkcki-order-2-2026-07-14.pdf \
+            security-knowledge/evidence/primary-artifacts/2026/nkcki-attack-type-initial-data-2026-07-08.pdf \
+            security-knowledge/evidence/nkcki-2026-official-origin-acquisition-receipt.json
+          git commit -m "evidence: preserve NKTsKI 2026 official origin PDFs"
+          git pull --rebase origin main
+          git push origin HEAD:main
