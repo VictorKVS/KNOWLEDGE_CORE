@@ -27,7 +27,7 @@ def evaluate(case):
         if case["route"] == "EMAIL_WITHOUT_VALID_REQUEST":
             return "ROUTE_TO_ARTICLE14_REQUEST_VALIDATION"
         if case["route"] == "APPEAL":
-            return "PASS_AT_APPEAL" if case["delivered"] and case["working_days"] == 0 else "BLOCK_APPEAL_ROUTE_NOT_SATISFIED"
+            return "PASS_AT_APPEAL" if case["delivered"] and case["at_appeal"] else "BLOCK_APPEAL_ROUTE_NOT_SATISFIED"
         if case["working_days"] > 10:
             return "BLOCK_TEN_WORKING_DAY_DEADLINE_BREACHED"
         return "PASS" if case["delivered"] else "BLOCK_INFORMATION_AND_INSPECTION_REQUIRED"
