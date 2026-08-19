@@ -2,7 +2,7 @@ schema_version: 1
 inventory_id: RU_PD_MASTER_SOURCE_INVENTORY
 scope: Russian personal-data regulation and directly applicable technical/cryptographic overlays
 parent_inventory: "../master-source-inventory.yaml"
-updated_at: "2026-08-19T20:06:01+03:00"
+updated_at: "2026-08-19T20:23:27+03:00"
 status_values:
   - DISCOVERED
   - REGISTERED
@@ -163,8 +163,24 @@ stream_progress:
     hashes_recorded: 0
     applicability_guards: 2
   stream_3_sector_overlays:
-    status: RUNNING_SEPARATELY
-    note: "Sector/special protected-information overlays are owned by the sector acquisition stream."
+    status: ACTIVE
+    inventory: "../ru-protected-information/master-inventory.yaml"
+    overlap_graph: "../../cross-domain/pdn-sector-overlap-seed-v1.yaml"
+    sources_found_total: 11
+    new_sources_this_pass: 4
+    reused_existing_sources: 1
+    primary_publication_verified_total: 3
+    immutable_artifacts: 0
+    pending_immutable: 10
+    exact_binary_acquisition_attempts_this_pass: 1
+    exact_binary_acquisition_success_this_pass: 0
+    sectors_registered: 11
+    explicit_or_direct_legal_overlap_candidates:
+      - "16-ФЗ article 11 -> 152-ФЗ"
+      - "79-ФЗ article 42 -> personal-data legislation"
+    note: >-
+      Sector/special protected-information overlays are isolated from executable PDN logic until
+      authoritative current artifacts, version chains and anchored applicability edges pass review.
 
 quality_gates:
   acquisition_gate:
@@ -197,3 +213,7 @@ next_priority:
   - RU_FSB_ORDER_378_2014_exact_official_artifact
   - RU_FSB_ORDER_66_2005
   - RU_FAPSI_ORDER_152_2001
+  - STREAM3_SEC_SRC_RU_FZ_273_2012_immutable_artifact
+  - STREAM3_SEC_SRC_RU_FZ_16_2007_primary_artifact_and_version_chain
+  - STREAM3_SEC_SRC_RU_FZ_79_2004_primary_artifact_and_presidential_dependency
+  - STREAM3_SEC_SRC_RU_GK2_1996_A946_primary_artifact
