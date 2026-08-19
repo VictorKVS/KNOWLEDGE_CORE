@@ -1,0 +1,28 @@
+name: PP RF 961 Article 13.1 Formation and Access Gate
+
+on:
+  push:
+    paths:
+      - 'security-knowledge/corpus/ru-personal-data/pp-rf-961-2025-art13-1-formation-access-atomic-v1.yaml'
+      - 'security-knowledge/corpus/ru-personal-data/pp-rf-961-2025-art13-1-formation-access-regression-v1.json'
+      - 'security-knowledge/pdn/pdn-master-source-library-v1.yaml'
+      - 'security-knowledge/validators/validate_pp_rf_961_art13_1_formation_access.py'
+      - '.github/workflows/pp-rf-961-art13-1-formation-access.yml'
+  pull_request:
+    paths:
+      - 'security-knowledge/corpus/ru-personal-data/pp-rf-961-2025-art13-1-formation-access-atomic-v1.yaml'
+      - 'security-knowledge/corpus/ru-personal-data/pp-rf-961-2025-art13-1-formation-access-regression-v1.json'
+      - 'security-knowledge/pdn/pdn-master-source-library-v1.yaml'
+      - 'security-knowledge/validators/validate_pp_rf_961_art13_1_formation_access.py'
+      - '.github/workflows/pp-rf-961-art13-1-formation-access.yml'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: pip install pyyaml
+      - run: python security-knowledge/validators/validate_pp_rf_961_art13_1_formation_access.py

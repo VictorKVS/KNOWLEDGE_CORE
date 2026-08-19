@@ -86,6 +86,25 @@ sources:
     atomization_status: CLAUSE_LEVEL_ATOMIZED_IMMUTABLE_OFFICIAL_PDF_PENDING
     atomic_model: pp-rf-538-2025-art13-1-cases-atomic-v1.yaml
     regression_fixture: pp-rf-538-2025-art13-1-cases-regression-v1.json
+  - source_id: RU_GOV_PP_961_2025
+    authority: Government_of_Russian_Federation
+    document_type: government_decree
+    number: "961"
+    signed_date: 2025-06-26
+    title: "Article 13.1 dataset-formation and user-access procedure"
+    official_publication:
+      publication_number: "0001202506270025"
+      publication_date: 2025-06-27
+      url: "https://publication.pravo.gov.ru/document/0001202506270025"
+    admitted_text_source:
+      provider: Garant / authority and current full-text renderings
+      url: "https://base.garant.ru/412251904/"
+    effective_from: 2025-09-01
+    legal_basis: "Federal Law 152-FZ, article 13.1"
+    verification_status: STATUS_VERIFIED
+    atomization_status: CLAUSE_LEVEL_ATOMIZED_IMMUTABLE_OFFICIAL_PDF_PENDING
+    atomic_model: pp-rf-961-2025-art13-1-formation-access-atomic-v1.yaml
+    regression_fixture: pp-rf-961-2025-art13-1-formation-access-regression-v1.json
 atomic_facts:
   - fact_id: RU_RKN140_F001
     source_id: RU_RKN_ORDER_140_2025
@@ -135,6 +154,24 @@ atomic_facts:
     source_quote: "вступает в силу с 1 сентября 2025 г."
     statement: "Government Decree 538 enters into force on 2025-09-01."
     verification_status: VERIFIED
+  - fact_id: RU_PP961_F001
+    source_id: RU_GOV_PP_961_2025
+    locator: "formation rules, clauses 1-6"
+    source_quote: "обеспечивает формирование составов данных в срок, не превышающий 30 рабочих дней"
+    statement: "The authorized body forms datasets under a threat-aware, category-gated procedure within 30 working days from operator-data receipt."
+    verification_status: VERIFIED
+  - fact_id: RU_PP961_F002
+    source_id: RU_GOV_PP_961_2025
+    locator: "access rules, clauses 1-13"
+    source_quote: "Доступ пользователям к составам данных блокируется незамедлительно"
+    statement: "The access procedure separates request review, clarification, refusal, grant, termination and immediate-blocking branches."
+    verification_status: VERIFIED
+  - fact_id: RU_PP961_F003
+    source_id: RU_GOV_PP_961_2025
+    locator: "decree, clause 2"
+    source_quote: "вступает в силу с 1 сентября 2025 г."
+    statement: "Government Decree 961 enters into force on 2025-09-01."
+    verification_status: VERIFIED
 relations:
   - from: RU_RKN_ORDER_996_2013
     to: RU_RKN_ORDER_140_2025
@@ -158,20 +195,32 @@ relations:
   - from: RU_GOV_PP_966_2025
     to: RU_GOV_PP_538_2025
     type: APPLIES_REQUIREMENT_FREQUENCY_BY_CASE_GROUP
+  - from: RU_GOV_PP_961_2025
+    to: Federal_Law_152_FZ_article_13_1
+    type: IMPLEMENTS_FORMATION_AND_ACCESS_ROUTE
+  - from: RU_GOV_PP_961_2025
+    to: RU_GOV_PP_538_2025
+    type: CONSUMES_CASE_TAXONOMY_AND_RESTRICTS_A_THROUGH_G_ACCESS
+  - from: RU_GOV_PP_961_2025
+    to: RU_GOV_PP_966_2025
+    type: CONSUMES_OPERATOR_REQUIREMENT_AND_DATA_TRANSMISSION_ROUTE
 red_team_notes:
   - "Do not merge the two anonymization regimes merely because both became effective on 2025-09-01; applicability must be resolved from 152-FZ and the respective source scope."
   - "Order 140 now has clause-level requirements and method mapping, but expert review and immutable official PDF-byte acquisition remain pending."
   - "Government Decree 1154 now has a separate fail-closed clause map; expert review, immutable official PDF bytes and dependency atomization remain pending."
   - "Government Decree 966 now has a separate fail-closed interaction map; its 15-working-day clock belongs to the Ministry repeat-requirement route, not operator correction."
   - "Government Decree 538 now has a closed seven-case map; it does not itself impose a standing operator-transfer duty or authorize unrelated dataset attributes."
+  - "Government Decree 961 now has separate formation and access state machines; its 30-day clock belongs to the authorized body, and its 15-day value is a user clarification window before refusal."
 next_actions:
   - acquire_and_hash_RKN140_immutable_official_pdf_bytes
   - expert_review_RKN140_clause_level_model
   - acquire_and_hash_PP1154_immutable_official_pdf_bytes
   - expert_review_PP1154_clause_level_model
-  - atomize_PP961_and_Mindigital_Order173_dependencies
+  - atomize_Mindigital_Order173_dependency
   - acquire_and_hash_PP538_immutable_official_pdf_bytes
   - expert_review_PP538_case_level_model
+  - acquire_and_hash_PP961_immutable_official_pdf_bytes
+  - expert_review_PP961_formation_access_model
   - acquire_and_hash_PP966_immutable_official_pdf_bytes
   - expert_review_PP966_clause_level_model
   - map_each_atomic_requirement_to_152FZ_applicability

@@ -1,0 +1,30 @@
+{
+  "schema_version": "1.0",
+  "suite_id": "PP961-ART13-1-FORMATION-ACCESS-REGRESSION-V1",
+  "cases": [
+    {"id":"PP961-REG-001","query":"formation_scope","operator_requirement":false,"pp538_case":true,"expected":"BLOCK_MISSING_OPERATOR_REQUIREMENT"},
+    {"id":"PP961-REG-002","query":"formation_scope","operator_requirement":true,"pp538_case":false,"expected":"BLOCK_MISSING_PP538_CASE"},
+    {"id":"PP961-REG-003","query":"formation_scope","operator_requirement":true,"pp538_case":true,"expected":"ALLOW_FORMATION_WORKFLOW"},
+    {"id":"PP961-REG-004","query":"formation_deadline","expected":"30_WORKING_DAYS_FROM_OPERATOR_DATA_RECEIPT"},
+    {"id":"PP961-REG-005","query":"security_response_deadline","security_request_received":true,"expected":"10_CALENDAR_DAYS_FROM_SECURITY_REQUEST"},
+    {"id":"PP961-REG-006","query":"security_response_deadline","security_request_received":false,"expected":"NO_CLOCK_WITHOUT_SECURITY_REQUEST"},
+    {"id":"PP961-REG-007","query":"formation_threats","considered":["MEMBERSHIP_INFERENCE","LINKAGE_OR_ENRICHMENT","VALUE_INFERENCE"],"expected":"PASS_ALL_THREE"},
+    {"id":"PP961-REG-008","query":"formation_threats","considered":["MEMBERSHIP_INFERENCE"],"expected":"BLOCK_INCOMPLETE_THREAT_SET"},
+    {"id":"PP961-REG-009","query":"data_category_gate","article10_special":true,"article10_part2_1":false,"biometric":false,"expected":"BLOCK_SPECIAL_CATEGORY"},
+    {"id":"PP961-REG-010","query":"data_category_gate","article10_special":true,"article10_part2_1":true,"biometric":false,"expected":"ALLOW_CATEGORY_GATE_REVIEW"},
+    {"id":"PP961-REG-011","query":"data_category_gate","article10_special":false,"article10_part2_1":false,"biometric":true,"expected":"BLOCK_BIOMETRIC"},
+    {"id":"PP961-REG-012","query":"access_request_fields","fields":["ACCESS_PURPOSE","PLANNED_RESULT_OR_ITS_CONTENT","DATASET_PROCESSING_PERIOD","LEGAL_GROUNDS_FOR_ACCESS"],"expected":"PASS_COMPLETE_REQUEST"},
+    {"id":"PP961-REG-013","query":"access_request_fields","fields":["ACCESS_PURPOSE","LEGAL_GROUNDS_FOR_ACCESS"],"expected":"BLOCK_OR_CLARIFY_INCOMPLETE_REQUEST"},
+    {"id":"PP961-REG-014","query":"access_review_deadline","expected":"5_WORKING_DAYS_FROM_REQUEST_RECEIPT"},
+    {"id":"PP961-REG-015","query":"clarification_branch","remediable_information_defect":true,"direct_refusal_ground":false,"expected":"SEND_SIGNED_CLARIFICATION_AND_SUSPEND"},
+    {"id":"PP961-REG-016","query":"clarification_branch","remediable_information_defect":true,"direct_refusal_ground":true,"expected":"DIRECT_SIGNED_REFUSAL"},
+    {"id":"PP961-REG-017","query":"clarification_timeout","working_days_without_response":15,"expected":"SEND_SIGNED_ACCESS_REFUSAL"},
+    {"id":"PP961-REG-018","query":"dataset_availability","dataset_exists":true,"expected":"GRANT_ACCESS_AFTER_CONFIRMATION"},
+    {"id":"PP961-REG-019","query":"dataset_availability","dataset_exists":false,"expected":"INITIATE_ARTICLE_13_1_OPERATOR_REQUIREMENT_ROUTE"},
+    {"id":"PP961-REG-020","query":"restricted_user_case","article13_1_part7_item2_user":true,"pp538_case_letter":"г","expected":"BLOCK_ACCESS"},
+    {"id":"PP961-REG-021","query":"restricted_user_case","article13_1_part7_item2_user":true,"pp538_case_letter":"д","expected":"CONTINUE_ELIGIBILITY_REVIEW"},
+    {"id":"PP961-REG-022","query":"purpose_complete","purpose_achieved":true,"expected":"TERMINATE_ACCESS"},
+    {"id":"PP961-REG-023","query":"blocking","ground":"ATTEMPT_TO_RECORD_EXTRACT_OR_TRANSFER_DATASET_FROM_SYSTEM","expected":"BLOCK_IMMEDIATELY_NO_NUMERIC_DEADLINE"},
+    {"id":"PP961-REG-024","query":"retention_period","expected":"NOT_STATED_DO_NOT_INVENT"}
+  ]
+}
