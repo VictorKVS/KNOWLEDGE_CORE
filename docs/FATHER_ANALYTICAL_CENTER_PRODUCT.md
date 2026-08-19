@@ -359,7 +359,74 @@ flowchart TB
 - из Quant Lab: сценарии, временные ряды, backtest и экономические метрики;
 - из будущего Regulatory Twin: impact analysis и what-if.
 
-## 14. Уровни зрелости
+## 14. Контур самоанализа и совершенствования FATHER
+
+Аналитический центр исследует саму экосистему как управляемый объект:
+
+| Объект | Что измеряется | Возможные улучшения |
+|---|---|---|
+| Код | дефекты, сложность, coverage, duplication, performance, dependency risk | refactoring, алгоритм, язык, библиотека |
+| Архитектура | coupling, latency, reliability, стоимость, security boundaries | decomposition, caching, contracts, topology |
+| Базы знаний | coverage, freshness, conflicts, orphan nodes, retrieval quality | новые источники, ontology, chunking, links |
+| Навыки агентов | task success, factuality, tool safety, cost, stability | prompt, tool, workflow, examples, fine-tuning |
+| Методы аналитики | precision/recall, bias, reproducibility, usefulness | новый метод, комбинация, критерий |
+| Инфраструктура | uptime, compute, storage, queue, energy/cost | scaling, scheduling, model routing |
+| Продукты | adoption, outcome, defects, value, TCO/ROI | feature, simplification, pricing, retirement |
+
+```mermaid
+flowchart LR
+    O[Observe code / KB / agents / metrics] --> H[Improvement hypothesis]
+    H --> B[Baseline & experiment design]
+    B --> T[A/B + golden + adversarial tests]
+    T --> V[Independent verification]
+    V --> D{Decision gate}
+    D -->|reject| N[Negative result memory]
+    D -->|adapt| H
+    D -->|approve| C[Canary]
+    C --> M[Outcome measurement]
+    M -->|regression| R[Rollback]
+    M -->|proven| G[Golden Pattern]
+    G --> O
+```
+
+### Карточка улучшения
+
+```yaml
+improvement_id: FATHER-IMP-*
+target_type: code|architecture|knowledge|skill|agent|workflow|infrastructure
+baseline_version:
+problem_evidence: []
+hypothesis:
+proposed_change:
+expected_effect:
+metrics:
+guardrails:
+experiment_design:
+test_sets: [golden, regression, adversarial]
+cost_limit:
+risk_class:
+verifier:
+human_approval:
+canary_scope:
+rollback:
+result:
+decision:
+knowledge_nodes: []
+```
+
+### Неподлежащие нарушению правила
+
+- аналитик предлагает изменение, но не утверждает собственный результат;
+- production-код, веса, права и базы не изменяются без отдельного gate;
+- A/B выполняется на сопоставимых входах и фиксированных версиях;
+- success metric дополняется guardrail-метриками безопасности, стоимости и регрессий;
+- отрицательный результат сохраняется;
+- улучшение сначала проходит sandbox, затем canary;
+- всегда определён rollback;
+- подтверждённое улучшение становится Golden Pattern только после воспроизведения;
+- самоизменение без аудита и human approval запрещено.
+
+## 15. Уровни зрелости
 
 | Этап | Состав | Проверка |
 |---|---|---|
@@ -370,7 +437,7 @@ flowchart TB
 | M4 — Analytical Factory | очереди проектов, шаблоны отраслей, SLA, monitoring | пилоты с измеренной выгодой |
 | M5 — Senior Virtual Center | полный competency coverage и continuous improvement | независимый аудит и production evidence |
 
-## 15. Первый MVP
+## 16. Первый MVP
 
 Три сквозных кейса:
 
@@ -380,7 +447,7 @@ flowchart TB
 
 M1 не обучает собственную модель. Он использует RAG, tools, шаблоны, проверяемые расчёты и human approval. Данные для SFT/RL появятся как побочный продукт качественно выполненных и проверенных кейсов.
 
-## 16. Критерий хорошего результата
+## 17. Критерий хорошего результата
 
 Хороший анализ:
 
