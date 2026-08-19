@@ -1,7 +1,7 @@
-schema_version: "1.1"
+schema_version: "1.2"
 kind: ru-protected-information-master-inventory
 status: ACTIVE_DISCOVERY
-updated_at: "2026-08-19T20:23:27+03:00"
+updated_at: "2026-08-19T23:15:15+03:00"
 purpose: >-
   Authoritative discovery and reconciliation inventory for Russian sector-specific
   confidentiality/protected-information regimes intersecting with the PDN corpus.
@@ -14,6 +14,7 @@ proof_floor:
   - Existing source IDs and artifacts must be reused instead of duplicated.
   - Exact source bytes are required before SOURCE_ACQUIRED or IMMUTABLE promotion.
   - Portal-displayed PDF size/page count is discovery metadata, not an immutable fingerprint.
+  - Repealed provisions are conflict/version evidence and must never be reused as current anchors.
 status_values:
   - DISCOVERED
   - REUSED
@@ -245,6 +246,79 @@ sources:
     artifact:
       state: SOURCE_PENDING
 
+  - id: SEC-SRC-RU-FZ-326-2010
+    sector: healthcare
+    regime: oms_personalized_health_data
+    number: "326-ФЗ"
+    date: "2010-11-29"
+    title: "Об обязательном медицинском страховании в Российской Федерации"
+    status: SOURCE_PENDING
+    discovery_anchors:
+      - "статья 44 — персонифицированный учет сведений о застрахованных лицах и медицинской помощи"
+      - "статья 44 — сведения о застрахованном лице и оказанной медицинской помощи относятся к информации ограниченного доступа"
+    current_text_check:
+      checked_at: "2026-08-19"
+      secondary_consolidated_evidence: "КонсультантПлюс: редакция от 04.08.2026"
+      note: >-
+        Current consolidated text confirms restricted-access status for insured-person and medical-care data;
+        it also shows a future Article 44 change from 2027-06-01 under 329-ФЗ of 2026.
+    version_chain:
+      state: VERSION_CHAIN_PARTIAL
+      evidence:
+        - "Федеральный закон от 28.11.2025 № 430-ФЗ; primary publication № 0001202511280092 verified on the official publication portal."
+        - "Федеральный закон от 20.02.2026 № 29-ФЗ; primary publication № 0001202602200050 verified on the official publication portal."
+        - "Федеральный закон от 04.08.2026 № 329-ФЗ changes Article 44 with effect from 2027-06-01; exact primary publication artifact still pending."
+      pending: "Acquire authoritative current consolidated artifact and reconcile the complete amendment chain through 2026-08-19."
+    overlap_candidates:
+      - target: "152-ФЗ"
+        type: "PROTECTED_PERSONAL_DATA_CONTEXT"
+        status: "CANDIDATE_PENDING_PRIMARY_REVIEW"
+      - target: "323-ФЗ"
+        type: "MEDICAL_DATA_CONTEXT"
+        status: "CANDIDATE_PENDING_PRIMARY_REVIEW"
+    artifact:
+      state: SOURCE_PENDING
+      acquisition_attempted_at: "2026-08-19T23:15:15+03:00"
+      reason: "Official publication metadata for amendment events was reachable, but exact current 326-ФЗ bytes were not captured for MIME/byte-length/SHA-256."
+
+  - id: SEC-SRC-RU-FZ-143-1997
+    sector: public_sector
+    regime: civil_status_registry_data
+    number: "143-ФЗ"
+    date: "1997-11-15"
+    title: "Об актах гражданского состояния"
+    status: SOURCE_PENDING
+    discovery_anchors:
+      - "статья 13.1 — Единый государственный реестр записей актов гражданского состояния"
+      - "статья 13.2 — предоставление сведений из ЕГР ЗАГС"
+      - "статья 13.2 пункт 9 — получатели обеспечивают защиту сведений по требованиям 149-ФЗ и 152-ФЗ"
+    stale_anchor_rejected:
+      locator: "статья 12"
+      reason: "Статья 12 утратила силу с 2018-10-01; прежнее использование ее как текущего confidentiality anchor запрещено."
+    current_text_check:
+      checked_at: "2026-08-19"
+      secondary_consolidated_evidence: "ГАРАНТ: статья 13.2 с изменениями по состоянию на 26.07.2026"
+      note: >-
+        Current Article 13.2 explicitly routes civil-status registry data to public bodies and organizations;
+        paragraph 9 requires protection under 149-ФЗ and 152-ФЗ. This is a strong overlap candidate but still awaits exact primary current artifact.
+    version_chain:
+      state: VERSION_CHAIN_PARTIAL
+      evidence:
+        - "Федеральный закон от 11.02.2026 № 22-ФЗ amended Article 13.2; primary publication № 0001202602110017 verified on the official publication portal."
+        - "Федеральный закон от 26.07.2026 № 264-ФЗ changed Article 13.2; current-text delta identified, exact primary publication artifact pending."
+      pending: "Acquire authoritative current artifact and reconcile complete Article 13.2 version chain."
+    overlap_candidates:
+      - target: "152-ФЗ"
+        type: "EXPLICIT_REFERENCE_IN_CURRENT_CONSOLIDATED_TEXT"
+        status: "CANDIDATE_PENDING_PRIMARY_REVIEW"
+      - target: "149-ФЗ"
+        type: "EXPLICIT_REFERENCE_IN_CURRENT_CONSOLIDATED_TEXT"
+        status: "CANDIDATE_PENDING_PRIMARY_REVIEW"
+    artifact:
+      state: SOURCE_PENDING
+      acquisition_attempted_at: "2026-08-19T23:15:15+03:00"
+      reason: "Primary amendment publication card is verified; exact current 143-ФЗ binary has not been captured and fingerprinted."
+
 coverage:
   healthcare: DISCOVERED
   financial_banking: DISCOVERED
@@ -257,24 +331,29 @@ coverage:
   education_children: PRIMARY_PUBLICATION_VERIFIED
   public_sector: DISCOVERED
   transport: DISCOVERED
+  civil_status_records: DISCOVERED
 counters:
-  found: 11
-  new_this_pass: 4
+  found: 13
+  new_this_pass: 2
   downloaded: 0
   immutable: 0
-  pending: 10
+  pending: 12
   reused: 1
   primary_publication_verified: 3
-  exact_binary_acquisition_attempts_this_pass: 1
+  primary_amendment_events_verified_this_pass: 3
+  exact_binary_acquisition_attempts_this_pass: 2
   exact_binary_acquisition_success_this_pass: 0
+  stale_or_repealed_anchors_rejected_this_pass: 1
 production_telemetry:
-  checked_at: "2026-08-19T20:23:27+03:00"
-  acquisition_bottleneck: "Exact official binary retrieval is not yet available for the newly registered sector sources in this run."
+  checked_at: "2026-08-19T23:15:15+03:00"
+  acquisition_bottleneck: "Official publication metadata is reachable, but exact consolidated-law binaries are still not capturable in the acquisition runtime."
   analysis_note: >-
-    Discovery and legal-anchor reconciliation progressed even though binary acquisition did not.
-    No document is promoted to SOURCE_ACQUIRED/IMMUTABLE without MIME, exact byte length and SHA-256.
+    Discovery advanced by two source families. One stale legal anchor was detected and rejected:
+    Article 12 of 143-ФЗ is repealed; the live civil-status data overlap is now tracked through Articles 13.1-13.2.
+    No source was promoted to SOURCE_ACQUIRED/IMMUTABLE without MIME, exact byte length and SHA-256.
 next_actions:
   - Acquire exact official binaries for SEC-SRC-RU-FZ-323, SEC-SRC-RU-FZ-572-2022 and SEC-SRC-RU-FZ-273-2012; record MIME, byte length and SHA-256.
+  - Acquire exact current artifacts for SEC-SRC-RU-FZ-326-2010 and SEC-SRC-RU-FZ-143-1997 before chunking or executable applicability.
   - Resolve authoritative exact texts for 218-ФЗ, Law 395-1, 125-ФЗ, 38-ФЗ, 16-ФЗ, 79-ФЗ and GK Part II Article 946 before atomization.
   - Reconcile full amendment chains to 2026-08-19 before any status is raised to VERSION_CHAIN_VERIFIED.
   - Only after primary acquisition run document structure/chunk/concept/definition/requirement compilers.
