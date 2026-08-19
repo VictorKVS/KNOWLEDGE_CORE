@@ -1,0 +1,66 @@
+schema_version: "1.0"
+kind: pdn-sector-overlap-discovery-seed
+status: PROPOSED
+checked_at: "2026-08-19"
+root: PDN-RU-FZ-0152
+rule: >-
+  These are discovery-routing edges only. They do not prove organizational
+  applicability and must not feed executable decisions until both endpoint
+  versions and a legal anchor are verified.
+edges:
+  - from: PDN-RU-FZ-0323-A13
+    to: PDN-RU-FZ-0152
+    type: candidate_overlap
+    overlap_dimension: [health_information, confidentiality, personal_data]
+    proof_state: PARTIAL
+    verified_anchor: "323-ФЗ, статья 13 — врачебная тайна"
+    pending: "Verify exact current 323-ФЗ provision explicitly connecting medical-information handling to personal-data requirements."
+
+  - from: PDN-RU-FZ-0572-2022
+    to: PDN-RU-FZ-0152
+    type: candidate_special_regime
+    overlap_dimension: [biometric_personal_data, identification, authentication]
+    proof_state: PARTIAL
+    verified_anchor: "Название и предмет 572-ФЗ прямо относятся к биометрическим персональным данным."
+    pending: "Compile exact current provisions and amendment chain before raising edge to VERIFIED."
+
+  - from: PDN-RU-FZ-0126
+    to: PDN-RU-FZ-0152
+    type: candidate_overlap
+    overlap_dimension: [subscriber_data, communications_confidentiality]
+    proof_state: DISCOVERY_ONLY
+    pending: "Anchor current provisions governing subscriber/user information before applicability mapping."
+
+  - from: PDN-RU-FZ-0218
+    to: PDN-RU-FZ-0152
+    type: candidate_overlap
+    overlap_dimension: [credit_history_subject_data, consent, disclosure]
+    proof_state: DISCOVERY_ONLY
+    pending: "Acquire exact current primary text and anchor disclosure/consent provisions."
+
+  - from: PDN-RU-LAW-0395-1
+    to: PDN-RU-FZ-0152
+    type: candidate_overlap
+    overlap_dimension: [banking_secrecy, customer_information]
+    proof_state: PARTIAL
+    verified_anchor: "Закон 395-1, статья 26 — банковская тайна; amendment acts for article 26 identified."
+    pending: "Acquire exact current primary text of article 26 and test overlap conditions."
+
+  - from: PDN-RU-FZ-0125
+    to: PDN-RU-FZ-0152
+    type: candidate_overlap
+    overlap_dimension: [archives, retention, restricted_access]
+    proof_state: DISCOVERY_ONLY
+    pending: "Verify current access-restriction anchors before any retention rule is derived."
+
+  - from: PDN-RU-FZ-0038-2006
+    to: PDN-RU-FZ-0152
+    type: candidate_overlap
+    overlap_dimension: [marketing, telecom, consent]
+    proof_state: DISCOVERY_ONLY
+    pending: "Verify current Article 18 text and distinguish advertising consent from personal-data processing consent."
+quality_gates:
+  - no_candidate_edge_is_applicability_proof
+  - no_inferred_edge_is_promoted_without_primary_anchor
+  - current_version_of_both_endpoints_required_for_verified_edge
+  - explicit_legal_reference_has_higher_provenance_than_semantic_overlap
