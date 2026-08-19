@@ -1,7 +1,7 @@
-schema_version: "1.0"
+schema_version: "1.1"
 kind: ru-protected-information-master-inventory
 status: ACTIVE_DISCOVERY
-updated_at: "2026-08-19T17:24:49+03:00"
+updated_at: "2026-08-19T20:23:27+03:00"
 purpose: >-
   Authoritative discovery and reconciliation inventory for Russian sector-specific
   confidentiality/protected-information regimes intersecting with the PDN corpus.
@@ -12,6 +12,8 @@ proof_floor:
   - No SOURCE_PENDING entry may feed executable rules.
   - Cross-document applicability edges require an anchored provision and review.
   - Existing source IDs and artifacts must be reused instead of duplicated.
+  - Exact source bytes are required before SOURCE_ACQUIRED or IMMUTABLE promotion.
+  - Portal-displayed PDF size/page count is discovery metadata, not an immutable fingerprint.
 status_values:
   - DISCOVERED
   - REUSED
@@ -45,7 +47,7 @@ sources:
       pending: "Полная цепочка изменений до 2026-08-19 не сверена."
     artifact:
       state: SOURCE_PENDING
-      reason: "Exact official binary has not yet been acquired and fingerprinted in this run."
+      reason: "Exact official binary has not yet been acquired and fingerprinted."
 
   - id: SEC-SRC-RU-FZ-572-2022
     sector: biometrics
@@ -62,7 +64,7 @@ sources:
       pending: "Полная цепочка изменений до 2026-08-19 не сверена."
     artifact:
       state: SOURCE_PENDING
-      reason: "Exact official binary has not yet been acquired and fingerprinted in this run."
+      reason: "Exact official binary has not yet been acquired and fingerprinted."
 
   - id: SEC-SRC-RU-FZ-126
     sector: communications
@@ -149,6 +151,100 @@ sources:
     artifact:
       state: SOURCE_PENDING
 
+  - id: SEC-SRC-RU-FZ-273-2012
+    sector: education_children
+    regime: education_restricted_information
+    number: "273-ФЗ"
+    date: "2012-12-29"
+    title: "Об образовании в Российской Федерации"
+    status: PRIMARY_PUBLICATION_VERIFIED
+    official_publication_number: "0001201212300007"
+    official_publication_date: "2012-12-30"
+    source_url: "https://publication.pravo.gov.ru/document/0001201212300007"
+    discovery_anchor: "статья 59 — материалы государственной итоговой аттестации содержат информацию ограниченного доступа"
+    current_text_check:
+      checked_at: "2026-08-19"
+      secondary_consolidated_evidence: "КонсультантПлюс: редакция от 04.08.2026"
+      note: "Secondary current-text check does not replace primary version-chain proof."
+    version_chain:
+      state: VERSION_CHAIN_PARTIAL
+      evidence:
+        - "В текущем консолидированном перечне изменений присутствуют 45-ФЗ от 08.03.2026, 107-ФЗ от 25.04.2026, 259-ФЗ от 26.07.2026, 330-ФЗ и 334-ФЗ от 04.08.2026."
+      pending: "Reconcile each 2026 amendment against its primary publication before VERSION_CHAIN_VERIFIED."
+    artifact:
+      state: SOURCE_PENDING
+      portal_pdf_display_size: "20017 KB"
+      portal_page_count: 404
+      acquisition_attempted_at: "2026-08-19T20:20:00+03:00"
+      reason: "Exact official PDF bytes were not retrievable from the acquisition runtime; SHA-256/byte length therefore remain unset."
+
+  - id: SEC-SRC-RU-FZ-16-2007
+    sector: transport
+    regime: transport_security_restricted_information_and_passenger_data
+    number: "16-ФЗ"
+    date: "2007-02-09"
+    title: "О транспортной безопасности"
+    status: SOURCE_PENDING
+    primary_anchors:
+      - "статья 11 часть 2 — централизованные базы персональных данных пассажиров и персонала транспортных средств"
+      - "статья 11 часть 4 — информационные ресурсы ЕГИС ОТБ являются информацией ограниченного доступа"
+      - "статья 11 часть 7 — передача данных выполняется в соответствии с 152-ФЗ и 16-ФЗ"
+    current_text_check:
+      checked_at: "2026-08-19"
+      secondary_consolidated_evidence: "КонсультантПлюс: редакция от 04.08.2026"
+      note: "Explicit 152-ФЗ cross-reference is present in Article 11; primary exact artifact is still pending."
+    version_chain:
+      state: VERSION_CHAIN_PARTIAL
+      evidence:
+        - "Федеральный закон от 08.03.2026 № 51-ФЗ — изменение 16-ФЗ"
+        - "Федеральный закон от 04.08.2026 № 325-ФЗ — изменения статей 1 и 2 16-ФЗ"
+        - "Федеральный закон от 30.01.2026 № 13-ФЗ — изменение статьи 1, отдельная будущая редакция с 01.09.2026"
+      pending: "Acquire primary consolidated text and reconcile complete amendment chain."
+    artifact:
+      state: SOURCE_PENDING
+
+  - id: SEC-SRC-RU-FZ-79-2004
+    sector: public_sector
+    regime: civil_service_personal_data
+    number: "79-ФЗ"
+    date: "2004-07-27"
+    title: "О государственной гражданской службе Российской Федерации"
+    status: SOURCE_PENDING
+    discovery_anchor: "статья 42 — персональные данные гражданского служащего и ведение личного дела"
+    overlap_note: >-
+      Article 42 explicitly requires the state body's HR service to observe Russian
+      personal-data legislation and regulates collection, automated decisions,
+      protection and transfer of a civil servant's personal data.
+    version_chain:
+      state: VERSION_CHAIN_PARTIAL
+      evidence:
+        - "Пункт 4 части 1 статьи 42 изменён Федеральным законом от 12.12.2023 № 594-ФЗ."
+      pending: "Acquire authoritative current primary text and the current Presidential implementing regulation for civil-servant personal files."
+    artifact:
+      state: SOURCE_PENDING
+
+  - id: SEC-SRC-RU-GK2-1996-A946
+    sector: insurance
+    regime: insurance_secrecy
+    number: "14-ФЗ / ГК РФ часть вторая"
+    date: "1996-01-26"
+    title: "Гражданский кодекс Российской Федерации (часть вторая), статья 946 — тайна страхования"
+    status: SOURCE_PENDING
+    discovery_anchor: >-
+      статья 946 — страховщик не вправе разглашать сведения о страхователе,
+      застрахованном лице, выгодоприобретателе, состоянии их здоровья и имущественном положении
+    current_text_check:
+      checked_at: "2026-08-19"
+      secondary_consolidated_evidence: "КонсультантПлюс: ГК РФ часть вторая, статья 946"
+    relation_note: >-
+      Protected information substantially overlaps personal, health and property data,
+      but no direct 152-ФЗ applicability edge is inferred at discovery stage.
+    version_chain:
+      state: SOURCE_PENDING
+      pending: "Acquire authoritative current primary text and reconcile Article 946 amendment history."
+    artifact:
+      state: SOURCE_PENDING
+
 coverage:
   healthcare: DISCOVERED
   financial_banking: DISCOVERED
@@ -157,19 +253,29 @@ coverage:
   biometrics: DISCOVERED
   archives_retention: DISCOVERED
   advertising_marketing: DISCOVERED
-  insurance: NOT_REGISTERED
-  education_children: NOT_REGISTERED
-  public_sector: NOT_REGISTERED
-  transport: NOT_REGISTERED
+  insurance: DISCOVERED
+  education_children: PRIMARY_PUBLICATION_VERIFIED
+  public_sector: DISCOVERED
+  transport: DISCOVERED
 counters:
-  found: 7
+  found: 11
+  new_this_pass: 4
   downloaded: 0
   immutable: 0
-  pending: 6
+  pending: 10
   reused: 1
+  primary_publication_verified: 3
+  exact_binary_acquisition_attempts_this_pass: 1
+  exact_binary_acquisition_success_this_pass: 0
+production_telemetry:
+  checked_at: "2026-08-19T20:23:27+03:00"
+  acquisition_bottleneck: "Exact official binary retrieval is not yet available for the newly registered sector sources in this run."
+  analysis_note: >-
+    Discovery and legal-anchor reconciliation progressed even though binary acquisition did not.
+    No document is promoted to SOURCE_ACQUIRED/IMMUTABLE without MIME, exact byte length and SHA-256.
 next_actions:
-  - Acquire exact official binaries for SEC-SRC-RU-FZ-323 and SEC-SRC-RU-FZ-572-2022; record MIME, byte length and SHA-256.
-  - Resolve authoritative exact texts for 218-ФЗ, Law 395-1, 125-ФЗ and 38-ФЗ before atomization.
+  - Acquire exact official binaries for SEC-SRC-RU-FZ-323, SEC-SRC-RU-FZ-572-2022 and SEC-SRC-RU-FZ-273-2012; record MIME, byte length and SHA-256.
+  - Resolve authoritative exact texts for 218-ФЗ, Law 395-1, 125-ФЗ, 38-ФЗ, 16-ФЗ, 79-ФЗ and GK Part II Article 946 before atomization.
   - Reconcile full amendment chains to 2026-08-19 before any status is raised to VERSION_CHAIN_VERIFIED.
-  - Only after primary acquisition run document structure/chunk/concept/requirement compilers.
-  - Expand discovery to insurance, education/children, public sector and transport without inferring applicability from taxonomy alone.
+  - Only after primary acquisition run document structure/chunk/concept/definition/requirement compilers.
+  - Expand education/children discovery to special protected student-testing and health-related records, but keep taxonomy-only leads outside executable logic.
