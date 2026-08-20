@@ -1,0 +1,87 @@
+schema_version: "1.0"
+kind: stream-3-production-run
+run_id: STREAM3-2026-08-20T2022
+checked_at: "2026-08-20T20:22:41+03:00"
+repository: "VictorKVS/KNOWLEDGE_CORE"
+stream: STREAM_3_SECTOR_OVERLAYS
+
+objective: >-
+  Discover, reconcile, acquire and register primary/current authoritative legal sources for sectoral and special
+  protected-information regimes intersecting with the 152-ФЗ domain without inventing applicability.
+
+run_summary:
+  discovery_candidates_reviewed: 3
+  new_sources_registered: 1
+  existing_sources_reused: 0
+  current_authority_texts_identified: 1
+  primary_amendment_events_verified: 1
+  exact_binary_acquisition_attempts: 1
+  exact_binary_acquisition_successes: 0
+  immutable_artifacts_added: 0
+  semantic_scope_guards_added: 1
+  applicability_edges_promoted: 0
+  legal_conflicts_confirmed: 0
+
+registered_source:
+  source_id: SEC-SRC-RU-FZ-63-2002
+  title: "63-ФЗ «Об адвокатской деятельности и адвокатуре в Российской Федерации»"
+  sector: legal_professional_secrecy
+  regime: advocate_secret
+  authority_url: "https://www.kremlin.ru/acts/bank/18127/print"
+  legal_anchor: "Article 8(1)"
+  lifecycle_state: SOURCE_PENDING
+  version_chain_state: VERSION_CHAIN_PARTIAL
+  amendment_evidence:
+    act: "83-ФЗ от 22.04.2024"
+    official_publication_id: "0001202404220011"
+  exact_artifact_state: SOURCE_PENDING_PRIMARY_EXACT_CAPTURE
+
+reconciliation:
+  dedup_queries:
+    - "SEC-SRC-RU-FZ-63"
+    - "адвокатская тайна"
+  duplicate_found: false
+  note: "No existing indexed source node for 63-ФЗ advocate secrecy was found in the repository search during this run."
+
+conflict_check:
+  id: STREAM3-SCOPE-GUARD-63FZ-001
+  classification: SEMANTIC_SCOPE_GUARD
+  status: NOT_A_LEGAL_CONFLICT
+  finding: >-
+    Advocate secrecy and personal data are distinct concepts. The knowledge graph must not create a synonym/equivalence
+    edge between them. Dual applicability remains scenario-dependent and non-executable until separately proven.
+
+acquisition:
+  - target: SEC-SRC-RU-FZ-63-2002
+    url: "https://www.kremlin.ru/acts/bank/18127/print"
+    result: FAILED_EXACT_NETWORK_CAPTURE
+    mime: null
+    byte_length: null
+    sha256: null
+    proof_floor: "No synthetic artifact metadata recorded."
+
+counter_state_before:
+  found: 19
+  downloaded: 7
+  immutable: 7
+  pending: 10
+  reused: 2
+  sectors_registered: 16
+
+counter_state_after:
+  found: 20
+  downloaded: 7
+  immutable: 7
+  pending: 11
+  reused: 2
+  sectors_registered: 17
+
+artifacts_written:
+  - "63-fz-2002-source-card.yaml"
+  - "master-inventory-delta-2026-08-20T2022.yaml"
+  - "../ru-personal-data/master-source-inventory-delta-stream3-2026-08-20T2022.yaml"
+
+next_priority:
+  - "Exact capture + manifest for SEC-SRC-RU-FZ-63-2002."
+  - "Resume pending exact acquisition for 222-ФЗ, 218-ФЗ and 98-ФЗ."
+  - "Continue discovery of professional/special secrecy regimes only when a primary/current authority source can be grounded."
