@@ -1,0 +1,61 @@
+name: RU Protected Information Immutable Acquisition
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/ru-protected-information-acquisition.yml"
+      - "TOOLS/ru_protected_acquire.py"
+      - "security-corpora/RU/protected-information/source/**"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: ru-protected-information-acquisition
+  cancel-in-progress: false
+
+jobs:
+  acquire:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Capture byte-exact official PDFs and manifests
+        id: acquire
+        shell: bash
+        run: |
+          set +e
+          python TOOLS/ru_protected_acquire.py
+          rc=$?
+          echo "acquirer_exit_code=$rc" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Commit immutable artifacts and telemetry
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add security-corpora/RU/protected-information/raw \
+                  security-corpora/RU/protected-information/manifests \
+                  security-corpora/RU/protected-information/SECTOR_ACQUISITION_RUN.json
+          if git diff --cached --quiet; then
+            echo "No acquisition delta"
+            exit 0
+          fi
+          git commit -m "security-kb: capture RU protected-information immutable originals [skip ci]"
+          git push
+
+      - name: Surface acquisition result
+        shell: bash
+        run: |
+          cat security-corpora/RU/protected-information/SECTOR_ACQUISITION_RUN.json || true
+          if [ "${{ steps.acquire.outputs.acquirer_exit_code }}" != "0" ]; then
+            echo "Sector acquisition completed with zero successful captures; inspect telemetry." >&2
+            exit 1
+          fi
