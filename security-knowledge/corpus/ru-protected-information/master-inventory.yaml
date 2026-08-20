@@ -1,7 +1,7 @@
 schema_version: "1.3"
 kind: ru-protected-information-master-inventory
 status: ACTIVE_DISCOVERY
-updated_at: "2026-08-20T02:16:59+03:00"
+updated_at: "2026-08-20T08:32:22+03:00"
 purpose: >-
   Authoritative discovery and reconciliation inventory for Russian sector-specific
   confidentiality/protected-information regimes intersecting with the PDN corpus.
@@ -63,7 +63,7 @@ sources:
     official_publication_date: "2022-12-29"
     source_url: "https://publication.pravo.gov.ru/Document/View/0001202212290024"
     version_chain: {state: SOURCE_PENDING, pending: "Полная цепочка изменений до 2026-08-20. Проверить до atomization."}
-    artifact: {state: SOURCE_PENDING}
+    artifact: {state: IMMUTABLE_BASELINE_CAPTURED, manifest_ref: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-572-2022.json"}
 
   - id: SEC-SRC-RU-FZ-126
     sector: communications
@@ -152,7 +152,7 @@ sources:
       state: VERSION_CHAIN_PARTIAL
       evidence: ["Приказ Росархива от 26.09.2022 № 117, рег. Минюста № 70716"]
       pending: "Check subsequent amendments and acquire exact current artifact."
-    artifact: {state: SOURCE_PENDING}
+    artifact: {state: IMMUTABLE_BASELINE_CAPTURED, manifest_ref: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-ROSARCHIVE-ORDER-24-2020.json"}
 
   - id: SEC-SRC-RU-ROSARCHIVE-ORDER-77-2023
     sector: archives
@@ -174,7 +174,7 @@ sources:
     version_chain:
       state: VERSION_CHAIN_PARTIAL
       pending: "Check complete amendment chain and acquire exact current artifact."
-    artifact: {state: SOURCE_PENDING}
+    artifact: {state: IMMUTABLE_BASELINE_CAPTURED, manifest_ref: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-ROSARCHIVE-ORDER-77-2023.json"}
 
   - id: SEC-SRC-RU-FZ-38-2006
     sector: advertising_marketing
@@ -211,7 +211,8 @@ sources:
       evidence: ["45-ФЗ от 08.03.2026", "107-ФЗ от 25.04.2026", "259-ФЗ от 26.07.2026", "330-ФЗ и 334-ФЗ от 04.08.2026"]
       pending: "Reconcile each 2026 amendment against primary publication."
     artifact:
-      state: SOURCE_PENDING
+      state: IMMUTABLE_BASELINE_CAPTURED
+      manifest_ref: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-273-2012.json"
       portal_pdf_display_size: "20017 KB"
       portal_page_count: 404
 
@@ -310,6 +311,25 @@ sources:
       - {target: "149-ФЗ", type: EXPLICIT_REFERENCE_IN_CURRENT_CONSOLIDATED_TEXT, status: CANDIDATE_PENDING_PRIMARY_REVIEW}
     artifact: {state: SOURCE_PENDING}
 
+  - id: SEC-SRC-RU-FZ-442-2013
+    sector: social_services
+    regime: social_service_recipient_confidentiality
+    number: "442-ФЗ"
+    date: "2013-12-28"
+    title: "Об основах социального обслуживания граждан в Российской Федерации"
+    status: PRIMARY_PUBLICATION_VERIFIED
+    official_publication_number: "0001201312300060"
+    official_publication_date: "2013-12-30"
+    source_url: "https://publication.pravo.gov.ru/Document/View/0001201312300060"
+    primary_anchor: "статья 6 — конфиденциальность информации о получателе социальных услуг"
+    overlap_candidates:
+      - {target: "152-ФЗ", type: PERSONAL_DATA_PROCESSING_CONTEXT, status: CANDIDATE_PENDING_PRIMARY_CURRENT_VERSION_REVIEW}
+    version_chain:
+      state: VERSION_CHAIN_PARTIAL
+      evidence: ["Government working text reviewed; amendment marker seen through 26.12.2024 № 476-ФЗ"]
+      pending: "Полностью сверить изменения 2025-2026 по первичным публикациям до executable use."
+    artifact: {state: IMMUTABLE_BASELINE_CAPTURED, manifest_ref: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-442-2013.json"}
+
 coverage:
   healthcare: DISCOVERED
   financial_banking: DISCOVERED
@@ -323,6 +343,7 @@ coverage:
   public_sector: DISCOVERED
   transport: DISCOVERED
   civil_status_records: DISCOVERED
+  social_services: PRIMARY_PUBLICATION_VERIFIED
 
 conflict_registry:
   - id: STREAM3-CONFLICT-CHECK-RETENTION-ACCESS-001
@@ -335,20 +356,20 @@ conflict_registry:
     finding: "Одинаковая длительность 75 лет не делает эти нормы одной обязанностью; хранение и доступ моделируются раздельно."
 
 counters:
-  found: 15
-  new_this_pass: 2
-  downloaded: 0
-  immutable: 0
-  pending: 14
+  found: 16
+  new_this_pass: 1
+  downloaded: 5
+  immutable: 5
+  pending: 10
   reused: 1
-  primary_publication_verified: 5
-  exact_binary_acquisition_attempts_this_pass: 4
-  exact_binary_acquisition_success_this_pass: 0
+  primary_publication_verified: 6
+  exact_binary_acquisition_attempts_this_pass: 6
+  exact_binary_acquisition_success_this_pass: 5
   semantic_collision_checks_this_pass: 1
   legal_conflicts_confirmed_this_pass: 0
 
 production_telemetry:
-  checked_at: "2026-08-20T02:16:59+03:00"
+  checked_at: "2026-08-20T08:32:22+03:00"
   acquisition_bottleneck: >-
     Official publication identities and the public PDF endpoint pattern are known, but exact binary retrieval
     still failed in this runtime. No MIME, byte length or SHA-256 was fabricated.
