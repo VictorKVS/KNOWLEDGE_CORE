@@ -2,7 +2,7 @@
 """Byte-exact official acquisition for RU Protected Information sector sources.
 
 Scans security-corpora/RU/protected-information/source/*.yaml for source IDs and
-19-digit official publication IDs, retrieves authoritative metadata/PDF bytes
+16-digit official publication IDs, retrieves authoritative metadata/PDF bytes
 from publication.pravo.gov.ru, verifies advertised byte length, writes immutable
 raw artifacts + manifests, and emits production telemetry. It never upgrades
 semantic/applicability/version-chain status.
@@ -28,9 +28,9 @@ RAW_DIR = CORPUS / "raw"
 MANIFEST_DIR = CORPUS / "manifests"
 RUN_FILE = CORPUS / "SECTOR_ACQUISITION_RUN.json"
 BASES = ("http://publication.pravo.gov.ru", "https://publication.pravo.gov.ru")
-UA = "KNOWLEDGE_CORE-sector-acquirer/1.0 (+https://github.com/VictorKVS/KNOWLEDGE_CORE)"
+UA = "KNOWLEDGE_CORE-sector-acquirer/1.1 (+https://github.com/VictorKVS/KNOWLEDGE_CORE)"
 ID_RE = re.compile(r"^id:\s*([^\s#]+)\s*$", re.M)
-EO_RE = re.compile(r'^\s*official_publication_id:\s*["\']?([0-9]{19})["\']?\s*$', re.M)
+EO_RE = re.compile(r'^\s*official_publication_id:\s*["\']?([0-9]{16})["\']?\s*$', re.M)
 
 
 def fetch_bytes(url: str, timeout: int = 90, attempts: int = 4):
