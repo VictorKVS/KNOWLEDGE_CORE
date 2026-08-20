@@ -1,0 +1,121 @@
+schema_version: "1.0"
+kind: stream-3-sector-library-run
+owner_stream: STREAM_3_SECTOR_OVERLAYS
+checked_at: "2026-08-20T17:18:05+03:00"
+previous_run_ref: "stream-3-run-2026-08-20T1435.yaml"
+
+objective: >-
+  Continue primary-source discovery/acquisition for sector and special protected-information regimes
+  intersecting the RU personal-data corpus, reusing existing source nodes and refusing inferred applicability.
+
+reconciliation:
+  existing_sources_reused: 1
+  reused_source_ids:
+    - SEC-SRC-RU-FZ-98
+  finding: >-
+    98-ФЗ «О коммерческой тайне» already exists in the legislation graph and therefore must be reused,
+    not registered as a second source node in the protected-information corpus.
+
+source_checks:
+  - source_id: SEC-SRC-RU-FZ-98
+    number: "98-ФЗ"
+    date: "2004-07-29"
+    title: "О коммерческой тайне"
+    sector: commercial_secrets
+    regime: commercial_secret
+    reuse_path: "security-knowledge/legislation/RU/federal-laws/98-FZ/document.yaml"
+    existing_provenance_state: USER_UPLOADED_SECONDARY_TEXT
+    primary_authority_check:
+      authority: "Президент России / государственная система правовой информации"
+      url: "https://www.kremlin.ru/acts/bank/21227"
+      state: CURRENT_AUTHORITY_TEXT_IDENTIFIED
+      amendment_visible:
+        act: "251-ФЗ от 08.08.2024"
+        official_publication_url: "https://publication.pravo.gov.ru/document/0001202408080046"
+        official_publication_id: "0001202408080046"
+      freshness_guard: >-
+        The authority text establishes an authoritative current-text route and confirms the 2024 amendment event,
+        but this run does not assert that no 2025-2026 amendments exist until a complete primary version-chain sweep is closed.
+    pdn_overlap:
+      state: NOT_PROVED_BY_REGIME_NAME
+      guard: "COMMERCIAL_SECRET != PERSONAL_DATA"
+      rule: >-
+        A data item may fall under both regimes only when the concrete information and processing scenario independently
+        satisfy the requirements of each regime. No default 152-ФЗ applicability edge is created.
+
+  - source_id: SEC-SRC-RU-FZ-218
+    number: "218-ФЗ"
+    title: "О кредитных историях"
+    lifecycle_state: SOURCE_PENDING
+    version_chain_delta:
+      state: VERSION_CHAIN_PARTIAL
+      primary_events_verified:
+        - act: "377-ФЗ от 07.10.2022"
+          official_publication_id: "0001202210070001"
+          official_publication_url: "https://publication.pravo.gov.ru/Document/View/0001202210070001"
+          effect: "Статья 6 изменяет статью 4 218-ФЗ."
+        - act: "442-ФЗ от 04.08.2023"
+          official_publication_id: "0001202308040037"
+          official_publication_url: "https://publication.pravo.gov.ru/document/0001202308040037"
+          effect: >-
+            Статья 9 дополняет 218-ФЗ статьей 10.2; в норме о рассмотрении обращений одновременно защищаются
+            персональные данные заявителя и коммерческая, служебная, банковская, страховая и иная охраняемая законом тайна.
+    applicability_effect: NONE
+    note: >-
+      These amendment events enrich provenance/version-chain and protected-information relations but do not certify
+      the current consolidated 218-ФЗ text. Exact current artifact remains required before atomization/executable use.
+
+acquisition:
+  exact_binary_attempts: 2
+  exact_binary_successes: 0
+  targets:
+    - source_id: SEC-SRC-RU-FZ-222-2015
+      target: "official publication PDF 0001201507130083"
+      result: BLOCKED_BY_CURRENT_FETCH_PATH
+      proof_preserved: true
+      action: "Keep SOURCE_PENDING; do not mint MIME/byte length/SHA-256 from portal display metadata."
+    - source_id: SEC-SRC-RU-FZ-98
+      target: "authoritative current-text network artifact"
+      result: BLOCKED_BY_CURRENT_FETCH_PATH
+      proof_preserved: true
+      action: "Reuse source node; do not promote existing uploaded ODT to primary immutable artifact."
+
+counter_state_before:
+  found: 18
+  downloaded: 7
+  immutable: 7
+  pending: 10
+  reused: 1
+  primary_publication_verified: 8
+  sectors_registered: 15
+
+counter_state_after:
+  found: 19
+  downloaded: 7
+  immutable: 7
+  pending: 10
+  reused: 2
+  primary_publication_verified: 8
+  sectors_registered: 16
+
+run_metrics:
+  new_duplicate_sources_created: 0
+  existing_sources_reconciled: 1
+  primary_amendment_events_added: 2
+  explicit_protected_information_cooccurrence_anchors_added: 1
+  applicability_edges_promoted: 0
+  immutable_baselines_added: 0
+  legal_conflicts_confirmed: 0
+  semantic_scope_guards_added: 1
+
+proof_floor:
+  - "Portal display size/page count is not a byte-exact fingerprint."
+  - "An uploaded/secondary source cannot be silently promoted to primary provenance."
+  - "Commercial secrecy is not automatically personal data."
+  - "Primary amendment evidence does not by itself certify a current consolidated source."
+
+next_actions:
+  - "Acquire byte-exact official artifact for 222-ФЗ publication 0001201507130083 and record MIME/bytes/SHA-256."
+  - "Acquire an authoritative exact artifact for the reused 98-ФЗ node without replacing its existing source identity."
+  - "Continue exact acquisition for 218-ФЗ, Law 395-1, 125-ФЗ, 38-ФЗ, 16-ФЗ, 79-ФЗ, GK Article 946, 326-ФЗ and 143-ФЗ."
+  - "After acquisition, compile only source deltas into structure/chunks/concepts/definitions/requirements/relations/conflict checks."
