@@ -1,7 +1,7 @@
 schema_version: "1.0"
 id: GIS-FSTEC-117-TRANSITION-CLASSIFICATION-VERIFIED
-checked_at: "2026-08-13"
-status: VERIFIED_AUTHORITATIVE_CONSOLIDATED_WITH_OFFICIAL_IDENTITY
+checked_at: "2026-08-20"
+status: VERIFIED_CURRENT_ORIGINAL_WITH_REGISTERED_FUTURE_AMENDMENT_ROUTER
 purpose: >-
   Replace obsolete reliance on FSTEC Order No. 17 for current GIS/non-crypto protection decisions
   and capture the current transition, governance and classification rules of FSTEC Order No. 117.
@@ -16,11 +16,20 @@ source:
   official_publication_url: "https://publication.pravo.gov.ru/document/0001202506170011"
   authoritative_consolidated_url: "https://www.consultant.ru/document/cons_doc_LAW_507869/"
   effective_from: "2026-03-01"
+  future_amendment:
+    number: "137"
+    signed_date: "2026-05-08"
+    minjust_registration: "10.08.2026 № 87797"
+    general_effective_from: "2026-09-01"
+    item_7_effective_from: "2027-03-01"
+    authoritative_text_url: "https://www.consultant.ru/document/cons_doc_LAW_541612/"
+    official_publication_identity: PENDING_LOCATE_DO_NOT_INVENT
   verification_note: >-
     Official publication portal proves act identity, registration/publication metadata and existence.
     Clause text below is verified against the current authoritative consolidated legal text in ConsultantPlus.
-    The April 2026 amendment found in public sources is only a draft and is NOT applied here unless an adopted
-    official act is separately proven.
+    Order No. 137 is no longer a draft: it was signed on 8 May 2026 and registered by the Ministry
+    of Justice on 10 August 2026 as No. 87797. It is future-effective and is routed separately:
+    items 1-6 and 8-18 from 1 September 2026; item 7 from 1 March 2027.
 
 records:
   - id: FSTEC117-TR-01
@@ -43,6 +52,18 @@ records:
     rule: "Аттестаты соответствия на ГИС и иные информационные системы, выданные до вступления приказа №117 в силу, считаются действительными."
     source_quote: "аттестаты соответствия ... выданные до дня вступления в силу настоящего приказа, считаются действительными"
     decision_effect: "Do not automatically invalidate pre-2026-03-01 attestations merely because Order 117 replaced Order 17."
+
+  - id: FSTEC117-TR-04
+    status: VERIFIED_FUTURE_EFFECTIVE
+    source_locator: "приказ ФСТЭК России № 137, п. 2"
+    rule: "Общие изменения приказа №137 вступают в силу 1 сентября 2026 года."
+    decision_effect: "Do not apply items 1-6 or 8-18 before 2026-09-01."
+
+  - id: FSTEC117-TR-05
+    status: VERIFIED_FUTURE_EFFECTIVE
+    source_locator: "приказ ФСТЭК России № 137, п. 2; приложение, п. 7"
+    rule: "Новая редакция пункта 32 вступает в силу отдельно — 1 марта 2027 года."
+    decision_effect: "During 2026-09-01 through 2027-02-28 keep original point 32 despite the other effective amendments."
 
   - id: FSTEC117-GOV-01
     status: VERIFIED
@@ -156,7 +177,9 @@ records:
 red_team_guardrails:
   - "Order 17 is historical after 2026-03-01 and must not be cited as the current GIS baseline."
   - "A pre-2026-03-01 attestation is not invalid merely because Order 117 became effective."
-  - "The April 2026 amendment located during research is a draft; draft clauses, dates and changed indicator rules must not be treated as current law without adopted official publication."
+  - "Order 137 is adopted and registered but future-effective; do not treat it as current on 2026-08-20."
+  - "Do not apply Order 137 item 7 before 2027-03-01, even though the other amendment items start on 2026-09-01."
+  - "The Order 137 official-publication identifier was not located in the bounded search and must not be guessed."
   - "Order 117 covers non-cryptographic protection within its scope; do not use it as a substitute for applicable cryptographic/FSB requirements."
   - "Classification requires actual information-significance and system-scale facts; the engine must not infer a class from organization type alone."
 
@@ -175,6 +198,13 @@ proof_sources:
       - governance clauses
       - monitoring deadlines
       - classification appendix
+  - type: AUTHORITATIVE_REGISTERED_FUTURE_AMENDMENT_TEXT
+    url: "https://www.consultant.ru/document/cons_doc_LAW_541612/"
+    proves:
+      - Order 137 identity and Minjust registration
+      - general 2026-09-01 effective date
+      - item 7 separate 2027-03-01 effective date
+      - eighteen amendment items
 
 family_promotion:
   promoted: false
