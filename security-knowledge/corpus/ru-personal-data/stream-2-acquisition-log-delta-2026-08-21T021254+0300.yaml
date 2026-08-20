@@ -1,0 +1,91 @@
+schema_version: 1
+stream_id: RU_PD_STREAM_2_TECHNICAL_CRYPTO
+log_delta_id: RU_PD_STREAM2_LOG_DELTA_2026_08_21T021254_0300
+applies_to: stream-2-acquisition-log.yaml
+append_only: true
+retrieved_at: "2026-08-21T02:12:54+03:00"
+
+run:
+  reconciliation:
+    existing_priority_nodes_reused: 8
+    new_primary_source_records: 5
+    duplicate_existing_nodes_created: 0
+    new_source_ids:
+      - RU_FSB_ORDER_545_2024
+      - RU_FSB_ORDER_557_2025
+      - RU_FSTEC_ORDER_163_2025
+      - RU_FSTEC_ORDER_164_2025
+      - RU_FSTEC_ORDER_487_2025
+
+  primary_evidence:
+    pp1119_current_edition_page_reverified: true
+    fsb77_primary_publication_reverified: true
+    fstec21_primary_amendment_chain_reverified: true
+    fsb545_primary_publication_verified: true
+    fsb557_primary_publication_verified: true
+    fstec163_primary_publication_verified: true
+    fstec164_primary_publication_verified: true
+    fstec487_primary_publication_verified: true
+
+  artifact_acquisition:
+    exact_binary_source_attempts: 7
+    successes: 0
+    bytes_downloaded: 0
+    sha256_recorded: 0
+    immutable_artifacts_created: 0
+    failure_classes:
+      DNS_RESOLUTION_FAILURE: 7
+    integrity_rule: >-
+      Do not populate MIME, exact byte length or SHA-256 from publication-card metadata.
+      Exact bytes are required for SOURCE_ACQUIRED/IMMUTABLE.
+
+  version_analysis:
+    primary_version_edges_added: 4
+    edges:
+      - "RU_FSB_ORDER_142_2023 AMENDED_BY RU_FSB_ORDER_545_2024"
+      - "RU_FSB_ORDER_142_2023 AMENDED_BY RU_FSB_ORDER_557_2025"
+      - "RU_FSTEC_ORDER_163_2025 AMENDED_BY RU_FSTEC_ORDER_487_2025"
+      - "RU_FSTEC_ORDER_164_2025 AMENDED_BY RU_FSTEC_ORDER_487_2025"
+    unresolved_semantic_delta:
+      - >-
+        FSB Orders 545/2024 and 557/2025 both change paragraph 2 of Order 142.
+        The events are proved, but the final consolidated paragraph is not synthesized before exact text acquisition.
+
+  applicability_analysis:
+    new_universal_pdn_duties: 0
+    direct_pdn_gossopka_edges_added: 0
+    context_guards_preserved_or_added: 4
+    rules:
+      - "FSB Order 77 remains the only proved PDn-specific GosSOPKA/NKTsKI branch in this stream."
+      - "FSB licensing-control amendments do not become ordinary PDn operator duties."
+      - "FSTEC 163/164/487 apply to licensed activities, not automatically to every ISPDn operator."
+      - "FSTEC Order 21 and FSB Order 378 remain the separate technical and conditional-SKZI protection branches."
+
+  conflict_detection:
+    candidates_checked: 4
+    confirmed_legal_contradictions: 0
+    context_splits: 2
+    version_chain_cases: 2
+
+  counters_after_run:
+    unique_stream2_source_records: 18
+    new_primary_source_records_this_run: 5
+    primary_amendment_events_verified_cumulative: 7
+    direct_pdn_gossopka_bridge_sources_registered: 1
+    direct_applicability_edges_verified: 1
+    immutable_artifacts_stream2: 0
+    pending_immutable_or_snapshot: 18
+    bytes_downloaded_stream2: 0
+    hashes_recorded_stream2: 0
+    exact_binary_attempts_this_run: 7
+    exact_binary_successes_this_run: 0
+
+  outputs:
+    - "technical-security-source-pack-delta-2026-08-21T021254+0300.yaml"
+    - "master-source-inventory-delta-stream2-2026-08-21T021254+0300.yaml"
+    - "runs/stream-2/2026-08-21T021254+0300.yaml"
+
+  next_bottleneck: >-
+    Exact authoritative binary acquisition remains blocked by transient DNS resolution in this worker.
+    Once bytes become available, highest-value compilation targets are FSB 77, FSTEC Threat Method 2021,
+    PP 1119, FSTEC 21 and FSB 378; licensing amendment deltas follow without importing them as universal PDn duties.
