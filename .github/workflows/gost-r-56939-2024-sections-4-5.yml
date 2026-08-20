@@ -1,0 +1,27 @@
+name: GOST R 56939-2024 sections 4-5 gate
+
+on:
+  pull_request:
+    paths:
+      - "security-knowledge/standards/gost-r-56939-2024-sections-4-5-*.yaml"
+      - "security-knowledge/standards/gost-r-56939-2024-sections-4-5-*.json"
+      - "security-knowledge/standards/gost-and-ru-standards-source-registry.yaml"
+      - "security-knowledge/validators/validate_gost_r_56939_2024_sections_4_5.py"
+      - ".github/workflows/gost-r-56939-2024-sections-4-5.yml"
+  push:
+    paths:
+      - "security-knowledge/standards/gost-r-56939-2024-sections-4-5-*.yaml"
+      - "security-knowledge/standards/gost-r-56939-2024-sections-4-5-*.json"
+      - "security-knowledge/standards/gost-and-ru-standards-source-registry.yaml"
+      - "security-knowledge/validators/validate_gost_r_56939_2024_sections_4_5.py"
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pyyaml
+      - run: python security-knowledge/validators/validate_gost_r_56939_2024_sections_4_5.py
