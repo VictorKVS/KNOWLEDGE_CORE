@@ -1,0 +1,29 @@
+name: GIS FSTEC 117 process details 35-49
+
+on:
+  pull_request:
+    paths:
+      - "security-knowledge/controls/gis-fstec-117-process-details-35-49-*"
+      - "security-knowledge/classification/gis-fstec-117-137-temporal-amendment-atomic-v1.yaml"
+      - "security-knowledge/validators/validate_gis_fstec_117_process_details_35_49.py"
+      - ".github/workflows/gis-fstec-117-process-details-35-49.yml"
+  push:
+    paths:
+      - "security-knowledge/controls/gis-fstec-117-process-details-35-49-*"
+      - "security-knowledge/classification/gis-fstec-117-137-temporal-amendment-atomic-v1.yaml"
+      - "security-knowledge/validators/validate_gis_fstec_117_process_details_35_49.py"
+      - ".github/workflows/gis-fstec-117-process-details-35-49.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install --disable-pip-version-check pyyaml
+      - run: python security-knowledge/validators/validate_gis_fstec_117_process_details_35_49.py
