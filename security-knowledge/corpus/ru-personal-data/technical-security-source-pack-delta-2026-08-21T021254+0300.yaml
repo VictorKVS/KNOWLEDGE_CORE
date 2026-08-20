@@ -1,0 +1,223 @@
+schema_version: 1
+pack_id: RU_PD_TECHNICAL_SECURITY_DELTA_2026_08_21T021254_0300
+applies_to: technical-security-source-pack.yaml
+retrieved_at: "2026-08-21T02:12:54+03:00"
+scope: >-
+  Incremental primary-source registration for the PDn technical/cryptographic contour.
+  This delta adds current licensing-control version events discovered after the base pack and
+  preserves the rule that licensing/certification material is not an ordinary PDn operator duty
+  without an explicit applicability edge.
+
+integrity_policy:
+  - "No source is IMMUTABLE until exact bytes are acquired and MIME, byte_length and SHA-256 are computed from those bytes."
+  - "Portal page PDF-size metadata is publication metadata, not a substitute for the artifact hash."
+  - "An amendment event may be PRIMARY_PUBLICATION_VERIFIED while its exact PDF remains SOURCE_PENDING."
+  - "Licensing-control, certification and CII/GosSOPKA branches remain context-separated from ordinary PDn operator duties."
+
+rechecks:
+  RU_GOV_PP_1119_2012:
+    result: CURRENT_EDITION_PAGE_REVERIFIED
+    official_url: "https://government.ru/docs/6339/"
+    evidence: "Government portal explicitly labels PP 1119 as the current edition."
+  RU_FSB_ORDER_77_2023:
+    result: PRIMARY_PUBLICATION_REVERIFIED
+    official_publication_number: "0001202302200021"
+    official_url: "https://publication.pravo.gov.ru/document/0001202302200021"
+    justice_registration_number: "72404"
+    applicability_gate: PDN_COMPUTER_INCIDENT_WITH_UNLAWFUL_TRANSFER_PROVISION_DISTRIBUTION_OR_ACCESS
+    note: "Retain only the proved 152-FZ article 19 part 12 -> FSB-77 -> GosSOPKA/NKTsKI PDn incident route."
+  RU_FSTEC_ORDER_21_2013:
+    result: PRIMARY_AMENDMENT_CHAIN_REVERIFIED
+    amendment_events:
+      - source_id: RU_FSTEC_ORDER_49_2017
+        official_publication_number: "0001201704260010"
+      - source_id: RU_FSTEC_ORDER_68_2020
+        official_publication_number: "0001202007100002"
+    note: "No later Order 21 amendment is promoted by this delta without primary evidence."
+
+new_sources:
+  - source_id: RU_FSB_ORDER_545_2024
+    authority: FSB_Russia
+    document_type: amendment_order
+    number: "545"
+    signed_date: 2024-12-16
+    title: >-
+      О внесении изменения в пункт 2 приказа ФСБ России от 25 марта 2023 г. № 142
+      "Об установлении сроков и последовательности административных процедур при осуществлении
+      органами федеральной службы безопасности лицензионного контроля ..."
+    justice_registration:
+      date: 2024-12-20
+      number: "80660"
+    official_publication:
+      publication_number: "0001202412200069"
+      publication_date: 2024-12-20
+      page_url: "https://publication.pravo.gov.ru/document/0001202412200069"
+      exact_file_url_attempted: "https://publication.pravo.gov.ru/File/GetFile/0001202412200069?type=pdf"
+      portal_pdf_metadata_kb: 81
+      portal_pdf_pages: 2
+    verification_status: PRIMARY_PUBLICATION_VERIFIED
+    applicability: CONDITIONAL_FSB_LICENSING_CONTROL_CONTEXT
+    semantic_role: VERSION_EVENT_FOR_RU_FSB_ORDER_142_2023
+    artifact:
+      status: SOURCE_PENDING
+      mime: null
+      byte_length: null
+      sha256: null
+      acquisition_result: DNS_RESOLUTION_FAILURE
+
+  - source_id: RU_FSB_ORDER_557_2025
+    authority: FSB_Russia
+    document_type: amendment_order
+    number: "557"
+    signed_date: 2025-12-29
+    title: >-
+      О внесении изменения в пункт 2 приказа ФСБ России от 25 марта 2023 г. № 142
+      "Об установлении сроков и последовательности административных процедур при осуществлении
+      органами федеральной службы безопасности лицензионного контроля ..."
+    justice_registration:
+      date: 2025-12-30
+      number: "84878"
+    official_publication:
+      publication_number: "0001202512300057"
+      publication_date: 2025-12-30
+      page_url: "https://publication.pravo.gov.ru/document/0001202512300057"
+      exact_file_url_attempted: "https://publication.pravo.gov.ru/File/GetFile/0001202512300057?type=pdf"
+      portal_pdf_metadata_kb: 94
+      portal_pdf_pages: 2
+    verification_status: PRIMARY_PUBLICATION_VERIFIED
+    applicability: CONDITIONAL_FSB_LICENSING_CONTROL_CONTEXT
+    semantic_role: VERSION_EVENT_FOR_RU_FSB_ORDER_142_2023
+    artifact:
+      status: SOURCE_PENDING
+      mime: null
+      byte_length: null
+      sha256: null
+      acquisition_result: DNS_RESOLUTION_FAILURE
+
+  - source_id: RU_FSTEC_ORDER_163_2025
+    authority: FSTEK_Russia
+    document_type: licensing_control_order
+    number: "163"
+    signed_date: 2025-05-12
+    title: >-
+      Об установлении сроков и последовательности административных процедур при осуществлении
+      Федеральной службой по техническому и экспортному контролю и ее территориальными органами
+      лицензионного контроля за деятельностью по технической защите конфиденциальной информации
+    justice_registration:
+      date: 2025-07-01
+      number: "82774"
+    official_publication:
+      publication_number: "0001202507020008"
+      publication_date: 2025-07-02
+      page_url: "https://publication.pravo.gov.ru/document/0001202507020008"
+      exact_file_url_attempted: "https://publication.pravo.gov.ru/File/GetFile/0001202507020008?type=pdf"
+      portal_pdf_metadata_kb: 739
+      portal_pdf_pages: 12
+    verification_status: PRIMARY_PUBLICATION_VERIFIED
+    applicability: CONDITIONAL_FSTEK_TZI_LICENSED_ACTIVITY
+    applicability_warning: >-
+      Do not infer this licensing-control procedure merely from processing personal data or operating an ISPDn.
+      It enters PDn decision logic only if the organization performs the licensed activity in scope.
+    version_chain:
+      - event: BASE_ACT
+        date: 2025-05-12
+      - source_id: RU_FSTEC_ORDER_487_2025
+        event: AMENDED_BY
+        signed_date: 2025-12-29
+        status: PRIMARY_PUBLICATION_VERIFIED
+    artifact:
+      status: SOURCE_PENDING
+      mime: null
+      byte_length: null
+      sha256: null
+      acquisition_result: DNS_RESOLUTION_FAILURE
+
+  - source_id: RU_FSTEC_ORDER_164_2025
+    authority: FSTEK_Russia
+    document_type: licensing_control_order
+    number: "164"
+    signed_date: 2025-05-12
+    title: >-
+      Об установлении сроков и последовательности административных процедур при осуществлении
+      Федеральной службой по техническому и экспортному контролю и ее территориальными органами
+      лицензионного контроля за деятельностью по разработке и производству средств защиты
+      конфиденциальной информации (в пределах компетенции ФСТЭК России)
+    justice_registration:
+      date: 2025-07-01
+      number: "82775"
+    official_publication:
+      publication_number: "0001202507020007"
+      publication_date: 2025-07-02
+      page_url: "https://publication.pravo.gov.ru/document/0001202507020007"
+      exact_file_url_attempted: "https://publication.pravo.gov.ru/File/GetFile/0001202507020007?type=pdf"
+      portal_pdf_metadata_kb: 743
+      portal_pdf_pages: 11
+    verification_status: PRIMARY_PUBLICATION_VERIFIED
+    applicability: CONDITIONAL_FSTEK_SECURITY_PRODUCT_DEVELOPMENT_LICENSED_ACTIVITY
+    applicability_warning: >-
+      This is a licensed-activity control branch; it is not a universal PDn operator requirement.
+    version_chain:
+      - event: BASE_ACT
+        date: 2025-05-12
+      - source_id: RU_FSTEC_ORDER_487_2025
+        event: AMENDED_BY
+        signed_date: 2025-12-29
+        status: PRIMARY_PUBLICATION_VERIFIED
+    artifact:
+      status: SOURCE_PENDING
+      mime: null
+      byte_length: null
+      sha256: null
+      acquisition_result: DNS_RESOLUTION_FAILURE
+
+  - source_id: RU_FSTEC_ORDER_487_2025
+    authority: FSTEK_Russia
+    document_type: amendment_order
+    number: "487"
+    signed_date: 2025-12-29
+    title: "О внесении изменений в приказы ФСТЭК России от 12 мая 2025 г. № 163 и от 12 мая 2025 г. № 164"
+    justice_registration:
+      date: 2025-12-30
+      number: "84884"
+    official_publication:
+      publication_number: "0001202512300067"
+      publication_date: 2025-12-30
+      page_url: "https://publication.pravo.gov.ru/document/0001202512300067"
+      exact_file_url_attempted: "https://publication.pravo.gov.ru/File/GetFile/0001202512300067?type=pdf"
+      portal_pdf_metadata_kb: 107
+      portal_pdf_pages: 2
+    verification_status: PRIMARY_PUBLICATION_VERIFIED
+    applicability: VERSION_CONTEXT_FOR_FSTEK_LICENSING_CONTROL
+    semantic_role: AMENDMENT_EVENT_NOT_UNIVERSAL_PDN_DUTY
+    artifact:
+      status: SOURCE_PENDING
+      mime: null
+      byte_length: null
+      sha256: null
+      acquisition_result: DNS_RESOLUTION_FAILURE
+
+version_edges:
+  - from: RU_FSB_ORDER_142_2023
+    to: RU_FSB_ORDER_545_2024
+    type: AMENDED_BY
+    status: PRIMARY_PUBLICATION_VERIFIED
+  - from: RU_FSB_ORDER_142_2023
+    to: RU_FSB_ORDER_557_2025
+    type: AMENDED_BY
+    status: PRIMARY_PUBLICATION_VERIFIED
+    note: "Do not infer final consolidated paragraph-2 wording until exact text/delta compilation is completed."
+  - from: RU_FSTEC_ORDER_163_2025
+    to: RU_FSTEC_ORDER_487_2025
+    type: AMENDED_BY
+    status: PRIMARY_PUBLICATION_VERIFIED
+  - from: RU_FSTEC_ORDER_164_2025
+    to: RU_FSTEC_ORDER_487_2025
+    type: AMENDED_BY
+    status: PRIMARY_PUBLICATION_VERIFIED
+
+conflict_and_scope_result:
+  confirmed_legal_contradictions: 0
+  context_splits_added: 2
+  notes:
+    - "FSB licensing-control changes and FSTEK licensing-control changes are separate authority/activity branches, not interchangeable PDn protection requirements."
+    - "The 2024 and 2025 FSB amendments both target paragraph 2 of Order 142; record both version events but defer consolidated semantic interpretation until exact text is compiled."
