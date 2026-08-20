@@ -25,7 +25,9 @@ def evaluate(case, model, directions, requirements):
     query = case["query"]
     if query == "count":
         mapping = {
-            "clauses": model["counts"]["numbered_clauses"],
+            "clause_instances": model["counts"]["numbered_paragraph_instances"],
+            "unique_clause_labels": model["counts"]["unique_numeric_clause_labels"],
+            "duplicate_clause_labels": len(model["counts"]["duplicated_numeric_labels"]),
             "pipeline": len(model["evaluation_route"]["pipeline"]),
             "directions": len(directions),
             "evidence": len(model["input_evidence_classes"]),
@@ -64,6 +66,14 @@ def evaluate(case, model, directions, requirements):
         return model["calculation_boundary"]["p_threshold_alone_is_sufficient"]
     if query == "formula":
         return model["calculation_boundary"][case["kind"]]
+    if query == "direction_score":
+        return round(sum(
+            requirements[requirement_id]["weight"] * coefficient
+            for requirement_id, coefficient in case["coefficients"].items()
+        ), 10)
+    if query == "aggregate_uzi":
+        included_levels = [value for value in case["levels"] if value is not None]
+        return round(sum(included_levels) / len(included_levels), 10)
     if query == "table3_cells":
         return model["calculation_boundary"]["table_3_normalized_d_ij_minima"]
     if query == "plan_deadline":
@@ -88,6 +98,9 @@ def main():
     requirements = {item["id"]: item for item in model["requirement_types"]}
 
     assert model["status"] == "VERIFIED_BOUNDED_CURRENT_TEXT_INTERFACE_OFFICIAL_BYTES_AND_IMAGE_CELLS_PENDING"
+    assert model["counts"]["numbered_paragraph_instances"] == 39
+    assert model["counts"]["unique_numeric_clause_labels"] == 36
+    assert model["counts"]["duplicated_numeric_labels"] == [34, 35, 36]
     assert len(directions) == model["counts"]["directions"] == 21
     assert len(requirements) == model["counts"]["requirement_types"] == 8
     assert round(sum(item["weight"] for item in requirements.values()), 10) == 1.0
@@ -100,6 +113,9 @@ def main():
     assert len(model["optional_tools"]["classes"]) == model["counts"]["optional_tool_classes"] == 4
     assert len(model["report"]["required_fields"]) == model["counts"]["report_required_fields"] == 13
     assert model["calculation_boundary"]["p_threshold_alone_is_sufficient"] is False
+    assert model["calculation_boundary"]["direction_score_formula"] == "P_i = sum_{j=1}^8 D_ij"
+    assert model["calculation_boundary"]["aggregate_uzi_formula"] == "Uzi = sum_{i=1}^N Uziti / N"
+    assert model["calculation_boundary"]["aggregate_denominator"] == "INCLUDED_APPLICABLE_DIRECTIONS_ONLY"
     assert model["calculation_boundary"]["table_3_normalized_d_ij_minima"] == "PENDING_IMAGE_CELL_EXTRACTION"
     assert model["verification_boundary"]["immutable_official_bytes"] == "PENDING"
     assert model["verification_boundary"]["critical_gap_created"] is False
@@ -114,7 +130,7 @@ def main():
         for failure in failures:
             print("FAIL", failure)
         raise SystemExit(1)
-    print("PASS: 36 clauses; 21 directions; 8 requirements; 13 evidence inputs; 52 fail-closed cases")
+    print("PASS: 39 numbered paragraph instances; 36 unique labels; 21 directions; 8 requirements; 13 evidence inputs; 60 fail-closed cases")
 
 
 if __name__ == "__main__":

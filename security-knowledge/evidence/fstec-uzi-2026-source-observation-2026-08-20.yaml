@@ -23,11 +23,20 @@ current_text_interface:
     - {id: II, url: https://www.consultant.ru/document/cons_doc_LAW_541543/666b6bec9bd774de8ea03c81694d99afbd961ca3/, clauses: "7-11"}
     - {id: III, url: https://www.consultant.ru/document/cons_doc_LAW_541543/efc711cf4c4dc35e367041500ef196fd92278105/, clauses: "12-18"}
     - {id: IV, url: https://www.consultant.ru/document/cons_doc_LAW_541543/1d66be7a4af70d1f9021ad4c86628fefa7c1bef7/, clauses: "19-26"}
-    - {id: V, url: https://www.consultant.ru/document/cons_doc_LAW_541543/d6c97d779356211e675ce85fbaf8201eebaac54f/, clauses: "27-33"}
+    - {id: V, url: https://www.consultant.ru/document/cons_doc_LAW_541543/d6c97d779356211e675ce85fbaf8201eebaac54f/, clauses: "27-36"}
     - {id: VI, url: https://www.consultant.ru/document/cons_doc_LAW_541543/692a152f2e141fc85592716040d278c8baeadb2e/, clauses: "34-36"}
 
+independent_formula_corroboration:
+  url: https://117fstec.credos.ru/maturity
+  role: CORROBORATION_ONLY_NOT_NORMATIVE_AUTHORITY
+  observed_formulas:
+    direction_score: "P_i = sum_{j=1}^8 D_ij"
+    aggregate_uzi: "Uzi = sum_{i=1}^N Uziti / N"
+
 bounded_facts_verified:
-  numbered_clauses: 36
+  numbered_paragraph_instances: 39
+  unique_numeric_clause_labels: 36
+  duplicated_numeric_labels: [34, 35, 36]
   pipeline_steps: 6
   directions: 21
   requirement_types: 8
@@ -37,19 +46,24 @@ bounded_facts_verified:
   target_routes: 3
   report_required_fields: 13
 
+formula_semantics:
+  direction_score: "P_i = sum_{j=1}^8 D_ij"
+  aggregate_uzi: "Uzi = sum_{i=1}^N Uziti / N"
+  verification: VERIFIED_CONTEXT_PLUS_INDEPENDENT_TRANSCRIPTION
+  official_formula_image_bytes: PENDING
+
 image_only_or_not_machine_readable:
-  - exact_direction_score_formula
-  - exact_aggregate_uzi_formula
   - table_3_normalized_d_ij_minimum_cells
 
 observed_anomalies:
   - POSSIBLE_ORDER_31_FOOTNOTE_DATE_OR_YEAR_TYPO
   - POSSIBLE_POINT_11_CROSS_REFERENCE_TYPO_IN_SECTION_V
   - CONSULTANT_NOTE_THAT_NUMBERING_FOLLOWS_OFFICIAL_TEXT
+  - DUPLICATE_CLAUSE_LABELS_34_35_36_ACROSS_SECTIONS_V_AND_VI
 
 pending:
   - acquire_hash_and_record_immutable_official_bytes
-  - extract_and_dually_verify_formula_images
+  - acquire_and_hash_official_formula_image_bytes
   - extract_and_dually_verify_all_table_3_normalized_d_ij_cells
   - independent_expert_review
 
@@ -58,5 +72,6 @@ fail_closed_rules:
   - DO_NOT_USE_CALCULATORS_AS_NORMATIVE_AUTHORITY
   - DO_NOT_ASSIGN_DIRECTION_LEVEL_FROM_P_THRESHOLD_ALONE
   - DO_NOT_INVENT_IMAGE_ONLY_VALUES_OR_FORMULAS
+  - DO_NOT_COLLAPSE_DUPLICATE_34_35_36_ACROSS_SECTIONS
   - DO_NOT_INVENT_A_NUMERIC_PLAN_DEADLINE
   - DO_NOT_EQUATE_UZI_WITH_KZI_OR_PZI

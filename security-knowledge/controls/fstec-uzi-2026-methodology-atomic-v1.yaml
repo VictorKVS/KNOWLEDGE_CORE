@@ -6,7 +6,8 @@ approved_date: "2026-08-07"
 document_title: "Методика оценки уровня зрелости деятельности в области технической защиты информации в информационных системах и обеспечения безопасности значимых объектов критической информационной инфраструктуры Российской Федерации"
 status: VERIFIED_BOUNDED_CURRENT_TEXT_INTERFACE_OFFICIAL_BYTES_AND_IMAGE_CELLS_PENDING
 scope_statement: >-
-  This model covers the thirty-six numbered clauses, six-stage evaluation pipeline,
+  This model covers thirty-nine numbered paragraph instances using thirty-six unique
+  numeric labels (labels 34-36 are duplicated across sections V and VI), the six-stage evaluation pipeline,
   twenty-one basic directions, eight weighted requirement types, evidence inputs,
   recommended target routes, maturity bands, governance and report contents visible
   in the current text interface. It does not reconstruct formula images or the
@@ -19,6 +20,8 @@ source_evidence:
   current_text_root: https://www.consultant.ru/document/cons_doc_LAW_541543/
   current_text_notice: https://www.consultant.ru/law/hotdocs/95228.html
   current_text_notice_published: "2026-08-11"
+  independent_formula_transcription: https://117fstec.credos.ru/maturity
+  independent_formula_transcription_role: CORROBORATION_ONLY_NOT_NORMATIVE_AUTHORITY
   immutable_official_bytes: PENDING
 
 applicability:
@@ -180,10 +183,12 @@ calculation_boundary:
   weighted_requirement_value: "D_ij = w_j * a_j"
   requirement_weights_sum: 1.0
   coefficient_range: "0 <= a_j <= 1"
-  direction_score_semantics: AGGREGATES_EIGHT_D_IJ_VALUES
-  direction_score_exact_formula_image: PENDING_MACHINE_READABLE_OR_OFFICIAL_FORMULA
-  aggregate_uzi_semantics: AGGREGATES_CURRENT_LEVELS_OF_INCLUDED_DIRECTIONS
-  aggregate_uzi_exact_formula_image: PENDING_MACHINE_READABLE_OR_OFFICIAL_FORMULA
+  direction_score_formula: "P_i = sum_{j=1}^8 D_ij"
+  direction_score_formula_verification: VERIFIED_CONTEXT_PLUS_INDEPENDENT_TRANSCRIPTION_OFFICIAL_IMAGE_BYTES_PENDING
+  aggregate_uzi_formula: "Uzi = sum_{i=1}^N Uziti / N"
+  aggregate_uzi_formula_verification: VERIFIED_CONTEXT_PLUS_INDEPENDENT_TRANSCRIPTION_OFFICIAL_IMAGE_BYTES_PENDING
+  aggregate_denominator: INCLUDED_APPLICABLE_DIRECTIONS_ONLY
+  official_formula_image_bytes: PENDING
   table_3_visible_p_thresholds:
     - {level: 0, condition: "P < 0.2"}
     - {level: 1, condition: "P >= 0.225"}
@@ -230,6 +235,8 @@ observed_text_anomalies:
     treatment: PRESERVE_AS_SOURCE_ANOMALY_DO_NOT_SILENTLY_CORRECT
   - id: OFFICIAL_NUMBERING_NOTE
     treatment: CONSULTANT_STATES_NUMBERING_FOLLOWS_OFFICIAL_TEXT
+  - id: DUPLICATE_CLAUSE_LABELS_34_35_36_ACROSS_SECTIONS_V_AND_VI
+    treatment: PRESERVE_SECTION_QUALIFIED_IDENTITIES
 
 scope_guards:
   - DO_NOT_EQUATE_UZI_WITH_KZI_OR_PZI
@@ -240,10 +247,13 @@ scope_guards:
   - DO_NOT_RECONSTRUCT_IMAGE_ONLY_D_IJ_MINIMA
   - DO_NOT_INVENT_A_NUMERIC_IMPROVEMENT_PLAN_DEADLINE
   - DO_NOT_SILENTLY_CORRECT_OBSERVED_SOURCE_ANOMALIES
+  - DO_NOT_COLLAPSE_DUPLICATE_34_35_36_ACROSS_SECTIONS
   - DO_NOT_CLAIM_IMMUTABLE_OFFICIAL_BYTES
 
 counts:
-  numbered_clauses: 36
+  numbered_paragraph_instances: 39
+  unique_numeric_clause_labels: 36
+  duplicated_numeric_labels: [34, 35, 36]
   pipeline_steps: 6
   directions: 21
   input_evidence_classes: 13
@@ -258,7 +268,8 @@ verification_boundary:
   clauses_process_directions_roles_evidence_and_reporting: VERIFIED_CURRENT_TEXT_INTERFACE
   weights_coefficients_and_visible_p_thresholds: VERIFIED_CURRENT_TEXT_INTERFACE
   target_routes_and_normative_strength: VERIFIED_CURRENT_TEXT_INTERFACE
-  exact_formula_images: PENDING
+  formula_semantics: VERIFIED_CONTEXT_PLUS_INDEPENDENT_TRANSCRIPTION
+  official_formula_image_bytes: PENDING
   table_3_normalized_d_ij_minima: PENDING
   immutable_official_bytes: PENDING
   independent_expert_review: PENDING
