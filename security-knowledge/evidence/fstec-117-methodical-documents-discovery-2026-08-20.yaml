@@ -1,0 +1,52 @@
+schema_version: "1.0"
+run_id: SECURITY-KB-RUN-153
+observed_at: "2026-08-20"
+purpose: >-
+  Preserve source discovery and retrieval boundaries for the three distinct FSTEC
+  methodical documents used around Order 117. Endpoint existence is not treated as
+  proof of complete or current normative bytes.
+
+documents:
+  - id: FSTEC_MD_KZI_2025_11_11
+    title: "Методика оценки показателя состояния технической защиты информации и обеспечения безопасности значимых объектов критической информационной инфраструктуры Российской Федерации"
+    approved_date: "2025-11-11"
+    purpose: KZI_CALCULATION
+    official_page: https://fstec.ru/dokumenty/vse-dokumenty/spetsialnye-normativnye-dokumenty/metodicheskij-dokument-ot-11-noyabrya-2025-g
+    official_endpoint_result: TIMEOUT
+    authoritative_bytes: PENDING
+    atomization: PENDING
+  - id: FSTEC_MD_MEASURES_2026_04_12
+    title: "Состав и содержание мероприятий и мер по защите информации, содержащейся в информационных системах"
+    approved_date: "2026-04-12"
+    purpose: MEASURE_CATALOG_AND_IMPLEMENTATION_CONTENT
+    official_page: https://fstec.ru/dokumenty/vse-dokumenty/spetsialnye-normativnye-dokumenty/metodicheskij-dokument-ot-12-aprelya-2026-g
+    official_endpoint_result: TIMEOUT
+    public_text_copy: https://117fstec.credos.ru/files/metoddok-fstek-12-04-2026.pdf
+    public_text_copy_pages: 182
+    public_text_copy_title_page_observed: true
+    bounded_catalog_atomization: VERIFIED_17_FAMILIES_96_CODES_SELECTION_RULES
+    full_requirements_and_enhancements_atomization: PENDING
+    authoritative_bytes: PENDING
+  - id: FSTEC_MD_UZI_2026_08_07
+    title: "Методика оценки уровня зрелости деятельности в области технической защиты информации в информационных системах и обеспечения безопасности значимых объектов критической информационной инфраструктуры Российской Федерации"
+    approved_date: "2026-08-07"
+    purpose: UZI_MATURITY_CALCULATION
+    official_pdf_endpoint: https://fstec.ru/files/1523/---7--2026-/3102/---7--2026-.pdf
+    official_endpoint_result: TIMEOUT
+    authoritative_bytes: PENDING
+    atomization: PENDING
+
+fail_closed_rules:
+  - DO_NOT_EQUATE_KZI_CALCULATION_METHODOLOGY_WITH_MEASURE_CATALOG
+  - DO_NOT_EQUATE_UZI_MATURITY_METHODOLOGY_WITH_KZI
+  - DO_NOT_TREAT_SECONDARY_CALCULATORS_AS_AUTHORITATIVE_TEXT
+  - DO_NOT_INVENT_NORMALIZED_VALUES_FORMULAS_WEIGHTS_OR_THRESHOLDS
+  - DO_NOT_CLAIM_OFFICIAL_BYTES_FROM_A_TIMEOUT
+  - DO_NOT_APPLY_FUTURE_ORDER_137_WORDING_BEFORE_ITS_EFFECTIVE_DATE
+
+next_acquisition:
+  - acquire_and_hash_official_KZI_2025_11_11_bytes
+  - acquire_and_hash_official_UZI_2026_08_07_bytes
+  - atomize_KZI_and_UZI_formulas_thresholds_roles_evidence_and_temporal_edges
+  - acquire_and_hash_official_MEASURES_2026_04_12_bytes
+  - atomize_all_measure_implementation_requirements_enhancements_and_class_cells

@@ -1,0 +1,23 @@
+name: FSTEC methodical 2026 measure catalog gate
+
+on:
+  pull_request:
+    paths:
+      - "security-knowledge/controls/fstec-methodical-2026-measure-catalog-*"
+      - "security-knowledge/validators/validate_fstec_methodical_2026_measure_catalog.py"
+      - ".github/workflows/fstec-methodical-2026-measure-catalog.yml"
+  push:
+    paths:
+      - "security-knowledge/controls/fstec-methodical-2026-measure-catalog-*"
+      - "security-knowledge/validators/validate_fstec_methodical_2026_measure_catalog.py"
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pyyaml
+      - run: python security-knowledge/validators/validate_fstec_methodical_2026_measure_catalog.py
