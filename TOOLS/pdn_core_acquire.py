@@ -9,6 +9,10 @@ Two official acquisition routes are supported:
 Every successful capture records URL, retrieval time, MIME, byte length and SHA-256.
 The script never upgrades semantic/verification status: raw capture proves only the
 bytes obtained from an already METADATA_VERIFIED official source route.
+
+Safety invariant (v1.2): acquisition identity is read only from the top-level
+``document`` section of a source card. Amendment/version-chain publication IDs
+must never be captured under the baseline source ID.
 """
 from __future__ import annotations
 
@@ -34,12 +38,27 @@ BASES = (
     "http://publication.pravo.gov.ru",
     "https://publication.pravo.gov.ru",
 )
-UA = "KNOWLEDGE_CORE-pdn-acquirer/1.1 (+https://github.com/VictorKVS/KNOWLEDGE_CORE)"
+UA = "KNOWLEDGE_CORE-pdn-acquirer/1.2 (+https://github.com/VictorKVS/KNOWLEDGE_CORE)"
 
 ID_RE = re.compile(r"^id:\s*([^\s#]+)\s*$", re.M)
-EO_RE = re.compile(r'^\s*official_publication_id:\s*["\']?([0-9]{16})["\']?\s*$', re.M)
-CANONICAL_URL_RE = re.compile(r'(?ms)^canonical_source:\s*\n.*?^\s{2}url:\s*["\']([^"\']+)["\']\s*$')
+DOC_EO_RE = re.compile(r'^  official_publication_id:\s*["\']?([0-9]{16})["\']?\s*$', re.M)
+DOC_NUMBER_RE = re.compile(r'^  number:\s*["\']?([^"\'\n]+)["\']?\s*$', re.M)
+CANONICAL_URL_RE = re.compile(r'^  url:\s*["\']([^"\']+)["\']\s*$', re.M)
 STATUS_RE = re.compile(r"^status:\s*([^\s#]+)\s*$", re.M)
+FEDERAL_LAW_NUMBER_RE = re.compile(r"^\d+-ФЗ$")
+TOP_LEVEL_RE = re.compile(r"(?m)^[A-Za-z_][A-Za-z0-9_-]*:\s*(?:.*)?$")
+
+
+def top_level_section(text: str, name: str) -> str:
+    """Return the indented body of one top-level YAML-ish section."""
+    start_match = re.search(rf"(?m)^{re.escape(name)}:\s*$", text)
+    if not start_match:
+        return ""
+    start = start_match.end()
+    tail = text[start:]
+    next_top = TOP_LEVEL_RE.search(tail)
+    end = start + next_top.start() if next_top else len(text)
+    return text[start:end]
 
 
 def fetch_bytes(url: str, timeout: int = 90, attempts: int = 4) -> tuple[bytes, dict[str, str], str]:
@@ -109,19 +128,44 @@ def discover_targets() -> list[dict[str, object]]:
         status = STATUS_RE.search(text)
         if not status or status.group(1) != "METADATA_VERIFIED":
             continue
-        eo = EO_RE.search(text)
-        curl = CANONICAL_URL_RE.search(text)
+
+        document = top_level_section(text, "document")
+        canonical = top_level_section(text, "canonical_source")
+        eo = DOC_EO_RE.search(document)
+        mnumber = DOC_NUMBER_RE.search(document)
+        curl = CANONICAL_URL_RE.search(canonical)
+        expected_number = mnumber.group(1).strip() if mnumber else ""
+
         if eo:
-            targets.append({"source_id": mid.group(1), "route": "publication_pdf", "value": eo.group(1), "path": path})
+            targets.append({
+                "source_id": mid.group(1),
+                "route": "publication_pdf",
+                "value": eo.group(1),
+                "expected_number": expected_number,
+                "path": path,
+            })
         elif curl:
-            targets.append({"source_id": mid.group(1), "route": "canonical_snapshot", "value": curl.group(1), "path": path})
+            targets.append({
+                "source_id": mid.group(1),
+                "route": "canonical_snapshot",
+                "value": curl.group(1),
+                "expected_number": expected_number,
+                "path": path,
+            })
     return targets
 
 
-def capture_publication_pdf(source_id: str, eo: str, source_record: Path) -> dict[str, object]:
+def capture_publication_pdf(source_id: str, eo: str, expected_number: str, source_record: Path) -> dict[str, object]:
     meta_raw, _meta_headers, meta_url = official_get("/api/Document", {"eoNumber": eo})
     meta = json.loads(meta_raw.decode("utf-8"))
     advertised = meta.get("pdfFileLength")
+    api_number = str(meta.get("number") or "").strip()
+    if expected_number and FEDERAL_LAW_NUMBER_RE.fullmatch(expected_number) and api_number and api_number != expected_number:
+        raise RuntimeError(
+            f"source/publication identity mismatch: source document number={expected_number!r}, "
+            f"official API number={api_number!r}, eo={eo}"
+        )
+
     pdf, pdf_headers, pdf_url = official_get("/File/Pdf", {"eoNumber": eo})
     if not pdf.startswith(b"%PDF-"):
         raise RuntimeError(f"not a PDF signature; first bytes={pdf[:16]!r}")
@@ -133,9 +177,16 @@ def capture_publication_pdf(source_id: str, eo: str, source_record: Path) -> dic
     mime = (pdf_headers.get("content-type") or "application/pdf").split(";", 1)[0].strip()
     if mime == "application/octet-stream":
         mime = "application/pdf"
+    number_match = (
+        not expected_number
+        or not FEDERAL_LAW_NUMBER_RE.fullmatch(expected_number)
+        or not api_number
+        or api_number == expected_number
+    )
     return {
-        "schema_version": "1.1",
+        "schema_version": "1.2",
         "source_id": source_id,
+        "source_document_number": expected_number,
         "capture_kind": "official_publication_pdf",
         "official_publication_id": eo,
         "official_metadata_url": meta_url,
@@ -153,6 +204,8 @@ def capture_publication_pdf(source_id: str, eo: str, source_record: Path) -> dic
         "official_api_number": meta.get("number"),
         "proof": {
             "official_route": True,
+            "publication_id_scoped_to_source_document_section": True,
+            "official_api_number_matches_source_document_when_checkable": number_match,
             "byte_exact_download": True,
             "pdf_signature_ok": True,
             "byte_length_matches_official_api": advertised is None or int(advertised) == len(pdf),
@@ -162,7 +215,7 @@ def capture_publication_pdf(source_id: str, eo: str, source_record: Path) -> dic
     }
 
 
-def capture_canonical_snapshot(source_id: str, url: str, source_record: Path) -> dict[str, object]:
+def capture_canonical_snapshot(source_id: str, url: str, expected_number: str, source_record: Path) -> dict[str, object]:
     data, headers, final_url = fetch_bytes(url)
     if not data:
         raise RuntimeError("empty canonical-source response")
@@ -171,8 +224,9 @@ def capture_canonical_snapshot(source_id: str, url: str, source_record: Path) ->
     artifact, sha = write_immutable(source_id, "official-snapshot", data, extension)
     retrieved = dt.datetime.now(dt.timezone.utc).isoformat().replace("+00:00", "Z")
     return {
-        "schema_version": "1.1",
+        "schema_version": "1.2",
         "source_id": source_id,
+        "source_document_number": expected_number,
         "capture_kind": "official_canonical_snapshot",
         "official_file_url": final_url,
         "source_url": url,
@@ -184,6 +238,7 @@ def capture_canonical_snapshot(source_id: str, url: str, source_record: Path) ->
         "source_record_ref": str(source_record.relative_to(ROOT)).replace("\\", "/"),
         "proof": {
             "official_route": True,
+            "publication_id_scoped_to_source_document_section": True,
             "byte_exact_download": True,
             "sha256_calculated_from_downloaded_bytes": True,
             "publication_api_length_check_not_applicable": True,
@@ -204,13 +259,19 @@ def main() -> int:
         source_id = str(target["source_id"])
         route = str(target["route"])
         value = str(target["value"])
+        expected_number = str(target.get("expected_number") or "")
         source_record = Path(target["path"])
-        row: dict[str, object] = {"source_id": source_id, "route": route, "status": "PENDING"}
+        row: dict[str, object] = {
+            "source_id": source_id,
+            "route": route,
+            "source_document_number": expected_number,
+            "status": "PENDING",
+        }
         try:
             if route == "publication_pdf":
-                manifest = capture_publication_pdf(source_id, value, source_record)
+                manifest = capture_publication_pdf(source_id, value, expected_number, source_record)
             else:
-                manifest = capture_canonical_snapshot(source_id, value, source_record)
+                manifest = capture_canonical_snapshot(source_id, value, expected_number, source_record)
             mpath = MANIFEST_DIR / f"{source_id}.json"
             mpath.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
             row.update({
@@ -229,8 +290,9 @@ def main() -> int:
     publication_targets = sum(1 for t in targets if t["route"] == "publication_pdf")
     canonical_targets = sum(1 for t in targets if t["route"] == "canonical_snapshot")
     run = {
-        "schema_version": "1.1",
+        "schema_version": "1.2",
         "kind": "pdn-core-acquisition-run",
+        "identity_scope_guard": "document.official_publication_id only",
         "started_at": started.isoformat().replace("+00:00", "Z"),
         "finished_at": dt.datetime.now(dt.timezone.utc).isoformat().replace("+00:00", "Z"),
         "targets_total": len(targets),
@@ -242,7 +304,14 @@ def main() -> int:
         "results": results,
     }
     RUN_FILE.write_text(json.dumps(run, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(json.dumps({k: run[k] for k in ("targets_total", "targets_with_official_publication_id", "targets_with_canonical_official_route", "raw_downloaded_exact", "immutable_sha256_verified", "pending")}, ensure_ascii=False))
+    print(json.dumps({k: run[k] for k in (
+        "targets_total",
+        "targets_with_official_publication_id",
+        "targets_with_canonical_official_route",
+        "raw_downloaded_exact",
+        "immutable_sha256_verified",
+        "pending",
+    )}, ensure_ascii=False))
     return 0 if ok else 2
 
 
