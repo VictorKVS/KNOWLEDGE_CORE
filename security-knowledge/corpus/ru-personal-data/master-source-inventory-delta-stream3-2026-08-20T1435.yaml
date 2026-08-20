@@ -1,0 +1,37 @@
+schema_version: "1.0"
+kind: ru-pdn-master-source-inventory-delta
+base_inventory: "master-source-inventory.yaml"
+checked_at: "2026-08-20T14:35:00+03:00"
+owner_stream: STREAM_3_SECTOR_OVERLAYS
+protected_inventory_delta: "../ru-protected-information/master-inventory-delta-2026-08-20T1435.yaml"
+
+stream_3_sector_overlay_state:
+  sources_found_total: 18
+  reused_existing_sources: 1
+  primary_publication_verified_total: 8
+  immutable_artifacts: 7
+  pending_immutable: 10
+  sectors_registered: 15
+  new_sources_this_automation_run: 2
+  new_immutable_this_automation_run: 1
+
+source_delta:
+  - source_id: SEC-SRC-RU-FZ-222-2015
+    domain: CREDIT_RATING_INFORMATION_CONFIDENTIALITY
+    registration_status: PRIMARY_PUBLICATION_VERIFIED
+    immutable_status: SOURCE_PENDING
+    analysis_status: VERSION_CHAIN_PARTIAL
+    applicability_gate: NO_PDN_EDGE_UNTIL_IDENTIFIABLE_PERSON_PROCESSING_SCENARIO_AND_PRIMARY_ANCHOR
+    note: >-
+      Article 9 is a protected-information discovery anchor. Confidentiality of information received
+      from a rated person is not sufficient by itself to infer that all such information is personal data.
+
+proof_floor_effect:
+  executable_pdn_rules_changed: false
+  applicability_edges_promoted: 0
+  sector_sources_added: 1
+  immutable_baselines_added: 0
+
+merge_rule: >-
+  Apply after the 14:32 PDN stream-3 delta. The source contributes to protected-information coverage
+  and production telemetry but does not add a 152-ФЗ applicability edge.
