@@ -1,0 +1,82 @@
+schema_version: "1.0"
+kind: ru-protected-information-master-inventory-delta
+base_inventory: "master-inventory.yaml"
+checked_at: "2026-08-20T20:22:41+03:00"
+owner_stream: STREAM_3_SECTOR_OVERLAYS
+previous_delta: "master-inventory-delta-2026-08-20T1718.yaml"
+run_ref: "stream-3-run-2026-08-20T2022.yaml"
+
+counter_state_after_reconciliation:
+  found: 20
+  downloaded: 7
+  immutable: 7
+  pending: 11
+  reused: 2
+  primary_publication_verified: 8
+  sectors_registered: 17
+  new_sources_this_run: 1
+  newly_reconciled_existing_sources_this_run: 0
+  new_immutable_this_run: 0
+
+sources_added:
+  - source_id: SEC-SRC-RU-FZ-63-2002
+    source_card: "63-fz-2002-source-card.yaml"
+    sector: legal_professional_secrecy
+    regime: advocate_secret
+    lifecycle_state: SOURCE_PENDING
+    authority:
+      state: CURRENT_AUTHORITY_TEXT_IDENTIFIED
+      url: "https://www.kremlin.ru/acts/bank/18127/print"
+    anchor:
+      locator: "Article 8(1)"
+      state: CURRENT_AUTHORITY_TEXT_VERIFIED
+      proposition: "Advocate secrecy is a distinct protected-information regime covering information connected with legal assistance to a client."
+    version_chain:
+      state: VERSION_CHAIN_PARTIAL
+      primary_amendment_event_verified:
+        act: "83-ФЗ от 22.04.2024"
+        official_publication_id: "0001202404220011"
+        url: "https://publication.pravo.gov.ru/document/0001202404220011"
+      pending: "Complete primary amendment sweep through 2026-08-20."
+    artifact:
+      state: SOURCE_PENDING_PRIMARY_EXACT_CAPTURE
+      mime: null
+      byte_length: null
+      sha256: null
+    overlap_candidates:
+      - target: "152-ФЗ"
+        type: POSSIBLE_DUAL_REGIME_ON_SCENARIO_PROOF_ONLY
+        status: DISCOVERY_ONLY_NON_EXECUTABLE
+        guard: "ADVOCATE_SECRET != PERSONAL_DATA"
+
+conflict_registry_delta:
+  - id: STREAM3-SCOPE-GUARD-63FZ-001
+    classification: SEMANTIC_SCOPE_GUARD
+    status: NOT_A_LEGAL_CONFLICT
+    compared:
+      - "63-ФЗ Article 8 — advocate secrecy"
+      - "152-ФЗ — personal-data processing regime"
+    finding: >-
+      Advocate secrecy and personal data are not interchangeable concepts. A dual-regime edge requires proof that
+      the concrete protected information is also personal data and that 152-ФЗ applicability predicates are met.
+    executable_effect: NONE
+
+acquisition_delta:
+  attempts: 1
+  successes: 0
+  immutable_baselines_added: 0
+  blocked_targets:
+    - "SEC-SRC-RU-FZ-63-2002 authoritative current source bytes"
+  proof_floor_action: "No MIME/byte_length/SHA-256 values synthesized from rendered or search metadata."
+
+proof_floor_effect:
+  executable_rules_changed: false
+  applicability_edges_promoted: 0
+  duplicate_source_nodes_avoided: 0
+  primary_amendment_events_added: 1
+  legal_conflicts_confirmed: 0
+  semantic_scope_guards_added: 1
+
+merge_rule: >-
+  Apply after the 17:18 delta. This delta adds 63-ФЗ as a new professional-secrecy discovery source but leaves it
+  non-executable until exact source acquisition and version-chain closure are complete.
