@@ -1,0 +1,72 @@
+schema_version: "1.0"
+id: SEC-SRC-RU-FZ-230-2016
+kind: security-regulatory-source
+status: METADATA_VERIFIED
+
+title: "Федеральный закон от 03.07.2016 № 230-ФЗ «О защите прав и законных интересов физических лиц при осуществлении деятельности по возврату просроченной задолженности и о внесении изменений в Федеральный закон «О микрофинансовой деятельности и микрофинансовых организациях»»"
+jurisdiction: RU
+issuer: "Российская Федерация"
+document:
+  type: federal_law
+  number: "230-ФЗ"
+  adopted_date: "2016-07-03"
+  official_publication_id: "0001201607030002"
+  official_publication_date: "2016-07-03"
+  checked_at: "2026-08-20"
+
+canonical_source:
+  publisher: "Официальное опубликование правовых актов"
+  url: "https://publication.pravo.gov.ru/Document/View/0001201607030002"
+  origin_verified: true
+
+protected_information:
+  sector: debt_collection
+  regime: debtor_personal_data_and_confidentiality
+  primary_anchor: "статья 6 — конфиденциальность сведений о должнике и ограничения передачи персональных данных"
+  findings:
+    - "часть 3 ограничивает раскрытие третьим лицам сведений о должнике, просроченной задолженности/ее взыскании и иных персональных данных при отсутствии предусмотренного законом основания"
+    - "часть 7 предусматривает отзыв согласия должником и запрет дальнейшей передачи после получения уведомления, если иное не предусмотрено федеральным законом"
+    - "часть 8 запрещает раскрытие таких сведений и персональных данных неограниченному кругу лиц, включая размещение в сети Интернет и по месту работы или учебы"
+    - "статья 19.3 требует от уполномоченного органа сохранять коммерческую, служебную и иную охраняемую законом тайну"
+  applicability_status: EXPLICIT_PDN_OVERLAP_PENDING_PRIMARY_CURRENT_VERSION_REVIEW
+
+relations:
+  - target: "152-ФЗ статья 6 часть 1 пункт 7"
+    type: EXPLICIT_CROSS_REGIME_REFERENCE
+    direction: "152-FZ_TO_230-FZ"
+    status: PARTIAL_PENDING_PRIMARY_CURRENT_VERSION_CHAIN
+    note: "Действующий консолидированный текст 152-ФЗ прямо упоминает закон о возврате просроченной задолженности; executable use требует проверки текущей первичной version-chain."
+
+version_chain:
+  state: VERSION_CHAIN_PARTIAL
+  current_consolidated_revision_seen: "31.07.2025"
+  current_text_warning: "Подготовлена редакция с изменениями, не вступившими в силу; будущие изменения не смешивать с действующим состоянием."
+  primary_events_verified:
+    - act: "137-ФЗ от 07.06.2025"
+      official_publication_id: "0001202506070014"
+      official_publication_date: "2025-06-07"
+      proof_status: PRIMARY_AMENDMENT_EVENT_VERIFIED
+      effect: "Вносит изменения в 230-ФЗ; наличие статьи 19.3 подтверждено в текущем консолидированном тексте."
+  pending: "Сверить полную цепочку поправок и изменения, не вступившие в силу, до executable use; исходная официальная публикация подтверждает только baseline 2016 года."
+
+conflict_check:
+  status: SCOPE_COLLISION_GUARD
+  classification: NON_CONFLICT_SPECIALIZATION_PENDING_FULL_CHAIN
+  guard_rule: "Правовое основание обработки по 152-ФЗ статье 6 части 1 пункту 7 не трактовать как безусловное разрешение раскрытия третьим лицам: ограничения специальных норм 230-ФЗ должны проверяться отдельно по операции, субъекту и контексту."
+  review_required: true
+
+capture:
+  raw_artifact_ref: ""
+  manifest_ref: ""
+  mime: null
+  byte_length: null
+  sha256: ""
+  fingerprint_status: PENDING_RAW_CAPTURE
+
+provenance:
+  checked_at: "2026-08-20"
+  primary_origin_evidence: "official publication 0001201607030002"
+  primary_amendment_evidence: "official publication 0001202506070014"
+  review_required: true
+
+agent_rule: "Original publication capture proves the 2016 baseline only; current executable semantics require a verified amendment chain/current-version review. Do not merge processing-lawful-basis with disclosure permission."
