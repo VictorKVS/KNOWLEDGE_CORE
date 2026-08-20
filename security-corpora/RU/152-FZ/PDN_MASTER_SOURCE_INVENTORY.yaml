@@ -1,4 +1,4 @@
-schema_version: "1.0"
+schema_version: "1.1"
 id: SEC-PDN-MASTER-SOURCE-INVENTORY
 kind: security-regulatory-source-inventory
 status: ACTIVE_DISCOVERY
@@ -15,15 +15,38 @@ policy:
   immutable_source_required: true
   byte_length_required_for_immutable: true
   sha256_required_for_immutable: true
+  current_version_routing_required: true
+  delta_reuse_required_after_amendment: true
+
+freshness_alerts:
+  - alert_id: PDN-FRESH-2026-001
+    status: OPEN_DELTA_REVIEW
+    detected_at: "2026-08-20"
+    subject: SEC-SRC-RU-152FZ-2026-07-26
+    finding: >-
+      Previously registered current root SEC-SRC-RU-152FZ-2025-09-01 is no longer current. Federal Law
+      No. 265-FZ of 26.07.2026 amended Article 12 of 152-FZ and entered into force on 26.07.2026 except
+      Article 2 of No. 265-FZ, which takes effect on 01.09.2027.
+    action: >-
+      Route current-date queries to the 26.07.2026 version identity; preserve the 01.09.2025 node only as
+      historical evidence and perform structural delta review before reusing derived nodes.
 
 sources:
-  - id: SEC-SRC-RU-152FZ-2025-09-01
-    document: "Федеральный закон от 27.07.2006 № 152-ФЗ «О персональных данных»"
+  - id: SEC-SRC-RU-152FZ-2026-07-26
+    document: "Федеральный закон от 27.07.2006 № 152-ФЗ «О персональных данных», текущая редакция с 26.07.2026"
     role: root_law
-    metadata_status: METADATA_VERIFIED
-    source_record: "source/SEC-SRC-RU-152FZ-2025-09-01.yaml"
+    metadata_status: VERSION_IDENTITY_CROSS_VERIFIED
+    source_record: "source/SEC-SRC-RU-152FZ-2026-07-26.yaml"
     raw_capture: PENDING
-    existing_atomized_records: 4
+    existing_atomized_records_reuse_candidate: 4
+    delta_review_required: true
+
+  - id: SEC-SRC-RU-FZ265-2026
+    document: "Федеральный закон от 26.07.2026 № 265-ФЗ"
+    role: direct_amendment_dependency_article_12
+    metadata_status: METADATA_VERIFIED
+    source_record: "source/SEC-SRC-RU-FZ265-2026.yaml"
+    raw_capture: PENDING
 
   - id: SEC-SRC-RU-PP687-2008
     document: "Постановление Правительства РФ от 15.09.2008 № 687"
@@ -52,6 +75,7 @@ sources:
     metadata_status: METADATA_VERIFIED
     source_record: "source/SEC-SRC-RU-RKN128-2022.yaml"
     raw_capture: IMMUTABLE_CAPTURED
+    impact_review: PDN-CONFLICT-CANDIDATE-2026-001
 
   - id: SEC-SRC-RU-RKN178-2022
     document: "Приказ Роскомнадзора от 27.10.2022 № 178"
@@ -96,40 +120,69 @@ sources:
     raw_capture: IMMUTABLE_CAPTURED
     applicability: SPECIAL_SCOPE_ONLY
 
+version_history:
+  historical_source_ref: "source/SEC-SRC-RU-152FZ-2025-09-01.yaml"
+  historical_source_id: SEC-SRC-RU-152FZ-2025-09-01
+  status: SUPERSEDED_VERSION
+  superseded_from: "2026-07-26"
+  note: "Preserved for temporal/delta analysis; excluded from active-source counters."
+
+conflict_candidates:
+  - conflict_id: PDN-CONFLICT-CANDIDATE-2026-001
+    type: NORMATIVE_ALIGNMENT_REVIEW
+    status: REVIEW_REQUIRED
+    source_a: SEC-SRC-RU-FZ265-2026
+    locator_a: "Article 1 -> 152-FZ Article 12"
+    source_b: SEC-SRC-RU-RKN128-2022
+    issue: >-
+      No. 265-FZ changed the statutory criteria for adequate-protection countries, while the currently
+      registered RKN Order No. 128 is structured around the earlier Convention-party/non-party distinction.
+      This is a review candidate, not a finding that Order No. 128 is invalid or repealed.
+    resolution_gate:
+      - verify current status/version chain of RKN Order No. 128
+      - compare the order's operative list and grouping logic against Article 12 effective 26.07.2026
+      - search for amending/replacement regulator acts after 26.07.2026
+      - classify as compatible, context-dependent, superseded, or genuine conflict with evidence
+
 production_counters:
-  identified: 11
-  registered_before_this_pass: 1
-  registered_after_this_pass: 11
-  source_records_added_this_pass: 10
+  identified: 12
+  registered_before_this_pass: 11
+  registered_after_this_pass: 12
+  source_records_added_this_pass: 2
+  sources_moved_to_version_history_this_pass: 1
   metadata_verified: 11
+  current_revision_identity_pending_raw: 1
   raw_downloaded_exact: 8
   immutable_sha256_verified: 8
   atomized_existing_proposed: 4
   atomized_verified: 0
-  pending_raw_capture: 3
+  pending_raw_capture: 4
   source_registration_success_rate: 1.0
-  raw_capture_coverage_ratio: 0.7273
+  raw_capture_coverage_ratio: 0.6667
 
 analysis_metrics:
-  existing_source_reuse_count: 1
-  newly_registered_source_count: 10
-  source_level_reuse_ratio: 0.0909
+  existing_atomized_nodes_reuse_candidate: 4
+  mandatory_delta_review_articles: 1
+  freshness_defects_found_this_pass: 1
+  direct_dependencies_added_this_pass: 1
+  conflict_candidates_opened_this_pass: 1
   note: >-
-    Reuse ratio here is source-record-level only. Existing requirements, graph nodes and other reusable
-    knowledge objects are not included and must be measured separately by the document compiler.
+    The four existing atomized records are reuse candidates only. No derived node is promoted until the
+    new current-version artifact and affected-locator delta are reviewed. Article 12 is mandatory re-analysis scope.
 
 acquisition_blockers:
   - >-
-      Byte-exact acquisition via the official publication portal is operational for source records
-      carrying an official_publication_id; each captured PDF is checked against the portal API byte
-      length, fingerprinted with SHA-256 and stored with a manifest.
+      Byte-exact acquisition via the official publication portal is operational for source records carrying
+      an official_publication_id; No. 265-FZ has been registered for that route.
   - >-
-      Remaining raw captures are the consolidated 152-FZ text and PP RF No. 687 / No. 211. Their
-      current source records use official IPS/Government routes rather than the publication-ID path,
-      so they remain PENDING until byte-exact version-specific official artifacts are captured.
+      Remaining current-core raw captures are the consolidated 152-FZ text effective 26.07.2026, PP RF No. 687,
+      PP RF No. 211 and No. 265-FZ until an accepted manifest appears. Existing eight immutable artifacts remain valid.
 
 next_gate:
-  - capture byte-exact version-specific official artifacts for 152-FZ, PP RF No. 687 and PP RF No. 211
+  - capture and fingerprint No. 265-FZ through official publication identity 0001202607260024
+  - capture byte-exact current consolidated 152-FZ version effective 26.07.2026 and PP RF No. 687 / No. 211
+  - run structural delta 152-FZ 2025-09-01 -> 2026-07-26 with Article 12 mandatory review
+  - review RKN Order No. 128 alignment with amended Article 12 without presuming invalidity
   - structural parse and legal/semantic chunking of immutable captures
   - concept/definition reconciliation and conflict detection
   - atomic requirement extraction with source locators
