@@ -8,8 +8,8 @@ status: VERIFIED_BOUNDED_PUBLIC_TEXT_INTERFACE_OFFICIAL_BYTES_PENDING
 scope_statement: >-
   This model covers clauses 1-37, the sixteen private security indicators in four
   weighted groups, the calculation formula, zeroing rules, evaluation triggers,
-  roles and evidence classes. It does not claim immutable official bytes or a
-  row-complete atomization of every document named in appendix 1.
+  roles, evidence classes and the row-complete appendix-1 evidence and submission
+  map. It does not claim immutable official bytes.
 
 source_evidence:
   official_page: https://fstec.ru/dokumenty/vse-dokumenty/spetsialnye-normativnye-dokumenty/metodicheskij-dokument-ot-11-noyabrya-2025-g
@@ -17,6 +17,11 @@ source_evidence:
   public_text_interface: https://meganorm.ru/mega_doc/dop1/90/metodicheskiy_dokument_metodika_otsenki_pokazatelya_megainfo/0/metodicheskiy_dokument_metodika_otsenki_pokazatelya.html
   public_text_provenance: "states that text follows fstec.ru as at 2025-11-17"
   corroborating_text_interface: https://www.garant.ru/products/ipo/prime/doc/412956179/
+  appendix_text_interface: https://meganorm.ru/mega_doc/dop1/90/metodicheskiy_dokument_metodika_otsenki_pokazatelya_megainfo/0/metodicheskiy_dokument_metodika_otsenki_pokazatelya.html
+  appendix_corroboration:
+    - https://base.garant.ru/413056179/53f89421bbdaf741eb2d1ecc4ddb4c33/
+    - https://bazanpa.ru/fstek-rossii-metodika-ot11112025-h6919682/
+    - https://sudact.ru/law/metodicheskii-dokument-metodika-otsenki-pokazatelia-sostoianiia-tekhnicheskoi_1/
   immutable_official_bytes: PENDING
 
 applicability:
@@ -80,7 +85,95 @@ evidence_rules:
   implemented_measure: ASSIGN_TABLE_1_MAXIMUM_VALUE_ONLY_WHEN_ANALYSIS_SUPPORTS_SUFFICIENCY
   absent_ineffective_or_partial_measure: ASSIGN_ZERO
   result_documentation: ORGANIZATION_DEFINED_FORM_AND_SEND_TO_FSTEC
-  appendix_1_row_complete_artifact_map: PENDING_ATOMIZATION
+  appendix_1_row_complete_artifact_map: VERIFIED_PUBLIC_TEXT_CROSSCHECK_OFFICIAL_BYTES_PENDING
+
+appendix_1_evidence_map:
+  submission_modes:
+    ON_REQUEST: "Presented when requested"
+    WITH_EVALUATION_RESULTS: "Presented together with evaluation results"
+    CONDITIONAL_REPLACEMENT: "Used only when the stated condition applies; the source column does not state a separate universal submission mode"
+  rows:
+    - indicator: k11
+      artifacts:
+        - {id: K11-A1, kind: RESPONSIBLE_DEPUTY_APPOINTMENT_ORD, submission: ON_REQUEST}
+        - {id: K11-A2, kind: RESPONSIBLE_DEPUTY_DUTY_REGULATION_OR_INSTRUCTION, submission: ON_REQUEST}
+    - indicator: k12
+      artifacts:
+        - {id: K12-A1, kind: SECURITY_UNIT_OR_RESPONSIBLE_WORKER_FUNCTIONS_ORD, submission: ON_REQUEST}
+    - indicator: k13
+      artifacts:
+        - {id: K13-A1, kind: CONTRACT_OR_EXTRACT_OR_SPECIFICATION_WITH_CONTRACTOR_INFRASTRUCTURE_SECURITY_REQUIREMENTS, submission: ON_REQUEST}
+    - indicator: k21
+      artifacts:
+        - {id: K21-A1, kind: PASSWORD_POLICY_ORD, submission: ON_REQUEST}
+        - {id: K21-A2, kind: PASSWORD_POLICY_CONFIGURATION_SCREENSHOT, submission: WITH_EVALUATION_RESULTS}
+        - {id: K21-A3, kind: NONCOMPLIANT_PASSWORD_ANALYSIS_REPORT, submission: WITH_EVALUATION_RESULTS}
+      conditional_replacements:
+        - {id: K21-C1, condition: PASSWORD_REQUIREMENTS_TECHNICALLY_IMPOSSIBLE, kind: COMPENSATING_MEASURES_LIST_AND_IMPLEMENTATION_EVIDENCE, submission: CONDITIONAL_REPLACEMENT}
+    - indicator: k22
+      artifacts:
+        - {id: K22-A1, kind: MFA_TOOL_INFORMATION_OR_MANAGEMENT_SCREENSHOT, submission: WITH_EVALUATION_RESULTS}
+        - {id: K22-A2, kind: PRIVILEGED_AND_MFA_ENABLED_REMOTE_USER_COUNTS, submission: ON_REQUEST}
+      conditional_replacements:
+        - {id: K22-C1, condition: SECOND_FACTOR_TECHNICALLY_IMPOSSIBLE, kind: COMPENSATING_MEASURES_LIST_AND_IMPLEMENTATION_EVIDENCE, submission: CONDITIONAL_REPLACEMENT}
+    - indicator: k23
+      artifacts:
+        - {id: K23-A1, kind: FIRST_LOGIN_PASSWORD_RESET_CONFIGURATION_SCREENSHOT, submission: WITH_EVALUATION_RESULTS}
+        - {id: K23-A2, kind: DEFAULT_PASSWORD_DETECTION_REPORT, submission: WITH_EVALUATION_RESULTS}
+    - indicator: k24
+      artifacts:
+        - {id: K24-A1, kind: ACCOUNT_DISABLEMENT_AFTER_RELATIONSHIP_END_ORD, submission: ON_REQUEST}
+    - indicator: k31
+      artifacts:
+        - {id: K31-A1, kind: INTERNET_ACCESSIBLE_INTERFACE_INVENTORY, submission: ON_REQUEST}
+        - {id: K31-A2, kind: L3_L4_FIREWALL_INFORMATION_AND_ACCESS_RULE_SCREENSHOTS, submission: WITH_EVALUATION_RESULTS}
+      conditional_replacements:
+        - {id: K31-C1, condition: NO_INTERNET_ACCESSIBLE_SERVICES_OR_INTERACTION, kind: ABSENCE_STATEMENT, submission: CONDITIONAL_REPLACEMENT}
+    - indicator: k32
+      artifacts:
+        - {id: K32-A1, kind: INTERNET_ACCESSIBLE_DEVICE_AND_INTERFACE_COUNTS, submission: ON_REQUEST}
+        - {id: K32-A2, kind: CRITICAL_VULNERABILITY_SCAN_REPORT_NOT_OLDER_THAN_30_DAYS_AT_EVALUATION, submission: WITH_EVALUATION_RESULTS}
+        - {id: K32-A3, kind: UNREMEDIABLE_CRITICAL_VULNERABILITY_COMPENSATING_MEASURES_AND_EVIDENCE, submission: ON_REQUEST}
+    - indicator: k33
+      artifacts:
+        - {id: K33-A1, kind: USER_DEVICE_AND_SERVER_COUNTS, submission: ON_REQUEST}
+        - {id: K33-A2, kind: USER_DEVICE_AND_SERVER_CRITICAL_VULNERABILITY_SCAN_REPORT, submission: WITH_EVALUATION_RESULTS}
+        - {id: K33-A3, kind: UNREMEDIABLE_CRITICAL_VULNERABILITY_COMPENSATING_MEASURES_AND_EVIDENCE, submission: ON_REQUEST}
+    - indicator: k34
+      artifacts:
+        - {id: K34-A1, kind: TOTAL_AND_EMAIL_ATTACHMENT_SCANNED_WORKSTATION_COUNTS, submission: ON_REQUEST}
+        - {id: K34-A2, kind: ANTIVIRUS_TOOL_INFORMATION_OR_MANAGEMENT_SCREENSHOT, submission: WITH_EVALUATION_RESULTS}
+        - {id: K34-A3, kind: EMAIL_ANTIVIRUS_DEVICE_COVERAGE_REPORT, submission: ON_REQUEST}
+      conditional_replacements:
+        - {id: K34-C1, condition: NO_EMAIL_IN_INFORMATION_SYSTEMS, kind: EMAIL_ABSENCE_STATEMENT, submission: CONDITIONAL_REPLACEMENT}
+    - indicator: k35
+      artifacts:
+        - {id: K35-A1, kind: TOTAL_WORKSTATION_COUNT, submission: ON_REQUEST}
+        - {id: K35-A2, kind: CENTRAL_ANTIVIRUS_MANAGEMENT_COVERAGE_SCREENSHOT, submission: WITH_EVALUATION_RESULTS}
+        - {id: K35-A3, kind: CENTRAL_ANTIVIRUS_UPDATE_AND_LAST_SCAN_REPORT, submission: ON_REQUEST}
+    - indicator: k36
+      artifacts:
+        - {id: K36-A1, kind: TELECOM_OR_OTHER_PROVIDER_L3_L4_DDOS_CLEANING_CONTRACT_OR_EXTRACT, submission: WITH_EVALUATION_RESULTS}
+      conditional_replacements:
+        - {id: K36-C1, condition: ORGANIZATION_BLOCKS_INBOUND_TRAFFIC_ITSELF, kind: SELF_PROTECTION_METHODS_AND_TOOLS_STATEMENT, submission: CONDITIONAL_REPLACEMENT}
+        - {id: K36-C2, condition: NO_INTERNET_ACCESSIBLE_WEBSITE_SERVICE_OR_OTHER_PROTECTED_SERVICE, kind: EVIDENCE_SPECIFIED_FOR_K35, source_cross_reference: k35, treatment: PRESERVE_LITERAL_SOURCE_REFERENCE, submission: CONDITIONAL_REPLACEMENT}
+    - indicator: k41
+      artifacts:
+        - {id: K41-A1, kind: PRIVILEGED_ACCOUNT_COUNT_AND_COLLECTED_EVENT_LIST, submission: ON_REQUEST}
+        - {id: K41-A2, kind: FAILED_PRIVILEGED_LOGIN_ALERT_CONFIGURATION_SCREENSHOT, submission: WITH_EVALUATION_RESULTS}
+        - {id: K41-A3, kind: HISTORICAL_SECURITY_EVENT_MONITORING_REPORT, submission: ON_REQUEST}
+    - indicator: k42
+      artifacts:
+        - {id: K42-A1, kind: REGISTERED_EVENT_LIST_AND_INTERNET_ACCESS_WORKSTATION_COUNT, submission: ON_REQUEST}
+        - {id: K42-A2, kind: CENTRAL_EVENT_COLLECTION_COVERAGE_SCREENSHOT, submission: WITH_EVALUATION_RESULTS}
+        - {id: K42-A3, kind: HISTORICAL_SECURITY_EVENT_MONITORING_REPORT, submission: ON_REQUEST}
+    - indicator: k43
+      artifacts:
+        - {id: K43-A1, kind: APPROVED_COMPUTER_INCIDENT_RESPONSE_PROCEDURE_ORD, submission: ON_REQUEST}
+      special_submission:
+        initial_evaluation: SEND_TO_FSTEC
+        if_missing_and_k43_zero: SEND_TO_FSTEC_AT_REPEAT_EVALUATION
+        numeric_days: NOT_STATED
 
 indicator_groups:
   - id: G1
@@ -143,7 +236,9 @@ scope_guards:
   - DO_NOT_SCORE_PARTIAL_OR_INEFFECTIVE_IMPLEMENTATION_ABOVE_ZERO
   - DO_NOT_AVERAGE_DIFFERING_SYSTEM_VALUES_WHERE_THE_METHOD_REQUIRES_THE_MINIMUM
   - DO_NOT_IGNORE_REPEAT_FAILURE_OR_PENTEST_GROUP_ZEROING
-  - DO_NOT_CLAIM_APPENDIX_1_ARTIFACT_COMPLETENESS
+  - DO_NOT_COLLAPSE_ON_REQUEST_AND_WITH_RESULTS_SUBMISSION_MODES
+  - DO_NOT_INVENT_A_NUMERIC_K43_SPECIAL_SUBMISSION_DEADLINE
+  - DO_NOT_SILENTLY_CORRECT_THE_LITERAL_K36_TO_K35_APPENDIX_CROSS_REFERENCE
   - DO_NOT_CLAIM_IMMUTABLE_OFFICIAL_BYTES
 
 counts:
@@ -153,13 +248,18 @@ counts:
   input_evidence_classes: 9
   extraordinary_triggers: 4
   result_bands: 3
+  appendix_indicator_rows: 16
+  appendix_primary_artifact_entries: 34
+  appendix_conditional_replacements: 6
+  appendix_on_request_entries: 21
+  appendix_with_results_entries: 13
 
 verification_boundary:
   clauses_1_37_process_and_formula: VERIFIED_PUBLIC_TEXT_INTERFACE
   indicator_values_and_group_weights: VERIFIED_PUBLIC_TEXT_INTERFACE
   threshold_bands_and_zeroing_rules: VERIFIED_PUBLIC_TEXT_INTERFACE
   roles_triggers_and_evidence_classes: VERIFIED_PUBLIC_TEXT_INTERFACE
-  appendix_1_complete_artifact_rows: PENDING_ATOMIZATION
+  appendix_1_complete_artifact_rows: VERIFIED_PUBLIC_TEXT_CROSSCHECK_OFFICIAL_BYTES_PENDING
   immutable_official_bytes: PENDING
   independent_expert_review: PENDING
   critical_gap_created: false
