@@ -2,7 +2,7 @@ schema_version: 1
 inventory_id: RU_PD_MASTER_SOURCE_INVENTORY
 scope: Russian personal-data regulation and directly applicable technical/cryptographic overlays
 parent_inventory: "../master-source-inventory.yaml"
-updated_at: "2026-08-20T08:32:22+03:00"
+updated_at: "2026-08-20T08:33:43+03:00"
 status_values:
   - DISCOVERED
   - REGISTERED
@@ -215,16 +215,27 @@ stream_progress:
     new_sources_this_pass: 1
     reused_existing_sources: 1
     primary_publication_verified_total: 6
-    immutable_artifacts: 5
-    pending_immutable: 10
+    immutable_artifacts: 6
+    pending_immutable: 9
     exact_binary_acquisition_attempts_this_pass: 6
-    exact_binary_acquisition_success_this_pass: 5
+    exact_binary_acquisition_success_this_pass: 6
     sectors_registered: 13
+    semantic_collision_checks_this_pass: 1
+    legal_conflicts_confirmed_this_pass: 0
     explicit_or_direct_legal_overlap_candidates:
       - "16-ФЗ article 11 -> 152-ФЗ"
       - "79-ФЗ article 42 -> personal-data legislation"
-      - "143-ФЗ article 13.2(9) -> 152-ФЗ"
+      - "143-ФЗ article 13.2(9) -> 149-ФЗ + 152-ФЗ (current consolidated text; current-primary review pending)"
+      - "326-ФЗ article 44 -> restricted-access insured-person/medical-care data; PDN/health applicability review pending"
+      - "125-ФЗ article 25(3) -> protected private/family-life archive information; no direct 152-ФЗ edge inferred"
       - "442-ФЗ article 6 -> personal-data processing context (candidate; not executable)"
+    conflict_notes:
+      - "143-ФЗ article 12 is repealed since 2018-10-01; current routing uses articles 13.1-13.2."
+      - "125-ФЗ article 22.1 retention and article 25(3) access restriction are distinct semantics even when both show 75 years."
+      - "442-ФЗ confidentiality of social-service-recipient information must not be auto-merged with generic 152-ФЗ personal-data confidentiality; scope comparison is pending."
+    source_extensions:
+      - "Росархив №24/2020: immutable original baseline captured; current-version chain remains partial."
+      - "Росархив №77/2023: immutable original baseline captured; current-version chain remains partial."
     note: >-
       Sector/special protected-information overlays remain isolated from executable PDN logic until
       authoritative current artifacts, version chains and anchored applicability edges pass review.

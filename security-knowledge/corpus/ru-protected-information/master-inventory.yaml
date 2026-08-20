@@ -1,7 +1,7 @@
 schema_version: "1.3"
 kind: ru-protected-information-master-inventory
 status: ACTIVE_DISCOVERY
-updated_at: "2026-08-20T08:32:22+03:00"
+updated_at: "2026-08-20T08:33:43+03:00"
 purpose: >-
   Authoritative discovery and reconciliation inventory for Russian sector-specific
   confidentiality/protected-information regimes intersecting with the PDN corpus.
@@ -50,7 +50,7 @@ sources:
         - "515-ФЗ от 28.12.2025 — изменения 323-ФЗ"
         - "550-ФЗ от 29.12.2025 — изменения статей 14 и 42.1"
       pending: "Полная цепочка изменений до 2026-08-20."
-    artifact: {state: SOURCE_PENDING}
+    artifact: {state: IMMUTABLE_BASELINE_CAPTURED, manifest_ref: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-323.json"}
 
   - id: SEC-SRC-RU-FZ-572-2022
     sector: biometrics
@@ -358,24 +358,30 @@ conflict_registry:
 counters:
   found: 16
   new_this_pass: 1
-  downloaded: 5
-  immutable: 5
-  pending: 10
+  downloaded: 6
+  immutable: 6
+  pending: 9
   reused: 1
   primary_publication_verified: 6
   exact_binary_acquisition_attempts_this_pass: 6
-  exact_binary_acquisition_success_this_pass: 5
+  exact_binary_acquisition_success_this_pass: 6
   semantic_collision_checks_this_pass: 1
   legal_conflicts_confirmed_this_pass: 0
 
 production_telemetry:
-  checked_at: "2026-08-20T08:32:22+03:00"
-  acquisition_bottleneck: >-
-    Official publication identities and the public PDF endpoint pattern are known, but exact binary retrieval
-    still failed in this runtime. No MIME, byte length or SHA-256 was fabricated.
+  checked_at: "2026-08-20T08:33:43+03:00"
+  acquisition_status: "IMMUTABLE_BASELINE_CAPTURE_OPERATIONAL"
+  exact_targets: 6
+  immutable_successes: 6
+  exact_bytes_and_sha256_recorded: 6
+  note: >-
+    Official byte-exact acquisition is operational. Captures prove immutable original-publication baselines only;
+    current consolidated semantics remain gated by version-chain and locator review.
+  remaining_capture_issue: >-
+    323-ФЗ official endpoint may return a ZIP container rather than a bare PDF; acquirer v1.2 accepts and fingerprints
+    recognized official PDF/ZIP containers without weakening the proof floor.
   analysis_note: >-
-    Discovery/reconciliation added two archive implementation sources and sharpened 125-ФЗ semantics.
-    The compiler must keep record-retention periods separate from archive-access restriction periods.
+    Retention and access-restriction semantics remain separate; sector overlaps stay non-executable until applicability review.
 
 next_actions:
   - "Acquire exact official/current binaries for 125-ФЗ, Rosarchive Order 24 and Order 77; record MIME, byte length and SHA-256."
