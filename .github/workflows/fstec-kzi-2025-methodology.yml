@@ -1,0 +1,23 @@
+name: FSTEC Kzi 2025 methodology gate
+
+on:
+  pull_request:
+    paths:
+      - "security-knowledge/controls/fstec-kzi-2025-methodology-*"
+      - "security-knowledge/validators/validate_fstec_kzi_2025_methodology.py"
+      - ".github/workflows/fstec-kzi-2025-methodology.yml"
+  push:
+    paths:
+      - "security-knowledge/controls/fstec-kzi-2025-methodology-*"
+      - "security-knowledge/validators/validate_fstec_kzi_2025_methodology.py"
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pyyaml
+      - run: python security-knowledge/validators/validate_fstec_kzi_2025_methodology.py

@@ -1,5 +1,5 @@
 schema_version: "1.0"
-run_id: SECURITY-KB-RUN-153
+run_id: SECURITY-KB-RUN-154
 observed_at: "2026-08-20"
 purpose: >-
   Preserve source discovery and retrieval boundaries for the three distinct FSTEC
@@ -13,8 +13,13 @@ documents:
     purpose: KZI_CALCULATION
     official_page: https://fstec.ru/dokumenty/vse-dokumenty/spetsialnye-normativnye-dokumenty/metodicheskij-dokument-ot-11-noyabrya-2025-g
     official_endpoint_result: TIMEOUT
+    public_text_interface: https://meganorm.ru/mega_doc/dop1/90/metodicheskiy_dokument_metodika_otsenki_pokazatelya_megainfo/0/metodicheskiy_dokument_metodika_otsenki_pokazatelya.html
+    corroborating_text_interface: https://www.garant.ru/products/ipo/prime/doc/412956179/
+    bounded_atomization: VERIFIED_37_CLAUSES_4_GROUPS_16_INDICATORS_FORMULA_THRESHOLDS_ROLES_EVIDENCE
+    bounded_model: security-knowledge/controls/fstec-kzi-2025-methodology-atomic-v1.yaml
+    regression_fixture: security-knowledge/controls/fstec-kzi-2025-methodology-regression-v1.json
+    appendix_1_complete_artifact_rows: PENDING
     authoritative_bytes: PENDING
-    atomization: PENDING
   - id: FSTEC_MD_MEASURES_2026_04_12
     title: "Состав и содержание мероприятий и мер по защите информации, содержащейся в информационных системах"
     approved_date: "2026-04-12"
@@ -31,6 +36,7 @@ documents:
     title: "Методика оценки уровня зрелости деятельности в области технической защиты информации в информационных системах и обеспечения безопасности значимых объектов критической информационной инфраструктуры Российской Федерации"
     approved_date: "2026-08-07"
     purpose: UZI_MATURITY_CALCULATION
+    official_page: https://fstec.ru/dokumenty/vse-dokumenty/spetsialnye-normativnye-dokumenty/metodicheskij-dokument-ot-7-avgusta-2026-g
     official_pdf_endpoint: https://fstec.ru/files/1523/---7--2026-/3102/---7--2026-.pdf
     official_endpoint_result: TIMEOUT
     authoritative_bytes: PENDING
@@ -40,13 +46,13 @@ fail_closed_rules:
   - DO_NOT_EQUATE_KZI_CALCULATION_METHODOLOGY_WITH_MEASURE_CATALOG
   - DO_NOT_EQUATE_UZI_MATURITY_METHODOLOGY_WITH_KZI
   - DO_NOT_TREAT_SECONDARY_CALCULATORS_AS_AUTHORITATIVE_TEXT
-  - DO_NOT_INVENT_NORMALIZED_VALUES_FORMULAS_WEIGHTS_OR_THRESHOLDS
   - DO_NOT_CLAIM_OFFICIAL_BYTES_FROM_A_TIMEOUT
   - DO_NOT_APPLY_FUTURE_ORDER_137_WORDING_BEFORE_ITS_EFFECTIVE_DATE
 
 next_acquisition:
   - acquire_and_hash_official_KZI_2025_11_11_bytes
+  - atomize_all_KZI_appendix_1_artifact_rows
   - acquire_and_hash_official_UZI_2026_08_07_bytes
-  - atomize_KZI_and_UZI_formulas_thresholds_roles_evidence_and_temporal_edges
+  - atomize_UZI_directions_formulas_thresholds_roles_evidence_and_temporal_edges
   - acquire_and_hash_official_MEASURES_2026_04_12_bytes
   - atomize_all_measure_implementation_requirements_enhancements_and_class_cells

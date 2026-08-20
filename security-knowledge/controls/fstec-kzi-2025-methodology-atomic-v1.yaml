@@ -1,0 +1,166 @@
+schema_version: "1.0"
+id: FSTEC-MD-KZI-2025-11-11
+title: "FSTEC Kzi methodology of 11 November 2025: bounded calculation and evidence model"
+authority: FSTEC_RUSSIA
+approved_date: "2025-11-11"
+document_title: "Методика оценки показателя состояния технической защиты информации в информационных системах и обеспечения безопасности значимых объектов критической информационной инфраструктуры Российской Федерации"
+status: VERIFIED_BOUNDED_PUBLIC_TEXT_INTERFACE_OFFICIAL_BYTES_PENDING
+scope_statement: >-
+  This model covers clauses 1-37, the sixteen private security indicators in four
+  weighted groups, the calculation formula, zeroing rules, evaluation triggers,
+  roles and evidence classes. It does not claim immutable official bytes or a
+  row-complete atomization of every document named in appendix 1.
+
+source_evidence:
+  official_page: https://fstec.ru/dokumenty/vse-dokumenty/spetsialnye-normativnye-dokumenty/metodicheskij-dokument-ot-11-noyabrya-2025-g
+  official_endpoint_result: TIMEOUT_BYTES_NOT_ACQUIRED
+  public_text_interface: https://meganorm.ru/mega_doc/dop1/90/metodicheskiy_dokument_metodika_otsenki_pokazatelya_megainfo/0/metodicheskiy_dokument_metodika_otsenki_pokazatelya.html
+  public_text_provenance: "states that text follows fstec.ru as at 2025-11-17"
+  corroborating_text_interface: https://www.garant.ru/products/ipo/prime/doc/412956179/
+  immutable_official_bytes: PENDING
+
+applicability:
+  actors:
+    - FSTEC_RUSSIA
+    - GOVERNMENT_BODY
+    - LOCAL_GOVERNMENT_BODY
+    - ORGANIZATION
+    - CII_SUBJECT
+  protected_scope:
+    - INFORMATION_SYSTEMS_SUBJECT_TO_RUSSIAN_SECURITY_NPA
+    - SUPPORTING_TELECOMMUNICATION_INFRASTRUCTURE_WHEN_SYSTEMS_RUN_ON_IT
+  optional_scope_extension: BY_HEAD_OR_RESPONSIBLE_DEPUTY_DECISION
+  excluded_activity: DETECTION_PREVENTION_AND_RESPONSE_TO_COMPUTER_ATTACKS_ON_RUSSIAN_INFORMATION_RESOURCES
+  superseded_methodology: FSTEC_KZI_2024_05_02_NOT_USED_AFTER_2025_METHOD_APPROVAL
+
+normalized_value:
+  symbol: KZI
+  value: 1.0
+  meaning: MINIMUM_BASELINE_PROTECTION_FROM_TYPICAL_RELEVANT_THREATS
+
+evaluation_pipeline:
+  - {step: 1, id: COLLECT_AND_ANALYZE_INPUTS}
+  - {step: 2, id: ASSIGN_PRIVATE_INDICATOR_VALUES}
+  - {step: 3, id: CALCULATE_AND_COMPARE_WITH_NORMALIZED_VALUE}
+
+periodicity_and_triggers:
+  planned_max_interval_months: 6
+  internal_regulation_required: true
+  extraordinary:
+    - SIGNIFICANT_INFORMATION_SECURITY_INCIDENT_WITH_NEGATIVE_CONSEQUENCES
+    - INFORMATION_SYSTEM_ARCHITECTURE_DEVELOPMENT_OR_CHANGE
+    - HEAD_REQUEST_FOR_CURRENT_VALUE
+    - FSTEC_REQUEST
+  improvement_plan_due: BEFORE_NEXT_PLANNED_KZI_EVALUATION
+  submission_to_fstec: REQUIRED_BY_METHOD_CLAUSES_16_AND_27
+  submission_numeric_days: NOT_STATED_IN_METHOD_USE_APPLICABLE_ORDER_FOR_DEADLINE
+
+roles:
+  organizer: RESPONSIBLE_DEPUTY_HEAD
+  performers: SECURITY_UNIT_OR_SECURITY_SPECIALISTS
+  data_collectors: MOST_PREPARED_SPECIALISTS_FROM_SECURITY_UNIT
+  other_unit_specialists: MAY_BE_ADDED_BY_RESPONSIBLE_DEPUTY_DECISION
+  segregation_of_duties: EVALUATOR_MUST_NOT_ASSESS_EVIDENCE_OF_OWN_FUNCTIONS_OR_TASKS
+  head_notification: REQUIRED_WHEN_KZI_DOES_NOT_EQUAL_NORMALIZED_VALUE
+
+input_evidence_classes:
+  - STATE_CONTROL_ACTS_PROTOCOLS_AND_OTHER_DOCUMENTS
+  - INTERNAL_SECURITY_CONTROL_REPORTS_PROTOCOLS_AND_OTHER_DOCUMENTS
+  - EXTERNAL_CONFORMITY_ASSESSMENT_REPORTS_INCLUDING_PENTEST_EXERCISES_AND_DRILLS
+  - INTERNAL_ORGANIZATIONAL_AND_ADMINISTRATIVE_DOCUMENTS
+  - SECURITY_TOOL_OPERATIONAL_DOCUMENTATION_WITH_SETTINGS_AND_CONFIGURATION
+  - INFORMATION_SYSTEM_INVENTORY_RESULTS
+  - WORKER_INTERVIEW_RESULTS
+  - SOFTWARE_AND_HARDWARE_FUNCTION_ANALYSIS_RESULTS
+  - INSTRUMENTAL_SECURITY_ASSESSMENT_OR_MONITORING_RESULTS
+
+evidence_rules:
+  interview_results: MUST_BE_DOCUMENTED_IN_ORGANIZATION_DEFINED_FORM
+  missing_requested_material: ASSIGN_ZERO_TO_RELEVANT_PRIVATE_INDICATOR
+  implemented_measure: ASSIGN_TABLE_1_MAXIMUM_VALUE_ONLY_WHEN_ANALYSIS_SUPPORTS_SUFFICIENCY
+  absent_ineffective_or_partial_measure: ASSIGN_ZERO
+  result_documentation: ORGANIZATION_DEFINED_FORM_AND_SEND_TO_FSTEC
+  appendix_1_row_complete_artifact_map: PENDING_ATOMIZATION
+
+indicator_groups:
+  - id: G1
+    title: "Организация и управление"
+    group_weight: 0.10
+    indicators:
+      - {id: k11, max_value: 0.30, rule: RESPONSIBLE_DEPUTY_APPOINTED_AND_DUTIES_DEFINED}
+      - {id: k12, max_value: 0.40, rule: SECURITY_UNIT_OR_RESPONSIBLE_WORKER_FUNCTIONS_DEFINED}
+      - {id: k13, max_value: 0.30, rule: PRIVILEGED_CONTRACTORS_BOUND_TO_INFRASTRUCTURE_SECURITY_REQUIREMENTS, not_applicable: FULL_VALUE_IF_NO_CONTRACTORS}
+  - id: G2
+    title: "Защита пользователей"
+    group_weight: 0.25
+    indicators:
+      - {id: k21, max_value: 0.30, rule: NO_ACCOUNTS_WITH_NONCOMPLIANT_PASSWORDS_OR_COMPENSATING_MEASURES}
+      - {id: k22, max_value: 0.30, rule: MFA_FOR_AT_LEAST_HALF_OF_ADMINISTRATORS_DEVELOPERS_OR_OTHER_PRIVILEGED_USERS, technical_exception: FULL_VALUE_IF_TECHNICALLY_IMPOSSIBLE}
+      - {id: k23, max_value: 0.20, rule: NO_DEFAULT_PASSWORDS_FOR_DEVELOPER_AND_SERVICE_ACCOUNTS}
+      - {id: k24, max_value: 0.20, rule: NO_ACTIVE_ACCOUNTS_AFTER_EMPLOYMENT_OR_CONTRACT_END}
+  - id: G3
+    title: "Защита информационных систем"
+    group_weight: 0.35
+    indicators:
+      - {id: k31, max_value: 0.20, rule: L3_L4_FIREWALL_CONTROLS_ALL_INTERNET_ACCESSIBLE_INTERFACES}
+      - {id: k32, max_value: 0.25, rule: NO_UNMITIGATED_CRITICAL_PERIMETER_VULNERABILITY_WITH_FIX_OLDER_THAN_30_DAYS}
+      - {id: k33, max_value: 0.15, rule: AT_LEAST_90_PERCENT_USER_DEVICES_AND_SERVERS_HAVE_NO_UNMITIGATED_CRITICAL_VULNERABILITY_WITH_FIX_OLDER_THAN_90_DAYS}
+      - {id: k34, max_value: 0.15, rule: EMAIL_ATTACHMENTS_SCANNED_ON_AT_LEAST_80_PERCENT_OF_USER_DEVICES}
+      - {id: k35, max_value: 0.15, rule: CENTRAL_ANTIVIRUS_CONTROL_OF_AT_LEAST_80_PERCENT_USER_DEVICES_AND_SERVERS_AND_DATABASE_UPDATES_AT_LEAST_MONTHLY}
+      - {id: k36, max_value: 0.10, rule: INBOUND_INTERNET_DDOS_TRAFFIC_CLEANING_AT_L3_L4}
+  - id: G4
+    title: "Мониторинг информационной безопасности и реагирование"
+    group_weight: 0.30
+    indicators:
+      - {id: k41, max_value: 0.40, rule: CENTRAL_SECURITY_EVENT_COLLECTION_AND_FAILED_PRIVILEGED_LOGIN_ALERTING}
+      - {id: k42, max_value: 0.35, rule: CENTRAL_EVENT_COLLECTION_AND_ANALYSIS_ON_ALL_INTERNET_CONNECTED_DEVICES}
+      - {id: k43, max_value: 0.25, rule: APPROVED_COMPUTER_INCIDENT_RESPONSE_PROCEDURE}
+
+calculation:
+  formula: "KZI = sum_j(sum_i(k_ji) * R_j)"
+  group_indicator_maxima_sum: 1.0
+  group_weights_sum: 1.0
+  cross_system_rule: USE_MINIMUM_VALUE_FOR_SAME_INDICATOR_WHEN_SYSTEM_RESULTS_DIFFER
+  repeated_failure_rule:
+    window_months: 12
+    condition: SAME_PRIVATE_INDICATOR_REPEATEDLY_EQUALS_ZERO_AT_NEXT_CALCULATION
+    consequence: SET_THE_INDICATORS_GROUP_WEIGHT_TO_ZERO
+  penetration_and_exercise_zeroing:
+    initial_access_via_user_accounts: SET_R2_TO_ZERO
+    initial_access_via_software_or_hardware_vulnerabilities: SET_R3_TO_ZERO
+    unacceptable_event_demonstrated: SET_R2_AND_R3_TO_ZERO
+
+result_bands:
+  - {id: GREEN, condition: "KZI == 1.0", state: MINIMUM_BASELINE}
+  - {id: ORANGE, condition: "0.75 < KZI < 1.0", state: LOW_WITH_PRECONDITIONS_FOR_THREATS}
+  - {id: RED, condition: "KZI <= 0.75", state: CRITICAL_WITH_REAL_THREAT_FEASIBILITY}
+
+scope_guards:
+  - DO_NOT_EQUATE_KZI_WITH_UZI_OR_PZI_MATURITY
+  - DO_NOT_TREAT_KZI_EQUAL_ONE_AS_ABSOLUTE_SECURITY_OR_ABSENCE_OF_ALL_THREATS
+  - DO_NOT_INVENT_A_NUMERIC_FSTEC_SUBMISSION_DEADLINE_FROM_THIS_METHOD
+  - DO_NOT_USE_THE_SUPERSEDED_2024_METHOD_FOR_CURRENT_CALCULATIONS
+  - DO_NOT_SCORE_PARTIAL_OR_INEFFECTIVE_IMPLEMENTATION_ABOVE_ZERO
+  - DO_NOT_AVERAGE_DIFFERING_SYSTEM_VALUES_WHERE_THE_METHOD_REQUIRES_THE_MINIMUM
+  - DO_NOT_IGNORE_REPEAT_FAILURE_OR_PENTEST_GROUP_ZEROING
+  - DO_NOT_CLAIM_APPENDIX_1_ARTIFACT_COMPLETENESS
+  - DO_NOT_CLAIM_IMMUTABLE_OFFICIAL_BYTES
+
+counts:
+  numbered_clauses: 37
+  indicator_groups: 4
+  private_indicators: 16
+  input_evidence_classes: 9
+  extraordinary_triggers: 4
+  result_bands: 3
+
+verification_boundary:
+  clauses_1_37_process_and_formula: VERIFIED_PUBLIC_TEXT_INTERFACE
+  indicator_values_and_group_weights: VERIFIED_PUBLIC_TEXT_INTERFACE
+  threshold_bands_and_zeroing_rules: VERIFIED_PUBLIC_TEXT_INTERFACE
+  roles_triggers_and_evidence_classes: VERIFIED_PUBLIC_TEXT_INTERFACE
+  appendix_1_complete_artifact_rows: PENDING_ATOMIZATION
+  immutable_official_bytes: PENDING
+  independent_expert_review: PENDING
+  critical_gap_created: false
+  high_gap_created: false
