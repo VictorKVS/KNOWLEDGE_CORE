@@ -1,0 +1,22 @@
+name: GIS FSTEC 117 governance roles
+
+on:
+  pull_request:
+    paths:
+      - "security-knowledge/governance/gis-fstec-117-governance-roles-atomic-v1.yaml"
+      - "security-knowledge/classification/gis-fstec-117-governance-roles-regression-v1.json"
+      - "security-knowledge/classification/gis-fstec-117-137-temporal-amendment-atomic-v1.yaml"
+      - "security-knowledge/validators/validate_gis_fstec_117_governance_roles.py"
+      - ".github/workflows/gis-fstec-117-governance-roles.yml"
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install pyyaml
+      - run: python security-knowledge/validators/validate_gis_fstec_117_governance_roles.py
