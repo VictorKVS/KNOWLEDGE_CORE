@@ -1,0 +1,114 @@
+schema_version: "1.0"
+kind: stream-3-sector-overlay-run
+stream_id: STREAM_3_SECTOR_OVERLAYS
+started_at: "2026-08-21T02:22:09+03:00"
+checked_through: "2026-08-21"
+repository: "VictorKVS/KNOWLEDGE_CORE"
+status: PARTIAL_SUCCESS_PRIMARY_METADATA_AND_VERSION_GRAPH_UPDATED
+
+objective: >-
+  Continue discovery, primary-source verification, acquisition and registration of Russian sector/special protected-
+  information regimes intersecting with personal-data processing, without inferring applicability from taxonomy alone.
+
+primary_sources_verified_this_run:
+  - act: "168-ФЗ от 08.06.2020"
+    title: "О едином федеральном информационном регистре, содержащем сведения о населении Российской Федерации"
+    official_publication_id: "0001202006080019"
+    official_publication_date: "2020-06-08"
+    url: "https://publication.pravo.gov.ru/Document/View/0001202006080019"
+    role: NEW_SECTOR_SOURCE_IDENTITY
+  - act: "512-ФЗ от 28.12.2024"
+    official_publication_id: "0001202412280014"
+    official_publication_date: "2024-12-28"
+    url: "https://publication.pravo.gov.ru/Document/View/0001202412280014"
+    role: VERSION_EVENT_FOR_168_FZ
+  - act: "442-ФЗ от 28.11.2025"
+    official_publication_id: "0001202511280105"
+    official_publication_date: "2025-11-28"
+    url: "https://publication.pravo.gov.ru/Document/View/0001202511280105"
+    role: VERSION_EVENT_FOR_168_FZ_AND_218_FZ
+    title_evidence: "Official title expressly amends 218-ФЗ Article 13 and 168-ФЗ Articles 4 and 11."
+  - act: "425-ФЗ от 28.11.2025"
+    official_publication_id: "0001202511280017"
+    official_publication_date: "2025-11-28"
+    url: "https://publication.pravo.gov.ru/Document/View/0001202511280017"
+    role: VERSION_EVENT_FOR_BANKING_SECRECY
+    current_authority_text_url: "https://kremlin.ru/acts/bank/52640/print"
+    locator_evidence: "Article 3 amends Article 26 of the Federal Law on Banks and Banking Activity."
+
+new_source:
+  source_id: SEC-SRC-RU-FZ-168-2020
+  sector: public_sector
+  regime: federal_population_registry
+  source_card: "security-corpora/RU/protected-information/source/SEC-SRC-RU-FZ-168-2020.yaml"
+  status: PRIMARY_PUBLICATION_VERIFIED_SOURCE_PENDING
+  pdn_overlap:
+    type: STATE_POPULATION_REGISTER_CONTEXT
+    status: DISCOVERY_ONLY_NON_EXECUTABLE
+    context_source: "152-ФЗ Article 8(4)"
+    context_url: "https://www.kremlin.ru/acts/bank/24154/print"
+    guard: "No organization/scenario applicability is inferred."
+
+existing_source_reconciliation:
+  - source_id: SEC-SRC-RU-FZ-218
+    added_version_event: "442-ФЗ от 28.11.2025 / 0001202511280105"
+    status_changed: false
+  - source_id: SEC-SRC-RU-LAW-395-1
+    added_version_event: "425-ФЗ от 28.11.2025 / 0001202511280017 / Article 3 -> banking law Article 26"
+    status_changed: false
+
+acquisition:
+  attempts: 1
+  successes: 0
+  immutable_added: 0
+  target:
+    source_id: SEC-SRC-RU-FZ-168-2020
+    official_publication_id: "0001202006080019"
+    official_file_url_candidate: "https://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202006080019"
+    result: OFFICIAL_BINARY_NOT_RETRIEVABLE_IN_EXECUTION_ENVIRONMENT
+    retrieved_at: null
+    mime: null
+    byte_length: null
+    sha256: null
+    artifact_ref: null
+    manifest_ref: null
+  proof_floor_action: >-
+    No immutable artifact or final manifest was fabricated. Search/render metadata was retained only as discovery and
+    primary-publication identity evidence; exact acquisition remains pending.
+
+counters_before:
+  found: 21
+  downloaded: 9
+  immutable: 9
+  pending: 10
+  reused: 2
+  primary_publication_verified: 9
+
+counters_after:
+  found: 22
+  downloaded: 9
+  immutable: 9
+  pending: 11
+  reused: 2
+  primary_publication_verified: 10
+  sectors_registered: 16
+
+inventory_updates:
+  protected_information_delta: "master-inventory-delta-2026-08-21T0222.yaml"
+  pdn_delta: "../ru-personal-data/master-source-inventory-delta-stream3-2026-08-21T0222.yaml"
+  source_card: "security-corpora/RU/protected-information/source/SEC-SRC-RU-FZ-168-2020.yaml"
+
+quality:
+  duplicate_source_nodes_created: 0
+  applicability_edges_promoted: 0
+  executable_rules_changed: false
+  legal_conflicts_confirmed: 0
+  source_version_edges_added: 4
+  scope_guards_added: 1
+
+next_priority:
+  - "Retry exact official byte acquisition for 168-ФЗ publication 0001202006080019; only then create immutable artifact + final manifest."
+  - "Complete 168-ФЗ primary amendment sweep through 2026-08-21 and compile current Articles 4/11 plus protected-information/access locators."
+  - "Acquire and fingerprint 218-ФЗ current/original authoritative artifact; reconcile 442-ФЗ and 476-ФЗ event sequence."
+  - "Acquire authoritative banking-law artifact and reconcile Article 26 through 425-ФЗ plus the existing 2025 events."
+  - "Continue P1 pending acquisitions: 326-ФЗ, 143-ФЗ, 16-ФЗ, 38-ФЗ, 125-ФЗ and GK Article 946."
