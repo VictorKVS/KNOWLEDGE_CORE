@@ -1,0 +1,235 @@
+schema_version: "1.0"
+id: FSTEC-MD-2026-ZSV-FAMILY
+title: "FSTEC 12 April 2026 methodical document: complete ZSV.1-ZSV.9 family"
+authority: FSTEC_RUSSIA
+approved_date: "2026-04-12"
+status: VERIFIED_BOUNDED_COMPLETE_ZSV_PUBLIC_TEXT_CROSSCHECK
+scope_statement: >-
+  Complete normalized coverage of section 4.4 measures ZSV.1-ZSV.9 for
+  virtualization and cloud-computing environments, including implementation,
+  documentation, all numbered enhancements and all fifty-four appendix-2
+  base/enhancement class cells. Applicability is conditional on use of
+  virtualization where the source so states. Other measure families remain
+  pending at content level.
+
+source_evidence:
+  official_page: https://fstec.ru/dokumenty/vse-dokumenty/spetsialnye-normativnye-dokumenty/metodicheskij-dokument-ot-12-aprelya-2026-g
+  official_endpoint_result: TIMEOUT_BYTES_NOT_ACQUIRED
+  section_locator: "section 4.4, ZSV.1-ZSV.9"
+  appendix_locator: "appendix 2, family 4, ZSV.1-ZSV.9 rows"
+  current_text_interfaces:
+    - https://base.garant.ru/414070697/
+    - https://wiki.privacy-advocates.ru/fstek_12.04.2026
+    - https://sudact.ru/law/metodicheskii-dokument-sostav-i-soderzhanie-meropriiatii-i/
+  corroborating_full_text_interface: https://normativ.kontur.ru/document/1/506081-metodicheskiy-dokument-sostav-i-soderzhanie-meropriyatiy-i-mer-po-zashchite-informatsii
+  immutable_official_bytes: PENDING
+
+applicability:
+  trigger: VIRTUALIZATION_MEANS_USED
+  rule: APPLY_MEASURE_WHEN_CLASS_MATRIX_AND_SELECTION_PIPELINE_SELECTS_IT_AND_TECHNOLOGY_TRIGGER_IS_MET
+  guard: DO_NOT_TREAT_ZSV_AS_UNIVERSAL_WHEN_VIRTUALIZATION_IS_NOT_USED
+
+measures:
+  - code: "ЗСВ.1"
+    title: "Доверенная загрузка средств виртуализации и виртуальных машин"
+    purpose: CONTROL_VIRTUALIZATION_AND_VM_INTEGRITY_AT_BOOT
+    implementation:
+      - TRUSTED_BOOT_HOST_OPERATING_SYSTEM_WHEN_PRESENT
+      - TRUSTED_BOOT_VIRTUALIZATION_MEANS
+      - DETECT_VM_BOOT_WITH_UNAUTHORIZED_VIRTUAL_HARDWARE_COMPOSITION_CHANGES
+      - DETECT_VM_BOOT_WITH_UNAUTHORIZED_VIRTUAL_HARDWARE_SETTING_CHANGES
+      - USE_BIOS_TRUSTED_BOOT_HOST_OS_OR_VIRTUALIZATION_SECURITY_MECHANISMS_IN_ANY_APPLICABLE_COMBINATION
+    documentation: []
+    enhancements:
+      - {number: 1, rule: BLOCK_VM_BOOT_WHEN_GUEST_BOOT_EXECUTABLES_OR_CONFIGURATION_HAVE_UNAUTHORIZED_CHANGES}
+      - {number: 2, rule: BLOCK_VM_BOOT_WHEN_GUEST_OS_VERSION_HAS_CRITICAL_VULNERABILITIES_OR_IS_PROHIBITED}
+      - {number: 3, rule: BLOCK_VM_BOOT_WHEN_GUEST_BOOT_EXECUTABLES_OR_CONFIGURATION_FAIL_MODULE_AUTHENTICITY_EVIDENCE_CHECK}
+      - {number: 4, rule: BLOCK_VM_BOOT_WHEN_GUEST_BOOT_EXECUTABLES_OR_CONFIGURATION_FAIL_OPERATOR_DIGITAL_SIGNATURE_CHECK}
+    matrix:
+      base: {K3: PLUS, K2: PLUS, K1: PLUS}
+      enhancements: {K3: [], K2: [1], K1: [1, 2]}
+
+  - code: "ЗСВ.2"
+    title: "Контроль целостности средств виртуализации и виртуальных машин"
+    purpose: CONTROL_VIRTUALIZATION_AND_VM_INTEGRITY_DURING_OPERATION
+    implementation:
+      - AT_LEAST_WEEKLY_CHECK_RUNNING_VM_VIRTUAL_HARDWARE_COMPOSITION_FOR_UNAUTHORIZED_CHANGES
+      - AT_LEAST_WEEKLY_CHECK_RUNNING_VM_VIRTUAL_HARDWARE_SETTINGS_FOR_UNAUTHORIZED_CHANGES
+      - USE_BUILT_IN_VIRTUALIZATION_SECURITY_MECHANISMS
+    documentation: []
+    enhancements:
+      - {number: 1, rule: AT_LEAST_WEEKLY_CHECK_HOST_OS_AND_VIRTUALIZATION_EXECUTABLES_FOR_UNAUTHORIZED_CHANGES}
+      - {number: 2, rule: AT_LEAST_WEEKLY_CHECK_HOST_OS_AND_VIRTUALIZATION_SETTINGS_FOR_UNAUTHORIZED_CHANGES}
+      - {number: 3, rule: AT_LEAST_WEEKLY_CHECK_VIRTUAL_BIOS_OR_PRIMARY_VM_BOOTLOADER_FILES_FOR_UNAUTHORIZED_CHANGES}
+      - {number: 4, rule: AT_LEAST_WEEKLY_CHECK_GUEST_OS_EXECUTABLES_FOR_UNAUTHORIZED_CHANGES}
+    matrix:
+      base: {K3: PLUS, K2: PLUS, K1: PLUS}
+      enhancements: {K3: [], K2: [1, 2], K1: [1, 2]}
+
+  - code: "ЗСВ.3"
+    title: "Регистрация событий безопасности в среде виртуализации"
+    purpose: DEFINE_AND_REGISTER_VIRTUALIZATION_SECURITY_EVENTS
+    implementation:
+      - REGISTER_VIRTUALIZATION_EVENTS_IN_ACCORDANCE_WITH_RSB_1_TO_RSB_5
+      - REGISTER_SUCCESSFUL_AND_FAILED_VIRTUALIZATION_USER_AUTHENTICATION_ATTEMPTS
+      - REGISTER_USER_ACCESS_TO_VMS_THROUGH_VIRTUALIZATION_INTERFACE
+      - REGISTER_VM_CREATION_AND_DELETION
+      - REGISTER_VIRTUALIZATION_MEANS_START_AND_STOP_WITH_STOP_REASON
+      - REGISTER_VM_START_AND_STOP_WITH_STOP_REASON
+      - REGISTER_ROLE_ASSIGNMENT_CHANGES
+      - REGISTER_VIRTUALIZATION_CONFIGURATION_CHANGES
+      - REGISTER_VM_CONFIGURATION_CHANGES
+      - REGISTER_CONTROL_OBJECT_INTEGRITY_VIOLATIONS
+      - REGISTER_VM_MOVEMENT_EVENTS
+      - USE_BUILT_IN_VIRTUALIZATION_PROTECTION_AND_OR_SECURITY_EVENT_MANAGEMENT_MEANS
+    documentation:
+      - VIRTUALIZATION_SECURITY_EVENT_COLLECTION_REGISTRATION_AND_ANALYSIS_REQUIREMENTS
+    enhancements: []
+    matrix:
+      base: {K3: PLUS, K2: PLUS, K1: PLUS}
+      enhancements: {K3: [], K2: [], K1: []}
+
+  - code: "ЗСВ.4"
+    title: "Управление доступом в среде виртуализации"
+    purpose: PREVENT_UNAUTHORIZED_ACCESS_IN_VIRTUALIZATION_ENVIRONMENT
+    implementation:
+      - APPLY_UPD_1_TO_UPD_4_ACCESS_CONTROL_IN_VIRTUALIZATION_ENVIRONMENT
+      - MANAGE_VIRTUALIZATION_USER_RIGHTS_TO_VMS
+      - MANAGE_VM_ACCESS_TO_PHYSICAL_AND_VIRTUAL_EQUIPMENT
+      - MANAGE_VM_ACCESS_QUOTAS_TO_PHYSICAL_AND_VIRTUAL_EQUIPMENT
+      - USE_BUILT_IN_VIRTUALIZATION_SECURITY_MECHANISMS
+    documentation:
+      - VIRTUALIZATION_ACCESS_CONTROL_MODEL
+    enhancements: []
+    matrix:
+      base: {K3: PLUS, K2: PLUS, K1: PLUS}
+      enhancements: {K3: [], K2: [], K1: []}
+
+  - code: "ЗСВ.5"
+    title: "Резервное копирование в среде виртуализации"
+    purpose: ENABLE_RECOVERY_OF_VIRTUALIZATION_MEANS_AND_VMS
+    implementation:
+      - BACK_UP_OPERATOR_SELECTED_VM_IMAGES
+      - BACK_UP_VIRTUALIZATION_MEANS_SETTINGS
+      - USE_VIRTUALIZATION_HOST_OS_AND_OR_BACKUP_MECHANISMS
+    documentation:
+      - VIRTUALIZATION_BACKUP_IMPLEMENTATION_PROCEDURE
+    enhancements:
+      - {number: 1, rule: BACK_UP_VM_VIRTUAL_HARDWARE_CONFIGURATIONS}
+      - {number: 2, rule: BACK_UP_VIRTUALIZATION_SECURITY_EVENT_INFORMATION}
+    matrix:
+      base: {K3: PLUS, K2: PLUS, K1: PLUS}
+      enhancements: {K3: [], K2: [], K1: []}
+
+  - code: "ЗСВ.6"
+    title: "Ограничение программной среды в среде виртуализации"
+    purpose: BLOCK_UNAUTHORIZED_SOFTWARE_START_IN_VIRTUALIZATION_ENVIRONMENT
+    implementation:
+      - DETECT_START_OF_HOST_OS_OR_VIRTUALIZATION_COMPONENTS_NOT_ON_ALLOWED_COMPONENT_LIST
+      - USE_BUILT_IN_VIRTUALIZATION_AND_OR_HOST_OS_SECURITY_MECHANISMS
+    documentation: []
+    enhancements:
+      - {number: 1, rule: BLOCK_START_OF_HOST_OS_OR_VIRTUALIZATION_COMPONENTS_NOT_ON_ALLOWED_SOFTWARE_LIST}
+    matrix:
+      base: {K3: PLUS, K2: PLUS, K1: PLUS}
+      enhancements: {K3: [], K2: [], K1: [1]}
+
+  - code: "ЗСВ.7"
+    title: "Защита памяти в среде виртуализации"
+    purpose: PROTECT_VOLATILE_AND_PERSISTENT_MEMORY_WHEN_VIRTUALIZATION_IS_USED
+    implementation:
+      - ISOLATE_MEMORY_AREAS_BELONGING_TO_DIFFERENT_VMS
+      - CLEAR_RESIDUAL_VM_DATA_ON_COMPUTING_MEMORY_RELEASE_OR_REALLOCATION
+      - USE_BUILT_IN_VIRTUALIZATION_AND_OR_HOST_OS_SECURITY_MECHANISMS
+    documentation: []
+    enhancements:
+      - {number: 1, rule: DELETE_VIRTUALIZATION_FILE_SYSTEM_OBJECTS_BY_MULTIPLE_OVERWRITE_WITH_SPECIAL_BIT_SEQUENCES}
+      - {number: 2, rule: ISOLATE_VM_MEMORY_USING_HARDWARE_PLATFORM_MEMORY_MANAGEMENT}
+      - {number: 3, rule: CONTROL_VM_MEMORY_AREA_INTEGRITY_ON_GUEST_OS_REQUEST}
+    matrix:
+      base: {K3: PLUS, K2: PLUS, K1: PLUS}
+      enhancements: {K3: [], K2: [], K1: []}
+
+  - code: "ЗСВ.8"
+    title: "Идентификация и аутентификация в среде виртуализации"
+    purpose: PREVENT_ACCESS_BY_UNIDENTIFIED_OR_UNAUTHENTICATED_VIRTUALIZATION_SUBJECTS
+    implementation:
+      - APPLY_IAF_1_AND_IAF_3_TO_VIRTUALIZATION_ACCESS_SUBJECTS
+      - IDENTIFY_AND_AUTHENTICATE_VM_DEVELOPERS
+      - IDENTIFY_AND_AUTHENTICATE_VIRTUALIZATION_SECURITY_ADMINISTRATORS
+      - IDENTIFY_AND_AUTHENTICATE_VIRTUALIZATION_ADMINISTRATORS
+      - IDENTIFY_AND_AUTHENTICATE_VM_ADMINISTRATORS
+      - IDENTIFY_AND_AUTHENTICATE_HOST_OS_ADMINISTRATORS
+      - IDENTIFY_AND_AUTHENTICATE_VIRTUAL_INFRASTRUCTURE_COMPUTING_EQUIPMENT_ADMINISTRATORS
+      - USE_BUILT_IN_VIRTUALIZATION_AND_OR_HOST_OS_SECURITY_MECHANISMS
+    documentation:
+      - VIRTUALIZATION_SUBJECT_IDENTIFICATION_AND_AUTHENTICATION_PROCEDURE
+    enhancements:
+      - number: 1
+        rule: IDENTIFY_VMS_VIRTUALIZATION_MEANS_AND_VIRTUAL_INFRASTRUCTURE_COMPUTING_EQUIPMENT_AS_ACCESS_OBJECTS
+    matrix:
+      base: {K3: PLUS, K2: PLUS, K1: PLUS}
+      enhancements: {K3: [], K2: [], K1: []}
+
+  - code: "ЗСВ.9"
+    title: "Управление виртуальными машинами"
+    purpose: CENTRALLY_MANAGE_VM_IMAGES_AND_VMS
+    implementation:
+      - MANAGE_VM_IMAGE_FILE_PLACEMENT_AND_MOVEMENT_BETWEEN_MEDIA_OR_STORAGE_SYSTEMS
+      - MANAGE_RUNNING_VM_MOVEMENT_BETWEEN_VIRTUALIZATION_SERVERS
+      - MANAGE_VM_PROCESSED_DATA_MOVEMENT_BETWEEN_MEDIA_OR_STORAGE_SYSTEMS
+      - CONTROL_VM_MOVEMENT_OUTSIDE_SYSTEM_SEGMENTS_AND_OR_HOST_INFRASTRUCTURE
+      - USE_ONLY_TECHNICAL_MEANS_WITHIN_INFORMATION_SYSTEM_TO_MANAGE_VM_AND_DATA_MOVEMENT
+      - USE_BUILT_IN_VIRTUALIZATION_AND_OR_HOST_OS_SECURITY_MECHANISMS
+    documentation: []
+    enhancements: []
+    matrix:
+      base: {K3: BLANK, K2: PLUS, K1: PLUS}
+      enhancements: {K3: [], K2: [], K1: []}
+
+numeric_constraints:
+  - {id: ZSV2_BASE_INTERVAL, measure: "ЗСВ.2", route: BASE_VM_HARDWARE_INTEGRITY, comparator: MAX_INTERVAL, value: 1, unit: WEEK}
+  - {id: ZSV2_E1_INTERVAL, measure: "ЗСВ.2", route: ENHANCEMENT_1_HOST_EXECUTABLE_INTEGRITY, comparator: MAX_INTERVAL, value: 1, unit: WEEK}
+  - {id: ZSV2_E2_INTERVAL, measure: "ЗСВ.2", route: ENHANCEMENT_2_HOST_SETTING_INTEGRITY, comparator: MAX_INTERVAL, value: 1, unit: WEEK}
+  - {id: ZSV2_E3_INTERVAL, measure: "ЗСВ.2", route: ENHANCEMENT_3_VIRTUAL_BIOS_INTEGRITY, comparator: MAX_INTERVAL, value: 1, unit: WEEK}
+  - {id: ZSV2_E4_INTERVAL, measure: "ЗСВ.2", route: ENHANCEMENT_4_GUEST_EXECUTABLE_INTEGRITY, comparator: MAX_INTERVAL, value: 1, unit: WEEK}
+
+operator_defined_parameters:
+  - {id: ZSV2_SHORTER_CONTROL_INTERVAL, measure: "ЗСВ.2", type: FREQUENCY_AT_OR_SHORTER_THAN_ONE_WEEK, universal_value: MAX_ONE_WEEK}
+  - {id: ZSV5_VM_IMAGE_BACKUP_SCOPE, measure: "ЗСВ.5", type: VM_IMAGE_SET, universal_value: NONE_OPERATOR_SELECTS}
+
+class_matrix_summary:
+  cells_total: 54
+  nonblank_cells: 31
+  blank_cells: 23
+  rule: BLANK_BASE_OR_ENHANCEMENT_CELL_IS_NOT_PROHIBITION_AND_DOES_NOT_DELETE_ADAPTATION_VERIFICATION_OR_COMPENSATION
+
+scope_guards:
+  - DO_NOT_APPLY_ZSV_TECHNOLOGY_REQUIREMENTS_WHEN_VIRTUALIZATION_IS_NOT_USED
+  - DO_NOT_TREAT_ZSV_9_AS_K3_BASELINE
+  - DO_NOT_TREAT_ZSV_1_ENHANCEMENTS_3_OR_4_AS_CLASS_LISTED
+  - DO_NOT_TREAT_ZSV_2_ENHANCEMENTS_3_OR_4_AS_CLASS_LISTED
+  - DO_NOT_INVENT_ZSV_5_BACKUP_FREQUENCY_COPY_COUNT_RETENTION_OR_RECOVERY_TIME
+  - DO_NOT_TREAT_ZSV_5_ENHANCEMENTS_AS_CLASS_LISTED
+  - DO_NOT_TREAT_ZSV_7_MULTIPLE_OVERWRITE_AS_CLASS_LISTED_OR_UNIVERSALLY_REQUIRED
+  - DO_NOT_TREAT_ZSV_8_OBJECT_IDENTIFICATION_ENHANCEMENT_AS_CLASS_LISTED
+  - DO_NOT_REPLACE_RSB_1_TO_RSB_5_WITH_ZSV_3
+  - DO_NOT_REPLACE_UPD_1_TO_UPD_4_WITH_ZSV_4
+  - DO_NOT_REPLACE_IAF_1_AND_IAF_3_WITH_ZSV_8
+  - DO_NOT_TREAT_BLANK_CLASS_CELL_AS_PROHIBITION
+  - DO_NOT_GENERALIZE_ZSV_CONTENT_TO_CONTAINER_OR_OTHER_MEASURE_FAMILIES
+
+verification_boundary:
+  section_4_4_zsv_1_9: VERIFIED_PUBLIC_TEXT_CROSSCHECK
+  complete_zsv_family: VERIFIED_PUBLIC_TEXT_CROSSCHECK_9_OF_9
+  implementation_requirements: VERIFIED_NORMALIZED_PUBLIC_TEXT_CROSSCHECK
+  documentation_requirements: VERIFIED_NORMALIZED_PUBLIC_TEXT_CROSSCHECK
+  numbered_enhancements: VERIFIED_NORMALIZED_PUBLIC_TEXT_CROSSCHECK
+  exact_zsv_class_cells: VERIFIED_PUBLIC_TEXT_CROSSCHECK
+  referenced_iaf_upd_rsb_content: VERIFIED_BY_SEPARATE_LINKED_MODELS
+  cloud_service_role_and_shared_responsibility_profiles: PENDING_SEPARATE_PROFILE_MODELS
+  other_measure_families: PENDING
+  official_immutable_bytes: PENDING
+  independent_expert_review: PENDING
+  critical_gap_created: false
+  high_gap_created: false
