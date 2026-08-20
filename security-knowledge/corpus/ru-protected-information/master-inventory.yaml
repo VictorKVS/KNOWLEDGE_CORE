@@ -1,7 +1,7 @@
 schema_version: "1.3"
 kind: ru-protected-information-master-inventory
 status: ACTIVE_DISCOVERY
-updated_at: "2026-08-20T14:29:09+03:00"
+updated_at: "2026-08-20T23:21:14+03:00"
 purpose: >-
   Authoritative discovery and reconciliation inventory for Russian sector-specific
   confidentiality/protected-information regimes intersecting with the PDN corpus.
@@ -330,6 +330,38 @@ sources:
       pending: "Полностью сверить изменения 2025-2026 по первичным публикациям до executable use."
     artifact: {state: IMMUTABLE_BASELINE_CAPTURED, manifest_ref: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-442-2013.json"}
 
+  - id: SEC-SRC-RU-FZ-222-2015
+    sector: financial_credit_ratings
+    regime: rated_person_information_confidentiality
+    number: "222-ФЗ"
+    date: "2015-07-13"
+    title: "Федеральный закон от 13.07.2015 № 222-ФЗ «О деятельности кредитных рейтинговых агентств в Российской Федерации, о внесении изменения в статью 76-1 Федерального закона «О Центральном банке Российской Федерации (Банке России)» и признании утратившими силу отдельных положений законодательных актов Российской Федерации»"
+    status: PRIMARY_PUBLICATION_VERIFIED
+    source_card_ref: "security-corpora/RU/protected-information/source/SEC-SRC-RU-FZ-222-2015.yaml"
+    official_publication_number: "0001201507130083"
+    official_publication_date: "2015-07-13"
+    source_url: "https://publication.pravo.gov.ru/Document/View/0001201507130083"
+    version_chain:
+      state: VERSION_CHAIN_PARTIAL
+      pending: "See source card; current executable semantics remain gated by full primary version-chain review."
+    artifact: {state: IMMUTABLE_BASELINE_CAPTURED, manifest_ref: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-222-2015.json"}
+  - id: SEC-SRC-RU-FZ-230-2016
+    sector: debt_collection
+    regime: debtor_personal_data_and_confidentiality
+    number: "230-ФЗ"
+    date: "2016-07-03"
+    title: "Федеральный закон от 03.07.2016 № 230-ФЗ «О защите прав и законных интересов физических лиц при осуществлении деятельности по возврату просроченной задолженности и о внесении изменений в Федеральный закон «О микрофинансовой деятельности и микрофинансовых организациях»»"
+    status: PRIMARY_PUBLICATION_VERIFIED
+    source_card_ref: "security-corpora/RU/protected-information/source/SEC-SRC-RU-FZ-230-2016.yaml"
+    official_publication_number: "0001201607030002"
+    official_publication_date: "2016-07-03"
+    source_url: "https://publication.pravo.gov.ru/Document/View/0001201607030002"
+    primary_anchor: "статья 6 — конфиденциальность сведений о должнике и ограничения передачи персональных данных"
+    version_chain:
+      state: VERSION_CHAIN_PARTIAL
+      pending: "See source card; current executable semantics remain gated by full primary version-chain review."
+    artifact: {state: IMMUTABLE_BASELINE_CAPTURED, manifest_ref: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-230-2016.json"}
+
 coverage:
   healthcare: DISCOVERED
   financial_banking: DISCOVERED
@@ -344,6 +376,9 @@ coverage:
   transport: DISCOVERED
   civil_status_records: DISCOVERED
   social_services: PRIMARY_PUBLICATION_VERIFIED
+  financial_credit_ratings: DISCOVERED
+  debt_collection: DISCOVERED
+  archives: DISCOVERED
 
 conflict_registry:
   - id: STREAM3-CONFLICT-CHECK-RETENTION-ACCESS-001
@@ -356,32 +391,33 @@ conflict_registry:
     finding: "Одинаковая длительность 75 лет не делает эти нормы одной обязанностью; хранение и доступ моделируются раздельно."
 
 counters:
-  found: 16
-  new_this_pass: 1
-  downloaded: 7
-  immutable: 7
-  pending: 8
+  found: 18
+  new_this_pass: 2
+  downloaded: 8
+  immutable: 8
+  pending: 9
   reused: 1
-  primary_publication_verified: 6
-  exact_binary_acquisition_attempts_this_pass: 6
-  exact_binary_acquisition_success_this_pass: 7
+  primary_publication_verified: 8
+  exact_binary_acquisition_attempts_this_pass: 8
+  exact_binary_acquisition_success_this_pass: 8
   semantic_collision_checks_this_pass: 1
   legal_conflicts_confirmed_this_pass: 0
 
 production_telemetry:
-  checked_at: "2026-08-20T14:29:09+03:00"
+  checked_at: "2026-08-20T23:21:14+03:00"
   acquisition_status: "IMMUTABLE_BASELINE_CAPTURE_OPERATIONAL"
-  exact_targets: 6
-  immutable_successes: 7
-  exact_bytes_and_sha256_recorded: 7
+  exact_targets: 8
+  immutable_successes: 8
+  exact_bytes_and_sha256_recorded: 8
+  bytes_scanned_this_acquisition_run: 55177558
+  source_universe_count: 18
+  sectors_registered: 13
   note: >-
     Official byte-exact acquisition is operational. Captures prove immutable original-publication baselines only;
     current consolidated semantics remain gated by version-chain and locator review.
-  remaining_capture_issue: >-
-    323-ФЗ official endpoint may return a ZIP container rather than a bare PDF; acquirer v1.2 accepts and fingerprints
-    recognized official PDF/ZIP containers without weakening the proof floor.
   analysis_note: >-
-    Retention and access-restriction semantics remain separate; sector overlaps stay non-executable until applicability review.
+    Source-universe and acquisition counters are derived from source cards, master nodes and manifests;
+    semantic overlaps remain non-executable until applicability review.
 
 next_actions:
   - "Acquire exact official/current binaries for 125-ФЗ, Rosarchive Order 24 and Order 77; record MIME, byte length and SHA-256."
