@@ -2,7 +2,7 @@ schema_version: 1
 inventory_id: RU_PD_MASTER_SOURCE_INVENTORY
 scope: Russian personal-data regulation and directly applicable technical/cryptographic overlays
 parent_inventory: "../master-source-inventory.yaml"
-updated_at: "2026-08-20T14:29:09+03:00"
+updated_at: "2026-08-20T17:14:35+03:00"
 status_values:
   - DISCOVERED
   - REGISTERED
@@ -97,6 +97,21 @@ sources:
     applicability_gate: SKZI_USED_IN_ISPDN
     reuse: true
 
+  - source_id: RU_FSB_ORDER_77_2023
+    domain: PDN_INCIDENT_GOSSOPKA_INTERACTION
+    priority: P0
+    local_record: "../../legislation/RU/regulators/FSB/77-2023/document.yaml"
+    registration_status: PRIMARY_PUBLICATION_AND_SCOPE_VERIFIED
+    official_publication_number: "0001202302200021"
+    justice_registration_number: "72404"
+    immutable_status: SOURCE_PENDING
+    analysis_status: LINKED_SCOPE_VERIFIED_ATOMIZATION_PENDING
+    applicability_gate: PDN_COMPUTER_INCIDENT_WITH_UNLAWFUL_TRANSFER_PROVISION_DISTRIBUTION_OR_ACCESS
+    direct_legal_basis: "152-FZ article 19 part 12"
+    applicability_edge: "152-FZ article 19 part 12 -> FSB-77-2023 -> GosSOPKA/NKTSKI"
+    current_status_note: "Official publication metadata and source text prove the direct PDn/GosSOPKA scope. Secondary current-status recheck on 2026-08-20 reports the 2023-02-13 edition as active; exact current primary binary/status chain remains pending."
+    reuse: true
+
   - source_id: RU_GOV_PP_313_2012
     domain: CRYPTO_LICENSING
     priority: P1
@@ -184,8 +199,8 @@ sources:
     note: "Government material effective from 2026-03-01 cites PP 608 as the information-security product certification regulation. No universal PDn operator obligation is inferred from this reference alone."
 
 excluded_from_core_until_applicability_proved:
-  - source_family: GOSSOPKA_NKTSKI
-    reason: "No direct personal-data incident applicability edge proved in current technical-security pass."
+  - source_family: GOSSOPKA_NKTSKI_GENERAL_OVERLAY
+    reason: "FSB Order 77 proves one direct PDn incident interaction branch through GosSOPKA/NKTsKI. Other CII/GosSOPKA duties remain excluded from ordinary PDn core unless separately anchored by an applicable source."
   - source_id: RU_FSTEC_BDU_ASU_TP
     reason: "Industrial-control overlay; not a substitute for the general FSTEK threat catalog in ordinary ISPDn."
 
@@ -196,16 +211,18 @@ stream_progress:
   stream_2_technical_crypto:
     status: ACTIVE
     source_pack: "technical-security-source-pack.yaml"
-    core_sources_reconciled: 7
+    core_sources_reconciled: 8
     related_crypto_sources_registered: 3
     conditional_licensing_or_certification_sources_registered: 3
+    direct_pdn_gossopka_bridge_sources_registered: 1
     primary_amendment_events_verified: 3
+    direct_applicability_edges_verified: 1
     immutable_artifacts: 0
-    pending_immutable_or_snapshot: 12
+    pending_immutable_or_snapshot: 13
     bytes_downloaded: 0
     hashes_recorded: 0
-    applicability_guards: 4
-    last_run_binary_attempts: 3
+    applicability_guards: 5
+    last_run_binary_attempts: 1
     last_run_binary_successes: 0
   stream_3_sector_overlays:
     status: ACTIVE
@@ -265,6 +282,7 @@ quality_gates:
       - red_team_pass
 
 next_priority:
+  - RU_FSB_ORDER_77_2023_exact_primary_artifact_and_paragraph_compilation
   - RU_GOV_PP_1119_2012_immutable_artifact
   - RU_FSTEC_ORDER_21_2013_current_artifact
   - RU_FSTEC_THREAT_METHOD_2021_attachment_2919
