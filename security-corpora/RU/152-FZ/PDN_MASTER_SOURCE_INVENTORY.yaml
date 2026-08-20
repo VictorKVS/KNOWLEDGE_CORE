@@ -4,7 +4,7 @@ kind: security-regulatory-source-inventory
 status: ACTIVE_DISCOVERY
 jurisdiction: RU
 domain: personal_data
-checked_at: "2026-08-20"
+checked_at: "2026-08-21"
 
 policy:
   proof_floor: >-
@@ -17,6 +17,7 @@ policy:
   sha256_required_for_immutable: true
   current_version_routing_required: true
   delta_reuse_required_after_amendment: true
+  acquisition_identity_scope: "document.official_publication_id only"
 
 freshness_alerts:
   - alert_id: PDN-FRESH-2026-001
@@ -164,10 +165,10 @@ regulatory_watch:
 
 production_counters:
   identified: 12
-  registered_before_this_pass: 11
+  registered_before_this_pass: 12
   registered_after_this_pass: 12
-  source_records_added_this_pass: 2
-  sources_moved_to_version_history_this_pass: 1
+  source_records_added_this_pass: 0
+  sources_moved_to_version_history_this_pass: 0
   metadata_verified: 11
   current_revision_identity_pending_raw: 1
   raw_downloaded_exact: 8
@@ -181,16 +182,19 @@ production_counters:
 analysis_metrics:
   existing_atomized_nodes_reuse_candidate: 4
   mandatory_delta_review_articles: 1
-  freshness_defects_found_this_pass: 1
-  direct_dependencies_added_this_pass: 1
-  conflict_candidates_opened_this_pass: 1
-  source_relation_rebases_this_pass: 2
-  replacement_draft_watches_opened_this_pass: 1
+  freshness_defects_found_this_pass: 0
+  direct_dependencies_added_this_pass: 0
+  conflict_candidates_opened_this_pass: 0
+  source_relation_rebases_this_pass: 0
+  replacement_draft_watches_opened_this_pass: 0
   immutable_acquisition_requests_this_pass: 1
+  acquisition_identity_guard_hardened_this_pass: 1
+  semantic_promotions_this_pass: 0
   note: >-
-    The four existing atomized records are reuse candidates only. No derived node is promoted until the
-    new current-version artifact and affected-locator delta are reviewed. Article 12 is mandatory re-analysis scope.
-    PP 687 and PP 211 dependency edges were rebased to the 26.07.2026 current 152-FZ root without changing their semantics.
+    The four existing atomized records remain reuse candidates only. No derived node is promoted until the
+    new current-version artifact and affected-locator delta are reviewed. Article 12 remains mandatory re-analysis scope.
+    This pass hardened PDN acquisition so only document.official_publication_id can select a publication artifact;
+    nested amendment/version-chain IDs cannot be captured under the wrong source identity.
 
 acquisition_activity:
   - source_id: SEC-SRC-RU-FZ265-2026
@@ -199,17 +203,29 @@ acquisition_activity:
     official_publication_id: "0001202607260024"
     status: REQUESTED_NO_ACCEPTED_MANIFEST_YET
     proof_rule: "Keep raw_capture=PENDING until manifest contains exact bytes metadata and SHA-256."
+  - source_id: PDN-CORE-ACQUIRER
+    requested_at: "2026-08-20T23:02:40Z"
+    route: pipeline_hardening
+    status: IDENTITY_SCOPE_GUARD_COMMITTED
+    commit: "158d83df01e65d2753fed6af76a0378d20e2cc91"
+    proof_rule: >-
+      A publication ID is eligible for acquisition only when it belongs to the top-level document section;
+      federal-law publication metadata number must match the registered source document number when checkable.
 
 acquisition_blockers:
   - >-
-      Byte-exact acquisition via the official publication portal is operational for source records carrying
-      an official_publication_id; No. 265-FZ has been registered and explicitly requested for that route.
+      Byte-exact acquisition via the official publication portal remains operational for source records carrying
+      an official document-level publication ID; No. 265-FZ is registered for that route but has no accepted manifest yet.
   - >-
       Remaining current-core raw captures are the consolidated 152-FZ text effective 26.07.2026, PP RF No. 687,
-      PP RF No. 211 and No. 265-FZ until an accepted manifest appears. Existing eight immutable artifacts remain valid.
+      PP RF No. 211 and No. 265-FZ. Existing eight immutable artifacts remain valid.
+  - >-
+      The hardened acquirer is committed, but a networked repository runner must execute it before any pending source
+      can be promoted to IMMUTABLE_CAPTURED; this inventory does not infer completion from a request or code commit.
 
 next_gate:
-  - capture and fingerprint No. 265-FZ through official publication identity 0001202607260024
+  - execute hardened pdn_core_acquire.py in the networked repository runner
+  - accept manifest for No. 265-FZ only after PDF signature, official API byte-length and source-number identity checks pass
   - capture byte-exact current consolidated 152-FZ version effective 26.07.2026 and PP RF No. 687 / No. 211
   - run structural delta 152-FZ 2025-09-01 -> 2026-07-26 with Article 12 mandatory review
   - review RKN Order No. 128 alignment with amended Article 12 without presuming invalidity
