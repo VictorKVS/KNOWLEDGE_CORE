@@ -32,6 +32,15 @@ layers:
       - id: RU-PP-1119-2012
         title: "Постановление Правительства РФ от 01.11.2012 № 1119 — требования к защите персональных данных при обработке в ИСПДн"
         verification_status: TO_VERIFY_CURRENT_REVISION
+      - id: SEC-SRC-RU-PP687-2008
+        title: "Постановление Правительства РФ от 15.09.2008 № 687 — неавтоматизированная обработка ПДн"
+        verification_status: METADATA_VERIFIED_RAW_PENDING
+      - id: SEC-SRC-RU-PP211-2012
+        title: "Постановление Правительства РФ от 21.03.2012 № 211 — меры для операторов-государственных и муниципальных органов"
+        verification_status: METADATA_VERIFIED_RAW_PENDING
+      - id: SEC-SRC-RU-PP1154-2025
+        title: "Постановление Правительства РФ от 01.08.2025 № 1154 — требования, методы и правила обезличивания ПДн"
+        verification_status: METADATA_VERIFIED_RAW_PENDING
     notes: "Government resolutions operationalize statutory requirements and must be versioned independently."
 
   regulators:
@@ -43,10 +52,26 @@ layers:
           verification_status: TO_VERIFY_CURRENT_REVISION
     fsb:
       role: "cryptographic protection and other requirements within its competence"
-      initial_sources: []
+      initial_sources:
+        - id: SEC-SRC-RU-INTERAGENCY-245-56-399-85-441-2025
+          title: "Межведомственный приказ от 25.06.2025 № 245/56/399/85/441"
+          verification_status: METADATA_VERIFIED_RAW_PENDING
+          applicability: SPECIAL_SCOPE_ONLY
     roskomnadzor:
       role: "personal-data regulator/supervision and regulatory acts within its competence"
-      initial_sources: []
+      initial_sources:
+        - id: SEC-SRC-RU-RKN18-2021
+          verification_status: METADATA_VERIFIED_RAW_PENDING
+        - id: SEC-SRC-RU-RKN128-2022
+          verification_status: METADATA_VERIFIED_RAW_PENDING
+        - id: SEC-SRC-RU-RKN178-2022
+          verification_status: METADATA_VERIFIED_RAW_PENDING
+        - id: SEC-SRC-RU-RKN179-2022
+          verification_status: METADATA_VERIFIED_RAW_PENDING
+        - id: SEC-SRC-RU-RKN180-2022
+          verification_status: METADATA_VERIFIED_RAW_PENDING
+        - id: SEC-SRC-RU-RKN140-2025
+          verification_status: METADATA_VERIFIED_RAW_PENDING
     rospotrebnadzor:
       role: "consumer protection and sanitary-epidemiological supervision; include only where a security requirement is actually applicable"
       initial_sources: []
@@ -57,13 +82,19 @@ cross_domain_rules:
   - "Do not treat all listed sources as applicable to every organization."
   - "For KII, build a separate RU-187-FZ branch and connect Presidential Decree No. 250 only where its scope actually applies."
   - "Every amendment creates version lineage and impact analysis; never overwrite historical requirements."
+  - "Source metadata verification is not equivalent to immutable raw capture or extraction verification."
+  - "Roskomnadzor Order No. 140 and Government Resolution No. 1154 must remain separate nodes until locator-level comparison proves exact relations."
 
 planned_branches:
   personal_data:
     root: RU-152-FZ
+    source_inventory: "152-FZ/PDN_MASTER_SOURCE_INVENTORY.yaml"
     next_sources:
       - RU-PP-1119-2012
       - RU-FSTEC-21-2013
+      - SEC-SRC-RU-PP687-2008
+      - SEC-SRC-RU-PP211-2012
+      - SEC-SRC-RU-PP1154-2025
       - ROSKOMNADZOR_APPLICABLE_ACTS
       - FSB_APPLICABLE_ACTS
   kii:
