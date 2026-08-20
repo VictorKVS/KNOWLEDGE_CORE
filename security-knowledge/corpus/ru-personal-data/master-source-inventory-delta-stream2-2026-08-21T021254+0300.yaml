@@ -1,0 +1,148 @@
+schema_version: 1
+delta_id: RU_PD_MASTER_SOURCE_INVENTORY_STREAM2_DELTA_2026_08_21T021254_0300
+applies_to: master-source-inventory.yaml
+created_at: "2026-08-21T02:12:54+03:00"
+stream_id: RU_PD_STREAM_2_TECHNICAL_CRYPTO
+merge_policy: >-
+  CONCURRENCY_SAFE_OVERLAY. Apply by source_id and stream_progress keys; do not replace unrelated
+  stream-1/stream-3 content. Existing master entries win unless this delta supplies newer primary
+  publication evidence or an explicit new field.
+
+source_patches:
+  RU_GOV_PP_1119_2012:
+    current_status_evidence: "Government portal current-edition page reverified 2026-08-21."
+  RU_FSB_ORDER_77_2023:
+    current_status_note: >-
+      Primary publication 0001202302200021 and PDn incident scope reverified 2026-08-21;
+      exact binary remains SOURCE_PENDING.
+  RU_FSTEC_ORDER_21_2013:
+    version_chain_status: >-
+      2013 base -> Order 49/2017 -> Order 68/2020; both amendment publications reverified.
+      No later Order 21 amendment is promoted by this stream without primary evidence.
+  RU_FSB_ORDER_142_2023:
+    version_chain_status: >-
+      2023 base; paragraph 2 amended by FSB Order 545/2024 and again by FSB Order 557/2025.
+      Both amendment events are primary-publication verified. Consolidated paragraph-2 semantics
+      remain pending exact artifact/text-diff compilation.
+
+new_sources:
+  - source_id: RU_FSB_ORDER_545_2024
+    domain: CRYPTO_LICENSING_VERSION_CONTEXT
+    priority: P1
+    local_record: "technical-security-source-pack-delta-2026-08-21T021254+0300.yaml"
+    registration_status: PRIMARY_PUBLICATION_VERIFIED
+    immutable_status: SOURCE_PENDING
+    analysis_status: REGISTERED_VERSION_CONTEXT
+    applicability_gate: FSB_LICENSING_CONTROL_CONTEXT
+    official_publication_number: "0001202412200069"
+    justice_registration_number: "80660"
+    signed_date: 2024-12-16
+    publication_date: 2024-12-20
+    relation:
+      from: RU_FSB_ORDER_142_2023
+      type: AMENDED_BY
+    note: "Version evidence only until exact text is compiled; not a universal PDn operator duty."
+
+  - source_id: RU_FSB_ORDER_557_2025
+    domain: CRYPTO_LICENSING_VERSION_CONTEXT
+    priority: P1
+    local_record: "technical-security-source-pack-delta-2026-08-21T021254+0300.yaml"
+    registration_status: PRIMARY_PUBLICATION_VERIFIED
+    immutable_status: SOURCE_PENDING
+    analysis_status: REGISTERED_VERSION_CONTEXT
+    applicability_gate: FSB_LICENSING_CONTROL_CONTEXT
+    official_publication_number: "0001202512300057"
+    justice_registration_number: "84878"
+    signed_date: 2025-12-29
+    publication_date: 2025-12-30
+    relation:
+      from: RU_FSB_ORDER_142_2023
+      type: AMENDED_BY
+    note: "Later paragraph-2 amendment event; exact consolidated wording is not inferred from metadata."
+
+  - source_id: RU_FSTEC_ORDER_163_2025
+    domain: FSTEK_TZI_LICENSING_CONTROL
+    priority: P1
+    local_record: "technical-security-source-pack-delta-2026-08-21T021254+0300.yaml"
+    registration_status: PRIMARY_PUBLICATION_VERIFIED
+    immutable_status: SOURCE_PENDING
+    analysis_status: REGISTERED
+    applicability_gate: FSTEK_TZI_LICENSED_ACTIVITY
+    official_publication_number: "0001202507020008"
+    justice_registration_number: "82774"
+    signed_date: 2025-05-12
+    publication_date: 2025-07-02
+    version_chain_status: "Base 2025-05-12; amended by FSTEK Order 487/2025, publication 0001202512300067."
+    note: "Licensed-activity control source; do not promote merely because an organization processes PDn."
+
+  - source_id: RU_FSTEC_ORDER_164_2025
+    domain: FSTEK_SECURITY_PRODUCT_DEVELOPMENT_LICENSING_CONTROL
+    priority: P1
+    local_record: "technical-security-source-pack-delta-2026-08-21T021254+0300.yaml"
+    registration_status: PRIMARY_PUBLICATION_VERIFIED
+    immutable_status: SOURCE_PENDING
+    analysis_status: REGISTERED
+    applicability_gate: FSTEK_SECURITY_PRODUCT_DEVELOPMENT_LICENSED_ACTIVITY
+    official_publication_number: "0001202507020007"
+    justice_registration_number: "82775"
+    signed_date: 2025-05-12
+    publication_date: 2025-07-02
+    version_chain_status: "Base 2025-05-12; amended by FSTEK Order 487/2025, publication 0001202512300067."
+    note: "Licensed-activity control source; not a universal ISPDn control requirement."
+
+  - source_id: RU_FSTEC_ORDER_487_2025
+    domain: FSTEK_LICENSING_VERSION_CONTEXT
+    priority: P2
+    local_record: "technical-security-source-pack-delta-2026-08-21T021254+0300.yaml"
+    registration_status: PRIMARY_PUBLICATION_VERIFIED
+    immutable_status: SOURCE_PENDING
+    analysis_status: REGISTERED_VERSION_CONTEXT
+    applicability_gate: FSTEK_LICENSING_CONTROL_CONTEXT
+    official_publication_number: "0001202512300067"
+    justice_registration_number: "84884"
+    signed_date: 2025-12-29
+    publication_date: 2025-12-30
+    relations:
+      - from: RU_FSTEC_ORDER_163_2025
+        type: AMENDED_BY
+      - from: RU_FSTEC_ORDER_164_2025
+        type: AMENDED_BY
+    note: "Amendment/version evidence; not a standalone PDn operator duty."
+
+stream_progress_patch:
+  stream_2_technical_crypto:
+    status: ACTIVE
+    source_pack_delta: "technical-security-source-pack-delta-2026-08-21T021254+0300.yaml"
+    core_sources_reconciled: 8
+    unique_stream2_source_records_after_delta: 18
+    new_primary_source_records_this_run: 5
+    primary_amendment_events_verified: 7
+    direct_pdn_gossopka_bridge_sources_registered: 1
+    direct_applicability_edges_verified: 1
+    immutable_artifacts: 0
+    pending_immutable_or_snapshot: 18
+    bytes_downloaded: 0
+    hashes_recorded: 0
+    last_run_binary_attempts: 7
+    last_run_binary_successes: 0
+    last_run_primary_sources_registered: 5
+    last_run_new_version_edges: 4
+    last_run_new_universal_applicability_edges: 0
+    last_run_record: "runs/stream-2/2026-08-21T021254+0300.yaml"
+    counter_correction: >-
+      The run file's stream2_registered_source_records_estimated value of 19 is superseded by this
+      unique-source reconciliation: 13 pre-existing stream-2 source records + 5 new records = 18.
+
+next_priority_patch:
+  - RU_FSB_ORDER_77_2023_exact_primary_artifact_and_paragraph_compilation
+  - RU_FSTEC_THREAT_METHOD_2021_attachment_2919
+  - RU_GOV_PP_1119_2012_exact_current_artifact
+  - RU_FSTEC_ORDER_21_2013_current_consolidated_artifact
+  - RU_FSB_ORDER_378_2014_exact_authoritative_artifact
+  - RU_FSB_ORDER_545_2024_and_RU_FSB_ORDER_557_2025_exact_artifacts_then_order142_delta_compilation
+  - RU_FSTEC_ORDER_487_2025_exact_artifact_then_163_164_delta_compilation
+
+quality_note: >-
+  This delta deliberately does not change any source to SOURCE_ACQUIRED/IMMUTABLE because every exact
+  binary request in this run failed at DNS resolution. Primary publication verification is retained as
+  registration/version evidence only.
