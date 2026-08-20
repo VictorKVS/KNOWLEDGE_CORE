@@ -1,0 +1,72 @@
+schema_version: "1.0"
+kind: ru-protected-information-master-inventory-delta
+base_inventory: "master-inventory.yaml"
+checked_at: "2026-08-20T14:32:00+03:00"
+owner_stream: STREAM_3_SECTOR_OVERLAYS
+run_ref: "stream-3-run-2026-08-20T1432.yaml"
+overlap_delta_ref: "../../cross-domain/pdn-sector-overlap-delta-stream3-2026-08-20T1430.yaml"
+
+counter_state_after_reconciliation:
+  found: 17
+  downloaded: 7
+  immutable: 7
+  pending: 9
+  reused: 1
+  primary_publication_verified: 7
+  sectors_registered: 14
+  new_sources_this_run: 1
+  new_immutable_this_run: 1
+  new_bytes_this_run: 2483982
+
+counter_reconciliation:
+  issue: >-
+    The legacy synchronizer used hard-coded source-universe totals. After registering a new source,
+    it could increase immutable count while decreasing pending count without increasing found,
+    producing a mathematically consistent but semantically wrong universe count.
+  correction: >-
+    Source-universe metrics are now derived from master source nodes + source cards + manifests.
+    For the new 230-ФЗ source the correct state is found=17, immutable=7, pending=9, reused=1.
+  synchronizer_fix: "TOOLS/ru_protected_master_sync.py source-driven generation"
+
+sources_added:
+  - source_id: SEC-SRC-RU-FZ-230-2016
+    sector: debt_collection
+    regime: debtor_personal_data_and_confidentiality
+    status: PRIMARY_PUBLICATION_VERIFIED
+    official_publication_id: "0001201607030002"
+    official_publication_date: "2016-07-03"
+    source_card_ref: "../../../security-corpora/RU/protected-information/source/SEC-SRC-RU-FZ-230-2016.yaml"
+    immutable:
+      state: IMMUTABLE_BASELINE_CAPTURED
+      manifest_ref: "../../../security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-230-2016.json"
+      mime: "application/pdf"
+      byte_length: 2483982
+      sha256: "5b964683c637fea3544624bcb9b8f56f477d738d24b54fe0e3bd971dd1badc1c"
+    primary_anchor: "статья 6 — ограничения передачи/раскрытия сведений о должнике и персональных данных"
+    version_chain:
+      state: VERSION_CHAIN_PARTIAL
+      current_consolidated_revision_seen: "31.07.2025"
+      primary_event_verified:
+        act: "137-ФЗ от 07.06.2025"
+        official_publication_id: "0001202506070014"
+      pending: "Complete current primary amendment chain before executable use."
+
+conflict_registry_delta:
+  - id: STREAM3-SCOPE-GUARD-230FZ-001
+    classification: NON_CONFLICT_SPECIALIZATION_PENDING_FULL_CHAIN
+    compared:
+      - "152-ФЗ статья 6 часть 1 пункт 7 — lawful processing basis"
+      - "230-ФЗ статья 6 части 3, 7, 8 — operation-specific disclosure restrictions"
+    guard: "PROCESSING_LAWFUL_BASIS != UNRESTRICTED_DISCLOSURE_PERMISSION"
+    executable_effect: NONE
+
+proof_floor_effect:
+  executable_rules_changed: false
+  applicability_edges_promoted: 0
+  immutable_baselines_added: 1
+  primary_amendment_events_added: 1
+  legal_conflicts_confirmed: 0
+
+merge_rule: >-
+  Apply after the base inventory and earlier stream-3 deltas. This delta adds a source node and
+  immutable baseline but does not certify the current consolidated semantics of 230-ФЗ.
