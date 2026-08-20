@@ -1,0 +1,226 @@
+schema_version: "1.0"
+id: RU-FSTEC21-ISPDN-CONTROLS-ATOMIC-V1
+title: FSTEC Order No. 21 current ISPDN measure-selection and control-catalog model
+scope: >-
+  Current public text of FSTEC Order No. 21 of 18 February 2013 as amended by Orders
+  No. 49 of 23 March 2017 and No. 68 of 14 May 2020. The model covers scope, actors,
+  the four-stage measure-selection pipeline, compensating measures, certified-tool
+  conditionals, the three-year effectiveness-assessment floor, fifteen measure families
+  and all 109 appendix control identifiers with their base protection-level inclusion.
+  Cryptographic measures, state-secret data, PP 1119 level determination, FSB Order 378,
+  immutable current consolidated bytes and expert implementation profiles remain separate.
+
+source:
+  authority: FSTEC of Russia
+  order_number: "21"
+  signed_date: "2013-02-18"
+  minjust_registration_number: "28375"
+  minjust_registration_date: "2013-05-14"
+  original_official_publication:
+    publisher: Rossiyskaya Gazeta
+    issue: "107"
+    publication_date: "2013-05-22"
+    effective_from: "2013-06-02"
+    url: https://rg.ru/documents/2013/05/22/soderjanie-dok.html
+  current_consolidated_text:
+    edition_date: "2020-05-14"
+    status_checked_at: "2026-08-20"
+    url: https://www.consultant.ru/document/cons_doc_LAW_146520/
+  amendment_49:
+    signed_date: "2017-03-23"
+    minjust_registration_number: "46487"
+    minjust_registration_date: "2017-04-25"
+    official_publication_number: "0001201704260010"
+    official_publication_date: "2017-04-26"
+    url: https://publication.pravo.gov.ru/document/0001201704260010
+  amendment_68:
+    signed_date: "2020-05-14"
+    minjust_registration_number: "58877"
+    minjust_registration_date: "2020-07-08"
+    official_publication_number: "0001202007100002"
+    official_publication_date: "2020-07-10"
+    effective_from: "2021-01-01"
+    url: https://publication.pravo.gov.ru/document/0001202007100002
+  dependencies:
+    - FL152_ARTICLE19_PART4
+    - PP_RF_1119_ISPDN_PROTECTION_LEVEL
+    - FSTEC_ORDER_131_TRUST_LEVELS
+    - CURRENT_THREAT_MODEL
+    - FSB_ORDER_378_WHEN_CRYPTOGRAPHIC_PROTECTION_APPLIES
+    - FSTEC_ORDER_17_WHEN_ISPDN_IS_A_STATE_INFORMATION_SYSTEM
+
+verification_boundary:
+  current_status_and_edition: VERIFIED_AUTHORITATIVE_SECONDARY_2026_08_20
+  original_identity_registration_and_publication: VERIFIED_AUTHORITATIVE_PUBLICATION_INTERFACE
+  amendment_49_identity_registration_publication: VERIFIED_PRIMARY_WEB
+  amendment_68_identity_registration_publication_effective_date: VERIFIED_PRIMARY_WEB_AND_CURRENT_TEXT
+  current_consolidated_clause_text: VERIFIED_AUTHORITATIVE_SECONDARY
+  appendix_109_control_ids_and_base_level_marks: VERIFIED_AUTHORITATIVE_SECONDARY
+  immutable_current_consolidated_bytes: PENDING
+  amendment_49_exact_effective_date: NOT_CLAIMED
+  independent_expert_review: PENDING
+
+version_chain:
+  - {event: ORIGINAL_ORDER_SIGNED, date: "2013-02-18"}
+  - {event: ORIGINAL_ORDER_EFFECTIVE, date: "2013-06-02"}
+  - {event: ORDER_49_SIGNED, date: "2017-03-23"}
+  - {event: ORDER_49_OFFICIALLY_PUBLISHED, date: "2017-04-26"}
+  - {event: ORDER_68_SIGNED, date: "2020-05-14"}
+  - {event: ORDER_68_EFFECTIVE_CURRENT_EDITION, date: "2021-01-01"}
+  - {event: CURRENT_STATUS_CHECKED, date: "2026-08-20"}
+
+numeric_deadlines:
+  - id: FSTEC21-D001
+    locator: clause_6
+    action: ASSESS_EFFECTIVENESS_OF_IMPLEMENTED_MEASURES
+    maximum_interval: 3
+    unit: YEARS
+    clock: BETWEEN_EFFECTIVENESS_ASSESSMENTS
+    actor: OPERATOR
+    contractor_route: LICENSED_TZKI_LEGAL_ENTITY_OR_INDIVIDUAL_ENTREPRENEUR
+
+atomic_rules:
+  - {id: FSTEC21-R001, locator: clause_1.scope, class: ISPDN_LEVEL_MEASURE_SCOPE, rule: "Apply the order to organizational and technical personal-data security measures for each PP 1119 protection level in an ISPDN."}
+  - {id: FSTEC21-R002, locator: clause_1.objective, class: PROTECTED_EVENTS, rule: "Protect personal data against unlawful or accidental access, destruction, modification, blocking, copying, provision, dissemination and other unlawful actions."}
+  - {id: FSTEC21-R003, locator: clause_1.exclusion_1, class: STATE_SECRET_EXCLUSION, rule: "Do not use this order as the measure set for personal data classified as state secrets."}
+  - {id: FSTEC21-R004, locator: clause_1.exclusion_2, class: CRYPTOGRAPHY_EXCLUSION, rule: "Do not use this order as the source of cryptographic-protection measures; route that question separately."}
+  - {id: FSTEC21-R005, locator: clause_2.actor, class: OPERATOR_OR_PROCESSOR_SECURITY, rule: "ISPDN personal-data security is ensured by the operator or a person processing on the operator's instructions under Russian law."}
+  - {id: FSTEC21-R006, locator: clause_2.contractor, class: LICENSED_TZKI_CONTRACTOR, rule: "A contracted legal entity or individual entrepreneur performing ISPDN security work must hold the relevant technical-protection-of-confidential-information licence."}
+  - {id: FSTEC21-R007, locator: clause_3, class: PROTECTION_SYSTEM_AND_CURRENT_THREATS, rule: "Implement measures within the PP 1119 personal-data protection system and direct them at neutralizing current threats."}
+  - {id: FSTEC21-R008, locator: clause_4, class: CONFORMITY_ASSESSED_TOOLS_WHEN_NECESSARY, rule: "Use conformity-assessed security tools when such tools are necessary to neutralize current threats."}
+  - {id: FSTEC21-R009, locator: clause_6.actor, class: EFFECTIVENESS_ASSESSMENT_ACTOR, rule: "The operator assesses effectiveness itself or contracts an appropriately licensed legal entity or individual entrepreneur."}
+  - {id: FSTEC21-R010, locator: clause_6.frequency, class: THREE_YEAR_FLOOR, rule: "Assess effectiveness at least once every three years."}
+  - {id: FSTEC21-R011, locator: clause_7, class: GIS_SPECIAL_ROUTE, rule: "For personal data processed in a state information system, route security measures through the FSTEC requirements for state information systems."}
+  - {id: FSTEC21-R012, locator: clause_8, class: FIFTEEN_MEASURE_FAMILIES, rule: "Use the fifteen enumerated measure families with current threats and technologies taken into account."}
+  - {id: FSTEC21-R013, locator: clause_9.step_1, class: BASE_SET_BY_LEVEL, rule: "Start with the appendix base set for the PP 1119 protection level already established for the ISPDN."}
+  - {id: FSTEC21-R014, locator: clause_9.step_2, class: ADAPT_BASE_SET, rule: "Adapt the base set to structural and functional characteristics, technologies and operating features."}
+  - {id: FSTEC21-R015, locator: clause_9.step_2.exclusion, class: EXCLUDE_ONLY_INAPPLICABLE_TECH_OR_CHARACTERISTIC, rule: "An appendix base measure may be excluded during adaptation when it directly depends on technology not used or a structural-functional characteristic absent from the ISPDN."}
+  - {id: FSTEC21-R016, locator: clause_9.step_3, class: REFINE_FOR_ALL_CURRENT_THREATS, rule: "Refine the adapted set with previously unselected appendix measures so that all current threats for the specific ISPDN are neutralized."}
+  - {id: FSTEC21-R017, locator: clause_9.step_4, class: SUPPLEMENT_OTHER_NPA, rule: "Supplement the refined set with measures required by other applicable information-security and personal-data-security normative acts."}
+  - {id: FSTEC21-R018, locator: clause_10.trigger, class: COMPENSATING_MEASURE_TRIGGER, rule: "During adaptation or refinement, compensating measures may be designed when a selected measure cannot be technically implemented or when economic feasibility is taken into account."}
+  - {id: FSTEC21-R019, locator: clause_10.objective, class: COMPENSATING_MEASURE_OBJECTIVE, rule: "A compensating measure must neutralize current personal-data security threats."}
+  - {id: FSTEC21-R020, locator: clause_10.justification, class: COMPENSATING_MEASURE_JUSTIFICATION, rule: "Document justification for compensating measures while designing the personal-data protection system."}
+  - {id: FSTEC21-R021, locator: clause_11.condition, class: TYPE1_TYPE2_OPTIONAL_ADDITIONS, rule: "For PP 1119 threat types 1 or 2, the three clause 11 measures may be additionally applied; the word may is not converted into an unconditional obligation."}
+  - {id: FSTEC21-R022, locator: clause_11.branch_1, class: UNDECLARED_CAPABILITY_REVIEW, rule: "One optional clause 11 route is system or application software and code review for undeclared capabilities."}
+  - {id: FSTEC21-R023, locator: clause_11.branch_2, class: PENETRATION_TESTING, rule: "One optional clause 11 route is penetration testing of the information system."}
+  - {id: FSTEC21-R024, locator: clause_11.branch_3, class: SECURE_DEVELOPMENT_SOFTWARE, rule: "One optional clause 11 route is use of system or application software developed using secure-programming methods."}
+  - {id: FSTEC21-R025, locator: clause_12.technical, class: SECURITY_TOOL_FUNCTIONS, rule: "Implement technical measures through software or software-hardware security tools having the necessary security functions."}
+  - {id: FSTEC21-R026, locator: clause_12.certification_condition, class: CERTIFIED_TOOL_CONDITIONAL, rule: "Apply the clause 12 class and trust thresholds when security tools certified to information-security requirements are used; do not rewrite this conditional as universal certification of every tool."}
+  - {id: FSTEC21-R027, locator: clause_12.level_1, class: LEVEL1_CERTIFIED_THRESHOLDS, rule: "For protection level 1, certified security tools are at least class 4 and trust level 4, and computing equipment at least class 5."}
+  - {id: FSTEC21-R028, locator: clause_12.level_2, class: LEVEL2_CERTIFIED_THRESHOLDS, rule: "For protection level 2, certified security tools are at least class 5 and trust level 5, and computing equipment at least class 5."}
+  - {id: FSTEC21-R029, locator: clause_12.level_3, class: LEVEL3_CERTIFIED_THRESHOLDS, rule: "For protection level 3, certified security tools are class 6 and trust level 6, and computing equipment at least class 5."}
+  - {id: FSTEC21-R030, locator: clause_12.level_4, class: LEVEL4_CERTIFIED_THRESHOLDS, rule: "For protection level 4, certified security tools are class 6 and trust level 6, and computing equipment at least class 6."}
+  - {id: FSTEC21-R031, locator: clause_12.class_source, class: SECURITY_CLASS_EXTERNAL_SOURCE, rule: "Determine protection classes under the separate FSTEC normative acts issued under its statutory authority."}
+  - {id: FSTEC21-R032, locator: clause_12.trust_source, class: TRUST_LEVEL_ORDER131, rule: "Determine trust levels under FSTEC Order No. 131."}
+  - {id: FSTEC21-R033, locator: clause_12.certificate_scope, class: CERTIFICATE_REQUIREMENT_SCOPE, rule: "A certified tool must be certified against applicable mandatory security requirements or requirements in its technical conditions or security target."}
+  - {id: FSTEC21-R034, locator: clause_12.function_fit, class: FUNCTIONAL_FIT, rule: "Security-tool functions must implement the measures selected under this order."}
+  - {id: FSTEC21-R035, locator: clause_13, class: NEW_TECH_NEW_THREAT_COMPENSATION, rule: "For new technologies and additional threats lacking defined measures, develop compensating measures under clause 10."}
+  - {id: FSTEC21-R036, locator: appendix.note_1, class: PLUS_MEANS_BASE_SET, rule: "A plus sign includes the measure in the base set for the corresponding protection level."}
+  - {id: FSTEC21-R037, locator: appendix.note_2, class: NO_PLUS_NOT_PROHIBITED, rule: "Absence of a plus does not prohibit the measure; it may enter during adaptation/refinement or compensating-measure design."}
+  - {id: FSTEC21-R038, locator: order.clause_2, class: ORDER58_REPEALED, rule: "Order No. 21 repealed FSTEC Order No. 58 of 5 February 2010; do not use Order No. 58 as the current ISPDN measure source."}
+
+selection_pipeline:
+  - {order: 1, step: DETERMINE_BASE_SET, input: PP1119_PROTECTION_LEVEL, output: APPENDIX_PLUS_MEASURES}
+  - {order: 2, step: ADAPT, input: [STRUCTURAL_FUNCTIONAL_CHARACTERISTICS, TECHNOLOGIES, OPERATING_FEATURES], output: ADAPTED_SET}
+  - {order: 3, step: REFINE, input: [CURRENT_THREATS, UNSELECTED_APPENDIX_MEASURES], output: ALL_CURRENT_THREATS_NEUTRALIZED_SET}
+  - {order: 4, step: SUPPLEMENT, input: OTHER_APPLICABLE_NPA, output: FINAL_REQUIRED_SET}
+
+family_objectives:
+  - {code: IAF, clause: "8.1", title: IDENTIFICATION_AUTHENTICATION, controls: 6, source_url: https://www.consultant.ru/document/cons_doc_LAW_146520/b8f3a9cc473a22a0ccc730e577fae74eba33a33f/}
+  - {code: UPD, clause: "8.2", title: ACCESS_CONTROL, controls: 17, source_url: https://www.consultant.ru/document/cons_doc_LAW_146520/adee49c90d46db7489932f5a0afa4f39a633a97c/}
+  - {code: OPS, clause: "8.3", title: SOFTWARE_ENVIRONMENT_RESTRICTION, controls: 4, source_url: https://www.consultant.ru/document/cons_doc_LAW_146520/fad39236233048150456b31577248ee04a72cb03/}
+  - {code: ZNI, clause: "8.4", title: MACHINE_MEDIA_PROTECTION, controls: 8, source_url: https://www.consultant.ru/document/cons_doc_LAW_146520/6f05e3d0826eef1b7d59a7dcfa67c9125ab0c3fc/}
+  - {code: RSB, clause: "8.5", title: SECURITY_EVENT_LOGGING, controls: 7, source_url: https://www.consultant.ru/document/cons_doc_LAW_146520/d5e33b1623d84eae1c8691cb2e1c132d1f635ac4/}
+  - {code: AVZ, clause: "8.6", title: ANTIVIRUS_PROTECTION, controls: 2, source_url: https://www.consultant.ru/document/cons_doc_LAW_146520/4a428ceb339b3d45ebd14bc9598ac4fce0726cf2/}
+  - {code: SOV, clause: "8.7", title: INTRUSION_DETECTION_PREVENTION, controls: 2, source_url: https://www.consultant.ru/document/cons_doc_LAW_146520/6d42d4af5048bfebe436ddc1f4fe43c85643f3d6/}
+  - {code: ANZ, clause: "8.8", title: SECURITY_ANALYSIS, controls: 5, source_url: https://www.consultant.ru/document/cons_doc_LAW_146520/2df66d3fbe660007474ddfaf4874741c980d031f/}
+  - {code: OCL, clause: "8.9", title: SYSTEM_AND_DATA_INTEGRITY, controls: 8, source_url: https://www.consultant.ru/document/cons_doc_LAW_146520/3fd51a09c4b6c62b00c7f3a052a4d1987f029e20/}
+  - {code: ODT, clause: "8.10", title: DATA_AVAILABILITY, controls: 5, source_url: https://www.consultant.ru/document/cons_doc_LAW_146520/8a19e2d66fa7bd7534890dcb8d7df8d3fc363d71/}
+  - {code: ZSV, clause: "8.11", title: VIRTUALIZATION_PROTECTION, controls: 10, source_url: https://www.consultant.ru/document/cons_doc_LAW_146520/2d81d500e9f27c88a52df32d90edd011db8de013/}
+  - {code: ZTS, clause: "8.12", title: TECHNICAL_MEANS_PROTECTION, controls: 5, source_url: https://www.consultant.ru/document/cons_doc_LAW_146520/79af53afcc5d339b0af30ee295b9ce7408d714c8/}
+  - {code: ZIS, clause: "8.13", title: SYSTEM_NETWORK_COMMUNICATION_PROTECTION, controls: 20, source_url: https://www.consultant.ru/document/cons_doc_LAW_146520/e1f5f07ed15780c4b3cafeef6daefba36e41cf63/}
+  - {code: INC, clause: "8.14", title: INCIDENT_DETECTION_RESPONSE, controls: 6, source_url: https://www.consultant.ru/document/cons_doc_LAW_146520/c1281c81d6f660816efb32b989d16b18ad92015a/}
+  - {code: UKF, clause: "8.15", title: CONFIGURATION_MANAGEMENT, controls: 4, source_url: https://www.consultant.ru/document/cons_doc_LAW_146520/b935883340a6300258ce7be72fce665c2afeffe2/}
+
+control_catalog:
+  IAF: {IAF.1: [4,3,2,1], IAF.2: [2,1], IAF.3: [4,3,2,1], IAF.4: [4,3,2,1], IAF.5: [4,3,2,1], IAF.6: [4,3,2,1]}
+  UPD: {UPD.1: [4,3,2,1], UPD.2: [4,3,2,1], UPD.3: [4,3,2,1], UPD.4: [4,3,2,1], UPD.5: [4,3,2,1], UPD.6: [4,3,2,1], UPD.7: [], UPD.8: [], UPD.9: [], UPD.10: [3,2,1], UPD.11: [3,2,1], UPD.12: [], UPD.13: [4,3,2,1], UPD.14: [4,3,2,1], UPD.15: [4,3,2,1], UPD.16: [4,3,2,1], UPD.17: [2,1]}
+  OPS: {OPS.1: [], OPS.2: [2,1], OPS.3: [1], OPS.4: []}
+  ZNI: {ZNI.1: [2,1], ZNI.2: [2,1], ZNI.3: [], ZNI.4: [], ZNI.5: [], ZNI.6: [], ZNI.7: [], ZNI.8: [3,2,1]}
+  RSB: {RSB.1: [4,3,2,1], RSB.2: [4,3,2,1], RSB.3: [4,3,2,1], RSB.4: [], RSB.5: [2,1], RSB.6: [], RSB.7: [4,3,2,1]}
+  AVZ: {AVZ.1: [4,3,2,1], AVZ.2: [4,3,2,1]}
+  SOV: {SOV.1: [2,1], SOV.2: [2,1]}
+  ANZ: {ANZ.1: [3,2,1], ANZ.2: [4,3,2,1], ANZ.3: [3,2,1], ANZ.4: [3,2,1], ANZ.5: [2,1]}
+  OCL: {OCL.1: [2,1], OCL.2: [], OCL.3: [], OCL.4: [2,1], OCL.5: [], OCL.6: [], OCL.7: [], OCL.8: []}
+  ODT: {ODT.1: [], ODT.2: [], ODT.3: [1], ODT.4: [2,1], ODT.5: [2,1]}
+  ZSV: {ZSV.1: [4,3,2,1], ZSV.2: [4,3,2,1], ZSV.3: [3,2,1], ZSV.4: [], ZSV.5: [], ZSV.6: [2,1], ZSV.7: [2,1], ZSV.8: [2,1], ZSV.9: [3,2,1], ZSV.10: [3,2,1]}
+  ZTS: {ZTS.1: [], ZTS.2: [], ZTS.3: [4,3,2,1], ZTS.4: [4,3,2,1], ZTS.5: []}
+  ZIS: {ZIS.1: [1], ZIS.2: [], ZIS.3: [4,3,2,1], ZIS.4: [], ZIS.5: [], ZIS.6: [], ZIS.7: [], ZIS.8: [], ZIS.9: [], ZIS.10: [], ZIS.11: [2,1], ZIS.12: [], ZIS.13: [], ZIS.14: [], ZIS.15: [2,1], ZIS.16: [], ZIS.17: [2,1], ZIS.18: [], ZIS.19: [], ZIS.20: [3,2,1]}
+  INC: {INC.1: [2,1], INC.2: [2,1], INC.3: [2,1], INC.4: [2,1], INC.5: [2,1], INC.6: [2,1]}
+  UKF: {UKF.1: [3,2,1], UKF.2: [3,2,1], UKF.3: [3,2,1], UKF.4: [3,2,1]}
+
+base_set_counts:
+  protection_level_4: 27
+  protection_level_3: 41
+  protection_level_2: 66
+  protection_level_1: 69
+  catalog_total: 109
+
+evidence_model:
+  - {id: EVIDENCE_FSTEC21_SCOPE_AND_EXCLUSIONS, proves: [FSTEC21-R001, FSTEC21-R002, FSTEC21-R003, FSTEC21-R004]}
+  - {id: EVIDENCE_FSTEC21_ACTOR_AND_CONTRACTOR, proves: [FSTEC21-R005, FSTEC21-R006]}
+  - {id: EVIDENCE_FSTEC21_SYSTEM_AND_THREAT_MODEL_LINK, proves: [FSTEC21-R007, FSTEC21-R008]}
+  - {id: EVIDENCE_FSTEC21_EFFECTIVENESS_ASSESSMENT, proves: [FSTEC21-R009, FSTEC21-R010]}
+  - {id: EVIDENCE_FSTEC21_GIS_ROUTING_DECISION, proves: [FSTEC21-R011]}
+  - {id: EVIDENCE_FSTEC21_FAMILY_CATALOG, proves: [FSTEC21-R012]}
+  - {id: EVIDENCE_FSTEC21_BASE_SET, proves: [FSTEC21-R013, FSTEC21-R036]}
+  - {id: EVIDENCE_FSTEC21_ADAPTATION_RECORD, proves: [FSTEC21-R014, FSTEC21-R015]}
+  - {id: EVIDENCE_FSTEC21_REFINEMENT_THREAT_COVERAGE, proves: [FSTEC21-R016, FSTEC21-R037]}
+  - {id: EVIDENCE_FSTEC21_OTHER_NPA_SUPPLEMENT, proves: [FSTEC21-R017]}
+  - {id: EVIDENCE_FSTEC21_COMPENSATING_MEASURE_JUSTIFICATION, proves: [FSTEC21-R018, FSTEC21-R019, FSTEC21-R020]}
+  - {id: EVIDENCE_FSTEC21_TYPE1_TYPE2_DECISION, proves: [FSTEC21-R021, FSTEC21-R022, FSTEC21-R023, FSTEC21-R024]}
+  - {id: EVIDENCE_FSTEC21_TOOL_FUNCTIONAL_FIT, proves: [FSTEC21-R025, FSTEC21-R034]}
+  - {id: EVIDENCE_FSTEC21_CERTIFICATE_AND_THRESHOLDS, proves: [FSTEC21-R026, FSTEC21-R027, FSTEC21-R028, FSTEC21-R029, FSTEC21-R030, FSTEC21-R031, FSTEC21-R032, FSTEC21-R033]}
+  - {id: EVIDENCE_FSTEC21_NEW_TECH_THREAT_COMPENSATION, proves: [FSTEC21-R035]}
+  - {id: EVIDENCE_FSTEC21_ORDER58_SUPERSESSION, proves: [FSTEC21-R038]}
+  - {id: EVIDENCE_FSTEC21_VERSION_CHAIN, proves: [FSTEC21-R026, FSTEC21-R038]}
+  - {id: EVIDENCE_FSTEC21_IAF_CATALOG, proves: [FSTEC21-R012]}
+  - {id: EVIDENCE_FSTEC21_UPD_CATALOG, proves: [FSTEC21-R012]}
+  - {id: EVIDENCE_FSTEC21_OPS_ZNI_RSB_CATALOG, proves: [FSTEC21-R012]}
+  - {id: EVIDENCE_FSTEC21_AVZ_SOV_ANZ_CATALOG, proves: [FSTEC21-R012]}
+  - {id: EVIDENCE_FSTEC21_OCL_ODT_CATALOG, proves: [FSTEC21-R012]}
+  - {id: EVIDENCE_FSTEC21_ZSV_ZTS_CATALOG, proves: [FSTEC21-R012]}
+  - {id: EVIDENCE_FSTEC21_ZIS_INC_UKF_CATALOG, proves: [FSTEC21-R012]}
+
+conflict_and_definition_checks:
+  - {id: FSTEC21-C001, type: LEVEL_SOURCE, resolution: "PP 1119 determines the protection level; Order 21 maps and selects measures after that result."}
+  - {id: FSTEC21-C002, type: PLUS_NOT_FINAL_SET, resolution: "The plus table is only the base set; adaptation, threat-based refinement and other-NPA supplementation still follow."}
+  - {id: FSTEC21-C003, type: NO_PLUS_NOT_PROHIBITED, resolution: "A blank appendix cell does not prohibit use of the control."}
+  - {id: FSTEC21-C004, type: EXCLUSION_NOT_CONVENIENCE, resolution: "Adaptation exclusion needs absent technology or absent structural-functional characteristic; preference alone is insufficient."}
+  - {id: FSTEC21-C005, type: ECONOMIC_FEASIBILITY_COMPENSATION, resolution: "Economic feasibility can support a compensating route but does not permit an uncovered current threat."}
+  - {id: FSTEC21-C006, type: COMPENSATION_NEEDS_JUSTIFICATION, resolution: "Compensating measures require documented design justification."}
+  - {id: FSTEC21-C007, type: TYPE1_TYPE2_MAY, resolution: "Clause 11 says the three measures may be additionally applied; do not convert may to shall."}
+  - {id: FSTEC21-C008, type: CERTIFIED_TOOL_CONDITIONAL, resolution: "The class/trust table is conditional on use of certified tools; Order 21 does not state that every security component must always be certified."}
+  - {id: FSTEC21-C009, type: CERTIFICATE_NOT_FUNCTIONAL_FIT, resolution: "Certification does not replace proof that tool functions implement selected measures."}
+  - {id: FSTEC21-C010, type: CURRENT_EDITION_TRUST_LEVELS, resolution: "Use the post-1-January-2021 trust-level wording introduced by Order 68, not the superseded clause 12 text."}
+  - {id: FSTEC21-C011, type: GIS_ROUTE, resolution: "A state ISPDN is routed to FSTEC GIS requirements; Order 21 is not used as a standalone substitute for that layer."}
+  - {id: FSTEC21-C012, type: CRYPTO_SEPARATE, resolution: "FSB cryptographic requirements remain separate and are not inferred from Order 21."}
+  - {id: FSTEC21-C013, type: STATE_SECRET_SEPARATE, resolution: "State-secret personal data is outside this order's scope."}
+  - {id: FSTEC21-C014, type: CONTRACTOR_LICENSE_CONDITION, resolution: "The licence rule applies to the contracted party performing the regulated work; it is not a universal licence obligation for every operator employee."}
+  - {id: FSTEC21-C015, type: THREE_YEARS_MAX_INTERVAL, resolution: "At least once every three years is a maximum interval, not a mandatory exactly-three-year cadence."}
+  - {id: FSTEC21-C016, type: INCIDENT_CLOCK_SEPARATE, resolution: "The INC family contains operational incident controls but does not replace Article 21's 24/72-hour regulator-notification route."}
+  - {id: FSTEC21-C017, type: LOG_RETENTION_NOT_FIXED, resolution: "RSB.1 requires the operator to define retention; Order 21 states no universal numeric log-retention period."}
+  - {id: FSTEC21-C018, type: BACKUP_INTERVAL_NOT_FIXED, resolution: "ODT.4 requires periodic backup but Order 21 states no universal numeric backup frequency."}
+  - {id: FSTEC21-C019, type: RECOVERY_INTERVAL_NOT_FIXED, resolution: "ODT.5 requires recovery within an established interval but Order 21 does not prescribe one universal numeric value."}
+  - {id: FSTEC21-C020, type: ORDER58_SUPERSEDED, resolution: "Do not route current ISPDN controls through repealed Order 58."}
+
+red_team:
+  critical_gap_created: false
+  high_gap_created: false
+  status: PASS_MODEL_FAIL_GLOBAL_SCOPE_INCOMPLETE
+  residuals:
+    - MEDIUM_IMMUTABLE_CURRENT_CONSOLIDATED_BYTES_PENDING
+    - MEDIUM_FSB_ORDER378_CRYPTO_CROSSWALK_PENDING
+    - MEDIUM_FSTEC_ORDER17_GIS_OVERLAY_REPLAY_PENDING
+    - MEDIUM_CONTROL_IMPLEMENTATION_PROFILES_PENDING
+    - MEDIUM_INDEPENDENT_EXPERT_REVIEW_PENDING
