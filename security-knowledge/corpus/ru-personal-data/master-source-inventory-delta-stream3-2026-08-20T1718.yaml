@@ -1,0 +1,64 @@
+schema_version: "1.0"
+kind: ru-personal-data-master-source-inventory-delta
+base_inventory: "master-source-inventory.yaml"
+checked_at: "2026-08-20T17:18:05+03:00"
+owner_stream: STREAM_3_SECTOR_OVERLAYS
+protected_information_delta_ref: "../ru-protected-information/master-inventory-delta-2026-08-20T1718.yaml"
+
+sector_evidence_updates:
+  - source_id: SEC-SRC-RU-FZ-98
+    title: "98-ФЗ «О коммерческой тайне»"
+    source_identity_state: REUSED_FROM_EXISTING_LEGISLATION_GRAPH
+    reuse_path: "../../legislation/RU/federal-laws/98-FZ/document.yaml"
+    pdn_relation:
+      state: NOT_PROVED
+      type: POSSIBLE_DUAL_REGIME_ON_SCENARIO_PROOF_ONLY
+      guard: "COMMERCIAL_SECRET != PERSONAL_DATA"
+    rule: >-
+      Do not infer 152-ФЗ applicability merely because information is commercially confidential.
+      A PDN edge requires an identifiable natural-person processing scenario and a primary current legal anchor.
+
+  - source_id: SEC-SRC-RU-FZ-218
+    title: "218-ФЗ «О кредитных историях»"
+    lifecycle_state: SOURCE_PENDING
+    primary_amendment_evidence_added:
+      - act: "377-ФЗ от 07.10.2022"
+        official_publication_id: "0001202210070001"
+        source_url: "https://publication.pravo.gov.ru/Document/View/0001202210070001"
+        verified_effect: "Article 6 changes Article 4 of 218-ФЗ."
+      - act: "442-ФЗ от 04.08.2023"
+        official_publication_id: "0001202308040037"
+        source_url: "https://publication.pravo.gov.ru/document/0001202308040037"
+        verified_effect: >-
+          Article 9 adds Article 10.2 to 218-ФЗ. The new complaint-handling rule explicitly protects applicant
+          personal data together with commercial, official, banking, insurance and other legally protected secrets.
+    relation_candidate:
+      type: EXPLICIT_PROTECTED_INFORMATION_COOCCURRENCE_IN_PRIMARY_AMENDING_ACT
+      status: EVIDENCE_ONLY_NON_EXECUTABLE
+      targets:
+        - personal_data
+        - commercial_secret
+        - official_secret
+        - banking_secret
+        - insurance_secret
+        - other_legally_protected_secret
+    gate: >-
+      Do not treat the amendment-event text as proof of the current consolidated 218-ФЗ locator until exact current
+      source acquisition and version-chain reconciliation are complete.
+
+pdn_executable_effect:
+  rules_changed: false
+  applicability_edges_promoted: 0
+  new_primary_amendment_events: 2
+  new_scope_guards: 1
+
+acquisition_state:
+  new_primary_immutable_artifacts: 0
+  exact_capture_pending:
+    - SEC-SRC-RU-FZ-218
+    - SEC-SRC-RU-FZ-98
+    - SEC-SRC-RU-FZ-222-2015
+
+proof_floor: >-
+  This delta contributes provenance and relation candidates only. It does not lower the requirement for exact source
+  bytes, current version-chain closure, locators, and review before executable PDN reasoning.
