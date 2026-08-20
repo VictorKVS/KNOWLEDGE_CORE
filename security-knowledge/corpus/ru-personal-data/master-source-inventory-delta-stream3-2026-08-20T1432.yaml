@@ -1,0 +1,52 @@
+schema_version: "1.0"
+kind: ru-pdn-master-source-inventory-delta
+base_inventory: "master-source-inventory.yaml"
+checked_at: "2026-08-20T14:32:00+03:00"
+owner_stream: STREAM_3_SECTOR_OVERLAYS
+protected_inventory_delta: "../ru-protected-information/master-inventory-delta-2026-08-20T1432.yaml"
+overlap_delta: "../../cross-domain/pdn-sector-overlap-delta-stream3-2026-08-20T1430.yaml"
+run_ref: "../ru-protected-information/stream-3-run-2026-08-20T1432.yaml"
+
+stream_3_sector_overlay_state:
+  sources_found_total: 17
+  reused_existing_sources: 1
+  primary_publication_verified_total: 7
+  immutable_artifacts: 7
+  pending_immutable: 9
+  sectors_registered: 14
+  new_sources_this_run: 1
+  new_immutable_this_run: 1
+
+source_delta:
+  - source_id: SEC-SRC-RU-FZ-230-2016
+    domain: DEBT_COLLECTION_PERSONAL_DATA_CONFIDENTIALITY
+    registration_status: PRIMARY_PUBLICATION_VERIFIED
+    immutable_status: IMMUTABLE_BASELINE_CAPTURED
+    analysis_status: VERSION_CHAIN_PARTIAL
+    local_source_card: "../../../security-corpora/RU/protected-information/source/SEC-SRC-RU-FZ-230-2016.yaml"
+    manifest_ref: "../../../security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-230-2016.json"
+    applicability_gate: SECTOR_SPECIAL_REGIME_REVIEW
+
+explicit_or_direct_legal_overlap_delta:
+  - from: "152-ФЗ статья 6 часть 1 пункт 7"
+    to: "230-ФЗ debt-collection regime"
+    type: EXPLICIT_CROSS_REGIME_REFERENCE
+    proof_state: PARTIAL_EXPLICIT_REFERENCE
+    executable_use_allowed: false
+    pending: "Full primary current-version chains and locator compilation."
+
+conflict_notes_delta:
+  - >-
+    230-ФЗ restrictions on third-party/public disclosure are not contradictory to a lawful-processing
+    basis in 152-ФЗ; they are an operation-specific specialization. Never compile lawful processing
+    into unrestricted disclosure permission.
+
+proof_floor_effect:
+  executable_pdn_rules_changed: false
+  applicability_edges_promoted: 0
+  sector_sources_added: 1
+  immutable_baselines_added: 1
+
+merge_rule: >-
+  Apply this append-only stream delta after the PDN master inventory and earlier deltas.
+  Do not promote the 230-ФЗ edge to executable PDN decision logic before full current-version review.
