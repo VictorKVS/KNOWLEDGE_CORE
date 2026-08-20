@@ -5,6 +5,10 @@ The official publication endpoint normally returns PDF bytes, but some large
 publications are delivered as a ZIP container. Both are valid immutable source
 artifacts when the bytes match official API metadata. Semantic/current-version
 status is never upgraded by this capture step.
+
+Safety invariant (v1.3): acquisition identity is read only from the top-level
+``document`` section of a source card. Amendment/version-chain publication IDs
+must never be captured under the baseline source ID.
 """
 from __future__ import annotations
 
@@ -26,9 +30,24 @@ RAW_DIR = CORPUS / "raw"
 MANIFEST_DIR = CORPUS / "manifests"
 RUN_FILE = CORPUS / "SECTOR_ACQUISITION_RUN.json"
 BASES = ("http://publication.pravo.gov.ru", "https://publication.pravo.gov.ru")
-UA = "KNOWLEDGE_CORE-sector-acquirer/1.2 (+https://github.com/VictorKVS/KNOWLEDGE_CORE)"
+UA = "KNOWLEDGE_CORE-sector-acquirer/1.3 (+https://github.com/VictorKVS/KNOWLEDGE_CORE)"
 ID_RE = re.compile(r"^id:\s*([^\s#]+)\s*$", re.M)
-EO_RE = re.compile(r'^\s*official_publication_id:\s*["\']?([0-9]{16})["\']?\s*$', re.M)
+DOC_EO_RE = re.compile(r'^  official_publication_id:\s*["\']?([0-9]{16})["\']?\s*$', re.M)
+DOC_NUMBER_RE = re.compile(r'^  number:\s*["\']?([^"\'\n]+)["\']?\s*$', re.M)
+FEDERAL_LAW_NUMBER_RE = re.compile(r"^\d+-ФЗ$")
+TOP_LEVEL_RE = re.compile(r"(?m)^[A-Za-z_][A-Za-z0-9_-]*:\s*(?:.*)?$")
+
+
+def top_level_section(text: str, name: str) -> str:
+    """Return indented body of a top-level YAML-ish section without parsing nested fields elsewhere."""
+    start_match = re.search(rf"(?m)^{re.escape(name)}:\s*$", text)
+    if not start_match:
+        return ""
+    start = start_match.end()
+    tail = text[start:]
+    next_top = TOP_LEVEL_RE.search(tail)
+    end = start + next_top.start() if next_top else len(text)
+    return text[start:end]
 
 
 def fetch_bytes(url: str, timeout: int = 90, attempts: int = 4):
@@ -71,9 +90,12 @@ def discover_targets():
     out = []
     for path in sorted(SOURCE_DIR.glob("*.yaml")):
         text = path.read_text(encoding="utf-8")
-        mid, meo = ID_RE.search(text), EO_RE.search(text)
+        mid = ID_RE.search(text)
+        document = top_level_section(text, "document")
+        meo = DOC_EO_RE.search(document)
+        mnumber = DOC_NUMBER_RE.search(document)
         if mid and meo:
-            out.append((mid.group(1), meo.group(1), path))
+            out.append((mid.group(1), meo.group(1), (mnumber.group(1).strip() if mnumber else ""), path))
     return out
 
 
@@ -84,12 +106,18 @@ def main() -> int:
     RAW_DIR.mkdir(parents=True, exist_ok=True)
     MANIFEST_DIR.mkdir(parents=True, exist_ok=True)
 
-    for source_id, eo, source_record in targets:
-        row = {"source_id": source_id, "eo_number": eo, "status": "PENDING"}
+    for source_id, eo, expected_number, source_record in targets:
+        row = {"source_id": source_id, "eo_number": eo, "source_document_number": expected_number, "status": "PENDING"}
         try:
             meta_raw, _, meta_url = official_get("/api/Document", {"eoNumber": eo})
             meta = json.loads(meta_raw.decode("utf-8"))
             advertised = meta.get("pdfFileLength")
+            api_number = str(meta.get("number") or "").strip()
+            if expected_number and FEDERAL_LAW_NUMBER_RE.fullmatch(expected_number) and api_number and api_number != expected_number:
+                raise RuntimeError(
+                    f"source/publication identity mismatch: source document number={expected_number!r}, official API number={api_number!r}, eo={eo}"
+                )
+
             data, headers, file_url = official_get("/File/Pdf", {"eoNumber": eo})
             ext, mime, container = artifact_type(data, headers)
             if advertised is not None and int(advertised) != len(data):
@@ -107,9 +135,12 @@ def main() -> int:
                 artifact.write_bytes(data)
 
             retrieved = dt.datetime.now(dt.timezone.utc).isoformat().replace("+00:00", "Z")
+            number_match = (not expected_number or not FEDERAL_LAW_NUMBER_RE.fullmatch(expected_number)
+                            or not api_number or api_number == expected_number)
             manifest = {
-                "schema_version": "1.1",
+                "schema_version": "1.2",
                 "source_id": source_id,
+                "source_document_number": expected_number,
                 "official_publication_id": eo,
                 "official_metadata_url": meta_url,
                 "official_file_url": file_url,
@@ -125,6 +156,8 @@ def main() -> int:
                 "official_api_publish_date": meta.get("publishDateShort"),
                 "official_api_number": meta.get("number"),
                 "proof": {
+                    "publication_id_scoped_to_source_document_section": True,
+                    "official_api_number_matches_source_document_when_checkable": number_match,
                     "recognized_official_container": True,
                     "byte_length_matches_official_api": advertised is None or int(advertised) == len(data),
                     "sha256_calculated_from_downloaded_bytes": True,
@@ -144,8 +177,9 @@ def main() -> int:
     ok = sum(1 for r in results if r["status"] == "IMMUTABLE_CAPTURED")
     total_bytes = sum(int(r.get("byte_length", 0)) for r in results if r["status"] == "IMMUTABLE_CAPTURED")
     run = {
-        "schema_version": "1.1",
+        "schema_version": "1.2",
         "kind": "ru-protected-information-acquisition-run",
+        "identity_scope_guard": "document.official_publication_id only",
         "started_at": started.isoformat().replace("+00:00", "Z"),
         "finished_at": dt.datetime.now(dt.timezone.utc).isoformat().replace("+00:00", "Z"),
         "targets_with_official_publication_id": len(targets),
