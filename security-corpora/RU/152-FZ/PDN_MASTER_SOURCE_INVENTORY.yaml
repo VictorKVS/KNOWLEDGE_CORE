@@ -138,11 +138,29 @@ conflict_candidates:
       No. 265-FZ changed the statutory criteria for adequate-protection countries, while the currently
       registered RKN Order No. 128 is structured around the earlier Convention-party/non-party distinction.
       This is a review candidate, not a finding that Order No. 128 is invalid or repealed.
+    current_status_check:
+      checked_at: "2026-08-20"
+      finding: >-
+        Current-law references still identify RKN Order No. 128 as the operative list, while August 2026
+        monitoring reports a Roskomnadzor draft replacement list (project ID 169785) prepared after No. 265-FZ.
+        A draft is not an enacted primary source and must not replace the current node until official publication.
+      classification: CURRENT_RULE_WITH_REPLACEMENT_DRAFT_WATCH
+      semantic_promotion: false
     resolution_gate:
       - verify current status/version chain of RKN Order No. 128
       - compare the order's operative list and grouping logic against Article 12 effective 26.07.2026
+      - monitor draft project 169785 but do not treat it as law before official publication
       - search for amending/replacement regulator acts after 26.07.2026
       - classify as compatible, context-dependent, superseded, or genuine conflict with evidence
+
+regulatory_watch:
+  - watch_id: PDN-WATCH-RKN128-REPLACEMENT-2026-001
+    subject: "Potential replacement of RKN Order No. 128 after Federal Law No. 265-FZ"
+    status: DRAFT_REPORTED_NOT_PRIMARY
+    detected_at: "2026-08-20"
+    reported_project_id: "169785"
+    evidence_class: SECONDARY_MONITORING_ONLY
+    proof_rule: "Do not register as an active normative source until an official enacted publication identity is found."
 
 production_counters:
   identified: 12
@@ -166,14 +184,26 @@ analysis_metrics:
   freshness_defects_found_this_pass: 1
   direct_dependencies_added_this_pass: 1
   conflict_candidates_opened_this_pass: 1
+  source_relation_rebases_this_pass: 2
+  replacement_draft_watches_opened_this_pass: 1
+  immutable_acquisition_requests_this_pass: 1
   note: >-
     The four existing atomized records are reuse candidates only. No derived node is promoted until the
     new current-version artifact and affected-locator delta are reviewed. Article 12 is mandatory re-analysis scope.
+    PP 687 and PP 211 dependency edges were rebased to the 26.07.2026 current 152-FZ root without changing their semantics.
+
+acquisition_activity:
+  - source_id: SEC-SRC-RU-FZ265-2026
+    requested_at: "2026-08-20T20:03:42Z"
+    route: official_publication_pdf
+    official_publication_id: "0001202607260024"
+    status: REQUESTED_NO_ACCEPTED_MANIFEST_YET
+    proof_rule: "Keep raw_capture=PENDING until manifest contains exact bytes metadata and SHA-256."
 
 acquisition_blockers:
   - >-
       Byte-exact acquisition via the official publication portal is operational for source records carrying
-      an official_publication_id; No. 265-FZ has been registered for that route.
+      an official_publication_id; No. 265-FZ has been registered and explicitly requested for that route.
   - >-
       Remaining current-core raw captures are the consolidated 152-FZ text effective 26.07.2026, PP RF No. 687,
       PP RF No. 211 and No. 265-FZ until an accepted manifest appears. Existing eight immutable artifacts remain valid.
@@ -183,6 +213,7 @@ next_gate:
   - capture byte-exact current consolidated 152-FZ version effective 26.07.2026 and PP RF No. 687 / No. 211
   - run structural delta 152-FZ 2025-09-01 -> 2026-07-26 with Article 12 mandatory review
   - review RKN Order No. 128 alignment with amended Article 12 without presuming invalidity
+  - monitor RKN replacement draft project 169785 and promote only after official enacted publication is found
   - structural parse and legal/semantic chunking of immutable captures
   - concept/definition reconciliation and conflict detection
   - atomic requirement extraction with source locators
