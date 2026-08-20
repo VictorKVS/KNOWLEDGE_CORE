@@ -1,0 +1,23 @@
+name: FSB Order 117 government IS crypto
+on:
+  pull_request:
+    paths:
+      - "security-knowledge/legislation/RU/regulators/FSB/117-2025/**"
+      - "security-knowledge/corpus/ru-personal-data/fsb-order-378-ispdn-crypto-controls-atomic-v1.yaml"
+      - "security-knowledge/validators/validate_fsb_order_117_government_is_crypto.py"
+      - ".github/workflows/fsb-order-117-government-is-crypto.yml"
+  push:
+    paths:
+      - "security-knowledge/legislation/RU/regulators/FSB/117-2025/**"
+      - "security-knowledge/corpus/ru-personal-data/fsb-order-378-ispdn-crypto-controls-atomic-v1.yaml"
+      - "security-knowledge/validators/validate_fsb_order_117_government_is_crypto.py"
+      - ".github/workflows/fsb-order-117-government-is-crypto.yml"
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: python -m pip install PyYAML
+      - run: python security-knowledge/validators/validate_fsb_order_117_government_is_crypto.py
