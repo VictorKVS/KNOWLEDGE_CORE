@@ -7,6 +7,7 @@ on:
     paths:
       - ".github/workflows/pdn-core-immutable-acquisition.yml"
       - "TOOLS/pdn_core_acquire.py"
+      - "TOOLS/pdn_core_sync_capture.py"
       - "security-corpora/RU/152-FZ/source/**"
 
 permissions:
@@ -36,19 +37,25 @@ jobs:
           echo "acquirer_exit_code=$rc" >> "$GITHUB_OUTPUT"
           exit 0
 
-      - name: Commit immutable artifacts and run telemetry
+      - name: Sync immutable evidence to source records and master inventory
+        shell: bash
+        run: python TOOLS/pdn_core_sync_capture.py
+
+      - name: Commit immutable artifacts, manifests and registry telemetry
         shell: bash
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add security-corpora/RU/152-FZ/raw \
                   security-corpora/RU/152-FZ/manifests \
-                  security-corpora/RU/152-FZ/PDN_ACQUISITION_RUN.json
+                  security-corpora/RU/152-FZ/source \
+                  security-corpora/RU/152-FZ/PDN_ACQUISITION_RUN.json \
+                  security-corpora/RU/152-FZ/PDN_MASTER_SOURCE_INVENTORY.yaml
           if git diff --cached --quiet; then
             echo "No acquisition delta"
             exit 0
           fi
-          git commit -m "security-kb: capture PDN core immutable originals [skip ci]"
+          git commit -m "security-kb: sync PDN immutable capture evidence [skip ci]"
           git push
 
       - name: Surface acquisition result
