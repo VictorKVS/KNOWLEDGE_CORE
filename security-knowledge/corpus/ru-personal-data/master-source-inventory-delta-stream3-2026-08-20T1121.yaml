@@ -1,0 +1,49 @@
+schema_version: "1.0"
+kind: ru-pdn-master-source-inventory-delta
+base_inventory: "master-source-inventory.yaml"
+base_inventory_sha: "944e72d0246297639183aa8f750fb9d8704f8d1b"
+checked_at: "2026-08-20T11:21:30+03:00"
+owner_stream: STREAM_3_SECTOR_OVERLAYS
+protected_inventory_delta: "../ru-protected-information/master-inventory-delta-2026-08-20T1121.yaml"
+run_ref: "../ru-protected-information/stream-3-run-2026-08-20T1121.yaml"
+
+stream_3_sector_overlay_state:
+  sources_found_total: 16
+  reused_existing_sources: 1
+  primary_publication_verified_total: 6
+  immutable_artifacts: 6
+  pending_immutable: 9
+  version_chain_events_verified_this_run: 3
+  exact_binary_acquisition_attempts_this_run: 0
+  exact_binary_acquisition_success_this_run: 0
+  lifecycle_counters_changed: false
+
+version_chain_deltas:
+  - source_id: SEC-SRC-RU-FZ-38-2006
+    event: "41-ФЗ от 20.02.2026; publication 0001202602200062; changes Articles 27 and 38 of 38-ФЗ"
+    applicability_effect: NONE_UNTIL_LOCATOR_REVIEW
+  - source_id: SEC-SRC-RU-FZ-126
+    event: "33-ФЗ от 20.02.2026; publication 0001202602200054; changes Articles 46 and 68 of 126-ФЗ"
+    reused_source: true
+    applicability_effect: NONE_UNTIL_LOCATOR_REVIEW
+  - source_id: SEC-SRC-RU-FZ-273-2012
+    event: "34-ФЗ от 20.02.2026; publication 0001202602200055; changes Articles 29 and 39 of 273-ФЗ"
+    applicability_effect: NONE_UNTIL_LOCATOR_REVIEW
+
+consistency_fix:
+  source_id: SEC-SRC-RU-FZ-273-2012
+  issue: "Source card still reported PENDING_RAW_CAPTURE while the immutable manifest already existed."
+  resolution: "Source card synchronized to IMMUTABLE_BASELINE_CAPTURED with existing byte length and SHA-256; no new acquisition counted."
+
+next_priority_delta:
+  remove_stale:
+    - STREAM3_SEC_SRC_RU_FZ_273_2012_immutable_artifact
+  add:
+    - STREAM3_SEC_SRC_RU_FZ_38_2006_current_artifact_and_article18_delta
+    - STREAM3_SEC_SRC_RU_FZ_126_current_delta_on_reused_node
+    - STREAM3_SEC_SRC_RU_FZ_273_2012_current_version_chain_and_article59_delta
+    - STREAM3_AMENDMENT_BINARIES_41FZ_33FZ_34FZ
+
+merge_rule: >-
+  Apply this append-only stream delta after the base PDN master inventory. No executable PDN rule,
+  sector applicability edge or lifecycle status is promoted by the version events alone.
