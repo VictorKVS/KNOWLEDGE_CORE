@@ -1,0 +1,79 @@
+schema_version: "1.0"
+kind: stream-3-production-run
+run_id: "STREAM3-2026-08-20T1121"
+checked_at: "2026-08-20T11:21:30+03:00"
+scope: "RU protected-information sector overlay discovery/version-chain reconciliation"
+
+proof_floor:
+  - "Primary official publication metadata may verify an amendment event, but does not prove the current consolidated text."
+  - "No amendment event in this run changes applicability or executable rules without locator-level review."
+  - "No SOURCE_PENDING entry is promoted without exact bytes, MIME, byte_length and SHA-256."
+  - "Existing source IDs are reused; no duplicate source nodes are created."
+
+baseline_before:
+  found: 16
+  downloaded: 6
+  immutable: 6
+  pending: 9
+  reused: 1
+
+primary_version_events_verified:
+  - source_id: "SEC-SRC-RU-FZ-38-2006"
+    sector: advertising_marketing
+    amendment_act: "Федеральный закон от 20.02.2026 № 41-ФЗ"
+    title: "О внесении изменений в статьи 27 и 38 Федерального закона 'О рекламе' и Федеральный закон о государственном регулировании азартных игр"
+    official_publication_number: "0001202602200062"
+    official_publication_date: "2026-02-20"
+    official_url: "https://publication.pravo.gov.ru/document/0001202602200062"
+    target_locators: ["статья 27", "статья 38"]
+    discovery_anchor_impact: "NO_DIRECT_CHANGE_PROVED_FOR_ARTICLE_18"
+    status: "PRIMARY_AMENDMENT_EVENT_VERIFIED"
+
+  - source_id: "SEC-SRC-RU-FZ-126"
+    sector: communications
+    amendment_act: "Федеральный закон от 20.02.2026 № 33-ФЗ"
+    title: "О внесении изменений в статьи 46 и 68 Федерального закона 'О связи'"
+    official_publication_number: "0001202602200054"
+    official_publication_date: "2026-02-20"
+    official_url: "https://publication.pravo.gov.ru/document/0001202602200054"
+    target_locators: ["статья 46", "статья 68"]
+    source_reuse: true
+    status: "PRIMARY_AMENDMENT_EVENT_VERIFIED"
+
+  - source_id: "SEC-SRC-RU-FZ-273-2012"
+    sector: education_children
+    amendment_act: "Федеральный закон от 20.02.2026 № 34-ФЗ"
+    title: "О внесении изменений в статьи 29 и 39 Федерального закона 'Об образовании в Российской Федерации'"
+    official_publication_number: "0001202602200055"
+    official_publication_date: "2026-02-20"
+    official_url: "https://publication.pravo.gov.ru/document/0001202602200055"
+    target_locators: ["статья 29", "статья 39"]
+    discovery_anchor_impact: "NO_DIRECT_CHANGE_PROVED_FOR_ARTICLE_59"
+    status: "PRIMARY_AMENDMENT_EVENT_VERIFIED"
+
+reconciliation_findings:
+  - id: "STREAM3-DELTA-38FZ-20260220"
+    finding: "41-ФЗ is a verified version-chain event for 38-ФЗ, but it changes Articles 27 and 38 rather than the current protected-information discovery anchor Article 18. Article 18 must not be marked changed on this evidence."
+  - id: "STREAM3-DELTA-126FZ-20260220"
+    finding: "33-ФЗ is attached to the existing reused 126-ФЗ node; no duplicate communications source is created."
+  - id: "STREAM3-DELTA-273FZ-20260220"
+    finding: "34-ФЗ is a verified version-chain event for 273-ФЗ, but it changes Articles 29 and 39; Article 59 remains separately gated until current locator reconciliation."
+
+acquisition:
+  new_exact_binary_attempts: 0
+  new_exact_binary_successes: 0
+  reason: "This pass prioritized primary version-event reconciliation. The official File/Pdf endpoint was not reachable from the execution environment with byte-exact retrieval, so no hash/size claims were fabricated."
+
+baseline_after:
+  found: 16
+  downloaded: 6
+  immutable: 6
+  pending: 9
+  reused: 1
+  primary_version_events_verified_this_run: 3
+
+next_actions:
+  - "Acquire exact official binaries for amendment acts 41-ФЗ (0001202602200062), 33-ФЗ (0001202602200054), 34-ФЗ (0001202602200055); record MIME, byte length and SHA-256."
+  - "Reconcile the amendment deltas against current locator sets before semantic compilation."
+  - "Continue exact-current acquisition for SOURCE_PENDING sector laws; prioritize 38-ФЗ, 16-ФЗ, 79-ФЗ, 218-ФЗ and Law 395-1."
+  - "Continue discovery of trade secrecy, tax secrecy and adoption secrecy using primary acts only; do not create applicability edges from taxonomy alone."
