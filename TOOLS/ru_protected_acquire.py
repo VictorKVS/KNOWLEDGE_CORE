@@ -1,18 +1,16 @@
 #!/usr/bin/env python3
-"""Byte-exact official acquisition for RU Protected Information sector sources.
+"""Byte-exact acquisition for RU Protected Information sector sources.
 
-Scans security-corpora/RU/protected-information/source/*.yaml for source IDs and
-16-digit official publication IDs, retrieves authoritative metadata/PDF bytes
-from publication.pravo.gov.ru, verifies advertised byte length, writes immutable
-raw artifacts + manifests, and emits production telemetry. It never upgrades
-semantic/applicability/version-chain status.
+The official publication endpoint normally returns PDF bytes, but some large
+publications are delivered as a ZIP container. Both are valid immutable source
+artifacts when the bytes match official API metadata. Semantic/current-version
+status is never upgraded by this capture step.
 """
 from __future__ import annotations
 
 import datetime as dt
 import hashlib
 import json
-import mimetypes
 import re
 import sys
 import time
@@ -28,7 +26,7 @@ RAW_DIR = CORPUS / "raw"
 MANIFEST_DIR = CORPUS / "manifests"
 RUN_FILE = CORPUS / "SECTOR_ACQUISITION_RUN.json"
 BASES = ("http://publication.pravo.gov.ru", "https://publication.pravo.gov.ru")
-UA = "KNOWLEDGE_CORE-sector-acquirer/1.1 (+https://github.com/VictorKVS/KNOWLEDGE_CORE)"
+UA = "KNOWLEDGE_CORE-sector-acquirer/1.2 (+https://github.com/VictorKVS/KNOWLEDGE_CORE)"
 ID_RE = re.compile(r"^id:\s*([^\s#]+)\s*$", re.M)
 EO_RE = re.compile(r'^\s*official_publication_id:\s*["\']?([0-9]{16})["\']?\s*$', re.M)
 
@@ -60,6 +58,15 @@ def official_get(path: str, params: dict[str, str]):
     raise RuntimeError("; ".join(errors))
 
 
+def artifact_type(data: bytes, headers: dict[str, str]):
+    if data.startswith(b"%PDF-"):
+        return ".pdf", "application/pdf", "PDF"
+    if data.startswith(b"PK\x03\x04"):
+        return ".zip", "application/zip", "ZIP"
+    ctype = (headers.get("content-type") or "application/octet-stream").split(";", 1)[0].strip()
+    raise RuntimeError(f"unsupported official artifact signature; content-type={ctype}; first bytes={data[:16]!r}")
+
+
 def discover_targets():
     out = []
     for path in sorted(SOURCE_DIR.glob("*.yaml")):
@@ -83,36 +90,33 @@ def main() -> int:
             meta_raw, _, meta_url = official_get("/api/Document", {"eoNumber": eo})
             meta = json.loads(meta_raw.decode("utf-8"))
             advertised = meta.get("pdfFileLength")
-            pdf, pdf_headers, pdf_url = official_get("/File/Pdf", {"eoNumber": eo})
-            if not pdf.startswith(b"%PDF-"):
-                raise RuntimeError(f"not a PDF signature; first bytes={pdf[:16]!r}")
-            if advertised is not None and int(advertised) != len(pdf):
-                raise RuntimeError(f"byte-length mismatch: api={advertised}, downloaded={len(pdf)}")
+            data, headers, file_url = official_get("/File/Pdf", {"eoNumber": eo})
+            ext, mime, container = artifact_type(data, headers)
+            if advertised is not None and int(advertised) != len(data):
+                raise RuntimeError(f"byte-length mismatch: api={advertised}, downloaded={len(data)}")
 
-            sha = hashlib.sha256(pdf).hexdigest()
+            sha = hashlib.sha256(data).hexdigest()
             out_dir = RAW_DIR / source_id
             out_dir.mkdir(parents=True, exist_ok=True)
-            artifact = out_dir / f"{eo}.pdf"
+            artifact = out_dir / f"{eo}{ext}"
             if artifact.exists():
                 old_sha = hashlib.sha256(artifact.read_bytes()).hexdigest()
                 if old_sha != sha:
                     raise RuntimeError(f"immutable collision: existing={old_sha}, incoming={sha}")
             else:
-                artifact.write_bytes(pdf)
+                artifact.write_bytes(data)
 
             retrieved = dt.datetime.now(dt.timezone.utc).isoformat().replace("+00:00", "Z")
-            mime = (pdf_headers.get("content-type") or "application/pdf").split(";", 1)[0].strip()
-            if mime == "application/octet-stream":
-                mime = mimetypes.guess_type(artifact.name)[0] or mime
             manifest = {
-                "schema_version": "1.0",
+                "schema_version": "1.1",
                 "source_id": source_id,
                 "official_publication_id": eo,
                 "official_metadata_url": meta_url,
-                "official_file_url": pdf_url,
+                "official_file_url": file_url,
                 "retrieved_at": retrieved,
                 "mime": mime,
-                "byte_length": len(pdf),
+                "container_format": container,
+                "byte_length": len(data),
                 "sha256": sha,
                 "artifact_ref": str(artifact.relative_to(ROOT)).replace("\\", "/"),
                 "source_record_ref": str(source_record.relative_to(ROOT)).replace("\\", "/"),
@@ -121,8 +125,8 @@ def main() -> int:
                 "official_api_publish_date": meta.get("publishDateShort"),
                 "official_api_number": meta.get("number"),
                 "proof": {
-                    "pdf_signature_ok": True,
-                    "byte_length_matches_official_api": advertised is None or int(advertised) == len(pdf),
+                    "recognized_official_container": True,
+                    "byte_length_matches_official_api": advertised is None or int(advertised) == len(data),
                     "sha256_calculated_from_downloaded_bytes": True,
                 },
                 "semantic_status_unchanged": True,
@@ -130,13 +134,9 @@ def main() -> int:
             }
             mpath = MANIFEST_DIR / f"{source_id}.json"
             mpath.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-            row.update({
-                "status": "IMMUTABLE_CAPTURED",
-                "byte_length": len(pdf),
-                "sha256": sha,
-                "artifact_ref": manifest["artifact_ref"],
-                "manifest_ref": str(mpath.relative_to(ROOT)).replace("\\", "/"),
-            })
+            row.update({"status": "IMMUTABLE_CAPTURED", "mime": mime, "container_format": container,
+                        "byte_length": len(data), "sha256": sha, "artifact_ref": manifest["artifact_ref"],
+                        "manifest_ref": str(mpath.relative_to(ROOT)).replace("\\", "/")})
         except Exception as exc:
             row.update({"status": "PENDING", "error": str(exc)})
         results.append(row)
@@ -144,7 +144,7 @@ def main() -> int:
     ok = sum(1 for r in results if r["status"] == "IMMUTABLE_CAPTURED")
     total_bytes = sum(int(r.get("byte_length", 0)) for r in results if r["status"] == "IMMUTABLE_CAPTURED")
     run = {
-        "schema_version": "1.0",
+        "schema_version": "1.1",
         "kind": "ru-protected-information-acquisition-run",
         "started_at": started.isoformat().replace("+00:00", "Z"),
         "finished_at": dt.datetime.now(dt.timezone.utc).isoformat().replace("+00:00", "Z"),
