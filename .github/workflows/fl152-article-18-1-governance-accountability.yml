@@ -1,0 +1,30 @@
+name: FL152 Article 18.1 Governance and Accountability Gate
+
+on:
+  push:
+    paths:
+      - "security-knowledge/corpus/ru-personal-data/fl-152-article-18-1-governance-accountability-atomic-v1.yaml"
+      - "security-knowledge/corpus/ru-personal-data/fl-152-article-18-1-governance-accountability-regression-v1.json"
+      - "security-knowledge/pdn/pdn-master-source-library-v1.yaml"
+      - "security-knowledge/pdn/pdn-direction-coverage-matrix-v1.yaml"
+      - "security-knowledge/validators/validate_fl152_article_18_1_governance_accountability.py"
+      - ".github/workflows/fl152-article-18-1-governance-accountability.yml"
+  pull_request:
+    paths:
+      - "security-knowledge/corpus/ru-personal-data/fl-152-article-18-1-governance-accountability-atomic-v1.yaml"
+      - "security-knowledge/corpus/ru-personal-data/fl-152-article-18-1-governance-accountability-regression-v1.json"
+      - "security-knowledge/pdn/pdn-master-source-library-v1.yaml"
+      - "security-knowledge/pdn/pdn-direction-coverage-matrix-v1.yaml"
+      - "security-knowledge/validators/validate_fl152_article_18_1_governance_accountability.py"
+      - ".github/workflows/fl152-article-18-1-governance-accountability.yml"
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pyyaml
+      - run: python security-knowledge/validators/validate_fl152_article_18_1_governance_accountability.py

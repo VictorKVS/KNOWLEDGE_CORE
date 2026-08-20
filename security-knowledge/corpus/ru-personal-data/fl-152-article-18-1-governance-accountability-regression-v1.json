@@ -1,0 +1,90 @@
+{
+  "schema_version":"1.0",
+  "model_id":"RU-FL152-ARTICLE18-1-GOVERNANCE-ACCOUNTABILITY-ATOMIC-V1",
+  "cases":[
+    {"id":"A181-T001","query":"measures","necessary":true,"sufficient":true,"illustrative_list_only":false,"expected":"PASS_NECESSARY_AND_SUFFICIENT_MEASURES"},
+    {"id":"A181-T002","query":"measures","necessary":false,"sufficient":true,"illustrative_list_only":false,"expected":"BLOCK_NECESSITY_NOT_PROVED"},
+    {"id":"A181-T003","query":"measures","necessary":true,"sufficient":false,"illustrative_list_only":false,"expected":"BLOCK_SUFFICIENCY_NOT_PROVED"},
+    {"id":"A181-T004","query":"measures","necessary":true,"sufficient":true,"illustrative_list_only":true,"expected":"BLOCK_ILLUSTRATIVE_LIST_IS_NOT_COMPLETE_PROOF"},
+    {"id":"A181-T005","query":"measure_selection","federal_law_override":false,"override_respected":true,"expected":"PASS_OPERATOR_SELF_SELECTION"},
+    {"id":"A181-T006","query":"measure_selection","federal_law_override":true,"override_respected":false,"expected":"BLOCK_FEDERAL_LAW_OVERRIDE_IGNORED"},
+
+    {"id":"A181-T007","query":"appointment","legal_entity":true,"appointed":true,"authority_defined":true,"expected":"PASS_RESPONSIBLE_PERSON_APPOINTED"},
+    {"id":"A181-T008","query":"appointment","legal_entity":true,"appointed":false,"authority_defined":false,"expected":"BLOCK_RESPONSIBLE_PERSON_NOT_APPOINTED"},
+    {"id":"A181-T009","query":"appointment","legal_entity":false,"appointed":false,"authority_defined":false,"expected":"POINT1_LEGAL_ENTITY_SCOPE_NOT_TRIGGERED"},
+    {"id":"A181-T010","query":"appointment","legal_entity":true,"appointed":true,"authority_defined":false,"expected":"BLOCK_RESPONSIBLE_PERSON_AUTHORITY_UNPROVEN"},
+    {"id":"A181-T011","query":"appointment","legal_entity":false,"appointed":true,"authority_defined":true,"expected":"VOLUNTARY_ROLE_NOT_ARTICLE18_1_POINT1_PROOF"},
+
+    {"id":"A181-T012","query":"document_set","fields":["policy","purpose_structure","data_categories_list","subject_categories","methods","processing_terms","storage_terms","destruction_procedure","violation_prevention_detection","violation_remediation"],"expected":"PASS_COMPLETE_POINT2_DOCUMENT_SET"},
+    {"id":"A181-T013","query":"document_set","fields":["purpose_structure","data_categories_list","subject_categories","methods","processing_terms","storage_terms","destruction_procedure","violation_prevention_detection","violation_remediation"],"expected":"BLOCK_MISSING_POLICY"},
+    {"id":"A181-T014","query":"document_set","fields":["policy","data_categories_list","subject_categories","methods","processing_terms","storage_terms","destruction_procedure","violation_prevention_detection","violation_remediation"],"expected":"BLOCK_MISSING_PURPOSE_STRUCTURE"},
+    {"id":"A181-T015","query":"document_set","fields":["policy","purpose_structure","subject_categories","methods","processing_terms","storage_terms","destruction_procedure","violation_prevention_detection","violation_remediation"],"expected":"BLOCK_MISSING_DATA_CATEGORIES_LIST"},
+    {"id":"A181-T016","query":"document_set","fields":["policy","purpose_structure","data_categories_list","methods","processing_terms","storage_terms","destruction_procedure","violation_prevention_detection","violation_remediation"],"expected":"BLOCK_MISSING_SUBJECT_CATEGORIES"},
+    {"id":"A181-T017","query":"document_set","fields":["policy","purpose_structure","data_categories_list","subject_categories","processing_terms","storage_terms","destruction_procedure","violation_prevention_detection","violation_remediation"],"expected":"BLOCK_MISSING_METHODS"},
+    {"id":"A181-T018","query":"document_set","fields":["policy","purpose_structure","data_categories_list","subject_categories","methods","storage_terms","destruction_procedure","violation_prevention_detection","violation_remediation"],"expected":"BLOCK_MISSING_PROCESSING_TERMS"},
+    {"id":"A181-T019","query":"document_set","fields":["policy","purpose_structure","data_categories_list","subject_categories","methods","processing_terms","destruction_procedure","violation_prevention_detection","violation_remediation"],"expected":"BLOCK_MISSING_STORAGE_TERMS"},
+    {"id":"A181-T020","query":"document_set","fields":["policy","purpose_structure","data_categories_list","subject_categories","methods","processing_terms","storage_terms","violation_prevention_detection","violation_remediation"],"expected":"BLOCK_MISSING_DESTRUCTION_PROCEDURE"},
+    {"id":"A181-T021","query":"document_set","fields":["policy","purpose_structure","data_categories_list","subject_categories","methods","processing_terms","storage_terms","destruction_procedure","violation_remediation"],"expected":"BLOCK_MISSING_VIOLATION_PREVENTION_DETECTION"},
+    {"id":"A181-T022","query":"document_set","fields":["policy","purpose_structure","data_categories_list","subject_categories","methods","processing_terms","storage_terms","destruction_procedure","violation_prevention_detection"],"expected":"BLOCK_MISSING_VIOLATION_REMEDIATION"},
+
+    {"id":"A181-T023","query":"document_guard","restricts_subject_rights":false,"creates_unsupported_powers_or_duties":false,"expected":"PASS_LOCAL_ACT_GUARDS"},
+    {"id":"A181-T024","query":"document_guard","restricts_subject_rights":true,"creates_unsupported_powers_or_duties":false,"expected":"BLOCK_SUBJECT_RIGHTS_RESTRICTION"},
+    {"id":"A181-T025","query":"document_guard","restricts_subject_rights":false,"creates_unsupported_powers_or_duties":true,"expected":"BLOCK_UNSUPPORTED_OPERATOR_POWERS_OR_DUTIES"},
+    {"id":"A181-T026","query":"document_guard","restricts_subject_rights":true,"creates_unsupported_powers_or_duties":true,"expected":"BLOCK_SUBJECT_RIGHTS_RESTRICTION"},
+
+    {"id":"A181-T027","query":"security","article19_crosswalk_complete":true,"policy_only":false,"expected":"PASS_ARTICLE19_SECURITY_CROSSWALK"},
+    {"id":"A181-T028","query":"security","article19_crosswalk_complete":false,"policy_only":false,"expected":"BLOCK_ARTICLE19_MEASURES_UNPROVEN"},
+    {"id":"A181-T029","query":"security","article19_crosswalk_complete":false,"policy_only":true,"expected":"POLICY_DOES_NOT_REPLACE_ARTICLE19_MEASURES"},
+
+    {"id":"A181-T030","query":"control_audit","control":true,"audit":false,"targets_complete":true,"reports_present":true,"external_certification_only":false,"expected":"PASS_INTERNAL_CONTROL_OR_AUDIT"},
+    {"id":"A181-T031","query":"control_audit","control":false,"audit":true,"targets_complete":true,"reports_present":true,"external_certification_only":false,"expected":"PASS_INTERNAL_CONTROL_OR_AUDIT"},
+    {"id":"A181-T032","query":"control_audit","control":true,"audit":true,"targets_complete":true,"reports_present":true,"external_certification_only":false,"expected":"PASS_INTERNAL_CONTROL_OR_AUDIT"},
+    {"id":"A181-T033","query":"control_audit","control":false,"audit":false,"targets_complete":true,"reports_present":true,"external_certification_only":false,"expected":"BLOCK_CONTROL_AND_AUDIT_MISSING"},
+    {"id":"A181-T034","query":"control_audit","control":true,"audit":false,"targets_complete":false,"reports_present":true,"external_certification_only":false,"expected":"BLOCK_CONTROL_TARGETS_INCOMPLETE"},
+    {"id":"A181-T035","query":"control_audit","control":true,"audit":false,"targets_complete":true,"reports_present":false,"external_certification_only":false,"expected":"BLOCK_CONTROL_AUDIT_EXECUTION_UNPROVEN"},
+    {"id":"A181-T036","query":"control_audit","control":false,"audit":false,"targets_complete":true,"reports_present":true,"external_certification_only":true,"expected":"EXTERNAL_CERTIFICATION_NOT_INTERNAL_CONTROL_OR_AUDIT_PROOF"},
+
+    {"id":"A181-T037","query":"harm","rkn_method":true,"assessment_present":true,"relationship_assessed":true,"numeric_formula_invented":false,"expected":"PASS_HARM_AND_MEASURE_RELATIONSHIP"},
+    {"id":"A181-T038","query":"harm","rkn_method":true,"assessment_present":false,"relationship_assessed":false,"numeric_formula_invented":false,"expected":"BLOCK_HARM_ASSESSMENT_MISSING"},
+    {"id":"A181-T039","query":"harm","rkn_method":false,"assessment_present":true,"relationship_assessed":true,"numeric_formula_invented":false,"expected":"BLOCK_AUTHORIZED_HARM_REQUIREMENTS_UNPROVEN"},
+    {"id":"A181-T040","query":"harm","rkn_method":true,"assessment_present":true,"relationship_assessed":false,"numeric_formula_invented":false,"expected":"BLOCK_HARM_MEASURE_RELATIONSHIP_MISSING"},
+    {"id":"A181-T041","query":"harm","rkn_method":true,"assessment_present":true,"relationship_assessed":true,"numeric_formula_invented":true,"expected":"BLOCK_INVENTED_NUMERIC_HARM_RATIO"},
+
+    {"id":"A181-T042","query":"workers","direct_processor":false,"familiarized_legislation":false,"familiarized_policy":false,"familiarized_local_acts":false,"trained":false,"expected":"POINT6_DIRECT_PROCESSOR_SCOPE_NOT_TRIGGERED"},
+    {"id":"A181-T043","query":"workers","direct_processor":true,"familiarized_legislation":true,"familiarized_policy":true,"familiarized_local_acts":true,"trained":false,"expected":"PASS_WORKER_FAMILIARIZATION_OR_TRAINING"},
+    {"id":"A181-T044","query":"workers","direct_processor":true,"familiarized_legislation":false,"familiarized_policy":false,"familiarized_local_acts":false,"trained":true,"expected":"PASS_WORKER_FAMILIARIZATION_OR_TRAINING"},
+    {"id":"A181-T045","query":"workers","direct_processor":true,"familiarized_legislation":false,"familiarized_policy":false,"familiarized_local_acts":false,"trained":false,"expected":"BLOCK_WORKER_FAMILIARIZATION_AND_TRAINING_MISSING"},
+    {"id":"A181-T046","query":"workers","direct_processor":true,"familiarized_legislation":false,"familiarized_policy":true,"familiarized_local_acts":true,"trained":false,"expected":"BLOCK_WORKER_LEGISLATION_AWARENESS_MISSING"},
+    {"id":"A181-T047","query":"workers","direct_processor":true,"familiarized_legislation":true,"familiarized_policy":false,"familiarized_local_acts":true,"trained":false,"expected":"BLOCK_WORKER_POLICY_AWARENESS_MISSING"},
+    {"id":"A181-T048","query":"workers","direct_processor":true,"familiarized_legislation":true,"familiarized_policy":true,"familiarized_local_acts":false,"trained":false,"expected":"BLOCK_WORKER_LOCAL_ACT_AWARENESS_MISSING"},
+
+    {"id":"A181-T049","query":"publication_general","policy_access":true,"protection_info_access":true,"unrestricted":true,"expected":"PASS_UNRESTRICTED_POLICY_AND_PROTECTION_INFO"},
+    {"id":"A181-T050","query":"publication_general","policy_access":false,"protection_info_access":true,"unrestricted":true,"expected":"BLOCK_POLICY_ACCESS_MISSING"},
+    {"id":"A181-T051","query":"publication_general","policy_access":true,"protection_info_access":false,"unrestricted":true,"expected":"BLOCK_PROTECTION_INFO_ACCESS_MISSING"},
+    {"id":"A181-T052","query":"publication_general","policy_access":true,"protection_info_access":true,"unrestricted":false,"expected":"BLOCK_ACCESS_NOT_UNRESTRICTED"},
+
+    {"id":"A181-T053","query":"network_publication","network_collection":false,"operator_owned_collection_page":false,"policy_published":true,"protection_info_published":true,"network_access":true,"expected":"NETWORK_COLLECTION_SPECIAL_RULE_NOT_TRIGGERED"},
+    {"id":"A181-T054","query":"network_publication","network_collection":true,"operator_owned_collection_page":true,"policy_published":true,"protection_info_published":true,"network_access":true,"expected":"PASS_NETWORK_COLLECTION_PUBLICATION"},
+    {"id":"A181-T055","query":"network_publication","network_collection":true,"operator_owned_collection_page":true,"policy_published":false,"protection_info_published":true,"network_access":true,"expected":"BLOCK_NETWORK_POLICY_PUBLICATION_MISSING"},
+    {"id":"A181-T056","query":"network_publication","network_collection":true,"operator_owned_collection_page":true,"policy_published":true,"protection_info_published":false,"network_access":true,"expected":"BLOCK_NETWORK_PROTECTION_INFO_MISSING"},
+    {"id":"A181-T057","query":"network_publication","network_collection":true,"operator_owned_collection_page":false,"policy_published":true,"protection_info_published":true,"network_access":true,"expected":"BLOCK_OPERATOR_COLLECTION_PAGE_COVERAGE_MISSING"},
+    {"id":"A181-T058","query":"network_publication","network_collection":true,"operator_owned_collection_page":true,"policy_published":true,"protection_info_published":true,"network_access":false,"expected":"BLOCK_NETWORK_ACCESS_CAPABILITY_MISSING"},
+    {"id":"A181-T059","query":"network_publication","network_collection":true,"operator_owned_collection_page":false,"policy_published":false,"protection_info_published":false,"network_access":false,"expected":"BLOCK_OPERATOR_COLLECTION_PAGE_COVERAGE_MISSING"},
+
+    {"id":"A181-T060","query":"public_operator","state_or_municipal_body":false,"pp211_crosswalk":false,"expected":"PART3_PUBLIC_OPERATOR_SPECIALIZATION_NOT_TRIGGERED"},
+    {"id":"A181-T061","query":"public_operator","state_or_municipal_body":true,"pp211_crosswalk":true,"expected":"PASS_PP211_GOVERNMENT_LIST_CROSSWALK"},
+    {"id":"A181-T062","query":"public_operator","state_or_municipal_body":true,"pp211_crosswalk":false,"expected":"BLOCK_GOVERNMENT_MEASURES_LIST_UNPROVEN"},
+
+    {"id":"A181-T063","query":"regulator_request","authorized_body_request":false,"documents_provided":false,"other_confirmation":false,"expected":"PART4_REQUEST_TRIGGER_NOT_MET"},
+    {"id":"A181-T064","query":"regulator_request","authorized_body_request":true,"documents_provided":true,"other_confirmation":false,"expected":"PASS_DOCUMENT_PRODUCTION_ROUTE"},
+    {"id":"A181-T065","query":"regulator_request","authorized_body_request":true,"documents_provided":false,"other_confirmation":true,"expected":"PASS_OTHER_CONFIRMATION_ROUTE"},
+    {"id":"A181-T066","query":"regulator_request","authorized_body_request":true,"documents_provided":true,"other_confirmation":true,"expected":"PASS_COMBINED_CONFIRMATION_ROUTE"},
+    {"id":"A181-T067","query":"regulator_request","authorized_body_request":true,"documents_provided":false,"other_confirmation":false,"expected":"BLOCK_MEASURES_NOT_CONFIRMED"},
+    {"id":"A181-T068","query":"regulator_request","authorized_body_request":"OTHER_REGULATOR","documents_provided":true,"other_confirmation":false,"expected":"ARTICLE18_1_AUTHORIZED_BODY_SCOPE_NOT_ESTABLISHED"},
+
+    {"id":"A181-T069","query":"deadline","expected":"NO_NUMERIC_DEADLINE_STATED"},
+    {"id":"A181-T070","query":"control_interval","expected":"NOT_STATED_DO_NOT_INVENT"},
+    {"id":"A181-T071","query":"training_interval","expected":"NOT_STATED_DO_NOT_INVENT"},
+    {"id":"A181-T072","query":"measures_list_closed","expected":"ILLUSTRATIVE_NOT_EXHAUSTIVE"}
+  ]
+}
