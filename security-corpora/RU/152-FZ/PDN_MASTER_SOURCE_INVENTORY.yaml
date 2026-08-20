@@ -1,0 +1,123 @@
+schema_version: "1.0"
+id: SEC-PDN-MASTER-SOURCE-INVENTORY
+kind: security-regulatory-source-inventory
+status: ACTIVE_DISCOVERY
+jurisdiction: RU
+domain: personal_data
+checked_at: "2026-08-20"
+
+policy:
+  proof_floor: >-
+    A source may be METADATA_VERIFIED from an official publication identity, but it must not be promoted
+    to VERIFIED_FOR_EXTRACTION until an immutable official raw artifact is captured, its exact byte length
+    and SHA-256 are recorded, and the source/version locator is independently reviewed.
+  reuse_first: true
+  immutable_source_required: true
+  byte_length_required_for_immutable: true
+  sha256_required_for_immutable: true
+
+sources:
+  - id: SEC-SRC-RU-152FZ-2025-09-01
+    document: "Федеральный закон от 27.07.2006 № 152-ФЗ «О персональных данных»"
+    role: root_law
+    metadata_status: METADATA_VERIFIED
+    source_record: "source/SEC-SRC-RU-152FZ-2025-09-01.yaml"
+    raw_capture: PENDING
+    existing_atomized_records: 4
+
+  - id: SEC-SRC-RU-PP687-2008
+    document: "Постановление Правительства РФ от 15.09.2008 № 687"
+    role: non_automated_processing
+    metadata_status: METADATA_VERIFIED
+    source_record: "source/SEC-SRC-RU-PP687-2008.yaml"
+    raw_capture: PENDING
+
+  - id: SEC-SRC-RU-PP211-2012
+    document: "Постановление Правительства РФ от 21.03.2012 № 211"
+    role: state_municipal_operator_measures
+    metadata_status: METADATA_VERIFIED
+    source_record: "source/SEC-SRC-RU-PP211-2012.yaml"
+    raw_capture: PENDING
+
+  - id: SEC-SRC-RU-RKN18-2021
+    document: "Приказ Роскомнадзора от 24.02.2021 № 18"
+    role: consent_for_dissemination_requirements
+    metadata_status: METADATA_VERIFIED
+    source_record: "source/SEC-SRC-RU-RKN18-2021.yaml"
+    raw_capture: PENDING
+
+  - id: SEC-SRC-RU-RKN128-2022
+    document: "Приказ Роскомнадзора от 05.08.2022 № 128"
+    role: adequate_foreign_states_list
+    metadata_status: METADATA_VERIFIED
+    source_record: "source/SEC-SRC-RU-RKN128-2022.yaml"
+    raw_capture: PENDING
+
+  - id: SEC-SRC-RU-RKN178-2022
+    document: "Приказ Роскомнадзора от 27.10.2022 № 178"
+    role: harm_assessment_requirements
+    metadata_status: METADATA_VERIFIED
+    source_record: "source/SEC-SRC-RU-RKN178-2022.yaml"
+    raw_capture: PENDING
+
+  - id: SEC-SRC-RU-RKN179-2022
+    document: "Приказ Роскомнадзора от 28.10.2022 № 179"
+    role: destruction_confirmation_requirements
+    metadata_status: METADATA_VERIFIED
+    source_record: "source/SEC-SRC-RU-RKN179-2022.yaml"
+    raw_capture: PENDING
+
+  - id: SEC-SRC-RU-RKN180-2022
+    document: "Приказ Роскомнадзора от 28.10.2022 № 180"
+    role: notification_forms
+    metadata_status: METADATA_VERIFIED
+    source_record: "source/SEC-SRC-RU-RKN180-2022.yaml"
+    raw_capture: PENDING
+
+  - id: SEC-SRC-RU-RKN140-2025
+    document: "Приказ Роскомнадзора от 19.06.2025 № 140"
+    role: depersonalization_requirements_and_methods
+    metadata_status: METADATA_VERIFIED
+    source_record: "source/SEC-SRC-RU-RKN140-2025.yaml"
+    raw_capture: PENDING
+
+  - id: SEC-SRC-RU-PP1154-2025
+    document: "Постановление Правительства РФ от 01.08.2025 № 1154"
+    role: depersonalization_government_rules
+    metadata_status: METADATA_VERIFIED
+    source_record: "source/SEC-SRC-RU-PP1154-2025.yaml"
+    raw_capture: PENDING
+
+  - id: SEC-SRC-RU-INTERAGENCY-245-56-399-85-441-2025
+    document: "Межведомственный приказ от 25.06.2025 № 245/56/399/85/441"
+    role: narrow_article_6_protected_person_access_dependency
+    metadata_status: METADATA_VERIFIED
+    source_record: "source/SEC-SRC-RU-INTERAGENCY-245-56-399-85-441-2025.yaml"
+    raw_capture: PENDING
+    applicability: SPECIAL_SCOPE_ONLY
+
+production_counters:
+  identified: 11
+  registered_before_this_pass: 1
+  metadata_verified_target_after_registration: 11
+  raw_downloaded_exact: 0
+  immutable_sha256_verified: 0
+  atomized_existing_proposed: 4
+  atomized_verified: 0
+  pending_raw_capture: 11
+
+acquisition_blockers:
+  - >-
+      The available GitHub connector can write UTF-8 text records but does not expose arbitrary binary-file
+      upload. The official publication portal metadata is reachable, while byte-exact official PDFs were not
+      obtainable through the current raw-download path in this pass. Therefore byte_length and sha256 remain
+      null and no source is promoted to VERIFIED_FOR_EXTRACTION.
+
+next_gate:
+  - capture byte-exact official raw artifact for every source
+  - record MIME, exact byte length and SHA-256
+  - bind artifact_ref to each source record
+  - structural parse and legal/semantic chunking
+  - concept/definition reconciliation
+  - atomic requirement extraction
+  - typed relation and conflict detection
