@@ -1,0 +1,127 @@
+schema_version: "1.0"
+id: FSTEC-MD-2026-UPD-3-4
+title: "FSTEC 12 April 2026 methodical document: bounded UPD.3-UPD.4 slice"
+authority: FSTEC_RUSSIA
+approved_date: "2026-04-12"
+status: VERIFIED_BOUNDED_UPD_3_4_PUBLIC_TEXT_CROSSCHECK
+scope_statement: >-
+  Complete normalized coverage of section 4.2 measures UPD.3 and UPD.4,
+  including implementation, documentation, all numbered enhancements and the
+  twelve appendix-2 base/enhancement class cells. UPD.5-UPD.9 and the other
+  measure families remain pending at content level.
+
+source_evidence:
+  official_page: https://fstec.ru/dokumenty/vse-dokumenty/spetsialnye-normativnye-dokumenty/metodicheskij-dokument-ot-12-aprelya-2026-g
+  official_endpoint_result: TIMEOUT_BYTES_NOT_ACQUIRED
+  section_locator: "section 4.2, UPD.3-UPD.4"
+  appendix_locator: "appendix 2, family 2, UPD.3-UPD.4 rows"
+  current_text_interfaces:
+    - https://wiki.privacy-advocates.ru/fstek_12.04.2026
+    - https://sudact.ru/law/metodicheskii-dokument-sostav-i-soderzhanie-meropriiatii-i/
+  corroborating_full_text_interface: https://normativ.kontur.ru/document/1/506081-metodicheskiy-dokument-sostav-i-soderzhanie-meropriyatiy-i-mer-po-zashchite-informatsii
+  immutable_official_bytes: PENDING
+
+measures:
+  - code: "УПД.3"
+    title: "Управление учетными записями"
+    purpose: MANAGE_ACCESS_SUBJECT_ACCOUNT_LIFECYCLE
+    implementation:
+      - CREATE_ACCOUNTS
+      - ASSIGN_ACCOUNTS
+      - ACTIVATE_ACCOUNTS
+      - BLOCK_ACCOUNTS
+      - DELETE_ACCOUNTS
+      - ACCOUNT_FOR_ACCOUNTS
+      - VERIFY_USER_IDENTITY_AND_FUNCTIONAL_DUTIES_ON_ACCOUNT_CREATION
+      - VERIFY_DEVICE_OR_APPLICATION_FOR_TECHNOLOGICAL_ACCOUNT_CREATION
+      - ASSIGN_ACCOUNT_ACCESS_RULES
+      - MODIFY_ACCOUNT_ACCESS_RULES
+      - DELETE_ACCOUNT_ACCESS_RULES
+      - MAY_GROUP_ACCOUNTS_WHEN_NEEDED
+      - REVIEW_INDIVIDUAL_AND_GROUP_ACCOUNT_ACCESS_RULES
+      - REGISTER_SECURITY_EVENTS_RELATED_TO_ACCOUNT_MANAGEMENT
+      - USE_USER_ACCOUNT_MANAGEMENT_MEANS
+    documentation:
+      - USER_DEVICE_AND_APPLICATION_ACCOUNT_VERIFICATION_AND_ACTIVATION_PROCEDURE
+      - ACCOUNT_LIFECYCLE_AND_ACCESS_RULE_MANAGEMENT_PROCEDURE
+      - PRIVILEGED_ACCOUNT_ADMINISTRATIVE_ACTION_LOGGING_PROCEDURE
+      - ACCOUNT_MANAGEMENT_ADMINISTRATOR_NOTIFICATION_PROCEDURE
+      - SECURITY_LOG_ANALYSIS_AND_RESPONSE_PROCEDURES
+      - CONTRACT_AND_INFORMATION_INTERACTION_REQUIREMENTS_FOR_EXTERNAL_SUBJECT_CONNECTIONS
+    enhancements:
+      - {number: 1, rule: CENTRALIZED_USER_ACCOUNT_MANAGEMENT}
+      - {number: 2, rule: CENTRALIZED_DEVICE_AND_APPLICATION_ACCOUNT_MANAGEMENT}
+    matrix:
+      base: {K3: PLUS, K2: PLUS, K1: PLUS}
+      enhancements: {K3: [], K2: [1], K1: [1, 2]}
+
+  - code: "УПД.4"
+    title: "Ограничение неуспешных и нерегламентированных попыток доступа в информационную систему"
+    purpose: RESTRICT_ACCESS_AFTER_EXCESSIVE_FAILED_OR_NONREGULATED_ACCESS_ATTEMPTS
+    implementation:
+      - RESTRICT_ACCESS_AFTER_OPERATOR_DEFINED_FAILED_ATTEMPT_LIMIT_WITHIN_DEFINED_WINDOW
+      - APPLY_RESTRICTION_TO_USER_ACCESS_SUBJECTS
+      - APPLY_RESTRICTION_TO_DEVICE_ACCESS_SUBJECTS
+      - APPLY_RESTRICTION_TO_ATTACKERS_USING_INTERACTING_DEVICES_OR_APPLICATIONS
+      - AUTOMATICALLY_ANALYZE_ACCESS_ATTEMPT_EVENTS_IN_COORDINATION_WITH_IAF_1_TO_IAF_4
+      - BLOCK_USER_ACCOUNT
+      - BLOCK_DEVICE_ACCOUNT
+      - BLOCK_APPLICATION_ACCOUNT
+      - BLOCK_ACCESS_BY_MATCHING_TECHNICAL_ATTRIBUTES
+    documentation:
+      - ALLOWED_FAILED_LOGIN_ATTEMPT_VALUE
+      - FAILED_ATTEMPT_COUNTING_WINDOW
+      - BLOCKING_OBJECT_TYPES
+      - TEMPORARY_ACCOUNT_LIFETIMES_BY_TYPE
+      - ALLOWED_ACCOUNT_INACTIVITY_PERIODS_BY_TYPE
+      - REGULATED_LOGIN_TIME_AND_OR_ACCESS_TYPES
+      - ACCESS_SUBJECT_BLOCKING_PROCEDURE
+      - ACCOUNT_OR_DEVICE_UNBLOCKING_CONDITIONS
+    enhancements:
+      - number: 1
+        rule: AUTOMATIC_BLOCK_OR_DELETE_TEMPORARY_AND_UNUSED_ACCOUNTS_AND_NOTIFY_PRIVILEGED_ADMINISTRATOR
+        subrequirements:
+          - AUTOMATICALLY_BLOCK_AND_OR_DELETE_TEMPORARY_AND_UNUSED_ACCOUNTS
+          - NOTIFY_PRIVILEGED_ACCOUNT_MANAGEMENT_ADMINISTRATOR_OF_EVENT
+      - {number: 2, rule: ONLY_CHIEF_ADMINISTRATOR_MAY_UNBLOCK_PRIVILEGED_SUBJECT_AFTER_FAILED_ATTEMPT_LIMIT}
+    matrix:
+      base: {K3: PLUS, K2: PLUS, K1: PLUS}
+      enhancements: {K3: [], K2: [1, 2], K1: [1, 2]}
+
+numeric_constraints: []
+
+operator_defined_parameters:
+  - {id: UPD4_FAILED_ATTEMPTS, measure: "УПД.4", type: COUNT, universal_value: NONE_STATED}
+  - {id: UPD4_ATTEMPT_WINDOW, measure: "УПД.4", type: TIME_WINDOW, universal_value: NONE_STATED}
+  - {id: UPD4_TEMPORARY_ACCOUNT_LIFETIME, measure: "УПД.4", type: DURATION_BY_ACCOUNT_TYPE, universal_value: NONE_STATED}
+  - {id: UPD4_INACTIVITY_PERIOD, measure: "УПД.4", type: DURATION_BY_ACCOUNT_TYPE, universal_value: NONE_STATED}
+  - {id: UPD4_REGULATED_ACCESS_TIME, measure: "УПД.4", type: ACCESS_TIME_OR_ACCESS_TYPE_RULE, universal_value: NONE_STATED}
+  - {id: UPD4_AUTOMATIC_UNLOCK_INTERVAL, measure: "УПД.4", type: OPTIONAL_DURATION, universal_value: NONE_STATED}
+
+class_matrix_summary:
+  cells_total: 12
+  nonblank_cells: 10
+  blank_cells: 2
+  rule: BLANK_ENHANCEMENT_CELL_IS_NOT_PROHIBITION_AND_DOES_NOT_DELETE_ADAPTATION_VERIFICATION_OR_COMPENSATION
+
+scope_guards:
+  - DO_NOT_INVENT_ACCOUNT_REVIEW_INTERVAL
+  - DO_NOT_INVENT_FAILED_ATTEMPT_COUNT_OR_COUNTING_WINDOW
+  - DO_NOT_INVENT_TEMPORARY_ACCOUNT_LIFETIME_OR_INACTIVITY_PERIOD
+  - DO_NOT_TREAT_IP_ADDRESS_OR_USER_AGENT_SIGNATURE_AS_EXHAUSTIVE_TECHNICAL_ATTRIBUTES
+  - DO_NOT_TREAT_CENTRALIZED_MANAGEMENT_ENHANCEMENTS_AS_UNIVERSAL_BASE_REQUIREMENTS
+  - DO_NOT_TREAT_ENHANCEMENT_2_AS_CLASS_LISTED_FOR_UPD_3
+  - DO_NOT_TREAT_BLANK_ENHANCEMENT_CELL_AS_PROHIBITION
+  - DO_NOT_GENERALIZE_UPD_3_4_CONTENT_TO_UPD_5_9
+
+verification_boundary:
+  section_4_2_upd_3_4: VERIFIED_PUBLIC_TEXT_CROSSCHECK
+  implementation_requirements: VERIFIED_NORMALIZED_PUBLIC_TEXT_CROSSCHECK
+  documentation_requirements: VERIFIED_NORMALIZED_PUBLIC_TEXT_CROSSCHECK
+  numbered_enhancements: VERIFIED_NORMALIZED_PUBLIC_TEXT_CROSSCHECK
+  exact_upd_3_4_class_cells: VERIFIED_PUBLIC_TEXT_CROSSCHECK
+  upd_5_9: PENDING
+  official_immutable_bytes: PENDING
+  independent_expert_review: PENDING
+  critical_gap_created: false
+  high_gap_created: false
