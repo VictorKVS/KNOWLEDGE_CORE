@@ -1,7 +1,10 @@
 schema_version: "1.0"
 id: SEC-SRC-RU-152FZ-2025-09-01
 kind: security-regulatory-source
-status: METADATA_VERIFIED
+status: SUPERSEDED_VERSION
+metadata_status: METADATA_VERIFIED
+version_status: SUPERSEDED
+superseded_by: SEC-SRC-RU-152FZ-2026-07-26
 
 title: "Федеральный закон от 27.07.2006 № 152-ФЗ «О персональных данных»"
 jurisdiction: RU
@@ -12,7 +15,7 @@ document:
   adopted_date: "2006-07-27"
   consolidated_revision_effective_from: "2025-09-01"
   checked_at: "2026-08-20"
-  current_consolidated_text_confirmed: true
+  current_consolidated_text_confirmed: false
   amendment_chain_tail:
     - "08.08.2024 № 233-ФЗ"
     - "28.12.2024 № 519-ФЗ"
@@ -24,6 +27,7 @@ canonical_source:
   publisher: "Официальный интернет-портал правовой информации / ИПС Право"
   url: "https://ips.pravo.gov.ru/api/ips/legislation/document?baseid=None&hash=98490812b3409e2a8d78a11ca9010f434ea3d9250a11dbbdb78690cd5551bdd6"
   origin_verified: true
+  version_note: "Этот URL относится к ранее зафиксированной консолидированной редакции с 01.09.2025 и больше не используется как current-root."
 
 capture:
   raw_artifact_ref: ""
@@ -31,9 +35,16 @@ capture:
   byte_length: null
   sha256: ""
   fingerprint_status: PENDING_RAW_CAPTURE
+  semantic_status: HISTORICAL_ONLY
   note: >-
-    Official consolidated text was rechecked on 2026-08-20. The immutable raw capture, exact byte length
-    and SHA-256 fingerprint remain mandatory before promotion to VERIFIED_FOR_EXTRACTION.
+    Историческая редакция сохранена как отдельный стабильный source ID. После выявления Федерального закона
+    от 26.07.2026 № 265-ФЗ данный source не может считаться текущей редакцией 152-ФЗ.
+
+relations:
+  - type: SUPERSEDED_BY
+    target: SEC-SRC-RU-152FZ-2026-07-26
+    effective_from: "2026-07-26"
+    evidence_status: CROSS_VERIFIED
 
 scope_notes:
   corpus_focus:
@@ -42,21 +53,23 @@ scope_notes:
     - operator_security_duties
   initial_extraction_scope:
     - "Article 19"
+  reuse_policy: >-
+    Существующие производные узлы этой редакции допускаются только к delta-reuse после проверки затронутых
+    локаторов. Статья 12 требует обязательного повторного разбора из-за № 265-ФЗ.
 
 future_change_notes:
   - >-
-      The official consolidated text contains future-effective provisions. In particular, Article 10 part 2
-      point 7 has a future change from 2027-03-01 under Federal Law No. 200-FZ of 2025-07-07.
-      Applicability must always be evaluated against the target date.
+      Федеральный закон от 07.07.2025 № 200-ФЗ содержит будущие изменения с 01.03.2027; они должны храниться
+      как отдельная future-effective ветвь и не смешиваться с состоянием на 26.07.2026.
 
 provenance:
   created_at: "2026-08-12"
   checked_at: "2026-08-20"
-  canonical_route_revalidated_at: "2026-08-20T16:56:09+03:00"
-  canonical_route_revalidated_against: "official IPS consolidated text"
+  stale_current_flag_detected_at: "2026-08-20T16:56:09+03:00"
+  stale_current_flag_reason: "26.07.2026 № 265-ФЗ изменил статью 12 152-ФЗ и вступил в силу 26.07.2026."
   created_by: "ChatGPT/GPT-5.6 Sol with official-source verification"
   review_required: true
 
 agent_rule: >-
-  Do not promote derived SEC-REQ records to VERIFIED until the immutable official source capture is
-  fingerprinted and the exact source locator has been independently reviewed.
+  Never route a current-date answer through this source version. Resolve current queries to
+  SEC-SRC-RU-152FZ-2026-07-26 and use this node only for historical/delta comparison until explicitly reviewed.
