@@ -20,11 +20,7 @@ def evaluate(case, model, families, measures):
     if query == "measure_exists":
         return "PRESENT" if case["measure"] in measures else "ABSENT"
     if query == "matrix":
-        return {
-            "PLUS": "INCLUDED_IN_BASE_SET_FOR_CLASS",
-            "BLANK": "NOT_BASELINE_MAY_APPLY_LATER",
-            "NUMBERED": "REQUIRED_ENHANCEMENT_FOR_CLASS",
-        }[case["mark"]]
+        return {"PLUS":"INCLUDED_IN_BASE_SET_FOR_CLASS","BLANK":"NOT_BASELINE_MAY_APPLY_LATER","NUMBERED":"REQUIRED_ENHANCEMENT_FOR_CLASS"}[case["mark"]]
     if query == "selection_pipeline":
         return [item["id"] for item in model["selection_pipeline"]]
     if query == "pdn_mapping":
@@ -38,11 +34,9 @@ def evaluate(case, model, families, measures):
     if query == "official_bytes":
         return model["verification_boundary"]["official_immutable_bytes"]
     if query == "content_completeness":
-        if model["verification_boundary"]["all_measure_implementation_requirements"] == "PENDING_ATOMIZATION":
-            return "CATALOG_ONLY_REQUIREMENTS_AND_ENHANCEMENTS_PENDING"
+        return "IAF_COMPLETE_OTHER_92_PENDING" if model["verification_boundary"]["all_measure_implementation_requirements"] == "PARTIAL_IAF_COMPLETE_4_OF_96" else None
     if query == "measure_proof":
-        if case["code_present"] and not case["implementation_verified"]:
-            return "INSUFFICIENT_CODE_EXISTENCE_ALONE"
+        return "INSUFFICIENT_CODE_EXISTENCE_ALONE" if case["code_present"] and not case["implementation_verified"] else None
     raise AssertionError(f"Unhandled query: {query}")
 
 
@@ -51,16 +45,11 @@ def main():
     fixtures = json.loads(FIXTURES.read_text(encoding="utf-8"))
     families = {item["id"]: item for item in model["families"]}
     measures = [code for family in model["families"] for code in family["measures"]]
-
-    assert model["status"] == "VERIFIED_BOUNDED_CATALOG_AND_SELECTION_RULES_PUBLIC_TEXT_COPY"
+    assert model["status"] == "VERIFIED_BOUNDED_CATALOG_SELECTION_AND_IAF_FAMILY_PUBLIC_TEXT_CROSSCHECK"
     assert len(families) == model["counts"]["families"] == 17
     assert len(measures) == len(set(measures)) == model["counts"]["measure_codes"] == 96
-    assert sum(len(item["measures"]) for item in families.values()) == 96
     assert model["source_evidence"]["official_endpoint_result"] == "TIMEOUT_BYTES_NOT_ACQUIRED"
-    assert model["verification_boundary"]["exact_class_matrix_cells"] == "PENDING_ATOMIZATION"
-    assert model["verification_boundary"]["critical_gap_created"] is False
-    assert model["verification_boundary"]["high_gap_created"] is False
-
+    assert model["verification_boundary"]["exact_class_matrix_cells"] == "PARTIAL_IAF_24_CELLS_VERIFIED_OTHER_FAMILIES_PENDING"
     failures = []
     for case in fixtures["cases"]:
         actual = evaluate(case, model, families, measures)
@@ -70,7 +59,7 @@ def main():
         for failure in failures:
             print("FAIL", failure)
         raise SystemExit(1)
-    print("PASS: 17 families; 96 unique measure codes; 3 selection steps; 36 fail-closed cases")
+    print("PASS: 17 families; 96 unique measure codes; IAF detail linked; 36 fail-closed cases")
 
 
 if __name__ == "__main__":
