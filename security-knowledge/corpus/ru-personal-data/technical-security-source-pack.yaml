@@ -2,7 +2,7 @@ schema_version: 1
 pack_id: RU_PD_TECHNICAL_SECURITY
 scope: Russian personal-data technical and cryptographic protection sources for ISPDn
 pipeline_stage: DISCOVERY_ACQUISITION_RECONCILIATION
-retrieved_at: "2026-08-19T20:06:01+03:00"
+retrieved_at: "2026-08-20T05:05:15+03:00"
 verification_policy: >-
   Prefer authoritative publication and regulator sources. Never synthesize MIME, byte length,
   SHA-256, amendment state, applicability or legal force when the original bytes or authoritative
@@ -18,13 +18,14 @@ sources:
     official_source:
       provider: Government_of_Russian_Federation
       url: "https://government.ru/docs/6339/"
-      page_status: CURRENT_EDITION_PAGE_IDENTIFIED
+      page_status: CURRENT_EDITION_PAGE_REVERIFIED_2026_08_20
+      note: "Government portal explicitly presents the decree in its current edition."
     version_chain:
       - event: BASE_ACT
         date: 2012-11-01
       - event: CURRENT_EDITION_PAGE_RECONCILED
-        date: 2026-08-19
-        note: "Government page exposes a current-edition download; exact artifact bytes remain pending in this worker."
+        date: 2026-08-20
+        note: "Current-edition page reverified; exact artifact bytes remain pending in this worker."
     applicability: CORE_ISPDN
     verification_status: STATUS_VERIFIED
     artifact:
@@ -66,6 +67,8 @@ sources:
           publication_number: "0001201704260010"
           publication_date: 2017-04-26
           url: "https://publication.pravo.gov.ru/Document/View/0001201704260010"
+          portal_pdf_metadata_kb: 275
+          portal_pdf_pages: 5
       - source_id: RU_FSTEC_ORDER_68_2020
         event: AMENDED_BY
         signed_date: 2020-05-14
@@ -76,7 +79,9 @@ sources:
           publication_number: "0001202007100002"
           publication_date: 2020-07-10
           url: "https://publication.pravo.gov.ru/Document/View/0001202007100002"
-    current_chain_status: "Current published amendment chain identified in this pass ends with Order 68 of 2020; later changes were not promoted without primary evidence."
+          portal_pdf_metadata_kb: 99
+          portal_pdf_pages: 2
+    current_chain_status: "Primary amendment chain identified and reverified through Order 68 of 2020; later changes were not promoted without primary evidence."
     applicability: ISPDN_TECHNICAL_MEASURES
     verification_status: STATUS_VERIFIED
     artifact:
@@ -103,13 +108,13 @@ sources:
       mime: null
       byte_length: null
       sha256: null
-      reason: "FSTEK official endpoint timed out/unresolved from this worker."
+      reason: "FSTEK official endpoint could not be resolved/downloaded from this worker."
     relations:
       - to: RU_FSTEC_BDU_GENERAL
         type: USES_THREAT_CATALOG
         status: TEXT_EVIDENCE_IDENTIFIED_PRIMARY_BYTES_PENDING
     version_notes:
-      - "The 2021 methodology replaces use of earlier FSTEK personal-data threat-assessment methodology in the covered assessment context; exact supersession locators require primary-byte capture before atomization."
+      - "The 2021 methodology is the registered current methodological anchor in this pack; exact supersession locators require primary-byte capture before atomization."
 
   - source_id: RU_FSB_ORDER_378_2014
     authority: FSB_Russia
@@ -123,12 +128,13 @@ sources:
     official_agency_reference:
       provider: FSB_Russia
       url: "https://www.fsb.ru/fsb/science/single.htm%21id%3D10437725%40fsbResearchart.html"
-      note: "FSB lists Order 378 among the regulatory-methodological documents operating in personal-data security."
+      note: "FSB methodological material lists Order 378 among the regulatory-methodological documents used in personal-data security."
     publication_reference:
       provider: Rossiyskaya_Gazeta
       url: "https://rg.ru/documents/2014/09/17/zashita-dok.html"
     applicability: CONDITIONAL_SKZI_IN_ISPDN
     verification_status: STATUS_VERIFIED_SCOPE
+    current_status_note: "Exact consolidated 2026 primary artifact/status chain is still pending; the source identity and PDn/crypto scope are verified."
     artifact:
       status: PENDING_IMMUTABLE
       mime: null
@@ -142,10 +148,11 @@ sources:
     document_type: government_decree
     number: "313"
     signed_date: 2012-04-16
-    title: "Лицензирование деятельности в области шифровальных (криптографических) средств"
-    current_reference_status: CURRENT_GOVERNMENT_ACTS_REFERENCE_THIS_LICENSING_REGULATION
+    title: "Об утверждении Положения о лицензировании деятельности по разработке, производству, распространению шифровальных (криптографических) средств, информационных систем и телекоммуникационных систем, защищенных с использованием шифровальных (криптографических) средств, выполнению работ, оказанию услуг в области шифрования информации, техническому обслуживанию шифровальных (криптографических) средств"
+    current_reference_status: CURRENT_GOVERNMENT_MATERIAL_2025_CONTINUES_TO_REFERENCE_PP313
+    current_reference_note: "Government material amended through 2025 cites PP 313 as the licensing regulation; exact consolidated PP 313 artifact/version chain remains pending."
     applicability: CONDITIONAL_CRYPTO_ACTIVITY_BASED
-    verification_status: DISCOVERED_CURRENT_REFERENCE
+    verification_status: STATUS_REFERENCED_BY_CURRENT_GOVERNMENT_MATERIAL_2025
     artifact:
       status: PENDING_IMMUTABLE
       mime: null
@@ -169,19 +176,136 @@ sources:
       sha256: null
       snapshot_policy: "Capture dated immutable snapshots/export metadata; do not pretend a live catalog has one permanent hash."
 
-related_sources_discovered_from_fsb_official_material:
   - source_id: RU_FSB_ORDER_66_2005
-    title: "Положение ПКЗ-2005"
-    status: DISCOVERED_NOT_YET_ACQUIRED
+    authority: FSB_Russia
+    document_type: order
+    number: "66"
+    signed_date: 2005-02-09
+    title: "Об утверждении Положения о разработке, производстве, реализации и эксплуатации шифровальных (криптографических) средств защиты информации (Положение ПКЗ-2005)"
+    justice_registration:
+      date: 2005-03-03
+      number: "6382"
+    effective_date: 2005-03-30
+    official_agency_reference:
+      provider: FSB_Russia
+      url: "https://www.fsb.ru/fsb/npd/more.htm%21id%3D10436382%40fsbNpa%26_print%3Dtrue.html"
+      status: PRIMARY_AGENCY_METADATA_VERIFIED
+    version_chain:
+      - event: BASE_ACT
+        date: 2005-02-09
+      - source_id: RU_FSB_ORDER_173_2010
+        event: AMENDED_BY
+        signed_date: 2010-04-12
+        justice_registration:
+          date: 2010-05-25
+          number: "17350"
+        effective_date: 2010-06-25
+        note: "FSB metadata says effective 2010-06-25 except specified provisions."
     applicability: CONDITIONAL_SKZI
+    verification_status: STATUS_VERIFIED_OFFICIAL_FSB_METADATA
+    artifact:
+      status: PENDING_IMMUTABLE
+      mime: null
+      byte_length: null
+      sha256: null
+      reason: "Exact authoritative bytes for the current text and amendment delta remain pending."
+    applicability_warning: "PKZ-2005 is an SKZI operational/development regime; do not collapse it into the ISPDn technical-measures branch."
+
   - source_id: RU_FAPSI_ORDER_152_2001
-    title: "Инструкция об организации и обеспечении безопасности хранения, обработки и передачи с использованием СКЗИ информации ограниченного доступа, не содержащей государственную тайну"
-    status: DISCOVERED_NOT_YET_ACQUIRED
+    authority: FAPSI_legacy_under_current_FSB_reference
+    document_type: order_instruction
+    number: "152"
+    signed_date: 2001-06-13
+    title: "Инструкция об организации и обеспечении безопасности хранения, обработки и передачи по каналам связи с использованием средств криптографической защиты информации с ограниченным доступом, не содержащей сведений, составляющих государственную тайну"
+    official_agency_reference:
+      provider: FSB_Russia
+      url: "https://www.fsb.ru/fsb/science/single.htm%21id%3D10437725%40fsbResearchart.html"
+      status: IDENTIFIED_IN_FSB_PDN_METHOD_SET
     applicability: CONDITIONAL_SKZI
+    verification_status: STATUS_VERIFIED_FSB_PD_METHOD_LIST
+    artifact:
+      status: PENDING_IMMUTABLE
+      mime: null
+      byte_length: null
+      sha256: null
+      reason: "Exact current authoritative binary/status chain requires acquisition."
+
   - source_id: RU_FSB_PD_THREAT_RECOMMENDATIONS_2015
-    reference: "149/7/2/6-432 от 31.03.2015"
-    status: DISCOVERED_NOT_YET_ACQUIRED
-    applicability: THREAT_MODELING_PD_CONTEXT
+    authority: FSB_Russia_8_Center
+    document_type: methodological_recommendations
+    reference: "149/7/2/6-432"
+    approved_date: 2015-03-31
+    title: "Методические рекомендации по разработке нормативных правовых актов, определяющих угрозы безопасности персональных данных, актуальные при обработке персональных данных в информационных системах персональных данных, эксплуатируемых при осуществлении соответствующих видов деятельности"
+    official_agency_reference:
+      provider: FSB_Russia
+      url: "https://www.fsb.ru/fsb/science/single.htm%21id%3D10437725%40fsbResearchart.html"
+      status: IDENTIFIED_IN_FSB_PDN_METHOD_SET
+    applicability: PDN_THREAT_MODELING_WITH_FSB_CRYPTO_CONTEXT
+    verification_status: STATUS_VERIFIED_FSB_PD_METHOD_LIST
+    artifact:
+      status: PENDING_IMMUTABLE
+      mime: null
+      byte_length: null
+      sha256: null
+      reason: "Exact authoritative recommendation bytes were not obtained in this worker."
+
+  - source_id: RU_FSB_ORDER_142_2023
+    authority: FSB_Russia
+    document_type: order
+    number: "142"
+    signed_date: 2023-03-25
+    title: "Об установлении сроков и последовательности административных процедур при осуществлении органами федеральной службы безопасности лицензионного контроля за видами деятельности, предусмотренными пунктами 1 - 3 и пунктом 4 (в пределах компетенции ФСБ России) части 1 статьи 12 Федерального закона от 4 мая 2011 г. № 99-ФЗ"
+    justice_registration:
+      date: 2023-03-31
+      number: "72831"
+    official_publication:
+      publication_number: "0001202303310020"
+      publication_date: 2023-03-31
+    applicability: CONDITIONAL_FSB_LICENSING_CONTROL_CONTEXT
+    verification_status: PRIMARY_PUBLICATION_IDENTIFIED
+    artifact:
+      status: PENDING_IMMUTABLE
+      mime: null
+      byte_length: null
+      sha256: null
+    applicability_warning: "Licensing-control procedure is not a universal PDn operator obligation."
+
+  - source_id: RU_FSB_ORDER_141_2023
+    authority: FSB_Russia
+    document_type: repeal_version_context_order
+    number: "141"
+    signed_date: 2023-03-25
+    title: "О признании утратившими силу приказов ФСБ России по вопросам осуществления органами федеральной службы безопасности лицензионного контроля видов деятельности, предусмотренных пунктами 1 - 3 и пунктом 4 (в пределах компетенции ФСБ России) части 1 статьи 12 Федерального закона от 4 мая 2011 г. № 99-ФЗ"
+    justice_registration:
+      date: 2023-03-31
+      number: "72830"
+    official_publication:
+      publication_number: "0001202303310017"
+      publication_date: 2023-03-31
+    applicability: VERSION_CONTEXT_ONLY_UNLESS_LICENSING_CONTROL_APPLIES
+    verification_status: PRIMARY_PUBLICATION_IDENTIFIED
+    artifact:
+      status: PENDING_IMMUTABLE
+      mime: null
+      byte_length: null
+      sha256: null
+    semantic_role: "Retain as version/repeal evidence; do not turn repealed licensing-control rules into current requirements."
+
+  - source_id: RU_GOV_PP_608_1995
+    authority: Government_of_Russian_Federation
+    document_type: government_decree
+    number: "608"
+    signed_date: 1995-06-26
+    title: "О сертификации средств защиты информации"
+    current_reference_status: GOVERNMENT_MATERIAL_EFFECTIVE_2026_REFERENCES_THIS_CERTIFICATION_REGULATION
+    applicability: CONDITIONAL_CERTIFIED_SECURITY_PRODUCT_CONTEXT
+    verification_status: STATUS_REFERENCED_BY_GOVERNMENT_MATERIAL_EFFECTIVE_2026
+    artifact:
+      status: PENDING_IMMUTABLE
+      mime: null
+      byte_length: null
+      sha256: null
+    applicability_warning: "Certification context must be mapped to the concrete control/product requirement; this reference alone is not a universal PDn obligation."
 
 deferred_or_not_promoted:
   - family: GOSSOPKA_NKTSKI
@@ -204,6 +328,17 @@ relations:
   - from: RU_FSTEC_THREAT_METHOD_2021
     to: RU_FSTEC_BDU_GENERAL
     type: USES_THREAT_CATALOG
+  - from: RU_FSB_ORDER_66_2005
+    to: RU_FSB_ORDER_173_2010
+    type: AMENDED_BY
+  - from: RU_GOV_PP_313_2012
+    to: RU_FSB_ORDER_142_2023
+    type: RELATED_LICENSING_CONTROL_WHEN_ACTIVITY_IN_SCOPE
+    provenance: "conditional relationship; exact activity mapping requires document compilation"
+  - from: SECURITY_PRODUCT_REQUIREMENT
+    to: RU_GOV_PP_608_1995
+    type: CERTIFICATION_REGIME_REFERENCE
+    provenance: "conditional; instantiate only when an applicable requirement calls for certified security products"
 
 conflict_checks:
   - check_id: RU_PD_TECH_CONFLICT_001
@@ -215,26 +350,35 @@ conflict_checks:
     type: NEIGHBORING_REGIME_GUARD
     objects: [GOSSOPKA_NKTSKI, RU_FSTEC_BDU_ASU_TP]
     result: NOT_PROMOTED_WITHOUT_APPLICABILITY_EVIDENCE
+  - check_id: RU_PD_TECH_CONFLICT_003
+    type: SEMANTIC_SCOPE_SPLIT
+    objects: [RU_GOV_PP_313_2012, RU_FSB_ORDER_66_2005, RU_GOV_PP_608_1995]
+    result: CONTEXT_SPLIT_REQUIRED
+    rule: "Licensing, SKZI operational rules and security-product certification are separate legal/technical concepts."
 
 run_metrics:
-  sources_reconciled: 6
-  family_entries_reused_from_parent_inventory: 6
-  source_pack_entries_registered: 6
-  related_crypto_sources_discovered: 3
-  primary_amendment_events_verified: 2
+  core_sources_reconciled: 7
+  related_crypto_sources_registered: 3
+  conditional_licensing_or_certification_sources_registered: 3
+  primary_amendment_events_verified: 3
   immutable_artifacts_created: 0
-  pending_immutable_or_snapshot: 6
+  pending_immutable_or_snapshot: 12
   bytes_downloaded: 0
   sha256_recorded: 0
-  applicability_guards_added: 2
+  applicability_guards_total: 4
   neighboring_regimes_not_promoted: 2
+  last_run_binary_attempts: 3
+  last_run_binary_successes: 0
 
 next_actions:
   - acquire_exact_current_PP1119_artifact_and_hash
   - acquire_base_and_consolidated_FSTEC21_artifacts_and_hash
   - retry_FSTEK_2021_methodology_attachment_2919_and_hash
   - resolve_and_acquire_exact_official_publication_artifact_for_FSB378
+  - acquire_FSB66_current_artifact_and_Order173_delta_then_hash
+  - acquire_FAPSI152_and_2015_PDn_threat_recommendations_from_authoritative_sources
   - acquire_and_version_PP313_only_as_conditional_crypto_licensing_source
-  - acquire_FSB66_FAPSI152_and_2015_PDn_threat_recommendations_from authoritative sources
+  - acquire_FSB142_2023_primary_artifact_and_keep_FSB141_as_version_context
+  - acquire_PP608_current_artifact_as_conditional_certification_source
   - snapshot_general_FSTEK_BDU_with_retrieval_metadata
-  - after immutable acquisition_run_DOCUMENT_COMPILER_structure_chunks_terms_definitions_relations_conflicts
+  - after_immutable_acquisition_run_DOCUMENT_COMPILER_structure_chunks_terms_definitions_relations_conflicts
