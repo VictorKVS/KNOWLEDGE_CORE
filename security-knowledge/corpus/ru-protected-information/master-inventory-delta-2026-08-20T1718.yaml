@@ -1,0 +1,95 @@
+schema_version: "1.0"
+kind: ru-protected-information-master-inventory-delta
+base_inventory: "master-inventory.yaml"
+checked_at: "2026-08-20T17:18:05+03:00"
+owner_stream: STREAM_3_SECTOR_OVERLAYS
+previous_delta: "master-inventory-delta-2026-08-20T1435.yaml"
+run_ref: "stream-3-run-2026-08-20T1718.yaml"
+
+counter_state_after_reconciliation:
+  found: 19
+  downloaded: 7
+  immutable: 7
+  pending: 10
+  reused: 2
+  primary_publication_verified: 8
+  sectors_registered: 16
+  newly_reconciled_existing_sources_this_run: 1
+  new_immutable_this_run: 0
+
+sources_reconciled:
+  - source_id: SEC-SRC-RU-FZ-98
+    sector: commercial_secrets
+    regime: commercial_secret
+    status: REUSED
+    reuse_path: "../../legislation/RU/federal-laws/98-FZ/document.yaml"
+    deduplication_rule: "Reuse the existing legal source identity; do not create SEC-SRC-RU-FZ-98-* duplicate nodes."
+    primary_authority:
+      state: CURRENT_AUTHORITY_TEXT_IDENTIFIED
+      url: "https://www.kremlin.ru/acts/bank/21227"
+      latest_amendment_event_verified_in_this_run:
+        act: "251-ФЗ от 08.08.2024"
+        official_publication_id: "0001202408080046"
+        url: "https://publication.pravo.gov.ru/document/0001202408080046"
+    artifact:
+      state: SOURCE_PENDING_PRIMARY_EXACT_CAPTURE
+      note: >-
+        The existing document card fingerprints a user-uploaded text and is retained as provenance evidence;
+        it is not counted as the immutable primary artifact for this stream.
+    overlap_candidates:
+      - target: "152-ФЗ"
+        type: POSSIBLE_DUAL_REGIME_ON_SCENARIO_PROOF_ONLY
+        status: NOT_PROMOTED
+        guard: "COMMERCIAL_SECRET != PERSONAL_DATA"
+    version_chain:
+      state: VERSION_CHAIN_PARTIAL
+      pending: "Close primary amendment sweep through 2026-08-20 before executable use."
+
+version_chain_updates:
+  - source_id: SEC-SRC-RU-FZ-218
+    lifecycle_state: SOURCE_PENDING
+    added_primary_events:
+      - act: "377-ФЗ от 07.10.2022"
+        official_publication_id: "0001202210070001"
+        effect: "Primary amending act; Article 6 changes Article 4 of 218-ФЗ."
+      - act: "442-ФЗ от 04.08.2023"
+        official_publication_id: "0001202308040037"
+        effect: >-
+          Primary amending act; Article 9 adds Article 10.2 to 218-ФЗ and creates an explicit protected-information
+          co-occurrence anchor covering applicant personal data together with commercial, official, banking,
+          insurance and other legally protected secrets during complaint handling.
+    executable_effect: NONE
+    pending: "Acquire and compile authoritative current 218-ФЗ before relying on current locator semantics."
+
+conflict_registry_delta:
+  - id: STREAM3-SCOPE-GUARD-98FZ-001
+    classification: SEMANTIC_SCOPE_GUARD
+    status: NOT_A_LEGAL_CONFLICT
+    compared:
+      - "98-ФЗ — commercial secret regime"
+      - "152-ФЗ — personal-data processing regime"
+    finding: >-
+      Regime labels are not interchangeable. The same information may be governed by both only when independent
+      applicability predicates are proven for the concrete scenario.
+    executable_effect: NONE
+
+acquisition_delta:
+  attempts: 2
+  successes: 0
+  immutable_baselines_added: 0
+  blocked_targets:
+    - "SEC-SRC-RU-FZ-222-2015 official publication PDF 0001201507130083"
+    - "SEC-SRC-RU-FZ-98 authoritative exact network artifact"
+  proof_floor_action: "No MIME/byte_length/SHA-256 values synthesized from HTML/search display metadata."
+
+proof_floor_effect:
+  executable_rules_changed: false
+  applicability_edges_promoted: 0
+  duplicate_source_nodes_avoided: 1
+  primary_amendment_events_added: 2
+  legal_conflicts_confirmed: 0
+
+merge_rule: >-
+  Apply after the 14:35 delta. This delta reconciles an already-existing 98-ФЗ source into the protected-information
+  inventory and enriches the 218-ФЗ primary amendment chain. It does not promote either source to a current
+  executable legal baseline without exact primary/current acquisition and version-chain closure.
