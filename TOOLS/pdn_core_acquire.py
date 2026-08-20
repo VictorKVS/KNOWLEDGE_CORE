@@ -37,7 +37,7 @@ BASES = (
 UA = "KNOWLEDGE_CORE-pdn-acquirer/1.0 (+https://github.com/VictorKVS/KNOWLEDGE_CORE)"
 
 ID_RE = re.compile(r"^id:\s*([^\s#]+)\s*$", re.M)
-EO_RE = re.compile(r'^\s*official_publication_id:\s*["\']?([0-9]{19})["\']?\s*$', re.M)
+EO_RE = re.compile(r'^\s*official_publication_id:\s*["\']?([0-9]{16})["\']?\s*$', re.M)
 
 
 def fetch_bytes(url: str, timeout: int = 90, attempts: int = 4) -> tuple[bytes, dict[str, str]]:
@@ -62,7 +62,7 @@ def official_get(path: str, params: dict[str, str]) -> tuple[bytes, dict[str, st
         try:
             data, headers = fetch_bytes(url)
             return data, headers, url
-        except Exception as exc:  # keep HTTP/HTTPS fallback evidence in run log
+        except Exception as exc:
             errors.append(f"{url}: {exc}")
     raise RuntimeError("; ".join(errors))
 
@@ -100,7 +100,6 @@ def main() -> int:
             out_dir = RAW_DIR / source_id
             out_dir.mkdir(parents=True, exist_ok=True)
             artifact = out_dir / f"{eo}.pdf"
-            # Immutable semantics: do not silently replace different bytes for the same publication id.
             if artifact.exists():
                 old_sha = hashlib.sha256(artifact.read_bytes()).hexdigest()
                 if old_sha != sha:
