@@ -1,0 +1,23 @@
+name: FSTEC Uzi 2026 methodology gate
+
+on:
+  pull_request:
+    paths:
+      - "security-knowledge/controls/fstec-uzi-2026-methodology-*"
+      - "security-knowledge/validators/validate_fstec_uzi_2026_methodology.py"
+      - ".github/workflows/fstec-uzi-2026-methodology.yml"
+  push:
+    paths:
+      - "security-knowledge/controls/fstec-uzi-2026-methodology-*"
+      - "security-knowledge/validators/validate_fstec_uzi_2026_methodology.py"
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pyyaml
+      - run: python security-knowledge/validators/validate_fstec_uzi_2026_methodology.py

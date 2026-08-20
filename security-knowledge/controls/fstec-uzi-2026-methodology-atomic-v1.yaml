@@ -1,0 +1,266 @@
+schema_version: "1.0"
+id: FSTEC-MD-UZI-2026-08-07
+title: "FSTEC Uzi maturity methodology of 7 August 2026: bounded process, evidence and reporting model"
+authority: FSTEC_RUSSIA
+approved_date: "2026-08-07"
+document_title: "Методика оценки уровня зрелости деятельности в области технической защиты информации в информационных системах и обеспечения безопасности значимых объектов критической информационной инфраструктуры Российской Федерации"
+status: VERIFIED_BOUNDED_CURRENT_TEXT_INTERFACE_OFFICIAL_BYTES_AND_IMAGE_CELLS_PENDING
+scope_statement: >-
+  This model covers the thirty-six numbered clauses, six-stage evaluation pipeline,
+  twenty-one basic directions, eight weighted requirement types, evidence inputs,
+  recommended target routes, maturity bands, governance and report contents visible
+  in the current text interface. It does not reconstruct formula images or the
+  normalized D_ij minima hidden in table-3 images and does not claim official bytes.
+
+source_evidence:
+  official_page: https://fstec.ru/dokumenty/vse-dokumenty/spetsialnye-normativnye-dokumenty/metodicheskij-dokument-ot-7-avgusta-2026-g
+  official_pdf: https://fstec.ru/files/1523/---7--2026-/3102/---7--2026-.pdf
+  official_endpoint_result: UNSAFE_OR_UNAVAILABLE_BYTES_NOT_ACQUIRED
+  current_text_root: https://www.consultant.ru/document/cons_doc_LAW_541543/
+  current_text_notice: https://www.consultant.ru/law/hotdocs/95228.html
+  current_text_notice_published: "2026-08-11"
+  immutable_official_bytes: PENDING
+
+applicability:
+  object:
+    - INFORMATION_SYSTEM_TECHNICAL_PROTECTION
+    - SIGNIFICANT_CII_OBJECT_SECURITY
+  actors:
+    - INFORMATION_SYSTEM_OPERATOR
+    - SIGNIFICANT_CII_OBJECT_OWNER
+    - CONTRACTOR_WITH_RELEVANT_ACCESS_OR_SECURITY_WORK
+    - STATE_BODY_ORGANIZATION_AS_CUSTOMER
+    - FSTEC_RUSSIA_FOR_EFFECTIVENESS_EVALUATION
+    - PERSONAL_DATA_INFORMATION_SYSTEM_OPERATOR
+  operator_self_evaluation: WHEN_PROCESSES_AND_MEASURES_ARE_IMPLEMENTED_WITH_OWN_RESOURCES
+  contractor_route: OPERATOR_AS_CUSTOMER_SETS_MATURITY_REQUIREMENTS_IN_WORK_OR_SERVICE_DOCUMENTS
+
+evaluation_route:
+  internal: ALLOWED
+  external: ALLOWED_AND_MORE_OBJECTIVE
+  external_organization_qualification: LICENSE_FOR_TECHNICAL_PROTECTION_OF_CONFIDENTIAL_INFORMATION_RELEVANT_CONTROL_SERVICES
+  external_evaluation_universally_mandatory: false
+  pipeline:
+    - {step: 1, id: DEFINE_EVALUATED_DIRECTIONS}
+    - {step: 2, id: COLLECT_AND_ANALYZE_INPUT_DATA}
+    - {step: 3, id: DETERMINE_CURRENT_LEVEL_PER_DIRECTION}
+    - {step: 4, id: DETERMINE_TARGET_LEVEL_PER_DIRECTION}
+    - {step: 5, id: BUILD_CURRENT_AND_TARGET_PROFILE}
+    - {step: 6, id: DETERMINE_AGGREGATE_UZI}
+
+aggregate_maturity_bands:
+  - {level: 0, name: ZERO, condition: "Uzi < 1"}
+  - {level: 1, name: INITIAL, condition: "1 <= Uzi < 2"}
+  - {level: 2, name: SYSTEMATIC, condition: "2 <= Uzi < 3"}
+  - {level: 3, name: CONTROLLED, condition: "3 <= Uzi < 4"}
+  - {level: 4, name: VERIFIABLE, condition: "Uzi >= 4"}
+
+target_level_recommendations:
+  normative_strength: RECOMMENDED_NOT_UNIVERSALLY_MANDATORY
+  routes:
+    - target_minimum: 1
+      classes:
+        - GIS_CLASS_3
+        - OTHER_STATE_BODY_ENTERPRISE_OR_INSTITUTION_INFORMATION_SYSTEM
+        - ISPDN_SECURITY_LEVEL_4
+        - ISPDN_SECURITY_LEVEL_3
+        - SIGNIFICANT_CII_CATEGORY_3
+        - CONTRACTOR_RELATED_TO_LEVEL_1_SCOPE
+    - target_minimum: 2
+      classes:
+        - GIS_CLASS_2
+        - ISPDN_SECURITY_LEVEL_2
+        - SIGNIFICANT_CII_CATEGORY_2
+        - CONTRACTOR_RELATED_TO_LEVEL_2_SCOPE
+    - target_minimum: 3
+      classes:
+        - GIS_CLASS_1
+        - ISPDN_SECURITY_LEVEL_1
+        - SIGNIFICANT_CII_CATEGORY_1
+        - CONTRACTOR_RELATED_TO_LEVEL_3_SCOPE
+
+directions:
+  - {id: D01, title: ORGANIZATION_AND_MANAGEMENT}
+  - {id: D02, title: THREAT_IDENTIFICATION_AND_EVALUATION}
+  - {id: D03, title: INFORMATION_SYSTEM_CONFIGURATION_CONTROL}
+  - {id: D04, title: VULNERABILITY_MANAGEMENT}
+  - {id: D05, title: UPDATE_MANAGEMENT}
+  - {id: D06, title: PROTECTED_HANDLING_OF_RESTRICTED_INFORMATION}
+  - {id: D07, title: ENDPOINT_DEVICE_PROTECTION}
+  - {id: D08, title: MOBILE_DEVICE_PROTECTION}
+  - {id: D09, title: REMOTE_ACCESS_PROTECTION}
+  - {id: D10, title: WIRELESS_ACCESS_PROTECTION}
+  - {id: D11, title: PRIVILEGED_ACCESS_PROTECTION}
+  - {id: D12, title: SECURITY_MONITORING}
+  - {id: D13, title: SECURE_SOFTWARE_DEVELOPMENT}
+  - {id: D14, title: PHYSICAL_PROTECTION}
+  - {id: D15, title: CONTINUITY}
+  - {id: D16, title: KNOWLEDGE_AND_AWARENESS}
+  - {id: D17, title: CONTRACTOR_INTERACTION_SECURITY}
+  - {id: D18, title: DDOS_PROTECTION}
+  - {id: D19, title: AI_USE_PROTECTION}
+  - {id: D20, title: INFORMATION_SYSTEM_AND_DATA_PROTECTION}
+  - {id: D21, title: PROTECTION_LEVEL_CONTROL}
+
+direction_scope_rules:
+  additional_sector_or_agency_directions: MAY_BE_INCLUDED
+  inapplicable_direction: EXCLUDE_WHEN_TECHNOLOGY_ABSENT_OR_TECHNOLOGICAL_OR_ARCHITECTURAL_FEATURES_JUSTIFY_EXCLUSION
+  profile: CURRENT_AND_TARGET_LEVELS_FOR_INCLUDED_DIRECTIONS
+  gap_use: IDENTIFY_DEFICIENCIES_AND_IMPROVEMENTS
+
+input_evidence_classes:
+  - SECURITY_POLICY
+  - RESPONSIBLE_PERSON_AUTHORITY_FUNCTIONS_RIGHTS_DOCUMENTS
+  - SECURITY_UNIT_AUTHORITY_FUNCTIONS_RIGHTS_DOCUMENTS
+  - INTERNAL_SECURITY_OPERATION_AND_PROCESSING_STANDARDS_AND_REGULATIONS
+  - IMPROVEMENT_PLAN
+  - PROCESS_AND_MEASURE_REPORTS_PROTOCOLS_AND_DOCUMENTS
+  - PREVIOUS_MATURITY_EVALUATION
+  - SECURITY_CONTROL_AND_ANALYSIS_REPORTS
+  - STATE_CONTROL_ACTS_PROTOCOLS_AND_DOCUMENTS
+  - WORKER_INTERVIEW_RESULTS
+  - OBSERVATION_OF_WORKER_INFORMATION_SYSTEM_ACTIVITIES
+  - OBSERVATION_OF_SOFTWARE_AND_HARDWARE_INFRASTRUCTURE_FUNCTIONING
+  - INSTRUMENTAL_ASSESSMENT_MONITORING_SOFTWARE_AND_OTHER_DIRECTION_DATA
+
+optional_tools:
+  normative_strength: MAY_NOT_MUST
+  classes:
+    - GRC
+    - SOAR_OR_SECOPS
+    - ENTERPRISE_ARCHITECTURE_TOOLS
+    - LANGUAGE_MODELS_ADAPTED_TO_CLAUSE_19_INPUTS
+
+evidence_and_role_rules:
+  evaluator_segregation: MUST_NOT_EVALUATE_EVIDENCE_OF_OWN_FUNCTIONS_OR_TASKS
+  missing_requested_material: ASSIGN_ZERO_TO_CORRESPONDING_DIRECTIONS
+  interview_results: MUST_BE_DOCUMENTED
+  analysis_dimensions:
+    - REALIZATION
+    - SUFFICIENCY_AND_EFFECTIVENESS
+    - GOALS_AND_REQUIREMENTS
+  operator_responsibility: QUALITY_AND_OBJECTIVITY_OF_EVALUATION
+
+requirement_types:
+  - id: R1
+    title: DOCUMENTATION
+    weight: 0.15
+    allowed_coefficients: [0.0, 0.5, 1.0]
+  - id: R2
+    title: EXECUTION
+    weight: 0.20
+    allowed_coefficients: [0.0, 0.5, 1.0]
+  - id: R3
+    title: TOOLS
+    weight: 0.10
+    allowed_coefficients: [0.0, 0.5, 1.0]
+  - id: R4
+    title: QUALIFICATION
+    weight: 0.10
+    allowed_coefficients: [0.0, 0.5, 1.0]
+    full_value_note: SIGNIFICANT_MORE_THAN_ONE_YEAR_EXPERIENCE_AND_OR_CERTIFICATES
+  - id: R5
+    title: CONTROL
+    weight: 0.15
+    allowed_coefficients: [0.0, 0.5, 1.0]
+  - id: R6
+    title: TRAINING
+    weight: 0.10
+    allowed_coefficients: [0.0, 0.3, 0.5, 1.0]
+  - id: R7
+    title: EXTERNAL_AUDIT
+    weight: 0.10
+    allowed_coefficients: [0.0, 0.5, 1.0]
+  - id: R8
+    title: IMPROVEMENT_AND_UPDATING
+    weight: 0.10
+    allowed_coefficients: [0.0, 0.5, 1.0]
+
+calculation_boundary:
+  weighted_requirement_value: "D_ij = w_j * a_j"
+  requirement_weights_sum: 1.0
+  coefficient_range: "0 <= a_j <= 1"
+  direction_score_semantics: AGGREGATES_EIGHT_D_IJ_VALUES
+  direction_score_exact_formula_image: PENDING_MACHINE_READABLE_OR_OFFICIAL_FORMULA
+  aggregate_uzi_semantics: AGGREGATES_CURRENT_LEVELS_OF_INCLUDED_DIRECTIONS
+  aggregate_uzi_exact_formula_image: PENDING_MACHINE_READABLE_OR_OFFICIAL_FORMULA
+  table_3_visible_p_thresholds:
+    - {level: 0, condition: "P < 0.2"}
+    - {level: 1, condition: "P >= 0.225"}
+    - {level: 2, condition: "P >= 0.35"}
+    - {level: 3, condition: "P >= 0.65"}
+    - {level: 4, condition: "P >= 0.9"}
+  table_3_normalized_d_ij_minima: PENDING_IMAGE_CELL_EXTRACTION
+  direction_level_assignment: REQUIRES_BOTH_NORMALIZED_D_IJ_AND_P_BOUNDARY
+  p_threshold_alone_is_sufficient: false
+
+dynamics_and_improvement:
+  retrospective_states:
+    - POSITIVE_AGGREGATE_GROWTH_TOWARD_NEXT_LEVEL
+    - POSITIVE_GROWTH_IN_SOME_DIRECTIONS
+    - ZERO_NO_CHANGE
+    - NEGATIVE_DECLINE_IN_ONE_OR_MORE_CRITERIA
+  improvement_plan: REQUIRED_FROM_GAPS
+  when_target_reached: SET_NEW_TARGET_AND_PLAN
+  repeated_below_target: PRIORITIZE_UNIMPLEMENTED_OR_LOW_QUALITY_PROCESSES_AND_PLAN
+  numeric_plan_deadline_in_method: NOT_STATED
+
+report:
+  required_fields:
+    - OPERATOR_AND_APPLICABLE_SECURITY_REQUIREMENTS
+    - EVALUATION_DATE
+    - EVALUATOR_IDENTITIES_ROLES_ORGANIZATIONS_CONTACTS
+    - PARTICIPANT_IDENTITIES_ROLES_ORGANIZATIONS_CONTACTS
+    - PREVIOUS_RESULT_VALUES_AND_GRAPH_IF_AVAILABLE
+    - INPUT_DATA
+    - METHODS_AND_TOOLS
+    - EVALUATED_DIRECTIONS
+    - D_IJ_AND_DIRECTION_SCORE_RESULTS
+    - CURRENT_DIRECTION_LEVELS_EVIDENCE_CONCLUSION_AND_AGGREGATE_UZI
+    - CURRENT_AND_TARGET_GRAPHICAL_PROFILE
+    - BELOW_TARGET_DIRECTIONS_AND_DEFICIENT_REQUIREMENT_TYPES
+    - IMPROVEMENT_RECOMMENDATIONS_ACTIONS_DEADLINES_AND_RESPONSIBLE_UNITS_OR_WORKERS
+  signed_by: EVALUATING_SPECIALISTS
+  approved_by: HEAD_OR_PERSON_RESPONSIBLE_FOR_INFORMATION_PROTECTION_OR_CII_SECURITY
+
+observed_text_anomalies:
+  - id: ORDER_31_DATE_OR_YEAR_FOOTNOTE
+    treatment: PRESERVE_AS_SOURCE_ANOMALY_DO_NOT_SILENTLY_CORRECT
+  - id: SECTION_V_POINT_11_CROSS_REFERENCE_EXPECTED_DIRECTIONS_POINT_12
+    treatment: PRESERVE_AS_SOURCE_ANOMALY_DO_NOT_SILENTLY_CORRECT
+  - id: OFFICIAL_NUMBERING_NOTE
+    treatment: CONSULTANT_STATES_NUMBERING_FOLLOWS_OFFICIAL_TEXT
+
+scope_guards:
+  - DO_NOT_EQUATE_UZI_WITH_KZI_OR_PZI
+  - DO_NOT_TREAT_RECOMMENDED_TARGET_LEVELS_AS_UNIVERSALLY_MANDATORY
+  - DO_NOT_TREAT_EXTERNAL_EVALUATION_AS_UNIVERSALLY_MANDATORY
+  - DO_NOT_TREAT_OPTIONAL_TOOLS_AS_REQUIRED
+  - DO_NOT_ASSIGN_DIRECTION_LEVEL_FROM_P_THRESHOLD_ALONE
+  - DO_NOT_RECONSTRUCT_IMAGE_ONLY_D_IJ_MINIMA
+  - DO_NOT_INVENT_A_NUMERIC_IMPROVEMENT_PLAN_DEADLINE
+  - DO_NOT_SILENTLY_CORRECT_OBSERVED_SOURCE_ANOMALIES
+  - DO_NOT_CLAIM_IMMUTABLE_OFFICIAL_BYTES
+
+counts:
+  numbered_clauses: 36
+  pipeline_steps: 6
+  directions: 21
+  input_evidence_classes: 13
+  optional_tool_classes: 4
+  requirement_types: 8
+  aggregate_bands: 5
+  target_routes: 3
+  report_required_fields: 13
+  retrospective_states: 4
+
+verification_boundary:
+  clauses_process_directions_roles_evidence_and_reporting: VERIFIED_CURRENT_TEXT_INTERFACE
+  weights_coefficients_and_visible_p_thresholds: VERIFIED_CURRENT_TEXT_INTERFACE
+  target_routes_and_normative_strength: VERIFIED_CURRENT_TEXT_INTERFACE
+  exact_formula_images: PENDING
+  table_3_normalized_d_ij_minima: PENDING
+  immutable_official_bytes: PENDING
+  independent_expert_review: PENDING
+  critical_gap_created: false
+  high_gap_created: false
