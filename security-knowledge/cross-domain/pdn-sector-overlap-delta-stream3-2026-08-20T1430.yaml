@@ -1,0 +1,49 @@
+schema_version: "1.0"
+kind: pdn-sector-overlap-delta
+base_graph: "pdn-sector-overlap-seed-v1.yaml"
+checked_at: "2026-08-20T14:30:00+03:00"
+owner_stream: STREAM_3_SECTOR_OVERLAYS
+
+edges:
+  - from: PDN-RU-FZ-0152-A6-P1-7
+    to: SEC-SRC-RU-FZ-230-2016
+    type: explicit_cross_regime_reference
+    direction: "152-FZ_TO_230-FZ"
+    overlap_dimension:
+      - debtor_personal_data
+      - lawful_processing_basis
+      - third_party_disclosure
+      - confidentiality
+    proof_state: PARTIAL_EXPLICIT_REFERENCE
+    verified_anchor: >-
+      The current consolidated text of 152-ФЗ Article 6(1)(7) expressly references the federal law
+      governing protection of individuals during overdue-debt collection. The current consolidated
+      text of 230-ФЗ Article 6 separately regulates transfer/disclosure of debtor information and
+      personal data.
+    executable_use_allowed: false
+    pending: >-
+      Complete the primary amendment chain and current-locator compilation for both endpoint
+      provisions before VERIFIED/applicability promotion.
+
+semantic_collision_guards:
+  - id: STREAM3-SCOPE-GUARD-230FZ-001
+    source: SEC-SRC-RU-FZ-230-2016
+    compared:
+      - "152-ФЗ статья 6 часть 1 пункт 7 — lawful basis for processing in specified legitimate-interest contexts"
+      - "230-ФЗ статья 6 части 3, 7, 8 — operation-specific restrictions on third-party disclosure and public disclosure"
+    classification: NON_CONFLICT_SPECIALIZATION_PENDING_FULL_CHAIN
+    guard: "PROCESSING_LAWFUL_BASIS != UNRESTRICTED_DISCLOSURE_PERMISSION"
+    reason: >-
+      A lawful basis for processing must not be compiled into a blanket permission to disclose
+      debtor data. Operation, recipient, consent/exception and disclosure scope must remain separate.
+
+proof_floor_effect:
+  executable_rules_changed: false
+  applicability_edges_promoted: 0
+  conflicts_confirmed: 0
+  conflict_candidates_created: 1
+  note: "The guard records a scope-collision risk, not a proven contradiction between statutes."
+
+merge_rule: >-
+  Apply after pdn-sector-overlap-seed-v1.yaml. Preserve this edge as non-executable until
+  primary current-version chains and locators are fully verified.
