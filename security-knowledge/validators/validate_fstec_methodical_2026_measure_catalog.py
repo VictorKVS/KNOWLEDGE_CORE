@@ -34,7 +34,7 @@ def evaluate(case, model, families, measures):
     if query == "official_bytes":
         return model["verification_boundary"]["official_immutable_bytes"]
     if query == "content_completeness":
-        return "IAF_AND_UPD_1_4_COMPLETE_OTHER_88_PENDING" if model["verification_boundary"]["all_measure_implementation_requirements"] == "PARTIAL_IAF_AND_UPD_1_4_COMPLETE_8_OF_96" else None
+        return "IAF_AND_COMPLETE_UPD_OTHER_83_PENDING" if model["verification_boundary"]["all_measure_implementation_requirements"] == "PARTIAL_IAF_AND_COMPLETE_UPD_13_OF_96" else None
     if query == "measure_proof":
         return "INSUFFICIENT_CODE_EXISTENCE_ALONE" if case["code_present"] and not case["implementation_verified"] else None
     raise AssertionError(f"Unhandled query: {query}")
@@ -45,11 +45,11 @@ def main():
     fixtures = json.loads(FIXTURES.read_text(encoding="utf-8"))
     families = {item["id"]: item for item in model["families"]}
     measures = [code for family in model["families"] for code in family["measures"]]
-    assert model["status"] == "VERIFIED_BOUNDED_CATALOG_SELECTION_IAF_AND_UPD_1_4_PUBLIC_TEXT_CROSSCHECK"
+    assert model["status"] == "VERIFIED_BOUNDED_CATALOG_SELECTION_IAF_AND_COMPLETE_UPD_PUBLIC_TEXT_CROSSCHECK"
     assert len(families) == model["counts"]["families"] == 17
     assert len(measures) == len(set(measures)) == model["counts"]["measure_codes"] == 96
     assert model["source_evidence"]["official_endpoint_result"] == "TIMEOUT_BYTES_NOT_ACQUIRED"
-    assert model["verification_boundary"]["exact_class_matrix_cells"] == "PARTIAL_IAF_AND_UPD_1_4_48_CELLS_VERIFIED_REMAINDER_PENDING"
+    assert model["verification_boundary"]["exact_class_matrix_cells"] == "PARTIAL_IAF_AND_COMPLETE_UPD_78_CELLS_VERIFIED_REMAINDER_PENDING"
     failures = []
     for case in fixtures["cases"]:
         actual = evaluate(case, model, families, measures)
@@ -59,7 +59,7 @@ def main():
         for failure in failures:
             print("FAIL", failure)
         raise SystemExit(1)
-    print("PASS: 17 families; 96 unique measure codes; IAF and UPD.1-UPD.4 detail linked; 36 fail-closed cases")
+    print("PASS: 17 families; 96 unique measure codes; IAF and complete UPD detail linked; 36 fail-closed cases")
 
 
 if __name__ == "__main__":

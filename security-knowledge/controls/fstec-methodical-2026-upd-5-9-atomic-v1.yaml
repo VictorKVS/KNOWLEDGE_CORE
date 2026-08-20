@@ -1,0 +1,179 @@
+schema_version: "1.0"
+id: FSTEC-MD-2026-UPD-5-9
+title: "FSTEC 12 April 2026 methodical document: bounded UPD.5-UPD.9 slice"
+authority: FSTEC_RUSSIA
+approved_date: "2026-04-12"
+status: VERIFIED_BOUNDED_UPD_5_9_PUBLIC_TEXT_CROSSCHECK
+scope_statement: >-
+  Complete normalized coverage of section 4.2 measures UPD.5-UPD.9,
+  including implementation, documentation, all enhancements and the thirty
+  appendix-2 base/enhancement class cells. Together with the existing UPD.1-
+  UPD.4 models this completes the nine-measure UPD family at the public-text
+  crosscheck boundary. Other families remain pending at content level.
+
+source_evidence:
+  official_page: https://fstec.ru/dokumenty/vse-dokumenty/spetsialnye-normativnye-dokumenty/metodicheskij-dokument-ot-12-aprelya-2026-g
+  official_endpoint_result: TIMEOUT_BYTES_NOT_ACQUIRED
+  section_locator: "section 4.2, UPD.5-UPD.9"
+  appendix_locator: "appendix 2, family 2, UPD.5-UPD.9 rows"
+  current_text_interfaces:
+    - https://wiki.privacy-advocates.ru/fstek_12.04.2026
+    - https://sudact.ru/law/metodicheskii-dokument-sostav-i-soderzhanie-meropriiatii-i/
+  corroborating_full_text_interface: https://normativ.kontur.ru/document/1/506081-metodicheskiy-dokument-sostav-i-soderzhanie-meropriyatiy-i-mer-po-zashchite-informatsii
+  immutable_official_bytes: PENDING
+
+measures:
+  - code: "УПД.5"
+    title: "Предупреждение пользователя при его доступе к информационной системе"
+    purpose: INFORM_USERS_OF_SECURITY_MEASURES_AND_MANDATORY_INFORMATION_HANDLING_RULES
+    implementation:
+      - DISPLAY_PRE_AUTHENTICATION_WARNING_THAT_SECURITY_MEASURES_ARE_IMPLEMENTED_AND_RULES_AND_RESTRICTIONS_MUST_BE_OBSERVED
+      - ALLOW_ACCESS_ONLY_AFTER_USER_CONFIRMS_READING_WARNING
+    documentation: []
+    enhancements: []
+    matrix:
+      base: {K3: BLANK, K2: BLANK, K1: BLANK}
+      enhancements: {K3: [], K2: [], K1: []}
+
+  - code: "УПД.6"
+    title: "Оповещение пользователя о предыдущем входе в информационную систему"
+    purpose: NOTIFY_USER_OF_PRIOR_LOGIN_ATTEMPTS_FROM_THEIR_ACCOUNT
+    implementation:
+      - AFTER_SUCCESSFUL_LOGIN_NOTIFY_USER_OF_LAST_PRIOR_SUCCESSFUL_LOGIN_FROM_ACCOUNT
+      - COORDINATE_SUCCESSFUL_LOGIN_WITH_IAF_1_TO_IAF_4
+      - INCLUDE_AT_LEAST_DATE_OF_PREVIOUS_LOGIN
+      - INCLUDE_AT_LEAST_TIME_OF_PREVIOUS_LOGIN
+      - INCLUDE_OTHER_INFORMATION_DEFINED_FOR_INFORMATION_SYSTEM
+      - USER_MUST_IMMEDIATELY_INFORM_PRIVILEGED_SECURITY_ADMINISTRATOR_WHEN_NOTIFICATION_REVEALS_UNAUTHORIZED_ACCESS
+    documentation:
+      - PREVIOUS_LOGIN_FACT_INFORMATION_SCOPE
+      - PRIMARY_AND_ALTERNATIVE_NOTIFICATION_CHANNELS_AND_ADDRESSES
+      - USER_CONTACT_DATA_CONFIGURATION_AND_CONFIRMATION_PROCEDURE
+      - UNAUTHORIZED_ACCOUNT_ACCESS_SECURITY_ADMINISTRATOR_NOTIFICATION_PROCEDURE
+    enhancements:
+      - {number: 1, rule: NOTIFY_COUNT_OF_FAILED_LOGIN_ATTEMPTS_SINCE_LAST_SUCCESSFUL_LOGIN}
+      - {number: 2, rule: NOTIFY_COUNT_OF_ALL_LOGIN_ATTEMPTS_IN_NONREGULATED_TIME}
+      - {number: 3, rule: NOTIFY_COUNT_OF_ALL_LOGIN_ATTEMPTS_DURING_PERIOD_NOT_LESS_THAN_SEVEN_DAYS}
+      - {number: 4, rule: NOTIFY_ACCOUNT_INFORMATION_CHANGES_SINCE_AT_LEAST_PREVIOUS_SUCCESSFUL_LOGIN}
+      - {number: 5, rule: INCLUDE_SOURCE_LOCATION_AND_DEVICE_OR_APPLICATION_INFORMATION_FOR_LOGIN_ATTEMPTS}
+      - {number: 6, rule: SEND_CRITICAL_EVENT_NOTIFICATIONS_OVER_ALTERNATIVE_CHANNELS}
+    matrix:
+      base: {K3: BLANK, K2: BLANK, K1: BLANK}
+      enhancements: {K3: [], K2: [], K1: []}
+
+  - code: "УПД.7"
+    title: "Ограничение числа параллельных сеансов доступа"
+    purpose: LIMIT_CONCURRENT_SESSIONS_FROM_ONE_ACCOUNT
+    implementation:
+      - ALLOW_CONCURRENT_SESSION_LIMITS_BASED_ON_ACCOUNT_IDENTIFIERS
+      - AUTOMATICALLY_ACCOUNT_FOR_ACTIVE_SESSIONS_PER_USER_DEVICE_AND_APPLICATION_ACCOUNT
+      - AUTOMATICALLY_LIMIT_CONCURRENT_SESSIONS_PER_USER_DEVICE_AND_APPLICATION_ACCOUNT
+      - NOTIFY_USER_WHEN_CONCURRENT_SESSION_LIMIT_IS_EXCEEDED_FOR_OWN_ADMINISTERED_OR_CONTROLLED_ACCOUNTS
+      - AFTER_SUCCESSFUL_AUTHENTICATION_AT_LIMIT_DISPLAY_EXCEEDANCE_MESSAGE
+      - INCLUDE_LOCATIONS_OF_PRIOR_LOGINS_WITH_ACTIVE_SESSIONS_IN_MESSAGE
+      - OFFER_TO_DISCONNECT_PRIOR_ACTIVE_SESSIONS
+      - ALLOW_LIMIT_SCOPE_FOR_SYSTEM_SEGMENTS_GROUPS_INDIVIDUALS_OR_COMBINATIONS
+    documentation:
+      - MAXIMUM_CONCURRENT_SESSION_VALUES_BY_ACCOUNT_TYPE
+      - ACTIVE_SESSION_ACCOUNTING_AND_REGISTRATION_PROCEDURE
+      - AUTOMATIC_ACTIVE_SESSION_ACCOUNTING_AND_LIMIT_ENFORCEMENT_PROCEDURE
+      - USER_NOTIFICATION_PROCEDURE_ON_CONCURRENT_SESSION_LIMIT_EXCEEDANCE
+      - ADMINISTRATOR_NOTIFICATION_PROCEDURE_ON_ACTIVE_SESSION_LIMIT_EXCEEDANCE
+      - NOTIFICATION_MESSAGE_INFORMATION_SCOPE
+    enhancements:
+      - number: 1
+        rule: LIMIT_PRIVILEGED_USER_CONCURRENT_SESSIONS
+        variants:
+          - {selector: "1а", rule: PRIVILEGED_CONCURRENT_SESSIONS_NOT_MORE_THAN_TWO, maximum: 2}
+          - {selector: "1б", rule: PRIVILEGED_CONCURRENT_SESSIONS_NOT_MORE_THAN_ONE, maximum: 1}
+    matrix:
+      base: {K3: BLANK, K2: PLUS, K1: PLUS}
+      enhancements: {K3: [], K2: [], K1: ["1а"]}
+
+  - code: "УПД.8"
+    title: "Блокирование сеанса доступа пользователя при неактивности"
+    purpose: PROTECT_UNATTENDED_ACTIVE_SESSIONS_FROM_UNAUTHORIZED_ACCESS
+    implementation:
+      - AUTOMATICALLY_BLOCK_SESSION_AFTER_INFORMATION_SYSTEM_DEFINED_INACTIVITY_TIME
+      - BLOCK_SESSION_ON_ACCESS_SUBJECT_REQUEST
+      - BLOCK_SESSION_ON_OPERATOR_REQUEST
+      - WHILE_BLOCKED_DENY_ALL_INFORMATION_OR_DISPLAY_DEVICE_ACCESS_ACTIONS_EXCEPT_UNLOCK
+      - REQUIRE_REPEAT_AUTHENTICATION_UNDER_IAF_3_TO_UNLOCK
+      - DO_NOT_DISPLAY_ACCESS_SUBJECT_SESSION_INFORMATION_AFTER_BLOCKING
+    documentation:
+      - ALLOWED_INACTIVITY_TIME_VALUES_BY_USER_CATEGORY
+      - AUTOMATIC_SESSION_BLOCKING_PROCEDURE
+      - ACCESS_SUBJECT_WORK_RECOVERY_PROCEDURE_AFTER_SESSION_BLOCK
+      - FAILED_UNLOCK_ATTEMPT_LIMIT_EXCEEDANCE_EVENT_REGISTRATION_PROCEDURE
+    enhancements:
+      - {id: U1, rule: TERMINATE_SESSION_AFTER_OPERATOR_DEFINED_INACTIVITY_TIME}
+      - {id: U2, rule: TERMINATE_SESSION_AFTER_OPERATOR_DEFINED_FAILED_UNLOCK_ATTEMPT_COUNT}
+    matrix:
+      base: {K3: PLUS, K2: PLUS, K1: PLUS}
+      enhancements: {K3: [], K2: [], K1: []}
+
+  - code: "УПД.9"
+    title: "Контроль действий субъектов доступа до идентификации и аутентификации"
+    purpose: CONTROL_AND_LIMIT_PRE_AUTHENTICATION_ACTIONS
+    implementation:
+      - ALLOW_ONLY_ENUMERATED_PRE_AUTHENTICATION_ACTIONS_AND_PROHIBIT_ALL_OTHER_ACTIONS
+      - DEFINE_PRIVILEGED_PRE_AUTHENTICATION_BYPASS_ACTIONS_NEEDED_TO_RESTORE_SYSTEM_FUNCTIONING
+      - LOG_ALL_PRE_AUTHENTICATION_ACTIONS_EXCEPT_ACCESS_TO_PUBLIC_INFORMATION_REQUIRED_TO_BE_PUBLISHED
+      - REVIEW_PERMITTED_PRE_AUTHENTICATION_ACTIONS_AT_LEAST_ANNUALLY_AND_AFTER_ACCESS_MODEL_CHANGES
+    documentation:
+      - RESOURCES_AND_COMPONENTS_ACCESSIBLE_BEFORE_IDENTIFICATION_AND_AUTHENTICATION
+      - USER_ACTIONS_PERMITTED_BEFORE_IDENTIFICATION_AND_AUTHENTICATION
+      - PRE_AUTHENTICATION_ACTION_REGISTRATION_PROCEDURE
+    enhancements: []
+    matrix:
+      base: {K3: PLUS, K2: PLUS, K1: PLUS}
+      enhancements: {K3: [], K2: [], K1: []}
+
+numeric_constraints:
+  - {id: UPD6_E3_LOOKBACK_MINIMUM, measure: "УПД.6", enhancement: 3, comparator: GTE, value: 7, unit: CALENDAR_DAYS}
+  - {id: UPD7_E1A_PRIVILEGED_SESSION_MAXIMUM, measure: "УПД.7", selector: "1а", comparator: LTE, value: 2, unit: CONCURRENT_SESSIONS}
+  - {id: UPD7_E1B_PRIVILEGED_SESSION_MAXIMUM, measure: "УПД.7", selector: "1б", comparator: LTE, value: 1, unit: CONCURRENT_SESSIONS}
+  - {id: UPD9_REVIEW_MINIMUM, measure: "УПД.9", comparator: GTE, value: 1, unit: REVIEW_PER_YEAR}
+
+event_triggers:
+  - {id: UPD6_UNAUTHORIZED_ACCESS_NOTICE, measure: "УПД.6", trigger: USER_DETECTS_UNAUTHORIZED_ACCESS_FROM_NOTIFICATION, response: IMMEDIATE_SECURITY_ADMINISTRATOR_NOTIFICATION}
+  - {id: UPD9_ACCESS_MODEL_CHANGE, measure: "УПД.9", trigger: ACCESS_MODEL_CHANGED, response: REVIEW_PERMITTED_PRE_AUTHENTICATION_ACTIONS}
+
+operator_defined_parameters:
+  - {id: UPD6_OTHER_LOGIN_INFORMATION, measure: "УПД.6", type: INFORMATION_SCOPE, universal_value: NONE_STATED}
+  - {id: UPD7_MAXIMUM_SESSIONS_BY_ACCOUNT_TYPE, measure: "УПД.7", type: COUNT_BY_ACCOUNT_TYPE, universal_value: NONE_STATED}
+  - {id: UPD8_INACTIVITY_TIME, measure: "УПД.8", type: DURATION_BY_USER_CATEGORY, universal_value: NONE_STATED}
+  - {id: UPD8_FAILED_UNLOCK_ATTEMPTS, measure: "УПД.8", type: COUNT, universal_value: NONE_STATED}
+
+class_matrix_summary:
+  cells_total: 30
+  nonblank_cells: 9
+  blank_cells: 21
+  rule: BLANK_CELL_IS_NOT_PROHIBITION_AND_DOES_NOT_DELETE_ADAPTATION_VERIFICATION_OR_COMPENSATION
+
+scope_guards:
+  - DO_NOT_INVENT_PREVIOUS_LOGIN_NOTIFICATION_RETENTION_OR_DELIVERY_DEADLINE
+  - DO_NOT_TREAT_UPD_6_SEVEN_DAY_ENHANCEMENT_AS_A_BASE_REQUIREMENT
+  - DO_NOT_TREAT_UPD_7_VARIANT_1B_AS_CLASS_LISTED
+  - DO_NOT_COLLAPSE_UPD_7_SELECTORS_1A_AND_1B_INTO_UNQUALIFIED_ENHANCEMENT_1
+  - DO_NOT_APPLY_UPD_7_AS_K3_BASELINE
+  - DO_NOT_INVENT_BASE_CONCURRENT_SESSION_LIMIT
+  - DO_NOT_INVENT_UPD_8_INACTIVITY_OR_FAILED_UNLOCK_VALUES
+  - DO_NOT_TREAT_UPD_8_UNNUMBERED_ENHANCEMENTS_AS_CLASS_LISTED
+  - DO_NOT_OMIT_UPD_9_PUBLIC_INFORMATION_LOGGING_EXCEPTION
+  - DO_NOT_REPLACE_UPD_9_ANNUAL_PLUS_EVENT_REVIEW_WITH_ONLY_ONE_TRIGGER
+  - DO_NOT_TREAT_BLANK_CELL_AS_PROHIBITION
+  - DO_NOT_GENERALIZE_UPD_CONTENT_TO_OTHER_MEASURE_FAMILIES
+
+verification_boundary:
+  section_4_2_upd_5_9: VERIFIED_PUBLIC_TEXT_CROSSCHECK
+  complete_upd_family: VERIFIED_PUBLIC_TEXT_CROSSCHECK_9_OF_9
+  implementation_requirements: VERIFIED_NORMALIZED_PUBLIC_TEXT_CROSSCHECK
+  documentation_requirements: VERIFIED_NORMALIZED_PUBLIC_TEXT_CROSSCHECK
+  enhancements_and_variants: VERIFIED_NORMALIZED_PUBLIC_TEXT_CROSSCHECK
+  exact_upd_5_9_class_cells: VERIFIED_PUBLIC_TEXT_CROSSCHECK
+  other_measure_families: PENDING
+  official_immutable_bytes: PENDING
+  independent_expert_review: PENDING
+  critical_gap_created: false
+  high_gap_created: false
