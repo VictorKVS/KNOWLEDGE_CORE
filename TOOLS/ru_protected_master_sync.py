@@ -5,6 +5,10 @@ The synchronizer is intentionally conservative: acquisition may prove identity a
 original-publication bytes, but it never upgrades current-law semantics, applicability or a
 version-chain gate. Source-universe counters are derived from repository state instead of
 hard-coded totals so adding a new sector source cannot silently corrupt telemetry.
+
+Safety invariant (v1.4): baseline identity fields are read only from the top-level ``document``
+section of a source card. Nested amendment/version-chain publication IDs cannot promote the
+baseline source or its master-inventory artifact state.
 """
 from __future__ import annotations
 
@@ -21,6 +25,7 @@ SOURCE_DIR = CORPUS / "source"
 MANIFEST_DIR = CORPUS / "manifests"
 RUN_FILE = CORPUS / "SECTOR_ACQUISITION_RUN.json"
 NOW = dt.datetime.now(dt.timezone(dt.timedelta(hours=3))).isoformat(timespec="seconds")
+TOP_LEVEL_RE = re.compile(r"(?m)^[A-Za-z_][A-Za-z0-9_-]*:\s*(?:.*)?$")
 
 
 def captured_ids() -> set[str]:
@@ -43,8 +48,20 @@ def source_blocks(text: str) -> dict[str, str]:
     return out
 
 
-def field(text: str, name: str, default: str = "") -> str:
-    m = re.search(rf'(?m)^\s*{re.escape(name)}:\s*"?([^"\n]+)"?\s*$', text)
+def top_level_section(text: str, name: str) -> str:
+    start_match = re.search(rf"(?m)^{re.escape(name)}:\s*$", text)
+    if not start_match:
+        return ""
+    start = start_match.end()
+    tail = text[start:]
+    next_top = TOP_LEVEL_RE.search(tail)
+    end = start + next_top.start() if next_top else len(text)
+    return text[start:end]
+
+
+def anchored_field(text: str, name: str, indent: int = 0, default: str = "") -> str:
+    prefix = " " * indent
+    m = re.search(rf'(?m)^{re.escape(prefix)}{re.escape(name)}:\s*["\']?([^"\'\n]+)["\']?\s*$', text)
     return m.group(1).strip() if m else default
 
 
@@ -55,21 +72,26 @@ def quoted_top_field(text: str, name: str, default: str = "") -> str:
 
 def parse_card(path: Path) -> dict[str, str | bool]:
     text = path.read_text(encoding="utf-8")
-    sid = field(text, "id")
+    document = top_level_section(text, "document")
+    canonical = top_level_section(text, "canonical_source")
+    protected = top_level_section(text, "protected_information")
+    version = top_level_section(text, "version_chain")
+    reuse = top_level_section(text, "reuse")
+
+    sid = anchored_field(text, "id")
     title = quoted_top_field(text, "title", sid)
-    sector = field(text, "sector", "unclassified")
-    regime = field(text, "regime", "protected_information")
-    number = field(text, "number", "")
-    adopted = field(text, "adopted_date", "")
-    eo = field(text, "official_publication_id", "")
-    pub_date = field(text, "official_publication_date", "")
-    url_match = re.search(r'(?m)^\s*url:\s*"([^"\n]+)"\s*$', text)
-    url = url_match.group(1) if url_match else ""
-    anchor_match = re.search(r'(?m)^\s*primary_anchor:\s*"([^"\n]+)"\s*$', text)
-    anchor = anchor_match.group(1) if anchor_match else ""
-    vmatch = re.search(r'(?ms)^version_chain:\s*\n\s*state:\s*([^\s#]+)', text)
-    version_state = vmatch.group(1) if vmatch else "VERSION_CHAIN_PARTIAL"
-    origin_verified = bool(re.search(r'(?m)^\s*origin_verified:\s*true\s*$', text, re.I))
+    sector = anchored_field(protected, "sector", indent=2, default="unclassified")
+    regime = anchored_field(protected, "regime", indent=2, default="protected_information")
+    number = anchored_field(document, "number", indent=2)
+    adopted = anchored_field(document, "adopted_date", indent=2)
+    eo = anchored_field(document, "official_publication_id", indent=2)
+    pub_date = anchored_field(document, "official_publication_date", indent=2)
+    url = anchored_field(canonical, "url", indent=2)
+    anchor = anchored_field(protected, "primary_anchor", indent=2)
+    version_state = anchored_field(version, "state", indent=2, default="VERSION_CHAIN_PARTIAL")
+    origin_verified = anchored_field(canonical, "origin_verified", indent=2).lower() == "true"
+    card_status = anchored_field(text, "status")
+    existing_source_ref = anchored_field(reuse, "existing_source_ref", indent=2)
     return {
         "id": sid,
         "title": title,
@@ -83,6 +105,8 @@ def parse_card(path: Path) -> dict[str, str | bool]:
         "primary_anchor": anchor,
         "version_state": version_state,
         "origin_verified": origin_verified,
+        "card_status": card_status,
+        "existing_source_ref": existing_source_ref,
         "source_card_ref": str(path.relative_to(ROOT)).replace("\\", "/"),
     }
 
@@ -100,10 +124,17 @@ def yaml_q(value: object) -> str:
     return json.dumps(str(value), ensure_ascii=False)
 
 
+def effective_status(card: dict[str, str | bool]) -> str:
+    if card.get("card_status") == "REUSED_EXISTING_SOURCE":
+        return "REUSED"
+    if bool(card.get("origin_verified")) and bool(card.get("official_publication_number")):
+        return "PRIMARY_PUBLICATION_VERIFIED"
+    return "SOURCE_PENDING"
+
+
 def card_to_master_block(card: dict[str, str | bool], captured: set[str]) -> str:
     sid = str(card["id"])
-    verified = bool(card["origin_verified"] and card["official_publication_number"])
-    status = "PRIMARY_PUBLICATION_VERIFIED" if verified else "SOURCE_PENDING"
+    status = effective_status(card)
     lines = [
         f"  - id: {sid}",
         f"    sector: {card['sector']}",
@@ -120,6 +151,9 @@ def card_to_master_block(card: dict[str, str | bool], captured: set[str]) -> str
         lines.append(f"    official_publication_date: {yaml_q(card['official_publication_date'])}")
     if card["source_url"]:
         lines.append(f"    source_url: {yaml_q(card['source_url'])}")
+    if card["existing_source_ref"]:
+        lines.append(f"    reuse_path: {yaml_q(card['existing_source_ref'])}")
+        lines.append('    reuse_note: "Existing legal source node is reused; this sector card does not create a duplicate legal node."')
     if card["primary_anchor"]:
         lines.append(f"    primary_anchor: {yaml_q(card['primary_anchor'])}")
     lines += [
@@ -143,6 +177,33 @@ def ensure_source_cards(text: str, source_cards: dict[str, dict[str, str | bool]
     insertion = "\n".join(card_to_master_block(source_cards[sid], captured).rstrip() for sid in sorted(new_ids)) + "\n"
     text = text.replace("\ncoverage:\n", "\n" + insertion + "\ncoverage:\n", 1)
     return text, new_ids
+
+
+def replace_source_block(text: str, sid: str, new_block: str) -> str:
+    marker = f"  - id: {sid}\n"
+    start = text.find(marker)
+    if start < 0:
+        return text
+    nxt = text.find("\n  - id: ", start + len(marker))
+    cov = text.find("\ncoverage:", start + len(marker))
+    ends = [x for x in (nxt, cov) if x >= 0]
+    end = min(ends) if ends else len(text)
+    return text[:start] + new_block.rstrip() + "\n" + text[end:]
+
+
+def reconcile_card_owned_blocks(text: str, source_cards: dict[str, dict[str, str | bool]], captured: set[str]) -> str:
+    """Rebuild only source-card-owned master blocks.
+
+    This removes stale promotions if a bad manifest is deleted and prevents nested amendment IDs from
+    persisting as baseline publication metadata. Legacy hand-curated blocks without source_card_ref are untouched.
+    """
+    blocks = source_blocks(text)
+    for sid, card in source_cards.items():
+        block = blocks.get(sid, "")
+        if block and "source_card_ref:" in block:
+            text = replace_source_block(text, sid, card_to_master_block(card, captured))
+            blocks = source_blocks(text)
+    return text
 
 
 def mark_artifact(text: str, sid: str) -> str:
@@ -198,7 +259,7 @@ def sector_metrics(text: str, source_cards: dict[str, dict[str, str | bool]], ca
     }
     verified_ids |= {
         sid for sid, card in source_cards.items()
-        if sid in blocks and bool(card.get("origin_verified")) and bool(card.get("official_publication_number"))
+        if sid in blocks and effective_status(card) == "PRIMARY_PUBLICATION_VERIFIED"
     }
     sectors = {
         m.group(1).strip() for b in blocks.values()
@@ -223,8 +284,7 @@ def ensure_coverage(text: str, source_cards: dict[str, dict[str, str | bool]]) -
     for card in source_cards.values():
         sector = str(card["sector"])
         if not re.search(rf"(?m)^  {re.escape(sector)}:\s*", coverage_block):
-            line = f"  {sector}: DISCOVERED\n"
-            coverage_block += line
+            coverage_block += f"  {sector}: DISCOVERED\n"
     return text[:coverage_start] + coverage_block + text[conflict_start:]
 
 
@@ -235,6 +295,7 @@ def sync_sector() -> tuple[dict[str, int], set[str], dict]:
     run = acquisition_run()
     text = re.sub(r'(?m)^updated_at: ".*"$', f'updated_at: "{NOW}"', text, count=1)
     text, new_ids = ensure_source_cards(text, source_cards, captured)
+    text = reconcile_card_owned_blocks(text, source_cards, captured)
     for sid in sorted(captured):
         text = mark_artifact(text, sid)
     text = ensure_coverage(text, source_cards)
@@ -257,6 +318,7 @@ def sync_sector() -> tuple[dict[str, int], set[str], dict]:
     telemetry = f'''production_telemetry:
   checked_at: "{NOW}"
   acquisition_status: "IMMUTABLE_BASELINE_CAPTURE_OPERATIONAL"
+  identity_scope_guard: "document.official_publication_id only"
   exact_targets: {attempts}
   immutable_successes: {successes}
   exact_bytes_and_sha256_recorded: {metrics['immutable']}
@@ -268,7 +330,8 @@ def sync_sector() -> tuple[dict[str, int], set[str], dict]:
     current consolidated semantics remain gated by version-chain and locator review.
   analysis_note: >-
     Source-universe and acquisition counters are derived from source cards, master nodes and manifests;
-    semantic overlaps remain non-executable until applicability review.
+    semantic overlaps remain non-executable until applicability review. Nested amendment publication IDs
+    are never treated as baseline source identities.
 
 '''
     text = re.sub(r"(?ms)^production_telemetry:\n.*?(?=^next_actions:)", telemetry, text, count=1)
@@ -281,6 +344,7 @@ def sync_pdn(metrics: dict[str, int], new_ids: set[str], run: dict) -> None:
     text = re.sub(r'(?m)^updated_at: ".*"$', f'updated_at: "{NOW}"', text, count=1)
     attempts = int(run.get("targets_with_official_publication_id", metrics["immutable"]))
     successes = int(run.get("raw_downloaded_exact", metrics["immutable"]))
+    sector_ids = source_blocks(SECTOR.read_text(encoding="utf-8"))
     overlap_lines = [
         '      - "16-ФЗ article 11 -> 152-ФЗ"',
         '      - "79-ФЗ article 42 -> personal-data legislation"',
@@ -289,8 +353,14 @@ def sync_pdn(metrics: dict[str, int], new_ids: set[str], run: dict) -> None:
         '      - "125-ФЗ article 25(3) -> protected private/family-life archive information; no direct 152-ФЗ edge inferred"',
         '      - "442-ФЗ article 6 -> personal-data processing context (candidate; not executable)"',
     ]
-    if "SEC-SRC-RU-FZ-230-2016" in source_blocks(SECTOR.read_text(encoding="utf-8")):
+    if "SEC-SRC-RU-FZ-230-2016" in sector_ids:
         overlap_lines.append('      - "152-ФЗ article 6(1)(7) -> 230-ФЗ debt-collection regime; processing basis does not equal unrestricted disclosure permission"')
+    if "SEC-SRC-RU-FZ-353-2013" in sector_ids:
+        overlap_lines.append('      - "353-ФЗ article 12(2)-(3) -> borrower personal data + banking/other protected secrecy in assignment-of-rights scenario; scope remains scenario-dependent"')
+    if "SEC-SRC-RU-FZ-63-2002" in sector_ids:
+        overlap_lines.append('      - "63-ФЗ advocacy article 8 -> professional secrecy; no automatic 152-ФЗ edge without an identifiable-person processing scenario"')
+    if "SEC-SRC-RU-FZ-98" in sector_ids:
+        overlap_lines.append('      - "98-ФЗ commercial secret -> reused legal node; no automatic equivalence with personal data"')
     overlap_text = "\n".join(overlap_lines)
     block = f'''  stream_3_sector_overlays:
     status: ACTIVE
@@ -305,7 +375,7 @@ def sync_pdn(metrics: dict[str, int], new_ids: set[str], run: dict) -> None:
     exact_binary_acquisition_attempts_this_pass: {attempts}
     exact_binary_acquisition_success_this_pass: {successes}
     sectors_registered: {metrics['sectors']}
-    semantic_collision_checks_this_pass: 1
+    semantic_collision_checks_this_pass: 2
     legal_conflicts_confirmed_this_pass: 0
     explicit_or_direct_legal_overlap_candidates:
 {overlap_text}
@@ -314,7 +384,11 @@ def sync_pdn(metrics: dict[str, int], new_ids: set[str], run: dict) -> None:
       - "125-ФЗ article 22.1 retention and article 25(3) access restriction are distinct semantics even when both show 75 years."
       - "442-ФЗ confidentiality of social-service-recipient information must not be auto-merged with generic 152-ФЗ personal-data confidentiality; scope comparison is pending."
       - "230-ФЗ special restrictions on third-party disclosure must not be collapsed into the 152-ФЗ lawful-basis rule for processing; classify as scope specialization, not contradiction, until full version-chain review."
+      - "Professional secrecy (63-ФЗ advocacy) and commercial secrecy (98-ФЗ) are independent regimes; neither is automatically personal data."
+      - "Acquisition identity guard rejects nested amendment publication IDs as baseline artifacts."
     source_extensions:
+      - "222-ФЗ/2015 credit-rating confidentiality: immutable original baseline captured; current-version chain remains partial."
+      - "353-ФЗ/2013 consumer credit: immutable original baseline captured; Article 12 PDN/secrecy overlap registered; current-version chain remains partial."
       - "Росархив №24/2020: immutable original baseline captured; current-version chain remains partial."
       - "Росархив №77/2023: immutable original baseline captured; current-version chain remains partial."
       - "230-ФЗ/2016: immutable original baseline captured; explicit PDN overlap registered; current-version chain remains partial."
