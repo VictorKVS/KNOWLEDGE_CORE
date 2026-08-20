@@ -121,3 +121,67 @@ runs:
     next_bottleneck: >-
       Acquire exact authoritative binary artifacts for PP1119, the current FSTEC 21 text, FSTEC Threat Method 2021,
       FSB 378, FSB 66 and FAPSI 152. Only then advance those versions to IMMUTABLE and start the document compiler.
+
+  - run_date: 2026-08-20
+    retrieved_at: "2026-08-20T17:14:35+03:00"
+    reconciliation:
+      existing_fsb77_node_reused: true
+      existing_incident_graph_reused: true
+      master_inventory_source_added_by_reconciliation: 1
+      duplicate_source_nodes_created: 0
+    primary_status_checks:
+      fsb77_primary_publication_identified: true
+      fsb77_official_publication_number: "0001202302200021"
+      fsb77_justice_registration_number: "72404"
+      fsb77_direct_fz152_article19_part12_basis_verified: true
+      fsb77_direct_pdn_gossopka_scope_verified: true
+      fsb77_secondary_current_status_recheck_active: true
+      fsb77_exact_current_primary_binary_obtained: false
+      fstec21_order49_primary_publication_reverified: true
+      fstec21_order68_primary_publication_reverified: true
+      fsb_pd_methodological_list_reverified: true
+    artifact_acquisition:
+      attempts: 1
+      successes: 0
+      bytes_downloaded: 0
+      sha256_recorded: 0
+      immutable_artifacts_created: 0
+      failure_classes:
+        worker_dns_resolution_failure: 1
+      attempted_source: RU_FSB_ORDER_77_2023
+      integrity_rule: "Official publication metadata is not substituted for exact artifact bytes; MIME, byte length and SHA-256 remain null until acquisition succeeds."
+    applicability_analysis:
+      direct_edges_promoted: 1
+      edge:
+        from: "FZ-152 article 19 part 12"
+        to: FSB-77-2023
+        onward_to: GOSSOPKA_NKTSKI
+        type: EXPLICIT_PRIMARY_LEGAL_BASIS_AND_INTERACTION_ROUTE
+        confidence: PRIMARY_ANCHOR_VERIFIED
+      previous_blanket_gossopka_exclusion_refined: true
+      rule: >-
+        FSB Order 77 proves a PDn-specific GosSOPKA/NKTsKI branch for computer incidents involving unlawful transfer,
+        provision, distribution or access to personal data. It does not import unrelated CII/GosSOPKA duties into ordinary PDn cases.
+    conflict_detection:
+      candidates_checked: 1
+      confirmed_legal_contradictions: 0
+      context_splits: 1
+      note: >-
+        The earlier statement 'no direct PDn/GosSOPKA applicability edge proved' is superseded for the FSB-77 branch only.
+        General FZ-187/CII obligations remain a separate context unless another source proves applicability.
+    outputs:
+      - "legislation/RU/regulators/FSB/77-2023/document.yaml"
+      - "legislation/RU/regulators/FSB/cross-links/incident-response-graph.yaml"
+      - "corpus/ru-personal-data/master-source-inventory.yaml"
+      - "corpus/ru-personal-data/stream-2-acquisition-log.yaml"
+    counters_after_run:
+      core_sources_reconciled: 8
+      direct_pdn_gossopka_bridge_sources_registered: 1
+      direct_applicability_edges_verified: 1
+      immutable_artifacts_stream2: 0
+      pending_immutable_or_snapshot: 13
+      bytes_downloaded_stream2: 0
+      hashes_recorded_stream2: 0
+    next_bottleneck: >-
+      Exact authoritative bytes remain the acquisition bottleneck. Highest-value next acquisition is FSB-77 itself,
+      because its paragraph-level compilation can then produce source-anchored 24h/72h routing nodes without relying on secondary text copies.
