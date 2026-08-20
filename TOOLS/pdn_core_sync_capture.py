@@ -4,6 +4,10 @@
 This deliberately does NOT promote a source to VERIFIED_FOR_EXTRACTION. It only
 records evidence that bytes from the registered official route were captured
 byte-exactly and fingerprinted.
+
+For schema v1.2+ manifests, source-identity proof is mandatory: publication IDs
+must have been taken from the source document section, and the official API
+number must match a registered federal-law source number when that check applies.
 """
 from __future__ import annotations
 
@@ -15,6 +19,7 @@ ROOT = Path(__file__).resolve().parents[1]
 CORPUS = ROOT / "security-corpora" / "RU" / "152-FZ"
 MANIFEST_DIR = CORPUS / "manifests"
 INVENTORY = CORPUS / "PDN_MASTER_SOURCE_INVENTORY.yaml"
+FEDERAL_LAW_NUMBER_RE = re.compile(r"^\d+-ФЗ$")
 
 
 def q(value: object) -> str:
@@ -23,18 +28,34 @@ def q(value: object) -> str:
 
 def manifest_is_raw_verified(manifest: dict) -> bool:
     proof = manifest.get("proof", {})
-    if manifest.get("schema_version") == "1.0":
+    schema_version = str(manifest.get("schema_version") or "")
+
+    # Grandfather the first byte-exact official-PDF manifests already accepted
+    # before identity-scope proof fields existed.
+    if schema_version == "1.0":
         return bool(
             proof.get("pdf_signature_ok")
             and proof.get("byte_length_matches_official_api")
             and proof.get("sha256_calculated_from_downloaded_bytes")
         )
+
     if not (
         proof.get("official_route")
         and proof.get("byte_exact_download")
         and proof.get("sha256_calculated_from_downloaded_bytes")
     ):
         return False
+
+    # New manifests must prove that acquisition identity came from the source
+    # document itself, not from nested amendment/version-chain metadata.
+    if schema_version >= "1.2":
+        if not proof.get("publication_id_scoped_to_source_document_section"):
+            return False
+        source_number = str(manifest.get("source_document_number") or "").strip()
+        if FEDERAL_LAW_NUMBER_RE.fullmatch(source_number):
+            if not proof.get("official_api_number_matches_source_document_when_checkable"):
+                return False
+
     if manifest.get("capture_kind") == "official_publication_pdf":
         return bool(proof.get("pdf_signature_ok") and proof.get("byte_length_matches_official_api"))
     if manifest.get("capture_kind") == "official_canonical_snapshot":
