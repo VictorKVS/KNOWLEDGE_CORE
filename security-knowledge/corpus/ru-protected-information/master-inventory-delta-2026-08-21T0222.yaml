@@ -1,0 +1,143 @@
+schema_version: "1.0"
+kind: ru-protected-information-master-inventory-delta
+base_inventory: "master-inventory.yaml"
+checked_at: "2026-08-21T02:22:09+03:00"
+owner_stream: STREAM_3_SECTOR_OVERLAYS
+run_ref: "stream-3-run-2026-08-21T0222.yaml"
+
+proof_floor:
+  - "Primary publication identity is evidence of the act, not proof of current consolidated wording."
+  - "Exact bytes with MIME, byte length and SHA-256 are required before SOURCE_ACQUIRED/IMMUTABLE promotion."
+  - "Sector overlap is not applicability; every executable edge requires current primary locators and scenario review."
+  - "No fingerprint values are synthesized from portal display metadata or search snippets."
+
+counter_state_before:
+  found: 21
+  downloaded: 9
+  immutable: 9
+  pending: 10
+  reused: 2
+  primary_publication_verified: 9
+  sectors_registered: 16
+
+counter_state_after_reconciliation:
+  found: 22
+  downloaded: 9
+  immutable: 9
+  pending: 11
+  reused: 2
+  primary_publication_verified: 10
+  sectors_registered: 16
+  new_sources_this_run: 1
+  newly_reconciled_existing_sources_this_run: 2
+  new_immutable_this_run: 0
+  exact_binary_acquisition_attempts_this_run: 1
+  exact_binary_acquisition_success_this_run: 0
+  unique_primary_amendment_acts_verified_this_run: 3
+  source_version_edges_added_this_run: 4
+
+sources_added:
+  - source_id: SEC-SRC-RU-FZ-168-2020
+    source_card: "security-corpora/RU/protected-information/source/SEC-SRC-RU-FZ-168-2020.yaml"
+    sector: public_sector
+    regime: federal_population_registry
+    lifecycle_state: PRIMARY_PUBLICATION_VERIFIED_SOURCE_PENDING
+    authority:
+      publisher: "Официальное опубликование правовых актов"
+      official_publication_id: "0001202006080019"
+      official_publication_date: "2020-06-08"
+      url: "https://publication.pravo.gov.ru/Document/View/0001202006080019"
+    version_chain:
+      state: VERSION_CHAIN_PARTIAL
+      primary_events_verified:
+        - act: "512-ФЗ от 28.12.2024"
+          official_publication_id: "0001202412280014"
+          url: "https://publication.pravo.gov.ru/Document/View/0001202412280014"
+          effect_evidence: "Official title states that the act amends 168-ФЗ."
+        - act: "442-ФЗ от 28.11.2025"
+          official_publication_id: "0001202511280105"
+          url: "https://publication.pravo.gov.ru/Document/View/0001202511280105"
+          effect_evidence: "Official title expressly amends Articles 4 and 11 of 168-ФЗ."
+      pending: "Complete primary amendment sweep and compile current locator-level text through 2026-08-21."
+    overlap_candidates:
+      - target: "152-ФЗ"
+        type: STATE_POPULATION_REGISTER_CONTEXT
+        status: DISCOVERY_ONLY_NON_EXECUTABLE
+        context_locator: "152-ФЗ статья 8 часть 4"
+        guard: "No automatic 168-ФЗ applicability is inferred from the population-register context."
+      - target: "218-ФЗ"
+        type: SHARED_AMENDMENT_EVENT_442_FZ_2025
+        status: VERSION_GRAPH_EDGE_ONLY
+    artifact:
+      state: SOURCE_PENDING_PRIMARY_EXACT_CAPTURE
+      candidate_official_file_url: "https://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202006080019"
+      retrieved_at: null
+      mime: null
+      byte_length: null
+      sha256: null
+
+existing_sources_reconciled:
+  - source_id: SEC-SRC-RU-FZ-218
+    sector: financial
+    regime: credit_histories
+    change: VERSION_CHAIN_EVIDENCE_ADDED
+    primary_event:
+      act: "442-ФЗ от 28.11.2025"
+      official_publication_id: "0001202511280105"
+      official_publication_date: "2025-11-28"
+      url: "https://publication.pravo.gov.ru/Document/View/0001202511280105"
+      effect_evidence: "Official title expressly amends Article 13 of 218-ФЗ and Articles 4 and 11 of 168-ФЗ."
+    lifecycle_state_unchanged: SOURCE_PENDING
+    artifact_state_unchanged: SOURCE_PENDING
+
+  - source_id: SEC-SRC-RU-LAW-395-1
+    sector: financial
+    regime: banking_secrecy
+    change: VERSION_CHAIN_EVIDENCE_ADDED
+    primary_event:
+      act: "425-ФЗ от 28.11.2025"
+      official_publication_id: "0001202511280017"
+      official_publication_date: "2025-11-28"
+      official_url: "https://publication.pravo.gov.ru/Document/View/0001202511280017"
+      current_authority_text_url: "https://kremlin.ru/acts/bank/52640/print"
+      effect_evidence: "Article 3 of 425-ФЗ amends Article 26 of the Federal Law on Banks and Banking Activity."
+    lifecycle_state_unchanged: SOURCE_PENDING
+    artifact_state_unchanged: SOURCE_PENDING
+    guard: "The amendment event does not by itself prove the full current wording of Article 26."
+
+acquisition_delta:
+  attempts: 1
+  successes: 0
+  immutable_baselines_added: 0
+  blocked_targets:
+    - source_id: SEC-SRC-RU-FZ-168-2020
+      official_publication_id: "0001202006080019"
+      state: OFFICIAL_BINARY_NOT_RETRIEVABLE_IN_EXECUTION_ENVIRONMENT
+  proof_floor_action: "MIME, byte_length and SHA-256 left null; source remains pending."
+
+conflict_registry_delta:
+  - id: STREAM3-SCOPE-GUARD-168FZ-001
+    classification: APPLICABILITY_GUARD
+    status: NOT_A_LEGAL_CONFLICT
+    compared:
+      - "152-ФЗ Article 8(4) state-population-register context"
+      - "168-ФЗ unified federal population information register"
+    finding: >-
+      The cross-reference context is sufficient for discovery and graph linking only. It is not sufficient to infer that
+      every PDN processing scenario or organization falls under 168-ФЗ.
+    executable_effect: NONE
+
+proof_floor_effect:
+  executable_rules_changed: false
+  applicability_edges_promoted: 0
+  duplicate_source_nodes_avoided: 0
+  primary_publication_identities_added: 1
+  unique_primary_amendment_acts_added: 3
+  source_version_edges_added: 4
+  legal_conflicts_confirmed: 0
+  semantic_scope_guards_added: 1
+
+merge_rule: >-
+  Merge this delta into the authoritative protected-information master inventory after preserving the existing 21-source
+  state. Resulting universe is 22 sources: 9 immutable, 11 pending, 2 reused. 168-ФЗ remains non-executable until exact
+  official bytes, complete version-chain review and current locator-level compilation are complete.
