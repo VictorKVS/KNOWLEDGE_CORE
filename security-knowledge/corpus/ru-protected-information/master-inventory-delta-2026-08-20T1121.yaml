@@ -1,0 +1,63 @@
+schema_version: "1.0"
+kind: ru-protected-information-master-inventory-delta
+base_inventory: "master-inventory.yaml"
+base_inventory_sha: "7857daf8c362727e721ed4922117351c9179d6af"
+checked_at: "2026-08-20T11:21:30+03:00"
+run_ref: "stream-3-run-2026-08-20T1121.yaml"
+
+counter_state:
+  found: 16
+  downloaded: 6
+  immutable: 6
+  pending: 9
+  reused: 1
+  primary_version_events_verified_this_run: 3
+  counter_change: false
+  note: "No lifecycle counter changed because this pass verified version events without new exact-byte captures or new source nodes."
+
+patches:
+  - source_id: "SEC-SRC-RU-FZ-38-2006"
+    op: ADD_VERSION_EVENT
+    event:
+      act: "41-ФЗ от 20.02.2026"
+      official_publication_id: "0001202602200062"
+      official_url: "https://publication.pravo.gov.ru/document/0001202602200062"
+      target_locators: ["статья 27", "статья 38"]
+      proof_status: PRIMARY_AMENDMENT_EVENT_VERIFIED
+      protected_anchor_effect: "Article 18 change is NOT proved by this event."
+
+  - source_id: "SEC-SRC-RU-FZ-126"
+    op: ADD_VERSION_EVENT_TO_REUSED_SOURCE
+    event:
+      act: "33-ФЗ от 20.02.2026"
+      official_publication_id: "0001202602200054"
+      official_url: "https://publication.pravo.gov.ru/document/0001202602200054"
+      target_locators: ["статья 46", "статья 68"]
+      proof_status: PRIMARY_AMENDMENT_EVENT_VERIFIED
+
+  - source_id: "SEC-SRC-RU-FZ-273-2012"
+    op: ADD_VERSION_EVENT
+    event:
+      act: "34-ФЗ от 20.02.2026"
+      official_publication_id: "0001202602200055"
+      official_url: "https://publication.pravo.gov.ru/document/0001202602200055"
+      target_locators: ["статья 29", "статья 39"]
+      proof_status: PRIMARY_AMENDMENT_EVENT_VERIFIED
+      protected_anchor_effect: "Article 59 change is NOT proved by this event."
+    source_record_sync:
+      path: "../../../security-corpora/RU/protected-information/source/SEC-SRC-RU-FZ-273-2012.yaml"
+      capture_status: IMMUTABLE_VERIFIED
+      byte_length: 20498123
+      sha256: "cc0b349dee5568925b3227c8a714dc8ace6cde53b6c13f752ed2364ecf1af16e"
+
+proof_floor_effect:
+  executable_rules_changed: false
+  applicability_edges_promoted: 0
+  source_pending_promoted: 0
+  conflicts_created: 0
+  conflict_candidates_created: 0
+
+merge_rule: >-
+  This append-only delta is authoritative for the listed version events until compacted into
+  master-inventory.yaml. Consumers must apply deltas in checked_at order and must not infer
+  changes to unlisted locators.
