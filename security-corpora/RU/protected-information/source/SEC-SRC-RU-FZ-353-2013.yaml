@@ -1,0 +1,90 @@
+schema_version: "1.0"
+id: SEC-SRC-RU-FZ-353-2013
+kind: security-regulatory-source
+status: METADATA_VERIFIED
+
+title: "Федеральный закон от 21.12.2013 № 353-ФЗ «О потребительском кредите (займе)»"
+jurisdiction: RU
+issuer: "Российская Федерация"
+document:
+  type: federal_law
+  number: "353-ФЗ"
+  adopted_date: "2013-12-21"
+  official_publication_id: "0001201312230003"
+  official_publication_date: "2013-12-23"
+  checked_at: "2026-08-20"
+
+canonical_source:
+  publisher: "Официальное опубликование правовых актов"
+  url: "https://publication.pravo.gov.ru/document/0001201312230003"
+  origin_verified: true
+  official_metadata_endpoint: "http://publication.pravo.gov.ru/api/Document?eoNumber=0001201312230003"
+  official_file_endpoint: "http://publication.pravo.gov.ru/File/Pdf?eoNumber=0001201312230003"
+
+protected_information:
+  sector: financial_consumer_credit
+  regime: borrower_personal_data_banking_and_other_protected_secrecy
+  primary_anchor: "статья 12 части 2-3 — передача персональных данных при уступке требований и обязанность хранить банковскую и иную охраняемую законом тайну, персональные данные, обеспечивать их конфиденциальность и безопасность"
+  overlap_status: DIRECT_PDN_AND_PROTECTED_INFORMATION_TEXT_IDENTIFIED_IN_CURRENT_CONSOLIDATED_SIGNAL
+  applicability_status: SCENARIO_DEPENDENT
+  guard_rule: >-
+    Do not generalize Article 12 to all processing by all creditors. The anchor concerns assignment of rights
+    under a consumer-credit agreement and the recipient's corresponding secrecy/data-protection duties.
+
+version_chain:
+  state: VERSION_CHAIN_PARTIAL
+  current_consolidated_revision_seen_secondary: "04.08.2026"
+  primary_events_verified:
+    - act: "31-ФЗ от 26.02.2024"
+      official_publication_id: "0001202402260017"
+      official_publication_date: "2024-02-26"
+      proof_status: PRIMARY_AMENDMENT_EVENT_VERIFIED
+      anchor_effect: "Act amends 353-ФЗ; no direct Article 12 anchor change asserted in this registration."
+    - act: "246-ФЗ от 23.07.2025"
+      official_publication_id: "0001202507230049"
+      official_publication_date: "2025-07-23"
+      proof_status: PRIMARY_AMENDMENT_EVENT_VERIFIED
+      anchor_effect: "Act amends Article 14; no Article 12 change asserted."
+  unresolved_current_event:
+    - act: "334-ФЗ от 04.08.2026"
+      status: SECONDARY_CURRENT_REVISION_SIGNAL_ONLY
+      note: "Exact primary publication identifier and amendment effect were not promoted in this run."
+  pending: >-
+    Reconcile the complete primary amendment chain through 2026-08-20 and confirm the current Article 12
+    wording against primary-version evidence before executable-rule promotion.
+
+conflict_check:
+  status: NO_CONFLICT_ASSERTED
+  relation_candidates:
+    - target: "152-ФЗ"
+      type: EXPLICIT_PERSONAL_DATA_REFERENCE
+      status: CANDIDATE_PENDING_PRIMARY_CURRENT_VERSION_REVIEW
+    - target: "230-ФЗ"
+      type: DEBT_COLLECTION_HANDOFF_CONTEXT
+      status: CANDIDATE_PENDING_SCENARIO_REVIEW
+    - target: "banking_secrecy_regime"
+      type: EXPLICIT_PROTECTED_SECRECY_REFERENCE
+      status: CANDIDATE_PENDING_SCOPE_REVIEW
+  review_required: true
+
+capture:
+  raw_artifact_ref: ""
+  manifest_ref: ""
+  mime: null
+  byte_length: null
+  sha256: ""
+  fingerprint_status: PENDING_RAW_CAPTURE
+  acquisition_requested_at: "2026-08-20T23:24:00+03:00"
+  proof_floor: "Immutable original-publication baseline does not prove current consolidated semantics."
+
+provenance:
+  checked_at: "2026-08-20"
+  primary_origin_evidence: "official publication 0001201312230003"
+  primary_amendment_evidence:
+    - "official publication 0001202402260017"
+    - "official publication 0001202507230049"
+  current_regulator_context: "Bank of Russia materials actively reference 353-ФЗ; regulator context does not replace primary text."
+  current_text_signal: "Current consolidated secondary text identifies Article 12(2)-(3) personal-data/secrecy duties and revision 04.08.2026; primary current-chain review remains pending."
+  review_required: true
+
+agent_rule: "Use Article 12 only for the legally scoped assignment-of-rights scenario; do not convert a sector confidentiality duty into a universal PDN rule."
