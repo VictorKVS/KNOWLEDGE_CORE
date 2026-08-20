@@ -1,0 +1,81 @@
+schema_version: "1.0"
+kind: stream-3-sector-library-run
+checked_at: "2026-08-20T14:32:00+03:00"
+stream: STREAM_3_SECTOR_OVERLAYS
+
+objective:
+  discovery: "sector/special protected-information regimes intersecting with PDN"
+  acquisition: "official immutable baseline with provenance, MIME, byte length and SHA-256"
+  analysis: "version-chain, typed overlap and conflict/scope-collision guard"
+
+input_state:
+  sources_found: 16
+  immutable: 6
+  pending_immutable: 9
+  reused: 1
+
+work_performed:
+  new_sources_discovered: 1
+  new_sources_registered: 1
+  primary_publication_identities_verified: 1
+  primary_amendment_events_verified: 1
+  new_immutable_artifacts: 1
+  new_bytes_captured: 2483982
+  new_overlap_edges: 1
+  new_scope_collision_guards: 1
+  legal_conflicts_confirmed: 0
+
+new_source:
+  source_id: SEC-SRC-RU-FZ-230-2016
+  act: "Федеральный закон от 03.07.2016 № 230-ФЗ"
+  sector: debt_collection
+  primary_anchor: "статья 6"
+  official_publication_id: "0001201607030002"
+  current_consolidated_revision_seen: "31.07.2025"
+  amendment_event:
+    act: "137-ФЗ от 07.06.2025"
+    official_publication_id: "0001202506070014"
+  immutable:
+    mime: "application/pdf"
+    byte_length: 2483982
+    sha256: "5b964683c637fea3544624bcb9b8f56f477d738d24b54fe0e3bd971dd1badc1c"
+    pages_from_official_api: 51
+    retrieved_at: "2026-08-20T11:26:56.116457Z"
+
+acquisition_scan:
+  targets_with_official_publication_id: 7
+  successful_exact_captures: 7
+  scan_success_rate: 1.0
+  bytes_scanned_total: 52275342
+  note: >-
+    The scan revalidated all seven source cards with official publication IDs. Only one immutable
+    source was new in this run; the other six were reuse/revalidation, not six new downloads for inventory counting.
+
+output_state_after_reconciliation:
+  sources_found: 17
+  downloaded_distinct_sources: 7
+  immutable_distinct_sources: 7
+  pending_immutable: 9
+  reused_existing_sources: 1
+  primary_publication_verified: 7
+  sectors_registered: 14
+
+telemetry_quality_fix:
+  issue: "legacy master synchronizer contained hard-coded found/verified/sector/attempt totals"
+  effect_observed: "new immutable source could reduce pending without increasing source-universe count"
+  remediation: "TOOLS/ru_protected_master_sync.py changed to derive source universe and telemetry from source cards, master nodes, manifests and acquisition-run data"
+  status: IMPLEMENTED
+
+conflict_check:
+  classification: NON_CONFLICT_SPECIALIZATION_PENDING_FULL_CHAIN
+  guard: "PROCESSING_LAWFUL_BASIS != UNRESTRICTED_DISCLOSURE_PERMISSION"
+  rationale: >-
+    152-ФЗ Article 6(1)(7) supplies a processing-lawful-basis context and expressly refers to the
+    debt-collection law; 230-ФЗ Article 6 separately restricts third-party/public disclosure.
+    These operations must not be collapsed into one permission.
+
+proof_floor:
+  current_semantics_verified: false
+  executable_rules_changed: false
+  applicability_edge_promoted: false
+  next_required_stage: "complete primary version-chain -> structure/chunks -> concepts/definitions -> atomic requirements -> relations -> conflict check"
