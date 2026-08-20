@@ -1,0 +1,28 @@
+name: GIS FSTEC 117 operational core
+
+on:
+  pull_request:
+    paths:
+      - "security-knowledge/classification/gis-fstec-117-operational-core-atomic-v1.yaml"
+      - "security-knowledge/classification/gis-fstec-117-operational-core-regression-v1.json"
+      - "security-knowledge/classification/gis-fstec-117-137-temporal-amendment-atomic-v1.yaml"
+      - "security-knowledge/validators/validate_gis_fstec_117_operational_core.py"
+      - ".github/workflows/gis-fstec-117-operational-core.yml"
+  push:
+    paths:
+      - "security-knowledge/classification/gis-fstec-117-operational-core-atomic-v1.yaml"
+      - "security-knowledge/classification/gis-fstec-117-operational-core-regression-v1.json"
+      - "security-knowledge/classification/gis-fstec-117-137-temporal-amendment-atomic-v1.yaml"
+      - "security-knowledge/validators/validate_gis_fstec_117_operational_core.py"
+      - ".github/workflows/gis-fstec-117-operational-core.yml"
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: python -m pip install PyYAML
+      - run: python security-knowledge/validators/validate_gis_fstec_117_operational_core.py

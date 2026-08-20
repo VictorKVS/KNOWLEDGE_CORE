@@ -1,0 +1,183 @@
+schema_version: "1.0"
+id: RU-FSTEC117-GIS-OPERATIONAL-CORE-ATOMIC-V1
+title: FSTEC Order 117/2025 current operational core and measure-family router
+checked_at: "2026-08-20"
+status: VERIFIED_CURRENT_BOUNDED_SLICE
+scope_note: >-
+  This model covers the original Order 117 text effective on 2026-08-20: clause 34,
+  clauses 38, 53, 55, 57 and 62-73, plus classification dependencies already modeled
+  from the appendix. It is not a claim that all clauses 1-73 have been atomized.
+
+source:
+  authority: "ФСТЭК России"
+  act: "Приказ ФСТЭК России от 11.04.2025 № 117"
+  minjust_registration: "16.06.2025 № 82619"
+  official_publication_number: "0001202506170011"
+  official_publication_date: "2025-06-17"
+  official_publication_url: "https://publication.pravo.gov.ru/document/0001202506170011"
+  consolidated_text_url: "https://www.consultant.ru/document/cons_doc_LAW_507869/"
+  text_cross_check_url: "https://rulaws.ru/acts/Prikaz-FSTEK-Rossii-ot-11.04.2025-N-117/"
+  effective_from: "2026-03-01"
+  current_until_exclusive: "2026-09-01"
+  future_version_router: security-knowledge/classification/gis-fstec-117-137-temporal-amendment-atomic-v1.yaml
+
+process_directions_clause_34:
+  - {id: THREAT_IDENTIFICATION_ASSESSMENT, locator: "п. 34(а)"}
+  - {id: CONFIGURATION_CONTROL, locator: "п. 34(б)"}
+  - {id: VULNERABILITY_MANAGEMENT, locator: "п. 34(в)"}
+  - {id: UPDATE_MANAGEMENT, locator: "п. 34(г)"}
+  - {id: RESTRICTED_INFORMATION_HANDLING, locator: "п. 34(д)"}
+  - {id: ENDPOINT_PROTECTION, locator: "п. 34(е)"}
+  - {id: MOBILE_DEVICE_PROTECTION, locator: "п. 34(ж)"}
+  - {id: REMOTE_ACCESS_PROTECTION, locator: "п. 34(з)"}
+  - {id: WIRELESS_ACCESS_PROTECTION, locator: "п. 34(и)"}
+  - {id: PRIVILEGED_ACCESS_PROTECTION, locator: "п. 34(к)"}
+  - {id: SECURITY_MONITORING, locator: "п. 34(л)"}
+  - {id: SECURE_SOFTWARE_DEVELOPMENT, locator: "п. 34(м)"}
+  - {id: PHYSICAL_PROTECTION, locator: "п. 34(н)"}
+  - {id: CONTINUITY_DURING_ABNORMAL_EVENTS, locator: "п. 34(о)"}
+  - {id: USER_KNOWLEDGE_AND_AWARENESS, locator: "п. 34(п)"}
+  - {id: CONTRACTOR_INTERACTION_PROTECTION, locator: "п. 34(р)"}
+  - {id: DDOS_PROTECTION, locator: "п. 34(с)"}
+  - {id: AI_USE_PROTECTION, locator: "п. 34(т)"}
+  - {id: SYSTEM_AND_INFORMATION_PROTECTION_MEASURES, locator: "п. 34(у)"}
+  - {id: PROTECTION_LEVEL_CONTROL, locator: "п. 34(ф)"}
+  - {id: GOSSOPKA_CONTINUOUS_INTERACTION, locator: "п. 34(х)"}
+
+base_measure_families_clause_63:
+  - {id: IDENTIFICATION_AUTHENTICATION, locator: "п. 63(а)"}
+  - {id: ACCESS_CONTROL, locator: "п. 63(б)"}
+  - {id: SECURITY_EVENT_LOGGING, locator: "п. 63(в)"}
+  - {id: VIRTUALIZATION_CLOUD_PROTECTION, locator: "п. 63(г)"}
+  - {id: CONTAINER_ORCHESTRATION_PROTECTION, locator: "п. 63(д)"}
+  - {id: EMAIL_SERVICE_PROTECTION, locator: "п. 63(е)"}
+  - {id: WEB_TECHNOLOGY_PROTECTION, locator: "п. 63(ж)"}
+  - {id: APPLICATION_INTERFACE_PROTECTION, locator: "п. 63(з)"}
+  - {id: ENDPOINT_MEASURES, locator: "п. 63(и)"}
+  - {id: MOBILE_DEVICE_MEASURES, locator: "п. 63(к)"}
+  - {id: IOT_TECHNOLOGY_PROTECTION, locator: "п. 63(л)"}
+  - {id: WIRELESS_ACCESS_POINT_PROTECTION, locator: "п. 63(м)"}
+  - {id: ANTIVIRUS_PROTECTION, locator: "п. 63(н)"}
+  - {id: NETWORK_INTRUSION_DETECTION_PREVENTION, locator: "п. 63(о)"}
+  - {id: SEGMENTATION_AND_FIREWALLING, locator: "п. 63(п)"}
+  - {id: DDOS_MEASURES, locator: "п. 63(р)"}
+  - {id: DATA_CHANNEL_AND_NETWORK_INTERACTION_PROTECTION, locator: "п. 63(с)"}
+
+measure_selection_pipeline_clause_62:
+  - {order: 1, action: IMPLEMENT_BASELINE_FOR_ASSIGNED_PROTECTION_CLASS}
+  - {order: 2, action: ADAPT_BASELINE_TO_ARCHITECTURE_TECHNOLOGIES_AND_OPERATION}
+  - {order: 3, action: VERIFY_AGAINST_CURRENT_THREATS_AND_ADVERSARY_CAPABILITIES_THEN_SUPPLEMENT_OR_STRENGTHEN}
+
+numeric_and_triggered_rules:
+  - id: VULN_CRITICAL_REMEDIATE
+    locator: "п. 38"
+    trigger: CRITICAL_VULNERABILITY_USABLE_BY_ADVERSARY
+    result: REMEDIATE_OR_EXCLUDE_EXPLOITABILITY
+    maximum: {value: 24, unit: HOURS}
+  - id: VULN_HIGH_REMEDIATE
+    locator: "п. 38"
+    trigger: HIGH_VULNERABILITY_USABLE_BY_ADVERSARY
+    result: REMEDIATE_OR_EXCLUDE_EXPLOITABILITY
+    maximum: {value: 7, unit: CALENDAR_DAYS}
+  - id: VULN_MEDIUM_LOW_LOCAL
+    locator: "п. 38"
+    trigger: MEDIUM_OR_LOW_VULNERABILITY
+    result: SET_DEADLINE_AND_PROCEDURE_IN_INTERNAL_REGULATION
+  - id: VULN_UNKNOWN_TO_BDU_REPORT
+    locator: "п. 38"
+    trigger: VULNERABILITY_ABSENT_FROM_FSTEC_BDU
+    result: SEND_INFORMATION_TO_FSTEC
+    maximum: {value: 5, unit: WORKING_DAYS, starts: DATE_OF_DETECTION}
+  - id: RECOVERY_K1
+    locator: "п. 53"
+    trigger: K1_SIGNIFICANT_FUNCTION_DISRUPTION_DETECTED
+    maximum: {value: 24, unit: HOURS}
+  - id: RECOVERY_K2
+    locator: "п. 53"
+    trigger: K2_SIGNIFICANT_FUNCTION_DISRUPTION_DETECTED
+    maximum: {value: 7, unit: CALENDAR_DAYS}
+  - id: RECOVERY_K3
+    locator: "п. 53"
+    trigger: K3_SIGNIFICANT_FUNCTION_DISRUPTION_DETECTED
+    maximum: {value: 4, unit: WEEKS}
+  - id: BACKUP_RECOVERY_DRILL
+    locator: "п. 55"
+    trigger: PERIODIC
+    maximum: {value: 2, unit: YEARS}
+  - id: USER_KNOWLEDGE_ASSESSMENT
+    locator: "п. 57"
+    trigger: PERIODIC_OR_AFTER_OPERATOR_COMPUTER_INCIDENT
+    maximum: {value: 3, unit: YEARS}
+  - id: PROTECTION_LEVEL_CONTROL
+    locator: "п. 67"
+    trigger: PERIODIC_OR_AFTER_OPERATOR_COMPUTER_INCIDENT
+    maximum: {value: 3, unit: YEARS}
+  - id: CONTROL_REPORT_TO_LEADERSHIP
+    locator: "п. 67"
+    trigger: PROTECTION_LEVEL_CONTROL_COMPLETED
+    maximum: {value: 3, unit: WORKING_DAYS, starts: COMPLETION_DATE}
+  - id: CONTROL_REPORT_TO_FSTEC
+    locator: "п. 67"
+    trigger: PROTECTION_LEVEL_CONTROL_COMPLETED
+    maximum: {value: 5, unit: WORKING_DAYS, starts: COMPLETION_DATE}
+
+class_routes:
+  adversary_capability_clause_64:
+    K1: HIGH
+    K2: ENHANCED
+    K3: BASELINE
+  certified_szi_minimum_clause_72:
+    K1: {protection_class: 4, trust_level: 4, comparator: NOT_LOWER_THAN}
+    K2: {protection_class: 5, trust_level: 5, comparator: NOT_LOWER_THAN}
+    K3: {protection_class: 6, trust_level: 6, comparator: EXACT_TEXT_NO_LOWER_THAN_NOT_STATED}
+
+attestation_clause_65:
+  government_information_system:
+    route: MANDATORY_BEFORE_INFORMATION_PROCESSING_OR_STORAGE
+    procedure: FSTEC_ORDER_77_2021
+  other_covered_public_sector_system:
+    route: DECISION_BY_OPERATOR_HEAD_OR_RESPONSIBLE_PERSON
+  guardrail: DO_NOT_GENERALIZE_MANDATORY_GIS_ATTESTATION_TO_EVERY_OTHER_SYSTEM
+
+protection_control_clause_66:
+  methods:
+    - AUTOMATED_OR_MANUAL_VULNERABILITY_DISCOVERY_WITH_EXPERT_EXPLOITABILITY_ASSESSMENT
+    - UNAUTHORIZED_DEVICE_CONNECTION_DISCOVERY
+    - THREAT_SIMULATION_TESTING_OF_UNAUTHORIZED_ACCESS_IMPACT_OR_PRIVILEGE_ESCALATION
+    - PLANNED_STAFF_EXERCISES_UNDER_CURRENT_THREAT_REALIZATION
+
+implementation_guards:
+  - id: METHODICAL_DOCUMENTS_REQUIRED
+    locator: "п. 68"
+    rule: USE_FSTEC_METHODICAL_DOCUMENTS_FOR_REQUIRED_ACTIVITIES_AND_MEASURES
+  - id: COMPENSATING_MEASURES
+    locator: "п. 69"
+    rule: WHEN_A_REQUIRED_ACTIVITY_OR_MEASURE_CANNOT_BE_IMPLEMENTED_DESIGN_AND_DEPLOY_COMPENSATING_MEASURES_THAT_NEUTRALIZE_CURRENT_THREATS
+    evidence: JUSTIFICATION_AT_CREATION_AND_EFFECTIVENESS_CONFIRMATION_AT_ATTESTATION
+  - id: TECHNICAL_LEVELS
+    locator: "п. 70"
+    rule: APPLY_TECHNICAL_MEASURES_AT_HARDWARE_SYSTEM_APPLICATION_AND_WHERE_PRESENT_INFRASTRUCTURE_LEVELS
+  - id: CERTIFIED_SZI_AND_SUPPORT
+    locator: "п. 71"
+    rule: USE_CERTIFIED_SZI_PER_VENDOR_DOCUMENTATION_WITH_SECURITY_SUPPORT_IN_RUSSIA_AND_APPLICABLE_DECREE_250_PROHIBITIONS
+  - id: LIFECYCLE_ROUTE
+    locator: "п. 73"
+    rule: GOVERNMENT_IS_ROUTE_TO_PP676_OTHER_SYSTEMS_ROUTE_TO_GOST_R_51583_2014_SECTION_5
+
+red_team_guardrails:
+  - ORIGINAL_ORDER117_ONLY_UNTIL_2026_09_01
+  - DO_NOT_APPLY_FUTURE_ORDER137_TEXT_BEFORE_ITS_SPLIT_EFFECTIVE_DATES
+  - DO_NOT_TREAT_CLAUSE34_PROCESS_DIRECTIONS_AS_THE_CLAUSE63_BASE_MEASURE_FAMILIES
+  - DO_NOT_INVENT_A_SINGLE_PATCH_DEADLINE_FOR_MEDIUM_OR_LOW_VULNERABILITIES
+  - DO_NOT_CONVERT_AFTER_INCIDENT_TRIGGERS_INTO_PERIODIC_ONLY_RULES
+  - DO_NOT_GENERALIZE_GIS_ATTESTATION_TO_ALL_COVERED_SYSTEMS
+  - DO_NOT_CONFLATE_NONCRYPTO_FSTEC117_WITH_FSB117_CRYPTO_REQUIREMENTS
+  - DO_NOT_CLAIM_ALL_73_CLAUSES_ATOMIZED_FROM_THIS_BOUNDED_MODEL
+
+verification_boundary:
+  complete_clauses_1_to_73_atomization: PENDING
+  complete_subclause_level_measure_catalog: PENDING_METHODICAL_DOCUMENT_INGEST
+  immutable_official_pdf_bytes: PENDING
+  independent_expert_review: PENDING
+  critical_gap_created: false
+  high_gap_created: false
