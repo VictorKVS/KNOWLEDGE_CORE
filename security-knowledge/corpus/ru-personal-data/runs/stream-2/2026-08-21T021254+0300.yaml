@@ -1,0 +1,172 @@
+schema_version: 1
+stream_id: RU_PD_STREAM_2_TECHNICAL_CRYPTO
+run_id: RU_PD_STREAM2_2026_08_21T021254_0300
+retrieved_at: "2026-08-21T02:12:54+03:00"
+purpose: >-
+  Reconcile current primary technical/cryptographic PDn sources, extend licensing-control
+  version chains, attempt exact binary acquisition, and preserve applicability boundaries.
+
+reconciliation:
+  existing_priority_nodes_reused: 8
+  duplicate_existing_nodes_created: 0
+  new_primary_source_records_registered: 5
+  new_sources:
+    - RU_FSB_ORDER_545_2024
+    - RU_FSB_ORDER_557_2025
+    - RU_FSTEC_ORDER_163_2025
+    - RU_FSTEC_ORDER_164_2025
+    - RU_FSTEC_ORDER_487_2025
+  delta_pack: "../../technical-security-source-pack-delta-2026-08-21T021254+0300.yaml"
+
+primary_status_checks:
+  RU_GOV_PP_1119_2012:
+    result: CURRENT_EDITION_PAGE_REVERIFIED
+    source_url: "https://government.ru/docs/6339/"
+    evidence_class: PRIMARY_GOVERNMENT_PAGE
+  RU_FSB_ORDER_77_2023:
+    result: PRIMARY_PUBLICATION_REVERIFIED
+    source_url: "https://publication.pravo.gov.ru/document/0001202302200021"
+    official_publication_number: "0001202302200021"
+    justice_registration_number: "72404"
+  RU_FSTEC_ORDER_21_2013:
+    result: PRIMARY_AMENDMENT_CHAIN_REVERIFIED
+    primary_amendment_publications:
+      - source_id: RU_FSTEC_ORDER_49_2017
+        official_publication_number: "0001201704260010"
+      - source_id: RU_FSTEC_ORDER_68_2020
+        official_publication_number: "0001202007100002"
+    later_change_promoted_this_run: false
+  RU_FSB_ORDER_545_2024:
+    result: PRIMARY_PUBLICATION_VERIFIED
+    official_publication_number: "0001202412200069"
+    justice_registration_number: "80660"
+    publication_date: 2024-12-20
+  RU_FSB_ORDER_557_2025:
+    result: PRIMARY_PUBLICATION_VERIFIED
+    official_publication_number: "0001202512300057"
+    justice_registration_number: "84878"
+    publication_date: 2025-12-30
+  RU_FSTEC_ORDER_163_2025:
+    result: PRIMARY_PUBLICATION_VERIFIED
+    official_publication_number: "0001202507020008"
+    justice_registration_number: "82774"
+    publication_date: 2025-07-02
+  RU_FSTEC_ORDER_164_2025:
+    result: PRIMARY_PUBLICATION_VERIFIED
+    official_publication_number: "0001202507020007"
+    justice_registration_number: "82775"
+    publication_date: 2025-07-02
+  RU_FSTEC_ORDER_487_2025:
+    result: PRIMARY_PUBLICATION_VERIFIED
+    official_publication_number: "0001202512300067"
+    justice_registration_number: "84884"
+    publication_date: 2025-12-30
+
+artifact_acquisition:
+  exact_binary_source_attempts: 7
+  exact_binary_successes: 0
+  bytes_downloaded: 0
+  sha256_recorded: 0
+  immutable_artifacts_created: 0
+  transport_failure_class: DNS_RESOLUTION_FAILURE
+  attempted:
+    - source_id: RU_FSB_ORDER_77_2023
+      url: "https://publication.pravo.gov.ru/File/GetFile/0001202302200021?type=pdf"
+      result: DNS_RESOLUTION_FAILURE
+    - source_id: RU_FSTEC_THREAT_METHOD_2021
+      url: "https://fstec.ru/component/attachments/download/2919"
+      result: DNS_RESOLUTION_FAILURE
+    - source_id: RU_FSB_ORDER_545_2024
+      url: "https://publication.pravo.gov.ru/File/GetFile/0001202412200069?type=pdf"
+      result: DNS_RESOLUTION_FAILURE
+    - source_id: RU_FSB_ORDER_557_2025
+      url: "https://publication.pravo.gov.ru/File/GetFile/0001202512300057?type=pdf"
+      result: DNS_RESOLUTION_FAILURE
+    - source_id: RU_FSTEC_ORDER_163_2025
+      url: "https://publication.pravo.gov.ru/File/GetFile/0001202507020008?type=pdf"
+      result: DNS_RESOLUTION_FAILURE
+    - source_id: RU_FSTEC_ORDER_164_2025
+      url: "https://publication.pravo.gov.ru/File/GetFile/0001202507020007?type=pdf"
+      result: DNS_RESOLUTION_FAILURE
+    - source_id: RU_FSTEC_ORDER_487_2025
+      url: "https://publication.pravo.gov.ru/File/GetFile/0001202512300067?type=pdf"
+      result: DNS_RESOLUTION_FAILURE
+  integrity_rule: >-
+    Primary publication pages and portal PDF-size/page-count metadata prove publication identity,
+    but do not satisfy the immutable artifact gate. MIME, exact byte length and SHA-256 remain null
+    until the exact bytes are captured.
+
+version_analysis:
+  primary_version_edges_added: 4
+  edges:
+    - from: RU_FSB_ORDER_142_2023
+      to: RU_FSB_ORDER_545_2024
+      type: AMENDED_BY
+      status: PRIMARY_PUBLICATION_VERIFIED
+    - from: RU_FSB_ORDER_142_2023
+      to: RU_FSB_ORDER_557_2025
+      type: AMENDED_BY
+      status: PRIMARY_PUBLICATION_VERIFIED
+      note: "Both 2024 and 2025 events amend paragraph 2; final consolidated semantics are deferred until exact text/diff compilation."
+    - from: RU_FSTEC_ORDER_163_2025
+      to: RU_FSTEC_ORDER_487_2025
+      type: AMENDED_BY
+      status: PRIMARY_PUBLICATION_VERIFIED
+    - from: RU_FSTEC_ORDER_164_2025
+      to: RU_FSTEC_ORDER_487_2025
+      type: AMENDED_BY
+      status: PRIMARY_PUBLICATION_VERIFIED
+  fstec21_latest_promoted_amendment: RU_FSTEC_ORDER_68_2020
+  later_fstec21_change_promoted_this_run: false
+
+applicability_analysis:
+  new_universal_pdn_duties_promoted: 0
+  direct_pdn_gossopka_edges_added: 0
+  rules_preserved_or_added:
+    - "PP 1119 remains the ISPDn protection-level core source."
+    - "FSTEC Order 21 remains the ISPDn technical-measures branch; no licensing-control act substitutes for it."
+    - "FSB Order 378 remains conditional on SKZI use in ISPDn."
+    - "FSB Order 77 remains the proved PDn-specific GosSOPKA/NKTsKI incident bridge; unrelated CII duties remain isolated."
+    - "FSB Orders 545/557 modify licensing-control procedure under FSB Order 142 and are not universal PDn operator duties."
+    - "FSTEC Orders 163/164/487 are licensed-activity control/version sources and are not universal PDn operator duties."
+
+conflict_detection:
+  candidates_checked: 4
+  confirmed_legal_contradictions: 0
+  context_splits: 2
+  unresolved_version_semantics: 1
+  notes:
+    - "FSB and FSTEC licensing-control branches are authority/activity-specific; they must not be merged with ordinary ISPDn protection duties."
+    - "Orders 545/2024 and 557/2025 both amend paragraph 2 of FSB Order 142. This is a version chain, not a contradiction; exact consolidated wording remains pending binary/text compilation."
+    - "FSTEC Order 487 explicitly amends both Orders 163 and 164; the two base orders remain distinct licensed-activity branches."
+
+counters_after_run:
+  core_sources_reconciled: 8
+  new_primary_source_records_this_run: 5
+  stream2_registered_source_records_estimated: 19
+  primary_amendment_events_verified_cumulative: 7
+  direct_pdn_gossopka_bridge_sources_registered: 1
+  direct_applicability_edges_verified: 1
+  immutable_artifacts_stream2: 0
+  pending_immutable_or_snapshot_estimated: 18
+  bytes_downloaded_stream2: 0
+  hashes_recorded_stream2: 0
+  exact_binary_attempts_this_run: 7
+  exact_binary_successes_this_run: 0
+  new_universal_applicability_edges: 0
+
+outputs:
+  - "../../technical-security-source-pack-delta-2026-08-21T021254+0300.yaml"
+  - "../../master-source-inventory-delta-stream2-2026-08-21T021254+0300.yaml"
+  - "../../stream-2-acquisition-log-delta-2026-08-21T021254+0300.yaml"
+
+next_priority:
+  - RU_FSB_ORDER_77_2023_exact_primary_artifact_and_paragraph_compilation
+  - RU_FSTEC_THREAT_METHOD_2021_attachment_2919
+  - RU_GOV_PP_1119_2012_exact_current_artifact
+  - RU_FSTEC_ORDER_21_2013_current_consolidated_artifact
+  - RU_FSB_ORDER_378_2014_exact_authoritative_artifact
+  - RU_FSB_ORDER_545_2024_and_RU_FSB_ORDER_557_2025_exact_artifacts_then_order142_delta_compilation
+  - RU_FSTEC_ORDER_487_2025_exact_artifact_then_163_164_delta_compilation
+
+result: PARTIAL_PROGRESS_NEW_PRIMARY_VERSION_EDGES_REGISTERED_BINARY_ACQUISITION_BLOCKED_BY_TRANSIENT_DNS
