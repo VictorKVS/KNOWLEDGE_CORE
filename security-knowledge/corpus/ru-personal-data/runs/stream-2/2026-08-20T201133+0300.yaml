@@ -1,0 +1,142 @@
+schema_version: 1
+stream_id: RU_PD_STREAM_2_TECHNICAL_CRYPTO
+run_id: RU_PD_STREAM2_2026_08_20T201133_0300
+retrieved_at: "2026-08-20T20:11:33+03:00"
+purpose: Primary-source status recheck and exact-binary acquisition telemetry for the PDn technical and cryptographic contour.
+
+reconciliation:
+  existing_priority_nodes_reused: 8
+  duplicate_source_nodes_created: 0
+  sources_rechecked:
+    - RU_GOV_PP_1119_2012
+    - RU_FSTEC_ORDER_21_2013
+    - RU_FSTEC_THREAT_METHOD_2021
+    - RU_FSB_ORDER_378_2014
+    - RU_FSB_ORDER_77_2023
+    - RU_FSB_ORDER_142_2023
+    - RU_FSTEC_ORDER_49_2017
+    - RU_FSTEC_ORDER_68_2020
+
+status_evidence:
+  RU_GOV_PP_1119_2012:
+    result: CURRENT_EDITION_PAGE_REVERIFIED
+    source_url: "https://government.ru/docs/6339/"
+    evidence_class: PRIMARY_GOVERNMENT_PAGE
+    note: "Government portal still exposes PP 1119 and explicitly labels a current-edition document."
+  RU_FSTEC_ORDER_21_2013:
+    result: CURRENT_EDITION_CORROBORATED_LAST_AMENDMENT_2020
+    evidence_class: PRIMARY_AMENDMENT_PUBLICATIONS_PLUS_CURRENT_CONSOLIDATED_CORROBORATION
+    current_edition_date: 2020-05-14
+    official_amendments:
+      - source_id: RU_FSTEC_ORDER_49_2017
+        official_publication_number: "0001201704260010"
+        publication_date: 2017-04-26
+        source_url: "https://publication.pravo.gov.ru/Document/View/0001201704260010"
+      - source_id: RU_FSTEC_ORDER_68_2020
+        official_publication_number: "0001202007100002"
+        publication_date: 2020-07-10
+        effective_date: 2021-01-01
+        source_url: "https://publication.pravo.gov.ru/Document/View/0001202007100002"
+    note: "No later amendment was promoted. Current consolidated references rechecked on 2026-08-20 identify the edition of 2020-05-14 as active; the primary portal confirms the two amendment events."
+  RU_FSTEC_THREAT_METHOD_2021:
+    result: IDENTITY_APPLICABILITY_AND_SUPERSESSION_TEXT_CORROBORATED_PRIMARY_BYTES_PENDING
+    official_page_url: "https://fstec.ru/tekhnicheskaya-zashchita-informatsii/dokumenty/114-spetsialnye-normativnye-dokumenty/2170-metodicheskij-dokument-utverzhden-fstek-rossii-5-fevralya-2021-g"
+    official_file_url: "https://fstec.ru/component/attachments/download/2919"
+    approved_date: 2021-02-05
+    applicability_note: "Current consolidated text states that the methodology applies to ISPDn among other system classes."
+    version_note: "Current consolidated text states that the FSTEK 2008 PDn threat methodology is no longer used for threat assessment after approval of the 2021 methodology. This edge remains corroborated rather than primary-byte anchored until attachment 2919 is acquired."
+  RU_FSB_ORDER_378_2014:
+    result: CURRENT_STATUS_CORROBORATED_SCOPE_REVERIFIED_PRIMARY_BINARY_PENDING
+    justice_registration_number: "33620"
+    signed_date: 2014-07-10
+    effective_date: 2014-09-28
+    official_agency_reference: "https://www.fsb.ru/fsb/science/single.htm%21id%3D10437725%40fsbResearchart.html"
+    note: "FSB methodological material lists Order 378 in the operative PDn security set; a current consolidated legal reference rechecked on 2026-08-20 reports the 2014-07-10 edition as active. Its applicability remains limited to ISPDn using SKZI."
+  RU_FSB_ORDER_77_2023:
+    result: PRIMARY_PUBLICATION_REVERIFIED
+    official_publication_number: "0001202302200021"
+    publication_date: 2023-02-20
+    justice_registration_number: "72404"
+    source_url: "https://publication.pravo.gov.ru/Document/View/0001202302200021"
+    applicability_gate: PDN_COMPUTER_INCIDENT_WITH_UNLAWFUL_TRANSFER_PROVISION_DISTRIBUTION_OR_ACCESS
+  RU_FSB_ORDER_142_2023:
+    result: PRIMARY_PUBLICATION_METADATA_REVERIFIED
+    official_publication_number: "0001202303310020"
+    publication_date: 2023-03-31
+    justice_registration_number: "72831"
+    source_url: "https://publication.pravo.gov.ru/Document/View/0001202303310020"
+    portal_pdf_metadata_kb: 2875
+    portal_pdf_pages: 52
+    applicability_gate: FSB_LICENSING_CONTROL_CONTEXT
+
+artifact_acquisition:
+  exact_binary_attempts: 5
+  exact_binary_successes: 0
+  bytes_downloaded: 0
+  sha256_recorded: 0
+  immutable_artifacts_created: 0
+  attempted:
+    - source_id: RU_FSB_ORDER_77_2023
+      url: "https://publication.pravo.gov.ru/File/GetFile/0001202302200021?type=pdf"
+      result: DNS_RESOLUTION_FAILURE
+    - source_id: RU_FSTEC_ORDER_68_2020
+      url: "https://publication.pravo.gov.ru/File/GetFile/0001202007100002?type=pdf"
+      result: DNS_RESOLUTION_FAILURE
+    - source_id: RU_FSTEC_ORDER_49_2017
+      url: "https://publication.pravo.gov.ru/File/GetFile/0001201704260010?type=pdf"
+      result: DNS_RESOLUTION_FAILURE
+    - source_id: RU_FSB_ORDER_142_2023
+      url: "https://publication.pravo.gov.ru/File/GetFile/0001202303310020?type=pdf"
+      result: DNS_RESOLUTION_FAILURE
+    - source_id: RU_FSTEC_THREAT_METHOD_2021
+      url: "https://fstec.ru/component/attachments/download/2919"
+      result: DNS_RESOLUTION_FAILURE
+  integrity_rule: "Portal PDF metadata or search snippets are not a substitute for exact acquired bytes. MIME, byte length and SHA-256 remain unset until the file is actually retrieved."
+
+version_analysis:
+  fstec21_latest_promoted_amendment: RU_FSTEC_ORDER_68_2020
+  fstec21_current_edition_date_corrobated: 2020-05-14
+  later_fstec21_change_promoted_this_run: false
+  threat_method_2008_to_2021_supersession_candidate:
+    from: FSTEC_PDN_THREAT_METHOD_2008
+    to: RU_FSTEC_THREAT_METHOD_2021
+    type: SUPERSEDED_FOR_THREAT_ASSESSMENT
+    status: CURRENT_TEXT_CORROBORATED_PRIMARY_BYTES_PENDING
+
+applicability_analysis:
+  new_universal_duties_promoted: 0
+  rules_preserved:
+    - "FSTEC Order 21 is the ISPDn technical-measures branch; it is not the SKZI measures source."
+    - "FSB Order 378 applies when SKZI is used in ISPDn; it is not a universal PDn duty."
+    - "FSB Order 77 imports only the proved PDn computer-incident interaction route into the GosSOPKA/NKTsKI branch."
+    - "FSB Order 142 is a licensing-control procedure and is not converted into a universal operator duty."
+
+conflict_detection:
+  candidates_checked: 3
+  confirmed_legal_contradictions: 0
+  context_splits_preserved: 3
+  notes:
+    - "FSTEC technical measures and FSB cryptographic measures are context branches, not contradictory requirements."
+    - "The 2021 FSTEC methodology supersession statement is treated as a version relation, not a semantic conflict with the 2008 method."
+    - "Licensing-control requirements are activity/context based and remain separate from ordinary PDn operator requirements."
+
+counters_after_run:
+  core_sources_reconciled: 8
+  immutable_artifacts_stream2: 0
+  pending_immutable_or_snapshot: 13
+  bytes_downloaded_stream2: 0
+  hashes_recorded_stream2: 0
+  exact_binary_attempts_this_run: 5
+  exact_binary_successes_this_run: 0
+  primary_publication_or_primary_page_rechecks_this_run: 5
+  current_status_corroborations_this_run: 2
+  new_universal_applicability_edges: 0
+
+next_priority:
+  - RU_FSB_ORDER_77_2023_exact_primary_artifact
+  - RU_FSTEC_THREAT_METHOD_2021_attachment_2919
+  - RU_GOV_PP_1119_2012_exact_current_artifact
+  - RU_FSTEC_ORDER_21_2013_current_consolidated_artifact
+  - RU_FSB_ORDER_378_2014_exact_authoritative_artifact
+
+result: PARTIAL_PROGRESS_BINARY_ACQUISITION_BLOCKED_BY_TRANSIENT_DNS
