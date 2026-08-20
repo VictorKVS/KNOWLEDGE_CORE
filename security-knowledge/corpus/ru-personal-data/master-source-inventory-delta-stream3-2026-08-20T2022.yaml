@@ -1,0 +1,44 @@
+schema_version: "1.0"
+kind: ru-personal-data-master-source-inventory-delta
+base_inventory: "master-source-inventory.yaml"
+checked_at: "2026-08-20T20:22:41+03:00"
+owner_stream: STREAM_3_SECTOR_OVERLAYS
+protected_information_delta_ref: "../ru-protected-information/master-inventory-delta-2026-08-20T2022.yaml"
+
+sector_evidence_updates:
+  - source_id: SEC-SRC-RU-FZ-63-2002
+    title: "63-ФЗ «Об адвокатской деятельности и адвокатуре в Российской Федерации»"
+    lifecycle_state: SOURCE_PENDING
+    protected_information_regime:
+      type: ADVOCATE_SECRET
+      locator: "Article 8(1)"
+      evidence_state: CURRENT_AUTHORITY_TEXT_VERIFIED
+    pdn_relation:
+      state: NOT_PROVED
+      type: POSSIBLE_DUAL_REGIME_ON_SCENARIO_PROOF_ONLY
+      guard: "ADVOCATE_SECRET != PERSONAL_DATA"
+    rule: >-
+      Do not infer 152-ФЗ applicability merely because information is protected by advocate secrecy. A PDN edge
+      requires a concrete processing scenario involving information about an identified or identifiable natural person
+      plus proof of the independent personal-data applicability predicates.
+    version_chain:
+      state: VERSION_CHAIN_PARTIAL
+      primary_amendment_event_verified:
+        act: "83-ФЗ от 22.04.2024"
+        official_publication_id: "0001202404220011"
+      gate: "Close primary amendment sweep through 2026-08-20 before executable PDN reasoning."
+
+pdn_executable_effect:
+  rules_changed: false
+  applicability_edges_promoted: 0
+  new_primary_amendment_events: 1
+  new_scope_guards: 1
+
+acquisition_state:
+  new_primary_immutable_artifacts: 0
+  exact_capture_pending:
+    - SEC-SRC-RU-FZ-63-2002
+
+proof_floor: >-
+  This delta contributes protected-information provenance and a guarded relation candidate only. It does not lower
+  the requirement for exact source bytes, current version-chain closure, locators, and review before executable PDN reasoning.
