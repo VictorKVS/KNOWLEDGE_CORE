@@ -1,0 +1,95 @@
+schema_version: "1.0"
+id: SEC-SRC-RU-FZ-168-2020
+kind: security-regulatory-source
+status: METADATA_VERIFIED_SOURCE_PENDING
+
+title: "Федеральный закон от 08.06.2020 № 168-ФЗ «О едином федеральном информационном регистре, содержащем сведения о населении Российской Федерации»"
+jurisdiction: RU
+issuer: "Российская Федерация"
+document:
+  type: federal_law
+  number: "168-ФЗ"
+  adopted_date: "2020-06-08"
+  official_publication_id: "0001202006080019"
+  official_publication_date: "2020-06-08"
+  checked_at: "2026-08-21"
+
+canonical_source:
+  publisher: "Официальное опубликование правовых актов"
+  url: "https://publication.pravo.gov.ru/Document/View/0001202006080019"
+  origin_verified: true
+  official_file_endpoint_candidate: "https://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202006080019"
+  file_endpoint_status: NOT_RETRIEVED_IN_THIS_RUN
+
+protected_information:
+  sector: public_sector
+  regime: federal_population_registry
+  discovery_basis: >-
+    Primary publication proves a special federal-law regime for the unified federal information register containing
+    information about the population. This registration does not infer which organizations, processing scenarios or
+    data fields are subject to the regime without locator-level review of the current text.
+  pdn_relation:
+    state: CANDIDATE_PENDING_PRIMARY_LOCATOR_REVIEW
+    type: STATE_POPULATION_REGISTER_CONTEXT
+    supporting_context:
+      source: "152-ФЗ"
+      locator: "статья 8 часть 4"
+      authority_url: "https://www.kremlin.ru/acts/bank/24154/print"
+      proposition: "152-ФЗ provides that a state population register may be created by federal law."
+    guard: "168-ФЗ inclusion in the sector library is not an automatic applicability decision for any organization."
+
+version_chain:
+  state: VERSION_CHAIN_PARTIAL
+  primary_events_verified:
+    - act: "512-ФЗ от 28.12.2024"
+      official_publication_id: "0001202412280014"
+      official_publication_date: "2024-12-28"
+      official_url: "https://publication.pravo.gov.ru/Document/View/0001202412280014"
+      proof_status: PRIMARY_AMENDMENT_EVENT_VERIFIED
+      anchor_effect: "Official title states that 512-ФЗ amends 168-ФЗ; locator-level effects require text compilation."
+    - act: "442-ФЗ от 28.11.2025"
+      official_publication_id: "0001202511280105"
+      official_publication_date: "2025-11-28"
+      official_url: "https://publication.pravo.gov.ru/Document/View/0001202511280105"
+      proof_status: PRIMARY_AMENDMENT_EVENT_VERIFIED
+      anchor_effect: "Official title expressly amends Articles 4 and 11 of 168-ФЗ and Article 13 of 218-ФЗ."
+  pending: >-
+    Complete the primary amendment sweep through 2026-08-21 and compile the current locator-level text before
+    executable requirements or applicability edges are promoted.
+
+capture:
+  state: SOURCE_PENDING_PRIMARY_EXACT_CAPTURE
+  raw_artifact_ref: null
+  manifest_ref: null
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  attempt_at: "2026-08-21T02:22:09+03:00"
+  attempt_result: OFFICIAL_BINARY_NOT_RETRIEVABLE_IN_EXECUTION_ENVIRONMENT
+  proof_floor: >-
+    Search/render metadata is not a byte-exact artifact. MIME, byte length and SHA-256 remain null until the exact
+    official file is retrieved and fingerprinted.
+
+conflict_check:
+  status: NO_CONFLICT_ASSERTED
+  relation_candidates:
+    - target: "152-ФЗ"
+      type: STATE_POPULATION_REGISTER_CONTEXT
+      status: CANDIDATE_PENDING_PRIMARY_LOCATOR_REVIEW
+    - target: "218-ФЗ"
+      type: SHARED_AMENDMENT_EVENT_442_FZ_2025
+      status: VERSION_GRAPH_EDGE_ONLY
+  review_required: true
+
+provenance:
+  checked_at: "2026-08-21"
+  primary_identity_evidence: "official publication 0001202006080019"
+  primary_amendment_evidence:
+    - "official publication 0001202412280014"
+    - "official publication 0001202511280105"
+  review_required: true
+
+agent_rule: >-
+  Treat 168-ФЗ as a distinct public-sector population-register regime. Do not infer applicability, permitted disclosure,
+  retention or access rights from the title or from 152-ФЗ Article 8(4); require current primary locators and scenario proof.
