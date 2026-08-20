@@ -182,7 +182,7 @@ def main():
     assert model["source"]["official_23_fz_publication"]["publication_number"] == "0001202502280034"
     assert model["verification_boundary"]["immutable_current_consolidated_bytes"] == "PENDING"
     assert model["verification_boundary"]["fstec_order_21_current_clause_map"] == "PENDING"
-    assert model["verification_boundary"]["fsb_order_378_current_applicability"] == "PENDING"
+    assert model["verification_boundary"]["fsb_order_378_current_applicability"] == "REGRESSION_PROTECTED"
     assert model["red_team"]["critical_gap_created"] is False
     assert model["red_team"]["high_gap_created"] is False
 

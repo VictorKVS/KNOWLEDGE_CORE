@@ -1,0 +1,42 @@
+name: FSB Order 378 ISPDN Crypto Controls Gate
+
+on:
+  push:
+    paths:
+      - "security-knowledge/corpus/ru-personal-data/fsb-order-378-ispdn-crypto-controls-atomic-v1.yaml"
+      - "security-knowledge/corpus/ru-personal-data/fsb-order-378-ispdn-crypto-controls-regression-v1.json"
+      - "security-knowledge/classification/ispdn-protection-level-decision-table-pp1119-verified.yaml"
+      - "security-knowledge/corpus/ru-personal-data/fl-152-article-19-security-measures-atomic-v1.yaml"
+      - "security-knowledge/corpus/ru-personal-data/fstec-order-21-ispdn-controls-atomic-v1.yaml"
+      - "security-knowledge/legislation/RU/regulators/FSB/378-2014/**"
+      - "security-knowledge/legislation/RU/regulators/FSB/registry.yaml"
+      - "security-knowledge/legislation/RU/regulators/FSB/history/legacy-status.yaml"
+      - "security-knowledge/pdn/pdn-master-source-library-v1.yaml"
+      - "security-knowledge/pdn/pdn-direction-coverage-matrix-v1.yaml"
+      - "security-knowledge/validators/validate_fsb_order_378_ispdn_crypto_controls.py"
+      - ".github/workflows/fsb-order-378-ispdn-crypto-controls.yml"
+  pull_request:
+    paths:
+      - "security-knowledge/corpus/ru-personal-data/fsb-order-378-ispdn-crypto-controls-atomic-v1.yaml"
+      - "security-knowledge/corpus/ru-personal-data/fsb-order-378-ispdn-crypto-controls-regression-v1.json"
+      - "security-knowledge/classification/ispdn-protection-level-decision-table-pp1119-verified.yaml"
+      - "security-knowledge/corpus/ru-personal-data/fl-152-article-19-security-measures-atomic-v1.yaml"
+      - "security-knowledge/corpus/ru-personal-data/fstec-order-21-ispdn-controls-atomic-v1.yaml"
+      - "security-knowledge/legislation/RU/regulators/FSB/378-2014/**"
+      - "security-knowledge/legislation/RU/regulators/FSB/registry.yaml"
+      - "security-knowledge/legislation/RU/regulators/FSB/history/legacy-status.yaml"
+      - "security-knowledge/pdn/pdn-master-source-library-v1.yaml"
+      - "security-knowledge/pdn/pdn-direction-coverage-matrix-v1.yaml"
+      - "security-knowledge/validators/validate_fsb_order_378_ispdn_crypto_controls.py"
+      - ".github/workflows/fsb-order-378-ispdn-crypto-controls.yml"
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install pyyaml
+      - run: python security-knowledge/validators/validate_fsb_order_378_ispdn_crypto_controls.py

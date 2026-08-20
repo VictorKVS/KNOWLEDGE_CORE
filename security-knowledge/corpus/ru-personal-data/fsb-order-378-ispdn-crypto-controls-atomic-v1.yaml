@@ -1,0 +1,220 @@
+schema_version: "1.0"
+id: RU-FSB378-ISPDN-CRYPTO-CONTROLS-ATOMIC-V1
+title: FSB Order No. 378 ISPDN cryptographic protection applicability, measures and class routing
+scope: >-
+  Original and current public text of FSB Order No. 378 of 10 July 2014. The model applies
+  only to operators using cryptographic information-protection means (SKZI) to secure
+  personal data in an ISPDN. It covers clauses 1-26, cumulative organizational measures
+  for protection levels 4-1, attacker-capability profiles KS1/KS2/KS3/KV/KA, the exact
+  protection-level/threat-type class routes, and the half-year and monthly control floors.
+  The decision to use cryptography, PP 1119 level calculation, product-certificate status,
+  key lifetimes and licensed external cryptographic work remain separate decisions.
+
+source:
+  authority: FSB of Russia
+  order_number: "378"
+  signed_date: "2014-07-10"
+  current_edition: "2014-07-10"
+  minjust_registration_number: "33620"
+  minjust_registration_date: "2014-08-18"
+  official_print_publication:
+    publisher: Rossiyskaya Gazeta
+    issue: "211"
+    publication_date: "2014-09-17"
+    effective_from: "2014-09-28"
+    url: https://rg.ru/documents/2014/09/17/zashita-dok.html
+  current_legal_text:
+    status_checked_at: "2026-08-20"
+    edition_date: "2014-07-10"
+    amendments_listed: []
+    url: https://www.consultant.ru/document/cons_doc_LAW_167862/
+  dependencies:
+    - FL152_ARTICLE19_PART4
+    - PP_RF_1119_PROTECTION_LEVEL_AND_THREAT_TYPE
+    - CURRENT_OPERATOR_DECISION_TO_USE_SKZI
+    - SKZI_OPERATIONAL_DOCUMENTATION
+    - CURRENT_FSB_CERTIFICATE_OR_PRODUCT_LIST_METADATA
+    - PP_RF_313_LICENSE_SCOPE_WHEN_EXTERNAL_REGULATED_CRYPTO_WORK_IS_PERFORMED
+
+verification_boundary:
+  identity_registration_publication_effective_date: VERIFIED_AUTHORITATIVE_PUBLICATION_INTERFACE
+  current_status_and_original_edition: VERIFIED_AUTHORITATIVE_SECONDARY_2026_08_20
+  clauses_1_to_26_text: VERIFIED_PRIMARY_PUBLICATION_CROSSCHECKED_CURRENT_TEXT
+  immutable_official_current_bytes: PENDING
+  exhaustive_product_certificate_lifecycle: PENDING
+  exhaustive_key_management_rules: OUTSIDE_THIS_ORDER_REQUIRE_SEPARATE_SOURCES
+  independent_expert_review: PENDING
+
+temporal_model:
+  - {event: ORDER_SIGNED, date: "2014-07-10"}
+  - {event: MINJUST_REGISTERED, date: "2014-08-18"}
+  - {event: OFFICIAL_PRINT_PUBLICATION, date: "2014-09-17"}
+  - {event: ORDER_EFFECTIVE, date: "2014-09-28"}
+  - {event: CURRENT_ORIGINAL_EDITION_STATUS_CHECKED, date: "2026-08-20"}
+
+numeric_deadlines:
+  - id: FSB378-D001
+    locator: clause_20.d
+    action: TEST_REQUEST_PROVISION_LOGGING_AND_ACCESS_RESTRICTION_MEANS
+    maximum_interval: 6
+    unit: MONTHS
+    applies_from_protection_level: 2
+  - id: FSB378-D002
+    locator: clause_23.c
+    action: CONTROL_SECURITY_JOURNAL_AND_PERMISSION_JOB_DUTY_ALIGNMENT
+    maximum_interval: 1
+    unit: MONTH
+    applies_from_protection_level: 1
+
+atomic_rules:
+  - {id: FSB378-R001, locator: clause_1, class: SCOPE, rule: "Apply this composition and content to personal-data security in an ISPDN when SKZI are used."}
+  - {id: FSB378-R002, locator: clause_2, class: ACTOR_AND_TRIGGER, rule: "The document is intended for operators using SKZI to secure personal data in an ISPDN; an ISPDN alone does not trigger this order."}
+  - {id: FSB378-R003, locator: clause_3, class: OPERATOR_ASSURANCE, rule: "The operator ensures the measures while taking the operational documentation of the used SKZI into account."}
+  - {id: FSB378-R004, locator: clause_4, class: OPERATIONAL_DOCUMENTATION, rule: "Operate SKZI under its documentation, this order and other applicable normative acts."}
+  - {id: FSB378-R005, locator: clause_5.a, class: PP1119_ROOM_REGIME, rule: "Provide the PP 1119 room-security regime preventing uncontrolled entry or presence."}
+  - {id: FSB378-R006, locator: clause_5.b, class: PP1119_MEDIA_SAFETY, rule: "Ensure safekeeping of personal-data media."}
+  - {id: FSB378-R007, locator: clause_5.c, class: PP1119_ACCESS_LIST, rule: "The operator head approves the list of persons whose access is needed for official or employment duties."}
+  - {id: FSB378-R008, locator: clause_5.d, class: CONFORMITY_IF_NEEDED, rule: "Use conformity-assessed security tools when needed to neutralize current threats; do not convert the condition into universal certification."}
+  - {id: FSB378-R009, locator: clause_6.chapeau, class: CRYPTO_ROOM_SCOPE, rule: "Protect rooms containing used or stored SKZI or media of SKZI key, authentication or password information against uncontrolled entry or presence."}
+  - {id: FSB378-R010, locator: clause_6.a, class: DOORS_AND_TAMPER_EVIDENCE, rule: "Use lockable entrance doors, keep them locked except for authorized passage, and seal rooms after work or use equivalent unauthorized-opening signalling devices."}
+  - {id: FSB378-R011, locator: clause_6.b, class: ROOM_ACCESS_RULES, rule: "Approve room-access rules for working time, non-working time and abnormal situations."}
+  - {id: FSB378-R012, locator: clause_6.c, class: ROOM_ACCESS_LIST, rule: "Approve the list of persons entitled to enter the protected rooms."}
+  - {id: FSB378-R013, locator: clause_7.a, class: REMOVABLE_MEDIA_STORAGE, rule: "Store removable personal-data media in safes or metal cabinets with the specified locks and sealing facilities or code locks."}
+  - {id: FSB378-R014, locator: clause_7.a.exception, class: ENCRYPTED_MEDIA_STORAGE_EXCEPTION, rule: "Media containing only personal data encrypted with SKZI may be stored outside those safes or metal cabinets."}
+  - {id: FSB378-R015, locator: clause_7.b, class: ITEMIZED_MEDIA_ACCOUNTING, rule: "Account for each personal-data machine-readable medium in a register using registration or factory numbers."}
+  - {id: FSB378-R016, locator: clause_8.a, class: DEVELOP_APPROVE_ACCESS_LIST, rule: "Develop and approve the duty-based personal-data access list."}
+  - {id: FSB378-R017, locator: clause_8.b, class: KEEP_ACCESS_LIST_CURRENT, rule: "Keep the duty-based personal-data access list current."}
+  - {id: FSB378-R018, locator: clause_9.a, class: ATTACKER_ASSUMPTION_INPUTS, rule: "Obtain source data for the set of assumptions about capabilities usable to create, prepare and conduct attacks."}
+  - {id: FSB378-R019, locator: clause_9.b, class: LEADER_APPROVED_ASSUMPTIONS, rule: "The operator head approves the capability assumptions and uses them with the current threat type to determine the required SKZI class."}
+  - {id: FSB378-R020, locator: clause_9.c, class: REQUIRED_CLASS_USE, rule: "Use an SKZI meeting or exceeding the class threshold selected for the protection level and relevant threat type."}
+  - {id: FSB378-R021, locator: clause_9.definition, class: ATTACK_DEFINITION, rule: "Treat an attack as targeted hardware or software action intended to violate SKZI-protected personal-data security or create conditions for that violation."}
+  - {id: FSB378-R022, locator: clause_10.a, class: KS1_NO_CRYPTO_SPECIALIST, rule: "The KS1 capability profile includes attack creation, preparation and conduct without cryptographic-development or analysis specialists."}
+  - {id: FSB378-R023, locator: clause_10.b, class: KS1_LIFECYCLE, rule: "The KS1 profile covers attack activity across SKZI development, production, storage, transportation, commissioning and operation."}
+  - {id: FSB378-R024, locator: clause_10.c, class: KS1_OUTSIDE_CONTROLLED_ZONE, rule: "The KS1 profile includes attack conduct from outside the controlled zone."}
+  - {id: FSB378-R025, locator: clause_10.d, class: KS1_PRE_OPERATION_CHANGES, rule: "The KS1 profile includes unauthorized changes to SKZI, its operating environment or their documentation before operation."}
+  - {id: FSB378-R026, locator: clause_10.e, class: KS1_OPERATION_TARGETS, rule: "The KS1 profile includes attacks against personal data, key/authentication/password information, SKZI and environment components, communications data and other established targets."}
+  - {id: FSB378-R027, locator: clause_10.f, class: KS1_PUBLIC_INFORMATION, rule: "The KS1 profile includes obtaining the enumerated system, technology, documentation, protected-information, channel, fault and signal information from publicly available sources."}
+  - {id: FSB378-R028, locator: clause_10.g, class: KS1_TOOLS, rule: "The KS1 profile includes publicly available or outside-zone hardware/software and specially developed hardware/software."}
+  - {id: FSB378-R029, locator: clause_10.h, class: KS1_TRANSFER_MEDIA, rule: "The KS1 profile includes using insufficiently protected communication channels and emanation channels as attack-transfer media."}
+  - {id: FSB378-R030, locator: clause_10.i, class: KS1_PUBLIC_NETWORK, rule: "The KS1 profile includes attacks from public telecommunications networks when the ISPDN has access to them."}
+  - {id: FSB378-R031, locator: clause_10.k, class: KS1_OFF_ZONE_STANDARD_MEANS, rule: "The KS1 profile includes standard system hardware and software located outside the controlled zone at SKZI operating locations."}
+  - {id: FSB378-R032, locator: clause_11.a, class: KS2_INSIDE_CONTROLLED_ZONE, rule: "The KS2 profile adds attack conduct while inside the controlled zone."}
+  - {id: FSB378-R033, locator: clause_11.b, class: KS2_DOCUMENTATION_AND_ROOMS, rule: "The KS2 profile adds attacks on SKZI/environment documentation and rooms containing computing means implementing SKZI and its environment."}
+  - {id: FSB378-R034, locator: clause_11.c, class: KS2_OBSERVED_PHYSICAL_CONTROLS, rule: "The KS2 profile adds authorized or observed information about physical protection, controlled-zone and room-access measures."}
+  - {id: FSB378-R035, locator: clause_11.d, class: KS2_CONSTRAINED_STANDARD_MEANS, rule: "The KS2 profile adds use of standard means constrained by implemented unauthorized-action prevention measures."}
+  - {id: FSB378-R036, locator: clause_12.a, class: KS3_PHYSICAL_ACCESS, rule: "The KS3 profile adds physical access to computing means implementing SKZI and its environment."}
+  - {id: FSB378-R037, locator: clause_12.b, class: KS3_LIMITED_HARDWARE_POSSESSION, rule: "The KS3 profile adds ability to possess SKZI or environment hardware, limited by implemented unauthorized-action prevention measures."}
+  - {id: FSB378-R038, locator: clause_13.a, class: KV_SPECIALISTS, rule: "The KV profile adds specialists in signal analysis and exploitation of undocumented application-software capabilities."}
+  - {id: FSB378-R039, locator: clause_13.b, class: KV_LAB_RESEARCH, rule: "The KV profile adds laboratory study of SKZI used outside the controlled zone, subject to implemented restrictions."}
+  - {id: FSB378-R040, locator: clause_13.c, class: KV_RESEARCH_CENTRE, rule: "The KV profile adds attack research in specialized centres, including use of relevant application-software source text."}
+  - {id: FSB378-R041, locator: clause_14.a, class: KA_SYSTEM_SOFTWARE_SPECIALISTS, rule: "The KA profile adds specialists exploiting undocumented system-software capabilities."}
+  - {id: FSB378-R042, locator: clause_14.b, class: KA_ENVIRONMENT_DESIGN_DOCS, rule: "The KA profile adds possession of design-documentation information for hardware and software components of the SKZI operating environment."}
+  - {id: FSB378-R043, locator: clause_14.c, class: KA_ALL_HARDWARE, rule: "The KA profile adds ability to possess all hardware components of SKZI and its operating environment."}
+  - {id: FSB378-R044, locator: clause_15, class: UNLISTED_CAPABILITIES_NO_CLASS_EFFECT, rule: "Additional capabilities outside clauses 10-14 do not change the order's class-determination procedure."}
+  - {id: FSB378-R045, locator: clause_9.c, class: LEVEL4_CLASS_ROUTE, rule: "For the PP 1119 level-4 combination, use KS1 or higher."}
+  - {id: FSB378-R046, locator: clause_16, class: LEVEL3_RESPONSIBLE_PERSON, rule: "Level 3 adds designation of an operator official or employee responsible for ISPDN personal-data security."}
+  - {id: FSB378-R047, locator: clause_17, class: RESPONSIBLE_PERSON_SKILLS, rule: "The designated responsible official or employee must possess sufficient skills."}
+  - {id: FSB378-R048, locator: clause_18, class: LEVEL3_CLASS_ROUTE, rule: "For level 3, replace the level-4 class route with KV or higher for threat type 2 and KS1 or higher for threat type 3."}
+  - {id: FSB378-R049, locator: clause_19, class: LEVEL2_JOURNAL_ACCESS, rule: "Level 2 adds exclusive electronic-message-journal access for operator or authorized-person staff who need its contents for official or employment duties."}
+  - {id: FSB378-R050, locator: clause_20.a, class: JOURNAL_ACCESS_LIST, rule: "The operator head approves and keeps current the list of persons admitted to electronic-message-journal contents."}
+  - {id: FSB378-R051, locator: clause_20.b, class: REQUEST_AND_PROVISION_LOGGING, rule: "Automated means register user requests for personal data and the corresponding provision events in the electronic message journal."}
+  - {id: FSB378-R052, locator: clause_20.c, class: JOURNAL_ACCESS_RESTRICTION, rule: "Automated means prevent journal-content access by persons outside the approved list."}
+  - {id: FSB378-R053, locator: clause_20.d, class: HALF_YEAR_FUNCTION_TEST, rule: "Test the clause 20 logging and access-restriction means at least once every six months."}
+  - {id: FSB378-R054, locator: clause_21, class: LEVEL2_CLASS_ROUTE, rule: "For level 2, use KA for threat type 1, KV or higher for threat type 2, and KS1 or higher for threat type 3."}
+  - {id: FSB378-R055, locator: clause_22.a, class: LEVEL1_PERMISSION_CHANGE_LOGGING, rule: "Level 1 adds automatic security-journal registration of changes to employee personal-data access powers."}
+  - {id: FSB378-R056, locator: clause_22.b, class: LEVEL1_SECURITY_FUNCTION, rule: "Level 1 adds a separate security unit or assignment of its functions to an existing structural unit."}
+  - {id: FSB378-R057, locator: clause_23.a, class: AUTOMATIC_PERMISSION_CHANGE_MEANS, rule: "Provide automated means that register employee personal-data access-power changes in the security journal."}
+  - {id: FSB378-R058, locator: clause_23.b, class: PERMISSION_DUTY_ALIGNMENT, rule: "Record employee access powers in the security journal and align them with job duties."}
+  - {id: FSB378-R059, locator: clause_23.c, class: MONTHLY_PERMISSION_CONTROL, rule: "Designate a person to control journal maintenance and permission-to-duty alignment at least once each month."}
+  - {id: FSB378-R060, locator: clause_24.a, class: SECURITY_UNIT_ANALYSIS, rule: "Analyze whether creating a separate ISPDN personal-data security unit is appropriate."}
+  - {id: FSB378-R061, locator: clause_24.b, class: SECURITY_UNIT_DECISION, rule: "Create the separate unit or assign its functions to an existing structural unit."}
+  - {id: FSB378-R062, locator: clause_25.a, class: LEVEL1_ROOM_WINDOWS, rule: "Protect vulnerable room windows on first or last floors and near access routes with grilles, shutters, alarm systems or equivalent means."}
+  - {id: FSB378-R063, locator: clause_25.b, class: LEVEL1_SERVER_ROOM_OPENINGS, rule: "Protect server-room windows and doors with grilles, alarm systems or equivalent means against uncontrolled entry."}
+  - {id: FSB378-R064, locator: clause_26, class: LEVEL1_CLASS_ROUTE, rule: "For level 1, use KA for threat type 1 and KV or higher for threat type 2."}
+
+class_order_weak_to_strong: [KS1, KS2, KS3, KV, KA]
+
+level_threat_class_matrix:
+  - {protection_level: 4, threat_type: TYPE_3, minimum_class: KS1, locator: clause_9.c}
+  - {protection_level: 3, threat_type: TYPE_2, minimum_class: KV, locator: clause_18}
+  - {protection_level: 3, threat_type: TYPE_3, minimum_class: KS1, locator: clause_18}
+  - {protection_level: 2, threat_type: TYPE_1, minimum_class: KA, locator: clause_21}
+  - {protection_level: 2, threat_type: TYPE_2, minimum_class: KV, locator: clause_21}
+  - {protection_level: 2, threat_type: TYPE_3, minimum_class: KS1, locator: clause_21}
+  - {protection_level: 1, threat_type: TYPE_1, minimum_class: KA, locator: clause_26}
+  - {protection_level: 1, threat_type: TYPE_2, minimum_class: KV, locator: clause_26}
+
+invalid_level_threat_combinations_under_pp1119:
+  - {protection_level: 4, threat_type: TYPE_1}
+  - {protection_level: 4, threat_type: TYPE_2}
+  - {protection_level: 3, threat_type: TYPE_1}
+  - {protection_level: 1, threat_type: TYPE_3}
+
+cumulative_measure_layers:
+  4: [clauses_5_to_15]
+  3: [clauses_5_to_15, clauses_16_to_18]
+  2: [clauses_5_to_15, clauses_16_to_18, clauses_19_to_21]
+  1: [clauses_5_to_15, clauses_16_to_18, clauses_19_to_21, clauses_22_to_26]
+
+evidence_model:
+  - {id: EVIDENCE_FSB378_APPLICABILITY_DECISION, proves: [FSB378-R001, FSB378-R002]}
+  - {id: EVIDENCE_FSB378_OPERATIONAL_DOCUMENT_CROSSWALK, proves: [FSB378-R003, FSB378-R004]}
+  - {id: EVIDENCE_FSB378_PP1119_LEVEL_AND_THREAT_TYPE, proves: [FSB378-R005, FSB378-R006, FSB378-R007, FSB378-R008]}
+  - {id: EVIDENCE_FSB378_ROOM_SECURITY_INSPECTION, proves: [FSB378-R009, FSB378-R010, FSB378-R011, FSB378-R012]}
+  - {id: EVIDENCE_FSB378_REMOVABLE_MEDIA_REGISTER, proves: [FSB378-R013, FSB378-R014, FSB378-R015]}
+  - {id: EVIDENCE_FSB378_DUTY_ACCESS_LIST, proves: [FSB378-R016, FSB378-R017]}
+  - {id: EVIDENCE_FSB378_ATTACKER_CAPABILITY_INPUTS, proves: [FSB378-R018]}
+  - {id: EVIDENCE_FSB378_APPROVED_ATTACKER_ASSUMPTIONS, proves: [FSB378-R019, FSB378-R021]}
+  - {id: EVIDENCE_FSB378_SKZI_CLASS_SELECTION, proves: [FSB378-R020, FSB378-R045, FSB378-R048, FSB378-R054, FSB378-R064]}
+  - {id: EVIDENCE_FSB378_CURRENT_PRODUCT_CLASS_STATUS, proves: [FSB378-R020]}
+  - {id: EVIDENCE_FSB378_KS1_PROFILE, proves: [FSB378-R022, FSB378-R023, FSB378-R024, FSB378-R025, FSB378-R026, FSB378-R027, FSB378-R028, FSB378-R029, FSB378-R030, FSB378-R031]}
+  - {id: EVIDENCE_FSB378_KS2_PROFILE, proves: [FSB378-R032, FSB378-R033, FSB378-R034, FSB378-R035]}
+  - {id: EVIDENCE_FSB378_KS3_PROFILE, proves: [FSB378-R036, FSB378-R037]}
+  - {id: EVIDENCE_FSB378_KV_PROFILE, proves: [FSB378-R038, FSB378-R039, FSB378-R040]}
+  - {id: EVIDENCE_FSB378_KA_PROFILE, proves: [FSB378-R041, FSB378-R042, FSB378-R043]}
+  - {id: EVIDENCE_FSB378_UNLISTED_CAPABILITY_GUARD, proves: [FSB378-R044]}
+  - {id: EVIDENCE_FSB378_RESPONSIBLE_PERSON_ORDER_AND_SKILLS, proves: [FSB378-R046, FSB378-R047]}
+  - {id: EVIDENCE_FSB378_JOURNAL_ACCESS_LIST, proves: [FSB378-R049, FSB378-R050]}
+  - {id: EVIDENCE_FSB378_REQUEST_PROVISION_LOG_TEST, proves: [FSB378-R051, FSB378-R052, FSB378-R053]}
+  - {id: EVIDENCE_FSB378_PERMISSION_CHANGE_LOG, proves: [FSB378-R055, FSB378-R057, FSB378-R058]}
+  - {id: EVIDENCE_FSB378_MONTHLY_PERMISSION_REVIEW, proves: [FSB378-R059]}
+  - {id: EVIDENCE_FSB378_SECURITY_UNIT_ANALYSIS_AND_ORDER, proves: [FSB378-R056, FSB378-R060, FSB378-R061]}
+  - {id: EVIDENCE_FSB378_LEVEL1_PHYSICAL_INSPECTION, proves: [FSB378-R062, FSB378-R063]}
+  - {id: EVIDENCE_FSB378_VERSION_STATUS, proves: [FSB378-R001]}
+  - {id: EVIDENCE_FSB378_LICENSE_SCOPE_SEPARATION, proves: [FSB378-R002, FSB378-R003]}
+
+conflict_and_definition_checks:
+  - {id: FSB378-C001, type: SKZI_USE_TRIGGER, resolution: "The order applies to operators using SKZI; do not infer universal cryptography from the existence of an ISPDN."}
+  - {id: FSB378-C002, type: PP1119_FIRST, resolution: "PP 1119 determines the protection level and relevant threat type; Order 378 maps those results after the SKZI-use trigger."}
+  - {id: FSB378-C003, type: ORIGINAL_CURRENT_EDITION, resolution: "The current public card lists the original 10 July 2014 edition; no amendment is invented."}
+  - {id: FSB378-C004, type: CUMULATIVE_ORGANIZATIONAL_LAYERS, resolution: "Higher protection levels inherit lower-level organizational measures, while class clauses expressly replace prior class routes."}
+  - {id: FSB378-C005, type: INVALID_LEVEL_THREAT_COMBINATIONS, resolution: "Do not invent class mappings for four level/type combinations that cannot result from PP 1119."}
+  - {id: FSB378-C006, type: THRESHOLD_NOT_EXACT_PRODUCT_CLASS, resolution: "KS1 or higher and KV or higher are minimum thresholds, not requirements to use exactly the named class."}
+  - {id: FSB378-C007, type: KS2_KS3_NOT_DIRECT_MATRIX_ROWS, resolution: "KS2 and KS3 capability profiles exist and can exceed KS1, but the level/type matrix does not name them as separate minimum rows."}
+  - {id: FSB378-C008, type: ENCRYPTED_MEDIA_EXCEPTION_NARROW, resolution: "Storage outside a safe applies only when the removable medium contains only SKZI-encrypted personal data; itemized accounting still applies."}
+  - {id: FSB378-C009, type: CONFORMITY_CONDITIONAL, resolution: "Clause 5(d) keeps the current-threat necessity condition; do not claim unconditional certification of every component."}
+  - {id: FSB378-C010, type: OPERATION_DOCS_ADDITIVE, resolution: "SKZI documentation and other applicable NPA add to, rather than replace, Order 378."}
+  - {id: FSB378-C011, type: CLASS_SELECTION_NEEDS_APPROVAL, resolution: "Class selection requires source data and operator-head-approved attacker capability assumptions, not only a protection-level number."}
+  - {id: FSB378-C012, type: CLASS_NOT_THREAT_TYPE, resolution: "Do not reverse-infer the PP 1119 threat type only from a desired or deployed SKZI class."}
+  - {id: FSB378-C013, type: SIX_MONTH_MAXIMUM_INTERVAL, resolution: "At least once every six months is a maximum interval between clause 20 functionality checks."}
+  - {id: FSB378-C014, type: MONTHLY_MAXIMUM_INTERVAL, resolution: "At least once a month is a maximum interval between clause 23(c) reviews."}
+  - {id: FSB378-C015, type: NO_LOG_RETENTION_PERIOD, resolution: "The order defines journal content, access and check intervals but no universal journal-retention period."}
+  - {id: FSB378-C016, type: NO_KEY_LIFETIME, resolution: "The order does not state a universal cryptographic-key lifetime or replacement interval."}
+  - {id: FSB378-C017, type: TWO_JOURNALS, resolution: "The level-2 electronic message journal and level-1 security journal have distinct content and controls."}
+  - {id: FSB378-C018, type: RESPONSIBLE_PERSON_AND_UNIT_DISTINCT, resolution: "The skilled responsible person at level 3 and the security-unit function at level 1 are separate requirements."}
+  - {id: FSB378-C019, type: CRYPTO_LICENSE_SEPARATE, resolution: "Use of SKZI does not by itself prove an operator needs a PP 313 cryptographic-activity licence; classify actual regulated work or service."}
+  - {id: FSB378-C020, type: PRODUCT_STATUS_SEPARATE, resolution: "A class threshold does not prove that a particular product version currently has the required FSB certificate/list status."}
+  - {id: FSB378-C021, type: ATTACK_PROFILE_NOT_EVENT, resolution: "Capability assumptions support design and class selection; they do not prove an attack occurred."}
+  - {id: FSB378-C022, type: UNLISTED_CAPABILITY_RULE, resolution: "Clause 15 prevents unlisted capabilities from changing this order's class procedure; it does not authorize ignoring them in the broader threat model."}
+  - {id: FSB378-C023, type: PHYSICAL_MEASURES_LEVEL_ROUTE, resolution: "Clause 25 strengthens level-1 room protection and does not erase the clause 6 baseline."}
+  - {id: FSB378-C024, type: ARTICLE19_AND_ORDER21_BOUNDARY, resolution: "Article 19, PP 1119, FSTEC Order 21 and FSB Order 378 are linked but remain separately evidenced normative layers."}
+
+red_team:
+  critical_gap_created: false
+  high_gap_created: false
+  status: PASS_MODEL_FAIL_GLOBAL_SCOPE_INCOMPLETE
+  residuals:
+    - MEDIUM_IMMUTABLE_OFFICIAL_CURRENT_BYTES_PENDING
+    - MEDIUM_CURRENT_PRODUCT_CERTIFICATE_LIST_SNAPSHOT_PENDING
+    - MEDIUM_EXHAUSTIVE_SKZI_OPERATION_AND_KEY_MANAGEMENT_CROSSWALK_PENDING
+    - MEDIUM_INDEPENDENT_EXPERT_REVIEW_PENDING

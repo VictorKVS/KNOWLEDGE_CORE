@@ -24,15 +24,25 @@ structure:
     - protection_level_2
     - protection_level_1
 status:
-  lifecycle: CURRENT_REFERENCE_FOUND
-  confidence: HIGH_BUT_REQUIRES_FINAL_PRIMARY_STATUS_CHECK
-  metadata: REVIEWED
-  full_text: SOURCE_TEXT_AVAILABLE_SECONDARY
-  atomization: PENDING
+  lifecycle: ACTIVE_ORIGINAL_EDITION
+  confidence: VERIFIED_AUTHORITATIVE_PUBLICATION_AND_CURRENT_TEXT_INTERFACE
+  metadata: VERIFIED
+  full_text: PRIMARY_PUBLICATION_CROSSCHECKED_CURRENT_TEXT
+  atomization: REGRESSION_PROTECTED
+  effective_from: 2014-09-28
+  checked_at: 2026-08-20
 sources:
+  - type: official_publication
+    name: Rossiyskaya_Gazeta
+    issue: 211
+    publication_date: 2014-09-17
+    effective_from: 2014-09-28
+    url: https://rg.ru/documents/2014/09/17/zashita-dok.html
   - type: current_legal_database
     name: ConsultantPlus
     document: cons_doc_LAW_167862
+    edition: 2014-07-10
+    amendments_listed: []
   - type: historical_publication_reference
     registration_number: 33620
 relations:
@@ -40,6 +50,15 @@ relations:
     type: IMPLEMENTS
   - to: PP-1119
     type: CRYPTO_MEASURES_BY_PROTECTION_LEVEL
+repo_bindings:
+  - security-knowledge/corpus/ru-personal-data/fsb-order-378-ispdn-crypto-controls-atomic-v1.yaml
+  - security-knowledge/corpus/ru-personal-data/fsb-order-378-ispdn-crypto-controls-regression-v1.json
+  - security-knowledge/validators/validate_fsb_order_378_ispdn_crypto_controls.py
+verification_boundary:
+  immutable_official_current_bytes: PENDING
+  exhaustive_product_certificate_lifecycle: PENDING
+  exhaustive_key_management_crosswalk: PENDING
+  independent_expert_review: PENDING
 expert_notes:
   - Do not confuse the existence of SKZI requirements with a requirement to use cryptography in every ISPDn; applicability must be derived from the applicable legal/security context.
-  - Atomization must preserve separate measures for levels 1, 2, 3 and 4 and links to organizational and technical evidence.
+  - Atomization preserves separate cumulative measures for levels 1, 2, 3 and 4 and the exact PP 1119 level/threat class routes.
