@@ -1,0 +1,181 @@
+schema_version: "1.0"
+id: FSTEC-MD-2026-ZOO-FAMILY
+title: "FSTEC 12 April 2026 methodical document: complete ZOO.1-ZOO.6 family"
+authority: FSTEC_RUSSIA
+approved_date: "2026-04-12"
+status: VERIFIED_BOUNDED_COMPLETE_ZOO_PUBLIC_TEXT_CROSSCHECK
+scope_statement: >-
+  Complete normalized coverage of section 4.16 measures ZOO.1-ZOO.6 for
+  protection from denial-of-service attacks: twenty-two implementation atoms,
+  five documentation items, eight enhancements, four exact numeric constraints
+  and all thirty-six appendix-2 cells. Operator-selected limits and methods are
+  not replaced by invented universal values.
+
+source_evidence:
+  official_page: https://fstec.ru/dokumenty/vse-dokumenty/spetsialnye-normativnye-dokumenty/metodicheskij-dokument-ot-12-aprelya-2026-g
+  official_endpoint_result: TIMEOUT_BYTES_NOT_ACQUIRED
+  section_locator: "section 4.16, ZOO.1-ZOO.6"
+  appendix_locator: "appendix 2, family 16, ZOO.1-ZOO.6 rows"
+  current_text_interfaces:
+    - https://www.garant.ru/products/ipo/prime/doc/413970697/
+    - https://wiki.privacy-advocates.ru/fstek_12.04.2026
+    - https://sudact.ru/law/metodicheskii-dokument-sostav-i-soderzhanie-meropriiatii-i/
+    - https://service.securitm.ru/docs/metod-doc-fstek-zashit-informat/4-16-zashhita-ot-kompiuternyx-atak-napravlennyx-na-otkaz-v-obsluzivanii-zoo
+  immutable_official_bytes: PENDING
+
+applicability:
+  trigger: INFORMATION_SYSTEM_HAS_SERVICES_OR_INTERFACES_EXPOSED_TO_EXTERNAL_USERS
+  rule: APPLY_CLASS_BASELINE_THEN_ADAPT_AND_VERIFY_AGAINST_THREATS
+  guard: ZOO_4_BLANK_BASE_ROW_AND_ZOO_6_K3_BLANK_CELL_ARE_NOT_PROHIBITIONS
+
+measures:
+  - code: "ЗОО.1"
+    title: "Защита от компьютерных атак, направленных на отказ в обслуживании, при доступе внешних пользователей к прикладным сервисам"
+    purpose: MAINTAIN_AVAILABILITY_DURING_DENIAL_OF_SERVICE_ATTACKS
+    implementation:
+      - PLACE_EXTERNAL_USER_APPLICATION_SERVICE_SERVERS_IN_DMZ_CONFORMING_TO_MSE_2
+      - FILTER_AND_CLEAN_EXTERNAL_TRAFFIC_AT_OR_BEFORE_DMZ_USING_OPERATOR_PROVIDER_CARRIER_AND_OR_SPECIALIZED_DDOS_FILTERING_SERVICE
+    documentation: []
+    enhancements: []
+    matrix:
+      base: {K3: PLUS, K2: PLUS, K1: PLUS}
+      enhancements: {K3: [], K2: [], K1: []}
+
+  - code: "ЗОО.2"
+    title: "Контроль и фильтрация входящего трафика"
+    purpose: EXCLUDE_ILLEGITIMATE_INBOUND_SERVICE_TRAFFIC_FLOWS
+    implementation:
+      - APPLY_INBOUND_FILTER_RULES_AFTER_DENIAL_OF_SERVICE_ATTACK_DETECTION
+      - APPLY_INBOUND_FILTER_RULES_AT_NETWORK_AND_TRANSPORT_LAYERS
+      - APPLY_AND_MAINTAIN_CURRENT_TRANSPORT_LAYER_INTERNET_COMMUNICATION_MATRIX_RULES
+      - DEFINE_REQUIRED_PEER_NETWORK_ADDRESSES_AND_APPLY_ALLOWLISTS
+      - CONDITIONALLY_EXCLUDE_NON_RUSSIAN_IP_TRAFFIC_BY_GEOIP_DURING_ATTACK_WHEN_COMMUNICATION_MATRIX_FILTERING_CANNOT_MAINTAIN_AVAILABILITY
+      - USE_APPLICATION_LAYER_SPECIALIZED_MEANS_AND_OR_PROVIDER_CARRIER_OR_FILTERING_SERVICE
+    documentation:
+      - DEFINE_ALWAYS_INTERNET_AVAILABLE_INTERFACES_AND_SERVICES_REQUIRING_DDOS_PROTECTION
+      - DEFINE_PARTICIPATING_UNITS_WORKERS_FUNCTIONS_AUTHORITIES_AND_INTERACTION_PROCEDURE
+      - RETAIN_DDOS_ATTACK_FACT_INFORMATION_AND_REQUIRED_FIELDS_FOR_THREE_YEARS
+    enhancements:
+      - {number: 1, rule: APPLY_INBOUND_TRAFFIC_FILTER_RULES_CONTINUOUSLY}
+      - {number: 2, rule: ENABLE_TLS_TRAFFIC_ANALYSIS_BY_DECRYPTION_OR_ACCESS_EVENT_LOG_INFORMATION}
+    matrix:
+      base: {K3: PLUS, K2: PLUS, K1: PLUS}
+      enhancements: {K3: [], K2: [], K1: [1]}
+
+  - code: "ЗОО.3"
+    title: "Мониторинг состояния сервисов и интерфейсов"
+    purpose: CONTINUOUSLY_MONITOR_AVAILABILITY_AND_PERFORMANCE_OF_SERVICES_AND_DDOS_PROTECTION_MEANS
+    implementation:
+      - MONITOR_CPU_MEMORY_AND_NETWORK_INTERFACE_LOAD_FOR_SERVERS_VMS_NETWORK_EQUIPMENT_AND_PERIMETER_PROTECTION_MEANS
+      - MONITOR_CONCURRENT_CONNECTION_COUNT_FOR_STATEFUL_NETWORK_FUNCTION_MEANS
+      - MONITOR_APPLICATION_LAYER_REQUEST_COUNT
+      - MONITOR_COUNT_AND_TYPES_OF_APPLICATION_AND_SERVICE_RESPONSE_ERRORS
+      - CONTINUOUSLY_REGISTER_SERVICE_AND_INTERFACE_UNAVAILABILITY_EVENTS
+    documentation:
+      - DEFINE_KEY_PERFORMANCE_INDICATORS_FOR_MONITORED_SERVICES_AND_MEANS
+      - DEFINE_RESPONSE_PROCEDURE_FOR_SERVICE_AND_INTERFACE_UNAVAILABILITY_EVENTS
+    enhancements:
+      - {number: 1, rule: MONITOR_PROVIDER_CARRIER_OR_FILTERING_SERVICE_CORE_METRICS_AND_EFFECTIVENESS_WHEN_USED}
+      - {number: 2, rule: MONITOR_APPLICATION_LAYER_AVAILABILITY_USING_TOOLS_LOCATED_ON_THE_INTERNET}
+    matrix:
+      base: {K3: PLUS, K2: PLUS, K1: PLUS}
+      enhancements: {K3: [], K2: [], K1: []}
+
+  - code: "ЗОО.4"
+    title: "Балансировка нагрузки"
+    purpose: IMPROVE_SERVICE_RESILIENCE_DURING_DENIAL_OF_SERVICE_ATTACKS
+    implementation:
+      - CONNECT_BY_INDEPENDENT_PHYSICAL_CHANNELS_TO_MULTIPLE_INTERNET_PROVIDERS_AND_RECEIVE_TRAFFIC_SIMULTANEOUSLY
+      - WHEN_EXTERNAL_SERVICES_ARE_USED_SELECT_PROVIDER_SATISFYING_MULTI_PROVIDER_INDEPENDENT_CHANNEL_REQUIREMENT
+      - ENABLE_VERTICAL_SCALING_OF_APPLICATION_SERVICES_DURING_DENIAL_OF_SERVICE_ATTACKS
+    documentation: []
+    enhancements:
+      - {number: 1, rule: ENABLE_HORIZONTAL_SCALING_AND_LOAD_DISTRIBUTION_BETWEEN_NODES_DURING_ATTACKS}
+      - {number: 2, rule: CONDITIONALLY_DISTRIBUTE_LOAD_SIMULTANEOUSLY_ACROSS_TWO_GEOGRAPHIC_SITES_WHEN_ARCHITECTURE_SUPPORTS_IT}
+    matrix:
+      base: {K3: BLANK, K2: BLANK, K1: BLANK}
+      enhancements: {K3: [], K2: [], K1: []}
+
+  - code: "ЗОО.5"
+    title: "Ограничение нагрузки"
+    purpose: LIMIT_RESOURCE_EXHAUSTION_CONDITIONS
+    implementation:
+      - LIMIT_MAXIMUM_CONCURRENT_TCP_CONNECTIONS_PER_IP_USING_OPERATOR_METHOD_AND_SOURCE_DATA
+      - LIMIT_DNS_SERVER_RESPONSE_RATE
+      - LIMIT_MAXIMUM_CONCURRENT_APPLICATION_REQUESTS_PER_SECOND_PER_IP_USING_OPERATOR_METHOD_AND_SOURCE_DATA
+      - MONITOR_TRAFFIC_AND_DETECT_ANOMALOUS_BEHAVIOR_WHILE_RATE_LIMITING
+    documentation: []
+    enhancements: []
+    matrix:
+      base: {K3: PLUS, K2: PLUS, K1: PLUS}
+      enhancements: {K3: [], K2: [], K1: []}
+
+  - code: "ЗОО.6"
+    title: "Поддержка резерва достаточной пропускной способности и расширение ресурсов при сбоях"
+    purpose: MAINTAIN_CAPACITY_RESERVE_FOR_ATTACK_TRAFFIC_PROCESSING
+    implementation:
+      - PROVIDE_AT_LEAST_TWOFOLD_INTERNET_PROVIDER_CHANNEL_BANDWIDTH_RESERVE_USING_OPERATOR_METHOD_AND_SOURCE_DATA
+      - PROVIDE_AT_LEAST_TWOFOLD_TRAFFIC_PROCESSING_RESERVE_ON_OPERATOR_DEFINED_SYSTEM_ELEMENTS
+    documentation: []
+    enhancements:
+      - {number: 1, rule: PROVIDE_TWOFOLD_INTERNAL_PATH_BANDWIDTH_RESERVE_FROM_INTERNET_INTERCONNECTION_TO_APPLICATION_SERVICE_BASED_ON_PEAK_LEGITIMATE_ATTACK_TRAFFIC}
+      - number: 2
+        rule: USE_TRUSTED_HIGH_PERFORMANCE_NETWORK_HARDWARE_THAT_BYPASSES_STANDARD_KERNEL_NETWORK_STACK_LIMITS
+        non_exhaustive_examples: [DPDK, XDP, PF_RING, OTHER]
+    matrix:
+      base: {K3: BLANK, K2: PLUS, K1: PLUS}
+      enhancements: {K3: [], K2: [], K1: []}
+
+numeric_constraints:
+  - {id: ZOO2_ATTACK_INFORMATION_RETENTION, measure: "ЗОО.2", relation: AT_LEAST, value: 3, unit: YEAR}
+  - {id: ZOO6_PROVIDER_BANDWIDTH_RESERVE, measure: "ЗОО.6", relation: AT_LEAST_FACTOR, value: 2, unit: TIMES}
+  - {id: ZOO6_PROCESSING_RESERVE, measure: "ЗОО.6", relation: AT_LEAST_FACTOR, value: 2, unit: TIMES}
+  - {id: ZOO6_INTERNAL_PATH_RESERVE_ENHANCEMENT_1, measure: "ЗОО.6", relation: FACTOR, value: 2, unit: TIMES}
+
+operator_defined_parameters:
+  - {id: ZOO2_COMMUNICATION_MATRIX, measure: "ЗОО.2", type: INTERNET_TRANSPORT_COMMUNICATION_MATRIX, universal_value: NOT_STATED}
+  - {id: ZOO2_ALLOWED_NETWORK_ADDRESSES, measure: "ЗОО.2", type: REQUIRED_PEER_NETWORK_ADDRESS_ALLOWLIST, universal_value: NOT_STATED}
+  - {id: ZOO2_PROTECTED_INTERFACE_SERVICE_SET, measure: "ЗОО.2", type: ALWAYS_AVAILABLE_INTERNET_INTERFACE_AND_SERVICE_SET, universal_value: NOT_STATED}
+  - {id: ZOO3_KPI_SET, measure: "ЗОО.3", type: SERVICE_AND_PROTECTION_MEANS_KEY_PERFORMANCE_INDICATORS, universal_value: NOT_STATED}
+  - {id: ZOO3_UNAVAILABILITY_RESPONSE_PROCEDURE, measure: "ЗОО.3", type: EVENT_RESPONSE_PROCEDURE, universal_value: NOT_STATED}
+  - {id: ZOO4_PROVIDER_CHANNEL_ARCHITECTURE, measure: "ЗОО.4", type: MULTI_PROVIDER_INDEPENDENT_CHANNEL_ARCHITECTURE, universal_value: NOT_STATED}
+  - {id: ZOO5_MAX_TCP_CONNECTIONS_PER_IP, measure: "ЗОО.5", type: OPERATOR_METHOD_DERIVED_LIMIT, universal_value: NOT_STATED}
+  - {id: ZOO5_DNS_RESPONSE_RATE, measure: "ЗОО.5", type: OPERATOR_DEFINED_RATE_LIMIT, universal_value: NOT_STATED}
+  - {id: ZOO5_MAX_APPLICATION_REQUESTS_PER_SECOND_PER_IP, measure: "ЗОО.5", type: OPERATOR_METHOD_DERIVED_LIMIT, universal_value: NOT_STATED}
+  - {id: ZOO6_RESERVE_CALCULATION_METHOD_AND_SOURCE_DATA, measure: "ЗОО.6", type: RESERVE_CALCULATION_METHOD_AND_SOURCE_DATA, universal_value: NOT_STATED}
+  - {id: ZOO6_PROCESSING_RESERVE_ELEMENT_SET, measure: "ЗОО.6", type: OPERATOR_DEFINED_SYSTEM_ELEMENT_SET, universal_value: NOT_STATED}
+
+class_matrix_summary:
+  cells_total: 36
+  nonblank_cells: 17
+  blank_cells: 19
+  fully_blank_measure_rows: ["ЗОО.4"]
+  partially_blank_measure_rows: {"ЗОО.6": [K3]}
+  class_listed_base_measures: ["ЗОО.1", "ЗОО.2", "ЗОО.3", "ЗОО.5", "ЗОО.6"]
+  class_listed_enhancements: {"ЗОО.2": {K3: [], K2: [], K1: [1]}}
+  rule: BLANK_BASE_OR_ENHANCEMENT_CELL_DOES_NOT_DELETE_ADAPTATION_VERIFICATION_OR_COMPENSATION
+
+scope_guards:
+  - DO_NOT_TREAT_ZOO_4_BLANK_ROW_OR_ZOO_6_K3_BLANK_CELL_AS_PROHIBITION_OR_PROOF_OF_NON_APPLICABILITY
+  - DO_NOT_APPLY_ZOO_2_GEOIP_FILTERING_UNCONDITIONALLY_OUTSIDE_THE_STATED_ATTACK_AND_AVAILABILITY_CONDITION
+  - DO_NOT_REDUCE_THE_THREE_YEAR_ATTACK_INFORMATION_RETENTION_PERIOD
+  - DO_NOT_INVENT_TCP_DNS_REQUEST_RATE_OR_OTHER_LOAD_LIMITS
+  - DO_NOT_TREAT_ZOO_2_ENHANCEMENT_2_AS_CLASS_LISTED
+  - DO_NOT_REQUIRE_ZOO_4_GEOGRAPHIC_DISTRIBUTION_WHERE_ARCHITECTURE_DOES_NOT_SUPPORT_IT
+  - DO_NOT_APPLY_ZOO_6_TO_K3_FROM_BASE_MATRIX_ALONE
+  - DO_NOT_TREAT_HIGH_PERFORMANCE_NETWORK_TECHNOLOGY_EXAMPLES_AS_EXHAUSTIVE
+  - DO_NOT_TREAT_ZOO_AS_REPLACEMENT_FOR_MSE_SOV_RSB_ZKS_OR_PROVIDER_CONTRACT_CONTROLS
+
+verification_boundary:
+  section_4_16_zoo_1_6: VERIFIED_PUBLIC_TEXT_CROSSCHECK
+  complete_zoo_family: VERIFIED_PUBLIC_TEXT_CROSSCHECK_6_OF_6
+  implementation_requirements: VERIFIED_NORMALIZED_PUBLIC_TEXT_CROSSCHECK
+  documentation_requirements: VERIFIED_NORMALIZED_PUBLIC_TEXT_CROSSCHECK
+  enhancement_entries: VERIFIED_NORMALIZED_PUBLIC_TEXT_CROSSCHECK
+  exact_numeric_constraints: VERIFIED_FOUR_CONSTRAINTS
+  exact_zoo_class_cells: VERIFIED_PUBLIC_TEXT_CROSSCHECK_36
+  product_specific_ddos_provider_firewall_and_capacity_profiles: PENDING_SEPARATE_PROFILE_MODELS
+  official_immutable_bytes: PENDING
+  independent_expert_review: PENDING
+  critical_gap_created: false
+  high_gap_created: false
