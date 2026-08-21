@@ -1,0 +1,176 @@
+schema_version: "1.0"
+kind: ru-protected-information-master-inventory-delta
+base_inventory: "master-inventory.yaml"
+reconciliation_base_delta: "master-inventory-delta-2026-08-21T0515.yaml"
+checked_at: "2026-08-21T08:26:31+03:00"
+owner_stream: STREAM_3_SECTOR_OVERLAYS
+run_ref: "stream-3-run-2026-08-21T0826.yaml"
+status: APPEND_ONLY_RECONCILIATION_READY
+
+concurrency_guard: >-
+  This delta is append-only. Reconcile it after the 2026-08-21T0515 Stream 3 delta and do not overwrite adjacent
+  Stream 2/Stream 3 inventory work.
+
+proof_floor:
+  - "A primary normative act is required for legal conclusions; secondary legal databases are used only for current-version discovery/cross-checking when the primary portal cannot be fetched."
+  - "An official agency-hosted copy is recorded as such and is not relabeled as the official-publication binary."
+  - "Exact byte capture is not counted immutable until the bytes are durably persisted in the repository/artifact store."
+  - "A version event that does not change the protected locator must not be treated as a changed confidentiality requirement."
+  - "No sector overlap implies 152-ФЗ applicability."
+
+counter_state_before_reconciled:
+  found: 23
+  downloaded: 9
+  immutable: 9
+  pending: 12
+  reused: 2
+  primary_publication_verified: 10
+  primary_current_authority_text_verified_pending: 1
+  sectors_registered: 16
+
+counter_state_after_reconciliation:
+  found: 24
+  downloaded: 9
+  immutable: 9
+  pending: 13
+  reused: 2
+  primary_publication_verified: 10
+  primary_current_authority_text_verified_pending: 1
+  sectors_registered: 16
+  new_sources_this_run: 1
+  new_immutable_this_run: 0
+  exact_binary_capture_ephemeral_successes_this_run: 1
+  source_version_edges_identified_this_run: 5
+  protected_locator_updates_this_run: 1
+
+sources_added:
+  - source_id: SEC-SRC-RU-FZ-176-1999
+    source_card: "security-corpora/RU/protected-information/source/SEC-SRC-RU-FZ-176-1999.yaml"
+    sector: communications
+    regime: postal_communications_secrecy
+    lifecycle_state: PRIMARY_ACT_PROTECTED_LOCATOR_VERIFIED_AGENCY_ARTIFACT_CAPTURED_VERSION_CHAIN_PARTIAL
+    primary_anchor:
+      locator: "статья 15 — Тайна связи"
+      concepts:
+        - POSTAL_COMMUNICATIONS_SECRECY
+        - ADDRESS_DATA_CONFIDENTIALITY
+        - POSTAL_ITEM_INFORMATION_CONFIDENTIALITY
+        - POSTAL_MONEY_TRANSFER_INFORMATION_CONFIDENTIALITY
+      finding: >-
+        Article 15 protects correspondence and postal/telegraph/other communications, requires postal operators to
+        preserve communications secrecy, and treats address data plus information about postal items, postal money
+        transfers and other communications as communications secrecy.
+    pdn_overlap:
+      state: CANDIDATE_PENDING_FIELD_AND_SCENARIO_REVIEW
+      finding: >-
+        Address and user-linked postal information may contain personal data, but postal communications secrecy is a
+        separate statutory protected-information regime and is not equivalent to 152-ФЗ applicability.
+    exact_capture:
+      source: OFFICIAL_AGENCY_HOSTED_COPY
+      authority: "Управление Росгвардии по Карачаево-Черкесской Республике"
+      source_url: "https://17.rosguard.gov.ru/uploads/2026/06/federalnyjj_zakon_ot_17071999_n_176fz_red_ot_10062026.pdf"
+      edition_marked_in_file: "ред. от 10.06.2026"
+      retrieved_at: "2026-08-21T05:26:31Z"
+      mime: "application/pdf"
+      byte_length: 521530
+      sha256: "4320e6a7be2715fe48b13df6f06ecc2a3c50b9884d7412592b5f17b012d1de7f"
+      capture_record: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-176-1999-capture-pending.json"
+      persistence_state: EXACT_BYTES_CAPTURED_EPHEMERAL_GITHUB_BINARY_WRITE_PENDING
+      immutable_counted: false
+
+version_events_identified:
+  - act: "264-ФЗ от 26.07.2026"
+    target: "SEC-SRC-RU-FZ-143-1997"
+    target_number: "143-ФЗ"
+    official_publication_id: "0001202607260023"
+    official_publication_date: "2026-07-26"
+    official_url_candidate: "https://publication.pravo.gov.ru/document/0001202607260023"
+    evidence_state: OFFICIAL_PUBLICATION_LOCATOR_CROSS_REFERENCED_PRIMARY_PORTAL_FETCH_PENDING
+    effective_date: "2026-07-26"
+    effect:
+      locator: "143-ФЗ статья 13.2"
+      concepts:
+        - EGR_ZAGS_INTERAGENCY_ACCESS
+        - RECIPIENT_SCOPE_EXPANSION
+        - PROVIDED_INFORMATION_PROTECTION_DUTY
+      protected_information_relevance: DIRECT
+      note: >-
+        The amendment expands specified Ministry of Defence/Rosgvardiya access paths to EGR ZAGS information and the
+        resulting current rule set includes a protection duty for provided information. Exact primary portal bytes and
+        locator-level current consolidated artifact remain pending.
+    new_edge: "264-ФЗ -> 143-ФЗ"
+
+  - act: "271-ФЗ от 26.07.2026"
+    official_publication_id: "0001202607260030"
+    official_publication_date: "2026-07-26"
+    official_url_candidate: "https://publication.pravo.gov.ru/document/0001202607260030"
+    evidence_state: OFFICIAL_PUBLICATION_LOCATOR_CORROBORATED_PRIMARY_PORTAL_FETCH_PENDING
+    targets:
+      - target: "SEC-SRC-RU-FZ-87-2003"
+        current_effect: "Article 4 point 1 of 271-ФЗ changes 87-ФЗ Article 1 point 2 from 2026-08-06."
+        protected_locator_effect: NONE_IDENTIFIED_ON_ARTICLE_4_POINTS_6_10_11
+        new_edge: "271-ФЗ -> 87-ФЗ"
+      - target: "SEC-SRC-RU-FZ-126"
+        effective_from: "2027-03-01"
+        protected_locator_effect: FUTURE_VERSION_EVENT_NO_CURRENT_ARTICLE_63_CHANGE_RECORDED
+        new_edge: "271-ФЗ -> 126-ФЗ"
+      - target: "SEC-SRC-RU-FZ-176-1999"
+        effective_schedule: "Article 15 part 3 amendment from 2027-03-01; other 176-ФЗ changes have staged 2027 dates."
+        protected_locator_effect: FUTURE_ARTICLE_15_SCOPE_EXPANSION
+        new_edge: "271-ФЗ -> 176-ФЗ"
+    guard: >-
+      Only the 87-ФЗ Article 1 point 2 amendment is treated as currently effective in this event on 2026-08-21.
+      Future 2027 changes are version-chain evidence, not current executable requirements.
+
+  - act: "272-ФЗ от 26.07.2026"
+    target: "SEC-SRC-RU-FZ-38-2006"
+    target_number: "38-ФЗ"
+    official_publication_id: "0001202607260031"
+    official_publication_date: "2026-07-26"
+    official_url_candidate: "https://publication.pravo.gov.ru/document/0001202607260031"
+    evidence_state: OFFICIAL_PUBLICATION_LOCATOR_CORROBORATED_PRIMARY_PORTAL_FETCH_PENDING
+    effective_date: "2026-08-06"
+    effect: "Changes Articles 21 and 38 concerning wine-sector advertising."
+    protected_locator_effect: "No change to the existing Stream 3 discovery anchor Article 18 (telecom advertising consent) identified in this amendment."
+    new_edge: "272-ФЗ -> 38-ФЗ"
+
+source_currentness_corrections:
+  - source_id: SEC-SRC-RU-FZ-87-2003
+    prior_latest_event: "140-ФЗ от 07.06.2025"
+    correction: >-
+      A post-2025 event exists: 271-ФЗ Article 4 point 1 has been effective since 2026-08-06 and changes 87-ФЗ Article 1.
+      It does not alter the recorded Article 4(6)/(10)/(11) retention/localization/cross-border anchors in the evidence
+      reviewed this run. Therefore those anchors remain separate and unchanged, while the full source version chain is
+      updated to include 271-ФЗ.
+
+acquisition_delta:
+  exact_capture_successes_ephemeral: 1
+  durable_immutable_artifacts_added: 0
+  captures:
+    - source_id: SEC-SRC-RU-FZ-176-1999
+      result: EXACT_BYTES_CAPTURED_PERSISTENCE_PENDING
+      mime: "application/pdf"
+      byte_length: 521530
+      sha256: "4320e6a7be2715fe48b13df6f06ecc2a3c50b9884d7412592b5f17b012d1de7f"
+  unresolved_primary_exact_capture:
+    - SEC-SRC-RU-FZ-176-1999_CURRENT_CONSOLIDATED
+    - SEC-SRC-RU-FZ-87-2003
+    - SEC-SRC-RU-FZ-168-2020
+    - SEC-SRC-RU-FZ-143-1997
+    - SEC-SRC-RU-FZ-38-2006
+  persistence_note: >-
+    The 176-ФЗ agency PDF was downloaded successfully and fingerprinted, but no direct binary GitHub write path was
+    available through the connected write interface in this run. Immutable counters are therefore not increased.
+
+proof_floor_effect:
+  executable_rules_changed: false
+  applicability_edges_promoted: 0
+  duplicate_source_nodes_created: 0
+  legal_conflicts_confirmed: 0
+  source_nodes_added: 1
+  current_protected_locators_added: 1
+  future_effective_rules_promoted: 0
+
+merge_rule: >-
+  Reconcile after master-inventory-delta-2026-08-21T0515.yaml. Resulting source universe is 24 sources:
+  9 immutable, 13 pending, 2 reused. The new 176-ФЗ node is pending durable current-artifact/version-chain gates.
