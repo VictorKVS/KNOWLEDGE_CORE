@@ -1,0 +1,229 @@
+schema_version: "1.0"
+id: FSTEC-MD-2026-ZMU-FAMILY
+title: "FSTEC 12 April 2026 methodical document: complete ZMU.1-ZMU.9 family"
+authority: FSTEC_RUSSIA
+approved_date: "2026-04-12"
+status: VERIFIED_BOUNDED_COMPLETE_ZMU_PUBLIC_TEXT_CROSSCHECK
+scope_statement: >-
+  Complete normalized coverage of section 4.10 measures ZMU.1-ZMU.9 for
+  mobile-device protection: thirty-six implementation atoms, one documentation
+  item, fifteen enhancements, six exact password constraints and all fifty-four
+  appendix-2 cells. ZMU.8 has a fully blank class row and is not baseline for
+  K3, K2 or K1; adaptation and threat verification remain available.
+
+source_evidence:
+  official_page: https://fstec.ru/dokumenty/vse-dokumenty/spetsialnye-normativnye-dokumenty/metodicheskij-dokument-ot-12-aprelya-2026-g
+  official_endpoint_result: TIMEOUT_BYTES_NOT_ACQUIRED
+  section_locator: "section 4.10, ZMU.1-ZMU.9"
+  appendix_locator: "appendix 2, family 10, ZMU.1-ZMU.9 rows"
+  current_text_interfaces:
+    - https://base.garant.ru/414070697/
+    - https://wiki.privacy-advocates.ru/fstek_12.04.2026
+    - https://sudact.ru/law/metodicheskii-dokument-sostav-i-soderzhanie-meropriiatii-i/
+    - https://normativ.kontur.ru/document/1/506081-metodicheskiy-dokument-sostav-i-soderzhanie-meropriyatiy-i-mer-po-zashchite-informatsii
+  immutable_official_bytes: PENDING
+
+applicability:
+  trigger: MOBILE_DEVICE_ACCESSES_INFORMATION_SYSTEM_OR_PROCESSES_SYSTEM_INFORMATION
+  rule: APPLY_MEASURE_WHEN_CLASS_MATRIX_AND_SELECTION_PIPELINE_SELECTS_IT_AND_MOBILE_TRIGGER_IS_MET
+  guard: DO_NOT_GENERALIZE_ZMU_TO_NON_MOBILE_ENDPOINTS
+
+measures:
+  - code: "ЗМУ.1"
+    title: "Идентификация и аутентификация пользователей"
+    purpose: PREVENT_ACCESS_BY_UNIDENTIFIED_OR_UNAUTHENTICATED_MOBILE_USERS
+    implementation:
+      - IDENTIFY_AND_AUTHENTICATE_MOBILE_USERS_IN_ACCORDANCE_WITH_IAF_1_TO_IAF_4
+      - USE_SIMPLE_PASSWORD_AUTHENTICATION_ON_MOBILE_DEVICE
+      - REQUIRE_PASSWORD_LENGTH_AT_LEAST_6_CHARACTERS
+      - LIMIT_FAILED_PASSWORD_ATTEMPTS_BEFORE_ACCOUNT_BLOCK_TO_5
+      - BLOCK_MOBILE_DEVICE_OR_USER_ACCOUNT_FOR_15_MINUTES_AT_FAILED_ATTEMPT_LIMIT
+      - CHANGE_PASSWORD_NO_LATER_THAN_30_DAYS
+      - PROHIBIT_REUSE_OF_LAST_12_PASSWORDS
+      - IMPLEMENT_WITH_OPERATING_SYSTEM_AND_OR_IDENTIFICATION_AUTHENTICATION_MEANS
+    documentation: []
+    enhancements:
+      - {number: 1, rule: REQUIRE_MOBILE_DEVICE_LOGIN_PASSWORD_LENGTH_AT_LEAST_10_CHARACTERS}
+    matrix:
+      base: {K3: PLUS, K2: PLUS, K1: PLUS}
+      enhancements: {K3: [], K2: [1], K1: [1]}
+
+  - code: "ЗМУ.2"
+    title: "Управление доступом пользователей к мобильным устройствам"
+    purpose: PREVENT_UNAUTHORIZED_USER_ACCESS_TO_MOBILE_DEVICES
+    implementation:
+      - CONTROL_MOBILE_USER_ACCESS_UNDER_UPD_1_TO_UPD_9_AND_MANAGE_RIGHTS_TO_APPLICATIONS_INFORMATION_AND_OTHER_OBJECTS
+      - APPLY_LEAST_PRIVILEGE_WHEN_MOBILE_USERS_ACCESS_SYSTEM_OR_MOBILE_INFORMATION
+      - IMPLEMENT_WITH_OPERATING_SYSTEM_AND_OR_IDENTIFICATION_AUTHENTICATION_AND_OR_MOBILE_DEVICE_MANAGEMENT_MEANS
+    documentation: []
+    enhancements: []
+    matrix:
+      base: {K3: PLUS, K2: PLUS, K1: PLUS}
+      enhancements: {K3: [], K2: [], K1: []}
+
+  - code: "ЗМУ.3"
+    title: "Обеспечение целостности"
+    purpose: ENSURE_MOBILE_DEVICE_SOFTWARE_ENVIRONMENT_INTEGRITY
+    implementation:
+      - CONTROL_MOBILE_OPERATING_SYSTEM_INTEGRITY
+      - CONTROL_MOBILE_SECURITY_SOFTWARE_INTEGRITY
+      - CONTROL_MOBILE_APPLICATION_SOFTWARE_INTEGRITY
+      - IMPLEMENT_WITH_OPERATING_SYSTEM_MOBILE_DEVICE_MANAGEMENT_AND_OR_OTHER_SECURITY_MEANS
+    documentation: []
+    enhancements:
+      - {number: 1, rule: PROHIBIT_DEVELOPMENT_AND_DEBUG_FUNCTIONS_OR_RUN_INTEGRITY_CONTROL_AFTER_EACH_NECESSARY_DEVELOPMENT_OR_DEBUG_PROCESS}
+      - {number: 2, rule: BLOCK_SOFTWARE_EXECUTION_AND_OR_MOBILE_DEVICE_ON_INTEGRITY_VIOLATION}
+      - {number: 3, rule: TRUSTED_BOOT_MOBILE_OPERATING_SYSTEMS_PROCESSING_RESTRICTED_INFORMATION_OR_SIGNIFICANT_FUNCTIONS}
+    matrix:
+      base: {K3: PLUS, K2: PLUS, K1: PLUS}
+      enhancements: {K3: [], K2: [1], K1: [1, 2]}
+
+  - code: "ЗМУ.4"
+    title: "Защита данных"
+    purpose: PROTECT_SYSTEM_DATA_PROCESSED_STORED_OR_TRANSMITTED_BY_MOBILE_DEVICES
+    implementation:
+      - PROHIBIT_ACCESS_APPLICATION_FROM_SAVING_SYSTEM_DATA_TO_PUBLIC_MOBILE_DIRECTORIES
+      - SAVE_SYSTEM_DATA_ONLY_IN_ISOLATED_MEMORY_ACCESSIBLE_ONLY_TO_THE_APPLICATION
+      - BLOCK_MOBILE_BACKUP_OF_SYSTEM_DATA_TO_PUBLIC_INTERNET_CLOUD_SERVICES
+      - IMPLEMENT_WITH_OPERATING_SYSTEM_AND_OR_MOBILE_DEVICE_MANAGEMENT_MEANS
+      - EXCHANGE_DATA_WITH_SYSTEM_OVER_INTERNET_WITH_ZKS_1_MEASURE_APPLIED
+    documentation: []
+    enhancements:
+      - {number: 1, rule: REMOTELY_WIPE_OR_FACTORY_RESET_WHEN_FAILED_UNLOCK_ATTEMPTS_EXCEED_ALLOWABLE_COUNT_BY_MORE_THAN_TWO_TIMES}
+      - {number: 2, rule: PREVENT_SCREENSHOT_SAVING_FROM_APPLICATION_USED_TO_ACCESS_INFORMATION_SYSTEM}
+      - {number: 3, rule: CLEAR_MEMORY_AND_REINSTALL_SOFTWARE_WHEN_TRANSFERRING_MOBILE_DEVICE_BETWEEN_USERS}
+    matrix:
+      base: {K3: PLUS, K2: PLUS, K1: PLUS}
+      enhancements: {K3: [], K2: [], K1: [1]}
+
+  - code: "ЗМУ.5"
+    title: "Антивирусная защита"
+    purpose: COUNTER_MALWARE_INTRODUCTION_AND_SPREAD_ON_MOBILE_DEVICES
+    implementation:
+      - PROVIDE_MOBILE_ANTIVIRUS_PROTECTION_IN_ACCORDANCE_WITH_AVZ_1
+      - IMPLEMENT_WITH_ANTIVIRUS_PROTECTION_MEANS
+    documentation: []
+    enhancements: []
+    matrix:
+      base: {K3: PLUS, K2: PLUS, K1: PLUS}
+      enhancements: {K3: [], K2: [], K1: []}
+
+  - code: "ЗМУ.6"
+    title: "Контроль приложений"
+    purpose: MANAGE_MOBILE_APPLICATION_INSTALLATION_EXECUTION_OPERATION_AND_UPDATE
+    implementation:
+      - CONTROL_MOBILE_APPLICATION_INSTALLATION_EXECUTION_OPERATION_AND_UPDATE
+      - PROHIBIT_INSTALLATION_AND_EXECUTION_OF_UNAUTHORIZED_APPLICATIONS
+      - RUN_APPLICATIONS_WITH_MINIMUM_RIGHTS_REQUIRED_FOR_OPERATION
+      - MANAGE_APPLICATION_RIGHTS_TO_DEVICE_INTERFACES_AND_MOBILE_OS_RESOURCES
+      - PROHIBIT_REMOTE_DEVICE_MANAGEMENT_BY_THIRD_PARTY_APPLICATIONS_NOT_PART_OF_OR_NOT_SECURITY_MEANS
+      - IMPLEMENT_WITH_OPERATING_SYSTEM_AND_OR_MOBILE_DEVICE_MANAGEMENT_MEANS
+    documentation:
+      - DEFINE_COMPOSITION_OF_SOFTWARE_APPLICATIONS_TO_BE_INSTALLED_ON_MOBILE_DEVICES_IN_SYSTEM_OPERATION_DOCUMENTATION
+    enhancements:
+      - {number: 1, rule: CENTRALLY_MANAGE_APPLICATION_CONFIGURATION_AND_RIGHTS_INCLUDING_SECURITY_SOFTWARE_COMPONENTS}
+      - {number: 2, rule: USE_AUTOMATED_INVENTORY_MEANS_TO_ACCOUNT_FOR_MOBILE_DEVICES}
+    matrix:
+      base: {K3: PLUS, K2: PLUS, K1: PLUS}
+      enhancements: {K3: [], K2: [], K1: []}
+
+  - code: "ЗМУ.7"
+    title: "Ограничение и контроль функциональности"
+    purpose: LIMIT_ATTACKER_ACCESS_TO_MOBILE_DEVICES_THROUGH_INTERFACES
+    implementation:
+      - DEFINE_WIRELESS_DATA_CHANNELS_ALLOWED_ON_MOBILE_DEVICES
+      - DEFINE_INPUT_OUTPUT_INTERFACES_ALLOWED_ON_MOBILE_DEVICES
+      - PROHIBIT_USE_OF_UNAPPROVED_WIRELESS_CHANNELS_AND_INPUT_OUTPUT_INTERFACES
+      - IMPLEMENT_WITH_OPERATING_SYSTEM_AND_OR_MOBILE_DEVICE_MANAGEMENT_MEANS
+    documentation: []
+    enhancements:
+      - {number: 1, rule: MUTUALLY_AUTHENTICATE_MOBILE_DEVICES_AND_WIRELESS_ACCESS_POINTS_USED_FOR_SYSTEM_CONNECTION}
+      - {number: 2, rule: HARDWARE_DISABLE_OR_BLOCK_UNUSED_MOBILE_DEVICE_INTERFACES}
+    matrix:
+      base: {K3: PLUS, K2: PLUS, K1: PLUS}
+      enhancements: {K3: [], K2: [], K1: []}
+
+  - code: "ЗМУ.8"
+    title: "Определение и контроль геопозиции"
+    purpose: OBTAIN_REGISTER_AND_CONTROL_ACTUAL_LOCATION_OF_CONNECTED_MOBILE_DEVICES
+    implementation:
+      - REGISTER_LOCATION_INFORMATION_FOR_MOBILE_DEVICE_ACCESSING_SYSTEM
+      - REGISTER_FACTS_WHEN_MOBILE_DEVICE_GEOLOCATION_CANNOT_BE_DETERMINED
+    documentation: []
+    enhancements:
+      - {number: 1, rule: RESTRICT_INFORMATION_SYSTEM_ACCESS_BASED_ON_MOBILE_DEVICE_GEOLOCATION}
+      - {number: 2, rule: USE_SERVERS_LOCATED_IN_RUSSIAN_FEDERATION_FOR_CELL_TOWER_OR_OTHER_WIRELESS_POINT_GEOLOCATION}
+    matrix:
+      base: {K3: BLANK, K2: BLANK, K1: BLANK}
+      enhancements: {K3: [], K2: [], K1: []}
+
+  - code: "ЗМУ.9"
+    title: "Регистрация, анализ и реагирование на события безопасности"
+    purpose: DEFINE_REGISTER_ANALYZE_AND_RESPOND_TO_MOBILE_SECURITY_EVENTS
+    implementation:
+      - REGISTER_MOBILE_OPERATING_SYSTEM_SECURITY_EVENTS_IN_ACCORDANCE_WITH_RSB_1_TO_RSB_5
+      - ANALYZE_REGISTERED_EVENTS_AND_RESPOND_TO_IDENTIFIED_COMPUTER_INCIDENTS
+    documentation: []
+    enhancements:
+      - {number: 1, rule: NOTIFY_INFORMATION_SYSTEM_SECURITY_ADMINISTRATOR_OF_IDENTIFIED_COMPUTER_INCIDENT_SIGNS}
+      - {number: 2, rule: BLOCK_AND_OR_ISOLATE_MOBILE_DEVICE_WITH_IDENTIFIED_COMPUTER_INCIDENT}
+    matrix:
+      base: {K3: PLUS, K2: PLUS, K1: PLUS}
+      enhancements: {K3: [], K2: [1], K1: [1]}
+
+numeric_constraints:
+  - {id: ZMU1_PASSWORD_MIN_LENGTH, measure: "ЗМУ.1", relation: AT_LEAST, value: 6, unit: CHARACTERS, applicability: BASE}
+  - {id: ZMU1_MAX_FAILED_ATTEMPTS, measure: "ЗМУ.1", relation: AT_MOST, value: 5, unit: ATTEMPTS, applicability: BASE}
+  - {id: ZMU1_BLOCK_DURATION, measure: "ЗМУ.1", relation: EQUALS, value: 15, unit: MINUTES, applicability: BASE}
+  - {id: ZMU1_PASSWORD_MAX_AGE, measure: "ЗМУ.1", relation: AT_MOST, value: 30, unit: DAYS, applicability: BASE}
+  - {id: ZMU1_PASSWORD_HISTORY, measure: "ЗМУ.1", relation: PROHIBIT_REUSE, value: 12, unit: LAST_PASSWORDS, applicability: BASE}
+  - {id: ZMU1_ENH1_PASSWORD_MIN_LENGTH, measure: "ЗМУ.1", relation: AT_LEAST, value: 10, unit: CHARACTERS, applicability: ENHANCEMENT_1}
+
+relational_constraints:
+  - id: ZMU4_ENH1_REMOTE_WIPE_TRIGGER
+    measure: "ЗМУ.4"
+    applicability: ENHANCEMENT_1
+    relation: FAILED_UNLOCK_ATTEMPTS_EXCEED_ALLOWABLE_COUNT_BY_MORE_THAN_MULTIPLIER
+    multiplier: 2
+    linked_parameter: ZMU1_MAX_FAILED_ATTEMPTS
+    guard: PRESERVE_RELATION_DO_NOT_REPLACE_WITH_UNIVERSAL_ABSOLUTE_THRESHOLD
+
+operator_defined_parameters:
+  - {id: ZMU7_ALLOWED_WIRELESS_CHANNELS, measure: "ЗМУ.7", type: WIRELESS_CHANNEL_SET, universal_value: NOT_STATED}
+  - {id: ZMU7_ALLOWED_INPUT_OUTPUT_INTERFACES, measure: "ЗМУ.7", type: INTERFACE_SET, universal_value: NOT_STATED}
+
+class_matrix_summary:
+  cells_total: 54
+  nonblank_cells: 31
+  blank_cells: 23
+  fully_blank_measure_rows: ["ЗМУ.8"]
+  rule: BLANK_BASE_OR_ENHANCEMENT_CELL_IS_NOT_PROHIBITION_AND_DOES_NOT_DELETE_ADAPTATION_VERIFICATION_OR_COMPENSATION
+
+scope_guards:
+  - DO_NOT_APPLY_ZMU_WHEN_NO_MOBILE_DEVICE_ACCESSES_OR_PROCESSES_SYSTEM_INFORMATION
+  - DO_NOT_REPLACE_IAF_UPD_AVZ_RSB_OR_ZKS_REFERENCED_MEASURES_WITH_ZMU
+  - DO_NOT_RELAX_ZMU_1_BASE_PASSWORD_LENGTH_FROM_6_OR_ENHANCEMENT_LENGTH_FROM_10
+  - DO_NOT_INVENT_DIFFERENT_PASSWORD_ATTEMPT_BLOCK_DURATION_MAX_AGE_OR_HISTORY_VALUES
+  - DO_NOT_COLLAPSE_ZMU_4_RELATIVE_REMOTE_WIPE_TRIGGER_TO_AN_UNCONDITIONAL_ABSOLUTE_NUMBER
+  - DO_NOT_REQUIRE_UNLISTED_ENHANCEMENTS_FROM_CLASS_MATRIX_ALONE
+  - DO_NOT_TREAT_ZMU_8_BLANK_ROW_AS_PROHIBITION_OR_DELETE_ADAPTATION_AND_THREAT_VERIFICATION
+  - DO_NOT_OMIT_RUSSIAN_FEDERATION_SERVER_LOCATION_CONDITION_FROM_ZMU_8_ENHANCEMENT_2
+  - DO_NOT_INVENT_ALLOWED_WIRELESS_CHANNELS_OR_INTERFACE_LISTS
+  - DO_NOT_GENERALIZE_ZMU_CONTENT_TO_ENDPOINT_IOT_OR_OTHER_MEASURE_FAMILIES
+
+verification_boundary:
+  section_4_10_zmu_1_9: VERIFIED_PUBLIC_TEXT_CROSSCHECK
+  complete_zmu_family: VERIFIED_PUBLIC_TEXT_CROSSCHECK_9_OF_9
+  implementation_requirements: VERIFIED_NORMALIZED_PUBLIC_TEXT_CROSSCHECK
+  documentation_requirements: VERIFIED_NORMALIZED_PUBLIC_TEXT_CROSSCHECK
+  numbered_enhancements: VERIFIED_NORMALIZED_PUBLIC_TEXT_CROSSCHECK
+  exact_numeric_constraints: VERIFIED_PUBLIC_TEXT_CROSSCHECK_6
+  exact_zmu_class_cells: VERIFIED_PUBLIC_TEXT_CROSSCHECK_54
+  referenced_iaf_upd_rsb_content: VERIFIED_BY_SEPARATE_LINKED_MODELS
+  referenced_avz_zks_content: PENDING_SEPARATE_FAMILY_MODELS
+  product_specific_mobile_profiles: PENDING_SEPARATE_PROFILE_MODELS
+  other_measure_families: PENDING
+  official_immutable_bytes: PENDING
+  independent_expert_review: PENDING
+  critical_gap_created: false
+  high_gap_created: false
