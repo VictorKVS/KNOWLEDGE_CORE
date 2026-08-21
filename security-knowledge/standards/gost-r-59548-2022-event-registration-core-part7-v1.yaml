@@ -1,0 +1,269 @@
+schema_version: "1.0"
+id: GOST-R-59548-2022-EVENT-REGISTRATION-CORE-PART7
+designation: "ГОСТ Р 59548-2022"
+title: "Security-event registered-information schemas 6.2.69-6.2.81"
+authority: ROSSTANDART
+order: {number: "2-ст", date: "2022-01-13"}
+effective_date: "2022-02-01"
+status_observed: CURRENT
+status_observed_date: "2026-08-21"
+status: VERIFIED_BOUNDED_PUBLIC_TEXT_CLAUSE_MODEL_6_2_69_TO_6_2_81
+
+source_evidence:
+  official_status_and_scope:
+    url: https://protect.gost.ru/gost/details/d5008460-671b-4563-9388-d1d0f9ecdbbf
+    result: VERIFIED_CURRENT_2026_08_21
+  clause_text_interface:
+    url: https://meganorm.ru/mega_doc/norm/gost-r_gosudarstvennyj-standart/9/gost_r_59548-2022_natsionalnyy_standart_rossiyskoy.html
+    result: VERIFIED_PUBLIC_TEXT_CROSSCHECK_6_2_69_TO_6_2_81_TABLES_138_TO_161
+  immutable_official_document_bytes: PENDING
+
+dependency:
+  common_schema: security-knowledge/standards/gost-r-59548-2022-event-registration-core-part1-v1.yaml
+  inherited_rule: EVERY_TYPE_ALSO_REQUIRES_SECTION_6_1_COMMON_MINIMUM_INFORMATION
+  inherited_additional_rule: SECTION_6_1_COMMON_ADDITIONAL_INFORMATION_REMAINS_OPTIONAL
+
+literal_value_sets:
+  OPERATION_RESULT: {values: [SUCCESSFUL, UNSUCCESSFUL]}
+  HTTP_REQUEST_METHOD: {values: [GET, POST, PUT, DELETE, HEAD, OPTIONS, PATCH, TRACE, CONNECT]}
+  ATTACHMENTS_PRESENT: {values: [PRESENT, ABSENT]}
+  INTERFACE_STATE: {values: [ENABLED, DISABLED]}
+
+event_type_schemas:
+  - id: G59548-6.2.69
+    clause: "6.2.69/tables 138-139"
+    name_ru: "Использование прокси-сервера"
+    source_anomaly: DUPLICATE_CLIENT_NETWORK_ADDRESS_ROW_IN_TABLE_138_PRESERVED_AS_TWO_FIELD_INSTANCES
+    required_fields:
+      - {id: CLIENT_NETWORK_ADDRESS_OCCURRENCE_1, canonical_field: CLIENT_NETWORK_ADDRESS, type: NETWORK_ADDRESS, source_row_ordinal: 1}
+      - {id: CLIENT_PORT, type: INTEGER, minimum: 0, maximum: 65535}
+      - {id: REQUEST_METHOD, type: VALUE_SET, value_set_ref: HTTP_REQUEST_METHOD}
+      - {id: UNIFORM_RESOURCE_IDENTIFIER, type: TEXT}
+      - {id: RESPONSE_CODE, type: INTEGER}
+      - {id: CLIENT_APPLICATION, type: TEXT}
+      - {id: CLIENT_NETWORK_ADDRESS_OCCURRENCE_2, canonical_field: CLIENT_NETWORK_ADDRESS, type: NETWORK_ADDRESS, source_row_ordinal: 7}
+      - {id: PROXY_RESPONSE, type: TEXT}
+      - {id: REQUEST_SOURCE_RESOURCE_IDENTIFIER, type: TEXT}
+    additional_fields:
+      - {id: PROXY_SERVER_PORT, type: INTEGER, minimum: 0, maximum: 65535}
+      - {id: REQUEST_PROTOCOL_VERSION, type: TEXT}
+      - {id: RESPONSE_TIME_MILLISECONDS, type: INTEGER}
+      - {id: REQUEST_SIZE_BYTES, type: INTEGER}
+      - {id: RESPONSE_SIZE_BYTES, type: INTEGER}
+      - {id: PROXY_HIERARCHY_LEVEL, type: TEXT}
+
+  - id: G59548-6.2.70
+    clause: "6.2.70/tables 140-141"
+    name_ru: "Использование почтового сервера"
+    required_fields:
+      - {id: EMAIL_MESSAGE_IDENTIFIER, type: TEXT, semantic: UNIQUE_SENDER_NODE_ADDRESS_PLUS_NODE_LOCAL_NUMBER}
+      - {id: MAIL_STATUS, type: TEXT, semantic: SEND_OR_RECEIVE_STATUS}
+      - {id: MAIL_SERVER_SOFTWARE_NAME, type: TEXT, semantic: FULL_OFFICIAL_SOFTWARE_NAME}
+      - {id: MAIL_SERVER_SOFTWARE_VERSION, type: SOFTWARE_VERSION}
+      - {id: SENDER_NETWORK_ADDRESS, type: NETWORK_ADDRESS}
+      - {id: MESSAGE_SUBJECT, type: TEXT}
+      - {id: MESSAGE_TEXT, type: TEXT}
+      - {id: RECIPIENT_EMAIL_ADDRESS, type: TEXT}
+      - {id: ATTACHMENTS_PRESENT, type: VALUE_SET, value_set_ref: ATTACHMENTS_PRESENT}
+      - {id: ACTION_TYPE, type: TEXT}
+      - {id: OPERATION_RESULT, type: VALUE_SET, value_set_ref: OPERATION_RESULT, when: RESULT_NOT_DETERMINED_BY_EVENT_IDENTIFIER}
+    additional_fields:
+      - {id: SENDER_EMAIL_ADDRESS, type: TEXT}
+      - {id: SERVICE_HEADER_CONTENT, type: TEXT, separator: ";"}
+
+  - id: G59548-6.2.71
+    clause: "6.2.71/tables 142-143"
+    name_ru: "Использование сервера каталогов"
+    required_fields:
+      - {id: OBJECT_NAME, type: TEXT, source_semantic: FULL_OFFICIAL_SOFTWARE_NAME}
+      - {id: OBJECT_IDENTIFIER, type: TEXT, semantic: UNIQUE_IDENTIFIER}
+      - {id: OBJECT_CATEGORY, type: TEXT}
+      - {id: OBJECT_CLASS, type: TEXT}
+      - {id: ACTION_TYPE, type: TEXT}
+      - {id: OPERATION_RESULT, type: VALUE_SET, value_set_ref: OPERATION_RESULT, when: RESULT_NOT_DETERMINED_BY_EVENT_IDENTIFIER}
+    additional_fields:
+      - {id: CHANGED_PARAMETER_NAME, type: TEXT}
+      - {id: CHANGED_PARAMETER_VALUE, type: TEXT}
+
+  - id: G59548-6.2.72
+    clause: "6.2.72/tables 144-145"
+    name_ru: "Использование терминального сервера"
+    required_fields:
+      - {id: SESSION_IDENTIFIER, type: INTEGER, semantic: ORDINAL_SESSION_NUMBER}
+      - {id: SESSION_DURATION, type: DURATION, stated_unit: MINUTE}
+      - {id: SOURCE_NETWORK_ADDRESS, type: NETWORK_ADDRESS}
+      - {id: SOURCE_PORT, type: INTEGER, minimum: 0, maximum: 65535}
+      - {id: DESTINATION_PORT, type: INTEGER, minimum: 0, maximum: 65535}
+      - {id: PROTOCOL, type: TEXT, examples: [IP, TCP, HTTP], examples_are_non_exhaustive: true}
+      - {id: ACTION_TYPE, type: TEXT}
+      - {id: OPERATION_RESULT, type: VALUE_SET, value_set_ref: OPERATION_RESULT, when: RESULT_NOT_DETERMINED_BY_EVENT_IDENTIFIER}
+    additional_fields:
+      - {id: TERMINAL_SERVER_SOFTWARE_NAME, type: TEXT, semantic: FULL_OFFICIAL_SOFTWARE_NAME}
+      - {id: TERMINAL_SERVER_SOFTWARE_VERSION, type: SOFTWARE_VERSION}
+
+  - id: G59548-6.2.73
+    clause: "6.2.73/tables 146-147"
+    name_ru: "Использование файлового хранилища"
+    required_fields:
+      - {id: FILE_NAME, type: TEXT, includes_extension_when_applicable: true}
+      - {id: FILE_FULL_PATH, type: TEXT}
+      - {id: FILE_SIZE_BYTES, type: INTEGER}
+      - {id: FILE_ACTION_TYPE, type: TEXT}
+      - {id: OPERATION_RESULT, type: VALUE_SET, value_set_ref: OPERATION_RESULT, when: RESULT_NOT_DETERMINED_BY_EVENT_IDENTIFIER}
+    additional_fields:
+      - {id: FILE_CHECKSUM, type: TEXT, semantic: ONE_WAY_HASH}
+      - {id: CHECKSUM_ALGORITHM, type: TEXT, examples: [MD5, SHA1, SHA256, OTHER], examples_are_non_exhaustive: true}
+      - {id: FILE_EXTENSION, type: TEXT, excludes_leading_dot: true, when: IF_APPLICABLE}
+
+  - id: G59548-6.2.74
+    clause: "6.2.74/tables 148-149"
+    name_ru: "Использование маршрутизатора"
+    required_fields:
+      - {id: SOURCE_NETWORK_ADDRESS, type: NETWORK_ADDRESS}
+      - {id: SOURCE_PORT, type: INTEGER, minimum: 0, maximum: 65535}
+      - {id: SOURCE_HARDWARE_ADDRESS, type: HARDWARE_ADDRESS, when: IF_APPLICABLE}
+      - {id: DESTINATION_NETWORK_ADDRESS, type: NETWORK_ADDRESS}
+      - {id: DESTINATION_PORT, type: INTEGER, minimum: 0, maximum: 65535}
+      - {id: DESTINATION_HARDWARE_ADDRESS, type: HARDWARE_ADDRESS, when: IF_APPLICABLE}
+      - {id: PROTOCOL, type: TEXT, examples: [IP, TCP, HTTP], examples_are_non_exhaustive: true}
+      - {id: ACTION_TYPE, type: TEXT}
+      - {id: FILTER_RULE_NUMBER, type: INTEGER}
+    additional_fields:
+      - {id: NETWORK_INTERFACE, type: TEXT, semantic: NAME_OR_ORDINAL}
+      - {id: INTERFACE_RATE_MBIT_PER_SECOND, type: INTEGER}
+      - {id: VIRTUAL_NETWORK_IDENTIFIER, type: INTEGER}
+      - {id: PACKET_TTL_MAX_ROUTER_HOPS, type: INTEGER}
+
+  - id: G59548-6.2.75
+    clause: "6.2.75/tables 150-151"
+    name_ru: "Управление маршрутизатором"
+    required_fields:
+      - {id: ACTION_TYPE, type: TEXT}
+      - {id: OPERATION_RESULT, type: VALUE_SET, value_set_ref: OPERATION_RESULT, when: RESULT_NOT_DETERMINED_BY_EVENT_IDENTIFIER}
+    additional_fields:
+      - {id: ROUTER_CONFIGURATION_PARAMETER_VALUES, type: TEXT, format: "parameter: value;"}
+      - {id: NEW_ROUTER_CONFIGURATION_PARAMETER_VALUES, type: TEXT, format: "parameter: value;"}
+      - {id: ADMINISTRATOR_NETWORK_ADDRESS, type: NETWORK_ADDRESS}
+      - {id: ROUTER_MODEL, type: TEXT, source_semantic: FULL_OFFICIAL_SOFTWARE_NAME}
+      - {id: ROUTER_SOFTWARE_VERSION, type: SOFTWARE_VERSION}
+
+  - id: G59548-6.2.76
+    clause: "6.2.76/tables 152-153"
+    name_ru: "Использование коммутатора"
+    required_fields:
+      - {id: SOURCE_HARDWARE_ADDRESS, type: HARDWARE_ADDRESS}
+      - {id: DESTINATION_HARDWARE_ADDRESS, type: HARDWARE_ADDRESS}
+      - {id: ACTION_TYPE, type: TEXT}
+      - {id: NETWORK_INTERFACE, type: TEXT, semantic: NAME_OR_ORDINAL}
+    additional_fields:
+      - {id: SOURCE_NETWORK_ADDRESS, type: NETWORK_ADDRESS}
+      - {id: SOURCE_PORT, type: INTEGER, minimum: 0, maximum: 65535}
+      - {id: DESTINATION_NETWORK_ADDRESS, type: NETWORK_ADDRESS}
+      - {id: DESTINATION_PORT, type: INTEGER, minimum: 0, maximum: 65535}
+      - {id: PROTOCOL, type: TEXT, examples: [IP, TCP, HTTP], examples_are_non_exhaustive: true}
+      - {id: INTERFACE_RATE_MBIT_PER_SECOND, type: INTEGER}
+      - {id: INTERFACE_STATE, type: VALUE_SET, value_set_ref: INTERFACE_STATE}
+      - {id: PACKET_TTL_MAX_SWITCH_HOPS, type: INTEGER}
+      - {id: VIRTUAL_NETWORK_IDENTIFIER, type: INTEGER}
+      - {id: FILTER_RULE_NUMBER, type: INTEGER}
+
+  - id: G59548-6.2.77
+    clause: "6.2.77/tables 154-155"
+    name_ru: "Управление коммутатором"
+    required_fields:
+      - {id: ACTION_TYPE, type: TEXT}
+      - {id: OPERATION_RESULT, type: VALUE_SET, value_set_ref: OPERATION_RESULT, when: RESULT_NOT_DETERMINED_BY_EVENT_IDENTIFIER}
+    additional_fields:
+      - {id: SWITCH_NAME_AND_MODEL, type: TEXT, source_semantic: FULL_OFFICIAL_SOFTWARE_NAME}
+      - {id: CONFIGURATION_PARAMETER_VALUES, type: TEXT, format: "parameter: value;"}
+      - {id: CHANGED_CONFIGURATION_PARAMETER_VALUES, type: TEXT, format: "parameter: old value => new value;"}
+      - {id: ADMINISTRATOR_NETWORK_ADDRESS, type: NETWORK_ADDRESS}
+      - {id: SWITCH_SOFTWARE_VERSION, type: SOFTWARE_VERSION}
+
+  - id: G59548-6.2.78
+    clause: "6.2.78/tables 156-157"
+    name_ru: "Использование контроллера беспроводного доступа"
+    required_fields:
+      - {id: WIRELESS_NETWORK_IDENTIFIER, type: TEXT, semantic: SSID}
+      - {id: SOURCE_HARDWARE_ADDRESS, type: HARDWARE_ADDRESS}
+      - {id: DESTINATION_HARDWARE_ADDRESS, type: HARDWARE_ADDRESS}
+      - {id: FREQUENCY_RANGE, type: TEXT}
+      - {id: CHANNEL, type: INTEGER}
+      - {id: WIRELESS_STANDARD, type: TEXT, examples: ["802.11a"], examples_are_non_exhaustive: true}
+      - {id: ACTION_TYPE, type: TEXT}
+    additional_fields:
+      - {id: WIRELESS_CONTROLLER_NAME_AND_MODEL, type: TEXT, source_semantic: FULL_OFFICIAL_SOFTWARE_NAME}
+      - {id: WIRELESS_CONTROLLER_SOFTWARE_VERSION, type: SOFTWARE_VERSION}
+
+  - id: G59548-6.2.79
+    clause: "6.2.79/tables 158-159"
+    name_ru: "Управление контроллером беспроводного доступа"
+    required_fields:
+      - {id: ACTION_TYPE, type: TEXT}
+      - {id: OPERATION_RESULT, type: VALUE_SET, value_set_ref: OPERATION_RESULT, when: RESULT_NOT_DETERMINED_BY_EVENT_IDENTIFIER}
+    additional_fields:
+      - {id: WIRELESS_CONTROLLER_CONFIGURATION_PARAMETER_VALUES, type: TEXT, format: "parameter: value;"}
+      - {id: NEW_WIRELESS_CONTROLLER_CONFIGURATION_PARAMETER_VALUES, type: TEXT, format: "parameter: old value => new value;"}
+      - {id: ADMINISTRATOR_NETWORK_ADDRESS, type: NETWORK_ADDRESS}
+      - {id: WIRELESS_CONTROLLER_NAME_AND_MODEL, type: TEXT, source_semantic: FULL_OFFICIAL_SOFTWARE_NAME}
+      - {id: WIRELESS_CONTROLLER_SOFTWARE_VERSION, type: SOFTWARE_VERSION}
+
+  - id: G59548-6.2.80
+    clause: "6.2.80/tables 160-161"
+    name_ru: "Использование ответвителя сетевого трафика"
+    required_fields:
+      - {id: RECEIVED_INFORMATION_BYTES, type: INTEGER}
+      - {id: TRANSMITTED_INFORMATION_BYTES, type: INTEGER}
+      - {id: LOSS_PERCENT, type: INTEGER}
+      - {id: TRANSMISSION_RATE_MBIT_PER_SECOND, type: INTEGER}
+    additional_fields:
+      - {id: EVENT_DESCRIPTION, type: TEXT}
+      - {id: TRAFFIC_SOURCE, type: TEXT}
+      - {id: TRAFFIC_RECIPIENT, type: TEXT}
+
+  - id: G59548-6.2.81
+    clause: "6.2.81"
+    name_ru: "Иные типы событий безопасности"
+    schema_rule: MANUFACTURER_DEFINES_TYPE_SPECIFIC_COMPOSITION_IN_ADDITION_TO_SECTION_6_1_2
+    applicable_manufacturers:
+      - INFORMATION_SECURITY_TOOLS
+      - INFORMATION_TECHNOLOGY_SECURITY_TOOLS
+      - OTHER_HARDWARE_AND_SOFTWARE_USED_IN_INFORMATION_SYSTEMS
+    required_fields: []
+    additional_fields: []
+
+coverage:
+  this_part_subsections: 13
+  this_part_required_field_placements: 69
+  this_part_additional_field_placements: 49
+  cumulative_modeled_subsections: 81
+  cumulative_pending_subsections: 0
+  cumulative_section_6_2_total: 81
+  modeled_subsections: "6.2.69-6.2.81"
+  remaining_subsections: NONE
+
+scope_guards:
+  - DO_NOT_TREAT_PUBLIC_TEXT_CROSSCHECK_AS_IMMUTABLE_OFFICIAL_DOCUMENT_BYTES
+  - DO_NOT_TREAT_ATOMIC_SECTION_6_2_COMPLETION_AS_COMPLETE_STANDARD_OR_UNIVERSAL_APPLICABILITY
+  - DO_NOT_TREAT_ADDITIONAL_FIELDS_AS_REQUIRED_FIELDS
+  - DO_NOT_COLLAPSE_DUPLICATE_CLIENT_NETWORK_ADDRESS_ROWS_IN_6_2_69_WITHOUT_OFFICIAL_BYTES_AND_EXPERT_REVIEW
+  - DO_NOT_REPLACE_SOURCE_SEMANTIC_ODDITIES_WITH_UNSOURCED_CORRECTIONS
+  - DO_NOT_TREAT_HTTP_METHOD_VALUE_SET_WITH_AN_ALLOWED_METHOD_POLICY
+  - DO_NOT_TREAT_PORT_RANGE_AS_A_NETWORK_ACCESS_POLICY
+  - DO_NOT_TREAT_IP_TCP_HTTP_MD5_SHA1_SHA256_OR_802_11A_EXAMPLES_AS_EXHAUSTIVE
+  - DO_NOT_INVENT_RETENTION_RESPONSE_FREQUENCY_SIGNAL_OR_LOSS_THRESHOLDS
+  - DO_NOT_INVENT_UNIVERSAL_FIELDS_FOR_SECTION_6_2_81
+  - DO_NOT_EQUATE_LOCAL_EVENT_REGISTRATION_WITH_INCIDENT_OR_REGULATOR_NOTIFICATION
+  - DO_NOT_TREAT_CURRENT_STANDARD_STATUS_AS_UNIVERSAL_BINDING_APPLICABILITY
+
+verification_boundary:
+  official_status_and_scope: VERIFIED_ROSSTANDART_2026_08_21
+  clauses_6_2_69_to_6_2_81: VERIFIED_PUBLIC_TEXT_CROSSCHECK
+  tables_138_to_161: VERIFIED_PUBLIC_TEXT_CROSSCHECK
+  clause_6_2_69_duplicate_client_network_address_rows: VERIFIED_PUBLIC_TEXT_ANOMALY_PENDING_OFFICIAL_BYTES_AND_EXPERT_REVIEW
+  section_6_2_atomic_public_text_model: COMPLETE_81_OF_81_SUBSECTIONS
+  complete_standard: PENDING_OFFICIAL_BYTES_REMAINING_CLAUSES_APPLICABILITY_AND_EXPERT_REVIEW
+  immutable_official_bytes: PENDING
+  independent_expert_review: PENDING
+  critical_gap_created: false
+  high_gap_created: false
