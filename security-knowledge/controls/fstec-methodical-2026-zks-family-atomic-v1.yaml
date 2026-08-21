@@ -1,0 +1,166 @@
+schema_version: "1.0"
+id: FSTEC-MD-2026-ZKS-FAMILY
+title: "FSTEC 12 April 2026 methodical document: complete ZKS.1-ZKS.4 family"
+authority: FSTEC_RUSSIA
+approved_date: "2026-04-12"
+status: VERIFIED_BOUNDED_COMPLETE_ZKS_PUBLIC_TEXT_CROSSCHECK
+scope_statement: >-
+  Complete normalized coverage of section 4.17 measures ZKS.1-ZKS.4 for
+  communication-channel and network-interaction protection: twenty-nine
+  implementation atoms, two documentation items, eight enhancements and all
+  twenty-four appendix-2 cells. The catalog contains no ZKS.5; literal ZVT.1
+  and ZPI.1 references to ZKS.1-ZKS.5 remain an unresolved source anomaly.
+
+source_evidence:
+  official_page: https://fstec.ru/dokumenty/vse-dokumenty/spetsialnye-normativnye-dokumenty/metodicheskij-dokument-ot-12-aprelya-2026-g
+  official_endpoint_result: TIMEOUT_BYTES_NOT_ACQUIRED
+  section_locator: "section 4.17, ZKS.1-ZKS.4"
+  appendix_locator: "appendix 2, family 17, ZKS.1-ZKS.4 rows"
+  current_text_interfaces:
+    - https://base.garant.ru/414070697/
+    - https://wiki.privacy-advocates.ru/fstek_12.04.2026
+    - https://sudact.ru/law/metodicheskii-dokument-sostav-i-soderzhanie-meropriiatii-i/
+    - https://normativ.kontur.ru/document/1/506081-metodicheskiy-dokument-sostav-i-soderzhanie-meropriyatiy-i-mer-po-zashchite-informatsii
+  immutable_official_bytes: PENDING
+
+applicability:
+  trigger: INFORMATION_SYSTEM_USES_COMMUNICATION_CHANNELS_OR_NETWORK_INTERACTION
+  rule: APPLY_CLASS_BASELINE_THEN_ADAPT_AND_VERIFY_AGAINST_THREATS
+  guard: ZKS_4_BLANK_BASE_ROW_IS_NOT_A_PROHIBITION
+
+measures:
+  - code: "ЗКС.1"
+    title: "Защита данных при передаче по каналам связи"
+    purpose: PROTECT_CONFIDENTIALITY_AND_INTEGRITY_BEYOND_CONTROLLED_ZONE
+    implementation:
+      - PROTECT_RESTRICTED_INFORMATION_TRANSMISSION_BEYOND_CONTROLLED_ZONE
+      - PROTECT_REMOTE_USER_ACCESS_TO_INFORMATION_SYSTEM
+      - PROTECT_INTERSEGMENT_USER_APPLICATION_AND_NETWORK_SERVICE_INTERACTION_WITH_MSE_1_AND_MSE_3
+      - PROTECT_INTERACTION_WITH_OTHER_INFORMATION_SYSTEMS_WITH_MSE_2_AND_MSE_3
+      - CONTROL_ALL_NETWORK_INTERACTIONS_ON_INTERNET_ACCESSIBLE_APPLICATION_AND_SERVICE_PORTS_AND_INTERFACES
+      - CREATE_AND_KEEP_FIREWALL_RULES_CURRENT_WITH_MSE_3
+      - RESTRICT_ACCESS_TO_UNUSED_PORTS_NETWORK_SERVICES_AND_SERVICES
+      - DISABLE_INSECURE_PROTOCOL_AND_NETWORK_SERVICE_VERSIONS
+      - IMPLEMENT_USING_FIREWALLS_ONE_WAY_TRANSFER_AND_WHERE_APPLICABLE_CRYPTOGRAPHY_UNDER_RUSSIAN_LAW
+    documentation:
+      - DEFINE_LIST_OF_EXTERNAL_INFORMATION_SYSTEMS_APPLICATIONS_AND_SERVICES
+    enhancements: []
+    matrix:
+      base: {K3: PLUS, K2: PLUS, K1: PLUS}
+      enhancements: {K3: [], K2: [], K1: []}
+
+  - code: "ЗКС.2"
+    title: "Контроль атрибутов безопасности при сетевом взаимодействии"
+    purpose: ESTABLISH_TRUSTED_NETWORK_INTERACTION_BY_SECURITY_ATTRIBUTE_CONTROL
+    implementation:
+      - DEFINE_SECURITY_ATTRIBUTES_FOR_INFORMATION_RECEIVED_AND_SENT_BEYOND_CONTROLLED_ZONE
+      - INCLUDE_CHARACTERISTICS_THAT_UNIQUELY_IDENTIFY_ACCESS_SUBJECT
+      - FORM_SENDER_AND_RECIPIENT_SECURITY_ATTRIBUTE_LISTS_INCLUDING_CONNECTION_ATTRIBUTES
+      - VERIFY_SENDER_AND_RECIPIENT_SECURITY_ATTRIBUTES_BEFORE_DATA_TRANSMISSION
+      - VERIFY_SENDER_AND_RECIPIENT_SECURITY_ATTRIBUTES_BEFORE_DATA_RECEIPT
+      - APPLY_FIREWALL_RULES_USING_SECURITY_ATTRIBUTES_WITH_MSE_3
+      - REGISTER_SECURITY_ATTRIBUTE_OPERATIONS_WITH_RSB_1_TO_RSB_5
+      - IMPLEMENT_USING_FIREWALLS_AND_OR_MULTIFUNCTION_NETWORK_FIREWALLS
+    documentation: []
+    enhancements: []
+    matrix:
+      base: {K3: PLUS, K2: PLUS, K1: PLUS}
+      enhancements: {K3: [], K2: [], K1: []}
+
+  - code: "ЗКС.3"
+    title: "Контроль доступа к внешним ресурсам"
+    purpose: PREVENT_UNAUTHORIZED_INTERNAL_USER_ACCESS_TO_EXTERNAL_RESOURCES
+    implementation:
+      - CREATE_AND_KEEP_CURRENT_ALLOW_AND_OR_DENY_LIST_OF_EXTERNAL_RESOURCES_NEEDED_FOR_FUNCTIONAL_TASKS
+      - CONTROL_USER_APPLICATION_AND_NETWORK_SERVICE_ACCESS_TO_EXTERNAL_NETWORK_RESOURCES_ACCORDING_TO_LIST
+      - BLOCK_ATTEMPTS_TO_ACCESS_UNAUTHORIZED_EXTERNAL_NETWORK_RESOURCES
+      - DEFINE_ALLOWED_NETWORK_PROTOCOL_NETWORK_APPLICATION_AND_SERVICE_LIST
+    documentation:
+      - DEFINE_PROCEDURE_FOR_MAINTAINING_ALLOWED_AND_OR_DENIED_RESOURCE_LIST
+    enhancements:
+      - {number: 1, rule: PERFORM_MORPHOLOGICAL_ANALYSIS_OF_REQUESTED_WEB_RESOURCES_BEFORE_OPENING}
+      - {number: 2, rule: USE_WEB_RESOURCE_CATEGORIZATION}
+    matrix:
+      base: {K3: PLUS, K2: PLUS, K1: PLUS}
+      enhancements: {K3: [], K2: [], K1: []}
+
+  - code: "ЗКС.4"
+    title: "Контекстная проверка исходящего трафика"
+    purpose: PREVENT_RESTRICTED_INFORMATION_LEAKAGE_AND_DETECT_UNAUTHORIZED_DATA_EXCHANGE
+    implementation:
+      - CONTEXTUALLY_INSPECT_OUTBOUND_TRAFFIC_SENT_BEYOND_CONTROLLED_ZONE
+      - ANALYZE_TRANSMITTED_DATA_CONTENT
+      - ANALYZE_TRANSMITTED_DATA_METADATA
+      - ANALYZE_TRANSMITTED_DATA_BEHAVIORAL_CHARACTERISTICS
+      - DETECT_ANOMALOUS_NETWORK_TRAFFIC_ACTIVITY
+      - DEFINE_NETWORK_PORTS_APPLICATIONS_AND_SERVICES_USED_FOR_OUTBOUND_TRANSMISSION
+      - CONTROL_DEFINED_NETWORK_PORTS_APPLICATIONS_AND_SERVICES
+      - INCLUDE_INTERNET_BOUND_TRAFFIC_WITHOUT_LIMITING_SCOPE_TO_INTERNET
+    documentation: []
+    enhancements:
+      - {number: 1, rule: USE_DEEP_PACKET_INSPECTION_TO_DETECT_NETWORK_TRAFFIC_ANOMALIES}
+      - {number: 2, rule: USE_USER_ACTIVITY_BEHAVIORAL_ANALYSIS}
+      - {number: 3, rule: USE_SPECIALIZED_ENDPOINT_AGENTS_TO_ANALYZE_OUTBOUND_TRAFFIC}
+      - {number: 4, rule: DETECT_AND_BLOCK_DATA_OBFUSCATION_ATTEMPTS}
+      - {number: 5, rule: USE_CLOUD_SERVICE_USAGE_CONTROL_SYSTEMS}
+      - {number: 6, rule: CLASSIFY_DATA_BASED_ON_CONTENT_ANALYSIS}
+    matrix:
+      base: {K3: BLANK, K2: BLANK, K1: BLANK}
+      enhancements: {K3: [], K2: [], K1: []}
+
+numeric_constraints: []
+
+operator_defined_parameters:
+  - {id: ZKS1_EXTERNAL_SYSTEM_APPLICATION_SERVICE_LIST, measure: "ЗКС.1", type: EXTERNAL_INTERACTION_OBJECT_LIST, universal_value: NOT_STATED}
+  - {id: ZKS1_FIREWALL_RULE_SET, measure: "ЗКС.1", type: FIREWALL_RULE_SET, universal_value: NOT_STATED}
+  - {id: ZKS1_UNUSED_PORT_SERVICE_SET, measure: "ЗКС.1", type: UNUSED_PORT_NETWORK_SERVICE_SET, universal_value: NOT_STATED}
+  - {id: ZKS1_INSECURE_PROTOCOL_VERSION_SET, measure: "ЗКС.1", type: INSECURE_PROTOCOL_AND_SERVICE_VERSION_SET, universal_value: NOT_STATED}
+  - {id: ZKS2_SECURITY_ATTRIBUTE_SET, measure: "ЗКС.2", type: SECURITY_ATTRIBUTE_SET, universal_value: NOT_STATED}
+  - {id: ZKS3_EXTERNAL_RESOURCE_ALLOW_DENY_LIST, measure: "ЗКС.3", type: EXTERNAL_RESOURCE_ALLOW_DENY_LIST, universal_value: NOT_STATED}
+  - {id: ZKS3_ALLOWED_PROTOCOL_APPLICATION_SERVICE_LIST, measure: "ЗКС.3", type: ALLOWED_NETWORK_PROTOCOL_APPLICATION_SERVICE_LIST, universal_value: NOT_STATED}
+  - {id: ZKS4_CONTEXT_ANALYSIS_RULE_SET, measure: "ЗКС.4", type: CONTENT_METADATA_BEHAVIOR_ANALYSIS_RULE_SET, universal_value: NOT_STATED}
+  - {id: ZKS4_ANOMALY_CRITERIA, measure: "ЗКС.4", type: ANOMALOUS_ACTIVITY_CRITERIA, universal_value: NOT_STATED}
+  - {id: ZKS4_OUTBOUND_PORT_APPLICATION_SERVICE_SET, measure: "ЗКС.4", type: OUTBOUND_TRANSMISSION_SCOPE, universal_value: NOT_STATED}
+
+source_anomalies:
+  - id: ZKS5_LITERAL_REFERENCE_WITHOUT_CATALOG_MEASURE
+    referencing_measures: ["ЗВТ.1", "ЗПИ.1"]
+    literal_reference: "ЗКС.1-ЗКС.5"
+    catalog_measures: ["ЗКС.1", "ЗКС.2", "ЗКС.3", "ЗКС.4"]
+    handling: PRESERVE_LITERAL_REFERENCE_AND_BLOCK_SYNTHETIC_ZKS_5
+    resolution: PENDING_OFFICIAL_IMMUTABLE_BYTES_AND_EXPERT_REVIEW
+
+class_matrix_summary:
+  cells_total: 24
+  nonblank_cells: 9
+  blank_cells: 15
+  fully_blank_measure_rows: ["ЗКС.4"]
+  class_listed_base_measures: ["ЗКС.1", "ЗКС.2", "ЗКС.3"]
+  class_listed_enhancements: []
+  rule: BLANK_BASE_OR_ENHANCEMENT_CELL_DOES_NOT_DELETE_ADAPTATION_VERIFICATION_OR_COMPENSATION
+
+scope_guards:
+  - DO_NOT_SYNTHESIZE_ZKS_5_FROM_LITERAL_ZVT_1_OR_ZPI_1_REFERENCE
+  - DO_NOT_TREAT_ZKS_4_BLANK_BASE_ROW_AS_PROHIBITION_OR_PROOF_OF_NON_APPLICABILITY
+  - DO_NOT_INVENT_FIREWALL_REVIEW_RESOURCE_LIST_REVIEW_OR_TRAFFIC_ANALYSIS_PERIODS
+  - DO_NOT_TREAT_INTERNET_AS_THE_ONLY_NETWORK_BEYOND_CONTROLLED_ZONE
+  - DO_NOT_TREAT_ALLOWED_AND_DENIED_RESOURCE_LISTS_AS_CUMULATIVELY_MANDATORY
+  - DO_NOT_REQUIRE_UNLISTED_ENHANCEMENTS_FROM_CLASS_MATRIX_ALONE
+  - DO_NOT_IMPORT_CRYPTOGRAPHIC_PARAMETERS_FROM_FSTEC_DOCUMENT_USE_APPLICABLE_FSB_LAYER
+  - DO_NOT_TREAT_ZKS_AS_REPLACEMENT_FOR_MSE_RSB_UPD_OR_DATA_LOSS_RESPONSE
+
+verification_boundary:
+  section_4_17_zks_1_4: VERIFIED_PUBLIC_TEXT_CROSSCHECK
+  complete_zks_family: VERIFIED_PUBLIC_TEXT_CROSSCHECK_4_OF_4
+  implementation_requirements: VERIFIED_NORMALIZED_PUBLIC_TEXT_CROSSCHECK
+  documentation_requirements: VERIFIED_NORMALIZED_PUBLIC_TEXT_CROSSCHECK
+  numbered_enhancements: VERIFIED_NORMALIZED_PUBLIC_TEXT_CROSSCHECK
+  exact_numeric_constraints: VERIFIED_NONE_STATED
+  exact_zks_class_cells: VERIFIED_PUBLIC_TEXT_CROSSCHECK_24
+  zks_5_reference_anomaly: PENDING_OFFICIAL_IMMUTABLE_BYTES_AND_EXPERT_REVIEW
+  product_specific_channel_and_dlp_profiles: PENDING_SEPARATE_PROFILE_MODELS
+  other_measure_families: PENDING
+  official_immutable_bytes: PENDING
+  independent_expert_review: PENDING
+  critical_gap_created: false
+  high_gap_created: false
