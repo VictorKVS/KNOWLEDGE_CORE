@@ -1,0 +1,256 @@
+schema_version: "1.0"
+id: GOST-R-59548-2022-EVENT-REGISTRATION-CORE-PART4
+designation: "ГОСТ Р 59548-2022"
+title: "Security-event registered-information schemas 6.2.33-6.2.44"
+authority: ROSSTANDART
+order: {number: "2-ст", date: "2022-01-13"}
+effective_date: "2022-02-01"
+status_observed: CURRENT
+status_observed_date: "2026-08-21"
+status: VERIFIED_BOUNDED_PARTIAL_CLAUSE_MODEL_6_2_33_TO_6_2_44
+
+source_evidence:
+  official_status_and_scope:
+    url: https://protect.gost.ru/gost/details/d5008460-671b-4563-9388-d1d0f9ecdbbf
+    result: VERIFIED_CURRENT_2026_08_21
+  clause_text_interface:
+    url: https://meganorm.ru/mega_doc/norm/gost-r_gosudarstvennyj-standart/9/gost_r_59548-2022_natsionalnyy_standart_rossiyskoy.html
+    result: VERIFIED_PUBLIC_TEXT_CROSSCHECK_6_2_33_TO_6_2_44_TABLES_68_TO_91
+  immutable_official_document_bytes: PENDING
+
+dependency:
+  common_schema: security-knowledge/standards/gost-r-59548-2022-event-registration-core-part1-v1.yaml
+  inherited_rule: EVERY_TYPE_ALSO_REQUIRES_SECTION_6_1_COMMON_MINIMUM_INFORMATION
+  inherited_additional_rule: SECTION_6_1_COMMON_ADDITIONAL_INFORMATION_REMAINS_OPTIONAL
+
+literal_value_sets:
+  OPERATION_RESULT: {values: [SUCCESSFUL, UNSUCCESSFUL]}
+  SOFTWARE_INSTALL_ACTION: {values: [INSTALL, REMOVE]}
+  PROCESS_CONTROL_ACTION: {values: [STOP, START]}
+  PRINT_TYPE: {values: [TO_FILE, TO_PRINTER]}
+  REMOVABLE_MEDIA_ACTION: {values: [CONNECT, DISCONNECT]}
+
+event_type_schemas:
+  - id: G59548-6.2.33
+    clause: "6.2.33/tables 68-69"
+    name_ru: "Изменения состава программного обеспечения"
+    required_fields:
+      - {id: COMPONENT_VERSION, type: SOFTWARE_VERSION}
+      - {id: COMPONENT_DEVELOPER, type: TEXT}
+      - {id: COMPONENT_TYPE, type: TEXT}
+      - {id: SOFTWARE_NAME, type: TEXT}
+      - {id: INSTALLATION_FULL_PATH, type: TEXT}
+      - {id: CHANGE_TYPE, type: TEXT}
+    additional_fields:
+      - {id: COMPONENT_USER_LIST, type: TEXT, separator: SEMICOLON, all_users_literal: "Для всех"}
+      - {id: SIZE_BYTES, type: INTEGER}
+      - {id: BITNESS, type: INTEGER}
+
+  - id: G59548-6.2.34
+    clause: "6.2.34/tables 70-71"
+    name_ru: "Изменения параметров настроек средств защиты информации"
+    required_fields:
+      - {id: SECURITY_TOOL_VERSION, type: SOFTWARE_VERSION}
+      - {id: SECURITY_TOOL_COMPONENT, type: TEXT}
+      - {id: OPERATION_RESULT, type: VALUE_SET, value_set_ref: OPERATION_RESULT, when: RESULT_NOT_DETERMINED_BY_EVENT_IDENTIFIER}
+    additional_fields:
+      - {id: CONFIGURATION_PARAMETER_VALUES, type: TEXT, format: "parameter: value;"}
+      - {id: CHANGED_CONFIGURATION_PARAMETER_VALUES, type: TEXT, format: "parameter: old value => new value;"}
+
+  - id: G59548-6.2.35
+    clause: "6.2.35/tables 72-73"
+    name_ru: "Установка или изменение системного времени"
+    required_fields:
+      - {id: PROCESS_IDENTIFIER, type: INTEGER, semantic: OS_PROCESS_UNIQUE_NUMBER}
+      - {id: NEW_SYSTEM_TIME, type: DATE_TIME}
+      - {id: PREVIOUS_SYSTEM_TIME, type: DATE_TIME}
+      - {id: ACTION_TYPE, type: TEXT}
+      - {id: OPERATION_RESULT, type: VALUE_SET, value_set_ref: OPERATION_RESULT, when: RESULT_NOT_DETERMINED_BY_EVENT_IDENTIFIER}
+    additional_fields:
+      - {id: PRECISE_TIME_SERVER_NETWORK_ADDRESS, type: NETWORK_ADDRESS}
+
+  - id: G59548-6.2.36
+    clause: "6.2.36/tables 74-75"
+    name_ru: "Изменение настроек общего программного обеспечения"
+    required_fields:
+      - {id: SOFTWARE_VERSION, type: SOFTWARE_VERSION}
+      - {id: SOFTWARE_COMPONENT_NAME, type: TEXT}
+      - {id: OPERATION_RESULT, type: VALUE_SET, value_set_ref: OPERATION_RESULT, when: RESULT_NOT_DETERMINED_BY_EVENT_IDENTIFIER}
+    additional_fields:
+      - {id: CHANGED_CONFIGURATION_PARAMETER_VALUES, type: TEXT, format: "parameter: old value => new value;"}
+      - {id: CONFIGURATION_PARAMETER_VALUES, type: TEXT, format: "parameter: value;"}
+
+  - id: G59548-6.2.37
+    clause: "6.2.37/tables 76-77"
+    name_ru: "Контроль наличия обязательных обновлений программного обеспечения"
+    required_fields:
+      - {id: SOFTWARE_VERSION, type: SOFTWARE_VERSION}
+      - {id: UPDATE_IDENTIFIER, type: TEXT}
+      - {id: UPDATE_SOURCE, type: TEXT}
+      - {id: UPDATE_CHECKSUM, type: TEXT, semantic: ONE_WAY_HASH_VALUE}
+      - {id: CHECKSUM_ALGORITHM, type: TEXT, examples: [MD5, SHA1, SHA256, OTHER]}
+      - {id: SOFTWARE_NAME, type: TEXT}
+      - {id: OPERATION_RESULT, type: VALUE_SET, value_set_ref: OPERATION_RESULT, when: RESULT_NOT_DETERMINED_BY_EVENT_IDENTIFIER}
+    additional_fields:
+      - {id: UPDATE_DESCRIPTION_LINK, type: TEXT, semantic: UNIFORM_REQUEST_SOURCE_RESOURCE_IDENTIFIER}
+      - {id: UPDATE_FILE_SIZE_BYTES, type: INTEGER}
+      - {id: UPDATED_FILE_LIST, type: TEXT, separator: SEMICOLON}
+      - {id: CLOSED_VULNERABILITY_LIST, type: TEXT, separator: SEMICOLON}
+      - {id: MANUFACTURER, type: TEXT}
+
+  - id: G59548-6.2.38
+    clause: "6.2.38/tables 78-79"
+    name_ru: "Установка или удаление компонентов программного обеспечения"
+    required_fields:
+      - {id: SOFTWARE_COMPONENT_NAME, type: TEXT}
+      - {id: SOFTWARE_COMPONENT_VERSION, type: SOFTWARE_VERSION}
+      - {id: COMPONENT_INSTALLATION_FULL_PATH, type: TEXT}
+      - {id: COMPONENT_MANUFACTURER, type: TEXT}
+      - {id: ACTION_TYPE, type: VALUE_SET, value_set_ref: SOFTWARE_INSTALL_ACTION}
+      - {id: OPERATION_RESULT, type: VALUE_SET, value_set_ref: OPERATION_RESULT, when: RESULT_NOT_DETERMINED_BY_EVENT_IDENTIFIER}
+    additional_fields:
+      - {id: SIZE_BYTES, type: INTEGER}
+      - {id: BITNESS, type: INTEGER}
+      - {id: COMPONENT_USER_LIST, type: TEXT, separator: SEMICOLON, all_users_literal: "Для всех"}
+
+  - id: G59548-6.2.39
+    clause: "6.2.39/tables 80-81"
+    name_ru: "Управление запуском или остановкой компонентов программного обеспечения"
+    required_fields:
+      - {id: PROCESS_IDENTIFIER, type: INTEGER, semantic: OS_PROCESS_UNIQUE_NUMBER}
+      - {id: PROCESS_FILE_FULL_PATH, type: TEXT}
+      - {id: PARENT_PROCESS_NAME, type: TEXT}
+      - {id: PARENT_PROCESS_IDENTIFIER, type: INTEGER, semantic: OS_PROCESS_UNIQUE_NUMBER}
+      - {id: ACTION_TYPE, type: VALUE_SET, value_set_ref: PROCESS_CONTROL_ACTION}
+    additional_fields:
+      - {id: KERNEL_MODE_RUNTIME, type: DURATION, stated_unit: SECOND, when: AFTER_PROCESS_COMPLETION}
+      - {id: USER_MODE_RUNTIME, type: DURATION, stated_unit: SECOND, when: AFTER_PROCESS_COMPLETION}
+      - {id: EXECUTABLE_FILE_VERSION, type: SOFTWARE_VERSION}
+      - {id: EXECUTABLE_FILE_CHECKSUM, type: TEXT, semantic: ONE_WAY_HASH_VALUE}
+      - {id: CHECKSUM_ALGORITHM, type: TEXT, examples: [MD5, SHA1, SHA256, OTHER]}
+      - {id: EXECUTABLE_FILE_DEVELOPER, type: TEXT}
+      - {id: PROCESS_QUALIFICATION_LABEL, type: TEXT}
+
+  - id: G59548-6.2.40
+    clause: "6.2.40/tables 82-83"
+    name_ru: "Обнаружение утечки через съемные носители и сетевые устройства"
+    required_fields:
+      - {id: DEVICE_NAME, type: TEXT}
+      - {id: WORKSTATION_NAME, type: TEXT}
+      - {id: FILE_NAME, type: TEXT}
+      - {id: FILE_PATH, type: TEXT, when: IF_APPLICABLE}
+    additional_fields:
+      - {id: PROTECTION_OBJECT, type: TEXT}
+      - {id: OBJECT_CATEGORY, type: TEXT}
+      - {id: POLICY_NAME, type: TEXT}
+      - {id: FILE_SIZE_BYTES, type: INTEGER}
+      - {id: FILE_QUALIFICATION_LABEL, type: TEXT}
+      - {id: REMOVABLE_MEDIA_OR_NETWORK_DEVICE_QUALIFICATION_LABEL, type: TEXT}
+      - {id: ACTION_TYPE, type: TEXT}
+      - {id: OPERATION_RESULT, type: TEXT, examples: [SUCCESSFUL, UNSUCCESSFUL], examples_are_non_exhaustive: true}
+
+  - id: G59548-6.2.41
+    clause: "6.2.41/tables 84-85"
+    name_ru: "Обнаружение утечки через системы обмена мгновенными сообщениями"
+    required_fields:
+      - {id: INTERCEPTION_SERVER_NETWORK_ADDRESS, type: NETWORK_ADDRESS}
+      - {id: DEVICE_NAME, type: TEXT}
+      - {id: WORKSTATION_NAME, type: TEXT}
+      - {id: FILE_PATH, type: TEXT, when: IF_APPLICABLE}
+      - {id: ACTION_TYPE, type: TEXT}
+    additional_fields:
+      - {id: PROTECTION_OBJECT, type: TEXT}
+      - {id: OBJECT_CATEGORY, type: TEXT}
+      - {id: POLICY_NAME, type: TEXT}
+      - {id: FILE_SIZE_BYTES, type: INTEGER}
+      - {id: OPERATION_RESULT, type: TEXT, examples: [SUCCESSFUL, UNSUCCESSFUL], examples_are_non_exhaustive: true}
+
+  - id: G59548-6.2.42
+    clause: "6.2.42/tables 86-87"
+    name_ru: "Обнаружение утечки через электронную почту"
+    required_fields:
+      - {id: ACTION_TYPE, type: TEXT}
+      - {id: SENT_DATE_TIME, type: DATE_TIME}
+      - {id: INTERCEPTION_DATE_TIME, type: DATE_TIME}
+      - {id: DELIVERY_STATUS, type: TEXT}
+      - {id: SENDER_EMAIL_ADDRESS, type: EMAIL_ADDRESS}
+      - {id: RECIPIENT_EMAIL_ADDRESS, type: EMAIL_ADDRESS}
+      - {id: ATTACHMENTS_PRESENT, type: TEXT, stated_values: ["есть", "нет"]}
+    additional_fields:
+      - {id: PROTECTION_OBJECT, type: TEXT}
+      - {id: OBJECT_CATEGORY, type: TEXT}
+      - {id: POLICY_NAME, type: TEXT, semantic: DATA_LEAK_CONTROL_POLICY_IDENTIFIER}
+      - {id: FILE_SIZE_BYTES, type: INTEGER}
+      - {id: FILE_TYPE, type: TEXT}
+      - {id: OPERATION_RESULT, type: TEXT, examples: [SUCCESSFUL, UNSUCCESSFUL], examples_are_non_exhaustive: true}
+
+  - id: G59548-6.2.43
+    clause: "6.2.43/tables 88-89"
+    name_ru: "Вывод защищаемой информации на печать"
+    required_fields:
+      - {id: ACTION_TYPE, type: TEXT}
+      - {id: PRINTER_PORT, type: TEXT}
+      - {id: PRINTER_NAME, type: TEXT, content: MANUFACTURER_AND_MODEL}
+      - {id: CLIENT_NETWORK_ADDRESS, type: NETWORK_ADDRESS}
+      - {id: FILE_NAME, type: TEXT, source_semantic: FILE_SYSTEM_LOCATION_STRING}
+      - {id: FILE_PAGE_COUNT, type: INTEGER}
+      - {id: PRINTED_PAGE_COUNT, type: INTEGER}
+      - {id: PRINT_TYPE, type: VALUE_SET, value_set_ref: PRINT_TYPE}
+      - {id: PRINTER_NETWORK_ADDRESS, type: NETWORK_ADDRESS}
+      - {id: OPERATION_RESULT, type: VALUE_SET, value_set_ref: OPERATION_RESULT, when: RESULT_NOT_DETERMINED_BY_EVENT_IDENTIFIER}
+    additional_fields:
+      - {id: PRINT_JOB_NUMBER, type: INTEGER}
+      - {id: PRINT_FAILURE_REASON, type: TEXT}
+      - {id: SHEET_FORMAT, type: TEXT, examples: [A4]}
+      - {id: DOCUMENT_QUALIFICATION_LABEL, type: TEXT}
+
+  - id: G59548-6.2.44
+    clause: "6.2.44/tables 90-91"
+    name_ru: "Подключение или отключение съемного машинного носителя информации"
+    registration_granularity: EACH_LOGICAL_VOLUME_SEPARATELY_IF_MEDIA_HAS_MULTIPLE_LOGICAL_VOLUMES
+    required_fields:
+      - {id: ACTION_TYPE, type: VALUE_SET, value_set_ref: REMOVABLE_MEDIA_ACTION}
+      - {id: DEVICE_SERIAL_OR_OTHER_UNIQUE_HARDWARE_IDENTIFIER, type: TEXT}
+      - {id: DEVICE_CLASS, type: TEXT}
+      - {id: DEVICE_NAME, type: TEXT}
+      - {id: VOLUME_NAME, type: TEXT}
+      - {id: OPERATION_RESULT, type: VALUE_SET, value_set_ref: OPERATION_RESULT, when: RESULT_NOT_DETERMINED_BY_EVENT_IDENTIFIER}
+      - {id: VOLUME_SIZE_BYTES, type: INTEGER}
+      - {id: FILE_SYSTEM, type: TEXT, examples: [NTFS]}
+    additional_fields:
+      - {id: AVAILABLE_SPACE_BYTES, type: INTEGER}
+      - {id: BLOCK_REASON, type: TEXT}
+      - {id: QUALIFICATION_LABEL, type: TEXT}
+      - {id: DEVICE_CODE, type: TEXT, encoding: HEXADECIMAL}
+      - {id: MANUFACTURER_CODE, type: TEXT, encoding: HEXADECIMAL}
+
+coverage:
+  this_part_subsections: 12
+  this_part_required_field_placements: 69
+  this_part_additional_field_placements: 51
+  cumulative_modeled_subsections: 44
+  cumulative_pending_subsections: 37
+  cumulative_section_6_2_total: 81
+  modeled_subsections: "6.2.33-6.2.44"
+  remaining_subsections: "6.2.45-6.2.81"
+
+scope_guards:
+  - DO_NOT_TREAT_THIS_PARTIAL_MODEL_AS_COMPLETE_GOST_R_59548_2022_EVENT_SCHEMA
+  - DO_NOT_TREAT_ADDITIONAL_FIELDS_AS_REQUIRED_FIELDS
+  - DO_NOT_TREAT_TEXT_EXAMPLES_SUCCESSFUL_UNSUCCESSFUL_AS_CLOSED_VALUE_SETS
+  - DO_NOT_TREAT_CHECKSUM_FILESYSTEM_SHEET_FORMAT_OR_ACTION_EXAMPLES_AS_EXHAUSTIVE_UNLESS_MARKED_VALUE_SET
+  - DO_NOT_INVENT_UPDATE_INSTALLATION_TIME_SYNC_DLP_RETENTION_OR_RESPONSE_INTERVALS
+  - DO_NOT_INFER_DATA_CLASSIFICATION_POLICY_OR_BLOCKING_DECISION_FROM_EVENT_FIELDS_ALONE
+  - DO_NOT_EQUATE_LOCAL_EVENT_REGISTRATION_WITH_INCIDENT_OR_REGULATOR_NOTIFICATION
+  - DO_NOT_TREAT_CURRENT_STANDARD_STATUS_AS_UNIVERSAL_BINDING_APPLICABILITY
+
+verification_boundary:
+  official_status_and_scope: VERIFIED_ROSSTANDART_2026_08_21
+  clauses_6_2_33_to_6_2_44: VERIFIED_PUBLIC_TEXT_CROSSCHECK
+  tables_68_to_91: VERIFIED_PUBLIC_TEXT_CROSSCHECK
+  clauses_6_2_45_to_6_2_81: PENDING_ATOMIC_MODEL
+  complete_event_schema: PENDING_37_OF_81_SUBSECTIONS
+  immutable_official_bytes: PENDING
+  independent_expert_review: PENDING
+  critical_gap_created: false
+  high_gap_created: false
