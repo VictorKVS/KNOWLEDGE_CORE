@@ -1,0 +1,88 @@
+schema_version: "1.0"
+kind: protected-information-source-card
+source_id: SEC-SRC-RU-FZ-176-1999
+jurisdiction: RU
+sector: communications
+regime: postal_communications_secrecy
+number: "176-ФЗ"
+date: "1999-07-17"
+title: "Федеральный закон от 17.07.1999 № 176-ФЗ «О почтовой связи»"
+status: PRIMARY_ACT_PROTECTED_LOCATOR_VERIFIED_AGENCY_ARTIFACT_CAPTURED_VERSION_CHAIN_PARTIAL
+checked_at: "2026-08-21T08:26:31+03:00"
+
+proof_floor:
+  - "The federal law itself is the primary normative act; the captured PDF is an official Rosgvardiya-hosted agency copy, not the official-publication binary."
+  - "The captured agency PDF is edition 10.06.2026. A later 26.07.2026 amendment event exists; therefore the full-law current consolidated artifact remains pending."
+  - "Article 15 is a protected-information anchor. Its existence does not prove that every data item handled by every organization is personal data or that 152-ФЗ applies to every postal operation."
+  - "No applicability edge is promoted from sector overlap alone."
+
+protected_information_anchor:
+  locator: "статья 15 — Тайна связи"
+  concept: POSTAL_COMMUNICATIONS_SECRECY
+  current_effective_rule_state: CURRENT_LOCATOR_IDENTIFIED
+  findings:
+    - "Все операторы почтовой связи обязаны обеспечивать соблюдение тайны связи."
+    - "Адресные данные пользователей, сведения о почтовых отправлениях, почтовых переводах денежных средств, телеграфных и иных сообщениях в сфере деятельности операторов почтовой связи относятся законом к тайне связи."
+    - "Ограничение тайны связи допускается только на основании судебного решения."
+  semantic_guard: >-
+    Address data may intersect with personal data, but Article 15 protects a broader statutory communications-secrecy
+    object. Do not collapse postal communications secrecy into the 152-ФЗ regime.
+
+source_evidence:
+  official_agency_copy:
+    authority: "Управление Росгвардии по Карачаево-Черкесской Республике (official .gov.ru domain)"
+    url: "https://17.rosguard.gov.ru/uploads/2026/06/federalnyjj_zakon_ot_17071999_n_176fz_red_ot_10062026.pdf"
+    edition_marked_in_file: "ред. от 10.06.2026"
+    role: OFFICIAL_AGENCY_HOSTED_EXACT_ARTIFACT
+  current_consolidated_cross_check:
+    edition_date: "2026-07-26"
+    state: CURRENT_TEXT_CROSS_CHECKED_SECONDARY_PENDING_PRIMARY_CURRENT_BINARY
+    note: >-
+      Current legal-database text identifies 176-ФЗ in the 26.07.2026 edition and keeps Article 15 as the communications-
+      secrecy provision; future Article 15 changes from 271-ФЗ are scheduled for 01.03.2027.
+
+version_chain:
+  state: VERSION_CHAIN_PARTIAL
+  latest_identified_event:
+    act: "271-ФЗ от 26.07.2026"
+    title: "О внесении изменений в Федеральный закон «О почтовой связи» и отдельные законодательные акты Российской Федерации"
+    official_publication_id: "0001202607260030"
+    official_publication_date: "2026-07-26"
+    official_url_candidate: "https://publication.pravo.gov.ru/document/0001202607260030"
+    publication_locator_state: OFFICIAL_LOCATOR_CORROBORATED_PRIMARY_PORTAL_FETCH_PENDING
+    effect_on_article_15: "Future amendment from 01.03.2027; not treated as current Article 15 wording on 2026-08-21."
+  pending: >-
+    Reconcile complete amendment chain and persist an exact current primary/authority consolidated artifact before
+    VERSION_CHAIN_VERIFIED or executable promotion.
+
+overlap_candidates:
+  - target: "152-ФЗ"
+    type: ADDRESS_AND_USER_INFORMATION_MAY_CONTAIN_PERSONAL_DATA
+    status: CANDIDATE_PENDING_FIELD_AND_SCENARIO_REVIEW
+    guard: "Postal communications secrecy is not equivalent to personal-data applicability."
+  - target: "126-ФЗ"
+    type: PARALLEL_COMMUNICATIONS_SECRECY_REGIME
+    status: CROSS_DOMAIN_RELATION_CANDIDATE
+    guard: "Parallel communications sector does not make the statutory objects identical."
+  - target: "271-ФЗ от 26.07.2026"
+    type: SOURCE_VERSION_EVENT
+    status: VERSION_EVENT_IDENTIFIED_PRIMARY_PORTAL_FETCH_PENDING
+
+artifact_capture:
+  state: EXACT_BYTES_CAPTURED_PERSISTENCE_PENDING
+  retrieved_at: "2026-08-21T05:26:31Z"
+  source_url: "https://17.rosguard.gov.ru/uploads/2026/06/federalnyjj_zakon_ot_17071999_n_176fz_red_ot_10062026.pdf"
+  mime: "application/pdf"
+  byte_length: 521530
+  sha256: "4320e6a7be2715fe48b13df6f06ecc2a3c50b9884d7412592b5f17b012d1de7f"
+  artifact_ref: null
+  immutable_manifest_ref: null
+  durable: false
+  persistence_blocker: >-
+    Exact PDF bytes were successfully retrieved and fingerprinted in the execution environment, but the connected GitHub
+    write interface in this run exposes UTF-8 content writes and no direct binary-file upload path. The hash is retained
+    as a verification target; immutable promotion is withheld until the exact bytes are durably stored.
+
+executable_use:
+  allowed: false
+  gate: "Durable exact artifact + current primary/version-chain reconciliation + locator review + applicability review"
