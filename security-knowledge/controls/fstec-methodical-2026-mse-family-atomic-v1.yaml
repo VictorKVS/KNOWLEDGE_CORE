@@ -1,0 +1,188 @@
+schema_version: "1.0"
+id: FSTEC-MD-2026-MSE-FAMILY
+title: "FSTEC 12 April 2026 methodical document: complete MSE.1-MSE.5 family"
+authority: FSTEC_RUSSIA
+approved_date: "2026-04-12"
+status: VERIFIED_BOUNDED_COMPLETE_MSE_PUBLIC_TEXT_CROSSCHECK
+scope_statement: >-
+  Complete normalized coverage of section 4.15 measures MSE.1-MSE.5 for
+  segmentation and firewalling: thirty-four implementation atoms, three
+  documentation items, fourteen enhancements, one exact annual constraint and
+  all thirty appendix-2 cells. Example decoy-data formats remain examples and
+  are not converted into an exhaustive mandatory list.
+
+source_evidence:
+  official_page: https://fstec.ru/dokumenty/vse-dokumenty/spetsialnye-normativnye-dokumenty/metodicheskij-dokument-ot-12-aprelya-2026-g
+  official_endpoint_result: TIMEOUT_BYTES_NOT_ACQUIRED
+  section_locator: "section 4.15, MSE.1-MSE.5"
+  appendix_locator: "appendix 2, family 15, MSE.1-MSE.5 rows"
+  current_text_interfaces:
+    - https://base.garant.ru/414070697/
+    - https://wiki.privacy-advocates.ru/fstek_12.04.2026
+    - https://sudact.ru/law/metodicheskii-dokument-sostav-i-soderzhanie-meropriiatii-i/
+    - https://normativ.kontur.ru/document/1/506081-metodicheskiy-dokument-sostav-i-soderzhanie-meropriyatiy-i-mer-po-zashchite-informatsii
+  immutable_official_bytes: PENDING
+
+applicability:
+  trigger: INFORMATION_SYSTEM_REQUIRES_SEGMENTATION_OR_NETWORK_BOUNDARY_CONTROL
+  rule: APPLY_CLASS_BASELINE_THEN_ADAPT_AND_VERIFY_AGAINST_THREATS
+  guard: MSE_4_AND_MSE_5_BLANK_BASE_ROWS_ARE_NOT_PROHIBITIONS
+
+measures:
+  - code: "МСЭ.1"
+    title: "Сегментация сети"
+    purpose: ISOLATE_INFORMATION_SYSTEM_SEGMENTS_FROM_EACH_OTHER
+    implementation:
+      - IMPLEMENT_INFORMATION_SYSTEM_SEGMENTATION
+      - IDENTIFY_NETWORK_SEGMENTS
+      - IDENTIFY_FUNCTIONAL_SEGMENTS
+      - IDENTIFY_SEGMENTS_BY_INFORMATION_SIGNIFICANCE_LEVEL
+      - IDENTIFY_SEGMENTS_BY_PROTECTION_CLASS
+      - IDENTIFY_SEGMENTS_BY_DEVICE_TYPE
+      - IDENTIFY_VIRTUAL_ENVIRONMENT_SEGMENTS
+      - IDENTIFY_CONTAINER_ENVIRONMENT_SEGMENTS
+      - CONTROL_AND_FILTER_NETWORK_TRAFFIC_AT_SEGMENT_BOUNDARIES
+      - VERIFY_SEGMENTATION_CORRECTNESS_ACCORDING_TO_OPERATING_DOCUMENTATION_AT_LEAST_ANNUALLY
+      - APPLY_LEAST_PRIVILEGE_TO_INTERSEGMENT_INTERACTION_AND_SEGMENT_ACCESS
+      - IMPLEMENT_USING_FIREWALLS_ONE_WAY_TRANSFER_AND_IF_NEEDED_OPERATOR_DEFINED_PHYSICAL_ISOLATION
+    documentation:
+      - DEFINE_INFORMATION_SYSTEM_SEGMENTATION_PROCEDURE
+    enhancements:
+      - {number: 1, rule: IMPLEMENT_MICROSEGMENTATION_INTO_ISOLATED_SEGMENTS}
+      - {number: 2, rule: ALLOW_EXTERNAL_USER_ACCESS_TO_APPLICATIONS_WITHOUT_ACCESS_TO_OTHER_SEGMENTS}
+      - {number: 3, rule: AUTOMATE_FILTER_RULE_MANAGEMENT_FOR_CROSS_FIREWALL_CONSISTENCY}
+      - {number: 4, rule: CENTRALLY_REGISTER_BLOCKED_FIREWALL_BYPASS_ATTEMPTS_USING_SECURITY_MONITORING}
+    matrix:
+      base: {K3: PLUS, K2: PLUS, K1: PLUS}
+      enhancements: {K3: [], K2: [], K1: [1]}
+
+  - code: "МСЭ.2"
+    title: "Организация демилитаризованной зоны"
+    purpose: CREATE_CONTROLLED_BUFFER_SEGMENT_FOR_SAFE_EXTERNAL_INTERACTION
+    implementation:
+      - CREATE_DMZ_FOR_COMPONENTS_INTERACTING_WITH_EXTERNAL_SYSTEMS_AND_NETWORKS
+      - ISOLATE_DMZ_FROM_INTERNAL_RESTRICTED_INFORMATION_SEGMENTS_USING_FIREWALLS_OR_ONE_WAY_TRANSFER
+      - ROUTE_ALL_DMZ_EXTERNAL_AND_INTERNAL_NETWORK_CONNECTIONS_THROUGH_FIREWALLS
+    documentation:
+      - DEFINE_DMZ_ORGANIZATION_PROCEDURE
+    enhancements:
+      - {number: 1, rule: PROTECT_DMZ_COMPONENTS_USING_WEB_SERVER_LEVEL_FIREWALLS}
+      - {number: 2, rule: USE_REVERSE_PROXIES_FOR_ACCESS_TO_DMZ_COMPONENTS}
+      - {number: 3, rule: LIMIT_NETWORK_INTERFACE_MEMORY_ACCESS_TO_ALLOWED_ADDRESS_RANGE_AND_EXCLUDE_OTHER_READ_WRITE_ACCESS}
+    matrix:
+      base: {K3: PLUS, K2: PLUS, K1: PLUS}
+      enhancements: {K3: [], K2: [], K1: []}
+
+  - code: "МСЭ.3"
+    title: "Контроль сетевого доступа и фильтрация трафика"
+    purpose: SECURE_INTERSEGMENT_AND_EXTERNAL_NETWORK_INTERACTION
+    implementation:
+      - CONTROL_NETWORK_ACCESS_AND_FILTER_ALL_TRAFFIC_AT_INTERSEGMENT_AND_EXTERNAL_BOUNDARIES
+      - USE_THREAT_INFORMED_FILTER_RULES_AND_OR_ONE_WAY_TRANSFER
+      - DEFINE_NETWORK_TRAFFIC_CONTROL_AND_FILTER_RULES
+      - FILTER_INBOUND_NETWORK_CONNECTIONS
+      - FILTER_OUTBOUND_NETWORK_CONNECTIONS
+      - REGISTER_SECURITY_EVENTS_FOR_OPERATOR_DEFINED_NETWORK_INTERACTION_RULE_VIOLATIONS
+      - BACK_UP_FIREWALL_RULE_LIST
+      - IMPLEMENT_USING_FIREWALLS_ONE_WAY_TRANSFER_AND_IF_NEEDED_OPERATOR_DEFINED_PHYSICAL_ISOLATION
+    documentation:
+      - DEFINE_NETWORK_TRAFFIC_CONTROL_AND_FILTERING_PROCEDURE
+    enhancements:
+      - {number: 1, rule: IMPLEMENT_HARDWARE_PACKET_FILTERING_BY_PHYSICAL_AND_OR_NETWORK_SENDER_AND_OR_RECIPIENT_ADDRESSES}
+    matrix:
+      base: {K3: PLUS, K2: PLUS, K1: PLUS}
+      enhancements: {K3: [], K2: [], K1: []}
+
+  - code: "МСЭ.4"
+    title: "Маскирование системы"
+    purpose: IMPEDE_EXTERNAL_ANALYSIS_OF_SYSTEM_CONFIGURATION_AND_OPERATION
+    implementation:
+      - IDENTIFY_EXTERNAL_BOUNDARY_COMPONENTS_REQUIRING_MASKING
+      - PREVENT_UNAUTHORIZED_DISCOVERY_OF_NETWORK_ADDRESSES_NODE_NAMES_AND_SOFTWARE_TYPES_AND_VERSIONS
+      - ENSURE_NETWORK_RESPONSES_DO_NOT_DISCLOSE_INFORMATION_SYSTEM_DETAILS
+      - ENSURE_MASKING_DOES_NOT_DISRUPT_NORMAL_INFORMATION_SYSTEM_OPERATION
+    documentation: []
+    enhancements:
+      - {number: 1, rule: HIDE_SERVICE_NETWORK_ADDRESSES_FOR_ADMINISTRATIVE_SERVICE_ACCESS_CONTROL}
+      - {number: 2, rule: USE_NETWORK_SCAN_SLOWDOWN_SYSTEMS}
+      - {number: 3, rule: IGNORE_REQUESTS_FROM_EXTERNAL_SOURCES}
+      - {number: 4, rule: MASK_NETWORK_TRAFFIC_ATTRIBUTES_TO_IMPEDE_ANALYSIS}
+    matrix:
+      base: {K3: BLANK, K2: BLANK, K1: BLANK}
+      enhancements: {K3: [], K2: [], K1: []}
+
+  - code: "МСЭ.5"
+    title: "Создание ложных систем"
+    purpose: DETECT_UNAUTHORIZED_ACCESS_ATTEMPTS_USING_EMULATED_DECOY_SYSTEMS_OR_COMPONENTS
+    implementation:
+      - USE_DECOY_INFORMATION_SYSTEMS_OR_COMPONENTS_TO_DETECT_REGISTER_AND_ANALYZE_ATTACKER_ACTIONS
+      - IMITATE_REAL_INFORMATION_SYSTEM_OR_COMPONENT_OPERATION
+      - DETECT_AND_REGISTER_ATTACKER_COMPUTER_ATTACK_ACTIONS
+      - SEND_COLLECTED_INFORMATION_TO_SECURITY_MONITORING_SYSTEMS
+      - ISOLATE_DECOY_SYSTEMS_FROM_INFORMATION_SYSTEM
+      - GIVE_DECOY_SYSTEMS_SIGNS_OF_FUNCTIONING_SERVICES
+      - EXCLUDE_RESTRICTED_INFORMATION_FROM_DECOY_SYSTEMS
+    documentation: []
+    enhancements:
+      - number: 1
+        rule: CREATE_DECOY_DATA_ON_INFORMATION_SYSTEM_COMPONENTS
+        non_exhaustive_examples: [TEXT_AND_TABLE_FILES, OPERATING_SYSTEM_COMPONENT_DATA, APPLICATION_SOFTWARE_DATA]
+      - {number: 2, rule: MAKE_DECOY_SYSTEM_IDENTIFIABLE_AS_EXISTING_SYSTEM_WITHOUT_REVEALING_IT_AS_INFORMATION_SYSTEM_COMPONENT}
+    matrix:
+      base: {K3: BLANK, K2: BLANK, K1: BLANK}
+      enhancements: {K3: [], K2: [], K1: []}
+
+numeric_constraints:
+  - id: MSE1_SEGMENTATION_CORRECTNESS_REVIEW
+    measure: "МСЭ.1"
+    relation: AT_LEAST_ONCE_EVERY
+    value: 1
+    unit: YEAR
+    trigger: INFORMATION_SYSTEM_SEGMENTATION_IN_OPERATION
+
+operator_defined_parameters:
+  - {id: MSE1_SEGMENT_SCHEME, measure: "МСЭ.1", type: SEGMENT_IDENTIFICATION_AND_BOUNDARY_SCHEME, universal_value: NOT_STATED}
+  - {id: MSE1_PHYSICAL_ISOLATION_SCOPE, measure: "МСЭ.1", type: OPERATOR_DEFINED_PHYSICALLY_ISOLATED_SEGMENT_SET, universal_value: NOT_STATED}
+  - {id: MSE2_DMZ_COMPONENT_SET, measure: "МСЭ.2", type: EXTERNALLY_INTERACTING_COMPONENT_SET, universal_value: NOT_STATED}
+  - {id: MSE2_ALLOWED_MEMORY_ADDRESS_RANGE, measure: "МСЭ.2", type: HARDWARE_ALLOWED_MEMORY_ADDRESS_RANGE, universal_value: NOT_STATED}
+  - {id: MSE3_FILTER_RULE_SET, measure: "МСЭ.3", type: NETWORK_CONTROL_AND_FILTER_RULE_SET, universal_value: NOT_STATED}
+  - {id: MSE3_RULE_BACKUP_PROCEDURE, measure: "МСЭ.3", type: FIREWALL_RULE_BACKUP_PROCEDURE, universal_value: NOT_STATED}
+  - {id: MSE3_PHYSICAL_ISOLATION_SCOPE, measure: "МСЭ.3", type: OPERATOR_DEFINED_PHYSICALLY_ISOLATED_SEGMENT_SET, universal_value: NOT_STATED}
+  - {id: MSE4_MASKED_COMPONENT_SET, measure: "МСЭ.4", type: EXTERNAL_BOUNDARY_COMPONENT_SET, universal_value: NOT_STATED}
+  - {id: MSE4_MASKED_ATTRIBUTE_SET, measure: "МСЭ.4", type: SYSTEM_AND_TRAFFIC_ATTRIBUTE_SET, universal_value: NOT_STATED}
+  - {id: MSE5_DECOY_SYSTEM_COMPONENT_SET, measure: "МСЭ.5", type: DECOY_SYSTEM_AND_COMPONENT_SET, universal_value: NOT_STATED}
+
+class_matrix_summary:
+  cells_total: 30
+  nonblank_cells: 10
+  blank_cells: 20
+  fully_blank_measure_rows: ["МСЭ.4", "МСЭ.5"]
+  class_listed_base_measures: ["МСЭ.1", "МСЭ.2", "МСЭ.3"]
+  class_listed_enhancements: {"МСЭ.1": {K3: [], K2: [], K1: [1]}}
+  rule: BLANK_BASE_OR_ENHANCEMENT_CELL_DOES_NOT_DELETE_ADAPTATION_VERIFICATION_OR_COMPENSATION
+
+scope_guards:
+  - DO_NOT_TREAT_MSE_4_OR_MSE_5_BLANK_BASE_ROW_AS_PROHIBITION_OR_PROOF_OF_NON_APPLICABILITY
+  - DO_NOT_REDUCE_ANNUAL_SEGMENTATION_REVIEW_TO_DOCUMENT_REVIEW_ONLY
+  - DO_NOT_TREAT_PHYSICAL_ISOLATION_AS_UNCONDITIONAL_FOR_EVERY_SEGMENT
+  - DO_NOT_TREAT_DMZ_AS_SUBSTITUTE_FOR_ALL_OTHER_BOUNDARY_CONTROLS
+  - DO_NOT_INVENT_FIREWALL_RULE_REVIEW_OR_BACKUP_FREQUENCY
+  - DO_NOT_REQUIRE_UNLISTED_ENHANCEMENTS_FROM_CLASS_MATRIX_ALONE
+  - DO_NOT_TREAT_DECOY_DATA_EXAMPLES_AS_EXHAUSTIVE_OR_ALL_MANDATORY
+  - DO_NOT_PLACE_RESTRICTED_INFORMATION_IN_DECOY_SYSTEMS
+  - DO_NOT_TREAT_MSE_AS_REPLACEMENT_FOR_SOV_ZKS_AVZ_RSB_OR_DDOS_CONTROLS
+
+verification_boundary:
+  section_4_15_mse_1_5: VERIFIED_PUBLIC_TEXT_CROSSCHECK
+  complete_mse_family: VERIFIED_PUBLIC_TEXT_CROSSCHECK_5_OF_5
+  implementation_requirements: VERIFIED_NORMALIZED_PUBLIC_TEXT_CROSSCHECK
+  documentation_requirements: VERIFIED_NORMALIZED_PUBLIC_TEXT_CROSSCHECK
+  enhancement_entries: VERIFIED_NORMALIZED_PUBLIC_TEXT_CROSSCHECK
+  exact_numeric_constraints: VERIFIED_ONE_ANNUAL_CONSTRAINT
+  exact_mse_class_cells: VERIFIED_PUBLIC_TEXT_CROSSCHECK_30
+  product_specific_firewall_dpi_dlp_and_deception_profiles: PENDING_SEPARATE_PROFILE_MODELS
+  other_measure_families: PENDING
+  official_immutable_bytes: PENDING
+  independent_expert_review: PENDING
+  critical_gap_created: false
+  high_gap_created: false
