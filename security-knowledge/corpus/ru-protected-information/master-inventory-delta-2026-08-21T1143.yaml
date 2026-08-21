@@ -1,0 +1,71 @@
+schema_version: "1.0"
+kind: ru-protected-information-master-inventory-delta
+base_inventory: "master-inventory.yaml"
+reconciliation_base_delta: "master-inventory-delta-2026-08-21T1122.yaml"
+checked_at: "2026-08-21T11:43:00+03:00"
+owner_stream: STREAM_3_SECTOR_OVERLAYS
+status: APPEND_ONLY_RECONCILIATION_READY
+
+proof_floor:
+  - "125-ФЗ already existed in the master inventory; this pass operationalizes that source node and must not increase discovery counts."
+  - "Retention under Article 22.1 and access restriction under Article 25(3) are distinct legal concepts."
+  - "152-ФЗ Article 1(2)(2) creates a direct statutory scope boundary for archival-law relations, not a blanket exemption for all organizational processing."
+  - "Exact binary fields remain null until authoritative bytes are captured."
+
+counter_state_before_reconciled: {found: 24, downloaded: 9, immutable: 9, pending: 13, reused: 2, primary_publication_verified: 10, sectors_registered: 16}
+counter_state_after_reconciliation:
+  found: 24
+  downloaded: 9
+  immutable: 9
+  pending: 13
+  reused: 2
+  primary_publication_verified: 10
+  sectors_registered: 16
+  new_sources_this_run: 0
+  existing_source_nodes_operationalized: 1
+  new_immutable_this_run: 0
+  new_version_edges_identified_this_run: 1
+  direct_pdn_scope_boundaries_registered_this_run: 1
+
+source_reconciled:
+  source_id: SEC-SRC-RU-FZ-125
+  source_card: "security-corpora/RU/protected-information/source/SEC-SRC-RU-FZ-125.yaml"
+  sector: archives
+  regime: archival_access_retention
+  state: CURRENT_AUTHORITY_TEXT_VERIFIED_PRIMARY_EXACT_ARTIFACT_PENDING_VERSION_CHAIN_PARTIAL
+  protected_locators:
+    - {locator: "статья 22.1", concept: RECORD_RETENTION_PERIOD, current_rule: "75 years for personnel records completed before 2003; 50 years after 2003, subject to statutory exceptions and special lists"}
+    - {locator: "статья 25 часть 3", concept: ACCESS_RESTRICTION_PERIOD, current_rule: "75-year access restriction for personal/family secret, private-life and citizen-safety information"}
+  semantic_guard: "Do not merge Article 22.1 retention with Article 25(3) access restriction even where both can contain the number 75."
+  pdn_relation:
+    target: "152-ФЗ статья 1 часть 2 пункт 2"
+    type: DIRECT_STATUTORY_SCOPE_BOUNDARY
+    state: RELATION_IDENTIFIED_RELATIONSHIP_LEVEL_APPLICABILITY_REVIEW_REQUIRED
+    finding: >-
+      152-ФЗ excludes relations arising from organization of storage, acquisition, accounting and use of Archival Fund
+      and other archival documents containing personal data when governed by Russian archival legislation.
+    guard: "The exclusion must be tested against the concrete relationship and lifecycle stage; it is not an organization-wide exemption."
+
+version_event:
+  act: "469-ФЗ от 13.12.2024"
+  official_publication_id: "0001202412130022"
+  official_publication_date: "2024-12-13"
+  official_url: "https://publication.pravo.gov.ru/document/0001202412130022"
+  edge: "469-ФЗ -> 125-ФЗ"
+  effect: "Amends Article 24 access mechanisms, including electronic/remote access; no change identified to Article 22.1 or Article 25(3)."
+  current_edition_crosscheck: "125-ФЗ ред. от 13.12.2024; действует с 24.12.2024"
+  exact_artifact: PENDING
+
+acquisition:
+  capture_backlog_ref: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-125-capture-pending.json"
+  exact_binary_downloads_succeeded: 0
+  durable_immutable_added: 0
+  note: "Official amendment portal displays 195 KB / 4 pages; these are discovery metadata and are not treated as byte_length/hash."
+
+proof_floor_effect:
+  executable_rules_changed: false
+  applicability_edges_promoted: 0
+  duplicate_source_nodes_created: 0
+  legal_conflicts_confirmed: 0
+  source_nodes_added: 0
+  current_scope_boundary_registered: 1
