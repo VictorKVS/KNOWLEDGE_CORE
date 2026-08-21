@@ -71,6 +71,46 @@ sources:
     raw_capture: PENDING
     applicability: ARTICLE_13_1_SCOPE_ONLY
 
+  - id: SEC-SRC-RU-PP740-2025
+    document: "Постановление Правительства РФ от 28.05.2025 № 740"
+    role: article_13_1_designated_gis_and_platform_extension
+    metadata_status: METADATA_VERIFIED
+    source_record: "source/SEC-SRC-RU-PP740-2025.yaml"
+    raw_capture: PENDING
+    applicability: ARTICLE_13_1_SCOPE_ONLY
+
+  - id: SEC-SRC-RU-PP966-2025
+    document: "Постановление Правительства РФ от 26.06.2025 № 966"
+    role: article_13_1_operator_and_information_system_interaction
+    metadata_status: METADATA_VERIFIED
+    source_record: "source/SEC-SRC-RU-PP966-2025.yaml"
+    raw_capture: PENDING
+    applicability: ARTICLE_13_1_SCOPE_ONLY
+
+  - id: SEC-SRC-RU-PP733-2021
+    document: "Постановление Правительства РФ от 14.05.2021 № 733, текущая редакция от 17.12.2025"
+    role: article_13_1_depersonalized_data_platform_context
+    metadata_status: METADATA_VERIFIED
+    source_record: "source/SEC-SRC-RU-PP733-2021.yaml"
+    raw_capture: PENDING
+    current_revision_compile_required: true
+
+  - id: SEC-SRC-RU-PP1650-2024
+    document: "Постановление Правительства РФ от 28.11.2024 № 1650"
+    role: pp733_version_chain_dependency
+    metadata_status: METADATA_VERIFIED
+    source_record: "source/SEC-SRC-RU-PP1650-2024.yaml"
+    raw_capture: PENDING
+    applicability: VERSION_CHAIN_SCOPE
+
+  - id: SEC-SRC-RU-PP2052-2025
+    document: "Постановление Правительства РФ от 17.12.2025 № 2052"
+    role: current_pp733_amendment_and_article_13_1_platform_terms
+    metadata_status: METADATA_VERIFIED
+    source_record: "source/SEC-SRC-RU-PP2052-2025.yaml"
+    raw_capture: PENDING
+    applicability: ARTICLE_13_1_PLATFORM_AND_VERSION_CHAIN_SCOPE
+
   - id: SEC-SRC-RU-RKN18-2021
     document: "Приказ Роскомнадзора от 24.02.2021 № 18"
     role: consent_for_dissemination_requirements
@@ -136,6 +176,16 @@ version_history:
   superseded_from: "2026-07-26"
   note: "Preserved for temporal/delta analysis; excluded from active-source counters."
 
+version_chain_gaps:
+  - chain: SEC-SRC-RU-PP733-2021
+    amendment: "Постановление Правительства РФ от 29.12.2021 № 2563"
+    status: PUBLICATION_IDENTITY_REGISTRATION_PENDING
+    evidence: "Current PP 733 version index confirms this amendment and effective date 31.12.2021."
+  - chain: SEC-SRC-RU-PP733-2021
+    amendment: "Постановление Правительства РФ от 15.06.2024 № 806"
+    status: PUBLICATION_IDENTITY_REGISTRATION_PENDING
+    evidence: "Current PP 733 version index confirms this amendment and effective date 23.06.2024."
+
 conflict_candidates:
   - conflict_id: PDN-CONFLICT-CANDIDATE-2026-001
     type: NORMATIVE_ALIGNMENT_REVIEW
@@ -172,37 +222,39 @@ regulatory_watch:
     proof_rule: "Do not register as an active normative source until an official enacted publication identity is found."
 
 production_counters:
-  identified: 13
-  registered_before_this_pass: 12
-  registered_after_this_pass: 13
-  source_records_added_this_pass: 1
+  identified: 18
+  registered_before_this_pass: 13
+  registered_after_this_pass: 18
+  source_records_added_this_pass: 5
   sources_moved_to_version_history_this_pass: 0
-  metadata_verified: 12
+  metadata_verified: 17
   current_revision_identity_pending_raw: 1
   raw_downloaded_exact: 8
   immutable_sha256_verified: 8
   atomized_existing_proposed: 4
   atomized_verified: 0
-  pending_raw_capture: 5
+  pending_raw_capture: 10
   source_registration_success_rate: 1.0
-  raw_capture_coverage_ratio: 0.6154
+  raw_capture_coverage_ratio: 0.4444
 
 analysis_metrics:
   existing_atomized_nodes_reuse_candidate: 4
   mandatory_delta_review_articles: 1
   freshness_defects_found_this_pass: 0
-  direct_dependencies_added_this_pass: 1
+  direct_dependencies_added_this_pass: 4
+  version_chain_dependencies_added_this_pass: 1
+  version_chain_gaps_opened_this_pass: 2
   conflict_candidates_opened_this_pass: 0
   source_relation_rebases_this_pass: 0
   replacement_draft_watches_opened_this_pass: 0
-  immutable_acquisition_requests_this_pass: 2
+  immutable_acquisition_requests_this_pass: 6
   acquisition_identity_guard_hardened_this_pass: 0
   semantic_promotions_this_pass: 0
   note: >-
     The four existing atomized records remain reuse candidates only. No derived node is promoted until the
-    new current-version artifact and affected-locator delta are reviewed. Article 12 remains mandatory re-analysis scope.
-    This pass re-requested guarded immutable acquisition for No. 265-FZ and registered PP RF No. 702 of 22.05.2025
-    as a direct Article 13.1 dependency. No semantic status was promoted.
+    current-version artifact and affected-locator delta are reviewed. This pass expanded the Article 13.1 execution
+    chain with PP RF Nos. 740, 966, current PP 733, its current amendment PP 2052, and PP 1650 as version-chain evidence.
+    Raw coverage fell because new required sources were added to the denominator; no immutable status was inferred.
 
 acquisition_activity:
   - source_id: SEC-SRC-RU-FZ265-2026
@@ -220,36 +272,63 @@ acquisition_activity:
       A publication ID is eligible for acquisition only when it belongs to the top-level document section;
       federal-law publication metadata number must match the registered source document number when checkable.
   - source_id: SEC-SRC-RU-FZ265-2026
-    requested_at: "2026-08-21T01:57:29Z"
+    requested_at: "2026-08-21T05:05:00Z"
     route: official_publication_pdf
     official_publication_id: "0001202607260024"
-    status: RETRY_REQUESTED_GUARDED
-    commit: "eeaa65e33b08829d9cdae682caaa534e895e23fe"
+    status: RUN_REQUESTED_GUARDED
+    commit: "ec0ede982c096e719bd0931989bae507ef72779d"
     proof_rule: "Require source-number identity match, PDF signature, exact official byte length and SHA-256 before immutable promotion."
   - source_id: SEC-SRC-RU-PP702-2025
     requested_at: "2026-08-21T02:10:00Z"
     route: official_publication_pdf
     official_publication_id: "0001202505280017"
     status: REQUESTED_NO_ACCEPTED_MANIFEST_YET
-    commit: "07cdda7fe6fe4a7c41fcede24b358d8ebf4b6352"
     proof_rule: "Keep raw_capture=PENDING until official PDF manifest contains exact byte length and SHA-256."
+  - source_id: SEC-SRC-RU-PP740-2025
+    requested_at: "2026-08-21T05:15:00Z"
+    route: official_publication_pdf
+    official_publication_id: "0001202505300061"
+    status: REQUESTED_NO_ACCEPTED_MANIFEST_YET
+  - source_id: SEC-SRC-RU-PP966-2025
+    requested_at: "2026-08-21T05:16:00Z"
+    route: official_publication_pdf
+    official_publication_id: "0001202506260044"
+    status: REQUESTED_NO_ACCEPTED_MANIFEST_YET
+  - source_id: SEC-SRC-RU-PP733-2021
+    requested_at: "2026-08-21T05:28:00Z"
+    route: official_publication_pdf
+    official_publication_id: "0001202105180005"
+    status: REQUESTED_BASELINE_CURRENT_VERSION_COMPILE_REQUIRED
+  - source_id: SEC-SRC-RU-PP2052-2025
+    requested_at: "2026-08-21T05:29:00Z"
+    route: official_publication_pdf
+    official_publication_id: "0001202512180033"
+    status: REQUESTED_NO_ACCEPTED_MANIFEST_YET
+  - source_id: SEC-SRC-RU-PP1650-2024
+    requested_at: "2026-08-21T05:32:00Z"
+    route: official_publication_pdf
+    official_publication_id: "0001202411290006"
+    status: REQUESTED_NO_ACCEPTED_MANIFEST_YET
 
 acquisition_blockers:
   - >-
       Byte-exact acquisition via the official publication portal remains operational for source records carrying
-      an official document-level publication ID. No. 265-FZ and PP RF No. 702 are queued by source-card changes,
-      but neither has an accepted immutable manifest in main at this inventory revision.
-  - >-
-      Remaining current-core raw captures are the consolidated 152-FZ text effective 26.07.2026, PP RF No. 687,
-      PP RF No. 211, No. 265-FZ and PP RF No. 702. Existing eight immutable artifacts remain valid.
+      document-level publication IDs, but no new accepted immutable manifest was present in main when this inventory
+      revision was written. Existing eight immutable artifacts remain valid.
   - >-
       The current consolidated 152-FZ source card still lacks an approved byte-exact canonical artifact route;
       version identity alone is insufficient for immutable promotion.
+  - >-
+      PP RF No. 733 must not be treated as current merely from its original 2021 PDF. Current semantics require
+      compilation of the amendment chain through No. 2052; exact publication identities/source records for Nos. 2563
+      and 806 remain to be registered.
 
 next_gate:
-  - accept manifest for No. 265-FZ only after PDF signature, official API byte-length and source-number identity checks pass
-  - accept PP RF No. 702 only after byte-exact official PDF, exact byte length and SHA-256 are recorded
-  - capture byte-exact current consolidated 152-FZ version effective 26.07.2026 and PP RF No. 687 / No. 211
+  - accept No. 265-FZ only after PDF signature, official API byte-length and source-number identity checks pass
+  - accept PP RF Nos. 702, 740, 966, 1650 and 2052 only after byte-exact official PDFs and SHA-256 are recorded
+  - capture PP RF No. 733 base artifact and complete its amendment-chain evidence before compiling current locators
+  - register exact official publication identities/source records for PP RF Nos. 2563 and 806
+  - capture byte-exact current consolidated 152-FZ version effective 26.07.2026 and PP RF Nos. 687 / 211
   - run structural delta 152-FZ 2025-09-01 -> 2026-07-26 with Article 12 mandatory review
   - review RKN Order No. 128 alignment with amended Article 12 without presuming invalidity
   - monitor RKN replacement draft project 169785 and promote only after official enacted publication is found
