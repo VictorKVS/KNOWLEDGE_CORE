@@ -1,0 +1,151 @@
+schema_version: "1.0"
+kind: stream-3-sector-overlay-run
+stream_id: STREAM_3_SECTOR_OVERLAYS
+started_at: "2026-08-21T05:15:37+03:00"
+checked_through: "2026-08-21"
+repository: "VictorKVS/KNOWLEDGE_CORE"
+status: PARTIAL_SUCCESS_NEW_TRANSPORT_SOURCE_AND_PRIMARY_VERSION_EVENT_VERIFIED
+
+objective: >-
+  Continue discovery, primary-source verification, acquisition and registration of Russian sector/special protected-
+  information regimes intersecting with personal-data processing, with primary law as evidence and no inferred
+  applicability from taxonomy alone.
+
+primary_sources_verified_this_run:
+  - act: "87-ФЗ от 30.06.2003"
+    title: "О транспортно-экспедиционной деятельности"
+    authority: "Президент России — Банк документов"
+    authority_url: "https://www.kremlin.ru/acts/bank/19642/print"
+    current_edition_markers_displayed:
+      - "307-ФЗ от 14.10.2014"
+      - "374-ФЗ от 06.07.2016"
+      - "59-ФЗ от 18.03.2020"
+      - "140-ФЗ от 07.06.2025"
+    role: NEW_SECTOR_SOURCE_CURRENT_PRIMARY_TEXT
+  - act: "140-ФЗ от 07.06.2025"
+    title: "О внесении изменений в Федеральный закон «О транспортно-экспедиционной деятельности» и отдельные законодательные акты Российской Федерации"
+    official_publication_id: "0001202506070016"
+    official_publication_date: "2025-06-07"
+    official_url: "https://publication.pravo.gov.ru/Document/View/0001202506070016"
+    authority_text_url: "https://www.kremlin.ru/acts/bank/51991/print"
+    role: VERSION_EVENT_FOR_87_FZ_AND_EFFECTIVE_DATE_EVIDENCE
+  - act: "430-ФЗ от 28.11.2025"
+    official_publication_id: "0001202511280092"
+    official_publication_date: "2025-11-28"
+    role: REVERIFIED_EXISTING_VERSION_EVENT_FOR_326_FZ_NO_DUPLICATE_EDGE
+  - act: "29-ФЗ от 20.02.2026"
+    official_publication_id: "0001202602200050"
+    official_publication_date: "2026-02-20"
+    role: REVERIFIED_EXISTING_VERSION_EVENT_FOR_326_FZ_NO_DUPLICATE_EDGE
+  - act: "168-ФЗ от 08.06.2020"
+    official_publication_id: "0001202006080019"
+    official_publication_date: "2020-06-08"
+    role: PREVIOUS_SOURCE_PRIMARY_IDENTITY_REVERIFIED_CAPTURE_STILL_PENDING
+
+new_source:
+  source_id: SEC-SRC-RU-FZ-87-2003
+  sector: transport
+  regime: transport_expedition_client_personal_data_retention_localization_cross_border
+  source_card: "security-corpora/RU/protected-information/source/SEC-SRC-RU-FZ-87-2003.yaml"
+  status: PRIMARY_CURRENT_AUTHORITY_TEXT_VERIFIED_SOURCE_PENDING
+  current_locators:
+    - {locator: "Article 4(6)", concept: RECORD_RETENTION_PERIOD, status: CURRENT_PRIMARY_TEXT_LOCATOR_IDENTIFIED}
+    - {locator: "Article 4(10)", concept: DATA_INFRASTRUCTURE_LOCALIZATION, status: CURRENT_PRIMARY_TEXT_LOCATOR_IDENTIFIED}
+    - {locator: "Article 4(11)", concept: CROSS_BORDER_PERSONAL_DATA_TRANSFER_RESTRICTION, status: CURRENT_PRIMARY_TEXT_LOCATOR_IDENTIFIED}
+    - {locator: "Article 24(3)(3)", concept: INDIVIDUAL_ENTREPRENEUR_REGISTER_PERSONAL_DATA, status: CURRENT_PRIMARY_TEXT_LOCATOR_IDENTIFIED}
+  pdn_overlap:
+    type: EXPLICIT_REFERENCE_IN_CURRENT_PRIMARY_TEXT
+    target: "152-ФЗ"
+    locator: "Article 4(11)"
+    status: CANDIDATE_PENDING_SCENARIO_APPLICABILITY_REVIEW
+    guard: "Explicit statutory reference is not universal applicability."
+
+version_chain_result:
+  source_id: SEC-SRC-RU-FZ-87-2003
+  state: CURRENT_AUTHORITY_EDITIONS_LIST_VERIFIED_VERSION_CHAIN_PARTIAL
+  latest_primary_event: "140-ФЗ / 0001202506070016"
+  source_version_edges_added: 1
+  effective_date_mapping:
+    source_locator: "140-ФЗ Article 5"
+    general_date: "2025-09-01"
+    recorded_87_fz_locators: ["Article 4(6)", "Article 4(10)", "Article 4(11)"]
+    finding: >-
+      The Article 1 point 3 subpoint 'в' addition of points 6-11 is not in the delayed exceptions in Article 5 parts 2-4;
+      therefore the general 2025-09-01 effective date is applied to these recorded locators.
+    guard: "Other 140-ФЗ amendments have staggered dates and are not generalized from this finding."
+  pending: "Reconcile 2014/2016/2020 amendment publications and perform post-2025 primary amendment sweep."
+
+healthcare_reconciliation:
+  source_id: SEC-SRC-RU-FZ-326-2010
+  status_changed: false
+  primary_events_reverified:
+    - "430-ФЗ / 0001202511280092"
+    - "29-ФЗ / 0001202602200050"
+  duplicate_version_edges_added: 0
+  exact_artifact_state: SOURCE_PENDING
+
+acquisition:
+  immutable_added: 0
+  exact_binary_acquisition_successes: 0
+  pending_targets:
+    - source_id: SEC-SRC-RU-FZ-87-2003
+      current_authority_text_url: "https://www.kremlin.ru/acts/bank/19642/print"
+      latest_amendment_publication_id: "0001202506070016"
+      result: SOURCE_PENDING_PRIMARY_EXACT_CAPTURE
+      retrieved_at: null
+      mime: null
+      byte_length: null
+      sha256: null
+      artifact_ref: null
+      manifest_ref: null
+    - source_id: SEC-SRC-RU-FZ-168-2020
+      official_publication_id: "0001202006080019"
+      result: SOURCE_PENDING_PRIMARY_EXACT_CAPTURE_RETRY_UNRESOLVED
+      retrieved_at: null
+      mime: null
+      byte_length: null
+      sha256: null
+  proof_floor_action: >-
+    No immutable artifact or final manifest was fabricated. Primary text/publication identity evidence is registered while
+    exact byte capture remains pending.
+
+counters_before_reconciled:
+  found: 22
+  downloaded: 9
+  immutable: 9
+  pending: 11
+  reused: 2
+  primary_publication_verified: 10
+  sectors_registered: 16
+
+counters_after_reconciled:
+  found: 23
+  downloaded: 9
+  immutable: 9
+  pending: 12
+  reused: 2
+  primary_publication_verified: 10
+  primary_current_authority_text_verified_pending: 1
+  sectors_registered: 16
+
+inventory_updates:
+  protected_information_delta: "master-inventory-delta-2026-08-21T0515.yaml"
+  pdn_delta: "../ru-personal-data/master-source-inventory-delta-stream3-2026-08-21T0515.yaml"
+  source_card: "security-corpora/RU/protected-information/source/SEC-SRC-RU-FZ-87-2003.yaml"
+
+quality:
+  duplicate_source_nodes_created: 0
+  duplicate_version_edges_created: 0
+  applicability_edges_promoted: 0
+  executable_rules_changed: false
+  legal_conflicts_confirmed: 0
+  source_version_edges_added: 1
+  semantic_separation_guards_added: 1
+  exact_fingerprints_fabricated: 0
+
+next_priority:
+  - "Capture exact official bytes for 87-ФЗ/current authority text or authoritative downloadable artifact and 140-ФЗ publication; then record MIME, byte length and SHA-256 and create immutable manifest."
+  - "Retry exact official byte acquisition for 168-ФЗ publication 0001202006080019."
+  - "Acquire and fingerprint 326-ФЗ authoritative artifact; reconcile 430-ФЗ, 29-ФЗ and the 2026 amendment chain at locator level."
+  - "Continue P1 pending exact acquisitions: 143-ФЗ, 16-ФЗ, 38-ФЗ, 125-ФЗ, 218-ФЗ, banking law Article 26 and GK Article 946."
+  - "Keep retention/localization/cross-border requirements separate and run applicability review before executable use."
