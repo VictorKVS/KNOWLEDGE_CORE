@@ -1,0 +1,71 @@
+schema_version: "1.0"
+kind: stream-3-sector-overlay-run
+stream_id: STREAM_3_SECTOR_OVERLAYS
+continued_from: "stream-3-run-2026-08-21T1122.yaml"
+started_at: "2026-08-21T11:43:00+03:00"
+checked_through: "2026-08-21"
+repository: "VictorKVS/KNOWLEDGE_CORE"
+status: SUCCESS_ARCHIVAL_SCOPE_BOUNDARY_RECONCILED
+
+objective: >-
+  Continue Stream 3 by operationalizing the already-discovered 125-ФЗ archival source, separating retention from access
+  restrictions, and recording the direct 152-ФЗ statutory scope boundary without inflating source counters.
+
+source_focus:
+  source_id: SEC-SRC-RU-FZ-125
+  source_disposition: EXISTING_MASTER_SOURCE_OPERATIONALIZED_NOT_REDICOVERED
+  source_card: "security-corpora/RU/protected-information/source/SEC-SRC-RU-FZ-125.yaml"
+  current_authority_text: "https://www.kremlin.ru/acts/bank/21556/print"
+
+protected_locators:
+  - {locator: "статья 22.1", concept: RECORD_RETENTION_PERIOD, rule: "75 years before 2003 / 50 years after 2003, subject to statutory exceptions"}
+  - {locator: "статья 25 часть 3", concept: ACCESS_RESTRICTION_PERIOD, rule: "75-year restriction for specified private/personal archival information"}
+  semantic_guard: "Do not merge retention and access restriction."
+
+pdn_boundary:
+  source_locator: "152-ФЗ статья 1 часть 2 пункт 2"
+  relation: DIRECT_STATUTORY_SCOPE_BOUNDARY
+  finding: >-
+    Relations arising from organization of storage, acquisition, accounting and use of archival documents containing
+    personal data under Russian archival legislation are outside the scope of 152-ФЗ.
+  guard: "Apply only to the concrete archival-law relationship; do not grant an organization-wide exemption."
+
+version_chain:
+  current_edition_crosscheck: "125-ФЗ ред. от 13.12.2024; действует с 24.12.2024"
+  latest_identified_event:
+    act: "469-ФЗ от 13.12.2024"
+    official_publication_id: "0001202412130022"
+    official_url: "https://publication.pravo.gov.ru/document/0001202412130022"
+    edge: "469-ФЗ -> 125-ФЗ"
+    effect: "Article 24 access mechanisms updated; no change identified to Article 22.1 or Article 25(3)."
+  exact_binary_capture: PENDING
+
+acquisition:
+  capture_backlog_ref: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-125-capture-pending.json"
+  official_portal_display_metadata_for_469_fz: {pdf_size: "195 KB", pages: 4}
+  exact_mime: null
+  exact_byte_length: null
+  exact_sha256: null
+  immutable_added: false
+  guard: "Portal display metadata is not an exact fingerprint."
+
+counters_after_reconciled: {found: 24, downloaded: 9, immutable: 9, pending: 13, reused: 2, primary_publication_verified: 10, sectors_registered: 16}
+run_delta_metrics:
+  new_sources: 0
+  existing_source_nodes_operationalized: 1
+  exact_binary_downloads_succeeded: 0
+  version_edges_identified: 1
+  statutory_scope_boundaries_registered: 1
+  applicability_edges_promoted: 0
+  executable_rules_changed: false
+  legal_conflicts_confirmed: 0
+  exact_fingerprints_fabricated: 0
+
+inventory_updates:
+  protected_information_delta: "master-inventory-delta-2026-08-21T1143.yaml"
+  pdn_delta: "../ru-personal-data/master-source-inventory-delta-stream3-2026-08-21T1143.yaml"
+
+next_priority:
+  - "Exact-capture 469-ФЗ and an authoritative exact current/base 125-ФЗ artifact; compute MIME/bytes/SHA-256 and persist."
+  - "Continue 218-ФЗ credit histories, banking secrecy Article 26 and insurance secrecy Article 946 exact/current acquisitions."
+  - "Finish 572-ФЗ amendment exact captures (303-ФЗ, 494-ФЗ, 522-ФЗ) and locator-level diff."
