@@ -1,0 +1,122 @@
+schema_version: "1.0"
+kind: ru-protected-information-master-inventory-delta
+base_inventory: "master-inventory.yaml"
+reconciliation_base_delta: "master-inventory-delta-2026-08-21T0826.yaml"
+checked_at: "2026-08-21T11:22:06+03:00"
+owner_stream: STREAM_3_SECTOR_OVERLAYS
+run_ref: "stream-3-run-2026-08-21T1122.yaml"
+status: APPEND_ONLY_RECONCILIATION_READY
+
+proof_floor:
+  - "Existing source IDs and immutable baseline artifacts are reused; discovery must not create duplicate source nodes."
+  - "A captured original-publication PDF is baseline evidence, not proof of current executable semantics after amendments."
+  - "Explicit cross-reference to 152-ФЗ proves a statutory relationship, not organization-specific applicability."
+  - "No MIME, byte length or SHA-256 is invented for amendment artifacts that were not byte-exact captured in this run."
+
+counter_state_before_reconciled:
+  found: 24
+  downloaded: 9
+  immutable: 9
+  pending: 13
+  reused: 2
+  primary_publication_verified: 10
+  sectors_registered: 16
+
+counter_state_after_reconciliation:
+  found: 24
+  downloaded: 9
+  immutable: 9
+  pending: 13
+  reused: 2
+  primary_publication_verified: 10
+  sectors_registered: 16
+  new_sources_this_run: 0
+  source_nodes_reused_this_run: 1
+  new_immutable_this_run: 0
+  exact_binary_downloads_this_run: 0
+  source_version_edges_identified_this_run: 3
+  protected_locator_groups_reconciled_this_run: 3
+
+source_reconciled:
+  - source_id: SEC-SRC-RU-FZ-572-2022
+    source_card: "security-corpora/RU/protected-information/source/SEC-SRC-RU-FZ-572-2022.yaml"
+    sector: biometrics
+    regime: biometric_identification_authentication
+    reuse_state: EXISTING_SOURCE_AND_IMMUTABLE_BASELINE_REUSED
+    baseline_artifact:
+      manifest_ref: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-572-2022.json"
+      official_publication_id: "0001202212290024"
+      official_file_url: "http://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202212290024"
+      mime: "application/pdf"
+      byte_length: 8211644
+      sha256: "e50a472ac175a00a1b745582e50bd2567da88373a19753f8769843074e652a5d"
+      artifact_ref: "security-corpora/RU/protected-information/raw/SEC-SRC-RU-FZ-572-2022/0001202212290024.pdf"
+      immutable: true
+    protected_locators:
+      - "статья 3 — special EBS/biometric identification-authentication rules, voluntariness/non-conditioning and cross-border biometric-transfer restriction"
+      - "статья 15 — processing biometric personal data outside EBS"
+      - "статья 17 — accreditation of biometric-authentication organizations"
+    pdn_relation:
+      state: DIRECT_EXPLICIT_STATUTORY_RELATION_APPLICATION_SCOPE_REVIEW_REQUIRED
+      finding: >-
+        572-ФЗ directly references 152-ФЗ in consent, security and data-subject-response contexts. This is a direct legal
+        relation between the regimes, but actor/system/scenario review is still required before applicability is promoted.
+
+version_events_identified:
+  - act: "303-ФЗ от 08.08.2024"
+    target: "SEC-SRC-RU-FZ-572-2022"
+    official_publication_id: "0001202408080127"
+    official_publication_date: "2024-08-08"
+    official_url: "https://publication.pravo.gov.ru/document/0001202408080127"
+    effect: "Article 4 adds Article 3 part 19.1 to 572-ФЗ; effective for this amendment from 2025-01-01."
+    new_edge: "303-ФЗ -> 572-ФЗ"
+    exact_amendment_artifact: PENDING
+  - act: "494-ФЗ от 26.12.2024"
+    target: "SEC-SRC-RU-FZ-572-2022"
+    official_publication_id: "0001202412260023"
+    official_publication_date: "2024-12-26"
+    official_url: "https://publication.pravo.gov.ru/document/0001202412260023"
+    effect: "Article 24 amends Article 3 part 19.1 and Article 26 part 10 of 572-ФЗ."
+    new_edge: "494-ФЗ -> 572-ФЗ"
+    exact_amendment_artifact: PENDING
+  - act: "522-ФЗ от 28.12.2024"
+    target: "SEC-SRC-RU-FZ-572-2022"
+    official_publication_id: "0001202412280035"
+    official_publication_date: "2024-12-28"
+    official_url: "https://publication.pravo.gov.ru/document/0001202412280035"
+    effect: "Article 41 amends Article 10 part 8 and Article 16 part 9 in the AML/CFT/extremist-financing context."
+    new_edge: "522-ФЗ -> 572-ФЗ"
+    exact_amendment_artifact: PENDING
+
+currentness_reconciliation:
+  source_id: SEC-SRC-RU-FZ-572-2022
+  current_edition_crosscheck: "ред. от 28.12.2024"
+  current_edition_effective_from: "2025-06-01"
+  identified_direct_amendments: ["303-ФЗ", "494-ФЗ", "522-ФЗ"]
+  state: DIRECT_AMENDMENTS_IDENTIFIED_CURRENT_EDITION_CROSSCHECKED_EXACT_AMENDMENT_ARTIFACTS_PENDING
+  guard: >-
+    The original 2022 PDF remains immutable baseline evidence. Current executable semantics stay blocked until the
+    amendment artifacts are captured and locator-level diffs are reconciled.
+
+acquisition_delta:
+  durable_immutable_artifacts_added: 0
+  existing_immutable_artifacts_reused: 1
+  exact_binary_downloads_succeeded: 0
+  amendment_exact_capture_pending:
+    - "303-ФЗ / 0001202408080127"
+    - "494-ФЗ / 0001202412260023"
+    - "522-ФЗ / 0001202412280035"
+
+proof_floor_effect:
+  executable_rules_changed: false
+  applicability_edges_promoted: 0
+  duplicate_source_nodes_created: 0
+  legal_conflicts_confirmed: 0
+  source_nodes_added: 0
+  source_nodes_reused: 1
+  new_source_version_edges_identified: 3
+
+merge_rule: >-
+  Reconcile after master-inventory-delta-2026-08-21T0826.yaml. Aggregate Stream 3 counters remain 24 found / 9 downloaded /
+  9 immutable / 13 pending / 2 status-REUSED sources. This pass improves the already-existing 572-ФЗ node rather than
+  inflating source counts.
