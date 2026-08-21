@@ -1,0 +1,142 @@
+schema_version: "1.0"
+id: FSTEC-MD-2026-ZPI-FAMILY
+title: "FSTEC 12 April 2026 methodical document: complete ZPI.1-ZPI.3 family"
+authority: FSTEC_RUSSIA
+approved_date: "2026-04-12"
+status: VERIFIED_BOUNDED_COMPLETE_ZPI_PUBLIC_TEXT_CROSSCHECK
+scope_statement: >-
+  Complete normalized coverage of section 4.8 measures ZPI.1-ZPI.3 for API
+  protection, including implementation, documentation, all three numbered
+  enhancements and all eighteen appendix-2 base/enhancement class cells. The
+  repeated literal ZKS.1-ZKS.5 reference is preserved as a source anomaly
+  because appendix-2 contains ZKS.1-ZKS.4 only. Other families remain pending.
+
+source_evidence:
+  official_page: https://fstec.ru/dokumenty/vse-dokumenty/spetsialnye-normativnye-dokumenty/metodicheskij-dokument-ot-12-aprelya-2026-g
+  official_endpoint_result: TIMEOUT_BYTES_NOT_ACQUIRED
+  section_locator: "section 4.8, ZPI.1-ZPI.3"
+  appendix_locator: "appendix 2, family 8, ZPI.1-ZPI.3 rows"
+  current_text_interfaces:
+    - https://base.garant.ru/414070697/
+    - https://wiki.privacy-advocates.ru/fstek_12.04.2026
+    - https://sudact.ru/law/metodicheskii-dokument-sostav-i-soderzhanie-meropriiatii-i/
+    - https://normativ.kontur.ru/document/1/506081-metodicheskiy-dokument-sostav-i-soderzhanie-meropriyatiy-i-mer-po-zashchite-informatsii
+  immutable_official_bytes: PENDING
+
+applicability:
+  trigger: API_IS_WITHIN_INFORMATION_SYSTEM_OR_OPERATOR_INFRASTRUCTURE
+  rule: APPLY_MEASURE_WHEN_CLASS_MATRIX_AND_SELECTION_PIPELINE_SELECTS_IT_AND_API_TRIGGER_IS_MET
+  guard: DO_NOT_TREAT_ZPI_AS_UNIVERSAL_WHEN_NO_API_IS_IN_SCOPE
+
+measures:
+  - code: "ЗПИ.1"
+    title: "Защита данных API (Application Programming Interface)"
+    purpose: PREVENT_UNAUTHORIZED_SYSTEM_ACCESS_WHEN_APIS_ARE_USED
+    implementation:
+      - MINIMIZE_API_TRANSMITTED_INFORMATION_REVEALING_SYSTEM_STRUCTURE_OR_OTHER_INFORMATION
+      - MINIMIZE_API_ERROR_MESSAGE_INFORMATION_REVEALING_SYSTEM_STRUCTURE_FUNCTION_OR_CONFIDENTIAL_INFORMATION
+      - MINIMIZE_API_ACCESS_AUTHENTICATOR_INFORMATION_BY_EXCLUDING_SYSTEM_STRUCTURE_OR_OTHER_CONFIDENTIAL_DATA
+      - FOR_EXTERNAL_SUBJECT_API_INTERACTION_OVER_INTERNET_PROTECT_WITH_LITERAL_SOURCE_REFERENCE_ZKS_1_TO_ZKS_5
+    documentation:
+      - LISTS_OF_APIS_PROVIDED_TO_EXTERNAL_AND_INTERNAL_USERS
+      - SOFTWARE_MODES_AND_SETTINGS_ENSURING_CONFIDENTIALITY_OF_INFORMATION_AND_SERVICE_DATA_DURING_API_ACCESS_AND_INTERACTION
+    enhancements:
+      - {number: 1, rule: REVIEW_API_SOFTWARE_MODES_AND_SETTINGS_ANNUALLY_TO_IDENTIFY_CONFIGURATION_VULNERABILITIES}
+    matrix:
+      base: {K3: PLUS, K2: PLUS, K1: PLUS}
+      enhancements: {K3: [], K2: [1], K1: [1]}
+
+  - code: "ЗПИ.2"
+    title: "Управление доступом пользователей и приложений"
+    purpose: PREVENT_UNAUTHENTICATED_USER_OR_APPLICATION_ACCESS_THROUGH_APIS
+    implementation:
+      - DEFINE_APIS_REQUIRING_USER_AND_APPLICATION_ACCESS_CONTROL
+      - IDENTIFY_AND_AUTHENTICATE_API_USERS_IN_ACCORDANCE_WITH_IAF_1_AND_IAF_3
+      - CONTROL_API_USER_AND_APPLICATION_ACCESS_IN_ACCORDANCE_WITH_UPD_1_TO_UPD_6
+      - LIMIT_PARALLEL_API_SESSIONS_IN_ACCORDANCE_WITH_UPD_7
+      - AUTOMATICALLY_TERMINATE_INACTIVE_API_SESSIONS_IN_ACCORDANCE_WITH_UPD_8
+      - CHECK_ACCESS_RIGHTS_ON_EVERY_API_REQUEST_EXCEPT_DEFINED_PUBLIC_RESOURCES_IN_ACCORDANCE_WITH_UPD_9
+      - SET_API_REQUEST_FREQUENCY_AND_VOLUME_LIMITS_AND_AUTOMATICALLY_DETECT_AND_SUPPRESS_AUTHENTICATOR_BRUTE_FORCE_ATTEMPTS
+    documentation: []
+    enhancements: []
+    matrix:
+      base: {K3: PLUS, K2: PLUS, K1: PLUS}
+      enhancements: {K3: [], K2: [], K1: []}
+
+  - code: "ЗПИ.3"
+    title: "Проверка на соответствие спецификации API (Application Programming Interface)"
+    purpose: DETECT_AND_BLOCK_REQUESTS_NOT_CONFORMING_TO_APPROVED_API_SPECIFICATION
+    implementation:
+      - DEFINE_API_SPECIFICATION
+      - AUTOMATICALLY_CHECK_REQUESTS_AGAINST_FORMAT_STRUCTURE_AND_LIMITS_IN_API_SPECIFICATION
+      - DEFINE_RULES_FOR_AUTOMATICALLY_BLOCKING_NONCONFORMING_REQUESTS_BEFORE_IMPACT_ON_API_ACCESSIBLE_APPLICATION
+      - REVIEW_API_LIST_AND_SPECIFICATION_ANNUALLY_OR_WHEN_API_CHANGES_TO_FIND_UNDOCUMENTED_DEPRECATED_OR_UNUSED_APIS_AND_EXTERNALLY_ACCESSIBLE_RESOURCES
+      - CHECK_INCOMING_API_REQUESTS_AND_BLOCK_REQUESTS_NOT_CONFORMING_TO_SPECIFICATION
+    documentation: []
+    enhancements:
+      - {number: 1, rule: REVIEW_API_LIST_AND_SPECIFICATION_WHEN_CODE_OR_CONFIGURATION_OF_APPLICATIONS_IMPLEMENTING_API_CHANGES}
+      - {number: 2, rule: AUTOMATICALLY_ANALYZE_TRAFFIC_BETWEEN_EXTERNAL_SUBJECTS_AND_EXTERNAL_APIS_TO_FIND_UNDOCUMENTED_DEPRECATED_OR_UNUSED_APIS_AND_EXTERNALLY_ACCESSIBLE_RESOURCES}
+    matrix:
+      base: {K3: PLUS, K2: PLUS, K1: PLUS}
+      enhancements: {K3: [], K2: [], K1: [1]}
+
+numeric_constraints:
+  - {id: ZPI1_ANNUAL_CONFIGURATION_REVIEW, measure: "ЗПИ.1", maximum_interval: 1, unit: YEAR, route: ENHANCEMENT_1}
+  - {id: ZPI3_ANNUAL_API_INVENTORY_SPECIFICATION_REVIEW, measure: "ЗПИ.3", maximum_interval: 1, unit: YEAR, route: BASE_OR_API_CHANGE_EVENT}
+
+event_triggers:
+  - {id: ZPI3_API_CHANGE_REVIEW, measure: "ЗПИ.3", event: API_CHANGED, action: REVIEW_API_LIST_AND_SPECIFICATION}
+  - {id: ZPI3_APPLICATION_CHANGE_REVIEW, measure: "ЗПИ.3", event: API_IMPLEMENTING_APPLICATION_CODE_OR_CONFIGURATION_CHANGED, action: REVIEW_API_LIST_AND_SPECIFICATION, route: ENHANCEMENT_1}
+
+operator_defined_parameters:
+  - {id: ZPI2_REQUEST_FREQUENCY_LIMIT, measure: "ЗПИ.2", type: REQUEST_RATE, universal_value: NOT_STATED}
+  - {id: ZPI2_REQUEST_VOLUME_LIMIT, measure: "ЗПИ.2", type: REQUEST_VOLUME, universal_value: NOT_STATED}
+  - {id: ZPI2_BRUTE_FORCE_DETECTION_AND_SUPPRESSION_RULES, measure: "ЗПИ.2", type: DETECTION_AND_RESPONSE_RULES, universal_value: NOT_STATED}
+  - {id: ZPI3_API_SPECIFICATION_LIMITS, measure: "ЗПИ.3", type: FORMAT_STRUCTURE_AND_REQUEST_LIMITS, universal_value: NOT_STATED}
+  - {id: ZPI3_NONCONFORMING_REQUEST_BLOCK_RULE_SET, measure: "ЗПИ.3", type: BLOCKING_RULE_SET, universal_value: NOT_STATED}
+
+class_matrix_summary:
+  cells_total: 18
+  nonblank_cells: 12
+  blank_cells: 6
+  rule: BLANK_BASE_OR_ENHANCEMENT_CELL_IS_NOT_PROHIBITION_AND_DOES_NOT_DELETE_ADAPTATION_VERIFICATION_OR_COMPENSATION
+
+source_anomalies:
+  - id: ZPI_ZKS_5_LITERAL_REFERENCE
+    source_locations:
+      - "ZPI.1 implementation"
+      - "ZVT.1 implementation (separate linked model)"
+    literal_reference: "ЗКС.1-ЗКС.5"
+    catalog_observation: "appendix 2 family ZKS contains only ZKS.1-ZKS.4"
+    handling: PRESERVE_LITERAL_REFERENCE_AND_BLOCK_AUTOMATIC_MAPPING_OF_ZKS_5
+    resolution: PENDING_OFFICIAL_IMMUTABLE_BYTES_AND_EXPERT_REVIEW
+
+scope_guards:
+  - DO_NOT_APPLY_ZPI_TECHNOLOGY_REQUIREMENTS_WHEN_NO_API_IS_IN_SCOPE
+  - DO_NOT_RECONSTRUCT_OR_SILENTLY_REMAP_LITERAL_ZKS_5_REFERENCE
+  - DO_NOT_REQUIRE_ZPI_1_ENHANCEMENT_1_FOR_K3_FROM_CLASS_MATRIX_ALONE
+  - DO_NOT_REPLACE_IAF_OR_UPD_REFERENCED_MEASURES_WITH_ZPI_2
+  - DO_NOT_DROP_EVERY_REQUEST_CHECK_OR_PUBLIC_RESOURCE_EXCEPTION_FROM_ZPI_2
+  - DO_NOT_INVENT_API_REQUEST_FREQUENCY_VOLUME_OR_BRUTE_FORCE_NUMERIC_VALUES
+  - DO_NOT_REPLACE_ANNUAL_OR_API_CHANGE_BASE_REVIEW_WITH_ONE_ROUTE_ONLY
+  - DO_NOT_GENERALIZE_ZPI_3_ENHANCEMENT_1_APPLICATION_CHANGE_TRIGGER_TO_K2_OR_K3_FROM_CLASS_MATRIX_ALONE
+  - DO_NOT_TREAT_ZPI_3_ENHANCEMENT_2_AS_CLASS_LISTED
+  - DO_NOT_TREAT_BLANK_CLASS_CELL_AS_PROHIBITION
+  - DO_NOT_GENERALIZE_ZPI_CONTENT_TO_WEB_OR_OTHER_MEASURE_FAMILIES
+
+verification_boundary:
+  section_4_8_zpi_1_3: VERIFIED_PUBLIC_TEXT_CROSSCHECK
+  complete_zpi_family: VERIFIED_PUBLIC_TEXT_CROSSCHECK_3_OF_3
+  implementation_requirements: VERIFIED_NORMALIZED_PUBLIC_TEXT_CROSSCHECK
+  documentation_requirements: VERIFIED_NORMALIZED_PUBLIC_TEXT_CROSSCHECK
+  numbered_enhancements: VERIFIED_NORMALIZED_PUBLIC_TEXT_CROSSCHECK
+  exact_zpi_class_cells: VERIFIED_PUBLIC_TEXT_CROSSCHECK
+  referenced_iaf_upd_content: VERIFIED_BY_SEPARATE_LINKED_MODELS
+  referenced_zks_content: PENDING_SEPARATE_FAMILY_MODEL
+  literal_zks_5_reference_resolution: PENDING_OFFICIAL_IMMUTABLE_BYTES_AND_EXPERT_REVIEW
+  product_specific_api_profiles: PENDING_SEPARATE_PROFILE_MODELS
+  other_measure_families: PENDING
+  official_immutable_bytes: PENDING
+  independent_expert_review: PENDING
+  critical_gap_created: false
+  high_gap_created: false
