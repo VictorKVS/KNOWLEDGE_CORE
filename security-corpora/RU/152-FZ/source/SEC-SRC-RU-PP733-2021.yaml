@@ -1,0 +1,88 @@
+schema_version: "1.0"
+id: SEC-SRC-RU-PP733-2021
+kind: security-regulatory-source
+status: METADATA_VERIFIED
+
+title: "Постановление Правительства Российской Федерации от 14.05.2021 № 733 «Об утверждении Положения о федеральной государственной информационной системе «Единая информационная платформа национальной системы управления данными» и о внесении изменений в некоторые акты Правительства Российской Федерации»"
+jurisdiction: RU
+issuer: "Правительство Российской Федерации"
+document:
+  type: government_resolution
+  number: "733"
+  adopted_date: "2021-05-14"
+  official_publication_id: "0001202105180005"
+  publication_date: "2021-05-18"
+  effective_from: "2021-05-26"
+  current_revision_effective_from: "2025-12-26"
+  checked_at: "2026-08-21"
+  current_revision_note: >-
+    Current legal-source indexes identify PP RF No. 733 in the revision of 17.12.2025 No. 2052,
+    effective from 26.12.2025. The active text contains Article 13.1 personal-data platform functions,
+    including processing of depersonalized data and data-set access.
+
+canonical_source:
+  publisher: "Официальный интернет-портал правовой информации"
+  url: "https://publication.pravo.gov.ru/document/0001202105180005"
+  official_publication_identity_cross_verified: true
+  cross_verification:
+    - "ГАРАНТ: original text published 18.05.2021 No. 0001202105180005; current amendments through 17.12.2025 No. 2052"
+    - "КонсультантПлюс: current revision dated 17.12.2025"
+
+capture:
+  raw_artifact_ref: ""
+  mime: null
+  byte_length: null
+  sha256: ""
+  fingerprint_status: PENDING_RAW_CAPTURE
+  acquisition_request:
+    status: REQUESTED_BASELINE_AND_VERSION_CHAIN
+    requested_at: "2026-08-21T05:28:00Z"
+    route: official_publication_pdf
+    official_publication_id: "0001202105180005"
+    reason: >-
+      Direct Article 13.1 platform dependency. Capture immutable original now; current consolidated semantics
+      remain blocked until the amendment chain through PP RF No. 2052 is compiled and locator-reviewed.
+  semantic_status: UNCHANGED
+
+version_chain:
+  - amendment: "Постановление Правительства РФ от 29.12.2021 № 2563"
+    effective_from: "2021-12-31"
+    publication_identity: PENDING_REGISTRATION
+  - amendment: "Постановление Правительства РФ от 15.06.2024 № 806"
+    effective_from: "2024-06-23"
+    publication_identity: PENDING_REGISTRATION
+  - amendment: "Постановление Правительства РФ от 28.11.2024 № 1650"
+    effective_from: "2024-12-07"
+    official_publication_id: "0001202411290006"
+  - amendment: "Постановление Правительства РФ от 28.05.2025 № 740"
+    effective_from: "2025-09-01"
+    source_id: SEC-SRC-RU-PP740-2025
+    official_publication_id: "0001202505300061"
+  - amendment: "Постановление Правительства РФ от 17.12.2025 № 2052"
+    effective_from: "2025-12-26"
+    source_id: SEC-SRC-RU-PP2052-2025
+    official_publication_id: "0001202512180033"
+
+relations:
+  - type: IMPLEMENTATION_CONTEXT_FOR
+    target: SEC-SRC-RU-152FZ-2026-07-26
+    scope: article_13_1_depersonalized_data_platform
+    note: >-
+      The current PP 733 platform regulation includes functions and user/operator roles used for Article 13.1 execution;
+      this relation is narrower than a general obligation for all personal-data operators.
+  - type: AMENDED_BY
+    target: SEC-SRC-RU-PP740-2025
+    scope: article_13_1_platform_extension
+  - type: AMENDED_BY
+    target: SEC-SRC-RU-PP2052-2025
+    scope: current_platform_terms_and_processing_rules
+
+provenance:
+  created_at: "2026-08-21"
+  checked_at: "2026-08-21"
+  created_by: "ChatGPT/GPT-5.6 Sol with current legal-source cross-verification"
+  review_required: true
+
+agent_rule: >-
+  Do not treat the original 2021 PDF alone as the current operative text. Keep semantic extraction blocked until
+  the amendment chain is complete, immutable amendment evidence is captured, and current locators are reconstructed.
