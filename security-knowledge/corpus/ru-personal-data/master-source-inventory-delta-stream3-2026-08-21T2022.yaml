@@ -1,0 +1,88 @@
+schema_version: "1.0"
+kind: ru-personal-data-master-source-inventory-delta
+base_inventory: "master-source-inventory.yaml"
+reconciliation_base_delta: "master-source-inventory-delta-stream3-2026-08-21T1723.yaml"
+checked_at: "2026-08-21T20:22:59+03:00"
+owner_stream: STREAM_3_SECTOR_OVERLAYS
+protected_information_delta_ref: "../ru-protected-information/master-inventory-delta-2026-08-21T2022.yaml"
+status: APPEND_ONLY_RECONCILIATION_READY
+
+stream_3_counter_update:
+  sources_found_total: 24
+  new_sources_this_pass: 0
+  downloaded_total: 9
+  immutable_artifacts: 9
+  pending_immutable: 13
+  reused_existing_sources_status_total: 2
+  primary_publication_verified_total: 10
+  sectors_registered: 16
+  existing_source_nodes_operationalized_this_pass: 1
+  new_current_version_edges_identified_this_pass: 1
+  existing_current_version_edges_reconfirmed_this_pass: 2
+  future_version_events_newly_registered_this_pass: 2
+  prior_future_version_events_reconfirmed_this_pass: 1
+  legal_conflicts_confirmed_this_pass: 0
+
+financial_sector_reconciliation:
+  source_id: SEC-SRC-RU-LAW-395-1
+  title: "Закон РФ № 395-1 «О банках и банковской деятельности»"
+  regime: banking_secrecy
+  state: EXISTING_MASTER_SOURCE_OPERATIONALIZED_CURRENT_ARTICLE_26_CROSSCHECKED_EXACT_ARTIFACT_PENDING
+  source_card: "security-corpora/RU/protected-information/source/SEC-SRC-RU-LAW-395-1.yaml"
+  capture_backlog: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-LAW-395-1-version-capture-pending.json"
+  primary_anchor: "статья 26 — банковская тайна"
+  relevant_concepts:
+    - BANKING_SECRECY_CORE_SCOPE
+    - BANKING_SECRECY_STATUTORY_DISCLOSURE_CHANNELS
+    - BANKING_SECRECY_RECIPIENT_CONFIDENTIALITY
+    - BANKING_SECRECY_TO_CREDIT_HISTORY_TRANSFER_CONTEXT
+
+pdn_relation:
+  source: "395-1 special banking-secrecy regime"
+  target: "152-ФЗ generic personal-data regime"
+  relation: OVERLAP_CANDIDATE_SPECIAL_CONFIDENTIALITY_REGIME
+  state: RELATIONSHIP_LEVEL_APPLICABILITY_REVIEW_REQUIRED
+  finding: >-
+    Article 26 protects banking information and regulates statutory disclosure channels. The protected information can
+    concern natural persons as well as legal entities. Any 152-ФЗ relationship must therefore be evaluated for the
+    concrete actor, data subject, data field, purpose, operation, recipient and statutory basis.
+  guard: >-
+    Do not infer a universal 152-ФЗ rule from the fact that a bank record concerns an individual. Banking secrecy and PDN
+    are overlapping but distinct legal regimes. OVERLAP != APPLICABILITY.
+
+cross_regime_relation_candidate:
+  source: SEC-SRC-RU-LAW-395-1
+  target: SEC-SRC-RU-FZ-218
+  relation: STATUTORY_TRANSFER_CONTEXT_CREDIT_HISTORIES
+  locator: "статья 26"
+  state: REVIEW_REQUIRED_NOT_EXECUTABLE
+
+version_chain_update:
+  source_id: SEC-SRC-RU-LAW-395-1
+  current_events:
+    - {act: "163-ФЗ от 24.06.2025", official_publication_id: "0001202506240031", effective_from: "2026-07-01", changed_locator: "статья 26", edge: "163-ФЗ -> 395-1", state: RECONFIRMED_EXISTING}
+    - {act: "279-ФЗ от 31.07.2025", official_publication_id: "0001202507310010", effective_from: "2025-09-01", changed_locator: "статья 26", edge: "279-ФЗ -> 395-1", state: RECONFIRMED_EXISTING}
+    - {act: "431-ФЗ от 28.11.2025", official_publication_id: "0001202511280093", effective_from: "2025-11-28", changed_locator: "статья 26", edge: "431-ФЗ -> 395-1", state: NEW_THIS_PASS_SCOPE_LIMITED_2026_EXPERIMENT}
+  future_events:
+    - {act: "425-ФЗ от 28.11.2025", official_publication_id: "0001202511280017", effective_from: "2026-09-01", changed_locator: "статья 26 часть 64", state: FUTURE_RECONFIRMED_NOT_CURRENT}
+    - {act: "210-ФЗ от 26.06.2026", official_publication_id: "0001202606260070", effective_from: "2026-09-01", changed_locator: "статья 26", state: FUTURE_NEW_NOT_CURRENT}
+    - {act: "215-ФЗ от 26.06.2026", official_publication_id: "0001202606260075", effective_from: "2026-12-24", changed_locator: "статья 26 часть 12", state: FUTURE_NEW_NOT_CURRENT}
+
+pdn_executable_effect:
+  rules_changed: false
+  applicability_edges_promoted: 0
+  new_current_pdn_rules: 0
+  new_current_source_version_edges_identified: 1
+  current_edges_reconfirmed: 2
+  future_events_newly_registered: 2
+
+artifact_effect:
+  exact_binary_downloads_succeeded: 0
+  immutable_artifacts_added: 0
+  mime_byte_length_sha256_inferred: false
+  reason: "Official PDF bytes were not captured in this execution; portal display KB/page counts are not fingerprints."
+
+proof_floor: >-
+  This delta records currentness, confidentiality and overlap evidence for an existing financial-sector source. It does
+  not create organization-level applicability, executable PDN requirements, or immutable status without exact primary
+  bytes and locator-level review.
