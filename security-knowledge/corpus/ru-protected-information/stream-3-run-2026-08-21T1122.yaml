@@ -1,0 +1,117 @@
+schema_version: "1.0"
+kind: stream-3-sector-overlay-run
+stream_id: STREAM_3_SECTOR_OVERLAYS
+started_at: "2026-08-21T11:22:06+03:00"
+checked_through: "2026-08-21"
+repository: "VictorKVS/KNOWLEDGE_CORE"
+status: SUCCESS_EXISTING_BIOMETRIC_SOURCE_REUSED_VERSION_CHAIN_RECONCILED
+
+objective: >-
+  Continue sector/special-regime discovery and exact-source reconciliation without duplicating source nodes, using primary
+  normative acts as the legal proof floor and withholding organization-specific applicability conclusions.
+
+source_focus:
+  source_id: SEC-SRC-RU-FZ-572-2022
+  number: "572-ФЗ"
+  title: "О биометрической идентификации/аутентификации"
+  sector: biometrics
+  source_disposition: EXISTING_SOURCE_REUSED_NOT_DUPLICATED
+  source_card: "security-corpora/RU/protected-information/source/SEC-SRC-RU-FZ-572-2022.yaml"
+
+baseline_verification:
+  state: EXISTING_IMMUTABLE_OFFICIAL_PUBLICATION_REUSED
+  official_publication_id: "0001202212290024"
+  official_publication_date: "2022-12-29"
+  official_record_url: "https://publication.pravo.gov.ru/Document/View/0001202212290024"
+  manifest_ref: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-572-2022.json"
+  artifact_ref: "security-corpora/RU/protected-information/raw/SEC-SRC-RU-FZ-572-2022/0001202212290024.pdf"
+  mime: "application/pdf"
+  byte_length: 8211644
+  sha256: "e50a472ac175a00a1b745582e50bd2567da88373a19753f8769843074e652a5d"
+
+locator_reconciliation:
+  - locator: "статья 3"
+    relevance: DIRECT_BIOMETRIC_SPECIAL_REGIME
+    concepts: [BIOMETRIC_PERSONAL_DATA, EBS, VOLUNTARINESS, NON_CONDITIONING, CROSS_BORDER_RESTRICTION]
+  - locator: "статья 15"
+    relevance: DIRECT_BIOMETRIC_SPECIAL_REGIME
+    concepts: [PROCESSING_OUTSIDE_EBS, COLLECTION_STORAGE_RESTRICTIONS]
+  - locator: "статья 17"
+    relevance: DIRECT_BIOMETRIC_SPECIAL_REGIME
+    concepts: [AUTHENTICATION_ORGANIZATION_ACCREDITATION]
+  pdn_relation:
+    target: "152-ФЗ"
+    state: DIRECT_EXPLICIT_STATUTORY_RELATION_APPLICATION_SCOPE_REVIEW_REQUIRED
+    guard: "Do not turn statutory cross-reference into universal organization-specific applicability."
+
+version_chain_discovery_and_reconciliation:
+  current_edition_crosscheck: "ред. от 28.12.2024; действует в этой редакции с 01.06.2025"
+  changing_acts_identified: ["303-ФЗ от 08.08.2024", "494-ФЗ от 26.12.2024", "522-ФЗ от 28.12.2024"]
+  events:
+    - act: "303-ФЗ от 08.08.2024"
+      official_publication_id: "0001202408080127"
+      official_record_url: "https://publication.pravo.gov.ru/document/0001202408080127"
+      edge: "303-ФЗ -> 572-ФЗ"
+      effect: "Adds Article 3 part 19.1; effective for this amendment from 2025-01-01."
+      exact_binary_capture: PENDING
+    - act: "494-ФЗ от 26.12.2024"
+      official_publication_id: "0001202412260023"
+      official_record_url: "https://publication.pravo.gov.ru/document/0001202412260023"
+      edge: "494-ФЗ -> 572-ФЗ"
+      effect: "Amends Article 3 part 19.1 and Article 26 part 10."
+      exact_binary_capture: PENDING
+    - act: "522-ФЗ от 28.12.2024"
+      official_publication_id: "0001202412280035"
+      official_record_url: "https://publication.pravo.gov.ru/document/0001202412280035"
+      edge: "522-ФЗ -> 572-ФЗ"
+      effect: "Amends Article 10 part 8 and Article 16 part 9 in AML/CFT/extremist-financing context."
+      exact_binary_capture: PENDING
+  capture_backlog_ref: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-572-2022-version-capture-pending.json"
+
+counters_before_reconciled:
+  found: 24
+  downloaded: 9
+  immutable: 9
+  pending: 13
+  reused: 2
+  primary_publication_verified: 10
+  sectors_registered: 16
+
+counters_after_reconciled:
+  found: 24
+  downloaded: 9
+  immutable: 9
+  pending: 13
+  reused: 2
+  primary_publication_verified: 10
+  sectors_registered: 16
+
+run_delta_metrics:
+  new_sources: 0
+  source_nodes_reused: 1
+  duplicate_source_nodes_created: 0
+  existing_immutable_artifacts_reused: 1
+  exact_binary_downloads_succeeded: 0
+  version_edges_identified: 3
+  applicability_edges_promoted: 0
+  executable_rules_changed: false
+  legal_conflicts_confirmed: 0
+  exact_fingerprints_fabricated: 0
+
+inventory_updates:
+  protected_information_delta: "master-inventory-delta-2026-08-21T1122.yaml"
+  pdn_delta: "../ru-personal-data/master-source-inventory-delta-stream3-2026-08-21T1122.yaml"
+  source_card_updated: "security-corpora/RU/protected-information/source/SEC-SRC-RU-FZ-572-2022.yaml"
+  version_capture_backlog: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-572-2022-version-capture-pending.json"
+
+quality:
+  no_duplicate_source: true
+  no_applicability_invention: true
+  original_baseline_hash_preserved: true
+  amendment_byte_fields_left_null_until_capture: true
+  current_semantics_promoted: false
+
+next_priority:
+  - "Exact-capture official PDFs for 303-ФЗ/0001202408080127, 494-ФЗ/0001202412260023 and 522-ФЗ/0001202412280035; calculate MIME/length/SHA-256 and persist artifacts."
+  - "Then perform locator-level diff for 572-ФЗ and upgrade version chain only if primary amendment evidence is complete."
+  - "Resume pending exact acquisitions: 125-ФЗ archives, 218-ФЗ credit histories, banking law Article 26, GK Article 946, 326-ФЗ, 16-ФЗ and 38-ФЗ."
