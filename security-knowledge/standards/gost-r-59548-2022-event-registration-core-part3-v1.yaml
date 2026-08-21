@@ -1,0 +1,284 @@
+schema_version: "1.0"
+id: GOST-R-59548-2022-EVENT-REGISTRATION-CORE-PART3
+designation: "ГОСТ Р 59548-2022"
+title: "Security-event registered-information schemas 6.2.21-6.2.32"
+authority: ROSSTANDART
+order: {number: "2-ст", date: "2022-01-13"}
+effective_date: "2022-02-01"
+status_observed: CURRENT
+status_observed_date: "2026-08-21"
+status: VERIFIED_BOUNDED_PARTIAL_CLAUSE_MODEL_6_2_21_TO_6_2_32
+
+source_evidence:
+  official_status_and_scope:
+    url: https://protect.gost.ru/gost/details/d5008460-671b-4563-9388-d1d0f9ecdbbf
+    result: VERIFIED_CURRENT_2026_08_21
+  clause_text_interface:
+    url: https://meganorm.ru/mega_doc/norm/gost-r_gosudarstvennyj-standart/9/gost_r_59548-2022_natsionalnyy_standart_rossiyskoy.html
+    result: VERIFIED_PUBLIC_TEXT_CROSSCHECK_6_2_21_TO_6_2_32_TABLES_44_TO_67
+  immutable_official_document_bytes: PENDING
+
+dependency:
+  common_schema: security-knowledge/standards/gost-r-59548-2022-event-registration-core-part1-v1.yaml
+  inherited_rule: EVERY_TYPE_ALSO_REQUIRES_SECTION_6_1_COMMON_MINIMUM_INFORMATION
+  inherited_additional_rule: SECTION_6_1_COMMON_ADDITIONAL_INFORMATION_REMAINS_OPTIONAL
+  cwe_reference: http://cwe.mitre.org
+  cvss_reference: http://www.first.org/cvss
+
+literal_value_sets:
+  HTTP_METHOD: {values: [GET, POST, PUT, DELETE, HEAD, OPTIONS, PATCH, TRACE, CONNECT]}
+  OPERATION_RESULT: {values: [SUCCESSFUL, UNSUCCESSFUL]}
+  LICENSE_STATUS: {values: [CONNECTED, DISCONNECTED]}
+  FLOW_DIRECTION: {values: [INBOUND, OUTBOUND]}
+  YES_NO: {values: [YES, NO]}
+  ADDRESS_PORT_ENTRY_TYPE: {values: [STATIC, DYNAMIC]}
+  VULNERABILITY_CLASS:
+    values: [CODE_VULNERABILITY, ARCHITECTURE_VULNERABILITY, MULTIFACTOR_VULNERABILITY]
+  VULNERABILITY_SEVERITY: {values: [HIGH, MEDIUM, LOW]}
+
+event_type_schemas:
+  - id: G59548-6.2.21
+    clause: "6.2.21/tables 44-45"
+    name_ru: "Управление средством обнаружения и блокирования компьютерных атак"
+    required_fields:
+      - {id: DECISION_RULE_DATABASE_VERSION, type: DATE_TIME, semantic: DATABASE_FORMATION_DATE_TIME}
+      - {id: PROGRAM_VERSION, type: SOFTWARE_VERSION}
+      - {id: ACTION_TYPE, type: TEXT}
+      - {id: OPERATION_RESULT, type: VALUE_SET, value_set_ref: OPERATION_RESULT, when: RESULT_NOT_DETERMINED_BY_EVENT_IDENTIFIER}
+    additional_fields:
+      - {id: CONFIGURATION_PARAMETER_VALUES, type: TEXT, format: "parameter: value;"}
+      - {id: CHANGED_CONFIGURATION_PARAMETER_VALUES, type: TEXT, format: "parameter: old value => new value;"}
+      - {id: ADMINISTRATOR_NETWORK_ADDRESS, type: NETWORK_ADDRESS}
+      - {id: LICENSE_EXPIRY_TIME, type: DATE_TIME}
+      - {id: LICENSE_NUMBER, type: TEXT}
+      - {id: LICENSE_STATUS, type: VALUE_SET, value_set_ref: LICENSE_STATUS}
+
+  - id: G59548-6.2.22
+    clause: "6.2.22/tables 46-47"
+    name_ru: "Фильтрация сетевого трафика на логических границах сети и сегментов"
+    required_fields:
+      - {id: FILTER_RULE_NAME, type: TEXT}
+      - {id: FILTER_RULE_NUMBER, type: INTEGER}
+      - {id: SOURCE_PORT, type: INTEGER, minimum: 0, maximum: 65535}
+      - {id: DESTINATION_PORT, type: INTEGER, minimum: 0, maximum: 65535}
+      - {id: SOURCE_NETWORK_ADDRESS, type: NETWORK_ADDRESS}
+      - {id: DESTINATION_NETWORK_ADDRESS, type: NETWORK_ADDRESS}
+      - {id: NETWORK_INTERFACE, type: TEXT}
+      - {id: PROTOCOL, type: TEXT, examples: [IP, TCP, HTTP]}
+      - {id: ACTION_TYPE, type: TEXT}
+    additional_fields:
+      - {id: SOURCE_HARDWARE_ADDRESS, type: HARDWARE_ADDRESS, when: IF_APPLICABLE}
+      - {id: DESTINATION_HARDWARE_ADDRESS, type: HARDWARE_ADDRESS, when: IF_APPLICABLE}
+      - {id: PACKET_TIME_TO_LIVE, type: INTEGER}
+      - {id: PACKET_QUALIFICATION_LABEL, type: TEXT}
+      - {id: HTTP_REQUEST_METHOD, type: VALUE_SET, value_set_ref: HTTP_METHOD}
+      - {id: PACKET_SIZE_BYTES, type: INTEGER}
+      - {id: UNIFORM_RESOURCE_IDENTIFIER, type: TEXT}
+
+  - id: G59548-6.2.23
+    clause: "6.2.23/tables 48-49"
+    name_ru: "Фильтрация сетевого трафика на уровне узла"
+    required_fields:
+      - {id: FILTER_RULE_NAME, type: TEXT}
+      - {id: FLOW_DIRECTION, type: VALUE_SET, value_set_ref: FLOW_DIRECTION}
+      - {id: FILTER_RULE_NUMBER, type: INTEGER}
+      - {id: SOURCE_PORT, type: INTEGER, minimum: 0, maximum: 65535}
+      - {id: DESTINATION_PORT, type: INTEGER, minimum: 0, maximum: 65535}
+      - {id: SOURCE_NETWORK_ADDRESS, type: NETWORK_ADDRESS}
+      - {id: DESTINATION_NETWORK_ADDRESS, type: NETWORK_ADDRESS}
+      - {id: NETWORK_INTERFACE, type: TEXT}
+      - {id: PROTOCOL, type: TEXT, examples: [IP, TCP, HTTP]}
+      - {id: ACTION_TYPE, type: TEXT}
+    additional_fields:
+      - {id: SOURCE_HARDWARE_ADDRESS, type: HARDWARE_ADDRESS}
+      - {id: DESTINATION_HARDWARE_ADDRESS, type: HARDWARE_ADDRESS}
+      - {id: PACKET_TIME_TO_LIVE, type: INTEGER}
+      - {id: PACKET_QUALIFICATION_LABEL, type: TEXT}
+      - {id: PACKET_SIZE_BYTES, type: INTEGER}
+      - {id: HTTP_REQUEST_METHOD, type: VALUE_SET, value_set_ref: HTTP_METHOD}
+      - {id: UNIFORM_RESOURCE_IDENTIFIER, type: TEXT}
+
+  - id: G59548-6.2.24
+    clause: "6.2.24/tables 50-51"
+    name_ru: "Фильтрация сетевого трафика на прикладном уровне при обработке HTTP"
+    required_fields:
+      - {id: WEB_SERVER_VERSION, type: SOFTWARE_VERSION}
+      - {id: FIREWALL_SOFTWARE_VERSION, type: SOFTWARE_VERSION}
+      - {id: HTTP_PROTOCOL_VERSION, type: TEXT}
+      - {id: DOMAIN_NAME, type: TEXT}
+      - {id: SESSION_IDENTIFIER, type: TEXT}
+      - {id: SIGNATURE_IDENTIFIER, type: INTEGER, semantic: FILTER_RULE_NUMBER}
+      - {id: RESPONSE_CODE, type: INTEGER}
+      - {id: REQUEST_METHOD, type: VALUE_SET, value_set_ref: HTTP_METHOD}
+      - {id: WEB_SERVER_NAME, type: TEXT}
+      - {id: USER_APPLICATION, type: TEXT}
+      - {id: DESTINATION_PORT, type: INTEGER, minimum: 0, maximum: 65535}
+      - {id: PROXY_SERVER_PORT, type: INTEGER, minimum: 0, maximum: 65535}
+      - {id: SOURCE_PORT, type: INTEGER, minimum: 0, maximum: 65535}
+      - {id: REQUEST_SOURCE_NETWORK_ADDRESS, type: NETWORK_ADDRESS}
+      - {id: PROXY_SERVER_NETWORK_ADDRESS, type: NETWORK_ADDRESS}
+      - {id: ATTACK_TYPE, type: TEXT}
+      - {id: ACTION_TYPE, type: TEXT}
+      - {id: UNIFORM_REQUEST_SOURCE_RESOURCE_IDENTIFIER, type: TEXT}
+      - {id: UNIFORM_RESOURCE_IDENTIFIER, type: TEXT}
+    additional_fields:
+      - {id: BYTES_SENT, type: INTEGER}
+      - {id: BYTES_RECEIVED, type: INTEGER}
+      - {id: GEODATA, type: TEXT, content: COUNTRY_AND_CITY}
+      - {id: VULNERABILITY_IDENTIFIER, type: TEXT}
+      - {id: INTERACTION_MARKER, type: TEXT, format: "marker: value;"}
+      - {id: CHANGE_RESULT, type: VALUE_SET, value_set_ref: OPERATION_RESULT}
+
+  - id: G59548-6.2.25
+    clause: "6.2.25/tables 52-53"
+    name_ru: "Управление фильтрацией сетевого трафика"
+    required_fields:
+      - {id: FIREWALL_SOFTWARE_VERSION, type: SOFTWARE_VERSION}
+      - {id: FIREWALL_COMPONENT, type: TEXT}
+      - {id: ACTION_TYPE, type: TEXT}
+      - {id: OPERATION_RESULT, type: VALUE_SET, value_set_ref: OPERATION_RESULT, when: RESULT_NOT_DETERMINED_BY_EVENT_IDENTIFIER}
+    additional_fields:
+      - {id: ADMINISTRATOR_NETWORK_ADDRESS, type: NETWORK_ADDRESS}
+      - {id: FIREWALL_REBOOT_REQUIRED, type: VALUE_SET, value_set_ref: YES_NO}
+      - {id: CONFIGURATION_PARAMETER_VALUES, type: TEXT, format: "parameter: value;"}
+      - {id: CHANGED_CONFIGURATION_PARAMETER_VALUES, type: TEXT, format: "parameter: old value => new value;"}
+
+  - id: G59548-6.2.26
+    clause: "6.2.26/tables 54-55"
+    name_ru: "Изменения в сетевой адресации"
+    required_fields:
+      - {id: NEW_NETWORK_ADDRESS, type: NETWORK_ADDRESS}
+      - {id: OLD_NETWORK_ADDRESS, type: NETWORK_ADDRESS, source_literal_note: "Значение старого сетевой адреса"}
+      - {id: ACTION_TYPE, type: TEXT}
+      - {id: OPERATION_RESULT, type: VALUE_SET, value_set_ref: OPERATION_RESULT, when: RESULT_NOT_DETERMINED_BY_EVENT_IDENTIFIER}
+    additional_fields:
+      - {id: OLD_ADDRESS_NETWORK_PARAMETERS, type: TEXT, includes: [SUBNET_MASK, GATEWAY, DNS_SERVERS, DHCP_SERVERS]}
+      - {id: NEW_ADDRESS_NETWORK_PARAMETERS, type: TEXT, includes: [SUBNET_MASK, GATEWAY, DNS_SERVERS, DHCP_SERVERS]}
+
+  - id: G59548-6.2.27
+    clause: "6.2.27/tables 56-57"
+    name_ru: "Изменения в аппаратной адресации"
+    required_fields:
+      - {id: NEW_HARDWARE_ADDRESS, type: HARDWARE_ADDRESS}
+      - {id: OLD_HARDWARE_ADDRESS, type: HARDWARE_ADDRESS}
+      - {id: ACTION_TYPE, type: TEXT}
+      - {id: OPERATION_RESULT, type: VALUE_SET, value_set_ref: OPERATION_RESULT, when: RESULT_NOT_DETERMINED_BY_EVENT_IDENTIFIER}
+    additional_fields:
+      - {id: HARDWARE_ADDRESS_MANUFACTURER, type: TEXT}
+
+  - id: G59548-6.2.28
+    clause: "6.2.28/tables 58-59"
+    name_ru: "Изменения в статической маршрутизации"
+    required_fields:
+      - {id: ACTION_TYPE, type: TEXT}
+      - {id: ROUTE_TYPE, type: TEXT, examples: [HOST, NETWORK, DEFAULT, LOOP, ANNOUNCEMENT]}
+      - {id: OPERATION_RESULT, type: VALUE_SET, value_set_ref: OPERATION_RESULT, when: RESULT_NOT_DETERMINED_BY_EVENT_IDENTIFIER}
+    additional_fields:
+      - {id: GATEWAY_INTERFACE, type: TEXT}
+      - {id: ROUTE_METRIC, type: INTEGER}
+      - {id: OLD_ROUTE_PARAMETERS, type: TEXT, includes: [DESTINATION_NETWORK_ADDRESS, SUBNET_MASK, GATEWAY_NETWORK_ADDRESS]}
+      - {id: NEW_ROUTE_PARAMETERS, type: TEXT, includes: [DESTINATION_NETWORK_ADDRESS, SUBNET_MASK, GATEWAY_NETWORK_ADDRESS]}
+
+  - id: G59548-6.2.29
+    clause: "6.2.29/tables 60-61"
+    name_ru: "Изменения в таблице сопоставления аппаратных адресов и портов"
+    required_fields:
+      - {id: HARDWARE_ADDRESS, type: HARDWARE_ADDRESS}
+      - {id: VIRTUAL_NETWORK_IDENTIFIER, type: INTEGER}
+      - {id: SWITCH_PORT_NUMBER, type: INTEGER}
+      - {id: ACTION_TYPE, type: TEXT}
+      - {id: ENTRY_TYPE, type: VALUE_SET, value_set_ref: ADDRESS_PORT_ENTRY_TYPE}
+      - {id: OPERATION_RESULT, type: VALUE_SET, value_set_ref: OPERATION_RESULT, when: RESULT_NOT_DETERMINED_BY_EVENT_IDENTIFIER}
+    additional_fields:
+      - {id: HARDWARE_ADDRESS_COUNT_ON_INTERFACE, type: INTEGER}
+      - {id: VIRTUAL_NETWORK_NAME, type: TEXT}
+      - {id: INTERFACE_DESCRIPTION, type: TEXT}
+
+  - id: G59548-6.2.30
+    clause: "6.2.30/tables 62-63"
+    name_ru: "Обнаружение и защита от атак, направленных на отказ в обслуживании"
+    required_fields:
+      - {id: ATTACK_SOURCE, type: NETWORK_ADDRESS}
+      - {id: ATTACK_CODE, type: INTEGER}
+      - {id: ATTACK_NAME, type: TEXT}
+      - {id: SOURCE_PORT, type: INTEGER, minimum: 0, maximum: 65535}
+      - {id: DESTINATION_PORT, type: INTEGER, minimum: 0, maximum: 65535}
+      - {id: COMMUNICATION_CHANNEL_LOAD_PERCENT, type: INTEGER, semantic: OBSERVED_EVENT_VALUE_NOT_NORMATIVE_THRESHOLD}
+      - {id: PROTOCOL, type: TEXT, examples: [IP, TCP, HTTP]}
+      - {id: ATTACK_SPEED_MBIT_PER_SECOND, type: INTEGER, semantic: OBSERVED_EVENT_VALUE_NOT_NORMATIVE_THRESHOLD}
+      - {id: ACTION_TYPE, type: TEXT}
+      - {id: PACKET_COUNT, type: INTEGER}
+    additional_fields:
+      - {id: PACKET_TIME_TO_LIVE, type: INTEGER}
+      - {id: ATTACK_START_DATE_TIME, type: DATE_TIME}
+      - {id: ATTACK_DURATION, type: DURATION, stated_unit: MINUTE}
+      - {id: ATTACK_CATEGORY, type: TEXT}
+      - {id: PACKET_SIZE_BYTES, type: INTEGER}
+
+  - id: G59548-6.2.31
+    clause: "6.2.31/tables 64-65"
+    name_ru: "Обнаружение уязвимостей программного обеспечения"
+    required_fields:
+      - {id: SOFTWARE_VERSION, type: SOFTWARE_VERSION}
+      - {id: IDENTIFIER, type: TEXT}
+      - {id: VULNERABILITY_CLASS, type: VALUE_SET, value_set_ref: VULNERABILITY_CLASS}
+      - {id: OPERATING_SYSTEM_NAME, type: TEXT}
+      - {id: SOFTWARE_NAME, type: TEXT}
+      - {id: VULNERABILITY_NAME, type: TEXT}
+      - {id: HARDWARE_PLATFORM_TYPE, type: TEXT}
+      - {id: ACTION_TYPE, type: TEXT}
+      - {id: ERROR_TYPE, type: TEXT, identifier_scheme: CWE}
+      - {id: SOFTWARE_TYPE, type: TEXT}
+      - {id: VULNERABILITY_SEVERITY, type: VALUE_SET, value_set_ref: VULNERABILITY_SEVERITY}
+    additional_fields:
+      - {id: VULNERABILITY_BASE_VECTOR, type: TEXT, identifier_scheme: CVSS, version: UNSPECIFIED_BY_STANDARD}
+      - {id: DETECTION_DATE_TIME, type: DATE_TIME}
+      - {id: EXPLOIT_AVAILABLE, type: VALUE_SET, value_set_ref: YES_NO}
+      - {id: ERROR_DESCRIPTION, type: TEXT}
+      - {id: VULNERABILITY_DESCRIPTION, type: TEXT}
+      - {id: VULNERABILITY_REMEDIATION_RECOMMENDATIONS, type: TEXT}
+      - {id: SOFTWARE_MANUFACTURER, type: TEXT}
+      - {id: SOURCE_LINKS, type: TEXT, semantic: UNIFORM_REQUEST_SOURCE_RESOURCE_IDENTIFIER}
+
+  - id: G59548-6.2.32
+    clause: "6.2.32/tables 66-67"
+    name_ru: "Обновление базы уязвимостей"
+    required_fields:
+      - {id: VULNERABILITY_DATABASE_VERSION, type: DATE_TIME, semantic: DATABASE_FORMATION_DATE_TIME}
+      - {id: PROGRAM_VERSION, type: SOFTWARE_VERSION}
+      - {id: PROGRAM_NAME, type: TEXT}
+      - {id: ACTION_TYPE, type: TEXT}
+      - {id: OPERATION_RESULT, type: VALUE_SET, value_set_ref: OPERATION_RESULT, when: RESULT_NOT_DETERMINED_BY_EVENT_IDENTIFIER}
+    additional_fields:
+      - {id: VULNERABILITY_DATABASE_RECORD_COUNT, type: INTEGER}
+
+coverage:
+  this_part_subsections: 12
+  this_part_required_field_placements: 89
+  this_part_additional_field_placements: 54
+  cumulative_modeled_subsections: 32
+  cumulative_pending_subsections: 49
+  cumulative_section_6_2_total: 81
+  modeled_subsections: "6.2.21-6.2.32"
+  remaining_subsections: "6.2.33-6.2.81"
+
+scope_guards:
+  - DO_NOT_TREAT_THIS_PARTIAL_MODEL_AS_COMPLETE_GOST_R_59548_2022_EVENT_SCHEMA
+  - DO_NOT_TREAT_ADDITIONAL_FIELDS_AS_REQUIRED_FIELDS
+  - DO_NOT_TREAT_DDOS_SPEED_LOAD_OR_PACKET_VALUES_AS_NORMATIVE_DETECTION_OR_BLOCKING_THRESHOLDS
+  - DO_NOT_INVENT_VULNERABILITY_REMEDIATION_DEADLINE_DATABASE_UPDATE_INTERVAL_OR_CVSS_VERSION
+  - DO_NOT_TREAT_ROUTE_TYPE_PROTOCOL_OR_ACTION_EXAMPLES_AS_EXHAUSTIVE_VALUE_SETS
+  - DO_NOT_EQUATE_LICENSE_STATUS_EVENT_FIELDS_WITH_A_CURRENT_PRODUCT_LICENSE_REGISTRY_RECORD
+  - DO_NOT_EQUATE_LOCAL_EVENT_REGISTRATION_WITH_INCIDENT_OR_REGULATOR_NOTIFICATION
+  - DO_NOT_TREAT_CURRENT_STANDARD_STATUS_AS_UNIVERSAL_BINDING_APPLICABILITY
+
+verification_boundary:
+  official_status_and_scope: VERIFIED_ROSSTANDART_2026_08_21
+  clauses_6_2_21_to_6_2_32: VERIFIED_PUBLIC_TEXT_CROSSCHECK
+  tables_44_to_67: VERIFIED_PUBLIC_TEXT_CROSSCHECK
+  clauses_6_2_33_to_6_2_81: PENDING_ATOMIC_MODEL
+  complete_event_schema: PENDING_49_OF_81_SUBSECTIONS
+  immutable_official_bytes: PENDING
+  independent_expert_review: PENDING
+  critical_gap_created: false
+  high_gap_created: false
