@@ -1,0 +1,178 @@
+schema_version: "1.0"
+id: FSTEC-MD-2026-ZEP-FAMILY
+title: "FSTEC 12 April 2026 methodical document: complete ZEP.1-ZEP.6 family"
+authority: FSTEC_RUSSIA
+approved_date: "2026-04-12"
+status: VERIFIED_BOUNDED_COMPLETE_ZEP_PUBLIC_TEXT_CROSSCHECK
+scope_statement: >-
+  Complete normalized coverage of section 4.6 measures ZEP.1-ZEP.6 for
+  electronic-mail services, including implementation requirements, all
+  numbered enhancements and all thirty-six appendix-2 base/enhancement class
+  cells. The source states no documentation requirement for any ZEP measure.
+  Other measure families remain pending at content level.
+
+source_evidence:
+  official_page: https://fstec.ru/dokumenty/vse-dokumenty/spetsialnye-normativnye-dokumenty/metodicheskij-dokument-ot-12-aprelya-2026-g
+  official_endpoint_result: TIMEOUT_BYTES_NOT_ACQUIRED
+  section_locator: "section 4.6, ZEP.1-ZEP.6"
+  appendix_locator: "appendix 2, family 6, ZEP.1-ZEP.6 rows"
+  current_text_interfaces:
+    - https://base.garant.ru/414070697/
+    - https://wiki.privacy-advocates.ru/fstek_12.04.2026
+    - https://sudact.ru/law/metodicheskii-dokument-sostav-i-soderzhanie-meropriiatii-i/
+  corroborating_full_text_interface: https://normativ.kontur.ru/document/1/506081-metodicheskiy-dokument-sostav-i-soderzhanie-meropriyatiy-i-mer-po-zashchite-informatsii
+  immutable_official_bytes: PENDING
+
+applicability:
+  trigger: ELECTRONIC_MAIL_SERVICE_IS_WITHIN_INFORMATION_SYSTEM_OR_OPERATOR_INFRASTRUCTURE
+  rule: APPLY_MEASURE_WHEN_CLASS_MATRIX_AND_SELECTION_PIPELINE_SELECTS_IT_AND_EMAIL_SERVICE_TRIGGER_IS_MET
+  guard: DO_NOT_TREAT_ZEP_AS_UNIVERSAL_WHEN_NO_ELECTRONIC_MAIL_SERVICE_IS_IN_SCOPE
+
+measures:
+  - code: "ЗЭП.1"
+    title: "Защита ящиков и сообщений электронной почты"
+    purpose: PREVENT_UNAUTHORIZED_ACCESS_TO_MAILBOXES_AND_EMAIL_MESSAGES
+    implementation:
+      - PERIODICALLY_AUDIT_MAILBOXES_TO_IDENTIFY_MAILBOXES_SUBJECT_TO_DELETION
+      - REGISTER_EMAIL_USER_ACTION_SECURITY_EVENTS_IN_ACCORDANCE_WITH_RSB_1_TO_RSB_5
+    documentation: []
+    enhancements:
+      - {number: 1, rule: AUTOMATICALLY_BLOCK_MAILBOX_ACCESS_AFTER_OPERATOR_SET_INACTIVITY_TIME}
+      - {number: 2, rule: PERIODICALLY_BACK_UP_MAILBOX_CONTENT}
+    matrix:
+      base: {K3: PLUS, K2: PLUS, K1: PLUS}
+      enhancements: {K3: [], K2: [], K1: []}
+
+  - code: "ЗЭП.2"
+    title: "Управление доступом пользователей"
+    purpose: PREVENT_UNAUTHORIZED_ACCESS_TO_MAILBOXES_AND_EMAIL_MESSAGES
+    implementation:
+      - REQUIRE_IDENTIFICATION_AND_AUTHENTICATION_BEFORE_USER_MAILBOX_ACCESS
+      - APPLY_IAF_1_AND_IAF_3_TO_IDENTIFICATION_AND_AUTHENTICATION_FOR_MAILBOX_ACCESS
+      - REQUIRE_OWNER_APPROVAL_FOR_ACCESS_TO_SHARED_MAILBOXES_AND_DISTRIBUTION_GROUPS
+    documentation: []
+    enhancements: []
+    matrix:
+      base: {K3: PLUS, K2: PLUS, K1: PLUS}
+      enhancements: {K3: [], K2: [], K1: []}
+
+  - code: "ЗЭП.3"
+    title: "Защита от вредоносных вложений"
+    purpose: DETECT_AND_RESPOND_TO_MALWARE_IN_EMAIL_OBJECTS
+    implementation:
+      - PROVIDE_EMAIL_ANTIVIRUS_PROTECTION_IN_ACCORDANCE_WITH_AVZ_2
+      - CONTROL_EMAIL_ATTACHMENTS_AND_LINKS_USING_INDICATORS_OF_COMPROMISE
+      - BLOCK_MESSAGES_WITH_ATTACHMENTS_IN_FORMATS_NOT_ALLOWED_BY_OPERATOR_POLICY
+      - SUPPORT_RETROSPECTIVE_MALWARE_ANALYSIS_OF_ATTACHMENTS_AND_LINKS_IN_PREVIOUSLY_RECEIVED_MESSAGES
+    documentation: []
+    enhancements:
+      - {number: 1, rule: CHECK_INCOMING_ATTACHMENTS_IN_A_CLOSED_PRE_EXECUTION_SANDBOX}
+      - {number: 2, rule: BLOCK_USE_OF_PASSWORD_PROTECTED_ARCHIVES_UNTIL_ANTIVIRUS_CHECK_COMPLETES}
+    matrix:
+      base: {K3: PLUS, K2: PLUS, K1: PLUS}
+      enhancements: {K3: [], K2: [], K1: []}
+
+  - code: "ЗЭП.4"
+    title: "Защита от фишинга"
+    purpose: DETECT_AND_BLOCK_MESSAGES_WITH_FORGED_DATA_OR_PHISHING_ELEMENTS
+    implementation:
+      - CONTROL_MESSAGE_CONTENT_AND_EXTERNAL_LINKS_FOR_MALICIOUS_AND_PHISHING_ELEMENTS
+      - FILTER_MESSAGES_BY_SENDER_INFORMATION_INCLUDING_IP_ADDRESSES_DOMAINS_AND_ALLOW_OR_DENY_LISTS
+      - FILTER_MESSAGE_CONTENT_USING_PHISHING_CLASSIFICATION_CRITERIA
+      - SUPPORT_RETROSPECTIVE_ANALYSIS_FOR_FORGED_DATA_AND_PHISHING_ELEMENTS
+    documentation: []
+    enhancements:
+      - {number: 1, rule: BLOCK_OR_QUARANTINE_MESSAGES_WITH_FORGED_DATA_OR_PHISHING_ELEMENTS}
+      - {number: 2, rule: FILTER_MESSAGES_USING_SENDER_REPUTATION_INFORMATION}
+      - {number: 3, rule: CHECK_MESSAGES_FOR_PHISHING_ELEMENTS_IN_A_CLOSED_PRE_EXECUTION_SANDBOX}
+      - {number: 4, rule: VERIFY_SENDER_EMAIL_ADDRESSES_AND_DETECT_FORGED_MESSAGES_FROM_LEGITIMATE_SENDERS}
+    matrix:
+      base: {K3: PLUS, K2: PLUS, K1: PLUS}
+      enhancements: {K3: [], K2: [1], K1: [1]}
+
+  - code: "ЗЭП.5"
+    title: "Защита от спама"
+    purpose: PREVENT_UNSOLICITED_EMAIL_MESSAGES_FROM_REACHING_SYSTEM_USERS
+    implementation:
+      - CONTROL_INCOMING_MESSAGES_TO_DETECT_UNSOLICITED_EMAIL
+      - FILTER_MESSAGES_BY_SENDER_INFORMATION_INCLUDING_IP_ADDRESSES_DOMAINS_AND_ALLOW_OR_DENY_LISTS
+      - FILTER_MESSAGE_CONTENT_USING_SPAM_CLASSIFICATION_CRITERIA
+    documentation: []
+    enhancements:
+      - {number: 1, rule: FILTER_MESSAGES_USING_SENDER_REPUTATION_INFORMATION}
+      - {number: 2, rule: BLOCK_FURTHER_MESSAGES_WHEN_OPERATOR_SET_SENDER_COUNT_LIMIT_WITHIN_OPERATOR_SET_PERIOD_IS_EXCEEDED}
+      - {number: 3, rule: USE_TECHNOLOGIES_THAT_UNAMBIGUOUSLY_VERIFY_EMAIL_ADDRESSES_ON_WHOSE_BEHALF_MESSAGES_WERE_SENT}
+    matrix:
+      base: {K3: PLUS, K2: PLUS, K1: PLUS}
+      enhancements: {K3: [], K2: [], K1: []}
+
+  - code: "ЗЭП.6"
+    title: "Защита метаданных и иной технической информации сервисов электронной почты"
+    purpose: PREVENT_UNAUTHORIZED_USE_OF_EMAIL_SERVICE_METADATA_AND_TECHNICAL_INFORMATION
+    implementation:
+      - USE_TECHNOLOGIES_AND_NETWORK_PROTOCOLS_THAT_HIDE_EMAIL_SERVICE_METADATA_AND_TECHNICAL_INFORMATION
+      - HIDE_HEADERS_DISCLOSING_SYSTEM_INFRASTRUCTURE_OR_SENDING_SOFTWARE_INCLUDING_X_MAILER_AND_USER_AGENT
+      - HIDE_HEADERS_DISCLOSING_MESSAGE_ROUTE_INFORMATION_INCLUDING_X_ORIGINATING_IP_AND_MESSAGE_ID
+      - USE_AT_LEAST_ONE_SOURCE_LISTED_HEADER_HIDING_METHOD
+      - PREVENT_ENUMERATION_OF_EXISTING_MAILBOXES
+    implementation_alternatives:
+      header_hiding_one_of:
+        - CONFIGURE_MAIL_SERVER_TO_OMIT_INFORMATION_FROM_OUTGOING_SERVICE_HEADERS
+        - USE_SMTP_GATEWAY_OR_PROXY_TO_REPLACE_OR_DELETE_SERVICE_HEADER_INFORMATION
+      mailbox_enumeration_prevention:
+        - PROHIBIT_VRFY_AND_EXPN_COMMANDS_ON_MAIL_SERVER
+        - USE_SECURITY_MEANS_TO_BLOCK_REQUESTS_FOR_EXISTING_MAILBOX_INFORMATION
+    documentation: []
+    enhancements:
+      - {number: 1, rule: INTERNET_ACCESSIBLE_MAIL_SERVER_MUST_NOT_RELAY_MAIL_TRAFFIC_FOR_OTHER_SYSTEMS_OR_DOMAINS}
+    matrix:
+      base: {K3: PLUS, K2: PLUS, K1: PLUS}
+      enhancements: {K3: [], K2: [], K1: []}
+
+numeric_constraints: []
+
+operator_defined_parameters:
+  - {id: ZEP1_MAILBOX_AUDIT_FREQUENCY, measure: "ЗЭП.1", type: PERIODICITY, universal_value: NOT_STATED}
+  - {id: ZEP1_INACTIVITY_TIME, measure: "ЗЭП.1", type: DURATION, universal_value: NOT_STATED}
+  - {id: ZEP1_BACKUP_FREQUENCY, measure: "ЗЭП.1", type: PERIODICITY, universal_value: NOT_STATED}
+  - {id: ZEP3_ALLOWED_ATTACHMENT_FORMATS, measure: "ЗЭП.3", type: FORMAT_ALLOWLIST, universal_value: NOT_STATED}
+  - {id: ZEP5_SENDER_MESSAGE_COUNT_LIMIT, measure: "ЗЭП.5", type: COUNT, universal_value: NOT_STATED}
+  - {id: ZEP5_SENDER_RATE_PERIOD, measure: "ЗЭП.5", type: DURATION, universal_value: NOT_STATED}
+
+class_matrix_summary:
+  cells_total: 36
+  nonblank_cells: 20
+  blank_cells: 16
+  rule: BLANK_BASE_OR_ENHANCEMENT_CELL_IS_NOT_PROHIBITION_AND_DOES_NOT_DELETE_ADAPTATION_VERIFICATION_OR_COMPENSATION
+
+scope_guards:
+  - DO_NOT_APPLY_ZEP_TECHNOLOGY_REQUIREMENTS_WHEN_NO_EMAIL_SERVICE_IS_IN_SCOPE
+  - DO_NOT_INVENT_ZEP_1_MAILBOX_AUDIT_FREQUENCY_INACTIVITY_TIME_OR_BACKUP_FREQUENCY
+  - DO_NOT_INVENT_ZEP_3_ALLOWED_ATTACHMENT_FORMATS
+  - DO_NOT_REPLACE_RSB_1_TO_RSB_5_WITH_ZEP_1
+  - DO_NOT_REPLACE_IAF_1_AND_IAF_3_WITH_ZEP_2
+  - DO_NOT_REPLACE_AVZ_2_WITH_ZEP_3
+  - DO_NOT_TREAT_ZEP_3_SANDBOX_OR_PASSWORD_PROTECTED_ARCHIVE_ENHANCEMENTS_AS_CLASS_LISTED
+  - DO_NOT_TREAT_ZEP_4_ENHANCEMENTS_2_TO_4_AS_CLASS_LISTED
+  - DO_NOT_INVENT_ZEP_5_SENDER_COUNT_OR_RATE_PERIOD
+  - DO_NOT_TREAT_ZEP_5_ENHANCEMENTS_AS_CLASS_LISTED
+  - DO_NOT_REQUIRE_BOTH_ZEP_6_HEADER_HIDING_ALTERNATIVES_WHEN_SOURCE_REQUIRES_ONE_OF_THEM
+  - DO_NOT_GENERALIZE_ZEP_6_OPEN_RELAY_PROHIBITION_BEYOND_INTERNET_ACCESSIBLE_MAIL_SERVER_TRIGGER
+  - DO_NOT_TREAT_ZEP_6_ENHANCEMENT_1_AS_CLASS_LISTED
+  - DO_NOT_TREAT_BLANK_CLASS_CELL_AS_PROHIBITION
+  - DO_NOT_GENERALIZE_ZEP_CONTENT_TO_WEB_OR_OTHER_MEASURE_FAMILIES
+
+verification_boundary:
+  section_4_6_zep_1_6: VERIFIED_PUBLIC_TEXT_CROSSCHECK
+  complete_zep_family: VERIFIED_PUBLIC_TEXT_CROSSCHECK_6_OF_6
+  implementation_requirements: VERIFIED_NORMALIZED_PUBLIC_TEXT_CROSSCHECK
+  documentation_requirements: VERIFIED_NONE_STATED_FOR_ALL_SIX_MEASURES
+  numbered_enhancements: VERIFIED_NORMALIZED_PUBLIC_TEXT_CROSSCHECK
+  exact_zep_class_cells: VERIFIED_PUBLIC_TEXT_CROSSCHECK
+  referenced_iaf_rsb_avz_content: PARTIAL_LINKED_IAF_AND_RSB_COMPLETE_AVZ_PENDING
+  product_specific_email_service_profiles: PENDING_SEPARATE_PROFILE_MODELS
+  other_measure_families: PENDING
+  official_immutable_bytes: PENDING
+  independent_expert_review: PENDING
+  critical_gap_created: false
+  high_gap_created: false
