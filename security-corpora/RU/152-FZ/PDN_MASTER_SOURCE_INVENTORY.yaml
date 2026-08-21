@@ -1,10 +1,10 @@
-schema_version: "1.3"
+schema_version: "1.4"
 id: SEC-PDN-MASTER-SOURCE-INVENTORY
 kind: security-regulatory-source-inventory
 status: ACTIVE_DISCOVERY
 jurisdiction: RU
 domain: personal_data
-checked_at: "2026-08-21"
+checked_at: "2026-08-22"
 
 policy:
   proof_floor: >-
@@ -233,7 +233,7 @@ production_counters:
 analysis_metrics:
   existing_atomized_nodes_reuse_candidate: 4
   mandatory_delta_review_articles: 1
-  freshness_checks_this_pass: 1
+  freshness_checks_this_pass: 3
   freshness_defects_found_this_pass: 0
   source_records_added_this_pass: 0
   direct_dependencies_added_this_pass: 0
@@ -241,19 +241,25 @@ analysis_metrics:
   version_chain_gaps_closed_this_pass: 0
   conflict_candidates_opened_this_pass: 0
   source_relation_rebases_this_pass: 0
-  canonical_routes_registered_this_pass: 1
-  acquisition_helpers_added_this_pass: 1
+  canonical_routes_registered_this_pass: 0
+  acquisition_helpers_added_this_pass: 0
   acquisition_workflow_updates_this_pass: 1
+  acquisition_schedule_fallbacks_added_this_pass: 1
   semantic_promotions_this_pass: 0
   immutable_new_this_pass: 0
   note: >-
-    Registered the official IPS route for the current consolidated 152-FZ root and added a guarded current-root
-    acquisition helper to the PDN workflow. This removes the previous route-discovery blocker without claiming
-    immutable capture: accepted source bytes, MIME, exact byte length, SHA-256 and manifest are still required.
+    Freshness recheck kept the active 152-FZ root at the 26.07.2026 edition, confirmed PP RF No. 687 in its
+    18.01.2025 revision through 01.09.2030, and found no later amendment for the 21.03.2012 No. 211 PDN measure set
+    beyond the already registered 15.04.2019 revision chain. Added a native three-hour GitHub Actions schedule as a
+    resilient acquisition trigger in addition to push and workflow_dispatch. No immutable or semantic status was promoted.
 
 acquisition_activity:
-  latest_trigger_commit: "a2a6c94534bee2b36f1b64021d6f1045c146d43b"
-  trigger_reason: "Current consolidated 152-FZ official IPS route + guarded current-root acquisition helper enabled in the PDN workflow."
+  latest_trigger_commit: "71017f8112ce6acefba106e84156d02a7ff8069b"
+  trigger_reason: "Added native three-hour scheduled fallback to the guarded PDN immutable acquisition workflow."
+  trigger_modes:
+    - workflow_dispatch
+    - push_on_acquisition_inputs
+    - scheduled_3h
   accepted_manifest_delta_at_inventory_write: 0
   last_proven_acquisition_run:
     started_at: "2026-08-20T05:12:55.213514Z"
