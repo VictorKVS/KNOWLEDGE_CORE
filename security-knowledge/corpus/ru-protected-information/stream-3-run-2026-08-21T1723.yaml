@@ -1,0 +1,101 @@
+schema_version: "1.0"
+kind: stream-3-sector-overlay-run
+run_id: STREAM3-2026-08-21T1723
+started_at: "2026-08-21T17:23:35+03:00"
+owner_stream: STREAM_3_SECTOR_OVERLAYS
+focus: "financial / credit histories / 218-ФЗ"
+status: COMPLETED_WITH_PRIMARY_BINARY_CAPTURE_PENDING
+
+inputs:
+  protected_information_master: "master-inventory.yaml"
+  reconciliation_base_delta: "master-inventory-delta-2026-08-21T1143.yaml"
+  pdn_base_delta: "../ru-personal-data/master-source-inventory-delta-stream3-2026-08-21T1143.yaml"
+
+source_dedup:
+  source_id: SEC-SRC-RU-FZ-218
+  existed_before_run: true
+  duplicate_created: false
+  source_card_created: "security-corpora/RU/protected-information/source/SEC-SRC-RU-FZ-218.yaml"
+  note: "Creating a source card operationalizes the existing inventory node; it is not a new discovered source."
+
+discovery_and_currentness:
+  source: "218-ФЗ от 30.12.2004 «О кредитных историях»"
+  current_edition_crosscheck: "ред. от 04.08.2026"
+  state: CURRENT_EDITION_CROSSCHECKED_VERSION_CHAIN_PARTIAL
+  current_version_events:
+    - act: "442-ФЗ от 28.11.2025"
+      official_publication_id: "0001202511280105"
+      official_publication_date: "2025-11-28"
+      official_url: "https://publication.pravo.gov.ru/document/0001202511280105"
+      effect: "changes Article 13 of 218-ФЗ"
+      exact_binary: PENDING
+    - act: "476-ФЗ от 15.12.2025"
+      official_publication_id: "0001202512150041"
+      official_publication_date: "2025-12-15"
+      official_url: "https://publication.pravo.gov.ru/document/0001202512150041"
+      effect: "changes Article 6 of 218-ФЗ"
+      exact_binary: PENDING
+    - act: "86-ФЗ от 09.04.2026"
+      official_publication_id: "0001202604090024"
+      official_publication_date: "2026-04-09"
+      official_url: "https://publication.pravo.gov.ru/document/0001202604090024"
+      effect: "includes change to Article 14 part 2 item 2 of 218-ФЗ"
+      exact_binary: PENDING
+    - act: "334-ФЗ от 04.08.2026"
+      official_publication_id: "0001202608040078"
+      official_publication_date: "2026-08-04"
+      official_url: "https://publication.pravo.gov.ru/document/0001202608040078"
+      effect: "Article 12 changes Article 4 of 218-ФЗ"
+      exact_binary: PENDING_PRIMARY_BINARY
+  future_version_events:
+    - {act: "253-ФЗ от 26.07.2026", effective_from: "2027-07-27", current_requirement: false}
+    - {act: "332-ФЗ от 04.08.2026", official_publication_id: "0001202608040077", effective_from: "2027-10-01", current_requirement: false}
+
+primary_evidence_checks:
+  - "Official publication portal directly lists 442-ФЗ as amending Article 13 of 218-ФЗ; publication 0001202511280105 dated 28.11.2025."
+  - "Official publication portal directly lists 476-ФЗ as amending Article 6 of 218-ФЗ; publication 0001202512150041 dated 15.12.2025."
+  - "Official publication portal identifies 86-ФЗ publication 0001202604090024 dated 09.04.2026; locator-level change to 218-ФЗ was crosschecked in the published act text."
+  - "334-ФЗ published act text identifies a change to Article 4 of 218-ФЗ; official portal locator 0001202608040078 is registered for exact-capture backlog."
+
+pdn_overlap:
+  state: OVERLAP_CANDIDATE_SPECIAL_INFORMATION_REGIME_APPLICABILITY_REVIEW_REQUIRED
+  promoted_applicability_edges: 0
+  guard: "No organization-specific applicability inferred from the fact that credit-history data concerns natural persons."
+
+acquisition_attempt:
+  exact_primary_binary_downloads: 0
+  durable_immutable_artifacts_added: 0
+  capture_backlog_created: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-218-version-capture-pending.json"
+  blocker: >-
+    The available runtime could read official publication index records but could not obtain the official PDF endpoints as
+    byte-exact downloadable files. Direct external binary capture therefore remains pending. Portal-displayed file-size and
+    page-count values are recorded only as discovery metadata where available.
+  integrity_guard:
+    mime_invented: false
+    byte_length_invented: false
+    sha256_invented: false
+
+outputs:
+  - "security-corpora/RU/protected-information/source/SEC-SRC-RU-FZ-218.yaml"
+  - "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-218-version-capture-pending.json"
+  - "security-knowledge/corpus/ru-protected-information/master-inventory-delta-2026-08-21T1723.yaml"
+  - "security-knowledge/corpus/ru-personal-data/master-source-inventory-delta-stream3-2026-08-21T1723.yaml"
+  - "security-knowledge/corpus/ru-protected-information/stream-3-run-2026-08-21T1723.yaml"
+
+counter_reconciliation:
+  before: {found: 24, downloaded: 9, immutable: 9, pending: 13, reused: 2}
+  after: {found: 24, downloaded: 9, immutable: 9, pending: 13, reused: 2}
+  reason: "Existing 218-ФЗ node improved; no new source and no exact durable binary acquired."
+
+proof_floor_effect:
+  executable_rules_changed: false
+  applicability_edges_promoted: 0
+  legal_conflicts_confirmed: 0
+  duplicate_source_nodes_created: 0
+  new_current_version_edges_identified: 3
+  existing_current_version_edges_reconfirmed: 1
+  future_version_events_registered: 2
+
+next_priority:
+  - "Byte-exact capture and hashing for 442-ФЗ, 476-ФЗ, 86-ФЗ and 334-ФЗ; then locator-level diff reconciliation for 218-ФЗ."
+  - "Continue finance cluster with 395-1 Article 26 banking secrecy and Article 946 Civil Code insurance secrecy, without duplicating existing source nodes."
