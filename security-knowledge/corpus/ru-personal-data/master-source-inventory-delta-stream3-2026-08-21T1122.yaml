@@ -1,0 +1,73 @@
+schema_version: "1.0"
+kind: ru-personal-data-master-source-inventory-delta
+base_inventory: "master-source-inventory.yaml"
+reconciliation_base_delta: "master-source-inventory-delta-stream3-2026-08-21T0826.yaml"
+checked_at: "2026-08-21T11:22:06+03:00"
+owner_stream: STREAM_3_SECTOR_OVERLAYS
+protected_information_delta_ref: "../ru-protected-information/master-inventory-delta-2026-08-21T1122.yaml"
+run_ref: "../ru-protected-information/stream-3-run-2026-08-21T1122.yaml"
+status: APPEND_ONLY_RECONCILIATION_READY
+
+stream_3_counter_update:
+  sources_found_total: 24
+  new_sources_this_pass: 0
+  source_nodes_reused_this_pass: 1
+  reused_existing_sources_status_total: 2
+  primary_publication_verified_total: 10
+  downloaded_total: 9
+  immutable_artifacts: 9
+  pending_immutable: 13
+  sectors_registered: 16
+  exact_binary_downloads_this_pass: 0
+  source_version_edges_identified_this_pass: 3
+  legal_conflicts_confirmed_this_pass: 0
+
+biometric_sector_reconciliation:
+  - source_id: SEC-SRC-RU-FZ-572-2022
+    title: "572-ФЗ о биометрической идентификации/аутентификации"
+    sector: biometrics
+    reuse_state: EXISTING_IMMUTABLE_BASELINE_REUSED
+    baseline:
+      official_publication_id: "0001202212290024"
+      manifest_ref: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-572-2022.json"
+      raw_artifact_ref: "security-corpora/RU/protected-information/raw/SEC-SRC-RU-FZ-572-2022/0001202212290024.pdf"
+      mime: "application/pdf"
+      byte_length: 8211644
+      sha256: "e50a472ac175a00a1b745582e50bd2567da88373a19753f8769843074e652a5d"
+    pdn_relation:
+      state: DIRECT_EXPLICIT_STATUTORY_RELATION_APPLICATION_SCOPE_REVIEW_REQUIRED
+      target: "152-ФЗ"
+      findings:
+        - "572-ФЗ expressly uses personal-data and biometric-personal-data constructs and cross-references 152-ФЗ."
+        - "Consent/security/blocking/deletion/destruction relations are directly linked by statute."
+        - "The special EBS regime must remain distinct from generic 152-ФЗ processing rules where 572-ФЗ provides specific treatment."
+      guard: >-
+        Direct statutory relation is not a universal applicability edge. Actor, system, data type and identification/
+        authentication scenario must be evaluated before any organization-specific rule is promoted.
+    locator_groups:
+      - {locator: "статья 3", concepts: [EBS, BIOMETRIC_PERSONAL_DATA, VOLUNTARINESS, NON_CONDITIONING, CROSS_BORDER_RESTRICTION]}
+      - {locator: "статья 15", concepts: [BIOMETRIC_PROCESSING_OUTSIDE_EBS, COLLECTION_STORAGE_RESTRICTIONS]}
+      - {locator: "статья 17", concepts: [AUTHENTICATION_ORGANIZATION_ACCREDITATION]}
+
+version_chain_update:
+  source_id: SEC-SRC-RU-FZ-572-2022
+  state: VERSION_CHAIN_PARTIAL_DIRECT_AMENDMENTS_IDENTIFIED_CURRENT_EDITION_CROSSCHECKED
+  current_edition_crosscheck: "ред. от 28.12.2024; действует в этой редакции с 01.06.2025"
+  direct_events:
+    - {act: "303-ФЗ от 08.08.2024", official_publication_id: "0001202408080127", edge: "303-ФЗ -> 572-ФЗ", exact_artifact: PENDING}
+    - {act: "494-ФЗ от 26.12.2024", official_publication_id: "0001202412260023", edge: "494-ФЗ -> 572-ФЗ", exact_artifact: PENDING}
+    - {act: "522-ФЗ от 28.12.2024", official_publication_id: "0001202412280035", edge: "522-ФЗ -> 572-ФЗ", exact_artifact: PENDING}
+  executable_promotion: BLOCKED_PENDING_EXACT_AMENDMENT_ARTIFACTS_AND_LOCATOR_DIFF
+
+pdn_executable_effect:
+  rules_changed: false
+  applicability_edges_promoted: 0
+  new_sector_source_nodes: 0
+  reused_sector_source_nodes: 1
+  new_current_pdn_rules: 0
+  new_source_version_edges_identified: 3
+  new_scope_guards: 1
+
+proof_floor: >-
+  This delta reuses the already-immutable original publication of 572-ФЗ and improves its version-chain/current-locator
+  model. It does not create a duplicate biometric source and does not promote organization-specific applicability.
