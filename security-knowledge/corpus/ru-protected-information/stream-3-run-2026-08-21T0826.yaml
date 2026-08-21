@@ -1,0 +1,149 @@
+schema_version: "1.0"
+kind: stream-3-sector-overlay-run
+stream_id: STREAM_3_SECTOR_OVERLAYS
+started_at: "2026-08-21T08:19:44+03:00"
+checked_through: "2026-08-21"
+repository: "VictorKVS/KNOWLEDGE_CORE"
+status: PARTIAL_SUCCESS_NEW_POSTAL_SECRECY_SOURCE_EXACT_EPHEMERAL_CAPTURE_AND_VERSION_RECONCILIATION
+
+objective: >-
+  Continue discovery, exact acquisition and registration of Russian sector/special protected-information regimes
+  intersecting with personal-data processing, using primary normative acts as the legal proof floor and withholding
+  applicability conclusions until scenario/locator review.
+
+new_source:
+  source_id: SEC-SRC-RU-FZ-176-1999
+  number: "176-ФЗ"
+  title: "О почтовой связи"
+  sector: communications
+  regime: postal_communications_secrecy
+  source_card: "security-corpora/RU/protected-information/source/SEC-SRC-RU-FZ-176-1999.yaml"
+  primary_protected_locator:
+    locator: "Article 15 / статья 15 — Тайна связи"
+    findings:
+      - "Postal operators must ensure observance of communications secrecy."
+      - "Address data and information about postal items, postal money transfers, telegraph and other messages are included in the statutory communications-secrecy object."
+      - "Restriction of communications secrecy requires a judicial decision."
+    pdn_overlap_state: CANDIDATE_PENDING_FIELD_AND_SCENARIO_REVIEW
+
+exact_capture_this_run:
+  source_id: SEC-SRC-RU-FZ-176-1999
+  provenance: OFFICIAL_AGENCY_HOSTED_COPY
+  authority: "Управление Росгвардии по Карачаево-Черкесской Республике"
+  url: "https://17.rosguard.gov.ru/uploads/2026/06/federalnyjj_zakon_ot_17071999_n_176fz_red_ot_10062026.pdf"
+  edition_marked_in_file: "ред. от 10.06.2026"
+  retrieved_at: "2026-08-21T05:26:31Z"
+  http_status: 200
+  mime: "application/pdf"
+  byte_length: 521530
+  sha256: "4320e6a7be2715fe48b13df6f06ecc2a3c50b9884d7412592b5f17b012d1de7f"
+  capture_record: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-176-1999-capture-pending.json"
+  durable_artifact_state: PERSISTENCE_PENDING
+  immutable_counted: false
+  blocker: >-
+    Exact bytes were downloaded and hashed successfully, but the connected GitHub write surface used in this run did
+    not provide a direct binary-file upload operation. The hash/length/MIME are persisted as a verification target;
+    immutable promotion is deliberately withheld until the exact bytes are stored durably.
+
+version_chain_discovery_and_reconciliation:
+  - act: "264-ФЗ от 26.07.2026"
+    target: "143-ФЗ «Об актах гражданского состояния»"
+    official_publication_id: "0001202607260023"
+    official_url_candidate: "https://publication.pravo.gov.ru/document/0001202607260023"
+    effective_date: "2026-07-26"
+    relevance: DIRECT_PROTECTED_INFORMATION_UPDATE
+    finding: >-
+      The act amends 143-ФЗ Article 13.2, expanding specified electronic EGR ZAGS access paths for defence/Rosgvardiya
+      purposes and the corresponding recipient/protection-duty context. Current source remains pending exact primary
+      portal artifact and full locator reconciliation.
+    edge: "264-ФЗ -> 143-ФЗ"
+    primary_portal_fetch: PENDING
+
+  - act: "271-ФЗ от 26.07.2026"
+    official_publication_id: "0001202607260030"
+    official_url_candidate: "https://publication.pravo.gov.ru/document/0001202607260030"
+    publication_date: "2026-07-26"
+    targets:
+      - target: "87-ФЗ"
+        edge: "271-ФЗ -> 87-ФЗ"
+        effective_change: "Article 4 point 1 of 271-ФЗ is effective from 2026-08-06 and changes 87-ФЗ Article 1 point 2."
+        recorded_pdn_anchor_effect: "No change identified to Article 4(6), 4(10), 4(11)."
+      - target: "126-ФЗ"
+        edge: "271-ФЗ -> 126-ФЗ"
+        effective_from: "2027-03-01"
+        current_protected_rule_effect: FUTURE_EVENT_ONLY
+      - target: "176-ФЗ"
+        edge: "271-ФЗ -> 176-ФЗ"
+        article_15_effective_from: "2027-03-01"
+        current_protected_rule_effect: FUTURE_EVENT_ONLY
+    primary_portal_fetch: PENDING
+
+  - act: "272-ФЗ от 26.07.2026"
+    target: "38-ФЗ «О рекламе»"
+    official_publication_id: "0001202607260031"
+    official_url_candidate: "https://publication.pravo.gov.ru/document/0001202607260031"
+    effective_date: "2026-08-06"
+    edge: "272-ФЗ -> 38-ФЗ"
+    changed_locators: ["Article 21", "Article 38"]
+    stream_3_anchor_article_18_changed: false
+    primary_portal_fetch: PENDING
+
+currentness_correction:
+  source_id: SEC-SRC-RU-FZ-87-2003
+  previous_stream_latest_event: "140-ФЗ от 07.06.2025"
+  corrected_with: "271-ФЗ от 26.07.2026 / current part effective 2026-08-06"
+  protected_locator_semantics_changed: false
+  note: >-
+    The new event changes 87-ФЗ Article 1, not the previously recorded Article 4 retention/localization/cross-border
+    locators. The version chain is updated without rewriting those obligations.
+
+counters_before_reconciled:
+  found: 23
+  downloaded: 9
+  immutable: 9
+  pending: 12
+  reused: 2
+  primary_publication_verified: 10
+  sectors_registered: 16
+
+counters_after_reconciled:
+  found: 24
+  downloaded: 9
+  immutable: 9
+  pending: 13
+  reused: 2
+  primary_publication_verified: 10
+  sectors_registered: 16
+
+run_delta_metrics:
+  new_sources: 1
+  exact_binary_downloads_succeeded: 1
+  exact_binary_downloads_durably_persisted: 0
+  version_edges_identified: 5
+  current_version_edges_effective_now: 2
+  future_version_edges_recorded_without_promotion: 3
+  applicability_edges_promoted: 0
+  executable_rules_changed: false
+  legal_conflicts_confirmed: 0
+
+inventory_updates:
+  protected_information_delta: "master-inventory-delta-2026-08-21T0826.yaml"
+  pdn_delta: "../ru-personal-data/master-source-inventory-delta-stream3-2026-08-21T0826.yaml"
+  source_card: "security-corpora/RU/protected-information/source/SEC-SRC-RU-FZ-176-1999.yaml"
+  capture_record: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-176-1999-capture-pending.json"
+
+quality:
+  duplicate_source_nodes_created: 0
+  duplicate_version_edges_created: 0
+  applicability_edges_promoted: 0
+  executable_rules_changed: false
+  legal_conflicts_confirmed: 0
+  exact_fingerprints_fabricated: 0
+  exact_hashes_from_downloaded_bytes: 1
+
+next_priority:
+  - "Persist the exact captured 176-ФЗ agency PDF bytes durably; then acquire the current 26.07.2026 authority/primary artifact and reconcile the 271-ФЗ staged changes, especially future Article 15 scope from 01.03.2027."
+  - "Fetch exact primary portal bytes for 264-ФЗ/0001202607260023 and reconcile 143-ФЗ Article 13.2 at locator level."
+  - "Fetch exact primary portal bytes for 271-ФЗ/0001202607260030 and 272-ФЗ/0001202607260031; link only effective/current provisions."
+  - "Retry exact official acquisition for 87-ФЗ and 168-ФЗ."
+  - "Continue pending P1 exact acquisitions: 326-ФЗ, 16-ФЗ, 38-ФЗ, 125-ФЗ, 218-ФЗ, banking law Article 26 and GK Article 946."
