@@ -1,0 +1,159 @@
+schema_version: "1.0"
+kind: ru-protected-information-master-inventory-delta
+base_inventory: "master-inventory.yaml"
+reconciliation_base_delta: "master-inventory-delta-2026-08-21T0222.yaml"
+checked_at: "2026-08-21T05:15:37+03:00"
+owner_stream: STREAM_3_SECTOR_OVERLAYS
+run_ref: "stream-3-run-2026-08-21T0515.yaml"
+status: APPEND_ONLY_RECONCILIATION_READY
+
+concurrency_guard: >-
+  Stream 2 and Stream 3 may update adjacent PDN/protected-information inventories concurrently. This delta is append-only
+  and does not overwrite the stale base master file. The reconciled universe is derived from the base master plus all
+  accepted deltas through this run.
+
+proof_floor:
+  - "Taxonomy/sector similarity is discovery only. Primary current normative text is required for locator claims."
+  - "Explicit reference to 152-ФЗ is an overlap candidate, not universal applicability."
+  - "Exact bytes, MIME, byte length and SHA-256 are mandatory before SOURCE_ACQUIRED/IMMUTABLE promotion."
+  - "Retention, Russian-infrastructure localization and cross-border transfer restrictions remain separate semantic nodes."
+  - "No fingerprint is generated from search results, rendered HTML or portal PDF display metadata."
+
+counter_state_before_reconciled:
+  found: 22
+  downloaded: 9
+  immutable: 9
+  pending: 11
+  reused: 2
+  primary_publication_verified: 10
+  sectors_registered: 16
+
+counter_state_after_reconciliation:
+  found: 23
+  downloaded: 9
+  immutable: 9
+  pending: 12
+  reused: 2
+  primary_publication_verified: 10
+  primary_current_authority_text_verified_pending: 1
+  sectors_registered: 16
+  new_sources_this_run: 1
+  new_immutable_this_run: 0
+  exact_binary_acquisition_success_this_run: 0
+  unique_primary_amendment_acts_verified_this_run: 1
+  source_version_edges_added_this_run: 1
+  locator_level_effective_date_mappings_added_this_run: 3
+
+sources_added:
+  - source_id: SEC-SRC-RU-FZ-87-2003
+    source_card: "security-corpora/RU/protected-information/source/SEC-SRC-RU-FZ-87-2003.yaml"
+    sector: transport
+    regime: transport_expedition_client_personal_data_retention_localization_cross_border
+    lifecycle_state: PRIMARY_CURRENT_AUTHORITY_TEXT_VERIFIED_SOURCE_PENDING
+    authority:
+      current_primary_text:
+        publisher: "Президент России — Банк документов"
+        url: "https://www.kremlin.ru/acts/bank/19642/print"
+        displayed_edition_through: "140-ФЗ от 07.06.2025"
+      original_publication_citation: "Собрание законодательства РФ, 2003, № 27, ст. 2701"
+    current_locator_candidates:
+      - locator: "статья 4 пункт 6"
+        concept: RECORD_RETENTION_PERIOD
+        normalized_value: "3 years from completion of transport-expedition contract"
+        status: CURRENT_PRIMARY_TEXT_LOCATOR_IDENTIFIED
+      - locator: "статья 4 пункт 10"
+        concept: DATA_INFRASTRUCTURE_LOCALIZATION
+        status: CURRENT_PRIMARY_TEXT_LOCATOR_IDENTIFIED
+      - locator: "статья 4 пункт 11"
+        concept: CROSS_BORDER_PERSONAL_DATA_TRANSFER_RESTRICTION
+        explicit_reference: "152-ФЗ"
+        status: CURRENT_PRIMARY_TEXT_LOCATOR_IDENTIFIED
+      - locator: "статья 24 часть 3 пункт 3"
+        concept: INDIVIDUAL_ENTREPRENEUR_REGISTER_PERSONAL_DATA
+        status: CURRENT_PRIMARY_TEXT_LOCATOR_IDENTIFIED
+    effective_date:
+      source: "140-ФЗ статья 5"
+      finding: >-
+        Article 1 point 3 subpoint 'в', which adds Article 4 points 6-11, is not among the delayed exceptions in
+        Article 5 parts 2-4; the general effective date 2025-09-01 applies to the recorded points 6, 10 and 11.
+      status: PRIMARY_TEXT_EFFECTIVE_DATE_MAPPED_FOR_RECORDED_LOCATORS
+    overlap_candidates:
+      - target: "152-ФЗ"
+        type: EXPLICIT_REFERENCE_IN_CURRENT_PRIMARY_TEXT
+        locator: "87-ФЗ статья 4 пункт 11"
+        status: CANDIDATE_PENDING_SCENARIO_APPLICABILITY_REVIEW
+      - target: "16-ФЗ"
+        type: TRANSPORT_DOMAIN_NEIGHBOR
+        status: DISCOVERY_ONLY_NO_APPLICABILITY_EDGE
+      - target: "259-ФЗ"
+        type: ELECTRONIC_TRANSPORT_DOCUMENT_CONTEXT
+        status: DISCOVERY_ONLY_PENDING_PRIMARY_LOCATOR_REVIEW
+    artifact:
+      state: SOURCE_PENDING_PRIMARY_EXACT_CAPTURE
+      current_text_url: "https://www.kremlin.ru/acts/bank/19642/print"
+      latest_amendment_official_page: "https://publication.pravo.gov.ru/Document/View/0001202506070016"
+      retrieved_at: null
+      mime: null
+      byte_length: null
+      sha256: null
+
+primary_version_events_verified:
+  - act: "140-ФЗ от 07.06.2025"
+    official_publication_id: "0001202506070016"
+    official_publication_date: "2025-06-07"
+    official_url: "https://publication.pravo.gov.ru/Document/View/0001202506070016"
+    authority_text_url: "https://www.kremlin.ru/acts/bank/51991/print"
+    targets: ["87-ФЗ"]
+    new_edge: "140-ФЗ -> 87-ФЗ"
+
+existing_source_checks:
+  - source_id: SEC-SRC-RU-FZ-326-2010
+    sector: healthcare
+    lifecycle_state_changed: false
+    verification:
+      - act: "430-ФЗ от 28.11.2025"
+        official_publication_id: "0001202511280092"
+        official_publication_date: "2025-11-28"
+        finding: "Official publication identity re-verified; already present in version-chain evidence, so no duplicate edge added."
+      - act: "29-ФЗ от 20.02.2026"
+        official_publication_id: "0001202602200050"
+        official_publication_date: "2026-02-20"
+        finding: "Official publication identity re-verified; already present in version-chain evidence, so no duplicate edge added."
+    artifact_state_unchanged: SOURCE_PENDING
+
+acquisition_delta:
+  immutable_baselines_added: 0
+  exact_capture_candidates_identified:
+    - source_id: SEC-SRC-RU-FZ-87-2003
+      current_authority_text_url: "https://www.kremlin.ru/acts/bank/19642/print"
+      amendment_publication_id: "0001202506070016"
+      state: SOURCE_PENDING_PRIMARY_EXACT_CAPTURE
+    - source_id: SEC-SRC-RU-FZ-168-2020
+      official_publication_id: "0001202006080019"
+      state: SOURCE_PENDING_PRIMARY_EXACT_CAPTURE_RETRY_UNRESOLVED
+  environment_result: >-
+    Exact official binary bytes remain unavailable through the current execution path; therefore retrieved_at, MIME,
+    byte_length and SHA-256 remain null and no immutable artifact/manifest is fabricated.
+
+semantic_guards_added:
+  - id: STREAM3-87FZ-RETENTION-LOCALIZATION-XBORDER-001
+    classification: SEMANTIC_SEPARATION_GUARD
+    status: NOT_A_LEGAL_CONFLICT
+    source: "87-ФЗ"
+    locators: ["Article 4(6)", "Article 4(10)", "Article 4(11)"]
+    finding: >-
+      Three-year retention, Russian-location infrastructure duty and cross-border PDN transfer restriction are related
+      but distinct duties; they must not be collapsed into one requirement.
+    executable_effect: NONE
+
+proof_floor_effect:
+  executable_rules_changed: false
+  applicability_edges_promoted: 0
+  duplicate_source_nodes_created: 0
+  legal_conflicts_confirmed: 0
+  semantic_scope_guards_added: 1
+
+merge_rule: >-
+  Reconcile after the 2026-08-21T0222 delta. Resulting protected-information source universe is 23 sources:
+  9 immutable, 12 pending, 2 reused. The new 87-ФЗ node remains non-executable until exact capture and the remaining
+  version-chain/applicability gates are complete.
