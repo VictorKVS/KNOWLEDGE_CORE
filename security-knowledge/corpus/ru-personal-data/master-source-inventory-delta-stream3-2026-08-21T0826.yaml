@@ -1,0 +1,101 @@
+schema_version: "1.0"
+kind: ru-personal-data-master-source-inventory-delta
+base_inventory: "master-source-inventory.yaml"
+reconciliation_base_delta: "master-source-inventory-delta-stream3-2026-08-21T0515.yaml"
+checked_at: "2026-08-21T08:26:31+03:00"
+owner_stream: STREAM_3_SECTOR_OVERLAYS
+protected_information_delta_ref: "../ru-protected-information/master-inventory-delta-2026-08-21T0826.yaml"
+run_ref: "../ru-protected-information/stream-3-run-2026-08-21T0826.yaml"
+status: APPEND_ONLY_RECONCILIATION_READY
+
+stream_3_counter_update:
+  sources_found_total: 24
+  new_sources_this_pass: 1
+  reused_existing_sources: 2
+  primary_publication_verified_total: 10
+  immutable_artifacts: 9
+  pending_immutable: 13
+  sectors_registered: 16
+  exact_binary_capture_ephemeral_successes_this_pass: 1
+  source_version_edges_identified_this_pass: 5
+  legal_conflicts_confirmed_this_pass: 0
+
+sector_evidence_updates:
+  - source_id: SEC-SRC-RU-FZ-176-1999
+    title: "176-ФЗ «О почтовой связи»"
+    sector: communications
+    lifecycle_state: PRIMARY_ACT_PROTECTED_LOCATOR_VERIFIED_AGENCY_ARTIFACT_CAPTURED_VERSION_CHAIN_PARTIAL
+    protected_information_regime:
+      type: POSTAL_COMMUNICATIONS_SECRECY
+      locator: "статья 15"
+      state: CURRENT_PROTECTED_LOCATOR_IDENTIFIED
+    pdn_relation:
+      state: CANDIDATE_PENDING_FIELD_AND_SCENARIO_REVIEW
+      type: POSSIBLE_PERSONAL_DATA_WITHIN_BROADER_COMMUNICATIONS_SECRECY_OBJECT
+      evidence: >-
+        Article 15 protects address data and information linked to users' postal items, postal money transfers and other
+        communications. Such information can contain personal data in concrete scenarios, but the statutory object
+        "тайна связи" is broader and is not automatically equivalent to the 152-ФЗ regime.
+      guard: >-
+        No operator-wide or processing-wide 152-ФЗ applicability is inferred from the fact that the protected object may
+        contain address or user-linked information.
+    artifact_capture:
+      source_url: "https://17.rosguard.gov.ru/uploads/2026/06/federalnyjj_zakon_ot_17071999_n_176fz_red_ot_10062026.pdf"
+      retrieved_at: "2026-08-21T05:26:31Z"
+      mime: "application/pdf"
+      byte_length: 521530
+      sha256: "4320e6a7be2715fe48b13df6f06ecc2a3c50b9884d7412592b5f17b012d1de7f"
+      durable: false
+      immutable_counted: false
+
+public_sector_version_update:
+  - source_id: SEC-SRC-RU-FZ-143-1997
+    act: "264-ФЗ от 26.07.2026"
+    official_publication_id: "0001202607260023"
+    official_publication_date: "2026-07-26"
+    lifecycle_state_changed: false
+    locator: "статья 13.2"
+    finding: >-
+      The amendment expands specified electronic EGR ZAGS information-access paths for defence/Rosgvardiya use cases and
+      brings the recipient/protection-duty scope into the current version-chain review. Exact primary portal artifact is
+      still pending, so no executable applicability rule is promoted.
+    pdn_relation: CANDIDATE_PENDING_PRIMARY_EXACT_CAPTURE_AND_APPLICABILITY_REVIEW
+
+communications_transport_version_update:
+  - act: "271-ФЗ от 26.07.2026"
+    official_publication_id: "0001202607260030"
+    targets:
+      - source_id: SEC-SRC-RU-FZ-87-2003
+        current_effective_from: "2026-08-06"
+        locator_changed: "87-ФЗ статья 1 пункт 2"
+        pdn_locators_4_6_4_10_4_11_changed: false
+      - source_id: SEC-SRC-RU-FZ-126
+        effective_from: "2027-03-01"
+        current_pdn_effect: NONE_PROMOTED_FUTURE_EVENT_ONLY
+      - source_id: SEC-SRC-RU-FZ-176-1999
+        article_15_change_effective_from: "2027-03-01"
+        current_pdn_effect: NONE_PROMOTED_FUTURE_EVENT_ONLY
+    publication_locator_state: OFFICIAL_LOCATOR_CORROBORATED_PRIMARY_PORTAL_FETCH_PENDING
+
+advertising_version_update:
+  - source_id: SEC-SRC-RU-FZ-38-2006
+    act: "272-ФЗ от 26.07.2026"
+    official_publication_id: "0001202607260031"
+    effective_date: "2026-08-06"
+    changed_locators: ["статья 21", "статья 38"]
+    stream_3_pdn_anchor: "статья 18 — реклама по сетям электросвязи"
+    pdn_anchor_changed_by_event: false
+    applicability_effect: NONE
+
+pdn_executable_effect:
+  rules_changed: false
+  applicability_edges_promoted: 0
+  new_sector_source_nodes: 1
+  new_current_pdn_rules: 0
+  new_source_version_edges_identified: 5
+  new_scope_guards: 1
+
+proof_floor: >-
+  This delta adds postal communications secrecy as a distinct protected-information regime and records current/future
+  version events around 143-ФЗ, 87-ФЗ, 126-ФЗ, 176-ФЗ and 38-ФЗ. None of those graph relations is treated as proof of
+  universal 152-ФЗ applicability. Durable exact current artifacts and primary-portal reconciliation remain required.
