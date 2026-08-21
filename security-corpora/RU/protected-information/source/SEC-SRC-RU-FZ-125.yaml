@@ -1,0 +1,98 @@
+schema_version: "1.0"
+id: SEC-SRC-RU-FZ-125
+kind: security-regulatory-source
+status: CURRENT_AUTHORITY_TEXT_VERIFIED_PRIMARY_EXACT_ARTIFACT_PENDING_VERSION_CHAIN_PARTIAL
+
+title: "Федеральный закон от 22.10.2004 № 125-ФЗ «Об архивном деле в Российской Федерации»"
+jurisdiction: RU
+issuer: "Российская Федерация"
+document:
+  type: federal_law
+  number: "125-ФЗ"
+  adopted_date: "2004-10-22"
+  checked_at: "2026-08-21"
+
+canonical_sources:
+  current_authority_text:
+    publisher: "Президент России"
+    url: "https://www.kremlin.ru/acts/bank/21556/print"
+    current_amendment_chain_visible_through: "469-ФЗ от 13.12.2024"
+    origin_verified: true
+  sector_authority_index:
+    publisher: "Федеральное архивное агентство"
+    url: "https://archives.gov.ru/documents/fz.shtml"
+    note: "Rosarchiv lists 469-ФЗ as the current direct amendment to Article 24."
+
+protected_information:
+  sector: archives
+  regime: archival_access_retention
+  anchor_state: CURRENT_LOCATORS_IDENTIFIED
+  anchors:
+    - locator: "статья 22.1"
+      concept: RECORD_RETENTION_PERIOD
+      findings:
+        - "Документы по личному составу, законченные делопроизводством до 01.01.2003, хранятся 75 лет."
+        - "Документы по личному составу, законченные делопроизводством после 01.01.2003, хранятся 50 лет."
+        - "Отдельные документы по личному составу могут иметь иной срок по действующим перечням архивных документов."
+      semantic_guard: "Retention period is not an access-restriction period."
+    - locator: "статья 25 часть 3"
+      concept: ACCESS_RESTRICTION_PERIOD
+      findings:
+        - "Access to archival documents containing personal/family secrets, private-life information or information threatening citizen safety is restricted for 75 years from document creation."
+        - "Earlier lifting of this restriction is possible with written permission under the statutory conditions."
+      semantic_guard: "The 75-year access restriction must not be merged with Article 22.1 retention rules."
+
+pdn_relation:
+  target: "152-ФЗ"
+  state: DIRECT_STATUTORY_SCOPE_BOUNDARY
+  primary_locator: "152-ФЗ статья 1 часть 2 пункт 2"
+  finding: >-
+    152-ФЗ expressly excludes from its scope relations arising from organization of storage, acquisition, accounting and
+    use of documents of the Archival Fund of the Russian Federation and other archival documents containing personal data
+    when those relations are governed by Russian archival legislation.
+  significance: >-
+    This is not merely an overlap candidate: it is a statutory boundary between the generic personal-data regime and the
+    special archival regime. The boundary must still be applied to the concrete relationship and document lifecycle;
+    it does not mean every operation performed by an organization before or outside archival-law processing is excluded
+    from 152-ФЗ.
+  applicability_guard: "Determine whether the concrete relationship is archival storage/acquisition/accounting/use under archival legislation before applying the exclusion."
+
+version_chain:
+  state: VERSION_CHAIN_PARTIAL_CURRENT_EDITION_CROSSCHECKED
+  current_edition_crosscheck:
+    edition_date: "2024-12-13"
+    effective_from: "2024-12-24"
+    current_status: "Действует"
+  latest_identified_event:
+    act: "469-ФЗ от 13.12.2024"
+    title: "О внесении изменений в статью 24 Федерального закона «Об архивном деле в Российской Федерации»"
+    official_publication_id: "0001202412130022"
+    official_publication_date: "2024-12-13"
+    official_url: "https://publication.pravo.gov.ru/document/0001202412130022"
+    effect: "Amends Article 24 access mechanisms, including electronic access and the remote-use GIS framework."
+    protected_locator_effect:
+      article_22_1_retention: NONE_IDENTIFIED
+      article_25_part_3_access_restriction: NONE_IDENTIFIED
+    edge: "469-ФЗ -> 125-ФЗ"
+  pending: >-
+    Acquire exact official artifacts and reconcile the complete amendment chain before VERSION_CHAIN_VERIFIED or executable
+    promotion. Current-source cross-check indicates edition 13.12.2024 as effective from 24.12.2024.
+
+artifact_capture:
+  state: PRIMARY_EXACT_BINARY_PENDING
+  current_authority_url: "https://www.kremlin.ru/acts/bank/21556/print"
+  latest_amendment_official_url: "https://publication.pravo.gov.ru/document/0001202412130022"
+  retrieved_at: "2026-08-21T11:22:06+03:00"
+  mime: null
+  byte_length: null
+  sha256: null
+  artifact_ref: null
+  manifest_ref: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-125-capture-pending.json"
+  durable: false
+  blocker: >-
+    Authoritative current text and official amendment record were verified, but exact official binary bytes were not
+    captured in this execution. Byte-level metadata is deliberately left null.
+
+executable_use:
+  allowed: false
+  gate: "Exact durable primary/current artifacts + complete version-chain reconciliation + relationship-level applicability review"
