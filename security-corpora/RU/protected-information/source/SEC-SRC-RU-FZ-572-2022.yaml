@@ -1,7 +1,7 @@
-schema_version: "1.0"
+schema_version: "1.1"
 id: SEC-SRC-RU-FZ-572-2022
 kind: security-regulatory-source
-status: METADATA_VERIFIED
+status: PRIMARY_PUBLICATION_VERIFIED_IMMUTABLE_BASELINE_VERSION_CHAIN_PARTIAL
 
 title: "Федеральный закон от 29.12.2022 № 572-ФЗ о биометрических персональных данных"
 jurisdiction: RU
@@ -12,23 +12,86 @@ document:
   adopted_date: "2022-12-29"
   official_publication_id: "0001202212290024"
   official_publication_date: "2022-12-29"
-  checked_at: "2026-08-20"
+  checked_at: "2026-08-21"
 canonical_source:
   publisher: "Официальное опубликование правовых актов"
   url: "https://publication.pravo.gov.ru/Document/View/0001202212290024"
+  official_api_pdf_url: "http://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202212290024"
   origin_verified: true
+
 protected_information:
   sector: biometrics
   regime: biometric_identification_authentication
+  anchor_state: LOCATORS_IDENTIFIED_REVIEW_REQUIRED
+  anchors:
+    - locator: "статья 3"
+      concepts: [BIOMETRIC_PERSONAL_DATA, UNIFIED_BIOMETRIC_SYSTEM, VOLUNTARY_BIOMETRIC_PROVISION, SERVICE_NON_CONDITIONING, CROSS_BORDER_BIOMETRIC_TRANSFER_RESTRICTION]
+      finding: >-
+        The law establishes the special EBS identification/authentication regime; Article 3 contains dedicated rules on
+        biometric data, voluntariness/non-conditioning and a cross-border biometric-transfer restriction with statutory exceptions.
+    - locator: "статья 15"
+      concepts: [BIOMETRIC_PROCESSING_OUTSIDE_EBS, COLLECTION_AND_STORAGE_RESTRICTIONS, AUTHENTICATION_VIA_BIOMETRIC_VECTORS]
+      finding: >-
+        Article 15 establishes a separate rule set for processing biometric personal data outside the unified biometric
+        system, including restrictions on collection/storage in identification/authentication scenarios.
+    - locator: "статья 17"
+      concepts: [AUTHENTICATION_ORGANIZATION_ACCREDITATION, MANDATORY_REQUIREMENTS]
+      finding: "Accreditation requirements exist for organizations performing authentication on the basis of biometric personal data."
+
+pdn_relation:
+  target: "152-ФЗ"
+  state: DIRECT_EXPLICIT_STATUTORY_RELATION_APPLICATION_SCOPE_REVIEW_REQUIRED
+  evidence:
+    - "572-ФЗ expressly refers to consent requirements under 152-ФЗ in identification/authentication provisions."
+    - "572-ФЗ expressly links blocking/deletion/destruction actions to personal-data legislation."
+    - "Article 3 distinguishes treatment of EBS vectors from biometric personal data under Articles 11 and 19 of 152-ФЗ."
+  guard: >-
+    Explicit statutory cross-reference proves a legal relationship between the regimes, but not that every organization,
+    system or biometric-like feature falls within every provision of 572-ФЗ.
+
 version_chain:
-  state: VERSION_CHAIN_PARTIAL
-  pending: "Полная цепочка изменений до 2026-08-20."
+  state: VERSION_CHAIN_PARTIAL_DIRECT_AMENDMENTS_IDENTIFIED_CURRENT_EDITION_CROSSCHECKED
+  current_edition_crosscheck:
+    edition_date: "2024-12-28"
+    effective_from: "2025-06-01"
+    changing_acts: ["303-ФЗ от 08.08.2024", "494-ФЗ от 26.12.2024", "522-ФЗ от 28.12.2024"]
+  events:
+    - act: "303-ФЗ от 08.08.2024"
+      official_publication_id: "0001202408080127"
+      official_publication_date: "2024-08-08"
+      official_url: "https://publication.pravo.gov.ru/document/0001202408080127"
+      effect: "Article 4 of 303-ФЗ adds part 19.1 to Article 3 of 572-ФЗ; this amendment entered into force on 2025-01-01."
+      edge: "303-ФЗ -> 572-ФЗ"
+    - act: "494-ФЗ от 26.12.2024"
+      official_publication_id: "0001202412260023"
+      official_publication_date: "2024-12-26"
+      official_url: "https://publication.pravo.gov.ru/document/0001202412260023"
+      effect: "Article 24 amends Article 3 part 19.1 and Article 26 part 10 of 572-ФЗ."
+      edge: "494-ФЗ -> 572-ФЗ"
+    - act: "522-ФЗ от 28.12.2024"
+      official_publication_id: "0001202412280035"
+      official_publication_date: "2024-12-28"
+      official_url: "https://publication.pravo.gov.ru/document/0001202412280035"
+      effect: "Article 41 amends Article 10 part 8 and Article 16 part 9 in the AML/CFT/extremist-financing context."
+      edge: "522-ФЗ -> 572-ФЗ"
+  pending: >-
+    Persist/reconcile exact primary amendment artifacts and perform locator-level diff before upgrading the chain to VERIFIED
+    or generating executable rules.
+
 capture:
-  raw_artifact_ref: ""
-  manifest_ref: ""
-  mime: null
-  byte_length: null
-  sha256: ""
-  fingerprint_status: PENDING_RAW_CAPTURE
-provenance: {checked_at: "2026-08-20", review_required: true}
-agent_rule: "Original-publication capture is baseline evidence only; current executable semantics require verified version-chain review."
+  raw_artifact_ref: "security-corpora/RU/protected-information/raw/SEC-SRC-RU-FZ-572-2022/0001202212290024.pdf"
+  manifest_ref: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-572-2022.json"
+  mime: "application/pdf"
+  byte_length: 8211644
+  sha256: "e50a472ac175a00a1b745582e50bd2567da88373a19753f8769843074e652a5d"
+  fingerprint_status: IMMUTABLE_BASELINE_CAPTURED
+  note: "This is the original official-publication baseline; current executable semantics require the amendment chain."
+
+provenance:
+  checked_at: "2026-08-21T11:22:06+03:00"
+  primary_publication_verified: true
+  immutable_baseline_verified_from_existing_manifest: true
+  review_required: true
+agent_rule: >-
+  Original-publication capture is baseline evidence only. Do not promote applicability or current executable semantics until
+  version-chain artifacts and locator-level changes are reconciled.
