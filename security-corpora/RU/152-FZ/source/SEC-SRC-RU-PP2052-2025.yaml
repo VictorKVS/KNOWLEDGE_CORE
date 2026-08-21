@@ -1,0 +1,62 @@
+schema_version: "1.0"
+id: SEC-SRC-RU-PP2052-2025
+kind: security-regulatory-source
+status: METADATA_VERIFIED
+
+title: "Постановление Правительства Российской Федерации от 17.12.2025 № 2052 «О внесении изменений в постановление Правительства Российской Федерации от 14 мая 2021 г. № 733»"
+jurisdiction: RU
+issuer: "Правительство Российской Федерации"
+document:
+  type: government_resolution_amendment
+  number: "2052"
+  adopted_date: "2025-12-17"
+  official_publication_id: "0001202512180033"
+  publication_date: "2025-12-18"
+  effective_from: "2025-12-26"
+  checked_at: "2026-08-21"
+
+canonical_source:
+  publisher: "Официальный интернет-портал правовой информации"
+  url: "https://publication.pravo.gov.ru/document/0001202512180033"
+  official_publication_identity_cross_verified: true
+  cross_verification:
+    - "ГАРАНТ: official publication 18.12.2025 No. 0001202512180033, effective 26.12.2025"
+    - "КонсультантПлюс: PP RF No. 2052 of 17.12.2025 amends PP RF No. 733"
+
+capture:
+  raw_artifact_ref: ""
+  mime: null
+  byte_length: null
+  sha256: ""
+  fingerprint_status: PENDING_RAW_CAPTURE
+  acquisition_request:
+    status: REQUESTED
+    requested_at: "2026-08-21T05:29:00Z"
+    route: official_publication_pdf
+    official_publication_id: "0001202512180033"
+    reason: >-
+      Current-version amendment of the Article 13.1 platform regulation; require official PDF, official API byte-length
+      check and SHA-256 before using its definitions or amended requirements for extraction.
+  semantic_status: UNCHANGED
+
+relations:
+  - type: AMENDS
+    target: SEC-SRC-RU-PP733-2021
+    scope: current_platform_terms_functions_and_processing_rules
+    effective_from: "2025-12-26"
+  - type: DEFINES_OR_UPDATES_CONTEXT_FOR
+    target: SEC-SRC-RU-152FZ-2026-07-26
+    scope: article_13_1_depersonalized_data_platform
+    note: >-
+      PP 2052 revises PP 733 terminology and platform rules, including concepts tied to depersonalized data and data sets.
+      Extracted concept nodes remain pending until immutable bytes and locator-level review are complete.
+
+provenance:
+  created_at: "2026-08-21"
+  checked_at: "2026-08-21"
+  created_by: "ChatGPT/GPT-5.6 Sol with current legal-source cross-verification"
+  review_required: true
+
+agent_rule: >-
+  Do not promote definitions from PP RF No. 2052 until immutable official bytes are captured and locator comparison
+  against the prior PP 733 revision is complete. Preserve context-specific definitions rather than merging them blindly.
