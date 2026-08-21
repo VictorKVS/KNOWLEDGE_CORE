@@ -7,6 +7,7 @@ on:
     paths:
       - ".github/workflows/pdn-core-immutable-acquisition.yml"
       - "TOOLS/pdn_core_acquire.py"
+      - "TOOLS/pdn_current_root_acquire.py"
       - "TOOLS/pdn_core_sync_capture.py"
       - "security-corpora/RU/152-FZ/source/**"
 
@@ -37,6 +38,16 @@ jobs:
           echo "acquirer_exit_code=$rc" >> "$GITHUB_OUTPUT"
           exit 0
 
+      - name: Capture current consolidated 152-FZ root
+        id: current_root
+        shell: bash
+        run: |
+          set +e
+          python TOOLS/pdn_current_root_acquire.py
+          rc=$?
+          echo "current_root_exit_code=$rc" >> "$GITHUB_OUTPUT"
+          exit 0
+
       - name: Sync immutable evidence to source records and master inventory
         shell: bash
         run: python TOOLS/pdn_core_sync_capture.py
@@ -64,7 +75,10 @@ jobs:
           if [ -f security-corpora/RU/152-FZ/PDN_ACQUISITION_RUN.json ]; then
             cat security-corpora/RU/152-FZ/PDN_ACQUISITION_RUN.json
           fi
+          if [ "${{ steps.current_root.outputs.current_root_exit_code }}" != "0" ]; then
+            echo "Current consolidated 152-FZ capture remains pending; semantic status was not promoted." >&2
+          fi
           if [ "${{ steps.acquire.outputs.acquirer_exit_code }}" != "0" ]; then
-            echo "Acquisition completed with zero successful raw captures; inspect run telemetry." >&2
+            echo "General acquisition completed with zero successful raw captures; inspect run telemetry." >&2
             exit 1
           fi
