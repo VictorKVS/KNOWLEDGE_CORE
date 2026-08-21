@@ -1,0 +1,258 @@
+schema_version: "1.0"
+id: GOST-R-59548-2022-EVENT-REGISTRATION-CORE-PART5
+designation: "ГОСТ Р 59548-2022"
+title: "Security-event registered-information schemas 6.2.45-6.2.56"
+authority: ROSSTANDART
+order: {number: "2-ст", date: "2022-01-13"}
+effective_date: "2022-02-01"
+status_observed: CURRENT
+status_observed_date: "2026-08-21"
+status: VERIFIED_BOUNDED_PARTIAL_CLAUSE_MODEL_6_2_45_TO_6_2_56
+
+source_evidence:
+  official_status_and_scope:
+    url: https://protect.gost.ru/gost/details/d5008460-671b-4563-9388-d1d0f9ecdbbf
+    result: VERIFIED_CURRENT_2026_08_21
+  clause_text_interface:
+    url: https://meganorm.ru/mega_doc/norm/gost-r_gosudarstvennyj-standart/9/gost_r_59548-2022_natsionalnyy_standart_rossiyskoy.html
+    result: VERIFIED_PUBLIC_TEXT_CROSSCHECK_6_2_45_TO_6_2_56_TABLES_92_TO_113
+  immutable_official_document_bytes: PENDING
+
+dependency:
+  common_schema: security-knowledge/standards/gost-r-59548-2022-event-registration-core-part1-v1.yaml
+  inherited_rule: EVERY_TABLE_BASED_TYPE_ALSO_REQUIRES_SECTION_6_1_COMMON_MINIMUM_INFORMATION
+  inherited_additional_rule: SECTION_6_1_COMMON_ADDITIONAL_INFORMATION_REMAINS_OPTIONAL
+
+literal_value_sets:
+  OPERATION_RESULT: {values: [SUCCESSFUL, UNSUCCESSFUL]}
+  FILE_ACCESS_TYPE: {values: [READ, WRITE, EXECUTE]}
+
+event_type_schemas:
+  - id: G59548-6.2.45
+    clause: "6.2.45/tables 92-93"
+    name_ru: "Действия с файлами на съемных машинных носителях информации"
+    required_fields:
+      - {id: DEVICE_SERIAL_NUMBER, type: TEXT}
+      - {id: FILE_FULL_PATH, type: TEXT}
+      - {id: FILE_ACCESS_TYPE, type: VALUE_SET, value_set_ref: FILE_ACCESS_TYPE}
+      - {id: PROCESS_IDENTIFIER, type: INTEGER, semantic: OS_PROCESS_UNIQUE_NUMBER}
+      - {id: VOLUME_NAME, type: TEXT}
+      - {id: OPERATION_RESULT, type: VALUE_SET, value_set_ref: OPERATION_RESULT, when: RESULT_NOT_DETERMINED_BY_EVENT_IDENTIFIER}
+    additional_fields:
+      - {id: FILE_NAME, type: TEXT, includes_extension_when_applicable: true}
+      - {id: FILE_SIZE_BYTES, type: INTEGER}
+      - {id: FILE_CHECKSUM, type: TEXT, semantic: ONE_WAY_HASH_VALUE}
+      - {id: CHECKSUM_ALGORITHM, type: TEXT, examples: [MD5, SHA1, SHA256, OTHER], examples_are_non_exhaustive: true}
+      - {id: FILE_QUALIFICATION_LABEL, type: TEXT}
+      - {id: FILE_EXTENSION, type: TEXT, excludes_leading_dot: true, when: IF_APPLICABLE}
+
+  - id: G59548-6.2.46
+    clause: "6.2.46/tables 94-95"
+    name_ru: "Выполнение резервного копирования"
+    required_fields:
+      - {id: BACKUP_JOB_IDENTIFIER, type: INTEGER}
+      - {id: ACTION_TYPE, type: TEXT}
+      - {id: BACKUP_TYPE, type: TEXT, examples: [FULL], examples_are_non_exhaustive: true}
+      - {id: ELAPSED_TIME, type: DURATION, stated_unit: MINUTE}
+      - {id: BACKUP_PATH, type: TEXT}
+      - {id: STORAGE_IDENTIFIER, type: TEXT}
+      - {id: SOURCE_FILE_COUNT, type: INTEGER}
+      - {id: BACKUP_CHECKSUM, type: TEXT, semantic: ONE_WAY_HASH_VALUE}
+      - {id: CHECKSUM_ALGORITHM, type: TEXT, examples: [MD5, SHA1, SHA256, OTHER], examples_are_non_exhaustive: true}
+      - {id: BACKUP_SOURCE_NETWORK_ADDRESS, type: NETWORK_ADDRESS}
+      - {id: OPERATION_RESULT, type: TEXT, examples: [SUCCESSFUL, UNSUCCESSFUL_WITH_ERROR], examples_are_non_exhaustive: true, when: RESULT_NOT_DETERMINED_BY_EVENT_IDENTIFIER}
+    additional_fields:
+      - {id: FILE_TYPE, type: TEXT}
+      - {id: FILE_NAME, type: TEXT, includes_extension_when_applicable: true}
+      - {id: SOURCE_FILE_SIZE_BYTES, type: INTEGER}
+      - {id: RESULT_FILE_SIZE_BYTES, type: INTEGER}
+      - {id: FREE_SPACE_BYTES, type: INTEGER}
+      - {id: AVERAGE_TRANSFER_RATE_MBIT_PER_SECOND, type: INTEGER}
+      - {id: BACKUP_SOFTWARE_NAME, type: TEXT, semantic: FULL_OFFICIAL_NAME}
+      - {id: BACKUP_SOFTWARE_VERSION, type: SOFTWARE_VERSION}
+      - {id: STORAGE_NETWORK_ADDRESS, type: NETWORK_ADDRESS}
+
+  - id: G59548-6.2.47
+    clause: "6.2.47/tables 96-97"
+    name_ru: "Управление резервным копированием"
+    required_fields:
+      - {id: FREE_SPACE_BYTES, type: INTEGER}
+      - {id: STORAGE_IDENTIFIER, type: TEXT}
+      - {id: STORAGE_NETWORK_ADDRESS, type: NETWORK_ADDRESS}
+      - {id: BACKUP_PATH, type: TEXT}
+      - {id: BACKUP_JOB_IDENTIFIER, type: INTEGER}
+      - {id: BACKUP_JOB_NAME, type: TEXT}
+      - {id: ACTION_TYPE, type: TEXT}
+      - {id: BACKUP_TYPE, type: TEXT, examples: [FULL], examples_are_non_exhaustive: true}
+      - {id: OPERATION_RESULT, type: TEXT, examples: [SUCCESSFUL, UNSUCCESSFUL_WITH_ERROR], examples_are_non_exhaustive: true, when: RESULT_NOT_DETERMINED_BY_EVENT_IDENTIFIER}
+    additional_fields:
+      - {id: JOB_LAUNCH_PERIODICITY, type: DURATION, stated_unit: MINUTE, semantic: REGISTERED_JOB_CONFIGURATION_NOT_NORMATIVE_INTERVAL}
+      - {id: NEXT_JOB_LAUNCH_DATE_TIME, type: DATE_TIME, semantic: REGISTERED_JOB_CONFIGURATION_NOT_NORMATIVE_DEADLINE}
+      - {id: BACKUP_SOFTWARE_NAME, type: TEXT, semantic: FULL_OFFICIAL_NAME}
+      - {id: BACKUP_SOFTWARE_VERSION, type: SOFTWARE_VERSION}
+
+  - id: G59548-6.2.48
+    clause: "6.2.48/tables 98-99"
+    name_ru: "Выполнение восстановления информации"
+    required_fields:
+      - {id: RESTORE_JOB_IDENTIFIER, type: INTEGER}
+      - {id: ACTION_TYPE, type: TEXT}
+      - {id: RESTORED_FILE_TYPE, type: TEXT}
+      - {id: RESTORED_FILE_NAME, type: TEXT}
+      - {id: RESULT_FILE_SIZE_BYTES, type: INTEGER}
+      - {id: RESTORE_FILE_PATH, type: TEXT}
+      - {id: RESULT_FILE_CHECKSUM, type: TEXT, semantic: ONE_WAY_HASH_VALUE}
+      - {id: CHECKSUM_ALGORITHM, type: TEXT, examples: [MD5, SHA1, SHA256, OTHER], examples_are_non_exhaustive: true}
+      - {id: OPERATION_RESULT, type: TEXT, examples: [SUCCESSFUL, UNSUCCESSFUL_WITH_ERROR], examples_are_non_exhaustive: true}
+    additional_fields:
+      - {id: SOURCE_FILE_SIZE_BYTES, type: INTEGER}
+      - {id: RESTORE_ELAPSED_TIME, type: DURATION, stated_unit: MINUTE}
+      - {id: PRE_RESTORE_FILE_CHECKSUM, type: TEXT, semantic: ONE_WAY_HASH_VALUE}
+      - {id: PRE_RESTORE_CHECKSUM_ALGORITHM, type: TEXT, examples: [MD5, SHA1, SHA256, OTHER], examples_are_non_exhaustive: true}
+      - {id: STORAGE_IDENTIFIER, type: TEXT}
+      - {id: STORAGE_NETWORK_ADDRESS, type: NETWORK_ADDRESS}
+
+  - id: G59548-6.2.49
+    clause: "6.2.49/tables 100-101"
+    name_ru: "Контроль использования интерфейсов ввода (вывода) информации"
+    required_fields:
+      - {id: BUS_TYPE, type: TEXT, examples: [USB], examples_are_non_exhaustive: true}
+      - {id: DEVICE_SERIAL_NUMBER, type: TEXT}
+      - {id: DEVICE_NAME, type: TEXT}
+      - {id: DEVICE_CODE, type: TEXT, encoding: HEXADECIMAL}
+      - {id: ACTION_TYPE, type: TEXT}
+      - {id: DEVICE_CLASS, type: TEXT}
+    additional_fields:
+      - {id: DEVICE_MANUFACTURER, type: TEXT, semantic: FULL_OFFICIAL_COMPANY_NAME}
+      - {id: DEVICE_MANUFACTURER_CODE, type: TEXT, encoding: HEXADECIMAL}
+      - {id: IO_PORT_IDENTIFIER, type: TEXT}
+
+  - id: G59548-6.2.50
+    clause: "6.2.50/tables 102-103"
+    name_ru: "Контроль целостности"
+    required_fields:
+      - {id: OBJECT_TYPE, type: TEXT}
+      - {id: RESOURCE_NAME, type: TEXT}
+      - {id: CONTROL_METHOD, type: TEXT}
+      - {id: REACTION_TYPE, type: TEXT}
+      - {id: CHECKSUM_ALGORITHM_NAME, type: TEXT, examples: [MD5], examples_are_non_exhaustive: true}
+      - {id: REFERENCE_CHECKSUM_VALUE, type: TEXT, semantic: ONE_WAY_HASH_VALUE}
+      - {id: CURRENT_CHECKSUM_VALUE, type: TEXT, semantic: ONE_WAY_HASH_VALUE}
+    additional_fields:
+      - {id: EVENT_DESCRIPTION, type: TEXT}
+      - {id: INTEGRITY_CONTROL_JOB_NUMBER, type: INTEGER}
+      - {id: INTEGRITY_CONTROL_JOB_NAME, type: TEXT}
+      - {id: INTEGRITY_CONTROL_SECURITY_TOOL_NAME, type: TEXT, semantic: FULL_OFFICIAL_SOFTWARE_NAME}
+      - {id: INTEGRITY_CONTROL_SECURITY_TOOL_VERSION, type: SOFTWARE_VERSION}
+      - {id: REFERENCE_VALUE_CREATION_DATE_TIME, type: DATE_TIME}
+
+  - id: G59548-6.2.51
+    clause: "6.2.51/tables 104-105"
+    name_ru: "Гарантированное уничтожение информации"
+    required_fields:
+      - {id: OBJECT_NAME, type: TEXT}
+      - {id: OBJECT_FULL_PATH, type: TEXT}
+      - {id: WIPE_CYCLE_COUNT, type: INTEGER}
+      - {id: PROCESS_IDENTIFIER, type: INTEGER, semantic: OS_PROCESS_UNIQUE_NUMBER}
+      - {id: OBJECT_SIZE_BYTES, type: INTEGER}
+    additional_fields:
+      - {id: DEVICE_SERIAL_NUMBER, type: TEXT}
+      - {id: FILE_EXTENSION, type: TEXT, excludes_leading_dot: true, when: IF_APPLICABLE}
+      - {id: DESTRUCTION_SECURITY_TOOL_NAME, type: TEXT, semantic: FULL_OFFICIAL_SOFTWARE_NAME}
+      - {id: DESTRUCTION_SECURITY_TOOL_VERSION, type: SOFTWARE_VERSION}
+      - {id: FILE_QUALIFICATION_LABEL, type: TEXT}
+      - {id: OBJECT_CHECKSUM, type: TEXT, semantic: ONE_WAY_HASH_VALUE}
+      - {id: CHECKSUM_ALGORITHM, type: TEXT, examples: [MD5, SHA1, SHA256, OTHER], examples_are_non_exhaustive: true}
+
+  - id: G59548-6.2.52
+    clause: "6.2.52/tables 106-107"
+    name_ru: "Контроль функционирования средств защиты информации"
+    required_fields:
+      - {id: SECURITY_TOOL_COMPONENT, type: TEXT}
+      - {id: SECURITY_TOOL_NAME, type: TEXT, semantic: FULL_OFFICIAL_NAME}
+      - {id: SECURITY_TOOL_VERSION, type: SOFTWARE_VERSION}
+      - {id: CONTROL_RESULT, type: TEXT, examples: [SUCCESSFUL, UNSUCCESSFUL], examples_are_non_exhaustive: true}
+    additional_fields:
+      - {id: EVENT_DESCRIPTION, type: TEXT}
+      - {id: FUNCTION_TERMINATION_REASON, type: TEXT}
+      - {id: FUNCTION_TERMINATION_DURATION, type: DURATION, stated_unit: MINUTE}
+
+  - id: G59548-6.2.53
+    clause: "6.2.53/tables 108-109"
+    name_ru: "Прекращение функционирования (сбой, отказ) средства защиты информации"
+    required_fields:
+      - {id: SECURITY_TOOL_NAME, type: TEXT, semantic: FULL_OFFICIAL_NAME}
+      - {id: SECURITY_TOOL_VERSION, type: SOFTWARE_VERSION}
+      - {id: FUNCTION_TERMINATION_REASON, type: TEXT}
+    additional_fields:
+      - {id: EVENT_DESCRIPTION, type: TEXT}
+      - {id: FUNCTION_TERMINATION_DURATION, type: DURATION, stated_unit: MINUTE}
+
+  - id: G59548-6.2.54
+    clause: "6.2.54/tables 110-111"
+    name_ru: "Управление (администрирование) функциями безопасности"
+    required_fields:
+      - {id: SECURITY_TOOL_COMPONENT, type: TEXT}
+      - {id: SECURITY_TOOL_NAME, type: TEXT, semantic: FULL_OFFICIAL_SOFTWARE_NAME}
+      - {id: SECURITY_TOOL_VERSION, type: SOFTWARE_VERSION}
+      - {id: ACTION_TYPE, type: TEXT}
+      - {id: OPERATION_RESULT, type: VALUE_SET, value_set_ref: OPERATION_RESULT, when: RESULT_NOT_DETERMINED_BY_EVENT_IDENTIFIER}
+    additional_fields:
+      - {id: CONFIGURATION_PARAMETER_VALUES, type: TEXT, format: "parameter: value;"}
+      - {id: CHANGED_CONFIGURATION_PARAMETER_VALUES, type: TEXT, format: "parameter: old value => new value;"}
+      - {id: ADMINISTRATOR_NETWORK_ADDRESS, type: NETWORK_ADDRESS}
+
+  - id: G59548-6.2.55
+    clause: "6.2.55/tables 112-113"
+    name_ru: "Управление журналами (записями) регистрации событий безопасности"
+    required_fields:
+      - {id: ACTION_TYPE, type: TEXT}
+      - {id: LOG_TYPE, type: TEXT, semantic: LOG_NAME}
+      - {id: OPERATION_RESULT, type: VALUE_SET, value_set_ref: OPERATION_RESULT, when: RESULT_NOT_DETERMINED_BY_EVENT_IDENTIFIER}
+    additional_fields:
+      - {id: CONFIGURATION_PARAMETER_VALUES, type: TEXT, format: "parameter: value;"}
+      - {id: CHANGED_CONFIGURATION_PARAMETER_VALUES, type: TEXT, format: "parameter: old value => new value;"}
+      - {id: ADMINISTRATOR_NETWORK_ADDRESS, type: NETWORK_ADDRESS}
+
+  - id: G59548-6.2.56
+    clause: "6.2.56"
+    name_ru: "Применение методов криптографической защиты информации"
+    schema_kind: LEGISLATION_DEPENDENCY_WITHOUT_UNIVERSAL_FIELD_TABLE
+    governing_rule: DETERMINED_IN_ACCORDANCE_WITH_RUSSIAN_FEDERATION_LEGISLATION
+    required_fields: []
+    additional_fields: []
+
+coverage:
+  this_part_subsections: 12
+  this_part_table_based_subsections: 11
+  this_part_legislation_dependency_subsections: 1
+  this_part_required_field_placements: 68
+  this_part_additional_field_placements: 52
+  cumulative_modeled_subsections: 56
+  cumulative_pending_subsections: 25
+  cumulative_section_6_2_total: 81
+  modeled_subsections: "6.2.45-6.2.56"
+  remaining_subsections: "6.2.57-6.2.81"
+
+scope_guards:
+  - DO_NOT_TREAT_THIS_PARTIAL_MODEL_AS_COMPLETE_GOST_R_59548_2022_EVENT_SCHEMA
+  - DO_NOT_TREAT_ADDITIONAL_FIELDS_AS_REQUIRED_FIELDS
+  - DO_NOT_TREAT_TEXT_EXAMPLES_AS_CLOSED_VALUE_SETS
+  - DO_NOT_TREAT_HASH_ALGORITHM_FULL_USB_OR_RESULT_EXAMPLES_AS_EXHAUSTIVE
+  - DO_NOT_DERIVE_BACKUP_PERIODICITY_RPO_RTO_OR_RETENTION_FROM_REGISTERED_EVENT_FIELDS
+  - DO_NOT_INVENT_UNIVERSAL_CRYPTOGRAPHIC_FIELDS_FOR_6_2_56
+  - DO_NOT_EQUATE_REFERENCE_OR_CURRENT_CHECKSUM_FIELDS_WITH_A_PRESCRIBED_ALGORITHM
+  - DO_NOT_EQUATE_LOCAL_EVENT_REGISTRATION_WITH_INCIDENT_OR_REGULATOR_NOTIFICATION
+  - DO_NOT_TREAT_CURRENT_STANDARD_STATUS_AS_UNIVERSAL_BINDING_APPLICABILITY
+
+verification_boundary:
+  official_status_and_scope: VERIFIED_ROSSTANDART_2026_08_21
+  clauses_6_2_45_to_6_2_56: VERIFIED_PUBLIC_TEXT_CROSSCHECK
+  tables_92_to_113: VERIFIED_PUBLIC_TEXT_CROSSCHECK
+  clause_6_2_56_legislation_dependency: VERIFIED_PUBLIC_TEXT_CROSSCHECK
+  clauses_6_2_57_to_6_2_81: PENDING_ATOMIC_MODEL
+  complete_event_schema: PENDING_25_OF_81_SUBSECTIONS
+  immutable_official_bytes: PENDING
+  independent_expert_review: PENDING
+  critical_gap_created: false
+  high_gap_created: false
