@@ -1,0 +1,160 @@
+schema_version: "1.0"
+id: FSTEC-MD-2026-AVZ-FAMILY
+title: "FSTEC 12 April 2026 methodical document: complete AVZ.1-AVZ.4 family"
+authority: FSTEC_RUSSIA
+approved_date: "2026-04-12"
+status: VERIFIED_BOUNDED_COMPLETE_AVZ_PUBLIC_TEXT_CROSSCHECK
+scope_statement: >-
+  Complete normalized coverage of section 4.13 measures AVZ.1-AVZ.4 for
+  antimalware protection of devices, email, network traffic and suspicious
+  objects: twenty-seven implementation atoms, six documentation items, nine
+  enhancements and all twenty-four appendix-2 cells. Product configurations,
+  scan schedules and near-real-time thresholds remain separate operator or
+  product-profile decisions where the source states no universal value.
+
+source_evidence:
+  official_page: https://fstec.ru/dokumenty/vse-dokumenty/spetsialnye-normativnye-dokumenty/metodicheskij-dokument-ot-12-aprelya-2026-g
+  official_endpoint_result: TIMEOUT_BYTES_NOT_ACQUIRED
+  section_locator: "section 4.13, AVZ.1-AVZ.4"
+  appendix_locator: "appendix 2, family 13, AVZ.1-AVZ.4 rows"
+  current_text_interfaces:
+    - https://base.garant.ru/414070697/
+    - https://wiki.privacy-advocates.ru/fstek_12.04.2026
+    - https://sudact.ru/law/metodicheskii-dokument-sostav-i-soderzhanie-meropriiatii-i/
+    - https://normativ.kontur.ru/document/1/506081-metodicheskiy-dokument-sostav-i-soderzhanie-meropriyatiy-i-mer-po-zashchite-informatsii
+  immutable_official_bytes: PENDING
+
+applicability:
+  trigger: INFORMATION_SYSTEM_REQUIRES_MALWARE_DETECTION_AND_RESPONSE
+  rule: APPLY_CLASS_BASELINE_THEN_ADAPT_AND_VERIFY_AGAINST_THREATS
+  guard: AVZ_4_BLANK_BASE_ROW_IS_NOT_A_PROHIBITION
+
+measures:
+  - code: "АВЗ.1"
+    title: "Антивирусная защита устройств"
+    purpose: DETECT_AND_RESPOND_TO_MALWARE_ON_INFORMATION_SYSTEM_DEVICES
+    implementation:
+      - DEFINE_PHYSICAL_AND_VIRTUAL_DEVICES_REQUIRING_ANTIMALWARE_PROTECTION
+      - INSTALL_CONFIGURE_AND_MANAGE_ANTIMALWARE_MEANS
+      - GRANT_ANTIMALWARE_MEANS_ACCESS_TO_OBJECTS_REQUIRING_SCAN
+      - CONFIGURE_PERIODIC_DEVICE_SCANS_FOR_MALWARE
+      - CONFIGURE_NEAR_REAL_TIME_SCANNING_OF_EXTERNAL_SOURCE_OBJECTS_ON_DEVICES_THROUGH_WHICH_MALWARE_MAY_ENTER
+      - DETECT_AND_RESPOND_ON_DEVICES_AND_SERVERS_WHEN_REMOVABLE_MEDIA_IS_CONNECTED
+      - DETECT_AND_RESPOND_PERIODICALLY_OR_ON_COMMAND_DURING_OPERATION_ACCORDING_TO_DOCUMENTATION
+      - DEFINE_RESPONSE_ACTIONS_FOR_OBJECTS_INFECTED_WITH_MALWARE
+      - EXECUTE_DEFINED_RESPONSE_ACTIONS_FOR_INFECTED_OBJECTS
+      - UPDATE_MALWARE_INDICATOR_DATABASES_PER_VENDOR_INFORMATION_AND_OPERATING_DOCUMENTATION
+      - SCAN_DEVICES_FOR_MALWARE_AFTER_INDICATOR_DATABASE_UPDATE
+      - IMPLEMENT_USING_ANTIMALWARE_MEANS
+    documentation:
+      - DEFINE_DEVICE_ACCOUNTING_PROCEDURE_FOR_ANTIMALWARE_SCOPE
+      - DEFINE_PERIODIC_DEVICE_AND_SERVER_MALWARE_SCAN_PROCEDURE_AND_RULES
+      - DEFINE_RESPONSE_ACTIONS_FOR_MALWARE_INFECTED_OBJECTS
+      - DEFINE_MALWARE_INDICATOR_DATABASE_UPDATE_PROCEDURE_AND_RULES
+    enhancements:
+      - {number: 1, rule: DETECT_AND_RESPOND_TO_MALWARE_BEFORE_OPERATING_SYSTEM_BOOT}
+      - {number: 2, rule: PROVIDE_CENTRALIZED_ANTIMALWARE_MANAGEMENT}
+      - {number: 3, rule: SCAN_EXTERNAL_SOURCE_OBJECTS_NEAR_REAL_TIME_ON_LOAD_OPEN_OR_EXECUTION}
+    matrix:
+      base: {K3: PLUS, K2: PLUS, K1: PLUS}
+      enhancements: {K3: [], K2: [], K1: []}
+
+  - code: "АВЗ.2"
+    title: "Антивирусная защита электронной почты"
+    purpose: DETECT_AND_RESPOND_TO_MALWARE_IN_EMAIL
+    implementation:
+      - DETECT_MALWARE_IN_EMAIL_MESSAGES
+      - BLOCK_OR_DELETE_MALWARE_FROM_EMAIL_MESSAGES
+      - INFORM_ABOUT_DETECTED_EMAIL_SECURITY_THREATS
+      - NOTIFY_ABOUT_DELETE_MESSAGE_DELETE_ATTACHMENT_OR_QUARANTINE_ACTIONS
+      - IMPLEMENT_USING_EMAIL_ANTIMALWARE_MEANS
+    documentation:
+      - DEFINE_EMAIL_ANTIMALWARE_PROTECTION_PROCEDURE
+    enhancements:
+      - {number: 1, rule: DETECT_MALWARE_IN_EMAIL_ATTACHMENTS_WITH_ENCODED_DATA_AND_ARCHIVED_FILES}
+    matrix:
+      base: {K3: PLUS, K2: PLUS, K1: PLUS}
+      enhancements: {K3: [], K2: [], K1: []}
+
+  - code: "АВЗ.3"
+    title: "Антивирусная проверка сетевого трафика"
+    purpose: DETECT_AND_RESPOND_TO_MALWARE_IN_FILES_EXTRACTED_FROM_NETWORK_TRAFFIC
+    implementation:
+      - ANTIMALWARE_SCAN_FILES_EXTRACTED_FROM_NETWORK_TRAFFIC
+      - ANALYZE_EXTRACTED_FILES_FOR_MALWARE_NEAR_REAL_TIME
+      - ANALYZE_EXTRACTED_FILES_USING_SIGNATURE_DETECTION
+      - ANALYZE_EXTRACTED_FILES_USING_HASH_SUMS
+      - ANALYZE_EXTRACTED_FILES_USING_OTHER_INDICATORS
+      - RESPOND_TO_EXTRACTED_FILE_SCAN_RESULTS_ACCORDING_TO_OPERATING_DOCUMENTATION
+      - IMPLEMENT_USING_ANTIMALWARE_MEANS_NETWORK_FIREWALLS_AND_OR_OTHER_SECURITY_MEANS
+    documentation:
+      - DEFINE_NETWORK_TRAFFIC_ANTIMALWARE_PROTECTION_PROCEDURE
+    enhancements:
+      - {number: 1, rule: ANALYZE_EXTRACTED_FILES_USING_HEURISTIC_DETECTION_METHODS}
+      - {number: 2, rule: ANALYZE_EXTRACTED_FILES_AT_APPLICATION_LEVEL_FOR_DOCUMENTED_APPLICATIONS}
+      - {number: 3, rule: ANALYZE_ENCODED_DATA_EXTRACTED_FROM_NETWORK_PACKETS_FOR_MALWARE}
+    matrix:
+      base: {K3: PLUS, K2: PLUS, K1: PLUS}
+      enhancements: {K3: [], K2: [], K1: []}
+
+  - code: "АВЗ.4"
+    title: "Применение замкнутой системы предварительного выполнения программ"
+    purpose: DYNAMICALLY_ANALYZE_POTENTIALLY_MALICIOUS_OBJECTS_IN_A_SANDBOX
+    applicability_condition: POTENTIALLY_MALICIOUS_OBJECT_OR_BEHAVIOR_IDENTIFIED
+    implementation:
+      - TRANSFER_COPY_OF_POTENTIALLY_MALICIOUS_OBJECT_TO_SANDBOX_FOR_DYNAMIC_ANALYSIS
+      - DYNAMICALLY_ANALYZE_POTENTIALLY_MALICIOUS_OBJECT_IN_SANDBOX
+      - OBTAIN_DYNAMIC_ANALYSIS_RESULTS_FROM_SANDBOX
+    documentation: []
+    enhancements:
+      - {number: 1, rule: USE_SANDBOX_CAPABLE_OF_SIMULATING_USER_ACTIONS_WITH_SUSPICIOUS_OBJECTS}
+      - {number: 2, rule: USE_SANDBOX_CAPABLE_OF_LOADING_INFORMATION_SYSTEM_VIRTUAL_MACHINE_IMAGES}
+    matrix:
+      base: {K3: BLANK, K2: BLANK, K1: BLANK}
+      enhancements: {K3: [], K2: [], K1: []}
+
+numeric_constraints: []
+
+operator_defined_parameters:
+  - {id: AVZ1_DEVICE_SCOPE, measure: "АВЗ.1", type: PHYSICAL_AND_VIRTUAL_DEVICE_SET, universal_value: NOT_STATED}
+  - {id: AVZ1_PERIODIC_SCAN_SCHEDULE, measure: "АВЗ.1", type: PERIODIC_SCAN_SCHEDULE, universal_value: NOT_STATED}
+  - {id: AVZ1_EXTERNAL_SOURCE_SCOPE, measure: "АВЗ.1", type: EXTERNAL_SOURCE_OBJECT_SET, universal_value: NOT_STATED}
+  - {id: AVZ1_NEAR_REAL_TIME_THRESHOLD, measure: "АВЗ.1", type: NEAR_REAL_TIME_THRESHOLD, universal_value: NOT_STATED}
+  - {id: AVZ1_RESPONSE_ACTIONS, measure: "АВЗ.1", type: MALWARE_RESPONSE_ACTION_SET, universal_value: NOT_STATED}
+  - {id: AVZ1_INDICATOR_DATABASE_UPDATE_PROCEDURE, measure: "АВЗ.1", type: VENDOR_ALIGNED_UPDATE_PROCEDURE, universal_value: NOT_STATED}
+  - {id: AVZ3_NEAR_REAL_TIME_THRESHOLD, measure: "АВЗ.3", type: NEAR_REAL_TIME_THRESHOLD, universal_value: NOT_STATED}
+  - {id: AVZ3_APPLICATION_SCOPE, measure: "АВЗ.3", type: DOCUMENTED_APPLICATION_SET, universal_value: NOT_STATED}
+  - {id: AVZ4_SUSPICIOUS_OBJECT_BEHAVIOR_CRITERIA, measure: "АВЗ.4", type: POTENTIALLY_MALICIOUS_OBJECT_OR_BEHAVIOR_CRITERIA, universal_value: NOT_STATED}
+
+class_matrix_summary:
+  cells_total: 24
+  nonblank_cells: 9
+  blank_cells: 15
+  fully_blank_measure_rows: ["АВЗ.4"]
+  rule: BLANK_BASE_OR_ENHANCEMENT_CELL_DOES_NOT_DELETE_ADAPTATION_VERIFICATION_OR_COMPENSATION
+
+scope_guards:
+  - DO_NOT_TREAT_PERIODIC_AS_A_UNIVERSAL_NUMERIC_SCAN_INTERVAL
+  - DO_NOT_INVENT_NEAR_REAL_TIME_NUMERIC_THRESHOLD
+  - DO_NOT_TREAT_REMOVABLE_MEDIA_NETWORK_CONNECTIONS_OR_PUBLIC_NETWORKS_AS_EXHAUSTIVE_EXTERNAL_SOURCES
+  - DO_NOT_TREAT_SIGNATURE_HASH_OR_OTHER_INDICATOR_METHODS_AS_MUTUALLY_EXCLUSIVE
+  - DO_NOT_REQUIRE_UNLISTED_ENHANCEMENTS_FROM_CLASS_MATRIX_ALONE
+  - DO_NOT_TREAT_AVZ_4_BLANK_BASE_ROW_AS_PROHIBITION_OR_PROOF_OF_NON_APPLICABILITY
+  - DO_NOT_APPLY_AVZ_4_WITHOUT_POTENTIALLY_MALICIOUS_OBJECT_OR_BEHAVIOR_TRIGGER_OR_SELECTION_PIPELINE
+  - DO_NOT_REPLACE_SOV_MSE_ZEP_OR_OTHER_LINKED_FAMILIES_WITH_AVZ
+  - DO_NOT_TREAT_PRODUCT_CONFIGURATION_AS_NORMATIVE_UNIVERSAL_VALUE
+
+verification_boundary:
+  section_4_13_avz_1_4: VERIFIED_PUBLIC_TEXT_CROSSCHECK
+  complete_avz_family: VERIFIED_PUBLIC_TEXT_CROSSCHECK_4_OF_4
+  implementation_requirements: VERIFIED_NORMALIZED_PUBLIC_TEXT_CROSSCHECK
+  documentation_requirements: VERIFIED_NORMALIZED_PUBLIC_TEXT_CROSSCHECK
+  numbered_enhancements: VERIFIED_NORMALIZED_PUBLIC_TEXT_CROSSCHECK
+  exact_numeric_constraints: VERIFIED_NONE_STATED
+  exact_avz_class_cells: VERIFIED_PUBLIC_TEXT_CROSSCHECK_24
+  product_specific_antimalware_profiles: PENDING_SEPARATE_PROFILE_MODELS
+  other_measure_families: PENDING
+  official_immutable_bytes: PENDING
+  independent_expert_review: PENDING
+  critical_gap_created: false
+  high_gap_created: false
