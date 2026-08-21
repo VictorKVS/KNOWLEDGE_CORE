@@ -1,0 +1,342 @@
+schema_version: "1.0"
+id: GOST-R-59712-2022-INCIDENT-DETECTION-REGISTRATION-CORE-PART1
+designation: "ГОСТ Р 59712-2022"
+title: "Computer-incident management stages and detection/registration rules, sections 4-5.3 plus 6.1 framework"
+authority: ROSSTANDART
+order: {number: "1378-ст", date: "2022-11-29"}
+effective_date: "2023-02-01"
+status_observed: CURRENT
+status_observed_date: "2026-08-21"
+status: VERIFIED_BOUNDED_PARTIAL_CLAUSE_MODEL_SECTIONS_4_TO_5_3_AND_6_1_FRAMEWORK
+
+source_evidence:
+  official_status_and_scope:
+    url: https://protect.gost.ru/gost/details/5eb2da92-c6e0-46ef-b260-051a7b6daf09
+    result: VERIFIED_CURRENT_2026_08_21
+  clause_text_interface:
+    url: https://internet-law.ru/documents/prod/gost-r_gosudarstvennyj-standart/21/gost_61051.html
+    result: VERIFIED_PUBLIC_TEXT_CROSSCHECK_SECTIONS_4_TO_5_3_AND_6_1_FRAMEWORK
+  immutable_official_document_bytes: PENDING
+
+scope:
+  intended_for:
+    - GOSSOPKA_SUBJECTS_MANAGING_INCIDENTS_FOR_OWN_INFORMATION_RESOURCES
+    - GOSSOPKA_SUBJECTS_RESPONSIBLE_FOR_OTHER_SUBJECTS_INFORMATION_RESOURCES
+  stages_covered_by_standard:
+    - DETECTION_AND_REGISTRATION
+    - INCIDENT_RESPONSE
+    - RESULTS_ANALYSIS
+  normative_references:
+    - {designation: "ГОСТ Р 59547", dated: false, topic: INFORMATION_SECURITY_MONITORING}
+    - {designation: "ГОСТ Р 59709", dated: false, topic: INCIDENT_MANAGEMENT_TERMS}
+    - {designation: "ГОСТ Р 59710", dated: false, topic: INCIDENT_MANAGEMENT_GENERAL_PROVISIONS}
+    - {designation: "ГОСТ Р 59711-2022", dated: true, topic: INCIDENT_MANAGEMENT_ORGANIZATION}
+
+stage_model:
+  detection_and_registration:
+    steps:
+      - REGISTER_POSSIBLE_INCIDENT_INDICATORS
+      - CONFIRM_COMPUTER_INCIDENTS
+  incident_response:
+    sequential_steps:
+      - IDENTIFY_INVOLVED_INFRASTRUCTURE_ELEMENTS
+      - LOCALIZE_INCIDENT
+      - IDENTIFY_INCIDENT_CONSEQUENCES
+      - ELIMINATE_INCIDENT_CONSEQUENCES
+      - CLOSE_INCIDENT
+    separate_steps:
+      - FIX_INCIDENT_RELATED_MATERIALS
+      - ESTABLISH_INCIDENT_CAUSES_AND_CONDITIONS
+    separate_steps_may_run:
+      - IN_PARALLEL_WITH_OTHER_RESPONSE_STEPS
+      - AFTER_INCIDENT_CLOSURE
+    separate_steps_do_not_block_closure: true
+  results_analysis:
+    steps:
+      - ACQUIRE_AND_ACCUMULATE_INCIDENT_MANAGEMENT_EXPERIENCE
+      - DEVELOP_RECOMMENDATIONS_TO_REMOVE_INCIDENT_CAUSES_AND_CONDITIONS
+      - EVALUATE_RESPONSE_RESULTS_AND_EFFECTIVENESS
+
+analysis_methods:
+  SIGNATURE:
+    basis: MATCH_SPECIFIC_INDICATORS_AND_RELATIONSHIP_CONDITIONS
+    rule_creation_and_configuration_actor: INCIDENT_MANAGEMENT_UNIT_SPECIALIST
+  SIGNATURELESS:
+    basis: DETECT_STATISTICAL_OR_OTHER_DEPENDENCIES_AND_BUILD_RESOURCE_OPERATION_PROFILES
+    implementation_actor: SECURITY_EVENT_MANAGEMENT_TOOL_DEVELOPER
+    specialist_modification_available: false
+
+control_rules:
+  - id: G59712-4-001
+    clause: "4"
+    strength: DEFINES
+    rule: STANDARD_HAS_THREE_INCIDENT_MANAGEMENT_STAGES
+  - id: G59712-4-002
+    clause: "4(a)"
+    strength: DEFINES
+    rule: DETECTION_AND_REGISTRATION_HAS_TWO_STEPS
+  - id: G59712-4-003
+    clause: "4(b)(1-5)"
+    strength: DEFINES
+    rule: RESPONSE_HAS_FIVE_SEQUENTIAL_OPERATIONAL_STEPS
+  - id: G59712-4-004
+    clause: "4(b)(6-7); 6.1 note"
+    strength: MAY
+    rule: MATERIAL_FIXATION_AND_CAUSE_ANALYSIS_MAY_RUN_IN_PARALLEL
+  - id: G59712-4-005
+    clause: "6.1 note"
+    strength: MAY
+    rule: MATERIAL_FIXATION_AND_CAUSE_ANALYSIS_MAY_CONTINUE_AFTER_CLOSURE
+  - id: G59712-4-006
+    clause: "6.1 note"
+    strength: SHALL_NOT_BLOCK
+    rule: MATERIAL_FIXATION_AND_CAUSE_ANALYSIS_DO_NOT_CONTROL_INCIDENT_CLOSURE
+  - id: G59712-4-007
+    clause: "4(c)"
+    strength: DEFINES
+    rule: RESULTS_ANALYSIS_HAS_THREE_STEPS
+
+  - id: G59712-5-001
+    clause: "5.1"
+    strength: BASED_ON
+    rule: DETECTION_AND_REGISTRATION_USES_INFORMATION_SECURITY_MONITORING_RESULTS
+  - id: G59712-5-002
+    clause: "5.1 note"
+    strength: REFERENCE
+    rule: SECURITY_EVENT_AND_MONITORING_DATA_COLLECTION_FOLLOWS_GOST_R_59547
+  - id: G59712-5-003
+    clause: "5.1"
+    strength: DEFINES
+    rule: DETECTION_AND_REGISTRATION_INCLUDES_INDICATOR_REGISTRATION_AND_INCIDENT_CONFIRMATION
+  - id: G59712-5-004
+    clause: "5.2"
+    strength: MAY
+    rule: POSSIBLE_INCIDENT_INDICATORS_MAY_BE_REGISTERED_AUTOMATICALLY_OR_MANUALLY
+  - id: G59712-5-005
+    clause: "5.2 note"
+    strength: INTERPRETATION_GUARD
+    rule: POSSIBLE_INCIDENT_INDICATOR_IS_NOT_PROOF_OF_INCIDENT_OCCURRENCE
+
+  - id: G59712-5-006
+    clause: "5.2.1"
+    strength: SHALL
+    rule: AUTOMATED_REGISTRATION_USES_SECURITY_EVENT_MANAGEMENT_TOOL_AND_REGISTRATION_RULES
+  - id: G59712-5-007
+    clause: "5.2.1"
+    strength: SHALL
+    rule: REGISTRATION_RULES_SUPPORT_ONE_OR_A_COMBINATION_OF_ANALYSIS_METHODS
+    allowed_methods: [SIGNATURE, SIGNATURELESS]
+  - id: G59712-5-008
+    clause: "5.2.1"
+    strength: DEFINES
+    rule: SIGNATURE_METHOD_MATCHES_SPECIFIC_INDICATORS_AND_RELATIONSHIP_CONDITIONS
+  - id: G59712-5-009
+    clause: "5.2.1"
+    strength: DEFINES
+    rule: SIGNATURELESS_METHOD_DETECTS_STATISTICAL_OR_OTHER_DEPENDENCIES_AND_BUILDS_PROFILES
+  - id: G59712-5-010
+    clause: "5.2.1 note"
+    strength: DEFINES
+    rule: OPERATION_PROFILE_CONTAINS_BEHAVIORAL_ATTRIBUTES_AND_VALUES_FOR_AN_APPLICATION_AND_TIME_INTERVAL
+  - id: G59712-5-011
+    clause: "5.2.1"
+    strength: DEFINES
+    rule: INCIDENT_MANAGEMENT_UNIT_SPECIALIST_CREATES_AND_CONFIGURES_SIGNATURE_RULES
+  - id: G59712-5-012
+    clause: "5.2.1"
+    strength: DEFINES
+    rule: TOOL_DEVELOPER_IMPLEMENTS_SIGNATURELESS_ALGORITHMS_NOT_MODIFIABLE_BY_SPECIALIST
+  - id: G59712-5-013
+    clause: "5.2.1 note"
+    strength: MAY
+    rule: REGISTRATION_RULES_MAY_USE_LOGICAL_OPERATIONS
+    examples: [AND, OR, NOT, COMBINATIONS]
+    examples_are_non_exhaustive: true
+  - id: G59712-5-014
+    clause: "5.2.1 note"
+    strength: MAY
+    rule: REGISTRATION_RULES_MAY_USE_QUANTITATIVE_TEMPORAL_AND_OTHER_CHARACTERISTICS
+  - id: G59712-5-015
+    clause: "5.2.1 note"
+    strength: MAY
+    rule: REGISTRATION_RULES_MAY_USE_COMPARISON_RESULTS
+    examples: [GREATER_THAN, LESS_THAN, EQUAL, OTHER]
+    examples_are_non_exhaustive: true
+  - id: G59712-5-016
+    clause: "5.2.1"
+    strength: MAY
+    rule: REGISTRATION_RULES_MAY_USE_CONDITIONAL_CYCLIC_AND_OTHER_OPERATORS
+  - id: G59712-5-017
+    clause: "5.2.1"
+    strength: SHALL
+    rule: PRESENCE_OR_ABSENCE_OF_INDICATOR_IS_DECIDED_FROM_REGISTRATION_RULES
+  - id: G59712-5-018
+    clause: "5.2.1"
+    strength: SHALL
+    rule: AUTOMATED_INDICATOR_INFORMATION_FLOWS_FROM_EVENT_MANAGEMENT_TO_INCIDENT_MANAGEMENT_TOOL
+  - id: G59712-5-019
+    clause: "5.2.1"
+    strength: SHALL
+    rule: AUTOMATED_FLOW_CREATES_POSSIBLE_INCIDENT_INDICATOR_CARD
+
+  - id: G59712-5-020
+    clause: "5.2.2"
+    strength: SHALL
+    rule: MANUAL_REGISTRATION_IS_PERFORMED_BY_INCIDENT_MANAGEMENT_UNIT_SPECIALISTS
+  - id: G59712-5-021
+    clause: "5.2.2"
+    strength: DEFINES
+    rule: MANUAL_SOURCE_IS_SPECIALIST_MONITORING_ANALYSIS_OR_INFORMATION_FROM_WORKERS
+  - id: G59712-5-022
+    clause: "5.2.2"
+    strength: SHALL
+    rule: MANUAL_REGISTRATION_WRITES_REQUIRED_INFORMATION_TO_INDICATOR_CARD_IN_INCIDENT_MANAGEMENT_TOOL
+
+  - id: G59712-5-023
+    clause: "5.3"
+    strength: SHALL
+    rule: INCIDENT_CONFIRMATION_REQUIRES_CHECK_OF_REGISTERED_INDICATOR
+  - id: G59712-5-024
+    clause: "5.3"
+    strength: SHALL
+    rule: CHECK_IS_PERFORMED_BY_RESPONDER_OR_RESPONSE_GROUP_LEADER
+  - id: G59712-5-025
+    clause: "5.3 note 1"
+    strength: DEFINES
+    rule: RESPONDER_CHECKS_INCIDENT_FACTS_FOR_CONFIRMATION
+  - id: G59712-5-026
+    clause: "5.3 note 1"
+    strength: DEFINES
+    rule: RESPONDER_REGISTERS_CONFIRMED_INCIDENT
+  - id: G59712-5-027
+    clause: "5.3 note 1"
+    strength: DEFINES
+    rule: RESPONDER_CONTROLS_RESPONSE_STEPS
+  - id: G59712-5-028
+    clause: "5.3 note 1"
+    strength: SHALL
+    rule: RESPONDER_DECIDES_WHETHER_COORDINATING_ORGANIZATION_MUST_BE_ENGAGED
+  - id: G59712-5-029
+    clause: "5.3 note 2"
+    strength: CONTEXT
+    rule: NCCC_IS_COORDINATING_ORGANIZATION_WITHIN_GOSSOPKA
+  - id: G59712-5-030
+    clause: "5.3"
+    strength: SHALL
+    rule: INDICATORS_ARE_DISTRIBUTED_TO_RESPONDERS_BY_QUEUE_TYPE_OR_GEOGRAPHY
+    distribution_bases: [QUEUE, PREDEFINED_INCIDENT_TYPE, RESOURCE_GEOGRAPHY]
+    combination_allowed: true
+  - id: G59712-5-031
+    clause: "5.3 note"
+    strength: CONTEXT
+    rule: COORDINATING_ORGANIZATION_DEFINES_INCIDENT_TYPES_WITHIN_GOSSOPKA
+  - id: G59712-5-032
+    clause: "5.3(a)"
+    strength: SHALL
+    rule: FACT_CHECK_ANALYZES_INDICATOR_CARD_INFORMATION
+  - id: G59712-5-033
+    clause: "5.3(b)"
+    strength: MAY_IF_NEEDED
+    rule: FACT_CHECK_MAY_COLLECT_ADDITIONAL_INFORMATION
+    non_exhaustive_actions:
+      - INTERVIEW_INVOLVED_RESOURCE_USERS
+      - INTERVIEW_RESOURCE_OPERATION_SPECIALISTS
+      - OBTAIN_CRITICAL_PROCESS_SERVICE_OPERATION_DATA
+      - CHECK_EVENT_LOGS_FOR_UNAUTHORIZED_VIEW_CHANGE_OR_DELETION
+      - OTHER_ACTIONS_NEEDED_FOR_REGISTRATION_DECISION
+  - id: G59712-5-034
+    clause: "5.3 note"
+    strength: SHALL
+    rule: INDICATOR_CARD_CONTAINS_ALL_TRIGGERING_SECURITY_EVENTS_AND_MONITORING_DATA
+  - id: G59712-5-035
+    clause: "5.3"
+    strength: SHALL
+    rule: FACT_CHECK_USES_RESOURCE_OPERABILITY_AND_INFORMATION_SECURITY_EVIDENCE
+    evidence_dimensions:
+      - CRITICAL_PROCESS_INFORMATION_PROCESSING_OR_CONTROL_MONITORING_CAPABILITY
+      - CONFIDENTIALITY_INTEGRITY_OR_AVAILABILITY_VIOLATION
+  - id: G59712-5-036
+    clause: "5.3(c)"
+    strength: SHALL
+    rule: RESPONDER_DECIDES_INCIDENT_REGISTRATION_PRIORITY_AND_IMPACT_LEVEL
+  - id: G59712-5-037
+    clause: "5.3 note 1"
+    strength: SHALL_NOT
+    rule: INCIDENT_IS_NOT_REGISTERED_WHEN_INDICATOR_IS_CONFIRMED_FALSE
+  - id: G59712-5-038
+    clause: "5.3 note 1"
+    strength: SHALL
+    rule: ATTACK_WITHOUT_REGISTERED_INCIDENT_CREATES_ATTACK_AND_VULNERABILITY_CARDS
+  - id: G59712-5-039
+    clause: "5.3 note 2"
+    strength: SHALL
+    rule: PREASSIGNED_PRIORITY_AND_IMPACT_REQUIRE_SPECIALIST_CONFIRMATION_AND_POSSIBLE_REFINEMENT
+    dependency: GOST_R_59711_2022_APPENDICES_A_AND_B
+  - id: G59712-5-040
+    clause: "5.3"
+    strength: SHALL_IMMEDIATE_EVENT
+    rule: CONFIRMED_INCIDENT_TRIGGERS_IMMEDIATE_NOTIFICATION_OF_ASSIGNED_RESPONSE_GROUP
+    numeric_deadline: NONE_STATED
+  - id: G59712-5-041
+    clause: "5.3 note"
+    strength: MAY
+    rule: RESPONSE_GROUP_ASSIGNMENT_MAY_BE_AUTOMATIC_BY_INCIDENT_TYPE_OR_MANUAL_BY_RESPONDER
+  - id: G59712-5-042
+    clause: "5.3"
+    strength: SHALL_SIMULTANEOUS_EVENT
+    rule: RESPONSE_GROUP_NOTIFICATION_AND_COORDINATING_ORGANIZATION_NOTIFICATION_ARE_SIMULTANEOUS
+    numeric_deadline: NONE_STATED
+  - id: G59712-5-043
+    clause: "5.3"
+    strength: SHALL
+    rule: COORDINATOR_NOTIFICATION_CARRIES_INCIDENT_CARD_OR_ATTACK_AND_VULNERABILITY_CARDS_BY_DECISION_ROUTE
+
+card_routes:
+  confirmed_incident:
+    local_record: INCIDENT_CARD
+    coordinator_payload: INCIDENT_CARD
+  false_indicator_without_attack:
+    incident_registration: NONE
+    coordinator_payload: NONE_STATED
+  attack_confirmed_without_registered_incident:
+    local_records: [ATTACK_CARD, VULNERABILITY_CARD]
+    coordinator_payload: [ATTACK_CARD, VULNERABILITY_CARD]
+  gossopka_card_format_and_content_owner: COORDINATING_ORGANIZATION
+
+coverage:
+  structural_units: ["4", "5.1", "5.2", "5.2.1", "5.2.2", "5.3", "6.1-framework"]
+  structural_unit_count: 7
+  control_rule_count: 50
+  stage_count: 3
+  stage_step_count: 12
+  analysis_method_count: 2
+  additional_information_action_examples: 5
+  evidence_dimension_count: 2
+  distribution_basis_count: 3
+  numeric_deadline_count: 0
+  event_deadline_count: 2
+  remaining_sections: "6.2-8"
+
+scope_guards:
+  - DO_NOT_TREAT_THIS_PARTIAL_MODEL_AS_COMPLETE_GOST_R_59712_2022_GUIDANCE
+  - DO_NOT_TREAT_STANDARD_STATUS_AS_UNIVERSAL_BINDING_APPLICABILITY
+  - DO_NOT_EQUATE_POSSIBLE_INCIDENT_INDICATOR_WITH_CONFIRMED_INCIDENT
+  - DO_NOT_REQUIRE_BOTH_SIGNATURE_AND_SIGNATURELESS_METHODS_WHEN_ONE_OR_COMBINATION_IS_ALLOWED
+  - DO_NOT_TREAT_LOGICAL_COMPARISON_OR_COLLECTION_EXAMPLES_AS_EXHAUSTIVE
+  - DO_NOT_ALLOW_AUTOMATED_PRIORITY_OR_IMPACT_TO_BYPASS_SPECIALIST_CONFIRMATION
+  - DO_NOT_INVENT_GOSSOPKA_CARD_FORMAT_OR_CONTENT
+  - DO_NOT_INVENT_NUMERIC_DEADLINE_FOR_IMMEDIATE_OR_SIMULTANEOUS_NOTIFICATION
+  - DO_NOT_MERGE_INCIDENT_CARD_ROUTE_WITH_ATTACK_AND_VULNERABILITY_CARD_ROUTE
+  - DO_NOT_TREAT_PARALLEL_EVIDENCE_OR_CAUSE_ANALYSIS_AS_CLOSURE_BLOCKER
+  - DO_NOT_EQUATE_LOCAL_INCIDENT_WORKFLOW_WITH_ALL_STATUTORY_NOTIFICATION_REGIMES
+
+verification_boundary:
+  official_status_and_scope: VERIFIED_ROSSTANDART_2026_08_21
+  sections_4_to_5_3: VERIFIED_PUBLIC_TEXT_CROSSCHECK
+  section_6_1_framework: VERIFIED_PUBLIC_TEXT_CROSSCHECK
+  sections_6_2_to_8: PENDING_ATOMIC_MODEL
+  complete_response_guidance: PENDING_SECTIONS_6_2_TO_8
+  immutable_official_bytes: PENDING
+  independent_expert_review: PENDING
+  critical_gap_created: false
+  high_gap_created: false
