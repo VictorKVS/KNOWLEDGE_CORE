@@ -1,0 +1,132 @@
+schema_version: "1.0"
+kind: protected-information-source-card
+source_id: SEC-SRC-RU-FZ-87-2003
+jurisdiction: RU
+sector: transport
+regime: transport_expedition_client_personal_data_retention_localization_cross_border
+number: "87-ФЗ"
+date: "2003-06-30"
+title: "Федеральный закон от 30.06.2003 № 87-ФЗ «О транспортно-экспедиционной деятельности»"
+status: PRIMARY_CURRENT_AUTHORITY_TEXT_VERIFIED_SOURCE_PENDING
+checked_at: "2026-08-21T05:15:37+03:00"
+
+proof_floor:
+  - "Current authority text proves the displayed consolidated wording and edition markers, but exact source bytes are still required before SOURCE_ACQUIRED/IMMUTABLE promotion."
+  - "An explicit reference to 152-ФЗ creates a graph/overlap candidate only; it does not establish applicability to every organization or processing scenario."
+  - "Retention, infrastructure localization and cross-border-transfer restrictions are separate legal concepts and must remain separate nodes."
+  - "No MIME, byte length or SHA-256 may be synthesized from rendered/search metadata."
+
+authority:
+  current_text:
+    publisher: "Президент России — Банк документов"
+    url: "https://www.kremlin.ru/acts/bank/19642/print"
+    state: PRIMARY_CURRENT_AUTHORITY_TEXT_IDENTIFIED
+    displayed_editions:
+      - "307-ФЗ от 14.10.2014"
+      - "374-ФЗ от 06.07.2016"
+      - "59-ФЗ от 18.03.2020"
+      - "140-ФЗ от 07.06.2025"
+  original_publication:
+    citation: "Собрание законодательства Российской Федерации, 2003, № 27, ст. 2701"
+    evidence_source: "140-ФЗ от 07.06.2025, статья 1"
+    exact_original_binary: SOURCE_PENDING
+
+version_chain:
+  state: CURRENT_AUTHORITY_EDITIONS_LIST_VERIFIED_VERSION_CHAIN_PARTIAL
+  latest_verified_primary_event:
+    act: "140-ФЗ от 07.06.2025"
+    title: "О внесении изменений в Федеральный закон «О транспортно-экспедиционной деятельности» и отдельные законодательные акты Российской Федерации"
+    official_publication_id: "0001202506070016"
+    official_publication_date: "2025-06-07"
+    official_url: "https://publication.pravo.gov.ru/Document/View/0001202506070016"
+    authority_text_url: "https://www.kremlin.ru/acts/bank/51991/print"
+    effect: "Amends 87-ФЗ and adds the current information-retention/localization/cross-border provisions recorded below."
+  effective_date_review:
+    source_locator: "140-ФЗ статья 5"
+    general_effective_date: "2025-09-01"
+    finding: >-
+      Article 1 point 3 subpoint 'в' (addition of Article 4 points 6-11) is not listed among the delayed exceptions
+      in Article 5 parts 2-4; therefore the recorded Article 4 points 6, 10 and 11 are treated as current from
+      2025-09-01. Other amendments in 140-ФЗ have staggered dates and are not generalized here.
+    status: PRIMARY_TEXT_EFFECTIVE_DATE_MAPPED_FOR_RECORDED_LOCATORS
+  pending: >-
+    Complete primary publication reconciliation for the 2014, 2016 and 2020 amendment events and a post-2025
+    amendment sweep before VERSION_CHAIN_VERIFIED promotion.
+
+primary_locators:
+  - locator: "статья 4 пункт 6"
+    concept: RECORD_RETENTION_PERIOD
+    status: CURRENT_PRIMARY_TEXT_LOCATOR_IDENTIFIED
+    normalized_rule: >-
+      The expeditor must retain in the Russian Federation specified information about transport-expedition contracts,
+      parties, persons involved, cargo characteristics, handling events, routes, transport and other information in
+      expedition-service information systems for three years from completion of the contracts.
+    duration: "3 years from completion of the contract"
+  - locator: "статья 4 пункт 10"
+    concept: DATA_INFRASTRUCTURE_LOCALIZATION
+    status: CURRENT_PRIMARY_TEXT_LOCATOR_IDENTIFIED
+    normalized_rule: >-
+      Receipt, transmission and preservation of information about expedition services must use databases and technical
+      means located in the Russian Federation.
+  - locator: "статья 4 пункт 11"
+    concept: CROSS_BORDER_PERSONAL_DATA_TRANSFER_RESTRICTION
+    status: CURRENT_PRIMARY_TEXT_LOCATOR_IDENTIFIED
+    explicit_reference: "152-ФЗ от 27.07.2006 «О персональных данных»"
+    normalized_rule: >-
+      Transfer outside the Russian Federation of information containing clients' personal data is prohibited, except
+      for the stated international-carriage scenario where such transfer is permitted by Russian international treaties
+      and 152-ФЗ.
+  - locator: "статья 24 часть 3 пункт 3"
+    concept: INDIVIDUAL_ENTREPRENEUR_REGISTER_PERSONAL_DATA
+    status: CURRENT_PRIMARY_TEXT_LOCATOR_IDENTIFIED
+    normalized_fields:
+      - "фамилия, имя, отчество (при наличии)"
+      - "адрес регистрации по месту жительства (месту пребывания)"
+      - "ОГРНИП"
+      - "ИНН"
+      - "абонентский телефонный номер"
+      - "адрес электронной почты"
+
+semantic_separation:
+  - concept: RECORD_RETENTION_PERIOD
+    locator: "статья 4 пункт 6"
+    do_not_merge_with: [DATA_INFRASTRUCTURE_LOCALIZATION, CROSS_BORDER_PERSONAL_DATA_TRANSFER_RESTRICTION]
+  - concept: DATA_INFRASTRUCTURE_LOCALIZATION
+    locator: "статья 4 пункт 10"
+    do_not_merge_with: [RECORD_RETENTION_PERIOD, CROSS_BORDER_PERSONAL_DATA_TRANSFER_RESTRICTION]
+  - concept: CROSS_BORDER_PERSONAL_DATA_TRANSFER_RESTRICTION
+    locator: "статья 4 пункт 11"
+    do_not_merge_with: [RECORD_RETENTION_PERIOD, DATA_INFRASTRUCTURE_LOCALIZATION]
+
+overlap_candidates:
+  - target: "152-ФЗ"
+    type: EXPLICIT_REFERENCE_IN_CURRENT_PRIMARY_TEXT
+    locator: "87-ФЗ статья 4 пункт 11"
+    status: CANDIDATE_PENDING_SCENARIO_APPLICABILITY_REVIEW
+    guard: "No organization-wide applicability is inferred."
+  - target: "16-ФЗ"
+    type: TRANSPORT_DOMAIN_NEIGHBOR
+    status: DISCOVERY_ONLY_NO_APPLICABILITY_EDGE
+    guard: "Shared transport domain is not a legal applicability relation."
+  - target: "259-ФЗ"
+    type: ELECTRONIC_TRANSPORT_DOCUMENT_CONTEXT
+    status: DISCOVERY_ONLY_PENDING_PRIMARY_LOCATOR_REVIEW
+
+artifact:
+  state: SOURCE_PENDING_PRIMARY_EXACT_CAPTURE
+  current_text_url: "https://www.kremlin.ru/acts/bank/19642/print"
+  latest_amendment_official_page: "https://publication.pravo.gov.ru/Document/View/0001202506070016"
+  latest_amendment_pdf_candidate: "https://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202506070016"
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact_ref: null
+  manifest_ref: null
+  blocked_reason: >-
+    Exact official binary bytes are not retrievable through the current execution environment. No fingerprint or final
+    manifest is created until exact bytes are captured.
+
+executable_use:
+  allowed: false
+  gate: "Exact artifact + complete version-chain reconciliation + locator review + scenario applicability review"
