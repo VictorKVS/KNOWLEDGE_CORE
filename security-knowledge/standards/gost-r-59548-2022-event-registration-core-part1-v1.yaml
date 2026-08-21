@@ -1,0 +1,231 @@
+schema_version: "1.0"
+id: GOST-R-59548-2022-EVENT-REGISTRATION-CORE-PART1
+designation: "ГОСТ Р 59548-2022"
+title: "Защита информации. Регистрация событий безопасности. Требования к регистрируемой информации"
+authority: ROSSTANDART
+order: {number: "2-ст", date: "2022-01-13"}
+effective_date: "2022-02-01"
+status_observed: CURRENT
+status_observed_date: "2026-08-21"
+status: VERIFIED_BOUNDED_PARTIAL_CLAUSE_MODEL_6_1_AND_6_2_1_TO_6_2_8
+
+scope:
+  applies_to_registration_by:
+    - INFORMATION_PROTECTION_MEANS_INCLUDING_EMBEDDED_MEANS
+    - INFORMATION_TECHNOLOGY_SECURITY_MEANS
+    - OTHER_SOFTWARE_TECHNICAL_MEANS_AND_SOFTWARE_USED_IN_INFORMATION_OR_AUTOMATED_SYSTEMS
+  establishes:
+    - COMPOSITION_OF_REGISTERED_SECURITY_EVENT_INFORMATION
+    - CONTENT_OF_REGISTERED_SECURITY_EVENT_INFORMATION
+  does_not_establish:
+    - TECHNICAL_IMPLEMENTATION_REQUIREMENTS
+    - SECURITY_EVENT_STORAGE_FORMAT
+  sufficiency_rule: >-
+    Registration means provide the ability to obtain security-event information
+    for information-security monitoring, protection analysis, incident detection
+    and control of system elements and the system as a whole.
+  extension_rule: REGISTERED_INFORMATION_MAY_BE_EXTENDED_BEYOND_THIS_STANDARD
+  monitoring_transfer_rule: >-
+    When registered information is transferred to security-monitoring automation,
+    registration means provide access to it and/or transmit event information.
+
+source_evidence:
+  official_status_and_scope:
+    url: https://protect.gost.ru/gost/details/d5008460-671b-4563-9388-d1d0f9ecdbbf
+    authority: ROSSTANDART
+    result: VERIFIED_METADATA_SCOPE_AND_CURRENT_STATUS
+  clause_text_interface:
+    url: https://meganorm.ru/mega_doc/norm/gost-r_gosudarstvennyj-standart/9/gost_r_59548-2022_natsionalnyy_standart_rossiyskoy.html
+    result: VERIFIED_PUBLIC_TEXT_CROSSCHECK_SECTIONS_1_5_6_1_AND_6_2_1_TO_6_2_8
+  immutable_official_document_bytes: PENDING
+
+registered_information_data_types:
+  - {id: DATE_TIME, clause: "6.1.1/table 1", rule: GOST_R_7_0_64_DATE_TIME_WITH_TIMEZONE_OFFSET, milliseconds: OPTIONAL}
+  - {id: DURATION, clause: "6.1.1/table 1", rule: NONNEGATIVE_INTEGER_DURATION, accepted_units: [SECOND, MINUTE, HOUR, DAY]}
+  - {id: INTEGER, clause: "6.1.1/table 1", rule: INTEGER_DATA_TYPE}
+  - {id: TEXT, clause: "6.1.1/table 1", rule: ANY_CHARACTER_SEQUENCE}
+  - {id: VALUE_SET, clause: "6.1.1/table 1", rule: ONE_VALUE_FROM_A_FIXED_SET}
+  - {id: NETWORK_ADDRESS, clause: "6.1.1/table 1", rule: IPV4_OR_IPV6_ADDRESS}
+  - {id: HARDWARE_ADDRESS, clause: "6.1.1/table 1", rule: GENERALLY_MAC_ADDRESS_OF_SIX_OCTETS}
+  - {id: SOFTWARE_VERSION, clause: "6.1.1/table 1", rule: FULL_TEXT_VERSION, recommended_pattern: A.B.C.D}
+  - {id: EMAIL_ADDRESS, clause: "6.1.1/table 1", rule: LOCAL_PART_AT_DOMAIN}
+
+common_minimum_information:
+  clause: "6.1.2/table 2"
+  applies_to: EVERY_SECURITY_EVENT_TYPE
+  fields:
+    - {id: EVENT_DATE_TIME, name_ru: "Дата и время", type: DATE_TIME}
+    - id: EVENT_IDENTIFIER
+      name_ru: "Идентификатор"
+      type: TEXT
+      rule: UNIQUE_WITHIN_REGISTRATION_MEANS_AND_BINDS_EXPECTED_PARAMETER_SET
+    - {id: EVENT_NAME, name_ru: "Наименование", type: TEXT, rule: SHORT_EVENT_NAME}
+    - id: ACCESS_SUBJECT
+      name_ru: "Субъект доступа"
+      type: TEXT
+      nullable_when: SUBJECT_CANNOT_BE_DETERMINED
+    - {id: EVENT_TYPE, name_ru: "Тип", type: TEXT, rule: VALUE_FROM_ANNEX_A_OR_B}
+    - id: IMPORTANCE_LEVEL
+      name_ru: "Уровень важности"
+      type: VALUE_SET
+      accepted_values: [EMERGENCY, FATAL, CRITICAL, HIGH, MEDIUM, LOW, DEBUG]
+
+common_additional_information:
+  clause: "6.1.3/table 3"
+  modality: MAY_BE_REGISTERED
+  fields:
+    - {id: REGISTRATION_MEANS_IDENTIFIER, name_ru: "Идентификационная информация средства, осуществляющего регистрацию", type: TEXT}
+    - {id: SEQUENCE_NUMBER, name_ru: "Порядковый номер", type: INTEGER, when: IF_POSSIBLE}
+    - {id: ACCESS_OBJECT, name_ru: "Объект доступа", type: TEXT, when: IF_POSSIBLE}
+
+event_type_schemas:
+  - id: G59548-6.2.1
+    clause: "6.2.1/tables 4-5"
+    name_ru: "Идентификация и аутентификация субъекта доступа"
+    required_fields:
+      - {id: ACCOUNT_IDENTIFIER, type: TEXT}
+      - {id: OPERATION_RESULT, type: VALUE_SET, accepted_values: [SUCCESSFUL, UNSUCCESSFUL]}
+      - {id: ADMINISTRATOR_RIGHTS, type: VALUE_SET, accepted_values: [YES, NO]}
+      - {id: LOGIN_SOURCE_NETWORK_ADDRESS, type: NETWORK_ADDRESS}
+    additional_fields:
+      - {id: SESSION_IDENTIFIER, type: INTEGER}
+      - {id: PROCESS_IDENTIFIER, type: TEXT}
+      - {id: PROCESS_FULL_PATH, type: TEXT}
+      - {id: LOGIN_SOURCE_PORT, type: INTEGER, minimum: 0, maximum: 65535}
+      - {id: LOGIN_TYPE, type: TEXT, examples: [INTERACTIVE, NETWORK, REMOTE, OTHER]}
+
+  - id: G59548-6.2.2
+    clause: "6.2.2/tables 6-7"
+    name_ru: "Идентификация объекта доступа"
+    required_fields:
+      - {id: ACCESS_OBJECT_OR_DEVICE_IDENTIFIER, type: TEXT}
+      - {id: IDENTIFICATION_STATUS, type: TEXT, rule: REASON_FOR_UNSUCCESSFUL_IDENTIFICATION}
+    additional_fields:
+      - {id: SESSION_IDENTIFIER, type: INTEGER}
+      - {id: PROCESS_IDENTIFIER, type: TEXT}
+      - {id: PROCESS_FULL_PATH, type: TEXT}
+      - {id: LINKED_ACCOUNT_IDENTIFIER, type: TEXT}
+      - {id: DEVICE_SERIAL_NUMBER, type: TEXT}
+
+  - id: G59548-6.2.3
+    clause: "6.2.3/tables 8-9"
+    name_ru: "Аутентификация объекта доступа"
+    required_fields:
+      - {id: ACCESS_OBJECT_OR_DEVICE_IDENTIFIER, type: TEXT}
+      - {id: AUTHENTICATION_STATUS, type: TEXT, rule: REASON_FOR_UNSUCCESSFUL_AUTHENTICATION}
+    additional_fields:
+      - {id: LINKED_ACCOUNT_IDENTIFIER, type: TEXT}
+      - {id: SESSION_IDENTIFIER, type: INTEGER}
+      - {id: PROCESS_IDENTIFIER, type: INTEGER}
+      - {id: PROCESS_FULL_PATH, type: TEXT}
+      - {id: DEVICE_SERIAL_NUMBER, type: TEXT}
+
+  - id: G59548-6.2.4
+    clause: "6.2.4/tables 10-11"
+    name_ru: "Управление учетными записями пользователей"
+    required_fields:
+      - {id: LAST_LOGIN_DATE_TIME, type: DATE_TIME}
+      - {id: ACCOUNT_IDENTIFIER, type: TEXT}
+      - {id: PASSWORD_CHECK_PARAMETERS, type: VALUE_SET, accepted_values: [REQUIRED, NOT_REQUIRED, MUST_CHANGE]}
+      - {id: ACCOUNT_EXPIRY, type: DATE_TIME, unlimited_value: MANUFACTURER_DEFINED}
+      - {id: ACCOUNT_STATUS, type: VALUE_SET, accepted_values: [ENABLED, DISABLED, LOCKED]}
+      - {id: ACTION_TYPE, type: VALUE_SET, accepted_values: [CREATE, CHANGE, DELETE]}
+      - {id: ACCOUNT_TYPE, type: TEXT, values_depend_on: SZI_IMPLEMENTED_ROLES}
+    additional_fields:
+      - {id: LAST_PASSWORD_SET_DATE_TIME, type: DATE_TIME}
+      - {id: SECURITY_LABEL, type: TEXT}
+      - {id: PRIMARY_GROUP_IDENTIFIER, type: TEXT}
+      - {id: HOME_DIRECTORY_PATH, type: TEXT}
+      - {id: GROUP_MEMBERSHIP, type: VALUE_SET}
+      - {id: ACCOUNT_NAME, type: TEXT}
+      - {id: ALLOWED_LOGIN_TIME, type: DATE_TIME}
+      - {id: LINKED_IDENTIFICATION_DEVICE_IDENTIFIER, type: TEXT}
+      - {id: CHANGE_RESULT, type: VALUE_SET, accepted_values: [SUCCESSFUL, UNSUCCESSFUL]}
+
+  - id: G59548-6.2.5
+    clause: "6.2.5/tables 12-13"
+    name_ru: "Управление аппаратными идентификаторами"
+    required_fields:
+      - {id: LINKED_ACCOUNT_IDENTIFIER, type: TEXT}
+      - {id: IDENTIFIER_NAME, type: TEXT}
+      - {id: DEVICE_SERIAL_NUMBER, type: TEXT}
+      - {id: ACTION_TYPE, type: VALUE_SET, accepted_values: [ADD, CHANGE, DELETE]}
+    additional_fields:
+      - {id: IDENTIFIER_EXPIRY, type: DATE_TIME}
+      - {id: CHANGE_RESULT, type: VALUE_SET, accepted_values: [SUCCESSFUL, UNSUCCESSFUL]}
+
+  - id: G59548-6.2.6
+    clause: "6.2.6/tables 14-15"
+    name_ru: "Управление средствами аутентификации"
+    required_fields:
+      - {id: LOCKOUT_DURATION, type: DURATION, stated_unit: MINUTE}
+      - {id: UNSUCCESSFUL_INPUT_ATTEMPT_COUNT, type: INTEGER}
+      - {id: MAXIMUM_PASSWORD_AGE, type: DURATION, stated_unit: DAY}
+      - {id: MINIMUM_PASSWORD_LENGTH, type: INTEGER}
+      - {id: PASSWORD_COMPLEXITY, type: VALUE_SET, accepted_values: [EASY, MEDIUM, STRONG]}
+      - {id: AUTHENTICATION_METHOD, type: TEXT}
+      - {id: ACTION_TYPE, type: VALUE_SET, accepted_values: [CREATE, CHANGE, DELETE]}
+    additional_fields:
+      - {id: MINIMUM_PASSWORD_AGE, type: DURATION, stated_unit: DAY}
+      - {id: PASSWORD_STORAGE_METHOD, type: VALUE_SET, accepted_values: [REVERSIBLE_ENCRYPTION, ENCRYPTION, HASH_FUNCTION, NO_TRANSFORMATION, OTHER]}
+      - {id: CHANGE_RESULT, type: VALUE_SET, accepted_values: [SUCCESSFUL, UNSUCCESSFUL]}
+      - {id: PREVIOUS_PASSWORD_HISTORY_COUNT, type: INTEGER}
+
+  - id: G59548-6.2.7
+    clause: "6.2.7/tables 16-17"
+    name_ru: "Управление атрибутами доступа"
+    required_fields:
+      - {id: ACCESS_OBJECT_IDENTIFIER, type: TEXT}
+      - {id: OBJECT_OWNER_RIGHTS, type: TEXT, separator: SEMICOLON}
+      - {id: ACTION_TYPE, type: VALUE_SET, accepted_values: [CREATE, CHANGE, DELETE]}
+      - {id: OPERATION_RESULT, type: VALUE_SET, accepted_values: [SUCCESSFUL, UNSUCCESSFUL], when: RESULT_NOT_DETERMINED_BY_EVENT_IDENTIFIER}
+    additional_fields:
+      - {id: OBJECT_GROUP_RIGHTS, type: TEXT, separator: SEMICOLON}
+      - {id: SECURITY_LABEL, type: TEXT}
+
+  - id: G59548-6.2.8
+    clause: "6.2.8/tables 18-19"
+    name_ru: "Доступ к защищаемой информации"
+    required_fields:
+      - {id: ACCESS_OBJECT_IDENTIFIER, type: TEXT}
+      - {id: ACTION_TYPE, type: VALUE_SET, example_values: [READ, WRITE, EXECUTE]}
+      - {id: OPERATION_RESULT, type: VALUE_SET, accepted_values: [SUCCESSFUL, UNSUCCESSFUL], when: RESULT_NOT_DETERMINED_BY_EVENT_IDENTIFIER}
+    additional_fields:
+      - {id: PROCESS_IDENTIFIER, type: INTEGER}
+      - {id: USER_SESSION_IDENTIFIER, type: INTEGER}
+      - {id: PROCESS_FULL_PATH, type: TEXT}
+      - {id: SECURITY_LABEL, type: TEXT}
+
+coverage:
+  section_6_1_common_rules: VERIFIED_COMPLETE_PUBLIC_TEXT_CROSSCHECK
+  section_6_2_subsections_total: 81
+  section_6_2_subsections_modeled: 8
+  section_6_2_subsections_pending: 73
+  modeled_subsections: ["6.2.1", "6.2.2", "6.2.3", "6.2.4", "6.2.5", "6.2.6", "6.2.7", "6.2.8"]
+  remaining_subsections: "6.2.9-6.2.81"
+  common_data_types: 9
+  common_minimum_fields: 6
+  common_additional_fields: 3
+  type_specific_required_field_placements: 33
+  type_specific_additional_field_placements: 36
+
+scope_guards:
+  - DO_NOT_TREAT_THIS_PARTIAL_MODEL_AS_COMPLETE_GOST_R_59548_2022_EVENT_SCHEMA
+  - DO_NOT_TREAT_COMMON_ADDITIONAL_FIELDS_AS_MANDATORY
+  - DO_NOT_TREAT_EXAMPLE_VALUES_AS_EXHAUSTIVE_ACCEPTED_VALUE_SETS
+  - DO_NOT_INVENT_STORAGE_FORMAT_TRANSPORT_PROTOCOL_RETENTION_PERIOD_OR_TECHNICAL_IMPLEMENTATION
+  - DO_NOT_REJECT_ACCESS_SUBJECT_NULL_WHEN_THE_SUBJECT_CANNOT_BE_DETERMINED
+  - DO_NOT_REPLACE_MANUFACTURER_DEFINED_UNLIMITED_ACCOUNT_EXPIRY_VALUE_WITH_A_UNIVERSAL_VALUE
+  - DO_NOT_TREAT_STANDARD_CURRENCY_AS_AUTOMATIC_BINDING_APPLICABILITY_FOR_EVERY_ORGANIZATION
+  - DO_NOT_EQUATE_LOCAL_EVENT_REGISTRATION_WITH_REGULATOR_NOTIFICATION_OR_DELIVERY_EVIDENCE
+
+verification_boundary:
+  official_status_and_scope: VERIFIED_ROSSTANDART_2026_08_21
+  clause_6_1: VERIFIED_PUBLIC_TEXT_CROSSCHECK
+  clauses_6_2_1_to_6_2_8: VERIFIED_PUBLIC_TEXT_CROSSCHECK
+  clauses_6_2_9_to_6_2_81: PENDING_ATOMIC_MODEL
+  complete_event_schema: PENDING_73_OF_81_SUBSECTIONS
+  immutable_official_bytes: PENDING
+  independent_expert_review: PENDING
+  critical_gap_created: false
+  high_gap_created: false
