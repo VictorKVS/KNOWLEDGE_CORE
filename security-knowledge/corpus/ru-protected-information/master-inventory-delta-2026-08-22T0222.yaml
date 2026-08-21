@@ -1,0 +1,95 @@
+schema_version: "1.0"
+kind: ru-protected-information-master-inventory-delta
+base_inventory: "master-inventory.yaml"
+reconciliation_base_delta: "master-inventory-delta-2026-08-21T2022.yaml"
+checked_at: "2026-08-22T02:22:00+03:00"
+owner_stream: STREAM_3_SECTOR_OVERLAYS
+run_ref: "stream-3-run-2026-08-22T0222.yaml"
+status: APPEND_ONLY_RECONCILIATION_READY
+
+proof_floor:
+  - "SEC-SRC-RU-GK2-1996-A946 already existed in the master inventory; operationalizing it must not increase discovery counts."
+  - "Article 946 creates a special insurance-secrecy confidentiality regime; overlap with PDN is not organization-specific applicability."
+  - "The health-information field in Article 946 does not merge insurance secrecy with medical secrecy under 323-ФЗ."
+  - "A source-level Civil Code amendment is not automatically an Article-946 amendment; locator-specific reconciliation is required."
+  - "Exact primary current bytes are still pending, so SOURCE_ACQUIRED / IMMUTABLE / VERSION_CHAIN_VERIFIED are not promoted."
+
+counter_state_before_reconciled: {found: 24, downloaded: 9, immutable: 9, pending: 13, reused: 2, primary_publication_verified: 10, sectors_registered: 16}
+counter_state_after_reconciliation:
+  found: 24
+  downloaded: 9
+  immutable: 9
+  pending: 13
+  reused: 2
+  primary_publication_verified: 10
+  sectors_registered: 16
+  new_sources_this_run: 0
+  existing_source_nodes_operationalized: 1
+  new_immutable_this_run: 0
+  exact_binary_downloads_this_run: 0
+  current_article_crosschecks_updated_this_run: 1
+  new_cross_regime_candidates_this_run: 1
+  applicability_edges_promoted_this_run: 0
+  legal_conflicts_confirmed_this_run: 0
+
+source_reconciled:
+  source_id: SEC-SRC-RU-GK2-1996-A946
+  source_card: "security-corpora/RU/protected-information/source/SEC-SRC-RU-GK2-1996-A946.yaml"
+  sector: insurance
+  regime: insurance_secrecy
+  state: CURRENT_ARTICLE_946_CROSSCHECKED_PRIMARY_BASELINE_IDENTIFIED_EXACT_CURRENT_ARTIFACT_PENDING_VERSION_CHAIN_PARTIAL
+  primary_anchor: "ГК РФ часть вторая, статья 946 — Тайна страхования"
+  primary_baseline:
+    authority: "Президент Российской Федерации — Банк документов"
+    act: "Кодекс Российской Федерации от 26.01.1996 № 14-ФЗ"
+    url: "https://www.kremlin.ru/acts/bank/8804"
+    state: OFFICIAL_DOCUMENT_BANK_BASELINE_IDENTIFIED
+  protected_locators:
+    - {locator: "статья 946", concept: INSURANCE_SECRECY_NON_DISCLOSURE_DUTY, actor: "страховщик", state: CURRENT_TEXT_CROSSCHECKED}
+    - {locator: "статья 946", concept: POLICYHOLDER_INSURED_BENEFICIARY_INFORMATION, state: CURRENT_TEXT_CROSSCHECKED}
+    - {locator: "статья 946", concept: HEALTH_INFORMATION, state: CURRENT_TEXT_CROSSCHECKED}
+    - {locator: "статья 946", concept: PROPERTY_STATUS_INFORMATION, state: CURRENT_TEXT_CROSSCHECKED}
+  pdn_relation:
+    state: OVERLAP_CANDIDATE_SPECIAL_CONFIDENTIALITY_REGIME_APPLICABILITY_REVIEW_REQUIRED
+    guard: "OVERLAP != APPLICABILITY; resolve actor/data-subject/purpose/operation/legal-basis/recipient/insurance-context before creating a PDN edge."
+  cross_regime_relation:
+    target: SEC-SRC-RU-FZ-323
+    type: HEALTH_INFORMATION_FIELD_OVERLAP_NOT_REGIME_EQUIVALENCE
+    state: CANDIDATE_RELATIONSHIP_REVIEW_REQUIRED
+  capture_backlog: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-GK2-1996-A946-version-capture-pending.json"
+
+version_chain_delta:
+  state: VERSION_CHAIN_PARTIAL_LOCATOR_946_CURRENTNESS_CROSSCHECKED
+  current_wording_crosscheck: true
+  locator_specific_primary_amendments_proven_this_run: 0
+  source_level_amendments_promoted_to_article_946_edges: 0
+  note: >-
+    Current consolidated legal-text crosschecks reproduce the core Article 946 non-disclosure rule, but no primary
+    locator-specific amendment artifact changing Article 946 was established in this pass. Therefore the source remains
+    VERSION_CHAIN_PARTIAL and exact-current-artifact pending.
+
+acquisition_delta:
+  durable_immutable_artifacts_added: 0
+  exact_binary_downloads_succeeded: 0
+  official_primary_baseline_identified: 1
+  capture_backlog_created: true
+  mime: null
+  byte_length: null
+  sha256: null
+  blocker: >-
+    The authoritative presidential document-bank source was identified, but no durable byte-exact current consolidated
+    official binary was obtained in this execution. No binary metadata was inferred from portal or derivative-copy display values.
+
+proof_floor_effect:
+  executable_rules_changed: false
+  applicability_edges_promoted: 0
+  duplicate_source_nodes_created: 0
+  legal_conflicts_confirmed: 0
+  source_nodes_added: 0
+  source_nodes_operationalized: 1
+  cross_regime_candidates_added: 1
+
+merge_rule: >-
+  Reconcile after master-inventory-delta-2026-08-21T2022.yaml. Aggregate Stream 3 counters remain 24 found / 9 downloaded /
+  9 immutable / 13 pending / 2 status-REUSED sources. This pass deepens the pre-existing insurance-secrecy node without
+  inflating discovery or acquisition counts.
