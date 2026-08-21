@@ -1,0 +1,310 @@
+schema_version: "1.0"
+id: GOST-R-59548-2022-EVENT-REGISTRATION-CORE-PART2
+designation: "ГОСТ Р 59548-2022"
+title: "Security-event registered-information schemas 6.2.9-6.2.20"
+authority: ROSSTANDART
+order: {number: "2-ст", date: "2022-01-13"}
+effective_date: "2022-02-01"
+status_observed: CURRENT
+status_observed_date: "2026-08-21"
+status: VERIFIED_BOUNDED_PARTIAL_CLAUSE_MODEL_6_2_9_TO_6_2_20
+
+source_evidence:
+  official_status_and_scope:
+    url: https://protect.gost.ru/gost/details/d5008460-671b-4563-9388-d1d0f9ecdbbf
+    result: VERIFIED_CURRENT_2026_08_21
+  clause_text_interface:
+    url: https://meganorm.ru/mega_doc/norm/gost-r_gosudarstvennyj-standart/9/gost_r_59548-2022_natsionalnyy_standart_rossiyskoy.html
+    result: VERIFIED_PUBLIC_TEXT_CROSSCHECK_6_2_9_TO_6_2_20_TABLES_20_TO_43
+  immutable_official_document_bytes: PENDING
+
+dependency:
+  common_schema: security-knowledge/standards/gost-r-59548-2022-event-registration-core-part1-v1.yaml
+  inherited_rule: EVERY_TYPE_ALSO_REQUIRES_SECTION_6_1_COMMON_MINIMUM_INFORMATION
+  inherited_additional_rule: SECTION_6_1_COMMON_ADDITIONAL_INFORMATION_REMAINS_OPTIONAL
+
+literal_value_sets:
+  MALWARE_RESPONSE_ACTION:
+    values: [CURED, DELETED, QUARANTINED, BLOCKED, NOT_CURED, SKIPPED]
+  MALWARE_OBJECT_TYPE:
+    values:
+      - VIRUS
+      - TROJAN_PROGRAM
+      - MALICIOUS_PROGRAM
+      - WORM
+      - EXPLOIT
+      - PHISHING
+      - MALICIOUS_PROGRAM
+      - MALICIOUS_LINK
+      - POTENTIAL_DANGER
+      - BEHAVIORAL_VIRUS
+      - OTHER
+    literal_duplicate_preserved: MALICIOUS_PROGRAM
+  MALWARE_DETECTION_TECHNOLOGY:
+    values:
+      - FILE_ANTIVIRUS
+      - MAIL_ANTIVIRUS
+      - WEB_ANTIVIRUS
+      - MESSENGER_ANTIVIRUS
+      - HOST_INTRUSION_DETECTION_SYSTEM
+      - FIREWALL
+      - SUSPICIOUS_ACTIVITY_DETECTION
+      - EXPLOIT_PREVENTION
+      - ON_DEMAND_SCAN_TASK
+      - OTHER
+  HTTP_METHOD:
+    values: [GET, POST, PUT, DELETE, HEAD, OPTIONS, PATCH, TRACE, CONNECT]
+  TCP_HEADER_FLAG:
+    values: [URG, ACK, PSH, RST, SYN, FIN]
+
+event_type_schemas:
+  - id: G59548-6.2.9
+    clause: "6.2.9/tables 20-21"
+    name_ru: "Прохождение процедуры доверенной загрузки операционной системы"
+    required_fields:
+      - {id: MEDIA_SERIAL_NUMBER, type: TEXT}
+      - {id: BOOT_RESULT, type: VALUE_SET, accepted_values: [SUCCESSFUL, UNSUCCESSFUL]}
+      - {id: ACTION_TYPE, type: TEXT, rule: TRUSTED_BOOT_PROCEDURE_STAGE}
+      - {id: MEDIA_TYPE, type: TEXT, rule: MEDIA_CONNECTION_INTERFACE}
+    additional_fields:
+      - {id: TRUSTED_BOOT_MEANS_VERSION, type: SOFTWARE_VERSION}
+      - {id: MEDIA_NAME, type: TEXT}
+      - {id: EVENT_DESCRIPTION, type: TEXT}
+      - {id: WATCHDOG_TIMER_STATUS, type: VALUE_SET, accepted_values: [ENABLED, DISABLED]}
+      - {id: RANDOM_NUMBER_SENSOR_TEST_STATUS, type: VALUE_SET, accepted_values: [SUCCESSFUL, ERROR]}
+      - {id: CASE_OPEN_SENSOR_STATUS, type: VALUE_SET, accepted_values: [OPENED, NOT_OPENED]}
+      - {id: OPERATING_SYSTEM_VERSION, type: SOFTWARE_VERSION}
+      - {id: PROCESSOR_VERSION, type: SOFTWARE_VERSION}
+      - {id: BIOS_VERSION, type: SOFTWARE_VERSION}
+
+  - id: G59548-6.2.10
+    clause: "6.2.10/tables 22-23"
+    name_ru: "Обнаружение файловой активности вредоносных программ"
+    required_fields:
+      - {id: ANTIVIRUS_PROGRAM_VERSION, type: SOFTWARE_VERSION}
+      - {id: OBJECT_CHECKSUM, type: TEXT}
+      - {id: CHECKSUM_ALGORITHM, type: TEXT, examples: [MD5, SHA1, SHA256, OTHER]}
+      - {id: VIRUS_NAME, type: TEXT}
+      - {id: OBJECT_FULL_PATH, type: TEXT}
+      - {id: ACTION_TYPE, type: VALUE_SET, value_set_ref: MALWARE_RESPONSE_ACTION}
+    additional_fields:
+      - {id: VIRUS_DATABASE_VERSION, type: DATE_TIME, semantic: DATABASE_FORMATION_DATE_TIME}
+      - {id: INFECTED_OBJECT_NAME, type: TEXT, when: IF_POSSIBLE}
+      - {id: INFECTED_OBJECT_TYPE, type: VALUE_SET, value_set_ref: MALWARE_OBJECT_TYPE}
+      - {id: INFECTED_OBJECT_SIZE_BYTES, type: INTEGER}
+      - {id: DETECTION_TECHNOLOGY, type: VALUE_SET, value_set_ref: MALWARE_DETECTION_TECHNOLOGY}
+      - {id: INFECTED_OBJECT_FORMAT, type: TEXT, when: IF_APPLICABLE}
+
+  - id: G59548-6.2.11
+    clause: "6.2.11/tables 24-25"
+    name_ru: "Обнаружение активности вредоносных программ в почтовом трафике"
+    required_fields:
+      - {id: SENDER_EMAIL_ADDRESS, type: EMAIL_ADDRESS}
+      - {id: RECIPIENT_EMAIL_ADDRESS, type: EMAIL_ADDRESS}
+      - {id: ANTIVIRUS_PROGRAM_VERSION, type: SOFTWARE_VERSION}
+      - {id: OBJECT_CHECKSUM, type: TEXT, semantic: ATTACHMENT_ONE_WAY_HASH}
+      - {id: CHECKSUM_ALGORITHM, type: TEXT, examples: [MD5, SHA1, SHA256, OTHER]}
+      - {id: EMAIL_MESSAGE_IDENTIFIER, type: TEXT}
+      - {id: VIRUS_NAME, type: TEXT}
+      - {id: INFECTED_OBJECT_NAME, type: TEXT}
+      - {id: SENDER_NETWORK_ADDRESS, type: NETWORK_ADDRESS}
+      - {id: MESSAGE_SUBJECT, type: TEXT}
+      - {id: ACTION_TYPE, type: VALUE_SET, value_set_ref: MALWARE_RESPONSE_ACTION}
+    additional_fields:
+      - {id: VIRUS_DATABASE_VERSION, type: DATE_TIME, semantic: DATABASE_FORMATION_DATE_TIME}
+      - {id: EACH_ATTACHMENT_CHECKSUM, type: TEXT}
+      - {id: CHECKSUM_ALGORITHM, type: TEXT, examples: [MD5, SHA1, SHA256, OTHER]}
+      - {id: ATTACHMENT_NAMES, type: TEXT}
+      - {id: INFECTED_OBJECT_SIZE_BYTES, type: INTEGER}
+      - {id: MESSAGE_TEXT, type: TEXT}
+      - {id: DETECTION_TECHNOLOGY, type: VALUE_SET, value_set_ref: MALWARE_DETECTION_TECHNOLOGY}
+      - {id: INFECTED_OBJECT_TYPE, type: VALUE_SET, value_set_ref: MALWARE_OBJECT_TYPE}
+
+  - id: G59548-6.2.12
+    clause: "6.2.12/tables 26-27"
+    name_ru: "Обнаружение активности вредоносных программ в сетевом трафике"
+    required_fields:
+      - {id: ANTIVIRUS_PROGRAM_VERSION, type: SOFTWARE_VERSION}
+      - {id: OBJECT_CHECKSUM, type: TEXT}
+      - {id: CHECKSUM_ALGORITHM, type: TEXT, examples: [MD5, SHA1, SHA256, OTHER]}
+      - {id: VIRUS_NAME, type: TEXT}
+      - {id: SOURCE_PORT, type: INTEGER, minimum: 0, maximum: 65535}
+      - {id: DESTINATION_PORT, type: INTEGER, minimum: 0, maximum: 65535}
+      - {id: SOURCE_NETWORK_ADDRESS, type: NETWORK_ADDRESS}
+      - {id: DESTINATION_NETWORK_ADDRESS, type: NETWORK_ADDRESS}
+      - {id: PROTOCOL, type: TEXT, examples: [IP, TCP, HTTP]}
+      - {id: ACTION_TYPE, type: VALUE_SET, value_set_ref: MALWARE_RESPONSE_ACTION}
+    additional_fields:
+      - {id: VIRUS_DATABASE_VERSION, type: DATE_TIME, semantic: DATABASE_FORMATION_DATE_TIME}
+      - {id: INFECTED_OBJECT_SIZE_BYTES, type: INTEGER}
+      - {id: DETECTION_TECHNOLOGY, type: VALUE_SET, value_set_ref: MALWARE_DETECTION_TECHNOLOGY}
+      - {id: INFECTED_OBJECT_NAME, type: TEXT}
+      - {id: INFECTED_OBJECT_TYPE, type: VALUE_SET, value_set_ref: MALWARE_OBJECT_TYPE}
+      - {id: MALWARE_ACTIVITY_TRAFFIC_FRAGMENT, type: TEXT}
+
+  - id: G59548-6.2.13
+    clause: "6.2.13/tables 28-29"
+    name_ru: "Обновление базы данных признаков вредоносных компьютерных программ"
+    required_fields:
+      - {id: ANTIVIRUS_PROGRAM_VERSION, type: SOFTWARE_VERSION}
+      - {id: VIRUS_DATABASE_VERSION, type: DATE_TIME, semantic: DATABASE_FORMATION_DATE_TIME}
+      - {id: OPERATION_RESULT, type: VALUE_SET, accepted_values: [SUCCESSFUL, UNSUCCESSFUL], when: RESULT_NOT_DETERMINED_BY_EVENT_IDENTIFIER}
+    additional_fields:
+      - {id: VIRUS_DATABASE_RECORD_COUNT, type: INTEGER}
+      - {id: ERROR_REASON, type: TEXT}
+
+  - id: G59548-6.2.14
+    clause: "6.2.14/tables 30-31"
+    name_ru: "Управление антивирусной защитой"
+    required_fields:
+      - {id: ANTIVIRUS_PROGRAM_VERSION, type: SOFTWARE_VERSION}
+      - {id: ANTIVIRUS_COMPONENT, type: TEXT}
+      - {id: ACTION_TYPE, type: TEXT}
+      - {id: OPERATION_RESULT, type: VALUE_SET, accepted_values: [SUCCESSFUL, UNSUCCESSFUL], when: RESULT_NOT_DETERMINED_BY_EVENT_IDENTIFIER}
+    additional_fields:
+      - {id: CONFIGURATION_PARAMETER_VALUES, type: TEXT, format: "parameter: value;"}
+      - {id: CHANGED_CONFIGURATION_PARAMETER_VALUES, type: TEXT, format: "parameter: old value => new value;"}
+      - {id: LOGIN_SOURCE_NETWORK_ADDRESS, type: NETWORK_ADDRESS}
+      - {id: VIRUS_DATABASE_VERSION, type: DATE_TIME, semantic: DATABASE_FORMATION_DATE_TIME}
+      - {id: LICENSE_EXPIRY_TIME, type: DATE_TIME}
+      - {id: LICENSE_NUMBER, type: TEXT}
+      - {id: LICENSE_STATUS, type: VALUE_SET, accepted_values: [ACTIVE, INACTIVE]}
+
+  - id: G59548-6.2.15
+    clause: "6.2.15/tables 32-33"
+    name_ru: "Анализ компонента ПО в песочнице"
+    required_fields:
+      - {id: SANDBOX_SOFTWARE_VERSION, type: SOFTWARE_VERSION}
+      - {id: FILE_CHECKSUM, type: TEXT}
+      - {id: CHECKSUM_ALGORITHM, type: TEXT, examples: [MD5, SHA1, SHA256, OTHER]}
+      - {id: FILE_NAME, type: TEXT}
+      - {id: SANDBOX_OPERATING_SYSTEM, type: TEXT}
+      - {id: ANALYSIS_RESULT, type: TEXT}
+      - {id: ANALYSIS_STATUS, type: TEXT}
+      - {id: ACTION_TYPE, type: TEXT}
+    additional_fields:
+      - {id: ANALYSIS_DURATION, type: DURATION, stated_unit: MINUTE}
+      - {id: EXTENDED_ANALYSIS_RESULT, type: TEXT}
+      - {id: SANDBOX_OS_BITNESS, type: INTEGER}
+      - {id: SANDBOX_SOFTWARE_ARCHITECTURE, type: TEXT}
+
+  - id: G59548-6.2.16
+    clause: "6.2.16/tables 34-35"
+    name_ru: "Обнаружение и защита от незапрашиваемых электронных сообщений"
+    required_fields:
+      - {id: ANTISPAM_DATABASE_VERSION, type: DATE_TIME, semantic: DATABASE_FORMATION_DATE_TIME}
+      - {id: PROGRAM_VERSION, type: SOFTWARE_VERSION}
+      - {id: EMAIL_MESSAGE_IDENTIFIER, type: TEXT}
+      - {id: SENDER_NETWORK_ADDRESS, type: NETWORK_ADDRESS}
+      - {id: EMAIL_STATUS, type: TEXT}
+      - {id: MESSAGE_SUBJECT, type: TEXT}
+      - {id: ACTION_TYPE, type: TEXT}
+      - {id: SENDER_EMAIL_ADDRESS, type: EMAIL_ADDRESS}
+      - {id: RECIPIENT_EMAIL_ADDRESS, type: EMAIL_ADDRESS}
+    additional_fields:
+      - {id: OBJECT_SIZE_BYTES, type: INTEGER}
+      - {id: SERVICE_HEADER_CONTENT, type: TEXT, separator: SEMICOLON}
+      - {id: MESSAGE_TEXT, type: TEXT}
+
+  - id: G59548-6.2.17
+    clause: "6.2.17/tables 36-37"
+    name_ru: "Управление защитой от спама"
+    required_fields:
+      - {id: ACTION_TYPE, type: TEXT}
+    additional_fields:
+      - {id: CONFIGURATION_PARAMETER_VALUES, type: TEXT, format: "parameter: value;"}
+      - {id: CHANGED_CONFIGURATION_PARAMETER_VALUES, type: TEXT, format: "parameter: old value => new value;"}
+      - {id: ADMINISTRATOR_NETWORK_ADDRESS, type: NETWORK_ADDRESS}
+
+  - id: G59548-6.2.18
+    clause: "6.2.18/tables 38-39"
+    name_ru: "Обнаружение признаков компьютерных атак в сетевом трафике"
+    required_fields:
+      - {id: SENSOR_IDENTIFIER, type: TEXT, uniqueness_scope: ONE_MANUFACTURER}
+      - {id: ATTACK_CLASS, type: TEXT}
+      - {id: ATTACK_SIGNATURE_NAME, type: TEXT}
+      - {id: SOURCE_NETWORK_ADDRESS, type: NETWORK_ADDRESS}
+      - {id: DESTINATION_NETWORK_ADDRESS, type: NETWORK_ADDRESS}
+      - {id: PROTOCOL, type: TEXT, examples: [IP, TCP, HTTP]}
+      - {id: ACTION_TYPE, type: TEXT}
+    additional_fields:
+      - {id: SOURCE_HARDWARE_ADDRESS, type: HARDWARE_ADDRESS, when: IF_APPLICABLE}
+      - {id: DESTINATION_HARDWARE_ADDRESS, type: HARDWARE_ADDRESS, when: IF_APPLICABLE}
+      - {id: PACKET_TIME_TO_LIVE, type: INTEGER}
+      - {id: VULNERABILITY_IDENTIFIER, type: TEXT}
+      - {id: HTTP_REQUEST_METHOD, type: VALUE_SET, value_set_ref: HTTP_METHOD}
+      - {id: PACKET_COUNT, type: INTEGER}
+      - {id: PACKET_HEADER_FLAG, type: VALUE_SET, value_set_ref: TCP_HEADER_FLAG}
+      - {id: NETWORK_INTERFACE_NAME, type: TEXT}
+      - {id: ATTACK_SIGNATURE_DESCRIPTION, type: TEXT}
+      - {id: PACKET_SIZE_BYTES, type: INTEGER}
+      - {id: PACKET_CONTENT, type: TEXT}
+
+  - id: G59548-6.2.19
+    clause: "6.2.19/tables 40-41"
+    name_ru: "Обнаружение признаков компьютерных атак на узле"
+    required_fields:
+      - {id: ATTACK_CLASS, type: TEXT}
+      - {id: RUNNING_SERVICE_SOFTWARE_OR_PROCESS_NAME, type: TEXT}
+      - {id: ATTACK_SIGNATURE_NAME, type: TEXT}
+      - {id: SOURCE_PORT, type: INTEGER, minimum: 0, maximum: 65535}
+      - {id: DESTINATION_PORT, type: INTEGER, minimum: 0, maximum: 65535}
+      - {id: SOURCE_NETWORK_ADDRESS, type: NETWORK_ADDRESS}
+      - {id: DESTINATION_NETWORK_ADDRESS, type: NETWORK_ADDRESS}
+      - {id: PROTOCOL, type: TEXT, examples: [IP, TCP, HTTP]}
+      - {id: ACTION_TYPE, type: TEXT}
+      - {id: UNIFORM_RESOURCE_IDENTIFIER, type: TEXT}
+    additional_fields:
+      - {id: SOURCE_HARDWARE_ADDRESS, type: HARDWARE_ADDRESS, when: IF_APPLICABLE}
+      - {id: DESTINATION_HARDWARE_ADDRESS, type: HARDWARE_ADDRESS, when: IF_APPLICABLE}
+      - {id: PACKET_TIME_TO_LIVE, type: INTEGER}
+      - {id: SENSOR_IDENTIFIER, type: TEXT, uniqueness_scope: ONE_MANUFACTURER}
+      - {id: VULNERABILITY_IDENTIFIER, type: TEXT}
+      - {id: HTTP_REQUEST_METHOD, type: VALUE_SET, value_set_ref: HTTP_METHOD}
+      - {id: PACKET_COUNT, type: INTEGER}
+      - {id: PACKET_HEADER_FLAG, type: VALUE_SET, value_set_ref: TCP_HEADER_FLAG}
+      - {id: NETWORK_INTERFACE_NAME, type: TEXT}
+      - {id: ATTACK_SIGNATURE_DESCRIPTION, type: TEXT}
+      - {id: PACKET_SIZE_BYTES, type: INTEGER}
+      - {id: PACKET_CONTENT, type: TEXT}
+
+  - id: G59548-6.2.20
+    clause: "6.2.20/tables 42-43"
+    name_ru: "Обновление базы решающих правил"
+    required_fields:
+      - {id: DECISION_RULE_DATABASE_VERSION, type: DATE_TIME, semantic: DATABASE_FORMATION_DATE_TIME}
+      - {id: PROGRAM_VERSION, type: SOFTWARE_VERSION}
+      - {id: OPERATION_RESULT, type: VALUE_SET, accepted_values: [SUCCESSFUL, UNSUCCESSFUL], when: RESULT_NOT_DETERMINED_BY_EVENT_IDENTIFIER}
+    additional_fields:
+      - {id: DECISION_RULE_DATABASE_RECORD_COUNT, type: INTEGER}
+
+coverage:
+  this_part_subsections: 12
+  this_part_required_field_placements: 76
+  this_part_additional_field_placements: 72
+  cumulative_modeled_subsections: 20
+  cumulative_pending_subsections: 61
+  cumulative_section_6_2_total: 81
+  modeled_subsections: "6.2.9-6.2.20"
+  remaining_subsections: "6.2.21-6.2.81"
+
+scope_guards:
+  - DO_NOT_TREAT_THIS_PARTIAL_MODEL_AS_COMPLETE_GOST_R_59548_2022_EVENT_SCHEMA
+  - DO_NOT_TREAT_ADDITIONAL_FIELDS_AS_REQUIRED_FIELDS
+  - DO_NOT_NORMALIZE_AWAY_THE_LITERAL_DUPLICATE_MALWARE_PROGRAM_VALUE
+  - DO_NOT_TREAT_CHECKSUM_PROTOCOL_OR_ACTION_EXAMPLES_AS_EXHAUSTIVE_UNLESS_MARKED_ACCEPTED_VALUES
+  - DO_NOT_INVENT_RETENTION_PERIOD_SCAN_INTERVAL_UPDATE_INTERVAL_LICENSE_RENEWAL_PERIOD_OR_NETWORK_THRESHOLD
+  - DO_NOT_EQUATE_LICENSE_STATUS_EVENT_FIELDS_WITH_A_CURRENT_PRODUCT_LICENSE_REGISTRY_RECORD
+  - DO_NOT_EQUATE_LOCAL_EVENT_REGISTRATION_WITH_INCIDENT_OR_REGULATOR_NOTIFICATION
+  - DO_NOT_TREAT_CURRENT_STANDARD_STATUS_AS_UNIVERSAL_BINDING_APPLICABILITY
+
+verification_boundary:
+  official_status_and_scope: VERIFIED_ROSSTANDART_2026_08_21
+  clauses_6_2_9_to_6_2_20: VERIFIED_PUBLIC_TEXT_CROSSCHECK
+  tables_20_to_43: VERIFIED_PUBLIC_TEXT_CROSSCHECK
+  clauses_6_2_21_to_6_2_81: PENDING_ATOMIC_MODEL
+  complete_event_schema: PENDING_61_OF_81_SUBSECTIONS
+  immutable_official_bytes: PENDING
+  independent_expert_review: PENDING
+  critical_gap_created: false
+  high_gap_created: false
