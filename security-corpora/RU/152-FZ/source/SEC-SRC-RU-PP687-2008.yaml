@@ -12,12 +12,18 @@ document:
   adopted_date: "2008-09-15"
   current_revision_note: "В редакции Постановления Правительства РФ от 18.01.2025 № 12"
   valid_until: "2030-09-01"
-  checked_at: "2026-08-20"
+  checked_at: "2026-08-21"
 
 canonical_source:
   publisher: "Правительство России"
   url: "https://government.ru/docs/all/65436/"
   origin_verified: true
+  freshness_check:
+    checked_at: "2026-08-21T17:12:00Z"
+    result: CURRENT_REVISION_CONFIRMED
+    evidence_note: >-
+      Current-law index checked on 21.08.2026 identifies PP RF No. 687 in revision of 18.01.2025 No. 12;
+      validity is limited through 01.09.2030.
 
 capture:
   raw_artifact_ref: ""
@@ -25,7 +31,14 @@ capture:
   byte_length: null
   sha256: ""
   fingerprint_status: PENDING_RAW_CAPTURE
-  note: "Official text metadata/current revision verified; byte-exact raw artifact not captured in this pass."
+  acquisition_request:
+    status: RUN_REQUESTED_GUARDED
+    requested_at: "2026-08-21T17:12:00Z"
+    route: official_canonical_snapshot
+    reason: >-
+      Fresh stream-1 retry after revision verification; require official canonical bytes, retrieved_at,
+      MIME, exact byte length and SHA-256 before immutable promotion.
+  note: "Official text metadata/current revision verified; byte-exact raw artifact not yet accepted."
 
 relations:
   - type: IMPLEMENTS
@@ -35,7 +48,7 @@ relations:
     note: "Rebased from the superseded 2025-09-01 root; no change to PP 687 semantics is inferred."
 
 provenance:
-  checked_at: "2026-08-20"
+  checked_at: "2026-08-21"
   review_required: true
 
 agent_rule: "Do not promote to VERIFIED_FOR_EXTRACTION until immutable raw capture, exact byte length and SHA-256 are recorded."
