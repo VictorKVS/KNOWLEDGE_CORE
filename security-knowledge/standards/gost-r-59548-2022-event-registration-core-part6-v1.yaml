@@ -1,0 +1,271 @@
+schema_version: "1.0"
+id: GOST-R-59548-2022-EVENT-REGISTRATION-CORE-PART6
+designation: "ГОСТ Р 59548-2022"
+title: "Security-event registered-information schemas 6.2.57-6.2.68"
+authority: ROSSTANDART
+order: {number: "2-ст", date: "2022-01-13"}
+effective_date: "2022-02-01"
+status_observed: CURRENT
+status_observed_date: "2026-08-21"
+status: VERIFIED_BOUNDED_PARTIAL_CLAUSE_MODEL_6_2_57_TO_6_2_68
+
+source_evidence:
+  official_status_and_scope:
+    url: https://protect.gost.ru/gost/details/d5008460-671b-4563-9388-d1d0f9ecdbbf
+    result: VERIFIED_CURRENT_2026_08_21
+  clause_text_interface:
+    url: https://meganorm.ru/mega_doc/norm/gost-r_gosudarstvennyj-standart/9/gost_r_59548-2022_natsionalnyy_standart_rossiyskoy.html
+    result: VERIFIED_PUBLIC_TEXT_CROSSCHECK_6_2_57_TO_6_2_68_TABLES_114_TO_137
+  immutable_official_document_bytes: PENDING
+
+dependency:
+  common_schema: security-knowledge/standards/gost-r-59548-2022-event-registration-core-part1-v1.yaml
+  inherited_rule: EVERY_TYPE_ALSO_REQUIRES_SECTION_6_1_COMMON_MINIMUM_INFORMATION
+  inherited_additional_rule: SECTION_6_1_COMMON_ADDITIONAL_INFORMATION_REMAINS_OPTIONAL
+
+literal_value_sets:
+  OPERATION_RESULT: {values: [SUCCESSFUL, UNSUCCESSFUL]}
+  HTTP_REQUEST_METHOD: {values: [GET, POST, PUT, DELETE, HEAD, OPTIONS, PATCH, TRACE, CONNECT]}
+
+event_type_schemas:
+  - id: G59548-6.2.57
+    clause: "6.2.57/tables 114-115"
+    name_ru: "Действия по управлению виртуальными машинами"
+    required_fields:
+      - {id: ACTION_TYPE, type: TEXT}
+      - {id: HYPERVISOR_NETWORK_ADDRESS, type: NETWORK_ADDRESS}
+      - {id: VIRTUAL_MACHINE_IDENTIFIER, type: TEXT}
+      - {id: VIRTUAL_MACHINE_OS, type: TEXT, semantic: FULL_OFFICIAL_OS_NAME}
+      - {id: DATA_STORAGE_IDENTIFIER, type: TEXT}
+      - {id: HYPERVISOR_SOFTWARE_VERSION, type: SOFTWARE_VERSION}
+      - {id: OPERATION_RESULT, type: VALUE_SET, value_set_ref: OPERATION_RESULT, when: RESULT_NOT_DETERMINED_BY_EVENT_IDENTIFIER}
+    additional_fields:
+      - {id: VIRTUAL_NETWORK_IDENTIFIER, type: INTEGER}
+      - {id: VIRTUAL_SWITCH_IDENTIFIER, type: TEXT}
+      - {id: HARDWARE_ADDRESS, type: HARDWARE_ADDRESS}
+
+  - id: G59548-6.2.58
+    clause: "6.2.58/tables 116-117"
+    name_ru: "Изменение состояния виртуальных машин"
+    required_fields:
+      - {id: ACTION_TYPE, type: TEXT}
+      - {id: HYPERVISOR_NETWORK_ADDRESS, type: NETWORK_ADDRESS}
+      - {id: VIRTUAL_MACHINE_IDENTIFIER, type: TEXT}
+      - {id: VIRTUAL_MACHINE_OS, type: TEXT, semantic: FULL_OFFICIAL_OS_NAME}
+      - {id: DATA_STORAGE_IDENTIFIER, type: TEXT}
+      - {id: HYPERVISOR_SOFTWARE_VERSION, type: SOFTWARE_VERSION}
+      - {id: OPERATION_RESULT, type: VALUE_SET, value_set_ref: OPERATION_RESULT, when: RESULT_NOT_DETERMINED_BY_EVENT_IDENTIFIER}
+    additional_fields:
+      - {id: VIRTUAL_NETWORK_IDENTIFIER, type: INTEGER}
+      - {id: VIRTUAL_SWITCH_IDENTIFIER, type: TEXT}
+      - {id: HARDWARE_ADDRESS, type: HARDWARE_ADDRESS}
+
+  - id: G59548-6.2.59
+    clause: "6.2.59/tables 118-119"
+    name_ru: "Изменение конфигурации виртуальной машины"
+    required_fields:
+      - {id: HYPERVISOR_NETWORK_ADDRESS, type: NETWORK_ADDRESS}
+      - {id: VIRTUAL_MACHINE_IDENTIFIER, type: TEXT}
+      - {id: VIRTUAL_MACHINE_OS, type: TEXT, semantic: FULL_OFFICIAL_OS_NAME}
+      - {id: DATA_STORAGE_IDENTIFIER, type: TEXT}
+      - {id: VIRTUAL_NETWORK_IDENTIFIER, type: INTEGER}
+      - {id: HARDWARE_ADDRESS, type: HARDWARE_ADDRESS}
+      - {id: ACTION_TYPE, type: TEXT}
+      - {id: HYPERVISOR_SOFTWARE_VERSION, type: SOFTWARE_VERSION}
+      - {id: OPERATION_RESULT, type: VALUE_SET, value_set_ref: OPERATION_RESULT, when: RESULT_NOT_DETERMINED_BY_EVENT_IDENTIFIER}
+    additional_fields:
+      - {id: VIRTUAL_SWITCH_IDENTIFIER, type: TEXT}
+      - {id: CONFIGURATION_PARAMETER_VALUES, type: TEXT, format: "parameter: value;"}
+      - {id: CHANGED_CONFIGURATION_PARAMETER_VALUES, type: TEXT, format: "parameter: old value => new value;"}
+
+  - id: G59548-6.2.60
+    clause: "6.2.60/tables 120-121"
+    name_ru: "Изменение конфигурации гипервизора"
+    required_fields:
+      - {id: HYPERVISOR_COMPONENT, type: TEXT}
+      - {id: HYPERVISOR_NETWORK_ADDRESS, type: NETWORK_ADDRESS}
+      - {id: VIRTUALIZATION_SYSTEM_VERSION, type: SOFTWARE_VERSION}
+      - {id: VIRTUALIZATION_SYSTEM_NAME, type: TEXT, semantic: FULL_OFFICIAL_SOFTWARE_NAME}
+      - {id: HYPERVISOR_SOFTWARE_VERSION, type: SOFTWARE_VERSION}
+      - {id: ACTION_TYPE, type: TEXT}
+      - {id: OPERATION_RESULT, type: VALUE_SET, value_set_ref: OPERATION_RESULT, when: RESULT_NOT_DETERMINED_BY_EVENT_IDENTIFIER}
+    additional_fields:
+      - {id: CONFIGURATION_PARAMETER_VALUES, type: TEXT, format: "parameter: value;"}
+      - {id: CHANGED_CONFIGURATION_PARAMETER_VALUES, type: TEXT, format: "parameter: old value => new value;"}
+
+  - id: G59548-6.2.61
+    clause: "6.2.61/tables 122-123"
+    name_ru: "Изменение конфигурации виртуального коммутатора"
+    required_fields:
+      - {id: HYPERVISOR_NETWORK_ADDRESS, type: NETWORK_ADDRESS}
+      - {id: VIRTUAL_SWITCH_IDENTIFIER, type: TEXT}
+      - {id: HYPERVISOR_PHYSICAL_NETWORK_INTERFACE_HARDWARE_ADDRESS, type: HARDWARE_ADDRESS}
+      - {id: VIRTUAL_NETWORK_IDENTIFIER, type: INTEGER}
+      - {id: HYPERVISOR_SOFTWARE_VERSION, type: SOFTWARE_VERSION}
+      - {id: ACTION_TYPE, type: TEXT}
+      - {id: OPERATION_RESULT, type: VALUE_SET, value_set_ref: OPERATION_RESULT, when: RESULT_NOT_DETERMINED_BY_EVENT_IDENTIFIER}
+    additional_fields:
+      - {id: CONFIGURATION_PARAMETER_VALUES, type: TEXT, format: "parameter: value;"}
+      - {id: CHANGED_CONFIGURATION_PARAMETER_VALUES, type: TEXT, format: "parameter: old value => new value;"}
+
+  - id: G59548-6.2.62
+    clause: "6.2.62/tables 124-125"
+    name_ru: "Изменение конфигурации дискового хранилища"
+    source_anomaly: DUPLICATE_ACTION_TYPE_ROW_IN_TABLE_124_PRESERVED_AS_TWO_FIELD_INSTANCES
+    required_fields:
+      - {id: HYPERVISOR_NETWORK_ADDRESS, type: NETWORK_ADDRESS}
+      - {id: DATA_STORAGE_IDENTIFIER, type: TEXT}
+      - {id: STORAGE_TYPE, type: TEXT}
+      - {id: STORAGE_LOCATION, type: TEXT}
+      - {id: ACTION_TYPE_OCCURRENCE_1, canonical_field: ACTION_TYPE, type: TEXT, source_row_ordinal: 5}
+      - {id: HYPERVISOR_SOFTWARE_VERSION, type: SOFTWARE_VERSION}
+      - {id: ACTION_TYPE_OCCURRENCE_2, canonical_field: ACTION_TYPE, type: TEXT, source_row_ordinal: 7}
+      - {id: OPERATION_RESULT, type: VALUE_SET, value_set_ref: OPERATION_RESULT, when: RESULT_NOT_DETERMINED_BY_EVENT_IDENTIFIER}
+    additional_fields:
+      - {id: CONFIGURATION_PARAMETER_VALUES, type: TEXT, format: "parameter: value;"}
+      - {id: CHANGED_CONFIGURATION_PARAMETER_VALUES, type: TEXT, format: "parameter: old value => new value;"}
+
+  - id: G59548-6.2.63
+    clause: "6.2.63/tables 126-127"
+    name_ru: "Перемещение (размещение) виртуальных машин"
+    required_fields:
+      - {id: CURRENT_HYPERVISOR_NETWORK_ADDRESS, type: NETWORK_ADDRESS}
+      - {id: PREVIOUS_HYPERVISOR_NETWORK_ADDRESS, type: NETWORK_ADDRESS}
+      - {id: VIRTUAL_MACHINE_IDENTIFIER, type: TEXT}
+      - {id: VIRTUAL_MACHINE_OS, type: TEXT, semantic: FULL_OFFICIAL_OS_NAME}
+      - {id: DATA_STORAGE_IDENTIFIER, type: TEXT}
+      - {id: ACTION_TYPE, type: TEXT}
+      - {id: HYPERVISOR_SOFTWARE_VERSION, type: SOFTWARE_VERSION}
+      - {id: OPERATION_RESULT, type: VALUE_SET, value_set_ref: OPERATION_RESULT, when: RESULT_NOT_DETERMINED_BY_EVENT_IDENTIFIER}
+    additional_fields:
+      - {id: VIRTUAL_NETWORK_IDENTIFIER, type: INTEGER}
+      - {id: VIRTUAL_SWITCH_IDENTIFIER, type: TEXT}
+
+  - id: G59548-6.2.64
+    clause: "6.2.64/tables 128-129"
+    name_ru: "Управление контрольными точками виртуальной машины"
+    required_fields:
+      - {id: HYPERVISOR_NETWORK_ADDRESS, type: NETWORK_ADDRESS}
+      - {id: VIRTUAL_MACHINE_IDENTIFIER, type: TEXT}
+      - {id: VIRTUAL_MACHINE_OS, type: TEXT, semantic: FULL_OFFICIAL_OS_NAME}
+      - {id: DATA_STORAGE_IDENTIFIER, type: TEXT}
+      - {id: ACTION_TYPE, type: TEXT}
+      - {id: CHECKPOINT_CREATION_DATE_TIME, type: DATE_TIME}
+      - {id: HYPERVISOR_SOFTWARE_VERSION, type: SOFTWARE_VERSION}
+      - {id: OPERATION_RESULT, type: VALUE_SET, value_set_ref: OPERATION_RESULT, when: RESULT_NOT_DETERMINED_BY_EVENT_IDENTIFIER}
+    additional_fields:
+      - {id: VIRTUAL_NETWORK_IDENTIFIER, type: INTEGER}
+      - {id: VIRTUAL_SWITCH_IDENTIFIER, type: TEXT}
+      - {id: HARDWARE_ADDRESS, type: HARDWARE_ADDRESS}
+      - {id: EVENT_DESCRIPTION, type: TEXT}
+
+  - id: G59548-6.2.65
+    clause: "6.2.65/tables 130-131"
+    name_ru: "Использование сервиса доменных имен"
+    required_fields:
+      - {id: ACTION_TYPE, type: TEXT}
+      - {id: RESOURCE_RECORD_TYPE, type: TEXT, examples: [MX], examples_are_non_exhaustive: true}
+      - {id: DOMAIN_NAME, type: TEXT}
+      - {id: NETWORK_ADDRESS, type: NETWORK_ADDRESS}
+      - {id: IP_PROTOCOL_VERSION, type: INTEGER}
+      - {id: RESPONSE_TYPE, type: TEXT}
+      - {id: REQUEST_TYPE, type: TEXT}
+      - {id: DATA_FIELD, type: TEXT}
+      - {id: PROTOCOL, type: TEXT, examples: [IP, TCP, HTTP], examples_are_non_exhaustive: true}
+      - {id: CLIENT_NETWORK_ADDRESS, type: NETWORK_ADDRESS}
+      - {id: SERVER_PORT, type: INTEGER, minimum: 0, maximum: 65535}
+      - {id: CLIENT_PORT, type: INTEGER, minimum: 0, maximum: 65535}
+    additional_fields:
+      - {id: DNS_SERVER_SOFTWARE_NAME, type: TEXT, semantic: FULL_OFFICIAL_SOFTWARE_NAME}
+      - {id: DNS_SERVER_SOFTWARE_VERSION, type: SOFTWARE_VERSION}
+
+  - id: G59548-6.2.66
+    clause: "6.2.66/tables 132-133"
+    name_ru: "Использование сервиса динамической настройки сети"
+    required_fields:
+      - {id: CLIENT_NETWORK_ADDRESS, type: NETWORK_ADDRESS}
+      - {id: ACTION_TYPE, type: TEXT}
+      - {id: CLIENT_HARDWARE_ADDRESS, type: HARDWARE_ADDRESS}
+      - {id: LEASE_DURATION, type: DURATION, stated_unit: MINUTE}
+      - {id: LEASE_END_DATE_TIME, type: DATE_TIME}
+      - {id: SUBNET_MASK_PREFIX_LENGTH, type: INTEGER, semantic: NUMBER_OF_ONE_BITS_IN_MASK}
+    additional_fields:
+      - {id: ROUTER_NETWORK_ADDRESS, type: NETWORK_ADDRESS}
+      - {id: DNS_SERVER_ADDRESS, type: NETWORK_ADDRESS}
+      - {id: IP_PROTOCOL_VERSION, type: INTEGER}
+
+  - id: G59548-6.2.67
+    clause: "6.2.67/tables 134-135"
+    name_ru: "Использование сервиса передачи файлов"
+    required_fields:
+      - {id: FILE_NAME, type: TEXT, includes_extension_when_applicable: true}
+      - {id: FILE_FULL_PATH, type: TEXT}
+      - {id: FILE_SIZE_BYTES, type: INTEGER}
+      - {id: CLIENT_NETWORK_ADDRESS, type: NETWORK_ADDRESS}
+      - {id: CLIENT_PORT, type: INTEGER, minimum: 0, maximum: 65535}
+      - {id: SERVER_PORT, type: INTEGER, minimum: 0, maximum: 65535}
+      - {id: REQUEST_METHOD, type: VALUE_SET, value_set_ref: HTTP_REQUEST_METHOD}
+      - {id: ACTION_TYPE, type: TEXT}
+      - {id: OPERATION_RESULT, type: VALUE_SET, value_set_ref: OPERATION_RESULT, when: RESULT_NOT_DETERMINED_BY_EVENT_IDENTIFIER}
+    additional_fields:
+      - {id: FILE_EXTENSION, type: TEXT, excludes_leading_dot: true, when: IF_APPLICABLE}
+      - {id: TRANSFER_RATE_MBIT_PER_SECOND, type: INTEGER}
+      - {id: ELAPSED_TIME, type: DURATION, stated_unit: MINUTE}
+
+  - id: G59548-6.2.68
+    clause: "6.2.68/tables 136-137"
+    name_ru: "Использование веб-сервера"
+    required_fields:
+      - {id: REQUEST_SOURCE_NETWORK_ADDRESS, type: NETWORK_ADDRESS}
+      - {id: HTTP_PROTOCOL_VERSION, type: TEXT}
+      - {id: SOURCE_PORT, type: INTEGER, minimum: 0, maximum: 65535}
+      - {id: DESTINATION_PORT, type: INTEGER, minimum: 0, maximum: 65535}
+      - {id: REQUEST_METHOD, type: VALUE_SET, value_set_ref: HTTP_REQUEST_METHOD}
+      - {id: USER_APPLICATION, type: TEXT}
+      - {id: UNIFORM_RESOURCE_IDENTIFIER, type: TEXT}
+      - {id: RESPONSE_CODE, type: INTEGER}
+      - {id: REQUEST_SOURCE_RESOURCE_IDENTIFIER, type: TEXT}
+      - {id: DOMAIN_NAME, type: TEXT}
+      - {id: SESSION_IDENTIFIER, type: TEXT}
+      - {id: PROXY_SERVER_NETWORK_ADDRESS, type: NETWORK_ADDRESS}
+      - {id: PROXY_SERVER_PORT, type: INTEGER, minimum: 0, maximum: 65535}
+    additional_fields:
+      - {id: WEB_SERVER_NAME, type: TEXT, semantic: FULL_OFFICIAL_SOFTWARE_NAME}
+      - {id: WEB_SERVER_VERSION, type: SOFTWARE_VERSION}
+      - {id: CLIENT_GEODATA, type: TEXT, stated_content: COUNTRY_AND_CITY}
+      - {id: BYTES_SENT, type: INTEGER}
+      - {id: BYTES_RECEIVED, type: INTEGER}
+
+coverage:
+  this_part_subsections: 12
+  this_part_required_field_placements: 101
+  this_part_additional_field_placements: 34
+  cumulative_modeled_subsections: 68
+  cumulative_pending_subsections: 13
+  cumulative_section_6_2_total: 81
+  modeled_subsections: "6.2.57-6.2.68"
+  remaining_subsections: "6.2.69-6.2.81"
+
+scope_guards:
+  - DO_NOT_TREAT_THIS_PARTIAL_MODEL_AS_COMPLETE_GOST_R_59548_2022_EVENT_SCHEMA
+  - DO_NOT_TREAT_ADDITIONAL_FIELDS_AS_REQUIRED_FIELDS
+  - DO_NOT_INFER_VIRTUALIZATION_ARCHITECTURE_OR_CONTROL_FREQUENCY_FROM_EVENT_FIELDS
+  - DO_NOT_COLLAPSE_DUPLICATE_ACTION_TYPE_ROWS_IN_6_2_62_WITHOUT_OFFICIAL_BYTES_AND_EXPERT_REVIEW
+  - DO_NOT_TREAT_MX_IP_TCP_HTTP_EXAMPLES_AS_EXHAUSTIVE
+  - DO_NOT_INVENT_DNS_DHCP_FILE_TRANSFER_OR_WEB_RETENTION_THRESHOLDS
+  - DO_NOT_TREAT_PORT_RANGE_AS_A_NETWORK_ACCESS_POLICY
+  - DO_NOT_EQUATE_HTTP_METHOD_VALUE_SET_WITH_AN_ALLOWED_METHOD_POLICY
+  - DO_NOT_EQUATE_LOCAL_EVENT_REGISTRATION_WITH_INCIDENT_OR_REGULATOR_NOTIFICATION
+  - DO_NOT_TREAT_CURRENT_STANDARD_STATUS_AS_UNIVERSAL_BINDING_APPLICABILITY
+
+verification_boundary:
+  official_status_and_scope: VERIFIED_ROSSTANDART_2026_08_21
+  clauses_6_2_57_to_6_2_68: VERIFIED_PUBLIC_TEXT_CROSSCHECK
+  tables_114_to_137: VERIFIED_PUBLIC_TEXT_CROSSCHECK
+  clause_6_2_62_duplicate_action_type_rows: VERIFIED_PUBLIC_TEXT_ANOMALY_PENDING_OFFICIAL_BYTES_AND_EXPERT_REVIEW
+  clauses_6_2_69_to_6_2_81: PENDING_ATOMIC_MODEL
+  complete_event_schema: PENDING_13_OF_81_SUBSECTIONS
+  immutable_official_bytes: PENDING
+  independent_expert_review: PENDING
+  critical_gap_created: false
+  high_gap_created: false
