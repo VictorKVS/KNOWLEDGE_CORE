@@ -1,0 +1,179 @@
+schema_version: "1.0"
+id: FSTEC-MD-2026-ZIV-FAMILY
+title: "FSTEC 12 April 2026 methodical document: complete ZIV.1-ZIV.5 family"
+authority: FSTEC_RUSSIA
+approved_date: "2026-04-12"
+status: VERIFIED_BOUNDED_COMPLETE_ZIV_PUBLIC_TEXT_CROSSCHECK
+scope_statement: >-
+  Complete normalized coverage of section 4.11 measures ZIV.1-ZIV.5 for
+  internet-of-things protection: twenty-four implementation atoms, zero
+  documentation items, twenty enhancements, one weekly integrity-control
+  constraint and all thirty appendix-2 cells. Product profiles and referenced
+  AVZ, RSB, UPD, IAF and cryptographic layers remain separate dependencies.
+
+source_evidence:
+  official_page: https://fstec.ru/dokumenty/vse-dokumenty/spetsialnye-normativnye-dokumenty/metodicheskij-dokument-ot-12-aprelya-2026-g
+  official_endpoint_result: TIMEOUT_BYTES_NOT_ACQUIRED
+  section_locator: "section 4.11, ZIV.1-ZIV.5"
+  appendix_locator: "appendix 2, family 11, ZIV.1-ZIV.5 rows"
+  current_text_interfaces:
+    - https://base.garant.ru/414070697/
+    - https://wiki.privacy-advocates.ru/fstek_12.04.2026
+    - https://sudact.ru/law/metodicheskii-dokument-sostav-i-soderzhanie-meropriiatii-i/
+    - https://normativ.kontur.ru/document/1/506081-metodicheskiy-dokument-sostav-i-soderzhanie-meropriyatiy-i-mer-po-zashchite-informatsii
+  immutable_official_bytes: PENDING
+
+applicability:
+  trigger: INFORMATION_SYSTEM_USES_INTERNET_OF_THINGS_DEVICES_OR_DEVICE_NETWORKS
+  rule: APPLY_MEASURE_WHEN_CLASS_MATRIX_AND_SELECTION_PIPELINE_SELECTS_IT_AND_IOT_TRIGGER_IS_MET
+  guard: DO_NOT_GENERALIZE_ZIV_TO_NON_IOT_ENDPOINTS_OR_MOBILE_DEVICES
+
+measures:
+  - code: "ЗИВ.1"
+    title: "Идентификация и аутентификация"
+    purpose: PREVENT_ACCESS_BY_UNIDENTIFIED_OR_UNAUTHENTICATED_IOT_DEVICES
+    implementation:
+      - IDENTIFY_IOT_DEVICES_IN_ACCORDANCE_WITH_IAF_2
+      - IDENTIFY_BY_LOGICAL_NAME_LOGICAL_ADDRESS_PHYSICAL_ADDRESS_OR_COMBINATION
+      - AUTHENTICATE_IOT_DEVICES_USING_AUTHENTICATION_PROTOCOLS
+      - PROHIBIT_IOT_AUTHENTICATION_WITH_DEFAULT_PASSWORDS
+    documentation: []
+    enhancements:
+      - {number: 1, rule: IDENTIFY_IOT_DEVICES_WITH_PRIVATE_PSEUDONYMOUS_IDENTIFIERS_NOT_REVEALING_REAL_NAME_OR_PURPOSE}
+      - {number: 2, rule: AUTHENTICATE_IOT_DEVICES_USING_SECURITY_CERTIFICATES}
+      - {number: 3, rule: MUTUALLY_AUTHENTICATE_IOT_DEVICE_AND_INTERACTING_DEVICE_BEFORE_INFORMATION_EXCHANGE}
+      - {number: 4, rule: AUTHENTICATE_IOT_DEVICES_USING_UNIQUE_EMBEDDED_AUTHENTICATION_MEANS}
+    matrix:
+      base: {K3: PLUS, K2: PLUS, K1: PLUS}
+      enhancements: {K3: [], K2: [], K1: []}
+
+  - code: "ЗИВ.2"
+    title: "Управление доступом"
+    purpose: PREVENT_UNAUTHORIZED_ACCESS_TO_IOT_DEVICES
+    implementation:
+      - DEFINE_IOT_ACCESS_CONTROL_METHODS_IN_ACCORDANCE_WITH_UPD_1_TO_UPD_9
+      - DEFINE_IOT_DEVICE_TYPES_PERMITTED_IN_INFORMATION_SYSTEM
+      - DEFINE_PERMITTED_WIRELESS_WIRED_SWITCHED_AND_OTHER_ACCESS_TYPES
+      - DEFINE_IOT_INTERACTION_PROTOCOLS_PERMITTED_IN_INFORMATION_SYSTEM
+      - APPLY_LEAST_PRIVILEGE_WHEN_GRANTING_IOT_DEVICE_ACCESS
+    documentation: []
+    enhancements:
+      - {number: 1, rule: CENTRALLY_MANAGE_IOT_DEVICE_ACCESS}
+      - {number: 2, rule: MONITOR_AND_CONTROL_IOT_ACCESS_TO_DETECT_UNAUTHORIZED_CONNECTIONS_TO_INFORMATION_SYSTEM}
+      - {number: 3, rule: CONTROL_UNAUTHORIZED_CHANGES_TO_IOT_DEVICE_SETTINGS}
+      - {number: 4, rule: DETERMINE_IOT_DEVICE_LOCATION}
+      - {number: 5, rule: BLOCK_INFORMATION_SYSTEM_ACCESS_FROM_UNAUTHORIZED_IOT_DEVICE}
+      - {number: 6, rule: FILTER_SENSOR_ACTUATOR_AND_OTHER_IOT_MESSAGES_AND_COMMANDS_TO_ALLOW_ONLY_PERMITTED_MESSAGES_AND_COMMANDS}
+      - {number: 7, rule: PROTECT_IOT_NETWORK_DATA_USING_CRYPTOGRAPHIC_METHODS_IN_ACCORDANCE_WITH_RUSSIAN_LAW}
+      - {number: 8, rule: PROHIBIT_WIRELESS_CHANNELS_FOR_IOT_DEVICE_INFORMATION_TRANSMISSION}
+      - {number: 9, rule: ISOLATE_IOT_DEVICES_AND_IOT_NETWORK_FROM_INTERNET_AND_OR_OTHER_PUBLIC_COMMUNICATION_NETWORKS}
+    matrix:
+      base: {K3: PLUS, K2: PLUS, K1: PLUS}
+      enhancements: {K3: [], K2: [], K1: []}
+
+  - code: "ЗИВ.3"
+    title: "Защита данных"
+    purpose: PREVENT_IOT_DATA_LEAKAGE_UNAUTHORIZED_MODIFICATION_OR_ACCESS_RESTRICTION
+    implementation:
+      - INVENTORY_IOT_DEVICES_TO_DETECT_UNUSED_AND_UNAPPROVED_DEVICES
+      - ALLOW_CONNECTION_ONLY_TO_PERMITTED_IOT_DEVICES_FOR_ESTABLISHED_FUNCTIONS
+      - RESTRICT_FORMAT_OF_DATA_AND_COMMANDS_INPUT_TO_IOT_DEVICES
+      - DISABLE_UNUSED_IOT_CONNECTION_AND_COMMUNICATION_PROTOCOLS
+      - SEGMENT_IOT_DEVICE_NETWORKS_SEPARATELY_WITHIN_INFORMATION_SYSTEM
+      - PROTECT_IOT_DATA_FROM_DISCLOSURE_MODIFICATION_AND_FALSE_DATA_INJECTION_BEYOND_CONTROLLED_ZONE
+      - DISABLE_UNUSED_IOT_DEVICE_FUNCTIONAL_CAPABILITIES
+    documentation: []
+    enhancements:
+      - {number: 1, rule: PREVENT_DATA_OR_COMMAND_INPUT_TO_IOT_DEVICES_THROUGH_RESTRICTIVE_INPUT_INTERFACES}
+      - {number: 2, rule: ANALYZE_IOT_NETWORK_TRAFFIC_TO_DETECT_COMPUTER_ATTACK_SIGNS}
+    matrix:
+      base: {K3: PLUS, K2: PLUS, K1: PLUS}
+      enhancements: {K3: [], K2: [1], K1: [1]}
+
+  - code: "ЗИВ.4"
+    title: "Контроль целостности"
+    purpose: ENSURE_IOT_DEVICE_INTEGRITY
+    implementation:
+      - CONTROL_IOT_HARDWARE_COMPONENT_INTEGRITY_AND_DETECT_UNAUTHORIZED_NEW_DEVICES
+      - CONTROL_IOT_SOFTWARE_COMPOSITION_AND_DETECT_UNAUTHORIZED_NEW_SOFTWARE
+      - CONTROL_INTEGRITY_OF_IOT_NETWORK_SOFTWARE_UPDATES
+      - CONTROL_INTEGRITY_OF_IOT_SOFTWARE_CONFIGURATION_FILES
+      - ANALYZE_IOT_DEVICE_FIRMWARE_VULNERABILITIES
+      - WHEN_VULNERABILITIES_ARE_FOUND_UPDATE_TO_AVAILABLE_FIRMWARE_VERSION_WITHOUT_KNOWN_VULNERABILITIES
+    documentation: []
+    enhancements:
+      - {number: 1, rule: CONTROL_IOT_FIRMWARE_INTEGRITY_BY_VERIFYING_SECURITY_CERTIFICATE_AND_OR_CHECKSUMS}
+      - {number: 2, rule: CONTROL_ABSENCE_OF_UNAUTHORIZED_IOT_CONFIGURATION_CHANGES_WEEKLY_OR_AT_SHORTER_SYSTEM_DEFINED_INTERVAL}
+      - {number: 3, rule: DETECT_AND_BLOCK_EXECUTION_OF_IOT_SOFTWARE_WITH_BROKEN_INTEGRITY}
+    matrix:
+      base: {K3: PLUS, K2: PLUS, K1: PLUS}
+      enhancements: {K3: [], K2: [], K1: []}
+
+  - code: "ЗИВ.5"
+    title: "Регистрация, анализ и реагирование на события безопасности"
+    purpose: DEFINE_REGISTER_ANALYZE_AND_RESPOND_TO_IOT_SECURITY_EVENTS
+    implementation:
+      - REGISTER_IOT_DEVICE_SECURITY_EVENTS_IN_ACCORDANCE_WITH_RSB_1_TO_RSB_5
+      - ANALYZE_REGISTERED_EVENTS_AND_RESPOND_TO_IDENTIFIED_COMPUTER_INCIDENTS
+    documentation: []
+    enhancements:
+      - {number: 1, rule: NOTIFY_INFORMATION_SYSTEM_SECURITY_ADMINISTRATOR_OF_IDENTIFIED_COMPUTER_INCIDENT_SIGNS}
+      - {number: 2, rule: BLOCK_AND_OR_ISOLATE_IOT_DEVICES_WITH_IDENTIFIED_COMPUTER_INCIDENTS}
+    matrix:
+      base: {K3: PLUS, K2: PLUS, K1: PLUS}
+      enhancements: {K3: [], K2: [1], K1: [1]}
+
+numeric_constraints:
+  - id: ZIV4_ENH2_CONFIGURATION_INTEGRITY_INTERVAL
+    measure: "ЗИВ.4"
+    applicability: ENHANCEMENT_2
+    relation: AT_MOST
+    value: 1
+    unit: WEEK
+    source_semantics: WEEKLY_OR_AT_SHORTER_PERIOD_ESTABLISHED_IN_INFORMATION_SYSTEM
+
+operator_defined_parameters:
+  - {id: ZIV1_IDENTIFICATION_ATTRIBUTE_COMBINATION, measure: "ЗИВ.1", type: LOGICAL_NAME_LOGICAL_ADDRESS_PHYSICAL_ADDRESS_COMBINATION, universal_value: NOT_STATED}
+  - {id: ZIV2_ACCESS_CONTROL_METHODS, measure: "ЗИВ.2", type: ACCESS_CONTROL_METHOD_SET, universal_value: NOT_STATED}
+  - {id: ZIV2_PERMITTED_DEVICE_TYPES, measure: "ЗИВ.2", type: IOT_DEVICE_TYPE_SET, universal_value: NOT_STATED}
+  - {id: ZIV2_PERMITTED_ACCESS_TYPES, measure: "ЗИВ.2", type: ACCESS_TYPE_SET, universal_value: NOT_STATED}
+  - {id: ZIV2_PERMITTED_INTERACTION_PROTOCOLS, measure: "ЗИВ.2", type: PROTOCOL_SET, universal_value: NOT_STATED}
+  - {id: ZIV2_PERMITTED_MESSAGES_AND_COMMANDS, measure: "ЗИВ.2", type: MESSAGE_COMMAND_ALLOWLIST, universal_value: NOT_STATED}
+  - {id: ZIV3_INPUT_DATA_AND_COMMAND_FORMATS, measure: "ЗИВ.3", type: INPUT_FORMAT_SET, universal_value: NOT_STATED}
+  - {id: ZIV3_UNUSED_CONNECTION_PROTOCOLS, measure: "ЗИВ.3", type: PROTOCOL_DISABLE_SCOPE, universal_value: NOT_STATED}
+  - {id: ZIV3_UNUSED_FUNCTIONAL_CAPABILITIES, measure: "ЗИВ.3", type: FUNCTION_DISABLE_SCOPE, universal_value: NOT_STATED}
+
+class_matrix_summary:
+  cells_total: 30
+  nonblank_cells: 19
+  blank_cells: 11
+  fully_blank_measure_rows: []
+  rule: BLANK_ENHANCEMENT_CELL_DOES_NOT_DELETE_ADAPTATION_VERIFICATION_OR_COMPENSATION
+
+scope_guards:
+  - DO_NOT_APPLY_ZIV_WHEN_NO_IOT_DEVICE_OR_IOT_NETWORK_IS_IN_SCOPE
+  - DO_NOT_REPLACE_IAF_UPD_RSB_REFERENCED_MEASURES_WITH_ZIV
+  - DO_NOT_TREAT_ZIV_2_ENHANCEMENT_7_AS_SELF_CONTAINED_FSB_CRYPTOGRAPHIC_REQUIREMENTS
+  - DO_NOT_REQUIRE_UNLISTED_ENHANCEMENTS_FROM_CLASS_MATRIX_ALONE
+  - DO_NOT_TREAT_ROLE_ATTRIBUTE_OR_ACL_EXAMPLES_AS_EXHAUSTIVE_ACCESS_CONTROL_METHODS
+  - DO_NOT_INVENT_PERMITTED_DEVICE_ACCESS_PROTOCOL_MESSAGE_COMMAND_OR_INPUT_FORMAT_LISTS
+  - DO_NOT_REQUIRE_FIRMWARE_UPDATE_WHEN_NO_NONVULNERABLE_VERSION_IS_AVAILABLE
+  - DO_NOT_RELAX_ZIV_4_ENHANCEMENT_2_BEYOND_WEEKLY_OR_SHORTER_SYSTEM_DEFINED_INTERVAL
+  - DO_NOT_GENERALIZE_ZIV_CONTENT_TO_MOBILE_ENDPOINT_OR_WIRELESS_ACCESS_POINT_FAMILIES
+
+verification_boundary:
+  section_4_11_ziv_1_5: VERIFIED_PUBLIC_TEXT_CROSSCHECK
+  complete_ziv_family: VERIFIED_PUBLIC_TEXT_CROSSCHECK_5_OF_5
+  implementation_requirements: VERIFIED_NORMALIZED_PUBLIC_TEXT_CROSSCHECK
+  documentation_requirements: VERIFIED_NONE_STATED
+  numbered_enhancements: VERIFIED_NORMALIZED_PUBLIC_TEXT_CROSSCHECK
+  exact_numeric_constraints: VERIFIED_PUBLIC_TEXT_CROSSCHECK_1
+  exact_ziv_class_cells: VERIFIED_PUBLIC_TEXT_CROSSCHECK_30
+  referenced_iaf_upd_rsb_content: VERIFIED_BY_SEPARATE_LINKED_MODELS
+  referenced_cryptographic_content: PENDING_SEPARATE_FSB_LAYER
+  product_specific_iot_profiles: PENDING_SEPARATE_PROFILE_MODELS
+  other_measure_families: PENDING
+  official_immutable_bytes: PENDING
+  independent_expert_review: PENDING
+  critical_gap_created: false
+  high_gap_created: false
