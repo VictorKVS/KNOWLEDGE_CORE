@@ -1,0 +1,71 @@
+schema_version: "1.0"
+kind: ru-personal-data-master-source-inventory-delta
+base_inventory: "master-source-inventory.yaml"
+reconciliation_base_delta: "master-source-inventory-delta-stream3-2026-08-21T1122.yaml"
+checked_at: "2026-08-21T11:43:00+03:00"
+owner_stream: STREAM_3_SECTOR_OVERLAYS
+protected_information_delta_ref: "../ru-protected-information/master-inventory-delta-2026-08-21T1143.yaml"
+status: APPEND_ONLY_RECONCILIATION_READY
+
+stream_3_counter_update:
+  sources_found_total: 24
+  new_sources_this_pass: 0
+  downloaded_total: 9
+  immutable_artifacts: 9
+  pending_immutable: 13
+  reused_existing_sources_status_total: 2
+  primary_publication_verified_total: 10
+  sectors_registered: 16
+  direct_scope_boundaries_registered_this_pass: 1
+  source_version_edges_identified_this_pass: 1
+  legal_conflicts_confirmed_this_pass: 0
+
+archive_sector_reconciliation:
+  source_id: SEC-SRC-RU-FZ-125
+  title: "125-ФЗ «Об архивном деле в Российской Федерации»"
+  state: EXISTING_MASTER_SOURCE_OPERATIONALIZED_EXACT_ARTIFACT_PENDING
+  source_card: "security-corpora/RU/protected-information/source/SEC-SRC-RU-FZ-125.yaml"
+  retention_rule:
+    locator: "статья 22.1"
+    concept: RECORD_RETENTION_PERIOD
+    current_summary: "Personnel records completed before 01.01.2003: 75 years; after 01.01.2003: 50 years, with statutory exceptions."
+  access_rule:
+    locator: "статья 25 часть 3"
+    concept: ACCESS_RESTRICTION_PERIOD
+    current_summary: "75-year restriction from creation for archival documents containing personal/family secrets, private-life information or citizen-safety information."
+  semantic_guard: "Retention period and access-restriction period remain separate graph concepts."
+
+pdn_scope_boundary:
+  source: "152-ФЗ статья 1 часть 2 пункт 2"
+  target: "125-ФЗ / archival legislation"
+  relation: DIRECT_STATUTORY_SCOPE_BOUNDARY
+  state: RELATIONSHIP_LEVEL_APPLICATION_REVIEW_REQUIRED
+  finding: >-
+    152-ФЗ does not apply to relations arising from organization of storage, acquisition, accounting and use of Archival
+    Fund and other archival documents containing personal data when those relations are governed by Russian archival law.
+  guard: >-
+    Do not convert this into a blanket exemption for an organization. Processing outside the archival relationship or
+    lifecycle can remain subject to 152-ФЗ and must be evaluated separately.
+
+version_chain_update:
+  source_id: SEC-SRC-RU-FZ-125
+  current_edition_crosscheck: "ред. от 13.12.2024; действует с 24.12.2024"
+  latest_event:
+    act: "469-ФЗ от 13.12.2024"
+    official_publication_id: "0001202412130022"
+    edge: "469-ФЗ -> 125-ФЗ"
+    changed_locator: "статья 24"
+    article_22_1_changed: false
+    article_25_3_changed: false
+    exact_artifact: PENDING
+
+pdn_executable_effect:
+  rules_changed: false
+  applicability_edges_promoted: 0
+  new_current_pdn_rules: 0
+  scope_boundaries_registered: 1
+  new_source_version_edges_identified: 1
+
+proof_floor: >-
+  This delta records a statutory boundary between 152-ФЗ and archival-law relations. It must be resolved at the concrete
+  relationship/lifecycle level and does not grant an organization-wide personal-data exemption.
