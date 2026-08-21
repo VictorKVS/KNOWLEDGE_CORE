@@ -1,0 +1,51 @@
+schema_version: "1.0"
+kind: ru-personal-data-master-source-inventory-delta
+owner_stream: STREAM_3_SECTOR_OVERLAYS
+checked_at: "2026-08-22T02:22:00+03:00"
+status: APPEND_ONLY_RELATIONSHIP_DELTA
+
+source_relation:
+  source_id: SEC-SRC-RU-GK2-1996-A946
+  title: "ГК РФ часть вторая, статья 946 — Тайна страхования"
+  sector: insurance
+  regime: insurance_secrecy
+  source_card: "security-corpora/RU/protected-information/source/SEC-SRC-RU-GK2-1996-A946.yaml"
+  primary_source_identity:
+    authority: "Президент Российской Федерации — Банк документов"
+    url: "https://www.kremlin.ru/acts/bank/8804"
+    state: PRIMARY_BASELINE_IDENTIFIED_EXACT_CURRENT_BINARY_PENDING
+
+pdn_overlap:
+  target: "152-ФЗ"
+  state: OVERLAP_CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  dimensions:
+    - IDENTIFIABLE_NATURAL_PERSON_INFORMATION
+    - HEALTH_INFORMATION
+    - PROPERTY_STATUS_INFORMATION
+  legal_actor_from_special_regime: "страховщик"
+  special_regime_duty: NON_DISCLOSURE
+  guard: >-
+    Article 946 protects information obtained by an insurer in professional activity. This special confidentiality duty
+    does not by itself establish the complete 152-ФЗ applicability path for any concrete processing operation. Resolve
+    data subject, purpose, operation, legal basis, recipient and processing context separately.
+
+health_overlap:
+  target: SEC-SRC-RU-FZ-323
+  type: HEALTH_INFORMATION_FIELD_OVERLAP_NOT_REGIME_EQUIVALENCE
+  state: CANDIDATE_RELATIONSHIP_REVIEW_REQUIRED
+  guard: >-
+    The same health-related datum may be protected by different regimes in different legal contexts. Insurance secrecy
+    and medical secrecy must remain distinct nodes unless a concrete fact pattern proves both apply.
+
+version_and_evidence_gate:
+  current_article_text_crosschecked: true
+  primary_current_binary: PENDING
+  locator_specific_version_chain: PARTIAL
+  executable_pdn_edge_allowed: false
+
+counter_effect:
+  new_sources: 0
+  duplicate_sources: 0
+  applicability_edges_promoted: 0
+  relationship_candidates_added: 2
+  pdn_master_source_count_change: 0
