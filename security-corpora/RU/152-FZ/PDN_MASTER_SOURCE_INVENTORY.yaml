@@ -1,4 +1,4 @@
-schema_version: "1.1"
+schema_version: "1.2"
 id: SEC-PDN-MASTER-SOURCE-INVENTORY
 kind: security-regulatory-source-inventory
 status: ACTIVE_DISCOVERY
@@ -25,12 +25,11 @@ freshness_alerts:
     detected_at: "2026-08-20"
     subject: SEC-SRC-RU-152FZ-2026-07-26
     finding: >-
-      Previously registered current root SEC-SRC-RU-152FZ-2025-09-01 is no longer current. Federal Law
-      No. 265-FZ of 26.07.2026 amended Article 12 of 152-FZ and entered into force on 26.07.2026 except
-      Article 2 of No. 265-FZ, which takes effect on 01.09.2027.
+      Federal Law No. 265-FZ of 26.07.2026 amended Article 12 of 152-FZ and entered into force on 26.07.2026,
+      except Article 2 of No. 265-FZ, which takes effect on 01.09.2027.
     action: >-
       Route current-date queries to the 26.07.2026 version identity; preserve the 01.09.2025 node only as
-      historical evidence and perform structural delta review before reusing derived nodes.
+      historical evidence and perform structural delta review before reusing Article 12-derived nodes.
 
 sources:
   - id: SEC-SRC-RU-152FZ-2026-07-26
@@ -41,28 +40,24 @@ sources:
     raw_capture: PENDING
     existing_atomized_records_reuse_candidate: 4
     delta_review_required: true
-
   - id: SEC-SRC-RU-FZ265-2026
     document: "Федеральный закон от 26.07.2026 № 265-ФЗ"
     role: direct_amendment_dependency_article_12
     metadata_status: METADATA_VERIFIED
     source_record: "source/SEC-SRC-RU-FZ265-2026.yaml"
     raw_capture: PENDING
-
   - id: SEC-SRC-RU-PP687-2008
     document: "Постановление Правительства РФ от 15.09.2008 № 687"
     role: non_automated_processing
     metadata_status: METADATA_VERIFIED
     source_record: "source/SEC-SRC-RU-PP687-2008.yaml"
     raw_capture: PENDING
-
   - id: SEC-SRC-RU-PP211-2012
     document: "Постановление Правительства РФ от 21.03.2012 № 211"
     role: state_municipal_operator_measures
     metadata_status: METADATA_VERIFIED
     source_record: "source/SEC-SRC-RU-PP211-2012.yaml"
     raw_capture: PENDING
-
   - id: SEC-SRC-RU-PP702-2025
     document: "Постановление Правительства РФ от 22.05.2025 № 702"
     role: article_13_1_user_eligibility_verification
@@ -70,7 +65,6 @@ sources:
     source_record: "source/SEC-SRC-RU-PP702-2025.yaml"
     raw_capture: PENDING
     applicability: ARTICLE_13_1_SCOPE_ONLY
-
   - id: SEC-SRC-RU-PP740-2025
     document: "Постановление Правительства РФ от 28.05.2025 № 740"
     role: article_13_1_designated_gis_and_platform_extension
@@ -78,7 +72,6 @@ sources:
     source_record: "source/SEC-SRC-RU-PP740-2025.yaml"
     raw_capture: PENDING
     applicability: ARTICLE_13_1_SCOPE_ONLY
-
   - id: SEC-SRC-RU-PP966-2025
     document: "Постановление Правительства РФ от 26.06.2025 № 966"
     role: article_13_1_operator_and_information_system_interaction
@@ -86,7 +79,6 @@ sources:
     source_record: "source/SEC-SRC-RU-PP966-2025.yaml"
     raw_capture: PENDING
     applicability: ARTICLE_13_1_SCOPE_ONLY
-
   - id: SEC-SRC-RU-PP733-2021
     document: "Постановление Правительства РФ от 14.05.2021 № 733, текущая редакция от 17.12.2025"
     role: article_13_1_depersonalized_data_platform_context
@@ -94,7 +86,6 @@ sources:
     source_record: "source/SEC-SRC-RU-PP733-2021.yaml"
     raw_capture: PENDING
     current_revision_compile_required: true
-
   - id: SEC-SRC-RU-PP2563-2021
     document: "Постановление Правительства РФ от 29.12.2021 № 2563"
     role: pp733_version_chain_dependency
@@ -102,7 +93,6 @@ sources:
     source_record: "source/SEC-SRC-RU-PP2563-2021.yaml"
     raw_capture: PENDING
     applicability: VERSION_CHAIN_SCOPE
-
   - id: SEC-SRC-RU-PP806-2024
     document: "Постановление Правительства РФ от 15.06.2024 № 806"
     role: pp733_version_chain_dependency
@@ -110,7 +100,6 @@ sources:
     source_record: "source/SEC-SRC-RU-PP806-2024.yaml"
     raw_capture: PENDING
     applicability: VERSION_CHAIN_SCOPE
-
   - id: SEC-SRC-RU-PP1650-2024
     document: "Постановление Правительства РФ от 28.11.2024 № 1650"
     role: pp733_version_chain_dependency
@@ -118,7 +107,6 @@ sources:
     source_record: "source/SEC-SRC-RU-PP1650-2024.yaml"
     raw_capture: PENDING
     applicability: VERSION_CHAIN_SCOPE
-
   - id: SEC-SRC-RU-PP2052-2025
     document: "Постановление Правительства РФ от 17.12.2025 № 2052"
     role: current_pp733_amendment_and_article_13_1_platform_terms
@@ -126,57 +114,50 @@ sources:
     source_record: "source/SEC-SRC-RU-PP2052-2025.yaml"
     raw_capture: PENDING
     applicability: ARTICLE_13_1_PLATFORM_AND_VERSION_CHAIN_SCOPE
-
   - id: SEC-SRC-RU-RKN18-2021
     document: "Приказ Роскомнадзора от 24.02.2021 № 18"
     role: consent_for_dissemination_requirements
     metadata_status: METADATA_VERIFIED
     source_record: "source/SEC-SRC-RU-RKN18-2021.yaml"
     raw_capture: IMMUTABLE_CAPTURED
-
   - id: SEC-SRC-RU-RKN128-2022
     document: "Приказ Роскомнадзора от 05.08.2022 № 128"
     role: adequate_foreign_states_list
     metadata_status: METADATA_VERIFIED
     source_record: "source/SEC-SRC-RU-RKN128-2022.yaml"
     raw_capture: IMMUTABLE_CAPTURED
+    current_root: SEC-SRC-RU-152FZ-2026-07-26
     impact_review: PDN-CONFLICT-CANDIDATE-2026-001
-
   - id: SEC-SRC-RU-RKN178-2022
     document: "Приказ Роскомнадзора от 27.10.2022 № 178"
     role: harm_assessment_requirements
     metadata_status: METADATA_VERIFIED
     source_record: "source/SEC-SRC-RU-RKN178-2022.yaml"
     raw_capture: IMMUTABLE_CAPTURED
-
   - id: SEC-SRC-RU-RKN179-2022
     document: "Приказ Роскомнадзора от 28.10.2022 № 179"
     role: destruction_confirmation_requirements
     metadata_status: METADATA_VERIFIED
     source_record: "source/SEC-SRC-RU-RKN179-2022.yaml"
     raw_capture: IMMUTABLE_CAPTURED
-
   - id: SEC-SRC-RU-RKN180-2022
     document: "Приказ Роскомнадзора от 28.10.2022 № 180"
     role: notification_forms
     metadata_status: METADATA_VERIFIED
     source_record: "source/SEC-SRC-RU-RKN180-2022.yaml"
     raw_capture: IMMUTABLE_CAPTURED
-
   - id: SEC-SRC-RU-RKN140-2025
     document: "Приказ Роскомнадзора от 19.06.2025 № 140"
     role: depersonalization_requirements_and_methods
     metadata_status: METADATA_VERIFIED
     source_record: "source/SEC-SRC-RU-RKN140-2025.yaml"
     raw_capture: IMMUTABLE_CAPTURED
-
   - id: SEC-SRC-RU-PP1154-2025
     document: "Постановление Правительства РФ от 01.08.2025 № 1154"
     role: depersonalization_government_rules
     metadata_status: METADATA_VERIFIED
     source_record: "source/SEC-SRC-RU-PP1154-2025.yaml"
     raw_capture: IMMUTABLE_CAPTURED
-
   - id: SEC-SRC-RU-INTERAGENCY-245-56-399-85-441-2025
     document: "Межведомственный приказ от 25.06.2025 № 245/56/399/85/441"
     role: narrow_article_6_protected_person_access_dependency
@@ -195,16 +176,12 @@ version_history:
 version_chain_identity_resolutions:
   - chain: SEC-SRC-RU-PP733-2021
     source_id: SEC-SRC-RU-PP2563-2021
-    amendment: "Постановление Правительства РФ от 29.12.2021 № 2563"
     official_publication_id: "0001202112310106"
     status: PUBLICATION_IDENTITY_REGISTERED_RAW_PENDING
-    evidence: "PP 733 version index and the official EIP NSUD notice identify official publication 31.12.2021 No. 0001202112310106."
   - chain: SEC-SRC-RU-PP733-2021
     source_id: SEC-SRC-RU-PP806-2024
-    amendment: "Постановление Правительства РФ от 15.06.2024 № 806"
     official_publication_id: "0001202406150005"
     status: PUBLICATION_IDENTITY_REGISTERED_RAW_PENDING
-    evidence: "PP 733 version index identifies official publication 15.06.2024 No. 0001202406150005; special temporal scope begins 29.06.2023."
 
 conflict_candidates:
   - conflict_id: PDN-CONFLICT-CANDIDATE-2026-001
@@ -214,21 +191,20 @@ conflict_candidates:
     locator_a: "Article 1 -> 152-FZ Article 12"
     source_b: SEC-SRC-RU-RKN128-2022
     issue: >-
-      No. 265-FZ changed the statutory criteria for adequate-protection countries, while the currently
-      registered RKN Order No. 128 is structured around the earlier Convention-party/non-party distinction.
-      This is a review candidate, not a finding that Order No. 128 is invalid or repealed.
+      No. 265-FZ changed the statutory criteria for adequate-protection countries, while Order No. 128 is
+      structured around the earlier Convention-party/non-party distinction. This is a review candidate,
+      not a finding that Order No. 128 is invalid or repealed.
     current_status_check:
-      checked_at: "2026-08-20"
+      checked_at: "2026-08-21"
       finding: >-
-        Current-law references still identify RKN Order No. 128 as the operative list, while August 2026
-        monitoring reports a Roskomnadzor draft replacement list (project ID 169785) prepared after No. 265-FZ.
-        A draft is not an enacted primary source and must not replace the current node until official publication.
+        Current-law indexes checked on 2026-08-21 still present RKN Order No. 128 as the operative list.
+        The Roskomnadzor replacement text prepared 31.07.2026 remains a draft in the evidence found in this pass.
+        It must not replace the current node until an enacted official publication identity is found.
       classification: CURRENT_RULE_WITH_REPLACEMENT_DRAFT_WATCH
       semantic_promotion: false
     resolution_gate:
-      - verify current status/version chain of RKN Order No. 128
-      - compare the order's operative list and grouping logic against Article 12 effective 26.07.2026
-      - monitor draft project 169785 but do not treat it as law before official publication
+      - compare the operative list and grouping logic against Article 12 effective 26.07.2026
+      - monitor the replacement draft but do not treat it as law before official publication
       - search for amending/replacement regulator acts after 26.07.2026
       - classify as compatible, context-dependent, superseded, or genuine conflict with evidence
 
@@ -236,17 +212,13 @@ regulatory_watch:
   - watch_id: PDN-WATCH-RKN128-REPLACEMENT-2026-001
     subject: "Potential replacement of RKN Order No. 128 after Federal Law No. 265-FZ"
     status: DRAFT_REPORTED_NOT_PRIMARY
-    detected_at: "2026-08-20"
-    reported_project_id: "169785"
+    checked_at: "2026-08-21"
+    project_prepared_date: "2026-07-31"
     evidence_class: SECONDARY_MONITORING_ONLY
-    proof_rule: "Do not register as an active normative source until an official enacted publication identity is found."
+    proof_rule: "Do not register as active normative source until an enacted official publication identity is found."
 
 production_counters:
   identified: 20
-  registered_before_this_pass: 18
-  registered_after_this_pass: 20
-  source_records_added_this_pass: 2
-  sources_moved_to_version_history_this_pass: 0
   metadata_verified: 19
   current_revision_identity_pending_raw: 1
   raw_downloaded_exact: 8
@@ -260,108 +232,60 @@ production_counters:
 analysis_metrics:
   existing_atomized_nodes_reuse_candidate: 4
   mandatory_delta_review_articles: 1
+  freshness_checks_this_pass: 1
   freshness_defects_found_this_pass: 0
+  source_records_added_this_pass: 0
   direct_dependencies_added_this_pass: 0
-  version_chain_dependencies_added_this_pass: 2
-  version_chain_gaps_opened_this_pass: 0
-  version_chain_gaps_closed_this_pass: 2
+  version_chain_dependencies_added_this_pass: 0
+  version_chain_gaps_closed_this_pass: 0
   conflict_candidates_opened_this_pass: 0
-  source_relation_rebases_this_pass: 0
-  replacement_draft_watches_opened_this_pass: 0
-  immutable_acquisition_requests_this_pass: 3
-  acquisition_identity_guard_hardened_this_pass: 0
+  source_relation_rebases_this_pass: 1
   semantic_promotions_this_pass: 0
+  immutable_new_this_pass: 0
   note: >-
-    PP RF Nos. 2563 and 806 publication-identity gaps in the PP 733 version chain are now closed and represented by
-    separate source records. They remain raw-pending until byte-exact official PDFs, exact lengths and SHA-256 hashes
-    are accepted. PP 740 was also retriggered for immutable acquisition. No semantic or atomized status was promoted.
+    RKN Order No. 128 was freshly rechecked and remains routed as the current operative list in available current-law
+    indexes; its DETAILS relation was rebased from the superseded 01.09.2025 152-FZ root to the current 26.07.2026 root.
+    The Article 12 alignment conflict remains REVIEW_REQUIRED. No semantic or immutable status was promoted.
 
 acquisition_activity:
-  - source_id: SEC-SRC-RU-FZ265-2026
-    requested_at: "2026-08-20T20:03:42Z"
-    route: official_publication_pdf
-    official_publication_id: "0001202607260024"
-    status: REQUESTED_NO_ACCEPTED_MANIFEST_YET
-    proof_rule: "Keep raw_capture=PENDING until manifest contains exact bytes metadata and SHA-256."
-  - source_id: PDN-CORE-ACQUIRER
-    requested_at: "2026-08-20T23:02:40Z"
-    route: pipeline_hardening
-    status: IDENTITY_SCOPE_GUARD_COMMITTED
-    commit: "158d83df01e65d2753fed6af76a0378d20e2cc91"
-    proof_rule: >-
-      A publication ID is eligible for acquisition only when it belongs to the top-level document section;
-      federal-law publication metadata number must match the registered source document number when checkable.
-  - source_id: SEC-SRC-RU-FZ265-2026
-    requested_at: "2026-08-21T05:05:00Z"
-    route: official_publication_pdf
-    official_publication_id: "0001202607260024"
-    status: RUN_REQUESTED_GUARDED
-    commit: "ec0ede982c096e719bd0931989bae507ef72779d"
-    proof_rule: "Require source-number identity match, PDF signature, exact official byte length and SHA-256 before immutable promotion."
-  - source_id: SEC-SRC-RU-PP702-2025
-    requested_at: "2026-08-21T02:10:00Z"
-    route: official_publication_pdf
-    official_publication_id: "0001202505280017"
-    status: REQUESTED_NO_ACCEPTED_MANIFEST_YET
-    proof_rule: "Keep raw_capture=PENDING until official PDF manifest contains exact byte length and SHA-256."
-  - source_id: SEC-SRC-RU-PP740-2025
-    requested_at: "2026-08-21T07:59:28Z"
-    route: official_publication_pdf
-    official_publication_id: "0001202505300061"
-    status: RETRY_REQUESTED_NO_ACCEPTED_MANIFEST_YET
-    commit: "9bb35b2898f527ed59a700e8fe55788401e22f61"
-  - source_id: SEC-SRC-RU-PP966-2025
-    requested_at: "2026-08-21T05:16:00Z"
-    route: official_publication_pdf
-    official_publication_id: "0001202506260044"
-    status: REQUESTED_NO_ACCEPTED_MANIFEST_YET
-  - source_id: SEC-SRC-RU-PP733-2021
-    requested_at: "2026-08-21T05:28:00Z"
-    route: official_publication_pdf
-    official_publication_id: "0001202105180005"
-    status: REQUESTED_BASELINE_CURRENT_VERSION_COMPILE_REQUIRED
-  - source_id: SEC-SRC-RU-PP2052-2025
-    requested_at: "2026-08-21T05:29:00Z"
-    route: official_publication_pdf
-    official_publication_id: "0001202512180033"
-    status: REQUESTED_NO_ACCEPTED_MANIFEST_YET
-  - source_id: SEC-SRC-RU-PP1650-2024
-    requested_at: "2026-08-21T05:32:00Z"
-    route: official_publication_pdf
-    official_publication_id: "0001202411290006"
-    status: REQUESTED_NO_ACCEPTED_MANIFEST_YET
-  - source_id: SEC-SRC-RU-PP2563-2021
-    requested_at: "2026-08-21T08:10:00Z"
-    route: official_publication_pdf
-    official_publication_id: "0001202112310106"
-    status: REQUESTED_NO_ACCEPTED_MANIFEST_YET
-  - source_id: SEC-SRC-RU-PP806-2024
-    requested_at: "2026-08-21T08:11:00Z"
-    route: official_publication_pdf
-    official_publication_id: "0001202406150005"
-    status: REQUESTED_NO_ACCEPTED_MANIFEST_YET
+  latest_trigger_commit: "c0df8c7ce504aa2284b7f1ba823e9beee24e6506"
+  trigger_reason: "RKN128 current-root rebase and freshness refresh; source/** change is inside PDN acquisition workflow path set."
+  accepted_manifest_delta_at_inventory_write: 0
+  last_proven_acquisition_run:
+    started_at: "2026-08-20T05:12:55.213514Z"
+    targets: 8
+    raw_downloaded_exact: 8
+    immutable_sha256_verified: 8
+    pending: 0
+  pending_priority:
+    - SEC-SRC-RU-152FZ-2026-07-26
+    - SEC-SRC-RU-FZ265-2026
+    - SEC-SRC-RU-PP687-2008
+    - SEC-SRC-RU-PP211-2012
+    - SEC-SRC-RU-PP702-2025
+    - SEC-SRC-RU-PP740-2025
+    - SEC-SRC-RU-PP966-2025
+    - SEC-SRC-RU-PP733-2021
+    - SEC-SRC-RU-PP2563-2021
+    - SEC-SRC-RU-PP806-2024
+    - SEC-SRC-RU-PP1650-2024
+    - SEC-SRC-RU-PP2052-2025
 
 acquisition_blockers:
   - >-
-      Byte-exact acquisition via the official publication portal remains operational for source records carrying
-      document-level publication IDs, but no new accepted immutable manifest was present in main when this inventory
-      revision was written. Existing eight immutable artifacts remain valid.
+      No new accepted immutable manifest is present for the twelve pending sources at this inventory write.
+      Keep every pending source below IMMUTABLE_CAPTURED until source URL, retrieved_at, MIME, exact byte length,
+      SHA-256 and accepted manifest are actually present.
   - >-
-      The current consolidated 152-FZ source card still lacks an approved byte-exact canonical artifact route;
+      The current consolidated 152-FZ source card still requires an approved byte-exact canonical artifact route;
       version identity alone is insufficient for immutable promotion.
   - >-
-      PP RF No. 733 must not be treated as current merely from its original 2021 PDF. Its complete amendment publication
-      identities are now registered, but current semantics remain blocked until every required amendment artifact is
-      immutable-captured and the effective current locators are reconstructed.
+      PP RF No. 733 must not be treated as current merely from its original 2021 PDF. Compile its amendment-chain
+      artifacts and reconstruct effective current locators before semantic promotion.
 
 next_gate:
-  - accept No. 265-FZ only after PDF signature, official API byte-length and source-number identity checks pass
-  - accept PP RF Nos. 702, 740, 966, 2563, 806, 1650 and 2052 only after byte-exact official PDFs and SHA-256 are recorded
-  - capture PP RF No. 733 base artifact and compile its complete amendment-chain evidence before current locators
-  - capture byte-exact current consolidated 152-FZ version effective 26.07.2026 and PP RF Nos. 687 / 211
+  - capture and fingerprint the remaining twelve official raw artifacts
   - run structural delta 152-FZ 2025-09-01 -> 2026-07-26 with Article 12 mandatory review
-  - review RKN Order No. 128 alignment with amended Article 12 without presuming invalidity
-  - monitor RKN replacement draft project 169785 and promote only after official enacted publication is found
   - structural parse and legal/semantic chunking of immutable captures
   - concept/definition reconciliation and conflict detection
   - atomic requirement extraction with source locators
