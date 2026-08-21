@@ -1,0 +1,115 @@
+schema_version: "1.0"
+kind: stream-3-sector-overlay-run
+run_id: STREAM3-2026-08-21T2022
+started_at: "2026-08-21T20:22:59+03:00"
+owner_stream: STREAM_3_SECTOR_OVERLAYS
+focus: "financial / banking secrecy / Law 395-1 Article 26"
+status: COMPLETED_WITH_PRIMARY_BINARY_CAPTURE_PENDING
+
+inputs:
+  protected_information_master: "master-inventory.yaml"
+  reconciliation_base_delta: "master-inventory-delta-2026-08-21T1723.yaml"
+  pdn_base_delta: "../ru-personal-data/master-source-inventory-delta-stream3-2026-08-21T1723.yaml"
+
+source_dedup:
+  source_id: SEC-SRC-RU-LAW-395-1
+  existed_before_run: true
+  duplicate_created: false
+  source_card_created: "security-corpora/RU/protected-information/source/SEC-SRC-RU-LAW-395-1.yaml"
+  note: "The source was already present in the master inventory; the source card operationalizes that node and does not increase discovery counts."
+
+discovery_and_currentness:
+  source: "Закон РФ от 02.12.1990 № 395-1 «О банках и банковской деятельности»"
+  primary_anchor: "статья 26 — банковская тайна"
+  official_historical_baseline:
+    act: "17-ФЗ от 03.02.1996"
+    url: "https://www.kremlin.ru/acts/bank/8843/print"
+    state: OFFICIAL_RESTATEMENT_BASELINE_IDENTIFIED_NOT_CURRENT_CONSOLIDATED_ARTIFACT
+  current_text_state: CURRENT_ARTICLE_26_CROSSCHECKED_VERSION_CHAIN_PARTIAL
+  current_version_events:
+    - act: "163-ФЗ от 24.06.2025"
+      official_publication_id: "0001202506240031"
+      official_publication_date: "2025-06-24"
+      official_url: "https://publication.pravo.gov.ru/document/0001202506240031"
+      effective_from: "2026-07-01"
+      effect: "changes Article 26; current as of run date"
+      exact_binary: PENDING
+      reconciliation: RECONFIRMED_EXISTING_MASTER_EDGE
+    - act: "279-ФЗ от 31.07.2025"
+      official_publication_id: "0001202507310010"
+      official_publication_date: "2025-07-31"
+      official_url: "https://publication.pravo.gov.ru/document/0001202507310010"
+      effective_from: "2025-09-01"
+      effect: "changes Article 26; current as of run date"
+      exact_binary: PENDING
+      reconciliation: RECONFIRMED_EXISTING_MASTER_EDGE
+    - act: "431-ФЗ от 28.11.2025"
+      official_publication_id: "0001202511280093"
+      official_publication_date: "2025-11-28"
+      official_url: "https://publication.pravo.gov.ru/document/0001202511280093"
+      effective_from: "2025-11-28"
+      effect: "adds a 2026-specific Article 26 child-benefit experiment data-provision clause and recipient confidentiality duty"
+      exact_binary: PENDING
+      reconciliation: NEW_CURRENT_EDGE_REGISTERED
+  future_version_events:
+    - {act: "425-ФЗ от 28.11.2025", official_publication_id: "0001202511280017", effective_from: "2026-09-01", current_requirement: false, reconciliation: RECONFIRMED_PRIOR_STREAM_FINDING}
+    - {act: "210-ФЗ от 26.06.2026", official_publication_id: "0001202606260070", effective_from: "2026-09-01", current_requirement: false, reconciliation: NEW_FUTURE_EVENT}
+    - {act: "215-ФЗ от 26.06.2026", official_publication_id: "0001202606260075", effective_from: "2026-12-24", current_requirement: false, reconciliation: NEW_FUTURE_EVENT}
+
+primary_evidence_checks:
+  - "Official Presidential document bank contains the 03.02.1996 № 17-ФЗ restatement and Article 26 banking-secrecy anchor."
+  - "Official publication portal lists 163-ФЗ as an amendment to Article 26; publication 0001202506240031 dated 24.06.2025."
+  - "Official publication portal lists 279-ФЗ as an amendment to Article 26; publication 0001202507310010 dated 31.07.2025."
+  - "Official publication portal lists 431-ФЗ; current Article 26 crosscheck confirms its 2026-specific provision."
+  - "Official publication portal lists 425-ФЗ as publication 0001202511280017; authoritative act text identifies Article 26 part 64 as a future amendment."
+  - "210-ФЗ publication locator 0001202606260070 and 215-ФЗ locator 0001202606260075 were crosschecked; their Article 26 changes are future as of 21.08.2026."
+
+cross_regime_analysis:
+  pdn_overlap:
+    state: OVERLAP_CANDIDATE_SPECIAL_CONFIDENTIALITY_REGIME_APPLICABILITY_REVIEW_REQUIRED
+    promoted_applicability_edges: 0
+    guard: "Banking secrecy covers natural-person and legal-entity information; no universal PDN applicability inferred."
+  credit_histories:
+    target: SEC-SRC-RU-FZ-218
+    relation: STATUTORY_TRANSFER_CONTEXT_CREDIT_HISTORIES
+    state: CANDIDATE_RELATIONSHIP_REVIEW_REQUIRED
+    guard: "Do not merge regimes or infer organization-specific applicability."
+
+acquisition_attempt:
+  exact_primary_binary_downloads: 0
+  durable_immutable_artifacts_added: 0
+  capture_backlog_created: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-LAW-395-1-version-capture-pending.json"
+  blocker: >-
+    Official publication records and authoritative text locators were readable, but the runtime could not obtain official
+    PDF endpoints as durable byte-exact downloads. Exact MIME, byte length and SHA-256 therefore remain unset.
+  integrity_guard:
+    mime_invented: false
+    byte_length_invented: false
+    sha256_invented: false
+    portal_display_size_used_as_hash_input: false
+
+outputs:
+  - "security-corpora/RU/protected-information/source/SEC-SRC-RU-LAW-395-1.yaml"
+  - "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-LAW-395-1-version-capture-pending.json"
+  - "security-knowledge/corpus/ru-protected-information/master-inventory-delta-2026-08-21T2022.yaml"
+  - "security-knowledge/corpus/ru-personal-data/master-source-inventory-delta-stream3-2026-08-21T2022.yaml"
+  - "security-knowledge/corpus/ru-protected-information/stream-3-run-2026-08-21T2022.yaml"
+
+counter_reconciliation:
+  before: {found: 24, downloaded: 9, immutable: 9, pending: 13, reused: 2}
+  after: {found: 24, downloaded: 9, immutable: 9, pending: 13, reused: 2}
+  reason: "Existing banking-secrecy node improved; no new source and no exact durable binary acquired."
+
+proof_floor_effect:
+  executable_rules_changed: false
+  applicability_edges_promoted: 0
+  legal_conflicts_confirmed: 0
+  duplicate_source_nodes_created: 0
+  new_current_version_edges_identified: 1
+  existing_current_version_edges_reconfirmed: 2
+  future_version_events_newly_registered: 2
+  prior_future_version_events_reconfirmed: 1
+
+next_priority:
+  - "Retry byte-exact capture and hashing for 395-1/current Article 26 and 163-ФЗ, 279-ФЗ, 431-ФЗ, 425-ФЗ, 210-ФЗ, 215-ФЗ."
+  - "Continue finance cluster with Article 946 of Civil Code Part Two (insurance secrecy) without duplicating the existing SEC-SRC-RU-GK2-1996-A946 node."
