@@ -1,0 +1,138 @@
+schema_version: "1.0"
+id: FSTEC-MD-2026-SOV-FAMILY
+title: "FSTEC 12 April 2026 methodical document: complete SOV.1-SOV.2 family"
+authority: FSTEC_RUSSIA
+approved_date: "2026-04-12"
+status: VERIFIED_BOUNDED_COMPLETE_SOV_PUBLIC_TEXT_CROSSCHECK
+scope_statement: >-
+  Complete normalized coverage of section 4.14 measures SOV.1-SOV.2 for
+  network-level intrusion detection and prevention: eighteen implementation
+  atoms, two documentation items, twelve enhancement entries and all twelve
+  appendix-2 cells. The literal duplicate enhancement label 3 in SOV.1 is
+  preserved as two distinct source instances; no missing label 4 is invented.
+
+source_evidence:
+  official_page: https://fstec.ru/dokumenty/vse-dokumenty/spetsialnye-normativnye-dokumenty/metodicheskij-dokument-ot-12-aprelya-2026-g
+  official_endpoint_result: TIMEOUT_BYTES_NOT_ACQUIRED
+  section_locator: "section 4.14, SOV.1-SOV.2"
+  appendix_locator: "appendix 2, family 14, SOV.1-SOV.2 rows"
+  current_text_interfaces:
+    - https://base.garant.ru/414070697/
+    - https://wiki.privacy-advocates.ru/fstek_12.04.2026
+    - https://sudact.ru/law/metodicheskii-dokument-sostav-i-soderzhanie-meropriiatii-i/
+    - https://normativ.kontur.ru/document/1/506081-metodicheskiy-dokument-sostav-i-soderzhanie-meropriyatiy-i-mer-po-zashchite-informatsii
+  immutable_official_bytes: PENDING
+
+applicability:
+  trigger: INFORMATION_SYSTEM_REQUIRES_NETWORK_LEVEL_INTRUSION_DETECTION_AND_PREVENTION
+  rule: APPLY_CLASS_BASELINE_THEN_ADAPT_AND_VERIFY_AGAINST_THREATS
+  guard: CLASS_MATRIX_ASSIGNMENT_DOES_NOT_REPLACE_ARCHITECTURE_AND_THREAT_SELECTION
+
+measures:
+  - code: "СОВ.1"
+    title: "Обнаружение и предотвращение вторжений на периметре"
+    purpose: DETECT_AND_PREVENT_EXTERNAL_ATTACKER_INTRUSIONS_AT_INFORMATION_SYSTEM_PERIMETER
+    implementation:
+      - RECEIVE_NETWORK_TRAFFIC_OR_COPY_FOR_ANALYSIS
+      - DETECT_OR_PREVENT_INTRUSIONS_AND_COMPUTER_ATTACKS_AT_INFORMATION_SYSTEM_PERIMETER
+      - RESPOND_TO_ATTACKS_USING_ACTIONS_DEFINED_IN_OPERATING_DOCUMENTATION
+      - AUTOMATICALLY_OBTAIN_AND_UPDATE_DECISION_RULE_AND_ATTACK_INDICATOR_BASES
+      - OBTAIN_BASES_FROM_VENDOR_AND_OR_CONFIGURABLE_LOCAL_RESOURCES
+      - UPDATE_BASES_BY_SCHEDULE_AND_OR_ON_DEMAND
+      - IMPLEMENT_USING_NETWORK_IDS_NETWORK_FIREWALLS_AND_OR_OTHER_SECURITY_MEANS
+    documentation:
+      - DEFINE_PERIMETER_INTRUSION_DETECTION_AND_PREVENTION_PROCEDURE
+    enhancements:
+      - {instance_id: SOV1-E01, source_number: 1, rule: DEVELOP_OR_MODERNIZE_DECISION_RULES_FOR_SYSTEM_SPECIFIC_AND_NEW_ATTACKS_FROM_OPEN_OR_OTHER_SOURCES}
+      - {instance_id: SOV1-E02, source_number: 2, rule: DETECT_INTRUSIONS_AT_APPLICATION_LEVEL}
+      - {instance_id: SOV1-E03A, source_number: 3, rule: ANALYZE_ENCODED_DATA_EXTRACTED_FROM_NETWORK_PACKETS_FOR_INTRUSIONS}
+      - {instance_id: SOV1-E03B, source_number: 3, rule: STORE_FRAGMENTS_OF_COLLECTED_NETWORK_TRAFFIC}
+      - {instance_id: SOV1-E05, source_number: 5, rule: PERFORM_RETROSPECTIVE_NETWORK_TRAFFIC_ANALYSIS}
+      - {instance_id: SOV1-E06, source_number: 6, rule: DETECT_NETWORK_TRAFFIC_ANOMALIES}
+      - {instance_id: SOV1-E07, source_number: 7, rule: ANALYZE_ATTACHMENTS_AND_OBJECTS_AND_AUTOMATICALLY_SEND_TO_SANDBOX_FOR_DYNAMIC_ANALYSIS}
+      - {instance_id: SOV1-E08, source_number: 8, rule: USE_COMPLEX_SECURITY_MEANS_COMBINING_IDS_ANTIMALWARE_ANALYSIS_AND_SANDBOX}
+      - {instance_id: SOV1-E09, source_number: 9, rule: USE_THREAT_REPUTATION_DATABASE_FOR_NETWORK_AND_APPLICATION_ARTIFACTS_NEAR_REAL_TIME}
+      - {instance_id: SOV1-E10, source_number: 10, rule: USE_PASSIVE_NONVOLATILE_ONE_WAY_TRAFFIC_TAPS_FOR_IDS_ANALYSIS_COPY}
+    matrix:
+      base: {K3: PLUS, K2: PLUS, K1: PLUS}
+      enhancements: {K3: [], K2: [1], K1: [1]}
+
+  - code: "СОВ.2"
+    title: "Обнаружение и предотвращение вторжений в сегментах информационной системы"
+    purpose: DETECT_AND_PREVENT_EXTERNAL_AND_INTERNAL_ATTACKER_INTRUSIONS_IN_INFORMATION_SYSTEM_SEGMENTS
+    implementation:
+      - DETECT_OR_PREVENT_INTRUSIONS_IN_SEGMENTS_OR_AT_SEGMENT_BOUNDARIES
+      - CONSIDER_NETWORK_SEGMENTS
+      - CONSIDER_FUNCTIONAL_SEGMENTS
+      - CONSIDER_SEGMENTS_WITH_DIFFERENT_INFORMATION_SIGNIFICANCE_LEVELS
+      - CONSIDER_SEGMENTS_WITH_DIFFERENT_PROTECTION_CLASSES
+      - CONSIDER_SEGMENTS_WITH_DIFFERENT_DEVICE_TYPES
+      - ANALYZE_NETWORK_TRAFFIC_BETWEEN_SEGMENTS_FOR_INTRUSIONS
+      - AUTOMATICALLY_OBTAIN_AND_UPDATE_DECISION_RULE_AND_ATTACK_INDICATOR_BASES
+      - OBTAIN_BASES_FROM_VENDOR_AND_OR_CONFIGURABLE_LOCAL_RESOURCES
+      - UPDATE_BASES_BY_SCHEDULE_AND_OR_ON_DEMAND
+      - IMPLEMENT_USING_NETWORK_IDS_NETWORK_FIREWALLS_AND_OR_OTHER_SECURITY_MEANS
+    documentation:
+      - DEFINE_SEGMENT_INTRUSION_DETECTION_AND_PREVENTION_PROCEDURE
+    enhancements:
+      - {instance_id: SOV2-E01, source_number: 1, rule: BLOCK_NETWORK_TRAFFIC_OR_ISOLATE_SEGMENT_WHERE_ATTACKS_ARE_DETECTED}
+      - {instance_id: SOV2-E02, source_number: 2, rule: CENTRALLY_MANAGE_IDS_COMPONENTS_INSTALLED_IN_DIFFERENT_SEGMENTS}
+    matrix:
+      base: {K3: PLUS, K2: PLUS, K1: PLUS}
+      enhancements: {K3: [], K2: [], K1: []}
+
+numeric_constraints: []
+
+operator_defined_parameters:
+  - {id: SOV1_RESPONSE_ACTION_SET, measure: "СОВ.1", type: DOCUMENTED_ATTACK_RESPONSE_ACTION_SET, universal_value: NOT_STATED}
+  - {id: SOV1_UPDATE_SCHEDULE, measure: "СОВ.1", type: RULE_AND_INDICATOR_UPDATE_SCHEDULE, universal_value: NOT_STATED}
+  - {id: SOV1_LOCAL_RESOURCE_SET, measure: "СОВ.1", type: CONFIGURABLE_LOCAL_RESOURCE_SET, universal_value: NOT_STATED}
+  - {id: SOV1_APPLICATION_SCOPE, measure: "СОВ.1", type: APPLICATION_LEVEL_ANALYSIS_SCOPE, universal_value: NOT_STATED}
+  - {id: SOV1_TRAFFIC_FRAGMENT_RETENTION, measure: "СОВ.1", type: TRAFFIC_FRAGMENT_RETENTION_PERIOD, universal_value: NOT_STATED}
+  - {id: SOV1_RETROSPECTIVE_SCOPE, measure: "СОВ.1", type: RETROSPECTIVE_ANALYSIS_SCOPE_AND_DEPTH, universal_value: NOT_STATED}
+  - {id: SOV1_NEAR_REAL_TIME_THRESHOLD, measure: "СОВ.1", type: NEAR_REAL_TIME_THRESHOLD, universal_value: NOT_STATED}
+  - {id: SOV1_REPUTATION_DATABASE_SCOPE, measure: "СОВ.1", type: THREAT_REPUTATION_DATABASE_SCOPE, universal_value: NOT_STATED}
+  - {id: SOV2_SEGMENT_SET, measure: "СОВ.2", type: INFORMATION_SYSTEM_SEGMENT_SET, universal_value: NOT_STATED}
+  - {id: SOV2_UPDATE_SCHEDULE, measure: "СОВ.2", type: RULE_AND_INDICATOR_UPDATE_SCHEDULE, universal_value: NOT_STATED}
+  - {id: SOV2_LOCAL_RESOURCE_SET, measure: "СОВ.2", type: CONFIGURABLE_LOCAL_RESOURCE_SET, universal_value: NOT_STATED}
+
+source_anomalies:
+  - id: SOV1_DUPLICATE_ENHANCEMENT_3_MISSING_4
+    observed_source_numbers: [1, 2, 3, 3, 5, 6, 7, 8, 9, 10]
+    normalized_instances: [SOV1-E01, SOV1-E02, SOV1-E03A, SOV1-E03B, SOV1-E05, SOV1-E06, SOV1-E07, SOV1-E08, SOV1-E09, SOV1-E10]
+    handling: PRESERVE_LITERAL_LABELS_AND_DISTINCT_INSTANCES_NO_SILENT_RENUMBERING
+    resolution: PENDING_OFFICIAL_IMMUTABLE_BYTES_AND_EXPERT_REVIEW
+
+class_matrix_summary:
+  cells_total: 12
+  nonblank_cells: 8
+  blank_cells: 4
+  fully_blank_measure_rows: []
+  class_listed_enhancements: {"СОВ.1": {K3: [], K2: [1], K1: [1]}, "СОВ.2": {K3: [], K2: [], K1: []}}
+  rule: UNLISTED_ENHANCEMENT_IS_NOT_CLASS_REQUIRED_BUT_MAY_APPLY_THROUGH_SELECTION_PIPELINE
+
+scope_guards:
+  - DO_NOT_SILENTLY_RENUMBER_DUPLICATE_SOV_1_ENHANCEMENT_3_AS_4
+  - DO_NOT_INVENT_RULE_UPDATE_OR_TRAFFIC_RETENTION_PERIOD
+  - DO_NOT_INVENT_NEAR_REAL_TIME_NUMERIC_THRESHOLD
+  - DO_NOT_TREAT_NOTIFICATION_AND_TRAFFIC_BLOCKING_EXAMPLES_AS_EXHAUSTIVE_RESPONSE_ACTIONS
+  - DO_NOT_TREAT_SEGMENT_EXAMPLES_AS_EXHAUSTIVE_SEGMENT_TAXONOMY
+  - DO_NOT_REQUIRE_UNLISTED_ENHANCEMENTS_FROM_CLASS_MATRIX_ALONE
+  - DO_NOT_TREAT_SOV_AS_REPLACEMENT_FOR_MSE_AVZ_ZKS_OR_INCIDENT_RESPONSE_FAMILIES
+  - DO_NOT_TREAT_IDS_PRODUCT_CONFIGURATION_AS_NORMATIVE_UNIVERSAL_VALUE
+
+verification_boundary:
+  section_4_14_sov_1_2: VERIFIED_PUBLIC_TEXT_CROSSCHECK
+  complete_sov_family: VERIFIED_PUBLIC_TEXT_CROSSCHECK_2_OF_2
+  implementation_requirements: VERIFIED_NORMALIZED_PUBLIC_TEXT_CROSSCHECK
+  documentation_requirements: VERIFIED_NORMALIZED_PUBLIC_TEXT_CROSSCHECK
+  enhancement_instances: VERIFIED_NORMALIZED_PUBLIC_TEXT_CROSSCHECK_WITH_LITERAL_DUPLICATE_LABEL
+  exact_numeric_constraints: VERIFIED_NONE_STATED
+  exact_sov_class_cells: VERIFIED_PUBLIC_TEXT_CROSSCHECK_12
+  source_numbering_anomaly: PENDING_OFFICIAL_IMMUTABLE_BYTES_AND_EXPERT_REVIEW
+  product_specific_ids_profiles: PENDING_SEPARATE_PROFILE_MODELS
+  other_measure_families: PENDING
+  official_immutable_bytes: PENDING
+  independent_expert_review: PENDING
+  critical_gap_created: false
+  high_gap_created: false
