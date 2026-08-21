@@ -1,4 +1,4 @@
-schema_version: "1.2"
+schema_version: "1.3"
 id: SEC-PDN-MASTER-SOURCE-INVENTORY
 kind: security-regulatory-source-inventory
 status: ACTIVE_DISCOVERY
@@ -37,6 +37,7 @@ sources:
     role: root_law
     metadata_status: VERSION_IDENTITY_CROSS_VERIFIED
     source_record: "source/SEC-SRC-RU-152FZ-2026-07-26.yaml"
+    canonical_capture_route: OFFICIAL_IPS_ROUTE_REGISTERED_GUARDED
     raw_capture: PENDING
     existing_atomized_records_reuse_candidate: 4
     delta_review_required: true
@@ -239,17 +240,20 @@ analysis_metrics:
   version_chain_dependencies_added_this_pass: 0
   version_chain_gaps_closed_this_pass: 0
   conflict_candidates_opened_this_pass: 0
-  source_relation_rebases_this_pass: 1
+  source_relation_rebases_this_pass: 0
+  canonical_routes_registered_this_pass: 1
+  acquisition_helpers_added_this_pass: 1
+  acquisition_workflow_updates_this_pass: 1
   semantic_promotions_this_pass: 0
   immutable_new_this_pass: 0
   note: >-
-    RKN Order No. 128 was freshly rechecked and remains routed as the current operative list in available current-law
-    indexes; its DETAILS relation was rebased from the superseded 01.09.2025 152-FZ root to the current 26.07.2026 root.
-    The Article 12 alignment conflict remains REVIEW_REQUIRED. No semantic or immutable status was promoted.
+    Registered the official IPS route for the current consolidated 152-FZ root and added a guarded current-root
+    acquisition helper to the PDN workflow. This removes the previous route-discovery blocker without claiming
+    immutable capture: accepted source bytes, MIME, exact byte length, SHA-256 and manifest are still required.
 
 acquisition_activity:
-  latest_trigger_commit: "c0df8c7ce504aa2284b7f1ba823e9beee24e6506"
-  trigger_reason: "RKN128 current-root rebase and freshness refresh; source/** change is inside PDN acquisition workflow path set."
+  latest_trigger_commit: "a2a6c94534bee2b36f1b64021d6f1045c146d43b"
+  trigger_reason: "Current consolidated 152-FZ official IPS route + guarded current-root acquisition helper enabled in the PDN workflow."
   accepted_manifest_delta_at_inventory_write: 0
   last_proven_acquisition_run:
     started_at: "2026-08-20T05:12:55.213514Z"
@@ -277,8 +281,8 @@ acquisition_blockers:
       Keep every pending source below IMMUTABLE_CAPTURED until source URL, retrieved_at, MIME, exact byte length,
       SHA-256 and accepted manifest are actually present.
   - >-
-      The current consolidated 152-FZ source card still requires an approved byte-exact canonical artifact route;
-      version identity alone is insufficient for immutable promotion.
+      The current consolidated 152-FZ now has a registered official IPS route and guarded acquisition code;
+      the remaining gate is an accepted byte-exact capture from that route plus its manifest and fingerprint.
   - >-
       PP RF No. 733 must not be treated as current merely from its original 2021 PDF. Compile its amendment-chain
       artifacts and reconstruct effective current locators before semantic promotion.
