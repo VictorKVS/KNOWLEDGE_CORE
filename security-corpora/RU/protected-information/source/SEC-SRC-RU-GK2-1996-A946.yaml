@@ -1,0 +1,105 @@
+schema_version: "1.0"
+id: SEC-SRC-RU-GK2-1996-A946
+kind: security-regulatory-source
+status: CURRENT_ARTICLE_946_CROSSCHECKED_PRIMARY_BASELINE_IDENTIFIED_EXACT_CURRENT_ARTIFACT_PENDING_VERSION_CHAIN_PARTIAL
+
+title: "Гражданский кодекс Российской Федерации (часть вторая), статья 946 «Тайна страхования»"
+jurisdiction: RU
+issuer: "Российская Федерация"
+document:
+  type: code
+  federal_law_number: "14-ФЗ"
+  adopted_date: "1996-01-26"
+  checked_at: "2026-08-22"
+
+primary_baseline:
+  state: OFFICIAL_DOCUMENT_BANK_BASELINE_IDENTIFIED
+  authority: "Президент Российской Федерации — Банк документов"
+  official_url: "https://www.kremlin.ru/acts/bank/8804"
+  act: "Кодекс Российской Федерации от 26.01.1996 № 14-ФЗ"
+  finding: >-
+    The official presidential document bank identifies the Civil Code of the Russian Federation (Part Two),
+    Federal Law No. 14-FZ of 26 January 1996. This is authoritative primary-act evidence for the source identity,
+    but it is not treated here as a byte-exact current consolidated artifact.
+
+protected_information:
+  sector: insurance
+  regime: insurance_secrecy
+  primary_anchor: "статья 946 — Тайна страхования"
+  anchor_state: CURRENT_WORDING_CROSSCHECKED_PRIMARY_CURRENT_BINARY_PENDING
+  protected_fields:
+    - concept: INSURANCE_POLICYHOLDER_INFORMATION
+      subject: "страхователь"
+    - concept: INSURED_PERSON_INFORMATION
+      subject: "застрахованное лицо"
+    - concept: BENEFICIARY_INFORMATION
+      subject: "выгодоприобретатель"
+    - concept: HEALTH_INFORMATION
+      field: "состояние здоровья указанных лиц"
+    - concept: PROPERTY_STATUS_INFORMATION
+      field: "имущественное положение указанных лиц"
+  duty_model:
+    actor: "страховщик"
+    action: NON_DISCLOSURE
+    state: CURRENT_TEXT_CROSSCHECKED
+    guard: >-
+      The article creates a special insurance-secrecy confidentiality duty. It is not converted into a universal
+      information-security control or organization-specific applicability rule without actor/data/purpose/context review.
+
+current_text_crosscheck:
+  checked_at: "2026-08-22"
+  state: SECONDARY_CURRENT_TEXT_CROSSCHECK_ONLY
+  finding: >-
+    Current consolidated legal-text sources available during this pass reproduce Article 946 with the same core
+    non-disclosure rule and protected-field set. No locator-specific amendment to Article 946 was proven from a primary
+    amendment artifact in this pass; therefore VERSION_CHAIN_VERIFIED is not claimed.
+
+pdn_relation:
+  target: "152-ФЗ"
+  state: OVERLAP_CANDIDATE_SPECIAL_CONFIDENTIALITY_REGIME_APPLICABILITY_REVIEW_REQUIRED
+  overlap_dimensions:
+    - IDENTIFIABLE_NATURAL_PERSON_INFORMATION
+    - HEALTH_INFORMATION
+    - PROPERTY_STATUS_INFORMATION
+  applicability_guard: >-
+    OVERLAP != APPLICABILITY. Resolve data subject, actor, purpose, operation, legal basis, recipient and insurance context
+    before creating an organization-specific PDN applicability edge. Health information overlap does not by itself prove
+    that medical-secrecy rules apply.
+
+cross_regime_relations:
+  - target: SEC-SRC-RU-FZ-323
+    type: HEALTH_INFORMATION_FIELD_OVERLAP_NOT_REGIME_EQUIVALENCE
+    state: CANDIDATE_RELATIONSHIP_REVIEW_REQUIRED
+    guard: >-
+      Insurance secrecy can protect information about health, while medical secrecy protects information arising in the
+      healthcare context. Shared data fields do not merge the two legal regimes and do not prove mutual applicability.
+
+version_chain:
+  state: VERSION_CHAIN_PARTIAL_LOCATOR_946_CURRENTNESS_CROSSCHECKED
+  source_level_currentness_note: >-
+    Part Two of the Civil Code has many amendments. Source-level amendment history must not be mistaken for an amendment
+    to Article 946. This pass did not identify a primary locator-specific amendment artifact changing Article 946.
+  pending: >-
+    Acquire an exact durable official current artifact or a complete primary amendment chain proving the current wording
+    of Article 946; then reconcile every locator-specific change before VERSION_CHAIN_VERIFIED promotion.
+
+artifact_capture:
+  state: PRIMARY_EXACT_CURRENT_BINARY_PENDING
+  attempted_at: "2026-08-22T02:22:00+03:00"
+  retrieved_at: null
+  source_urls:
+    - "https://www.kremlin.ru/acts/bank/8804"
+  mime: null
+  byte_length: null
+  sha256: null
+  artifact_ref: null
+  manifest_ref: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-GK2-1996-A946-version-capture-pending.json"
+  durable: false
+  blocker: >-
+    The official presidential source identity was reachable, but this execution did not obtain a durable byte-exact
+    official current consolidated binary. MIME, byte length and SHA-256 are intentionally left null rather than inferred
+    from portal or derivative-copy metadata.
+
+executable_use:
+  allowed: false
+  gate: "Exact durable primary/current evidence + locator-specific version-chain reconciliation + applicability review"
