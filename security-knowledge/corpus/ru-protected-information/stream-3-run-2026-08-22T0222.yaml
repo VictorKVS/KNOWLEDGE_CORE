@@ -1,0 +1,92 @@
+schema_version: "1.0"
+kind: stream-3-sector-library-run
+run_id: "STREAM3-2026-08-22T0222"
+checked_at: "2026-08-22T02:22:00+03:00"
+focus: "financial/insurance special confidentiality regime"
+status: COMPLETED_WITH_PRIMARY_EXACT_CAPTURE_PENDING
+
+inputs:
+  base_inventory: "security-knowledge/corpus/ru-protected-information/master-inventory.yaml"
+  reconciliation_base: "security-knowledge/corpus/ru-protected-information/master-inventory-delta-2026-08-21T2022.yaml"
+  discovery_seed_policy: "taxonomy is discovery-only; primary act required for legal proof"
+
+work_completed:
+  - action: DEDUP_REUSE_EXISTING_SOURCE
+    source_id: SEC-SRC-RU-GK2-1996-A946
+    result: "Existing master-inventory node reused; no source-count inflation."
+  - action: PRIMARY_SOURCE_IDENTITY_CHECK
+    source_id: SEC-SRC-RU-GK2-1996-A946
+    authority: "Президент Российской Федерации — Банк документов"
+    url: "https://www.kremlin.ru/acts/bank/8804"
+    result: OFFICIAL_PRIMARY_ACT_IDENTITY_CONFIRMED
+  - action: CURRENT_ARTICLE_CROSSCHECK
+    locator: "ГК РФ часть вторая, статья 946"
+    result: >-
+      Current consolidated legal-text crosschecks reproduce the insurance-secrecy non-disclosure rule covering
+      policyholder, insured person, beneficiary, health information and property-status information.
+    evidence_state: SECONDARY_CURRENT_TEXT_CROSSCHECK_PRIMARY_CURRENT_BINARY_PENDING
+  - action: OPERATIONAL_SOURCE_CARD
+    path: "security-corpora/RU/protected-information/source/SEC-SRC-RU-GK2-1996-A946.yaml"
+    result: CREATED
+  - action: EXACT_CAPTURE_BACKLOG
+    path: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-GK2-1996-A946-version-capture-pending.json"
+    result: CREATED
+  - action: RU_PROTECTED_INFORMATION_RECONCILIATION_DELTA
+    path: "security-knowledge/corpus/ru-protected-information/master-inventory-delta-2026-08-22T0222.yaml"
+    result: CREATED
+  - action: PDN_RELATIONSHIP_DELTA
+    path: "security-knowledge/corpus/ru-personal-data/master-source-inventory-delta-stream3-2026-08-22T0222.yaml"
+    result: CREATED
+
+semantic_findings:
+  insurance_secrecy:
+    anchor: "статья 946"
+    actor: "страховщик"
+    duty: NON_DISCLOSURE
+    protected_dimensions:
+      - POLICYHOLDER_INFORMATION
+      - INSURED_PERSON_INFORMATION
+      - BENEFICIARY_INFORMATION
+      - HEALTH_INFORMATION
+      - PROPERTY_STATUS_INFORMATION
+  pdn_relation:
+    state: OVERLAP_CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    promoted: false
+  medical_secrecy_relation:
+    target: SEC-SRC-RU-FZ-323
+    state: HEALTH_INFORMATION_FIELD_OVERLAP_NOT_REGIME_EQUIVALENCE
+    promoted: false
+
+version_chain:
+  state: PARTIAL
+  locator_specific_primary_amendments_proven_this_run: 0
+  source_level_amendments_auto_mapped_to_article_946: 0
+  version_chain_verified: false
+  note: >-
+    Source-level amendments to Part Two of the Civil Code are not mapped to Article 946 unless the primary amending act
+    proves the locator change. No such locator-specific amendment was promoted in this pass.
+
+acquisition:
+  exact_binary_downloads_succeeded: 0
+  durable_immutable_artifacts_added: 0
+  official_primary_identity_verified: 1
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  blocker: >-
+    No durable byte-exact official current consolidated binary was obtained. Portal/derivative metadata was not converted
+    into MIME, byte length or SHA-256. Exact capture remains in backlog.
+
+counters:
+  before: {found: 24, downloaded: 9, immutable: 9, pending: 13, reused: 2}
+  after: {found: 24, downloaded: 9, immutable: 9, pending: 13, reused: 2}
+  source_nodes_operationalized_this_run: 1
+  duplicate_source_nodes_created: 0
+  applicability_edges_promoted: 0
+  legal_conflicts_confirmed: 0
+
+next_priority:
+  - "Exact current primary capture / locator-specific version-chain proof for Article 946"
+  - "Check whether Law RF 4015-1 creates additional distinct confidentiality duties that should remain separate from Article 946"
+  - "Return to exact capture backlog for banking secrecy / credit histories after insurance node hardening"
