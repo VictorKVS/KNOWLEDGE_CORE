@@ -4,7 +4,7 @@ kind: security-regulatory-source-inventory
 status: ACTIVE_DISCOVERY
 jurisdiction: RU
 domain: personal_data_security
-checked_at: "2026-08-22"
+checked_at: "2026-08-23"
 acquisition_trigger_registered_at: "2026-08-22T08:40:00Z"
 
 policy:
@@ -95,6 +95,18 @@ sources:
     source_record: "source/SEC-SRC-RU-PP313-2012.yaml"
     raw_capture: PENDING
     applicability: LICENSED_CRYPTO_ACTIVITY_ONLY
+  - id: SEC-SRC-RU-FSB142-2023
+    role: fsb_licensing_control_procedure_context
+    metadata_status: METADATA_VERIFIED
+    source_record: "source/SEC-SRC-RU-FSB142-2023.yaml"
+    raw_capture: PENDING
+    applicability: FSB_LICENSED_ACTIVITY_CONTROL_ONLY
+  - id: SEC-SRC-RU-FSB545-2024
+    role: fsb142_version_chain_dependency
+    metadata_status: METADATA_VERIFIED
+    source_record: "source/SEC-SRC-RU-FSB545-2024.yaml"
+    raw_capture: PENDING
+    applicability: VERSION_CHAIN_SCOPE
   - id: SEC-SRC-RU-PP79-2012
     role: technical_protection_licensed_activity_context
     metadata_status: METADATA_VERIFIED
@@ -119,6 +131,10 @@ version_edges:
     type: AMENDED_BY
     to: SEC-SRC-RU-FSB173-2010
     provenance: OFFICIAL_FSB_NPA_INDEX
+  - from: SEC-SRC-RU-FSB142-2023
+    type: AMENDED_BY
+    to: SEC-SRC-RU-FSB545-2024
+    provenance: OFFICIAL_PUBLICATION
 
 applicability_edges:
   - from: SEC-SRC-RU-152FZ-2026-07-26
@@ -147,6 +163,11 @@ applicability_edges:
     type: LICENSED_ACTIVITY_CONTEXT_FOR
     to: SEC-SRC-RU-FSB378-2014
     scope: CRYPTO_WORKS_SERVICES_OR_LICENSABLE_MAINTENANCE_ONLY
+    not_universal_pdn_duty: true
+  - from: SEC-SRC-RU-PP313-2012
+    type: LICENSING_CONTROL_PROCEDURE_DETAILED_BY
+    to: SEC-SRC-RU-FSB142-2023
+    scope: FSB_LICENSED_ACTIVITIES_WITHIN_STATUTORY_COMPETENCE_ONLY
     not_universal_pdn_duty: true
   - from: SEC-SRC-RU-PP79-2012
     type: LICENSED_ACTIVITY_CONTEXT_FOR
@@ -181,6 +202,15 @@ context_splits:
     finding: >-
       Crypto and TZI licensing rules govern defined licensed works/services. Mere operation of an ISPDn or mere
       use of certified protection tools does not by itself prove that the PDN operator must hold these licences.
+  - id: PDN-STACK-CONTEXT-2026-004
+    status: CONTEXT_DEPENDENT_NOT_CONFLICT
+    sources:
+      - SEC-SRC-RU-PP313-2012
+      - SEC-SRC-RU-FSB142-2023
+      - SEC-SRC-RU-FSB545-2024
+    finding: >-
+      FSB Orders No. 142/2023 and 545/2024 describe the licensing-control procedure/version chain for activities
+      within FSB competence. They do not create a universal licence duty for every PDN operator or every SKZI user.
 
 conflict_candidates:
   - id: PDN-STACK-CONFLICT-CANDIDATE-2026-001
@@ -195,16 +225,16 @@ conflict_candidates:
       as a contradiction until scope, legal regime, effective interval and purpose are compared.
 
 production_counters:
-  identified: 14
-  metadata_verified: 14
+  identified: 16
+  metadata_verified: 16
   raw_downloaded_exact: 7
   immutable_sha256_verified: 7
-  pending_raw_capture: 7
-  official_publication_id_targets: 5
+  pending_raw_capture: 9
+  official_publication_id_targets: 7
   official_canonical_targets: 6
   exact_official_route_unresolved: 3
-  version_edges_verified: 4
-  applicability_guards: 9
+  version_edges_verified: 5
+  applicability_guards: 10
   confirmed_conflicts: 0
   conflict_candidates: 1
 
