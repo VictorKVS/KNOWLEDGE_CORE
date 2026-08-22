@@ -1,0 +1,145 @@
+schema_version: "1.0"
+kind: protected-information-source-card
+source_id: SEC-SRC-RU-FZ-126
+jurisdiction: RU
+sector: communications
+regimes:
+  - communications_secrecy
+  - subscriber_information_restricted_access
+  - communications_metadata_content_retention
+number: "126-ФЗ"
+date: "2003-07-07"
+title: "Федеральный закон от 07.07.2003 № 126-ФЗ «О связи»"
+status: REUSED_CURRENT_PROTECTED_LOCATORS_PRIMARY_AUTHORITY_CROSSCHECKED_EXACT_OFFICIAL_ARTIFACT_PENDING_VERSION_CHAIN_PARTIAL
+checked_at: "2026-08-22T08:15:24+03:00"
+
+proof_floor:
+  - "SEC-SRC-RU-FZ-126 is an existing source node and must be reused instead of duplicated."
+  - "The existing uploaded ODT fingerprint is a working-source fingerprint, not proof of an official primary immutable artifact."
+  - "Articles 53, 63 and 64 establish special communications-sector information/confidentiality/retention rules; their existence does not prove organization-specific applicability of 152-ФЗ."
+  - "Communications secrecy, subscriber restricted-access information, PDN processing and operational-search disclosure/access contexts remain distinct legal concepts."
+  - "Future amendments effective in 2027 are version events, not current requirements as of 2026-08-22."
+  - "No MIME, byte length or SHA-256 is inferred for a current official artifact until exact bytes are durably captured."
+
+deduplication:
+  existing_source_ref: "security-knowledge/legislation/RU/federal-laws/126-FZ/document.yaml"
+  duplicate_node_created: false
+  existing_working_source:
+    family: GARANT
+    filename: "Федеральный закон от 7 июля 2003 г N 126 ФЗ О связи с изменениями и дополнениями(1).odt"
+    sha256: "0a4f3611459cb30d97abbf30fa364689c36435f6468d5ec369a2c8985e0302a3"
+    byte_length: 116005
+    binary_in_repository: false
+    official_primary_artifact: false
+
+primary_authority_text:
+  authority: "Президент Российской Федерации — Банк документов"
+  url: "https://www.kremlin.ru/acts/bank/49053/print"
+  checked_at: "2026-08-22T08:15:24+03:00"
+  state: OFFICIAL_TEXT_LOCATORS_CROSSCHECKED_EXACT_CURRENT_BINARY_PENDING
+
+protected_locators:
+  - locator: "статья 53, часть 1"
+    concept: SUBSCRIBER_INFORMATION_RESTRICTED_ACCESS
+    state: CURRENT_OFFICIAL_TEXT_CROSSCHECKED
+    finding: >-
+      Сведения об абонентах и оказываемых им услугах связи, ставшие известными оператору в силу исполнения договора,
+      являются информацией ограниченного доступа и подлежат защите по законодательству РФ.
+  - locator: "статья 53, часть 1"
+    concept: SUBSCRIBER_CITIZEN_DISCLOSURE_CONSENT_AND_STATUTORY_EXCEPTIONS
+    state: CURRENT_OFFICIAL_TEXT_CROSSCHECKED
+    finding: >-
+      Передача третьим лицам сведений об абонентах-гражданах допускается с согласия, кроме случаев, предусмотренных
+      федеральными законами; статья также содержит специальный контекст передачи оператору персональных данных
+      пользователей услугами связи абонента-юридического лица или ИП.
+  - locator: "статья 53, часть 2"
+    concept: PUBLIC_SUBSCRIBER_DATABASE_CONSENT_AND_REMOVAL
+    state: CURRENT_OFFICIAL_TEXT_CROSSCHECKED
+    finding: >-
+      Данные абонента-гражданина включаются в общедоступную базу только с письменного согласия, а по требованию
+      абонента исключаются из нее.
+  - locator: "статья 63"
+    concept: COMMUNICATIONS_SECRECY
+    actor: "оператор связи"
+    state: CURRENT_OFFICIAL_TEXT_CROSSCHECKED
+    finding: >-
+      Гарантируется тайна переписки, телефонных переговоров, почтовых, телеграфных и иных сообщений; ограничение
+      допускается только в случаях, установленных федеральными законами; операторы обязаны обеспечивать тайну связи.
+  - locator: "статья 64, часть 1"
+    concept: COMMUNICATIONS_METADATA_AND_CONTENT_RETENTION
+    actor: "оператор связи"
+    state: CURRENT_OFFICIAL_TEXT_CROSSCHECKED
+    current_rule_summary:
+      communications_facts_retention: "3 года с момента окончания приема/передачи/доставки/обработки"
+      message_content_retention: "до 6 месяцев в объеме и порядке, устанавливаемых Правительством РФ"
+    semantic_guard: "Специальный отраслевой retention не смешивать с общими правилами хранения ПДн и с тайной связи."
+  - locator: "статья 64, часть 2"
+    concept: AUTHORIZED_STATE_ACCESS_AND_NETWORK_REQUIREMENTS
+    state: CURRENT_OFFICIAL_TEXT_CROSSCHECKED
+    semantic_guard: >-
+      Условия доступа уполномоченных органов и технические обязанности оператора являются специальным законным
+      контекстом; они не превращаются в универсальное разрешение на раскрытие информации третьим лицам.
+
+pdn_relation:
+  target: "152-ФЗ"
+  state: OVERLAP_CANDIDATE_EXPLICIT_PERSONAL_DATA_CONTEXT_APPLICABILITY_REVIEW_REQUIRED
+  evidence_dimensions:
+    - "статья 53 прямо использует термин персональные данные в специальном контексте пользователей услугами связи"
+    - "идентификаторы и сведения об абоненте-гражданине могут пересекаться с персональными данными"
+    - "статья 53 одновременно охраняет более широкий отраслевой объект — сведения об абонентах и услугах связи"
+  guard: >-
+    OVERLAP != APPLICABILITY. Для конкретного PDN-ребра требуется установить субъект данных, операцию обработки,
+    цель, правовое основание, роль оператора/абонента, получателя и конкретное поле данных.
+
+cross_regime_relations:
+  - target: SEC-SRC-RU-FZ-176-1999
+    type: ELECTRONIC_AND_POSTAL_COMMUNICATIONS_SECRECY_BOUNDARY
+    state: CANDIDATE_RELATIONSHIP_REVIEW_REQUIRED
+    guard: "Параллельные режимы тайны связи не объединяются автоматически в один нормативный объект."
+
+version_chain:
+  state: VERSION_CHAIN_PARTIAL
+  current_events_reconciled:
+    - act: "33-ФЗ от 20.02.2026"
+      official_publication_id: "0001202602200054"
+      official_publication_date: "2026-02-20"
+      official_url: "https://publication.pravo.gov.ru/document/0001202602200054"
+      effective_from: "2026-03-03"
+      changed_locators: ["статья 46", "статья 68"]
+      protected_locators_53_63_64_affected: false
+      state: PRIMARY_PUBLICATION_VERIFIED_SOURCE_LEVEL_EVENT
+  future_events:
+    - act: "210-ФЗ от 26.06.2026"
+      publication_locator: "0001202606260070"
+      publication_date: "2026-06-26"
+      locator_verification_state: OFFICIAL_PUBLICATION_LOCATOR_SECONDARY_CROSSCHECK_PRIMARY_PAGE_PENDING
+      article_1_effective_from: "2027-03-01"
+      effect_on_126_fz: "изменяет, в том числе, часть 2 статьи 64"
+      current_requirement: false
+      state: FUTURE_VERSION_EVENT_NOT_CURRENT
+    - act: "271-ФЗ от 26.07.2026"
+      publication_locator: "0001202607260030"
+      publication_date: "2026-07-26"
+      locator_verification_state: OFFICIAL_PUBLICATION_LOCATOR_SECONDARY_CROSSCHECK_PRIMARY_PAGE_PENDING
+      relevant_126_fz_change: "статья 28"
+      default_effective_from: "2027-03-01"
+      protected_locators_53_63_64_affected: false
+      current_requirement: false
+      state: FUTURE_SOURCE_LEVEL_EVENT_NOT_CURRENT
+  pending: >-
+    Persist exact current authoritative artifact and perform complete locator-specific amendment-chain reconciliation
+    before VERSION_CHAIN_VERIFIED or executable promotion.
+
+artifact_capture:
+  state: PENDING_EXACT_OFFICIAL_CURRENT_ARTIFACT
+  source_url: "https://www.kremlin.ru/acts/bank/49053/print"
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  artifact_ref: null
+  manifest_ref: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-126-version-capture-pending.json"
+
+executable_use:
+  allowed: false
+  gate: "Durable exact official artifact + complete locator-specific currentness review + applicability review"
