@@ -1,7 +1,7 @@
-schema_version: "1.1"
+schema_version: "1.2"
 id: SEC-PDN-STREAM2-STATUS-2026-08-22
 kind: production-telemetry
-checked_at: "2026-08-22"
+checked_at: "2026-08-23"
 stream: pdn_technical_crypto
 
 scope:
@@ -13,14 +13,14 @@ scope:
 counters:
   sources_identified: 22
   sources_metadata_verified: 22
-  official_publication_id_targets: 5
+  official_publication_id_targets: 13
   official_canonical_targets: 6
   exact_official_route_unresolved: 3
   raw_downloaded_exact: 15
   immutable_sha256_verified: 15
   pending_raw_capture: 7
-  version_edges_verified: 4
-  applicability_guards: 9
+  version_edges_verified: 9
+  applicability_guards: 12
   confirmed_conflicts: 0
   conflict_candidates: 1
   acquisition_helper_added: 1
@@ -30,12 +30,12 @@ counters:
 acquisition_state:
   status: PARTIAL_IMMUTABLE_CAPTURED
   accepted_run_record: "PDN_SECURITY_STACK_ACQUISITION_RUN.json"
-  accepted_immutable_from_last_completed_run: 5
-  route_refresh_registered_at: "2026-08-22T20:21:28Z"
-  route_refresh_note: >-
-    Primary priority routes were extended with official-government / official-publication fallbacks for
-    PP1119, FSTEC21, FSTEC Threat Method 2021 and FSB378. PP313 and PP79 were added as guarded licensed-activity
-    context sources. Exact bytes remain pending until the acquisition workflow produces manifests and hashes.
+  latest_run_finished_at: "2026-08-22T23:18:53.077054Z"
+  reused_immutable_in_latest_run: 9
+  network_targets_attempted_in_latest_run: 10
+  new_immutable_in_latest_run: 6
+  immutable_total_after_latest_run: 15
+  pending_after_latest_run: 7
   evidence_rule: >-
     Immutable status is accepted only where an exact artifact and manifest exist and SHA-256 was calculated
     from downloaded bytes. Portal metadata, advertised sizes, search results and third-party copies are not
@@ -44,27 +44,37 @@ acquisition_state:
     - SEC-SRC-RU-FSB66-2005
     - SEC-SRC-RU-FSB173-2010
     - SEC-SRC-RU-FAPSI152-2001
+  transport_pending_sources:
+    - SEC-SRC-RU-PP1119-2012
+    - SEC-SRC-RU-FSB378-2014
+    - SEC-SRC-RU-PP313-2012
+    - SEC-SRC-RU-PP79-2012
 
 reuse_and_analysis:
   policy: REUSE_FIRST
   version_chains:
-    - "FSTEC21 -> FSTEC49/2017 -> FSTEC68/2020 (current portal revision: 14.05.2020)"
+    - "FSTEC21 -> FSTEC49/2017 -> FSTEC68/2020 (current revision: 14.05.2020)"
     - "FSB66/2005 -> FSB173/2010"
     - "FSTEC PDN threat method 2008 -> not applied for threat assessment after FSTEC Method 2021"
     - "PP313/2012 -> current indexed revision 28.08.2023"
     - "PP79/2012 -> current indexed revision 27.12.2024"
+    - "FSB142/2023 -> FSB545/2024"
+    - "FSTEC163/2025 -> FSTEC487/2025"
+    - "FSTEC55/2018 -> FSTEC121/2021 + FSTEC172/2022 + FSTEC9/2026 (current revision effective 02.05.2026)"
   explicit_pdn_gossopka_edge: "152-FZ Article 19 part 12 -> FSB77/2023"
   context_splits:
     - "FSTEC117/2025 != FSB117/2025: complementary bounded public-sector non-crypto/crypto layers"
     - "FSB378 != FSB66 != FAPSI152: ISPDn crypto measures vs SKZI lifecycle vs SKZI handling"
     - "PP313 and PP79 are licensed-activity contexts, not universal PDN-operator licence duties"
+    - "FSB142/545 and FSTEC163/487 are licensing-control procedure chains, not standalone PDN duties"
+    - "FSTEC55 certification-system chain is contextual and does not itself make certification universal for every PDN tool"
   conflict_rule: "Definition divergence is a candidate, not a confirmed contradiction, until scope/effective interval/purpose are compared."
 
 next_gate:
-  - complete immutable fallback acquisition for PP1119, FSTEC21, FSTEC Threat Method 2021 and FSB378
+  - resolve exact official capture for PP1119 and FSB378 without accepting third-party bytes
   - capture guarded PP313 and PP79 base official publications without promoting licensing to a universal PDN duty
   - resolve exact primary routes for FSB66/2005, FSB173/2010 and FAPSI152/2001
-  - synchronize source cards and master security_stack counters from accepted manifests
+  - register only those additional FSTEC methodologies/catalogues whose applicability to an ISPDn is evidenced by an explicit locator
   - run structural/legal chunk compiler on immutable captures
   - reconcile concepts and definitions against existing global dictionary
   - extract atomic requirements with source locators
