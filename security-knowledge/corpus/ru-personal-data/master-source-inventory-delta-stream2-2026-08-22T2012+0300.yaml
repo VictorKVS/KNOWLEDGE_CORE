@@ -1,0 +1,98 @@
+schema_version: 1
+delta_id: RU_PD_MASTER_SOURCE_INVENTORY_STREAM2_DELTA_2026_08_22T2012_0300
+applies_to: master-source-inventory.yaml
+created_at: "2026-08-22T20:12:41+03:00"
+stream_id: RU_PD_STREAM_2_TECHNICAL_CRYPTO
+merge_policy: >-
+  CONCURRENCY_SAFE_OVERLAY. Merge by source_id and stream_progress keys. Do not replace unrelated
+  stream-1/stream-3 fields. Exact-byte evidence controls SOURCE_ACQUIRED/IMMUTABLE. Government-hosted
+  fallbacks supplement but do not erase official publication or issuing-authority provenance.
+
+source_patches:
+  RU_GOV_PP_1119_2012:
+    registration_status: STATUS_VERIFIED_CURRENT_CONSOLIDATED_RECHECK_2026_08_22
+    immutable_status: SOURCE_PENDING
+    version_chain_status: NO_NEW_AMENDMENT_EVENT_PROMOTED_THIS_RUN
+
+  RU_FSTEC_ORDER_21_2013:
+    registration_status: STATUS_VERIFIED_CURRENT_BASELINE_AS_OF_2026_08_22
+    version_chain_status: "2013 base -> Order 49/2017 -> Order 68/2020"
+    immutable_status: SOURCE_PENDING
+    acquisition_fallback:
+      type: A1_GOVERNMENT_HOSTED_COPY
+      provider: MINZDRAV_CBS
+      listed_edition: "14.05.2020"
+      listed_status: "Действует"
+      exact_file_locator_resolved: true
+      exact_bytes_obtained: false
+
+  RU_FSTEC_THREAT_METHOD_2021:
+    registration_status: CURRENT_METHOD_SCOPE_RECONFIRMED
+    applicability_gate: INFORMATION_SYSTEM_OR_NETWORK_INCLUDING_ISPDN
+    immutable_status: SOURCE_PENDING
+    acquisition_fallback:
+      type: A1_GOVERNMENT_HOSTED_COPY
+      provider: MINZDRAV_CBS
+      listed_date: 2021-02-05
+      listed_status: "Действует"
+      exact_file_locator_resolved: true
+      exact_bytes_obtained: false
+
+  RU_FSB_ORDER_378_2014:
+    registration_status: STATUS_VERIFIED_CURRENT_CONSOLIDATED_RECHECK_2026_08_22
+    applicability_gate: SKZI_USED_IN_ISPDN
+    immutable_status: SOURCE_PENDING
+    version_chain_status: NO_NEW_AMENDMENT_EVENT_PROMOTED_THIS_RUN
+
+  RU_FSB_ORDER_77_2023:
+    registration_status: PRIMARY_PUBLICATION_AND_SCOPE_REVERIFIED_2026_08_22
+    official_publication_number: "0001202302200021"
+    justice_registration_number: "72404"
+    effective_from: 2023-03-01
+    immutable_status: SOURCE_PENDING
+    direct_legal_basis: "152-FZ article 19 part 12"
+    applicability_gate: PDN_COMPUTER_INCIDENT_WITH_UNLAWFUL_TRANSFER_PROVISION_DISTRIBUTION_OR_ACCESS
+    auxiliary_exact_pdf_locator_resolved: true
+    auxiliary_pdf_url: "https://minjust.consultant.ru/files/34555"
+    exact_bytes_obtained: false
+
+  RU_FSB_ORDER_66_2005:
+    registration_status: STATUS_VERIFIED_OFFICIAL_FSB_METADATA
+    version_chain_status: "2005 base -> FSB Order 173/2010 amendment"
+    applicability_gate: SKZI_CONTEXT
+    immutable_status: SOURCE_PENDING
+
+stream_progress_patch:
+  stream_2_technical_crypto:
+    status: ACTIVE
+    source_pack_delta: "technical-security-source-pack-delta-2026-08-22T2012+0300.yaml"
+    previous_unique_stream2_source_records: 25
+    new_source_records_this_run: 0
+    unique_stream2_source_records_after_delta: 25
+    current_status_rechecks_this_run: 6
+    acquisition_routes_resolved_this_run: 3
+    exact_artifact_endpoint_attempts_this_run: 5
+    exact_artifact_successes_this_run: 0
+    immutable_artifacts_added_this_run: 0
+    bytes_downloaded_this_run: 0
+    hashes_recorded_this_run: 0
+    new_executable_universal_pdn_duties: 0
+    confirmed_legal_contradictions_this_run: 0
+    run_record: "runs/stream-2/2026-08-22T2012+0300.yaml"
+    acquisition_log_delta: "stream-2-acquisition-log-delta-2026-08-22T2012+0300.yaml"
+
+next_priority_patch:
+  - RU_FSTEC_THREAT_METHOD_2021_retry_issuing_authority_then_Minzdav_A1_exact_bytes
+  - RU_FSTEC_ORDER_21_2013_retry_Minzdav_A1_current_DOCX_exact_bytes
+  - RU_FSB_ORDER_77_2023_retry_official_publication_then_Minjust_interface_PDF_exact_bytes
+  - RU_GOV_PP_1119_2012_resolve_exact_current_A0_A1_artifact
+  - RU_FSB_ORDER_378_2014_resolve_exact_authoritative_artifact_and_version_chain
+  - RU_FSB_ORDER_66_2005_exact_artifact_and_Order_173_delta
+  - RU_FSB_PD_THREAT_RECOMMENDATIONS_2015_retry_official_FSB_PDF
+  - RU_GOV_PP_313_2012_exact_current_artifact_and_activity_based_version_chain
+
+quality_note: >-
+  No source was promoted to SOURCE_ACQUIRED/IMMUTABLE because the runtime did not return exact bytes.
+  The pass nonetheless reduced future acquisition work by resolving government-hosted exact file
+  locators for FSTEK Order 21 and the 2021 Threat Method, plus a Ministry-of-Justice publication
+  interface PDF locator for FSB Order 77. Scope isolation was preserved throughout.
