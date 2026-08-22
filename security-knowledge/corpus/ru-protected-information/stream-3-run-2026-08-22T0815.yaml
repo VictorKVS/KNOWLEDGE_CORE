@@ -1,0 +1,101 @@
+schema_version: "1.0"
+kind: stream-run
+stream: STREAM_3_SECTOR_OVERLAYS
+checked_at: "2026-08-22T08:15:24+03:00"
+status: COMPLETED_WITH_EXACT_CURRENT_BINARY_PENDING
+focus: "communications / subscriber restricted information / communications secrecy / retention"
+
+scope_result:
+  existing_source_operationalized: SEC-SRC-RU-FZ-126
+  new_sources_discovered: 0
+  duplicate_sources_created: 0
+  exact_binary_downloads_succeeded: 0
+  durable_immutable_artifacts_added: 0
+  protected_locators_crosschecked: 6
+  relationship_candidates_added: 2
+  applicability_edges_promoted: 0
+  legal_conflicts_confirmed: 0
+
+source_work:
+  - source_id: SEC-SRC-RU-FZ-126
+    action: REUSE_AND_OPERATIONALIZE
+    source_card: "security-corpora/RU/protected-information/source/SEC-SRC-RU-FZ-126.yaml"
+    capture_backlog: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-126-version-capture-pending.json"
+    existing_source_ref: "security-knowledge/legislation/RU/federal-laws/126-FZ/document.yaml"
+    official_authority_text:
+      authority: "Президент Российской Федерации — Банк документов"
+      url: "https://www.kremlin.ru/acts/bank/49053/print"
+      state: LOCATORS_CROSSCHECKED
+    anchors:
+      - "статья 53 часть 1 — сведения об абонентах/услугах: информация ограниченного доступа"
+      - "статья 53 часть 1 — согласие/федеральный закон и специальный PDN-контекст"
+      - "статья 53 часть 2 — общедоступная абонентская база: письменное согласие и удаление"
+      - "статья 63 — тайна связи"
+      - "статья 64 часть 1 — 3 года факты связи; содержание сообщений до 6 месяцев"
+      - "статья 64 часть 2 — специальный контекст требований/доступа уполномоченных органов"
+
+version_reconciliation:
+  current:
+    - act: "33-ФЗ от 20.02.2026"
+      official_publication_id: "0001202602200054"
+      official_url: "https://publication.pravo.gov.ru/document/0001202602200054"
+      effective_from: "2026-03-03"
+      changed_locators: ["статья 46", "статья 68"]
+      protected_locators_affected: false
+      evidence_state: PRIMARY_OFFICIAL_PUBLICATION_VERIFIED
+  future:
+    - act: "210-ФЗ от 26.06.2026"
+      publication_locator: "0001202606260070"
+      article_1_effective_from: "2027-03-01"
+      protected_locator_effect: "часть 2 статьи 64 изменяется в будущем"
+      evidence_state: SECONDARY_TEXT_AND_PUBLICATION_LOCATOR_CROSSCHECK_PRIMARY_BINARY_PENDING
+    - act: "271-ФЗ от 26.07.2026"
+      publication_locator: "0001202607260030"
+      default_effective_from: "2027-03-01"
+      relevant_126_fz_locator: "статья 28"
+      protected_locators_53_63_64_affected: false
+      evidence_state: SECONDARY_TEXT_AND_PUBLICATION_LOCATOR_CROSSCHECK_PRIMARY_BINARY_PENDING
+
+relationship_work:
+  pdn:
+    target: "152-ФЗ"
+    state: OVERLAP_CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    reason: "Article 53 explicitly contains a personal-data context while protecting a broader subscriber-information object."
+  postal:
+    target: SEC-SRC-RU-FZ-176-1999
+    state: CANDIDATE_RELATIONSHIP_REVIEW_REQUIRED
+    relation: ELECTRONIC_AND_POSTAL_COMMUNICATIONS_SECRECY_BOUNDARY
+
+acquisition:
+  current_official_artifact:
+    retrieved_at: null
+    mime: null
+    byte_length: null
+    sha256: null
+    immutable: false
+  existing_working_source_reused:
+    sha256: "0a4f3611459cb30d97abbf30fa364689c36435f6468d5ec369a2c8985e0302a3"
+    byte_length: 116005
+    official_primary_artifact: false
+  blocker: >-
+    Exact current official 126-ФЗ binary bytes were not exposed through a durable capture path in this execution.
+    Therefore source download/immutable counters are not increased and no official binary metadata is fabricated.
+
+counter_reconciliation:
+  before: {found: 24, downloaded: 9, immutable: 9, pending: 13, reused: 2}
+  after: {found: 24, downloaded: 9, immutable: 9, pending: 13, reused: 2}
+  explanation: "Existing reused source deepened; no new durable official artifact."
+
+files_written:
+  - "security-corpora/RU/protected-information/source/SEC-SRC-RU-FZ-126.yaml"
+  - "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-126-version-capture-pending.json"
+  - "security-knowledge/corpus/ru-protected-information/master-inventory-delta-2026-08-22T0815.yaml"
+  - "security-knowledge/corpus/ru-personal-data/master-source-inventory-delta-stream3-2026-08-22T0815.yaml"
+  - "security-knowledge/corpus/ru-protected-information/stream-3-run-2026-08-22T0815.yaml"
+
+next_priority:
+  - "Exact byte capture for current authoritative 126-ФЗ and 33-ФЗ/210-ФЗ/271-ФЗ amendment artifacts."
+  - "Healthcare: operationalize/check 326-ФЗ OMC sector relations without duplicating existing nodes."
+  - "Transport: exact current 16-ФЗ capture and locator-specific chain."
+  - "Advertising/marketing: exact current 38-ФЗ Article 18 and amendment chain."
+  - "Public sector: continue 143-ФЗ/79-ФЗ exact-current capture and special information-regime relations."
