@@ -1,4 +1,4 @@
-schema_version: "1.1"
+schema_version: "1.2"
 id: SEC-SRC-RU-152FZ-2026-07-26
 kind: security-regulatory-source
 status: CURRENT_REVISION_DISCOVERED
@@ -13,7 +13,7 @@ document:
   number: "152-ФЗ"
   adopted_date: "2006-07-27"
   consolidated_revision_effective_from: "2026-07-26"
-  checked_at: "2026-08-21"
+  checked_at: "2026-08-22"
   current_revision_identity_confirmed: true
   triggering_amendment: "Федеральный закон от 26.07.2026 № 265-ФЗ"
   amendment_scope:
@@ -27,21 +27,22 @@ canonical_source:
   url: "http://pravo.gov.ru/proxy/ips/?docbody=&link_id=0&nd=102108261&intelsearch=&firstDoc=1"
   identity: "nd=102108261"
   route_status: OFFICIAL_CANONICAL_ROUTE_REGISTERED
-  route_checked_at: "2026-08-21"
+  route_checked_at: "2026-08-22"
   evidence_note: >-
-    The current Roskomnadzor mandatory-requirements index points 152-FZ to this official IPS identity.
-    Capture of the bytes returned by the route is still required before any immutable or extraction promotion.
+    Current legal indexes rechecked on 22.08.2026 include Federal Law No. 265-FZ in the amendment chain and
+    identify 26.07.2026 as the operative revision date. The future No. 200-FZ Article 10 amendment remains
+    scheduled for 01.03.2027 and does not alter current-date routing.
 
 version_evidence:
-  - publisher: "Российская газета"
-    kind: official_publication_medium
-    url: "https://rg.ru/documents/2026/08/03/fz265-dok.html"
-    supports: "№ 265-ФЗ изменяет статью 12 152-ФЗ и вступает в силу со дня официального опубликования, кроме статьи 2 самого № 265-ФЗ."
   - publisher: "Официальный интернет-портал правовой информации"
     kind: amendment_official_publication_identity
     publication_id: "0001202607260024"
     publication_date: "2026-07-26"
     supports: "effective-date anchor for № 265-ФЗ"
+  - publisher: "Current legal index cross-check"
+    kind: current_revision_index
+    checked_at: "2026-08-22"
+    supports: "№ 265-ФЗ is in the current amendment chain; № 200-ФЗ is future-effective from 01.03.2027"
 
 capture:
   raw_artifact_ref: ""
@@ -51,16 +52,15 @@ capture:
   fingerprint_status: PENDING_CURRENT_CONSOLIDATED_RAW_CAPTURE
   semantic_status: UNCHANGED
   acquisition_request:
-    status: RUN_REQUESTED_GUARDED
-    requested_at: "2026-08-21T20:15:00Z"
+    status: RETRY_REQUIRED_GUARDED
+    requested_at: "2026-08-22T16:57:00Z"
     route: official_canonical_snapshot
     reason: >-
-      Current consolidated 152-FZ now has an explicit official IPS route. Require exact returned bytes,
-      retrieved_at, MIME, byte length, SHA-256 and accepted manifest before immutable promotion.
+      Current consolidated 152-FZ has a registered official IPS route. Require exact returned bytes,
+      retrieved_at, MIME, byte length, SHA-256, identity-marker validation and accepted manifest before immutable promotion.
   note: >-
-    Текущая редакция 152-ФЗ идентифицирована по вступившему в силу № 265-ФЗ. Byte-exact официальный
-    консолидированный снимок именно редакции 26.07.2026 еще не захвачен, поэтому source не повышен до
-    METADATA_VERIFIED/VERIFIED_FOR_EXTRACTION.
+    The current revision identity is cross-verified, but a byte-exact official consolidated snapshot of the
+    26.07.2026 text has not yet passed the guarded capture gate. Do not promote to METADATA_VERIFIED_FOR_EXTRACTION.
 
 relations:
   - type: SUPERSEDES
@@ -70,6 +70,11 @@ relations:
     target: SEC-SRC-RU-FZ265-2026
     scope: article_12
     effective_from: "2026-07-26"
+  - type: AMENDED_BY_FUTURE
+    target: SEC-SRC-RU-FZ200-2025
+    scope: "article_10_part_2_point_7"
+    effective_from: "2027-03-01"
+    current_applicability: NOT_YET_EFFECTIVE
 
 impact_review:
   mandatory_delta_locators:
@@ -84,12 +89,12 @@ impact_review:
 
 future_change_notes:
   - >-
-      № 200-ФЗ от 07.07.2025 содержит future-effective изменения 152-ФЗ с 01.03.2027. Они не являются
-      текущими на 21.08.2026 и должны храниться отдельной temporal branch.
+      № 200-ФЗ от 07.07.2025 contains a future-effective Article 10 change from 01.03.2027. It is stored as a
+      separate temporal branch and must not be applied to decisions dated before 01.03.2027.
 
 provenance:
   created_at: "2026-08-20"
-  checked_at: "2026-08-21"
+  checked_at: "2026-08-22"
   created_by: "ChatGPT/GPT-5.6 Sol with current-version cross-verification"
   review_required: true
 
