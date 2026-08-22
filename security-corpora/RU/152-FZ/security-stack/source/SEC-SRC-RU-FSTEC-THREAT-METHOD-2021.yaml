@@ -1,4 +1,4 @@
-schema_version: "1.0"
+schema_version: "1.1"
 id: SEC-SRC-RU-FSTEC-THREAT-METHOD-2021
 kind: security-methodological-source
 status: METADATA_VERIFIED
@@ -10,12 +10,18 @@ document:
   number: null
   adopted_date: "2021-02-05"
   checked_at: "2026-08-22"
-  status_note: "Методика применяется к ИСПДн; п. 1.8 выводит из применения для оценки угроз методику ПДн 2008 года."
+  status_note: "Официальный государственный портал Минздрава России публикует Методики со статусом «Действует»; п. 1.3 прямо включает ИСПДн, п. 1.4 исключает оценку угроз безопасности СКЗИ и технических каналов, п. 1.8 прекращает применение методики ПДн 2008 года для оценки угроз."
 canonical_source:
   publisher: "ФСТЭК России"
   url: "https://fstec.ru/component/attachments/download/2919"
   landing_page: "https://fstec.ru/dokumenty/vse-dokumenty/spetsialnye-normativnye-dokumenty/metodicheskij-dokument-ot-5-fevralya-2021-g"
+  fallback_url: "https://cbs.minzdrav.gov.ru/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBJUT09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--d0bf86ea88f3f112a7c14e327cd606bf28fa7f3a/met_doc_2021.02.05.pdf?disposition=attachment"
+  fallback_publisher: "Официальный государственный портал Минздрава России"
+  fallback_scope: OFFICIAL_GOVERNMENT_MIRROR_IF_ISSUER_TRANSPORT_UNAVAILABLE
   expected_mime: "application/pdf"
+  freshness_check:
+    checked_at: "2026-08-22"
+    result: CURRENT_METHOD_CONFIRMED
 capture:
   fingerprint_status: PENDING
   semantic_status: UNCHANGED
@@ -25,8 +31,12 @@ relations:
   - type: REPLACES_FOR_THREAT_ASSESSMENT
     target: FSTEC-PDN-THREAT-METHOD-2008
     locator: "section 1.8"
+  - type: EXCLUDES_SCOPE
+    target: SKZI_SECURITY_THREAT_ASSESSMENT
+    locator: "section 1.4"
 provenance:
   official_route_registered: true
+  official_government_mirror_registered: true
   independent_text_corroboration: true
   review_required: true
-agent_rule: "After capture, extract Appendix 1 definitions before reusing threat concepts globally."
+agent_rule: "Do not reuse this method as the crypto-threat method; after capture, extract Appendix 1 definitions before reusing threat concepts globally."
