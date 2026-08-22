@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """Guarded curl acquisition for PP RF No. 687 official canonical capture.
 
-The primary Government portal route can time out from GitHub-hosted runners. This
-helper therefore tries only routes pre-registered in the PP687 source record:
-1) the Government canonical page;
-2) the official pravo.gov.ru IPS route, when registered as a fallback.
+The Government portal route has repeatedly timed out from GitHub-hosted runners. This
+helper therefore uses only routes pre-registered in the PP687 source record, but tries
+the separately verified official pravo.gov.ru IPS route first when it is available and
+keeps the Government canonical page as the second route.
 
 No response is accepted merely because the host is official. Returned bytes must
 contain strong PP-687/personal-data identity markers before an immutable artifact and
@@ -27,7 +27,7 @@ SOURCE_RECORD = CORPUS / "source" / f"{SOURCE_ID}.yaml"
 RAW_DIR = CORPUS / "raw" / SOURCE_ID
 MANIFEST_DIR = CORPUS / "manifests"
 RUN_FILE = CORPUS / "PDN_ACQUISITION_RUN.json"
-UA = "KNOWLEDGE_CORE-pdn-pp687-curl/1.1 (+https://github.com/VictorKVS/KNOWLEDGE_CORE)"
+UA = "KNOWLEDGE_CORE-pdn-pp687-curl/1.2 (+https://github.com/VictorKVS/KNOWLEDGE_CORE)"
 
 CANONICAL_URL_RE = re.compile(r'^  url:\s*["\']([^"\']+)["\']\s*$', re.M)
 OFFICIAL_IPS_URL_RE = re.compile(
@@ -172,6 +172,13 @@ def main() -> int:
         raise RuntimeError(f"refuse PP687 capture: source status is not METADATA_VERIFIED for {SOURCE_ID}")
 
     routes = registered_routes(text)
+    # Preserve routes[0] as the registered primary Government source for provenance,
+    # but prefer the separately verified official IPS route for transport because the
+    # Government route has repeatedly timed out from GitHub-hosted runners.
+    attempt_routes = sorted(
+        routes,
+        key=lambda item: 0 if item[0] == "pravo_ips_registered_fallback" else 1,
+    )
     errors: list[str] = []
     accepted_route = ""
     accepted_source_url = ""
@@ -180,7 +187,7 @@ def main() -> int:
     mime = "application/octet-stream"
     markers: list[str] = []
 
-    for route_name, route_url in routes:
+    for route_name, route_url in attempt_routes:
         try:
             candidate, candidate_final_url, candidate_mime = curl_capture(route_url)
             ok, candidate_markers = identity_ok(candidate)
@@ -202,7 +209,7 @@ def main() -> int:
     artifact, sha = write_immutable(data)
     retrieved = dt.datetime.now(dt.timezone.utc).isoformat().replace("+00:00", "Z")
     manifest: dict[str, object] = {
-        "schema_version": "1.4",
+        "schema_version": "1.5",
         "source_id": SOURCE_ID,
         "source_document_number": "687",
         "capture_kind": "official_registered_route_snapshot",
@@ -211,6 +218,7 @@ def main() -> int:
         "source_url": accepted_source_url,
         "registered_primary_source_url": routes[0][1],
         "registered_route_count": len(routes),
+        "registered_route_attempt_order": [name for name, _ in attempt_routes],
         "retrieved_at": retrieved,
         "mime": mime,
         "byte_length": len(data),
