@@ -125,6 +125,30 @@ sources:
     source_record: "source/SEC-SRC-RU-FSTEC487-2025.yaml"
     raw_capture: PENDING
     applicability: VERSION_CHAIN_SCOPE
+  - id: SEC-SRC-RU-FSTEC55-2018
+    role: fstec_information_security_certification_system
+    metadata_status: METADATA_VERIFIED
+    source_record: "source/SEC-SRC-RU-FSTEC55-2018.yaml"
+    raw_capture: PENDING
+    applicability: CERTIFICATION_AND_CONFORMITY_CONTEXT_ONLY
+  - id: SEC-SRC-RU-FSTEC121-2021
+    role: fstec55_version_chain_dependency
+    metadata_status: METADATA_VERIFIED
+    source_record: "source/SEC-SRC-RU-FSTEC121-2021.yaml"
+    raw_capture: PENDING
+    applicability: VERSION_CHAIN_SCOPE
+  - id: SEC-SRC-RU-FSTEC172-2022
+    role: fstec55_version_chain_dependency
+    metadata_status: METADATA_VERIFIED
+    source_record: "source/SEC-SRC-RU-FSTEC172-2022.yaml"
+    raw_capture: PENDING
+    applicability: VERSION_CHAIN_SCOPE
+  - id: SEC-SRC-RU-FSTEC9-2026
+    role: fstec55_current_version_chain_dependency
+    metadata_status: METADATA_VERIFIED
+    source_record: "source/SEC-SRC-RU-FSTEC9-2026.yaml"
+    raw_capture: PENDING
+    applicability: VERSION_CHAIN_SCOPE
 
 version_edges:
   - from: SEC-SRC-RU-FSTEC21-2013
@@ -151,6 +175,18 @@ version_edges:
     type: AMENDED_BY
     to: SEC-SRC-RU-FSTEC487-2025
     provenance: OFFICIAL_PUBLICATION
+  - from: SEC-SRC-RU-FSTEC55-2018
+    type: AMENDED_BY
+    to: SEC-SRC-RU-FSTEC121-2021
+    provenance: OFFICIAL_PUBLICATION
+  - from: SEC-SRC-RU-FSTEC55-2018
+    type: AMENDED_BY
+    to: SEC-SRC-RU-FSTEC172-2022
+    provenance: OFFICIAL_PUBLICATION
+  - from: SEC-SRC-RU-FSTEC55-2018
+    type: AMENDED_BY
+    to: SEC-SRC-RU-FSTEC9-2026
+    provenance: OFFICIAL_PUBLICATION_IDENTIFIER_WITH_CURRENT_INDEX_CORROBORATION
 
 applicability_edges:
   - from: SEC-SRC-RU-152FZ-2026-07-26
@@ -194,6 +230,11 @@ applicability_edges:
     type: LICENSING_CONTROL_PROCEDURE_DETAILED_BY
     to: SEC-SRC-RU-FSTEC163-2025
     scope: TZI_LICENSED_ACTIVITY_ONLY
+    not_universal_pdn_duty: true
+  - from: SEC-SRC-RU-FSTEC55-2018
+    type: CERTIFICATION_SYSTEM_CONTEXT_FOR
+    to: SECURITY_PROTECTION_MEANS
+    scope: CERTIFICATION_AND_CONFORMITY_CONTEXT_ONLY
     not_universal_pdn_duty: true
 
 context_splits:
@@ -241,6 +282,16 @@ context_splits:
     finding: >-
       FSTEC Orders No. 163/2025 and 487/2025 describe the TZI licensing-control procedure/version chain.
       They do not create a universal licence duty for every PDN operator merely because an ISPDn is operated.
+  - id: PDN-STACK-CONTEXT-2026-006
+    status: CONTEXT_DEPENDENT_NOT_CONFLICT
+    sources:
+      - SEC-SRC-RU-FSTEC55-2018
+      - SEC-SRC-RU-FSTEC121-2021
+      - SEC-SRC-RU-FSTEC172-2022
+      - SEC-SRC-RU-FSTEC9-2026
+    finding: >-
+      FSTEC Order No. 55 and its amendments define the certification-system framework for protection means.
+      They must not be transformed into a universal standalone requirement for every PDN operator to certify every tool.
 
 conflict_candidates:
   - id: PDN-STACK-CONFLICT-CANDIDATE-2026-001
@@ -255,16 +306,16 @@ conflict_candidates:
       as a contradiction until scope, legal regime, effective interval and purpose are compared.
 
 production_counters:
-  identified: 18
-  metadata_verified: 18
+  identified: 22
+  metadata_verified: 22
   raw_downloaded_exact: 9
   immutable_sha256_verified: 9
-  pending_raw_capture: 9
-  official_publication_id_targets: 9
+  pending_raw_capture: 13
+  official_publication_id_targets: 13
   official_canonical_targets: 6
   exact_official_route_unresolved: 3
-  version_edges_verified: 6
-  applicability_guards: 11
+  version_edges_verified: 9
+  applicability_guards: 12
   confirmed_conflicts: 0
   conflict_candidates: 1
 
