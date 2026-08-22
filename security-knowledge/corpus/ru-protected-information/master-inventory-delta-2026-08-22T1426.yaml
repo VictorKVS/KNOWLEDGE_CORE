@@ -1,0 +1,112 @@
+schema_version: "1.0"
+kind: ru-protected-information-master-inventory-delta
+base_inventory: "master-inventory.yaml"
+reconciliation_base_delta: "master-inventory-delta-2026-08-22T0815.yaml"
+checked_at: "2026-08-22T14:26:27+03:00"
+owner_stream: STREAM_3_SECTOR_OVERLAYS
+run_ref: "stream-3-run-2026-08-22T1426.yaml"
+status: APPEND_ONLY_RECONCILIATION_READY
+
+proof_floor:
+  - "Новый источник добавлен для самостоятельного режима тайны усыновления; он не заменяет 152-ФЗ и не доказывает применимость 152-ФЗ к конкретной организации."
+  - "Статья 139 СК РФ и статья 47 143-ФЗ связаны по предмету тайны усыновления, но остаются разными нормативными источниками."
+  - "Постановление КС РФ № 15-П является обязательным контекстом толкования; его наличие не превращается в универсальное разрешение раскрывать сведения."
+  - "Актуальность всего Семейного кодекса и статьи 139 проверяются отдельно."
+  - "MIME/byte_length/SHA-256 не придумываются без exact bytes."
+
+counter_state_before_reconciled: {found: 24, downloaded: 9, immutable: 9, pending: 13, reused: 2, primary_publication_verified: 10, sectors_registered: 16}
+counter_state_after_reconciliation:
+  found: 25
+  downloaded: 9
+  immutable: 9
+  pending: 14
+  reused: 2
+  primary_publication_verified: 10
+  sectors_registered: 17
+  new_sources_this_run: 1
+  existing_source_nodes_operationalized: 0
+  new_immutable_this_run: 0
+  exact_binary_downloads_this_run: 0
+  current_protected_locators_crosschecked_this_run: 3
+  pdn_overlap_candidates_added_this_run: 1
+  cross_regime_candidates_added_this_run: 1
+  constitutional_interpretation_edges_added_this_run: 1
+  current_version_events_reconciled_this_run: 1
+  future_version_events_registered_this_run: 1
+  applicability_edges_promoted_this_run: 0
+  legal_conflicts_confirmed_this_run: 0
+
+source_added:
+  source_id: SEC-SRC-RU-SK-1995-A139
+  source_card: "security-corpora/RU/protected-information/source/SEC-SRC-RU-SK-1995-A139.yaml"
+  sector: children-family
+  regimes: [adoption_secrecy, family_secret]
+  state: NEW_PRIMARY_AUTHORITY_TEXT_VERIFIED_EXACT_OFFICIAL_ARTIFACT_PENDING_VERSION_CHAIN_PARTIAL
+  primary_authority_text:
+    authority: "Президент Российской Федерации — Банк документов"
+    url: "https://www.kremlin.ru/acts/bank/8671/print"
+    state: OFFICIAL_TEXT_LOCATORS_CROSSCHECKED
+  protected_locators:
+    - {locator: "статья 139 пункт 1", concept: ADOPTION_SECRET_PROTECTED_BY_LAW, state: CURRENT_PRIMARY_AUTHORITY_TEXT_CROSSCHECKED}
+    - {locator: "статья 139 пункт 2", concept: ADOPTION_SECRET_DISCLOSURE_LIABILITY, state: CURRENT_PRIMARY_AUTHORITY_TEXT_CROSSCHECKED}
+    - {locator: "статья 135 пункт 1", concept: ADOPTION_SECRET_SUPPORTING_RECORD_CHANGES, state: PRIMARY_AUTHORITY_TEXT_CROSSCHECKED}
+  pdn_relation:
+    state: OVERLAP_CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    guard: "OVERLAP != APPLICABILITY; resolve data subject, fields, operation, purpose, legal basis, actor role and disclosure/access context."
+  cross_regime_relation:
+    target: "143-ФЗ, статья 47"
+    type: ADOPTION_CIVIL_STATUS_RECORD_SECRECY
+    state: DIRECT_STATUTORY_REGIME_OVERLAP_CONSTITUTIONAL_INTERPRETATION_EXISTS
+  constitutional_interpretation:
+    act: "Постановление Конституционного Суда РФ от 16.06.2015 № 15-П"
+    primary_pdf_url: "https://www.ksrf.ru/doc/KSRFDecision198856.pdf"
+    state: PRIMARY_DECISION_TEXT_VERIFIED_RELATIONSHIP_REQUIRES_EXPERT_INTERPRETATION
+  capture_backlog: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-SK-1995-A139-version-capture-pending.json"
+
+version_chain_delta:
+  state: VERSION_CHAIN_PARTIAL
+  current_events:
+    - act: "68-ФЗ от 23.03.2026"
+      official_publication_id: "0001202603230014"
+      official_publication_date: "2026-03-23"
+      official_url: "https://publication.pravo.gov.ru/document/0001202603230014"
+      effective_from: "2026-04-03"
+      changed_locator: "статья 3"
+      protected_locator_139_affected: false
+      state: PRIMARY_PUBLICATION_VERIFIED_SOURCE_LEVEL_EVENT
+  future_events:
+    - act: "286-ФЗ от 04.08.2026"
+      publication_locator: "0001202608040011"
+      publication_date: "2026-08-04"
+      effective_from: "2026-12-01"
+      changed_locator: "статья 169"
+      protected_locator_139_affected: false
+      state: FUTURE_SOURCE_LEVEL_EVENT_NOT_CURRENT_PUBLICATION_LOCATOR_CROSSCHECKED_PRIMARY_PAGE_PENDING
+  locator_specific_result: "No amendment directly changing article 139 was identified in this pass; historical chain remains PARTIAL, not VERIFIED."
+
+acquisition_delta:
+  durable_immutable_artifacts_added: 0
+  exact_binary_downloads_succeeded: 0
+  official_current_text_locator_crosschecks: 3
+  capture_backlog_created: true
+  official_current_artifact:
+    retrieved_at: null
+    mime: null
+    byte_length: null
+    sha256: null
+  blocker: >-
+    The official Bank-of-Documents text was available for locator verification, but a byte-exact current official artifact
+    could not be durably persisted through the available text-only GitHub write path. Binary metadata therefore remains null.
+
+proof_floor_effect:
+  executable_rules_changed: false
+  applicability_edges_promoted: 0
+  duplicate_source_nodes_created: 0
+  legal_conflicts_confirmed: 0
+  source_nodes_added: 1
+  cross_regime_candidates_added: 1
+
+merge_rule: >-
+  Reconcile after master-inventory-delta-2026-08-22T0815.yaml. Aggregate Stream 3 counters become 25 found / 9 downloaded /
+  9 immutable / 14 pending / 2 reused. New discovery is the article-139 adoption-secrecy regime; acquisition counters remain
+  unchanged until exact authoritative bytes are durably stored.
