@@ -1,0 +1,111 @@
+schema_version: "1.0"
+kind: stream-run
+stream: STREAM_3_SECTOR_OVERLAYS
+checked_at: "2026-08-22T17:21:01+03:00"
+status: COMPLETED_WITH_EXACT_CURRENT_BINARY_PENDING
+focus: "tax/public-finance — Tax Code article 102 tax secrecy"
+
+scope_result:
+  new_sources_discovered: 1
+  duplicate_sources_created: 0
+  exact_binary_downloads_succeeded: 0
+  durable_immutable_artifacts_added: 0
+  protected_locators_crosschecked: 5
+  relationship_candidates_added: 3
+  applicability_edges_promoted: 0
+  legal_conflicts_confirmed: 0
+
+source_work:
+  - source_id: SEC-SRC-RU-NK1-1998-A102
+    action: DISCOVER_AND_REGISTER
+    source_card: "security-corpora/RU/protected-information/source/SEC-SRC-RU-NK1-1998-A102.yaml"
+    capture_backlog: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-NK1-1998-A102-version-capture-pending.json"
+    authority_identity:
+      act: "Налоговый кодекс Российской Федерации (часть первая), 146-ФЗ от 31.07.1998"
+      official_bank_locator: "https://www.kremlin.ru/acts/bank/12755"
+      official_consolidated_locator: "https://pravo.gov.ru/proxy/ips/?docbody=&nd=102054722"
+    anchors:
+      - "статья 102 пункт 1 — состав налоговой тайны и законные исключения"
+      - "статья 102 пункт 2 — неразглашение, кроме случаев, предусмотренных федеральным законом"
+      - "статья 102 пункт 3 — специальный режим хранения и доступа"
+      - "статья 102 пункт 4 — ответственность за утрату документов/разглашение"
+      - "статья 102 пункт 16 — с 01.08.2026 защита документов/сведений в личном кабинете ЕПГУ в установленном нормой объеме"
+
+version_reconciliation:
+  current:
+    - act: "425-ФЗ от 28.11.2025"
+      official_publication_id: "0001202511280017"
+      official_url: "https://publication.pravo.gov.ru/Document/View/0001202511280017"
+      change: "статья 102 дополнена пунктами 16 и 17"
+      current_locator: "пункт 16"
+      effective_from: "2026-08-01"
+      point_17_effective_from: "2027-01-01"
+      evidence_state: PRIMARY_OFFICIAL_PUBLICATION_VERIFIED_CURRENT_LOCATOR
+  future:
+    - act: "242-ФЗ от 26.07.2026"
+      publication_locator: "0001202607260002"
+      effective_from: "2026-10-01"
+      changed_locator: "пункт 15.1 статьи 102"
+      relation: "передача налоговой тайны в МВД/территориальные органы/подведомственные и уполномоченные государственные организации в контексте 115-ФЗ"
+      evidence_state: PUBLICATION_LOCATOR_AND_LOCATOR_SPECIFIC_CHANGE_CROSSCHECKED_EXACT_PRIMARY_BINARY_PENDING
+    - act: "281-ФЗ от 04.08.2026"
+      publication_locator: "0001202608040006"
+      effective_from: "2027-01-01"
+      changed_locator: "пункт 15.2 статьи 102"
+      relation: "передача налоговой тайны уполномоченным федеральным органам в контексте 381-ФЗ о торговой деятельности"
+      evidence_state: PUBLICATION_LOCATOR_AND_LOCATOR_SPECIFIC_CHANGE_CROSSCHECKED_EXACT_PRIMARY_BINARY_PENDING
+    - act: "425-ФЗ от 28.11.2025"
+      official_publication_id: "0001202511280017"
+      effective_from: "2027-01-01"
+      changed_locator: "пункт 17 статьи 102"
+      evidence_state: FUTURE_COMPONENT_OF_PRIMARY_VERIFIED_AMENDMENT
+  locator_specific_result: >-
+    Current as of this pass: point 16 is effective from 2026-08-01. Point 15.1 becomes effective 2026-10-01;
+    point 15.2 and point 17 become effective 2027-01-01. Full historical locator-specific chain remains PARTIAL.
+
+relationship_work:
+  pdn:
+    target: "152-ФЗ"
+    state: OVERLAP_CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    reason: >-
+      Tax-secret information can include identifiable natural-person/IP data, but the regime also covers organizations
+      and other tax information; tax secrecy is not equivalent to personal data.
+  migration:
+    target: "115-ФЗ от 25.07.2002"
+    state: FUTURE_TRANSFER_CONTEXT_FROM_2026-10-01_NOT_CURRENT
+  trade_monitoring:
+    target: "381-ФЗ от 28.12.2009"
+    state: FUTURE_TRANSFER_CONTEXT_FROM_2027-01-01_NOT_CURRENT
+
+acquisition:
+  current_official_artifact:
+    retrieved_at: null
+    mime: null
+    byte_length: null
+    sha256: null
+    immutable: false
+  attempts:
+    - "Official consolidated pravo.gov.ru locator identified but byte-exact retrieval timed out/was unavailable in this execution."
+    - "Official 425-ФЗ publication page metadata was available, but direct exact PDF bytes were not obtained and durably persisted."
+  blocker: >-
+    No byte-exact current authoritative artifact was returned through the available fetch path, and the GitHub write connector used
+    in this run accepts UTF-8 text rather than an arbitrary binary artifact. No MIME, size, hash or immutable status was fabricated.
+
+counter_reconciliation:
+  before: {found: 25, downloaded: 9, immutable: 9, pending: 14, reused: 2}
+  after: {found: 26, downloaded: 9, immutable: 9, pending: 15, reused: 2}
+  explanation: "One genuinely new special protected-information source registered; exact authoritative current artifact remains pending."
+
+files_written:
+  - "security-corpora/RU/protected-information/source/SEC-SRC-RU-NK1-1998-A102.yaml"
+  - "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-NK1-1998-A102-version-capture-pending.json"
+  - "security-knowledge/corpus/ru-protected-information/master-inventory-delta-2026-08-22T1721.yaml"
+  - "security-knowledge/corpus/ru-personal-data/master-source-inventory-delta-stream3-2026-08-22T1721.yaml"
+  - "security-knowledge/corpus/ru-protected-information/stream-3-run-2026-08-22T1721.yaml"
+
+next_priority:
+  - "Exact byte capture for current authoritative Tax Code Part One artifact and 425/242/281-ФЗ publication PDFs."
+  - "Tax secrecy: reconcile historical locator-specific amendments to article 102 without promoting generic Tax Code amendments."
+  - "Children/education: deepen existing 273-ФЗ source and exact-current capture."
+  - "Public sector: article 47 of 143-ФЗ exact-current capture and adoption-record relation."
+  - "Continue pending exact captures in healthcare, finance, communications, transport, advertising and archives."
