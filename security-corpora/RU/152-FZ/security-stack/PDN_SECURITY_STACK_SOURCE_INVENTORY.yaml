@@ -1,4 +1,4 @@
-schema_version: "1.0"
+schema_version: "1.1"
 id: SEC-PDN-SECURITY-STACK-INVENTORY
 kind: security-regulatory-source-inventory
 status: ACTIVE_DISCOVERY
@@ -53,6 +53,24 @@ sources:
     source_record: "source/SEC-SRC-RU-FSB378-2014.yaml"
     raw_capture: PENDING
     applicability: ISPDN_WHEN_SKZI_USED
+  - id: SEC-SRC-RU-FSB66-2005
+    role: crypto_product_lifecycle_pkz_2005
+    metadata_status: METADATA_VERIFIED
+    source_record: "source/SEC-SRC-RU-FSB66-2005.yaml"
+    raw_capture: PENDING
+    applicability: SKZI_LIFECYCLE_WHEN_APPLICABLE
+  - id: SEC-SRC-RU-FSB173-2010
+    role: fsb66_version_chain_dependency
+    metadata_status: METADATA_VERIFIED
+    source_record: "source/SEC-SRC-RU-FSB173-2010.yaml"
+    raw_capture: PENDING
+    applicability: VERSION_CHAIN_SCOPE
+  - id: SEC-SRC-RU-FAPSI152-2001
+    role: crypto_handling_instruction
+    metadata_status: METADATA_VERIFIED
+    source_record: "source/SEC-SRC-RU-FAPSI152-2001.yaml"
+    raw_capture: PENDING
+    applicability: SKZI_HANDLING_WHEN_APPLICABLE
   - id: SEC-SRC-RU-FSB77-2023
     role: pdn_incident_gossopka_interaction
     metadata_status: METADATA_VERIFIED
@@ -85,6 +103,10 @@ version_edges:
     type: NOT_APPLIED_FOR_THREAT_ASSESSMENT_AFTER
     to: SEC-SRC-RU-FSTEC-THREAT-METHOD-2021
     provenance: METHODOLOGY_SECTION_1_8
+  - from: SEC-SRC-RU-FSB66-2005
+    type: AMENDED_BY
+    to: SEC-SRC-RU-FSB173-2010
+    provenance: OFFICIAL_FSB_NPA_INDEX
 
 applicability_edges:
   - from: SEC-SRC-RU-152FZ-2026-07-26
@@ -101,6 +123,14 @@ applicability_edges:
     type: CRYPTO_MEASURES_DETAILED_BY
     to: SEC-SRC-RU-FSB378-2014
     scope: ISPDN_WHEN_SKZI_USED
+  - from: SEC-SRC-RU-FSB378-2014
+    type: USES_CRYPTO_LIFECYCLE_CONTEXT
+    to: SEC-SRC-RU-FSB66-2005
+    scope: ONLY_WHEN_SKZI_LIFECYCLE_REQUIREMENTS_ARE_APPLICABLE
+  - from: SEC-SRC-RU-FSB378-2014
+    type: USES_CRYPTO_HANDLING_CONTEXT
+    to: SEC-SRC-RU-FAPSI152-2001
+    scope: ONLY_WHEN_SKZI_HANDLING_REQUIREMENTS_ARE_APPLICABLE
 
 context_splits:
   - id: PDN-STACK-CONTEXT-2026-001
@@ -111,6 +141,16 @@ context_splits:
     finding: >-
       The two Order No. 117 documents regulate complementary non-cryptographic and cryptographic protection
       in a bounded public-sector system scope. They must not be merged into a universal private-ISPDn duty.
+  - id: PDN-STACK-CONTEXT-2026-002
+    status: CONTEXT_DEPENDENT_NOT_CONFLICT
+    sources:
+      - SEC-SRC-RU-FSB378-2014
+      - SEC-SRC-RU-FSB66-2005
+      - SEC-SRC-RU-FAPSI152-2001
+    finding: >-
+      Order No. 378, PKZ-2005 and FAPSI No. 152 occupy different layers: ISPDn crypto measures, crypto-product
+      lifecycle, and crypto handling/operation. They must remain separate applicability paths until compiled
+      source locators prove a specific dependency for a case.
 
 conflict_candidates:
   - id: PDN-STACK-CONFLICT-CANDIDATE-2026-001
@@ -125,16 +165,16 @@ conflict_candidates:
       as a contradiction until scope, legal regime, effective interval and purpose are compared.
 
 production_counters:
-  identified: 9
-  metadata_verified: 9
+  identified: 12
+  metadata_verified: 12
   raw_downloaded_exact: 0
   immutable_sha256_verified: 0
-  pending_raw_capture: 9
+  pending_raw_capture: 12
   official_publication_id_targets: 5
   official_canonical_targets: 3
-  exact_official_route_unresolved: 1
-  version_edges_verified: 3
-  applicability_guards: 5
+  exact_official_route_unresolved: 4
+  version_edges_verified: 4
+  applicability_guards: 7
   confirmed_conflicts: 0
   conflict_candidates: 1
 
