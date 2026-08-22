@@ -1,0 +1,64 @@
+schema_version: 1
+delta_id: RU-PDN-LIB-0001-STREAM2-2026-08-22
+applies_to: security-knowledge/pdn/pdn-master-source-library-v1.yaml
+applies_to_library_id: RU-PDN-LIB-0001
+checked_at: 2026-08-22
+merge_policy: >-
+  This delta is additive evidence for the canonical PDN source library. It must not silently replace
+  canonical source states. Promote only after immutable artifact and version-chain gates pass.
+
+existing_source_updates:
+  PDN-SRC-0008:
+    source_id: RU_GOV_PP_1119_2012
+    verified_scope: DIRECT_PDN_ISPDN_SECURITY
+    official_source_url: "https://government.ru/docs/6339/"
+    immutable_artifact: PENDING
+    evidence_binding: security-knowledge/evidence/pdn-technical-crypto-source-acquisition-2026-08-22-run-190.yaml
+  PDN-SRC-0009:
+    source_id: RU_FSTEC_ORDER_21_2013
+    current_edition_basis: "Order 68 of 14.05.2020"
+    amendment_publications: ["0001201704260010", "0001202007100002"]
+    immutable_artifact: PENDING
+    evidence_binding: security-knowledge/evidence/pdn-technical-crypto-source-acquisition-2026-08-22-run-190.yaml
+  PDN-SRC-0010:
+    source_id: RU_FSTEC_THREAT_METHOD_2021
+    official_file_url: "https://fstec.ru/component/attachments/download/2919"
+    immutable_artifact: PENDING
+    evidence_binding: security-knowledge/evidence/pdn-technical-crypto-source-acquisition-2026-08-22-run-190.yaml
+  PDN-SRC-0012:
+    source_id: RU_FSB_ORDER_378_2014
+    verified_scope: CONDITIONAL_IF_SKZI_USED_FOR_PDN_IN_ISPDN
+    current_edition: "2014-07-10"
+    effective_from: "2014-09-28"
+    immutable_artifact: PENDING
+    evidence_binding: security-knowledge/evidence/pdn-technical-crypto-source-acquisition-2026-08-22-run-190.yaml
+
+candidate_new_source_records:
+  - candidate_id: PDN-SRC-CAND-0038
+    source_id: RU_GOV_PP_313_2012
+    title: "Government Decree No. 313 of 16.04.2012 — cryptographic-activity licensing"
+    authority: GOVERNMENT_RF
+    kind: GOVERNMENT_DECREE
+    scope: CONDITIONAL_CRYPTO_ACTIVITY_LICENSING
+    proposed_state: STATUS_RECHECK_REQUIRED
+    current_reference_evidence: >-
+      Current Government of Russia materials in 2025 still cite Decree No. 313 as the licensing
+      regulation for cryptographic activities, but the exact consolidated current version chain and
+      immutable official artifact remain to be acquired.
+    applicability_guard: >-
+      Do not infer a licence duty solely from PDn processing or SKZI use. Evaluate the actual activity,
+      exemptions including own-needs maintenance, and the current consolidated licensing regulation.
+    evidence_binding: security-knowledge/evidence/pdn-technical-crypto-source-acquisition-2026-08-22-run-190.yaml
+
+excluded_from_unconditional_pdn_baseline:
+  - GOSSOPKA_NKTSKI
+  - FSTEC_BDU_ASU_TP
+reason: >-
+  These are neighboring/special routes and require a proven incident, CII, ASU TP or other direct
+  applicability edge before their requirements can be promoted into the PDN core.
+
+counter_effect:
+  canonical_registered_source_records_before_merge: 37
+  proposed_new_candidates: 1
+  canonical_count_after_expert_merge_if_accepted: 38
+  existing_records_reconciled: 4
