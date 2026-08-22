@@ -27,9 +27,10 @@ RAW_DIR = STACK / "raw"
 MANIFEST_DIR = STACK / "manifests"
 INVENTORY = STACK / "PDN_SECURITY_STACK_SOURCE_INVENTORY.yaml"
 RUN_FILE = STACK / "PDN_SECURITY_STACK_ACQUISITION_RUN.json"
+STREAM_STATUS = STACK / "STREAM2_STATUS_2026-08-22.yaml"
 MASTER = PDN / "PDN_MASTER_SOURCE_INVENTORY.yaml"
 BASES = ("http://publication.pravo.gov.ru", "https://publication.pravo.gov.ru")
-UA = "KNOWLEDGE_CORE-pdn-security-stack-acquirer/1.0 (+https://github.com/VictorKVS/KNOWLEDGE_CORE)"
+UA = "KNOWLEDGE_CORE-pdn-security-stack-acquirer/1.1 (+https://github.com/VictorKVS/KNOWLEDGE_CORE)"
 
 ID_RE = re.compile(r"^id:\s*([^\s#]+)\s*$", re.M)
 STATUS_RE = re.compile(r"^status:\s*([^\s#]+)\s*$", re.M)
@@ -37,7 +38,9 @@ TOP_LEVEL_RE = re.compile(r"(?m)^[A-Za-z_][A-Za-z0-9_-]*:\s*(?:.*)?$")
 PUB_RE = re.compile(r'^  official_publication_id:\s*["\']?([0-9]{16})["\']?\s*$', re.M)
 NUMBER_RE = re.compile(r'^  number:\s*["\']?([^"\'\n]+)["\']?\s*$', re.M)
 URL_RE = re.compile(r'^  url:\s*["\']([^"\']+)["\']\s*$', re.M)
+FALLBACK_URL_RE = re.compile(r'^  fallback_url:\s*["\']([^"\']+)["\']\s*$', re.M)
 EXPECTED_MIME_RE = re.compile(r'^  expected_mime:\s*["\']?([^"\'\n]+)["\']?\s*$', re.M)
+DOCX_MIME = "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
 
 
 def section(text: str, name: str) -> str:
@@ -75,9 +78,11 @@ def official_get(path: str, eo: str):
     raise RuntimeError("; ".join(errors))
 
 
-def extension(mime: str, data: bytes) -> str:
-    if data.startswith(b"%PDF-") or mime == "application/pdf":
+def extension(mime: str, data: bytes, expected_mime: str = "") -> str:
+    if data.startswith(b"%PDF-") or mime == "application/pdf" or expected_mime == "application/pdf":
         return ".pdf"
+    if expected_mime == DOCX_MIME and data.startswith(b"PK\x03\x04"):
+        return ".docx"
     if "html" in mime or data.lstrip().lower().startswith((b"<!doctype html", b"<html")):
         return ".html"
     if "json" in mime:
@@ -85,6 +90,15 @@ def extension(mime: str, data: bytes) -> str:
     if mime.startswith("text/"):
         return ".txt"
     return mimetypes.guess_extension(mime) or ".bin"
+
+
+def validate_expected(data: bytes, mime: str, expected_mime: str) -> None:
+    if not expected_mime:
+        return
+    if expected_mime == "application/pdf" and not data.startswith(b"%PDF-"):
+        raise RuntimeError(f"expected official PDF but got mime={mime}")
+    if expected_mime == DOCX_MIME and not data.startswith(b"PK\x03\x04"):
+        raise RuntimeError(f"expected official DOCX/OOXML but got mime={mime}")
 
 
 def write_immutable(source_id: str, stem: str, data: bytes, ext: str):
@@ -108,11 +122,21 @@ def discover_targets():
         doc = section(text, "document")
         canon = section(text, "canonical_source")
         pub, num, url = PUB_RE.search(doc), NUMBER_RE.search(doc), URL_RE.search(canon)
+        fallback_urls = FALLBACK_URL_RE.findall(canon)
         expected_mime = EXPECTED_MIME_RE.search(canon)
         if pub:
-            out.append({"source_id": mid.group(1), "route": "publication_pdf", "value": pub.group(1), "number": num.group(1) if num else "", "path": path, "expected_mime": "application/pdf"})
+            out.append({
+                "source_id": mid.group(1), "route": "publication_pdf", "value": pub.group(1),
+                "number": num.group(1) if num else "", "path": path,
+                "expected_mime": "application/pdf", "fallback_urls": fallback_urls,
+            })
         elif url:
-            out.append({"source_id": mid.group(1), "route": "canonical_snapshot", "value": url.group(1), "number": num.group(1) if num else "", "path": path, "expected_mime": expected_mime.group(1) if expected_mime else ""})
+            out.append({
+                "source_id": mid.group(1), "route": "canonical_snapshot", "value": url.group(1),
+                "number": num.group(1) if num else "", "path": path,
+                "expected_mime": expected_mime.group(1) if expected_mime else "",
+                "fallback_urls": fallback_urls,
+            })
     return out
 
 
@@ -134,6 +158,24 @@ def reusable(source_id: str):
         return None
 
 
+def _canonical_fetch_with_fallback(target):
+    expected = target.get("expected_mime", "")
+    errors = []
+    candidates = [target["value"], *target.get("fallback_urls", [])]
+    for index, candidate in enumerate(candidates):
+        try:
+            data, headers, final_url = fetch_bytes(candidate)
+            if not data:
+                raise RuntimeError("empty official response")
+            response_mime = (headers.get("content-type") or "application/octet-stream").split(";", 1)[0].strip().lower()
+            validate_expected(data, response_mime, expected)
+            mime = expected if expected and response_mime in {"application/octet-stream", "binary/octet-stream"} else response_mime
+            return data, mime, final_url, index > 0, errors
+        except Exception as exc:
+            errors.append(f"{candidate}: {exc}")
+    raise RuntimeError("; ".join(errors))
+
+
 def capture(target):
     sid, route, value = target["source_id"], target["route"], target["value"]
     retrieved = dt.datetime.now(dt.timezone.utc).isoformat().replace("+00:00", "Z")
@@ -151,7 +193,7 @@ def capture(target):
         if mime == "application/octet-stream":
             mime = "application/pdf"
         return {
-            "schema_version": "1.0", "source_id": sid, "capture_kind": route,
+            "schema_version": "1.1", "source_id": sid, "capture_kind": route,
             "official_publication_id": value, "official_metadata_url": meta_url,
             "source_url": pdf_url, "retrieved_at": retrieved, "mime": mime,
             "byte_length": len(pdf), "sha256": sha,
@@ -162,22 +204,20 @@ def capture(target):
                       "sha256_calculated_from_downloaded_bytes": True},
             "semantic_status_unchanged": True,
         }
-    data, headers, final_url = fetch_bytes(value)
-    if not data:
-        raise RuntimeError("empty official canonical response")
-    mime = (headers.get("content-type") or "application/octet-stream").split(";", 1)[0].strip().lower()
-    if target.get("expected_mime") == "application/pdf" and not data.startswith(b"%PDF-"):
-        raise RuntimeError(f"expected official PDF but got mime={mime}")
-    ext = extension(mime, data)
+    data, mime, final_url, fallback_used, failed_primary_attempts = _canonical_fetch_with_fallback(target)
+    expected = target.get("expected_mime", "")
+    ext = extension(mime, data, expected)
     artifact, sha = write_immutable(sid, "official-snapshot", data, ext)
     return {
-        "schema_version": "1.0", "source_id": sid, "capture_kind": route,
-        "source_url": final_url, "retrieved_at": retrieved, "mime": mime,
-        "byte_length": len(data), "sha256": sha,
+        "schema_version": "1.1", "source_id": sid, "capture_kind": route,
+        "configured_primary_url": value, "source_url": final_url,
+        "fallback_used": fallback_used, "failed_primary_attempts": failed_primary_attempts,
+        "retrieved_at": retrieved, "mime": mime, "byte_length": len(data), "sha256": sha,
         "artifact_ref": str(artifact.relative_to(ROOT)).replace("\\", "/"),
         "source_record_ref": str(target["path"].relative_to(ROOT)).replace("\\", "/"),
         "proof": {"official_route": True, "byte_exact_download": True,
-                  "expected_pdf_signature_ok": target.get("expected_mime") != "application/pdf" or data.startswith(b"%PDF-"),
+                  "expected_pdf_signature_ok": expected != "application/pdf" or data.startswith(b"%PDF-"),
+                  "expected_docx_signature_ok": expected != DOCX_MIME or data.startswith(b"PK\x03\x04"),
                   "sha256_calculated_from_downloaded_bytes": True},
         "semantic_status_unchanged": True,
     }
@@ -209,13 +249,18 @@ def sync_source(manifest):
 
 def update_inventory(captured_ids, total_sources, run):
     text = INVENTORY.read_text(encoding="utf-8")
-    for sid in re.findall(r"(?m)^  - id:\s*([^\s#]+)$", text):
+    sources_text = section(text, "sources")
+    source_ids = re.findall(r"(?m)^  - id:\s*([^\s#]+)$", sources_text)
+    for sid in source_ids:
         value = "IMMUTABLE_CAPTURED" if sid in captured_ids else "PENDING"
         text = re.sub(rf"(?ms)(^  - id: {re.escape(sid)}\n.*?^    raw_capture:)\s*[^\n]+", rf"\1 {value}", text, count=1)
     values = {
+        "identified": total_sources,
+        "metadata_verified": total_sources,
         "raw_downloaded_exact": len(captured_ids),
         "immutable_sha256_verified": len(captured_ids),
         "pending_raw_capture": total_sources - len(captured_ids),
+        "exact_official_route_unresolved": len(run["unrouted_source_ids"]),
     }
     for key, val in values.items():
         text = re.sub(rf"(?m)^(  {key}:)\s*[^\n]+$", rf"\1 {val}", text, count=1)
@@ -233,6 +278,26 @@ def update_inventory(captured_ids, total_sources, run):
     )
     text = text.replace(marker, summary + marker, 1)
     INVENTORY.write_text(text, encoding="utf-8")
+
+
+def update_stream_status(captured, total, run):
+    if not STREAM_STATUS.exists():
+        return
+    text = STREAM_STATUS.read_text(encoding="utf-8")
+    values = {
+        "sources_identified": total,
+        "sources_metadata_verified": total,
+        "exact_official_route_unresolved": len(run["unrouted_source_ids"]),
+        "raw_downloaded_exact": captured,
+        "immutable_sha256_verified": captured,
+        "pending_raw_capture": total - captured,
+    }
+    for key, val in values.items():
+        text = re.sub(rf"(?m)^(  {key}:)\s*[^\n]+$", rf"\1 {val}", text, count=1)
+    state = "IMMUTABLE_CAPTURE_COMPLETE" if captured == total else "PARTIAL_IMMUTABLE_CAPTURED"
+    text = re.sub(r"(?m)^(  status:)\s*[^\n]+$", rf"\1 {state}", text, count=1)
+    text = re.sub(r"(?m)^(  accepted_run_record:)\s*[^\n]+$", r'\1 "PDN_SECURITY_STACK_ACQUISITION_RUN.json"', text, count=1)
+    STREAM_STATUS.write_text(text, encoding="utf-8")
 
 
 def update_master(captured, total, run):
@@ -265,7 +330,8 @@ def main():
     RAW_DIR.mkdir(parents=True, exist_ok=True)
     MANIFEST_DIR.mkdir(parents=True, exist_ok=True)
     targets = discover_targets()
-    all_source_ids = set(re.findall(r"(?m)^  - id:\s*([^\s#]+)$", INVENTORY.read_text(encoding="utf-8")))
+    inventory_text = INVENTORY.read_text(encoding="utf-8")
+    all_source_ids = set(re.findall(r"(?m)^  - id:\s*([^\s#]+)$", section(inventory_text, "sources")))
     reused, attempted = [], []
     for target in targets:
         old = reusable(target["source_id"])
@@ -277,7 +343,7 @@ def main():
             m = capture(target)
             (MANIFEST_DIR / f"{target['source_id']}.json").write_text(json.dumps(m, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
             sync_source(m)
-            row.update({"status": "IMMUTABLE_CAPTURED", "byte_length": m["byte_length"], "sha256": m["sha256"], "mime": m["mime"]})
+            row.update({"status": "IMMUTABLE_CAPTURED", "byte_length": m["byte_length"], "sha256": m["sha256"], "mime": m["mime"], "source_url": m["source_url"], "fallback_used": m.get("fallback_used", False)})
         except Exception as exc:
             row["error"] = str(exc)
         attempted.append(row)
@@ -288,7 +354,7 @@ def main():
             accepted.append(m)
     finished = dt.datetime.now(dt.timezone.utc).isoformat().replace("+00:00", "Z")
     run = {
-        "schema_version": "1.0", "kind": "pdn-security-stack-reuse-first-acquisition-run",
+        "schema_version": "1.1", "kind": "pdn-security-stack-reuse-first-acquisition-run",
         "started_at": started.isoformat().replace("+00:00", "Z"), "finished_at": finished,
         "sources_registered": len(all_source_ids), "targets_total": len(targets),
         "reused_immutable": len(reused), "network_targets_attempted": len(attempted),
@@ -298,7 +364,9 @@ def main():
         "unrouted_source_ids": sorted(all_source_ids - {t["source_id"] for t in targets}),
     }
     RUN_FILE.write_text(json.dumps(run, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    update_inventory({m["source_id"] for m in accepted}, len(all_source_ids), run)
+    captured_ids = {m["source_id"] for m in accepted}
+    update_inventory(captured_ids, len(all_source_ids), run)
+    update_stream_status(len(accepted), len(all_source_ids), run)
     update_master(len(accepted), len(all_source_ids), run)
     print(json.dumps({k: run[k] for k in ("sources_registered", "targets_total", "reused_immutable", "network_targets_attempted", "new_immutable_captured", "immutable_total", "pending_after_run", "unrouted_source_ids")}, ensure_ascii=False))
     return 0
