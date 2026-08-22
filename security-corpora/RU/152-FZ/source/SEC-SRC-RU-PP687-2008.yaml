@@ -1,4 +1,4 @@
-schema_version: "1.2"
+schema_version: "1.3"
 id: SEC-SRC-RU-PP687-2008
 kind: security-regulatory-source
 status: METADATA_VERIFIED
@@ -24,6 +24,16 @@ canonical_source:
     evidence_note: >-
       Official Government portal rechecked on 22.08.2026 still presents PP RF No. 687 in revision of
       18.01.2025 No. 12 and states that the resolution remains valid through 01.09.2030.
+  alternate_official_routes:
+    - publisher: "Официальный интернет-портал правовой информации / ИПС Право"
+      url: "http://pravo.gov.ru/proxy/ips/?docbody=&link_id=0&nd=102124251&intelsearch=&firstDoc=1"
+      identity: "nd=102124251"
+      route_status: OFFICIAL_IPS_ROUTE_REGISTERED_GUARDED
+      registered_at: "2026-08-22"
+      route_discovery_evidence: >-
+        The current index of Roskomnadzor's 16.12.2025 list of mandatory-requirement acts maps PP RF No. 687
+        to this official pravo.gov.ru IPS route. The route is registered only as a transport fallback;
+        returned bytes must still pass PP687 identity-marker validation before immutable acceptance.
 
 capture:
   raw_artifact_ref: ""
@@ -40,12 +50,12 @@ capture:
     semantic_promotion: false
   acquisition_request:
     status: RUN_REQUESTED_GUARDED
-    requested_at: "2026-08-22T20:03:00Z"
-    route: official_canonical_snapshot
+    requested_at: "2026-08-22T20:09:00Z"
+    route: official_canonical_snapshot_with_registered_ips_fallback
     reason: >-
-      Fresh stream-1 guarded retry after current-revision verification. Require returned official bytes,
-      retrieved_at, MIME, exact byte length, SHA-256 and accepted manifest before immutable promotion;
-      the same acquisition workflow also retries the pending current consolidated 152-FZ root.
+      Retry the Government canonical URL and, if transport fails, the newly registered official pravo.gov.ru
+      IPS route nd=102124251. Require returned official bytes, retrieved_at, MIME, exact byte length, SHA-256,
+      identity-marker validation and accepted manifest before immutable promotion.
   note: "Official text metadata/current revision verified; byte-exact raw artifact not yet accepted."
 
 relations:
