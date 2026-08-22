@@ -1,0 +1,62 @@
+schema_version: "1.0"
+kind: ru-personal-data-master-source-inventory-delta
+stream: STREAM_3_SECTOR_OVERLAYS
+checked_at: "2026-08-22T14:26:27+03:00"
+status: APPEND_ONLY_RELATIONSHIP_DELTA
+reconciliation_note: >-
+  This Stream 3 delta is append-only and must be reconciled with concurrent Stream 2 PDN deltas. It does not overwrite
+  the PDN master inventory.
+
+source_relation_added:
+  source_id: SEC-SRC-RU-SK-1995-A139
+  source_title: "Семейный кодекс Российской Федерации — статья 139 «Тайна усыновления ребенка»"
+  protected_information_regime: adoption_secrecy
+  source_card: "security-corpora/RU/protected-information/source/SEC-SRC-RU-SK-1995-A139.yaml"
+  relation_to_152_fz:
+    state: OVERLAP_CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    reasons:
+      - "сведения о ребенке, усыновителях, происхождении, имени, дате и месте рождения могут содержать персональные данные"
+      - "статья 139 защищает специальный объект — тайну факта и обстоятельств усыновления"
+      - "статья 135 содержит специальный механизм изменения даты/места рождения для обеспечения тайны усыновления"
+    guard: >-
+      Не выводить применимость 152-ФЗ только из наличия тайны усыновления. Для конкретного ребра требуется установить
+      субъект данных, состав полей, операцию, цель, правовое основание, роль участника, получателя и специальный режим доступа.
+  cross_regime:
+    target: "143-ФЗ, статья 47"
+    type: ADOPTION_CIVIL_STATUS_RECORD_SECRECY
+    state: CANDIDATE_RELATIONSHIP_WITH_DIRECT_LEGAL_LINK
+    constitutional_context: "Постановление КС РФ от 16.06.2015 № 15-П"
+    guard: "СК РФ и 143-ФЗ не сливать в один режим и не создавать универсальное disclosure rule."
+
+currentness:
+  primary_authority_text_url: "https://www.kremlin.ru/acts/bank/8671/print"
+  article_139_primary_text_crosschecked: true
+  latest_current_source_level_event:
+    act: "68-ФЗ от 23.03.2026"
+    official_publication_id: "0001202603230014"
+    effective_from: "2026-04-03"
+    changed_locator: "статья 3"
+    article_139_affected: false
+  future_source_level_event:
+    act: "286-ФЗ от 04.08.2026"
+    publication_locator: "0001202608040011"
+    effective_from: "2026-12-01"
+    changed_locator: "статья 169"
+    article_139_affected: false
+  locator_specific_version_chain: PARTIAL
+
+acquisition:
+  exact_current_official_artifact: PENDING
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable: false
+  capture_backlog: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-SK-1995-A139-version-capture-pending.json"
+
+proof_floor_effect:
+  applicability_edges_promoted: 0
+  executable_rules_changed: false
+  legal_conflicts_confirmed: 0
+  new_pdn_overlap_candidates: 1
+  new_cross_regime_candidates: 1
