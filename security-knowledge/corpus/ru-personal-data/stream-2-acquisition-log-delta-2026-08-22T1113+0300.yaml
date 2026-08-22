@@ -1,0 +1,62 @@
+schema_version: 1
+log_id: RU_PD_STREAM2_ACQUISITION_DELTA_2026_08_22T1113_0300
+created_at: "2026-08-22T11:13:16+03:00"
+stream_id: RU_PD_STREAM_2_TECHNICAL_CRYPTO
+
+attempts:
+  - source_id: RU_FSTEC_ORDER_137_2026
+    target_type: EXACT_BINARY
+    url: "https://publication.pravo.gov.ru/File/GetFile/0001202608110006?type=pdf"
+    result: FAILED
+    error_class: DNS_NAME_RESOLUTION_FAILURE
+    bytes_received: 0
+    mime: null
+    sha256: null
+
+  - source_id: RU_FSTEC_THREAT_METHOD_2021
+    target_type: EXACT_BINARY
+    url: "https://fstec.ru/component/attachments/download/2919"
+    result: FAILED
+    error_class: DNS_NAME_RESOLUTION_FAILURE
+    bytes_received: 0
+    mime: null
+    sha256: null
+
+  - source_id: RU_FSTEC_MATURITY_METHOD_2026_08_07
+    target_type: OFFICIAL_PAGE
+    url: "https://fstec.ru/dokumenty/vse-dokumenty/spetsialnye-normativnye-dokumenty/metodicheskij-dokument-ot-7-avgusta-2026-g"
+    result: FAILED
+    error_class: DNS_NAME_RESOLUTION_FAILURE
+    bytes_received: 0
+
+network_probes_recorded_this_run:
+  official_page_network_attempts: 4
+  official_page_network_successes: 0
+  exact_binary_attempts: 2
+  exact_binary_successes: 0
+
+production_counters:
+  new_source_records: 2
+  source_records_after_reconciliation: 25
+  sources_rechecked: 4
+  new_version_edges: 1
+  new_direct_pdn_methodical_edges: 1
+  research_leads_not_promoted: 1
+  confirmed_legal_contradictions: 0
+  terminology_version_divergences_queued: 1
+  bytes_downloaded: 0
+  sha256_recorded: 0
+  immutable_artifacts_added: 0
+
+proof_floor:
+  rule: >-
+    A failed network acquisition may improve discovery/version metadata through separately verified
+    evidence, but it cannot produce SOURCE_ACQUIRED, IMMUTABLE, MIME, byte_length or SHA-256 states.
+  result: MAINTAINED
+
+bottleneck:
+  stage: EXACT_PRIMARY_ARTIFACT_ACQUISITION
+  type: TRANSIENT_NETWORK_DNS
+  impact: >-
+    Blocks immutable capture and downstream source-anchored compilation from exact bytes. It does not
+    block reconciliation of version/applicability metadata when sufficiently corroborated.
