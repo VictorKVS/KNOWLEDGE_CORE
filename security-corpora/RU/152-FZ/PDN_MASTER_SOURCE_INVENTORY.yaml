@@ -1,4 +1,4 @@
-schema_version: "1.7"
+schema_version: "1.8"
 id: SEC-PDN-MASTER-SOURCE-INVENTORY
 kind: security-regulatory-source-inventory
 status: ACTIVE_DISCOVERY
@@ -31,6 +31,16 @@ freshness_alerts:
     action: >-
       Route current-date queries to the 26.07.2026 version identity; preserve the 01.09.2025 node only as
       historical evidence and perform structural delta review before reusing Article 12-derived nodes.
+  - alert_id: PDN-FUTURE-2027-001
+    status: FUTURE_EFFECTIVE_AMENDMENT_REGISTERED
+    detected_at: "2026-08-22"
+    subject: SEC-SRC-RU-FZ200-2025
+    finding: >-
+      Federal Law No. 200-FZ of 07.07.2025 amends point 7 of part 2 of Article 10 of 152-FZ by adding
+      road-safety legislation to the listed processing grounds. This 152-FZ amendment takes effect on 01.03.2027.
+    action: >-
+      Preserve the current 26.07.2026 routing until 28.02.2027; pre-register the future delta and do not apply
+      it to current-date decisions before 01.03.2027.
 
 sources:
   - id: SEC-SRC-RU-152FZ-2026-07-26
@@ -48,6 +58,14 @@ sources:
     metadata_status: METADATA_VERIFIED
     source_record: "source/SEC-SRC-RU-FZ265-2026.yaml"
     raw_capture: IMMUTABLE_CAPTURED
+  - id: SEC-SRC-RU-FZ200-2025
+    document: "Федеральный закон от 07.07.2025 № 200-ФЗ"
+    role: future_amendment_dependency_article_10
+    metadata_status: METADATA_VERIFIED
+    source_record: "source/SEC-SRC-RU-FZ200-2025.yaml"
+    raw_capture: PENDING
+    effective_for_152fz_from: "2027-03-01"
+    applicability: FUTURE_VERSION_CHAIN_SCOPE
   - id: SEC-SRC-RU-PP687-2008
     document: "Постановление Правительства РФ от 15.09.2008 № 687"
     role: non_automated_processing
@@ -230,24 +248,24 @@ security_stack:
   latest_acquisition_finished_at: "2026-08-22T13:25:03.431508Z"
 
 production_counters:
-  identified: 20
-  metadata_verified: 19
+  identified: 21
+  metadata_verified: 20
   current_revision_identity_pending_raw: 1
   raw_downloaded_exact: 18
   immutable_sha256_verified: 18
   atomized_existing_proposed: 4
   atomized_verified: 0
-  pending_raw_capture: 2
+  pending_raw_capture: 3
   source_registration_success_rate: 1.0
-  raw_capture_coverage_ratio: 0.9000
+  raw_capture_coverage_ratio: 0.8571
 
 analysis_metrics:
   existing_atomized_nodes_reuse_candidate: 4
   mandatory_delta_review_articles: 1
-  freshness_checks_this_pass: 2
+  freshness_checks_this_pass: 3
   freshness_defects_found_this_pass: 0
-  source_records_added_this_pass: 0
-  direct_dependencies_added_this_pass: 0
+  source_records_added_this_pass: 1
+  direct_dependencies_added_this_pass: 1
   version_chain_dependencies_added_this_pass: 0
   version_chain_gaps_closed_this_pass: 0
   conflict_candidates_opened_this_pass: 0
@@ -259,12 +277,12 @@ analysis_metrics:
   acquisition_retry_requests_this_pass: 1
   acquisition_proof_guards_hardened_this_pass: 0
   semantic_promotions_this_pass: 0
-  immutable_new_this_pass: 10
+  immutable_new_this_pass: 0
   note: >-
-    Reconciled the master inventory against the accepted 22.08.2026 acquisition run. Ten additional sources moved from
-    pending to byte-exact immutable capture, bringing the corpus from 8 to 18 immutable artifacts. PP RF No. 687 remains
-    pending after a timeout on its verified Government canonical URL and was queued for a guarded retry. The current
-    consolidated 152-FZ remains pending on the dedicated official IPS route. No semantic or extraction status was promoted.
+    Current-date reconciliation on 22.08.2026 still identifies 26.07.2026 as the operative 152-FZ revision. A separate
+    enacted future amendment, Federal Law No. 200-FZ of 07.07.2025, was discovered and registered because its Article 2
+    changes point 7 of part 2 of Article 10 of 152-FZ from 01.03.2027. It is a future version-chain dependency and must
+    not alter current-date decisions before its effective date. Raw capture remains pending until an accepted manifest exists.
 
 acquisition_activity:
   latest_sync_commit: "25e40a333638dab9f066f160d4c5a5b7ab0d38f1"
@@ -275,21 +293,24 @@ acquisition_activity:
     - scheduled_3h
   accepted_manifest_delta_at_inventory_write: 10
   last_proven_acquisition_run:
-    started_at: "2026-08-22T03:56:46.165468Z"
-    finished_at: "2026-08-22T04:15:48.677904Z"
+    started_at: "2026-08-22T13:03:17.183110Z"
+    finished_at: "2026-08-22T13:21:30.317648Z"
     targets: 19
-    raw_downloaded_exact: 18
-    immutable_sha256_verified: 18
+    reused_immutable: 18
+    network_targets_attempted: 1
+    new_immutable_captured: 0
     pending: 1
-    note: "Generic acquisition run pending only PP687; current consolidated 152-FZ is handled by a dedicated guarded IPS route and remains pending in the master inventory."
+    reuse_ratio: 0.9473684210526315
+    note: "Reuse-first acquisition revalidated 18 immutable artifacts locally and attempted only PP687; current consolidated 152-FZ is handled by a dedicated guarded IPS route and remains pending in the master inventory."
   pending_priority:
     - SEC-SRC-RU-152FZ-2026-07-26
+    - SEC-SRC-RU-FZ200-2025
     - SEC-SRC-RU-PP687-2008
 
 acquisition_blockers:
   - >-
       Official byte-exact acquisition is operational through publication-ID PDFs and registered canonical official URLs.
-      Remaining source IDs without an accepted immutable manifest: SEC-SRC-RU-152FZ-2026-07-26, SEC-SRC-RU-PP687-2008.
+      Remaining source IDs without an accepted immutable manifest: SEC-SRC-RU-152FZ-2026-07-26, SEC-SRC-RU-FZ200-2025, SEC-SRC-RU-PP687-2008.
 
 next_gate:
   - capture and fingerprint the remaining official raw artifacts
