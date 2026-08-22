@@ -1,0 +1,38 @@
+name: NKTsKI Order 2 Payload Schema Gate
+
+on:
+  push:
+    paths:
+      - 'security-knowledge/evidence/nkcki-order-2-2026-payload-schema-v1.yaml'
+      - 'security-knowledge/evidence/nkcki-order-2-2026-payload-schema-regression-v1.json'
+      - 'security-knowledge/evidence/nkcki-automated-interaction-protocol-publication-status-2026-08-19.yaml'
+      - 'security-knowledge/threat-modeling/nkcki-attack-type-initial-data-2026-taxonomy-v1.yaml'
+      - 'security-knowledge/evidence/primary-artifacts/2026/nkcki-order-2-2026-07-14.pdf'
+      - 'security-knowledge/evidence/primary-artifacts/2026/nkcki-attack-type-initial-data-2026-07-08.pdf'
+      - 'security-knowledge/validators/validate_nkcki_order2_payload_schema.py'
+      - '.github/workflows/nkcki-order2-payload-schema.yml'
+  pull_request:
+    paths:
+      - 'security-knowledge/evidence/nkcki-order-2-2026-payload-schema-v1.yaml'
+      - 'security-knowledge/evidence/nkcki-order-2-2026-payload-schema-regression-v1.json'
+      - 'security-knowledge/evidence/nkcki-automated-interaction-protocol-publication-status-2026-08-19.yaml'
+      - 'security-knowledge/threat-modeling/nkcki-attack-type-initial-data-2026-taxonomy-v1.yaml'
+      - 'security-knowledge/evidence/primary-artifacts/2026/nkcki-order-2-2026-07-14.pdf'
+      - 'security-knowledge/evidence/primary-artifacts/2026/nkcki-attack-type-initial-data-2026-07-08.pdf'
+      - 'security-knowledge/validators/validate_nkcki_order2_payload_schema.py'
+      - '.github/workflows/nkcki-order2-payload-schema.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python -m pip install pyyaml
+      - name: Validate NKTsKI Order 2 payload schema and method taxonomy
+        run: python security-knowledge/validators/validate_nkcki_order2_payload_schema.py
