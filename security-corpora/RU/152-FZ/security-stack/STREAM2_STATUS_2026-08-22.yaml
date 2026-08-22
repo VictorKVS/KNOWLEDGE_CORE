@@ -1,4 +1,4 @@
-schema_version: "1.0"
+schema_version: "1.1"
 id: SEC-PDN-STREAM2-STATUS-2026-08-22
 kind: production-telemetry
 checked_at: "2026-08-22"
@@ -11,32 +11,36 @@ scope:
   workflow: "../../../../.github/workflows/pdn-security-stack-immutable-acquisition.yml"
 
 counters:
-  sources_identified: 12
-  sources_metadata_verified: 12
+  sources_identified: 14
+  sources_metadata_verified: 14
   official_publication_id_targets: 5
-  official_canonical_targets: 3
-  exact_official_route_unresolved: 4
-  raw_downloaded_exact: 0
-  immutable_sha256_verified: 0
-  pending_raw_capture: 12
+  official_canonical_targets: 6
+  exact_official_route_unresolved: 3
+  raw_downloaded_exact: 5
+  immutable_sha256_verified: 5
+  pending_raw_capture: 9
   version_edges_verified: 4
-  applicability_guards: 7
+  applicability_guards: 9
   confirmed_conflicts: 0
   conflict_candidates: 1
-  new_source_records_this_pass: 12
   acquisition_helper_added: 1
   acquisition_workflow_added: 1
   semantic_promotions: 0
 
 acquisition_state:
-  status: PIPELINE_REGISTERED_PROOF_RUN_PENDING
-  accepted_run_record: null
+  status: PARTIAL_IMMUTABLE_CAPTURED
+  accepted_run_record: "PDN_SECURITY_STACK_ACQUISITION_RUN.json"
+  accepted_immutable_from_last_completed_run: 5
+  route_refresh_registered_at: "2026-08-22T20:21:28Z"
+  route_refresh_note: >-
+    Primary priority routes were extended with official-government / official-publication fallbacks for
+    PP1119, FSTEC21, FSTEC Threat Method 2021 and FSB378. PP313 and PP79 were added as guarded licensed-activity
+    context sources. Exact bytes remain pending until the acquisition workflow produces manifests and hashes.
   evidence_rule: >-
-    Zero immutable artifacts are claimed until PDN_SECURITY_STACK_ACQUISITION_RUN.json and accepted manifests
-    exist in the repository. Portal metadata, search-result file sizes and third-party copies are not accepted
-    as substitutes for exact downloaded bytes and locally calculated SHA-256.
+    Immutable status is accepted only where an exact artifact and manifest exist and SHA-256 was calculated
+    from downloaded bytes. Portal metadata, advertised sizes, search results and third-party copies are not
+    substitutes for exact capture evidence.
   exact_route_unresolved_sources:
-    - SEC-SRC-RU-FSB378-2014
     - SEC-SRC-RU-FSB66-2005
     - SEC-SRC-RU-FSB173-2010
     - SEC-SRC-RU-FAPSI152-2001
@@ -44,18 +48,23 @@ acquisition_state:
 reuse_and_analysis:
   policy: REUSE_FIRST
   version_chains:
-    - "FSTEC21 -> FSTEC49/2017 -> FSTEC68/2020"
+    - "FSTEC21 -> FSTEC49/2017 -> FSTEC68/2020 (current portal revision: 14.05.2020)"
     - "FSB66/2005 -> FSB173/2010"
     - "FSTEC PDN threat method 2008 -> not applied for threat assessment after FSTEC Method 2021"
+    - "PP313/2012 -> current indexed revision 28.08.2023"
+    - "PP79/2012 -> current indexed revision 27.12.2024"
   explicit_pdn_gossopka_edge: "152-FZ Article 19 part 12 -> FSB77/2023"
   context_splits:
     - "FSTEC117/2025 != FSB117/2025: complementary bounded public-sector non-crypto/crypto layers"
     - "FSB378 != FSB66 != FAPSI152: ISPDn crypto measures vs SKZI lifecycle vs SKZI handling"
+    - "PP313 and PP79 are licensed-activity contexts, not universal PDN-operator licence duties"
   conflict_rule: "Definition divergence is a candidate, not a confirmed contradiction, until scope/effective interval/purpose are compared."
 
 next_gate:
-  - obtain accepted exact official bytes and manifests
-  - synchronize source cards and master security_stack counters
+  - complete immutable fallback acquisition for PP1119, FSTEC21, FSTEC Threat Method 2021 and FSB378
+  - capture guarded PP313 and PP79 base official publications without promoting licensing to a universal PDN duty
+  - resolve exact primary routes for FSB66/2005, FSB173/2010 and FAPSI152/2001
+  - synchronize source cards and master security_stack counters from accepted manifests
   - run structural/legal chunk compiler on immutable captures
   - reconcile concepts and definitions against existing global dictionary
   - extract atomic requirements with source locators
