@@ -1,0 +1,103 @@
+schema_version: "1.0"
+kind: stream-run
+stream: STREAM_3_SECTOR_OVERLAYS
+checked_at: "2026-08-23T02:25:00+03:00"
+status: COMPLETED_WITH_EXACT_CURRENT_BINARY_PENDING
+focus: "other special protected-information regimes — notarial secrecy / Article 5 of the Basics of Notarial Legislation"
+
+scope_result:
+  new_sources_discovered: 1
+  duplicate_sources_created: 0
+  exact_binary_downloads_succeeded: 0
+  durable_immutable_artifacts_added: 0
+  protected_locators_crosschecked: 5
+  relationship_candidates_added: 3
+  applicability_edges_promoted: 0
+  legal_conflicts_confirmed: 0
+
+source_work:
+  - source_id: SEC-SRC-RU-NOTARIAT-4462I-A5
+    action: DISCOVER_AND_REGISTER
+    source_card: "security-corpora/RU/protected-information/source/SEC-SRC-RU-NOTARIAT-4462I-A5.yaml"
+    capture_backlog: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-NOTARIAT-4462I-A5-version-capture-pending.json"
+    authority_identity:
+      act: "Основы законодательства Российской Федерации о нотариате от 11.02.1993 № 4462-I"
+      official_minjust_locator: "https://minjust.gov.ru/ru/documents/7900/"
+    anchors:
+      - "статья 5 часть 2 — запрет разглашения сведений/документов о нотариальных действиях"
+      - "статья 5 часть 3 — ограничение выдачи сведений заявителями/специальными случаями"
+      - "статья 5 часть 4 — специальные законные каналы выдачи сведений"
+      - "статья 5 часть 5 — специальное правило о согласии субъекта персональных данных"
+      - "статья 5.1 — проверка машиночитаемой маркировки не является разглашением"
+
+currentness_reconciliation:
+  official_authority_copy:
+    source: "Минюст России"
+    download_advertised: "DOCX, 163,1 КБ"
+    amendment_list_ends_at: "2020-12-08 / 429-ФЗ"
+    current_2026_baseline_accepted: false
+    reason: "Authority-hosted copy is useful primary evidence for source identity and historic locator text but is not sufficiently current for 2026 executable semantics."
+  current_consolidated_crosscheck:
+    revision: "2026-08-04"
+    source: "ConsultantPlus"
+    article_5_status: CURRENT_TEXT_CROSSCHECKED
+  latest_locator_specific_primary_event:
+    act: "522-ФЗ от 28.12.2024"
+    official_publication_id: "0001202412280035"
+    official_url: "https://publication.pravo.gov.ru/document/0001202412280035"
+    presidential_bank_url: "https://www.kremlin.ru/acts/bank/51545/print"
+    changed_locator: "часть 4 статьи 5"
+    change: "добавлен контекст экстремистской деятельности/ее финансирования в специальный канал раскрытия"
+    effective_from: "2025-06-01"
+    state: PRIMARY_OFFICIAL_PUBLICATION_AND_PRESIDENTIAL_BANK_TEXT_VERIFIED
+  full_locator_specific_chain: PARTIAL
+
+relationship_work:
+  pdn:
+    target: "152-ФЗ"
+    state: EXPLICIT_STATUTORY_PDN_CONTEXT_APPLICABILITY_REVIEW_REQUIRED
+    reason: >-
+      Часть 5 статьи 5 прямо регулирует согласие субъекта персональных данных при обработке для совершения нотариального действия,
+      однако специальный контекст нельзя превращать в универсальное основание для любых операций с ПДн.
+  aml_cft:
+    target: "115-ФЗ"
+    state: CURRENT_SPECIAL_DISCLOSURE_CONTEXT_NOT_REGIME_EQUIVALENCE
+    evidence: "522-ФЗ, статья 4"
+  tax:
+    target: "SEC-SRC-RU-NK1-1998-A102"
+    state: TAX_AUTHORITY_TRANSFER_CONTEXT_RELATION_CANDIDATE
+    guard: "Notarial secrecy and tax secrecy remain separate regimes."
+
+acquisition:
+  current_official_artifact:
+    retrieved_at: null
+    mime: null
+    byte_length: null
+    sha256: null
+    immutable: false
+  attempts:
+    - "Official MinJust authority page reached; download control and DOCX display metadata discovered."
+    - "The authority-hosted copy's amendment list ends in 2020, so it was rejected as current-2026 immutable baseline."
+    - "Official 522-ФЗ publication metadata and Presidential Bank primary text were verified for the latest locator-specific Article 5 part 4 amendment."
+  blocker: >-
+    No byte-exact current 2026 authoritative artifact was returned through the available fetch path. The displayed DOCX size is not a cryptographic fingerprint,
+    and the GitHub connector in this run creates UTF-8 text files rather than arbitrary binary artifacts. No MIME, byte length, SHA-256 or immutable status was fabricated.
+
+counter_reconciliation:
+  before: {found: 26, downloaded: 9, immutable: 9, pending: 15, reused: 2}
+  after: {found: 27, downloaded: 9, immutable: 9, pending: 16, reused: 2}
+  explanation: "One genuinely new special protected-information source registered; exact current authoritative binary remains pending."
+
+files_written:
+  - "security-corpora/RU/protected-information/source/SEC-SRC-RU-NOTARIAT-4462I-A5.yaml"
+  - "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-NOTARIAT-4462I-A5-version-capture-pending.json"
+  - "security-knowledge/corpus/ru-protected-information/master-inventory-delta-2026-08-23T0225.yaml"
+  - "security-knowledge/corpus/ru-personal-data/master-source-inventory-delta-stream3-2026-08-23T0225.yaml"
+  - "security-knowledge/corpus/ru-protected-information/stream-3-run-2026-08-23T0225.yaml"
+
+next_priority:
+  - "Exact byte capture of a current authoritative 2026 notarial-legislation artifact and 379/457/480/522-ФЗ amendment PDFs, with dedupe against any existing immutable amendment artifacts."
+  - "Public sector: exact-current 143-ФЗ Article 13.2/47 capture and adoption-record relation."
+  - "Education/children: deepen already immutable-baselined 273-ФЗ Article 59 and current version chain."
+  - "Continue pending exact captures in healthcare, finance, communications, transport, advertising and archives."
+  - "Continue discovery of other special regimes only from primary-law evidence; taxonomy remains seed-only."
