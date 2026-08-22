@@ -1,0 +1,110 @@
+schema_version: 1
+observation_id: PDN-TECH-CRYPTO-ACQ-2026-08-22-RUN-190
+observed_at: "2026-08-22T14:10:39Z"
+stream: PDN_SECURITY_STACK_STREAM_2
+scope: >-
+  Primary-source acquisition and status/version-chain verification for the technical and
+  cryptographic perimeter of Federal Law 152-FZ. This observation is fail-closed: no immutable
+  artifact, MIME, byte length or SHA-256 is claimed unless exact source bytes were obtained.
+
+source_observations:
+  - source_id: RU_GOV_PP_1119_2012
+    title: "Government Decree No. 1119 of 01.11.2012"
+    applicability: DIRECT_PDN_ISPDN_SECURITY
+    official_source_url: "https://government.ru/docs/6339/"
+    current_status: CURRENT_SCOPE_CONFIRMED_ARTIFACT_PENDING
+    status_evidence:
+      - "Government of Russia currently references Decree No. 1119 as the ISPDN protection-level requirements source in current government materials."
+    acquisition:
+      result: BLOCKED_BY_OFFICIAL_ENDPOINT_TRANSPORT
+      exact_bytes_obtained: false
+      mime: null
+      byte_length: null
+      sha256: null
+    promotion_guard: "Do not infer FSTEC/FSB measures from PP 1119 without their separate applicability edges."
+
+  - source_id: RU_FSTEC_ORDER_21_2013
+    title: "FSTEC Order No. 21 of 18.02.2013"
+    applicability: DIRECT_PDN_ISPDN_TECHNICAL_MEASURES
+    official_source_url: "https://fstec.ru/dokumenty/vse-dokumenty/prikazy/prikaz-fstek-rossii-ot-18-fevralya-2013-g-n-21"
+    official_publication_fallback: "https://rg.ru/2013/05/22/soderjanie-dok.html"
+    current_status: CURRENT_AMENDED_CHAIN_IDENTIFIED_ARTIFACT_PENDING
+    version_chain:
+      - {event: BASE_ACT, date: "2013-02-18", minjust_registration: "28375"}
+      - {event: AMENDED_BY, order: "49", date: "2017-03-23", official_publication: "0001201704260010", minjust_registration: "46487"}
+      - {event: AMENDED_BY, order: "68", date: "2020-05-14", official_publication: "0001202007100002", minjust_registration: "58877", effective_from: "2021-01-01"}
+    acquisition:
+      result: BLOCKED_BY_OFFICIAL_ENDPOINT_TLS_OR_TRANSPORT
+      exact_bytes_obtained: false
+      mime: null
+      byte_length: null
+      sha256: null
+    promotion_guard: "Order 21 is the technical-measures route; SKZI measures remain a separate FSB route."
+
+  - source_id: RU_FSTEC_THREAT_METHOD_2021
+    title: "FSTEC Methodology for assessing information-security threats, approved 05.02.2021"
+    applicability: THREAT_ASSESSMENT_WHERE_APPLICABLE_TO_ISPDN
+    official_page_url: "https://fstec.ru/tekhnicheskaya-zashchita-informatsii/dokumenty/114-spetsialnye-normativnye-dokumenty/2170-metodicheskij-dokument-utverzhden-fstek-rossii-5-fevralya-2021-g"
+    official_file_url: "https://fstec.ru/component/attachments/download/2919"
+    current_status: PRIMARY_LOCATOR_IDENTIFIED_ARTIFACT_PENDING
+    acquisition:
+      result: BLOCKED_BY_OFFICIAL_ENDPOINT_TRANSPORT
+      exact_bytes_obtained: false
+      mime: null
+      byte_length: null
+      sha256: null
+    promotion_guard: "Methodology scope must be applied through the system/threat-assessment route; it is not a free-standing universal control catalog."
+
+  - source_id: RU_FSB_ORDER_378_2014
+    title: "FSB Order No. 378 of 10.07.2014"
+    applicability: CONDITIONAL_IF_SKZI_USED_FOR_PDN_IN_ISPDN
+    official_agency_reference: "https://www.fsb.ru/fsb/science/single.htm%21id%3D10437725%40fsbResearchart.html"
+    official_publication_url: "https://rg.ru/documents/2014/09/17/zashita-dok.html"
+    current_status: CURRENT_ORIGINAL_EDITION_SCOPE_VERIFIED_ARTIFACT_PENDING
+    version_chain:
+      - {event: BASE_ACT, date: "2014-07-10", minjust_registration_date: "2014-08-18", minjust_registration: "33620", effective_from: "2014-09-28"}
+    status_evidence:
+      - "Rossiyskaya Gazeta publication identifies the act, registration No. 33620 and effective date 28.09.2014."
+      - "No later amendment is promoted in this run without primary evidence."
+    acquisition:
+      result: EXACT_OFFICIAL_BYTES_NOT_OBTAINED
+      exact_bytes_obtained: false
+      mime: null
+      byte_length: null
+      sha256: null
+    promotion_guard: "ISPDN status alone does not trigger Order 378; the operator must actually use SKZI for PDn protection."
+
+  - source_id: RU_GOV_PP_313_2012
+    title: "Government Decree No. 313 of 16.04.2012 — cryptographic-activity licensing"
+    applicability: CONDITIONAL_IF_LICENSED_CRYPTO_ACTIVITY_IS_PERFORMED
+    current_status: CURRENT_REFERENCE_CONFIRMED_CONSOLIDATION_RECHECK_REQUIRED
+    status_evidence:
+      - "Current Government of Russia materials in 2025 continue to cite Decree No. 313 as the licensing regulation for cryptographic activities."
+    acquisition:
+      result: PRIMARY_CONSOLIDATED_ARTIFACT_PENDING
+      exact_bytes_obtained: false
+      mime: null
+      byte_length: null
+      sha256: null
+    promotion_guard: "Mere use of personal data or SKZI does not itself prove that the operator performs a licensed cryptographic activity; the own-needs exception and exact activity must be evaluated."
+
+neighboring_regime_guards:
+  - object: GOSSOPKA_NKTSKI
+    decision: CONDITIONAL_ONLY
+    rule: >-
+      Keep GosSOPKA/NKTsKI outside the general PDn technical baseline unless a direct 152-FZ incident
+      edge or a separately applicable CII/special-law trigger is proven for the organization/system.
+  - object: FSTEC_BDU_ASU_TP
+    decision: NOT_PROMOTED_TO_GENERAL_PDN
+    rule: "Industrial-control threat catalogs require an ASU TP/sector applicability edge."
+
+run_result:
+  source_records_checked: 5
+  current_or_scope_status_confirmed: 4
+  primary_locator_identified: 5
+  immutable_artifacts_created: 0
+  sha256_recorded: 0
+  version_chains_reconciled: 2
+  applicability_guards_preserved: 7
+  hard_data_fabrications: 0
+  primary_blocker: OFFICIAL_ENDPOINT_TRANSPORT_OR_TLS
