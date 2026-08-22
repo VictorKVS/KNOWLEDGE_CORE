@@ -1,4 +1,4 @@
-schema_version: "1.5"
+schema_version: "1.6"
 id: SEC-PDN-MASTER-SOURCE-INVENTORY
 kind: security-regulatory-source-inventory
 status: ACTIVE_DISCOVERY
@@ -179,11 +179,11 @@ version_chain_identity_resolutions:
   - chain: SEC-SRC-RU-PP733-2021
     source_id: SEC-SRC-RU-PP2563-2021
     official_publication_id: "0001202112310106"
-    status: PUBLICATION_IDENTITY_REGISTERED_RAW_PENDING
+    status: IMMUTABLE_CAPTURED
   - chain: SEC-SRC-RU-PP733-2021
     source_id: SEC-SRC-RU-PP806-2024
     official_publication_id: "0001202406150005"
-    status: PUBLICATION_IDENTITY_REGISTERED_RAW_PENDING
+    status: IMMUTABLE_CAPTURED
 
 conflict_candidates:
   - conflict_id: PDN-CONFLICT-CANDIDATE-2026-001
@@ -234,7 +234,7 @@ production_counters:
 analysis_metrics:
   existing_atomized_nodes_reuse_candidate: 4
   mandatory_delta_review_articles: 1
-  freshness_checks_this_pass: 1
+  freshness_checks_this_pass: 2
   freshness_defects_found_this_pass: 0
   source_records_added_this_pass: 0
   direct_dependencies_added_this_pass: 0
@@ -247,42 +247,34 @@ analysis_metrics:
   acquisition_workflow_updates_this_pass: 0
   acquisition_schedule_fallbacks_added_this_pass: 0
   acquisition_retry_requests_this_pass: 1
-  acquisition_proof_guards_hardened_this_pass: 1
+  acquisition_proof_guards_hardened_this_pass: 0
   semantic_promotions_this_pass: 0
-  immutable_new_this_pass: 0
+  immutable_new_this_pass: 10
   note: >-
-    Rechecked PP RF No. 702 on the official Government page and refreshed its guarded immutable-acquisition request.
-    Hardened the current consolidated 152-FZ helper so an official-route response is accepted only when the returned
-    body also contains identity markers for 152-FZ and personal data; generic error/anti-bot/landing responses are rejected
-    and removed before a manifest can be written. No immutable or semantic status was promoted without accepted evidence.
+    Reconciled the master inventory against the accepted 22.08.2026 acquisition run. Ten additional sources moved from
+    pending to byte-exact immutable capture, bringing the corpus from 8 to 18 immutable artifacts. PP RF No. 687 remains
+    pending after a timeout on its verified Government canonical URL and was queued for a guarded retry. The current
+    consolidated 152-FZ remains pending on the dedicated official IPS route. No semantic or extraction status was promoted.
 
 acquisition_activity:
-  latest_trigger_commit: "33608aa824e52d4c6eeed0c26b16522bd20efafc"
-  trigger_reason: "PP702 guarded retry plus current-root canonical response identity-marker proof guard."
+  latest_sync_commit: "25e40a333638dab9f066f160d4c5a5b7ab0d38f1"
+  latest_retry_commit: "21c472fbd71a068f1cd52c781fd0822975a21139"
   trigger_modes:
     - workflow_dispatch
     - push_on_acquisition_inputs
     - scheduled_3h
-  accepted_manifest_delta_at_inventory_write: 0
+  accepted_manifest_delta_at_inventory_write: 10
   last_proven_acquisition_run:
-    started_at: "2026-08-20T05:12:55.213514Z"
-    targets: 8
-    raw_downloaded_exact: 8
-    immutable_sha256_verified: 8
-    pending: 0
+    started_at: "2026-08-22T03:56:46.165468Z"
+    finished_at: "2026-08-22T04:15:48.677904Z"
+    targets: 19
+    raw_downloaded_exact: 18
+    immutable_sha256_verified: 18
+    pending: 1
+    note: "Generic acquisition run pending only PP687; current consolidated 152-FZ is handled by a dedicated guarded IPS route and remains pending in the master inventory."
   pending_priority:
     - SEC-SRC-RU-152FZ-2026-07-26
-    - SEC-SRC-RU-FZ265-2026
     - SEC-SRC-RU-PP687-2008
-    - SEC-SRC-RU-PP211-2012
-    - SEC-SRC-RU-PP702-2025
-    - SEC-SRC-RU-PP740-2025
-    - SEC-SRC-RU-PP966-2025
-    - SEC-SRC-RU-PP733-2021
-    - SEC-SRC-RU-PP2563-2021
-    - SEC-SRC-RU-PP806-2024
-    - SEC-SRC-RU-PP1650-2024
-    - SEC-SRC-RU-PP2052-2025
 
 acquisition_blockers:
   - >-
