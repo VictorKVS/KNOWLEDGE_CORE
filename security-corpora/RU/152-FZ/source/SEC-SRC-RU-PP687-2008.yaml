@@ -1,4 +1,4 @@
-schema_version: "1.0"
+schema_version: "1.1"
 id: SEC-SRC-RU-PP687-2008
 kind: security-regulatory-source
 status: METADATA_VERIFIED
@@ -31,13 +31,20 @@ capture:
   byte_length: null
   sha256: ""
   fingerprint_status: PENDING_RAW_CAPTURE
+  last_attempt:
+    started_at: "2026-08-22T03:56:46.165468Z"
+    finished_at: "2026-08-22T04:15:48.677904Z"
+    route: official_canonical_snapshot
+    result: TIMEOUT
+    error: "GET failed: https://government.ru/docs/all/65436/: URLError(TimeoutError('timed out'))"
+    semantic_promotion: false
   acquisition_request:
     status: RUN_REQUESTED_GUARDED
-    requested_at: "2026-08-21T17:12:00Z"
+    requested_at: "2026-08-22T05:05:00Z"
     route: official_canonical_snapshot
     reason: >-
-      Fresh stream-1 retry after revision verification; require official canonical bytes, retrieved_at,
-      MIME, exact byte length and SHA-256 before immutable promotion.
+      Retry after transient timeout on the verified official Government canonical URL. Require returned
+      official bytes, retrieved_at, MIME, exact byte length, SHA-256 and accepted manifest before immutable promotion.
   note: "Official text metadata/current revision verified; byte-exact raw artifact not yet accepted."
 
 relations:
