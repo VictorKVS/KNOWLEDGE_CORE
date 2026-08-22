@@ -1,0 +1,240 @@
+schema_version: 1
+pack_id: RU_PD_TECHNICAL_SECURITY_DELTA_2026_08_22T0812_0300
+applies_to: technical-security-source-pack.yaml
+retrieved_at: "2026-08-22T08:12:11+03:00"
+scope: >-
+  Incremental registration and status reconciliation for the PDn technical/security contour.
+  This delta adds the 2026 FSTEK methodical/certification/attestation developments and a monitored
+  draft intended to replace Order 21. Draft requirements are not executable and neighboring
+  regimes remain applicability-gated.
+
+integrity_policy:
+  - "No source is SOURCE_ACQUIRED or IMMUTABLE until exact bytes are acquired and MIME, byte_length and SHA-256 are computed from those bytes."
+  - "Search-result or publication-card size metadata is not an artifact hash."
+  - "A draft may be monitored as FUTURE_DELTA_CANDIDATE but must never replace current law before enactment/effective-date verification."
+  - "GIS/CII, certification and attestation material does not become an ordinary PDn operator duty without an explicit applicability edge."
+  - "Definitions in new methodical documents enter the conflict-comparison queue; terminology is not globally merged by string equality."
+
+status_rechecks:
+  RU_FSTEC_ORDER_21_2013:
+    result: CURRENT_BASELINE_STILL_ACTIVE_AS_OF_2026_08_22
+    evidence_note: >-
+      Current consolidated references still expose the 14.05.2020 edition. A July 2026 replacement
+      exists only as a draft in the evidence found in this run; no enacted replacement was verified.
+    draft_successor_id: RU_FSTEC_ORDER_21_REPLACEMENT_DRAFT_2026
+  RU_FSTEC_THREAT_METHOD_2021:
+    result: CURRENT_METHOD_CORROBORATED
+    note: >-
+      The 2021 Method applies to systems and networks including ISPDn and explicitly states that the
+      2008 PDn threat method is no longer used for threat assessment.
+  RU_FSB_ORDER_378_2014:
+    result: CURRENT_CRYPTO_BRANCH_RETAINED
+    applicability_gate: SKZI_USED_IN_ISPDN
+    note: "No evidence in this run justifies making Order 378 universal for ISPDn without SKZI."
+
+new_sources:
+  - source_id: RU_FSTEC_ORDER_117_2025
+    authority: FSTEK_Russia
+    document_type: protection_requirements_order
+    number: "117"
+    signed_date: 2025-04-11
+    effective_date: 2026-03-01
+    title: >-
+      Об утверждении Требований о защите информации, содержащейся в государственных
+      информационных системах, иных информационных системах государственных органов,
+      государственных унитарных предприятий, государственных учреждений
+    justice_registration:
+      date: 2025-06-16
+      number: "82619"
+    official_publication:
+      publication_number: "0001202506170011"
+      publication_date: 2025-06-17
+      page_url: "https://publication.pravo.gov.ru/document/0001202506170011"
+      exact_file_url_attempted: "https://publication.pravo.gov.ru/File/GetFile/0001202506170011?type=pdf"
+    verification_status: PRIMARY_PUBLICATION_METADATA_VERIFIED
+    applicability: CONDITIONAL_GIS_GOVERNMENT_INFORMATION_SYSTEM_CONTEXT
+    pdn_edge: >-
+      When an in-scope information system processes personal data, Order 117 itself states that
+      PP 1119 and Order 117 requirements are applied together. Do not apply Order 117 to an
+      ordinary private-sector ISPDn solely because personal data are processed.
+    version_context: >-
+      Effective 01.03.2026; replaces the former Order 17 branch for its scope.
+    artifact:
+      status: SOURCE_PENDING
+      mime: null
+      byte_length: null
+      sha256: null
+
+  - source_id: RU_FSTEC_METHOD_MEASURES_2026_04_12
+    authority: FSTEK_Russia
+    document_type: methodical_document
+    approved_date: 2026-04-12
+    title: >-
+      Состав и содержание мероприятий и мер по защите информации, содержащейся
+      в информационных системах
+    official_reference:
+      information_message: "240/22/2457"
+      message_date: 2026-04-14
+      page_url: "https://fstec.ru/dokumenty/vse-dokumenty/spetsialnye-normativnye-dokumenty/metodicheskij-dokument-ot-12-aprelya-2026-g"
+    verification_status: CURRENT_METHOD_CORROBORATED_OFFICIAL_URL_TIMEOUT
+    applicability: CONDITIONAL_UNDER_APPLICABLE_FSTEK_REQUIREMENTS
+    scope_guard: >-
+      The document directly covers protection measures for the stated information-system/GIS/CII
+      scopes and does not itself create a universal current Order-21 obligation for every private
+      ISPDn. The July 2026 draft successor to Order 21 proposes relying on FSTEK methodical
+      documents, but that draft relation is not current-law applicability.
+    supersession_relation:
+      from: RU_FSTEC_METHOD_GIS_MEASURES_2014
+      type: NOT_APPLIED_AFTER
+      effective_from: 2026-04-12
+      evidence_note: "The 2026 methodical document states the 11.02.2014 GIS measures document is no longer applied."
+    dictionary_queue:
+      required: true
+      reason: >-
+        Appendix 1 contains terms/definitions. Compare these definitions against the 2021 Threat
+        Method and existing PDn/GIS concepts before concept-node reuse or merge.
+    artifact:
+      status: SOURCE_PENDING
+      mime: null
+      byte_length: null
+      sha256: null
+      acquisition_result: FSTEC_OFFICIAL_URL_TIMEOUT
+
+  - source_id: RU_FSTEC_ORDER_9_2026
+    authority: FSTEK_Russia
+    document_type: certification_amendment_order
+    number: "9"
+    signed_date: 2026-01-20
+    effective_date: 2026-05-02
+    title: >-
+      О внесении изменений в Положение о системе сертификации средств защиты информации,
+      утвержденное приказом ФСТЭК России от 3 апреля 2018 г. № 55
+    justice_registration:
+      date: 2026-04-20
+      number: "86119"
+    official_publication:
+      publication_number: "0001202604210031"
+      publication_date: 2026-04-21
+      page_url: "https://publication.pravo.gov.ru/document/0001202604210031"
+      exact_file_url_attempted: "https://publication.pravo.gov.ru/File/GetFile/0001202604210031?type=pdf"
+    verification_status: PRIMARY_PUBLICATION_METADATA_VERIFIED_CURRENT
+    applicability: CONDITIONAL_CERTIFIED_SECURITY_PRODUCT_CONTEXT
+    relation:
+      from: RU_FSTEC_ORDER_55_2018
+      type: AMENDED_BY
+    note: >-
+      Certification-system version context only. It is not a standalone obligation to use a
+      certified product in every ISPDn; such a duty must be anchored in an applicable protection rule.
+    artifact:
+      status: SOURCE_PENDING
+      mime: null
+      byte_length: null
+      sha256: null
+
+  - source_id: RU_FSTEC_ORDER_60_2026
+    authority: FSTEK_Russia
+    document_type: attestation_amendment_order
+    number: "60"
+    signed_date: 2026-02-27
+    effective_date: 2026-09-01
+    status_on_retrieved_at: ENACTED_NOT_YET_EFFECTIVE
+    title: >-
+      О внесении изменений в Порядок организации и проведения работ по аттестации объектов
+      информатизации на соответствие требованиям о защите информации ограниченного доступа,
+      не составляющей государственную тайну, утвержденный приказом ФСТЭК России от 29 апреля 2021 г. № 77
+    justice_registration:
+      date: 2026-06-24
+      number: "87202"
+    official_publication:
+      publication_number: "0001202606250029"
+      publication_date: 2026-06-25
+      page_url: "https://publication.pravo.gov.ru/document/0001202606250029"
+      exact_file_url_attempted: "https://publication.pravo.gov.ru/File/GetFile/0001202606250029?type=pdf"
+    verification_status: PRIMARY_PUBLICATION_METADATA_VERIFIED_FUTURE_EFFECTIVE
+    applicability: CONDITIONAL_ATTESTATION_REQUIRED_CONTEXT
+    relation:
+      from: RU_FSTEC_ORDER_77_2021_ATTESTATION
+      type: AMENDED_BY
+      effective_from: 2026-09-01
+    note: >-
+      As of 22.08.2026 this amendment is not yet effective. Do not use it in current executable
+      decisions before 01.09.2026 and do not infer that all ISPDn require formal attestation.
+    artifact:
+      status: SOURCE_PENDING
+      mime: null
+      byte_length: null
+      sha256: null
+
+  - source_id: RU_FSTEC_ORDER_21_REPLACEMENT_DRAFT_2026
+    authority: FSTEK_Russia
+    document_type: draft_order
+    prepared_date: 2026-07-24
+    project_id: "01/02/07-26/00169583"
+    title: >-
+      Об утверждении Состава и содержания организационных и технических мер по обеспечению
+      безопасности персональных данных при их обработке в информационных системах персональных данных
+    verification_status: DRAFT_PUBLIC_DISCUSSION_EVIDENCE_VERIFIED
+    lifecycle_status: DRAFT_MONITOR
+    proposed_effective_date: 2026-09-01
+    proposed_version_effect:
+      - "repeal RU_FSTEC_ORDER_21_2013"
+      - "repeal paragraph 1 of the amendment to Order 49/2017"
+      - "repeal RU_FSTEC_ORDER_68_2020"
+    requirements_import_allowed: false
+    conflict_policy: >-
+      Differences against current Order 21 are FUTURE_DELTA_CANDIDATES, not current legal
+      contradictions. Compile a structural/semantic diff only after enactment identity and effective
+      text are verified.
+    notable_draft_links:
+      - target: RU_GOV_PP_1119_2012
+        type: REFERENCES
+      - target: RU_FSTEC_ORDER_117_2025
+        type: CONDITIONAL_GIS_OVERLAY_REFERENCE
+      - target: RU_FSTEC_METHOD_MEASURES_2026_04_12
+        type: PROPOSED_METHODICAL_DEPENDENCY
+      - target: RU_FSB_ORDER_378_2014
+        type: CRYPTO_SCOPE_REFERENCE_BY_AUTHORITY
+    artifact:
+      status: DRAFT_TEXT_NOT_IMMUTABLE_PRIMARY
+      mime: null
+      byte_length: null
+      sha256: null
+
+version_and_applicability_edges:
+  - from: RU_FSTEC_ORDER_117_2025
+    to: RU_FSTEC_METHOD_MEASURES_2026_04_12
+    type: METHODICAL_DETAIL_CONTEXT
+    status: CORROBORATED
+  - from: RU_FSTEC_ORDER_55_2018
+    to: RU_FSTEC_ORDER_9_2026
+    type: AMENDED_BY
+    status: PRIMARY_PUBLICATION_METADATA_VERIFIED
+  - from: RU_FSTEC_ORDER_77_2021_ATTESTATION
+    to: RU_FSTEC_ORDER_60_2026
+    type: AMENDED_BY
+    status: PRIMARY_PUBLICATION_METADATA_VERIFIED_FUTURE_EFFECTIVE
+  - from: RU_FSTEC_ORDER_21_2013
+    to: RU_FSTEC_ORDER_21_REPLACEMENT_DRAFT_2026
+    type: DRAFT_SUCCESSOR_CANDIDATE
+    status: NON_EXECUTABLE
+
+conflict_and_scope_result:
+  confirmed_legal_contradictions: 0
+  potential_definition_conflicts_queued: 1
+  future_delta_candidates: 1
+  context_splits_added: 3
+  notes:
+    - "The 2026 methodical document has its own terms/definitions; compare them with the 2021 Threat Method before concept-node merge."
+    - "The July 2026 Order-21 replacement is a draft, so its changed measures cannot be treated as a conflict with current Order 21."
+    - "Order 117 applies as a PDn overlay only for systems in its governmental/GIS scope; it does not expand to ordinary private ISPDn."
+    - "Orders 9 and 60 remain certification/attestation context branches, not generic PDn duties."
+
+acquisition:
+  exact_binary_attempts: 1
+  exact_binary_successes: 0
+  official_page_network_attempts: 4
+  official_page_network_successes: 0
+  new_bytes_downloaded: 0
+  new_sha256: 0
+  new_immutable_artifacts: 0
+  blocker: "Runtime DNS/name-resolution or official-site timeout; web publication metadata remained reachable for status verification."
