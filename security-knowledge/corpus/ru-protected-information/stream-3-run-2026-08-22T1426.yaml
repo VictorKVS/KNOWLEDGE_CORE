@@ -1,0 +1,94 @@
+schema_version: "1.0"
+kind: stream-run
+stream: STREAM_3_SECTOR_OVERLAYS
+checked_at: "2026-08-22T14:26:27+03:00"
+status: COMPLETED_WITH_EXACT_CURRENT_BINARY_PENDING
+focus: "children/family — adoption secrecy and civil-status overlap"
+
+scope_result:
+  new_sources_discovered: 1
+  duplicate_sources_created: 0
+  exact_binary_downloads_succeeded: 0
+  durable_immutable_artifacts_added: 0
+  protected_locators_crosschecked: 3
+  relationship_candidates_added: 2
+  constitutional_interpretation_edges_added: 1
+  applicability_edges_promoted: 0
+  legal_conflicts_confirmed: 0
+
+source_work:
+  - source_id: SEC-SRC-RU-SK-1995-A139
+    action: DISCOVER_AND_REGISTER
+    source_card: "security-corpora/RU/protected-information/source/SEC-SRC-RU-SK-1995-A139.yaml"
+    capture_backlog: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-SK-1995-A139-version-capture-pending.json"
+    official_authority_text:
+      authority: "Президент Российской Федерации — Банк документов"
+      url: "https://www.kremlin.ru/acts/bank/8671/print"
+      state: LOCATORS_CROSSCHECKED
+    anchors:
+      - "статья 139 пункт 1 — тайна усыновления охраняется законом; обязанность сохранять тайну"
+      - "статья 139 пункт 2 — ответственность за разглашение против воли усыновителей"
+      - "статья 135 пункт 1 — изменение даты/места рождения как специальный механизм обеспечения тайны усыновления"
+
+version_reconciliation:
+  current:
+    - act: "68-ФЗ от 23.03.2026"
+      official_publication_id: "0001202603230014"
+      official_url: "https://publication.pravo.gov.ru/document/0001202603230014"
+      effective_from: "2026-04-03"
+      changed_locator: "статья 3"
+      protected_locator_139_affected: false
+      evidence_state: PRIMARY_OFFICIAL_PUBLICATION_VERIFIED
+  future:
+    - act: "286-ФЗ от 04.08.2026"
+      publication_locator: "0001202608040011"
+      effective_from: "2026-12-01"
+      changed_locator: "статья 169"
+      protected_locator_139_affected: false
+      evidence_state: PUBLICATION_LOCATOR_CROSSCHECKED_PRIMARY_PAGE_EXACT_BINARY_PENDING
+  locator_specific_result: >-
+    No direct amendment to article 139 was identified in this pass. Full historical locator-specific chain remains PARTIAL.
+
+relationship_work:
+  pdn:
+    target: "152-ФЗ"
+    state: OVERLAP_CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    reason: "Adoption-secret records can include identifiable child/adopter/origin data, while article 139 protects a distinct special secrecy object."
+  civil_status:
+    target: "143-ФЗ, статья 47"
+    state: DIRECT_REGIME_OVERLAP_CONSTITUTIONAL_INTERPRETATION_EXISTS
+    relation: ADOPTION_CIVIL_STATUS_RECORD_SECRECY
+  constitutional_interpretation:
+    act: "Постановление Конституционного Суда РФ от 16.06.2015 № 15-П"
+    primary_pdf_url: "https://www.ksrf.ru/doc/KSRFDecision198856.pdf"
+    state: PRIMARY_DECISION_TEXT_VERIFIED_EXPERT_INTERPRETATION_REQUIRED
+
+acquisition:
+  current_official_artifact:
+    retrieved_at: null
+    mime: null
+    byte_length: null
+    sha256: null
+    immutable: false
+  blocker: >-
+    Current official text was available for locator verification, but the available GitHub write interface is text-only and
+    this execution did not obtain and durably store byte-exact authoritative source bytes. No official artifact metadata is fabricated.
+
+counter_reconciliation:
+  before: {found: 24, downloaded: 9, immutable: 9, pending: 13, reused: 2}
+  after: {found: 25, downloaded: 9, immutable: 9, pending: 14, reused: 2}
+  explanation: "One genuinely new special protected-information source discovered; exact authoritative artifact remains pending."
+
+files_written:
+  - "security-corpora/RU/protected-information/source/SEC-SRC-RU-SK-1995-A139.yaml"
+  - "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-SK-1995-A139-version-capture-pending.json"
+  - "security-knowledge/corpus/ru-protected-information/master-inventory-delta-2026-08-22T1426.yaml"
+  - "security-knowledge/corpus/ru-personal-data/master-source-inventory-delta-stream3-2026-08-22T1426.yaml"
+  - "security-knowledge/corpus/ru-protected-information/stream-3-run-2026-08-22T1426.yaml"
+
+next_priority:
+  - "Exact byte capture for current authoritative Family Code artifact and KSRF 15-P interpretation artifact."
+  - "Children/education: deepen existing 273-ФЗ node and check current protected-information locators without duplication."
+  - "Public sector: article 47 of 143-ФЗ exact-current capture and adoption-record relationship reconciliation."
+  - "Tax secrecy: discover/operationalize article 102 of Part One Tax Code, including future 281-ФЗ from 2027."
+  - "Continue pending exact captures in healthcare, finance, transport and advertising clusters."
