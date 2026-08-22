@@ -1,0 +1,67 @@
+schema_version: "1.0"
+kind: ru-personal-data-master-source-inventory-delta
+stream: STREAM_3_SECTOR_OVERLAYS
+checked_at: "2026-08-22T17:21:01+03:00"
+status: APPEND_ONLY_RELATIONSHIP_DELTA
+reconciliation_note: >-
+  This Stream 3 delta is append-only and must be reconciled with concurrent Stream 2 PDN deltas. It does not overwrite
+  the PDN master inventory.
+
+source_relation_added:
+  source_id: SEC-SRC-RU-NK1-1998-A102
+  source_title: "Налоговый кодекс Российской Федерации (часть первая) — статья 102 «Налоговая тайна»"
+  protected_information_regime: tax_secrecy
+  source_card: "security-corpora/RU/protected-information/source/SEC-SRC-RU-NK1-1998-A102.yaml"
+  relation_to_152_fz:
+    state: OVERLAP_CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    reasons:
+      - "налоговая тайна может включать сведения об идентифицируемых физических лицах и индивидуальных предпринимателях"
+      - "режим статьи 102 также охватывает сведения об организациях и иную налоговую информацию, поэтому не тождествен персональным данным"
+      - "статья 102 устанавливает самостоятельные правила неразглашения, специального хранения/доступа и законных каналов передачи"
+      - "пункт 16 с 01.08.2026 отдельно охватывает документы/сведения в личном кабинете ЕПГУ в объеме запрета и ответственности за разглашение"
+    guard: >-
+      Не выводить применимость 152-ФЗ только из наличия налоговой тайны. Для конкретного ребра требуется установить
+      субъект данных, тип налогоплательщика, состав сведений, операцию, цель, правовое основание, роль органа/получателя
+      и специальный режим доступа/передачи.
+  future_cross_regime:
+    - target: "115-ФЗ от 25.07.2002"
+      type: MIGRATION_INFORMATION_TAX_SECRET_TRANSFER_CONTEXT
+      source_amendment: "242-ФЗ от 26.07.2026"
+      effective_from: "2026-10-01"
+      state: FUTURE_NOT_CURRENT
+    - target: "381-ФЗ от 28.12.2009"
+      type: TRADE_MONITORING_TAX_SECRET_TRANSFER_CONTEXT
+      source_amendment: "281-ФЗ от 04.08.2026"
+      effective_from: "2027-01-01"
+      state: FUTURE_NOT_CURRENT
+
+currentness:
+  official_bank_locator: "https://www.kremlin.ru/acts/bank/12755"
+  official_consolidated_locator: "https://pravo.gov.ru/proxy/ips/?docbody=&nd=102054722"
+  current_locator_event:
+    act: "425-ФЗ от 28.11.2025"
+    official_publication_id: "0001202511280017"
+    effective_from: "2026-08-01"
+    changed_locator: "пункт 16 статьи 102"
+    state: CURRENT
+  future_locator_events:
+    - {act: "242-ФЗ от 26.07.2026", publication_locator: "0001202607260002", effective_from: "2026-10-01", changed_locator: "пункт 15.1 статьи 102"}
+    - {act: "281-ФЗ от 04.08.2026", publication_locator: "0001202608040006", effective_from: "2027-01-01", changed_locator: "пункт 15.2 статьи 102"}
+    - {act: "425-ФЗ от 28.11.2025", official_publication_id: "0001202511280017", effective_from: "2027-01-01", changed_locator: "пункт 17 статьи 102"}
+  locator_specific_version_chain: PARTIAL
+
+acquisition:
+  exact_current_official_artifact: PENDING
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable: false
+  capture_backlog: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-NK1-1998-A102-version-capture-pending.json"
+
+proof_floor_effect:
+  applicability_edges_promoted: 0
+  executable_rules_changed: false
+  legal_conflicts_confirmed: 0
+  new_pdn_overlap_candidates: 1
+  future_cross_regime_candidates: 2
