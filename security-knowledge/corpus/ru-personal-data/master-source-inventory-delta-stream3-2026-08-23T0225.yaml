@@ -1,0 +1,65 @@
+schema_version: "1.0"
+kind: ru-personal-data-master-source-inventory-delta
+owner_stream: STREAM_3_SECTOR_OVERLAYS
+checked_at: "2026-08-23T02:25:00+03:00"
+source_id: SEC-SRC-RU-NOTARIAT-4462I-A5
+source_card: "security-corpora/RU/protected-information/source/SEC-SRC-RU-NOTARIAT-4462I-A5.yaml"
+status: APPEND_ONLY_RELATIONSHIP_DELTA
+
+relationship:
+  target: "152-ФЗ"
+  type: EXPLICIT_STATUTORY_PDN_CONTEXT
+  state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  primary_locator: "статья 5, часть 5 Основ законодательства РФ о нотариате"
+  current_text_finding: >-
+    Норма прямо устанавливает, что при совершении нотариальных действий отдельное согласие субъекта персональных данных
+    на обработку его персональных данных для совершения нотариального действия не требуется.
+  evidence_quality:
+    authority_hosted_text: "Минюст России: https://minjust.gov.ru/ru/documents/7900/"
+    current_consolidated_crosscheck: "редакция Основ от 04.08.2026"
+    exact_current_authoritative_binary: PENDING
+  applicability_guard: >-
+    Не выводить общее основание обработки или передачи данных из части 5 статьи 5. Перед применением определить конкретное нотариальное действие,
+    субъекта данных, состав ПДн, операцию, цель, роль нотариуса/нотариальной палаты/получателя, специальное правовое основание и канал передачи.
+    OVERLAP != APPLICABILITY.
+
+related_protected_information:
+  regime: notarial_secrecy
+  confidentiality_locator: "статья 5, части 2-4"
+  state: SPECIAL_REGIME_LINKED_NOT_MERGED_WITH_PDN
+  note: >-
+    Запрет разглашения и специальные каналы выдачи сведений существуют параллельно режиму персональных данных;
+    они не заменяют и не отменяют иные требования 152-ФЗ.
+
+cross_regime_candidates:
+  - target: "115-ФЗ от 07.08.2001"
+    type: AML_CFT_EXTREMISM_DISCLOSURE_CONTEXT
+    state: RELATIONSHIP_CONTEXT_ONLY
+    evidence_event: "522-ФЗ от 28.12.2024, статья 4 -> часть 4 статьи 5 Основ"
+  - target: "SEC-SRC-RU-NK1-1998-A102"
+    type: TAX_AUTHORITY_NOTARIAL_INFORMATION_TRANSFER_CONTEXT
+    state: RELATIONSHIP_CONTEXT_ONLY
+    guard: "Не объединять нотариальную и налоговую тайну."
+
+version_guard:
+  latest_locator_specific_primary_event_verified:
+    act: "522-ФЗ от 28.12.2024"
+    official_publication_id: "0001202412280035"
+    affected_locator: "статья 5, часть 4"
+    effective_from: "2025-06-01"
+  current_consolidated_revision_crosschecked: "2026-08-04"
+  full_chain: PARTIAL
+
+capture_guard:
+  exact_current_binary: PENDING
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  executable_use: false
+
+counter_effect:
+  pdn_overlap_candidates_added: 1
+  applicability_edges_promoted: 0
+  executable_rules_changed: false
+  duplicate_sources_created: 0
