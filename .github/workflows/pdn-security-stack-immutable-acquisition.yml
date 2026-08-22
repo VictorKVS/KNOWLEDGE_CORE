@@ -1,0 +1,52 @@
+name: PDN Security Stack Immutable Acquisition
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "27 */3 * * *"
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/pdn-security-stack-immutable-acquisition.yml"
+      - "TOOLS/pdn_security_stack_acquire.py"
+      - "security-corpora/RU/152-FZ/security-stack/**"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pdn-security-stack-immutable-acquisition
+  cancel-in-progress: true
+
+jobs:
+  acquire:
+    runs-on: ubuntu-latest
+    timeout-minutes: 22
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Reuse immutable captures and acquire technical/crypto deltas
+        shell: bash
+        run: python TOOLS/pdn_security_stack_acquire.py
+
+      - name: Commit immutable artifacts, manifests, source evidence and telemetry
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add security-corpora/RU/152-FZ/security-stack \
+                  security-corpora/RU/152-FZ/PDN_MASTER_SOURCE_INVENTORY.yaml
+          if git diff --cached --quiet; then
+            echo "No security-stack acquisition delta"
+            exit 0
+          fi
+          git commit -m "security-kb: sync PDN security-stack immutable capture [skip ci]"
+          git pull --rebase origin main
+          git push
+
+      - name: Surface stream telemetry
+        shell: bash
+        run: cat security-corpora/RU/152-FZ/security-stack/PDN_SECURITY_STACK_ACQUISITION_RUN.json
