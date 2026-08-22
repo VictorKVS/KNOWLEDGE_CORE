@@ -1,0 +1,193 @@
+schema_version: 1
+pack_id: RU_PD_TECHNICAL_SECURITY_DELTA_2026_08_22T1113_0300
+applies_to: technical-security-source-pack.yaml
+retrieved_at: "2026-08-22T11:13:16+03:00"
+stream_id: RU_PD_STREAM_2_TECHNICAL_CRYPTO
+scope: >-
+  Incremental reconciliation for the Russian PDn technical and cryptographic security contour.
+  This delta registers only newly discovered/reconciled sources with a proven or explicit PDn edge,
+  keeps staged/future changes non-executable, and records failed primary-byte acquisition without
+  fabricating MIME, byte length or SHA-256.
+
+integrity_policy:
+  - "SOURCE_ACQUIRED/IMMUTABLE requires exact acquired bytes plus MIME, byte_length and SHA-256 computed from those bytes."
+  - "Publication-card metadata and secondary consolidated texts do not substitute for an immutable primary artifact."
+  - "ENACTED_NOT_YET_EFFECTIVE and DRAFT sources never modify current executable rules before their legal effective gate."
+  - "GIS/CII/GosSOPKA/licensing/certification branches require explicit applicability edges before entering ordinary PDn decisions."
+  - "Differences in terminology are queued as contextual/version divergences before being classified as legal contradictions."
+
+status_rechecks:
+  RU_FSTEC_ORDER_21_2013:
+    result: CURRENT_EXECUTABLE_BASELINE_RETAINED_AS_OF_2026_08_22
+    version_chain: "2013 base -> Order 49/2017 -> Order 68/2020"
+    evidence:
+      - type: OFFICIAL_PUBLICATION
+        publication_number: "0001201704260010"
+        date: 2017-04-26
+        role: ORDER_49_2017_AMENDMENT
+      - type: OFFICIAL_PUBLICATION
+        publication_number: "0001202007100002"
+        date: 2020-07-10
+        role: ORDER_68_2020_AMENDMENT
+    future_note: >-
+      Project 01/02/07-26/00169583 remains a draft successor candidate in evidence available on
+      22.08.2026. No enacted replacement was promoted in this run.
+
+  RU_FSTEC_ORDER_60_2026:
+    result: ENACTED_NOT_YET_EFFECTIVE_RECONFIRMED
+    effective_from: 2026-09-01
+    note: >-
+      The attestation amendment does not create a universal ISPDn attestation duty. For private
+      ISPDn, applicability remains conditional on an actual attestation requirement.
+
+  RU_FSTEC_THREAT_METHOD_2021:
+    result: CURRENT_METHOD_SCOPE_RECONFIRMED
+    applicability: "Systems/networks including ISPDn"
+    supersession_note: >-
+      The 2021 Method states that the 2008 PDn threat methodology is no longer used for threat
+      assessment after approval of the 2021 Method. Exact official bytes remain pending.
+
+  RU_FSB_ORDER_77_2023:
+    result: DIRECT_PDN_GOSSOPKA_EDGE_RECONFIRMED
+    legal_basis: "Federal Law 152-FZ article 19 part 12"
+    route: "PDn operator -> GosSOPKA interaction through NKTsKI for qualifying computer incidents"
+    scope_guard: "Do not import unrelated CII/GosSOPKA duties into ordinary PDn cases."
+
+new_sources:
+  - source_id: RU_FSTEC_ORDER_137_2026
+    authority: FSTEK_Russia
+    document_type: amendment_order
+    number: "137"
+    signed_date: 2026-05-08
+    title: >-
+      О внесении изменений в Требования о защите информации, содержащейся в государственных
+      информационных системах, иных информационных системах государственных органов,
+      государственных унитарных предприятий, государственных учреждений, утвержденные приказом
+      ФСТЭК России от 11 апреля 2025 г. № 117
+    justice_registration:
+      date: 2026-08-10
+      number: "87797"
+    official_publication:
+      publication_number: "0001202608110006"
+      publication_date: 2026-08-11
+      page_url: "https://publication.pravo.gov.ru/document/0001202608110006"
+      exact_file_url_attempted: "https://publication.pravo.gov.ru/File/GetFile/0001202608110006?type=pdf"
+    verification_status: PUBLICATION_ID_AND_MINJUST_CORROBORATED_PRIMARY_ENDPOINT_UNREACHABLE
+    lifecycle_status_on_2026_08_22: ENACTED_NOT_YET_EFFECTIVE
+    effective_schedule:
+      general_effective_from: 2026-09-01
+      appendix_point_7_effective_from: 2027-03-01
+    applicability: CONDITIONAL_ORDER_117_SCOPE_ONLY
+    relation:
+      from: RU_FSTEC_ORDER_117_2025
+      type: AMENDED_BY
+      effective_from: 2026-09-01
+      staged_effect: true
+    pdn_scope_guard: >-
+      This amendment affects the Order-117 governmental/GIS information-system branch. It must not
+      be promoted to a generic private-sector ISPDn duty merely because personal data are processed.
+    artifact:
+      status: SOURCE_PENDING
+      mime: null
+      byte_length: null
+      sha256: null
+      acquisition_result: DNS_NAME_RESOLUTION_FAILURE
+
+  - source_id: RU_FSTEC_MATURITY_METHOD_2026_08_07
+    authority: FSTEK_Russia
+    document_type: methodical_document
+    approved_date: 2026-08-07
+    title: >-
+      Методика оценки уровня зрелости деятельности в области технической защиты информации
+      в информационных системах и обеспечения безопасности значимых объектов критической
+      информационной инфраструктуры Российской Федерации
+    official_source:
+      page_url: "https://fstec.ru/dokumenty/vse-dokumenty/spetsialnye-normativnye-dokumenty/metodicheskij-dokument-ot-7-avgusta-2026-g"
+      endpoint_status: URL_IDENTIFIED_PRIMARY_ENDPOINT_UNREACHABLE
+    verification_status: CURRENT_METHODICAL_TEXT_CORROBORATED_PRIMARY_BYTES_PENDING
+    applicability: DIRECT_ISPDN_METHODICAL_RELEVANCE
+    pdn_edge: >-
+      The methodology expressly includes operators of personal-data information systems for
+      confirming the maturity of PDn security activities and for setting maturity requirements for
+      contractors. This is a methodical assessment layer, not a substitute for Order 21 requirements.
+    relations:
+      - to: RU_FSTEC_ORDER_21_2013
+        type: USES_APPLICABLE_PROTECTION_REQUIREMENT_SET
+        status: TEXT_CORROBORATED_PRIMARY_BYTES_PENDING
+      - to: ISPDN_OPERATOR
+        type: APPLIES_TO
+        status: TEXT_CORROBORATED_PRIMARY_BYTES_PENDING
+    semantics_guard: >-
+      Target maturity levels and assessment outputs must be classified as methodological targets,
+      recommendations or obligations according to exact source wording. Do not convert them into
+      universal statutory duties during ingestion.
+    definition_conflict_queue:
+      required: true
+      class: TERMINOLOGY_VERSION_DIVERGENCE_REVIEW
+      compare_with:
+        - RU_FSTEC_METHOD_MEASURES_2026_04_12
+        - RU_FSTEC_THREAT_METHOD_2021
+        - RU_FSTEC_ORDER_117_2025
+        - RU_FSTEC_ORDER_137_2026
+      note: >-
+        Compare protection-level/maturity terminology and staged Order-117 terminology only after
+        exact source artifacts are acquired; do not label as a legal contradiction yet.
+    artifact:
+      status: SOURCE_PENDING
+      mime: null
+      byte_length: null
+      sha256: null
+      acquisition_result: FSTEC_OFFICIAL_ENDPOINT_DNS_FAILURE
+
+research_leads_not_promoted:
+  - candidate_id: RU_FSTEC_KZI_METHOD_2025_11_11
+    title: >-
+      Методика оценки показателя состояния технической защиты информации в информационных системах
+      и обеспечения безопасности значимых объектов критической информационной инфраструктуры Российской Федерации
+    discovery_status: CURRENT_TEXT_CORROBORATED_OFFICIAL_SOURCE_URL_PENDING
+    known_relation_candidate: "supersedes/not-applies prior 02.05.2024 KZI assessment methodology"
+    promotion_blocker: >-
+      Exact official FSTEK source identity/URL and artifact were not resolved in this run. Keep as
+      discovery lead only; do not count as a verified primary source record yet.
+
+version_and_applicability_edges:
+  - from: RU_FSTEC_ORDER_117_2025
+    to: RU_FSTEC_ORDER_137_2026
+    type: AMENDED_BY
+    status: ENACTED_FUTURE_EFFECTIVE
+    effective_from: 2026-09-01
+    staged_exception: "appendix point 7 effective 2027-03-01"
+  - from: RU_FSTEC_MATURITY_METHOD_2026_08_07
+    to: ISPDN_OPERATOR
+    type: APPLIES_TO
+    status: TEXT_CORROBORATED_PRIMARY_BYTES_PENDING
+  - from: RU_FSB_ORDER_77_2023
+    to: PDI_COMPUTER_INCIDENT_GOSSOPKA_ROUTE
+    type: DIRECT_PDN_APPLICABILITY
+    status: RECONFIRMED
+
+conflict_and_scope_result:
+  confirmed_legal_contradictions: 0
+  terminology_version_divergences_queued: 1
+  future_effective_version_events_added: 1
+  direct_pdn_methodical_sources_added: 1
+  context_splits_preserved:
+    - "Order 137 remains inside Order-117 governmental/GIS scope."
+    - "FSB Order 77 is the direct PDn-to-GosSOPKA incident route; unrelated CII duties remain isolated."
+    - "Maturity methodology is an assessment layer and must not overwrite statutory/mandatory requirement semantics."
+
+acquisition:
+  exact_binary_attempts: 2
+  exact_binary_successes: 0
+  exact_binary_targets:
+    - "https://publication.pravo.gov.ru/File/GetFile/0001202608110006?type=pdf"
+    - "https://fstec.ru/component/attachments/download/2919"
+  official_page_network_attempts: 4
+  official_page_network_successes: 0
+  new_bytes_downloaded: 0
+  new_sha256: 0
+  new_immutable_artifacts: 0
+  blocker: >-
+    Runtime DNS/name-resolution failure for publication.pravo.gov.ru, fstec.ru and other official
+    endpoints. Search/index evidence remained reachable for status reconciliation. No source was
+    promoted to SOURCE_ACQUIRED/IMMUTABLE.
