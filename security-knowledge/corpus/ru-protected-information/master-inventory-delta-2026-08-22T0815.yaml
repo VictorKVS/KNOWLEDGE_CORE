@@ -1,0 +1,122 @@
+schema_version: "1.0"
+kind: ru-protected-information-master-inventory-delta
+base_inventory: "master-inventory.yaml"
+reconciliation_base_delta: "master-inventory-delta-2026-08-22T0222.yaml"
+checked_at: "2026-08-22T08:15:24+03:00"
+owner_stream: STREAM_3_SECTOR_OVERLAYS
+run_ref: "stream-3-run-2026-08-22T0815.yaml"
+status: APPEND_ONLY_RECONCILIATION_READY
+
+proof_floor:
+  - "SEC-SRC-RU-FZ-126 already existed and is reused; operationalizing it must not increase source discovery or reused counters."
+  - "The existing GARANT ODT fingerprint is a working-source fingerprint only, not an official primary immutable artifact."
+  - "Articles 53, 63 and 64 are protected-information anchors, but overlap with PDN is not organization-specific applicability."
+  - "The 3-year/6-month communications retention rule is a special sector rule and must not be merged with general PDN storage limitation or communications secrecy."
+  - "Future 210-ФЗ and 271-ФЗ events are not current requirements as of 2026-08-22."
+  - "No official artifact MIME/byte length/SHA-256 is inferred without exact bytes."
+
+counter_state_before_reconciled: {found: 24, downloaded: 9, immutable: 9, pending: 13, reused: 2, primary_publication_verified: 10, sectors_registered: 16}
+counter_state_after_reconciliation:
+  found: 24
+  downloaded: 9
+  immutable: 9
+  pending: 13
+  reused: 2
+  primary_publication_verified: 10
+  sectors_registered: 16
+  new_sources_this_run: 0
+  existing_source_nodes_operationalized: 1
+  new_immutable_this_run: 0
+  exact_binary_downloads_this_run: 0
+  current_protected_locators_crosschecked_this_run: 6
+  pdn_overlap_candidates_added_this_run: 1
+  cross_regime_candidates_added_this_run: 1
+  current_version_events_reconciled_this_run: 1
+  future_version_events_registered_this_run: 2
+  applicability_edges_promoted_this_run: 0
+  legal_conflicts_confirmed_this_run: 0
+
+source_reconciled:
+  source_id: SEC-SRC-RU-FZ-126
+  source_card: "security-corpora/RU/protected-information/source/SEC-SRC-RU-FZ-126.yaml"
+  existing_source_ref: "security-knowledge/legislation/RU/federal-laws/126-FZ/document.yaml"
+  sector: communications
+  regimes:
+    - communications_secrecy
+    - subscriber_information_restricted_access
+    - communications_metadata_content_retention
+  state: REUSED_CURRENT_PROTECTED_LOCATORS_PRIMARY_AUTHORITY_CROSSCHECKED_EXACT_OFFICIAL_ARTIFACT_PENDING_VERSION_CHAIN_PARTIAL
+  primary_authority_text:
+    authority: "Президент Российской Федерации — Банк документов"
+    url: "https://www.kremlin.ru/acts/bank/49053/print"
+    state: OFFICIAL_TEXT_LOCATORS_CROSSCHECKED
+  protected_locators:
+    - {locator: "статья 53 часть 1", concept: SUBSCRIBER_INFORMATION_RESTRICTED_ACCESS, state: CURRENT_OFFICIAL_TEXT_CROSSCHECKED}
+    - {locator: "статья 53 часть 1", concept: SUBSCRIBER_CITIZEN_DISCLOSURE_CONSENT_AND_STATUTORY_EXCEPTIONS, state: CURRENT_OFFICIAL_TEXT_CROSSCHECKED}
+    - {locator: "статья 53 часть 2", concept: PUBLIC_SUBSCRIBER_DATABASE_CONSENT_AND_REMOVAL, state: CURRENT_OFFICIAL_TEXT_CROSSCHECKED}
+    - {locator: "статья 63", concept: COMMUNICATIONS_SECRECY, state: CURRENT_OFFICIAL_TEXT_CROSSCHECKED}
+    - {locator: "статья 64 часть 1", concept: COMMUNICATIONS_METADATA_AND_CONTENT_RETENTION, state: CURRENT_OFFICIAL_TEXT_CROSSCHECKED}
+    - {locator: "статья 64 часть 2", concept: AUTHORIZED_STATE_ACCESS_AND_NETWORK_REQUIREMENTS, state: CURRENT_OFFICIAL_TEXT_CROSSCHECKED}
+  pdn_relation:
+    state: OVERLAP_CANDIDATE_EXPLICIT_PERSONAL_DATA_CONTEXT_APPLICABILITY_REVIEW_REQUIRED
+    guard: "OVERLAP != APPLICABILITY; resolve subject, operation, purpose, legal basis, actor role, recipient and data field."
+  cross_regime_relation:
+    target: SEC-SRC-RU-FZ-176-1999
+    type: ELECTRONIC_AND_POSTAL_COMMUNICATIONS_SECRECY_BOUNDARY
+    state: CANDIDATE_RELATIONSHIP_REVIEW_REQUIRED
+  capture_backlog: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-126-version-capture-pending.json"
+
+version_chain_delta:
+  state: VERSION_CHAIN_PARTIAL
+  current_events:
+    - act: "33-ФЗ от 20.02.2026"
+      official_publication_id: "0001202602200054"
+      official_publication_date: "2026-02-20"
+      official_url: "https://publication.pravo.gov.ru/document/0001202602200054"
+      effective_from: "2026-03-03"
+      changed_locators: ["статья 46", "статья 68"]
+      protected_locators_53_63_64_affected: false
+      state: PRIMARY_PUBLICATION_VERIFIED_SOURCE_LEVEL_EVENT
+  future_events:
+    - act: "210-ФЗ от 26.06.2026"
+      publication_locator: "0001202606260070"
+      publication_date: "2026-06-26"
+      article_1_effective_from: "2027-03-01"
+      changes: "включая часть 2 статьи 64"
+      state: FUTURE_NOT_CURRENT_LOCATOR_CROSSCHECKED_PRIMARY_BINARY_PENDING
+    - act: "271-ФЗ от 26.07.2026"
+      publication_locator: "0001202607260030"
+      publication_date: "2026-07-26"
+      default_effective_from: "2027-03-01"
+      relevant_126_fz_change: "статья 28"
+      protected_locators_53_63_64_affected: false
+      state: FUTURE_SOURCE_LEVEL_EVENT_NOT_CURRENT_PRIMARY_BINARY_PENDING
+
+acquisition_delta:
+  durable_immutable_artifacts_added: 0
+  exact_binary_downloads_succeeded: 0
+  official_current_text_locator_crosschecks: 6
+  capture_backlog_created: true
+  official_current_artifact:
+    retrieved_at: null
+    mime: null
+    byte_length: null
+    sha256: null
+  blocker: >-
+    The authoritative current text and official publication metadata for the current 33-ФЗ event were reachable, but this
+    execution did not obtain a durable byte-exact current official 126-ФЗ binary. Existing GARANT ODT metadata is retained
+    as a working-source fingerprint and is not promoted to primary immutable evidence.
+
+proof_floor_effect:
+  executable_rules_changed: false
+  applicability_edges_promoted: 0
+  duplicate_source_nodes_created: 0
+  legal_conflicts_confirmed: 0
+  source_nodes_added: 0
+  source_nodes_operationalized: 1
+  cross_regime_candidates_added: 1
+
+merge_rule: >-
+  Reconcile after master-inventory-delta-2026-08-22T0222.yaml. Aggregate Stream 3 counters remain 24 found / 9 downloaded /
+  9 immutable / 13 pending / 2 status-REUSED sources. This pass deepens the existing 126-ФЗ communications node without
+  inflating discovery/acquisition counts.
