@@ -1,0 +1,108 @@
+schema_version: 1
+delta_id: RU_PD_MASTER_SOURCE_INVENTORY_STREAM2_DELTA_2026_08_22T1113_0300
+applies_to: master-source-inventory.yaml
+created_at: "2026-08-22T11:13:16+03:00"
+stream_id: RU_PD_STREAM_2_TECHNICAL_CRYPTO
+merge_policy: >-
+  CONCURRENCY_SAFE_OVERLAY. Merge by source_id and stream_progress keys. Do not replace unrelated
+  stream-1/stream-3 fields. Current primary evidence wins for the same source/version, while future
+  effective and draft sources remain non-executable until their effective/enactment gates are met.
+
+source_patches:
+  RU_FSTEC_ORDER_21_2013:
+    registration_status: STATUS_VERIFIED_CURRENT_BASELINE_AS_OF_2026_08_22
+    version_chain_status: "2013 base -> Order 49/2017 -> Order 68/2020"
+    draft_successor_status: "Project 01/02/07-26/00169583 remains DRAFT_MONITOR; no enacted replacement verified."
+
+  RU_FSTEC_ORDER_60_2026:
+    registration_status: PRIMARY_METADATA_RECONFIRMED_FUTURE_EFFECTIVE
+    effective_from: 2026-09-01
+    status_on_2026_08_22: ENACTED_NOT_YET_EFFECTIVE
+    applicability_gate: ATTESTATION_REQUIRED_CONTEXT
+
+  RU_FSTEC_THREAT_METHOD_2021:
+    registration_status: CURRENT_METHOD_SCOPE_RECONFIRMED
+    applicability_gate: INFORMATION_SYSTEM_OR_NETWORK_INCLUDING_ISPDN
+    immutable_status: SOURCE_PENDING
+
+  RU_FSB_ORDER_77_2023:
+    registration_status: DIRECT_PDN_GOSSOPKA_EDGE_RECONFIRMED
+    legal_basis: "152-FZ article 19 part 12"
+    applicability_gate: QUALIFYING_PDN_COMPUTER_INCIDENT
+
+new_sources:
+  - source_id: RU_FSTEC_ORDER_137_2026
+    domain: ORDER_117_VERSION_CONTEXT
+    priority: P1
+    local_record: "technical-security-source-pack-delta-2026-08-22T1113+0300.yaml"
+    registration_status: ENACTED_FUTURE_EFFECTIVE_METADATA_CORROBORATED
+    immutable_status: SOURCE_PENDING
+    analysis_status: REGISTERED_VERSION_CONTEXT
+    official_publication_number: "0001202608110006"
+    justice_registration_number: "87797"
+    signed_date: 2026-05-08
+    general_effective_from: 2026-09-01
+    staged_effective_from:
+      appendix_point_7: 2027-03-01
+    relation: "RU_FSTEC_ORDER_117_2025 AMENDED_BY RU_FSTEC_ORDER_137_2026"
+    applicability_gate: ORDER_117_SCOPE_ONLY
+    note: "Not a generic private-sector ISPDn duty."
+
+  - source_id: RU_FSTEC_MATURITY_METHOD_2026_08_07
+    domain: INFORMATION_SECURITY_MATURITY_ASSESSMENT
+    priority: P1
+    local_record: "technical-security-source-pack-delta-2026-08-22T1113+0300.yaml"
+    registration_status: CURRENT_METHODICAL_TEXT_CORROBORATED_PRIMARY_BYTES_PENDING
+    immutable_status: SOURCE_PENDING
+    analysis_status: REGISTERED_DIRECT_ISPDN_METHODICAL_RELEVANCE
+    approved_date: 2026-08-07
+    official_page_url: "https://fstec.ru/dokumenty/vse-dokumenty/spetsialnye-normativnye-dokumenty/metodicheskij-dokument-ot-7-avgusta-2026-g"
+    applicability_gate: ISPDN_MATURITY_ASSESSMENT_CONTEXT
+    pdn_edge: >-
+      Explicitly applies to ISPDn operators for confirming the maturity of personal-data security
+      activities and for setting maturity requirements for contractors.
+    semantics_guard: "Methodical maturity targets are not automatically statutory obligations."
+    conflict_queue: TERMINOLOGY_VERSION_DIVERGENCE_REVIEW
+
+research_leads_not_promoted:
+  RU_FSTEC_KZI_METHOD_2025_11_11:
+    status: DISCOVERED_CURRENT_TEXT_CORROBORATED_OFFICIAL_SOURCE_PENDING
+    reason_not_promoted: "Exact official FSTEK source identity/URL and immutable artifact not resolved in this run."
+
+stream_progress_patch:
+  stream_2_technical_crypto:
+    status: ACTIVE
+    source_pack_delta: "technical-security-source-pack-delta-2026-08-22T1113+0300.yaml"
+    previous_unique_stream2_source_records: 23
+    new_source_records_this_run: 2
+    unique_stream2_source_records_after_delta: 25
+    current_status_rechecks_this_run: 4
+    new_future_effective_version_events: 1
+    new_direct_pdn_methodical_sources: 1
+    new_executable_universal_pdn_duties: 0
+    confirmed_legal_contradictions_this_run: 0
+    terminology_version_divergences_queued_this_run: 1
+    research_leads_not_promoted_this_run: 1
+    exact_binary_attempts_this_run: 2
+    exact_binary_successes_this_run: 0
+    immutable_artifacts_added_this_run: 0
+    bytes_downloaded_this_run: 0
+    hashes_recorded_this_run: 0
+    run_record: "runs/stream-2/2026-08-22T1113+0300.yaml"
+    acquisition_log_delta: "stream-2-acquisition-log-delta-2026-08-22T1113+0300.yaml"
+
+next_priority_patch:
+  - RU_FSTEC_ORDER_137_2026_exact_primary_artifact_before_2026_09_01_effective_gate
+  - RU_FSTEC_MATURITY_METHOD_2026_08_07_exact_official_artifact_then_structure_terms_requirements
+  - RU_FSTEC_THREAT_METHOD_2021_exact_official_artifact
+  - RU_FSB_ORDER_77_2023_exact_primary_artifact_and_paragraph_compilation
+  - RU_GOV_PP_1119_2012_exact_current_artifact
+  - RU_FSTEC_ORDER_21_2013_current_consolidated_artifact
+  - RU_FSB_ORDER_378_2014_exact_authoritative_artifact
+  - RU_FSTEC_KZI_METHOD_2025_11_11_resolve_official_source_before_promotion
+
+quality_note: >-
+  This delta intentionally promotes no source to SOURCE_ACQUIRED/IMMUTABLE. Exact binary acquisition
+  remained blocked by runtime DNS/name-resolution. The new Order 137 version edge is staged and
+  non-executable until 01.09.2026; the maturity methodology is registered as a methodical assessment
+  source with a direct ISPDn edge but without converting maturity targets into statutory duties.
