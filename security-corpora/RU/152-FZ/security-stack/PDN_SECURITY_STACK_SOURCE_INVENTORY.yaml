@@ -113,6 +113,18 @@ sources:
     source_record: "source/SEC-SRC-RU-PP79-2012.yaml"
     raw_capture: PENDING
     applicability: LICENSED_TZI_ACTIVITY_ONLY
+  - id: SEC-SRC-RU-FSTEC163-2025
+    role: fstec_tzi_licensing_control_procedure_context
+    metadata_status: METADATA_VERIFIED
+    source_record: "source/SEC-SRC-RU-FSTEC163-2025.yaml"
+    raw_capture: PENDING
+    applicability: LICENSED_TZI_ACTIVITY_ONLY
+  - id: SEC-SRC-RU-FSTEC487-2025
+    role: fstec163_version_chain_dependency
+    metadata_status: METADATA_VERIFIED
+    source_record: "source/SEC-SRC-RU-FSTEC487-2025.yaml"
+    raw_capture: PENDING
+    applicability: VERSION_CHAIN_SCOPE
 
 version_edges:
   - from: SEC-SRC-RU-FSTEC21-2013
@@ -134,6 +146,10 @@ version_edges:
   - from: SEC-SRC-RU-FSB142-2023
     type: AMENDED_BY
     to: SEC-SRC-RU-FSB545-2024
+    provenance: OFFICIAL_PUBLICATION
+  - from: SEC-SRC-RU-FSTEC163-2025
+    type: AMENDED_BY
+    to: SEC-SRC-RU-FSTEC487-2025
     provenance: OFFICIAL_PUBLICATION
 
 applicability_edges:
@@ -174,6 +190,11 @@ applicability_edges:
     to: SEC-SRC-RU-FSTEC21-2013
     scope: TZI_WORKS_SERVICES_CERTIFICATION_OR_ATTESTATION_ONLY
     not_universal_pdn_duty: true
+  - from: SEC-SRC-RU-PP79-2012
+    type: LICENSING_CONTROL_PROCEDURE_DETAILED_BY
+    to: SEC-SRC-RU-FSTEC163-2025
+    scope: TZI_LICENSED_ACTIVITY_ONLY
+    not_universal_pdn_duty: true
 
 context_splits:
   - id: PDN-STACK-CONTEXT-2026-001
@@ -211,6 +232,15 @@ context_splits:
     finding: >-
       FSB Orders No. 142/2023 and 545/2024 describe the licensing-control procedure/version chain for activities
       within FSB competence. They do not create a universal licence duty for every PDN operator or every SKZI user.
+  - id: PDN-STACK-CONTEXT-2026-005
+    status: CONTEXT_DEPENDENT_NOT_CONFLICT
+    sources:
+      - SEC-SRC-RU-PP79-2012
+      - SEC-SRC-RU-FSTEC163-2025
+      - SEC-SRC-RU-FSTEC487-2025
+    finding: >-
+      FSTEC Orders No. 163/2025 and 487/2025 describe the TZI licensing-control procedure/version chain.
+      They do not create a universal licence duty for every PDN operator merely because an ISPDn is operated.
 
 conflict_candidates:
   - id: PDN-STACK-CONFLICT-CANDIDATE-2026-001
@@ -225,16 +255,16 @@ conflict_candidates:
       as a contradiction until scope, legal regime, effective interval and purpose are compared.
 
 production_counters:
-  identified: 16
-  metadata_verified: 16
+  identified: 18
+  metadata_verified: 18
   raw_downloaded_exact: 9
   immutable_sha256_verified: 9
-  pending_raw_capture: 7
-  official_publication_id_targets: 7
+  pending_raw_capture: 9
+  official_publication_id_targets: 9
   official_canonical_targets: 6
   exact_official_route_unresolved: 3
-  version_edges_verified: 5
-  applicability_guards: 10
+  version_edges_verified: 6
+  applicability_guards: 11
   confirmed_conflicts: 0
   conflict_candidates: 1
 
