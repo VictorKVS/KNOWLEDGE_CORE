@@ -9,6 +9,7 @@ on:
     paths:
       - ".github/workflows/pdn-core-immutable-acquisition.yml"
       - "TOOLS/pdn_core_acquire.py"
+      - "TOOLS/pdn_core_pending_acquire.py"
       - "TOOLS/pdn_current_root_acquire.py"
       - "TOOLS/pdn_current_root_curl_acquire.py"
       - "TOOLS/pdn_pp687_acquire.py"
@@ -20,29 +21,19 @@ permissions:
 
 concurrency:
   group: pdn-core-immutable-acquisition
-  cancel-in-progress: false
+  cancel-in-progress: true
 
 jobs:
   acquire:
     runs-on: ubuntu-latest
-    timeout-minutes: 28
+    timeout-minutes: 22
     steps:
       - name: Checkout
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
 
-      - name: Capture byte-exact official PDFs and manifests
-        id: acquire
-        shell: bash
-        run: |
-          set +e
-          python TOOLS/pdn_core_acquire.py
-          rc=$?
-          echo "acquirer_exit_code=$rc" >> "$GITHUB_OUTPUT"
-          exit 0
-
-      - name: Retry PP687 through guarded curl transport
+      - name: Try PP687 through guarded curl transport first
         id: pp687
         shell: bash
         run: |
@@ -52,17 +43,7 @@ jobs:
           echo "pp687_exit_code=$rc" >> "$GITHUB_OUTPUT"
           exit 0
 
-      - name: Capture current consolidated 152-FZ root
-        id: current_root
-        shell: bash
-        run: |
-          set +e
-          python TOOLS/pdn_current_root_acquire.py
-          rc=$?
-          echo "current_root_exit_code=$rc" >> "$GITHUB_OUTPUT"
-          exit 0
-
-      - name: Retry current 152-FZ through guarded curl transport
+      - name: Try current 152-FZ through guarded curl transport first
         id: current_root_curl
         shell: bash
         run: |
@@ -70,6 +51,27 @@ jobs:
           python TOOLS/pdn_current_root_curl_acquire.py
           rc=$?
           echo "current_root_curl_exit_code=$rc" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Reuse immutable artifacts and acquire only remaining deltas
+        id: acquire
+        shell: bash
+        run: |
+          set +e
+          python TOOLS/pdn_core_pending_acquire.py
+          rc=$?
+          echo "acquirer_exit_code=$rc" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Fallback current consolidated 152-FZ through urllib transport
+        id: current_root
+        if: steps.current_root_curl.outputs.current_root_curl_exit_code != '0'
+        shell: bash
+        run: |
+          set +e
+          python TOOLS/pdn_current_root_acquire.py
+          rc=$?
+          echo "current_root_exit_code=$rc" >> "$GITHUB_OUTPUT"
           exit 0
 
       - name: Sync immutable evidence to source records and master inventory
@@ -100,13 +102,9 @@ jobs:
             cat security-corpora/RU/152-FZ/PDN_ACQUISITION_RUN.json
           fi
           if [ "${{ steps.pp687.outputs.pp687_exit_code }}" != "0" ]; then
-            echo "PP687 curl fallback did not yield an accepted immutable capture; source remains pending." >&2
+            echo "PP687 guarded curl route did not close the source before delta acquisition; urllib fallback was allowed to try it." >&2
           fi
-          if [ "${{ steps.current_root.outputs.current_root_exit_code }}" != "0" ] && \
-             [ "${{ steps.current_root_curl.outputs.current_root_curl_exit_code }}" != "0" ]; then
-            echo "Current consolidated 152-FZ capture remains pending after both guarded transports; semantic status was not promoted." >&2
-          fi
-          if [ "${{ steps.acquire.outputs.acquirer_exit_code }}" != "0" ] && \
-             [ "${{ steps.pp687.outputs.pp687_exit_code }}" != "0" ]; then
-            echo "General acquisition and PP687 fallback completed without closing the remaining canonical-source gap." >&2
+          if [ "${{ steps.current_root_curl.outputs.current_root_curl_exit_code }}" != "0" ] && \
+             [ "${{ steps.current_root.outputs.current_root_exit_code }}" != "0" ]; then
+            echo "Current consolidated 152-FZ remains pending after both guarded transports; semantic status was not promoted." >&2
           fi
