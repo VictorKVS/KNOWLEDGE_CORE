@@ -1,4 +1,4 @@
-schema_version: "1.0"
+schema_version: "1.1"
 id: SEC-SRC-RU-PP1119-2012
 kind: security-regulatory-source
 status: METADATA_VERIFIED
@@ -10,10 +10,13 @@ document:
   number: "1119"
   adopted_date: "2012-11-01"
   checked_at: "2026-08-22"
-  status_note: "Официальная страница Правительства помечает текст как действующую редакцию."
+  status_note: "Официальная страница Правительства содержит постановление №1119 и отдельную ссылку на действующую редакцию; официальный архив Российской газеты подтверждает исходную публикацию."
 canonical_source:
   publisher: "Правительство Российской Федерации"
   url: "https://government.ru/docs/6339/"
+  fallback_url: "https://rg.ru/documents/2012/11/07/pers-dannye-dok.html"
+  fallback_publisher: "Российская газета — архив официальной публикации"
+  fallback_scope: BASE_OFFICIAL_PUBLICATION_IF_GOVERNMENT_TRANSPORT_UNAVAILABLE
   freshness_check:
     checked_at: "2026-08-22"
     result: CURRENT_PAGE_CONFIRMED
@@ -24,7 +27,15 @@ relations:
   - type: IMPLEMENTS
     target: SEC-SRC-RU-152FZ-2026-07-26
     locator: "Article 19 parts 3-4"
+  - type: TECHNICAL_MEASURES_DETAILED_BY
+    target: SEC-SRC-RU-FSTEC21-2013
+    scope: ISPDN
+  - type: CRYPTO_MEASURES_DETAILED_BY
+    target: SEC-SRC-RU-FSB378-2014
+    scope: ISPDN_WHEN_SKZI_USED
 provenance:
   official_identity_verified: true
+  official_current_page_verified: true
+  official_publication_fallback_registered: true
   review_required: true
-agent_rule: "Do not promote beyond metadata verification until exact official bytes and version/source locators are proven."
+agent_rule: "Do not promote beyond metadata verification until exact official bytes and version/source locators are proven; FSB crypto requirements require established SKZI use."
