@@ -1,0 +1,146 @@
+schema_version: "1.0"
+id: SEC-PDN-SECURITY-STACK-INVENTORY
+kind: security-regulatory-source-inventory
+status: ACTIVE_DISCOVERY
+jurisdiction: RU
+domain: personal_data_security
+checked_at: "2026-08-22"
+
+policy:
+  proof_floor: >-
+    Metadata verification does not prove immutable acquisition or extraction readiness.
+    Exact official bytes, MIME, byte length and SHA-256 are required before IMMUTABLE_CAPTURED.
+  reuse_first: true
+  neighboring_regime_requirements_require_explicit_applicability_edge: true
+  inferred_relation_must_not_be_presented_as_normative_relation: true
+  conflict_detection_required_after_concept_extraction: true
+
+sources:
+  - id: SEC-SRC-RU-PP1119-2012
+    role: ispdn_protection_levels_and_requirements
+    metadata_status: METADATA_VERIFIED
+    source_record: "source/SEC-SRC-RU-PP1119-2012.yaml"
+    raw_capture: PENDING
+    applicability: ISPDN_SCOPE
+  - id: SEC-SRC-RU-FSTEC21-2013
+    role: ispdn_technical_and_organizational_measures
+    metadata_status: METADATA_VERIFIED
+    source_record: "source/SEC-SRC-RU-FSTEC21-2013.yaml"
+    raw_capture: PENDING
+    applicability: ISPDN_SCOPE_NON_CRYPTO_TECHNICAL_CONTROLS
+  - id: SEC-SRC-RU-FSTEC49-2017
+    role: fstec21_version_chain_dependency
+    metadata_status: METADATA_VERIFIED
+    source_record: "source/SEC-SRC-RU-FSTEC49-2017.yaml"
+    raw_capture: PENDING
+    applicability: VERSION_CHAIN_SCOPE
+  - id: SEC-SRC-RU-FSTEC68-2020
+    role: fstec21_version_chain_dependency
+    metadata_status: METADATA_VERIFIED
+    source_record: "source/SEC-SRC-RU-FSTEC68-2020.yaml"
+    raw_capture: PENDING
+    applicability: VERSION_CHAIN_SCOPE
+  - id: SEC-SRC-RU-FSTEC-THREAT-METHOD-2021
+    role: threat_assessment_methodology
+    metadata_status: METADATA_VERIFIED
+    source_record: "source/SEC-SRC-RU-FSTEC-THREAT-METHOD-2021.yaml"
+    raw_capture: PENDING
+    applicability: ISPDN_AND_OTHER_ENUMERATED_SYSTEMS
+  - id: SEC-SRC-RU-FSB378-2014
+    role: ispdn_crypto_measures
+    metadata_status: METADATA_VERIFIED
+    source_record: "source/SEC-SRC-RU-FSB378-2014.yaml"
+    raw_capture: PENDING
+    applicability: ISPDN_WHEN_SKZI_USED
+  - id: SEC-SRC-RU-FSB77-2023
+    role: pdn_incident_gossopka_interaction
+    metadata_status: METADATA_VERIFIED
+    source_record: "source/SEC-SRC-RU-FSB77-2023.yaml"
+    raw_capture: PENDING
+    applicability: PDN_COMPUTER_INCIDENT_SCOPE_ONLY
+  - id: SEC-SRC-RU-FSTEC117-2025
+    role: state_system_non_crypto_protection_overlay
+    metadata_status: METADATA_VERIFIED
+    source_record: "source/SEC-SRC-RU-FSTEC117-2025.yaml"
+    raw_capture: PENDING
+    applicability: STATE_AND_ENUMERATED_PUBLIC_SYSTEMS_ONLY
+  - id: SEC-SRC-RU-FSB117-2025
+    role: state_system_crypto_protection_overlay
+    metadata_status: METADATA_VERIFIED
+    source_record: "source/SEC-SRC-RU-FSB117-2025.yaml"
+    raw_capture: PENDING
+    applicability: STATE_AND_ENUMERATED_PUBLIC_SYSTEMS_WHEN_SKZI_USED
+
+version_edges:
+  - from: SEC-SRC-RU-FSTEC21-2013
+    type: AMENDED_BY
+    to: SEC-SRC-RU-FSTEC49-2017
+    provenance: OFFICIAL_PUBLICATION
+  - from: SEC-SRC-RU-FSTEC21-2013
+    type: AMENDED_BY
+    to: SEC-SRC-RU-FSTEC68-2020
+    provenance: OFFICIAL_PUBLICATION
+  - from: FSTEC-PDN-THREAT-METHOD-2008
+    type: NOT_APPLIED_FOR_THREAT_ASSESSMENT_AFTER
+    to: SEC-SRC-RU-FSTEC-THREAT-METHOD-2021
+    provenance: METHODOLOGY_SECTION_1_8
+
+applicability_edges:
+  - from: SEC-SRC-RU-152FZ-2026-07-26
+    locator: "Article 19 part 12"
+    type: IMPLEMENTED_BY
+    to: SEC-SRC-RU-FSB77-2023
+    scope: PDN_COMPUTER_INCIDENTS
+    provenance: EXPLICIT_LEGAL_BASIS
+  - from: SEC-SRC-RU-PP1119-2012
+    type: TECHNICAL_MEASURES_DETAILED_BY
+    to: SEC-SRC-RU-FSTEC21-2013
+    scope: ISPDN
+  - from: SEC-SRC-RU-PP1119-2012
+    type: CRYPTO_MEASURES_DETAILED_BY
+    to: SEC-SRC-RU-FSB378-2014
+    scope: ISPDN_WHEN_SKZI_USED
+
+context_splits:
+  - id: PDN-STACK-CONTEXT-2026-001
+    status: CONTEXT_DEPENDENT_NOT_CONFLICT
+    sources:
+      - SEC-SRC-RU-FSTEC117-2025
+      - SEC-SRC-RU-FSB117-2025
+    finding: >-
+      The two Order No. 117 documents regulate complementary non-cryptographic and cryptographic protection
+      in a bounded public-sector system scope. They must not be merged into a universal private-ISPDn duty.
+
+conflict_candidates:
+  - id: PDN-STACK-CONFLICT-CANDIDATE-2026-001
+    type: DEFINITION_RECONCILIATION
+    status: PENDING_DOCUMENT_COMPILER
+    sources:
+      - SEC-SRC-RU-FSTEC-THREAT-METHOD-2021
+      - SEC-SRC-RU-FSTEC21-2013
+      - SEC-SRC-RU-FSB378-2014
+    issue: >-
+      Compare terms and contextual definitions after immutable capture and chunking; divergence is not treated
+      as a contradiction until scope, legal regime, effective interval and purpose are compared.
+
+production_counters:
+  identified: 9
+  metadata_verified: 9
+  raw_downloaded_exact: 0
+  immutable_sha256_verified: 0
+  pending_raw_capture: 9
+  official_publication_id_targets: 5
+  official_canonical_targets: 3
+  exact_official_route_unresolved: 1
+  version_edges_verified: 3
+  applicability_guards: 5
+  confirmed_conflicts: 0
+  conflict_candidates: 1
+
+next_gate:
+  - exact official acquisition and fingerprinting
+  - structural parse and legal/semantic chunks
+  - concept and definition reconciliation
+  - atomic requirement extraction with source locators
+  - typed relations and conflict detection
+  - regression and red-team gates
