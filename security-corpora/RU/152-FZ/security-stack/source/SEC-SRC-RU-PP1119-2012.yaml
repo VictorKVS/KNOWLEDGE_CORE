@@ -1,4 +1,4 @@
-schema_version: "1.1"
+schema_version: "1.2"
 id: SEC-SRC-RU-PP1119-2012
 kind: security-regulatory-source
 status: METADATA_VERIFIED
@@ -9,17 +9,21 @@ document:
   type: government_resolution
   number: "1119"
   adopted_date: "2012-11-01"
-  checked_at: "2026-08-22"
-  status_note: "Официальная страница Правительства содержит постановление №1119 и отдельную ссылку на действующую редакцию; официальный архив Российской газеты подтверждает исходную публикацию."
+  effective_from: "2012-11-15"
+  current_revision_date: "2012-11-01"
+  checked_at: "2026-08-23"
+  status_note: "Действует; текущий правовой индекс показывает исходную редакцию от 01.11.2012. Официальный архив Российской газеты подтверждает публикацию в №256 от 07.11.2012."
+  version_chain_note: "На проверке 23.08.2026 отдельные изменяющие редакции для данного постановления не выявлены; не путать с иными постановлениями Правительства №1119 других лет."
 canonical_source:
   publisher: "Правительство Российской Федерации"
   url: "https://government.ru/docs/6339/"
+  fallback_url: "https://government.ru/docs/all/84743/"
   fallback_url: "https://rg.ru/documents/2012/11/07/pers-dannye-dok.html"
-  fallback_publisher: "Российская газета — архив официальной публикации"
-  fallback_scope: BASE_OFFICIAL_PUBLICATION_IF_GOVERNMENT_TRANSPORT_UNAVAILABLE
+  fallback_publisher: "Правительство Российской Федерации / Российская газета — официальные архивные маршруты"
+  fallback_scope: BASE_OFFICIAL_PUBLICATION_IF_PRIMARY_GOVERNMENT_TRANSPORT_UNAVAILABLE
   freshness_check:
-    checked_at: "2026-08-22"
-    result: CURRENT_PAGE_CONFIRMED
+    checked_at: "2026-08-23"
+    result: CURRENT_UNAMENDED_STATUS_CROSS_VERIFIED
 capture:
   fingerprint_status: PENDING
   semantic_status: UNCHANGED
@@ -33,9 +37,14 @@ relations:
   - type: CRYPTO_MEASURES_DETAILED_BY
     target: SEC-SRC-RU-FSB378-2014
     scope: ISPDN_WHEN_SKZI_USED
+  - type: CONFORMITY_ASSESSED_PROTECTION_MEANS_WHEN_NEEDED
+    target: SEC-SRC-RU-FSTEC55-2018
+    locator: "Requirements point 13(d)"
+    scope: ONLY_WHEN_SUCH_MEANS_ARE_NECESSARY_TO_NEUTRALIZE_ACTUAL_THREATS
 provenance:
   official_identity_verified: true
   official_current_page_verified: true
   official_publication_fallback_registered: true
+  current_status_cross_verified: true
   review_required: true
-agent_rule: "Do not promote beyond metadata verification until exact official bytes and version/source locators are proven; FSB crypto requirements require established SKZI use."
+agent_rule: "Do not promote beyond metadata verification until exact official bytes and version/source locators are proven. Treat conformity assessment in point 13(d) conditionally: only when such protection means are necessary to neutralize actual threats. FSB crypto measures require established SKZI use."
