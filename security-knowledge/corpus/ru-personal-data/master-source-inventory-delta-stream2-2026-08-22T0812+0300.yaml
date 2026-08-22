@@ -1,0 +1,138 @@
+schema_version: 1
+delta_id: RU_PD_MASTER_SOURCE_INVENTORY_STREAM2_DELTA_2026_08_22T0812_0300
+applies_to: master-source-inventory.yaml
+created_at: "2026-08-22T08:12:11+03:00"
+stream_id: RU_PD_STREAM_2_TECHNICAL_CRYPTO
+merge_policy: >-
+  CONCURRENCY_SAFE_OVERLAY. Apply by source_id and stream_progress keys. Do not replace unrelated
+  stream-1/stream-3 fields. Newer primary/current-status evidence wins for the same source_id.
+
+source_patches:
+  RU_FSTEC_ORDER_21_2013:
+    registration_status: STATUS_VERIFIED_CURRENT_AS_OF_2026_08_22
+    version_chain_status: >-
+      2013 base -> Order 49/2017 -> Order 68/2020. Current consolidated sources still identify the
+      14.05.2020 edition. A 24.07.2026 draft successor exists but no enacted replacement was verified
+      in this run; therefore Order 21 remains the current executable baseline on 22.08.2026.
+    future_delta_candidate: RU_FSTEC_ORDER_21_REPLACEMENT_DRAFT_2026
+  RU_FSTEC_THREAT_METHOD_2021:
+    registration_status: CURRENT_METHOD_CORROBORATED
+    current_status_note: >-
+      Rechecked 22.08.2026. The 2021 Method applies to systems/networks including ISPDn, references
+      the FSTEK threat bank, and states that the 2008 PDn threat methodology is not used for threat
+      assessment after approval of the 2021 Method.
+  RU_FSB_ORDER_378_2014:
+    current_status_note: >-
+      Crypto branch retained with SKZI_USED_IN_ISPDN applicability gate. This run found no evidence
+      justifying universal application to an ISPDn that does not use cryptographic protection means.
+
+new_sources:
+  - source_id: RU_FSTEC_ORDER_117_2025
+    domain: GIS_AND_GOVERNMENT_INFORMATION_SYSTEM_PROTECTION
+    priority: P1
+    local_record: "technical-security-source-pack-delta-2026-08-22T0812+0300.yaml"
+    registration_status: PRIMARY_PUBLICATION_METADATA_VERIFIED_CURRENT
+    immutable_status: SOURCE_PENDING
+    analysis_status: REGISTERED_APPLICABILITY_GATED
+    official_publication_number: "0001202506170011"
+    justice_registration_number: "82619"
+    effective_from: 2026-03-01
+    applicability_gate: GIS_GOVERNMENT_OR_OTHER_SYSTEM_WITHIN_ORDER117_SCOPE
+    pdn_edge: "Order 117 + PP 1119 when an Order-117-scope system processes personal data"
+    note: "Not a universal private-sector ISPDn requirement."
+
+  - source_id: RU_FSTEC_METHOD_MEASURES_2026_04_12
+    domain: FSTEK_INFORMATION_SYSTEM_PROTECTION_METHODS
+    priority: P1
+    local_record: "technical-security-source-pack-delta-2026-08-22T0812+0300.yaml"
+    registration_status: CURRENT_METHOD_CORROBORATED_OFFICIAL_URL_TIMEOUT
+    immutable_status: SOURCE_PENDING
+    analysis_status: REGISTERED_DEFINITION_CONFLICT_CHECK_PENDING
+    approved_date: 2026-04-12
+    official_information_message: "240/22/2457 dated 2026-04-14"
+    applicability_gate: APPLICABLE_FSTEK_REQUIREMENT_CONTEXT
+    note: >-
+      Contains its own terms/definitions and therefore enters concept/definition comparison before
+      reuse. No universal current Order-21 applicability edge inferred.
+
+  - source_id: RU_FSTEC_ORDER_9_2026
+    domain: SECURITY_PRODUCT_CERTIFICATION_VERSION_CONTEXT
+    priority: P2
+    local_record: "technical-security-source-pack-delta-2026-08-22T0812+0300.yaml"
+    registration_status: PRIMARY_PUBLICATION_METADATA_VERIFIED_CURRENT
+    immutable_status: SOURCE_PENDING
+    analysis_status: REGISTERED_VERSION_CONTEXT
+    official_publication_number: "0001202604210031"
+    justice_registration_number: "86119"
+    effective_from: 2026-05-02
+    applicability_gate: CERTIFIED_SECURITY_PRODUCT_CONTEXT
+    relation: "RU_FSTEC_ORDER_55_2018 AMENDED_BY RU_FSTEC_ORDER_9_2026"
+
+  - source_id: RU_FSTEC_ORDER_60_2026
+    domain: INFORMATION_SYSTEM_ATTESTATION_VERSION_CONTEXT
+    priority: P2
+    local_record: "technical-security-source-pack-delta-2026-08-22T0812+0300.yaml"
+    registration_status: PRIMARY_PUBLICATION_METADATA_VERIFIED_FUTURE_EFFECTIVE
+    immutable_status: SOURCE_PENDING
+    analysis_status: REGISTERED_VERSION_CONTEXT
+    official_publication_number: "0001202606250029"
+    justice_registration_number: "87202"
+    effective_from: 2026-09-01
+    status_on_2026_08_22: ENACTED_NOT_YET_EFFECTIVE
+    applicability_gate: ATTESTATION_REQUIRED_CONTEXT
+    relation: "RU_FSTEC_ORDER_77_2021_ATTESTATION AMENDED_BY RU_FSTEC_ORDER_60_2026"
+
+  - source_id: RU_FSTEC_ORDER_21_REPLACEMENT_DRAFT_2026
+    domain: ISPDN_TECHNICAL_MEASURES_FUTURE_DELTA
+    priority: P0_MONITOR
+    local_record: "technical-security-source-pack-delta-2026-08-22T0812+0300.yaml"
+    registration_status: DRAFT_PUBLIC_DISCUSSION_EVIDENCE_VERIFIED
+    immutable_status: SOURCE_PENDING
+    analysis_status: DRAFT_MONITOR_NON_EXECUTABLE
+    project_id: "01/02/07-26/00169583"
+    prepared_date: 2026-07-24
+    proposed_effective_from: 2026-09-01
+    applicability_gate: NEVER_EXECUTE_UNTIL_ENACTED_AND_EFFECTIVE
+    relation: "RU_FSTEC_ORDER_21_2013 DRAFT_SUCCESSOR_CANDIDATE RU_FSTEC_ORDER_21_REPLACEMENT_DRAFT_2026"
+
+stream_progress_patch:
+  stream_2_technical_crypto:
+    status: ACTIVE
+    source_pack_delta: "technical-security-source-pack-delta-2026-08-22T0812+0300.yaml"
+    previous_unique_stream2_source_records: 18
+    new_source_records_this_run: 5
+    unique_stream2_source_records_after_delta: 23
+    current_status_rechecks_this_run: 3
+    new_current_methodical_sources: 1
+    new_current_certification_version_events: 1
+    new_future_effective_attestation_events: 1
+    new_gis_pdn_overlay_sources: 1
+    new_draft_successor_monitors: 1
+    new_executable_universal_pdn_duties: 0
+    confirmed_legal_contradictions_this_run: 0
+    potential_definition_conflicts_queued_this_run: 1
+    future_delta_candidates_this_run: 1
+    immutable_artifacts_added_this_run: 0
+    bytes_downloaded_this_run: 0
+    hashes_recorded_this_run: 0
+    exact_binary_attempts_this_run: 1
+    exact_binary_successes_this_run: 0
+    run_record: "runs/stream-2/2026-08-22T0812+0300.yaml"
+    acquisition_log_delta: "stream-2-acquisition-log-delta-2026-08-22T0812+0300.yaml"
+
+next_priority_patch:
+  - RU_FSTEC_ORDER_21_REPLACEMENT_DRAFT_2026_monitor_for_enactment_only
+  - RU_FSTEC_METHOD_MEASURES_2026_04_12_exact_official_artifact_then_terms_definitions_diff
+  - RU_FSB_ORDER_77_2023_exact_primary_artifact_and_paragraph_compilation
+  - RU_FSTEC_THREAT_METHOD_2021_exact_official_artifact
+  - RU_GOV_PP_1119_2012_exact_current_artifact
+  - RU_FSTEC_ORDER_21_2013_current_consolidated_artifact
+  - RU_FSB_ORDER_378_2014_exact_authoritative_artifact
+  - RU_FSTEC_ORDER_117_2025_exact_primary_artifact
+  - RU_FSTEC_ORDER_9_2026_exact_primary_artifact
+  - RU_FSTEC_ORDER_60_2026_exact_primary_artifact_before_2026_09_01_effective_gate
+
+quality_note: >-
+  This delta intentionally adds no SOURCE_ACQUIRED/IMMUTABLE promotion. Exact binary acquisition
+  remained blocked by runtime DNS/name-resolution and official-site timeout. Current/draft/future
+  statuses are separated so a proposed successor cannot silently replace current Order 21.
