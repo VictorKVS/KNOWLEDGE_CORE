@@ -1,0 +1,69 @@
+schema_version: "1.0"
+kind: ru-personal-data-master-source-inventory-delta
+owner_stream: STREAM_3_SECTOR_OVERLAYS
+reconciliation_base_delta: "master-source-inventory-delta-stream3-2026-08-22T0222.yaml"
+checked_at: "2026-08-22T08:15:24+03:00"
+status: APPEND_ONLY_RELATIONSHIP_DELTA
+
+source_relation:
+  source_id: SEC-SRC-RU-FZ-126
+  title: "Федеральный закон от 07.07.2003 № 126-ФЗ «О связи»"
+  sector: communications
+  regimes:
+    - communications_secrecy
+    - subscriber_information_restricted_access
+    - communications_metadata_content_retention
+  source_card: "security-corpora/RU/protected-information/source/SEC-SRC-RU-FZ-126.yaml"
+  existing_source_ref: "security-knowledge/legislation/RU/federal-laws/126-FZ/document.yaml"
+  dedup_state: EXISTING_SOURCE_REUSED_NO_DUPLICATE
+
+pdn_overlap:
+  target: "152-ФЗ"
+  state: OVERLAP_CANDIDATE_EXPLICIT_PERSONAL_DATA_CONTEXT_APPLICABILITY_REVIEW_REQUIRED
+  dimensions:
+    - IDENTIFIABLE_SUBSCRIBER_INFORMATION
+    - EXPLICIT_PERSONAL_DATA_REFERENCE_IN_ARTICLE_53
+    - SUBSCRIBER_DISCLOSURE_CONSENT_CONTEXT
+    - PUBLIC_SUBSCRIBER_DATABASE_CONSENT_AND_REMOVAL
+    - COMMUNICATIONS_METADATA_RETENTION
+  anchors:
+    - "статья 53 часть 1 — сведения об абонентах и услугах являются информацией ограниченного доступа"
+    - "статья 53 часть 1 — специальный контекст передачи оператору персональных данных пользователей услугами связи абонента-юридического лица/ИП"
+    - "статья 53 часть 2 — письменное согласие для общедоступной базы данных абонентов-граждан и право на исключение"
+    - "статья 64 часть 1 — специальный отраслевой срок хранения фактов связи и содержания сообщений"
+  guard: >-
+    126-ФЗ прямо пересекается с персональными данными и идентифицируемой информацией, но это не доказывает применимость
+    конкретного требования 152-ФЗ к любой операции. Перед созданием executable PDN edge требуется установить субъект,
+    операцию, цель, правовое основание, роли абонента/оператора, получателя и конкретный набор данных.
+
+special_regime_boundary:
+  communications_secrecy:
+    locator: "статья 63"
+    state: DISTINCT_SPECIAL_CONFIDENTIALITY_REGIME
+    guard: "Тайна связи не сводится к ПДн и может защищать сообщения независимо от их квалификации как персональных данных."
+  retention:
+    locator: "статья 64 часть 1"
+    state: DISTINCT_SECTOR_RETENTION_RULE
+    guard: "3 года для фактов связи и до 6 месяцев для содержания сообщений не объединять с общим принципом ограничения срока хранения ПДн."
+  postal_overlap:
+    target: SEC-SRC-RU-FZ-176-1999
+    type: ELECTRONIC_AND_POSTAL_COMMUNICATIONS_SECRECY_BOUNDARY
+    state: CANDIDATE_RELATIONSHIP_REVIEW_REQUIRED
+
+version_and_evidence_gate:
+  current_official_text_locators_crosschecked: true
+  current_33_fz_primary_publication_verified: true
+  future_210_fz_effect_on_article_64_registered: true
+  future_271_fz_source_level_event_registered: true
+  primary_current_binary: PENDING
+  locator_specific_version_chain: PARTIAL
+  executable_pdn_edge_allowed: false
+
+counter_effect:
+  new_sources: 0
+  duplicate_sources: 0
+  pdn_master_source_count_change: 0
+  applicability_edges_promoted: 0
+  relationship_candidates_added: 2
+  exact_binary_downloads: 0
+  immutable_artifacts_added: 0
