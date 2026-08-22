@@ -30,7 +30,7 @@ RUN_FILE = STACK / "PDN_SECURITY_STACK_ACQUISITION_RUN.json"
 STREAM_STATUS = STACK / "STREAM2_STATUS_2026-08-22.yaml"
 MASTER = PDN / "PDN_MASTER_SOURCE_INVENTORY.yaml"
 BASES = ("http://publication.pravo.gov.ru", "https://publication.pravo.gov.ru")
-UA = "KNOWLEDGE_CORE-pdn-security-stack-acquirer/1.1 (+https://github.com/VictorKVS/KNOWLEDGE_CORE)"
+UA = "KNOWLEDGE_CORE-pdn-security-stack-acquirer/1.2 (+https://github.com/VictorKVS/KNOWLEDGE_CORE)"
 
 ID_RE = re.compile(r"^id:\s*([^\s#]+)\s*$", re.M)
 STATUS_RE = re.compile(r"^status:\s*([^\s#]+)\s*$", re.M)
@@ -162,9 +162,17 @@ def _canonical_fetch_with_fallback(target):
     expected = target.get("expected_mime", "")
     errors = []
     candidates = [target["value"], *target.get("fallback_urls", [])]
+    has_fallback = len(candidates) > 1
     for index, candidate in enumerate(candidates):
         try:
-            data, headers, final_url = fetch_bytes(candidate)
+            # Issuer sites can be transport-blocked from CI for minutes. When a
+            # separately verified official-government/publication fallback exists,
+            # fail over quickly instead of spending the whole workflow budget on
+            # a dead primary transport. Evidence/trust policy is unchanged.
+            if index == 0 and has_fallback:
+                data, headers, final_url = fetch_bytes(candidate, timeout=18, attempts=1)
+            else:
+                data, headers, final_url = fetch_bytes(candidate, timeout=60, attempts=2)
             if not data:
                 raise RuntimeError("empty official response")
             response_mime = (headers.get("content-type") or "application/octet-stream").split(";", 1)[0].strip().lower()
