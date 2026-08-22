@@ -1,0 +1,76 @@
+schema_version: "1.0"
+id: SEC-SRC-RU-FZ200-2025
+kind: security-regulatory-source
+status: METADATA_VERIFIED
+
+title: "Федеральный закон от 07.07.2025 № 200-ФЗ «О внесении изменений в Федеральный закон «О безопасности дорожного движения» и статью 10 Федерального закона «О персональных данных»»"
+jurisdiction: RU
+issuer: "Российская Федерация"
+document:
+  type: federal_law_amendment
+  number: "200-ФЗ"
+  adopted_date: "2025-07-07"
+  official_publication_id: "0001202507070020"
+  publication_date: "2025-07-07"
+  effective_from: "2027-03-01"
+  checked_at: "2026-08-22"
+  phased_effect:
+    - provision: "Article 2 of № 200-ФЗ amending 152-ФЗ Article 10 part 2 point 7"
+      effective_from: "2027-03-01"
+    - provision: "Article 1 point 2 of № 200-ФЗ"
+      effective_from: "2025-07-07"
+      note: "This earlier phase concerns the road-safety law and does not activate the 152-ФЗ amendment."
+
+canonical_source:
+  publisher: "Официальный интернет-портал правовой информации"
+  url: "https://publication.pravo.gov.ru/document/0001202507070020"
+  origin_identity_cross_verified: true
+  cross_verification:
+    - "Официальный портал: публикация 07.07.2025 № 0001202507070020, PDF 487 КБ, 10 страниц"
+    - "ИПС Право: future note for 152-ФЗ Article 10 part 2 point 7 from 01.03.2027"
+    - "Current-law indexes on 22.08.2026 still identify 26.07.2026 as the current 152-ФЗ revision"
+  freshness_check:
+    checked_at: "2026-08-22"
+    result: ENACTED_FUTURE_152FZ_AMENDMENT
+    evidence_note: >-
+      The amendment to 152-ФЗ is enacted but not yet effective. Current-date routing remains on the
+      26.07.2026 version through 28.02.2027; the Article 10 delta becomes operative on 01.03.2027.
+
+capture:
+  raw_artifact_ref: null
+  manifest_ref: null
+  capture_kind: official_publication_pdf
+  source_url: "http://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202507070020"
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  fingerprint_status: PENDING_RAW_CAPTURE
+  semantic_status: UNCHANGED
+  note: "Official publication identity is verified; byte-exact capture and fingerprint are pending."
+
+relations:
+  - type: AMENDS_FUTURE
+    target: SEC-SRC-RU-152FZ-2026-07-26
+    scope: "article_10_part_2_point_7"
+    effective_from: "2027-03-01"
+    current_applicability: NOT_YET_EFFECTIVE
+
+change_set:
+  article_10:
+    changed_locator: "part 2 point 7"
+    effective_from: "2027-03-01"
+    effect_summary: >-
+      After the words referring to transport-safety legislation, adds legislation on road safety to the
+      statutory list for processing of special-category personal data in the specified cases.
+
+provenance:
+  created_at: "2026-08-22"
+  checked_at: "2026-08-22"
+  created_by: "ChatGPT/GPT-5.6 Sol with current-source cross-verification"
+  review_required: true
+
+agent_rule: >-
+  Do not apply this Article 10 amendment to decisions dated before 01.03.2027. Do not promote to
+  VERIFIED_FOR_EXTRACTION until the official publication bytes are captured, fingerprinted, and the
+  affected locator is independently reviewed.
