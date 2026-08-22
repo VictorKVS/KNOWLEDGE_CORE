@@ -1,0 +1,93 @@
+schema_version: 1
+log_id: RU_PD_STREAM2_ACQUISITION_DELTA_2026_08_22T2012_0300
+created_at: "2026-08-22T20:12:41+03:00"
+stream_id: RU_PD_STREAM_2_TECHNICAL_CRYPTO
+
+attempts:
+  - source_id: RU_FSTEC_THREAT_METHOD_2021
+    target_type: EXACT_BINARY_ISSUING_AUTHORITY
+    url: "https://fstec.ru/component/attachments/download/2919"
+    result: FAILED
+    error_class: DNS_NAME_RESOLUTION_FAILURE
+    bytes_received: 0
+    mime: null
+    sha256: null
+
+  - source_id: RU_FSTEC_THREAT_METHOD_2021
+    target_type: EXACT_BINARY_A1_GOVERNMENT_FALLBACK
+    url: "https://cbs.minzdrav.gov.ru/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBJUT09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--d0bf86ea88f3f112a7c14e327cd606bf28fa7f3a/met_doc_2021.02.05.pdf?disposition=attachment"
+    result: FAILED
+    error_class: DNS_NAME_RESOLUTION_FAILURE
+    bytes_received: 0
+    mime: null
+    sha256: null
+
+  - source_id: RU_FSTEC_ORDER_21_2013
+    target_type: EXACT_BINARY_A1_GOVERNMENT_FALLBACK
+    url: "https://cbs.minzdrav.gov.ru/rails/active_storage/blobs/redirect/eyJfcmFpbHMiOnsibWVzc2FnZSI6IkJBaHBLZz09IiwiZXhwIjpudWxsLCJwdXIiOiJibG9iX2lkIn19--3366f13f18bde0b4f5696434006d92541367a7df/%D0%9F%D1%80%D0%B8%D0%BA%D0%B0%D0%B7%20%D0%A4%D0%A1%D0%A2%D0%AD%D0%9A%20%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D0%B8%20%D0%BE%D1%82%2018.02.2013%20N%2021%20%28%D1%80%D0%B5%D0%B4.%20%D0%BE%D1%82%2014.05.2020%29.docx?disposition=attachment"
+    result: FAILED
+    error_class: FETCH_LAYER_FAILED_TO_RETURN_ARTIFACT
+    bytes_received: 0
+    mime: null
+    sha256: null
+
+  - source_id: RU_FSB_PD_THREAT_RECOMMENDATIONS_2015
+    target_type: EXACT_BINARY_ISSUING_AUTHORITY
+    url: "https://www.fsb.ru/files/PDF/Metodicheskie_recomendacii.pdf"
+    result: FAILED
+    error_class: NETWORK_FETCH_FAILURE
+    bytes_received: 0
+    mime: null
+    sha256: null
+
+  - source_id: RU_FSB_ORDER_77_2023
+    target_type: EXACT_BINARY_AUXILIARY_MINJUST_INTERFACE
+    url: "https://minjust.consultant.ru/files/34555"
+    result: FAILED
+    error_class: RUNTIME_DOWNLOAD_FAILURE
+    advertised_size_kb: 290
+    bytes_received: 0
+    mime: null
+    sha256: null
+    note: "The publication interface advertises a PDF, but advertised size is not accepted as exact byte_length."
+
+resolved_routes_without_exact_bytes:
+  - source_id: RU_FSTEC_THREAT_METHOD_2021
+    landing_page: "https://cbs.minzdrav.gov.ru/public/normative_docs"
+    listed_status: "Действует"
+    file_name: "met_doc_2021.02.05.pdf"
+  - source_id: RU_FSTEC_ORDER_21_2013
+    landing_page: "https://cbs.minzdrav.gov.ru/public/normative_docs"
+    listed_status: "Действует"
+    listed_edition: "14.05.2020"
+  - source_id: RU_FSB_ORDER_77_2023
+    official_publication_url: "https://publication.pravo.gov.ru/Document/View/0001202302200021"
+    auxiliary_pdf_url: "https://minjust.consultant.ru/files/34555"
+
+production_counters:
+  previous_unique_stream2_source_records: 25
+  new_source_records: 0
+  unique_stream2_source_records_after_reconciliation: 25
+  sources_rechecked: 6
+  acquisition_routes_resolved_this_run: 3
+  exact_artifact_endpoint_attempts: 5
+  exact_artifact_successes: 0
+  immutable_artifacts_added: 0
+  bytes_downloaded: 0
+  sha256_recorded: 0
+  new_executable_universal_pdn_duties: 0
+  confirmed_legal_contradictions: 0
+
+proof_floor:
+  rule: >-
+    Search/cached content, status pages, advertised sizes and authoritative consolidated legal-system
+    text may improve discovery, status and version reconciliation but cannot generate MIME,
+    byte_length, SHA-256, SOURCE_ACQUIRED or IMMUTABLE states without exact returned bytes.
+  result: MAINTAINED
+
+bottleneck:
+  stage: EXACT_PRIMARY_OR_TRUSTED_GOVERNMENT_ARTIFACT_ACQUISITION
+  type: TRANSIENT_RUNTIME_NETWORK_DNS_FETCH
+  impact: >-
+    Exact immutable capture remains blocked. Three stronger fallback file locators are now registered,
+    so the next pass can retry bytes directly without repeating discovery work.
