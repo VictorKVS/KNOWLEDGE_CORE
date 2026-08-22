@@ -1,0 +1,100 @@
+schema_version: 1
+run_id: RU_PD_STREAM2_2026_08_22T2012_0300
+stream_id: RU_PD_STREAM_2_TECHNICAL_CRYPTO
+started_at: "2026-08-22T20:12:41+03:00"
+objective: >-
+  Continue acquisition/reconciliation of primary technical and cryptographic sources for the
+  Russian personal-data security contour, prioritize exact artifacts, preserve version chains and
+  never import neighboring-regime requirements without a proved applicability edge.
+
+reconciliation_summary:
+  previous_unique_source_records: 25
+  new_source_records: 0
+  unique_source_records_after_run: 25
+  current_status_rechecks: 6
+  acquisition_routes_resolved: 3
+  new_executable_universal_pdn_duties: 0
+  confirmed_legal_contradictions: 0
+
+status_rechecks:
+  - source_id: RU_GOV_PP_1119_2012
+    result: CURRENT_CONSOLIDATED_STATUS_RECORROBORATED
+    immutable_status: SOURCE_PENDING
+  - source_id: RU_FSTEC_ORDER_21_2013
+    result: CURRENT_2020_EDITION_AND_VERSION_CHAIN_RECORROBORATED
+    chain: "2013 base -> 49/2017 -> 68/2020"
+    immutable_status: SOURCE_PENDING
+  - source_id: RU_FSTEC_THREAT_METHOD_2021
+    result: CURRENT_AND_DIRECT_ISPDN_SCOPE_RECORROBORATED
+    immutable_status: SOURCE_PENDING
+  - source_id: RU_FSB_ORDER_378_2014
+    result: CURRENT_CONSOLIDATED_REFERENCE_RECORROBORATED
+    applicability_gate: SKZI_USED_IN_ISPDN
+    immutable_status: SOURCE_PENDING
+  - source_id: RU_FSB_ORDER_77_2023
+    result: OFFICIAL_PUBLICATION_AND_DIRECT_PDN_INCIDENT_SCOPE_RECORROBORATED
+    official_publication_number: "0001202302200021"
+    effective_from: 2023-03-01
+    immutable_status: SOURCE_PENDING
+  - source_id: RU_FSB_ORDER_66_2005
+    result: OFFICIAL_FSB_METADATA_AND_ORDER_173_2010_VERSION_EDGE_RETAINED
+    applicability_gate: SKZI_CONTEXT
+    immutable_status: SOURCE_PENDING
+
+new_acquisition_routes:
+  - source_id: RU_FSTEC_THREAT_METHOD_2021
+    route_type: A1_GOVERNMENT_HOSTED_FALLBACK
+    provider: MINZDRAV_CBS
+    landing_page: "https://cbs.minzdrav.gov.ru/public/normative_docs"
+    exact_file_locator: RESOLVED
+    listed_file: "met_doc_2021.02.05.pdf"
+    listed_status: "Действует"
+  - source_id: RU_FSTEC_ORDER_21_2013
+    route_type: A1_GOVERNMENT_HOSTED_FALLBACK
+    provider: MINZDRAV_CBS
+    landing_page: "https://cbs.minzdrav.gov.ru/public/normative_docs"
+    exact_file_locator: RESOLVED
+    listed_file: "Приказ ФСТЭК России от 18.02.2013 N 21 (ред. от 14.05.2020).docx"
+    listed_status: "Действует"
+  - source_id: RU_FSB_ORDER_77_2023
+    route_type: AUXILIARY_MINJUST_PUBLICATION_INTERFACE
+    page_url: "https://minjust.consultant.ru/documents/34555"
+    pdf_url: "https://minjust.consultant.ru/files/34555"
+    advertised_size_kb: 290
+    exact_byte_length_recorded: false
+
+acquisition_summary:
+  exact_artifact_endpoint_attempts: 5
+  exact_artifact_successes: 0
+  bytes_downloaded: 0
+  sha256_recorded: 0
+  immutable_artifacts_added: 0
+  blocker: RUNTIME_DNS_OR_FETCH_LAYER_UNABLE_TO_RETURN_EXACT_BYTES
+
+proof_floor:
+  maintained: true
+  promotions_to_source_acquired: 0
+  promotions_to_immutable: 0
+  fabricated_hashes: 0
+  fabricated_sizes: 0
+  advertised_sizes_used_as_byte_length: 0
+  neighboring_regime_requirements_imported_without_edge: 0
+
+applicability_guards:
+  - "FSTEK Threat Method explicitly includes ISPDn but excludes cryptographic-compromise threat methodology from its own scope."
+  - "FSB Order 378 applies only when SKZI is used in ISPDn."
+  - "FSB Order 77 is the direct PDn incident-to-GosSOPKA/NKTsKI branch under 152-FZ article 19 part 12."
+  - "Other CII/GosSOPKA requirements remain isolated unless a separate applicability edge is proved."
+  - "Crypto licensing/certification remains activity/product-context gated."
+
+files_written:
+  - "technical-security-source-pack-delta-2026-08-22T2012+0300.yaml"
+  - "master-source-inventory-delta-stream2-2026-08-22T2012+0300.yaml"
+  - "stream-2-acquisition-log-delta-2026-08-22T2012+0300.yaml"
+
+next_actions:
+  - "Retry FSTEK Threat Method exact bytes at issuing-authority URL, then the resolved Minzdrav government-hosted PDF fallback."
+  - "Retry FSTEK Order 21 current consolidated DOCX using the resolved Minzdrav government-hosted locator; hash exact bytes if returned."
+  - "Retry FSB Order 77 from official publication; if primary endpoint remains unavailable, use the Minjust publication-interface PDF as an auxiliary representation while retaining A0 provenance."
+  - "Resolve an exact current A0/A1 artifact for PP 1119 and exact authoritative artifact/version chain for FSB Order 378."
+  - "Retry the official FSB 2015 PDn threat recommendations PDF and continue SKZI operational/licensing sources only behind applicability gates."
