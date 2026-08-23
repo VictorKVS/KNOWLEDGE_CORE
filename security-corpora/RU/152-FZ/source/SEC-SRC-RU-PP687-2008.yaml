@@ -1,4 +1,4 @@
-schema_version: "1.4"
+schema_version: "1.5"
 id: SEC-SRC-RU-PP687-2008
 kind: security-regulatory-source
 status: METADATA_VERIFIED
@@ -11,6 +11,8 @@ document:
   number: "687"
   adopted_date: "2008-09-15"
   current_revision_note: "В редакции Постановления Правительства РФ от 18.01.2025 № 12"
+  current_revision_source_id: SEC-SRC-RU-PP12-2025
+  current_revision_effective_from: "2025-01-26"
   valid_until: "2030-09-01"
   checked_at: "2026-08-23"
 
@@ -22,8 +24,9 @@ canonical_source:
     checked_at: "2026-08-23"
     result: CURRENT_REVISION_CONFIRMED
     evidence_note: >-
-      Official Government portal rechecked on 23.08.2026 still presents PP RF No. 687 in revision of
+      Official Government portal rechecked on 23.08.2026 presents PP RF No. 687 in revision of
       18.01.2025 No. 12 and states that the resolution remains valid through 01.09.2030.
+      The amending act is now registered separately as SEC-SRC-RU-PP12-2025.
   alternate_official_routes:
     - publisher: "Официальный интернет-портал правовой информации / ИПС Право"
       url: "http://pravo.gov.ru/proxy/ips/?docbody=&link_id=0&nd=102124251&intelsearch=&firstDoc=1"
@@ -42,18 +45,18 @@ capture:
   sha256: ""
   fingerprint_status: PENDING_RAW_CAPTURE
   last_attempt:
-    started_at: "2026-08-22T18:50:54.872805Z"
-    finished_at: "2026-08-22T19:09:07.014160Z"
+    started_at: "2026-08-23T04:05:16.357161Z"
+    finished_at: "2026-08-23T04:23:28.760869Z"
     route: official_canonical_snapshot
     result: TIMEOUT
     error: "GET failed: https://government.ru/docs/all/65436/: URLError(TimeoutError('timed out'))"
     semantic_promotion: false
   acquisition_request:
     status: RUN_REQUESTED_GUARDED
-    requested_at: "2026-08-23T02:08:00Z"
+    requested_at: "2026-08-23T05:16:00Z"
     route: official_canonical_snapshot_with_registered_ips_fallback
     reason: >-
-      Current status was reconfirmed on the official Government page. Retry the verified official IPS route first
+      Current status and the PP12 version-chain amendment were reconfirmed. Retry the verified official IPS route first
       and keep the Government canonical URL as the second route. Require returned official bytes, retrieved_at,
       MIME, exact byte length, SHA-256, identity-marker validation and accepted manifest before immutable promotion.
   note: "Official text metadata/current revision verified; byte-exact raw artifact not yet accepted."
@@ -64,6 +67,11 @@ relations:
     scope: non_automated_personal_data_processing
     relation_rebased_at: "2026-08-20"
     note: "Rebased from the superseded 2025-09-01 root; no change to PP 687 semantics is inferred."
+  - type: AMENDED_BY
+    target: SEC-SRC-RU-PP12-2025
+    scope: clause_3_validity_period
+    effective_from: "2025-01-26"
+    note: "PP RF No. 12 sets the validity of PP RF No. 687 through 01.09.2030."
 
 provenance:
   checked_at: "2026-08-23"
