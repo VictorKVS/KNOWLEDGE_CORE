@@ -1,0 +1,81 @@
+schema_version: 1
+run_id: RU_PD_STREAM1_2026_08_23T1100_0300
+stream_id: RU_PD_STREAM_1_CORE_REGULATION
+recorded_at: "2026-08-23T11:00:17+03:00"
+status: ACTIVE
+
+scope:
+  domain: RU_personal_data_core
+  overlay_expansion: false
+  priority:
+    - SEC-SRC-RU-152FZ-2026-07-26
+    - SEC-SRC-RU-PP687-2008
+    - SEC-SRC-RU-PP12-2025
+    - SEC-SRC-RU-PP211-2012
+    - SEC-SRC-RU-RKN18-2021
+    - SEC-SRC-RU-RKN128-2022
+    - SEC-SRC-RU-RKN178-2022
+    - SEC-SRC-RU-RKN179-2022
+    - SEC-SRC-RU-RKN180-2022
+    - SEC-SRC-RU-RKN140-2025
+    - SEC-SRC-RU-PP1154-2025
+
+proof_floor:
+  immutable_requires:
+    - official_registered_source_route
+    - retrieved_at
+    - mime
+    - exact_byte_length
+    - sha256
+    - accepted_manifest
+  semantic_promotion_without_locator_review: false
+
+freshness_checks:
+  current_152fz:
+    result: CURRENT_REVISION_2026_07_26_CONFIRMED
+    evidence: "Current legal indexes still route 152-FZ through the 26.07.2026 revision based on No. 265-FZ; No. 200-FZ remains future-effective from 01.03.2027."
+  pp687:
+    result: CURRENT_REVISION_CONFIRMED
+    evidence: "Official Government text presents PP687 in revision of PP12 dated 18.01.2025 and valid through 01.09.2030."
+  pp12:
+    result: OFFICIAL_PUBLICATION_IDENTITY_CONFIRMED
+    official_publication_id: "0001202501180009"
+  rkn128_replacement_watch:
+    result: REPLACEMENT_REMAINS_DRAFT_IN_FRESH_EVIDENCE
+    note: "Do not replace the active RKN128 node until an enacted official publication identity is found."
+
+acquisition_snapshot_before_new_action_delta:
+  identified: 22
+  raw_downloaded_exact: 19
+  immutable_sha256_verified: 19
+  atomized_existing_proposed: 4
+  atomized_verified: 0
+  pending_raw_capture: 3
+  raw_capture_coverage_ratio: 0.8636
+  pending:
+    - SEC-SRC-RU-152FZ-2026-07-26
+    - SEC-SRC-RU-PP687-2008
+    - SEC-SRC-RU-PP12-2025
+  last_proven_reuse_first_run:
+    targets_total: 20
+    reused_immutable: 19
+    network_targets_attempted: 1
+    reuse_ratio: 0.95
+
+changes_this_run:
+  - type: ACQUISITION_RETRY
+    target: SEC-SRC-RU-PP12-2025
+    result: REQUEST_REFRESHED
+    semantic_promotion: false
+  - type: PIPELINE_OPTIMIZATION
+    result: APPLIED
+    detail: "PP687 is excluded from the generic delta network loop because it has a dedicated guarded transport. Slow PP687 retries can no longer block easy publication-ID deltas inside pdn_core_pending_acquire.py."
+  - type: PIPELINE_OPTIMIZATION
+    result: APPLIED
+    detail: "Workflow now prioritizes reusable/easy publication deltas before slow dedicated PP687/current-root routes and has a fast-delta commit stage."
+
+new_immutable_confirmed_at_record_time: 0
+semantic_promotions_this_run: 0
+quality_note: >-
+  Counters are not raised until a committed immutable artifact and accepted manifest are visible in the repository.
+  PP12 is expected to use the existing official-publication PDF gate, but remains PENDING at this snapshot.
