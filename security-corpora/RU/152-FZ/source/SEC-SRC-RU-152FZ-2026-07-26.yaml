@@ -1,4 +1,4 @@
-schema_version: "1.2"
+schema_version: "1.3"
 id: SEC-SRC-RU-152FZ-2026-07-26
 kind: security-regulatory-source
 status: CURRENT_REVISION_DISCOVERED
@@ -13,7 +13,7 @@ document:
   number: "152-ФЗ"
   adopted_date: "2006-07-27"
   consolidated_revision_effective_from: "2026-07-26"
-  checked_at: "2026-08-22"
+  checked_at: "2026-08-23"
   current_revision_identity_confirmed: true
   triggering_amendment: "Федеральный закон от 26.07.2026 № 265-ФЗ"
   amendment_scope:
@@ -27,11 +27,12 @@ canonical_source:
   url: "http://pravo.gov.ru/proxy/ips/?docbody=&link_id=0&nd=102108261&intelsearch=&firstDoc=1"
   identity: "nd=102108261"
   route_status: OFFICIAL_CANONICAL_ROUTE_REGISTERED
-  route_checked_at: "2026-08-22"
+  route_checked_at: "2026-08-23"
   evidence_note: >-
-    Current legal indexes rechecked on 22.08.2026 include Federal Law No. 265-FZ in the amendment chain and
-    identify 26.07.2026 as the operative revision date. The future No. 200-FZ Article 10 amendment remains
-    scheduled for 01.03.2027 and does not alter current-date routing.
+    Current legal index rechecked on 23.08.2026 still includes Federal Law No. 265-FZ in the amendment chain and
+    identifies 26.07.2026 as the operative revision. The future No. 200-FZ Article 10 amendment remains scheduled
+    for 01.03.2027 and does not alter current-date routing. Immutable capture now additionally requires the
+    No. 265-FZ amendment marker inside the returned official consolidated bytes, not document identity alone.
 
 version_evidence:
   - publisher: "Официальный интернет-портал правовой информации"
@@ -41,7 +42,7 @@ version_evidence:
     supports: "effective-date anchor for № 265-ФЗ"
   - publisher: "Current legal index cross-check"
     kind: current_revision_index
-    checked_at: "2026-08-22"
+    checked_at: "2026-08-23"
     supports: "№ 265-ФЗ is in the current amendment chain; № 200-ФЗ is future-effective from 01.03.2027"
 
 capture:
@@ -53,14 +54,15 @@ capture:
   semantic_status: UNCHANGED
   acquisition_request:
     status: RETRY_REQUIRED_GUARDED
-    requested_at: "2026-08-22T16:57:00Z"
+    requested_at: "2026-08-23T02:07:00Z"
     route: official_canonical_snapshot
     reason: >-
       Current consolidated 152-FZ has a registered official IPS route. Require exact returned bytes,
-      retrieved_at, MIME, byte length, SHA-256, identity-marker validation and accepted manifest before immutable promotion.
+      retrieved_at, MIME, byte length, SHA-256, 152-FZ/personal-data identity validation, the current-revision
+      265-FZ marker, and an accepted manifest before immutable promotion.
   note: >-
     The current revision identity is cross-verified, but a byte-exact official consolidated snapshot of the
-    26.07.2026 text has not yet passed the guarded capture gate. Do not promote to METADATA_VERIFIED_FOR_EXTRACTION.
+    26.07.2026 text has not yet passed the strengthened guarded capture gate. Do not promote to METADATA_VERIFIED_FOR_EXTRACTION.
 
 relations:
   - type: SUPERSEDES
@@ -94,10 +96,11 @@ future_change_notes:
 
 provenance:
   created_at: "2026-08-20"
-  checked_at: "2026-08-22"
+  checked_at: "2026-08-23"
   created_by: "ChatGPT/GPT-5.6 Sol with current-version cross-verification"
   review_required: true
 
 agent_rule: >-
   Treat this as the current version identity for date routing from 26.07.2026, but do not use it as
-  VERIFIED_FOR_EXTRACTION until an immutable official consolidated artifact, exact byte length, SHA-256 and locator review are present.
+  VERIFIED_FOR_EXTRACTION until an immutable official consolidated artifact, exact byte length, SHA-256,
+  current-revision marker proof and locator review are present.
