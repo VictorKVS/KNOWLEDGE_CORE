@@ -14,6 +14,7 @@ on:
       - "TOOLS/pdn_current_root_curl_acquire.py"
       - "TOOLS/pdn_pp687_acquire.py"
       - "TOOLS/pdn_core_sync_capture.py"
+      - "TOOLS/pdn_security_stack_reconcile_master.py"
       - "security-corpora/RU/152-FZ/source/**"
 
 permissions:
@@ -77,6 +78,10 @@ jobs:
       - name: Sync immutable evidence to source records and master inventory
         shell: bash
         run: python TOOLS/pdn_core_sync_capture.py
+
+      - name: Restore authoritative Stream-2 counters after core sync
+        shell: bash
+        run: python TOOLS/pdn_security_stack_reconcile_master.py
 
       - name: Commit immutable artifacts, manifests and registry telemetry
         shell: bash
