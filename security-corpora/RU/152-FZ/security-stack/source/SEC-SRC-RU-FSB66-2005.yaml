@@ -1,4 +1,4 @@
-schema_version: "1.1"
+schema_version: "1.2"
 id: SEC-SRC-RU-FSB66-2005
 kind: security-regulatory-source
 status: METADATA_VERIFIED
@@ -11,8 +11,19 @@ document:
   adopted_date: "2005-02-09"
   ministry_registration_number: "6382"
   effective_from: "2005-03-30"
-  current_revision_note: "Официальный перечень ФСБ указывает изменение приказом ФСБ России от 12.04.2010 № 173; текущий SKZI-контекст ФСБ продолжает ссылаться на ПКЗ-2005."
   checked_at: "2026-08-23"
+  current_revision_note: >-
+    Официальный перечень ФСБ указывает изменение приказом ФСБ России от 12.04.2010 №173;
+    текущий официальный SKZI-контекст ФСБ продолжает ссылаться на ПКЗ-2005. Для доказанной
+    ветки №173 релевантен только пункт 1 приложения к №173: он изменяет пункт 50 ПКЗ-2005
+    и сноску к нему. Последующие приказы 2012-2013 годов погасили пункты 2-8 приложения №173,
+    но не пункт 1.
+version_chain:
+  amended_by: SEC-SRC-RU-FSB173-2010
+  amendment_locator: "Приказ ФСБ №173/2010, приложение, пункт 1 (подпункты 1.1-1.2)"
+  target_locator: "ПКЗ-2005, пункт 50 и сноска к пункту 50"
+  branch_scope: PKZ_2005_ONLY
+  unrelated_fsb173_items_excluded: true
 canonical_source:
   publisher: "Официальный интернет-портал правовой информации"
   url: "https://pravo.gov.ru/proxy/ips/?docbody=&nd=102097894"
@@ -26,6 +37,9 @@ capture:
 relations:
   - type: AMENDED_BY
     target: SEC-SRC-RU-FSB173-2010
+    source_locator: "PKZ-2005 point 50"
+    amendment_locator: "FSB173 Appendix point 1"
+    scope: PKZ_2005_VERSION_CHAIN_ONLY
   - type: CRYPTO_LIFECYCLE_CONTEXT_FOR
     target: SEC-SRC-RU-FSB378-2014
     scope: SKZI_LIFECYCLE_WHEN_APPLICABLE
@@ -33,6 +47,14 @@ provenance:
   official_identity_verified: true
   official_current_pdn_crypto_context_corroborated: true
   official_legal_text_route_registered: true
+  amendment_identity_verified_in_official_fsb_npa_index: true
+  branch_specific_amendment_locator_cross_checked: true
   exact_official_artifact_pending: true
   review_required: true
-agent_rule: "Do not turn PKZ-2005 into a universal PDN-operator duty; apply only through a proved SKZI lifecycle/applicability path. The pravo.gov.ru capture proves official text bytes only; current applicability remains bounded by SKZI use and the explicit lifecycle edge."
+agent_rule: >-
+  Do not turn PKZ-2005 into a universal PDN-operator duty; apply only through a proved
+  SKZI lifecycle/applicability path. For the №173 version edge, carry only the point-50
+  amendment proven by Appendix point 1; do not import the unrelated administrative and
+  licensing changes from Appendix points 2-8 into the PDN/SKZI branch. The pravo.gov.ru
+  route is eligible for primary immutable acquisition only after exact bytes, MIME,
+  byte length and SHA-256 are captured.
