@@ -1,0 +1,70 @@
+schema_version: "1.0"
+kind: ru-personal-data-master-source-inventory-delta
+owner_stream: STREAM_3_SECTOR_OVERLAYS
+checked_at: "2026-08-23T08:32:44+03:00"
+source_id: SEC-SRC-RU-FZ-196-2007-A3
+source_card: "security-corpora/RU/protected-information/source/SEC-SRC-RU-FZ-196-2007-A3.yaml"
+status: APPEND_ONLY_RELATIONSHIP_DELTA
+
+relationship:
+  target: "152-ФЗ"
+  type: POSSIBLE_DUAL_REGIME_ON_SCENARIO_PROOF_ONLY
+  state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  primary_locator: "статья 3 Федерального закона от 19.07.2007 № 196-ФЗ «О ломбардах»"
+  current_text_finding: >-
+    Статья 3 устанавливает специальный режим профессиональной тайны для сведений, полученных ломбардом от заемщика или поклажедателя в связи
+    с договором займа или хранения, и возлагает на ломбард и работников обязанность конфиденциальности. Банк России прямо подтверждает эту обязанность.
+  evidence_quality:
+    official_current_locator: "https://pravo.gov.ru/proxy/ips/?docbody=&nd=102115923"
+    official_regulator_current_context: "https://www.cbr.ru/microfinance/explan/lombard/"
+    regulator_finding: "Банк России подтверждает обязанность по статье 3 и ссылается на состав тайны по части 1 статьи 3."
+    current_consolidated_crosscheck: "редакция 196-ФЗ от 28.12.2024"
+    latest_amendment_official_publication: "522-ФЗ, publication id 0001202412280035"
+    exact_current_authoritative_binary: PENDING
+  applicability_guard: >-
+    Не выводить применимость 152-ФЗ только из факта заключения договора с ломбардом или существования профессиональной тайны. Для конкретного
+    требования определить идентифицируемое физическое лицо, состав данных, операцию, цель, роль ломбарда/работника/получателя, правовое основание,
+    срок и канал раскрытия. PAWNSHOP_SECRET != PERSONAL_DATA; OVERLAP != APPLICABILITY.
+
+related_protected_information:
+  regime: pawnshop_professional_secrecy
+  confidentiality_locators: ["статья 3 часть 1", "статья 3 часть 2"]
+  state: SPECIAL_REGIME_LINKED_NOT_MERGED_WITH_PDN
+  note: >-
+    Профессиональная тайна ломбарда формируется специальным договорным контекстом и содержит собственное statutory exception по характеристикам
+    невостребованной вещи. Это исключение не превращается в общее разрешение раскрывать сведения о клиенте.
+
+cross_regime_candidates:
+  - target: "353-ФЗ от 21.12.2013"
+    type: CONSUMER_CREDIT_PAWNSHOP_LOAN_CONTEXT
+    state: RELATIONSHIP_CONTEXT_ONLY
+    guard: "Проверять конкретный договор займа и требования 353-ФЗ отдельно; не объединять режим потребительского кредита с профессиональной тайной."
+  - target: "115-ФЗ от 07.08.2001"
+    type: AML_PAWNSHOP_SPECIAL_DUTY_CONTEXT
+    state: RELATIONSHIP_CONTEXT_ONLY
+    guard: "Законные AML-передачи требуют самостоятельного основания и состава сведений; не считать их универсальным исключением из конфиденциальности."
+
+version_guard:
+  latest_source_level_event:
+    act: "522-ФЗ от 28.12.2024"
+    official_publication_id: "0001202412280035"
+    affected: ["статья 2.1 Закона о ломбардах"]
+    effect_on_article3: NONE_IDENTIFIED
+  major_2020_amendment_crosschecked: "196-ФЗ от 13.07.2020; Article 3 change not identified in checked amendment list"
+  current_consolidated_revision_crosschecked: "2024-12-28"
+  full_chain: PARTIAL
+
+capture_guard:
+  exact_current_binary: PENDING
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  executable_use: false
+
+counter_effect:
+  pdn_overlap_candidates_added: 1
+  cross_regime_candidates_added: 2
+  applicability_edges_promoted: 0
+  executable_rules_changed: false
+  duplicate_sources_created: 0
