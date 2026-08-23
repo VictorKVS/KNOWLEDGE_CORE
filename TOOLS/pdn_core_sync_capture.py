@@ -165,6 +165,48 @@ def update_production_counters(text: str, immutable: int, pending: int, total: i
     return text[: match.start()] + block + text[match.end() :]
 
 
+def update_version_chain_resolution_statuses(text: str, captured: set[str]) -> str:
+    """Keep version-chain status aligned with accepted source manifests.
+
+    This prevents a source from being IMMUTABLE_CAPTURED in the main source list while
+    remaining stale as PENDING_RAW_CAPTURE in version_chain_identity_resolutions.
+    """
+    section = re.search(
+        r"(?ms)^version_chain_identity_resolutions:\n.*?(?=^[A-Za-z_][A-Za-z0-9_-]*:\s*(?:.*)?$|\Z)",
+        text,
+    )
+    if not section:
+        return text
+    block = section.group(0)
+    for source_id in sorted(captured):
+        pat = re.compile(
+            rf"(?ms)(^  - chain: .*?\n    source_id: {re.escape(source_id)}\n.*?^    status:)\s*[^\n]+"
+        )
+        block = pat.sub(r"\1 IMMUTABLE_CAPTURED", block, count=1)
+    return text[: section.start()] + block + text[section.end() :]
+
+
+def update_pending_priority(text: str, pending_ids: list[str]) -> str:
+    """Synchronize acquisition_activity.pending_priority with actual manifest gaps."""
+    section = re.search(
+        r"(?ms)^acquisition_activity:\n.*?(?=^[A-Za-z_][A-Za-z0-9_-]*:\s*(?:.*)?$|\Z)",
+        text,
+    )
+    if not section:
+        return text
+    block = section.group(0)
+    replacement = "  pending_priority:\n" + "".join(f"    - {sid}\n" for sid in pending_ids)
+    block, n = re.subn(
+        r"(?m)^  pending_priority:\n(?:    - [^\n]+\n)*",
+        replacement,
+        block,
+        count=1,
+    )
+    if n == 0:
+        block = block.rstrip("\n") + "\n" + replacement
+    return text[: section.start()] + block + text[section.end() :]
+
+
 def update_inventory(manifests: list[dict]) -> None:
     text = INVENTORY.read_text(encoding="utf-8")
     captured = {m["source_id"] for m in manifests}
@@ -185,6 +227,8 @@ def update_inventory(manifests: list[dict]) -> None:
     immutable = len(captured.intersection(all_ids))
     pending_ids = [sid for sid in all_ids if sid not in captured]
     text = update_production_counters(text, immutable, len(pending_ids), total)
+    text = update_version_chain_resolution_statuses(text, captured)
+    text = update_pending_priority(text, pending_ids)
 
     if pending_ids:
         blocker = (
