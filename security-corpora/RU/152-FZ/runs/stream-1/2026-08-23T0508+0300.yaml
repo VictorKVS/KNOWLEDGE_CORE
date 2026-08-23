@@ -1,0 +1,71 @@
+schema_version: 1
+run_id: PDN_CORE_STREAM1_2026_08_23T0508_0300
+stream_id: PDN_CORE_DOWNLOAD
+created_at: "2026-08-23T05:08:00+03:00"
+scope: GENERAL_152FZ_AND_ROSKOMNADZOR_CORE
+semantic_promotion_policy: NO_PROMOTION_WITHOUT_IMMUTABLE_AND_LOCATOR_EVIDENCE
+
+freshness_checks:
+  - source_id: SEC-SRC-RU-152FZ-2026-07-26
+    result: CURRENT_REVISION_RECONFIRMED
+    current_revision: "26.07.2026"
+    triggering_amendment: "Федеральный закон от 26.07.2026 № 265-ФЗ"
+    future_branch_note: "№ 200-ФЗ remains future-effective for 152-ФЗ from 01.03.2027"
+    raw_capture_status: PENDING
+  - source_id: SEC-SRC-RU-PP687-2008
+    result: CURRENT_REVISION_RECONFIRMED
+    current_revision: "ПП РФ от 18.01.2025 № 12"
+    valid_until: "2030-09-01"
+    raw_capture_status: PENDING
+
+pipeline_fixes:
+  - id: PDN-ACQ-GUARD-2026-08-23-001
+    component: TOOLS/pdn_current_root_acquire.py
+    finding: >-
+      Document-identity markers alone could accept an older 152-ФЗ consolidated response as the
+      current 26.07.2026 root if that response still contained 152-ФЗ/personal-data text.
+    fix: >-
+      Require the № 265-ФЗ amendment marker in returned official bytes in addition to 152-ФЗ and
+      personal-data identity markers; record current_revision_trigger and effective_from in manifest proof.
+    semantic_promotion: false
+  - id: PDN-ACQ-SYNC-2026-08-23-001
+    component: TOOLS/pdn_core_sync_capture.py
+    finding: >-
+      A successful guarded PP687 registered-route manifest used capture_kind
+      official_registered_route_snapshot, but the synchronizer only accepted publication PDFs and generic
+      canonical snapshots and also required a publication-ID scope flag that is not applicable to this route.
+      Therefore a valid PP687 exact capture could be written but never synchronized into the source card/master inventory.
+    fix: >-
+      Add an explicit proof path for PP687 registered official routes requiring registered_route_used,
+      canonical_content_identity_markers_ok, byte-exact capture, SHA-256, and semantic_status_unchanged.
+      Keep publication-ID identity gates for publication-ID acquisitions. Also require current-revision proof
+      for the current 152-ФЗ canonical manifest.
+    semantic_promotion: false
+
+production_counters_snapshot:
+  identified: 21
+  raw_downloaded_exact: 19
+  immutable_sha256_verified: 19
+  atomized_existing_proposed: 4
+  atomized_verified: 0
+  pending_raw_capture: 2
+  raw_capture_coverage_ratio: 0.9048
+  last_accepted_regular_acquisition_targets: 20
+  last_accepted_reused_immutable: 19
+  last_accepted_reuse_ratio: 0.95
+  new_immutable_this_run: 0
+  semantic_promotions_this_run: 0
+
+pending_raw:
+  - SEC-SRC-RU-152FZ-2026-07-26
+  - SEC-SRC-RU-PP687-2008
+
+next_gate:
+  - accept PP687 only after official registered-route bytes pass identity markers, exact byte length and SHA-256
+  - accept current consolidated 152-ФЗ only after official bytes also prove the № 265-ФЗ pinned revision
+  - once raw coverage reaches 21/21, shift stream capacity to structural parse, legal/semantic chunks, concepts/definitions, conflict detection, atomic requirements and typed relations
+
+quality_note: >-
+  No new source was marked IMMUTABLE in this run. The useful delta is removal of two acquisition-proof defects
+  that could respectively admit a stale current-root artifact or prevent a valid PP687 capture from ever reaching
+  the registry. Existing 19 immutable artifacts remain reuse candidates and are not re-downloaded merely to repeat work.
