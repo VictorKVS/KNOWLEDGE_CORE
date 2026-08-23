@@ -1,0 +1,106 @@
+schema_version: "1.0"
+kind: ru-protected-information-master-inventory-delta
+base_inventory: "master-inventory.yaml"
+reconciliation_base_delta: "master-inventory-delta-2026-08-23T0521.yaml"
+checked_at: "2026-08-23T08:32:44+03:00"
+owner_stream: STREAM_3_SECTOR_OVERLAYS
+run_ref: "stream-3-run-2026-08-23T0832.yaml"
+status: APPEND_ONLY_RECONCILIATION_READY
+
+proof_floor:
+  - "Статья 3 196-ФЗ устанавливает самостоятельный режим профессиональной тайны ломбарда; PAWNSHOP_SECRET != PERSONAL_DATA."
+  - "Банк России в действующем разъяснительном разделе прямо подтверждает обязанность ломбарда и работников соблюдать конфиденциальность сведений части 1 статьи 3 и ответственность за разглашение."
+  - "Текущая консолидация 196-ФЗ сверена в редакции от 28.12.2024; последнее source-level изменение 522-ФЗ затрагивает статью 2.1, а изменение статьи 3 не выявлено."
+  - "Сильное пересечение с ПДн возникает из контекста займов гражданам/физическим лицам, но применимость 152-ФЗ устанавливается только по конкретным данным, операции, цели, роли и основанию."
+  - "Exact current authoritative bytes не получены; MIME, byte length, SHA-256 и retrieved_at не придуманы."
+
+counter_state_before_reconciled: {found: 28, downloaded: 9, immutable: 9, pending: 17, reused: 2, primary_publication_verified: 10, sectors_registered: 20}
+counter_state_after_reconciliation:
+  found: 29
+  downloaded: 9
+  immutable: 9
+  pending: 18
+  reused: 2
+  primary_publication_verified: 10
+  sectors_registered: 21
+  new_sources_this_run: 1
+  existing_source_nodes_operationalized: 0
+  new_immutable_this_run: 0
+  exact_binary_downloads_this_run: 0
+  current_protected_locators_crosschecked_this_run: 3
+  pdn_overlap_candidates_added_this_run: 1
+  cross_regime_candidates_added_this_run: 2
+  current_version_events_reconciled_this_run: 2
+  applicability_edges_promoted_this_run: 0
+  legal_conflicts_confirmed_this_run: 0
+
+source_added:
+  source_id: SEC-SRC-RU-FZ-196-2007-A3
+  source_card: "security-corpora/RU/protected-information/source/SEC-SRC-RU-FZ-196-2007-A3.yaml"
+  sector: pawnshop-financial-services
+  regimes: [pawnshop_professional_secrecy, borrower_depositor_confidentiality]
+  state: NEW_PRIMARY_ACT_IDENTIFIED_OFFICIAL_REGULATOR_ARTICLE3_DUTY_CONFIRMED_CURRENT_CONSOLIDATION_CROSSCHECKED_EXACT_CURRENT_ARTIFACT_PENDING_VERSION_CHAIN_PARTIAL
+  act_identity:
+    title: "Федеральный закон от 19.07.2007 № 196-ФЗ «О ломбардах»"
+    current_official_locator: "https://pravo.gov.ru/proxy/ips/?docbody=&nd=102115923"
+    current_consolidated_crosscheck: "ред. от 28.12.2024"
+  protected_locators:
+    - {locator: "статья 3 часть 1", concept: PAWNSHOP_PROFESSIONAL_SECRET_SCOPE, state: CURRENT_TEXT_CROSSCHECKED_OFFICIAL_REGULATOR_REFERENCES_PART1}
+    - {locator: "статья 3 часть 2", concept: PAWNSHOP_CONFIDENTIALITY_DUTY_AND_DISCLOSURE_LIABILITY, state: OFFICIAL_REGULATOR_CURRENT_DUTY_CONFIRMED}
+    - {locator: "статья 7 часть 1 / договорный контекст", concept: NATURAL_PERSON_BORROWER_CONTEXT, state: CURRENT_TEXT_CROSSCHECKED}
+  pdn_relation:
+    state: POSSIBLE_DUAL_REGIME_ON_SCENARIO_PROOF_ONLY
+    guard: "Resolve identifiable person, data fields, operation, purpose, pawnshop/employee/recipient role, legal basis and disclosure route. OVERLAP != APPLICABILITY."
+  capture_backlog: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-196-2007-A3-version-capture-pending.json"
+
+version_chain_delta:
+  state: VERSION_CHAIN_PARTIAL_LOCATOR_SPECIFIC_CURRENT_RECONCILED
+  current_consolidated_revision: "2024-12-28"
+  latest_source_level_event:
+    act: "522-ФЗ от 28.12.2024"
+    official_publication_id: "0001202412280035"
+    official_publication_date: "2024-12-28"
+    official_url: "https://publication.pravo.gov.ru/document/0001202412280035"
+    changed_locator: "статья 2.1 Закона о ломбардах"
+    effect_on_article3: NONE_IDENTIFIED
+    state: OFFICIAL_PUBLICATION_LOCATOR_VERIFIED_CURRENT_CONSOLIDATION_CROSSCHECKED
+  major_2020_event:
+    act: "196-ФЗ от 13.07.2020 «О внесении изменений в отдельные законодательные акты Российской Федерации»"
+    official_publication_locator_candidate: "0001202007130046"
+    effect_on_article3: NONE_IDENTIFIED_IN_CHECKED_AMENDMENT_LIST
+    state: AMENDMENT_CONTEXT_CROSSCHECKED_EXACT_PRIMARY_BINARY_PENDING
+  full_article3_chain: PARTIAL
+
+relationship_delta:
+  - {target: "152-ФЗ", type: POSSIBLE_DUAL_REGIME_ON_SCENARIO_PROOF_ONLY, state: APPLICABILITY_REVIEW_REQUIRED}
+  - {target: "353-ФЗ от 21.12.2013", type: CONSUMER_CREDIT_PAWNSHOP_LOAN_CONTEXT, state: RELATION_CANDIDATE_NOT_REGIME_EQUIVALENCE}
+  - {target: "115-ФЗ от 07.08.2001", type: AML_PAWNSHOP_SPECIAL_DUTY_CONTEXT, state: RELATION_CANDIDATE_NOT_CONFIDENTIALITY_OVERRIDE}
+
+acquisition_delta:
+  durable_immutable_artifacts_added: 0
+  exact_binary_downloads_succeeded: 0
+  official_current_locator_identified: true
+  official_regulator_article3_current_context_identified: true
+  latest_amendment_official_publication_verified: true
+  official_current_artifact:
+    retrieved_at: null
+    mime: null
+    byte_length: null
+    sha256: null
+  attempts:
+    - {target: "current 196-ФЗ integrated official locator", result: DOWNLOAD_FAILED_RUNTIME_DNS_OR_TIMEOUT}
+    - {target: "522-ФЗ official publication PDF", result: OFFICIAL_PUBLICATION_PAGE_IDENTIFIED_PDF_BYTES_NOT_CAPTURED_TIMEOUT}
+  blocker: >-
+    Runtime confirmed the official current locator and official regulator Article 3 context, and verified the latest amendment publication locator,
+    but did not receive reliable byte-exact current authoritative bytes. Portal-rendered PDF size/page count was not converted into a fingerprint.
+
+proof_floor_effect:
+  executable_rules_changed: false
+  applicability_edges_promoted: 0
+  duplicate_source_nodes_created: 0
+  legal_conflicts_confirmed: 0
+  source_nodes_added: 1
+
+merge_rule: >-
+  Reconcile after master-inventory-delta-2026-08-23T0521.yaml. Aggregate Stream 3 counters become 29 found / 9 downloaded /
+  9 immutable / 18 pending / 2 reused. Pawnshop professional secrecy is a new source node; acquisition counters remain unchanged until exact current authoritative bytes are durably stored.
