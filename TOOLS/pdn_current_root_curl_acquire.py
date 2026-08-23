@@ -1,22 +1,23 @@
 #!/usr/bin/env python3
-"""Guarded curl fallback for the current consolidated 152-FZ official IPS route.
+"""Guarded multi-route curl acquisition for the current consolidated 152-FZ.
 
-The source record pins the official pravo.gov.ru IPS identity. This helper tries a
-TLS-normalized form of that same registered URL before the URL as stored, because the
-legacy IPS links are commonly recorded as HTTP while the portal serves HTTPS. Returned
-bytes still must contain the 152-FZ/personal-data identity markers and the pinned
-current-revision marker (No. 265-FZ). Capture never promotes semantic status.
+All official URLs must already be registered inside the current source card. The helper
+tries each registered route, including a TLS-normalized equivalent for legacy HTTP IPS
+links. A response is accepted only if the existing content gate proves 152-FZ,
+personal-data identity and the pinned current-revision marker No. 265-FZ.
+Raw capture never promotes semantic or extraction status.
 """
 from __future__ import annotations
 
 import datetime as dt
 import hashlib
 import json
+import re
 import subprocess
 import tempfile
 from pathlib import Path
 
-from pdn_core_acquire import CANONICAL_URL_RE, CORPUS, DOC_NUMBER_RE, MANIFEST_DIR, ROOT, top_level_section
+from pdn_core_acquire import CORPUS, DOC_NUMBER_RE, MANIFEST_DIR, ROOT, top_level_section
 from pdn_current_root_acquire import (
     CURRENT_REVISION_EFFECTIVE_FROM,
     CURRENT_REVISION_TRIGGER,
@@ -26,8 +27,9 @@ from pdn_current_root_acquire import (
     current_root_identity_ok,
 )
 
-UA = "KNOWLEDGE_CORE-pdn-current-root-curl/1.2 (+https://github.com/VictorKVS/KNOWLEDGE_CORE)"
+UA = "KNOWLEDGE_CORE-pdn-current-root-curl/1.3 (+https://github.com/VictorKVS/KNOWLEDGE_CORE)"
 RAW_DIR = CORPUS / "raw" / SOURCE_ID
+REGISTERED_URL_RE = re.compile(r'(?m)^\s+url:\s*["\']([^"\']+)["\']\s*$')
 
 
 def curl_capture(url: str) -> tuple[bytes, str, str]:
@@ -35,10 +37,10 @@ def curl_capture(url: str) -> tuple[bytes, str, str]:
         body = Path(td) / "body.bin"
         cmd = [
             "curl", "--silent", "--show-error", "--location", "--fail-with-body",
-            "--retry", "4", "--retry-delay", "2", "--retry-all-errors",
+            "--retry", "3", "--retry-delay", "2", "--retry-all-errors",
             "--connect-timeout", "20", "--max-time", "120", "--ipv4", "--http1.1",
             "--header", f"User-Agent: {UA}",
-            "--header", "Accept: text/html,application/xhtml+xml,*/*;q=0.8",
+            "--header", "Accept: text/html,application/xhtml+xml,application/pdf,*/*;q=0.8",
             "--header", "Accept-Encoding: identity",
             "--output", str(body),
             "--write-out", "%{url_effective}\n%{content_type}\n",
@@ -49,31 +51,50 @@ def curl_capture(url: str) -> tuple[bytes, str, str]:
             raise RuntimeError(f"curl exit={proc.returncode}: {(proc.stderr or '').strip()}")
         data = body.read_bytes() if body.exists() else b""
         if not data:
-            raise RuntimeError("empty official IPS response")
+            raise RuntimeError("empty official-route response")
         lines = (proc.stdout or "").splitlines()
         final_url = lines[0].strip() if lines else url
         mime = lines[1].strip().split(";", 1)[0] if len(lines) > 1 else "application/octet-stream"
         return data, final_url, mime or "application/octet-stream"
 
 
-def transport_variants(source_url: str) -> list[tuple[str, str]]:
-    variants: list[tuple[str, str]] = []
-    if source_url.startswith("http://"):
-        variants.append(("registered_ips_tls_equivalent", "https://" + source_url[len("http://"):]))
-    variants.append(("registered_ips_as_recorded", source_url))
-    out: list[tuple[str, str]] = []
+def registered_urls(canonical_section: str) -> list[str]:
+    urls: list[str] = []
     seen: set[str] = set()
-    for name, url in variants:
+    for url in REGISTERED_URL_RE.findall(canonical_section):
         if url not in seen:
-            out.append((name, url))
+            urls.append(url)
             seen.add(url)
+    return urls
+
+
+def transport_variants(urls: list[str]) -> list[tuple[str, str, str]]:
+    """Return (label, transport_url, registered_url) without inventing unregistered identities."""
+    out: list[tuple[str, str, str]] = []
+    seen_transport: set[str] = set()
+    for index, registered_url in enumerate(urls, start=1):
+        variants: list[tuple[str, str]] = []
+        if registered_url.startswith("http://"):
+            variants.append((f"registered_route_{index}_tls_equivalent", "https://" + registered_url[len("http://"):]))
+        variants.append((f"registered_route_{index}_as_recorded", registered_url))
+        for label, transport_url in variants:
+            if transport_url in seen_transport:
+                continue
+            out.append((label, transport_url, registered_url))
+            seen_transport.add(transport_url)
     return out
 
 
 def write_immutable(data: bytes) -> tuple[Path, str]:
     sha = hashlib.sha256(data).hexdigest()
     RAW_DIR.mkdir(parents=True, exist_ok=True)
-    ext = ".html" if data.lstrip().lower().startswith((b"<!doctype html", b"<html")) else ".bin"
+    stripped = data.lstrip().lower()
+    if data.startswith(b"%PDF-"):
+        ext = ".pdf"
+    elif stripped.startswith((b"<!doctype html", b"<html")):
+        ext = ".html"
+    else:
+        ext = ".bin"
     artifact = RAW_DIR / f"official-current-snapshot-{sha[:16]}{ext}"
     if artifact.exists():
         old = hashlib.sha256(artifact.read_bytes()).hexdigest()
@@ -89,68 +110,69 @@ def main() -> int:
     metadata = METADATA_STATUS_RE.search(text)
     if not metadata or metadata.group(1) != "VERSION_IDENTITY_CROSS_VERIFIED":
         raise RuntimeError(
-            f"refuse current-root curl capture: metadata_status is not VERSION_IDENTITY_CROSS_VERIFIED for {SOURCE_ID}"
+            f"refuse current-root capture: metadata_status is not VERSION_IDENTITY_CROSS_VERIFIED for {SOURCE_ID}"
         )
 
     document = top_level_section(text, "document")
     canonical = top_level_section(text, "canonical_source")
     mnumber = DOC_NUMBER_RE.search(document)
-    murl = CANONICAL_URL_RE.search(canonical)
-    if not murl:
-        raise RuntimeError("refuse current-root curl capture: no registered canonical_source.url")
-
-    registered_source_url = murl.group(1)
     expected_number = mnumber.group(1).strip() if mnumber else ""
-    attempts = transport_variants(registered_source_url)
+    source_urls = registered_urls(canonical)
+    if not source_urls:
+        raise RuntimeError("refuse current-root capture: no registered official URLs in canonical_source")
+
+    attempts = transport_variants(source_urls)
     errors: list[str] = []
     accepted_transport = ""
-    accepted_url = ""
+    accepted_registered_url = ""
+    accepted_transport_url = ""
     data = b""
     final_url = ""
     mime = "application/octet-stream"
     markers: list[str] = []
 
-    for transport_name, transport_url in attempts:
+    for label, transport_url, registered_url in attempts:
         try:
             candidate, candidate_final_url, candidate_mime = curl_capture(transport_url)
             ok, candidate_markers = current_root_identity_ok(candidate)
             if not ok:
                 raise RuntimeError("official response lacks required 152-FZ/personal-data/current-revision markers")
-            accepted_transport = transport_name
-            accepted_url = transport_url
+            accepted_transport = label
+            accepted_registered_url = registered_url
+            accepted_transport_url = transport_url
             data = candidate
             final_url = candidate_final_url
             mime = candidate_mime
             markers = candidate_markers
             break
         except Exception as exc:
-            errors.append(f"{transport_name}: {exc}")
+            errors.append(f"{label}: {exc}")
 
     if not data:
-        raise RuntimeError("all registered current-root IPS transports failed: " + " | ".join(errors))
+        raise RuntimeError("all registered current-root official transports failed: " + " | ".join(errors))
 
     artifact, sha = write_immutable(data)
     retrieved = dt.datetime.now(dt.timezone.utc).isoformat().replace("+00:00", "Z")
     manifest: dict[str, object] = {
-        "schema_version": "1.7",
+        "schema_version": "1.8",
         "source_id": SOURCE_ID,
         "source_document_number": expected_number,
-        "capture_kind": "official_canonical_snapshot",
+        "capture_kind": "official_registered_multi_route_snapshot",
         "accepted_transport": accepted_transport,
+        "accepted_registered_source_url": accepted_registered_url,
+        "source_url": accepted_transport_url,
         "official_file_url": final_url,
-        "source_url": accepted_url,
-        "registered_source_url": registered_source_url,
-        "transport_attempt_order": [name for name, _ in attempts],
+        "registered_source_urls": source_urls,
+        "transport_attempt_order": [label for label, _, _ in attempts],
         "retrieved_at": retrieved,
         "mime": mime,
         "byte_length": len(data),
         "sha256": sha,
         "artifact_ref": str(artifact.relative_to(ROOT)).replace("\\", "/"),
         "source_record_ref": str(SOURCE_RECORD.relative_to(ROOT)).replace("\\", "/"),
-        "capture_policy": "current-root-version-identity-cross-verified-curl-ipv4-http11-with-content-and-revision-markers",
+        "capture_policy": "current-root-version-identity-cross-verified-multi-official-route-with-content-and-revision-markers",
         "proof": {
-            "official_route": True,
-            "publication_id_scoped_to_source_document_section": True,
+            "official_route_pre_registered": True,
             "byte_exact_download": True,
             "sha256_calculated_from_downloaded_bytes": True,
             "publication_api_length_check_not_applicable": True,
@@ -161,19 +183,22 @@ def main() -> int:
             "current_revision_marker_ok": True,
             "current_revision_trigger": CURRENT_REVISION_TRIGGER,
             "current_revision_effective_from": CURRENT_REVISION_EFFECTIVE_FROM,
-            "tls_scheme_normalization_only_when_used": accepted_transport == "registered_ips_tls_equivalent",
             "transport_fallback_only": True,
+            "semantic_status_unchanged": True,
         },
         "failed_transports_before_acceptance": errors,
         "semantic_status_unchanged": True,
-        "review_note": "Capture proves exact bytes from the registered official IPS identity, source identity and pinned current-revision markers only; locator/delta review remains required before extraction promotion.",
+        "review_note": "Capture proves exact bytes from a pre-registered official route plus source/current-revision markers only; locator/delta review remains required before extraction promotion.",
     }
     MANIFEST_DIR.mkdir(parents=True, exist_ok=True)
-    (MANIFEST_DIR / f"{SOURCE_ID}.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    (MANIFEST_DIR / f"{SOURCE_ID}.json").write_text(
+        json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
+    )
     print(json.dumps({
         "source_id": SOURCE_ID,
         "status": "IMMUTABLE_CAPTURED_RAW_ONLY",
         "accepted_transport": accepted_transport,
+        "accepted_registered_source_url": accepted_registered_url,
         "mime": mime,
         "byte_length": len(data),
         "sha256": sha,
