@@ -1,0 +1,88 @@
+schema_version: 1
+run_id: RU_PD_STREAM1_2026_08_23T1406_0300
+stream_id: RU_PD_STREAM_1_CORE_REGULATION
+recorded_at: "2026-08-23T14:06:38+03:00"
+status: ACTIVE
+
+scope:
+  domain: RU_personal_data_core
+  overlay_expansion: false
+  priority:
+    - SEC-SRC-RU-152FZ-2026-07-26
+    - SEC-SRC-RU-PP687-2008
+    - SEC-SRC-RU-PP211-2012
+    - SEC-SRC-RU-RKN18-2021
+    - SEC-SRC-RU-RKN128-2022
+    - SEC-SRC-RU-RKN178-2022
+    - SEC-SRC-RU-RKN179-2022
+    - SEC-SRC-RU-RKN180-2022
+    - SEC-SRC-RU-RKN140-2025
+    - SEC-SRC-RU-PP1154-2025
+
+proof_floor:
+  immutable_requires:
+    - official_registered_source_route
+    - retrieved_at
+    - mime
+    - exact_byte_length
+    - sha256
+    - accepted_manifest
+  semantic_promotion_without_locator_review: false
+
+freshness_checks:
+  current_152fz:
+    result: CURRENT_REVISION_2026_07_26_CONFIRMED
+    evidence_class: CURRENT_LEGAL_INDEX_CROSS_CHECK
+    note: "Current index still presents 152-FZ in revision of 26.07.2026; No. 200-FZ remains future-effective from 01.03.2027."
+  pp687:
+    result: CURRENT_REVISION_CONFIRMED
+    evidence_class: OFFICIAL_GOVERNMENT_TEXT
+    note: "Government portal presents PP687 in revision of PP12 dated 18.01.2025 and valid through 01.09.2030."
+  pp12:
+    result: IMMUTABLE_CAPTURE_RECONCILED
+    official_publication_id: "0001202501180009"
+    byte_length: 138381
+    sha256: "db88ff663cdcd3a7aa6e145c1a7bb86f179636ddd2b74321cafdd2cdb6e85049"
+
+acquisition_snapshot:
+  identified: 22
+  raw_downloaded_exact: 20
+  immutable_sha256_verified: 20
+  atomized_existing_proposed: 4
+  atomized_verified: 0
+  pending_raw_capture: 2
+  raw_capture_coverage_ratio: 0.9091
+  pending:
+    - SEC-SRC-RU-152FZ-2026-07-26
+    - SEC-SRC-RU-PP687-2008
+  latest_reuse_first_generic_run:
+    started_at: "2026-08-23T09:43:12.034665Z"
+    finished_at: "2026-08-23T09:43:12.053079Z"
+    targets_total: 21
+    reused_immutable: 20
+    network_targets_attempted: 0
+    new_immutable_captured: 0
+    reuse_ratio: 0.9523809523809523
+
+changes_this_run:
+  - type: INVENTORY_CONSISTENCY_REPAIR
+    result: APPLIED
+    detail: "PP12 version-chain status is synchronized to IMMUTABLE_CAPTURED from its accepted manifest instead of remaining stale as PENDING_RAW_CAPTURE."
+  - type: PENDING_PRIORITY_RECONCILIATION
+    result: APPLIED
+    detail: "Acquisition priority is now derived from actual accepted manifest gaps; PP12 was removed and only current consolidated 152-FZ plus PP687 remain."
+  - type: PIPELINE_HARDENING
+    result: APPLIED
+    detail: "pdn_core_sync_capture.py now keeps version_chain_identity_resolutions and acquisition_activity.pending_priority aligned with accepted immutable manifests on every core sync."
+
+new_immutable_confirmed_this_run: 0
+semantic_promotions_this_run: 0
+
+remaining_blockers:
+  - source_id: SEC-SRC-RU-152FZ-2026-07-26
+    gate: "registered official IPS bytes + 152-FZ/personal-data identity markers + No.265-FZ current-revision marker + MIME + exact bytes + SHA-256 + accepted manifest"
+  - source_id: SEC-SRC-RU-PP687-2008
+    gate: "registered official Government/IPS bytes + PP687/non-automated-processing identity markers + MIME + exact bytes + SHA-256 + accepted manifest"
+
+quality_note: >-
+  No source was promoted semantically in this run. The production counters remain proof-based: 20 of 22 registered core sources have accepted immutable captures, and the two remaining sources stay pending until their registered official routes yield accepted exact bytes and fingerprints.
