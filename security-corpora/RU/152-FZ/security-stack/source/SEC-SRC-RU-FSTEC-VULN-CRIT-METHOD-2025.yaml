@@ -1,0 +1,60 @@
+schema_version: "1.0"
+id: SEC-SRC-RU-FSTEC-VULN-CRIT-METHOD-2025
+kind: security-methodical-source
+status: METADATA_VERIFIED
+title: "Методический документ ФСТЭК России от 30.06.2025 «Методика оценки уровня критичности уязвимостей программных, программно-аппаратных средств»"
+jurisdiction: RU
+issuer: "ФСТЭК России"
+document:
+  type: methodical_document
+  number: "б/н"
+  adopted_date: "2025-06-30"
+  current_revision_date: "2025-06-30"
+  checked_at: "2026-08-23"
+  status_note: >-
+    Действующий методический документ ФСТЭК России. Пункт 3 ограничивает прямую область применения
+    требованиями защиты информации в государственных информационных системах, иных информационных
+    системах государственных органов, ГУП/ГУ, значимых объектах КИИ, а также случаями, когда применение
+    следует из иных НПА или методических документов ФСТЭК России. Не переносить автоматически на любую частную ИСПДн.
+  version_chain_note: >-
+    Пункт 6 прямо устанавливает, что Методика оценки уровня критичности уязвимостей от 28.10.2022
+    не применяется с утверждением настоящей Методики от 30.06.2025.
+canonical_source:
+  publisher: "ФСТЭК России"
+  landing_page: "https://fstec.ru/dokumenty/vse-dokumenty/spetsialnye-normativnye-dokumenty/metodicheskij-dokument-ot-30-iyunya-2025-g"
+  url: "https://fstec.ru/files/1367/---30--2025-/2773/---30--2025-.pdf"
+  expected_mime: "application/pdf"
+  freshness_check:
+    checked_at: "2026-08-23"
+    result: CURRENT_METHOD_CONFIRMED_WITH_2022_PREDECESSOR_REPLACED
+capture:
+  fingerprint_status: PENDING
+  semantic_status: UNCHANGED
+relations:
+  - type: REPLACES_FOR_VULNERABILITY_CRITICALITY_ASSESSMENT
+    target: FSTEC-VULN-CRIT-METHOD-2022
+    locator: "point 6"
+  - type: USES_VULNERABILITY_DATA_FROM
+    target: FSTEC-BDU
+    locator: "point 8(a)"
+applicability_guard:
+  direct_scope:
+    - GOVERNMENT_INFORMATION_SYSTEMS
+    - OTHER_INFORMATION_SYSTEMS_OF_STATE_BODIES
+    - STATE_UNITARY_ENTERPRISES_AND_STATE_INSTITUTIONS
+    - SIGNIFICANT_CII_OBJECTS
+  conditional_scope: OTHER_SYSTEMS_ONLY_WHEN_ANOTHER_NPA_OR_FSTEC_METHODICAL_DOCUMENT_REQUIRES_THIS_METHOD
+  generic_private_ispdn: NOT_PROVEN_BY_THIS_METHOD_ALONE
+provenance:
+  official_landing_page_verified: true
+  official_pdf_route_verified: true
+  current_status_cross_verified: true
+  predecessor_replacement_explicit_in_point_6: true
+  review_required: true
+agent_rule: >-
+  Treat this Method as a guarded vulnerability-management reference. Do not create a universal private-ISPDn
+  obligation from it. Promotion into a concrete PDN case requires either an enumerated direct scope or a separate
+  normative/methodical applicability edge. Exact official bytes and SHA-256 are required before immutable promotion.
+inventory_registration:
+  role: fstec_vulnerability_criticality_methodical_context
+  applicability: ENUMERATED_GIS_KII_PUBLIC_SCOPE_OR_EXPLICIT_CROSS_REFERENCE_ONLY
