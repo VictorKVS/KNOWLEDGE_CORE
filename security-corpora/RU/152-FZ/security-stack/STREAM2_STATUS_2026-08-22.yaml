@@ -1,4 +1,4 @@
-schema_version: "1.3"
+schema_version: "1.4"
 id: SEC-PDN-STREAM2-STATUS-2026-08-22
 kind: production-telemetry
 checked_at: "2026-08-23"
@@ -61,6 +61,14 @@ acquisition_state:
     - source_id: SEC-SRC-RU-FSB66-2005
       route: "https://pravo.gov.ru/proxy/ips/?docbody=&nd=102097894"
       class: OFFICIAL_LEGAL_TEXT
+    - source_id: SEC-SRC-RU-PP313-2012
+      route: "https://pravo.gov.ru/proxy/ips/?docbody=&nd=102155729"
+      class: OFFICIAL_LEGAL_TEXT
+      applicability_guard: LICENSED_CRYPTO_ACTIVITY_ONLY
+    - source_id: SEC-SRC-RU-PP79-2012
+      route: "https://pravo.gov.ru/proxy/ips/?docbody=&nd=102153815"
+      class: OFFICIAL_LEGAL_TEXT
+      applicability_guard: LICENSED_TZI_ACTIVITY_ONLY
 
 reuse_and_analysis:
   policy: REUSE_FIRST
@@ -82,12 +90,48 @@ reuse_and_analysis:
     - "FSTEC55 certification-system chain is contextual and does not itself make certification universal for every PDN tool"
   conflict_rule: "Definition divergence is a candidate, not a confirmed contradiction, until scope/effective interval/purpose are compared."
 
+methodical_discovery:
+  - id: SEC-CAND-RU-FSTEC-VULN-CRIT-2025
+    title: "Методика оценки уровня критичности уязвимостей программных, программно-аппаратных средств"
+    approved: "2025-06-30"
+    status: CURRENT_METHOD_REPLACES_2022
+    official_page: "https://fstec.ru/dokumenty/vse-dokumenty/spetsialnye-normativnye-dokumenty/metodicheskij-dokument-ot-30-iyunya-2025-g"
+    replaced_document: "ФСТЭК Методика оценки уровня критичности уязвимостей от 28.10.2022"
+    replacement_effective_rule: "2022 method is not applied from 2025-06-30"
+    applicability_guard: "STATE_GIS_PUBLIC_SECTOR_CII_OR_OTHER_EXPLICIT_FSTEC_REQUIREMENT_ONLY; do not auto-promote to every private ISPDn"
+    active_inventory_promotion: HOLD_UNTIL_EXPLICIT_ISPDN_LOCATOR_OR_DUAL_REGIME_SCOPE
+    exact_artifact_status: PENDING_OFFICIAL_FILE_ROUTE
+  - id: SEC-CAND-RU-FSTEC-VULN-MGMT-GUIDE-2023
+    title: "Руководство по организации процесса управления уязвимостями в органе (организации)"
+    approved: "2023-05-17"
+    official_page: "https://fstec.ru/dokumenty/vse-dokumenty/spetsialnye-normativnye-dokumenty/metodicheskij-dokument-ot-17-maya-2023-g"
+    applicability_guard: "ORGANIZATION_SCOPE_WHERE_FSTEC_VULNERABILITY_MANAGEMENT_REQUIREMENTS_APPLY; not a universal standalone PDN duty"
+    version_note: "The guide cites the 28.10.2022 criticality method; current scoring must use the superseding 30.06.2025 method where applicable."
+    active_inventory_promotion: HOLD_UNTIL_EXPLICIT_ISPDN_LOCATOR_OR_DUAL_REGIME_SCOPE
+    exact_artifact_status: PENDING_OFFICIAL_FILE_ROUTE
+  - id: SEC-CAND-RU-FSTEC-UPDATE-TEST-2022
+    title: "Методика тестирования обновлений безопасности программных, программно-аппаратных средств"
+    approved: "2022-10-28"
+    official_page: "https://fstec.ru/dokumenty/vse-dokumenty/spetsialnye-normativnye-dokumenty/metodicheskij-dokument-ot-28-oktyabrya-2022-g"
+    current_status: CURRENT_INDEXED_NO_REPLACEMENT_FOUND_IN_THIS_PASS
+    applicability_guard: "ONLY_WHERE_VULNERABILITY_OR_UPDATE_TESTING_REQUIREMENT_IS_APPLICABLE; not a universal standalone PDN duty"
+    active_inventory_promotion: HOLD_UNTIL_EXPLICIT_ISPDN_LOCATOR_OR_DUAL_REGIME_SCOPE
+    exact_artifact_status: PENDING_OFFICIAL_FILE_ROUTE
+  - id: SEC-CAND-RU-FSTEC-TZI-LIST-2024
+    title: "Перечень НПА, методических документов и национальных стандартов, необходимых для работ/услуг по технической защите конфиденциальной информации"
+    approved: "2024-12-10"
+    current_index_checked_at: "2026-06-10"
+    current_status: CURRENT_LICENSING_CONTEXT
+    applicability_guard: "LICENSED_TZI_WORKS_SERVICES_ONLY; never infer a universal PDN-operator duty"
+    active_inventory_promotion: HOLD_UNTIL_OFFICIAL_FSTEC_FILE_ROUTE_CAPTURED
+    exact_artifact_status: PENDING_OFFICIAL_FILE_ROUTE
+
 next_gate:
-  - rerun exact official capture for PP1119, FAPSI152 and FSB66 through newly registered Pravo routes under fail-closed identity checking
+  - rerun exact official capture for PP1119, PP313, PP79, FAPSI152 and FSB66 through registered Pravo routes under fail-closed identity checking
   - resolve exact official capture for FSB378 without accepting third-party bytes
-  - capture guarded PP313 and PP79 base official publications without promoting licensing to a universal PDN duty
   - resolve exact primary route for FSB173/2010
-  - register only those additional FSTEC methodologies/catalogues whose applicability to an ISPDn is evidenced by an explicit locator
+  - obtain exact official FSTEC files for guarded methodical candidates before active inventory promotion
+  - prove an explicit ISPDn applicability locator before reusing vulnerability-management/catalogue requirements outside state/GIS/CII or licensed-TZI scopes
   - run structural/legal chunk compiler on immutable captures
   - reconcile concepts and definitions against existing global dictionary
   - extract atomic requirements with source locators
