@@ -1,0 +1,110 @@
+schema_version: "1.0"
+kind: ru-protected-information-master-inventory-delta
+base_inventory: "master-inventory.yaml"
+reconciliation_base_delta: "master-inventory-delta-2026-08-23T0225.yaml"
+checked_at: "2026-08-23T05:21:37+03:00"
+owner_stream: STREAM_3_SECTOR_OVERLAYS
+run_ref: "stream-3-run-2026-08-23T0521.yaml"
+status: APPEND_ONLY_RECONCILIATION_READY
+
+proof_floor:
+  - "Статья 9 307-ФЗ устанавливает самостоятельный режим аудиторской тайны; AUDIT_SECRET != PERSONAL_DATA."
+  - "Части 2 и 3 статьи 9 присутствуют в актуальном 2026 перечне обязательных требований для внешнего контроля аудиторских организаций, однако это не освобождает от проверки текущего byte-exact текста закона."
+  - "Действующая консолидация 307-ФЗ сверена по редакции от 04.08.2026; последняя source-level поправка 318-ФЗ меняет статью 5, не статью 9."
+  - "Последнее выявленное locator-specific изменение статьи 9 — 359-ФЗ от 02.07.2021; его официальный publication locator 0001202107020092 подтвержден."
+  - "Exact current authoritative bytes не получены; MIME, byte length, SHA-256 и retrieved_at не придуманы."
+
+counter_state_before_reconciled: {found: 27, downloaded: 9, immutable: 9, pending: 16, reused: 2, primary_publication_verified: 10, sectors_registered: 19}
+counter_state_after_reconciliation:
+  found: 28
+  downloaded: 9
+  immutable: 9
+  pending: 17
+  reused: 2
+  primary_publication_verified: 10
+  sectors_registered: 20
+  new_sources_this_run: 1
+  existing_source_nodes_operationalized: 0
+  new_immutable_this_run: 0
+  exact_binary_downloads_this_run: 0
+  current_protected_locators_crosschecked_this_run: 6
+  pdn_overlap_candidates_added_this_run: 1
+  cross_regime_candidates_added_this_run: 2
+  current_version_events_reconciled_this_run: 2
+  applicability_edges_promoted_this_run: 0
+  legal_conflicts_confirmed_this_run: 0
+
+source_added:
+  source_id: SEC-SRC-RU-FZ-307-2008-A9
+  source_card: "security-corpora/RU/protected-information/source/SEC-SRC-RU-FZ-307-2008-A9.yaml"
+  sector: audit-professional-services
+  regimes: [audit_secrecy, audit_information_confidentiality]
+  state: NEW_PRIMARY_ACT_IDENTIFIED_CURRENT_LOCATOR_CROSSCHECKED_LATEST_LOCATOR_AMENDMENT_PUBLICATION_VERIFIED_EXACT_CURRENT_ARTIFACT_PENDING_VERSION_CHAIN_PARTIAL
+  act_identity:
+    title: "Федеральный закон от 30.12.2008 № 307-ФЗ «Об аудиторской деятельности»"
+    current_official_locator: "https://pravo.gov.ru/proxy/ips/?docbody=&link_id=0&nd=102127051&bpa=cd00000&bpas=cd00000&intelsearch=307-%F4%E7++&firstDoc=1"
+    current_consolidated_crosscheck: "ред. от 04.08.2026"
+  protected_locators:
+    - {locator: "статья 9 часть 1", concept: AUDIT_SECRET_SCOPE, state: CURRENT_TEXT_CROSSCHECKED}
+    - {locator: "статья 9 часть 2", concept: AUDIT_CONFIDENTIALITY_DUTY, state: CURRENT_2026_REGULATORY_OBLIGATION_LOCATOR_CONFIRMED}
+    - {locator: "статья 9 часть 3", concept: AUDIT_NON_DISCLOSURE_TRANSFER_RESTRICTION, state: CURRENT_2026_REGULATORY_OBLIGATION_LOCATOR_CONFIRMED}
+    - {locator: "статья 9 часть 3.1", concept: BANK_OF_RUSSIA_SPECIAL_TRANSFER_RULE, state: CURRENT_TEXT_CROSSCHECKED_359FZ_EVENT_VERIFIED}
+    - {locator: "статья 9 часть 4", concept: STATUTORY_DISCLOSURE_EXCEPTION, state: CURRENT_TEXT_CROSSCHECKED}
+    - {locator: "статья 9 части 5-6", concept: DOWNSTREAM_CONFIDENTIALITY_AND_DAMAGE_REMEDY, state: CURRENT_TEXT_CROSSCHECKED_359FZ_EVENT_VERIFIED}
+  pdn_relation:
+    state: POSSIBLE_DUAL_REGIME_ON_SCENARIO_PROOF_ONLY
+    guard: "Resolve data subject, fields, operation, purpose, audit actor, recipient, consent/special legal basis and lawful disclosure route. OVERLAP != APPLICABILITY."
+  capture_backlog: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-307-2008-A9-version-capture-pending.json"
+
+version_chain_delta:
+  state: VERSION_CHAIN_PARTIAL_LOCATOR_SPECIFIC_CURRENT_RECONCILED
+  current_consolidated_revision: "2026-08-04"
+  current_source_level_event:
+    act: "318-ФЗ от 04.08.2026"
+    changed_locator: "статья 5"
+    effect_on_article9: NONE_IDENTIFIED
+    state: CURRENT_SOURCE_LEVEL_EVENT_CROSSCHECKED
+  latest_identified_article9_event:
+    act: "359-ФЗ от 02.07.2021"
+    official_publication_id: "0001202107020092"
+    official_publication_date: "2021-07-02"
+    official_url: "https://publication.pravo.gov.ru/document/0001202107020092"
+    affected_locators: ["статья 9 часть 3.1", "статья 9 часть 5", "статья 9 часть 6"]
+    effective_from: "2022-01-01"
+    state: OFFICIAL_PUBLICATION_LOCATOR_VERIFIED_CURRENT_AND_AUTHORITY_HOSTED_TEXT_CROSSCHECKED
+  earlier_locator_events_pending_exact_primary_capture:
+    - {act: "200-ФЗ от 11.07.2011", affected_locator: "статья 9 часть 2 / downstream confidentiality wording"}
+    - {act: "403-ФЗ от 01.12.2014", affected_locator: "статья 9 часть 1 пункт 2 / related recipient context"}
+
+relationship_delta:
+  - {target: "152-ФЗ", type: POSSIBLE_DUAL_REGIME_ON_SCENARIO_PROOF_ONLY, state: APPLICABILITY_REVIEW_REQUIRED}
+  - {target: "SEC-SRC-RU-LAW-395-1", type: BANKING_SECRECY_AUDIT_MATERIAL_OVERLAP_CANDIDATE, state: RELATION_CANDIDATE_NOT_REGIME_EQUIVALENCE}
+  - {target: "98-ФЗ от 29.07.2004", type: COMMERCIAL_SECRET_AUDIT_MATERIAL_OVERLAP_CANDIDATE, state: DISCOVERY_RELATION_ONLY}
+
+acquisition_delta:
+  durable_immutable_artifacts_added: 0
+  exact_binary_downloads_succeeded: 0
+  official_current_locator_identified: true
+  authority_hosted_historical_pdf_identified: true
+  authority_hosted_historical_pdf_revision: "2021-12-30; изменения до 2022-07-01"
+  direct_historical_pdf_download_attempted: true
+  direct_historical_pdf_download_result: DOWNLOAD_FAILED_RUNTIME
+  official_current_artifact:
+    retrieved_at: null
+    mime: null
+    byte_length: null
+    sha256: null
+  blocker: >-
+    Current official integrated text locator is known and a Federal Treasury-hosted historical PDF is discoverable, but this runtime did not obtain reliable
+    byte-exact current authoritative bytes. The historical PDF direct download also failed. No interface metadata was converted into a fingerprint.
+
+proof_floor_effect:
+  executable_rules_changed: false
+  applicability_edges_promoted: 0
+  duplicate_source_nodes_created: 0
+  legal_conflicts_confirmed: 0
+  source_nodes_added: 1
+
+merge_rule: >-
+  Reconcile after master-inventory-delta-2026-08-23T0225.yaml. Aggregate Stream 3 counters become 28 found / 9 downloaded /
+  9 immutable / 17 pending / 2 reused. Audit secrecy is a new source node; acquisition counters remain unchanged until exact current authoritative bytes are durably stored.
