@@ -1,0 +1,97 @@
+schema_version: 1
+run_id: RU_PD_STREAM1_2026_08_23T1707_0300
+stream_id: RU_PD_STREAM_1_CORE_REGULATION
+recorded_at: "2026-08-23T17:07:30+03:00"
+status: ACTIVE
+
+scope:
+  domain: RU_personal_data_core
+  overlay_expansion: false
+  priority:
+    - SEC-SRC-RU-152FZ-2026-07-26
+    - SEC-SRC-RU-PP687-2008
+    - SEC-SRC-RU-PP211-2012
+    - SEC-SRC-RU-RKN18-2021
+    - SEC-SRC-RU-RKN128-2022
+    - SEC-SRC-RU-RKN178-2022
+    - SEC-SRC-RU-RKN179-2022
+    - SEC-SRC-RU-RKN180-2022
+    - SEC-SRC-RU-RKN140-2025
+    - SEC-SRC-RU-PP1154-2025
+
+proof_floor:
+  immutable_requires:
+    - official_registered_source_route
+    - retrieved_at
+    - mime
+    - exact_byte_length
+    - sha256
+    - accepted_manifest
+  identity_normalization_may_change_raw_bytes: false
+  semantic_promotion_without_locator_review: false
+
+freshness_checks:
+  current_152fz:
+    result: CURRENT_REVISION_2026_07_26_CONFIRMED
+    evidence_class: CURRENT_LEGAL_INDEX_CROSS_CHECK
+    note: "Current index still presents 152-FZ in revision of 26.07.2026 and includes No. 265-FZ in its amendment chain."
+  pp687:
+    result: CURRENT_REVISION_CONFIRMED
+    evidence_class: OFFICIAL_GOVERNMENT_SOURCE_RECORD
+    note: "PP687 remains pinned to the revision of PP12 dated 18.01.2025, effective 26.01.2025, valid through 01.09.2030."
+  rkn128:
+    result: CURRENT_NODE_RETAINED
+    evidence_class: CURRENT_LEGAL_INDEX_CROSS_CHECK
+    note: "Order No. 128 remains present in current legal indexes; no enacted replacement publication was promoted in this run."
+
+acquisition_snapshot:
+  identified: 22
+  raw_downloaded_exact: 20
+  immutable_sha256_verified: 20
+  atomized_existing_proposed: 4
+  atomized_verified: 0
+  pending_raw_capture: 2
+  raw_capture_coverage_ratio: 0.9091
+  pending:
+    - SEC-SRC-RU-152FZ-2026-07-26
+    - SEC-SRC-RU-PP687-2008
+  latest_reuse_first_generic_run:
+    started_at: "2026-08-23T14:07:30.344696Z"
+    finished_at: "2026-08-23T14:07:30.363960Z"
+    targets_total: 21
+    reused_immutable: 20
+    network_targets_attempted: 0
+    new_immutable_captured: 0
+    reuse_ratio: 0.9523809523809523
+
+changes_this_run:
+  - type: IDENTITY_GUARD_NORMALIZATION
+    source_id: SEC-SRC-RU-PP687-2008
+    result: APPLIED
+    detail: >-
+      Dedicated PP687 acquisition now normalizes only its inspection view: HTML entities are unescaped,
+      tags are collapsed, Unicode is NFKC-normalized, non-breaking spaces and dash variants are normalized,
+      and regex identity gates are applied to issuer, No. 687, personal-data and non-automated-processing markers.
+      Immutable raw bytes remain unchanged and continue to be hashed exactly as received.
+  - type: IDENTITY_GUARD_NORMALIZATION
+    source_id: SEC-SRC-RU-152FZ-2026-07-26
+    result: APPLIED
+    detail: >-
+      Current-root inspection now applies the same non-destructive HTML/Unicode normalization before checking
+      152-FZ, personal-data and No. 265-FZ current-revision markers. The raw capture is never rewritten by this step.
+  - type: REUSE_FIRST_ACQUISITION
+    result: CONFIRMED
+    detail: "20 immutable artifacts were reused from manifests; no generic network acquisition was required in the latest run."
+
+new_immutable_confirmed_this_run: 0
+semantic_promotions_this_run: 0
+
+remaining_blockers:
+  - source_id: SEC-SRC-RU-152FZ-2026-07-26
+    gate: "registered official IPS bytes + normalized identity view confirming 152-FZ/personal-data/No.265-FZ + MIME + exact bytes + SHA-256 + accepted manifest"
+  - source_id: SEC-SRC-RU-PP687-2008
+    gate: "registered official Government/IPS bytes + normalized identity view confirming PP687/non-automated processing + MIME + exact bytes + SHA-256 + accepted manifest"
+
+quality_note: >-
+  This run hardened acceptance of legitimate official HTML representations without lowering the proof floor.
+  No semantic status was promoted and no source was counted immutable without an accepted exact-byte manifest.
