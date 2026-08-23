@@ -1,0 +1,59 @@
+schema_version: "1.0"
+id: SEC-SRC-RU-FSTEC-UPDATE-TEST-METHOD-2022
+kind: security-methodical-source
+status: METADATA_VERIFIED
+title: "Методический документ ФСТЭК России от 28.10.2022 «Методика тестирования обновлений безопасности программных, программно-аппаратных средств»"
+jurisdiction: RU
+issuer: "ФСТЭК России"
+document:
+  type: methodical_document
+  number: "б/н"
+  adopted_date: "2022-10-28"
+  current_revision_date: "2022-10-28"
+  checked_at: "2026-08-23"
+  status_note: >-
+    Методика определяет порядок и содержание тестирования обновлений безопасности программных и
+    программно-аппаратных средств. Ее актуальное использование подтверждается ссылкой из действующей
+    Методики оценки критичности уязвимостей ФСТЭК от 30.06.2025 (п. 23) и из Руководства по управлению
+    уязвимостями от 17.05.2023. Отдельного акта о прекращении применения этой Методики не выявлено.
+  scope_note: >-
+    Документ является методическим источником для процесса тестирования обновлений в тех режимах,
+    где соответствующий процесс управления уязвимостями/защиты информации применим. Сам по себе он
+    не создает универсальную обязанность для любой частной ИСПДн.
+canonical_source:
+  publisher: "ФСТЭК России"
+  landing_page: "https://bdu.fstec.ru/documents/30"
+  url: "https://fstec.ru/files/496/---28--2022-409/893/---28--2022-.pdf"
+  expected_mime: "application/pdf"
+  freshness_check:
+    checked_at: "2026-08-23"
+    result: CURRENT_USE_CONFIRMED_BY_2023_GUIDE_AND_2025_CRITICALITY_METHOD
+capture:
+  fingerprint_status: PENDING
+  semantic_status: UNCHANGED
+relations:
+  - type: REFERENCED_BY
+    target: SEC-SRC-RU-FSTEC-VULN-MGMT-GUIDE-2023
+    locator: "section 6; footnote 10"
+  - type: REFERENCED_BY
+    target: SEC-SRC-RU-FSTEC-VULN-CRIT-METHOD-2025
+    locator: "point 23"
+  - type: SUPPORTS_PROCESS_STEP
+    target: SECURITY_UPDATE_TESTING
+applicability_guard:
+  direct_scope: METHODICAL_DEPENDENCY_WHERE_FSTEC_VULNERABILITY_OR_UPDATE_MANAGEMENT_IS_APPLICABLE
+  conditional_scope: OTHER_SYSTEMS_ONLY_WHEN_ANOTHER_NPA_OR_FSTEC_METHODICAL_DOCUMENT_REQUIRES_OR_INVOKES_THIS_METHOD
+  generic_private_ispdn: NOT_PROVEN_BY_THIS_METHOD_ALONE
+  neighboring_regimes: DO_NOT_AUTO_PROPAGATE_GIS_KII_OR_LICENSE_REQUIREMENTS_INTO_GENERIC_PDN_SCOPE
+provenance:
+  official_bdu_landing_identified: true
+  official_fstec_pdf_route_identified: true
+  current_use_cross_verified_against_2023_and_2025_fstec_methodical_documents: true
+  review_required: true
+agent_rule: >-
+  Keep this Method as a separately versioned dependency of vulnerability/update management. Do not infer a
+  generic private-ISPDn obligation without an applicability edge. Exact official bytes, MIME, byte length and
+  SHA-256 are required before immutable promotion.
+inventory_registration:
+  role: fstec_security_update_testing_methodical_context
+  applicability: EXPLICIT_FSTEC_VULNERABILITY_OR_UPDATE_MANAGEMENT_CONTEXT_ONLY
