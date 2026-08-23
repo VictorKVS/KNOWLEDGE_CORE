@@ -3,8 +3,9 @@
 
 This is a transport fallback only. It uses the same registered official IPS URL and
 the same current-root metadata gate as pdn_current_root_acquire.py. A response is
-accepted only if it contains the 152-FZ and personal-data identity markers. Raw capture
-never promotes semantic/extraction status.
+accepted only if it contains the 152-FZ/personal-data identity markers and the amendment
+marker for the pinned current revision. Raw capture never promotes semantic/extraction
+status.
 """
 from __future__ import annotations
 
@@ -24,13 +25,15 @@ from pdn_core_acquire import (
     top_level_section,
 )
 from pdn_current_root_acquire import (
+    CURRENT_REVISION_EFFECTIVE_FROM,
+    CURRENT_REVISION_TRIGGER,
     METADATA_STATUS_RE,
     SOURCE_ID,
     SOURCE_RECORD,
     current_root_identity_ok,
 )
 
-UA = "KNOWLEDGE_CORE-pdn-current-root-curl/1.0 (+https://github.com/VictorKVS/KNOWLEDGE_CORE)"
+UA = "KNOWLEDGE_CORE-pdn-current-root-curl/1.1 (+https://github.com/VictorKVS/KNOWLEDGE_CORE)"
 RAW_DIR = CORPUS / "raw" / SOURCE_ID
 
 
@@ -95,13 +98,14 @@ def main() -> int:
     identity_ok, markers = current_root_identity_ok(data)
     if not identity_ok:
         raise RuntimeError(
-            "refuse current-root curl capture: official response lacks required 152-FZ/personal-data identity markers"
+            "refuse current-root curl capture: official response lacks required "
+            "152-FZ/personal-data/current-revision markers"
         )
 
     artifact, sha = write_immutable(data)
     retrieved = dt.datetime.now(dt.timezone.utc).isoformat().replace("+00:00", "Z")
     manifest: dict[str, object] = {
-        "schema_version": "1.5",
+        "schema_version": "1.6",
         "source_id": SOURCE_ID,
         "source_document_number": expected_number,
         "capture_kind": "official_canonical_snapshot",
@@ -113,7 +117,7 @@ def main() -> int:
         "sha256": sha,
         "artifact_ref": str(artifact.relative_to(ROOT)).replace("\\", "/"),
         "source_record_ref": str(SOURCE_RECORD.relative_to(ROOT)).replace("\\", "/"),
-        "capture_policy": "current-root-version-identity-cross-verified-curl-fallback-with-content-markers",
+        "capture_policy": "current-root-version-identity-cross-verified-curl-with-content-and-revision-markers",
         "proof": {
             "official_route": True,
             "publication_id_scoped_to_source_document_section": True,
@@ -124,10 +128,13 @@ def main() -> int:
             "metadata_status_gate": "VERSION_IDENTITY_CROSS_VERIFIED",
             "canonical_content_identity_markers_ok": True,
             "canonical_content_identity_markers": markers,
+            "current_revision_marker_ok": True,
+            "current_revision_trigger": CURRENT_REVISION_TRIGGER,
+            "current_revision_effective_from": CURRENT_REVISION_EFFECTIVE_FROM,
             "transport_fallback_only": True,
         },
         "semantic_status_unchanged": True,
-        "review_note": "Capture proves exact bytes from the registered official IPS route and source identity markers only; current-version locator/delta review remains required before extraction promotion.",
+        "review_note": "Capture proves exact bytes from the registered official IPS route, source identity and pinned current-revision markers only; locator/delta review remains required before extraction promotion.",
     }
     MANIFEST_DIR.mkdir(parents=True, exist_ok=True)
     (MANIFEST_DIR / f"{SOURCE_ID}.json").write_text(
@@ -140,7 +147,9 @@ def main() -> int:
         "byte_length": len(data),
         "sha256": sha,
         "artifact_ref": manifest["artifact_ref"],
-        "identity_markers": markers,
+        "identity_and_revision_markers": markers,
+        "current_revision_trigger": CURRENT_REVISION_TRIGGER,
+        "current_revision_effective_from": CURRENT_REVISION_EFFECTIVE_FROM,
         "semantic_status_unchanged": True,
     }, ensure_ascii=False))
     return 0
