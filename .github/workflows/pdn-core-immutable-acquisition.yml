@@ -74,8 +74,8 @@ jobs:
         shell: bash
         run: |
           set +e
-          python TOOLS/pdn_pp687_acquire.py
-          rc=$?
+          python TOOLS/pdn_pp687_acquire.py 2>&1 | tee /tmp/pdn-pp687-result.log
+          rc=${PIPESTATUS[0]}
           echo "pp687_exit_code=$rc" >> "$GITHUB_OUTPUT"
           exit 0
 
@@ -84,8 +84,8 @@ jobs:
         shell: bash
         run: |
           set +e
-          python TOOLS/pdn_current_root_curl_acquire.py
-          rc=$?
+          python TOOLS/pdn_current_root_curl_acquire.py 2>&1 | tee /tmp/pdn-current-root-curl-result.log
+          rc=${PIPESTATUS[0]}
           echo "current_root_curl_exit_code=$rc" >> "$GITHUB_OUTPUT"
           exit 0
 
@@ -95,10 +95,49 @@ jobs:
         shell: bash
         run: |
           set +e
-          python TOOLS/pdn_current_root_acquire.py
-          rc=$?
+          python TOOLS/pdn_current_root_acquire.py 2>&1 | tee /tmp/pdn-current-root-urllib-result.log
+          rc=${PIPESTATUS[0]}
           echo "current_root_exit_code=$rc" >> "$GITHUB_OUTPUT"
           exit 0
+
+      - name: Persist dedicated-route attempt telemetry
+        shell: bash
+        run: |
+          python - <<'PY'
+          import datetime as dt
+          import json
+          from pathlib import Path
+
+          run_path = Path("security-corpora/RU/152-FZ/PDN_ACQUISITION_RUN.json")
+          try:
+              run = json.loads(run_path.read_text(encoding="utf-8"))
+          except Exception:
+              run = {"kind": "pdn-core-acquisition-run"}
+
+          def read_result(path: str):
+              p = Path(path)
+              if not p.exists():
+                  return {"status": "NOT_RUN"}
+              lines = [line.strip() for line in p.read_text(encoding="utf-8", errors="replace").splitlines() if line.strip()]
+              for line in reversed(lines):
+                  try:
+                      obj = json.loads(line)
+                  except Exception:
+                      continue
+                  if isinstance(obj, dict):
+                      return obj
+              return {"status": "UNPARSEABLE_OUTPUT", "output_tail": "\n".join(lines[-8:])[-4000:]}
+
+          observed = dt.datetime.now(dt.timezone.utc).isoformat().replace("+00:00", "Z")
+          run["dedicated_route_attempt_telemetry"] = {
+              "observed_at": observed,
+              "pp687": read_result("/tmp/pdn-pp687-result.log"),
+              "current_root_curl": read_result("/tmp/pdn-current-root-curl-result.log"),
+              "current_root_urllib": read_result("/tmp/pdn-current-root-urllib-result.log"),
+              "proof_rule": "Attempt telemetry records transport outcomes only and never promotes semantic or extraction status."
+          }
+          run_path.write_text(json.dumps(run, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+          PY
 
       - name: Sync dedicated-route immutable evidence to source records and master inventory
         shell: bash
