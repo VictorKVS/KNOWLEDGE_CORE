@@ -11,6 +11,7 @@ STACK = ROOT / "security-corpora" / "RU" / "152-FZ" / "security-stack"
 SOURCE_DIR = STACK / "source"
 RUN_FILE = STACK / "PDN_SECURITY_STACK_ACQUISITION_RUN.json"
 STATUS_FILE = STACK / "STREAM2_STATUS_2026-08-22.yaml"
+INVENTORY_FILE = STACK / "PDN_SECURITY_STACK_SOURCE_INVENTORY.yaml"
 
 STATUS_RE = re.compile(r"(?m)^status:\s*([^\s#]+)\s*$")
 PUB_RE = re.compile(r"(?m)^  official_publication_id:\s*[\"']?[0-9]{16}[\"']?\s*$")
@@ -23,7 +24,7 @@ def replace_scalar(text: str, key: str, value: object) -> str:
 
 
 def main() -> int:
-    if not RUN_FILE.is_file() or not STATUS_FILE.is_file():
+    if not RUN_FILE.is_file() or not STATUS_FILE.is_file() or not INVENTORY_FILE.is_file():
         print("STREAM2_TELEMETRY_INPUT_MISSING")
         return 2
     run = json.loads(RUN_FILE.read_text(encoding="utf-8"))
@@ -69,6 +70,17 @@ def main() -> int:
     state = "IMMUTABLE_CAPTURE_COMPLETE" if int(run["pending_after_run"]) == 0 else "PARTIAL_IMMUTABLE_CAPTURED"
     text = replace_scalar(text, "status", state)
     STATUS_FILE.write_text(text, encoding="utf-8")
+
+    inventory = INVENTORY_FILE.read_text(encoding="utf-8")
+    inventory_values = {
+        "official_publication_id_targets": publication_targets,
+        "official_canonical_targets": canonical_targets,
+        "exact_official_route_unresolved": len(run.get("unrouted_source_ids", [])),
+    }
+    for key, value in inventory_values.items():
+        inventory = replace_scalar(inventory, key, value)
+    INVENTORY_FILE.write_text(inventory, encoding="utf-8")
+
     print(json.dumps({"status": state, **static_values, **latest_values}, ensure_ascii=False))
     return 0
 
