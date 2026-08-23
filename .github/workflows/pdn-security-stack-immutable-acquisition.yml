@@ -9,6 +9,7 @@ on:
     paths:
       - ".github/workflows/pdn-security-stack-immutable-acquisition.yml"
       - "TOOLS/pdn_security_stack_acquire.py"
+      - "TOOLS/pdn_security_stack_curl_pending.py"
       - "TOOLS/pdn_security_stack_capture_gate.py"
       - "TOOLS/pdn_security_stack_reconcile_telemetry.py"
       - "TOOLS/pdn_security_stack_reconcile_master.py"
@@ -31,7 +32,11 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: Reuse immutable captures and acquire technical/crypto deltas
+      - name: Try pending registered official legal-text routes through guarded curl
+        shell: bash
+        run: python TOOLS/pdn_security_stack_curl_pending.py
+
+      - name: Reuse immutable captures and acquire remaining technical/crypto deltas
         shell: bash
         run: python TOOLS/pdn_security_stack_acquire.py
 
@@ -68,4 +73,6 @@ jobs:
 
       - name: Surface stream telemetry
         shell: bash
-        run: cat security-corpora/RU/152-FZ/security-stack/PDN_SECURITY_STACK_ACQUISITION_RUN.json
+        run: |
+          cat security-corpora/RU/152-FZ/security-stack/PDN_SECURITY_STACK_CURL_ATTEMPT.json
+          cat security-corpora/RU/152-FZ/security-stack/PDN_SECURITY_STACK_ACQUISITION_RUN.json
