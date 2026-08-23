@@ -10,6 +10,7 @@ on:
       - ".github/workflows/pdn-security-stack-immutable-acquisition.yml"
       - "TOOLS/pdn_security_stack_acquire.py"
       - "TOOLS/pdn_security_stack_capture_gate.py"
+      - "TOOLS/pdn_security_stack_reconcile_telemetry.py"
       - "security-corpora/RU/152-FZ/security-stack/**"
 
 permissions:
@@ -36,6 +37,10 @@ jobs:
       - name: Fail closed on generic or wrong legal-text portal captures
         shell: bash
         run: python TOOLS/pdn_security_stack_capture_gate.py
+
+      - name: Reconcile Stream-2 telemetry from accepted run record
+        shell: bash
+        run: python TOOLS/pdn_security_stack_reconcile_telemetry.py
 
       - name: Commit immutable artifacts, manifests, source evidence and telemetry
         shell: bash
