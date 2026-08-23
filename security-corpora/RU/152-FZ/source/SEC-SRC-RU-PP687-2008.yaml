@@ -1,4 +1,4 @@
-schema_version: "1.3"
+schema_version: "1.4"
 id: SEC-SRC-RU-PP687-2008
 kind: security-regulatory-source
 status: METADATA_VERIFIED
@@ -12,17 +12,17 @@ document:
   adopted_date: "2008-09-15"
   current_revision_note: "В редакции Постановления Правительства РФ от 18.01.2025 № 12"
   valid_until: "2030-09-01"
-  checked_at: "2026-08-22"
+  checked_at: "2026-08-23"
 
 canonical_source:
   publisher: "Правительство России"
   url: "https://government.ru/docs/all/65436/"
   origin_verified: true
   freshness_check:
-    checked_at: "2026-08-22"
+    checked_at: "2026-08-23"
     result: CURRENT_REVISION_CONFIRMED
     evidence_note: >-
-      Official Government portal rechecked on 22.08.2026 still presents PP RF No. 687 in revision of
+      Official Government portal rechecked on 23.08.2026 still presents PP RF No. 687 in revision of
       18.01.2025 No. 12 and states that the resolution remains valid through 01.09.2030.
   alternate_official_routes:
     - publisher: "Официальный интернет-портал правовой информации / ИПС Право"
@@ -42,20 +42,20 @@ capture:
   sha256: ""
   fingerprint_status: PENDING_RAW_CAPTURE
   last_attempt:
-    started_at: "2026-08-22T15:37:23.797765Z"
-    finished_at: "2026-08-22T15:55:36.095620Z"
+    started_at: "2026-08-22T18:50:54.872805Z"
+    finished_at: "2026-08-22T19:09:07.014160Z"
     route: official_canonical_snapshot
     result: TIMEOUT
     error: "GET failed: https://government.ru/docs/all/65436/: URLError(TimeoutError('timed out'))"
     semantic_promotion: false
   acquisition_request:
     status: RUN_REQUESTED_GUARDED
-    requested_at: "2026-08-22T20:09:00Z"
+    requested_at: "2026-08-23T02:08:00Z"
     route: official_canonical_snapshot_with_registered_ips_fallback
     reason: >-
-      Retry the Government canonical URL and, if transport fails, the newly registered official pravo.gov.ru
-      IPS route nd=102124251. Require returned official bytes, retrieved_at, MIME, exact byte length, SHA-256,
-      identity-marker validation and accepted manifest before immutable promotion.
+      Current status was reconfirmed on the official Government page. Retry the verified official IPS route first
+      and keep the Government canonical URL as the second route. Require returned official bytes, retrieved_at,
+      MIME, exact byte length, SHA-256, identity-marker validation and accepted manifest before immutable promotion.
   note: "Official text metadata/current revision verified; byte-exact raw artifact not yet accepted."
 
 relations:
@@ -66,7 +66,7 @@ relations:
     note: "Rebased from the superseded 2025-09-01 root; no change to PP 687 semantics is inferred."
 
 provenance:
-  checked_at: "2026-08-22"
+  checked_at: "2026-08-23"
   review_required: true
 
 agent_rule: "Do not promote to VERIFIED_FOR_EXTRACTION until immutable raw capture, exact byte length and SHA-256 are recorded."
