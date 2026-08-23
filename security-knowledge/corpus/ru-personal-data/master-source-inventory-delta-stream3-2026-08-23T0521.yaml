@@ -1,0 +1,69 @@
+schema_version: "1.0"
+kind: ru-personal-data-master-source-inventory-delta
+owner_stream: STREAM_3_SECTOR_OVERLAYS
+checked_at: "2026-08-23T05:21:37+03:00"
+source_id: SEC-SRC-RU-FZ-307-2008-A9
+source_card: "security-corpora/RU/protected-information/source/SEC-SRC-RU-FZ-307-2008-A9.yaml"
+status: APPEND_ONLY_RELATIONSHIP_DELTA
+
+relationship:
+  target: "152-ФЗ"
+  type: POSSIBLE_DUAL_REGIME_ON_SCENARIO_PROOF_ONLY
+  state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  primary_locator: "статья 9 Федерального закона от 30.12.2008 № 307-ФЗ"
+  current_text_finding: >-
+    Статья 9 устанавливает самостоятельный режим аудиторской тайны: широкий состав сведений и документов, обязанность конфиденциальности,
+    запрет передачи/разглашения без предусмотренного законом основания и специальные lawful-disclosure контексты.
+  evidence_quality:
+    official_current_locator: "https://pravo.gov.ru/proxy/ips/?docbody=&link_id=0&nd=102127051&bpa=cd00000&bpas=cd00000&intelsearch=307-%F4%E7++&firstDoc=1"
+    official_regulator_2026_context: "действующий перечень обязательных требований указывает части 2 и 3 статьи 9 для контроля аудиторских организаций"
+    authority_hosted_historical_text: "Росказначейство PDF, ред. 30.12.2021"
+    current_consolidated_crosscheck: "редакция 307-ФЗ от 04.08.2026"
+    exact_current_authoritative_binary: PENDING
+  applicability_guard: >-
+    Не выводить применимость 152-ФЗ только из факта аудита или наличия аудиторской тайны. Перед применением конкретного требования определить
+    субъект данных, состав сведений, операцию, цель, роль аудиторской организации/аудируемого лица/получателя, правовое основание и канал передачи.
+    AUDIT_SECRET != PERSONAL_DATA; OVERLAP != APPLICABILITY.
+
+related_protected_information:
+  regime: audit_secrecy
+  confidentiality_locators: ["статья 9 часть 2", "статья 9 часть 3", "статья 9 часть 3.1", "статья 9 часть 5"]
+  state: SPECIAL_REGIME_LINKED_NOT_MERGED_WITH_PDN
+  note: >-
+    Аудиторская тайна может содержать персональные данные, банковскую/коммерческую тайну и иные защищаемые сведения,
+    но каждый режим сохраняет самостоятельные юридические предпосылки и правила раскрытия.
+
+cross_regime_candidates:
+  - target: "SEC-SRC-RU-LAW-395-1"
+    type: BANKING_SECRECY_AUDIT_MATERIAL_OVERLAP
+    state: RELATIONSHIP_CONTEXT_ONLY
+    guard: "Не объединять банковскую и аудиторскую тайну; проверять конкретные сведения и законный канал доступа аудитора."
+  - target: "98-ФЗ от 29.07.2004"
+    type: COMMERCIAL_SECRET_AUDIT_MATERIAL_OVERLAP
+    state: DISCOVERY_RELATION_ONLY
+    guard: "Не считать все материалы аудита коммерческой тайной без самостоятельных условий 98-ФЗ."
+
+version_guard:
+  latest_source_level_event_crosschecked: "318-ФЗ от 04.08.2026 -> статья 5; статья 9 не затронута"
+  latest_identified_article9_event:
+    act: "359-ФЗ от 02.07.2021"
+    official_publication_id: "0001202107020092"
+    effective_from: "2022-01-01"
+    affected: ["часть 3.1", "часть 5", "часть 6"]
+  current_consolidated_revision_crosschecked: "2026-08-04"
+  full_chain: PARTIAL
+
+capture_guard:
+  exact_current_binary: PENDING
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  executable_use: false
+
+counter_effect:
+  pdn_overlap_candidates_added: 1
+  cross_regime_candidates_added: 2
+  applicability_edges_promoted: 0
+  executable_rules_changed: false
+  duplicate_sources_created: 0
