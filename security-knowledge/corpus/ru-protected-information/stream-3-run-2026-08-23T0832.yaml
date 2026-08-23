@@ -1,0 +1,110 @@
+schema_version: "1.0"
+kind: stream-3-sector-library-run
+run_id: STREAM3-2026-08-23T0832
+started_at: "2026-08-23T08:32:44+03:00"
+owner_stream: STREAM_3_SECTOR_OVERLAYS
+status: COMPLETED_WITH_EXACT_CAPTURE_PENDING
+
+objective: >-
+  Discover and register primary sectoral/special protected-information regimes intersecting personal-data processing without inventing applicability;
+  verify currentness/version chain; obtain exact official artifacts when runtime permits.
+
+reconciliation_base:
+  ru_protected_information_delta: "master-inventory-delta-2026-08-23T0521.yaml"
+  counters: {found: 28, downloaded: 9, immutable: 9, pending: 17, reused: 2, primary_publication_verified: 10, sectors_registered: 20}
+
+discovery:
+  query_cluster: ["тайна ломбарда", "196-ФЗ", "статья 3", "профессиональная тайна ломбарда", "Банк России ломбарды"]
+  github_dedupe:
+    searches: ["SEC-SRC-RU-FZ-196", "ломбард", "тайна ломбарда"]
+    existing_source_found: false
+  source_selected:
+    source_id: SEC-SRC-RU-FZ-196-2007-A3
+    reason: "Independent statutory professional-secrecy regime tied to borrower/depositor information; natural-person loan context creates a high-value PDN overlap candidate."
+
+primary_and_currentness_evidence:
+  - type: OFFICIAL_CURRENT_INTEGRATED_TEXT_LOCATOR
+    authority: "Официальный интернет-портал правовой информации / Интегрированный банк"
+    url: "https://pravo.gov.ru/proxy/ips/?docbody=&nd=102115923"
+    state: IDENTIFIED_DOWNLOAD_FAILED_RUNTIME
+  - type: OFFICIAL_REGULATOR_ARTICLE3_CONFIRMATION
+    authority: "Банк России"
+    url: "https://www.cbr.ru/microfinance/explan/lombard/"
+    finding: >-
+      Банк России указывает, что в силу статьи 3 Закона № 196-ФЗ ломбард и его работники обязаны соблюдать конфиденциальность информации,
+      составляющей по части 1 статьи 3 профессиональную тайну, и отвечают за ее разглашение.
+    state: CURRENT_REGULATOR_CONTEXT_CONFIRMED
+  - type: CURRENT_CONSOLIDATION_CROSSCHECK
+    revision: "2024-12-28"
+    finding: "Article 3 remains; list of changing acts ends with 522-ФЗ от 28.12.2024."
+    state: SECONDARY_CROSSCHECK_ONLY
+  - type: OFFICIAL_LATEST_AMENDMENT_PUBLICATION
+    act: "522-ФЗ от 28.12.2024"
+    official_publication_id: "0001202412280035"
+    publication_date: "2024-12-28"
+    url: "https://publication.pravo.gov.ru/document/0001202412280035"
+    finding: "Current crosscheck identifies its pawnshop-law change at Article 2.1; no Article 3 change identified."
+    state: OFFICIAL_PUBLICATION_LOCATOR_VERIFIED
+
+version_chain:
+  state: PARTIAL_LOCATOR_SPECIFIC
+  current_consolidated_revision: "2024-12-28"
+  latest_source_level_event:
+    act: "522-ФЗ от 28.12.2024"
+    official_publication_id: "0001202412280035"
+    affected_locator: "Article 2.1"
+    article3_effect: NONE_IDENTIFIED
+  major_2020_event:
+    act: "196-ФЗ от 13.07.2020"
+    official_publication_locator_candidate: "0001202007130046"
+    article3_effect: NONE_IDENTIFIED_IN_CHECKED_AMENDMENT_LIST
+    exact_primary_binary: PENDING
+  article3_full_historical_chain: PARTIAL
+
+acquisition:
+  official_current_exact_bytes_obtained: false
+  latest_amendment_exact_pdf_bytes_obtained: false
+  current_locator_download_attempted: true
+  latest_amendment_page_fetch_attempted: true
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact_created: false
+  pending_manifest: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-196-2007-A3-version-capture-pending.json"
+  blocker: >-
+    Official current locator and latest amendment publication were identified, but direct current-law retrieval failed with DNS/timeout and the publication
+    page did not yield a reliable byte-exact PDF stream in this runtime. Displayed PDF size/page count was deliberately not used as fingerprint evidence.
+
+relations_added:
+  - {target: "152-ФЗ", type: POSSIBLE_DUAL_REGIME_ON_SCENARIO_PROOF_ONLY, applicability: NOT_PROMOTED}
+  - {target: "353-ФЗ от 21.12.2013", type: CONSUMER_CREDIT_PAWNSHOP_LOAN_CONTEXT, applicability: NOT_PROMOTED}
+  - {target: "115-ФЗ от 07.08.2001", type: AML_PAWNSHOP_SPECIAL_DUTY_CONTEXT, applicability: NOT_PROMOTED}
+
+outputs:
+  source_card: "security-corpora/RU/protected-information/source/SEC-SRC-RU-FZ-196-2007-A3.yaml"
+  capture_backlog: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-196-2007-A3-version-capture-pending.json"
+  ru_inventory_delta: "security-knowledge/corpus/ru-protected-information/master-inventory-delta-2026-08-23T0832.yaml"
+  pdn_inventory_delta: "security-knowledge/corpus/ru-personal-data/master-source-inventory-delta-stream3-2026-08-23T0832.yaml"
+
+counters_after_reconciliation:
+  found: 29
+  downloaded: 9
+  immutable: 9
+  pending: 18
+  reused: 2
+  primary_publication_verified: 10
+  sectors_registered: 21
+
+quality_gates:
+  duplicate_source_nodes_created: 0
+  applicability_edges_promoted: 0
+  legal_conflicts_confirmed: 0
+  executable_rules_changed: false
+  exact_fingerprint_synthesized: false
+
+next_priority:
+  - "Retry exact current official capture for 196-ФЗ and exact primary amendment capture for 522-ФЗ / 13.07.2020 amendment."
+  - "Continue special-regime discovery with media-source confidentiality (Law 2124-1 Article 41) after dedupe."
+  - "Then cover child-placement databank confidentiality (44-ФЗ Article 8) and financial-platform confidentiality (211-ФЗ Article 17) after dedupe."
+  - "Return to high-priority unresolved healthcare/education/public-sector exact captures as runtime permits."
