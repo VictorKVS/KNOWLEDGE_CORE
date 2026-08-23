@@ -1,0 +1,99 @@
+schema_version: "1.0"
+id: PDN-STREAM1-2026-08-23T2313+0300
+kind: pdn-core-production-run
+stream: 1
+observed_at: "2026-08-23T23:13:00+03:00"
+
+scope:
+  domain: RU-PDN-core
+  repository: VictorKVS/KNOWLEDGE_CORE
+  exclusions: "No sector overlay work except direct dependencies."
+
+freshness_checks:
+  - source_id: SEC-SRC-RU-152FZ-2026-07-26
+    result: CURRENT_REVISION_CONFIRMED
+    operative_revision_from: "2026-07-26"
+    current_amendment: "Федеральный закон от 26.07.2026 № 265-ФЗ"
+    note: >-
+      Fresh current-law indexes still identify the 26.07.2026 revision as operative. The consolidated current
+      form is not a separately published new act, so the raw-proof model remains a guarded official consolidated
+      snapshot plus the immutable primary amendment chain; this does not waive the exact-byte capture gate.
+  - source_id: SEC-SRC-RU-PP687-2008
+    result: CURRENT_REVISION_IDENTITY_UNCHANGED
+    operative_amendment: SEC-SRC-RU-PP12-2025
+    operative_from: "2025-01-26"
+    valid_through: "2030-09-01"
+
+changes_this_pass:
+  source_records_added: 0
+  canonical_routes_registered: 1
+  acquisition_helpers_added: 0
+  acquisition_helpers_hardened: 1
+  synchronizer_proof_rules_hardened: 1
+  semantic_promotions: 0
+  immutable_new_at_record_write: 0
+  details:
+    - >-
+      Registered the official Government 152-FZ page https://government.ru/docs/all/98196/ as a second guarded
+      transport route. It is not treated as current-version proof by registration alone and may only be accepted
+      when returned live bytes contain the existing 152-FZ/personal-data/No.265-FZ marker set.
+    - >-
+      Reworked pdn_current_root_curl_acquire.py to enumerate all official URLs already registered under the current
+      source card, try transport variants without inventing new source identities, and bind any accepted manifest
+      to the exact pre-registered source URL.
+    - >-
+      Reworked pdn_core_sync_capture.py so current consolidated 152-FZ snapshots are validated by registered-route
+      binding plus identity/current-revision content proof instead of an inapplicable publication-ID proof field.
+
+proof_floor:
+  current_152fz_required:
+    - pre-registered official route
+    - byte-exact returned content
+    - SHA-256 calculated from returned bytes
+    - 152-FZ identity marker
+    - personal-data identity marker
+    - No.265-FZ current-revision marker
+    - accepted manifest bound to a registered source URL
+    - semantic_status_unchanged
+  pp687_required:
+    - pre-registered official route
+    - byte-exact returned content
+    - SHA-256 calculated from returned bytes
+    - PP687 and non-automated personal-data processing identity markers
+    - accepted manifest
+    - semantic_status_unchanged
+
+production_counters_at_record_write:
+  identified: 22
+  raw_downloaded_exact: 20
+  immutable_sha256_verified: 20
+  atomized_existing_proposed: 4
+  atomized_verified: 0
+  pending_raw_capture: 2
+  raw_capture_coverage_ratio: 0.9091
+
+reuse_telemetry:
+  last_proven_generic_run_started_at: "2026-08-23T18:48:56.458037Z"
+  last_proven_generic_run_finished_at: "2026-08-23T18:48:56.478631Z"
+  generic_targets_total: 21
+  reused_immutable: 20
+  network_targets_attempted: 0
+  reuse_ratio: 0.9523809524
+  note: >-
+    The remaining two master-inventory gaps are handled through dedicated guarded routes; existing immutable
+    sources are not re-downloaded.
+
+latest_proven_dedicated_attempt_before_route_expansion:
+  observed_at: "2026-08-23T18:54:27.228227Z"
+  pp687: PENDING_TRANSPORT_TIMEOUTS
+  current_152fz: PENDING_OFFICIAL_ROUTE_TIMEOUT_OR_IDENTITY_MARKER_FAILURE
+  semantic_promotions: 0
+
+pending:
+  - SEC-SRC-RU-152FZ-2026-07-26
+  - SEC-SRC-RU-PP687-2008
+
+next_gate:
+  - accept either pending source only after a real immutable manifest passes its dedicated proof rule
+  - synchronize master counters if a new manifest is accepted
+  - after raw coverage closes, shift Stream-1 capacity to structure/chunks/concepts/definitions/conflict detection
