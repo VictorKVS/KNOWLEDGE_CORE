@@ -1,0 +1,66 @@
+schema_version: "1.0"
+id: SEC-SRC-RU-PP12-2025
+kind: security-regulatory-source
+status: METADATA_VERIFIED
+
+title: "Постановление Правительства Российской Федерации от 18.01.2025 № 12 «О внесении изменения в постановление Правительства Российской Федерации от 15 сентября 2008 г. № 687»"
+jurisdiction: RU
+issuer: "Правительство Российской Федерации"
+document:
+  type: government_resolution_amendment
+  number: "12"
+  adopted_date: "2025-01-18"
+  official_publication_id: "0001202501180009"
+  publication_date: "2025-01-18"
+  effective_from: "2025-01-26"
+  checked_at: "2026-08-23"
+
+canonical_source:
+  publisher: "Официальный интернет-портал правовой информации"
+  url: "https://publication.pravo.gov.ru/document/0001202501180009"
+  origin_identity_cross_verified: true
+  freshness_check:
+    checked_at: "2026-08-23"
+    result: ENACTED_CURRENT_PP687_VERSION_CHAIN_AMENDMENT
+    evidence_note: >-
+      Official publication identity confirms PP RF No. 12 of 18.01.2025 as the act amending PP RF No. 687.
+      The current Government text of PP687 identifies this as its current revision and states validity through 01.09.2030.
+
+capture:
+  raw_artifact_ref: ""
+  mime: null
+  byte_length: null
+  sha256: ""
+  fingerprint_status: PENDING_RAW_CAPTURE
+  acquisition_request:
+    status: RUN_REQUESTED_GUARDED
+    requested_at: "2026-08-23T05:15:00Z"
+    route: official_publication_pdf
+    official_publication_id: "0001202501180009"
+    reason: >-
+      Capture the official publication PDF byte-exactly, verify PDF signature and official API byte length,
+      calculate SHA-256, create immutable artifact and manifest, and do not promote semantic/extraction status.
+  note: "Official publication identity registered; immutable official PDF pending acquisition."
+
+relations:
+  - type: AMENDS
+    target: SEC-SRC-RU-PP687-2008
+    scope: "clause_3_validity_period"
+    effective_from: "2025-01-26"
+    effect_summary: "Sets the validity of PP RF No. 687 through 01.09.2030."
+
+change_set:
+  pp687:
+    changed_locator: "clause 3"
+    effect: "valid_until_2030-09-01"
+    semantic_scope: VERSION_CHAIN_ONLY
+
+provenance:
+  created_at: "2026-08-23"
+  checked_at: "2026-08-23"
+  created_by: "ChatGPT/GPT-5.6 Sol with official publication verification"
+  review_required: true
+
+agent_rule: >-
+  Use this source only to establish the PP687 version chain and validity-period amendment until its immutable
+  official PDF is captured and the changed locator is independently reviewed. Do not infer additional PP687 semantics.
