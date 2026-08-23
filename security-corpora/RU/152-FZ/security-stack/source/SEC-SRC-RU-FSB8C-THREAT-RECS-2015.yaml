@@ -1,0 +1,40 @@
+schema_version: "1.0"
+id: SEC-SRC-RU-FSB8C-THREAT-RECS-2015
+kind: security-methodological-source
+status: METADATA_VERIFIED
+title: "Методические рекомендации по разработке нормативных правовых актов, определяющих угрозы безопасности персональных данных, актуальные при обработке персональных данных в ИСПДн, № 149/7/2/6-432 от 31.03.2015"
+jurisdiction: RU
+issuer: "8 Центр ФСБ России"
+document:
+  type: methodological_recommendations
+  number: "149/7/2/6-432"
+  adopted_date: "2015-03-31"
+  checked_at: "2026-08-23"
+  current_status: CURRENT_FSB_PDN_METHODICAL_SET_CORROBORATED
+  status_note: "Официальная страница ФСБ России о действующих нормативно-методических документах в области безопасности ПДн включает эти рекомендации в текущий криптографический контур вместе с приказом №378, ПКЗ-2005 и Инструкцией ФАПСИ №152. При проверке 23.08.2026 на официальном научно-техническом индексе ФСБ более поздний заменяющий документ не выявлен."
+canonical_source:
+  publisher: "ФСБ России"
+  url: "https://www.fsb.ru/files/PDF/Metodicheskie_recomendacii.pdf"
+  expected_mime: "application/pdf"
+  landing_page: "https://www.fsb.ru/fsb/science/single.htm!id=10437725@fsbResearchart.html"
+  exact_original_route_status: OFFICIAL_FSB_PDF_ROUTE_REGISTERED
+capture:
+  fingerprint_status: PENDING
+  semantic_status: UNCHANGED
+relations:
+  - type: METHODICAL_CONTEXT_FOR
+    target: SEC-SRC-RU-FSB378-2014
+    scope: ISPDN_THREAT_MODELING_WHEN_SKZI_RELEVANT
+  - type: REFERENCES_LIFECYCLE_CONTEXT
+    target: SEC-SRC-RU-FSB66-2005
+    scope: SKZI_LIFECYCLE_WHEN_APPLICABLE
+  - type: MUST_REMAIN_SEPARATE_FROM
+    target: SEC-SRC-RU-FSTEC-THREAT-METHOD-2021
+    scope: FSB_CRYPTO_VS_FSTEC_NON_CRYPTO_THREAT_ASSESSMENT
+provenance:
+  official_fsb_current_set_page_verified: true
+  official_fsb_pdf_route_registered: true
+  later_replacement_not_found_in_official_fsb_index: true
+  exact_official_artifact_pending: true
+  review_required: true
+agent_rule: "Use only as bounded methodical context for PDN threat-modeling where the SKZI/cryptographic branch is actually relevant. Do not transform it into a universal duty for every PDN operator, and do not merge its crypto-threat concepts with the FSTEC 2021 methodology, whose scope explicitly excludes SKZI-security-threat assessment, unless a separate applicability edge is proved."
