@@ -1,4 +1,4 @@
-schema_version: "1.10"
+schema_version: "1.11"
 id: SEC-PDN-MASTER-SOURCE-INVENTORY
 kind: security-regulatory-source-inventory
 status: ACTIVE_DISCOVERY
@@ -17,7 +17,7 @@ policy:
   sha256_required_for_immutable: true
   current_version_routing_required: true
   delta_reuse_required_after_amendment: true
-  acquisition_identity_scope: "document.official_publication_id only"
+  acquisition_identity_scope: "document.official_publication_id only for publication-ID captures; registered-route binding for canonical consolidated snapshots"
   current_root_canonical_snapshot_identity_markers_required: true
 
 freshness_alerts:
@@ -48,7 +48,7 @@ sources:
     role: root_law
     metadata_status: VERSION_IDENTITY_CROSS_VERIFIED
     source_record: "source/SEC-SRC-RU-152FZ-2026-07-26.yaml"
-    canonical_capture_route: OFFICIAL_IPS_ROUTE_REGISTERED_GUARDED
+    canonical_capture_route: OFFICIAL_MULTI_ROUTE_REGISTERED_GUARDED
     raw_capture: PENDING
     existing_atomized_records_reuse_candidate: 4
     delta_review_required: true
@@ -274,46 +274,58 @@ production_counters:
 analysis_metrics:
   existing_atomized_nodes_reuse_candidate: 4
   mandatory_delta_review_articles: 1
-  freshness_checks_this_pass: 3
+  freshness_checks_this_pass: 2
   freshness_defects_found_this_pass: 0
-  source_records_added_this_pass: 1
+  source_records_added_this_pass: 0
   direct_dependencies_added_this_pass: 0
-  version_chain_dependencies_added_this_pass: 1
-  version_chain_gaps_closed_this_pass: 1
+  version_chain_dependencies_added_this_pass: 0
+  version_chain_gaps_closed_this_pass: 0
   conflict_candidates_opened_this_pass: 0
   source_relation_rebases_this_pass: 0
-  canonical_routes_registered_this_pass: 0
+  canonical_routes_registered_this_pass: 1
   acquisition_helpers_added_this_pass: 0
+  acquisition_helpers_hardened_this_pass: 1
+  synchronizer_proof_rules_hardened_this_pass: 1
   acquisition_workflow_updates_this_pass: 0
   acquisition_schedule_fallbacks_added_this_pass: 0
-  acquisition_retry_requests_this_pass: 0
-  acquisition_proof_guards_hardened_this_pass: 0
+  acquisition_retry_requests_this_pass: 1
+  acquisition_proof_guards_hardened_this_pass: 1
   semantic_promotions_this_pass: 0
   immutable_new_this_pass: 0
   note: >-
-    Fresh reconciliation of PP RF No. 687 identified its current amending act, PP RF No. 12 of 18.01.2025,
-    as a missing version-chain source. Official publication identity 0001202501180009 is now registered in the
-    master inventory. PP687 remains current in the revision of No. 12 and is valid through 01.09.2030. No semantic
-    status was promoted; the new dependency is pending byte-exact official capture and SHA-256.
+    Fresh reconciliation kept the current 152-FZ root at the revision effective 26.07.2026 and confirmed PP RF
+    No. 687 remains in the No. 12 of 18.01.2025 revision through 01.09.2030. A second official Government route
+    for 152-FZ was registered as transport-only and remains subject to the strict 152-FZ/personal-data/No.265-FZ
+    content gate. The current-root downloader now tries every pre-registered official route and binds any accepted
+    manifest back to the exact registered URL. The synchronizer validates that route binding directly instead of
+    requiring an inapplicable publication-ID proof for a consolidated snapshot. No semantic status was promoted.
 
 acquisition_activity:
-  latest_sync_commit: "2a532fca4b264ad8c6cc818348e2f843232ed617"
-  latest_retry_commit: "21c472fbd71a068f1cd52c781fd0822975a21139"
+  latest_sync_commit: "6564f8b957a0bc293ccc83f76d6d7dfc22344cd5"
+  latest_route_hardening_commit: "8a4345f404dc2d49a1052b940699b397b7b6114d"
+  latest_stream1_run_record_commit: "8731751f1f68aea959f43c3812085ba1dfb911f9"
   trigger_modes:
     - workflow_dispatch
     - push_on_acquisition_inputs
     - scheduled_3h
   accepted_manifest_delta_at_inventory_write: 0
   last_proven_acquisition_run:
-    started_at: "2026-08-23T04:05:16.357161Z"
-    finished_at: "2026-08-23T04:23:28.760869Z"
-    targets: 20
-    reused_immutable: 19
-    network_targets_attempted: 1
+    started_at: "2026-08-23T18:48:56.458037Z"
+    finished_at: "2026-08-23T18:48:56.478631Z"
+    targets: 21
+    reused_immutable: 20
+    network_targets_attempted: 0
     new_immutable_captured: 0
-    pending: 1
-    reuse_ratio: 0.95
-    note: "Reuse-first acquisition revalidated 19 immutable artifacts locally and attempted only PP687; current consolidated 152-FZ is handled by a dedicated guarded IPS route and remains pending in the master inventory."
+    pending_generic: 1
+    reuse_ratio: 0.9523809524
+    note: >-
+      Reuse-first acquisition revalidated 20 immutable artifacts locally. The two remaining master gaps are
+      handled by dedicated guarded routes rather than repeated generic downloads.
+  latest_proven_dedicated_attempt_before_route_expansion:
+    observed_at: "2026-08-23T18:54:27.228227Z"
+    pp687: PENDING_TRANSPORT_TIMEOUTS
+    current_152fz: PENDING_OFFICIAL_ROUTE_TIMEOUT_OR_IDENTITY_MARKER_FAILURE
+    semantic_promotions: 0
   pending_priority:
     - SEC-SRC-RU-152FZ-2026-07-26
     - SEC-SRC-RU-PP687-2008
