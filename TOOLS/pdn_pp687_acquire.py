@@ -1,14 +1,14 @@
 #!/usr/bin/env python3
-"""Guarded curl acquisition for PP RF No. 687 official canonical capture.
+"""Guarded acquisition for PP RF No. 687 from registered official routes.
 
-The Government portal route has repeatedly timed out from GitHub-hosted runners. This
-helper therefore uses only routes pre-registered in the PP687 source record, but tries
-the separately verified official pravo.gov.ru IPS route first when it is available and
-keeps the Government canonical page as the second route.
+The Government portal has intermittently timed out from GitHub-hosted runners. The
+source record also contains the official pravo.gov.ru IPS identity for PP687. This
+helper therefore tries a TLS-normalized form of that *same registered IPS URL* first,
+then the registered URL as written, then the Government canonical page.
 
 No response is accepted merely because the host is official. Returned bytes must
-contain strong PP-687/personal-data identity markers before an immutable artifact and
-manifest are written. The helper never promotes semantic/extraction status.
+contain strong PP687/personal-data identity markers. Capture proves bytes/provenance
+only and never promotes semantic or extraction status.
 """
 from __future__ import annotations
 
@@ -27,7 +27,7 @@ SOURCE_RECORD = CORPUS / "source" / f"{SOURCE_ID}.yaml"
 RAW_DIR = CORPUS / "raw" / SOURCE_ID
 MANIFEST_DIR = CORPUS / "manifests"
 RUN_FILE = CORPUS / "PDN_ACQUISITION_RUN.json"
-UA = "KNOWLEDGE_CORE-pdn-pp687-curl/1.2 (+https://github.com/VictorKVS/KNOWLEDGE_CORE)"
+UA = "KNOWLEDGE_CORE-pdn-pp687-curl/1.3 (+https://github.com/VictorKVS/KNOWLEDGE_CORE)"
 
 CANONICAL_URL_RE = re.compile(r'^  url:\s*["\']([^"\']+)["\']\s*$', re.M)
 OFFICIAL_IPS_URL_RE = re.compile(
@@ -59,8 +59,7 @@ def decode_identity(data: bytes) -> str:
             texts.append(data.decode(enc))
         except UnicodeDecodeError:
             texts.append(data.decode(enc, errors="ignore"))
-    text = "\n".join(texts).lower().replace("\xa0", " ")
-    return re.sub(r"\s+", " ", text)
+    return re.sub(r"\s+", " ", "\n".join(texts).lower().replace("\xa0", " "))
 
 
 def identity_ok(data: bytes) -> tuple[bool, list[str]]:
@@ -80,7 +79,7 @@ def curl_capture(url: str) -> tuple[bytes, str, str]:
         cmd = [
             "curl", "--silent", "--show-error", "--location", "--fail-with-body",
             "--retry", "4", "--retry-delay", "2", "--retry-all-errors",
-            "--connect-timeout", "20", "--max-time", "120", "--ipv4",
+            "--connect-timeout", "20", "--max-time", "120", "--ipv4", "--http1.1",
             "--header", f"User-Agent: {UA}",
             "--header", "Accept: text/html,application/xhtml+xml,*/*;q=0.8",
             "--header", "Accept-Encoding: identity",
@@ -114,6 +113,28 @@ def write_immutable(data: bytes) -> tuple[Path, str]:
     return artifact, sha
 
 
+def registered_routes(source_text: str) -> list[tuple[str, str]]:
+    canonical = top_level_section(source_text, "canonical_source")
+    murl = CANONICAL_URL_RE.search(canonical)
+    if not murl:
+        raise RuntimeError("refuse PP687 capture: no registered canonical_source.url")
+    routes: list[tuple[str, str]] = [("government_canonical", murl.group(1))]
+    mips = OFFICIAL_IPS_URL_RE.search(canonical)
+    if mips:
+        ips = mips.group(1)
+        if ips.startswith("http://"):
+            routes.insert(0, ("pravo_ips_registered_tls_equivalent", "https://" + ips[len("http://"):]))
+        routes.insert(1 if routes and routes[0][0].endswith("tls_equivalent") else 0, ("pravo_ips_registered", ips))
+    # Preserve order and avoid duplicate URLs.
+    out: list[tuple[str, str]] = []
+    seen: set[str] = set()
+    for name, url in routes:
+        if url not in seen:
+            out.append((name, url))
+            seen.add(url)
+    return out
+
+
 def reconcile_run(manifest: dict[str, object]) -> None:
     if not RUN_FILE.exists():
         return
@@ -137,32 +158,19 @@ def reconcile_run(manifest: dict[str, object]) -> None:
         })
         changed = True
         break
-    if not changed:
-        return
-    ok = sum(1 for row in results if row.get("status") == "IMMUTABLE_CAPTURED")
-    run["raw_downloaded_exact"] = ok
-    run["immutable_sha256_verified"] = ok
-    run["pending"] = len(results) - ok
-    run["postprocess_transport_fallback"] = {
-        "source_id": SOURCE_ID,
-        "transport": "curl_ipv4_guarded_registered_routes",
-        "accepted": True,
-        "accepted_registered_route": manifest["accepted_registered_route"],
-        "semantic_status_unchanged": True,
-    }
-    RUN_FILE.write_text(json.dumps(run, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-
-
-def registered_routes(source_text: str) -> list[tuple[str, str]]:
-    canonical = top_level_section(source_text, "canonical_source")
-    murl = CANONICAL_URL_RE.search(canonical)
-    if not murl:
-        raise RuntimeError("refuse PP687 capture: no registered canonical_source.url")
-    routes: list[tuple[str, str]] = [("government_canonical", murl.group(1))]
-    mips = OFFICIAL_IPS_URL_RE.search(canonical)
-    if mips and mips.group(1) != murl.group(1):
-        routes.append(("pravo_ips_registered_fallback", mips.group(1)))
-    return routes
+    if changed:
+        ok = sum(1 for row in results if row.get("status") == "IMMUTABLE_CAPTURED")
+        run["raw_downloaded_exact"] = ok
+        run["immutable_sha256_verified"] = ok
+        run["pending"] = len(results) - ok
+        run["postprocess_transport_fallback"] = {
+            "source_id": SOURCE_ID,
+            "transport": "curl_ipv4_http11_registered_routes",
+            "accepted": True,
+            "accepted_registered_route": manifest["accepted_registered_route"],
+            "semantic_status_unchanged": True,
+        }
+        RUN_FILE.write_text(json.dumps(run, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
 
 
 def main() -> int:
@@ -172,13 +180,6 @@ def main() -> int:
         raise RuntimeError(f"refuse PP687 capture: source status is not METADATA_VERIFIED for {SOURCE_ID}")
 
     routes = registered_routes(text)
-    # Preserve routes[0] as the registered primary Government source for provenance,
-    # but prefer the separately verified official IPS route for transport because the
-    # Government route has repeatedly timed out from GitHub-hosted runners.
-    attempt_routes = sorted(
-        routes,
-        key=lambda item: 0 if item[0] == "pravo_ips_registered_fallback" else 1,
-    )
     errors: list[str] = []
     accepted_route = ""
     accepted_source_url = ""
@@ -187,7 +188,7 @@ def main() -> int:
     mime = "application/octet-stream"
     markers: list[str] = []
 
-    for route_name, route_url in attempt_routes:
+    for route_name, route_url in routes:
         try:
             candidate, candidate_final_url, candidate_mime = curl_capture(route_url)
             ok, candidate_markers = identity_ok(candidate)
@@ -204,31 +205,32 @@ def main() -> int:
             errors.append(f"{route_name}: {exc}")
 
     if not data:
-        raise RuntimeError("all registered official PP687 routes failed: " + " | ".join(errors))
+        raise RuntimeError("all registered official PP687 transports failed: " + " | ".join(errors))
 
     artifact, sha = write_immutable(data)
     retrieved = dt.datetime.now(dt.timezone.utc).isoformat().replace("+00:00", "Z")
     manifest: dict[str, object] = {
-        "schema_version": "1.5",
+        "schema_version": "1.6",
         "source_id": SOURCE_ID,
         "source_document_number": "687",
         "capture_kind": "official_registered_route_snapshot",
         "accepted_registered_route": accepted_route,
         "official_file_url": final_url,
         "source_url": accepted_source_url,
-        "registered_primary_source_url": routes[0][1],
+        "registered_primary_source_url": next(url for name, url in routes if name == "government_canonical"),
         "registered_route_count": len(routes),
-        "registered_route_attempt_order": [name for name, _ in attempt_routes],
+        "registered_route_attempt_order": [name for name, _ in routes],
         "retrieved_at": retrieved,
         "mime": mime,
         "byte_length": len(data),
         "sha256": sha,
         "artifact_ref": str(artifact.relative_to(ROOT)).replace("\\", "/"),
         "source_record_ref": str(SOURCE_RECORD.relative_to(ROOT)).replace("\\", "/"),
-        "capture_policy": "registered-official-route-curl-with-pp687-content-identity-markers",
+        "capture_policy": "registered-official-route-curl-ipv4-http11-with-pp687-content-identity-markers",
         "proof": {
             "official_route": True,
             "registered_route_used": True,
+            "tls_scheme_normalization_only_when_used": accepted_route == "pravo_ips_registered_tls_equivalent",
             "byte_exact_download": True,
             "sha256_calculated_from_downloaded_bytes": True,
             "publication_api_length_check_not_applicable": True,
@@ -238,12 +240,10 @@ def main() -> int:
         },
         "failed_routes_before_acceptance": errors,
         "semantic_status_unchanged": True,
-        "review_note": "Capture proves exact bytes returned by a pre-registered official route and PP687 identity markers only; semantic/version-locator review remains required.",
+        "review_note": "Capture proves exact bytes returned by the registered official PP687 identity route and content markers only; semantic/version-locator review remains required.",
     }
     MANIFEST_DIR.mkdir(parents=True, exist_ok=True)
-    (MANIFEST_DIR / f"{SOURCE_ID}.json").write_text(
-        json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8"
-    )
+    (MANIFEST_DIR / f"{SOURCE_ID}.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     reconcile_run(manifest)
     print(json.dumps({
         "source_id": SOURCE_ID,
