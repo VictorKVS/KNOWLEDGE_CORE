@@ -1,0 +1,125 @@
+schema_version: "1.0"
+kind: protected-information-source-card
+source_id: SEC-SRC-RU-FZ-196-2007-A3
+jurisdiction: RU
+sector: pawnshop-financial-services
+regimes:
+  - pawnshop_professional_secrecy
+  - borrower_depositor_confidentiality
+number: "196-ФЗ"
+date: "2007-07-19"
+title: "Федеральный закон от 19.07.2007 № 196-ФЗ «О ломбардах» — статья 3 «Информация, составляющая профессиональную тайну при осуществлении ломбардом своей деятельности»"
+status: NEW_PRIMARY_ACT_IDENTIFIED_OFFICIAL_REGULATOR_ARTICLE3_DUTY_CONFIRMED_CURRENT_CONSOLIDATION_CROSSCHECKED_EXACT_CURRENT_ARTIFACT_PENDING_VERSION_CHAIN_PARTIAL
+checked_at: "2026-08-23T08:32:44+03:00"
+owner_stream: STREAM_3_SECTOR_OVERLAYS
+
+proof_floor:
+  - "Профессиональная тайна ломбарда является самостоятельным специальным режимом и не равна персональным данным."
+  - "Статья 3 применяется к специальному набору сведений, полученных ломбардом от заемщика или поклажедателя в связи с договором займа или хранения; это не означает автоматическую применимость каждого требования 152-ФЗ."
+  - "Исключение из состава профессиональной тайны для отдельных характеристик невостребованной вещи не является разрешением раскрывать сведения о клиенте."
+  - "Exact current authoritative bytes не получены; retrieved_at, MIME, byte length и SHA-256 не синтезируются."
+
+primary_authority:
+  act_identity:
+    title: "О ломбардах"
+    number: "196-ФЗ"
+    date: "2007-07-19"
+  official_integrated_bank_locator: "https://pravo.gov.ru/proxy/ips/?docbody=&nd=102115923"
+  official_regulator_current_context:
+    authority: "Банк России"
+    url: "https://www.cbr.ru/microfinance/explan/lombard/"
+    finding: >-
+      Банк России прямо указывает, что в силу статьи 3 Закона № 196-ФЗ ломбард и его работники обязаны соблюдать конфиденциальность информации,
+      составляющей в соответствии с частью 1 статьи 3 профессиональную тайну, и несут ответственность за ее разглашение.
+    state: OFFICIAL_REGULATOR_ARTICLE3_DUTY_CONFIRMED
+  current_consolidated_crosscheck:
+    revision: "2024-12-28"
+    effective_context: "действующая редакция, перечень изменяющих актов до 522-ФЗ"
+    state: SECONDARY_CURRENT_CONSOLIDATION_CROSSCHECK_ONLY
+  state: PRIMARY_ACT_IDENTITY_AND_OFFICIAL_CURRENT_LOCATOR_IDENTIFIED_REGULATOR_DUTY_CONFIRMED_EXACT_CURRENT_BINARY_PENDING
+
+protected_locators:
+  - locator: "статья 3, часть 1"
+    concept: PAWNSHOP_PROFESSIONAL_SECRET_SCOPE
+    state: CURRENT_CONSOLIDATED_TEXT_CROSSCHECKED_OFFICIAL_REGULATOR_REFERENCES_PART1
+    finding: >-
+      В состав профессиональной тайны входят сведения, полученные ломбардом от заемщика или поклажедателя в связи с заключением договора займа
+      либо договора хранения, за исключением прямо указанной законом информации о наименовании и описании технических, технологических и
+      качественных характеристик невостребованной вещи, на которую обращено взыскание в порядке статьи 12.
+    guard: "Проверять конкретное поле и договорный контекст; не считать все сведения о деятельности ломбарда профессиональной тайной."
+  - locator: "статья 3, часть 2"
+    concept: PAWNSHOP_CONFIDENTIALITY_DUTY
+    state: OFFICIAL_REGULATOR_CURRENT_DUTY_CONFIRMED
+    finding: >-
+      Ломбард и его работники обязаны соблюдать конфиденциальность информации, составляющей профессиональную тайну, и несут установленную законом
+      ответственность за ее разглашение.
+  - locator: "статья 1 / статья 2 / статья 7 / статья 9"
+    concept: NATURAL_PERSON_BORROWER_DEPOSITOR_CONTEXT
+    state: CURRENT_CONSOLIDATED_CONTEXT_CROSSCHECKED
+    finding: >-
+      Основные операции ломбарда связаны с краткосрочными займами гражданам (физическим лицам) и хранением вещей; это создает сильный кандидат
+      пересечения с персональными данными, но не заменяет проверку состава данных и конкретной операции.
+
+pdn_relation:
+  target: "152-ФЗ"
+  state: POSSIBLE_DUAL_REGIME_ON_SCENARIO_PROOF_ONLY
+  evidence_dimensions:
+    - "заемщик по статье 7 — гражданин (физическое лицо)"
+    - "часть 1 статьи 3 охватывает сведения, полученные от заемщика или поклажедателя в договорном контексте"
+    - "профессиональная тайна определяется специальным законом и имеет собственное исключение по характеристикам невостребованной вещи"
+  guard: >-
+    Для конкретного требования определить идентифицируемое физическое лицо, состав сведений, операцию обработки, цель, роль ломбарда и работника,
+    договорный контекст, основание обработки и получателя. PAWNSHOP_SECRET != PERSONAL_DATA; OVERLAP != APPLICABILITY.
+
+cross_regime_relations:
+  - target: "353-ФЗ от 21.12.2013"
+    type: CONSUMER_CREDIT_PAWNSHOP_LOAN_CONTEXT
+    state: RELATION_CANDIDATE_NOT_REGIME_EQUIVALENCE
+    guard: "Заем ломбарда может подпадать под специальные правила потребительского кредита; это не меняет автоматически объем тайны статьи 3."
+  - target: "115-ФЗ от 07.08.2001"
+    type: AML_PAWNSHOP_SPECIAL_DUTY_CONTEXT
+    state: RELATION_CANDIDATE_NOT_CONFIDENTIALITY_OVERRIDE
+    guard: "AML-обязанности и законные каналы передачи проверяются отдельно; они не являются общим разрешением разглашать профессиональную тайну."
+
+version_chain:
+  state: VERSION_CHAIN_PARTIAL_LOCATOR_SPECIFIC_CURRENT_RECONCILED
+  as_of: "2026-08-23"
+  current_act_crosscheck:
+    consolidated_revision: "2024-12-28"
+    latest_source_level_event: "522-ФЗ от 28.12.2024"
+    latest_source_level_event_official_publication_id: "0001202412280035"
+    latest_source_level_event_effect: "изменяет статью 2.1 Закона о ломбардах; изменения статьи 3 не выявлено"
+    state: OFFICIAL_AMENDMENT_PUBLICATION_VERIFIED_CURRENT_CONSOLIDATION_CROSSCHECKED
+  locator_events:
+    - act: "196-ФЗ от 13.07.2020 «О внесении изменений в отдельные законодательные акты Российской Федерации»"
+      official_publication_locator_candidate: "0001202007130046"
+      change: "масштабная реформа закона о ломбардах; по проверенному перечню изменений статья 3 не идентифицирована как изменяемый locator"
+      state: AMENDMENT_CONTEXT_CROSSCHECKED_EXACT_PRIMARY_AMENDMENT_BINARY_PENDING
+    - act: "522-ФЗ от 28.12.2024"
+      official_publication_id: "0001202412280035"
+      official_publication_date: "2024-12-28"
+      official_url: "https://publication.pravo.gov.ru/document/0001202412280035"
+      change: "изменена статья 2.1; effect_on_article3: NONE_IDENTIFIED"
+      state: OFFICIAL_PUBLICATION_LOCATOR_VERIFIED_CURRENT_SOURCE_LEVEL_EVENT
+  current_result: >-
+    Статья 3 присутствует в действующей редакции 196-ФЗ. Последнее source-level изменение 522-ФЗ затрагивает статью 2.1, не статью 3.
+    Полная историческая locator-specific цепочка статьи 3 остается PARTIAL до exact-capture первичных изменяющих актов и исходного текста.
+
+artifact_capture:
+  state: PENDING_EXACT_OFFICIAL_CURRENT_ARTIFACT
+  source_url: "https://pravo.gov.ru/proxy/ips/?docbody=&nd=102115923"
+  retrieval_attempted_at: "2026-08-23T08:32:44+03:00"
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  artifact_ref: null
+  manifest_ref: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-196-2007-A3-version-capture-pending.json"
+  blocker: >-
+    Официальный интегрированный locator идентифицирован, но runtime не получил byte-exact текущий официальный артефакт: прямое обращение к pravo.gov.ru
+    завершалось timeout/DNS failure. Официальная публикация 522-ФЗ доступна как publication locator, но отображаемые порталом размер и число страниц
+    не используются как fingerprint. Никакие поля MIME/byte_length/SHA-256/retrieved_at не выведены из интерфейсных метаданных.
+
+executable_use:
+  allowed: false
+  gate: "Durable exact current authoritative artifact + locator-specific version review + scenario applicability/data-field/operation/legal-basis review"
