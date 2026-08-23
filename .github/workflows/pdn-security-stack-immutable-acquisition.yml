@@ -10,6 +10,7 @@ on:
       - ".github/workflows/pdn-security-stack-immutable-acquisition.yml"
       - "TOOLS/pdn_security_stack_register_sources.py"
       - "TOOLS/pdn_security_stack_acquire.py"
+      - "TOOLS/pdn_security_stack_acquire_fast.py"
       - "TOOLS/pdn_security_stack_curl_pending.py"
       - "TOOLS/pdn_security_stack_capture_gate.py"
       - "TOOLS/pdn_security_stack_reconcile_telemetry.py"
@@ -37,11 +38,18 @@ jobs:
         shell: bash
         run: python TOOLS/pdn_security_stack_register_sources.py
 
-      - name: Try pending registered official legal-text routes through guarded curl
+      - name: Full guarded curl sweep for scheduled or manual maintenance
+        if: github.event_name != 'push'
         shell: bash
         run: python TOOLS/pdn_security_stack_curl_pending.py
 
-      - name: Reuse immutable captures and acquire remaining technical/crypto deltas
+      - name: Fast bounded acquisition for change-triggered runs
+        if: github.event_name == 'push'
+        shell: bash
+        run: python TOOLS/pdn_security_stack_acquire_fast.py
+
+      - name: Full reuse-first acquisition for scheduled or manual maintenance
+        if: github.event_name != 'push'
         shell: bash
         run: python TOOLS/pdn_security_stack_acquire.py
 
@@ -79,5 +87,7 @@ jobs:
       - name: Surface stream telemetry
         shell: bash
         run: |
-          cat security-corpora/RU/152-FZ/security-stack/PDN_SECURITY_STACK_CURL_ATTEMPT.json
+          if [ -f security-corpora/RU/152-FZ/security-stack/PDN_SECURITY_STACK_CURL_ATTEMPT.json ]; then
+            cat security-corpora/RU/152-FZ/security-stack/PDN_SECURITY_STACK_CURL_ATTEMPT.json
+          fi
           cat security-corpora/RU/152-FZ/security-stack/PDN_SECURITY_STACK_ACQUISITION_RUN.json
