@@ -1,0 +1,133 @@
+schema_version: "1.0"
+kind: stream-3-sector-library-run
+run_id: STREAM3-2026-08-23T1424
+started_at: "2026-08-23T14:24:34+03:00"
+owner_stream: STREAM_3_SECTOR_OVERLAYS
+status: COMPLETED_WITH_EXACT_CAPTURE_PENDING
+
+objective: >-
+  Discover and register primary sectoral/special protected-information regimes intersecting personal-data processing without inventing applicability;
+  verify currentness/version chain; obtain exact official artifacts when runtime permits.
+
+reconciliation_base:
+  ru_protected_information_delta: "master-inventory-delta-2026-08-23T0832.yaml"
+  counters: {found: 29, downloaded: 9, immutable: 9, pending: 18, reused: 2, primary_publication_verified: 10, sectors_registered: 21}
+
+discovery:
+  query_cluster:
+    - "конфиденциальность журналистского источника"
+    - "Закон 2124-I статья 41"
+    - "обеспечение конфиденциальности информации СМИ"
+    - "несовершеннолетний статья 41 СМИ"
+  github_dedupe:
+    expected_source_path: "security-corpora/RU/protected-information/source/SEC-SRC-RU-LAW-2124I-1991-A41.yaml"
+    existing_source_found_before_run: false
+  source_selected:
+    source_id: SEC-SRC-RU-LAW-2124I-1991-A41
+    reason: >-
+      Independent statutory confidentiality regime governing citizen submissions, journalistic sources and identifying information about minors;
+      direct/indirect identification concepts make it a high-value PDN-overlap candidate while remaining legally distinct from 152-ФЗ.
+
+primary_and_currentness_evidence:
+  - type: OFFICIAL_CURRENT_INTEGRATED_TEXT_LOCATOR
+    authority: "Официальный интернет-портал правовой информации / Интегрированный банк"
+    url: "https://pravo.gov.ru/proxy/ips/?docbody=&nd=102013812"
+    state: IDENTIFIED_DOWNLOAD_FAILED_RUNTIME
+  - type: OFFICIAL_ARTICLE41_SPECIFIC_AMENDMENT_PUBLICATION
+    act: "50-ФЗ от 05.04.2013"
+    official_publication_id: "0001201304080008"
+    publication_date: "2013-04-08"
+    url: "https://publication.pravo.gov.ru/document/0001201304080008"
+    finding: "Последнее выявленное locator-specific изменение статьи 41; связано также с частью 6 статьи 4 о несовершеннолетнем потерпевшем."
+    state: OFFICIAL_PUBLICATION_LOCATOR_VERIFIED
+  - type: OFFICIAL_SOURCE_LEVEL_AMENDMENT_PUBLICATION
+    act: "215-ФЗ от 23.07.2025"
+    official_publication_id: "0001202507230005"
+    publication_date: "2025-07-23"
+    url: "https://publication.pravo.gov.ru/document/0001202507230005"
+    finding: "Изменяет статьи 4 и 16; статья 41 не изменяется."
+    state: OFFICIAL_PUBLICATION_LOCATOR_VERIFIED
+  - type: OFFICIAL_CURRENT_SOURCE_LEVEL_AMENDMENT_PUBLICATION
+    act: "304-ФЗ от 31.07.2025"
+    official_publication_id: "0001202507310080"
+    publication_date: "2025-07-31"
+    url: "https://publication.pravo.gov.ru/document/0001202507310080"
+    effective_for_media_law_change: "2026-03-01"
+    finding: "Изменяет иные положения Закона о СМИ; изменение статьи 41 в проверенном amendment text не выявлено."
+    state: OFFICIAL_PUBLICATION_LOCATOR_VERIFIED
+  - type: FUTURE_SOURCE_LEVEL_EVENT
+    act: "215-ФЗ от 26.06.2026"
+    official_publication_locator: "0001202606260075"
+    official_url_candidate: "https://publication.pravo.gov.ru/document/0001202606260075"
+    effective_for_media_law_change: "2026-09-01"
+    finding: "Будущее изменение части 10 статьи 4; статья 41 не изменяется и ее child-victim cross-reference направлен на часть 6 статьи 4."
+    state: PUBLICATION_LOCATOR_CROSSCHECKED_EXACT_PRIMARY_CAPTURE_PENDING
+
+protected_locators_reconciled:
+  - "статья 41 часть 1 — confidential citizen submission"
+  - "статья 41 часть 2 — journalistic source confidentiality / court exception"
+  - "статья 41 часть 3 — identifying information of minor offender/suspect"
+  - "статья 41 часть 4 + статья 4 часть 6 — minor victim special disclosure gate"
+  - "статья 41 часть 5 — additional restriction for minor sexual-offence victim"
+
+version_chain:
+  state: PARTIAL_LOCATOR_SPECIFIC_CURRENT_RECONCILED
+  current_effective_revision_basis: "304-ФЗ от 31.07.2025; media-law changes effective 01.03.2026"
+  last_identified_article41_event:
+    act: "50-ФЗ от 05.04.2013"
+    official_publication_id: "0001201304080008"
+  historical_events_pending_exact_archive_capture:
+    - "110-ФЗ от 05.08.2000 — introduced part 3"
+    - "200-ФЗ от 11.07.2011 — revised Article 41 core wording"
+  current_source_level_events_not_affecting_article41:
+    - "215-ФЗ от 23.07.2025"
+    - "304-ФЗ от 31.07.2025"
+  future_event_not_affecting_article41:
+    - "215-ФЗ от 26.06.2026; effective 01.09.2026"
+
+acquisition:
+  official_current_exact_bytes_obtained: false
+  exact_amendment_pdf_bytes_obtained: false
+  current_locator_download_attempted: true
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact_created: false
+  pending_manifest: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-LAW-2124I-1991-A41-version-capture-pending.json"
+  blocker: >-
+    Official current locator and amendment publication locators were identified, but direct runtime access to pravo.gov.ru/publication.pravo.gov.ru did not
+    yield reliable byte-exact content because of DNS/network failures and portal timeouts. Displayed PDF size/page metadata was deliberately not used as fingerprint evidence.
+
+relations_added:
+  - {target: "152-ФЗ", type: CANDIDATE_DUAL_REGIME_ON_DATA_AND_OPERATION_PROOF_ONLY, applicability: NOT_PROMOTED}
+  - {target: "УПК РФ статьи 161 и 241", type: CRIMINAL_PROCEDURE_DISCLOSURE_LIMIT_FOR_MINOR_VICTIM, applicability: NOT_PROMOTED}
+  - {target: "специальные режимы защиты сведений о несовершеннолетних", type: CHILD_IDENTITY_PROTECTION_OVERLAP, applicability: NOT_PROMOTED}
+
+outputs:
+  source_card: "security-corpora/RU/protected-information/source/SEC-SRC-RU-LAW-2124I-1991-A41.yaml"
+  capture_backlog: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-LAW-2124I-1991-A41-version-capture-pending.json"
+  ru_inventory_delta: "security-knowledge/corpus/ru-protected-information/master-inventory-delta-2026-08-23T1424.yaml"
+  pdn_inventory_delta: "security-knowledge/corpus/ru-personal-data/master-source-inventory-delta-stream3-2026-08-23T1424.yaml"
+
+counters_after_reconciliation:
+  found: 30
+  downloaded: 9
+  immutable: 9
+  pending: 19
+  reused: 2
+  primary_publication_verified: 10
+  sectors_registered: 22
+
+quality_gates:
+  duplicate_source_nodes_created: 0
+  applicability_edges_promoted: 0
+  legal_conflicts_confirmed: 0
+  executable_rules_changed: false
+  exact_fingerprint_synthesized: false
+
+next_priority:
+  - "Retry exact current official capture for Law 2124-I plus 50-ФЗ/304-ФЗ publication PDFs using the local Windows acquisition worker."
+  - "Continue special-regime discovery with child-placement databank confidentiality: 44-ФЗ от 16.04.2001, Article 8, after dedupe."
+  - "Then cover financial-platform confidentiality: 211-ФЗ, Article 17, after dedupe."
+  - "Return to high-priority unresolved healthcare/education/public-sector exact captures as runtime permits."
