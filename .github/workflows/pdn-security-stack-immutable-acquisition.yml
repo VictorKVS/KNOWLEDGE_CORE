@@ -8,6 +8,7 @@ on:
     branches: [main]
     paths:
       - ".github/workflows/pdn-security-stack-immutable-acquisition.yml"
+      - "TOOLS/pdn_security_stack_register_sources.py"
       - "TOOLS/pdn_security_stack_acquire.py"
       - "TOOLS/pdn_security_stack_curl_pending.py"
       - "TOOLS/pdn_security_stack_capture_gate.py"
@@ -31,6 +32,10 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 1
+
+      - name: Register explicitly declared Stream-2 source cards
+        shell: bash
+        run: python TOOLS/pdn_security_stack_register_sources.py
 
       - name: Try pending registered official legal-text routes through guarded curl
         shell: bash
