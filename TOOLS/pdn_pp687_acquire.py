@@ -14,10 +14,12 @@ from __future__ import annotations
 
 import datetime as dt
 import hashlib
+import html
 import json
 import re
 import subprocess
 import tempfile
+import unicodedata
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -27,18 +29,18 @@ SOURCE_RECORD = CORPUS / "source" / f"{SOURCE_ID}.yaml"
 RAW_DIR = CORPUS / "raw" / SOURCE_ID
 MANIFEST_DIR = CORPUS / "manifests"
 RUN_FILE = CORPUS / "PDN_ACQUISITION_RUN.json"
-UA = "KNOWLEDGE_CORE-pdn-pp687-curl/1.3 (+https://github.com/VictorKVS/KNOWLEDGE_CORE)"
+UA = "KNOWLEDGE_CORE-pdn-pp687-curl/1.4 (+https://github.com/VictorKVS/KNOWLEDGE_CORE)"
 
 CANONICAL_URL_RE = re.compile(r'^  url:\s*["\']([^"\']+)["\']\s*$', re.M)
 OFFICIAL_IPS_URL_RE = re.compile(
     r'url:\s*["\'](https?://pravo\.gov\.ru/proxy/ips/\?[^"\']*nd=102124251[^"\']*)["\']'
 )
 STATUS_RE = re.compile(r"^status:\s*([^\s#]+)\s*$", re.M)
-IDENTITY_GROUPS = (
-    ("постановление правительства российской федерации", "правительство российской федерации"),
-    ("№ 687", "№687", " 687 "),
-    ("персональных данных",),
-    ("без использования средств автоматизации",),
+IDENTITY_PATTERNS = (
+    ("government_issuer", re.compile(r"(?:постановление\s+)?правительства\s+российской\s+федерации")),
+    ("document_number_687", re.compile(r"(?:№|n|no\.?|номер)?\s*687(?:\D|$)")),
+    ("personal_data", re.compile(r"персональн\w*\s+данн\w*")),
+    ("non_automated_processing", re.compile(r"без\s+использования\s+средств\s+автоматизац\w*")),
 )
 
 
@@ -52,6 +54,21 @@ def top_level_section(text: str, name: str) -> str:
     return text[start.end():end]
 
 
+def normalize_identity_text(text: str) -> str:
+    """Normalize only the inspection view; immutable stored bytes remain untouched."""
+    text = html.unescape(text)
+    text = re.sub(r"<[^>]+>", " ", text)
+    text = unicodedata.normalize("NFKC", text)
+    text = text.translate(str.maketrans({
+        "\xa0": " ",
+        "‑": "-",
+        "–": "-",
+        "—": "-",
+        "−": "-",
+    }))
+    return re.sub(r"\s+", " ", text.lower()).strip()
+
+
 def decode_identity(data: bytes) -> str:
     texts: list[str] = []
     for enc in ("utf-8", "cp1251"):
@@ -59,17 +76,17 @@ def decode_identity(data: bytes) -> str:
             texts.append(data.decode(enc))
         except UnicodeDecodeError:
             texts.append(data.decode(enc, errors="ignore"))
-    return re.sub(r"\s+", " ", "\n".join(texts).lower().replace("\xa0", " "))
+    return normalize_identity_text("\n".join(texts))
 
 
 def identity_ok(data: bytes) -> tuple[bool, list[str]]:
     text = decode_identity(data)
     matched: list[str] = []
-    for group in IDENTITY_GROUPS:
-        marker = next((m for m in group if m in text), "")
-        if not marker:
+    for label, pattern in IDENTITY_PATTERNS:
+        hit = pattern.search(text)
+        if not hit:
             return False, matched
-        matched.append(marker)
+        matched.append(f"{label}:{hit.group(0)}")
     return True, matched
 
 
@@ -210,7 +227,7 @@ def main() -> int:
     artifact, sha = write_immutable(data)
     retrieved = dt.datetime.now(dt.timezone.utc).isoformat().replace("+00:00", "Z")
     manifest: dict[str, object] = {
-        "schema_version": "1.6",
+        "schema_version": "1.7",
         "source_id": SOURCE_ID,
         "source_document_number": "687",
         "capture_kind": "official_registered_route_snapshot",
@@ -226,7 +243,7 @@ def main() -> int:
         "sha256": sha,
         "artifact_ref": str(artifact.relative_to(ROOT)).replace("\\", "/"),
         "source_record_ref": str(SOURCE_RECORD.relative_to(ROOT)).replace("\\", "/"),
-        "capture_policy": "registered-official-route-curl-ipv4-http11-with-pp687-content-identity-markers",
+        "capture_policy": "registered-official-route-curl-ipv4-http11-with-normalized-pp687-content-identity-markers",
         "proof": {
             "official_route": True,
             "registered_route_used": True,
@@ -236,11 +253,15 @@ def main() -> int:
             "publication_api_length_check_not_applicable": True,
             "canonical_content_identity_markers_ok": True,
             "canonical_content_identity_markers": markers,
+            "identity_view_html_entities_unescaped": True,
+            "identity_view_unicode_nfkc_normalized": True,
+            "identity_view_html_tags_collapsed": True,
+            "raw_bytes_unchanged_by_identity_normalization": True,
             "semantic_status_unchanged": True,
         },
         "failed_routes_before_acceptance": errors,
         "semantic_status_unchanged": True,
-        "review_note": "Capture proves exact bytes returned by the registered official PP687 identity route and content markers only; semantic/version-locator review remains required.",
+        "review_note": "Capture proves exact bytes returned by the registered official PP687 identity route and normalized inspection markers only; raw bytes are unchanged and semantic/version-locator review remains required.",
     }
     MANIFEST_DIR.mkdir(parents=True, exist_ok=True)
     (MANIFEST_DIR / f"{SOURCE_ID}.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
