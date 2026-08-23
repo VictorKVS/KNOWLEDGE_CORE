@@ -1,0 +1,113 @@
+schema_version: "1.0"
+kind: ru-protected-information-master-inventory-delta
+base_inventory: "master-inventory.yaml"
+reconciliation_base_delta: "master-inventory-delta-2026-08-23T1424.yaml"
+checked_at: "2026-08-23T23:22:55+03:00"
+owner_stream: STREAM_3_SECTOR_OVERLAYS
+run_ref: "stream-3-run-2026-08-23T2322.yaml"
+status: APPEND_ONLY_RECONCILIATION_READY
+
+proof_floor:
+  - "Статья 8 44-ФЗ от 16.04.2001 формирует самостоятельный режим конфиденциальности государственного банка данных о детях; CHILD_DATABANK_CONFIDENTIALITY != PERSONAL_DATA."
+  - "Статья 8 часть 1 относит анкеты детей и перечисленных категорий граждан к конфиденциальной информации; порядок доступа вынесен в статью 11."
+  - "Статья 8 часть 2 разрешает специальное использование производной информации, но требует исключить идентификацию ребенка, родителей и иных родственников; коммерческое использование производной информации запрещено."
+  - "Сведения о здоровье и фотографии в производной информации создают сильный PDN/sensitive-data overlap, но не доказывают применимость конкретного требования 152-ФЗ."
+  - "Exact current authoritative bytes не получены; MIME, byte length, SHA-256 и retrieved_at не придуманы."
+
+counter_state_before_reconciled: {found: 30, downloaded: 9, immutable: 9, pending: 19, reused: 2, primary_publication_verified: 10, sectors_registered: 22}
+counter_state_after_reconciliation:
+  found: 31
+  downloaded: 9
+  immutable: 9
+  pending: 20
+  reused: 2
+  primary_publication_verified: 10
+  sectors_registered: 23
+  new_sources_this_run: 1
+  existing_source_nodes_operationalized: 0
+  new_immutable_this_run: 0
+  exact_binary_downloads_this_run: 0
+  current_protected_locators_crosschecked_this_run: 5
+  pdn_overlap_candidates_added_this_run: 1
+  cross_regime_candidates_added_this_run: 3
+  locator_specific_version_events_reconciled_this_run: 2
+  source_level_version_events_contextualized_this_run: 1
+  applicability_edges_promoted_this_run: 0
+  legal_conflicts_confirmed_this_run: 0
+
+source_added:
+  source_id: SEC-SRC-RU-FZ-44-2001-A8
+  source_card: "security-corpora/RU/protected-information/source/SEC-SRC-RU-FZ-44-2001-A8.yaml"
+  sector: children-guardianship-state-databank
+  regimes: [state_child_databank_confidentiality, child_identity_deidentification, sensitive_family_health_information]
+  state: NEW_PRIMARY_ACT_IDENTIFIED_OFFICIAL_CURRENT_LOCATOR_IDENTIFIED_ARTICLE8_CURRENT_TEXT_CROSSCHECKED_LOCATOR_AMENDMENTS_RECONCILED_EXACT_CURRENT_ARTIFACT_PENDING_VERSION_CHAIN_PARTIAL
+  act_identity:
+    title: "Федеральный закон от 16.04.2001 № 44-ФЗ «О государственном банке данных о детях, оставшихся без попечения родителей»"
+    official_current_locator: "https://pravo.gov.ru/proxy/ips/?docbody=&nd=102038925"
+    current_consolidated_revision: "2023-08-04"
+    provisions_effective_through: "2026-01-01"
+  protected_locators:
+    - {locator: "статья 8 часть 1", concept: CHILD_DATABANK_CONFIDENTIAL_QUESTIONNAIRES, state: CURRENT_TEXT_CROSSCHECKED}
+    - {locator: "статья 8 часть 2 абзац 1", concept: DERIVATIVE_CHILD_INFORMATION_SPECIAL_PURPOSE, state: CURRENT_TEXT_CROSSCHECKED}
+    - {locator: "статья 8 часть 2 абзац 2", concept: CHILD_AND_FAMILY_DEIDENTIFICATION_GATE, state: CURRENT_TEXT_CROSSCHECKED}
+    - {locator: "статья 8 часть 2 абзац 3", concept: DERIVATIVE_INFORMATION_SENSITIVE_FIELDS, state: CURRENT_TEXT_CROSSCHECKED}
+    - {locator: "статья 11", concept: CONFIDENTIAL_ACCESS_PROCEDURE_CROSS_REFERENCE, state: SEPARATE_LOCATOR_REVIEW_REQUIRED}
+  pdn_relation:
+    state: CANDIDATE_DUAL_REGIME_ON_DATA_FIELD_OPERATION_AND_ROLE_PROOF_ONLY
+    guard: "Resolve subject, field, special-category status, operation, purpose, role, legal basis, Article 8/11 gates and recipient. OVERLAP != APPLICABILITY."
+  capture_backlog: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-44-2001-A8-version-capture-pending.json"
+
+version_chain_delta:
+  state: VERSION_CHAIN_PARTIAL_LOCATOR_SPECIFIC_CURRENT_RECONCILED
+  current_effective_basis: "44-ФЗ in revision 04.08.2023; delayed provisions of 488-ФЗ effective through 01.01.2026"
+  locator_events:
+    - act: "319-ФЗ от 02.08.2019"
+      official_publication_id: "0001201908030001"
+      official_publication_date: "2019-08-03"
+      official_url: "https://publication.pravo.gov.ru/document/0001201908030001"
+      effective: "2020-01-01"
+      article8_effect: "title, part 1 and amendment context in part 2"
+      state: OFFICIAL_PUBLICATION_LOCATOR_VERIFIED_LOCATOR_CHANGE_CROSSCHECKED
+    - act: "488-ФЗ от 04.08.2023"
+      official_publication_id: "0001202308040091"
+      official_publication_date: "2023-08-04"
+      official_url: "https://publication.pravo.gov.ru/document/0001202308040091"
+      effective_for_article8: "2024-07-01"
+      article8_effect: "part 2 amendment"
+      state: OFFICIAL_PUBLICATION_VERIFIED_LOCATOR_CHANGE_CROSSCHECKED
+  source_level_context:
+    - {act: "569-ФЗ от 28.12.2022", effect_on_article8: NONE_IDENTIFIED_IN_CURRENT_ARTICLE8_CROSSCHECK, state: CURRENT_CHAIN_CONTEXT_ONLY}
+  full_article8_chain: PARTIAL
+
+relationship_delta:
+  - {target: "152-ФЗ", type: CANDIDATE_DUAL_REGIME_ON_DATA_FIELD_OPERATION_AND_ROLE_PROOF_ONLY, state: APPLICABILITY_REVIEW_REQUIRED}
+  - {target: "СК РФ статья 139", type: ADOPTION_SECRECY_CHILD_DATABANK_CONTEXT, state: RELATION_CANDIDATE_NOT_REGIME_MERGE}
+  - {target: "149-ФЗ", type: INFORMATION_CONFIDENTIALITY_STATUTORY_REFERENCE_CONTEXT, state: STATUTORY_CONTEXT_ONLY}
+  - {target: "специальные режимы данных о здоровье детей", type: HEALTH_INFORMATION_OVERLAP, state: RELATION_CANDIDATE_REQUIRES_FIELD_AND_ROLE_REVIEW}
+
+acquisition_delta:
+  durable_immutable_artifacts_added: 0
+  exact_binary_downloads_succeeded: 0
+  official_current_locator_identified: true
+  locator_specific_amendment_official_publications_verified: 2
+  official_current_artifact:
+    retrieved_at: null
+    mime: null
+    byte_length: null
+    sha256: null
+  attempts:
+    - {target: "current 44-ФЗ integrated official locator", result: OFFICIAL_LOCATOR_IDENTIFIED_RUNTIME_TIMEOUT}
+    - {target: "319-ФЗ official publication", result: OFFICIAL_PUBLICATION_METADATA_VERIFIED_PDF_BYTES_NOT_CAPTURED}
+    - {target: "488-ФЗ official publication", result: OFFICIAL_PUBLICATION_METADATA_VERIFIED_PDF_BYTES_NOT_CAPTURED}
+  blocker: >-
+    Runtime can verify official locators and primary amendment publications but did not receive a reliable byte-exact current authoritative binary. GitHub connector in this run writes UTF-8 content resources, not arbitrary official PDF bytes; therefore downloaded/immutable counters remain unchanged.
+
+proof_floor_effect:
+  executable_rules_changed: false
+  applicability_edges_promoted: 0
+  duplicate_source_nodes_created: 0
+  legal_conflicts_confirmed: 0
+  source_nodes_added: 1
+
+merge_rule: >-
+  Reconcile after master-inventory-delta-2026-08-23T1424.yaml. Aggregate Stream 3 counters become 31 found / 9 downloaded / 9 immutable / 20 pending / 2 reused. Child-databank confidentiality is a new special-regime node; acquisition counters remain unchanged until exact authoritative bytes are durably stored.
