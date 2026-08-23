@@ -1,4 +1,4 @@
-schema_version: "1.0"
+schema_version: "1.1"
 id: SEC-SRC-RU-FSB173-2010
 kind: security-regulatory-source
 status: METADATA_VERIFIED
@@ -9,11 +9,17 @@ document:
   type: regulator_order
   number: "173"
   adopted_date: "2010-04-12"
-  checked_at: "2026-08-22"
+  ministry_registration_date: "2010-05-25"
+  ministry_registration_number: "17350"
+  official_publication: "Бюллетень нормативных актов федеральных органов исполнительной власти, 14.06.2010, № 24"
+  current_revision_date: "2013-03-25"
+  checked_at: "2026-08-23"
+  current_status: ACTING_WITH_LATER_AMENDMENTS
+  version_chain_note: "Изменения в приказ №173 вносились приказами ФСБ России от 30.08.2012 №440, 28.12.2012 №683, 10.01.2013 №7 и 25.03.2013 №157. Для ветки ПКЗ-2005 этот источник используется только как доказанная цепочка изменений; точный официальный байтовый артефакт пока не получен."
 canonical_source:
   publisher: "ФСБ России"
   metadata_evidence_url: "https://www.fsb.ru/fsb/npd/more.htm!id=10436382@fsbNpa&_print=true.html"
-  exact_original_route_status: UNRESOLVED_IN_THIS_PASS
+  exact_original_route_status: UNRESOLVED_AFTER_CURRENT_STATUS_RECHECK
 capture:
   fingerprint_status: PENDING
   semantic_status: UNCHANGED
@@ -21,8 +27,18 @@ relations:
   - type: AMENDS
     target: SEC-SRC-RU-FSB66-2005
     scope: PKZ_2005_VERSION_CHAIN
+  - type: HAS_LATER_AMENDMENTS
+    targets:
+      - "FSB-440-2012"
+      - "FSB-683-2012"
+      - "FSB-7-2013"
+      - "FSB-157-2013"
+    scope: VERSION_CHAIN_METADATA_ONLY
 provenance:
   official_identity_verified: true
+  ministry_registration_cross_checked: true
+  publication_identity_cross_checked: true
+  current_revision_cross_checked: true
   exact_official_artifact_pending: true
   review_required: true
-agent_rule: "Use as version-chain evidence only until exact official text and amendment locators are captured and compiled."
+agent_rule: "Use as version-chain evidence only until exact official text and amendment locators are captured and compiled. Do not transfer special-technical-means licensing changes into the PDN/SKZI branch unless the exact amended PKZ-2005 locator is proven relevant."
