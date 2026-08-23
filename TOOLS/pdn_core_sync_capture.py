@@ -12,7 +12,8 @@ must match a registered federal-law source number when that check applies.
 Registered canonical-route captures that do not use a publication ID are validated
 by their own route/content proof instead. The current consolidated 152-FZ additionally
 requires proof that the returned bytes contain the amendment marker of the pinned
-current revision (No. 265-FZ, effective 26.07.2026).
+current revision (No. 265-FZ, effective 26.07.2026), and that the accepted route was
+pre-registered in the current source card.
 """
 from __future__ import annotations
 
@@ -65,6 +66,30 @@ def manifest_is_raw_verified(manifest: dict) -> bool:
             and manifest.get("semantic_status_unchanged")
         )
 
+    # The current consolidated 152-FZ has no publication-ID PDF for the consolidated
+    # 26.07.2026 form. Accept only a byte-exact snapshot from an official URL that was
+    # already registered in the source card and whose body proves both source identity
+    # and the pinned No. 265-FZ revision marker. This branch intentionally does NOT fake
+    # a publication-ID-scoping proof that is inapplicable to consolidated snapshots.
+    if capture_kind == "official_canonical_snapshot" and source_id == CURRENT_ROOT_SOURCE_ID:
+        registered_urls = manifest.get("registered_source_urls") or []
+        accepted_registered_url = str(manifest.get("accepted_registered_source_url") or "")
+        route_binding_ok = bool(
+            isinstance(registered_urls, list)
+            and accepted_registered_url
+            and accepted_registered_url in registered_urls
+        )
+        return bool(
+            proof.get("official_route_pre_registered")
+            and route_binding_ok
+            and proof.get("publication_api_length_check_not_applicable")
+            and proof.get("canonical_content_identity_markers_ok")
+            and proof.get("current_revision_marker_ok")
+            and proof.get("current_revision_trigger") == "265-ФЗ"
+            and proof.get("current_revision_effective_from") == "2026-07-26"
+            and manifest.get("semantic_status_unchanged")
+        )
+
     if schema_version >= "1.2":
         if not proof.get("publication_id_scoped_to_source_document_section"):
             return False
@@ -80,14 +105,6 @@ def manifest_is_raw_verified(manifest: dict) -> bool:
     if capture_kind == "official_canonical_snapshot":
         if not proof.get("publication_api_length_check_not_applicable"):
             return False
-        if source_id == CURRENT_ROOT_SOURCE_ID:
-            return bool(
-                proof.get("canonical_content_identity_markers_ok")
-                and proof.get("current_revision_marker_ok")
-                and proof.get("current_revision_trigger") == "265-ФЗ"
-                and proof.get("current_revision_effective_from") == "2026-07-26"
-                and manifest.get("semantic_status_unchanged")
-            )
         return True
 
     return False
@@ -100,7 +117,7 @@ def update_source(manifest: dict) -> None:
     note = (
         "Byte-exact official PDF captured; overall source status remains METADATA_VERIFIED until extraction/source-locator review gates pass."
         if kind == "official_publication_pdf"
-        else "Byte-exact snapshot from the registered official canonical URL captured; overall source status remains METADATA_VERIFIED until semantic/version-locator review gates pass."
+        else "Byte-exact snapshot from a registered official canonical URL captured; overall source status remains unchanged until semantic/version-locator review gates pass."
     )
     block = (
         "capture:\n"
@@ -166,11 +183,6 @@ def update_production_counters(text: str, immutable: int, pending: int, total: i
 
 
 def update_version_chain_resolution_statuses(text: str, captured: set[str]) -> str:
-    """Keep version-chain status aligned with accepted source manifests.
-
-    This prevents a source from being IMMUTABLE_CAPTURED in the main source list while
-    remaining stale as PENDING_RAW_CAPTURE in version_chain_identity_resolutions.
-    """
     section = re.search(
         r"(?ms)^version_chain_identity_resolutions:\n.*?(?=^[A-Za-z_][A-Za-z0-9_-]*:\s*(?:.*)?$|\Z)",
         text,
@@ -187,7 +199,6 @@ def update_version_chain_resolution_statuses(text: str, captured: set[str]) -> s
 
 
 def update_pending_priority(text: str, pending_ids: list[str]) -> str:
-    """Synchronize acquisition_activity.pending_priority with actual manifest gaps."""
     section = re.search(
         r"(?ms)^acquisition_activity:\n.*?(?=^[A-Za-z_][A-Za-z0-9_-]*:\s*(?:.*)?$|\Z)",
         text,
