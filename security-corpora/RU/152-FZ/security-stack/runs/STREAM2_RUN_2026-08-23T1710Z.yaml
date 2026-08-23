@@ -1,0 +1,69 @@
+schema_version: "1.0"
+id: SEC-PDN-STREAM2-RUN-2026-08-23T1710Z
+kind: production-telemetry
+checked_at: "2026-08-23"
+stream: pdn_technical_crypto
+
+counter_snapshot:
+  sources_identified: 23
+  sources_metadata_verified: 23
+  immutable_sha256_verified: 16
+  pending_raw_capture: 7
+  exact_official_route_unresolved: 1
+  delta_sources_identified: 0
+  delta_immutable: 0
+  delta_pending: 0
+  authoritative_inventory: "../PDN_SECURITY_STACK_SOURCE_INVENTORY.yaml"
+  master_inventory: "../../PDN_MASTER_SOURCE_INVENTORY.yaml"
+  counter_note: >-
+    Counters remain 23/16/7 because this pass improved version-chain scope and provenance
+    but did not obtain new exact official bytes. No metadata-only source was promoted to immutable.
+
+research_pass:
+  focus:
+    - SEC-SRC-RU-FSB173-2010
+    - SEC-SRC-RU-FSB66-2005
+    - SEC-SRC-RU-FSB378-2014
+    - SEC-SRC-RU-PP1119-2012
+  findings:
+    - >-
+      The official FSB NPA index confirms Order No. 173 of 12.04.2010, Minjust registration
+      No. 17350, official publication in BNA FOIV No. 24 on 14.06.2010 and effective date
+      25.06.2010.
+    - >-
+      For the PDN/SKZI branch, the surviving relevant part of Order No. 173 is Appendix point 1:
+      it amends PKZ-2005 point 50 and its footnote. Later Orders No. 440/2012, 683/2012,
+      7/2013 and 157/2013 removed Appendix points 2-8, not point 1.
+    - >-
+      Therefore unrelated licensing/administrative-regulation changes from Appendix points 2-8
+      must not be imported into the PDN/SKZI knowledge graph through the FSB66 -> FSB173 edge.
+    - >-
+      Current-law indexes rechecked in this pass continue to show PP RF No. 1119 as acting in
+      the original 01.11.2012 revision and FSB Order No. 378 as acting in the original
+      10.07.2014 revision; neither status changes the immutable proof floor.
+
+repo_updates:
+  - commit: "523b0ae91099a8efdff939ed6f739abc32696489"
+    change: "narrow FSB173 PKZ-2005 amendment scope to Appendix point 1"
+  - commit: "e48727b30db704e76ffdda1e959d05244ab12493"
+    change: "pin PKZ-2005 amendment locator to point 50 and exclude FSB173 points 2-8"
+
+acquisition_state:
+  immutable_new_this_pass: 0
+  proof_floor_preserved: true
+  semantic_promotions: 0
+  transport_pending:
+    - SEC-SRC-RU-PP1119-2012
+    - SEC-SRC-RU-FSB378-2014
+    - SEC-SRC-RU-PP313-2012
+    - SEC-SRC-RU-PP79-2012
+    - SEC-SRC-RU-FAPSI152-2001
+    - SEC-SRC-RU-FSB66-2005
+  exact_route_unresolved:
+    - SEC-SRC-RU-FSB173-2010
+
+next_gate:
+  - "resolve primary exact-byte route for FSB173/2010; metadata/index evidence is not enough"
+  - "retry official exact capture for PP1119, FSB378, FSB66, FAPSI152, PP313 and PP79"
+  - "do not accept regional-government or commercial-database copies as primary immutable evidence"
+  - "keep FSTEC methodical candidates guarded until explicit ISPDn/dual-regime applicability and official file routes are proven"
