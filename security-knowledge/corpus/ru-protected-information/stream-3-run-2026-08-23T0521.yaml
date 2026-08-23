@@ -1,0 +1,103 @@
+schema_version: "1.0"
+kind: stream-3-sector-library-run
+run_id: STREAM3-2026-08-23T0521
+started_at: "2026-08-23T05:21:37+03:00"
+owner_stream: STREAM_3_SECTOR_OVERLAYS
+status: COMPLETED_WITH_EXACT_CAPTURE_PENDING
+
+objective: >-
+  Discover and register primary sectoral/special protected-information regimes intersecting personal-data processing without inventing applicability;
+  verify currentness/version chain; obtain exact official artifacts when runtime permits.
+
+reconciliation_base:
+  ru_protected_information_delta: "master-inventory-delta-2026-08-23T0225.yaml"
+  counters: {found: 27, downloaded: 9, immutable: 9, pending: 16, reused: 2, primary_publication_verified: 10, sectors_registered: 19}
+
+discovery:
+  query_cluster: ["аудиторская тайна", "307-ФЗ", "статья 9", "359-ФЗ", "обязательные требования аудиторских организаций"]
+  github_dedupe:
+    searches: ["аудиторская тайна", "307-ФЗ", "auditor_secret"]
+    existing_source_found: false
+  source_selected:
+    source_id: SEC-SRC-RU-FZ-307-2008-A9
+    reason: "Independent statutory professional-secrecy regime; broad audit documents can overlap PDN, banking secrecy, commercial secrecy and other protected information."
+
+primary_and_currentness_evidence:
+  - type: OFFICIAL_CURRENT_INTEGRATED_TEXT_LOCATOR
+    authority: "Официальный интернет-портал правовой информации / Интегрированный банк"
+    url: "https://pravo.gov.ru/proxy/ips/?docbody=&link_id=0&nd=102127051&bpa=cd00000&bpas=cd00000&intelsearch=307-%F4%E7++&firstDoc=1"
+    state: IDENTIFIED
+  - type: OFFICIAL_REGULATOR_2026_REQUIREMENTS_REFERENCE
+    authority: "Федеральное казначейство / Минфин"
+    finding: "307-ФЗ remains in the current 2026 mandatory-requirements list; Article 9 parts 2 and 3 are named obligation locators."
+    state: CURRENT_REGULATORY_CONTEXT_CONFIRMED
+  - type: AUTHORITY_HOSTED_HISTORICAL_LAW_COPY
+    authority: "Федеральное казначейство"
+    revision: "2021-12-30; amendments effective through 2022-07-01"
+    state: TEXT_DISCOVERED_NOT_CURRENT_BASELINE
+  - type: CURRENT_CONSOLIDATION_CROSSCHECK
+    revision: "2026-08-04"
+    finding: "Article 9 remains; latest source-level 318-ФЗ event modifies Article 5 only."
+    state: SECONDARY_CROSSCHECK_ONLY
+
+version_chain:
+  state: PARTIAL_LOCATOR_SPECIFIC
+  latest_identified_article9_amendment:
+    act: "359-ФЗ от 02.07.2021"
+    official_publication_id: "0001202107020092"
+    publication_date: "2021-07-02"
+    effective_from: "2022-01-01"
+    changes: ["Article 9 part 3.1 introduced", "Article 9 part 5 amended", "Article 9 part 6 amended"]
+  earlier_events_pending_exact_primary_capture:
+    - "200-ФЗ от 11.07.2011"
+    - "403-ФЗ от 01.12.2014"
+  latest_source_level_event:
+    act: "318-ФЗ от 04.08.2026"
+    affected_locator: "Article 5"
+    article9_effect: NONE_IDENTIFIED
+
+acquisition:
+  official_current_exact_bytes_obtained: false
+  historical_official_pdf_download_attempted: true
+  historical_official_pdf_download_succeeded: false
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact_created: false
+  pending_manifest: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-307-2008-A9-version-capture-pending.json"
+  blocker: >-
+    Runtime could identify official locators and an authority-hosted historical PDF but could not retrieve reliable exact current official bytes;
+    direct historical PDF download also failed. No fingerprint metadata was invented.
+
+relations_added:
+  - {target: "152-ФЗ", type: POSSIBLE_DUAL_REGIME_ON_SCENARIO_PROOF_ONLY, applicability: NOT_PROMOTED}
+  - {target: "SEC-SRC-RU-LAW-395-1", type: BANKING_SECRECY_AUDIT_MATERIAL_OVERLAP_CANDIDATE, applicability: NOT_PROMOTED}
+  - {target: "98-ФЗ от 29.07.2004", type: COMMERCIAL_SECRET_AUDIT_MATERIAL_OVERLAP_CANDIDATE, applicability: NOT_PROMOTED}
+
+outputs:
+  source_card: "security-corpora/RU/protected-information/source/SEC-SRC-RU-FZ-307-2008-A9.yaml"
+  capture_backlog: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-307-2008-A9-version-capture-pending.json"
+  ru_inventory_delta: "security-knowledge/corpus/ru-protected-information/master-inventory-delta-2026-08-23T0521.yaml"
+  pdn_inventory_delta: "security-knowledge/corpus/ru-personal-data/master-source-inventory-delta-stream3-2026-08-23T0521.yaml"
+
+counters_after_reconciliation:
+  found: 28
+  downloaded: 9
+  immutable: 9
+  pending: 17
+  reused: 2
+  primary_publication_verified: 10
+  sectors_registered: 20
+
+quality_gates:
+  duplicate_source_nodes_created: 0
+  applicability_edges_promoted: 0
+  legal_conflicts_confirmed: 0
+  executable_rules_changed: false
+  exact_fingerprint_synthesized: false
+
+next_priority:
+  - "Retry exact current official capture for 307-ФЗ and capture 359-ФЗ primary amendment bytes."
+  - "Continue special-regime discovery with pawnshop secrecy (196-ФЗ article 3) and media-source confidentiality (Law 2124-1 article 41) after dedupe."
+  - "Return to high-priority unresolved healthcare/education/public-sector exact captures as available."
