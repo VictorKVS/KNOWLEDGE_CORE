@@ -1,0 +1,73 @@
+schema_version: "1.0"
+id: SEC-SRC-RU-FSTEC-VULN-MGMT-GUIDE-2023
+kind: security-methodical-source
+status: METADATA_VERIFIED
+title: "Методический документ ФСТЭК России от 17.05.2023 «Руководство по организации процесса управления уязвимостями в органе (организации)»"
+jurisdiction: RU
+issuer: "ФСТЭК России"
+document:
+  type: methodical_document
+  number: "б/н"
+  adopted_date: "2023-05-17"
+  current_revision_date: "2023-05-17"
+  checked_at: "2026-08-23"
+  status_note: >-
+    Руководство применяется государственными органами и организациями, включая субъектов КИИ,
+    являющихся операторами информационных (автоматизированных) систем, при выполнении требований
+    по защите информации, а также в иных случаях, когда его применение следует из НПА или
+    методических документов ФСТЭК России. Само по себе Руководство не доказывает универсальную
+    обязанность для любой частной ИСПДн.
+  version_chain_note: >-
+    Руководство 2023 года ссылается на Методику оценки критичности уязвимостей от 28.10.2022.
+    Методика ФСТЭК от 30.06.2025 прямо прекратила применение версии 2022 года; поэтому текущая
+    реализация шага оценки критичности должна разрешать эту зависимость через актуальный successor,
+    а не считать ссылку Руководства фиксацией старой редакции.
+canonical_source:
+  publisher: "ФСТЭК России"
+  landing_page: "https://fstec.ru/dokumenty/vse-dokumenty/spetsialnye-normativnye-dokumenty/metodicheskij-dokument-ot-17-maya-2023-g"
+  url: "https://fstec.ru/files/1096/---17--2023-/2011/---17--2023-.pdf"
+  expected_mime: "application/pdf"
+  freshness_check:
+    checked_at: "2026-08-23"
+    result: CURRENT_GUIDE_CROSS_VERIFIED_AND_CURRENT_CRITICALITY_SUCCESSOR_IDENTIFIED
+capture:
+  fingerprint_status: PENDING
+  semantic_status: UNCHANGED
+relations:
+  - type: USES_VULNERABILITY_SOURCE
+    target: FSTEC-BDU
+    locator: "section 3.1(b)"
+  - type: REFERENCES_PREDECESSOR_CRITICALITY_METHOD
+    target: FSTEC-VULN-CRIT-METHOD-2022
+    locator: "section 4.2 footnote 8"
+  - type: REFERENCES_SECURITY_UPDATE_TESTING_METHOD
+    target: FSTEC-SECURITY-UPDATE-TESTING-METHOD-2022
+    locator: "section 6; footnote 10"
+  - type: CURRENT_CRITICALITY_DEPENDENCY_RESOLVES_TO
+    target: SEC-SRC-RU-FSTEC-VULN-CRIT-METHOD-2025
+    provenance: "2025 method point 6 plus 2023 guide reference to predecessor"
+applicability_guard:
+  direct_scope:
+    - STATE_BODIES_OPERATING_INFORMATION_SYSTEMS
+    - ORGANIZATIONS_WHERE_PROTECTION_REQUIREMENTS_REQUIRE_VULNERABILITY_MANAGEMENT
+    - CII_SUBJECTS_WHERE_APPLICABLE
+  conditional_scope: OTHER_SYSTEMS_ONLY_WHEN_ANOTHER_NPA_OR_FSTEC_METHODICAL_DOCUMENT_REQUIRES_OR_INVOKES_THIS_GUIDE
+  generic_private_ispdn: NOT_PROVEN_BY_THIS_GUIDE_ALONE
+  pdn_usage_rule: >-
+    Reuse this guide in an ISPDn only after an explicit applicability edge from the governing protection
+    requirements or system regime is recorded. Do not infer a universal private-PDn duty merely from the
+    document's existence.
+provenance:
+  official_landing_page_identified: true
+  official_pdf_route_identified: true
+  current_text_cross_verified: true
+  current_criticality_successor_cross_checked: true
+  review_required: true
+agent_rule: >-
+  Treat this document as a guarded vulnerability-management process source. Keep BDU, criticality scoring,
+  update testing and remediation timelines as separately versioned dependencies. Resolve the 2022 criticality
+  reference through the current 2025 successor before generating current controls. Exact official bytes and
+  SHA-256 are required before immutable promotion.
+inventory_registration:
+  role: fstec_vulnerability_management_process_context
+  applicability: PUBLIC_CII_OR_EXPLICIT_CROSS_REFERENCE_ONLY
