@@ -34,7 +34,42 @@ jobs:
         with:
           fetch-depth: 1
 
-      - name: Try PP687 through guarded curl transport first
+      - name: Reuse immutable artifacts and acquire easy publication deltas first
+        id: acquire
+        shell: bash
+        run: |
+          set +e
+          python TOOLS/pdn_core_pending_acquire.py
+          rc=$?
+          echo "acquirer_exit_code=$rc" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Sync fast immutable delta to source records and master inventory
+        shell: bash
+        run: python TOOLS/pdn_core_sync_capture.py
+
+      - name: Restore authoritative Stream-2 counters after fast core sync
+        shell: bash
+        run: python TOOLS/pdn_security_stack_reconcile_master.py
+
+      - name: Commit fast immutable deltas before slow dedicated routes
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add security-corpora/RU/152-FZ/raw \
+                  security-corpora/RU/152-FZ/manifests \
+                  security-corpora/RU/152-FZ/source \
+                  security-corpora/RU/152-FZ/PDN_ACQUISITION_RUN.json \
+                  security-corpora/RU/152-FZ/PDN_MASTER_SOURCE_INVENTORY.yaml
+          if git diff --cached --quiet; then
+            echo "No fast acquisition delta"
+          else
+            git commit -m "security-kb: sync fast PDN immutable delta [skip ci]"
+            git push
+          fi
+
+      - name: Try PP687 through guarded curl transport
         id: pp687
         shell: bash
         run: |
@@ -44,7 +79,7 @@ jobs:
           echo "pp687_exit_code=$rc" >> "$GITHUB_OUTPUT"
           exit 0
 
-      - name: Try current 152-FZ through guarded curl transport first
+      - name: Try current 152-FZ through guarded curl transport
         id: current_root_curl
         shell: bash
         run: |
@@ -52,16 +87,6 @@ jobs:
           python TOOLS/pdn_current_root_curl_acquire.py
           rc=$?
           echo "current_root_curl_exit_code=$rc" >> "$GITHUB_OUTPUT"
-          exit 0
-
-      - name: Reuse immutable artifacts and acquire only remaining deltas
-        id: acquire
-        shell: bash
-        run: |
-          set +e
-          python TOOLS/pdn_core_pending_acquire.py
-          rc=$?
-          echo "acquirer_exit_code=$rc" >> "$GITHUB_OUTPUT"
           exit 0
 
       - name: Fallback current consolidated 152-FZ through urllib transport
@@ -75,15 +100,15 @@ jobs:
           echo "current_root_exit_code=$rc" >> "$GITHUB_OUTPUT"
           exit 0
 
-      - name: Sync immutable evidence to source records and master inventory
+      - name: Sync dedicated-route immutable evidence to source records and master inventory
         shell: bash
         run: python TOOLS/pdn_core_sync_capture.py
 
-      - name: Restore authoritative Stream-2 counters after core sync
+      - name: Restore authoritative Stream-2 counters after final core sync
         shell: bash
         run: python TOOLS/pdn_security_stack_reconcile_master.py
 
-      - name: Commit immutable artifacts, manifests and registry telemetry
+      - name: Commit dedicated-route immutable artifacts and registry telemetry
         shell: bash
         run: |
           git config user.name "github-actions[bot]"
@@ -94,10 +119,10 @@ jobs:
                   security-corpora/RU/152-FZ/PDN_ACQUISITION_RUN.json \
                   security-corpora/RU/152-FZ/PDN_MASTER_SOURCE_INVENTORY.yaml
           if git diff --cached --quiet; then
-            echo "No acquisition delta"
+            echo "No dedicated-route acquisition delta"
             exit 0
           fi
-          git commit -m "security-kb: sync PDN immutable capture evidence [skip ci]"
+          git commit -m "security-kb: sync PDN dedicated-route capture evidence [skip ci]"
           git push
 
       - name: Surface acquisition result
@@ -107,7 +132,7 @@ jobs:
             cat security-corpora/RU/152-FZ/PDN_ACQUISITION_RUN.json
           fi
           if [ "${{ steps.pp687.outputs.pp687_exit_code }}" != "0" ]; then
-            echo "PP687 guarded curl route did not close the source before delta acquisition; urllib fallback was allowed to try it." >&2
+            echo "PP687 guarded registered routes remain pending; semantic status was not promoted." >&2
           fi
           if [ "${{ steps.current_root_curl.outputs.current_root_curl_exit_code }}" != "0" ] && \
              [ "${{ steps.current_root.outputs.current_root_exit_code }}" != "0" ]; then
