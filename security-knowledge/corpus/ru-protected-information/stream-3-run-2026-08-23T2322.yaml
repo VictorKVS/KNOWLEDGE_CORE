@@ -1,0 +1,89 @@
+schema_version: "1.0"
+kind: stream-3-sector-overlay-run
+run_id: STREAM3-2026-08-23T2322
+checked_at: "2026-08-23T23:22:55+03:00"
+owner_stream: STREAM_3_SECTOR_OVERLAYS
+status: COMPLETED_WITH_EXACT_BINARY_CAPTURE_PENDING
+
+scope:
+  primary_focus: children-guardianship-state-databank
+  source: SEC-SRC-RU-FZ-44-2001-A8
+  discovery_seed_only: RU_PROTECTED_INFORMATION_TAXONOMY
+  evidence_rule: PRIMARY_STATUTORY_ACT_AND_OFFICIAL_AMENDMENT_PUBLICATIONS
+
+work_completed:
+  - "Зарегистрирован новый source-node 44-ФЗ от 16.04.2001, статья 8, по конфиденциальной информации государственного банка данных о детях."
+  - "Размечены часть 1, три смысловых узла части 2 и прямая отсылка к статье 11."
+  - "Проверена текущая консолидация: редакция 04.08.2023 с изменениями закона, вступившими в силу по 01.01.2026."
+  - "Подтверждены locator-specific события статьи 8: 319-ФЗ и 488-ФЗ; их официальные publication locators записаны."
+  - "Добавлен PDN overlap candidate без applicability promotion."
+  - "Добавлены связи с тайной усыновления, 149-ФЗ и специальными режимами health-data; режимы не объединены."
+  - "Создан pending exact-capture manifest; нулевые fingerprints сохранены как null."
+
+primary_evidence:
+  current_act_locator:
+    url: "https://pravo.gov.ru/proxy/ips/?docbody=&nd=102038925"
+    result: OFFICIAL_LOCATOR_IDENTIFIED_RUNTIME_TIMEOUT_ON_DIRECT_FETCH
+  amendment_319_fz:
+    publication_id: "0001201908030001"
+    publication_date: "2019-08-03"
+    url: "https://publication.pravo.gov.ru/document/0001201908030001"
+    result: OFFICIAL_PUBLICATION_METADATA_VERIFIED
+  amendment_488_fz:
+    publication_id: "0001202308040091"
+    publication_date: "2023-08-04"
+    url: "https://publication.pravo.gov.ru/document/0001202308040091"
+    result: OFFICIAL_PUBLICATION_VERIFIED
+
+current_article8_findings:
+  confidentiality_scope: "Анкеты детей и перечисленных категорий граждан относятся к конфиденциальной информации; доступ регулируется статьей 11."
+  derivative_information_gate: "Производная информация допускается для специальной цели информирования о детях, подлежащих устройству в семьи; коммерческое использование запрещено."
+  deidentification_gate: "Должна быть исключена возможность идентификации ребенка, родителей и других родственников."
+  sensitive_fields: "Перечень производной информации может включать здоровье, развитие, семейные обстоятельства, родственников и фотографии."
+
+version_chain:
+  state: PARTIAL_LOCATOR_SPECIFIC_CURRENT_RECONCILED
+  events:
+    - {act: "319-ФЗ от 02.08.2019", publication_id: "0001201908030001", article8_effect: "title/part1/part2 context", effective: "2020-01-01"}
+    - {act: "488-ФЗ от 04.08.2023", publication_id: "0001202308040091", article8_effect: "part2", effective: "2024-07-01"}
+    - {act: "569-ФЗ от 28.12.2022", article8_effect: NONE_IDENTIFIED_IN_CURRENT_ARTICLE8_CROSSCHECK, role: SOURCE_LEVEL_CONTEXT}
+
+acquisition:
+  exact_binary_downloads: 0
+  immutable_artifacts_added: 0
+  blocker: >-
+    Direct current official locator timed out in the web runtime. Official amendment publication pages are identified, but no reliable exact current binary was received. The GitHub connector available in this run persists UTF-8 repository files and is not used to fabricate/upload an official PDF from metadata.
+  invariant: "No actual bytes => no MIME/byte_length/SHA-256/retrieved_at and no downloaded/immutable increment."
+
+counter_reconciliation:
+  before: {found: 30, downloaded: 9, immutable: 9, pending: 19, reused: 2, sectors_registered: 22}
+  after: {found: 31, downloaded: 9, immutable: 9, pending: 20, reused: 2, sectors_registered: 23}
+  applicability_edges_promoted: 0
+  legal_conflicts_confirmed: 0
+  duplicate_source_nodes_created: 0
+
+files_written:
+  - "security-corpora/RU/protected-information/source/SEC-SRC-RU-FZ-44-2001-A8.yaml"
+  - "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-44-2001-A8-version-capture-pending.json"
+  - "security-knowledge/corpus/ru-protected-information/master-inventory-delta-2026-08-23T2322.yaml"
+  - "security-knowledge/corpus/ru-personal-data/master-source-inventory-delta-stream3-2026-08-23T2322.yaml"
+  - "security-knowledge/corpus/ru-protected-information/stream-3-run-2026-08-23T2322.yaml"
+
+discovery_correction:
+  candidate: "211-ФЗ от 20.07.2020 «О совершении финансовых сделок с использованием финансовой платформы»"
+  correction: >-
+    Seed «статья 17 = общая конфиденциальность финансовой платформы» уточнен. Основное data/security ядро требует отдельного locator-review статей 7, 8 и 12; статья 17 прежде всего регулирует полномочия/получение информации Банком России и содержит отдельный supervisory confidentiality context, а не универсальную клиентскую тайну.
+  next_action: "До регистрации режима получить официальный primary locator текущей редакции и exact locator map; не переносить весь режим статьи 17 на данные клиентов."
+
+next_priority:
+  - "211-ФЗ — corrected locator map: статьи 7, 8, 12, 17; official primary capture and version chain"
+  - "44-ФЗ — exact authoritative current binary and PDFs 319-ФЗ/488-ФЗ"
+  - "143-ФЗ — статьи 13.2/47 exact capture and child/adoption confidentiality relations"
+  - "healthcare/326-ФЗ pending exact capture"
+  - "remaining transport/marketing/public-sector pending exact-capture backlog"
+
+proof_floor:
+  - "OVERLAP != APPLICABILITY"
+  - "SOURCE-LEVEL AMENDMENT != LOCATOR-SPECIFIC CHANGE"
+  - "PORTAL DISPLAY METADATA != BYTE-EXACT ARTIFACT"
+  - "NO BINARY => NO IMMUTABLE PROMOTION"
