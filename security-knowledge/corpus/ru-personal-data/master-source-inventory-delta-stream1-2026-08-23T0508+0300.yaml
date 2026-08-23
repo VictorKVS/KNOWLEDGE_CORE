@@ -1,0 +1,73 @@
+schema_version: 1
+delta_id: RU_PD_MASTER_SOURCE_INVENTORY_STREAM1_DELTA_2026_08_23T0508_0300
+applies_to: master-source-inventory.yaml
+created_at: "2026-08-23T05:08:00+03:00"
+stream_id: RU_PD_STREAM_1_CORE_REGULATION
+merge_policy: >-
+  CONCURRENCY_SAFE_OVERLAY. Do not replace stream-2/stream-3 fields. The authoritative core acquisition
+  ledger is security-corpora/RU/152-FZ/PDN_MASTER_SOURCE_INVENTORY.yaml; this delta only publishes the
+  latest stream-1 acquisition/proof state into the shared PDN inventory layer.
+
+source_patches:
+  RU_FZ152_2006:
+    registration_status: CURRENT_REVISION_IDENTITY_CROSS_VERIFIED_2026_08_23
+    current_revision: "26.07.2026"
+    triggering_amendment: "265-ФЗ"
+    immutable_status: SOURCE_PENDING
+    capture_gate: >-
+      Official consolidated bytes must contain 152-ФЗ/personal-data identity markers AND the № 265-ФЗ
+      current-revision marker before an immutable manifest is accepted.
+    semantic_promotion: false
+
+  RU_GOV_PP_687_2008:
+    registration_status: STATUS_VERIFIED_CURRENT_2026_08_23
+    current_revision: "ПП РФ от 18.01.2025 № 12"
+    valid_until: "2030-09-01"
+    immutable_status: SOURCE_PENDING
+    preferred_transport: OFFICIAL_PRAVO_IPS_REGISTERED_ROUTE
+    fallback_transport: OFFICIAL_GOVERNMENT_CANONICAL_PAGE
+    semantic_promotion: false
+
+stream_progress_patch:
+  stream_1_core_regulation:
+    status: ACTIVE
+    authoritative_inventory: "../../../security-corpora/RU/152-FZ/PDN_MASTER_SOURCE_INVENTORY.yaml"
+    authoritative_run_record: "../../../security-corpora/RU/152-FZ/runs/stream-1/2026-08-23T0508+0300.yaml"
+    identified: 21
+    exact_raw_artifacts: 19
+    immutable_sha256_verified: 19
+    atomized_existing_proposed: 4
+    atomized_verified: 0
+    pending_raw_capture: 2
+    raw_capture_coverage_ratio: 0.9048
+    last_accepted_regular_targets: 20
+    last_accepted_reused_immutable: 19
+    last_accepted_reuse_ratio: 0.95
+    new_immutable_this_run: 0
+    freshness_checks_this_run: 2
+    acquisition_proof_defects_fixed_this_run: 2
+    semantic_promotions_this_run: 0
+
+proof_gate_fixes:
+  - >-
+      Current 152-ФЗ canonical capture no longer accepts document identity alone. It also requires the
+      № 265-ФЗ marker proving the bytes correspond to the current 26.07.2026 revision branch.
+  - >-
+      The synchronizer now has an explicit acceptance path for PP687 guarded registered-route manifests.
+      Before this fix, a valid exact PP687 capture could be written but could not be synchronized because
+      official_registered_route_snapshot was not an accepted capture_kind and publication-ID scope proof
+      was incorrectly required for a route that does not use a publication ID.
+
+pending_raw:
+  - SEC-SRC-RU-152FZ-2026-07-26
+  - SEC-SRC-RU-PP687-2008
+
+next_priority_patch:
+  - close PP687 exact official capture through registered IPS route, with Government page as fallback
+  - close current consolidated 152-ФЗ only with current-revision marker proof
+  - after 21/21 raw coverage, move capacity to structure/chunks/concepts/definitions/conflicts/requirements/typed-relations
+
+quality_note: >-
+  No source was promoted to IMMUTABLE without accepted exact-byte evidence. The existing 19 immutable artifacts
+  remain reuse-first assets; this pass improved proof correctness and removed a synchronization blocker rather
+  than inflating acquisition counters.
