@@ -1,4 +1,4 @@
-schema_version: "1.3"
+schema_version: "1.4"
 id: SEC-SRC-RU-152FZ-2026-07-26
 kind: security-regulatory-source
 status: CURRENT_REVISION_DISCOVERED
@@ -28,11 +28,27 @@ canonical_source:
   identity: "nd=102108261"
   route_status: OFFICIAL_CANONICAL_ROUTE_REGISTERED
   route_checked_at: "2026-08-23"
+  alternate_official_routes:
+    - publisher: "Правительство России"
+      url: "https://government.ru/docs/all/98196/"
+      route_status: OFFICIAL_GOVERNMENT_ROUTE_REGISTERED_GUARDED
+      registered_at: "2026-08-23"
+      current_revision_marker_required: "265-ФЗ"
+      evidence_note: >-
+        The official Government portal hosts the 152-FZ document page. The indexed copy available during this
+        pass is not fresh enough by itself to prove the 26.07.2026 consolidated revision, so this route is
+        transport-only: returned live bytes may be accepted only when the existing 152-FZ/personal-data/265-FZ
+        current-revision content gate succeeds. No semantic or extraction status is promoted from route registration.
   evidence_note: >-
-    Current legal index rechecked on 23.08.2026 still includes Federal Law No. 265-FZ in the amendment chain and
-    identifies 26.07.2026 as the operative revision. The future No. 200-FZ Article 10 amendment remains scheduled
-    for 01.03.2027 and does not alter current-date routing. Immutable capture now additionally requires the
-    No. 265-FZ amendment marker inside the returned official consolidated bytes, not document identity alone.
+    Current legal indexes rechecked on 23.08.2026 still include Federal Law No. 265-FZ in the amendment chain and
+    identify 26.07.2026 as the operative revision. The future No. 200-FZ Article 10 amendment remains scheduled
+    for 01.03.2027 and does not alter current-date routing. Immutable capture requires the No. 265-FZ amendment
+    marker inside the returned official consolidated bytes, not document identity alone.
+  source_model_note: >-
+    Current legal indexes state that the consolidated 26.07.2026 form was not separately officially published as
+    a new publication. Therefore immutable proof for the current root is modeled as a guarded exact snapshot from
+    a registered official consolidated-text route plus the immutable primary amendment chain. This note does not
+    waive the byte-exact snapshot gate and does not promote VERIFIED_FOR_EXTRACTION.
 
 version_evidence:
   - publisher: "Официальный интернет-портал правовой информации"
@@ -54,12 +70,12 @@ capture:
   semantic_status: UNCHANGED
   acquisition_request:
     status: RETRY_REQUIRED_GUARDED
-    requested_at: "2026-08-23T02:07:00Z"
-    route: official_canonical_snapshot
+    requested_at: "2026-08-23T20:10:00Z"
+    route: official_registered_multi_route_snapshot
     reason: >-
-      Current consolidated 152-FZ has a registered official IPS route. Require exact returned bytes,
+      Current consolidated 152-FZ has multiple registered official routes. Require exact returned bytes,
       retrieved_at, MIME, byte length, SHA-256, 152-FZ/personal-data identity validation, the current-revision
-      265-FZ marker, and an accepted manifest before immutable promotion.
+      265-FZ marker, accepted manifest, and locator review before immutable/extraction promotion.
   note: >-
     The current revision identity is cross-verified, but a byte-exact official consolidated snapshot of the
     26.07.2026 text has not yet passed the strengthened guarded capture gate. Do not promote to METADATA_VERIFIED_FOR_EXTRACTION.
