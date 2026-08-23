@@ -174,7 +174,6 @@ def main() -> int:
         "proof": {
             "official_route": True,
             "official_route_pre_registered": True,
-            "publication_id_scoped_to_source_document_section": True,
             "byte_exact_download": True,
             "sha256_calculated_from_downloaded_bytes": True,
             "publication_api_length_check_not_applicable": True,
