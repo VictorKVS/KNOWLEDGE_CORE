@@ -1,10 +1,10 @@
-schema_version: "1.9"
+schema_version: "1.10"
 id: SEC-PDN-MASTER-SOURCE-INVENTORY
 kind: security-regulatory-source-inventory
 status: ACTIVE_DISCOVERY
 jurisdiction: RU
 domain: personal_data
-checked_at: "2026-08-22"
+checked_at: "2026-08-23"
 
 policy:
   proof_floor: >-
@@ -72,6 +72,14 @@ sources:
     metadata_status: METADATA_VERIFIED
     source_record: "source/SEC-SRC-RU-PP687-2008.yaml"
     raw_capture: PENDING
+  - id: SEC-SRC-RU-PP12-2025
+    document: "Постановление Правительства РФ от 18.01.2025 № 12"
+    role: pp687_version_chain_dependency
+    metadata_status: METADATA_VERIFIED
+    source_record: "source/SEC-SRC-RU-PP12-2025.yaml"
+    raw_capture: PENDING
+    applicability: VERSION_CHAIN_SCOPE
+    amends: SEC-SRC-RU-PP687-2008
   - id: SEC-SRC-RU-PP211-2012
     document: "Постановление Правительства РФ от 21.03.2012 № 211"
     role: state_municipal_operator_measures
@@ -194,6 +202,10 @@ version_history:
   note: "Preserved for temporal/delta analysis; excluded from active-source counters."
 
 version_chain_identity_resolutions:
+  - chain: SEC-SRC-RU-PP687-2008
+    source_id: SEC-SRC-RU-PP12-2025
+    official_publication_id: "0001202501180009"
+    status: PENDING_RAW_CAPTURE
   - chain: SEC-SRC-RU-PP733-2021
     source_id: SEC-SRC-RU-PP2563-2021
     official_publication_id: "0001202112310106"
@@ -248,26 +260,26 @@ security_stack:
   latest_acquisition_finished_at: "2026-08-23T04:27:28.267857Z"
 
 production_counters:
-  identified: 21
-  metadata_verified: 20
+  identified: 22
+  metadata_verified: 21
   current_revision_identity_pending_raw: 1
   raw_downloaded_exact: 19
   immutable_sha256_verified: 19
   atomized_existing_proposed: 4
   atomized_verified: 0
-  pending_raw_capture: 2
+  pending_raw_capture: 3
   source_registration_success_rate: 1.0
-  raw_capture_coverage_ratio: 0.9048
+  raw_capture_coverage_ratio: 0.8636
 
 analysis_metrics:
   existing_atomized_nodes_reuse_candidate: 4
   mandatory_delta_review_articles: 1
   freshness_checks_this_pass: 3
   freshness_defects_found_this_pass: 0
-  source_records_added_this_pass: 0
+  source_records_added_this_pass: 1
   direct_dependencies_added_this_pass: 0
-  version_chain_dependencies_added_this_pass: 0
-  version_chain_gaps_closed_this_pass: 0
+  version_chain_dependencies_added_this_pass: 1
+  version_chain_gaps_closed_this_pass: 1
   conflict_candidates_opened_this_pass: 0
   source_relation_rebases_this_pass: 0
   canonical_routes_registered_this_pass: 0
@@ -277,13 +289,12 @@ analysis_metrics:
   acquisition_retry_requests_this_pass: 0
   acquisition_proof_guards_hardened_this_pass: 0
   semantic_promotions_this_pass: 0
-  immutable_new_this_pass: 1
+  immutable_new_this_pass: 0
   note: >-
-    Reconciled the accepted immutable manifest for Federal Law No. 200-FZ: official PDF captured at 499239 bytes,
-    SHA-256 35d4a2adc9ed283c258341f55ca6231f76e60d7212c119b13612e80d1f47f9f0. The latest reuse-first run
-    revalidated 19 immutable artifacts and attempted only PP RF No. 687, which remained pending after an official
-    government.ru timeout. The current consolidated 152-FZ official IPS route also remains pending. Freshness checks
-    still identify the 26.07.2026 152-FZ revision as current and the Roskomnadzor replacement of Order No. 128 as a draft.
+    Fresh reconciliation of PP RF No. 687 identified its current amending act, PP RF No. 12 of 18.01.2025,
+    as a missing version-chain source. Official publication identity 0001202501180009 is now registered in the
+    master inventory. PP687 remains current in the revision of No. 12 and is valid through 01.09.2030. No semantic
+    status was promoted; the new dependency is pending byte-exact official capture and SHA-256.
 
 acquisition_activity:
   latest_sync_commit: "2a532fca4b264ad8c6cc818348e2f843232ed617"
@@ -292,10 +303,10 @@ acquisition_activity:
     - workflow_dispatch
     - push_on_acquisition_inputs
     - scheduled_3h
-  accepted_manifest_delta_at_inventory_write: 1
+  accepted_manifest_delta_at_inventory_write: 0
   last_proven_acquisition_run:
-    started_at: "2026-08-22T15:37:23.797765Z"
-    finished_at: "2026-08-22T15:55:36.095620Z"
+    started_at: "2026-08-23T04:05:16.357161Z"
+    finished_at: "2026-08-23T04:23:28.760869Z"
     targets: 20
     reused_immutable: 19
     network_targets_attempted: 1
@@ -306,11 +317,12 @@ acquisition_activity:
   pending_priority:
     - SEC-SRC-RU-152FZ-2026-07-26
     - SEC-SRC-RU-PP687-2008
+    - SEC-SRC-RU-PP12-2025
 
 acquisition_blockers:
   - >-
       Official byte-exact acquisition is operational through publication-ID PDFs and registered canonical official URLs.
-      Remaining source IDs without an accepted immutable manifest: SEC-SRC-RU-152FZ-2026-07-26, SEC-SRC-RU-PP687-2008.
+      Remaining source IDs without an accepted immutable manifest: SEC-SRC-RU-152FZ-2026-07-26, SEC-SRC-RU-PP687-2008, SEC-SRC-RU-PP12-2025.
 
 next_gate:
   - capture and fingerprint the remaining official raw artifacts
