@@ -157,7 +157,7 @@ def main() -> int:
         "schema_version": "1.8",
         "source_id": SOURCE_ID,
         "source_document_number": expected_number,
-        "capture_kind": "official_registered_multi_route_snapshot",
+        "capture_kind": "official_canonical_snapshot",
         "accepted_transport": accepted_transport,
         "accepted_registered_source_url": accepted_registered_url,
         "source_url": accepted_transport_url,
@@ -172,7 +172,9 @@ def main() -> int:
         "source_record_ref": str(SOURCE_RECORD.relative_to(ROOT)).replace("\\", "/"),
         "capture_policy": "current-root-version-identity-cross-verified-multi-official-route-with-content-and-revision-markers",
         "proof": {
+            "official_route": True,
             "official_route_pre_registered": True,
+            "publication_id_scoped_to_source_document_section": True,
             "byte_exact_download": True,
             "sha256_calculated_from_downloaded_bytes": True,
             "publication_api_length_check_not_applicable": True,
