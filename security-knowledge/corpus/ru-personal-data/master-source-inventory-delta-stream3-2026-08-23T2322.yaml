@@ -1,0 +1,77 @@
+schema_version: "1.0"
+kind: ru-personal-data-master-source-inventory-delta
+owner_stream: STREAM_3_SECTOR_OVERLAYS
+checked_at: "2026-08-23T23:22:55+03:00"
+source_id: SEC-SRC-RU-FZ-44-2001-A8
+source_card: "security-corpora/RU/protected-information/source/SEC-SRC-RU-FZ-44-2001-A8.yaml"
+status: APPEND_ONLY_RELATIONSHIP_DELTA
+
+relationship:
+  target: "152-ФЗ"
+  type: CANDIDATE_DUAL_REGIME_ON_DATA_FIELD_OPERATION_AND_ROLE_PROOF_ONLY
+  state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  primary_locator: "статья 8 Федерального закона от 16.04.2001 № 44-ФЗ «О государственном банке данных о детях, оставшихся без попечения родителей»"
+  current_text_finding: >-
+    Часть 1 статьи 8 относит анкеты детей и перечисленных категорий граждан к конфиденциальной информации и отсылает порядок доступа к статье 11. Часть 2 допускает специальное создание и распространение производной информации о детях, запрещает ее коммерческое использование и требует исключить идентификацию ребенка, его родителей и других родственников. В перечне допустимой производной информации прямо присутствуют сведения о состоянии здоровья и фотографии.
+  evidence_quality:
+    official_current_locator: "https://pravo.gov.ru/proxy/ips/?docbody=&nd=102038925"
+    current_consolidated_revision: "2023-08-04"
+    provisions_effective_through: "2026-01-01"
+    article8_amendments:
+      - "319-ФЗ от 02.08.2019; official publication 0001201908030001; effective 2020-01-01"
+      - "488-ФЗ от 04.08.2023; official publication 0001202308040091; Article 8 part 2 change effective 2024-07-01"
+    exact_current_authoritative_binary: PENDING
+  applicability_guard: >-
+    Не выводить применимость 152-ФЗ только из факта нахождения сведений в государственном банке данных либо наличия здоровья/фотографии. Для конкретного требования определить идентифицируемого субъекта, точное поле, наличие специальной категории, операцию обработки, цель, роль органа опеки/регионального или федерального оператора/получателя, правовое основание и точные statutory gates статей 8 и 11. CHILD_DATABANK_CONFIDENTIALITY != PERSONAL_DATA; OVERLAP != APPLICABILITY.
+
+related_protected_information:
+  regimes:
+    - state_child_databank_confidentiality
+    - child_identity_deidentification
+    - sensitive_family_health_information
+  confidentiality_locators:
+    - "статья 8 часть 1"
+    - "статья 8 часть 2 абзац 1"
+    - "статья 8 часть 2 абзац 2"
+    - "статья 8 часть 2 абзац 3"
+    - "статья 11 (порядок доступа — отдельная проверка)"
+  state: SPECIAL_REGIMES_LINKED_NOT_MERGED_WITH_PDN
+  note: >-
+    Требование исключить идентификацию при распространении производной информации является специальным statutory gate. Оно не подменяет полный анализ обезличивания по 152-ФЗ и подзаконным актам и не означает, что любая опубликованная производная информация автоматически перестает быть персональными данными.
+
+cross_regime_candidates:
+  - target: "СК РФ статья 139"
+    type: ADOPTION_SECRECY_CHILD_DATABANK_CONTEXT
+    state: RELATIONSHIP_CONTEXT_ONLY
+    guard: "Не смешивать тайну усыновления и режим государственного банка данных без конкретного факта/операции и прямого правового основания."
+  - target: "149-ФЗ"
+    type: INFORMATION_CONFIDENTIALITY_STATUTORY_REFERENCE_CONTEXT
+    state: STATUTORY_REFERENCE_CONTEXT_ONLY
+    guard: "Импортировать требования 149-ФЗ только по точным locator и роли; не считать общую ссылку автоматической применимостью всех требований закона."
+  - target: "режимы данных о здоровье детей"
+    type: HEALTH_INFORMATION_OVERLAP
+    state: RELATIONSHIP_CONTEXT_ONLY
+    guard: "Сведения о здоровье требуют отдельной квалификации; наличие медицинского поля не превращает весь банк данных во врачебную тайну."
+
+version_guard:
+  locator_specific_events:
+    - {act: "319-ФЗ от 02.08.2019", official_publication_id: "0001201908030001", effective: "2020-01-01", effect_on_article8: "title + part 1 + part 2 amendment context"}
+    - {act: "488-ФЗ от 04.08.2023", official_publication_id: "0001202308040091", effective_for_article8: "2024-07-01", effect_on_article8: "part 2"}
+  source_level_context:
+    - {act: "569-ФЗ от 28.12.2022", effect_on_article8: NONE_IDENTIFIED_IN_CURRENT_ARTICLE8_CROSSCHECK}
+  full_chain: PARTIAL
+
+capture_guard:
+  exact_current_binary: PENDING
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  executable_use: false
+
+counter_effect:
+  pdn_overlap_candidates_added: 1
+  cross_regime_candidates_added: 3
+  applicability_edges_promoted: 0
+  executable_rules_changed: false
+  duplicate_sources_created: 0
