@@ -4,7 +4,7 @@ kind: security-regulatory-source-inventory
 status: ACTIVE_DISCOVERY
 jurisdiction: RU
 domain: personal_data_security
-checked_at: "2026-08-23"
+checked_at: "2026-08-24"
 acquisition_trigger_registered_at: "2026-08-22T08:40:00Z"
 
 policy:
@@ -176,6 +176,24 @@ sources:
     source_record: "source/SEC-SRC-RU-FSTEC-VULN-MGMT-GUIDE-2023.yaml"
     raw_capture: PENDING
     applicability: PUBLIC_CII_OR_EXPLICIT_CROSS_REFERENCE_ONLY
+  - id: SEC-SRC-RU-FSTEC-SECURITY-ANALYSIS-METHOD-2025
+    role: fstec_security_analysis_methodical_context
+    metadata_status: METADATA_VERIFIED
+    source_record: "source/SEC-SRC-RU-FSTEC-SECURITY-ANALYSIS-METHOD-2025.yaml"
+    raw_capture: PENDING
+    applicability: ATTESTATION_CONTROL_OR_CONFORMITY_ASSESSMENT_CONTEXT_ONLY
+  - id: SEC-SRC-RU-FSTEC-PROTECTION-MEASURES-METHOD-2026
+    role: fstec_protection_processes_and_measures_methodical_context
+    metadata_status: METADATA_VERIFIED
+    source_record: "source/SEC-SRC-RU-FSTEC-PROTECTION-MEASURES-METHOD-2026.yaml"
+    raw_capture: PENDING
+    applicability: PUBLIC_SYSTEMS_KII_OR_EXPLICIT_CROSS_REFERENCE_ONLY
+  - id: SEC-SRC-RU-FSTEC-MATURITY-METHOD-2026
+    role: fstec_ispdn_security_maturity_methodical_context
+    metadata_status: METADATA_VERIFIED
+    source_record: "source/SEC-SRC-RU-FSTEC-MATURITY-METHOD-2026.yaml"
+    raw_capture: PENDING
+    applicability: ISPDN_MATURITY_ASSESSMENT_WITH_RECOMMENDATIONS_NOT_AUTOMATIC_MANDATORY_MINIMA
 
 version_edges:
   - from: SEC-SRC-RU-FSTEC21-2013
@@ -263,6 +281,20 @@ applicability_edges:
     to: SECURITY_PROTECTION_MEANS
     scope: CERTIFICATION_AND_CONFORMITY_CONTEXT_ONLY
     not_universal_pdn_duty: true
+  - from: SEC-SRC-RU-FSTEC-MATURITY-METHOD-2026
+    type: REFERENCES_ISPDN_TECHNICAL_MEASURES
+    to: SEC-SRC-RU-FSTEC21-2013
+    scope: ISPDN_MATURITY_ASSESSMENT
+    not_a_new_mandatory_control: true
+  - from: SEC-SRC-RU-FSTEC-MATURITY-METHOD-2026
+    type: USES_PROTECTION_LEVELS_FOR_RECOMMENDED_TARGET_PROFILE
+    to: SEC-SRC-RU-PP1119-2012
+    scope: RECOMMENDED_MATURITY_TARGETS_ONLY
+    not_a_new_mandatory_minimum: true
+  - from: SEC-SRC-RU-FSTEC-SECURITY-ANALYSIS-METHOD-2025
+    type: USES_CURRENT_VULNERABILITY_CRITICALITY_METHOD
+    to: SEC-SRC-RU-FSTEC-VULN-CRIT-METHOD-2025
+    scope: ATTESTATION_CONTROL_OR_CONFORMITY_ASSESSMENT_CONTEXT_ONLY
 
 context_splits:
   - id: PDN-STACK-CONTEXT-2026-001
@@ -319,6 +351,23 @@ context_splits:
     finding: >-
       FSTEC Order No. 55 and its amendments define the certification-system framework for protection means.
       They must not be transformed into a universal standalone requirement for every PDN operator to certify every tool.
+  - id: PDN-STACK-CONTEXT-2026-007
+    status: CONTEXT_DEPENDENT_NOT_CONFLICT
+    sources:
+      - SEC-SRC-RU-FSTEC-MATURITY-METHOD-2026
+      - SEC-SRC-RU-PP1119-2012
+      - SEC-SRC-RU-FSTEC21-2013
+    finding: >-
+      The 07.08.2026 maturity method directly includes ISPDn operators, but its point 11 target maturity values are
+      recommendations. They must not be transformed into new mandatory protection-level requirements beyond PP1119/FSTEC21.
+  - id: PDN-STACK-CONTEXT-2026-008
+    status: CONTEXT_DEPENDENT_NOT_CONFLICT
+    sources:
+      - SEC-SRC-RU-FSTEC-PROTECTION-MEASURES-METHOD-2026
+      - SEC-SRC-RU-FSB378-2014
+    finding: >-
+      The 12.04.2026 FSTEC protection-measures method is guarded to its public/KII scope and expressly leaves
+      cryptographic protection/SKZI measures to FSB requirements; the two branches must not be silently merged.
 
 conflict_candidates:
   - id: PDN-STACK-CONFLICT-CANDIDATE-2026-001
@@ -333,16 +382,16 @@ conflict_candidates:
       as a contradiction until scope, legal regime, effective interval and purpose are compared.
 
 production_counters:
-  identified: 26
-  metadata_verified: 26
+  identified: 29
+  metadata_verified: 29
   raw_downloaded_exact: 16
   immutable_sha256_verified: 16
-  pending_raw_capture: 10
+  pending_raw_capture: 13
   official_publication_id_targets: 13
   official_canonical_targets: 12
-  exact_official_route_unresolved: 1
+  exact_official_route_unresolved: 4
   version_edges_verified: 9
-  applicability_guards: 12
+  applicability_guards: 15
   confirmed_conflicts: 0
   conflict_candidates: 1
 
@@ -353,8 +402,10 @@ latest_acquisition_run:
   network_targets_attempted: 9
   new_immutable_captured: 0
   pending_after_run: 10
+  note: "Historical run before registration of three additional current FSTEC methodical source cards on 2026-08-24."
 
 next_gate:
+  - resolve exact official attachment routes for the three newly registered FSTEC methodical sources
   - exact official acquisition and fingerprinting
   - structural parse and legal/semantic chunks
   - concept and definition reconciliation
