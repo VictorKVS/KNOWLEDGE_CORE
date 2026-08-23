@@ -1,0 +1,81 @@
+schema_version: "1.0"
+id: SEC-PDN-SECURITY-STACK-STREAM2-STATUS-2026-08-23
+kind: stream-status
+status: ACTIVE_DISCOVERY
+checked_at: "2026-08-23"
+
+counters:
+  identified: 23
+  immutable_sha256_verified: 16
+  pending_raw_capture: 7
+  latest_acquisition_started_at: "2026-08-23T08:19:08.925021Z"
+  latest_acquisition_finished_at: "2026-08-23T08:24:37.663829Z"
+  reused_immutable_in_latest_run: 15
+  network_targets_attempted_in_latest_run: 7
+  new_immutable_captured_in_latest_run: 1
+
+latest_immutable_delta:
+  source_id: SEC-SRC-RU-FSB8C-THREAT-RECS-2015
+  document: "Методические рекомендации 8 Центра ФСБ России № 149/7/2/6-432 от 31.03.2015"
+  applicability: ISPDN_THREAT_MODELING_WHEN_SKZI_RELEVANT
+  source_url: "http://www.fsb.ru/files/PDF/Metodicheskie_recomendacii.pdf"
+  configured_primary_url: "https://www.fsb.ru/files/PDF/Metodicheskie_recomendacii.pdf"
+  fallback_reason: "HTTPS official FSB route timed out; the same official FSB file succeeded via HTTP transport fallback."
+  retrieved_at: "2026-08-23T08:20:50.743820Z"
+  mime: "application/pdf"
+  byte_length: 399341
+  sha256: "a7256cecc1bfa3d9fb68eacc80de4f9329eed071dd8f7d27afc8aa878321f4df"
+  artifact_ref: "raw/SEC-SRC-RU-FSB8C-THREAT-RECS-2015/official-snapshot-a7256cecc1bfa3d9.pdf"
+  manifest_ref: "manifests/SEC-SRC-RU-FSB8C-THREAT-RECS-2015.json"
+  proof:
+    byte_exact_download: true
+    pdf_signature_verified: true
+    sha256_calculated_from_downloaded_bytes: true
+    official_route: true
+
+pending:
+  - source_id: SEC-SRC-RU-PP1119-2012
+    reason: TRANSIENT_TRANSPORT_TIMEOUT
+    registered_routes:
+      - "https://government.ru/docs/all/84743/"
+      - "https://pravo.gov.ru/proxy/ips/?docbody=&nd=102160483"
+  - source_id: SEC-SRC-RU-FSB378-2014
+    reason: OFFICIAL_RG_ROUTE_HTTP_401
+    registered_routes:
+      - "https://rg.ru/documents/2014/09/17/zashita-dok.html"
+  - source_id: SEC-SRC-RU-FSB66-2005
+    reason: TRANSIENT_TRANSPORT_TIMEOUT
+    registered_routes:
+      - "https://pravo.gov.ru/proxy/ips/?docbody=&nd=102097894"
+  - source_id: SEC-SRC-RU-FAPSI152-2001
+    reason: TRANSIENT_TRANSPORT_TIMEOUT
+    registered_routes:
+      - "https://pravo.gov.ru/proxy/ips/?docbody=&nd=102095483"
+  - source_id: SEC-SRC-RU-PP313-2012
+    reason: TRANSIENT_TRANSPORT_TIMEOUT
+    registered_routes:
+      - "https://pravo.gov.ru/proxy/ips/?docbody=&nd=102155729"
+  - source_id: SEC-SRC-RU-PP79-2012
+    reason: TRANSIENT_TRANSPORT_TIMEOUT
+    registered_routes:
+      - "https://pravo.gov.ru/proxy/ips/?docbody=&nd=102153815"
+  - source_id: SEC-SRC-RU-FSB173-2010
+    reason: EXACT_PUBLIC_PRIMARY_ARTIFACT_ROUTE_UNRESOLVED
+    metadata_verified:
+      adopted_date: "2010-04-12"
+      ministry_registration_number: "17350"
+      ministry_registration_date: "2010-05-25"
+      current_revision_date: "2013-03-25"
+
+applicability_guards:
+  - "FSB Order No. 378 applies only when SKZI use in the ISPDn is established."
+  - "FSB 8th Center 2015 recommendations are methodical context for PDN threat modeling when the SKZI/cryptographic branch is relevant; they are not a universal PDN duty."
+  - "FSTEC 2021 threat methodology and FSB cryptographic threat methodology remain separate unless an explicit applicability edge is proved."
+  - "PP No. 313 and PP No. 79 govern defined licensed activities and must not be inferred as universal licence duties for every PDN operator."
+  - "FSTEC certification-system documents are conformity/certification context, not a universal standalone requirement to certify every protection tool."
+  - "NCCCI/GosSOPKA materials enter this stream only through an explicit PDN computer-incident applicability edge."
+
+next_priority:
+  - "Retry official byte capture for PP1119, FSB378, FSB66, FAPSI152, PP313 and PP79 without lowering proof requirements."
+  - "Continue searching for an exact publicly accessible primary route for FSB Order No. 173/2010; do not promote commercial/secondary copies."
+  - "Preserve existing immutable FSTEC21 and FSTEC 2021 methodology captures; only re-acquire on proven version/fingerprint change."
