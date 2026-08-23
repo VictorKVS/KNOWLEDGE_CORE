@@ -1,0 +1,90 @@
+schema_version: "1.0"
+kind: ru-personal-data-master-source-inventory-delta
+owner_stream: STREAM_3_SECTOR_OVERLAYS
+checked_at: "2026-08-23T14:24:34+03:00"
+source_id: SEC-SRC-RU-LAW-2124I-1991-A41
+source_card: "security-corpora/RU/protected-information/source/SEC-SRC-RU-LAW-2124I-1991-A41.yaml"
+status: APPEND_ONLY_RELATIONSHIP_DELTA
+
+relationship:
+  target: "152-ФЗ"
+  type: CANDIDATE_DUAL_REGIME_ON_DATA_AND_OPERATION_PROOF_ONLY
+  state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  primary_locator: "статья 41 Закона Российской Федерации от 27.12.1991 № 2124-I «О средствах массовой информации»"
+  current_text_finding: >-
+    Статья 41 отдельно запрещает редакции разглашать сведения, предоставленные гражданином с условием сохранения их в тайне, требует хранить в тайне
+    источник информации и вводит специальные ограничения на распространение сведений, прямо или косвенно идентифицирующих несовершеннолетнего.
+    Части 4-5 связаны с частью 6 статьи 4 и содержат узкие условия/цели допустимого распространения информации о несовершеннолетнем потерпевшем.
+  evidence_quality:
+    official_current_locator: "https://pravo.gov.ru/proxy/ips/?docbody=&nd=102013812"
+    current_consolidated_revision_basis: "304-ФЗ от 31.07.2025; изменения Закона о СМИ действуют с 01.03.2026"
+    last_article41_specific_amendment: "50-ФЗ от 05.04.2013; official publication id 0001201304080008"
+    current_source_level_publications:
+      - "215-ФЗ от 23.07.2025; official publication id 0001202507230005; Article 41 effect NONE"
+      - "304-ФЗ от 31.07.2025; official publication id 0001202507310080; Article 41 effect NONE_IDENTIFIED"
+    future_source_level_event: "215-ФЗ от 26.06.2026; publication locator 0001202606260075; effective 01.09.2026; Article 41 effect NONE_IDENTIFIED"
+    exact_current_authoritative_binary: PENDING
+  applicability_guard: >-
+    Не выводить применимость 152-ФЗ только из факта публикации материала, статуса редакции/журналиста или наличия режима конфиденциальности источника.
+    Для конкретного требования определить идентифицируемое физическое лицо, состав данных, публикационную/редакционную операцию, цель, роли, правовое
+    основание, условие о тайне, требуемые согласия, судебное требование и точный locator Закона о СМИ. MEDIA_CONFIDENTIALITY != PERSONAL_DATA;
+    OVERLAP != APPLICABILITY.
+
+related_protected_information:
+  regimes:
+    - media_source_confidentiality
+    - confidential_citizen_submission
+    - minor_identity_protection_in_media
+  confidentiality_locators:
+    - "статья 41 часть 1"
+    - "статья 41 часть 2"
+    - "статья 41 часть 3"
+    - "статья 41 часть 4 + статья 4 часть 6"
+    - "статья 41 часть 5"
+  state: SPECIAL_REGIMES_LINKED_NOT_MERGED_WITH_PDN
+  note: >-
+    Конфиденциальность источника определяется условием неразглашения и специальной ролью редакции; защита несовершеннолетних имеет собственные
+    statutory gates. Наличие персональных данных возможно и часто вероятно, но требуется отдельная проверка состава данных и операции обработки.
+
+cross_regime_candidates:
+  - target: "УПК РФ статьи 161 и 241"
+    type: CRIMINAL_PROCEDURE_DISCLOSURE_LIMIT_FOR_MINOR_VICTIM
+    state: STATUTORY_CROSS_REFERENCE_CONTEXT_ONLY
+    guard: "Проверять конкретный уголовно-процессуальный контекст и пределы раскрытия; не считать ссылку универсальным основанием публикации."
+  - target: "специальные режимы защиты сведений о несовершеннолетних"
+    type: CHILD_IDENTITY_PROTECTION_OVERLAP
+    state: RELATIONSHIP_CONTEXT_ONLY
+    guard: "Не объединять нормы Закона о СМИ с семейной, образовательной, медицинской или иной детской тайной без прямого нормативного основания."
+
+version_guard:
+  last_article41_specific_event:
+    act: "50-ФЗ от 05.04.2013"
+    official_publication_id: "0001201304080008"
+    state: OFFICIAL_PUBLICATION_LOCATOR_VERIFIED
+  current_source_level_events:
+    - {act: "215-ФЗ от 23.07.2025", official_publication_id: "0001202507230005", effect_on_article41: NONE}
+    - {act: "304-ФЗ от 31.07.2025", official_publication_id: "0001202507310080", effect_on_article41: NONE_IDENTIFIED, effective_context: "01.03.2026"}
+  future_source_level_event:
+    act: "215-ФЗ от 26.06.2026"
+    official_publication_locator: "0001202606260075"
+    effective_context: "01.09.2026"
+    effect_on_article41: NONE_IDENTIFIED
+  historical_locator_events:
+    - "110-ФЗ от 05.08.2000 — part 3 introduced; exact primary archive capture pending"
+    - "200-ФЗ от 11.07.2011 — Article 41 core revised; exact primary archive capture pending"
+  full_chain: PARTIAL
+
+capture_guard:
+  exact_current_binary: PENDING
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  executable_use: false
+
+counter_effect:
+  pdn_overlap_candidates_added: 1
+  cross_regime_candidates_added: 2
+  applicability_edges_promoted: 0
+  executable_rules_changed: false
+  duplicate_sources_created: 0
