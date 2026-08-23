@@ -9,6 +9,7 @@ on:
     paths:
       - ".github/workflows/pdn-security-stack-immutable-acquisition.yml"
       - "TOOLS/pdn_security_stack_acquire.py"
+      - "TOOLS/pdn_security_stack_capture_gate.py"
       - "security-corpora/RU/152-FZ/security-stack/**"
 
 permissions:
@@ -31,6 +32,10 @@ jobs:
       - name: Reuse immutable captures and acquire technical/crypto deltas
         shell: bash
         run: python TOOLS/pdn_security_stack_acquire.py
+
+      - name: Fail closed on generic or wrong legal-text portal captures
+        shell: bash
+        run: python TOOLS/pdn_security_stack_capture_gate.py
 
       - name: Commit immutable artifacts, manifests, source evidence and telemetry
         shell: bash
