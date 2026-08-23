@@ -11,6 +11,7 @@ on:
       - "TOOLS/pdn_security_stack_acquire.py"
       - "TOOLS/pdn_security_stack_capture_gate.py"
       - "TOOLS/pdn_security_stack_reconcile_telemetry.py"
+      - "TOOLS/pdn_security_stack_reconcile_master.py"
       - "security-corpora/RU/152-FZ/security-stack/**"
 
 permissions:
@@ -42,19 +43,27 @@ jobs:
         shell: bash
         run: python TOOLS/pdn_security_stack_reconcile_telemetry.py
 
-      - name: Commit immutable artifacts, manifests, source evidence and telemetry
+      - name: Commit Stream-2 evidence, then reconcile shared master after rebase
         shell: bash
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add security-corpora/RU/152-FZ/security-stack \
-                  security-corpora/RU/152-FZ/PDN_MASTER_SOURCE_INVENTORY.yaml
-          if git diff --cached --quiet; then
-            echo "No security-stack acquisition delta"
-            exit 0
+
+          # The shared master is reconciled only after rebasing on the latest main.
+          # This prevents concurrent PDN-core runs from overwriting Stream-2 counters
+          # with similarly named core counters.
+          git restore security-corpora/RU/152-FZ/PDN_MASTER_SOURCE_INVENTORY.yaml || true
+          git add security-corpora/RU/152-FZ/security-stack
+          if ! git diff --cached --quiet; then
+            git commit -m "security-kb: sync PDN security-stack immutable capture [skip ci]"
           fi
-          git commit -m "security-kb: sync PDN security-stack immutable capture [skip ci]"
+
           git pull --rebase origin main
+          python TOOLS/pdn_security_stack_reconcile_master.py
+          git add security-corpora/RU/152-FZ/PDN_MASTER_SOURCE_INVENTORY.yaml
+          if ! git diff --cached --quiet; then
+            git commit -m "security-kb: reconcile Stream-2 master counters [skip ci]"
+          fi
           git push
 
       - name: Surface stream telemetry
