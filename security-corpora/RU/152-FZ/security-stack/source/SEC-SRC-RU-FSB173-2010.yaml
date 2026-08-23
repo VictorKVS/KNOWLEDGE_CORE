@@ -1,4 +1,4 @@
-schema_version: "1.1"
+schema_version: "1.2"
 id: SEC-SRC-RU-FSB173-2010
 kind: security-regulatory-source
 status: METADATA_VERIFIED
@@ -12,10 +12,30 @@ document:
   ministry_registration_date: "2010-05-25"
   ministry_registration_number: "17350"
   official_publication: "Бюллетень нормативных актов федеральных органов исполнительной власти, 14.06.2010, № 24"
+  official_publication_date: "2010-06-14"
+  effective_from: "2010-06-25"
   current_revision_date: "2013-03-25"
   checked_at: "2026-08-23"
   current_status: ACTING_WITH_LATER_AMENDMENTS
-  version_chain_note: "Изменения в приказ №173 вносились приказами ФСБ России от 30.08.2012 №440, 28.12.2012 №683, 10.01.2013 №7 и 25.03.2013 №157. Для ветки ПКЗ-2005 этот источник используется только как доказанная цепочка изменений; точный официальный байтовый артефакт пока не получен."
+  version_chain_note: >-
+    Консолидированная редакция учитывает приказы ФСБ России от 30.08.2012 №440,
+    28.12.2012 №683, 10.01.2013 №7 и 25.03.2013 №157. Эти акты признали утратившими
+    силу пункты 2-8 приложения к приказу №173, но не пункт 1, которым изменен пункт 50
+    ПКЗ-2005. Для ветки ПДн/СКЗИ приказ №173 используется только как доказанная
+    version-chain зависимость приказа ФСБ №66 и только по приложению, пункту 1.
+branch_relevance:
+  pdn_skzi_locator: "Приложение, пункт 1 (подпункты 1.1-1.2)"
+  amends_target: SEC-SRC-RU-FSB66-2005
+  target_locator: "ПКЗ-2005, пункт 50 и сноска к пункту 50"
+  surviving_after_2013_consolidation: true
+  unrelated_items_removed_from_pdn_branch:
+    - "Приложение, пункт 2 — утратил силу по приказу ФСБ №157/2013"
+    - "Приложение, пункты 3-5 и 7 — утратили силу по приказу ФСБ №440/2012"
+    - "Приложение, пункт 6 — утратил силу по приказу ФСБ №683/2012"
+    - "Приложение, пункт 8 — утратил силу по приказу ФСБ №7/2013"
+  scope_rule: >-
+    Не переносить в PDN/SKZI knowledge graph изменения административных регламентов
+    и иных актов из пунктов 2-8. Для ПКЗ-2005 релевантен только пункт 1 приложения.
 canonical_source:
   publisher: "ФСБ России"
   metadata_evidence_url: "https://www.fsb.ru/fsb/npd/more.htm!id=10436382@fsbNpa&_print=true.html"
@@ -26,7 +46,9 @@ capture:
 relations:
   - type: AMENDS
     target: SEC-SRC-RU-FSB66-2005
-    scope: PKZ_2005_VERSION_CHAIN
+    locator: "Appendix point 1"
+    target_locator: "PKZ-2005 point 50"
+    scope: PKZ_2005_VERSION_CHAIN_ONLY
   - type: HAS_LATER_AMENDMENTS
     targets:
       - "FSB-440-2012"
@@ -34,11 +56,20 @@ relations:
       - "FSB-7-2013"
       - "FSB-157-2013"
     scope: VERSION_CHAIN_METADATA_ONLY
+    pdn_skzi_effect: "No later amendment listed here cancels Appendix point 1 / PKZ-2005 point-50 change."
 provenance:
   official_identity_verified: true
+  official_fsb_npa_index_verified: true
+  official_fsb_npa_index_reverified_at: "2026-08-23"
   ministry_registration_cross_checked: true
   publication_identity_cross_checked: true
   current_revision_cross_checked: true
+  branch_specific_locator_cross_checked: true
   exact_official_artifact_pending: true
   review_required: true
-agent_rule: "Use as version-chain evidence only until exact official text and amendment locators are captured and compiled. Do not transfer special-technical-means licensing changes into the PDN/SKZI branch unless the exact amended PKZ-2005 locator is proven relevant."
+agent_rule: >-
+  Use as version-chain evidence for PKZ-2005 only at Appendix point 1 / PKZ-2005 point 50
+  until exact official bytes are captured and compiled. Do not transfer special-technical-means,
+  licensing or other administrative-regulation changes from Appendix points 2-8 into the PDN/SKZI
+  branch. The later 2012-2013 amendments remove those unrelated items and do not establish a new
+  universal PDN duty.
