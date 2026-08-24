@@ -1,7 +1,7 @@
-schema_version: "1.0"
+schema_version: "1.2"
 id: SEC-SRC-RU-FZ-323
 kind: security-regulatory-source
-status: METADATA_VERIFIED
+status: IMMUTABLE_BASELINE_CAPTURED_VERSION_CHAIN_PARTIAL
 
 title: "Федеральный закон от 21.11.2011 № 323-ФЗ «Об основах охраны здоровья граждан в Российской Федерации»"
 jurisdiction: RU
@@ -12,24 +12,122 @@ document:
   adopted_date: "2011-11-21"
   official_publication_id: "0001201111220007"
   official_publication_date: "2011-11-22"
-  checked_at: "2026-08-20"
+  checked_at: "2026-08-24"
+
 canonical_source:
   publisher: "Официальное опубликование правовых актов"
   url: "https://publication.pravo.gov.ru/Document/View/0001201111220007"
   origin_verified: true
+  proof_scope: "Первичная публикация и immutable-артефакт доказывают исходную редакцию 2011 года; действующая семантика статьи 13 требует locator-specific проверки всех последующих изменений."
+
 protected_information:
   sector: healthcare
   regime: medical_secrecy
-  primary_anchor: "статья 13 — врачебная тайна"
+  protected_locators:
+    - locator: "статья 13 часть 1"
+      concept: MEDICAL_SECRECY_SCOPE
+      findings:
+        - "К врачебной тайне относятся сведения о факте обращения за медицинской помощью, состоянии здоровья, диагнозе и иные сведения, полученные при медицинском обследовании и лечении."
+    - locator: "статья 13 часть 2"
+      concept: NON_DISCLOSURE_DUTY
+      findings:
+        - "Разглашение сведений, составляющих врачебную тайну, не допускается лицами, которым они стали известны при обучении, исполнении трудовых, должностных, служебных и иных обязанностей, кроме предусмотренных законом случаев."
+    - locator: "статья 13 части 3 и 3.1"
+      concept: CONSENT_AND_POST_MORTEM_DISCLOSURE_CONTEXT
+      findings:
+        - "Разглашение в предусмотренных законом целях допускается при наличии соответствующего согласия; после смерти гражданина действует специальный режим раскрытия супругу, близким родственникам и иным указанным лицам при отсутствии запрета гражданина/представителя."
+    - locator: "статья 13 часть 4"
+      concept: DISCLOSURE_WITHOUT_CONSENT_ENUMERATED_EXCEPTIONS
+      findings:
+        - "Передача без согласия допускается только в перечисленных законом контекстах; конкретный пункт и его действующая редакция должны устанавливаться отдельно."
+    - locator: "статья 13 часть 4 пункт 8"
+      concept: MEDICAL_INFORMATION_EXCHANGE_DIRECT_PDN_CONTEXT
+      findings:
+        - "Обмен информацией медицинскими организациями для оказания медицинской помощи прямо поставлен в контекст соблюдения требований законодательства Российской Федерации о персональных данных."
+  applicability_status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  applicability_guard: >-
+    Наличие врачебной тайны, медицинских данных или прямого упоминания законодательства о персональных данных не доказывает применимость каждого требования 152-ФЗ к любой организации и операции. Для каждого требования установить actor/role, субъект данных, конкретные поля, операцию обработки, цель, правовое основание, канал передачи и действующий locator.
+
+relationship_candidates:
+  - target: "152-ФЗ"
+    type: DIRECT_STATUTORY_PDN_CONTEXT_FOR_MEDICAL_INFORMATION_EXCHANGE
+    state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    locators:
+      - "323-ФЗ статья 13 часть 4 пункт 8"
+    guard: "DIRECT_REFERENCE != UNIVERSAL_APPLICABILITY; проверять actor/data/operation/purpose/legal_basis и действующую редакцию."
+  - target: "326-ФЗ"
+    type: HEALTHCARE_INSURANCE_INFORMATION_CONTEXT
+    state: STATUTORY_CONTEXT_ONLY
+    locators:
+      - "323-ФЗ статья 13 часть 4 пункт 9"
+    guard: "Учет и контроль в системе обязательного социального страхования не означает тождество врачебной тайны, ПДн и режима ОМС."
+
 version_chain:
   state: VERSION_CHAIN_PARTIAL
-  pending: "Полная цепочка изменений до 2026-08-20."
+  working_current_revision_crosscheck: "2026-08-04"
+  working_current_revision_state: CURRENT_CONSOLIDATION_CROSSCHECK_NOT_EXECUTABLE_PROOF
+  locator_specific_events:
+    - act: "205-ФЗ от 23.07.2013"
+      locator: "статья 13 часть 4 пункт 3"
+      state: LOCATOR_EVENT_DISCOVERED_PRIMARY_CAPTURE_PENDING
+    - act: "317-ФЗ от 25.11.2013"
+      locator: "статья 13 часть 4 пункты 7/11"
+      state: LOCATOR_EVENT_DISCOVERED_PRIMARY_CAPTURE_PENDING
+    - act: "145-ФЗ от 04.06.2014"
+      locator: "статья 13 часть 4 пункт 6"
+      state: LOCATOR_EVENT_DISCOVERED_PRIMARY_CAPTURE_PENDING
+    - act: "78-ФЗ от 06.04.2015"
+      locator: "статья 13 часть 4 пункт 7"
+      state: LOCATOR_EVENT_DISCOVERED_PRIMARY_CAPTURE_PENDING
+    - act: "230-ФЗ от 13.07.2015"
+      locator: "статья 13 часть 4 пункт 3.1"
+      state: LOCATOR_EVENT_DISCOVERED_PRIMARY_CAPTURE_PENDING
+    - act: "438-ФЗ от 22.12.2020"
+      official_publication_id: "0001202012220007"
+      official_publication_date: "2020-12-22"
+      locator: "статья 13 часть 4 пункт 5"
+      state: PRIMARY_PUBLICATION_METADATA_VERIFIED_LOCATOR_EFFECT_CROSSCHECKED
+    - act: "315-ФЗ от 02.07.2021"
+      locator: "статья 13 часть 3 и новая часть 3.1"
+      state: OFFICIAL_PORTAL_PRIMARY_SUMMARY_VERIFIED_BINARY_CAPTURE_PENDING
+      note: "Официальный портал в разделе новых поступлений прямо описывает специальный посмертный режим раскрытия врачебной тайны; exact publication locator/binary еще требуется зарегистрировать."
+    - act: "195-ФЗ от 22.07.2024"
+      official_publication_id: "0001202407220010"
+      official_publication_date: "2024-07-22"
+      locator: "статья 13 часть 4 пункт 5 подпункт г"
+      state: PRIMARY_PUBLICATION_METADATA_VERIFIED_LOCATOR_EFFECT_CROSSCHECKED
+    - act: "509-ФЗ от 28.12.2024"
+      official_publication_id: "0001202412280011"
+      official_publication_date: "2024-12-28"
+      locator: "статья 13 часть 4 пункт 3"
+      state: PRIMARY_PUBLICATION_TITLE_EXPLICITLY_TARGETS_ARTICLE_13_BINARY_CAPTURE_PENDING
+  latest_source_level_event_crosscheck:
+    act: "329-ФЗ от 04.08.2026"
+    publication_locator_crosscheck: "0001202608040072"
+    source_level_effect: "изменение части 2 статьи 72 323-ФЗ"
+    article_13_effect: NONE_IDENTIFIED_IN_CURRENT_CONSOLIDATION
+    state: CURRENTNESS_CROSSCHECK_PRIMARY_PUBLICATION_EXACT_CAPTURE_PENDING
+  pending: >-
+    Получить и зарегистрировать exact primary artifacts для locator-specific поправок, подтвердить их даты вступления и полный исторический chain статьи 13. До завершения цепочки не повышать current executable semantics.
+
 capture:
-  raw_artifact_ref: ""
-  manifest_ref: ""
-  mime: null
-  byte_length: null
-  sha256: ""
-  fingerprint_status: PENDING_RAW_CAPTURE
-provenance: {checked_at: "2026-08-20", review_required: true}
-agent_rule: "Original-publication capture is baseline evidence only; current executable semantics require verified version-chain review."
+  official_initial_publication:
+    state: IMMUTABLE_BASELINE_CAPTURED
+    artifact_ref: "security-corpora/RU/protected-information/raw/SEC-SRC-RU-FZ-323/0001201111220007.zip"
+    manifest_ref: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-323.json"
+    official_file_url: "http://publication.pravo.gov.ru/File/Pdf?eoNumber=0001201111220007"
+    retrieved_at: "2026-08-20T20:32:11.874652Z"
+    mime: "application/zip"
+    container_format: ZIP
+    byte_length: 7257635
+    sha256: "aa54cb7c53980e765efbe0d4196e82d9f758d5596a3394b9283f4e9e250eaabc"
+    proof_scope: "Immutable official original-publication baseline; official API-reported file length matched captured bytes."
+  current_exact_authoritative_binary: PENDING_VERSION_CHAIN_PROOF
+
+provenance:
+  checked_at: "2026-08-24T14:20:14+03:00"
+  review_required: true
+  deduplication: "Existing source ID and existing immutable baseline reused; stale PENDING_RAW_CAPTURE fields reconciled, no duplicate source/artifact counted."
+
+agent_rule: >-
+  Treat Article 13 as a special medical-secrecy regime and Article 13(4)(8) as a direct statutory PDN context for medical information exchange. Do not infer universal 152-FZ applicability or a general disclosure permission from sector membership, data overlap or an exception listed for a specific scenario. Original publication bytes prove the 2011 baseline only; current executable semantics require complete locator-specific primary version-chain verification.
