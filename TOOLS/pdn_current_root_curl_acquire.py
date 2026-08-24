@@ -3,9 +3,13 @@
 
 All official URLs must already be registered inside the current source card. The helper
 tries each registered route, including a TLS-normalized equivalent for legacy HTTP IPS
-links. A response is accepted only if the existing content gate proves 152-FZ,
-personal-data identity and the pinned current-revision marker No. 265-FZ.
-Raw capture never promotes semantic or extraction status.
+links. Each HTTPS/registered transport is tried with two network profiles: the historical
+IPv4+HTTP/1.1 profile and curl's default address/protocol negotiation. This is a transport
+fallback only; it never weakens source, content, version, byte-exact or SHA-256 proof.
+
+A response is accepted only if current_root_identity_ok proves 152-FZ, personal-data
+identity and the pinned current revision (No. 265-FZ or the complete Article-12 delta
+fingerprint). Raw capture never promotes semantic or extraction status.
 """
 from __future__ import annotations
 
@@ -27,18 +31,23 @@ from pdn_current_root_acquire import (
     current_root_identity_ok,
 )
 
-UA = "KNOWLEDGE_CORE-pdn-current-root-curl/1.3 (+https://github.com/VictorKVS/KNOWLEDGE_CORE)"
+UA = "KNOWLEDGE_CORE-pdn-current-root-curl/1.4 (+https://github.com/VictorKVS/KNOWLEDGE_CORE)"
 RAW_DIR = CORPUS / "raw" / SOURCE_ID
 REGISTERED_URL_RE = re.compile(r'(?m)^\s+url:\s*["\']([^"\']+)["\']\s*$')
+NETWORK_PROFILES = (
+    ("ipv4_http11", ("--ipv4", "--http1.1")),
+    ("default_stack", ()),
+)
 
 
-def curl_capture(url: str) -> tuple[bytes, str, str]:
+def curl_capture(url: str, network_args: tuple[str, ...]) -> tuple[bytes, str, str]:
     with tempfile.TemporaryDirectory(prefix="pdn-current-root-") as td:
         body = Path(td) / "body.bin"
         cmd = [
             "curl", "--silent", "--show-error", "--location", "--fail-with-body",
-            "--retry", "3", "--retry-delay", "2", "--retry-all-errors",
-            "--connect-timeout", "20", "--max-time", "120", "--ipv4", "--http1.1",
+            "--retry", "2", "--retry-delay", "2", "--retry-all-errors",
+            "--connect-timeout", "20", "--max-time", "120",
+            *network_args,
             "--header", f"User-Agent: {UA}",
             "--header", "Accept: text/html,application/xhtml+xml,application/pdf,*/*;q=0.8",
             "--header", "Accept-Encoding: identity",
@@ -69,7 +78,7 @@ def registered_urls(canonical_section: str) -> list[str]:
 
 
 def transport_variants(urls: list[str]) -> list[tuple[str, str, str]]:
-    """Return (label, transport_url, registered_url) without inventing unregistered identities."""
+    """Return (label, transport_url, registered_url) without inventing source identities."""
     out: list[tuple[str, str, str]] = []
     seen_transport: set[str] = set()
     for index, registered_url in enumerate(urls, start=1):
@@ -83,6 +92,15 @@ def transport_variants(urls: list[str]) -> list[tuple[str, str, str]]:
             out.append((label, transport_url, registered_url))
             seen_transport.add(transport_url)
     return out
+
+
+def transport_attempts(urls: list[str]) -> list[tuple[str, str, str, str, tuple[str, ...]]]:
+    """Expand each proof-bound transport into safe network-stack attempts."""
+    attempts: list[tuple[str, str, str, str, tuple[str, ...]]] = []
+    for route_label, transport_url, registered_url in transport_variants(urls):
+        for profile_name, profile_args in NETWORK_PROFILES:
+            attempts.append((f"{route_label}:{profile_name}", transport_url, registered_url, profile_name, profile_args))
+    return attempts
 
 
 def write_immutable(data: bytes) -> tuple[Path, str]:
@@ -121,9 +139,10 @@ def main() -> int:
     if not source_urls:
         raise RuntimeError("refuse current-root capture: no registered official URLs in canonical_source")
 
-    attempts = transport_variants(source_urls)
+    attempts = transport_attempts(source_urls)
     errors: list[str] = []
     accepted_transport = ""
+    accepted_network_profile = ""
     accepted_registered_url = ""
     accepted_transport_url = ""
     data = b""
@@ -131,13 +150,14 @@ def main() -> int:
     mime = "application/octet-stream"
     markers: list[str] = []
 
-    for label, transport_url, registered_url in attempts:
+    for label, transport_url, registered_url, profile_name, profile_args in attempts:
         try:
-            candidate, candidate_final_url, candidate_mime = curl_capture(transport_url)
+            candidate, candidate_final_url, candidate_mime = curl_capture(transport_url, profile_args)
             ok, candidate_markers = current_root_identity_ok(candidate)
             if not ok:
                 raise RuntimeError("official response lacks required 152-FZ/personal-data/current-revision markers")
             accepted_transport = label
+            accepted_network_profile = profile_name
             accepted_registered_url = registered_url
             accepted_transport_url = transport_url
             data = candidate
@@ -154,23 +174,25 @@ def main() -> int:
     artifact, sha = write_immutable(data)
     retrieved = dt.datetime.now(dt.timezone.utc).isoformat().replace("+00:00", "Z")
     manifest: dict[str, object] = {
-        "schema_version": "1.8",
+        "schema_version": "1.9",
         "source_id": SOURCE_ID,
         "source_document_number": expected_number,
         "capture_kind": "official_canonical_snapshot",
         "accepted_transport": accepted_transport,
+        "accepted_network_profile": accepted_network_profile,
         "accepted_registered_source_url": accepted_registered_url,
         "source_url": accepted_transport_url,
         "official_file_url": final_url,
         "registered_source_urls": source_urls,
-        "transport_attempt_order": [label for label, _, _ in attempts],
+        "transport_attempt_order": [label for label, *_ in attempts],
+        "network_profiles": [name for name, _ in NETWORK_PROFILES],
         "retrieved_at": retrieved,
         "mime": mime,
         "byte_length": len(data),
         "sha256": sha,
         "artifact_ref": str(artifact.relative_to(ROOT)).replace("\\", "/"),
         "source_record_ref": str(SOURCE_RECORD.relative_to(ROOT)).replace("\\", "/"),
-        "capture_policy": "current-root-version-identity-cross-verified-multi-official-route-with-content-and-revision-markers",
+        "capture_policy": "current-root-version-identity-cross-verified-multi-official-route-multi-network-profile-with-content-and-revision-markers",
         "proof": {
             "official_route": True,
             "official_route_pre_registered": True,
@@ -185,11 +207,12 @@ def main() -> int:
             "current_revision_trigger": CURRENT_REVISION_TRIGGER,
             "current_revision_effective_from": CURRENT_REVISION_EFFECTIVE_FROM,
             "transport_fallback_only": True,
+            "network_profile_does_not_change_registered_source_identity": True,
             "semantic_status_unchanged": True,
         },
         "failed_transports_before_acceptance": errors,
         "semantic_status_unchanged": True,
-        "review_note": "Capture proves exact bytes from a pre-registered official route plus source/current-revision markers only; locator/delta review remains required before extraction promotion.",
+        "review_note": "Capture proves exact bytes from a pre-registered official route plus source/current-revision markers only; network profile changes transport negotiation only, and locator/delta review remains required before extraction promotion.",
     }
     MANIFEST_DIR.mkdir(parents=True, exist_ok=True)
     (MANIFEST_DIR / f"{SOURCE_ID}.json").write_text(
@@ -199,6 +222,7 @@ def main() -> int:
         "source_id": SOURCE_ID,
         "status": "IMMUTABLE_CAPTURED_RAW_ONLY",
         "accepted_transport": accepted_transport,
+        "accepted_network_profile": accepted_network_profile,
         "accepted_registered_source_url": accepted_registered_url,
         "mime": mime,
         "byte_length": len(data),
