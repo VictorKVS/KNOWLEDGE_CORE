@@ -1,0 +1,81 @@
+schema_version: "1.0"
+kind: ru-personal-data-master-source-inventory-delta
+owner_stream: STREAM_3_SECTOR_OVERLAYS
+checked_at: "2026-08-24T23:19:38+03:00"
+previous_delta_ref: "security-knowledge/corpus/ru-personal-data/master-source-inventory-delta-stream3-2026-08-24T1756.yaml"
+source_id: SEC-SRC-RU-FZ-273-2012
+status: APPEND_ONLY_EDUCATION_PDN_CONTEXT_DELTA
+
+relationship:
+  target: "152-ФЗ"
+  type: DIRECT_STATUTORY_PDN_CONTEXT_IN_EDUCATION_SCENARIOS
+  locators:
+    - "273-ФЗ статья 16 часть 3.1"
+    - "273-ФЗ статья 98 часть 1"
+    - "273-ФЗ статья 98 части 20-22"
+  state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  applicability_promoted: false
+  semantic_notes:
+    - "Статья 16 часть 3.1 содержит специальный сценарий e-learning/ДОТ, прямо предусматривающий обработку ПДн обучающихся."
+    - "Статья 98 часть 1 требует конфиденциальности и безопасности ПДн в образовательных государственных информационных системах."
+    - "Статья 98 части 20-22 содержит перечень ПДн ребенка/родителей в дошкольных региональных ИС, обязанность конфиденциальности/безопасности и ответственность."
+  proof_floor: "Эти нормы доказывают отраслевой PDN-контекст, но применимость конкретных обязанностей 152-ФЗ требует доказательства роли, системы, операции, цели и основания."
+
+protected_information_overlap:
+  locators:
+    - "статья 16 часть 5 — государственная или иная охраняемая законом тайна"
+    - "статья 59 часть 11 — КИМ ГИА как информация ограниченного доступа"
+    - "статья 98 часть 1 — государственная/иная охраняемая законом тайна"
+  relation_state: STATUTORY_CONTEXT_ONLY
+
+version_evidence_progress:
+  primary_metadata_verified_this_pass:
+    - act: "539-ФЗ от 29.12.2025"
+      official_publication_id: "0001202512290027"
+      official_publication_date: "2025-12-29"
+      target_locators: ["статья 16 часть 3.1", "статья 98"]
+      currentness: CURRENT
+      proof_state: EXACT_BINARY_PENDING
+    - act: "253-ФЗ от 23.07.2025"
+      official_publication_id: "0001202507230054"
+      official_publication_date: "2025-07-23"
+      target_locators: ["статья 59 часть 11", "статья 59 части 13.1-13.4"]
+      effective_date: "2026-09-01"
+      currentness: FUTURE_NOT_CURRENT
+      proof_state: EXACT_BINARY_PENDING
+  future_source_event:
+    act: "310-ФЗ от 04.08.2026"
+    official_publication_id: "0001202608040033"
+    target_locator: "статья 8"
+    effective_date: "2026-09-01"
+    protected_anchor_impact: NONE_DIRECT_FOR_ARTICLES_16_59_98
+    state: FUTURE_NOT_CURRENT
+  state: VERSION_CHAIN_PARTIAL
+
+capture_guard:
+  immutable_initial_publication:
+    state: IMMUTABLE_BASELINE_CAPTURED
+    artifact: "security-corpora/RU/protected-information/raw/SEC-SRC-RU-FZ-273-2012/0001201212300007.pdf"
+    manifest: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-273-2012.json"
+    retrieved_at: "2026-08-20T20:32:08.360479Z"
+    mime: "application/pdf"
+    byte_length: 20498123
+    sha256: "cc0b349dee5568925b3227c8a714dc8ace6cde53b6c13f752ed2364ecf1af16e"
+  amendment_exact_binary_capture:
+    state: PENDING_RUNTIME_PRIMARY_FILE_ACCESS
+    new_immutable_artifacts_this_pass: 0
+  executable_use: false
+
+counter_effect:
+  top_level_before: {found: 32, downloaded: 9, immutable: 9, pending: 21, reused: 2}
+  top_level_after: {found: 32, downloaded: 9, immutable: 9, pending: 21, reused: 2}
+  pdn_overlap_candidates_added: 1
+  applicability_edges_promoted: 0
+  executable_rules_changed: false
+  duplicate_sources_created: 0
+
+proof_floor:
+  - "OVERLAP != APPLICABILITY."
+  - "Direct statutory PDN context is scenario-specific and role-specific."
+  - "Future amendments are not current requirements before their effective date."
+  - "Exact-byte capture remains mandatory before immutable amendment promotion."
