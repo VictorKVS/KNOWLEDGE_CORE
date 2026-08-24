@@ -1,4 +1,4 @@
-schema_version: "1.2"
+schema_version: "1.3"
 id: SEC-SRC-RU-FSB66-2005
 kind: security-regulatory-source
 status: METADATA_VERIFIED
@@ -11,13 +11,16 @@ document:
   adopted_date: "2005-02-09"
   ministry_registration_number: "6382"
   effective_from: "2005-03-30"
-  checked_at: "2026-08-23"
+  current_revision_date: "2010-04-12"
+  checked_at: "2026-08-24"
+  current_status: ACTING_AS_AMENDED
   current_revision_note: >-
-    Официальный перечень ФСБ указывает изменение приказом ФСБ России от 12.04.2010 №173;
-    текущий официальный SKZI-контекст ФСБ продолжает ссылаться на ПКЗ-2005. Для доказанной
-    ветки №173 релевантен только пункт 1 приложения к №173: он изменяет пункт 50 ПКЗ-2005
-    и сноску к нему. Последующие приказы 2012-2013 годов погасили пункты 2-8 приложения №173,
-    но не пункт 1.
+    Актуальный правовой индекс, перепроверенный 24.08.2026, показывает приказ ФСБ №66
+    действующим в редакции от 12.04.2010 (приказ ФСБ №173). Официальный перечень ФСБ
+    также указывает изменение приказом №173; текущий официальный SKZI-контекст ФСБ
+    продолжает ссылаться на ПКЗ-2005. Для доказанной ветки №173 релевантен только пункт 1
+    приложения к №173: он изменяет пункт 50 ПКЗ-2005 и сноску к нему. Последующие приказы
+    2012-2013 годов погасили пункты 2-8 приложения №173, но не пункт 1.
 version_chain:
   amended_by: SEC-SRC-RU-FSB173-2010
   amendment_locator: "Приказ ФСБ №173/2010, приложение, пункт 1 (подпункты 1.1-1.2)"
@@ -34,6 +37,8 @@ canonical_source:
 capture:
   fingerprint_status: PENDING
   semantic_status: UNCHANGED
+  last_primary_transport_attempt_at: "2026-08-24T08:18:00Z"
+  last_primary_transport_result: "PRAVO_GOV_RU_ROUTE_TIMEOUT_IN_CURRENT_RETRIEVAL_PATH"
 relations:
   - type: AMENDED_BY
     target: SEC-SRC-RU-FSB173-2010
@@ -49,6 +54,7 @@ provenance:
   official_legal_text_route_registered: true
   amendment_identity_verified_in_official_fsb_npa_index: true
   branch_specific_amendment_locator_cross_checked: true
+  current_status_cross_verified_at: "2026-08-24"
   exact_official_artifact_pending: true
   review_required: true
 agent_rule: >-
@@ -57,4 +63,4 @@ agent_rule: >-
   amendment proven by Appendix point 1; do not import the unrelated administrative and
   licensing changes from Appendix points 2-8 into the PDN/SKZI branch. The pravo.gov.ru
   route is eligible for primary immutable acquisition only after exact bytes, MIME,
-  byte length and SHA-256 are captured.
+  byte length and SHA-256 are captured. Do not invent fingerprint fields while transport is pending.
