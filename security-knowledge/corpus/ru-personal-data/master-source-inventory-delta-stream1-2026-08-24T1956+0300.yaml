@@ -1,0 +1,58 @@
+schema_version: "1.0"
+delta_id: PDN-MASTER-DELTA-STREAM1-2026-08-24T1956+0300
+parent_inventory: "../../../security-corpora/RU/152-FZ/PDN_MASTER_SOURCE_INVENTORY.yaml"
+stream: 1
+scope: GENERAL_152FZ_ROSKOMNADZOR_CORE
+observed_at: "2026-08-24T19:56:16+03:00"
+
+counter_snapshot:
+  identified: 22
+  downloaded_exact: 20
+  immutable_sha256: 20
+  atomized_proposed: 4
+  atomized_verified: 0
+  pending_raw: 2
+  raw_coverage: 0.9091
+  latest_reuse_ratio: 0.9524
+
+pending_raw_sources:
+  - SEC-SRC-RU-152FZ-2026-07-26
+  - SEC-SRC-RU-PP687-2008
+
+proof_policy_delta:
+  source_id: SEC-SRC-RU-152FZ-2026-07-26
+  change: CURRENT_REVISION_PROOF_IS_DELTA_AWARE
+  old_gate: "152-FZ identity + personal-data identity + literal 265-FZ amendment citation"
+  new_gate: >-
+    152-FZ identity + personal-data identity + either literal 265-FZ citation OR the complete revision-specific
+    Article 12 part 2 wording fingerprint introduced by Federal Law No. 265-FZ on 26.07.2026.
+  required_delta_anchors_when_citation_absent:
+    - "государства, в которых правовое регулирование в области персональных данных"
+    - "меры по соблюдению основополагающих принципов защиты"
+    - "соответствуют положениям Конвенции"
+  exact_bytes_required: true
+  sha256_required: true
+  registered_official_route_required: true
+  semantic_promotion: false
+  rationale: >-
+    A consolidated official text may incorporate an amendment without repeating the amending-law number.
+    Version identity must therefore be provable from the actual changed legal wording as well as an explicit
+    amendment citation. The full three-anchor fingerprint is required together to prevent an older Article 12
+    edition from passing accidentally.
+
+transport_state:
+  SEC-SRC-RU-PP687-2008:
+    status: PENDING
+    classes: [TRANSPORT_TIMEOUT, IDENTITY_MARKER_MISS, ALL_REGISTERED_ROUTES_FAILED]
+  SEC-SRC-RU-152FZ-2026-07-26:
+    status: RETRY_TRIGGERED_WITH_CORRECTED_PROOF_GATE
+    prior_classes: [TRANSPORT_TIMEOUT, CURRENT_REVISION_MARKER_MISS, ALL_REGISTERED_ROUTES_FAILED]
+
+traceability:
+  acquirer_commit: bef629acd21996f900441190dc3e33c1892072df
+  source_card_commit: cfec48400b49d6cc924fa2a8016346958ff10496
+  run_record: "../../../security-corpora/RU/152-FZ/runs/stream-1/2026-08-24T1956+0300.yaml"
+
+merge_rule: >-
+  This is a concurrency-safe Stream-1 delta. Do not increase master immutable counters unless an accepted manifest
+  appears. When the next master reconciliation runs, preserve 20/22 until exact new capture evidence exists.
