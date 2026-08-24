@@ -1,14 +1,15 @@
 #!/usr/bin/env python3
 """Guarded acquisition for PP RF No. 687 from registered official routes.
 
-The Government portal has intermittently timed out from GitHub-hosted runners. The
-source record also contains the official pravo.gov.ru IPS identity for PP687. This
-helper therefore tries a TLS-normalized form of that *same registered IPS URL* first,
-then the registered URL as written, then the Government canonical page.
+The source record contains the Government canonical page and the official pravo.gov.ru
+IPS identity. This helper preserves those registered source identities, tries a TLS
+normalization only for the legacy HTTP IPS URL, and for every transport tries both the
+historical IPv4+HTTP/1.1 profile and curl's default network/protocol negotiation.
 
 No response is accepted merely because the host is official. Returned bytes must
-contain strong PP687/personal-data identity markers. Capture proves bytes/provenance
-only and never promotes semantic or extraction status.
+contain strong PP687/personal-data identity markers. Network-profile fallback changes
+transport negotiation only; exact bytes, SHA-256, source binding and semantic gates are
+not weakened. Capture proves bytes/provenance only and never promotes extraction status.
 """
 from __future__ import annotations
 
@@ -29,7 +30,7 @@ SOURCE_RECORD = CORPUS / "source" / f"{SOURCE_ID}.yaml"
 RAW_DIR = CORPUS / "raw" / SOURCE_ID
 MANIFEST_DIR = CORPUS / "manifests"
 RUN_FILE = CORPUS / "PDN_ACQUISITION_RUN.json"
-UA = "KNOWLEDGE_CORE-pdn-pp687-curl/1.4 (+https://github.com/VictorKVS/KNOWLEDGE_CORE)"
+UA = "KNOWLEDGE_CORE-pdn-pp687-curl/1.5 (+https://github.com/VictorKVS/KNOWLEDGE_CORE)"
 
 CANONICAL_URL_RE = re.compile(r'^  url:\s*["\']([^"\']+)["\']\s*$', re.M)
 OFFICIAL_IPS_URL_RE = re.compile(
@@ -41,6 +42,10 @@ IDENTITY_PATTERNS = (
     ("document_number_687", re.compile(r"(?:№|n|no\.?|номер)?\s*687(?:\D|$)")),
     ("personal_data", re.compile(r"персональн\w*\s+данн\w*")),
     ("non_automated_processing", re.compile(r"без\s+использования\s+средств\s+автоматизац\w*")),
+)
+NETWORK_PROFILES = (
+    ("ipv4_http11", ("--ipv4", "--http1.1")),
+    ("default_stack", ()),
 )
 
 
@@ -59,13 +64,7 @@ def normalize_identity_text(text: str) -> str:
     text = html.unescape(text)
     text = re.sub(r"<[^>]+>", " ", text)
     text = unicodedata.normalize("NFKC", text)
-    text = text.translate(str.maketrans({
-        "\xa0": " ",
-        "‑": "-",
-        "–": "-",
-        "—": "-",
-        "−": "-",
-    }))
+    text = text.translate(str.maketrans({"\xa0": " ", "‑": "-", "–": "-", "—": "-", "−": "-"}))
     return re.sub(r"\s+", " ", text.lower()).strip()
 
 
@@ -90,13 +89,14 @@ def identity_ok(data: bytes) -> tuple[bool, list[str]]:
     return True, matched
 
 
-def curl_capture(url: str) -> tuple[bytes, str, str]:
+def curl_capture(url: str, network_args: tuple[str, ...]) -> tuple[bytes, str, str]:
     with tempfile.TemporaryDirectory(prefix="pdn-pp687-") as td:
         body = Path(td) / "body.bin"
         cmd = [
             "curl", "--silent", "--show-error", "--location", "--fail-with-body",
-            "--retry", "4", "--retry-delay", "2", "--retry-all-errors",
-            "--connect-timeout", "20", "--max-time", "120", "--ipv4", "--http1.1",
+            "--retry", "2", "--retry-delay", "2", "--retry-all-errors",
+            "--connect-timeout", "20", "--max-time", "120",
+            *network_args,
             "--header", f"User-Agent: {UA}",
             "--header", "Accept: text/html,application/xhtml+xml,*/*;q=0.8",
             "--header", "Accept-Encoding: identity",
@@ -130,26 +130,35 @@ def write_immutable(data: bytes) -> tuple[Path, str]:
     return artifact, sha
 
 
-def registered_routes(source_text: str) -> list[tuple[str, str]]:
+def registered_sources(source_text: str) -> tuple[str, list[tuple[str, str, str]]]:
     canonical = top_level_section(source_text, "canonical_source")
     murl = CANONICAL_URL_RE.search(canonical)
     if not murl:
         raise RuntimeError("refuse PP687 capture: no registered canonical_source.url")
-    routes: list[tuple[str, str]] = [("government_canonical", murl.group(1))]
+    government_url = murl.group(1)
+    routes: list[tuple[str, str, str]] = [("government_canonical", government_url, government_url)]
     mips = OFFICIAL_IPS_URL_RE.search(canonical)
     if mips:
         ips = mips.group(1)
         if ips.startswith("http://"):
-            routes.insert(0, ("pravo_ips_registered_tls_equivalent", "https://" + ips[len("http://"):]))
-        routes.insert(1 if routes and routes[0][0].endswith("tls_equivalent") else 0, ("pravo_ips_registered", ips))
-    # Preserve order and avoid duplicate URLs.
-    out: list[tuple[str, str]] = []
-    seen: set[str] = set()
-    for name, url in routes:
-        if url not in seen:
-            out.append((name, url))
-            seen.add(url)
-    return out
+            routes.insert(0, ("pravo_ips_registered_tls_equivalent", "https://" + ips[len("http://"):], ips))
+        routes.insert(1 if routes and routes[0][0].endswith("tls_equivalent") else 0, ("pravo_ips_registered", ips, ips))
+    out: list[tuple[str, str, str]] = []
+    seen: set[tuple[str, str]] = set()
+    for name, transport_url, registered_url in routes:
+        key = (transport_url, registered_url)
+        if key not in seen:
+            out.append((name, transport_url, registered_url))
+            seen.add(key)
+    return government_url, out
+
+
+def transport_attempts(routes: list[tuple[str, str, str]]) -> list[tuple[str, str, str, str, str, tuple[str, ...]]]:
+    attempts: list[tuple[str, str, str, str, str, tuple[str, ...]]] = []
+    for route_name, transport_url, registered_url in routes:
+        for profile_name, profile_args in NETWORK_PROFILES:
+            attempts.append((f"{route_name}:{profile_name}", route_name, transport_url, registered_url, profile_name, profile_args))
+    return attempts
 
 
 def reconcile_run(manifest: dict[str, object]) -> None:
@@ -165,6 +174,7 @@ def reconcile_run(manifest: dict[str, object]) -> None:
         row.update({
             "source_id": SOURCE_ID,
             "route": manifest["accepted_registered_route"],
+            "network_profile": manifest["accepted_network_profile"],
             "source_document_number": "687",
             "status": "IMMUTABLE_CAPTURED",
             "byte_length": manifest["byte_length"],
@@ -182,9 +192,10 @@ def reconcile_run(manifest: dict[str, object]) -> None:
         run["pending"] = len(results) - ok
         run["postprocess_transport_fallback"] = {
             "source_id": SOURCE_ID,
-            "transport": "curl_ipv4_http11_registered_routes",
+            "transport": "curl_registered_routes_multi_network_profile",
             "accepted": True,
             "accepted_registered_route": manifest["accepted_registered_route"],
+            "accepted_network_profile": manifest["accepted_network_profile"],
             "semantic_status_unchanged": True,
         }
         RUN_FILE.write_text(json.dumps(run, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
@@ -196,57 +207,71 @@ def main() -> int:
     if not status or status.group(1) != "METADATA_VERIFIED":
         raise RuntimeError(f"refuse PP687 capture: source status is not METADATA_VERIFIED for {SOURCE_ID}")
 
-    routes = registered_routes(text)
+    government_url, routes = registered_sources(text)
+    attempts = transport_attempts(routes)
     errors: list[str] = []
     accepted_route = ""
-    accepted_source_url = ""
+    accepted_transport = ""
+    accepted_registered_url = ""
+    accepted_transport_url = ""
+    accepted_network_profile = ""
     data = b""
     final_url = ""
     mime = "application/octet-stream"
     markers: list[str] = []
 
-    for route_name, route_url in routes:
+    for attempt_label, route_name, transport_url, registered_url, profile_name, profile_args in attempts:
         try:
-            candidate, candidate_final_url, candidate_mime = curl_capture(route_url)
+            candidate, candidate_final_url, candidate_mime = curl_capture(transport_url, profile_args)
             ok, candidate_markers = identity_ok(candidate)
             if not ok:
                 raise RuntimeError("official response lacks required PP687/personal-data identity markers")
             accepted_route = route_name
-            accepted_source_url = route_url
+            accepted_transport = attempt_label
+            accepted_registered_url = registered_url
+            accepted_transport_url = transport_url
+            accepted_network_profile = profile_name
             data = candidate
             final_url = candidate_final_url
             mime = candidate_mime
             markers = candidate_markers
             break
         except Exception as exc:
-            errors.append(f"{route_name}: {exc}")
+            errors.append(f"{attempt_label}: {exc}")
 
     if not data:
         raise RuntimeError("all registered official PP687 transports failed: " + " | ".join(errors))
 
     artifact, sha = write_immutable(data)
     retrieved = dt.datetime.now(dt.timezone.utc).isoformat().replace("+00:00", "Z")
+    registered_urls = list(dict.fromkeys(registered_url for _, _, registered_url in routes))
     manifest: dict[str, object] = {
-        "schema_version": "1.7",
+        "schema_version": "1.8",
         "source_id": SOURCE_ID,
         "source_document_number": "687",
         "capture_kind": "official_registered_route_snapshot",
         "accepted_registered_route": accepted_route,
+        "accepted_transport": accepted_transport,
+        "accepted_network_profile": accepted_network_profile,
+        "accepted_registered_source_url": accepted_registered_url,
         "official_file_url": final_url,
-        "source_url": accepted_source_url,
-        "registered_primary_source_url": next(url for name, url in routes if name == "government_canonical"),
-        "registered_route_count": len(routes),
-        "registered_route_attempt_order": [name for name, _ in routes],
+        "source_url": accepted_transport_url,
+        "registered_primary_source_url": government_url,
+        "registered_source_urls": registered_urls,
+        "registered_route_count": len(registered_urls),
+        "transport_attempt_order": [label for label, *_ in attempts],
+        "network_profiles": [name for name, _ in NETWORK_PROFILES],
         "retrieved_at": retrieved,
         "mime": mime,
         "byte_length": len(data),
         "sha256": sha,
         "artifact_ref": str(artifact.relative_to(ROOT)).replace("\\", "/"),
         "source_record_ref": str(SOURCE_RECORD.relative_to(ROOT)).replace("\\", "/"),
-        "capture_policy": "registered-official-route-curl-ipv4-http11-with-normalized-pp687-content-identity-markers",
+        "capture_policy": "registered-official-route-curl-multi-network-profile-with-normalized-pp687-content-identity-markers",
         "proof": {
             "official_route": True,
             "registered_route_used": True,
+            "registered_source_identity_preserved_across_network_profiles": True,
             "tls_scheme_normalization_only_when_used": accepted_route == "pravo_ips_registered_tls_equivalent",
             "byte_exact_download": True,
             "sha256_calculated_from_downloaded_bytes": True,
@@ -261,7 +286,7 @@ def main() -> int:
         },
         "failed_routes_before_acceptance": errors,
         "semantic_status_unchanged": True,
-        "review_note": "Capture proves exact bytes returned by the registered official PP687 identity route and normalized inspection markers only; raw bytes are unchanged and semantic/version-locator review remains required.",
+        "review_note": "Capture proves exact bytes returned through a registered official PP687 source identity and normalized inspection markers only; network profiles do not change source identity, raw bytes are unchanged, and semantic/version-locator review remains required.",
     }
     MANIFEST_DIR.mkdir(parents=True, exist_ok=True)
     (MANIFEST_DIR / f"{SOURCE_ID}.json").write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
@@ -270,6 +295,8 @@ def main() -> int:
         "source_id": SOURCE_ID,
         "status": "IMMUTABLE_CAPTURED_RAW_ONLY",
         "accepted_registered_route": accepted_route,
+        "accepted_network_profile": accepted_network_profile,
+        "accepted_registered_source_url": accepted_registered_url,
         "mime": mime,
         "byte_length": len(data),
         "sha256": sha,
