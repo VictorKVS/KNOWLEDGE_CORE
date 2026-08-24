@@ -1,0 +1,60 @@
+schema_version: "1.0"
+kind: ru-personal-data-master-source-inventory-delta
+owner_stream: STREAM_3_SECTOR_OVERLAYS
+checked_at: "2026-08-25T02:46:55+03:00"
+previous_delta_ref: "security-knowledge/corpus/ru-personal-data/master-source-inventory-delta-stream3-2026-08-24T2319.yaml"
+source_id: SEC-SRC-RU-FZ-323
+status: APPEND_ONLY_HEALTHCARE_VERSION_EVIDENCE_DELTA
+
+relationship:
+  target: "152-ФЗ"
+  type: DIRECT_STATUTORY_PDN_CONTEXT_FOR_MEDICAL_INFORMATION_EXCHANGE
+  locator: "323-ФЗ статья 13 часть 4 пункт 8"
+  state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  applicability_promoted: false
+  changed_this_pass: false
+  proof_floor: "Прямой PDN-контекст медицинского обмена не доказывает универсальную применимость всех обязанностей 152-ФЗ."
+
+scenario_specific_version_evidence:
+  - act: "205-ФЗ от 23.07.2013"
+    locator: "323-ФЗ статья 13 часть 4 пункт 3"
+    effect: "Специальный контекст предоставления сведений по запросу органов прокуратуры в связи с прокурорским надзором."
+    source: "https://rg.ru/documents/2013/07/26/persdannye-dok.html"
+    source_state: OFFICIAL_GAZETTE_ACT_TEXT_VERIFIED
+    relation_to_pdn: "Тот же 205-ФЗ изменял законодательство о персональных данных в прокурорском контексте; это не создает общего исключения из 152-ФЗ."
+    applicability_state: SCENARIO_BOUND_NO_GLOBAL_PROMOTION
+  - act: "317-ФЗ от 25.11.2013"
+    locator: "323-ФЗ статья 13 часть 4 пункты 7/11"
+    effect: "Пункт 7 изменен; пункт 11 признан утратившим силу."
+    source: "https://rg.ru/documents/2013/11/27/zdorovye-dok.html"
+    source_state: OFFICIAL_GAZETTE_FULL_ACT_TEXT_VERIFIED
+    applicability_state: NO_PDN_APPLICABILITY_PROMOTION
+
+capture_guard:
+  immutable_initial_publication:
+    state: IMMUTABLE_BASELINE_CAPTURED
+    artifact: "security-corpora/RU/protected-information/raw/SEC-SRC-RU-FZ-323/0001201111220007.zip"
+    manifest: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-323.json"
+    retrieved_at: "2026-08-20T20:32:11.874652Z"
+    mime: "application/zip"
+    byte_length: 7257635
+    sha256: "aa54cb7c53980e765efbe0d4196e82d9f758d5596a3394b9283f4e9e250eaabc"
+  amendment_exact_binary_capture:
+    state: PENDING_PRIMARY_PORTAL_EXACT_BYTES
+    new_immutable_artifacts_this_pass: 0
+  executable_use: false
+
+counter_effect:
+  top_level_before: {found: 32, downloaded: 9, immutable: 9, pending: 21, reused: 2}
+  top_level_after: {found: 32, downloaded: 9, immutable: 9, pending: 21, reused: 2}
+  historical_version_effects_enriched: 2
+  pdn_overlap_candidates_added: 0
+  applicability_edges_promoted: 0
+  executable_rules_changed: false
+  duplicate_sources_created: 0
+
+proof_floor:
+  - "OVERLAP != APPLICABILITY."
+  - "Disclosure exception != universal processing or transfer permission."
+  - "Official-gazette evidence does not replace exact-byte amendment capture."
+  - "Unknown publication portal identifiers remain null rather than guessed."
