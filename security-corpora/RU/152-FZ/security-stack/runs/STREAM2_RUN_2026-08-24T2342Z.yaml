@@ -1,0 +1,78 @@
+schema_version: "1.0"
+id: STREAM2_RUN_2026-08-24T2342Z
+stream: RU_PDN_TECHNICAL_CRYPTO
+started_at: "2026-08-24T23:42:00Z"
+finished_at: "2026-08-24T23:51:00Z"
+status: COMPLETED_WITH_NEW_PRIMARY_STATUS_SOURCE
+
+scope:
+  priorities:
+    - SEC-SRC-RU-PP1119-2012
+    - SEC-SRC-RU-FSTEC21-2013
+    - SEC-SRC-RU-FSTEC-THREAT-METHOD-2021
+    - SEC-SRC-RU-FSB378-2014
+    - SEC-SRC-RU-FSB66-2005
+    - SEC-SRC-RU-FAPSI152-2001
+  applicability_guard: >-
+    No KII, public-sector, GosSOPKA, licensing or certification requirement becomes a general PDN duty without
+    an explicit applicability edge and source-specific trigger.
+
+findings:
+  - source_id: SEC-SRC-RU-FSB-PDN-NORMATIVE-STATUS-NOTICE-2016
+    finding: NEW_OFFICIAL_FSB_STATUS_AND_VERSION_CHAIN_SOURCE_REGISTERED
+    source_url: "https://www.fsb.ru/fsb/science/single.htm!id=10437725@fsbResearchart.html"
+    publication_date: "2016-06-21"
+    raw_capture: PENDING
+    semantic_promotion: false
+    note: >-
+      The official FSB notice states that the 2008 PDN crypto methodical materials lost relevance after PP RF
+      No. 781 ceased to apply, and lists FSB378, FSB66/PKZ-2005, FAPSI152 and FSB 8-Center recommendations
+      No. 149/7/2/6-432 as the methodological set at the notice date. It is not treated as a new control source.
+  - source_id: SEC-SRC-RU-PP1119-2012
+    finding: PRIMARY_DOC_RETRY_FAILED_NO_IMMUTABLE_PROMOTION
+    semantic_promotion: false
+  - source_id: SEC-SRC-RU-FSTEC21-2013
+    finding: ACTIVE_BASELINE_RETAINED_NO_FINAL_REPLACEMENT_PROVEN_IN_BOUNDED_CURRENT_CHECK
+    semantic_promotion: false
+  - source_id: SEC-SRC-RU-FSB378-2014
+    finding: OFFICIAL_FSB_2016_STATUS_CHAIN_EVIDENCE_EXPLICITLY_LINKED_PRIMARY_BYTES_STILL_PENDING
+    semantic_promotion: false
+
+counters:
+  identified: 33
+  metadata_verified: 33
+  immutable_sha256_verified: 16
+  pending_raw_capture: 17
+  exact_official_route_unresolved: 6
+  confirmed_conflicts: 0
+
+run_delta:
+  new_sources: 1
+  new_immutable_captured: 0
+  status_rechecks: 3
+  semantic_promotions: 0
+  new_universal_pdn_duties: 0
+
+transport:
+  pp1119_government_doc: >-
+    EXACT_BYTES_NOT_OBTAINED; registered Government HTTPS route did not resolve in the bounded transport path and
+    the OLE/CFB signature gate was therefore not executed.
+  fsb_status_notice_2016: >-
+    OFFICIAL_PAGE_IDENTITY_AND_CONTENT_RESOLVED_BY_WEB_INDEX; exact HTTP response bytes were not obtained, so MIME,
+    byte length and SHA-256 were not recorded as captured evidence.
+  fsb378_primary_publication: EXACT_BYTES_NOT_OBTAINED
+  transport_failure_is_not_absence_or_repeal: true
+
+next_priority:
+  - PP1119 exact Government DOC bytes and OLE/CFB signature gate
+  - FSB378 exact primary publication bytes
+  - FSB66/173 and FAPSI152 exact primary bytes
+  - FSTEC 240/22/690 exact primary bytes
+  - source-bounded FSTEC methodical attachments
+
+proof_floor:
+  immutable_claim_without_exact_bytes: false
+  historical_status_notice_as_current_2026_version_chain_proof: false
+  draft_as_active_law: false
+  neighboring_regime_import_without_edge: false
+  secondary_copy_as_primary: false
