@@ -1,0 +1,87 @@
+schema_version: "1.0"
+kind: ru-personal-data-master-source-inventory-delta
+owner_stream: STREAM_3_SECTOR_OVERLAYS
+checked_at: "2026-08-24T05:23:18+03:00"
+source_id: SEC-SRC-RU-FZ-211-2020
+source_card: "security-corpora/RU/protected-information/source/SEC-SRC-RU-FZ-211-2020.yaml"
+status: APPEND_ONLY_RELATIONSHIP_DELTA
+
+relationship:
+  target: "152-ФЗ"
+  type: CANDIDATE_DUAL_REGIME_ON_DATA_FIELD_OPERATION_ROLE_PURPOSE_AND_LEGAL_BASIS_PROOF_ONLY
+  state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  primary_locators:
+    - "статья 7 части 3 и 6 Федерального закона от 20.07.2020 № 211-ФЗ"
+    - "статья 8 часть 7 Федерального закона от 20.07.2020 № 211-ФЗ"
+    - "статья 12 Федерального закона от 20.07.2020 № 211-ФЗ"
+    - "статья 17 часть 4 Федерального закона от 20.07.2020 № 211-ФЗ"
+  current_text_finding: >-
+    Закон регулирует передачу и доступ к информации о финансовых сделках, использование регистратором набора идентифицирующих сведений физического лица для доступа к информации, получение оператором платформы сведений из ЕСИА с согласием лица, отраслевые требования по защите информации и операционной надежности, а также конфиденциальность документов и информации, предоставленных оператором Банку России. Это сильное пересечение с PDN, но не единый режим.
+  evidence_quality:
+    official_initial_publication_id: "0001202007200033"
+    official_initial_publication_url: "https://publication.pravo.gov.ru/Document/View/0001202007200033"
+    official_current_locator: "https://pravo.gov.ru/proxy/ips/?docbody=&intelsearch=&link_id=0&nd=102792227"
+    current_consolidated_revision_crosscheck: "2025-10-27"
+    protected_locator_amendments:
+      - "45-ФЗ от 11.03.2024; publication locator 0001202403110010; changes article 7, article 8(7), article 12(1) in broader reform"
+      - "402-ФЗ от 27.10.2025; official publication 0001202510270029; latest source-level amendment, effective 2025-10-27"
+    exact_current_authoritative_binary: PENDING
+  applicability_guard: >-
+    Не выводить применимость конкретного требования 152-ФЗ только из факта работы через финансовую платформу, хранения сведений о сделке, идентификации или наличия контактных данных. Для каждого требования определить субъект данных, точное поле, операцию, цель, роль оператора финансовой платформы / регистратора финансовых транзакций / финансовой организации / Банка России, основание и согласие при необходимости, а также точный locator 211-ФЗ и применимого нормативного акта Банка России. FINANCIAL_PLATFORM_INFORMATION != PERSONAL_DATA; OVERLAP != APPLICABILITY.
+
+related_protected_information:
+  regimes:
+    - financial_platform_transaction_information
+    - financial_platform_information_security
+    - regulator_received_information_confidentiality
+    - financial_platform_identity_data
+  locators:
+    - "статья 7 части 1,3,5–8"
+    - "статья 8 часть 7"
+    - "статья 12 части 1–5"
+    - "статья 17 часть 4"
+  state: SPECIAL_REGIMES_LINKED_NOT_MERGED_WITH_PDN
+  note: >-
+    Статья 17 часть 4 защищает документы и информацию у Банка России и не должна моделироваться как универсальная тайна клиента платформы. Статья 12 создает отраслевой security layer, который сосуществует с PDN security при доказанной применимости последнего.
+
+cross_regime_candidates:
+  - target: "115-ФЗ"
+    type: AML_IDENTIFICATION_AND_INFORMATION_SECURITY_CONTEXT
+    state: DIRECT_STATUTORY_CONTEXT_ONLY
+    guard: "Импортировать AML-требования по конкретной идентификационной операции, роли и locator."
+  - target: "572-ФЗ / ЕБС"
+    type: BIOMETRIC_IDENTIFICATION_CONTEXT_CANDIDATE
+    state: RELATIONSHIP_CONTEXT_ONLY
+    guard: "Не считать биометрию применимой ко всем клиентам и процессам платформы без факта конкретной биометрической операции."
+  - target: "63-ФЗ"
+    type: ELECTRONIC_SIGNATURE_PLATFORM_AUTHENTICATION_CONTEXT
+    state: STATUTORY_CONTEXT_ONLY
+    guard: "Связь возникает по конкретному способу электронной подписи/аутентификации."
+  - target: "банковская тайна / страховая тайна / кредитные истории"
+    type: FINANCIAL_PRODUCT_TRANSACTION_DATA_OVERLAP
+    state: RELATIONSHIP_CONTEXT_ONLY
+    guard: "Определять дополнительный отраслевой режим по виду финансового продукта, сторонам, данным и операции; не сливать режимы."
+
+version_guard:
+  locator_specific_events:
+    - {act: "45-ФЗ от 11.03.2024", official_publication_id: "0001202403110010", effect: "article 7 + article 8(7) + article 12(1) protected-information context", state: LOCATOR_CHANGE_TEXT_CROSSCHECKED}
+    - {act: "402-ФЗ от 27.10.2025", official_publication_id: "0001202510270029", effective: "2025-10-27", effect_on_article7_12_17: NONE_IDENTIFIED_THIS_PASS, state: OFFICIAL_PUBLICATION_VERIFIED_SOURCE_LEVEL_EVENT}
+  source_level_context:
+    - {act: "390-ФЗ от 23.11.2024", effect: "article 5.1 testing", protected_locator_effect: NONE_IDENTIFIED}
+    - {act: "522-ФЗ от 28.12.2024", effect: "AML/extremism governance context", protected_locator_effect: NONE_IDENTIFIED}
+  full_chain: PARTIAL
+
+capture_guard:
+  exact_current_binary: PENDING
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  executable_use: false
+
+counter_effect:
+  pdn_overlap_candidates_added: 1
+  cross_regime_candidates_added: 4
+  applicability_edges_promoted: 0
+  executable_rules_changed: false
+  duplicate_sources_created: 0
