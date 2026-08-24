@@ -1,0 +1,140 @@
+schema_version: "1.0"
+kind: stream-3-sector-library-run
+stream: STREAM_3_SECTOR_OVERLAYS
+completed_at: "2026-08-24T23:19:38+03:00"
+repository: "VictorKVS/KNOWLEDGE_CORE"
+status: COMPLETED_WITH_PRIMARY_AMENDMENT_BINARY_CAPTURE_PENDING
+
+objective: >-
+  Continue primary-source/version-chain work for sector and special protected-information regimes intersecting with 152-ФЗ,
+  preserving deduplication, immutable proof requirements and the no-invented-applicability rule.
+
+focus:
+  source_id: SEC-SRC-RU-FZ-273-2012
+  title: "Федеральный закон от 29.12.2012 № 273-ФЗ «Об образовании в Российской Федерации»"
+  sector: education_children
+  reason: >-
+    Existing source had an immutable official baseline but only one protected-information anchor. Operationalize direct PDN,
+    protected-secret and restricted-information locators before discovering another duplicate sector source.
+
+progress:
+  immutable_baseline:
+    publication_id: "0001201212300007"
+    artifact: "security-corpora/RU/protected-information/raw/SEC-SRC-RU-FZ-273-2012/0001201212300007.pdf"
+    manifest: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-273-2012.json"
+    retrieved_at: "2026-08-20T20:32:08.360479Z"
+    mime: "application/pdf"
+    byte_length: 20498123
+    sha256: "cc0b349dee5568925b3227c8a714dc8ace6cde53b6c13f752ed2364ecf1af16e"
+    action_this_pass: REUSED_NOT_DOUBLE_COUNTED
+  protected_locators_operationalized:
+    - "статья 16 часть 3.1 — e-learning/ДОТ scenario explicitly involving processing of students' personal data"
+    - "статья 16 часть 5 — protection of state or other legally protected secret"
+    - "статья 59 часть 11 — GIA control-measurement materials as restricted-access information"
+    - "статья 98 часть 1 — confidentiality/security of PDN in education GIS plus protected-secret context"
+    - "статья 98 части 20-22 — preschool regional IS PDN fields, confidentiality/security and liability"
+  primary_amendment_metadata_verified:
+    - act: "539-ФЗ от 29.12.2025"
+      official_publication_id: "0001202512290027"
+      official_publication_date: "2025-12-29"
+      official_publication_url: "https://publication.pravo.gov.ru/document/0001202512290027"
+      target_locators: ["статья 16 часть 3.1", "статья 98"]
+      currentness: CURRENT
+      proof_state: PRIMARY_METADATA_VERIFIED_EXACT_BINARY_PENDING
+    - act: "253-ФЗ от 23.07.2025"
+      official_publication_id: "0001202507230054"
+      official_publication_date: "2025-07-23"
+      official_publication_url: "https://publication.pravo.gov.ru/document/0001202507230054"
+      official_index_reported_pages: 8
+      official_index_reported_pdf_size_kb: 381
+      target_locators: ["статья 59 часть 11", "статья 59 части 13.1-13.4"]
+      effective_date: "2026-09-01"
+      currentness: FUTURE_NOT_CURRENT_AT_RUN_DATE
+      proof_state: PRIMARY_METADATA_VERIFIED_EXACT_BINARY_PENDING
+  future_source_level_event:
+    act: "310-ФЗ от 04.08.2026"
+    official_publication_id: "0001202608040033"
+    official_publication_date: "2026-08-04"
+    target_locator: "статья 8"
+    effective_date: "2026-09-01"
+    protected_anchor_impact: "NO_DIRECT_CHANGE_TO_ARTICLES_16_59_98"
+    proof_state: PUBLICATION_LOCATOR_AND_EFFECT_CROSSCHECK_EXACT_BINARY_PENDING
+  existing_event_preserved:
+    act: "34-ФЗ от 20.02.2026"
+    official_publication_id: "0001202602200055"
+    target_locators: ["статья 29", "статья 39"]
+    anchor_impact: "NO_DIRECT_CHANGE_PROVED_FOR_ARTICLES_16_59_98"
+  current_consolidation_crosscheck:
+    edition_date: "2026-08-04"
+    state: SECONDARY_CONSOLIDATION_CROSSCHECK_ONLY
+
+relationships:
+  pdn:
+    target: "152-ФЗ"
+    type: DIRECT_STATUTORY_PDN_CONTEXT_IN_EDUCATION_SCENARIOS
+    locators: ["статья 16 часть 3.1", "статья 98 часть 1", "статья 98 части 20-22"]
+    state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    applicability_promoted: false
+  protected_information:
+    type: EDUCATION_RESTRICTED_AND_LEGALLY_PROTECTED_INFORMATION
+    locators: ["статья 16 часть 5", "статья 59 часть 11", "статья 98 часть 1"]
+    state: STATUTORY_CONTEXT_ONLY
+
+network_and_acquisition:
+  attempted_official_binary_capture: true
+  result: OFFICIAL_PORTAL_DIRECT_BINARY_UNAVAILABLE_IN_RUNTIME
+  new_durable_downloads: 0
+  new_immutable_artifacts: 0
+  exact_runtime_captures: 0
+  guard: "No MIME, byte length or SHA-256 recorded for amendment artifacts without exact bytes."
+
+carry_over_healthcare_chain:
+  source_id: SEC-SRC-RU-FZ-323
+  unresolved_primary_publication_ids_preserved:
+    - "205-ФЗ от 23.07.2013"
+    - "317-ФЗ от 25.11.2013"
+  note: "No official publication IDs were invented when direct primary portal resolution remained unavailable."
+
+writes:
+  updated:
+    - "security-corpora/RU/protected-information/source/SEC-SRC-RU-FZ-273-2012.yaml"
+  created:
+    - "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-273-2012-version-capture-pending.json"
+    - "security-knowledge/corpus/ru-protected-information/master-inventory-delta-2026-08-24T2319.yaml"
+    - "security-knowledge/corpus/ru-personal-data/master-source-inventory-delta-stream3-2026-08-24T2319.yaml"
+    - "security-knowledge/corpus/ru-protected-information/stream-3-run-2026-08-24T2319.yaml"
+
+counters:
+  before: {found: 32, downloaded: 9, immutable: 9, pending: 21, reused: 2, primary_publication_verified: 11, sectors_registered: 24}
+  after: {found: 32, downloaded: 9, immutable: 9, pending: 21, reused: 2, primary_publication_verified: 11, sectors_registered: 24}
+  pass_delta:
+    new_sources: 0
+    existing_sources_operationalized: 1
+    protected_locators_added_or_enriched: 5
+    primary_amendment_publication_metadata_verified: 2
+    future_source_events_registered: 2
+    exact_runtime_captures: 0
+    new_durable_downloads: 0
+    new_immutable_artifacts: 0
+    pdn_overlap_candidates_added: 1
+    applicability_promotions: 0
+    legal_conflicts_declared: 0
+    duplicate_sources_created: 0
+
+version_chain:
+  state: PARTIAL
+  executable_current_rule: false
+  next_steps:
+    - "Obtain exact primary official bytes for 539-ФЗ and 253-ФЗ and register immutable amendment manifests."
+    - "Capture 310-ФЗ primary bytes before its 2026-09-01 effective date; keep it future until then."
+    - "Continue locator-specific history for Article 16 and Article 98, including 472-ФЗ and 515-ФЗ, before executable promotion."
+    - "Return to 323-ФЗ Article 13 unresolved 205-ФЗ/317-ФЗ publication IDs when official portal resolution is available."
+
+proof_floor:
+  - "Taxonomy is discovery seed only; primary act controls."
+  - "OVERLAP != APPLICABILITY."
+  - "Direct PDN wording is scenario-specific and role-specific."
+  - "Future amendments are not current requirements before their effective dates."
+  - "Publication metadata or consolidation crosscheck is not equivalent to an immutable exact-byte artifact."
+  - "No current executable rule is promoted from a partial version chain."
+  - "No hash, MIME, length, applicability or conflict is invented."
