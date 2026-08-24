@@ -1,0 +1,111 @@
+schema_version: "1.0"
+id: PDN-STREAM1-2026-08-24T0504+0300
+kind: pdn-core-production-run
+stream: 1
+observed_at: "2026-08-24T05:04:30+03:00"
+
+scope:
+  domain: RU-PDN-core
+  repository: VictorKVS/KNOWLEDGE_CORE
+  exclusions: "No sector overlay work except direct dependencies."
+
+freshness_checks:
+  - source_id: SEC-SRC-RU-152FZ-2026-07-26
+    result: CURRENT_REVISION_IDENTITY_UNCHANGED
+    operative_revision_from: "2026-07-26"
+    current_amendment: "Федеральный закон от 26.07.2026 № 265-ФЗ"
+    evidence_class: CURRENT_LAW_INDEX_CROSS_CHECK_PLUS_IMMUTABLE_PRIMARY_AMENDMENT
+    note: >-
+      No later effective amendment to the current 152-FZ root was found in this pass. The current-root
+      acquisition gate remains pinned to the 152-FZ/personal-data/No.265-FZ marker set. Future No.200-FZ
+      remains not yet effective until 01.03.2027.
+  - source_id: SEC-SRC-RU-PP687-2008
+    result: CURRENT_REVISION_CONFIRMED
+    operative_amendment: SEC-SRC-RU-PP12-2025
+    operative_from: "2025-01-26"
+    valid_through: "2030-09-01"
+    official_source_url: "https://government.ru/docs/all/65436/"
+    note: >-
+      The official Government page still presents PP RF No.687 in the revision of PP RF No.12 of
+      18.01.2025 and states that the resolution remains valid through 01.09.2030.
+
+discovery_universe_check:
+  baseline: "Roskomnadzor mandatory-requirements list approved 16.12.2025"
+  evidence_class: DISCOVERY_CROSS_CHECK_ONLY
+  result: NO_NEW_UNIVERSAL_CORE_SOURCE_FROM_BASELINE
+  note: >-
+    The baseline identifies 152-FZ, PP RF No.211, PP RF No.687, RKN Order No.140 and RKN Order No.18
+    in the PDN-control core, alongside context-specific 79-FZ and the Labour Code. The latter two are
+    intentionally not promoted into the universal core by this stream. Existing separately registered
+    RKN operational acts and direct 152-FZ dependencies remain unchanged.
+
+latest_acquisition_attempt:
+  generic_reuse_first:
+    started_at: "2026-08-24T01:57:58.724060Z"
+    finished_at: "2026-08-24T01:57:58.743984Z"
+    targets_total: 21
+    reused_immutable: 20
+    network_targets_attempted: 0
+    new_immutable_captured: 0
+    reuse_ratio: 0.9523809524
+    note: "Twenty immutable artifacts were revalidated and reused; no known immutable source was re-downloaded."
+  dedicated_routes:
+    observed_at: "2026-08-24T02:04:30.825503Z"
+    pp687:
+      status: PENDING
+      classification: MIXED_TRANSPORT_AND_IDENTITY_FAILURE
+      attempts:
+        - route: pravo_ips_registered_tls_equivalent
+          result: TIMEOUT
+          detail: "curl exit 28; pravo.gov.ru:443 connection timeout after about 20 seconds per retry"
+        - route: pravo_ips_registered
+          result: IDENTITY_MARKER_MISS
+          detail: "official response did not contain the complete PP687/personal-data/non-automated-processing marker set"
+        - route: government_canonical
+          result: TIMEOUT
+          detail: "curl exit 28; government.ru:443 connection timeout after about 20 seconds per retry"
+      semantic_status_unchanged: true
+    current_152fz_curl:
+      status: PENDING
+      classification: MIXED_TRANSPORT_AND_IDENTITY_FAILURE
+      attempts:
+        - route: registered_route_1_tls_equivalent
+          result: TIMEOUT
+          detail: "curl exit 28; pravo.gov.ru:443 connection timeout"
+        - route: registered_route_1_as_recorded
+          result: IDENTITY_OR_CURRENT_REVISION_MARKER_MISS
+          detail: "official response did not contain the complete 152-FZ/personal-data/No.265-FZ marker set"
+        - route: registered_route_2_as_recorded
+          result: TIMEOUT
+          detail: "curl exit 28; government.ru:443 connection timeout"
+      semantic_status_unchanged: true
+    current_152fz_urllib_fallback:
+      status: PENDING
+      result: IDENTITY_OR_CURRENT_REVISION_MARKER_MISS
+      detail: "official-route response lacked the required 152-FZ/personal-data/current-revision (265-FZ) markers"
+      semantic_status_unchanged: true
+
+production_counters_at_record_write:
+  identified: 22
+  raw_downloaded_exact: 20
+  immutable_sha256_verified: 20
+  atomized_existing_proposed: 4
+  atomized_verified: 0
+  pending_raw_capture: 2
+  raw_capture_coverage_ratio: 0.9091
+
+quality_gates:
+  immutable_new_this_pass: 0
+  semantic_promotions_this_pass: 0
+  proof_floor_relaxed: false
+  unsupported_status_promotions: 0
+
+pending:
+  - SEC-SRC-RU-152FZ-2026-07-26
+  - SEC-SRC-RU-PP687-2008
+
+next_gate:
+  - keep PP687 and current 152-FZ pending until an accepted immutable manifest exists
+  - do not weaken identity/current-revision markers to force 100 percent coverage
+  - continue reuse-first acquisition and record typed route failure telemetry
+  - once both raw gaps close, shift Stream-1 capacity to structure/chunks/concepts/definitions/conflict detection
