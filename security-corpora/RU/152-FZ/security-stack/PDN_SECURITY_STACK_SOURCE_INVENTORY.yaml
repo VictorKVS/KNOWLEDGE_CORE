@@ -1,4 +1,4 @@
-schema_version: "1.3"
+schema_version: "1.4"
 id: SEC-PDN-SECURITY-STACK-INVENTORY
 kind: security-regulatory-source-inventory
 status: ACTIVE_DISCOVERY
@@ -200,6 +200,12 @@ sources:
     source_record: "source/SEC-SRC-RU-FSTEC-MATURITY-METHOD-2026.yaml"
     raw_capture: PENDING
     applicability: ISPDN_MATURITY_ASSESSMENT_WITH_RECOMMENDATIONS_NOT_AUTOMATIC_MANDATORY_MINIMA
+  - id: SEC-SRC-RU-FSTEC-KZI-METHOD-2025
+    role: fstec_current_state_kzi_methodical_context
+    metadata_status: METADATA_VERIFIED
+    source_record: "source/SEC-SRC-RU-FSTEC-KZI-METHOD-2025.yaml"
+    raw_capture: PENDING
+    applicability: PUBLIC_SECURITY_GOVERNANCE_OR_EXPLICIT_APPLICABILITY_ONLY
 
   - id: SEC-SRC-RU-FSTEC-TZI-LIST-2024
     role: fstec_tzi_licensed_activity_required_document_catalog
@@ -245,6 +251,10 @@ version_edges:
     type: AMENDED_BY
     to: SEC-SRC-RU-FSTEC9-2026
     provenance: OFFICIAL_PUBLICATION_IDENTIFIER_WITH_CURRENT_INDEX_CORROBORATION
+  - from: FSTEC-KZI-METHOD-2024-05-02
+    type: NOT_APPLIED_FOR_CURRENT_STATE_KZI_ASSESSMENT_AFTER
+    to: SEC-SRC-RU-FSTEC-KZI-METHOD-2025
+    provenance: METHODOLOGY_POINT_7_CURRENT_TEXT_CROSSCHECK
 
 applicability_edges:
   - from: SEC-SRC-RU-152FZ-2026-07-26
@@ -313,6 +323,16 @@ applicability_edges:
     type: USES_CURRENT_VULNERABILITY_CRITICALITY_METHOD
     to: SEC-SRC-RU-FSTEC-VULN-CRIT-METHOD-2025
     scope: ATTESTATION_CONTROL_OR_CONFORMITY_ASSESSMENT_CONTEXT_ONLY
+  - from: SEC-SRC-RU-FSTEC117-2025
+    type: CURRENT_STATE_ASSESSMENT_CONTEXT_DETAILED_BY
+    to: SEC-SRC-RU-FSTEC-KZI-METHOD-2025
+    scope: STATE_AND_ENUMERATED_PUBLIC_SYSTEMS_ONLY
+    not_universal_private_ispdn_duty: true
+  - from: SEC-SRC-RU-FSTEC-KZI-METHOD-2025
+    type: USES_THREAT_CAPABILITY_MODEL
+    to: SEC-SRC-RU-FSTEC-THREAT-METHOD-2021
+    scope: COVERED_KZI_ASSESSMENT_ONLY
+    not_universal_private_ispdn_duty: true
 
 context_splits:
   - id: PDN-STACK-CONTEXT-2026-001
@@ -388,6 +408,18 @@ context_splits:
     finding: >-
       The 12.04.2026 FSTEC protection-measures method is guarded to its public/KII scope and expressly leaves
       cryptographic protection/SKZI measures to FSB requirements; the two branches must not be silently merged.
+  - id: PDN-STACK-CONTEXT-2026-009
+    status: CONTEXT_DEPENDENT_NOT_CONFLICT
+    sources:
+      - SEC-SRC-RU-FSTEC-KZI-METHOD-2025
+      - SEC-SRC-RU-FSTEC117-2025
+      - SEC-SRC-RU-FSB77-2023
+      - SEC-SRC-RU-FSTEC-MATURITY-METHOD-2026
+    finding: >-
+      The 11.11.2025 KZI method measures current protection state in its covered public/security-governance scope.
+      It is distinct from the 07.08.2026 maturity Uzi method and point 6 expressly excludes the GosSOPKA-style
+      detection/prevention/elimination-of-computer-attack-consequences branch. Its six-month cycle must not be
+      generalized into a universal private-ISPDn duty.
 
 conflict_candidates:
   - id: PDN-STACK-CONFLICT-CANDIDATE-2026-001
@@ -402,16 +434,16 @@ conflict_candidates:
       as a contradiction until scope, legal regime, effective interval and purpose are compared.
 
 production_counters:
-  identified: 31
-  metadata_verified: 31
+  identified: 32
+  metadata_verified: 32
   raw_downloaded_exact: 16
   immutable_sha256_verified: 16
-  pending_raw_capture: 15
+  pending_raw_capture: 16
   official_publication_id_targets: 13
-  official_canonical_targets: 12
-  exact_official_route_unresolved: 6
-  version_edges_verified: 9
-  applicability_guards: 16
+  official_canonical_targets: 13
+  exact_official_route_unresolved: 7
+  version_edges_verified: 10
+  applicability_guards: 18
   confirmed_conflicts: 0
   conflict_candidates: 1
 
@@ -423,8 +455,15 @@ latest_acquisition_run:
   new_immutable_captured: 0
   pending_after_run: 15
 
+latest_status_review:
+  finished_at: "2026-08-24T17:10:29Z"
+  run_record: "runs/STREAM2_RUN_2026-08-24T1710Z.yaml"
+  source_records_added: 1
+  new_immutable_captured: 0
+  pending_after_review: 16
+
 next_gate:
-  - resolve exact official attachment routes for the registered FSTEC methodical sources
+  - resolve exact official attachment routes for the registered FSTEC methodical sources, including KZI 2025
   - resolve the exact primary publication/text route and amendment identities for PP608
   - exact official acquisition and fingerprinting
   - structural parse and legal/semantic chunks
