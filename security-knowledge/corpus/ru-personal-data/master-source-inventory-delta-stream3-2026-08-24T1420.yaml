@@ -1,0 +1,82 @@
+schema_version: "1.0"
+kind: ru-personal-data-master-source-inventory-delta
+owner_stream: STREAM_3_SECTOR_OVERLAYS
+checked_at: "2026-08-24T14:20:14+03:00"
+source_id: SEC-SRC-RU-FZ-323
+source_card: "security-corpora/RU/protected-information/source/SEC-SRC-RU-FZ-323.yaml"
+status: APPEND_ONLY_RELATIONSHIP_DELTA
+
+relationship:
+  target: "152-ФЗ"
+  type: DIRECT_STATUTORY_PDN_CONTEXT_FOR_MEDICAL_INFORMATION_EXCHANGE_WITH_APPLICABILITY_REVIEW_REQUIRED
+  state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  primary_locators:
+    - "статья 13 часть 1 Федерального закона от 21.11.2011 № 323-ФЗ — состав врачебной тайны"
+    - "статья 13 часть 2 — обязанность неразглашения"
+    - "статья 13 части 3 и 3.1 — согласие и специальный посмертный режим раскрытия"
+    - "статья 13 часть 4 — исчерпывающе-контекстные основания передачи без согласия"
+    - "статья 13 часть 4 пункт 8 — обмен медицинской информацией с учетом требований законодательства РФ о персональных данных"
+  statutory_pdn_anchor: "323-ФЗ статья 13 часть 4 пункт 8"
+  current_text_finding: >-
+    Режим врачебной тайны охватывает факт обращения за медицинской помощью, состояние здоровья, диагноз и иные сведения обследования/лечения и устанавливает отдельную обязанность неразглашения. Часть 4 содержит сценарные исключения, а пункт 8 прямо связывает обмен информацией между медицинскими организациями для оказания медицинской помощи с требованиями законодательства Российской Федерации о персональных данных. Это сильная прямая нормативная связь с PDN-режимом, но не доказательство универсальной применимости каждого требования 152-ФЗ к любому медицинскому процессу.
+  evidence_quality:
+    official_initial_publication_id: "0001201111220007"
+    official_initial_publication_url: "https://publication.pravo.gov.ru/Document/View/0001201111220007"
+    immutable_initial_publication_manifest: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-323.json"
+    immutable_initial_publication_artifact: "security-corpora/RU/protected-information/raw/SEC-SRC-RU-FZ-323/0001201111220007.zip"
+    current_version_chain: PARTIAL
+    amendment_primary_metadata_verified:
+      - {act: "438-ФЗ от 22.12.2020", official_publication_id: "0001202012220007"}
+      - {act: "195-ФЗ от 22.07.2024", official_publication_id: "0001202407220010"}
+      - {act: "509-ФЗ от 28.12.2024", official_publication_id: "0001202412280011", note: "официальный заголовок прямо указывает изменение статьи 13 323-ФЗ"}
+    official_portal_summary_verified:
+      - {act: "315-ФЗ от 02.07.2021", effect: "посмертное раскрытие врачебной тайны в предусмотренном законом порядке", exact_binary: PENDING}
+  applicability_guard: >-
+    Не выводить применимость конкретного требования 152-ФЗ только из статуса медицинской организации, наличия медицинской документации, сведений о здоровье или врачебной тайны. Для каждого требования доказать actor/role, субъекта данных, конкретные поля, операцию обработки, цель, основание, канал передачи и действующий locator. Исключение из запрета разглашения по статье 13 часть 4 не является автоматически правовым основанием для любой обработки или передачи персональных данных.
+
+related_protected_information:
+  regimes:
+    - medical_secrecy
+    - health_information
+    - medical_documentation_confidentiality
+  state: SPECIAL_REGIME_LINKED_NOT_MERGED_WITH_PDN
+
+cross_regime_candidates:
+  - target: "326-ФЗ"
+    type: HEALTHCARE_INSURANCE_INFORMATION_CONTEXT
+    state: STATUTORY_CONTEXT_ONLY
+    locator: "323-ФЗ статья 13 часть 4 пункт 9"
+    guard: "Контекст учета/контроля в системе обязательного социального страхования не означает тождество режима ОМС, врачебной тайны и ПДн."
+
+version_guard:
+  state: VERSION_CHAIN_PARTIAL
+  working_current_revision_crosscheck: "2026-08-04"
+  latest_locator_specific_event_with_primary_title_proof:
+    act: "509-ФЗ от 28.12.2024"
+    official_publication_id: "0001202412280011"
+    locator: "статья 13"
+  latest_source_level_event_crosscheck:
+    act: "329-ФЗ от 04.08.2026"
+    article_13_effect: NONE_IDENTIFIED_IN_CURRENT_CONSOLIDATION
+    detected_effect: "часть 2 статьи 72"
+    primary_exact_capture: PENDING
+  pending: "Полная первичная locator-specific цепочка изменений статьи 13 и exact immutable artifacts поправок."
+
+capture_guard:
+  immutable_initial_publication:
+    state: IMMUTABLE_BASELINE_CAPTURED
+    retrieved_at: "2026-08-20T20:32:11.874652Z"
+    mime: "application/zip"
+    container_format: ZIP
+    byte_length: 7257635
+    sha256: "aa54cb7c53980e765efbe0d4196e82d9f758d5596a3394b9283f4e9e250eaabc"
+  exact_current_authoritative_binary: PENDING_VERSION_CHAIN_PROOF
+  executable_use: false
+
+counter_effect:
+  pdn_overlap_candidates_added: 1
+  cross_regime_candidates_added: 1
+  applicability_edges_promoted: 0
+  executable_rules_changed: false
+  duplicate_sources_created: 0
+  top_level_found_downloaded_immutable_pending_counters_changed: false
