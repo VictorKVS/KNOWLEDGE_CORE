@@ -1,0 +1,49 @@
+schema_version: "1.0"
+id: SEC-PDN-SECURITY-STACK-INVENTORY-DELTA-2026-08-24T1725Z
+applies_to: PDN_SECURITY_STACK_SOURCE_INVENTORY.yaml
+stream: RU_PDN_TECHNICAL_CRYPTO
+created_at: "2026-08-24T17:34:00Z"
+merge_policy: >-
+  ADDITIVE_OVERLAY. Merge by source id and relation identity. Do not replace unrelated sources or weaken
+  applicability guards. Exact bytes remain mandatory for IMMUTABLE_CAPTURED.
+
+source_additions:
+  - id: SEC-SRC-RU-FSTEC-INFO-240-22-690-2021
+    role: threat_methodology_adoption_and_transition_notice
+    metadata_status: METADATA_VERIFIED
+    source_record: "source/SEC-SRC-RU-FSTEC-INFO-240-22-690-2021.yaml"
+    raw_capture: PENDING
+    applicability: ISPDN_THREAT_ASSESSMENT_METHOD_VERSION_TRANSITION
+
+relation_additions:
+  - from: SEC-SRC-RU-FSTEC-INFO-240-22-690-2021
+    type: ANNOUNCES_APPROVAL_OF
+    to: SEC-SRC-RU-FSTEC-THREAT-METHOD-2021
+    provenance: PRIMARY_FSTEC_INFORMATION_NOTICE_IDENTITY_WITH_CONTENT_CORROBORATION
+  - from: SEC-SRC-RU-FSTEC-INFO-240-22-690-2021
+    type: TRANSITION_EVIDENCE_FOR
+    to: FSTEC-PDN-THREAT-METHOD-2008
+    scope: THREAT_ASSESSMENT_VERSION_TRANSITION_ONLY
+    not_a_new_control: true
+
+counter_patch:
+  identified: 32
+  metadata_verified: 32
+  raw_downloaded_exact: 16
+  immutable_sha256_verified: 16
+  pending_raw_capture: 16
+  exact_official_route_unresolved: 6
+  confirmed_conflicts: 0
+
+latest_run_patch:
+  run_record: "runs/STREAM2_RUN_2026-08-24T1725Z.yaml"
+  new_sources: 1
+  new_immutable_captured: 0
+  immutable_reused: 1
+  semantic_promotions: 0
+
+merge_gate:
+  - preserve existing FSTEC21 active baseline and project-169583 watch
+  - preserve FSTEC 2021 immutable artifact and SHA-256
+  - do not count the new notice as a cryptographic threat-method source
+  - do not promote secondary copies to immutable evidence
