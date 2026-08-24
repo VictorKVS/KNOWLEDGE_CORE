@@ -1,0 +1,91 @@
+schema_version: "1.0"
+run_id: PDN-CORE-STREAM1-2026-08-24T1956+0300
+stream: 1
+scope: GENERAL_PDN_CORE
+observed_at: "2026-08-24T19:56:16+03:00"
+
+result:
+  status: PROOF_GATE_IMPROVED_RAW_PENDING
+  new_sources_identified: 0
+  new_immutable_artifacts: 0
+  semantic_promotions: 0
+  proof_floor_held: true
+
+production_counters:
+  identified: 22
+  byte_exact_downloaded: 20
+  immutable_sha256_verified: 20
+  existing_atomized_proposed: 4
+  atomized_verified: 0
+  pending_raw_capture: 2
+  raw_capture_coverage_ratio: 0.9091
+
+reuse_telemetry:
+  latest_fast_pass_targets_total: 21
+  reused_immutable: 20
+  network_targets_attempted: 0
+  reuse_ratio: 0.9524
+  note: >-
+    Existing immutable artifacts were revalidated/reused rather than downloaded again. Dedicated official-route
+    acquisition remains responsible only for the current consolidated 152-FZ root and PP RF No. 687.
+
+freshness_checks:
+  - source_id: SEC-SRC-RU-152FZ-2026-07-26
+    result: CURRENT_REVISION_CONFIRMED
+    effective_from: "2026-07-26"
+    amendment_anchor: SEC-SRC-RU-FZ265-2026
+    affected_locators:
+      - "Article 12 part 2"
+      - "Article 12 part 5 point 2"
+      - "Article 12 part 10"
+      - "Article 12 part 11"
+  - source_id: SEC-SRC-RU-PP687-2008
+    result: CURRENT_VERSION_IDENTITY_ALREADY_CONFIRMED_RAW_TRANSPORT_PENDING
+    current_revision_source_id: SEC-SRC-RU-PP12-2025
+
+proof_gate_change:
+  subject: SEC-SRC-RU-152FZ-2026-07-26
+  previous_problem: >-
+    Current-root acquisition required the literal text "265-ФЗ" inside an official consolidated response.
+    A publisher may legitimately present a consolidated current text without repeating the amending-law citation,
+    causing a valid current edition to be rejected even when the changed Article 12 wording is present.
+  correction: >-
+    Source identity still requires 152-FZ plus personal-data markers. Current-revision proof now requires either
+    the explicit No. 265-FZ citation OR all revision-specific Article 12 part 2 content anchors introduced on
+    26.07.2026. Exact returned bytes remain unchanged and must still be fingerprinted with SHA-256.
+  article12_delta_anchors_required_together:
+    - "государства, в которых правовое регулирование в области персональных данных"
+    - "меры по соблюдению основополагающих принципов защиты"
+    - "соответствуют положениям Конвенции"
+  old_revision_false_positive_guard: >-
+    The pre-26.07.2026 wording is not accepted by the complete delta-anchor path because it lacks the new
+    legal-regulation/fundamental-protection-principles formulation.
+  semantic_status_unchanged: true
+
+code_changes:
+  - path: TOOLS/pdn_current_root_acquire.py
+    commit: bef629acd21996f900441190dc3e33c1892072df
+    change: delta-aware current-revision proof
+  - path: security-corpora/RU/152-FZ/source/SEC-SRC-RU-152FZ-2026-07-26.yaml
+    commit: cfec48400b49d6cc924fa2a8016346958ff10496
+    change: source-card proof policy synchronized with the acquirer
+
+latest_runner_observation_before_gate_change:
+  pp687:
+    status: PENDING
+    failure_classes:
+      - TRANSPORT_TIMEOUT
+      - IDENTITY_MARKER_MISS
+      - ALL_REGISTERED_ROUTES_FAILED
+  current_152fz:
+    status: PENDING
+    failure_classes:
+      - TRANSPORT_TIMEOUT
+      - CURRENT_REVISION_MARKER_MISS
+      - ALL_REGISTERED_ROUTES_FAILED
+
+next_gate:
+  - accept neither pending source without exact official-route bytes and SHA-256
+  - re-run dedicated current-root acquisition with the corrected delta-aware proof
+  - keep PP687 on registered official routes only
+  - after raw closure, begin structural parse/chunks/concepts/definitions/conflict detection without re-reading reusable nodes
