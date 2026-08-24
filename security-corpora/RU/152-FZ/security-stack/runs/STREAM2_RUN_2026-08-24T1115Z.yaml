@@ -1,0 +1,142 @@
+schema_version: "1.0"
+id: SEC-PDN-STREAM2-RUN-2026-08-24T1115Z
+kind: production-telemetry
+checked_at: "2026-08-24"
+stream: pdn_technical_crypto
+
+counter_snapshot:
+  sources_identified: 30
+  sources_metadata_verified: 30
+  immutable_sha256_verified: 16
+  pending_raw_capture: 14
+  exact_official_route_unresolved: 5
+  delta_sources_identified: 0
+  delta_immutable: 0
+  delta_pending: 0
+  authoritative_inventory: "../PDN_SECURITY_STACK_SOURCE_INVENTORY.yaml"
+  master_inventory: "../../PDN_MASTER_SOURCE_INVENTORY.yaml"
+  counter_note: >-
+    Active source counters are unchanged. This pass produced a new regulatory watch for the proposed FSTEC Order 21
+    replacement but did not count the unenacted project as an active normative source. No metadata-only source was
+    promoted and no SHA-256 was inferred.
+
+status_refresh:
+  - source: SEC-SRC-RU-PP1119-2012
+    finding: >-
+      Current legal indexes checked 24.08.2026 continue to expose Government Resolution No. 1119 as the operative
+      ISPDn protection-level baseline. No amending version identity was found in this pass.
+    version_chain_change: false
+    immutable_change: false
+  - source: SEC-SRC-RU-FSTEC21-2013
+    finding: >-
+      Order No. 21 remains the active verified baseline in revision 14.05.2020. The 24.07.2026 replacement text,
+      project identifier 169583, still appears in the latest verifiable evidence as a project; public discussion
+      ended 08.08.2026. No primary evidence of a final issued, Minjust-registered and officially published replacement
+      was found in this pass. The project therefore remains watch-only and is not executed as law.
+    version_chain_change: false
+    immutable_change: false
+    watch_record: "../watch/PDN-WATCH-FSTEC21-REPLACEMENT-2026-001.yaml"
+  - source: SEC-SRC-RU-FSTEC-THREAT-METHOD-2021
+    finding: >-
+      Previously captured immutable methodology remains the current threat-assessment source in the stack; no newer
+      replacement identity was found in this pass. The 2008 PDN method remains excluded for current threat assessment
+      under the already registered methodology relation.
+    version_chain_change: false
+    immutable_change: false
+  - source: SEC-SRC-RU-FSB378-2014
+    finding: >-
+      Current legal index still exposes FSB Order No. 378, registered in Minjust on 18.08.2014 No. 33620. No amendment
+      or replacement identity was found in this pass. Applicability remains conditional on established SKZI use in the ISPDn.
+    version_chain_change: false
+    immutable_change: false
+  - source: SEC-SRC-RU-FSB66-2005
+    finding: >-
+      PKZ-2005 remains represented in the checked current index with the amendment of FSB Order No. 173 dated 12.04.2010.
+      It remains lifecycle context only where the SKZI applicability edge is established.
+    version_chain_change: false
+    immutable_change: false
+
+regulatory_watch_updates:
+  - watch_id: PDN-WATCH-FSTEC21-REPLACEMENT-2026-001
+    action: CREATED
+    status: DRAFT_NOT_ENACTED_IN_VERIFIED_EVIDENCE
+    active_source_count_delta: 0
+    semantic_promotion: false
+    proof_gate: FINAL_ISSUED_REGISTERED_OFFICIALLY_PUBLISHED_ACT_REQUIRED
+
+primary_capture_attempts:
+  - source: SEC-SRC-RU-PP1119-2012
+    route: "https://government.ru/media/2012/11/3/53354/file/1119_pril.doc"
+    result: OFFICIAL_ROUTE_CACHE_MISS_EXACT_BYTES_NOT_CAPTURED
+    fingerprint_written: false
+  - source: SEC-SRC-RU-FSTEC-MATURITY-METHOD-2026
+    route: "https://fstec.ru/dokumenty/vse-dokumenty/spetsialnye-normativnye-dokumenty/metodicheskij-dokument-ot-7-avgusta-2026-g"
+    result: OFFICIAL_LANDING_TIMEOUT_DIRECT_ATTACHMENT_UNRESOLVED
+    fingerprint_written: false
+  - source: SEC-SRC-RU-FSB378-2014
+    route: "official publication / current legal-text route"
+    result: CURRENT_IDENTITY_RECONFIRMED_BUT_NO_NEW_BYTE_EXACT_PRIMARY_ARTIFACT
+    fingerprint_written: false
+  - source: SEC-SRC-RU-FSB66-2005
+    route: "official legal-text / publication route"
+    result: VERSION_CHAIN_RECONFIRMED_BUT_NO_NEW_BYTE_EXACT_PRIMARY_ARTIFACT
+    fingerprint_written: false
+
+current_monitoring_evidence:
+  - subject: FSTEC21_REPLACEMENT_PROJECT_169583
+    url: "https://www.garant.ru/products/ipo/prime/doc/56961246/"
+    evidence_class: SECONDARY_CURRENT_PROJECT_TEXT
+    observed_at: "2026-08-24"
+  - subject: FSTEC21_CURRENT_STATUS
+    url: "https://cisoclub.ru/prikaz-fstek-21/"
+    evidence_class: SECONDARY_CURRENT_STATUS_MONITORING
+    observed_at: "2026-08-24"
+  - subject: PP1119_CURRENT_TEXT_INDEX
+    url: "https://www.consultant.ru/document/cons_doc_LAW_137356/"
+    evidence_class: CURRENT_LEGAL_INDEX_CROSS_CHECK
+    observed_at: "2026-08-24"
+  - subject: FSB378_CURRENT_TEXT_INDEX
+    url: "https://www.consultant.ru/document/cons_doc_LAW_167862/"
+    evidence_class: CURRENT_LEGAL_INDEX_CROSS_CHECK
+    observed_at: "2026-08-24"
+  - subject: FSB66_VERSION_CHAIN_INDEX
+    url: "https://base.garant.ru/187947/"
+    evidence_class: CURRENT_LEGAL_INDEX_CROSS_CHECK
+    observed_at: "2026-08-24"
+
+applicability_guard_review:
+  result: PRESERVED
+  findings:
+    - "FSTEC replacement project 169583 is not imported into active ISPDn controls before primary enactment proof."
+    - "FSB Order No. 378 remains conditional on established SKZI use in the ISPDn."
+    - "PKZ-2005 and FAPSI No. 152 remain lifecycle/handling context only through a proved SKZI edge."
+    - "Licensing and certification sources remain contextual and are not universal PDN-operator duties."
+    - "GosSOPKA/NKCKI remains limited to the explicit PDN computer-incident edge."
+    - "Public-sector/KII overlays are not imported into ordinary ISPDn without direct scope or cross-reference."
+
+repo_updates:
+  source_records_refreshed:
+    - SEC-SRC-RU-FSTEC21-2013
+  watch_records_created:
+    - PDN-WATCH-FSTEC21-REPLACEMENT-2026-001
+  master_counter_reconciliation_required: false
+
+acquisition_state:
+  immutable_new_this_pass: 0
+  proof_floor_preserved: true
+  semantic_promotions: 0
+  rework_share_this_pass: 1.0
+  rework_reason: >-
+    This pass was a status/version/transport retry over already identified sources plus a draft watch registration;
+    no new immutable artifact crossed the proof floor. Rework share is 100% for this pass only.
+  throughput_new_immutable_per_pass: 0
+  cumulative_immutable: 16
+  baseline_speed_comparison: NOT_COMPUTABLE_FROM_AVAILABLE_TELEMETRY
+  completion_forecast: NOT_EMITTED_INSUFFICIENT_SUCCESSFUL_ACQUISITION_THROUGHPUT
+
+next_gate:
+  - "retry exact official byte acquisition for PP1119, FSB378, FSB66, FAPSI152, PP313 and PP79"
+  - "resolve direct official attachments for pending FSTEC methodical sources, especially the 07.08.2026 maturity method"
+  - "monitor project 169583 for a final order number, Minjust registration and official publication; do not activate before proof"
+  - "do not accept commercial legal-database or unofficial copies as primary immutable evidence"
+  - "preserve regime/applicability boundaries before semantic extraction"
