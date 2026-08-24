@@ -1,0 +1,115 @@
+schema_version: "1.0"
+kind: stream-3-sector-library-run
+stream: STREAM_3_SECTOR_OVERLAYS
+started_context: "2026-08-24T11:23:00+03:00"
+completed_at: "2026-08-24T11:31:41+03:00"
+repository: "VictorKVS/KNOWLEDGE_CORE"
+status: COMPLETED_WITH_VERSION_CHAIN_PENDING
+
+objective: >-
+  Continue discovery/acquisition/registration of primary sector and special protected-information regimes intersecting with 152-ФЗ, with deduplication, immutable capture proof and no invented applicability.
+
+focus:
+  source_id: SEC-SRC-RU-FZ-442-2013
+  title: "Федеральный закон от 28.12.2013 № 442-ФЗ «Об основах социального обслуживания граждан в Российской Федерации»"
+  sector: social_services
+  regime: social_service_recipient_confidentiality
+  reason: "Existing high-value social-services/healthcare-adjacent source had stale source-card capture fields despite an already valid immutable official baseline; Article 12(1)(5) also creates a direct statutory PDN-protection relationship."
+
+research:
+  primary_initial_publication:
+    official_publication_id: "0001201312300060"
+    date: "2013-12-30"
+    url: "https://publication.pravo.gov.ru/Document/View/0001201312300060"
+    state: VERIFIED
+  official_sector_authority_text:
+    authority: "Минтруд России"
+    page_url: "https://mintrud.gov.ru/docs/laws/112"
+    checked_at: "2026-08-24"
+    verified_locators:
+      - "статья 6 части 1-3 — конфиденциальность информации о получателе социальных услуг"
+      - "статья 12 часть 1 пункт 5 — использование информации о получателях с соблюдением требований законодательства о персональных данных о защите ПДн"
+      - "статья 26 части 1-3 — регистр получателей, состав полей и размещение информации в государственной информационной системе социальной сферы"
+  official_government_working_text:
+    url: "https://government.ru/docs/all/101043/"
+    last_source_level_amendment_seen: "476-ФЗ от 26.12.2024"
+    state: CURRENTNESS_CROSSCHECK_ONLY
+  amendment_event:
+    act: "476-ФЗ от 26.12.2024"
+    official_publication_id: "0001202412260002"
+    official_publication_date: "2024-12-26"
+    protected_locator_effect: NONE_IDENTIFIED_THIS_PASS
+    locator_crosscheck: "Изменение 442-ФЗ относится к статье 16(1.1), не к защищаемым locator'ам 6, 12(1)(5), 26."
+
+acquisition:
+  existing_immutable_baseline:
+    source: OFFICIAL_PUBLICATION_PORTAL
+    artifact_ref: "security-corpora/RU/protected-information/raw/SEC-SRC-RU-FZ-442-2013/0001201312300060.pdf"
+    manifest_ref: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-442-2013.json"
+    retrieved_at: "2026-08-20T20:32:18.164845Z"
+    mime: "application/pdf"
+    byte_length: 2483407
+    sha256: "ee8aec6c8aa5efee704e8d8f4df2e4238eb28125e635cd4e812213c0057dc5ff"
+    state: REUSED_NOT_DOUBLE_COUNTED
+  mintrud_exact_runtime_capture:
+    url: "https://mintrud.gov.ru/document/document/download/6770"
+    retrieved_at: "2026-08-24T08:26:24Z"
+    mime: "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    byte_length: 25840
+    sha256: "94f741eb2e0b6544165d8c519304538d99d9e7ee47ed4fe2716da212038c0a47"
+    state: EXACT_BYTES_CAPTURED_CURRENT_TEXT_CROSSCHECK_NOT_DURABLY_REGISTERED
+    immutable_counter_effect: 0
+    reason: "The official Mintrud text is useful for current locator checking, but the page does not independently prove a complete amendment chain; an existing official original-publication immutable artifact already satisfies baseline capture."
+
+writes:
+  updated:
+    - "security-corpora/RU/protected-information/source/SEC-SRC-RU-FZ-442-2013.yaml"
+  created:
+    - "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-442-2013-version-capture-pending.json"
+    - "security-knowledge/corpus/ru-protected-information/master-inventory-delta-2026-08-24T1131.yaml"
+    - "security-knowledge/corpus/ru-personal-data/master-source-inventory-delta-stream3-2026-08-24T1131.yaml"
+    - "security-knowledge/corpus/ru-protected-information/stream-3-run-2026-08-24T1131.yaml"
+
+relationships:
+  pdn:
+    target: "152-ФЗ"
+    type: DIRECT_STATUTORY_PDN_PROTECTION_CONTEXT
+    state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    applicability_promoted: false
+  cross_regime:
+    - {target: "210-ФЗ", type: INTERAGENCY_AND_GOVERNMENT_SERVICES_INFORMATION_CONTEXT, state: STATUTORY_CONTEXT_ONLY}
+    - {target: "178-ФЗ", type: SOCIAL_INFORMATION_SYSTEM_CONTEXT, state: STATUTORY_CONTEXT_ONLY}
+
+counters:
+  before: {found: 32, downloaded: 9, immutable: 9, pending: 21, reused: 2, primary_publication_verified: 11, sectors_registered: 24}
+  after: {found: 32, downloaded: 9, immutable: 9, pending: 21, reused: 2, primary_publication_verified: 11, sectors_registered: 24}
+  pass_delta:
+    new_sources: 0
+    existing_sources_operationalized: 1
+    protected_locators_verified: 3
+    exact_runtime_captures: 1
+    new_durable_downloads: 0
+    new_immutable_artifacts: 0
+    pdn_relationship_candidates: 1
+    cross_regime_candidates: 2
+    applicability_promotions: 0
+    legal_conflicts_declared: 0
+    duplicate_sources_created: 0
+
+version_chain:
+  state: PARTIAL
+  pending:
+    - "Complete primary locator-specific amendment history for Article 6."
+    - "Complete primary locator-specific amendment history for Article 12(1)(5)."
+    - "Complete primary locator-specific amendment history for Article 26."
+    - "Only after that consider current executable promotion."
+
+next_priority:
+  - "SEC-SRC-RU-FZ-323: deepen Article 13 medical secrecy current locator-specific version chain using its existing immutable baseline."
+  - "Close exact current/version artifacts for pending healthcare and public-sector sources before expanding discovery breadth."
+
+proof_floor:
+  - "Taxonomy is discovery seed only; primary act controls."
+  - "OVERLAP != APPLICABILITY."
+  - "No current executable rule is promoted from a partial version chain."
+  - "No hash, MIME, length, effective date, applicability or conflict is invented."
