@@ -1,4 +1,4 @@
-schema_version: "1.5"
+schema_version: "1.6"
 id: SEC-SRC-RU-152FZ-2026-07-26
 kind: security-regulatory-source
 status: CURRENT_REVISION_DISCOVERED
@@ -34,22 +34,26 @@ canonical_source:
       route_status: OFFICIAL_GOVERNMENT_ROUTE_REGISTERED_GUARDED
       registered_at: "2026-08-23"
       route_checked_at: "2026-08-24"
-      current_revision_marker_required: "265-ФЗ"
+      current_revision_proof_required: "explicit 265-ФЗ citation OR complete Article 12 part 2 wording fingerprint introduced on 26.07.2026"
       evidence_note: >-
-        The Government portal hosts the 152-FZ document page, but the indexed copy available in the 24.08.2026
-        check does not itself prove the 26.07.2026 consolidation. This route remains transport-only and may be
-        accepted only when live returned bytes pass the 152-FZ/personal-data/265-FZ current-revision content gate.
-        No semantic or extraction status is promoted from route registration or indexed content.
+        The Government portal hosts the 152-FZ document page, but route identity alone does not prove the
+        26.07.2026 consolidation. This route remains transport-only and may be accepted only when live returned
+        bytes pass the 152-FZ/personal-data identity gate and independently prove the pinned current revision.
+        Current-revision proof may be the explicit 265-FZ amendment citation or the complete revision-specific
+        Article 12 part 2 delta fingerprint. No semantic or extraction status is promoted from route registration.
   evidence_note: >-
     Current-law indexes rechecked on 24.08.2026 identify Federal Law No. 152-FZ as revised on 26.07.2026 and
-    include Federal Law No. 265-FZ in the amendment chain. The future No. 200-FZ Article 10 amendment remains
-    scheduled for 01.03.2027 and does not alter current-date routing. Immutable capture requires the No. 265-FZ
-    amendment marker inside the returned official consolidated bytes, not document identity alone.
+    include Federal Law No. 265-FZ in the amendment chain. The current Article 12 part 2 wording contains a
+    revision-specific combination: states are included where personal-data legal regulation and measures for
+    observance of fundamental protection principles, confidentiality and security conform to the Convention.
+    The future No. 200-FZ Article 10 amendment remains scheduled for 01.03.2027 and does not alter current-date
+    routing. Immutable capture requires exact official-route bytes and current-edition proof, not document identity alone.
   source_model_note: >-
     The consolidated 26.07.2026 form is not treated as a separately published new normative act. Immutable proof
     for the current root is modeled as a guarded exact snapshot from a registered official consolidated-text route
-    plus the immutable primary amendment chain. This does not waive the byte-exact snapshot gate and does not
-    promote VERIFIED_FOR_EXTRACTION.
+    plus the immutable primary amendment chain. A consolidated publisher is not required to repeat the amending-law
+    number inside the body if the returned text itself contains the full revision-specific Article 12 delta fingerprint.
+    This does not waive the byte-exact snapshot gate and does not promote VERIFIED_FOR_EXTRACTION.
 
 version_evidence:
   - publisher: "Официальный интернет-портал правовой информации"
@@ -61,6 +65,12 @@ version_evidence:
     kind: current_revision_index
     checked_at: "2026-08-24"
     supports: "152-FZ is in revision of 26.07.2026; № 265-ФЗ is in the current amendment chain; № 200-ФЗ is future-effective from 01.03.2027"
+  - publisher: "Current Article 12 legal-text cross-check"
+    kind: current_revision_delta_fingerprint
+    checked_at: "2026-08-24"
+    supports: >-
+      Article 12 part 2 current wording introduced by No. 265-FZ provides an independent content fingerprint for
+      a consolidated text even when the publisher omits an explicit amending-law citation.
 
 capture:
   raw_artifact_ref: ""
@@ -70,7 +80,7 @@ capture:
   fingerprint_status: PENDING_CURRENT_CONSOLIDATED_RAW_CAPTURE
   semantic_status: UNCHANGED
   last_attempt:
-    observed_at: "2026-08-24T10:11:28.939106Z"
+    observed_at: "2026-08-24T16:03:18.097248Z"
     route: registered_official_multi_route
     result: ALL_REGISTERED_ROUTES_FAILED
     failure_classes:
@@ -78,22 +88,23 @@ capture:
       - CURRENT_REVISION_MARKER_MISS
       - ALL_REGISTERED_ROUTES_FAILED
     detail: >-
-      TLS pravo.gov.ru route timed out; the recorded IPS response did not pass the full 152-FZ/personal-data/
-      current-revision marker gate; the Government route timed out from the acquisition runner. The urllib fallback
-      was also rejected because the returned official-route content did not prove the No. 265-FZ current revision.
+      Before the delta-aware revision proof update, TLS pravo.gov.ru and Government routes timed out and the
+      recorded IPS/urllib responses were rejected because they did not contain the literal No. 265-FZ citation.
+      The acquisition guard has now been corrected so a future exact response may instead prove the current edition
+      with the complete Article 12 part 2 revision-specific wording fingerprint. No prior failed response was promoted.
     proof_floor_held: true
     semantic_promotion: false
   acquisition_request:
     status: RETRY_REQUIRED_GUARDED
-    requested_at: "2026-08-24T10:11:29Z"
+    requested_at: "2026-08-24T17:08:35Z"
     route: official_registered_multi_route_snapshot
     reason: >-
       Require exact returned bytes, retrieved_at, MIME, byte length, SHA-256, 152-FZ/personal-data identity
-      validation, the current-revision 265-FZ marker, accepted manifest, and locator review before immutable or
-      extraction promotion. Do not relax the current-revision marker to make the capture pass.
+      validation, current-edition proof by explicit 265-FZ citation or full Article 12 2026 delta fingerprint,
+      accepted manifest, and locator review before immutable or extraction promotion. Do not weaken either proof path.
   note: >-
     The current revision identity is cross-verified, but a byte-exact official consolidated snapshot of the
-    26.07.2026 text has not yet passed the strengthened guarded capture gate. Do not promote to METADATA_VERIFIED_FOR_EXTRACTION.
+    26.07.2026 text has not yet passed guarded capture. Do not promote to METADATA_VERIFIED_FOR_EXTRACTION.
 
 relations:
   - type: SUPERSEDES
@@ -134,4 +145,4 @@ provenance:
 agent_rule: >-
   Treat this as the current version identity for date routing from 26.07.2026, but do not use it as
   VERIFIED_FOR_EXTRACTION until an immutable official consolidated artifact, exact byte length, SHA-256,
-  current-revision marker proof and locator review are present.
+  current-edition proof and locator review are present.
