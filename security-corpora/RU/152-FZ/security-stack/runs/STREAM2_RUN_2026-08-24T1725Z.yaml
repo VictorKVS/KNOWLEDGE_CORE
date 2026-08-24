@@ -1,0 +1,92 @@
+schema_version: "1.0"
+id: STREAM2_RUN_2026-08-24T1725Z
+stream: RU_PDN_TECHNICAL_CRYPTO
+started_at: "2026-08-24T17:25:13Z"
+finished_at: "2026-08-24T17:34:00Z"
+status: COMPLETED_WITH_PENDING_PRIMARY_BYTES
+
+scope:
+  priorities:
+    - SEC-SRC-RU-PP1119-2012
+    - SEC-SRC-RU-FSTEC21-2013
+    - SEC-SRC-RU-FSTEC-THREAT-METHOD-2021
+    - SEC-SRC-RU-FSB378-2014
+    - FSTEC_METHODICAL_AND_CATALOG_CONTEXT
+  applicability_guard: >-
+    Neighboring KII, public-sector, licensing, certification and GosSOPKA requirements are not imported into
+    general PDN duties without an explicit applicability edge.
+
+findings:
+  - source_id: SEC-SRC-RU-PP1119-2012
+    finding: CURRENT_STATUS_RECONFIRMED_PRIMARY_DOC_STILL_UNCAPTURED
+    evidence: >-
+      The current Government route continues to identify Government Decree No. 1119 and expose the historical
+      Government DOC route already registered in the source card. Exact OLE/CFB bytes were not returned in this
+      bounded run, so no fingerprint was invented.
+    semantic_promotion: false
+
+  - source_id: SEC-SRC-RU-FSTEC21-2013
+    finding: ACTIVE_BASELINE_RETAINED_REPLACEMENT_PROJECT_NOT_PROMOTED
+    evidence: >-
+      Fresh 2026 monitoring still describes project 169583 as a draft/replacement proposal and reports no final
+      signed, Minjust-registered and officially published replacement. Order No. 21 therefore remains the active
+      baseline in this corpus until primary enactment evidence is obtained.
+    semantic_promotion: false
+
+  - source_id: SEC-SRC-RU-FSTEC-THREAT-METHOD-2021
+    finding: IMMUTABLE_SOURCE_REUSED_AND_TRANSITION_NOTICE_REGISTERED
+    immutable_reused: true
+    sha256: "dfb473137de462f8c10fbbdccbea62bd136925e803e1c58aa6d4e790325c49b1"
+    transition_source_added: SEC-SRC-RU-FSTEC-INFO-240-22-690-2021
+    evidence: >-
+      Existing immutable official-government-mirror capture of the 05.02.2021 Methodology remains valid.
+      A separate primary FSTEC informational notice No. 240/22/690 is now registered to preserve the transition
+      evidence: approval of the 2021 Methodology, continuity of legacy threat models until modernization, and
+      non-use of the 2008 PDN threat methodology for threat assessment after the transition.
+
+  - source_id: SEC-SRC-RU-FSTEC-INFO-240-22-690-2021
+    finding: NEW_PRIMARY_SOURCE_METADATA_REGISTERED_BYTES_PENDING
+    official_route: "https://fstec.ru/normotvorcheskaya/informatsionnye-i-analiticheskie-materialy/2169-informatsionnoe-soobshchenie-fstek-rossii-ot-15-fevralya-2021-g-n-240-22-690"
+    exact_bytes_obtained: false
+    fingerprint_status: PENDING
+    secondary_copy_promoted: false
+
+  - source_id: SEC-SRC-RU-FSB378-2014
+    finding: APPLICABILITY_GUARD_UNCHANGED
+    scope: ISPDN_WHEN_SKZI_USED
+    semantic_promotion: false
+
+transport:
+  fstec_primary_route: TIMEOUT_OR_UNAVAILABLE
+  government_legacy_doc_route: CACHE_MISS_OR_UNAVAILABLE
+  note: >-
+    These are transport observations only. They do not prove source absence, repeal or unavailability outside
+    this bounded runtime.
+
+counter_delta:
+  identified: "+1"
+  metadata_verified: "+1"
+  immutable_sha256_verified: "+0"
+  pending_raw_capture: "+1"
+  version_transition_evidence_sources: "+1"
+  new_universal_pdn_duties: 0
+  confirmed_conflicts: 0
+
+expected_stream2_counters_after_overlay:
+  identified: 32
+  metadata_verified: 32
+  immutable_sha256_verified: 16
+  pending_raw_capture: 16
+  exact_official_route_unresolved: 6
+
+next_priority:
+  - capture exact Government DOC bytes for PP1119 and pass OLE/CFB signature validation
+  - capture primary FSTEC page/file bytes for No. 240/22/690
+  - continue exact-byte acquisition for FSB378, FSB66/173 and FAPSI152
+  - capture registered FSTEC 2025/2026 methodical attachments without broadening their applicability
+
+proof_floor:
+  immutable_claim_without_exact_bytes: false
+  secondary_copy_as_primary: false
+  draft_as_active_law: false
+  neighboring_regime_import_without_edge: false
