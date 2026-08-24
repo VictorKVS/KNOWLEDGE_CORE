@@ -1,4 +1,4 @@
-schema_version: "1.2"
+schema_version: "1.3"
 id: SEC-PDN-SECURITY-STACK-INVENTORY
 kind: security-regulatory-source-inventory
 status: ACTIVE_DISCOVERY
@@ -130,6 +130,12 @@ sources:
     metadata_status: METADATA_VERIFIED
     source_record: "source/SEC-SRC-RU-FSTEC55-2018.yaml"
     raw_capture: IMMUTABLE_CAPTURED
+    applicability: CERTIFICATION_AND_CONFORMITY_CONTEXT_ONLY
+  - id: SEC-SRC-RU-PP608-1995
+    role: government_information_security_certification_framework
+    metadata_status: METADATA_VERIFIED
+    source_record: "source/SEC-SRC-RU-PP608-1995.yaml"
+    raw_capture: PENDING
     applicability: CERTIFICATION_AND_CONFORMITY_CONTEXT_ONLY
   - id: SEC-SRC-RU-FSTEC121-2021
     role: fstec55_version_chain_dependency
@@ -288,6 +294,11 @@ applicability_edges:
     to: SECURITY_PROTECTION_MEANS
     scope: CERTIFICATION_AND_CONFORMITY_CONTEXT_ONLY
     not_universal_pdn_duty: true
+  - from: SEC-SRC-RU-PP608-1995
+    type: CERTIFICATION_GOVERNMENT_CONTEXT_FOR
+    to: SEC-SRC-RU-FSTEC55-2018
+    scope: CERTIFICATION_AND_CONFORMITY_CONTEXT_ONLY
+    not_universal_pdn_duty: true
   - from: SEC-SRC-RU-FSTEC-MATURITY-METHOD-2026
     type: REFERENCES_ISPDN_TECHNICAL_MEASURES
     to: SEC-SRC-RU-FSTEC21-2013
@@ -351,13 +362,15 @@ context_splits:
   - id: PDN-STACK-CONTEXT-2026-006
     status: CONTEXT_DEPENDENT_NOT_CONFLICT
     sources:
+      - SEC-SRC-RU-PP608-1995
       - SEC-SRC-RU-FSTEC55-2018
       - SEC-SRC-RU-FSTEC121-2021
       - SEC-SRC-RU-FSTEC172-2022
       - SEC-SRC-RU-FSTEC9-2026
     finding: >-
-      FSTEC Order No. 55 and its amendments define the certification-system framework for protection means.
-      They must not be transformed into a universal standalone requirement for every PDN operator to certify every tool.
+      PP No. 608 provides Government certification-framework context, while FSTEC Order No. 55 and its amendments
+      define the FSTEC certification-system framework for protection means. These sources must not be transformed
+      into a universal standalone requirement for every PDN operator to certify every used tool.
   - id: PDN-STACK-CONTEXT-2026-007
     status: CONTEXT_DEPENDENT_NOT_CONFLICT
     sources:
@@ -389,16 +402,16 @@ conflict_candidates:
       as a contradiction until scope, legal regime, effective interval and purpose are compared.
 
 production_counters:
-  identified: 30
-  metadata_verified: 30
+  identified: 31
+  metadata_verified: 31
   raw_downloaded_exact: 16
   immutable_sha256_verified: 16
-  pending_raw_capture: 14
+  pending_raw_capture: 15
   official_publication_id_targets: 13
-  official_canonical_targets: 12
-  exact_official_route_unresolved: 5
+  official_canonical_targets: 13
+  exact_official_route_unresolved: 6
   version_edges_verified: 9
-  applicability_guards: 15
+  applicability_guards: 16
   confirmed_conflicts: 0
   conflict_candidates: 1
 
@@ -410,8 +423,16 @@ latest_acquisition_run:
   new_immutable_captured: 0
   pending_after_run: 14
 
+latest_status_run:
+  run: "runs/STREAM2_RUN_2026-08-24T1422Z.yaml"
+  checked_at: "2026-08-24"
+  new_sources_registered: 1
+  new_immutable_captured: 0
+  note: "PP608 certification context registered from current Government references; exact primary artifact/version chain remains pending."
+
 next_gate:
-  - resolve exact official attachment routes for the three newly registered FSTEC methodical sources
+  - resolve exact official attachment routes for the registered FSTEC methodical sources
+  - resolve the exact primary publication/text route and amendment identities for PP608
   - exact official acquisition and fingerprinting
   - structural parse and legal/semantic chunks
   - concept and definition reconciliation
