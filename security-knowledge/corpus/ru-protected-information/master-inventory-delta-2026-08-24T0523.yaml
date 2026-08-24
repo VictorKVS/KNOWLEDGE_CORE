@@ -1,0 +1,114 @@
+schema_version: "1.0"
+kind: ru-protected-information-master-inventory-delta
+base_inventory: "master-inventory.yaml"
+reconciliation_base_delta: "master-inventory-delta-2026-08-23T2322.yaml"
+checked_at: "2026-08-24T05:23:18+03:00"
+owner_stream: STREAM_3_SECTOR_OVERLAYS
+run_ref: "stream-3-run-2026-08-24T0523.yaml"
+status: APPEND_ONLY_RECONCILIATION_READY
+
+proof_floor:
+  - "211-ФЗ от 20.07.2020 задает самостоятельный отраслевой режим обращения информации о финансовых сделках и защиты информации на финансовой платформе; FINANCIAL_PLATFORM_INFORMATION != PERSONAL_DATA."
+  - "Статья 7 регулирует передачу, доступ и ответственность за неправомерное раскрытие информации о финансовых сделках; статья 8 часть 7 и статья 7 часть 6 содержат идентификационные/контактные сведения физических лиц."
+  - "Статья 12 задает специальный security/operational-reliability layer Банка России; статья 17 часть 4 — конфиденциальность документов и информации у Банка России, а не универсальная «тайна клиента»."
+  - "Применимость 152-ФЗ не повышается автоматически: требуется проверка данных, операции, цели, роли и основания. OVERLAP != APPLICABILITY."
+  - "Exact current authoritative bytes не получены; MIME, byte length, SHA-256 и retrieved_at не придуманы."
+
+counter_state_before_reconciled: {found: 31, downloaded: 9, immutable: 9, pending: 20, reused: 2, primary_publication_verified: 10, sectors_registered: 23}
+counter_state_after_reconciliation:
+  found: 32
+  downloaded: 9
+  immutable: 9
+  pending: 21
+  reused: 2
+  primary_publication_verified: 11
+  sectors_registered: 24
+  new_sources_this_run: 1
+  existing_source_nodes_operationalized: 0
+  new_immutable_this_run: 0
+  exact_binary_downloads_this_run: 0
+  current_protected_locators_crosschecked_this_run: 5
+  pdn_overlap_candidates_added_this_run: 1
+  cross_regime_candidates_added_this_run: 4
+  locator_specific_version_events_reconciled_this_run: 2
+  source_level_version_events_contextualized_this_run: 2
+  applicability_edges_promoted_this_run: 0
+  legal_conflicts_confirmed_this_run: 0
+
+source_added:
+  source_id: SEC-SRC-RU-FZ-211-2020
+  source_card: "security-corpora/RU/protected-information/source/SEC-SRC-RU-FZ-211-2020.yaml"
+  sector: financial-platforms
+  regimes: [financial_platform_transaction_information, financial_platform_information_security, regulator_received_information_confidentiality, financial_platform_identity_data]
+  state: NEW_PRIMARY_ACT_IDENTIFIED_OFFICIAL_PUBLICATION_VERIFIED_OFFICIAL_CURRENT_LOCATOR_IDENTIFIED_CURRENT_TEXT_CROSSCHECKED_PROTECTED_LOCATORS_RECONCILED_EXACT_CURRENT_ARTIFACT_PENDING_VERSION_CHAIN_PARTIAL
+  act_identity:
+    title: "Федеральный закон от 20.07.2020 № 211-ФЗ «О совершении финансовых сделок с использованием финансовой платформы»"
+    official_initial_publication_id: "0001202007200033"
+    official_initial_publication_url: "https://publication.pravo.gov.ru/Document/View/0001202007200033"
+    official_current_locator: "https://pravo.gov.ru/proxy/ips/?docbody=&intelsearch=&link_id=0&nd=102792227"
+    current_consolidated_revision_crosscheck: "2025-10-27"
+  protected_locators:
+    - {locator: "статья 7 части 1,3,5–8", concept: FINANCIAL_TRANSACTION_INFORMATION_TRANSFER_ACCESS_AND_DISCLOSURE, state: CURRENT_TEXT_CROSSCHECKED}
+    - {locator: "статья 7 часть 6", concept: RFT_IDENTITY_DATA_FOR_ACCESS, state: CURRENT_TEXT_CROSSCHECKED_45FZ_CONTEXT}
+    - {locator: "статья 8 часть 7", concept: OFP_ESIA_IDENTITY_DATA_WITH_CONSENT, state: CURRENT_TEXT_CROSSCHECKED_45FZ_CONTEXT}
+    - {locator: "статья 12 части 1–5", concept: FINANCIAL_PLATFORM_INFORMATION_SECURITY_AND_OPERATIONAL_RELIABILITY, state: CURRENT_TEXT_CROSSCHECKED}
+    - {locator: "статья 17 часть 4", concept: BANK_OF_RUSSIA_RECEIVED_INFORMATION_CONFIDENTIALITY, state: CURRENT_TEXT_CROSSCHECKED}
+  pdn_relation:
+    state: CANDIDATE_DUAL_REGIME_ON_DATA_FIELD_OPERATION_ROLE_PURPOSE_AND_LEGAL_BASIS_PROOF_ONLY
+    guard: "Resolve data subject, exact field, operation, purpose, operator/registrar/financial-organization/Bank-of-Russia role, legal basis/consent and exact 211-FZ/Bank-of-Russia locator. OVERLAP != APPLICABILITY."
+  capture_backlog: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-211-2020-version-capture-pending.json"
+
+version_chain_delta:
+  state: VERSION_CHAIN_PARTIAL_PROTECTED_LOCATORS_RECONCILED
+  current_effective_basis: "211-ФЗ consolidated crosscheck in revision 27.10.2025"
+  locator_events:
+    - act: "45-ФЗ от 11.03.2024"
+      official_publication_id: "0001202403110010"
+      official_publication_date: "2024-03-11"
+      official_url: "https://publication.pravo.gov.ru/document/0001202403110010"
+      effect: "changes article 7, article 8(7), article 12(1) among broader 211-FZ reform"
+      state: PUBLICATION_LOCATOR_CROSSCHECKED_LOCATOR_CHANGE_TEXT_CROSSCHECKED
+    - act: "402-ФЗ от 27.10.2025"
+      official_publication_id: "0001202510270029"
+      official_publication_date: "2025-10-27"
+      official_url: "https://publication.pravo.gov.ru/document/0001202510270029"
+      effective: "2025-10-27"
+      effect: "latest source-level amendment; no direct article 7/12/17 protected-locator change identified"
+      state: OFFICIAL_PUBLICATION_VERIFIED_SOURCE_LEVEL_CURRENT_EVENT
+  source_level_context:
+    - {act: "390-ФЗ от 23.11.2024", effect: "article 5.1 testing context effective 2025-05-23", protected_locator_effect: NONE_IDENTIFIED, state: CURRENT_CHAIN_CONTEXT_ONLY}
+    - {act: "522-ФЗ от 28.12.2024", effect: "AML/extremism governance context effective 2025-06-01", protected_locator_effect: NONE_IDENTIFIED, state: CURRENT_CHAIN_CONTEXT_ONLY}
+  full_chain: PARTIAL
+
+relationship_delta:
+  - {target: "152-ФЗ", type: CANDIDATE_DUAL_REGIME_ON_DATA_FIELD_OPERATION_ROLE_PURPOSE_AND_LEGAL_BASIS_PROOF_ONLY, state: APPLICABILITY_REVIEW_REQUIRED}
+  - {target: "115-ФЗ", type: AML_IDENTIFICATION_AND_INFORMATION_SECURITY_CONTEXT, state: DIRECT_STATUTORY_CONTEXT_NOT_REGIME_MERGE}
+  - {target: "572-ФЗ / ЕБС", type: BIOMETRIC_IDENTIFICATION_CONTEXT_CANDIDATE, state: RELATION_CANDIDATE_REQUIRES_EXACT_OPERATION_REVIEW}
+  - {target: "63-ФЗ", type: ELECTRONIC_SIGNATURE_AND_PLATFORM_AUTHENTICATION_CONTEXT, state: STATUTORY_CONTEXT_ONLY}
+  - {target: "банковская/страховая тайна/кредитные истории", type: FINANCIAL_PRODUCT_TRANSACTION_DATA_OVERLAP, state: RELATION_CANDIDATE_NOT_REGIME_MERGE}
+
+acquisition_delta:
+  durable_immutable_artifacts_added: 0
+  exact_binary_downloads_succeeded: 0
+  official_initial_publication_verified: true
+  official_current_locator_identified: true
+  official_current_artifact:
+    retrieved_at: null
+    mime: null
+    byte_length: null
+    sha256: null
+  attempts:
+    - {target: "current 211-ФЗ official locator reached from cbr.ru", result: OFFICIAL_LOCATOR_IDENTIFIED_RUNTIME_TIMEOUT}
+    - {target: "initial official publication 0001202007200033", result: OFFICIAL_PUBLICATION_METADATA_VERIFIED_BYTE_DOWNLOAD_FAILED}
+  blocker: >-
+    Runtime verified the official publication identity and the current pravo.gov.ru locator from the Bank of Russia acts page, but did not receive reliable byte-exact authoritative content. downloaded/immutable counters therefore remain unchanged.
+
+proof_floor_effect:
+  executable_rules_changed: false
+  applicability_edges_promoted: 0
+  duplicate_source_nodes_created: 0
+  legal_conflicts_confirmed: 0
+  source_nodes_added: 1
+
+merge_rule: >-
+  Reconcile after master-inventory-delta-2026-08-23T2322.yaml. Aggregate Stream 3 counters become 32 found / 9 downloaded / 9 immutable / 21 pending / 2 reused. Primary-publication-verified becomes 11 and sectors_registered becomes 24; acquisition counters remain unchanged until exact authoritative bytes are durably stored.
