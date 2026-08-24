@@ -1,7 +1,7 @@
-schema_version: "1.1"
+schema_version: "1.2"
 id: SEC-SRC-RU-FZ-273-2012
 kind: security-regulatory-source
-status: IMMUTABLE_BASELINE_CAPTURED
+status: IMMUTABLE_BASELINE_CAPTURED_CURRENT_SEMANTICS_REVIEW_REQUIRED
 
 title: "Федеральный закон от 29.12.2012 № 273-ФЗ «Об образовании в Российской Федерации»"
 jurisdiction: RU
@@ -12,34 +12,124 @@ document:
   adopted_date: "2012-12-29"
   official_publication_id: "0001201212300007"
   official_publication_date: "2012-12-30"
-  checked_at: "2026-08-20"
+  checked_at: "2026-08-24"
+
 canonical_source:
   publisher: "Официальное опубликование правовых актов"
   url: "https://publication.pravo.gov.ru/Document/View/0001201212300007"
   origin_verified: true
+
 protected_information:
   sector: education_children
-  regime: education_restricted_information
-  primary_anchor: "статья 59 — материалы ГИА содержат информацию ограниченного доступа"
+  regimes:
+    - id: education_restricted_information
+      primary_anchor: "статья 59 часть 11"
+      rule: "Информация, содержащаяся в контрольных измерительных материалах ГИА, относится к информации ограниченного доступа."
+      current_state_at_check: CURRENT_UNTIL_2026_09_01_CHANGE_EVENT
+    - id: education_elearning_pdn_context
+      primary_anchor: "статья 16 часть 3.1"
+      rule: >-
+        Для основных общеобразовательных программ и программ СПО при электронном обучении/ДОТ,
+        предусматривающих обработку персональных данных обучающихся, закон устанавливает специальный
+        сценарий использования государственных информационных систем и многофункционального сервиса обмена информацией.
+      applicability_state: CANDIDATE_SCENARIO_PROOF_REQUIRED
+    - id: education_elearning_protected_secret
+      primary_anchor: "статья 16 часть 5"
+      rule: >-
+        При электронном обучении/ДОТ образовательная организация обеспечивает защиту сведений,
+        составляющих государственную или иную охраняемую законом тайну.
+      applicability_state: CANDIDATE_SCENARIO_PROOF_REQUIRED
+    - id: education_gis_pdn_security
+      primary_anchor: "статья 98 часть 1"
+      rule: >-
+        Ведение государственных информационных систем в системе образования осуществляется с обеспечением
+        конфиденциальности и безопасности содержащихся в них персональных данных и с соблюдением требований
+        законодательства о государственной или иной охраняемой законом тайне.
+      applicability_state: CANDIDATE_SYSTEM_ROLE_PROOF_REQUIRED
+    - id: preschool_regional_is_pdn
+      primary_anchor: "статья 98 части 20-22"
+      rule: >-
+        Региональные информационные системы дошкольного образования содержат прямо перечисленные персональные данные
+        ребенка и родителей/законных представителей; при персонифицированном учете обеспечиваются конфиденциальность
+        и безопасность ПДн с соблюдением законодательства о персональных данных; за нарушения предусмотрена ответственность.
+      applicability_state: CANDIDATE_SYSTEM_ROLE_AND_OPERATION_PROOF_REQUIRED
+
+pdn_relationship:
+  target: "152-ФЗ"
+  type: DIRECT_STATUTORY_PDN_CONTEXT_IN_EDUCATION_SCENARIOS
+  anchors:
+    - "статья 16 часть 3.1"
+    - "статья 98 часть 1"
+    - "статья 98 части 20-22"
+  state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  proof_floor: "Прямая ссылка/ПДн-контекст не означает универсальную применимость всех требований 152-ФЗ к любой образовательной деятельности."
+
 version_chain:
   state: VERSION_CHAIN_PARTIAL
+  executable_current_rule: false
+  current_consolidation_crosscheck:
+    edition_date: "2026-08-04"
+    checked_at: "2026-08-24"
+    evidence_class: SECONDARY_CONSOLIDATION_CROSSCHECK_NOT_IMMUTABLE_CURRENT_ARTIFACT
   verified_events:
     - act: "Федеральный закон от 20.02.2026 № 34-ФЗ"
       official_publication_id: "0001202602200055"
       official_publication_date: "2026-02-20"
       official_url: "https://publication.pravo.gov.ru/document/0001202602200055"
       target_locators: ["статья 29", "статья 39"]
-      anchor_impact: "NO_DIRECT_CHANGE_PROVED_FOR_ARTICLE_59"
+      anchor_impact: "NO_DIRECT_CHANGE_PROVED_FOR_ARTICLES_16_59_98"
       proof_status: PRIMARY_AMENDMENT_EVENT_VERIFIED
-  pending: "Сверить оставшуюся полную цепочку изменений 2026 года и текущую редакцию статьи 59 до executable use."
+    - act: "Федеральный закон от 29.12.2025 № 539-ФЗ"
+      official_publication_id: "0001202512290027"
+      official_publication_date: "2025-12-29"
+      official_url: "https://publication.pravo.gov.ru/document/0001202512290027"
+      official_file_url: "https://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202512290027"
+      target_locators: ["статья 16 часть 3.1", "статья 98"]
+      effect: "CURRENT; изменяет специальный e-learning/PDN контекст и состав/ведение образовательных информационных систем."
+      proof_status: PRIMARY_PUBLICATION_METADATA_VERIFIED_EXACT_BINARY_PENDING
+    - act: "Федеральный закон от 23.07.2025 № 253-ФЗ"
+      official_publication_id: "0001202507230054"
+      official_publication_date: "2025-07-23"
+      official_url: "https://publication.pravo.gov.ru/document/0001202507230054"
+      official_file_url: "https://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202507230054"
+      official_index_reported_pages: 8
+      official_index_reported_pdf_size_kb: 381
+      target_locators: ["статья 59 часть 11", "статья 59 части 13.1-13.4"]
+      effective_date: "2026-09-01"
+      effect: FUTURE_NOT_CURRENT_AT_2026_08_24
+      proof_status: PRIMARY_PUBLICATION_METADATA_VERIFIED_EXACT_BINARY_PENDING
+    - act: "Федеральный закон от 04.08.2026 № 310-ФЗ"
+      official_publication_id: "0001202608040033"
+      official_publication_date: "2026-08-04"
+      official_url: "https://publication.pravo.gov.ru/document/0001202608040033"
+      target_locators: ["статья 8"]
+      effective_date: "2026-09-01"
+      protected_anchor_impact: "NO_DIRECT_CHANGE_TO_ARTICLES_16_59_98"
+      effect: FUTURE_SOURCE_LEVEL_EVENT_ONLY
+      proof_status: PUBLICATION_LOCATOR_AND_EFFECT_CROSSCHECK_EXACT_BINARY_PENDING
+  pending: >-
+    Capture exact primary bytes for amendment events affecting protected-information anchors and continue locator-specific
+    reconciliation before any executable-current promotion.
+
 capture:
   raw_artifact_ref: "security-corpora/RU/protected-information/raw/SEC-SRC-RU-FZ-273-2012/0001201212300007.pdf"
   manifest_ref: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-273-2012.json"
+  retrieved_at: "2026-08-20T20:32:08.360479Z"
   mime: "application/pdf"
   byte_length: 20498123
   sha256: "cc0b349dee5568925b3227c8a714dc8ace6cde53b6c13f752ed2364ecf1af16e"
   fingerprint_status: IMMUTABLE_VERIFIED
+  current_consolidated_exact_artifact: PENDING
+
 provenance:
-  checked_at: "2026-08-20"
+  checked_at: "2026-08-24"
   review_required: true
-agent_rule: "Original-publication capture is baseline evidence only; current executable semantics require verified version-chain review."
+  evidence_classes:
+    - PRIMARY_IMMUTABLE_ORIGINAL_PUBLICATION
+    - PRIMARY_AMENDMENT_PUBLICATION_METADATA
+    - SECONDARY_CURRENT_CONSOLIDATION_CROSSCHECK
+
+agent_rule: >-
+  Original-publication capture is baseline evidence only. Taxonomy is discovery seed only. OVERLAP != APPLICABILITY.
+  Future amendments are not current requirements. Publication metadata is not an immutable exact-byte amendment artifact.
+  Current executable semantics require locator-specific version-chain closure and applicability proof.
