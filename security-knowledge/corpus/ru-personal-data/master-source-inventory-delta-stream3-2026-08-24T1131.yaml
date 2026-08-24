@@ -1,0 +1,79 @@
+schema_version: "1.0"
+kind: ru-personal-data-master-source-inventory-delta
+owner_stream: STREAM_3_SECTOR_OVERLAYS
+checked_at: "2026-08-24T11:31:41+03:00"
+source_id: SEC-SRC-RU-FZ-442-2013
+source_card: "security-corpora/RU/protected-information/source/SEC-SRC-RU-FZ-442-2013.yaml"
+status: APPEND_ONLY_RELATIONSHIP_DELTA
+
+relationship:
+  target: "152-ФЗ"
+  type: DIRECT_STATUTORY_PDN_PROTECTION_CONTEXT_FOR_SOCIAL_SERVICE_PROVIDER_INFORMATION_USE_WITH_APPLICABILITY_REVIEW_REQUIRED
+  state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  primary_locators:
+    - "статья 6 часть 3 пункт 3 Федерального закона от 28.12.2013 № 442-ФЗ"
+    - "статья 12 часть 1 пункт 5 Федерального закона от 28.12.2013 № 442-ФЗ"
+    - "статья 26 части 1-3 Федерального закона от 28.12.2013 № 442-ФЗ"
+  current_text_finding: >-
+    Статья 6 регулирует конфиденциальность информации о получателе социальных услуг и прямо выделяет обработку персональных данных при межведомственном информационном взаимодействии/портальной регистрации как один из специальных сценариев предоставления информации без отдельного согласия в рамках закона. Статья 12 часть 1 пункт 5 прямо обязывает поставщика использовать информацию о получателях в соответствии с установленными законодательством о персональных данных требованиями о защите персональных данных. Статья 26 перечисляет значительный состав идентификационных, контактных, документных, страховых и сервисных полей регистра получателей. Это прямой statutory PDN context, но не доказательство универсальной применимости каждого требования 152-ФЗ ко всем операциям.
+  evidence_quality:
+    official_initial_publication_id: "0001201312300060"
+    official_initial_publication_url: "https://publication.pravo.gov.ru/Document/View/0001201312300060"
+    immutable_initial_publication_manifest: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-442-2013.json"
+    official_sector_authority_current_text: "https://mintrud.gov.ru/docs/laws/112"
+    official_sector_authority_download: "https://mintrud.gov.ru/document/document/download/6770"
+    official_sector_authority_exact_runtime_capture:
+      retrieved_at: "2026-08-24T08:26:24Z"
+      mime: "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+      byte_length: 25840
+      sha256: "94f741eb2e0b6544165d8c519304538d99d9e7ee47ed4fe2716da212038c0a47"
+      durable_repo_binary: false
+    current_version_chain: PARTIAL
+  applicability_guard: >-
+    Не выводить применимость конкретного требования 152-ФЗ только из статуса поставщика/получателя социальной услуги, наличия конфиденциальной информации, наличия регистра или прямого упоминания законодательства о персональных данных. Для каждого требования установить оператора и иных участников, субъекта данных, конкретные поля, операцию обработки, цель, основание, канал передачи и применимый locator. Отдельно учитывать, что статья 6 регулирует отраслевую конфиденциальность и случаи раскрытия, а статья 12(1)(5) содержит прямой PDN-protection context для поставщика.
+
+related_protected_information:
+  regimes:
+    - social_service_recipient_confidentiality
+    - social_service_recipient_register
+    - provider_pdn_protection_context
+  state: SPECIAL_REGIME_LINKED_NOT_MERGED_WITH_PDN
+
+cross_regime_candidates:
+  - target: "210-ФЗ"
+    type: INTERAGENCY_AND_GOVERNMENT_SERVICES_INFORMATION_CONTEXT
+    state: STATUTORY_CONTEXT_ONLY
+    locator: "442-ФЗ статья 6 часть 3 пункт 3"
+    guard: "Не распространять специальный no-consent context за пределы конкретного межведомственного/портального сценария."
+  - target: "178-ФЗ"
+    type: SOCIAL_INFORMATION_SYSTEM_CONTEXT
+    state: STATUTORY_CONTEXT_ONLY
+    locator: "442-ФЗ статья 26 часть 3"
+    guard: "Связь с государственной информационной системой социальной сферы не означает тождество режимов и не повышает применимость автоматически."
+
+version_guard:
+  state: VERSION_CHAIN_PARTIAL
+  official_government_working_text: "https://government.ru/docs/all/101043/"
+  latest_source_level_event_checked:
+    act: "476-ФЗ от 26.12.2024"
+    official_publication_id: "0001202412260002"
+    protected_locator_effect: NONE_IDENTIFIED_THIS_PASS
+  pending: "Полная первичная locator-specific цепочка изменений статей 6, 12 и 26."
+
+capture_guard:
+  immutable_initial_publication:
+    state: IMMUTABLE_BASELINE_CAPTURED
+    retrieved_at: "2026-08-20T20:32:18.164845Z"
+    mime: "application/pdf"
+    byte_length: 2483407
+    sha256: "ee8aec6c8aa5efee704e8d8f4df2e4238eb28125e635cd4e812213c0057dc5ff"
+  exact_current_authoritative_binary: PENDING_VERSION_CHAIN_PROOF
+  executable_use: false
+
+counter_effect:
+  pdn_overlap_candidates_added: 1
+  cross_regime_candidates_added: 2
+  applicability_edges_promoted: 0
+  executable_rules_changed: false
+  duplicate_sources_created: 0
+  top_level_found_downloaded_immutable_pending_counters_changed: false
