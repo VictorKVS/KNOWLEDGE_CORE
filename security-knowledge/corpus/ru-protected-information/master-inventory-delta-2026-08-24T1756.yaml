@@ -1,0 +1,100 @@
+schema_version: "1.0"
+kind: ru-protected-information-master-inventory-delta
+owner_stream: STREAM_3_SECTOR_OVERLAYS
+checked_at: "2026-08-24T17:56:23+03:00"
+previous_delta_ref: "security-knowledge/corpus/ru-protected-information/master-inventory-delta-2026-08-24T1420.yaml"
+status: APPEND_ONLY_VERSION_CHAIN_RECONCILIATION_DELTA
+
+focus:
+  source_id: SEC-SRC-RU-FZ-323
+  sector: healthcare
+  regime: medical_secrecy
+  primary_anchor: "статья 13 — соблюдение врачебной тайны"
+  action: AMENDMENT_PUBLICATION_LOCATOR_ENRICHMENT_WITHOUT_APPLICABILITY_PROMOTION
+
+version_chain_progress:
+  newly_primary_verified_publication_metadata:
+    - act: "145-ФЗ от 04.06.2014"
+      official_publication_id: "0001201406040026"
+      official_publication_date: "2014-06-04"
+      official_publication_url: "https://publication.pravo.gov.ru/Document/View/0001201406040026"
+      official_index_reported_pages: 58
+      locator_crosscheck: "статья 13 часть 4 пункт 6"
+      state: PRIMARY_METADATA_VERIFIED_EXACT_BINARY_PENDING
+  newly_resolved_publication_locator_crosschecks:
+    - act: "78-ФЗ от 06.04.2015"
+      official_publication_id: "0001201504070030"
+      official_publication_date: "2015-04-07"
+      locator_crosscheck: "статья 13 часть 4 пункт 7"
+      state: STRONG_CROSSCHECK_PRIMARY_DIRECT_FETCH_PENDING
+    - act: "230-ФЗ от 13.07.2015"
+      official_publication_id: "0001201507130062"
+      official_publication_date: "2015-07-13"
+      locator_crosscheck: "статья 13 часть 4 пункт 3.1"
+      state: STRONG_CROSSCHECK_PRIMARY_DIRECT_FETCH_PENDING
+    - act: "315-ФЗ от 02.07.2021"
+      official_publication_id: "0001202107020011"
+      official_publication_date: "2021-07-02"
+      locator_crosscheck: "статья 13 часть 3 и новая часть 3.1"
+      effect_crosscheck: "посмертное раскрытие врачебной тайны ограниченному кругу лиц при отсутствии запрета пациента"
+      state: STRONG_CROSSCHECK_PRIMARY_DOCUMENT_DIRECT_FETCH_TIMED_OUT
+  existing_primary_verified_preserved:
+    - {act: "438-ФЗ от 22.12.2020", official_publication_id: "0001202012220007"}
+    - {act: "195-ФЗ от 22.07.2024", official_publication_id: "0001202407220010", official_index_reported_pages: 7}
+    - {act: "509-ФЗ от 28.12.2024", official_publication_id: "0001202412280011"}
+  still_unresolved_primary_publication_ids:
+    - "205-ФЗ от 23.07.2013"
+    - "317-ФЗ от 25.11.2013"
+  latest_source_level_event_pending:
+    act: "329-ФЗ от 04.08.2026"
+    publication_locator_crosscheck: "0001202608040072"
+    article_13_effect: NONE_IDENTIFIED_IN_CURRENT_CONSOLIDATION
+    state: PRIMARY_EXACT_CAPTURE_PENDING
+  version_chain_state: PARTIAL
+
+acquisition:
+  immutable_baseline_reused:
+    artifact: "security-corpora/RU/protected-information/raw/SEC-SRC-RU-FZ-323/0001201111220007.zip"
+    manifest: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-323.json"
+    sha256: "aa54cb7c53980e765efbe0d4196e82d9f758d5596a3394b9283f4e9e250eaabc"
+  amendment_capture_backlog: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-323-version-capture-pending.json"
+  exact_binary_attempt:
+    state: TRANSIENT_DNS_OR_PORTAL_TIMEOUT
+    durable_new_artifact: false
+    invented_mime_length_hash: false
+
+relationships:
+  pdn:
+    target: "152-ФЗ"
+    type: DIRECT_STATUTORY_PDN_CONTEXT_FOR_MEDICAL_INFORMATION_EXCHANGE
+    locator: "323-ФЗ статья 13 часть 4 пункт 8"
+    state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    changed_this_pass: false
+    applicability_promoted: false
+  cross_regime:
+    target: "326-ФЗ"
+    type: HEALTHCARE_INSURANCE_INFORMATION_CONTEXT
+    state: STATUTORY_CONTEXT_ONLY
+    changed_this_pass: false
+
+counters:
+  before: {found: 32, downloaded: 9, immutable: 9, pending: 21, reused: 2, primary_publication_verified: 11, sectors_registered: 24}
+  after: {found: 32, downloaded: 9, immutable: 9, pending: 21, reused: 2, primary_publication_verified: 11, sectors_registered: 24}
+  pass_delta:
+    new_sources: 0
+    primary_amendment_publication_metadata_verified: 1
+    publication_locators_resolved_crosscheck: 3
+    unresolved_publication_ids_remaining_in_article_13_chain: 2
+    exact_runtime_captures: 0
+    new_durable_downloads: 0
+    new_immutable_artifacts: 0
+    applicability_promotions: 0
+    legal_conflicts_declared: 0
+    duplicate_sources_created: 0
+
+proof_floor:
+  - "Taxonomy is discovery seed only; primary act controls."
+  - "OVERLAP != APPLICABILITY."
+  - "Publication locator crosscheck is not equivalent to immutable exact-byte capture."
+  - "No current executable rule is promoted from a partial version chain."
+  - "No MIME, byte_length or SHA-256 is invented for unavailable amendment binaries."
