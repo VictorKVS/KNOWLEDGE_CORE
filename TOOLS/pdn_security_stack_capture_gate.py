@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Fail-closed identity gate for exact PDN security-stack captures.
+"""Fail-closed identity/signature gate for exact PDN security-stack captures.
 
 The acquisition runner proves bytes/hash/route. This gate prevents a generic
 portal/error page from being accepted as the requested legal document when the
-route is an HTML/text snapshot rather than a publication-PDF endpoint.
+route is an HTML/text snapshot, and validates legacy OLE Word documents for
+sources whose official primary artifact is a pre-OOXML .doc file.
 """
 from __future__ import annotations
 
@@ -25,6 +26,12 @@ ALLOWED_HOST_SUFFIXES = (
     "fsb.ru",
     "rg.ru",
 )
+
+# OLE Compound File signature used by legacy Microsoft Word .doc containers.
+OLE_CFB_MAGIC = bytes.fromhex("D0 CF 11 E0 A1 B1 1A E1")
+STRICT_LEGACY_DOC_SOURCES = {
+    "SEC-SRC-RU-PP1119-2012",
+}
 
 # These are identity markers, not semantic extraction rules.
 STRICT_TEXT_IDENTITIES: dict[str, tuple[tuple[str, ...], ...]] = {
@@ -103,9 +110,23 @@ def main() -> int:
         if not artifact.is_file():
             failures.append(f"{source_id}: artifact missing: {artifact}")
             continue
+
+        if source_id in STRICT_LEGACY_DOC_SOURCES:
+            data = artifact.read_bytes()
+            mime = str(manifest.get("mime", "")).casefold()
+            if mime != "application/msword" and artifact.suffix.casefold() != ".doc":
+                failures.append(f"{source_id}: expected official legacy Word DOC, got mime={mime} suffix={artifact.suffix}")
+                continue
+            if not data.startswith(OLE_CFB_MAGIC):
+                failures.append(f"{source_id}: legacy Word DOC OLE/CFB signature mismatch")
+                continue
+            checked += 1
+            continue
+
         if not _looks_textual(manifest, artifact):
             # PDF/DOCX identity is guarded by signature/route-specific acquisition
-            # checks; this gate only addresses generic HTML/text portal responses.
+            # checks; this gate handles generic HTML/text portal responses plus the
+            # explicitly declared legacy-DOC cases above.
             continue
         checked += 1
         text = re.sub(r"\s+", " ", _decode(artifact.read_bytes()))
@@ -117,7 +138,7 @@ def main() -> int:
         for failure in failures:
             print(f"- {failure}")
         return 2
-    print(f"PDN_SECURITY_STACK_CAPTURE_IDENTITY_PASS textual_checked={checked}")
+    print(f"PDN_SECURITY_STACK_CAPTURE_IDENTITY_PASS checked={checked}")
     return 0
 
 
