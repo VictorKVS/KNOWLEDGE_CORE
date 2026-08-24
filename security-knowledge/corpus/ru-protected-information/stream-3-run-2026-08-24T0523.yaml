@@ -1,0 +1,118 @@
+schema_version: "1.0"
+kind: stream-3-sector-library-run
+owner_stream: STREAM_3_SECTOR_OVERLAYS
+started_at: "2026-08-24T05:23:18+03:00"
+finished_at: "2026-08-24T05:23:18+03:00"
+status: COMPLETED_WITH_EXACT_CAPTURE_PENDING
+
+objective: >-
+  Continue discovery and registration of primary sector/special-regime acts overlapping with personal data and protected information without inferring applicability. This pass focused on the financial-platform regime under 211-ФЗ.
+
+reconciliation_base:
+  ru_protected_information_delta: "security-knowledge/corpus/ru-protected-information/master-inventory-delta-2026-08-23T2322.yaml"
+  counters_before: {found: 31, downloaded: 9, immutable: 9, pending: 20, reused: 2, primary_publication_verified: 10, sectors_registered: 23}
+
+source_result:
+  source_id: SEC-SRC-RU-FZ-211-2020
+  action: NEW_SOURCE_NODE
+  source_card: "security-corpora/RU/protected-information/source/SEC-SRC-RU-FZ-211-2020.yaml"
+  capture_backlog: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-211-2020-version-capture-pending.json"
+  official_initial_publication:
+    id: "0001202007200033"
+    date: "2020-07-20"
+    url: "https://publication.pravo.gov.ru/Document/View/0001202007200033"
+    state: VERIFIED
+  official_current_locator:
+    url: "https://pravo.gov.ru/proxy/ips/?docbody=&intelsearch=&link_id=0&nd=102792227"
+    provenance: "linked by Bank of Russia official financial-platform acts page"
+    state: IDENTIFIED_FETCH_TIMEOUT
+  current_revision_crosscheck: "2025-10-27"
+
+legal_findings:
+  - locator: "article 7"
+    finding: "transaction-information transfer/access regime; consent-based additional disclosure in current part 3; registrar liability includes unlawful disclosure/provision; identity-data access context in part 6"
+    proof_state: CURRENT_TEXT_CROSSCHECKED
+  - locator: "article 8(7)"
+    finding: "operator may obtain prescribed ESIA identity/contact data with consent for statutory platform purposes and updates"
+    proof_state: CURRENT_TEXT_CROSSCHECKED
+  - locator: "article 12"
+    finding: "special information-security and operational-reliability obligations set by Bank of Russia, including identification/authentication and unauthorized-operation information exchange"
+    proof_state: CURRENT_TEXT_CROSSCHECKED
+  - locator: "article 17(4)"
+    finding: "Bank of Russia must preserve confidentiality of requested operator documents/information except statutory disclosure cases; not a universal client-secrecy rule"
+    proof_state: CURRENT_TEXT_CROSSCHECKED
+
+version_findings:
+  - act: "45-ФЗ от 11.03.2024"
+    publication_id: "0001202403110010"
+    finding: "locator-specific protected-information changes identified for article 7, article 8(7), article 12(1)"
+    state: PUBLICATION_LOCATOR_CROSSCHECKED_CHANGE_TEXT_CROSSCHECKED
+  - act: "390-ФЗ от 23.11.2024"
+    finding: "source-level article 5.1 testing context; no protected-locator change identified"
+    state: CONTEXT_ONLY
+  - act: "522-ФЗ от 28.12.2024"
+    finding: "source-level AML/extremism governance context; no article 7/12/17 protected-locator change identified"
+    state: CONTEXT_ONLY
+  - act: "402-ФЗ от 27.10.2025"
+    publication_id: "0001202510270029"
+    publication_date: "2025-10-27"
+    effective: "2025-10-27"
+    finding: "latest source-level amendment; changes definitions, platform rules, transaction/test and article 8(16) context; no direct article 7/12/17 protected-locator change identified"
+    state: OFFICIAL_PUBLICATION_VERIFIED
+  full_chain: PARTIAL
+
+relationships_added:
+  pdn:
+    target: "152-ФЗ"
+    state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    guard: "OVERLAP != APPLICABILITY; resolve data field, operation, purpose, role, legal basis/consent and exact statutory locator."
+  cross_regime:
+    - {target: "115-ФЗ", state: DIRECT_STATUTORY_CONTEXT_NOT_REGIME_MERGE}
+    - {target: "572-ФЗ / ЕБС", state: RELATION_CANDIDATE_REQUIRES_EXACT_OPERATION_REVIEW}
+    - {target: "63-ФЗ", state: STATUTORY_CONTEXT_ONLY}
+    - {target: "банковская/страховая тайна/кредитные истории", state: RELATION_CANDIDATE_NOT_REGIME_MERGE}
+
+acquisition:
+  exact_binary_downloads_succeeded: 0
+  durable_immutable_artifacts_added: 0
+  initial_publication_verified: true
+  current_locator_identified: true
+  attempts:
+    - target: "https://pravo.gov.ru/proxy/ips/?docbody=&intelsearch=&link_id=0&nd=102792227"
+      result: RUNTIME_TIMEOUT
+    - target: "https://publication.pravo.gov.ru/Document/View/0001202007200033"
+      result: BYTE_DOWNLOAD_FAILED
+  artifact_fields:
+    retrieved_at: null
+    mime: null
+    byte_length: null
+    sha256: null
+  guard: "No fingerprint values synthesized. No downloaded/immutable increment without durable exact authoritative bytes."
+
+outputs:
+  - "security-corpora/RU/protected-information/source/SEC-SRC-RU-FZ-211-2020.yaml"
+  - "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-211-2020-version-capture-pending.json"
+  - "security-knowledge/corpus/ru-protected-information/master-inventory-delta-2026-08-24T0523.yaml"
+  - "security-knowledge/corpus/ru-personal-data/master-source-inventory-delta-stream3-2026-08-24T0523.yaml"
+  - "security-knowledge/corpus/ru-protected-information/stream-3-run-2026-08-24T0523.yaml"
+
+counters_after:
+  found: 32
+  downloaded: 9
+  immutable: 9
+  pending: 21
+  reused: 2
+  primary_publication_verified: 11
+  sectors_registered: 24
+
+quality_gates:
+  duplicates_created: 0
+  applicability_edges_promoted: 0
+  legal_conflicts_confirmed: 0
+  executable_rules_changed: false
+  exact_bytes_required_for_immutable: true
+
+next_priority:
+  - "exact current 211-ФЗ authoritative capture and exact PDFs for 45-ФЗ/402-ФЗ"
+  - "deeper 211-ФЗ article 7/12 linkage to current Bank of Russia protection-information acts"
+  - "return to pending healthcare / education / government / transport exact captures after financial-platform closure"
