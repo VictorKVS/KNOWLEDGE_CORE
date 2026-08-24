@@ -1,0 +1,42 @@
+schema_version: "1.0"
+id: SEC-PDN-MASTER-SOURCE-INVENTORY-DELTA-STREAM2-2026-08-24T1725Z
+applies_to: PDN_MASTER_SOURCE_INVENTORY.yaml
+stream: RU_PDN_TECHNICAL_CRYPTO
+created_at: "2026-08-24T17:34:00Z"
+merge_policy: >-
+  CONCURRENCY_SAFE_OVERLAY. Apply only to the security_stack linked-inventory block and regulatory source linkage.
+  Preserve all Stream-1 source counters and unrelated master fields.
+
+security_stack_patch:
+  linked_inventory: "security-stack/PDN_SECURITY_STACK_SOURCE_INVENTORY.yaml"
+  checked_at: "2026-08-24"
+  identified: 32
+  immutable_sha256_verified: 16
+  pending_raw_capture: 16
+  exact_official_route_unresolved: 6
+  latest_stream2_run: "security-stack/runs/STREAM2_RUN_2026-08-24T1725Z.yaml"
+  latest_registry_update: >-
+    2026-08-24: registered FSTEC information notice No. 240/22/690 as primary transition evidence for the
+    05.02.2021 threat-assessment methodology. The new source is metadata-verified but remains raw-pending because
+    the FSTEC primary route did not return exact bytes in the bounded runtime. Existing immutable methodology
+    capture is reused. PP1119 remains current with exact Government DOC bytes pending; FSTEC Order No. 21 remains
+    the active baseline because no final enacted replacement was proven. No neighboring-regime or universal PDN
+    duty was added.
+
+source_link_addition:
+  id: SEC-SRC-RU-FSTEC-INFO-240-22-690-2021
+  source_record: "security-stack/source/SEC-SRC-RU-FSTEC-INFO-240-22-690-2021.yaml"
+  role: threat_methodology_adoption_and_transition_notice
+  applicability: ISPDN_THREAT_ASSESSMENT_METHOD_VERSION_TRANSITION
+  raw_capture: PENDING
+
+analysis_metrics_patch:
+  stream2_source_records_added_this_pass: 1
+  stream2_immutable_new_this_pass: 0
+  stream2_status_rechecks_this_pass: 4
+  stream2_semantic_promotions_this_pass: 0
+  stream2_new_universal_pdn_duties_this_pass: 0
+
+proof_rule: >-
+  This delta must not overwrite the master production_counters block for Stream 1. It updates only the linked
+  security_stack subinventory and its Stream-2 pointer/counters.
