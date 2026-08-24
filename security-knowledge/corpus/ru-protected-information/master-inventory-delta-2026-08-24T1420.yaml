@@ -1,0 +1,122 @@
+schema_version: "1.0"
+kind: ru-protected-information-master-inventory-delta
+owner_stream: STREAM_3_SECTOR_OVERLAYS
+checked_at: "2026-08-24T14:20:14+03:00"
+previous_delta_ref: "security-knowledge/corpus/ru-protected-information/master-inventory-delta-2026-08-24T1131.yaml"
+status: APPEND_ONLY_RECONCILIATION_DELTA
+
+focus:
+  source_id: SEC-SRC-RU-FZ-323
+  title: "Федеральный закон от 21.11.2011 № 323-ФЗ «Об основах охраны здоровья граждан в Российской Федерации»"
+  sector: healthcare
+  regime: medical_secrecy
+  primary_anchor: "статья 13 — соблюдение врачебной тайны"
+  action: EXISTING_SOURCE_OPERATIONALIZED_AND_STALE_CAPTURE_FIELDS_RECONCILED
+
+reconciliation:
+  source_card: "security-corpora/RU/protected-information/source/SEC-SRC-RU-FZ-323.yaml"
+  immutable_manifest: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-323.json"
+  immutable_artifact: "security-corpora/RU/protected-information/raw/SEC-SRC-RU-FZ-323/0001201111220007.zip"
+  version_capture_backlog: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-323-version-capture-pending.json"
+  stale_fields_fixed:
+    - "capture.raw_artifact_ref was empty despite durable artifact"
+    - "capture.manifest_ref was empty despite valid manifest"
+    - "fingerprint_status was PENDING_RAW_CAPTURE despite existing immutable baseline"
+  deduplication: "Existing source ID and artifact reused; no duplicate source or artifact counted."
+
+primary_evidence:
+  initial_publication:
+    official_publication_id: "0001201111220007"
+    official_publication_date: "2011-11-22"
+    official_publication_url: "https://publication.pravo.gov.ru/Document/View/0001201111220007"
+    state: VERIFIED_AND_IMMUTABLE_IN_REPOSITORY
+  immutable_baseline:
+    retrieved_at: "2026-08-20T20:32:11.874652Z"
+    mime: "application/zip"
+    container_format: ZIP
+    byte_length: 7257635
+    sha256: "aa54cb7c53980e765efbe0d4196e82d9f758d5596a3394b9283f4e9e250eaabc"
+  amendment_publication_metadata_verified:
+    - act: "438-ФЗ от 22.12.2020"
+      official_publication_id: "0001202012220007"
+      official_publication_date: "2020-12-22"
+      locator_crosscheck: "статья 13 часть 4 пункт 5"
+    - act: "195-ФЗ от 22.07.2024"
+      official_publication_id: "0001202407220010"
+      official_publication_date: "2024-07-22"
+      locator_crosscheck: "статья 13 часть 4 пункт 5 подпункт г"
+    - act: "509-ФЗ от 28.12.2024"
+      official_publication_id: "0001202412280011"
+      official_publication_date: "2024-12-28"
+      primary_title_proof: "О внесении изменений в статью 16 УИК РФ и статью 13 Федерального закона «Об основах охраны здоровья граждан в Российской Федерации»"
+      locator_crosscheck: "статья 13 часть 4 пункт 3"
+  official_portal_primary_summary_verified:
+    act: "315-ФЗ от 02.07.2021"
+    finding: "Официальный портал новых поступлений прямо описывает посмертное раскрытие сведений, составляющих врачебную тайну, супругу/близким родственникам/иным указанным лицам при отсутствии запрета."
+    exact_publication_locator: PENDING_CAPTURE
+
+protected_information_nodes:
+  - {locator: "статья 13 часть 1", type: MEDICAL_SECRECY_SCOPE}
+  - {locator: "статья 13 часть 2", type: NON_DISCLOSURE_DUTY}
+  - {locator: "статья 13 части 3 и 3.1", type: CONSENT_AND_POST_MORTEM_DISCLOSURE_CONTEXT}
+  - {locator: "статья 13 часть 4", type: ENUMERATED_DISCLOSURE_WITHOUT_CONSENT_CONTEXTS}
+  - {locator: "статья 13 часть 4 пункт 8", type: DIRECT_PDN_CONTEXT_FOR_MEDICAL_INFORMATION_EXCHANGE}
+
+relationships:
+  pdn:
+    target: "152-ФЗ"
+    type: DIRECT_STATUTORY_PDN_CONTEXT_FOR_MEDICAL_INFORMATION_EXCHANGE
+    locator: "323-ФЗ статья 13 часть 4 пункт 8"
+    state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    applicability_promoted: false
+  cross_regime:
+    - target: "326-ФЗ"
+      type: HEALTHCARE_INSURANCE_INFORMATION_CONTEXT
+      locator: "323-ФЗ статья 13 часть 4 пункт 9"
+      state: STATUTORY_CONTEXT_ONLY
+      guard: "Не объединять врачебную тайну, ОМС и ПДн без доказательства конкретной операции и правового основания."
+
+version_chain:
+  state: PARTIAL
+  working_current_revision_crosscheck: "2026-08-04"
+  locator_specific_events_registered: 9
+  primary_publication_metadata_verified_this_pass: 3
+  official_primary_summary_events_verified_this_pass: 1
+  latest_source_level_event_crosscheck:
+    act: "329-ФЗ от 04.08.2026"
+    publication_locator_crosscheck: "0001202608040072"
+    protected_locator_effect: NONE_IDENTIFIED_IN_CURRENT_CONSOLIDATION
+    detected_effect: "часть 2 статьи 72"
+    proof_state: PRIMARY_EXACT_CAPTURE_PENDING
+  pending:
+    - "Exact primary binaries and effective-date verification for article-13 amendment events."
+    - "Primary publication discovery/capture for older locator events 205-ФЗ, 317-ФЗ, 145-ФЗ, 78-ФЗ, 230-ФЗ."
+    - "Exact publication locator/binary for 315-ФЗ."
+    - "Primary exact capture for 438-ФЗ, 195-ФЗ, 509-ФЗ and latest source-level 329-ФЗ."
+    - "Only after full locator-specific chain consider current executable promotion."
+
+counters:
+  before: {found: 32, downloaded: 9, immutable: 9, pending: 21, reused: 2, primary_publication_verified: 11, sectors_registered: 24}
+  after: {found: 32, downloaded: 9, immutable: 9, pending: 21, reused: 2, primary_publication_verified: 11, sectors_registered: 24}
+  pass_delta:
+    new_sources: 0
+    existing_sources_operationalized: 1
+    protected_locators_mapped: 5
+    locator_specific_events_registered: 9
+    primary_amendment_publication_metadata_verified: 3
+    official_primary_summary_events_verified: 1
+    exact_runtime_captures: 0
+    new_durable_downloads: 0
+    new_immutable_artifacts: 0
+    pdn_relationship_candidates: 1
+    cross_regime_candidates: 1
+    applicability_promotions: 0
+    legal_conflicts_declared: 0
+    duplicate_sources_created: 0
+
+proof_floor:
+  - "Taxonomy is discovery seed only; primary act controls."
+  - "OVERLAP != APPLICABILITY."
+  - "A disclosure exception in Article 13 is scenario-bound, not a universal permission."
+  - "No current executable rule is promoted from a partial version chain."
+  - "No hash, MIME, length, effective date, applicability or conflict is invented."
