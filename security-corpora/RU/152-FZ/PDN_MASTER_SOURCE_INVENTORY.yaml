@@ -1,4 +1,4 @@
-schema_version: "1.12"
+schema_version: "1.13"
 id: SEC-PDN-MASTER-SOURCE-INVENTORY
 kind: security-regulatory-source-inventory
 status: ACTIVE_DISCOVERY
@@ -227,11 +227,12 @@ conflict_candidates:
       structured around the earlier Convention-party/non-party distinction. This is a review candidate,
       not a finding that Order No. 128 is invalid or repealed.
     current_status_check:
-      checked_at: "2026-08-22"
+      checked_at: "2026-08-24"
       finding: >-
-        Current-law indexes checked on 2026-08-22 still present RKN Order No. 128 as the operative list.
-        The Roskomnadzor replacement text prepared 31.07.2026 remains a draft in the evidence found in this pass.
-        It must not replace the current node until an enacted official publication identity is found.
+        Current-law indexes checked on 24.08.2026 still present RKN Order No. 128 as the operative list.
+        The Roskomnadzor replacement text prepared 31.07.2026 remains a draft in the evidence found in this pass,
+        and no enacted official-publication identity was found. It must not replace the current node until such
+        primary evidence exists.
       classification: CURRENT_RULE_WITH_REPLACEMENT_DRAFT_WATCH
       semantic_promotion: false
     resolution_gate:
@@ -244,9 +245,12 @@ regulatory_watch:
   - watch_id: PDN-WATCH-RKN128-REPLACEMENT-2026-001
     subject: "Potential replacement of RKN Order No. 128 after Federal Law No. 265-FZ"
     status: DRAFT_REPORTED_NOT_PRIMARY
-    checked_at: "2026-08-22"
+    checked_at: "2026-08-24"
     project_prepared_date: "2026-07-31"
     evidence_class: SECONDARY_MONITORING_ONLY
+    latest_finding: >-
+      The 31.07.2026 project still contains blank adoption/order fields and proposes repeal of No. 128 only upon
+      adoption. No enacted official-publication identity was found in the 24.08.2026 pass.
     proof_rule: "Do not register as active normative source until an enacted official publication identity is found."
 
 security_stack:
@@ -281,7 +285,7 @@ production_counters:
 analysis_metrics:
   existing_atomized_nodes_reuse_candidate: 4
   mandatory_delta_review_articles: 1
-  freshness_checks_this_pass: 2
+  freshness_checks_this_pass: 3
   freshness_defects_found_this_pass: 0
   source_records_added_this_pass: 0
   direct_dependencies_added_this_pass: 0
@@ -289,28 +293,28 @@ analysis_metrics:
   version_chain_gaps_closed_this_pass: 0
   conflict_candidates_opened_this_pass: 0
   source_relation_rebases_this_pass: 0
-  canonical_routes_registered_this_pass: 1
+  canonical_routes_registered_this_pass: 0
   acquisition_helpers_added_this_pass: 0
-  acquisition_helpers_hardened_this_pass: 1
-  synchronizer_proof_rules_hardened_this_pass: 1
+  acquisition_helpers_hardened_this_pass: 0
+  synchronizer_proof_rules_hardened_this_pass: 0
   acquisition_workflow_updates_this_pass: 0
   acquisition_schedule_fallbacks_added_this_pass: 0
-  acquisition_retry_requests_this_pass: 1
-  acquisition_proof_guards_hardened_this_pass: 1
+  acquisition_retry_requests_this_pass: 2
+  acquisition_proof_guards_hardened_this_pass: 0
   semantic_promotions_this_pass: 0
   immutable_new_this_pass: 0
   note: >-
-    Fresh reconciliation kept the current 152-FZ root at the revision effective 26.07.2026 and confirmed PP RF
-    No. 687 remains in the No. 12 of 18.01.2025 revision through 01.09.2030. A second official Government route
-    for 152-FZ was registered as transport-only and remains subject to the strict 152-FZ/personal-data/No.265-FZ
-    content gate. The current-root downloader now tries every pre-registered official route and binds any accepted
-    manifest back to the exact registered URL. The synchronizer validates that route binding directly instead of
-    requiring an inapplicable publication-ID proof for a consolidated snapshot. No semantic status was promoted.
+    The 24.08.2026 Stream-1 pass reconfirmed the operative 152-FZ revision identity at 26.07.2026, reconfirmed
+    PP RF No. 687 in the No. 12 of 18.01.2025 revision through 01.09.2030, and refreshed the RKN No. 128
+    replacement watch. No enacted replacement of No. 128 was found. The latest dedicated acquisition evidence
+    classifies the remaining two raw gaps as transport timeout and identity/current-revision marker failures.
+    Proof-floor remains unchanged and no semantic status was promoted.
 
 acquisition_activity:
   latest_sync_commit: "6564f8b957a0bc293ccc83f76d6d7dfc22344cd5"
   latest_route_hardening_commit: "8a4345f404dc2d49a1052b940699b397b7b6114d"
-  latest_stream1_run_record_commit: "8731751f1f68aea959f43c3812085ba1dfb911f9"
+  latest_stream1_run_record: "runs/stream-1/2026-08-24T1400+0300.yaml"
+  latest_stream1_run_record_commit: "d867b2cf817531d7c99c13be7a25eb0cbaa99cb1"
   latest_stream2_status_run: "security-stack/runs/STREAM2_RUN_2026-08-24T0818Z.yaml"
   trigger_modes:
     - workflow_dispatch
@@ -318,8 +322,8 @@ acquisition_activity:
     - scheduled_3h
   accepted_manifest_delta_at_inventory_write: 0
   last_proven_acquisition_run:
-    started_at: "2026-08-23T18:48:56.458037Z"
-    finished_at: "2026-08-23T18:48:56.478631Z"
+    started_at: "2026-08-24T10:04:40.674266Z"
+    finished_at: "2026-08-24T10:04:40.691694Z"
     targets: 21
     reused_immutable: 20
     network_targets_attempted: 0
@@ -329,11 +333,12 @@ acquisition_activity:
     note: >-
       Reuse-first acquisition revalidated 20 immutable artifacts locally. The two remaining master gaps are
       handled by dedicated guarded routes rather than repeated generic downloads.
-  latest_proven_dedicated_attempt_before_route_expansion:
-    observed_at: "2026-08-23T18:54:27.228227Z"
-    pp687: PENDING_TRANSPORT_TIMEOUTS
-    current_152fz: PENDING_OFFICIAL_ROUTE_TIMEOUT_OR_IDENTITY_MARKER_FAILURE
+  latest_proven_dedicated_attempt:
+    observed_at: "2026-08-24T10:11:28.939106Z"
+    pp687: PENDING_TRANSPORT_TIMEOUT_AND_IDENTITY_MARKER_MISS
+    current_152fz: PENDING_TRANSPORT_TIMEOUT_OR_CURRENT_REVISION_MARKER_MISS
     semantic_promotions: 0
+    proof_floor_held: true
   pending_priority:
     - SEC-SRC-RU-152FZ-2026-07-26
     - SEC-SRC-RU-PP687-2008
@@ -342,6 +347,10 @@ acquisition_blockers:
   - >-
       Official byte-exact acquisition is operational through publication-ID PDFs and registered canonical official URLs.
       Remaining source IDs without an accepted immutable manifest: SEC-SRC-RU-152FZ-2026-07-26, SEC-SRC-RU-PP687-2008.
+  - >-
+      PP687 current status is no longer the uncertainty: the official Government page confirms the current revision.
+      The unresolved gate is byte-exact transport from the acquisition runner. For current 152-FZ, an accepted route
+      must additionally prove the No. 265-FZ current-revision marker; indexed or stale official text is insufficient.
 
 next_gate:
   - capture and fingerprint the remaining official raw artifacts
