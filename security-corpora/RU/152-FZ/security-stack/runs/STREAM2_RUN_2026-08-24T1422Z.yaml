@@ -1,0 +1,91 @@
+schema_version: "1.0"
+id: STREAM2-RUN-2026-08-24T1422Z
+stream: 2
+domain: personal_data_security
+started_at: "2026-08-24T14:22:17Z"
+checked_at: "2026-08-24"
+status: PARTIAL_PROGRESS_NO_NEW_IMMUTABLE
+
+scope:
+  priority:
+    - SEC-SRC-RU-PP1119-2012
+    - SEC-SRC-RU-FSTEC21-2013
+    - SEC-SRC-RU-FSTEC-THREAT-METHOD-2021
+    - SEC-SRC-RU-FSB378-2014
+    - RELATED_SKZI_LICENSING_CERTIFICATION_METHODICAL_CONTEXT
+  applicability_policy: >-
+    Neighboring technical, crypto, licensing, certification and GosSOPKA regimes are not promoted into PDN
+    requirements without an explicit applicability edge and source locator.
+
+findings:
+  - source_id: SEC-SRC-RU-PP1119-2012
+    result: CURRENT_STATUS_RECONFIRMED_PRIMARY_BINARY_STILL_PENDING
+    evidence:
+      - "Government portal current document page continues to identify Resolution No. 1119 and advertises the DOC attachment."
+      - "The registered primary DOC route remains https://government.ru/media/2012/11/3/53354/file/1119_pril.doc."
+    acquisition_result: >-
+      Exact binary capture could not be completed in this pass because the official Government page/attachment
+      transport was not retrievable through the available route. No mirror was promoted in its place.
+    proof_floor_held: true
+
+  - source_id: SEC-SRC-RU-PP313-2012
+    result: CURRENT_REFERENCE_RECONFIRMED_NO_APPLICABILITY_BROADENING
+    evidence:
+      - "Government Resolution No. 1030 of 08.07.2025 explicitly references the licensing regulation approved by PP No. 313."
+      - "Current Government software/hardware registry rules also reference PP No. 313 for the relevant producer/licensable activity scope."
+    applicability: LICENSED_CRYPTO_ACTIVITY_ONLY
+    not_universal_pdn_duty: true
+
+  - source_id: SEC-SRC-RU-PP608-1995
+    result: NEW_METADATA_SOURCE_REGISTERED
+    evidence:
+      - "Government Resolution No. 1030 of 08.07.2025 explicitly requires, in its own applicable product scope, a certificate issued under PP No. 608."
+      - "Government Resolution No. 1936 of 28.11.2025 explicitly references the certification system under PP No. 608 for protection software."
+    raw_capture: PENDING
+    exact_primary_route: UNRESOLVED
+    applicability: CERTIFICATION_AND_CONFORMITY_CONTEXT_ONLY
+    not_universal_pdn_duty: true
+
+  - source_id: SEC-SRC-RU-FSTEC-MATURITY-METHOD-2026
+    result: EXACT_ATTACHMENT_ROUTE_REMAINS_UNRESOLVED
+    evidence: "Official FSTEC landing-page identity remains registered; no exact public attachment route was proven in this pass."
+    raw_capture: PENDING
+    applicability: ISPDN_MATURITY_ASSESSMENT_WITH_RECOMMENDATIONS_NOT_AUTOMATIC_MANDATORY_MINIMA
+
+registry_delta:
+  before:
+    identified: 30
+    metadata_verified: 30
+    immutable_sha256_verified: 16
+    pending_raw_capture: 14
+    exact_official_route_unresolved: 5
+  proposed_after_source_registration:
+    identified: 31
+    metadata_verified: 31
+    immutable_sha256_verified: 16
+    pending_raw_capture: 15
+    exact_official_route_unresolved: 6
+  note: >-
+    Counters above are the deterministic source-registration delta. Master/security-stack inventory synchronizers
+    should reconcile them after the new source is merged; no immutable counter changes are claimed.
+
+production_statistics:
+  new_sources_registered: 1
+  new_immutable_captured: 0
+  current_status_checks: 4
+  applicability_guards_preserved: 3
+  semantic_promotions: 0
+  rework_note: >-
+    This pass reused the existing 16 immutable artifacts and focused on unresolved primary routes/status evidence;
+    no already-proven raw artifact was re-downloaded.
+
+next_priority:
+  - capture exact Government DOC for PP1119 with OLE/CFB signature validation, MIME, byte length and SHA-256
+  - capture exact official text/artifact for FSB378, FSB66/173, FAPSI152 and PP313/PP79
+  - resolve exact official attachment for FSTEC maturity method 07.08.2026
+  - resolve primary publication/text route and version-chain identities for PP608
+  - keep FSTEC21 replacement project 169583 watch-only until final enactment/publication is proven
+
+proof_rule: >-
+  Metadata/current-reference evidence never upgrades a source to extraction-ready. IMMUTABLE_CAPTURED requires exact
+  official bytes, MIME, byte length, SHA-256 and reviewed source/version locators.
