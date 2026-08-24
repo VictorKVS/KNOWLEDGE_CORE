@@ -1,0 +1,121 @@
+schema_version: "1.0"
+kind: ru-protected-information-master-inventory-delta
+owner_stream: STREAM_3_SECTOR_OVERLAYS
+checked_at: "2026-08-24T23:19:38+03:00"
+previous_delta_ref: "security-knowledge/corpus/ru-protected-information/master-inventory-delta-2026-08-24T1756.yaml"
+status: APPEND_ONLY_EXISTING_SOURCE_OPERATIONALIZATION_DELTA
+
+focus:
+  source_id: SEC-SRC-RU-FZ-273-2012
+  sector: education_children
+  regimes:
+    - education_restricted_information
+    - education_elearning_pdn_context
+    - education_elearning_protected_secret
+    - education_gis_pdn_security
+    - preschool_regional_is_pdn
+  action: ENRICH_PROTECTED_LOCATORS_AND_VERSION_EVENTS_WITHOUT_APPLICABILITY_PROMOTION
+
+protected_locator_progress:
+  current_crosschecked:
+    - locator: "статья 16 часть 3.1"
+      meaning: "Специальный e-learning/ДОТ сценарий, прямо предусматривающий обработку ПДн обучающихся."
+      state: CURRENT_SEMANTICS_CROSSCHECKED_VERSION_CHAIN_PARTIAL
+    - locator: "статья 16 часть 5"
+      meaning: "Защита государственной или иной охраняемой законом тайны при e-learning/ДОТ."
+      state: CURRENT_SEMANTICS_CROSSCHECKED_VERSION_CHAIN_PARTIAL
+    - locator: "статья 59 часть 11"
+      meaning: "Информация в КИМ ГИА — информация ограниченного доступа."
+      state: CURRENT_UNTIL_2026_09_01_CHANGE_EVENT
+    - locator: "статья 98 часть 1"
+      meaning: "Конфиденциальность и безопасность ПДн и соблюдение режима государственной/иной охраняемой законом тайны при ведении образовательных ГИС."
+      state: CURRENT_SEMANTICS_CROSSCHECKED_VERSION_CHAIN_PARTIAL
+    - locator: "статья 98 части 20-22"
+      meaning: "Перечень ПДн в дошкольных региональных ИС, конфиденциальность/безопасность ПДн и ответственность."
+      state: CURRENT_SEMANTICS_CROSSCHECKED_VERSION_CHAIN_PARTIAL
+
+version_chain_progress:
+  primary_publication_metadata_verified:
+    - act: "539-ФЗ от 29.12.2025"
+      official_publication_id: "0001202512290027"
+      official_publication_date: "2025-12-29"
+      official_publication_url: "https://publication.pravo.gov.ru/document/0001202512290027"
+      target_locators: ["статья 16 часть 3.1", "статья 98"]
+      currentness: CURRENT
+      state: PRIMARY_METADATA_VERIFIED_EXACT_BINARY_PENDING
+    - act: "253-ФЗ от 23.07.2025"
+      official_publication_id: "0001202507230054"
+      official_publication_date: "2025-07-23"
+      official_publication_url: "https://publication.pravo.gov.ru/document/0001202507230054"
+      official_index_reported_pages: 8
+      official_index_reported_pdf_size_kb: 381
+      target_locators: ["статья 59 часть 11", "статья 59 части 13.1-13.4"]
+      effective_date: "2026-09-01"
+      currentness: FUTURE_NOT_CURRENT
+      state: PRIMARY_METADATA_VERIFIED_EXACT_BINARY_PENDING
+  future_source_level_event_crosschecked:
+    act: "310-ФЗ от 04.08.2026"
+    official_publication_id: "0001202608040033"
+    official_publication_date: "2026-08-04"
+    target_locator: "статья 8"
+    effective_date: "2026-09-01"
+    protected_anchor_impact: "NO_DIRECT_CHANGE_TO_ARTICLES_16_59_98"
+    state: PRIMARY_EXACT_CAPTURE_PENDING
+  preserved_existing_event:
+    act: "34-ФЗ от 20.02.2026"
+    official_publication_id: "0001202602200055"
+    target_locators: ["статья 29", "статья 39"]
+    protected_anchor_impact: NONE_PROVED
+  version_chain_state: PARTIAL
+  executable_current_rule: false
+
+acquisition:
+  immutable_baseline_reused:
+    artifact: "security-corpora/RU/protected-information/raw/SEC-SRC-RU-FZ-273-2012/0001201212300007.pdf"
+    manifest: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-273-2012.json"
+    retrieved_at: "2026-08-20T20:32:08.360479Z"
+    mime: "application/pdf"
+    byte_length: 20498123
+    sha256: "cc0b349dee5568925b3227c8a714dc8ace6cde53b6c13f752ed2364ecf1af16e"
+  amendment_capture_backlog: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-273-2012-version-capture-pending.json"
+  exact_binary_attempt:
+    state: OFFICIAL_PORTAL_DIRECT_BINARY_UNAVAILABLE_IN_RUNTIME
+    durable_new_artifact: false
+    invented_mime_length_hash: false
+
+relationships:
+  pdn:
+    target: "152-ФЗ"
+    type: DIRECT_STATUTORY_PDN_CONTEXT_IN_EDUCATION_SCENARIOS
+    locators: ["статья 16 часть 3.1", "статья 98 часть 1", "статья 98 части 20-22"]
+    state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    applicability_promoted: false
+  protected_information:
+    type: EDUCATION_RESTRICTED_AND_LEGALLY_PROTECTED_INFORMATION
+    locators: ["статья 16 часть 5", "статья 59 часть 11", "статья 98 часть 1"]
+    state: STATUTORY_CONTEXT_RECORDED
+
+counters:
+  before: {found: 32, downloaded: 9, immutable: 9, pending: 21, reused: 2, primary_publication_verified: 11, sectors_registered: 24}
+  after: {found: 32, downloaded: 9, immutable: 9, pending: 21, reused: 2, primary_publication_verified: 11, sectors_registered: 24}
+  pass_delta:
+    new_sources: 0
+    existing_sources_operationalized: 1
+    protected_locators_added_or_enriched: 5
+    primary_amendment_publication_metadata_verified: 2
+    future_source_events_registered: 2
+    exact_runtime_captures: 0
+    new_durable_downloads: 0
+    new_immutable_artifacts: 0
+    applicability_promotions: 0
+    legal_conflicts_declared: 0
+    duplicate_sources_created: 0
+
+proof_floor:
+  - "Taxonomy is discovery seed only; primary act controls."
+  - "OVERLAP != APPLICABILITY."
+  - "Direct PDN language in an education scenario does not make every 152-ФЗ requirement universally applicable."
+  - "A future event effective 2026-09-01 is not a current requirement on 2026-08-24."
+  - "Publication metadata and secondary current-consolidation crosschecks are not immutable exact-byte amendment artifacts."
+  - "No current executable rule is promoted from a partial locator-specific version chain."
+  - "No MIME, byte_length or SHA-256 is invented for unavailable amendment binaries."
