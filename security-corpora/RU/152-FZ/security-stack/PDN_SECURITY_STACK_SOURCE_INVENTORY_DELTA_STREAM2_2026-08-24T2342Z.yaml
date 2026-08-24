@@ -1,0 +1,64 @@
+schema_version: "1.0"
+id: SEC-PDN-SECURITY-STACK-INVENTORY-DELTA-2026-08-24T2342Z
+applies_to: PDN_SECURITY_STACK_SOURCE_INVENTORY.yaml
+stream: RU_PDN_TECHNICAL_CRYPTO
+created_at: "2026-08-24T23:42:00Z"
+merge_policy: >-
+  ADDITIVE_OVERLAY. Merge by source id and relation identity. Do not replace unrelated sources or weaken
+  applicability guards. Exact bytes remain mandatory for IMMUTABLE_CAPTURED.
+
+source_additions:
+  - id: SEC-SRC-RU-FSB-PDN-NORMATIVE-STATUS-NOTICE-2016
+    role: official_fsb_pdn_crypto_status_and_version_chain_evidence
+    metadata_status: METADATA_VERIFIED
+    source_record: "source/SEC-SRC-RU-FSB-PDN-NORMATIVE-STATUS-NOTICE-2016.yaml"
+    raw_capture: PENDING
+    applicability: STATUS_AND_VERSION_CHAIN_EVIDENCE_ONLY
+
+relation_additions:
+  - from: SEC-SRC-RU-FSB-PDN-NORMATIVE-STATUS-NOTICE-2016
+    type: LISTS_AS_CURRENT_AT_NOTICE_DATE
+    to: SEC-SRC-RU-FSB378-2014
+    evidence_date: "2016-06-21"
+  - from: SEC-SRC-RU-FSB-PDN-NORMATIVE-STATUS-NOTICE-2016
+    type: LISTS_AS_CURRENT_AT_NOTICE_DATE
+    to: SEC-SRC-RU-FSB66-2005
+    evidence_date: "2016-06-21"
+  - from: SEC-SRC-RU-FSB-PDN-NORMATIVE-STATUS-NOTICE-2016
+    type: LISTS_AS_CURRENT_AT_NOTICE_DATE
+    to: SEC-SRC-RU-FAPSI152-2001
+    evidence_date: "2016-06-21"
+  - from: SEC-SRC-RU-FSB-PDN-NORMATIVE-STATUS-NOTICE-2016
+    type: LISTS_AS_CURRENT_AT_NOTICE_DATE
+    to: SEC-SRC-RU-FSB8C-THREAT-RECS-2015
+    evidence_date: "2016-06-21"
+  - from: SEC-SRC-RU-FSB-PDN-NORMATIVE-STATUS-NOTICE-2016
+    type: DECLARES_LOST_RELEVANCE
+    to: FSB-PDN-CRYPTO-METHOD-2008
+    scope: HISTORICAL_2008_MATERIAL_ONLY
+  - from: SEC-SRC-RU-FSB-PDN-NORMATIVE-STATUS-NOTICE-2016
+    type: DECLARES_LOST_RELEVANCE
+    to: FSB-PDN-CRYPTO-TYPICAL-REQUIREMENTS-2008
+    scope: HISTORICAL_2008_MATERIAL_ONLY
+
+counter_patch:
+  identified: 33
+  metadata_verified: 33
+  raw_downloaded_exact: 16
+  immutable_sha256_verified: 16
+  pending_raw_capture: 17
+  exact_official_route_unresolved: 6
+  confirmed_conflicts: 0
+
+latest_run_patch:
+  run_record: "runs/STREAM2_RUN_2026-08-24T2342Z.yaml"
+  new_sources: 1
+  new_immutable_captured: 0
+  semantic_promotions: 0
+
+merge_gate:
+  - notice is status/version-chain evidence only and creates no new PDN duty
+  - 2008 FSB crypto materials are not to be treated as current after the official 2016 notice
+  - each listed act keeps its own independent 2026 current-status gate
+  - preserve FSTEC21 active baseline until a final enacted replacement is proven
+  - preserve exact-byte requirement for PP1119 and FSB378 immutable promotion

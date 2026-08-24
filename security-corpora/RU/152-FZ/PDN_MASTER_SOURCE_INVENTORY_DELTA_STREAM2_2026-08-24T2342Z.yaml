@@ -1,0 +1,43 @@
+schema_version: "1.0"
+id: SEC-PDN-MASTER-SOURCE-INVENTORY-DELTA-STREAM2-2026-08-24T2342Z
+applies_to: PDN_MASTER_SOURCE_INVENTORY.yaml
+stream: RU_PDN_TECHNICAL_CRYPTO
+created_at: "2026-08-24T23:42:00Z"
+merge_policy: >-
+  CONCURRENCY_SAFE_OVERLAY. Apply only to the security_stack linked-inventory block and regulatory source linkage.
+  Preserve all Stream-1 counters and unrelated master fields.
+
+security_stack_patch:
+  linked_inventory: "security-stack/PDN_SECURITY_STACK_SOURCE_INVENTORY.yaml"
+  checked_at: "2026-08-25"
+  identified: 33
+  immutable_sha256_verified: 16
+  pending_raw_capture: 17
+  exact_official_route_unresolved: 6
+  latest_stream2_run: "security-stack/runs/STREAM2_RUN_2026-08-24T2342Z.yaml"
+  latest_registry_update: >-
+    2026-08-25: registered the official FSB information notice of 21.06.2016 as explicit status/version-chain
+    evidence. The notice records loss of relevance of the 2008 PDN crypto methodological materials after PP RF
+    No. 781 ceased to apply and lists FSB Order No. 378, PKZ-2005 / FSB No. 66, FAPSI No. 152 and the 2015
+    8-Center threat recommendations as the methodological set at the notice date. This source is not a new control
+    and does not by itself prove absence of later changes. Exact page bytes remain pending. PP1119 and FSB378
+    primary-byte acquisition were not promoted; FSTEC Order No. 21 remains the active PDN baseline because no
+    final enacted replacement was proven in the bounded current check.
+
+source_link_addition:
+  id: SEC-SRC-RU-FSB-PDN-NORMATIVE-STATUS-NOTICE-2016
+  source_record: "security-stack/source/SEC-SRC-RU-FSB-PDN-NORMATIVE-STATUS-NOTICE-2016.yaml"
+  role: official_fsb_pdn_crypto_status_and_version_chain_evidence
+  applicability: STATUS_AND_VERSION_CHAIN_EVIDENCE_ONLY
+  raw_capture: PENDING
+
+analysis_metrics_patch:
+  stream2_source_records_added_this_pass: 1
+  stream2_immutable_new_this_pass: 0
+  stream2_status_rechecks_this_pass: 3
+  stream2_semantic_promotions_this_pass: 0
+  stream2_new_universal_pdn_duties_this_pass: 0
+
+proof_rule: >-
+  This delta must not overwrite Stream-1 production counters. It updates only the linked security_stack subinventory,
+  its Stream-2 pointer/counters, and the explicit FSB version-chain evidence link.
