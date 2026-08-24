@@ -8,10 +8,13 @@ one explicit source ID and only when metadata_status is VERSION_IDENTITY_CROSS_V
 It writes raw bytes + manifest and never promotes semantic/extraction status.
 
 Safety invariant: an official-route response is not sufficient by itself. The captured
-body must contain identity markers for Federal Law No. 152-FZ on personal data and the
-amendment marker for the revision pinned by this source node (No. 265-FZ, effective
-26.07.2026). The inspection view may normalize HTML entities/tags and Unicode variants,
-but the immutable stored bytes are never altered by that normalization.
+body must contain identity markers for Federal Law No. 152-FZ on personal data and must
+prove the pinned current revision. Revision proof may be either the explicit amending-law
+marker No. 265-FZ or the complete Article 12 part 2 wording fingerprint introduced by
+that amendment. This avoids rejecting a valid consolidated text merely because the
+publisher omits the amending-law citation, while still preventing an older edition from
+passing the gate. The inspection view may normalize HTML entities/tags and Unicode
+variants, but the immutable stored bytes are never altered by that normalization.
 """
 from __future__ import annotations
 
@@ -39,8 +42,29 @@ IDENTITY_PATTERNS = (
     ("law_number_152_fz", re.compile(r"(?:№\s*)?152\s*-\s*фз")),
     ("personal_data", re.compile(r"персональн\w*\s+данн\w*")),
 )
-CURRENT_REVISION_PATTERNS = (
+CURRENT_REVISION_CITATION_PATTERNS = (
     ("amendment_265_fz", re.compile(r"(?:№\s*)?265\s*-\s*фз")),
+)
+# Current-edition fingerprint derived from the Article 12 part 2 delta introduced by
+# Federal Law No. 265-FZ on 26.07.2026. All anchors are required when the explicit
+# amending-law citation is absent. They are deliberately narrower than generic Article
+# 12 phrases so the pre-26.07.2026 wording cannot satisfy the gate accidentally.
+CURRENT_REVISION_DELTA_PATTERNS = (
+    (
+        "article12_2026_country_scope",
+        re.compile(
+            r"государства,\s+в\s+которых\s+правовое\s+регулирование\s+"
+            r"в\s+области\s+персональных\s+данных"
+        ),
+    ),
+    (
+        "article12_2026_principles",
+        re.compile(r"мер\w*\s+по\s+соблюдению\s+основополагающих\s+принципов\s+защиты"),
+    ),
+    (
+        "article12_2026_convention_conformity",
+        re.compile(r"соответствуют\s+положениям\s+конвенции"),
+    ),
 )
 CURRENT_REVISION_EFFECTIVE_FROM = "2026-07-26"
 CURRENT_REVISION_TRIGGER = "265-ФЗ"
@@ -73,15 +97,47 @@ def decode_for_identity(data: bytes) -> str:
 
 
 def current_root_identity_ok(data: bytes) -> tuple[bool, list[str]]:
-    """Require source identity plus the amendment marker of the pinned current revision."""
+    """Require source identity plus one independently sufficient current-revision proof."""
     text = decode_for_identity(data)
     matched: list[str] = []
-    for label, pattern in (*IDENTITY_PATTERNS, *CURRENT_REVISION_PATTERNS):
+
+    for label, pattern in IDENTITY_PATTERNS:
         hit = pattern.search(text)
         if not hit:
             return False, matched
         matched.append(f"{label}:{hit.group(0)}")
+
+    citation_hits: list[str] = []
+    citation_ok = True
+    for label, pattern in CURRENT_REVISION_CITATION_PATTERNS:
+        hit = pattern.search(text)
+        if not hit:
+            citation_ok = False
+            break
+        citation_hits.append(f"{label}:{hit.group(0)}")
+    if citation_ok:
+        matched.extend(citation_hits)
+        matched.append("revision_proof:amendment_citation")
+        return True, matched
+
+    delta_hits: list[str] = []
+    for label, pattern in CURRENT_REVISION_DELTA_PATTERNS:
+        hit = pattern.search(text)
+        if not hit:
+            return False, matched
+        delta_hits.append(f"{label}:{hit.group(0)}")
+    matched.extend(delta_hits)
+    matched.append("revision_proof:article12_2026_delta_anchor")
     return True, matched
+
+
+def revision_proof_mode(markers: list[str]) -> str:
+    for marker in markers:
+        if marker == "revision_proof:amendment_citation":
+            return "amendment_citation"
+        if marker == "revision_proof:article12_2026_delta_anchor":
+            return "article12_2026_delta_anchor"
+    return "unknown"
 
 
 def main() -> int:
@@ -117,17 +173,23 @@ def main() -> int:
         artifact.unlink(missing_ok=True)
         raise RuntimeError(
             "refuse current-root capture: official-route response lacks required "
-            "152-FZ/personal-data/current-revision (265-FZ) markers"
+            "152-FZ/personal-data identity or pinned current-revision evidence "
+            "(265-FZ citation or Article-12 2026 delta anchor)"
         )
 
-    manifest["schema_version"] = "1.7"
-    manifest["capture_policy"] = "current-root-version-identity-cross-verified-with-normalized-content-and-revision-markers"
+    proof_mode = revision_proof_mode(markers)
+    manifest["schema_version"] = "1.8"
+    manifest["capture_policy"] = "current-root-version-identity-cross-verified-with-normalized-content-and-delta-aware-revision-proof"
     manifest["semantic_status_unchanged"] = True
     manifest["proof"]["current_root_source_id_pinned"] = True
     manifest["proof"]["metadata_status_gate"] = "VERSION_IDENTITY_CROSS_VERIFIED"
     manifest["proof"]["canonical_content_identity_markers_ok"] = True
     manifest["proof"]["canonical_content_identity_markers"] = markers
+    # Preserve this legacy boolean for synchronizer compatibility; its meaning is now
+    # "current revision proved", not necessarily "literal amending-law marker found".
     manifest["proof"]["current_revision_marker_ok"] = True
+    manifest["proof"]["current_revision_proof_ok"] = True
+    manifest["proof"]["current_revision_proof_mode"] = proof_mode
     manifest["proof"]["current_revision_trigger"] = CURRENT_REVISION_TRIGGER
     manifest["proof"]["current_revision_effective_from"] = CURRENT_REVISION_EFFECTIVE_FROM
     manifest["proof"]["identity_view_html_entities_unescaped"] = True
@@ -146,6 +208,7 @@ def main() -> int:
         "sha256": manifest["sha256"],
         "artifact_ref": manifest["artifact_ref"],
         "identity_and_revision_markers": markers,
+        "current_revision_proof_mode": proof_mode,
         "current_revision_trigger": CURRENT_REVISION_TRIGGER,
         "current_revision_effective_from": CURRENT_REVISION_EFFECTIVE_FROM,
         "semantic_status_unchanged": True,
