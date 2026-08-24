@@ -1,0 +1,80 @@
+schema_version: "1.0"
+id: STREAM2_RUN_2026-08-24T2006Z
+stream: RU_PDN_TECHNICAL_CRYPTO
+started_at: "2026-08-24T19:59:00Z"
+finished_at: "2026-08-24T20:06:30Z"
+status: COMPLETED_WITH_EFFECTIVE_COUNTER_RECONCILIATION
+
+scope:
+  priorities:
+    - SEC-SRC-RU-PP1119-2012
+    - SEC-SRC-RU-FSTEC21-2013
+    - SEC-SRC-RU-FSTEC-THREAT-METHOD-2021
+    - SEC-SRC-RU-FSTEC-INFO-240-22-690-2021
+    - SEC-SRC-RU-FSB378-2014
+  applicability_guard: >-
+    No KII, public-sector, GosSOPKA, licensing or certification requirement becomes a general PDN duty without
+    an explicit applicability edge and source-specific trigger.
+
+findings:
+  - source_id: SEC-SRC-RU-PP1119-2012
+    finding: CURRENT_STATUS_RECONFIRMED_PRIMARY_DOC_UNCAPTURED
+    semantic_promotion: false
+  - source_id: SEC-SRC-RU-FSTEC21-2013
+    finding: ACTIVE_BASELINE_RETAINED_PROJECT_169583_STILL_NOT_PROMOTED
+    semantic_promotion: false
+  - source_id: SEC-SRC-RU-FSTEC-THREAT-METHOD-2021
+    finding: EXISTING_IMMUTABLE_ARTIFACT_REUSED
+    immutable_reused: true
+    mime: application/pdf
+    byte_length: 2744210
+    sha256: "dfb473137de462f8c10fbbdccbea62bd136925e803e1c58aa6d4e790325c49b1"
+  - source_id: SEC-SRC-RU-FSTEC-INFO-240-22-690-2021
+    finding: MERGED_METADATA_OVERLAY_RECONCILED_IN_EFFECTIVE_COUNTERS_PRIMARY_BYTES_PENDING
+    semantic_promotion: false
+  - source_id: SEC-SRC-RU-FSB378-2014
+    finding: REGISTRATION_AND_SKZI_TRIGGER_SCOPE_RECONFIRMED_PRIMARY_BYTES_PENDING
+    semantic_promotion: false
+
+reconciliation:
+  direct_base_source_rows: 31
+  already_merged_overlay_source_rows: 1
+  effective_sources: 32
+  overlay: "../PDN_SECURITY_STACK_SOURCE_INVENTORY_DELTA_STREAM2_2026-08-24T1725Z.yaml"
+  reconciliation_record: "../reconciliation/STREAM2_RECONCILIATION_2026-08-24T2006Z.yaml"
+
+counters:
+  identified: 32
+  metadata_verified: 32
+  immutable_sha256_verified: 16
+  pending_raw_capture: 16
+  exact_official_route_unresolved: 6
+  confirmed_conflicts: 0
+
+run_delta:
+  new_sources: 0
+  new_immutable_captured: 0
+  immutable_reused: 1
+  status_rechecks: 4
+  counter_reconciliations: 1
+  semantic_promotions: 0
+  new_universal_pdn_duties: 0
+
+transport:
+  pp1119_government_doc: EXACT_BYTES_NOT_OBTAINED
+  fstec_info690_primary: EXACT_BYTES_NOT_OBTAINED
+  fstec_method2021_primary_attachment: TRANSPORT_UNAVAILABLE_EXISTING_OFFICIAL_GOVERNMENT_MIRROR_REUSED
+  transport_failure_is_not_absence_or_repeal: true
+
+next_priority:
+  - PP1119 exact Government DOC bytes and OLE/CFB signature gate
+  - FSTEC 240/22/690 exact primary bytes
+  - FSB378 exact primary bytes
+  - FSB66/173 and FAPSI152 exact primary bytes
+  - source-bounded FSTEC methodical attachments
+
+proof_floor:
+  immutable_claim_without_exact_bytes: false
+  draft_as_active_law: false
+  neighboring_regime_import_without_edge: false
+  secondary_copy_as_primary: false

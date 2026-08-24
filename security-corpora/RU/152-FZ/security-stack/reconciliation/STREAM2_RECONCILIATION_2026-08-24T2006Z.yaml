@@ -1,0 +1,91 @@
+schema_version: "1.0"
+id: STREAM2_RECONCILIATION_2026-08-24T2006Z
+stream: RU_PDN_TECHNICAL_CRYPTO
+created_at: "2026-08-24T20:06:30Z"
+status: EFFECTIVE_COUNTER_RECONCILIATION_WITH_PENDING_PRIMARY_BYTES
+
+inputs:
+  base_inventory: "../PDN_SECURITY_STACK_SOURCE_INVENTORY.yaml"
+  overlay: "../PDN_SECURITY_STACK_SOURCE_INVENTORY_DELTA_STREAM2_2026-08-24T1725Z.yaml"
+  overlay_run: "../runs/STREAM2_RUN_2026-08-24T1725Z.yaml"
+
+observed_state:
+  base_inventory_source_count: 31
+  overlay_source_additions: 1
+  overlay_source_id: SEC-SRC-RU-FSTEC-INFO-240-22-690-2021
+  overlay_source_present_in_base_inventory: false
+  effective_source_count: 32
+  note: >-
+    The 17:25Z overlay was merged into main with the source record and counter patch, but the large direct
+    base inventory was intentionally not rewritten. This reconciliation makes the effective Stream-2 count
+    explicit without silently discarding the overlay or weakening existing applicability guards.
+
+effective_counters:
+  identified: 32
+  metadata_verified: 32
+  raw_downloaded_exact: 16
+  immutable_sha256_verified: 16
+  pending_raw_capture: 16
+  exact_official_route_unresolved: 6
+  confirmed_conflicts: 0
+
+status_rechecks:
+  - source_id: SEC-SRC-RU-PP1119-2012
+    result: CURRENT_TEXT_RECONFIRMED_PRIMARY_GOVERNMENT_DOC_BYTES_STILL_PENDING
+    checked_at: "2026-08-24"
+    primary_route: "https://government.ru/media/2012/11/3/53354/file/1119_pril.doc"
+    transport_result: EXACT_OLE_CFB_BYTES_NOT_OBTAINED
+    immutable_promotion: false
+
+  - source_id: SEC-SRC-RU-FSTEC21-2013
+    result: ACTIVE_BASELINE_RETAINED
+    checked_at: "2026-08-24"
+    replacement_project: "169583"
+    replacement_status: DRAFT_PROJECT_NO_FINAL_ENACTMENT_PROVEN
+    note: >-
+      Current public materials still identify the 24.07.2026 text as a project with blank order number/date
+      fields. A proposed 01.09.2026 commencement date is not treated as an effective-law date until signed,
+      registered where required and officially published final text is proven.
+
+  - source_id: SEC-SRC-RU-FSTEC-THREAT-METHOD-2021
+    result: EXISTING_IMMUTABLE_CAPTURE_REUSED
+    sha256: "dfb473137de462f8c10fbbdccbea62bd136925e803e1c58aa6d4e790325c49b1"
+    bytes: 2744210
+    mime: application/pdf
+    semantic_promotion: false
+
+  - source_id: SEC-SRC-RU-FSB378-2014
+    result: CURRENT_SCOPE_AND_REGISTRATION_RECONFIRMED_RAW_PRIMARY_BYTES_PENDING
+    minjust_registration: "33620"
+    applicability: ISPDN_WHEN_SKZI_USED
+    immutable_promotion: false
+
+acquisition_attempts:
+  - source_id: SEC-SRC-RU-PP1119-2012
+    target: OFFICIAL_GOVERNMENT_LEGACY_DOC
+    result: NO_EXACT_BYTES_CAPTURED
+  - source_id: SEC-SRC-RU-FSTEC-INFO-240-22-690-2021
+    target: OFFICIAL_FSTEC_PRIMARY_ROUTE
+    result: NO_EXACT_BYTES_CAPTURED
+  - source_id: SEC-SRC-RU-FSTEC-THREAT-METHOD-2021
+    target: OFFICIAL_FSTEC_ATTACHMENT_2919
+    result: TRANSPORT_UNAVAILABLE_EXISTING_OFFICIAL_GOVERNMENT_MIRROR_ARTIFACT_REUSED
+
+applicability_guards:
+  neighboring_regime_import_without_explicit_edge: false
+  project_as_active_law: false
+  secondary_copy_as_primary_immutable: false
+  skzi_requirements_without_skzi_trigger: false
+  certification_or_licensing_as_universal_pdn_duty: false
+
+next_priority:
+  - PP1119 exact Government DOC bytes plus OLE/CFB signature validation
+  - FSTEC information notice 240/22/690 exact primary capture
+  - FSB378 exact primary bytes
+  - FSB66/173 and FAPSI152 exact primary bytes and version-chain closure
+  - FSTEC 2025/2026 methodical attachments with source-specific applicability guards
+
+proof_floor:
+  invented_mime_length_sha: false
+  counter_includes_unmerged_overlay: false
+  counter_includes_merged_overlay_effectively: true
