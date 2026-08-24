@@ -1,0 +1,91 @@
+schema_version: "1.0"
+kind: ru-protected-information-master-inventory-delta
+owner_stream: STREAM_3_SECTOR_OVERLAYS
+checked_at: "2026-08-25T02:46:55+03:00"
+previous_delta_ref: "security-knowledge/corpus/ru-protected-information/master-inventory-delta-2026-08-24T2319.yaml"
+status: APPEND_ONLY_EXISTING_SOURCE_VERSION_CHAIN_EVIDENCE_DELTA
+
+focus:
+  source_id: SEC-SRC-RU-FZ-323
+  sector: healthcare
+  regime: medical_secrecy
+  locator: "статья 13"
+  action: RESOLVE_2013_LOCATOR_EFFECTS_WITH_OFFICIAL_GAZETTE_TEXT_WITHOUT_EXECUTABLE_PROMOTION
+
+version_chain_progress:
+  newly_resolved_locator_effects:
+    - act: "205-ФЗ от 23.07.2013"
+      target_locator: "323-ФЗ статья 13 часть 4 пункт 3"
+      official_gazette_source: "https://rg.ru/documents/2013/07/26/persdannye-dok.html"
+      official_gazette_publication_date: "2013-07-25"
+      effect: "Пункт 3 части 4 статьи 13 заменен специальным контекстом предоставления сведений по запросу органов прокуратуры в связи с осуществлением прокурорского надзора."
+      corroboration: "Официальная консолидированная карточка 323-ФЗ Правительства РФ включает 205-ФЗ в цепочку изменений; официальный текст 152-ФЗ также фиксирует 205-ФЗ в PDN/prosecutor context."
+      state: OFFICIAL_GAZETTE_TEXT_VERIFIED_PRIMARY_PORTAL_EXACT_CAPTURE_PENDING
+    - act: "317-ФЗ от 25.11.2013"
+      target_locator: "323-ФЗ статья 13 часть 4 пункты 7/11"
+      official_gazette_source: "https://rg.ru/documents/2013/11/27/zdorovye-dok.html"
+      official_gazette_publication_date: "2013-11-26"
+      effect: "Статья 59 317-ФЗ излагает пункт 7 части 4 статьи 13 в новой редакции и признает пункт 11 части 4 статьи 13 утратившим силу."
+      state: OFFICIAL_GAZETTE_FULL_ACT_TEXT_VERIFIED_PRIMARY_PORTAL_EXACT_CAPTURE_PENDING
+  publication_portal_guard:
+    acts: ["205-ФЗ от 23.07.2013", "317-ФЗ от 25.11.2013"]
+    official_publication_ids: [null, null]
+    reason: "Exact publication.pravo.gov.ru identifiers were not independently verified in this pass; do not infer IDs from date or sequence."
+  preserved_primary_metadata:
+    - {act: "145-ФЗ от 04.06.2014", official_publication_id: "0001201406040026"}
+    - {act: "78-ФЗ от 06.04.2015", official_publication_id: "0001201504070030", state: STRONG_CROSSCHECK_PRIMARY_DIRECT_FETCH_PENDING}
+    - {act: "230-ФЗ от 13.07.2015", official_publication_id: "0001201507130062"}
+    - {act: "438-ФЗ от 22.12.2020", official_publication_id: "0001202012220007"}
+    - {act: "315-ФЗ от 02.07.2021", official_publication_id: "0001202107020011", state: STRONG_CROSSCHECK_PRIMARY_DOCUMENT_DIRECT_FETCH_PENDING}
+    - {act: "195-ФЗ от 22.07.2024", official_publication_id: "0001202407220010"}
+    - {act: "509-ФЗ от 28.12.2024", official_publication_id: "0001202412280011"}
+  version_chain_state: PARTIAL
+  executable_current_rule: false
+
+acquisition:
+  immutable_baseline_reused:
+    artifact: "security-corpora/RU/protected-information/raw/SEC-SRC-RU-FZ-323/0001201111220007.zip"
+    manifest: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-323.json"
+    retrieved_at: "2026-08-20T20:32:11.874652Z"
+    mime: "application/zip"
+    byte_length: 7257635
+    sha256: "aa54cb7c53980e765efbe0d4196e82d9f758d5596a3394b9283f4e9e250eaabc"
+  amendment_capture_backlog: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-323-version-capture-pending.json"
+  new_exact_binary_this_pass: false
+  invented_mime_length_hash: false
+
+relationships:
+  pdn:
+    target: "152-ФЗ"
+    type: DIRECT_STATUTORY_PDN_CONTEXT_FOR_MEDICAL_INFORMATION_EXCHANGE
+    locator: "323-ФЗ статья 13 часть 4 пункт 8"
+    state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    changed_this_pass: false
+    applicability_promoted: false
+  prosecutor_context:
+    source_act: "205-ФЗ от 23.07.2013"
+    type: SCENARIO_BOUND_DISCLOSURE_WITHOUT_CONSENT_CONTEXT
+    locator: "323-ФЗ статья 13 часть 4 пункт 3"
+    state: STATUTORY_EXCEPTION_CONTEXT_ONLY
+    guard: "Exception != universal disclosure/processing permission."
+
+counters:
+  before: {found: 32, downloaded: 9, immutable: 9, pending: 21, reused: 2, primary_publication_verified: 11, sectors_registered: 24}
+  after: {found: 32, downloaded: 9, immutable: 9, pending: 21, reused: 2, primary_publication_verified: 11, sectors_registered: 24}
+  pass_delta:
+    new_sources: 0
+    existing_sources_version_chain_enriched: 1
+    historical_locator_effects_resolved: 2
+    new_durable_downloads: 0
+    new_immutable_artifacts: 0
+    applicability_promotions: 0
+    legal_conflicts_declared: 0
+    duplicate_sources_created: 0
+
+proof_floor:
+  - "Taxonomy is discovery seed only; primary legal text controls."
+  - "OVERLAP != APPLICABILITY."
+  - "Official-gazette text proves the amendment wording/effect but is not the requested exact-byte immutable portal artifact."
+  - "A scenario-specific Article 13 exception is not a universal disclosure permission."
+  - "No publication.pravo.gov.ru ID, MIME, byte_length or SHA-256 is guessed."
+  - "No current executable rule is promoted while the locator-specific chain remains partial."
