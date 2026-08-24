@@ -1,0 +1,94 @@
+schema_version: "1.0"
+id: STREAM2_RUN_2026-08-24T1710Z
+kind: pdn-security-stack-production-run
+started_at: "2026-08-24T17:10:29Z"
+finished_at: "2026-08-24T17:10:29Z"
+status: COMPLETED_WITH_PENDING_PRIMARY_BYTES
+scope: TECHNICAL_AND_CRYPTO_SECURITY_STACK
+
+baseline_before:
+  identified: 31
+  metadata_verified: 31
+  immutable_sha256_verified: 16
+  pending_raw_capture: 15
+  exact_official_route_unresolved: 6
+
+work_performed:
+  - source_id: SEC-SRC-RU-PP1119-2012
+    action: CURRENT_STATUS_AND_PRIMARY_ROUTE_RECHECK
+    result: CURRENT_UNAMENDED_STATUS_RECONFIRMED_PRIMARY_DOC_BYTES_NOT_CAPTURED
+    source_url: "https://government.ru/docs/6339/"
+    target_file_url: "https://government.ru/media/2012/11/3/53354/file/1119_pril.doc"
+    immutable_delta: 0
+    note: >-
+      The current Government landing page continues to identify PP No. 1119 and a DOC download. Exact OLE/CFB
+      bytes were not obtained in this run, so MIME, byte length and SHA-256 remain unclaimed.
+
+  - source_id: SEC-SRC-RU-FSTEC-VULN-CRIT-METHOD-2025
+    action: OFFICIAL_PDF_RETRY
+    result: PRIMARY_FSTEC_ROUTE_TIMEOUT_NO_BYTES
+    source_url: "https://fstec.ru/files/1367/---30--2025-/2773/---30--2025-.pdf"
+    immutable_delta: 0
+    applicability_guard_held: true
+    note: >-
+      The verified official PDF route was retried but did not yield exact bytes. The method remains guarded to
+      its enumerated public/GIS/KII scope or an explicit cross-reference; it is not generalized to private ISPDn.
+
+  - source_id: SEC-SRC-RU-FSTEC-KZI-METHOD-2025
+    action: DISCOVER_REGISTER_AND_VERSION_ROUTE
+    result: METADATA_VERIFIED_PRIMARY_ATTACHMENT_PENDING
+    official_landing_page: "https://fstec.ru/dokumenty/vse-dokumenty/spetsialnye-normativnye-dokumenty/metodicheskij-dokument-ot-11-noyabrya-2025-g"
+    immutable_delta: 0
+    version_finding: >-
+      Point 7 of the current text states that the predecessor FSTEC methodology of 02.05.2024 is not applied for
+      current-state KZI assessment after approval of the 11.11.2025 methodology.
+    applicability_finding: >-
+      The method is a public/security-governance KZI route. It does not create a universal private-ISPDn duty.
+      Point 6 excludes detection/prevention/elimination of consequences of computer attacks, preserving the
+      GosSOPKA/NKTsKI boundary. Its point-3 reference to FSTEC Order No. 21 is the KII Order No. 21 of 25.12.2017,
+      not the PDN Order No. 21 of 18.02.2013.
+
+proof_floor:
+  exact_official_bytes_required_for_immutable: true
+  invented_mime_forbidden: true
+  invented_byte_length_forbidden: true
+  invented_sha256_forbidden: true
+  neighboring_regime_requirements_require_explicit_applicability_edge: true
+  draft_or_secondary_text_not_primary_immutable: true
+
+counters_after:
+  identified: 32
+  metadata_verified: 32
+  immutable_sha256_verified: 16
+  pending_raw_capture: 16
+  exact_official_route_unresolved: 7
+  version_edges_verified: 10
+  applicability_guards: 18
+
+production_statistics:
+  current_pass:
+    source_records_added: 1
+    primary_byte_retries: 2
+    new_immutable_captured: 0
+    metadata_promotions: 1
+    applicability_guards_added: 2
+  cumulative_stream2:
+    identified: 32
+    immutable_sha256_verified: 16
+    pending_raw_capture: 16
+  baseline_single_thread_comparison: NOT_MEASURED_NO_SINGLE_THREAD_TIMING_SAMPLE
+  acceleration_percent: NOT_CALCULABLE
+  throughput: NOT_CALCULABLE_NO_ELAPSED_WORK_SAMPLE
+  rework_share: NOT_CALCULABLE_NO_REWORK_COUNTER
+  remaining_volume_estimate: 16_PENDING_RAW_CAPTURE
+  completion_forecast: NOT_ISSUED_INSUFFICIENT_TELEMETRY
+
+next_priority:
+  - SEC-SRC-RU-PP1119-2012
+  - SEC-SRC-RU-FSB378-2014
+  - SEC-SRC-RU-FSB66-2005
+  - SEC-SRC-RU-FSB173-2010
+  - SEC-SRC-RU-FAPSI152-2001
+  - SEC-SRC-RU-FSTEC-KZI-METHOD-2025
+  - SEC-SRC-RU-FSTEC-MATURITY-METHOD-2026
+  - SEC-SRC-RU-FSTEC-VULN-CRIT-METHOD-2025
