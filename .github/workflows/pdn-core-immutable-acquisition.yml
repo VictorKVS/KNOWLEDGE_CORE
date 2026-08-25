@@ -56,6 +56,26 @@ jobs:
       - name: Commit fast immutable deltas before slow dedicated routes
         shell: bash
         run: |
+          # Fast-stage telemetry/master rewrites alone are intentionally deferred to the
+          # final commit. Persist early only when this pass actually captured new immutable
+          # bytes. This avoids a telemetry-only commit racing another stream on the shared
+          # master inventory and blocking the slow dedicated routes before they run.
+          new_immutable="$(python - <<'PY'
+          import json
+          from pathlib import Path
+          p = Path('security-corpora/RU/152-FZ/PDN_ACQUISITION_RUN.json')
+          try:
+              d = json.loads(p.read_text(encoding='utf-8'))
+              print(int(d.get('new_immutable_captured') or 0))
+          except Exception:
+              print(0)
+          PY
+          )"
+          if [ "$new_immutable" -le 0 ]; then
+            echo "No new fast immutable bytes; defer telemetry-only delta to final commit"
+            exit 0
+          fi
+
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add security-corpora/RU/152-FZ/raw \
@@ -139,8 +159,8 @@ jobs:
                   ("TRANSPORT_TIMEOUT", r"Timeout was reached|timed out|curl exit=28"),
                   ("HTTP_FORBIDDEN", r"\b403\b|curl exit=22.*403"),
                   ("EMPTY_RESPONSE", r"empty (?:official|official-route) response"),
-                  ("IDENTITY_MARKER_MISS", r"lacks required .*identity markers|lacks required PP687/personal-data identity markers"),
-                  ("CURRENT_REVISION_MARKER_MISS", r"current-revision|265-FZ\) markers"),
+                  ("IDENTITY_MARKER_MISS", r"lacks required .*identity markers|lacks required PP687.*identity"),
+                  ("CURRENT_REVISION_MARKER_MISS", r"current-revision|current revision|265-FZ\) markers"),
                   ("ALL_REGISTERED_ROUTES_FAILED", r"all registered .* transports failed"),
               )
               for label, pattern in checks:
@@ -176,7 +196,7 @@ jobs:
               "current_root_curl": read_result("/tmp/pdn-current-root-curl-result.log"),
               "current_root_urllib": read_result("/tmp/pdn-current-root-urllib-result.log"),
               "www_pravo_alias": read_result("/tmp/pdn-pravo-www-alias-result.log"),
-              "failure_taxonomy_version": "1.1",
+              "failure_taxonomy_version": "1.2",
               "failure_taxonomy": [
                   "TRANSPORT_TIMEOUT",
                   "HTTP_FORBIDDEN",
@@ -187,7 +207,7 @@ jobs:
                   "NOT_RUN",
                   "UNPARSEABLE_OUTPUT",
               ],
-              "proof_rule": "Attempt telemetry records transport outcomes only and never promotes semantic or extraction status. The www.pravo.gov.ru attempt is transport-only and remains bound to the pre-registered pravo.gov.ru source identity."
+              "proof_rule": "Attempt telemetry records transport outcomes only and never promotes semantic or extraction status. Current PP687 capture additionally requires its PP12 validity-through-01.09.2030 fingerprint. The www.pravo.gov.ru attempt is transport-only and remains bound to a pre-registered pravo.gov.ru source identity."
           }
           run_path.write_text(json.dumps(run, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
           PY
