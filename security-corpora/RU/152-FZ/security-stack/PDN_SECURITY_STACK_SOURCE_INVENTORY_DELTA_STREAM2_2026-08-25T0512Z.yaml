@@ -1,0 +1,76 @@
+schema_version: "1.0"
+id: SEC-PDN-SECURITY-STACK-INVENTORY-DELTA-2026-08-25T0512Z
+applies_to: PDN_SECURITY_STACK_SOURCE_INVENTORY.yaml
+stream: RU_PDN_TECHNICAL_CRYPTO
+created_at: "2026-08-25T05:24:00Z"
+merge_policy: >-
+  RECONCILIATION_OVERLAY. Preserve all direct-base source rows and every already merged additive overlay.
+  Do not regress effective counters to the stale direct-base value. Exact official bytes remain mandatory for
+  IMMUTABLE_CAPTURED; status rechecks do not create new immutable artifacts.
+
+effective_inventory_inputs:
+  direct_base_rows: 32
+  merged_overlay_sources:
+    - overlay: "PDN_SECURITY_STACK_SOURCE_INVENTORY_DELTA_STREAM2_2026-08-24T1725Z.yaml"
+      source_id: SEC-SRC-RU-FSTEC-INFO-240-22-690-2021
+      effect: ADD_ONE_METADATA_VERIFIED_PENDING_SOURCE
+    - overlay: "PDN_SECURITY_STACK_SOURCE_INVENTORY_DELTA_STREAM2_2026-08-25T0214Z.yaml"
+      source_id: SEC-SRC-RU-FSB-SKZI-FORM-NOTICE-2017
+      effect: ADD_ONE_METADATA_VERIFIED_PENDING_SOURCE
+  effective_identified: 34
+  reconciliation_assertion: "32 direct rows + 2 merged overlay-only source rows = 34 effective source records"
+
+status_refreshes:
+  - id: SEC-SRC-RU-PP1119-2012
+    checked_at: "2026-08-25"
+    status: METADATA_VERIFIED
+    raw_capture: PENDING
+    finding: CURRENT_ORIGINAL_EDITION_RECONFIRMED_PRIMARY_GOVERNMENT_DOC_BYTES_PENDING
+  - id: SEC-SRC-RU-FSB378-2014
+    checked_at: "2026-08-25"
+    status: METADATA_VERIFIED
+    raw_capture: PENDING
+    finding: CURRENT_ORIGINAL_EDITION_RECONFIRMED_PRIMARY_BYTES_PENDING
+    applicability: ISPDN_WHEN_SKZI_USED
+  - id: SEC-SRC-RU-FSTEC21-2013
+    checked_at: "2026-08-25"
+    status: METADATA_VERIFIED
+    raw_capture: IMMUTABLE_CAPTURED
+    finding: ACTIVE_BASELINE_RETAINED_PROJECT_169583_NOT_PROVEN_ENACTED
+  - id: SEC-SRC-RU-FSB-SKZI-FORM-NOTICE-2017
+    checked_at: "2026-08-25"
+    status: METADATA_VERIFIED
+    raw_capture: PENDING
+    finding: OFFICIAL_FSB_GUIDANCE_RECONFIRMED_EXACT_HTML_BYTES_PENDING
+    applicability: PDN_OPERATOR_WHEN_SKZI_USED_AND_SPECIFIC_FORMULAR_REQUIREMENT_APPLIES
+  - id: SEC-SRC-RU-FSB-PDN-NORMATIVE-STATUS-NOTICE-2016
+    checked_at: "2026-08-25"
+    status: METADATA_VERIFIED
+    raw_capture: PENDING
+    finding: STATUS_AND_VERSION_CHAIN_EVIDENCE_RECONFIRMED_NO_2026_AUTOMATIC_PROMOTION
+
+counter_patch:
+  identified: 34
+  metadata_verified: 34
+  raw_downloaded_exact: 16
+  immutable_sha256_verified: 16
+  pending_raw_capture: 18
+  exact_official_route_unresolved: 6
+  confirmed_conflicts: 0
+
+latest_run_patch:
+  run_record: "runs/STREAM2_RUN_2026-08-25T0512Z.yaml"
+  new_sources: 0
+  new_immutable_captured: 0
+  existing_immutable_reused: 1
+  status_rechecks: 5
+  primary_byte_targets_attempted: 3
+  semantic_promotions: 0
+
+merge_gate:
+  - preserve FSTEC21 as active PDN technical baseline until a final enacted replacement is proven
+  - preserve FSB378 applicability only when actual SKZI use is established
+  - preserve PP1119 fingerprint as pending until exact Government DOC bytes pass OLE/CFB validation
+  - preserve FSB 2016 and 2017 notices as bounded status/operational evidence, not independent universal controls
+  - do not invent MIME, byte length or SHA-256 for uncaptured primary routes
+  - do not overwrite source additions from prior merged overlays
