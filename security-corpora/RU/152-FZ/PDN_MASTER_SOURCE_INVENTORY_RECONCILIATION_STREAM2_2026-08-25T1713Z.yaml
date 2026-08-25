@@ -1,0 +1,42 @@
+schema_version: "1.0"
+id: SEC-PDN-MASTER-SOURCE-INVENTORY-RECONCILIATION-STREAM2-2026-08-25T1713Z
+applies_to: PDN_MASTER_SOURCE_INVENTORY.yaml
+stream: RU_PDN_TECHNICAL_CRYPTO
+created_at: "2026-08-25T17:13:21Z"
+merge_policy: >-
+  CONCURRENCY_SAFE_RECONCILIATION_OVERLAY. Preserve Stream-1 counters, records outside Stream-2 and all previously merged
+  Stream-2 source/version/applicability edges. Correct only the linked Security Stack proof counters and provenance pointer
+  for the already captured FSTEC Order No.137 official PDF.
+
+security_stack_patch:
+  linked_inventory: "security-stack/PDN_SECURITY_STACK_SOURCE_INVENTORY.yaml"
+  checked_at: "2026-08-25"
+  identified: 36
+  metadata_verified: 36
+  immutable_sha256_verified: 17
+  pending_raw_capture: 19
+  exact_official_route_unresolved: 6
+  confirmed_conflicts: 0
+  latest_status_review_at: "2026-08-25T17:13:21Z"
+  latest_stream2_run: "security-stack/runs/STREAM2_RUN_2026-08-25T1713Z.yaml"
+  latest_reconciliation: "security-stack/PDN_SECURITY_STACK_SOURCE_INVENTORY_RECONCILIATION_STREAM2_2026-08-25T1713Z.yaml"
+  latest_registry_update: >-
+    2026-08-25: proof accounting corrected from 36/36/16 immutable/20 pending to 36/36/17 immutable/19 pending after
+    verifying that FSTEC Order No.137 already has an official publication PDF, manifest and SHA-256 in main. The artifact
+    was captured at 2026-08-25T14:26:39.694528Z from publication identity 0001202608110006; this run does not claim a new
+    download. Order No.137 remains not yet effective until 01.09.2026 (appendix point 7 until 01.03.2027) and stays within
+    Order No.117 public/state-system scope. PP1119 and FSB378 primary-byte targets remain pending.
+
+analysis_metrics_patch:
+  stream2_source_records_added_this_pass: 0
+  stream2_immutable_new_this_pass: 0
+  stream2_existing_immutable_reconciled_this_pass: 1
+  stream2_status_rechecks_this_pass: 3
+  stream2_primary_byte_targets_attempted_this_pass: 2
+  stream2_semantic_promotions_this_pass: 0
+  stream2_new_universal_pdn_duties_this_pass: 0
+
+proof_rule: >-
+  Exact official bytes, MIME, byte length and SHA-256 remain the immutable gate. A reconciliation of an already captured
+  artifact changes proof counters but is not a new acquisition. Future-effective public-system amendments do not become
+  current generic PDN obligations before their effective date or without an explicit applicability edge.

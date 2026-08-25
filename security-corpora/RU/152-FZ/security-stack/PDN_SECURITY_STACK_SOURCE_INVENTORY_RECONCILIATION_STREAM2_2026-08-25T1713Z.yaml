@@ -1,0 +1,84 @@
+schema_version: "1.0"
+id: SEC-PDN-SECURITY-STACK-INVENTORY-RECONCILIATION-2026-08-25T1713Z
+applies_to: PDN_SECURITY_STACK_SOURCE_INVENTORY.yaml
+stream: RU_PDN_TECHNICAL_CRYPTO
+created_at: "2026-08-25T17:13:21Z"
+merge_policy: >-
+  CONCURRENCY_SAFE_RECONCILIATION_OVERLAY. Preserve all source rows and version/applicability edges from the base inventory
+  and previously merged Stream-2 overlays. This patch corrects proof accounting only: FSTEC Order No.137 already has a
+  captured official publication PDF and manifest in main, so it must not remain counted as pending raw capture.
+
+reconciled_source:
+  id: SEC-SRC-RU-FSTEC137-2026
+  source_record: "source/SEC-SRC-RU-FSTEC137-2026.yaml"
+  manifest: "manifests/SEC-SRC-RU-FSTEC137-2026.json"
+  raw_artifact: "raw/SEC-SRC-RU-FSTEC137-2026/0001202608110006-eea32d569889ed57.pdf"
+  source_url: "http://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202608110006"
+  retrieved_at: "2026-08-25T14:26:39.694528Z"
+  mime: "application/pdf"
+  byte_length: 176272
+  sha256: "eea32d569889ed57e9b7081b3a69fd31e44d0422d23349fefa3521427401c61a"
+  fingerprint_status: IMMUTABLE_CAPTURED
+  temporal_status: ADOPTED_REGISTERED_PUBLISHED_NOT_YET_EFFECTIVE
+  effective_from: "2026-09-01"
+  deferred_effective_provision:
+    locator: "пункт 7 приложения"
+    effective_from: "2027-03-01"
+  applicability: STATE_AND_ENUMERATED_PUBLIC_SYSTEMS_ONLY
+  accounting_action: >-
+    Move one source from pending_raw_capture to immutable_sha256_verified. This is reconciliation of an artifact already
+    captured before this run, not a newly downloaded immutable artifact.
+
+freshness_checks:
+  - id: SEC-SRC-RU-FSTEC137-2026
+    checked_at: "2026-08-25"
+    result: FUTURE_EFFECTIVE_STATUS_RECONFIRMED
+    finding: >-
+      Current legal indexes still show Order No.137 as not yet effective on 25.08.2026, with main effect from 01.09.2026
+      and appendix point 7 from 01.03.2027. No early execution of the future amendment is permitted by this overlay.
+  - id: SEC-SRC-RU-PP1119-2012
+    checked_at: "2026-08-25"
+    result: PRIMARY_BYTE_CAPTURE_STILL_BLOCKED
+    finding: >-
+      The known official Government landing remains the target, but the Government page timed out in this pass and exact
+      issuer DOC bytes were not obtained. PP1119 therefore remains pending immutable capture; no MIME, size or SHA was invented.
+  - id: SEC-SRC-RU-FSB378-2014
+    checked_at: "2026-08-25"
+    result: STATUS_RECONFIRMED_PRIMARY_BYTES_PENDING
+    finding: >-
+      Current legal indexes continue to identify Order No.378 dated 10.07.2014, Minjust registration No.33620, with scope
+      tied to ISPDn where cryptographic protection means are used. No official primary publication bytes were captured.
+
+counter_patch:
+  identified: 36
+  metadata_verified: 36
+  raw_downloaded_exact: 17
+  immutable_sha256_verified: 17
+  pending_raw_capture: 19
+  exact_official_route_unresolved: 6
+  confirmed_conflicts: 0
+
+counter_delta_vs_2026-08-25T1410Z:
+  identified: 0
+  metadata_verified: 0
+  raw_downloaded_exact: 1
+  immutable_sha256_verified: 1
+  pending_raw_capture: -1
+  exact_official_route_unresolved: 0
+  note: "Accounting correction for pre-existing FSTEC137 immutable artifact; not a new download in this run."
+
+proof_guards:
+  - exact-byte proof remains the immutable gate
+  - FSTEC137 remains future-effective and public/state-system scoped; private ISPDn status alone creates no applicability edge
+  - PP1119 remains PENDING until exact issuer bytes are captured
+  - FSB378 remains conditional on actual use of SKZI; do not infer universal cryptographic duty
+
+latest_run_patch:
+  run_record: "runs/STREAM2_RUN_2026-08-25T1713Z.yaml"
+  new_sources: 0
+  new_immutable_captured_this_run: 0
+  existing_immutable_reconciled: 1
+  priority_status_rechecks: 3
+  primary_byte_targets_attempted: 2
+  semantic_promotions: 0
+  new_universal_pdn_duties_created: 0

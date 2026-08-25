@@ -1,0 +1,71 @@
+schema_version: "1.0"
+id: STREAM2-RUN-2026-08-25T1713Z
+stream: RU_PDN_TECHNICAL_CRYPTO
+started_at: "2026-08-25T17:13:21Z"
+status: PASS
+objective: >-
+  Continue primary-source acquisition/status verification for the 152-FZ technical and cryptographic contour while
+  preserving strict applicability guards and exact-byte proof accounting.
+
+findings:
+  - id: SEC-SRC-RU-FSTEC137-2026
+    result: EXISTING_IMMUTABLE_CAPTURE_RECONCILED
+    details: >-
+      Repository inspection found the official publication PDF and manifest already present in main although the latest
+      Stream-2 overlay still counted the source as PENDING. Manifest proof: publication id 0001202608110006; source route
+      http://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202608110006; retrieved_at 2026-08-25T14:26:39.694528Z;
+      application/pdf; 176272 bytes; SHA-256 eea32d569889ed57e9b7081b3a69fd31e44d0422d23349fefa3521427401c61a.
+    temporal_status: ADOPTED_REGISTERED_PUBLISHED_NOT_YET_EFFECTIVE
+    effective_from: "2026-09-01"
+    deferred_effective_provision: "пункт 7 приложения -> 2027-03-01"
+    applicability: STATE_AND_ENUMERATED_PUBLIC_SYSTEMS_ONLY
+    new_download_this_run: false
+  - id: SEC-SRC-RU-PP1119-2012
+    result: PRIMARY_BYTE_CAPTURE_NOT_OBTAINED
+    details: >-
+      Official Government landing https://government.ru/docs/6339/ remained the priority target but timed out during this
+      pass. Exact issuer DOC bytes, MIME, byte length and SHA-256 therefore remain unproven and were not synthesized.
+  - id: SEC-SRC-RU-FSB378-2014
+    result: STATUS_RECONFIRMED_PRIMARY_BYTES_PENDING
+    details: >-
+      Fresh legal-index verification again identifies Order No.378 of 10.07.2014, Minjust registration No.33620. Scope is
+      constrained to personal-data information systems where cryptographic protection means are used. Official primary
+      publication bytes were not captured in this pass.
+
+repository_corrections:
+  - path: "source/SEC-SRC-RU-FSTEC137-2026.yaml"
+    change: >-
+      Replaced stale route/provenance flags (bytes-not-captured / exact_official_bytes_captured=false) with manifest-consistent
+      VERIFIED_CAPTURED / exact_official_bytes_captured=true / pending=false, without changing semantic or temporal status.
+  - path: "PDN_SECURITY_STACK_SOURCE_INVENTORY_RECONCILIATION_STREAM2_2026-08-25T1713Z.yaml"
+    change: "Proof counters corrected to 36 identified / 36 metadata verified / 17 immutable / 19 pending / 6 unresolved."
+  - path: "../PDN_MASTER_SOURCE_INVENTORY_RECONCILIATION_STREAM2_2026-08-25T1713Z.yaml"
+    change: "Linked master Security Stack counters reconciled with the same proof state."
+
+metrics:
+  new_sources: 0
+  new_immutable_captured: 0
+  existing_immutable_reconciled: 1
+  priority_status_rechecks: 3
+  primary_byte_targets_attempted: 2
+  semantic_promotions: 0
+  new_universal_pdn_duties_created: 0
+  effective_identified: 36
+  effective_metadata_verified: 36
+  effective_immutable_sha256_verified: 17
+  effective_pending_raw_capture: 19
+  exact_official_route_unresolved: 6
+  confirmed_conflicts: 0
+
+applicability_guards:
+  - FSTEC137 is a future-effective amendment to FSTEC117 and is not a current generic private-ISPDn requirement.
+  - PP1119 remains a universal PDN protection-level anchor but immutable promotion is blocked until exact official bytes exist.
+  - FSB378 applies only where SKZI are actually used; no universal SKZI or licensing duty is inferred from ISPDn status alone.
+
+next_priority:
+  - exact Government DOC for PP1119
+  - official primary bytes for FSB378
+  - FSB66 and FSB173 version chain / primary artifacts
+  - FAPSI152 primary artifact
+  - official PDFs for FSTEC 2026 protection-measures and maturity methodologies
+  - continue FSTEC21 replacement project 169583 enactment watch

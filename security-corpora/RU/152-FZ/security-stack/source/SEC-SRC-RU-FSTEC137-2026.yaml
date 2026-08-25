@@ -1,4 +1,4 @@
-schema_version: "1.0"
+schema_version: "1.1"
 id: SEC-SRC-RU-FSTEC137-2026
 kind: security-regulatory-source
 status: METADATA_VERIFIED
@@ -31,9 +31,12 @@ canonical_source:
   publisher: "Официальный интернет-портал правовой информации"
   landing_page: "https://publication.pravo.gov.ru/document/0001202608110006"
   publication_identity_status: VERIFIED
-  direct_pdf_route_candidate: "http://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202608110006"
-  exact_file_route_status: ROUTE_PATTERN_IDENTIFIED_BYTES_NOT_CAPTURED
-  acquisition_priority: MEDIUM_PUBLIC_SYSTEM_VERSION_CHAIN
+  official_file_route: "http://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202608110006"
+  exact_file_route_status: VERIFIED_CAPTURED
+  acquisition_priority: RESOLVED_IMMUTABLE_CAPTURE
+  freshness_check:
+    checked_at: "2026-08-25"
+    result: FUTURE_EFFECTIVE_STATUS_RECONFIRMED
 capture:
   raw_artifact_ref: "security-corpora/RU/152-FZ/security-stack/raw/SEC-SRC-RU-FSTEC137-2026/0001202608110006-eea32d569889ed57.pdf"
   manifest_ref: "security-corpora/RU/152-FZ/security-stack/manifests/SEC-SRC-RU-FSTEC137-2026.json"
@@ -46,7 +49,6 @@ capture:
   fingerprint_status: IMMUTABLE_CAPTURED
   semantic_status: UNCHANGED
   note: "Exact bytes from the registered official route captured; extraction/semantic status is not promoted."
-
 relations:
   - type: AMENDS
     target: SEC-SRC-RU-FSTEC117-2025
@@ -64,15 +66,19 @@ applicability_guard:
     Do not copy public-sector controls, reporting periods, maturity requirements or authentication requirements into a
     generic private-sector PDN baseline without an independent applicability edge.
 provenance:
+  official_route_registered_from_publication_identifier: true
   official_publication_id_verified: true
   minjust_registration_cross_verified: true
   future_effective_date_cross_verified: true
-  exact_official_bytes_captured: false
+  exact_official_bytes_captured: true
+  exact_official_artifact_pending: false
+  manifest_proof_consistent: true
   review_required: true
 agent_rule: >-
   Treat Order 137 as a proven future-effective version-chain dependency of Order 117, not as a current generic PDN rule.
   Before 01.09.2026 retain Order 117 without these amendments as the acting baseline; after that date re-run the temporal
-  status gate. Preserve the 01.03.2027 deferred date for point 7 separately.
+  status gate. Preserve the 01.03.2027 deferred date for point 7 separately. The immutable artifact is already captured;
+  do not regress it to PENDING or claim a new download during status-only refreshes.
 inventory_registration:
   role: fstec117_future_version_chain_dependency
   applicability: STATE_AND_ENUMERATED_PUBLIC_SYSTEMS_ONLY
