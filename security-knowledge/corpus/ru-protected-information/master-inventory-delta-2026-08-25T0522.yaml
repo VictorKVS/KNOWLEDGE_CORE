@@ -1,0 +1,119 @@
+schema_version: "1.0"
+kind: ru-protected-information-master-inventory-delta
+base_inventory: "master-inventory.yaml"
+reconciliation_base_delta: "master-inventory-delta-2026-08-25T0246.yaml"
+checked_at: "2026-08-25T05:22:31+03:00"
+owner_stream: STREAM_3_SECTOR_OVERLAYS
+run_ref: "stream-3-run-2026-08-25T0522.yaml"
+status: APPEND_ONLY_RECONCILIATION_READY
+
+proof_floor:
+  - "Статья 18 38-ФЗ — самостоятельный режим рекламы по сетям электросвязи; ADVERTISING_CONSENT != PDN_PROCESSING_CONSENT."
+  - "Части 1-2 статьи 18 задают предварительное согласие/бремя доказывания/немедленное прекращение и запрет автоматического дозвона/рассылки."
+  - "179-ФЗ от 27.10.2008 официально изменил наименование статьи 18 и отменил часть 5; текущая консолидация по состоянию на 26.07.2026 по-прежнему маркирует статью 18 редакцией 179-ФЗ."
+  - "Последний проверенный source-level event 272-ФЗ от 26.07.2026 меняет статьи 21 и 38, а не статью 18."
+  - "Exact authoritative bytes не получены; MIME, byte length, SHA-256 и retrieved_at не придуманы."
+
+counter_state_before_reconciled: {found: 32, downloaded: 9, immutable: 9, pending: 21, reused: 2, primary_publication_verified: 11, sectors_registered: 24}
+counter_state_after_reconciliation:
+  found: 33
+  downloaded: 9
+  immutable: 9
+  pending: 22
+  reused: 2
+  primary_publication_verified: 11
+  sectors_registered: 25
+  new_sources_this_run: 1
+  existing_source_nodes_operationalized: 0
+  new_immutable_this_run: 0
+  exact_binary_downloads_this_run: 0
+  current_protected_locators_crosschecked_this_run: 5
+  pdn_overlap_candidates_added_this_run: 1
+  cross_regime_candidates_added_this_run: 1
+  locator_specific_version_events_verified_this_run: 1
+  source_level_no_effect_events_verified_this_run: 1
+  applicability_edges_promoted_this_run: 0
+  legal_conflicts_confirmed_this_run: 0
+
+source_added:
+  source_id: SEC-SRC-RU-FZ-38-2006-A18
+  source_card: "security-corpora/RU/protected-information/source/SEC-SRC-RU-FZ-38-2006-A18.yaml"
+  sector: advertising_marketing
+  regimes: [telecom_advertising_consent, advertising_suppression, automated_marketing_restriction]
+  state: NEW_PRIMARY_ACT_IDENTIFIED_OFFICIAL_GAZETTE_TEXT_VERIFIED_CURRENT_LOCATOR_CROSSCHECKED_EXACT_ARTIFACT_PENDING
+  act_identity:
+    title: "Федеральный закон от 13.03.2006 № 38-ФЗ «О рекламе»"
+    official_gazette_source: "https://rg.ru/documents/2006/03/15/reklama-dok.html"
+    official_gazette_publication_date: "2006-03-15"
+    current_official_locator: "http://pravo.gov.ru/proxy/ips/?docbody=&link_id=0&nd=102105292&intelsearch=&firstDoc=1"
+    current_locator_provenance: "Перечень обязательных требований ФАС России от 08.06.2026"
+    current_consolidated_crosscheck: "ред. от 26.07.2026"
+  protected_locators:
+    - {locator: "статья 18 часть 1", concept: PRIOR_ADVERTISING_CONSENT_PROOF_AND_SUPPRESSION, state: CURRENT_TEXT_CROSSCHECKED_OFFICIAL_ORIGINAL_BASELINE_VERIFIED}
+    - {locator: "статья 18 часть 2", concept: AUTOMATED_DIALING_AND_AUTOMATED_MAILING_PROHIBITION, state: CURRENT_TEXT_CROSSCHECKED}
+    - {locator: "статья 18 часть 3", concept: DIRECTORY_SERVICE_ADVERTISING_SEQUENCE, state: CURRENT_TEXT_CROSSCHECKED}
+    - {locator: "статья 18 часть 4", concept: TIME_BASED_TELEPHONY_ADVERTISING_CHARGE_EXCLUSION, state: CURRENT_TEXT_CROSSCHECKED}
+    - {locator: "статья 18 часть 5", concept: REPEALED_POSTAL_ADVERTISING_RULE, state: REPEALED_BY_179_FZ_DO_NOT_EXECUTE}
+  pdn_relation:
+    state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    guard: "Advertising consent is purpose-specific under 38-ФЗ and must not be promoted to PDN consent. Resolve identifiable subject, contact field, processing operation, marketing purpose, actor role and separate legal basis."
+  capture_backlog: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-38-2006-A18-version-capture-pending.json"
+
+version_chain_delta:
+  state: LOCATOR_CHAIN_TEXT_VERIFIED_EXACT_BINARY_PENDING
+  direct_article18_amendment:
+    act: "179-ФЗ от 27.10.2008"
+    official_gazette_source: "https://rg.ru/documents/2008/10/29/fz-reklama-dok.html"
+    official_gazette_publication_date: "2008-10-29"
+    effective_date: "2008-11-09"
+    effect: "Из наименования статьи 18 исключены слова о почтовых отправлениях; часть 5 признана утратившей силу."
+    state: OFFICIAL_GAZETTE_PRIMARY_AMENDMENT_TEXT_VERIFIED_EXACT_BYTES_PENDING
+  current_article18_crosscheck:
+    revision: "2026-07-26"
+    annotation: "в ред. Федерального закона от 27.10.2008 № 179-ФЗ"
+    state: CURRENT_CONSOLIDATION_CROSSCHECK_NOT_IMMUTABLE_PROOF
+  latest_source_level_event:
+    act: "272-ФЗ от 26.07.2026"
+    official_gazette_source: "https://rg.ru/documents/2026/08/03/fz272-dok.html"
+    official_gazette_publication_date: "2026-08-03"
+    effective_date: "2026-08-06"
+    changed_locators: ["статья 21", "статья 38"]
+    effect_on_article18: NONE
+    state: OFFICIAL_GAZETTE_FULL_ACT_TEXT_VERIFIED
+
+relationship_delta:
+  - target: "152-ФЗ"
+    type: MARKETING_CONTACT_PDN_OVERLAP
+    state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    guard: "ADVERTISING_CONSENT != PDN_PROCESSING_CONSENT; OVERLAP != APPLICABILITY."
+  - target: "126-ФЗ статья 44.1"
+    type: TELECOM_NETWORK_AND_MOBILE_MAILING_OVERLAP
+    state: STATUTORY_CONTEXT_RELATION_REVIEW_REQUIRED
+    guard: "38-ФЗ and 126-ФЗ obligations may coexist; do not merge consents, actors, exceptions or proof burdens."
+
+acquisition_delta:
+  durable_immutable_artifacts_added: 0
+  exact_binary_downloads_succeeded: 0
+  official_initial_gazette_text_verified: true
+  official_current_locator_identified: true
+  direct_article18_amendment_official_gazette_text_verified: true
+  current_exact_authoritative_artifact:
+    retrieved_at: null
+    mime: null
+    byte_length: null
+    sha256: null
+  attempts:
+    - {target: "38-ФЗ original official-gazette exact bytes", result: DIRECT_BYTE_DOWNLOAD_NOT_COMPLETED_IN_RUNTIME}
+    - {target: "pravo.gov.ru current consolidated locator", result: EXACT_CURRENT_BYTES_NOT_OBTAINED}
+  blocker: >-
+    Primary official-gazette text and the current official locator are identified, but this runtime did not obtain durable byte-exact authoritative artifacts. No transport metadata or fingerprint is inferred from rendered pages.
+
+proof_floor_effect:
+  executable_rules_changed: false
+  applicability_edges_promoted: 0
+  duplicate_source_nodes_created: 0
+  legal_conflicts_confirmed: 0
+  source_nodes_added: 1
+
+merge_rule: >-
+  Reconcile after master-inventory-delta-2026-08-25T0246.yaml. Stream 3 counters become 33 found / 9 downloaded / 9 immutable / 22 pending / 2 reused. Advertising/marketing Article 18 is a new source node; acquisition counters remain unchanged until exact authoritative bytes are durably stored.
