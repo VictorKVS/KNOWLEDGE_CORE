@@ -1,0 +1,76 @@
+schema_version: "1.0"
+id: SEC-SRC-RU-FSB-SKZI-FORM-NOTICE-2017
+kind: security-methodological-source
+status: METADATA_VERIFIED
+title: "Информационное сообщение ФСБ России от 15.06.2017 «О неукоснительном соблюдении операторами персональных данных требований формуляров на СКЗИ»"
+jurisdiction: RU
+issuer: "ФСБ России"
+document:
+  type: informational_notice
+  adopted_date: "2017-06-15"
+  checked_at: "2026-08-25"
+  current_status: OFFICIAL_FSB_GUIDANCE_PAGE_STILL_PUBLICLY_INDEXED
+  status_note: >-
+    Официальная страница ФСБ России, повторно обнаруженная 25.08.2026 на домене fsb.ru,
+    обращает внимание операторов персональных данных на обязательность соблюдения требований
+    формуляров на СКЗИ. В частности, если формуляр конкретного СКЗИ требует оценки влияния среды
+    функционирования, ФСБ связывает выполнение такой оценки и наличие положительного заключения
+    ФСБ с условиями действия сертификата на СКЗИ. Это информационное сообщение/разъяснение,
+    а не самостоятельный нормативный правовой акт и не универсальное требование применять СКЗИ.
+  version_chain_note: >-
+    Сообщение применяется только как официальное разъяснение эксплуатационного контекста ПКЗ-2005
+    и формуляра конкретного СКЗИ. Оно не заменяет независимую проверку актуальной редакции приказа
+    ФСБ №66, сертификата, формуляра конкретного СКЗИ и действующей редакции КоАП РФ.
+canonical_source:
+  publisher: "ФСБ России"
+  url: "https://www.fsb.ru/fsb/science/single.htm!id=10437494@fsbResearchart.html"
+  print_url: "https://www.fsb.ru/fsb/science/single.htm!id=10437494@fsbResearchart&_print=true.html"
+  index_url: "https://www.fsb.ru/fsb/science.htm!_print=true.html"
+  expected_mime: "text/html"
+  route_status: OFFICIAL_PRIMARY_ROUTE_REGISTERED_CAPTURE_PENDING
+  freshness_check:
+    checked_at: "2026-08-25"
+    result: OFFICIAL_FSB_PAGE_IDENTITY_AND_CONTENT_RECONFIRMED_BY_CURRENT_WEB_INDEX
+capture:
+  fingerprint_status: PENDING
+  semantic_status: REGISTERED_WITHOUT_NORMATIVE_PROMOTION
+  source_url: "https://www.fsb.ru/fsb/science/single.htm!id=10437494@fsbResearchart.html"
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  last_primary_transport_attempt_at: "2026-08-25T02:18:00Z"
+  last_primary_transport_result: "OFFICIAL_FSB_PAGE_INDEXED_BUT_EXACT_HTTP_BYTES_UNAVAILABLE_IN_BOUNDED_RUNTIME"
+  note: >-
+    Search indexing resolved the official FSB page and its substantive text, but the exact HTTP response bytes
+    were not retrievable in the bounded runtime. MIME, byte length and SHA-256 are intentionally unset.
+relations:
+  - type: CLARIFIES_OPERATIONAL_REQUIREMENT_OF
+    target: SEC-SRC-RU-FSB66-2005
+    locator: "ПКЗ-2005, пункт 46; требования формуляра конкретного СКЗИ"
+    scope: SKZI_OPERATION_WHEN_APPLICABLE
+  - type: OPERATIONAL_CONTEXT_FOR
+    target: SEC-SRC-RU-FSB378-2014
+    scope: ISPDN_WHEN_SKZI_USED
+  - type: CERTIFICATE_CONDITION_CONTEXT
+    target: FSB_SKZI_CERTIFICATE_AND_FORMULAR
+    scope: ONLY_IF_SPECIFIC_SKZI_FORMULAR_REQUIRES_ENVIRONMENT_IMPACT_ASSESSMENT
+applicability:
+  trigger: PDN_OPERATOR_USES_SKZI_AND_SPECIFIC_FORMULAR_REQUIREMENT_APPLIES
+  not_universal_skzi_duty: true
+  not_general_pdn_control: true
+  not_independent_licensing_trigger: true
+  current_penalty_must_be_rechecked_independently: true
+provenance:
+  issuing_authority_page_identified: true
+  official_index_corroboration: true
+  primary_bytes_captured: false
+  exact_official_route_resolved: true
+  review_required: true
+agent_rule: >-
+  Apply this source only after SKZI use is established and the relevant requirement is present in the
+  operational documentation/formular of the specific SKZI. Do not infer a universal obligation to deploy
+  SKZI, obtain a cryptographic-activity licence, or conduct an environment-impact assessment for every PDN
+  system. Do not treat the notice's 2017 reference to administrative liability as proof of the current 2026
+  penalty text; current КоАП status requires a separate source. Do not invent MIME, byte length or SHA-256
+  until exact official bytes are captured.
