@@ -1,4 +1,4 @@
-schema_version: "1.0"
+schema_version: "1.1"
 id: SEC-SRC-RU-FSTEC-PROTECTION-MEASURES-METHOD-2026
 kind: security-methodical-source
 status: METADATA_VERIFIED
@@ -10,7 +10,7 @@ document:
   number: "б/н"
   adopted_date: "2026-04-12"
   current_revision_date: "2026-04-12"
-  checked_at: "2026-08-25"
+  checked_at: "2026-08-26"
   status_note: >-
     Действующий методический документ ФСТЭК России, детализирующий процессы и меры защиты информации прежде
     всего для государственных и иных перечисленных публичных информационных систем и значимых объектов КИИ.
@@ -22,23 +22,30 @@ document:
 canonical_source:
   publisher: "ФСТЭК России"
   landing_page: "https://fstec.ru/dokumenty/vse-dokumenty/spetsialnye-normativnye-dokumenty/metodicheskij-dokument-ot-12-aprelya-2026-g"
+  direct_pdf_url: "https://fstec.ru/files/1485/---12--2026-/3020/---12--2026-.pdf"
   status_evidence_url: "https://fstec.ru/dokumenty/vse-dokumenty/informatsionnye-i-analiticheskie-materialy/informatsionnoe-soobshchenie-fstek-rossii-ot-14-aprelya-2026-g-n-240-22-2457"
-  exact_file_route_status: UNRESOLVED_PUBLIC_DIRECT_ATTACHMENT
+  direct_file_expected_mime: "application/pdf"
+  exact_file_route_status: EXACT_OFFICIAL_PDF_ROUTE_RESOLVED_CAPTURE_PENDING
   freshness_check:
-    checked_at: "2026-08-25"
-    result: CURRENT_METHOD_AND_APPROVAL_NOTICE_RECONFIRMED
-    issuer_transport_result: FSTEC_LANDING_ROUTE_TIMEOUT_EXACT_ATTACHMENT_BYTES_NOT_CAPTURED
+    checked_at: "2026-08-26"
+    result: CURRENT_METHOD_APPROVAL_AND_EXACT_OFFICIAL_PDF_TARGET_RECONFIRMED
+    issuer_transport_result: FSTEC_EXACT_PDF_ROUTE_TIMEOUT_BYTES_NOT_CAPTURED
+    route_resolution_note: >-
+      A current independent preservation/navigation index explicitly links to the official FSTEC site and the official
+      PDF. Following that official-PDF link resolves the exact fstec.ru file URL above. Retrieval timed out, therefore
+      only the exact route is promoted; payload identity remains unproven.
 capture:
   fingerprint_status: PENDING
   semantic_status: CURRENT_METHOD_RECONFIRMED
-  source_url: "https://fstec.ru/dokumenty/vse-dokumenty/spetsialnye-normativnye-dokumenty/metodicheskij-dokument-ot-12-aprelya-2026-g"
+  source_url: "https://fstec.ru/files/1485/---12--2026-/3020/---12--2026-.pdf"
   retrieved_at: null
   mime: null
   byte_length: null
   sha256: null
   note: >-
-    Exact official PDF bytes were not captured in this bounded run. MIME, byte length and SHA-256 remain unset;
-    secondary current-text publications are corroboration only and are not promoted to immutable primary evidence.
+    Exact official PDF route is resolved but exact official bytes were not captured in this bounded run. MIME,
+    byte length and SHA-256 remain unset; secondary current-text publications are corroboration only and are not
+    promoted to immutable primary evidence.
 relations:
   - type: DETAILS_PROTECTION_PROCESSES_FOR
     target: SEC-SRC-RU-FSTEC117-2025
@@ -70,13 +77,15 @@ provenance:
   official_landing_page_identified: true
   official_information_message_identified: true
   current_text_cross_verified: true
-  exact_official_file_route_verified: false
+  exact_official_file_route_verified: true
+  exact_official_bytes_captured: false
   predecessor_non_application_cross_verified: true
   review_required: true
 agent_rule: >-
   Treat this as a guarded technical-protection process source for its enumerated scope. Do not silently apply its
   public-sector/KII measures to a private ISPDn, and do not merge its non-crypto controls with the FSB/SKZI branch.
-  Exact official bytes, MIME, byte length and SHA-256 are required before immutable promotion.
+  Exact route resolution does not satisfy immutable proof: exact official bytes, MIME, byte length and SHA-256 are
+  required before immutable promotion.
 inventory_registration:
   role: fstec_protection_processes_and_measures_methodical_context
   applicability: PUBLIC_SYSTEMS_KII_OR_EXPLICIT_CROSS_REFERENCE_ONLY
