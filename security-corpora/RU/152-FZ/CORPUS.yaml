@@ -1,4 +1,4 @@
-schema_version: "1.0"
+schema_version: "1.1"
 id: SEC-CORPUS-RU-152FZ
 kind: security-regulatory-corpus
 status: PILOT
@@ -6,19 +6,36 @@ status: PILOT
 name: "152-ФЗ — персональные данные"
 jurisdiction: RU
 purpose: >-
-  Build an evidence-traceable graph from the official consolidated text of Federal Law No. 152-FZ,
-  starting with Article 19 security duties and expanding only after the pilot extraction passes review.
+  Build an evidence-traceable graph from the current official/consolidated 152-FZ version route and its immutable
+  amendment chain, starting with Article 19 security duties. Reuse already proven nodes only after structural delta
+  confirms that their locators were not changed by the current version; expand only after the pilot extraction passes review.
 
 sources:
   active:
+    - SEC-SRC-RU-152FZ-2026-07-26
+  superseded:
     - SEC-SRC-RU-152FZ-2025-09-01
-  superseded: []
+
+version_routing:
+  current_source_id: SEC-SRC-RU-152FZ-2026-07-26
+  current_effective_from: "2026-07-26"
+  triggering_amendment_source_id: SEC-SRC-RU-FZ265-2026
+  current_root_raw_capture_status: PENDING
+  future_effective:
+    - source_id: SEC-SRC-RU-FZ200-2025
+      effective_from: "2027-03-01"
+      current_applicability: NOT_YET_EFFECTIVE
+  routing_rule: >-
+    Route current-date queries to SEC-SRC-RU-152FZ-2026-07-26. Preserve the 2025-09-01 node only for temporal and
+    structural-delta analysis. Do not route to the future FZ200 branch before 2027-03-01.
 
 ingestion:
-  raw_capture_status: PENDING
+  raw_capture_status: PENDING_CURRENT_ROOT_ONLY
+  immutable_amendment_chain_available: true
   structure_validation_status: PENDING
   extraction_allowed_for_verified_records: false
   pilot_proposed_extraction_allowed: true
+  reuse_policy: DELTA_FIRST
 
 pilot_scope:
   articles:
@@ -28,15 +45,20 @@ pilot_scope:
     - validate_source_locator_precision
     - validate_requirement_to_control_mapping_without_legal_overreach
     - validate_bidirectional_graph_traceability
+    - validate_current_version_and_delta_routing
 
 quality_gates:
   before_requirement_verified:
+    - current_version_route_matches_master_inventory
     - immutable_source_capture
     - sha256_fingerprint
     - exact_article_part_item_locator
     - independent_text_check
     - applicability_review
     - obligation_vs_example_classification
+  before_reuse_of_existing_requirement:
+    - structural_delta_confirms_locator_unchanged
+    - source_version_interval_is_compatible
   before_control_mapping_verified:
     - requirement_verified
     - interpretation_separated_from_source_text
@@ -49,7 +71,12 @@ review_roles:
 
 provenance:
   created_at: "2026-08-12"
+  updated_at: "2026-08-25"
+  update_reason: >-
+    Corrected stale corpus routing that still named the superseded 2025-09-01 source as active after the master
+    inventory had moved the current root to 2026-07-26 following Federal Law No. 265-FZ. No semantic promotion.
 
 agent_rule: >-
-  This pilot corpus is deliberately small. Do not expand to the whole law until Article 19 has been fully
-  traced through source, requirement, control and verification layers without unresolved quality defects.
+  Use SEC-SRC-RU-152FZ-2026-07-26 as the current version identity, but do not promote current-root extraction until
+  its guarded immutable consolidated snapshot, exact byte length, SHA-256, current-edition proof and locator review
+  are present. Existing Article 19 nodes are reuse candidates, not automatically verified knowledge.
