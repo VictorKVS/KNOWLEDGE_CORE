@@ -1,0 +1,134 @@
+schema_version: "1.2"
+id: SEC-SRC-RU-FZ-38-2006-A18
+kind: security-regulatory-source
+status: PRIMARY_OFFICIAL_GAZETTE_TEXT_VERIFIED_CURRENT_LOCATOR_CROSSCHECKED_EXACT_ARTIFACT_PENDING
+
+title: "Федеральный закон от 13.03.2006 № 38-ФЗ «О рекламе» — статья 18 «Реклама, распространяемая по сетям электросвязи»"
+jurisdiction: RU
+issuer: "Российская Федерация"
+document:
+  type: federal_law
+  number: "38-ФЗ"
+  adopted_date: "2006-03-13"
+  official_gazette_publication_date: "2006-03-15"
+  checked_at: "2026-08-25"
+
+canonical_sources:
+  original_official_gazette:
+    publisher: "Российская газета"
+    url: "https://rg.ru/documents/2006/03/15/reklama-dok.html"
+    origin_verified: true
+    proof_scope: "Официальное опубликование исходного 38-ФЗ; exact transport bytes не сохранены в immutable corpus."
+  current_official_locator:
+    publisher: "Официальный интернет-портал правовой информации / pravo.gov.ru"
+    url: "http://pravo.gov.ru/proxy/ips/?docbody=&link_id=0&nd=102105292&intelsearch=&firstDoc=1"
+    locator_origin: "Перечень обязательных требований ФАС России от 08.06.2026"
+    direct_runtime_fetch_state: PENDING
+    proof_scope: "Актуальный официальный locator закона идентифицирован через действующий перечень обязательных требований ФАС; runtime не получил exact current bytes."
+
+protected_information:
+  sector: advertising_marketing
+  regime: telecom_advertising_consent_and_suppression
+  protected_locators:
+    - locator: "статья 18 часть 1"
+      concept: PRIOR_ADVERTISING_CONSENT_AND_PROOF_BURDEN
+      findings:
+        - "Распространение рекламы по сетям электросвязи допускается только при предварительном согласии абонента или адресата на получение рекламы."
+        - "Если рекламораспространитель не докажет получение такого согласия, реклама признается распространенной без предварительного согласия."
+        - "Рекламораспространитель обязан немедленно прекратить рекламу в адрес лица, потребовавшего прекращения."
+    - locator: "статья 18 часть 2"
+      concept: AUTOMATED_DIALING_AND_AUTOMATED_MAILING_PROHIBITION
+      findings:
+        - "Не допускается использование сетей электросвязи для рекламы с применением средств выбора и (или) набора абонентского номера без участия человека, включая автоматическое дозванивание и автоматическую рассылку."
+    - locator: "статья 18 часть 3"
+      concept: DIRECTORY_SERVICE_ADVERTISING_SEQUENCE
+      findings:
+        - "При справочном телефонном обслуживании реклама может предоставляться только после сообщения запрашиваемой справки."
+    - locator: "статья 18 часть 4"
+      concept: TIME_BASED_TELEPHONY_ADVERTISING_CHARGE_EXCLUSION
+      findings:
+        - "При повременной оплате телефонных соединений время распространения рекламы не учитывается в стоимости услуги связи."
+    - locator: "статья 18 часть 5"
+      concept: REPEALED_POSTAL_ADVERTISING_RULE
+      findings:
+        - "Часть 5 утратила силу по 179-ФЗ от 27.10.2008; не использовать как действующее требование."
+  applicability_status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  applicability_guard: >-
+    Согласие на получение рекламы по статье 18 38-ФЗ не тождественно согласию на обработку персональных данных по 152-ФЗ. Наличие телефона, адреса электронной почты или иного контактного идентификатора может создавать пересечение с ПДн, но применимость конкретных требований 152-ФЗ устанавливается отдельно по субъекту, идентифицируемости, полям данных, операции, цели, роли и правовому основанию.
+
+relationship_candidates:
+  - target: "152-ФЗ"
+    type: MARKETING_CONTACT_PDN_OVERLAP
+    state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    locators:
+      - "38-ФЗ статья 18 часть 1"
+      - "38-ФЗ статья 18 часть 2"
+    guard: "ADVERTISING_CONSENT != PDN_PROCESSING_CONSENT; OVERLAP != APPLICABILITY."
+  - target: "126-ФЗ"
+    type: TELECOM_NETWORK_AND_MOBILE_MAILING_OVERLAP
+    state: STATUTORY_CONTEXT_RELATION_REVIEW_REQUIRED
+    locators:
+      - "38-ФЗ статья 18 части 1-2"
+      - "126-ФЗ статья 44.1"
+    guard: "Рекламный режим 38-ФЗ и режим рассылки 126-ФЗ могут действовать одновременно, но их согласия, субъекты обязанностей, исключения и доказательства не объединяются автоматически."
+
+version_chain:
+  state: LOCATOR_CHAIN_TEXT_VERIFIED_EXACT_BINARY_PENDING
+  current_consolidation_crosscheck:
+    revision_date: "2026-07-26"
+    article_18_annotation: "в ред. Федерального закона от 27.10.2008 № 179-ФЗ"
+    state: CURRENT_TEXT_CROSSCHECK_NOT_IMMUTABLE_PROOF
+  locator_specific_events:
+    - act: "38-ФЗ от 13.03.2006 — исходная редакция"
+      official_gazette_url: "https://rg.ru/documents/2006/03/15/reklama-dok.html"
+      official_gazette_publication_date: "2006-03-15"
+      locator: "статья 18"
+      state: OFFICIAL_GAZETTE_PRIMARY_TEXT_VERIFIED_EXACT_BYTES_PENDING
+    - act: "179-ФЗ от 27.10.2008"
+      official_gazette_url: "https://rg.ru/documents/2008/10/29/fz-reklama-dok.html"
+      official_gazette_publication_date: "2008-10-29"
+      effective_date: "2008-11-09"
+      locator: "статья 18 — наименование и часть 5"
+      effect: "Из наименования исключены слова о почтовых отправлениях; часть 5 признана утратившей силу."
+      state: OFFICIAL_GAZETTE_PRIMARY_AMENDMENT_TEXT_VERIFIED_EXACT_BYTES_PENDING
+  latest_source_level_event_checked:
+    act: "272-ФЗ от 26.07.2026"
+    official_gazette_url: "https://rg.ru/documents/2026/08/03/fz272-dok.html"
+    official_gazette_publication_date: "2026-08-03"
+    effective_date: "2026-08-06"
+    changed_locators: ["статья 21", "статья 38"]
+    effect_on_article_18: NONE
+    state: OFFICIAL_GAZETTE_FULL_ACT_TEXT_VERIFIED
+  pending: >-
+    Получить exact authoritative bytes исходного 38-ФЗ, 179-ФЗ и текущего официального consolidated artifact; сверить первичный publication locator для текущего source-level event 272-ФЗ. До сохранения exact-byte доказательств не повышать источник до immutable/current executable proof.
+
+capture:
+  initial_official_gazette:
+    state: EXACT_CAPTURE_PENDING
+    url: "https://rg.ru/documents/2006/03/15/reklama-dok.html"
+    retrieved_at: null
+    mime: null
+    byte_length: null
+    sha256: null
+  amendment_179_fz:
+    state: EXACT_CAPTURE_PENDING
+    url: "https://rg.ru/documents/2008/10/29/fz-reklama-dok.html"
+    retrieved_at: null
+    mime: null
+    byte_length: null
+    sha256: null
+  current_exact_authoritative_binary:
+    state: PENDING
+    official_locator: "http://pravo.gov.ru/proxy/ips/?docbody=&link_id=0&nd=102105292&intelsearch=&firstDoc=1"
+    retrieved_at: null
+    mime: null
+    byte_length: null
+    sha256: null
+
+provenance:
+  checked_at: "2026-08-25T05:22:31+03:00"
+  review_required: true
+  deduplication: "No existing Stream 3 protected-information source card for 38-ФЗ Article 18 was found before registration."
+
+agent_rule: >-
+  Treat Article 18 as a telecom-advertising regime. Separate advertising consent from PDN-processing consent and from telecom mailing consent under 126-ФЗ. A stop request is a statutory advertising-suppression duty, not proof of a general PDN erasure rule. Do not infer applicability from a phone/email field alone. Do not use repealed Article 18(5). Current executable semantics remain blocked until exact authoritative capture/version proof is complete.
