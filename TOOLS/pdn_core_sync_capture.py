@@ -14,6 +14,10 @@ by their own route/content proof instead. The current consolidated 152-FZ additi
 requires proof that the returned bytes contain the amendment marker of the pinned
 current revision (No. 265-FZ, effective 26.07.2026), and that the accepted route was
 pre-registered in the current source card.
+
+Production telemetry is synchronized from PDN_ACQUISITION_RUN.json into the master
+inventory on every pass so reuse, network work, pending counts and dedicated-route
+failure classes do not remain stale after a successful workflow run.
 """
 from __future__ import annotations
 
@@ -25,11 +29,15 @@ ROOT = Path(__file__).resolve().parents[1]
 CORPUS = ROOT / "security-corpora" / "RU" / "152-FZ"
 MANIFEST_DIR = CORPUS / "manifests"
 INVENTORY = CORPUS / "PDN_MASTER_SOURCE_INVENTORY.yaml"
+RUN_FILE = CORPUS / "PDN_ACQUISITION_RUN.json"
 FEDERAL_LAW_NUMBER_RE = re.compile(r"^\d+-ФЗ$")
 CURRENT_ROOT_SOURCE_ID = "SEC-SRC-RU-152FZ-2026-07-26"
 PP687_SOURCE_ID = "SEC-SRC-RU-PP687-2008"
 PRODUCTION_COUNTERS_RE = re.compile(
     r"(?ms)^production_counters:\n.*?(?=^[A-Za-z_][A-Za-z0-9_-]*:\s*(?:.*)?$|\Z)"
+)
+ACQUISITION_ACTIVITY_RE = re.compile(
+    r"(?ms)^acquisition_activity:\n.*?(?=^[A-Za-z_][A-Za-z0-9_-]*:\s*(?:.*)?$|\Z)"
 )
 
 
@@ -199,10 +207,7 @@ def update_version_chain_resolution_statuses(text: str, captured: set[str]) -> s
 
 
 def update_pending_priority(text: str, pending_ids: list[str]) -> str:
-    section = re.search(
-        r"(?ms)^acquisition_activity:\n.*?(?=^[A-Za-z_][A-Za-z0-9_-]*:\s*(?:.*)?$|\Z)",
-        text,
-    )
+    section = ACQUISITION_ACTIVITY_RE.search(text)
     if not section:
         return text
     block = section.group(0)
@@ -215,6 +220,116 @@ def update_pending_priority(text: str, pending_ids: list[str]) -> str:
     )
     if n == 0:
         block = block.rstrip("\n") + "\n" + replacement
+    return text[: section.start()] + block + text[section.end() :]
+
+
+def attempt_summary(attempt: object) -> str:
+    if not isinstance(attempt, dict):
+        return "NOT_RUN"
+    status = str(attempt.get("status") or "UNKNOWN")
+    if status.startswith("IMMUTABLE_CAPTURED"):
+        return "IMMUTABLE_CAPTURED"
+    classes = attempt.get("failure_classes") or []
+    if isinstance(classes, list) and classes:
+        return "PENDING_" + "_AND_".join(str(item) for item in classes)
+    return status
+
+
+def combined_current_root_summary(telemetry: dict) -> str:
+    attempts = [telemetry.get("current_root_curl"), telemetry.get("current_root_urllib")]
+    if any(isinstance(a, dict) and str(a.get("status") or "").startswith("IMMUTABLE_CAPTURED") for a in attempts):
+        return "IMMUTABLE_CAPTURED"
+    classes: list[str] = []
+    for attempt in attempts:
+        if not isinstance(attempt, dict):
+            continue
+        for item in attempt.get("failure_classes") or []:
+            item = str(item)
+            if item not in classes:
+                classes.append(item)
+    return "PENDING_" + "_AND_".join(classes) if classes else "PENDING"
+
+
+def update_acquisition_activity(text: str) -> str:
+    if not RUN_FILE.exists():
+        return text
+    try:
+        run = json.loads(RUN_FILE.read_text(encoding="utf-8"))
+    except Exception:
+        return text
+
+    section = ACQUISITION_ACTIVITY_RE.search(text)
+    if not section:
+        return text
+    block = section.group(0)
+
+    new_immutable = int(run.get("new_immutable_captured") or 0)
+    block = re.sub(
+        r"(?m)^  accepted_manifest_delta_at_inventory_write:\s*[^\n]+$",
+        f"  accepted_manifest_delta_at_inventory_write: {new_immutable}",
+        block,
+        count=1,
+    )
+
+    started_at = str(run.get("started_at") or "")
+    finished_at = str(run.get("finished_at") or "")
+    targets = int(run.get("targets_total") or 0)
+    reused = int(run.get("reused_immutable") or 0)
+    network = int(run.get("network_targets_attempted") or 0)
+    pending_generic = int(run.get("pending_after_run") or 0)
+    reuse_ratio = float(run.get("reuse_ratio") or 0.0)
+    last_run_block = (
+        "  last_proven_acquisition_run:\n"
+        f"    started_at: {q(started_at)}\n"
+        f"    finished_at: {q(finished_at)}\n"
+        f"    targets: {targets}\n"
+        f"    reused_immutable: {reused}\n"
+        f"    network_targets_attempted: {network}\n"
+        f"    new_immutable_captured: {new_immutable}\n"
+        f"    pending_generic: {pending_generic}\n"
+        f"    reuse_ratio: {reuse_ratio:.10f}\n"
+        "    note: >-\n"
+        "      Synchronized automatically from PDN_ACQUISITION_RUN.json; dedicated guarded routes are reported separately below.\n"
+    )
+    block, n = re.subn(
+        r"(?ms)^  last_proven_acquisition_run:\n.*?(?=^  latest_proven_dedicated_attempt:)",
+        last_run_block,
+        block,
+        count=1,
+    )
+    if n == 0:
+        anchor = re.search(r"(?m)^  latest_proven_dedicated_attempt:", block)
+        if anchor:
+            block = block[:anchor.start()] + last_run_block + block[anchor.start():]
+
+    telemetry = run.get("dedicated_route_attempt_telemetry")
+    if isinstance(telemetry, dict):
+        observed_at = str(telemetry.get("observed_at") or "")
+        pp687 = attempt_summary(telemetry.get("pp687"))
+        current_root = combined_current_root_summary(telemetry)
+        proof_held = all(
+            not isinstance(telemetry.get(key), dict) or bool(telemetry[key].get("proof_floor_held", True))
+            for key in ("pp687", "current_root_curl", "current_root_urllib")
+        )
+        dedicated_block = (
+            "  latest_proven_dedicated_attempt:\n"
+            f"    observed_at: {q(observed_at)}\n"
+            f"    pp687: {pp687}\n"
+            f"    current_152fz: {current_root}\n"
+            "    semantic_promotions: 0\n"
+            f"    proof_floor_held: {'true' if proof_held else 'false'}\n"
+        )
+        block, n = re.subn(
+            r"(?ms)^  latest_proven_dedicated_attempt:\n.*?(?=^  pending_priority:)",
+            dedicated_block,
+            block,
+            count=1,
+        )
+        if n == 0:
+            anchor = re.search(r"(?m)^  pending_priority:", block)
+            if anchor:
+                block = block[:anchor.start()] + dedicated_block + block[anchor.start():]
+
     return text[: section.start()] + block + text[section.end() :]
 
 
@@ -240,6 +355,7 @@ def update_inventory(manifests: list[dict]) -> None:
     text = update_production_counters(text, immutable, len(pending_ids), total)
     text = update_version_chain_resolution_statuses(text, captured)
     text = update_pending_priority(text, pending_ids)
+    text = update_acquisition_activity(text)
 
     if pending_ids:
         blocker = (
