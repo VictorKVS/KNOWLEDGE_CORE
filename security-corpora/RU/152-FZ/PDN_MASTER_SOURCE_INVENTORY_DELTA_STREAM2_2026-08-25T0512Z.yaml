@@ -1,0 +1,42 @@
+schema_version: "1.0"
+id: SEC-PDN-MASTER-SOURCE-INVENTORY-DELTA-STREAM2-2026-08-25T0512Z
+applies_to: PDN_MASTER_SOURCE_INVENTORY.yaml
+stream: RU_PDN_TECHNICAL_CRYPTO
+created_at: "2026-08-25T05:24:00Z"
+merge_policy: >-
+  CONCURRENCY_SAFE_OVERLAY. Apply only to the linked security_stack block and Stream-2 status pointers.
+  Preserve Stream-1 production counters, regulatory-watch records and unrelated master fields.
+
+security_stack_patch:
+  linked_inventory: "security-stack/PDN_SECURITY_STACK_SOURCE_INVENTORY.yaml"
+  checked_at: "2026-08-25"
+  identified: 34
+  immutable_sha256_verified: 16
+  pending_raw_capture: 18
+  exact_official_route_unresolved: 6
+  latest_status_review_at: "2026-08-25T05:24:00Z"
+  latest_stream2_run: "security-stack/runs/STREAM2_RUN_2026-08-25T0512Z.yaml"
+  latest_registry_update: >-
+    2026-08-25: effective Stream-2 inventory remains 34 identified / 34 metadata verified / 16 immutable /
+    18 pending / 6 unresolved. The direct linked inventory still contains 32 rows, while two source records are
+    supplied by already merged additive overlays: FSTEC information notice No. 240/22/690 and the FSB SKZI-formular
+    notice of 15.06.2017. This pass refreshes PP1119 and FSB378 status without semantic promotion. PP1119 remains
+    the acting original 2012 edition but its exact Government DOC bytes are pending; FSB378 remains the acting
+    original 2014 edition and is applicable only when SKZI use is established. Project 169583 remains project-only,
+    so current FSTEC Order No. 21 stays the active ISPDN technical baseline. No new immutable artifact was captured.
+
+analysis_metrics_patch:
+  stream2_source_records_added_this_pass: 0
+  stream2_immutable_new_this_pass: 0
+  stream2_existing_immutable_reused_this_pass: 1
+  stream2_status_rechecks_this_pass: 5
+  stream2_primary_byte_targets_attempted_this_pass: 3
+  stream2_semantic_promotions_this_pass: 0
+  stream2_new_universal_pdn_duties_this_pass: 0
+  stream2_effective_counter_reconciliation_performed: true
+
+proof_rule: >-
+  Do not reduce the effective Stream-2 counter from 34 to the stale direct-base value 32. Preserve all merged
+  additive overlays. Do not promote PP1119, FSB378 or FSB guidance pages to immutable status without exact primary
+  bytes, MIME, byte length and SHA-256. Do not convert adjacent licensing, certification, public-sector/KII or
+  GosSOPKA/NKTsKI requirements into universal PDN duties without an explicit applicability edge.
