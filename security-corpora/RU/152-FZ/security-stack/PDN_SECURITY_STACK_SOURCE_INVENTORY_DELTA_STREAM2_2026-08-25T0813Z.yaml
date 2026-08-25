@@ -1,0 +1,88 @@
+schema_version: "1.0"
+id: SEC-PDN-SECURITY-STACK-INVENTORY-DELTA-2026-08-25T0813Z
+applies_to: PDN_SECURITY_STACK_SOURCE_INVENTORY.yaml
+stream: RU_PDN_TECHNICAL_CRYPTO
+created_at: "2026-08-25T08:13:00Z"
+merge_policy: >-
+  ADDITIVE_AND_RECONCILIATION_OVERLAY. Preserve all direct-base rows and all previously merged overlays.
+  Add the newly registered FSTEC approval notice once; refresh methodical-source pointers without duplicating
+  the already registered 12.04.2026 and 07.08.2026 methodological documents.
+
+effective_inventory_inputs:
+  direct_base_rows: 32
+  previously_merged_overlay_sources: 2
+  new_source_records_this_overlay: 1
+  effective_identified_after_overlay: 35
+  reconciliation_assertion: "32 direct rows + 2 prior overlay-only sources + 1 new approval notice = 35 effective sources"
+
+source_additions:
+  - id: SEC-SRC-RU-FSTEC-INFO-240-22-2457-2026
+    role: fstec_2026_protection_measures_method_approval_and_version_chain_evidence
+    metadata_status: METADATA_VERIFIED
+    source_record: "source/SEC-SRC-RU-FSTEC-INFO-240-22-2457-2026.yaml"
+    raw_capture: PENDING
+    applicability: APPROVAL_AND_VERSION_CHAIN_EVIDENCE_ONLY
+    not_new_universal_pdn_control: true
+
+status_refreshes:
+  - id: SEC-SRC-RU-FSTEC-PROTECTION-MEASURES-METHOD-2026
+    checked_at: "2026-08-25"
+    status: METADATA_VERIFIED
+    raw_capture: PENDING
+    finding: CURRENT_METHOD_AND_OFFICIAL_APPROVAL_NOTICE_RECONFIRMED_EXACT_OFFICIAL_PDF_PENDING
+    applicability: PUBLIC_SYSTEMS_KII_OR_EXPLICIT_CROSS_REFERENCE_ONLY
+  - id: SEC-SRC-RU-FSTEC-MATURITY-METHOD-2026
+    checked_at: "2026-08-25"
+    status: METADATA_VERIFIED
+    raw_capture: PENDING
+    finding: CURRENT_APPROVED_METHOD_WITH_EXPLICIT_ISPDN_SCOPE_RECONFIRMED_EXACT_OFFICIAL_PDF_PENDING
+    applicability: ISPDN_MATURITY_ASSESSMENT_WITH_RECOMMENDATIONS_NOT_AUTOMATIC_MANDATORY_MINIMA
+  - id: SEC-SRC-RU-PP1119-2012
+    checked_at: "2026-08-25"
+    status: METADATA_VERIFIED
+    raw_capture: PENDING
+    finding: GOVERNMENT_PAGE_STILL_PUBLISHES_1119_AS_CURRENT_DOCUMENT_EXACT_GOVERNMENT_DOC_BYTES_PENDING
+  - id: SEC-SRC-RU-FSTEC21-2013
+    checked_at: "2026-08-25"
+    status: METADATA_VERIFIED
+    raw_capture: IMMUTABLE_CAPTURED
+    finding: ACTIVE_BASELINE_RETAINED_CURRENT_AUGUST_2026_PDN_GUIDANCE_STILL_USES_ORDER21_PROJECT_169583_NOT_PROVEN_ENACTED
+  - id: SEC-SRC-RU-FSB378-2014
+    checked_at: "2026-08-25"
+    status: METADATA_VERIFIED
+    raw_capture: PENDING
+    finding: CURRENT_ORIGINAL_2014_EDITION_RECONFIRMED_STATUS_ACTING_PRIMARY_BYTES_PENDING
+    applicability: ISPDN_WHEN_SKZI_USED
+
+counter_patch:
+  identified: 35
+  metadata_verified: 35
+  raw_downloaded_exact: 16
+  immutable_sha256_verified: 16
+  pending_raw_capture: 19
+  exact_official_route_unresolved: 6
+  confirmed_conflicts: 0
+
+semantic_guards:
+  - >-
+    The 12.04.2026 FSTEC protection-measures method remains bounded to its enumerated public-system/KII scope or an
+    explicit cross-reference. The draft replacement of Order No. 21 cannot create a binding edge before enactment.
+  - >-
+    The 07.08.2026 maturity method directly includes ISPDN operators, but point 11 target maturity levels are
+    recommendations. Preserve them as recommended targets, not mandatory minimums absent a binding NPA edge.
+  - >-
+    FSB Order No. 378 remains applicable to ISPDN where SKZI use is established. Do not generalize crypto licensing,
+    PKZ-2005 or FAPSI handling duties beyond their independently proven applicability.
+
+latest_run_patch:
+  run_record: "runs/STREAM2_RUN_2026-08-25T0813Z.yaml"
+  new_sources: 1
+  new_immutable_captured: 0
+  methodical_sources_refreshed: 2
+  priority_status_rechecks: 3
+  primary_routes_attempted: 4
+  semantic_promotions: 0
+
+proof_rule: >-
+  Exact official bytes, MIME, byte length and SHA-256 remain mandatory for immutable promotion. Do not use mirrors
+  as primary evidence. Do not turn approved methodological recommendations into universal binding PDN duties.
