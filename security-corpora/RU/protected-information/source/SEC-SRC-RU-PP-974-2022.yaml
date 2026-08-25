@@ -1,0 +1,89 @@
+schema_version: "1.0"
+id: SEC-SRC-RU-PP-974-2022
+kind: security-regulatory-source
+status: PRIMARY_PUBLICATION_LOCATOR_VERIFIED_CURRENT_TEXT_CROSSCHECKED_EXACT_ARTIFACT_PENDING
+
+title: "Постановление Правительства РФ от 28.05.2022 № 974 — правила взаимодействия Роскомнадзора с операторами рекламных данных"
+jurisdiction: RU
+issuer: "Правительство Российской Федерации"
+document:
+  type: government_decree
+  number: "974"
+  adopted_date: "2022-05-28"
+  official_publication_id: "0001202205300041"
+  official_publication_date: "2022-05-30"
+  checked_at: "2026-08-25"
+
+canonical_sources:
+  primary_publication:
+    publisher: "Официальное опубликование правовых актов"
+    url: "https://publication.pravo.gov.ru/document/0001202205300041"
+    origin_verified: true
+    proof_scope: "Официальные реквизиты исходного постановления; exact PDF bytes в этом проходе не получены."
+  current_text_crosscheck:
+    revision_date: "2025-09-18"
+    state: CURRENT_TEXT_CROSSCHECK_EXACT_CURRENT_BYTES_PENDING
+    amendments_crosschecked:
+      - "Постановление Правительства РФ от 20.12.2022 № 2355"
+      - "Постановление Правительства РФ от 28.05.2025 № 743"
+      - "Постановление Правительства РФ от 18.09.2025 № 1427"
+
+protected_information:
+  sector: advertising_marketing
+  regime: internet_advertising_regulatory_data_exchange
+  legal_basis: "38-ФЗ статья 18.1"
+  protected_locators:
+    - locator: "Правила, пункт 1"
+      concept: INTERNET_AD_DATA_INTERACTION_SCOPE
+      finding: "Определяет порядок, формат и сроки передачи через операторов рекламных данных информации об интернет-рекламе и социальной рекламе в Роскомнадзор."
+    - locator: "Правила, пункты 2-3"
+      concept: ORD_TO_RKN_DATA_TRANSPORT
+      finding: "Регулирует электронное взаимодействие оператора рекламных данных с информационной системой уполномоченного органа."
+    - locator: "Правила, пункт 10"
+      concept: INTERNET_AD_REPORTING_DEADLINE
+      finding: "Для лиц статьи 18.1 установлен специальный срок предоставления информации оператору рекламных данных; текущая редакция содержит базовый месячный цикл и отдельный договорный сценарий."
+    - locator: "Правила, пункт 19"
+      concept: ORD_DISCLOSURE_LIMITATION
+      finding: "Оператор рекламных данных не вправе передавать полученную рекламную информацию иным лицам, кроме предусмотренного правилами уполномоченного органа; возврат исходному поставщику возможен по его запросу."
+    - locator: "Правила, пункт 20"
+      concept: RKN_REQUEST_RESPONSE_DEADLINE
+      finding: "По запросу уполномоченного органа оператор рекламных данных предоставляет имеющуюся информацию и рекламу в специальный короткий срок."
+  applicability_status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  applicability_guard: "PP 974 исполняется только при доказанной роли участника режима статьи 18.1 38-ФЗ; наличие рекламных данных не означает автоматически наличие персональных данных."
+
+relationship_candidates:
+  - target: "38-ФЗ статья 18.1"
+    type: DIRECT_SUBORDINATE_IMPLEMENTATION
+    state: STATUTORY_IMPLEMENTATION_RELATION
+  - target: "152-ФЗ"
+    type: INTERNET_AD_DATA_FLOW_PDN_OVERLAP
+    state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    guard: "Проверять конкретный payload на сведения об идентифицируемом физическом лице; OVERLAP != APPLICABILITY."
+  - target: "SEC-SRC-RU-RKN-ORDER-67-2025"
+    type: ORD_SOFTWARE_AND_TRANSPORT_IMPLEMENTATION_CONTEXT
+    state: CROSS_REGIME_RELATION
+
+version_chain:
+  state: CURRENT_REVISION_CROSSCHECKED_PRIMARY_AMENDMENT_BYTES_PENDING
+  latest_crosschecked_revision: "2025-09-18"
+  events:
+    - {act: "2355 от 20.12.2022", state: AMENDMENT_EFFECT_CROSSCHECKED_PRIMARY_EXACT_BYTES_PENDING}
+    - {act: "743 от 28.05.2025", state: AMENDMENT_EFFECT_CROSSCHECKED_PRIMARY_EXACT_BYTES_PENDING}
+    - {act: "1427 от 18.09.2025", state: AMENDMENT_EFFECT_CROSSCHECKED_PRIMARY_EXACT_BYTES_PENDING}
+
+capture:
+  exact_capture_attempted_at: "2026-08-25T23:25:00+03:00"
+  source_url: "https://publication.pravo.gov.ru/document/0001202205300041"
+  result: TRANSIENT_DNS_OR_TIMEOUT
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  raw_artifact_ref: null
+  manifest_ref: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-PP-974-2022-capture-pending.json"
+  fingerprint_status: PENDING_EXACT_PRIMARY_BYTES
+
+proof_floor:
+  - "Primary-law metadata controls; current executable semantics require exact current/version-chain proof."
+  - "Portal display file size is not byte_length."
+  - "No MIME, SHA-256, applicability or conflict is inferred without evidence."
