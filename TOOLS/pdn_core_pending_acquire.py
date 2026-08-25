@@ -10,10 +10,10 @@ of unchanged official publication artifacts.
 Sources with dedicated guarded transports are excluded from the generic network loop
 so a slow special route cannot delay easy publication-ID deltas such as PP12.
 
-Inventory invariant (v1.5): a newly discovered source card must be registered in the
-PDN master inventory before its immutable manifest can be synchronized. This wrapper
-performs that reconciliation before acquisition so a successful new capture cannot be
-lost merely because the source-list update and the acquisition happen in the same run.
+Inventory invariant (v1.6): a newly discovered source card must be registered in the
+PDN master inventory before its immutable manifest can be synchronized. Core identity
+counters are reconciled strictly inside the production_counters block so identically
+named Stream-2 counters can never be overwritten.
 """
 from __future__ import annotations
 
@@ -38,10 +38,11 @@ from pdn_core_sync_capture import manifest_is_raw_verified
 
 DEDICATED_CAPTURE_SOURCE_IDS = {"SEC-SRC-RU-PP687-2008"}
 INVENTORY = CORPUS / "PDN_MASTER_SOURCE_INVENTORY.yaml"
+SOURCES_RE = re.compile(r"(?ms)^sources:\n.*?(?=^version_history:\n)")
+PRODUCTION_COUNTERS_RE = re.compile(
+    r"(?ms)^production_counters:\n.*?(?=^[A-Za-z_][A-Za-z0-9_-]*:\s*(?:.*)?$|\Z)"
+)
 
-# Explicit inventory metadata for dependencies discovered during Article 13.1
-# reconciliation. The source cards remain the provenance records; these blocks only
-# ensure the master source universe is complete before immutable synchronization.
 DISCOVERED_SOURCE_BLOCKS = {
     "SEC-SRC-RU-PP538-2025": """  - id: SEC-SRC-RU-PP538-2025
     document: \"Постановление Правительства РФ от 24.04.2025 № 538\"
@@ -62,16 +63,48 @@ DISCOVERED_SOURCE_BLOCKS = {
 }
 
 
-def replace_counter(text: str, key: str, value: int) -> str:
-    pattern = rf"(?m)^(  {re.escape(key)}:)\s*[^\n]+$"
-    updated, count = re.subn(pattern, rf"\1 {value}", text, count=1)
+def replace_block_scalar(block: str, key: str, value: object) -> str:
+    rendered = str(value)
+    updated, count = re.subn(
+        rf"(?m)^(  {re.escape(key)}:)\s*[^\n]+$",
+        rf"\1 {rendered}",
+        block,
+        count=1,
+    )
     if count != 1:
-        raise RuntimeError(f"production counter not found while registering sources: {key}")
+        raise RuntimeError(f"production counter not found while reconciling core inventory: {key}")
     return updated
 
 
+def reconcile_core_identity_counters(text: str) -> str:
+    sources_match = SOURCES_RE.search(text)
+    if not sources_match:
+        raise RuntimeError("sources block missing in PDN master inventory")
+    sources_block = sources_match.group(0)
+    source_ids = re.findall(r"(?m)^  - id:\s*([^\s#]+)\s*$", sources_block)
+    metadata_verified = len(re.findall(r"(?m)^    metadata_status:\s*METADATA_VERIFIED\s*$", sources_block))
+    immutable = len(re.findall(r"(?m)^    raw_capture:\s*IMMUTABLE_CAPTURED\s*$", sources_block))
+    pending = len(source_ids) - immutable
+
+    counters_match = PRODUCTION_COUNTERS_RE.search(text)
+    if not counters_match:
+        raise RuntimeError("production_counters block missing in PDN master inventory")
+    block = counters_match.group(0)
+    block = replace_block_scalar(block, "identified", len(source_ids))
+    block = replace_block_scalar(block, "metadata_verified", metadata_verified)
+    block = replace_block_scalar(block, "pending_raw_capture", pending)
+    ratio = (immutable / len(source_ids)) if source_ids else 0.0
+    block = re.sub(
+        r"(?m)^  raw_capture_coverage_ratio:\s*[^\n]+$",
+        f"  raw_capture_coverage_ratio: {ratio:.4f}",
+        block,
+        count=1,
+    )
+    return text[: counters_match.start()] + block + text[counters_match.end() :]
+
+
 def ensure_inventory_registration() -> list[str]:
-    """Insert newly discovered source nodes into the master inventory before capture."""
+    """Insert discovered source nodes, then reconcile core counters in their own block."""
     text = INVENTORY.read_text(encoding="utf-8")
     inserted: list[str] = []
     for source_id, block in DISCOVERED_SOURCE_BLOCKS.items():
@@ -84,41 +117,23 @@ def ensure_inventory_registration() -> list[str]:
         text = text.replace(marker, "\n" + block + marker, 1)
         inserted.append(source_id)
 
-    if not inserted:
-        return inserted
+    text = reconcile_core_identity_counters(text)
 
-    source_ids = re.findall(r"(?m)^  - id:\s*([^\s#]+)\s*$", text)
-    # All active nodes except the current consolidated root carry METADATA_VERIFIED;
-    # the root has VERSION_IDENTITY_CROSS_VERIFIED and remains a separate counter.
-    metadata_verified = len(source_ids) - 1
-    text = replace_counter(text, "identified", len(source_ids))
-    text = replace_counter(text, "metadata_verified", metadata_verified)
-
-    # Before the sync step, newly registered sources are pending by definition.
-    current_immutable = len(re.findall(r"(?m)^    raw_capture:\s*IMMUTABLE_CAPTURED\s*$", text))
-    text = replace_counter(text, "pending_raw_capture", len(source_ids) - current_immutable)
-    ratio = (current_immutable / len(source_ids)) if source_ids else 0.0
-    text = re.sub(
-        r"(?m)^  raw_capture_coverage_ratio:\s*[^\n]+$",
-        f"  raw_capture_coverage_ratio: {ratio:.4f}",
-        text,
-        count=1,
-    )
-
-    # Record this discovery delta without implying semantic validation.
-    text = re.sub(
-        r"(?m)^  source_records_added_this_pass:\s*[^\n]+$",
-        f"  source_records_added_this_pass: {len(inserted)}",
-        text,
-        count=1,
-    )
-    text = re.sub(
-        r"(?m)^  direct_dependencies_added_this_pass:\s*[^\n]+$",
-        f"  direct_dependencies_added_this_pass: {len(inserted)}",
-        text,
-        count=1,
-    )
-    text = re.sub(r'(?m)^checked_at:\s*"[^"]+"$', 'checked_at: "2026-08-25"', text, count=1)
+    if inserted:
+        text = re.sub(
+            r"(?m)^  source_records_added_this_pass:\s*[^\n]+$",
+            f"  source_records_added_this_pass: {len(inserted)}",
+            text,
+            count=1,
+        )
+        text = re.sub(
+            r"(?m)^  direct_dependencies_added_this_pass:\s*[^\n]+$",
+            f"  direct_dependencies_added_this_pass: {len(inserted)}",
+            text,
+            count=1,
+        )
+    today = dt.datetime.now(dt.timezone.utc).date().isoformat()
+    text = re.sub(r'(?m)^checked_at:\s*"[^"]+"$', f'checked_at: "{today}"', text, count=1)
     INVENTORY.write_text(text, encoding="utf-8")
     return inserted
 
@@ -209,7 +224,7 @@ def main() -> int:
     newly_captured = sum(1 for row in attempted if row.get("status") == "IMMUTABLE_CAPTURED")
     pending = sum(1 for row in attempted if row.get("status") == "PENDING")
     run = {
-        "schema_version": "1.5",
+        "schema_version": "1.6",
         "kind": "pdn-core-reuse-first-acquisition-run",
         "identity_scope_guard": "document.official_publication_id only",
         "started_at": started.isoformat().replace("+00:00", "Z"),
