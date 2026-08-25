@@ -1,0 +1,73 @@
+schema_version: "1.0"
+kind: ru-personal-data-master-source-inventory-delta
+owner_stream: STREAM_3_SECTOR_OVERLAYS
+checked_at: "2026-08-25T23:25:00+03:00"
+reconciliation_base: "master-source-inventory-delta-stream3-2026-08-25T1121.yaml"
+run_ref: "../ru-protected-information/stream-3-run-2026-08-25T2325.yaml"
+status: APPEND_ONLY_RELATIONSHIP_DELTA
+
+proof_floor:
+  - "OVERLAP != APPLICABILITY."
+  - "RKN Order 67 contains a direct reference to personal-data legislation, but the reference is scoped to ORD software used under Article 18.1 of 38-ФЗ."
+  - "Internet-ad participant/authority access does not itself prove that every accessed field is personal data."
+  - "Audience descriptors such as sex, age, sociodemographic category and territory may be aggregate or person-level; identifiability must be proven."
+  - "Advertising/ORD retention periods are not automatically PDN retention or deletion periods."
+
+sector_source_counter_overlay:
+  before: {found: 33, downloaded: 9, immutable: 9, pending: 22, reused: 2}
+  after: {found: 37, downloaded: 9, immutable: 9, pending: 26, reused: 2}
+  new_source_nodes: 4
+  new_exact_primary_artifacts: 0
+  applicability_promotions: 0
+
+source_relationships:
+  - source_id: SEC-SRC-RU-PP-974-2022
+    source_title: "Постановление Правительства РФ от 28.05.2022 № 974"
+    target: "152-ФЗ"
+    type: INTERNET_AD_DATA_FLOW_PDN_OVERLAP
+    state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    evidence_context: "Специальный поток передачи рекламной информации через ОРД в Роскомнадзор."
+    guard: "Проверить payload, идентифицируемость физлица, роль, цель, операцию и правовое основание до присоединения PDN duties."
+  - source_id: SEC-SRC-RU-PP-969-2022
+    source_title: "Постановление Правительства РФ от 28.05.2022 № 969"
+    target: "152-ФЗ"
+    type: REGULATORY_ACCESS_PDN_OVERLAP
+    state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    evidence_context: "ФАС/ФНС получают нормативно ограниченный доступ к рекламной информации Роскомнадзора."
+    guard: "Право доступа к рекламной информации != общее основание раскрытия ПДн; проверять конкретные поля."
+  - source_id: SEC-SRC-RU-RKN-ORDER-67-2025
+    source_title: "Приказ Роскомнадзора от 25.03.2025 № 67"
+    target: "152-ФЗ"
+    type: DIRECT_STATUTORY_PDN_SECURITY_CONTEXT_FOR_ORD_SOFTWARE
+    state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    evidence_context:
+      - "Пункт 1 прямо требует соответствия ПО ОРД законодательству РФ в области персональных данных."
+      - "ПО получает, хранит, обрабатывает и передает рекламные сведения и должно обеспечивать их сохранность/защиту."
+      - "Фиксируемая телеметрия может включать сведения о целевой аудитории: пол, возраст, иные социально-демографические параметры, территорию проживания/нахождения."
+    guard: "Direct reference is scoped to ORD software; do not promote to all advertisers, all ad-data or all audience telemetry."
+  - source_id: SEC-SRC-RU-RKN-ORDER-78-2025
+    source_title: "Приказ Роскомнадзора от 31.03.2025 № 78"
+    target: "152-ФЗ"
+    type: ACTOR_SCOPED_AD_DATA_PDN_OVERLAP
+    state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    evidence_context: "Определяет состав и actor-scoped доступ участников рекламного рынка к информации Роскомнадзора об интернет-рекламе."
+    guard: "Определить, содержит ли доступный конкретному субъекту набор сведения об идентифицируемом физическом лице."
+
+retention_boundaries:
+  - source_id: SEC-SRC-RU-RKN-ORDER-67-2025
+    locator: "Требования, пункт 6 подпункт г"
+    sector_rule: "Информация об интернет-рекламе у ОРД хранится не менее одного года после передачи в ИС; реклама хранится в течение года от передачи информации ОРД."
+    pdn_interpretation: "SECTOR_RETENTION_ONLY_NOT_GENERAL_PDN_TERM"
+  - source_id: SEC-SRC-RU-FZ-38-2006-A18
+    locator: "статья 18.1 часть 13"
+    sector_rule: "Информация у уполномоченного органа хранится не менее трех лет со дня получения."
+    pdn_interpretation: "REGULATOR_DATASET_RETENTION_ONLY_NOT_GENERAL_PDN_TERM"
+
+acquisition_state:
+  exact_primary_binary_new: 0
+  pending_exact_capture: 4
+  reason: TRANSIENT_OFFICIAL_ENDPOINT_TIMEOUT_OR_DNS_FAILURE
+  invariant: "No MIME, byte_length, retrieved_at or SHA-256 synthesized."
+
+merge_rule: >-
+  Merge as a Stream 3 overlay only. Do not overwrite concurrent PDN-core/security-stack counters owned by other streams. Applicability remains candidate/review-required for every new relation in this delta.
