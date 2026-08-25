@@ -1,0 +1,43 @@
+schema_version: "1.0"
+id: SEC-PDN-MASTER-SOURCE-INVENTORY-DELTA-STREAM2-2026-08-25T1108Z
+applies_to: PDN_MASTER_SOURCE_INVENTORY.yaml
+stream: RU_PDN_TECHNICAL_CRYPTO
+created_at: "2026-08-25T11:23:00Z"
+merge_policy: >-
+  CONCURRENCY_SAFE_OVERLAY. Apply only to the linked security_stack status/counter pointers. Preserve Stream-1
+  production counters, regulatory records outside this stream and all previously merged Stream-2 source additions.
+
+security_stack_patch:
+  linked_inventory: "security-stack/PDN_SECURITY_STACK_SOURCE_INVENTORY.yaml"
+  checked_at: "2026-08-25"
+  identified: 35
+  metadata_verified: 35
+  immutable_sha256_verified: 16
+  pending_raw_capture: 19
+  exact_official_route_unresolved: 6
+  latest_status_review_at: "2026-08-25T11:23:00Z"
+  latest_stream2_run: "security-stack/runs/STREAM2_RUN_2026-08-25T1108Z.yaml"
+  latest_registry_update: >-
+    2026-08-25: Stream-2 effective counters remain 35 identified / 35 metadata verified / 16 immutable / 19 pending /
+    6 unresolved. FSTEC Order No. 55 current revision (20.01.2026, acting from 02.05.2026) and amendment No. 9 were
+    rechecked. Existing immutable No. 9 evidence was reused and a source-card provenance contradiction was repaired:
+    the exact official artifact is captured, not pending. PP1119 remains current but exact Government DOC bytes are
+    still pending. FSTEC21 remains the active PDN baseline because project 169583 is not proven enacted; same-day
+    secondary future-tense claims are retained only as narrative/watch evidence.
+
+analysis_metrics_patch:
+  stream2_source_records_added_this_pass: 0
+  stream2_immutable_new_this_pass: 0
+  stream2_existing_immutable_reused_this_pass: 3
+  stream2_source_cards_refreshed_this_pass: 2
+  stream2_provenance_consistency_corrections_this_pass: 1
+  stream2_regulatory_watch_refreshes_this_pass: 1
+  stream2_status_rechecks_this_pass: 4
+  stream2_primary_byte_targets_attempted_this_pass: 1
+  stream2_semantic_promotions_this_pass: 0
+  stream2_new_universal_pdn_duties_this_pass: 0
+
+proof_rule: >-
+  Preserve effective counters from all merged overlays. Exact official bytes, MIME, byte length and SHA-256 remain the
+  immutable gate. Existing immutable proof must not be downgraded by a stale flag. A draft or secondary narrative must
+  not be executed as law without primary enactment evidence.
