@@ -1,0 +1,115 @@
+schema_version: "1.0"
+id: SEC-PDN-STREAM2-RUN-2026-08-25T1108Z
+stream: RU_PDN_TECHNICAL_CRYPTO
+status: COMPLETED_WITH_PROVENANCE_CORRECTION_NO_NEW_IMMUTABLE
+started_at: "2026-08-25T11:08:45Z"
+finished_at: "2026-08-25T11:23:00Z"
+
+scope:
+  priorities:
+    - SEC-SRC-RU-PP1119-2012
+    - SEC-SRC-RU-FSTEC21-2013
+    - SEC-SRC-RU-FSTEC55-2018
+    - SEC-SRC-RU-FSTEC9-2026
+    - CERTIFICATION_AND_CONFORMITY_CONTEXT_ONLY
+  applicability_rule: >-
+    Certification, licensing, public-sector, KII and cryptographic sources are reusable in PDN decisions only through
+    an explicit applicability edge. No certification-system rule is promoted into a universal standalone PDN duty.
+
+inventory_state_before:
+  effective_identified: 35
+  effective_metadata_verified: 35
+  effective_immutable_sha256_verified: 16
+  effective_pending_raw_capture: 19
+  effective_exact_official_route_unresolved: 6
+  confirmed_conflicts: 0
+
+status_checks:
+  - source: SEC-SRC-RU-FSTEC55-2018
+    checked_at: "2026-08-25"
+    result: CURRENT_REVISION_RECONFIRMED
+    findings:
+      - current revision is dated 20.01.2026 and acts from 02.05.2026
+      - amendment chain remains FSTEC 121/2021, 172/2022 and 9/2026
+      - certification framework remains context-only for PDN unless a concrete applicability source requires evaluated/conformant protection means
+    capture_result: EXISTING_IMMUTABLE_BASE_REUSED
+  - source: SEC-SRC-RU-FSTEC9-2026
+    checked_at: "2026-08-25"
+    result: ACTING_AMENDMENT_AND_IMMUTABLE_PROOF_RECONFIRMED
+    findings:
+      - Minjust registration No. 86119 and official publication identity 0001202604210031 reconfirmed
+      - effective date 02.05.2026 reconfirmed
+      - existing immutable official PDF is 418438 bytes, SHA-256 99f9659c21136883cbaf30224e47203679d6bd6af6bf21eba66a81bf4b142bb4
+      - source-card provenance contradiction was corrected: exact official artifact is captured and is not pending
+    capture_result: EXISTING_IMMUTABLE_REUSED_NO_REDOWLOAD
+  - source: SEC-SRC-RU-PP1119-2012
+    checked_at: "2026-08-25"
+    result: CURRENT_ORIGINAL_EDITION_RECONFIRMED_PRIMARY_GOVERNMENT_DOC_PENDING
+    findings:
+      - current legal index still reports the original 01.11.2012 revision as acting from 15.11.2012
+      - no amending edition was identified in the bounded current check
+      - exact issuer Government DOC bytes remain the immutable target and were not obtained in this pass
+    capture_result: PENDING
+  - source: SEC-SRC-RU-FSTEC21-2013
+    checked_at: "2026-08-25"
+    result: ACTIVE_BASELINE_RETAINED_PROJECT_169583_NOT_PROVEN_ENACTED
+    findings:
+      - fresh indexed sources continue to identify 169583 as a project
+      - no final order number, Minjust registration and official publication identity were proven
+      - a same-day secondary blog uses future-enactment language but itself relies on the July project; it is recorded as narrative, not enactment proof
+    capture_result: EXISTING_IMMUTABLE_REUSED
+
+provenance_correction:
+  source: SEC-SRC-RU-FSTEC9-2026
+  previous_inconsistency: >-
+    The source card simultaneously declared fingerprint_status IMMUTABLE_CAPTURED and provenance.exact_official_artifact_pending true.
+  corrected_to:
+    exact_official_artifact_captured: true
+    exact_official_artifact_pending: false
+    manifest_proof_consistent: true
+  evidence:
+    manifest: "../manifests/SEC-SRC-RU-FSTEC9-2026.json"
+    artifact: "../raw/SEC-SRC-RU-FSTEC9-2026/0001202604210031-99f9659c21136883.pdf"
+    byte_length: 418438
+    sha256: "99f9659c21136883cbaf30224e47203679d6bd6af6bf21eba66a81bf4b142bb4"
+
+primary_transport_attempts:
+  - target: SEC-SRC-RU-PP1119-2012
+    official_route: "https://government.ru/media/2012/11/3/53354/file/1119_pril.doc"
+    result: EXACT_ISSUER_BYTES_NOT_OBTAINED_IN_CURRENT_TRANSPORT
+    proof_floor_effect: NO_PROMOTION
+  - target: SEC-SRC-RU-FSTEC9-2026
+    official_publication_id: "0001202604210031"
+    result: NO_REDOWLOAD_REQUIRED_EXISTING_IMMUTABLE_MANIFEST_AND_ARTIFACT_REUSED
+    proof_floor_effect: IMMUTABLE_STATUS_PRESERVED
+
+inventory_state_after:
+  effective_identified: 35
+  effective_metadata_verified: 35
+  effective_immutable_sha256_verified: 16
+  effective_pending_raw_capture: 19
+  effective_exact_official_route_unresolved: 6
+  confirmed_conflicts: 0
+
+metrics:
+  new_sources_registered: 0
+  new_immutable_captured: 0
+  existing_immutable_reused: 3
+  source_cards_refreshed: 2
+  provenance_consistency_corrections: 1
+  regulatory_watch_records_refreshed: 1
+  priority_status_rechecks: 4
+  primary_routes_attempted: 1
+  semantic_promotions: 0
+  new_universal_pdn_duties_created: 0
+
+next_priority:
+  - exact Government DOC bytes for PP1119 with OLE/CFB validation
+  - exact primary publication bytes for FSB378
+  - exact primary bytes/current chain for FSB66/173 and FAPSI152
+  - exact official PDFs for FSTEC protection-measures method 12.04.2026 and maturity method 07.08.2026
+  - continue FSTEC21 project 169583 enactment watch without using secondary future-tense claims as law
+
+proof_rule: >-
+  Preserve exact-byte proof as the immutable gate. A stale or contradictory provenance flag must be repaired from the
+  manifest and artifact evidence rather than lowering a proven capture to pending. Secondary commentary cannot enact a draft.

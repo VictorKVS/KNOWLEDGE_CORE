@@ -1,0 +1,76 @@
+schema_version: "1.0"
+id: SEC-PDN-SECURITY-STACK-INVENTORY-DELTA-2026-08-25T1108Z
+applies_to: PDN_SECURITY_STACK_SOURCE_INVENTORY.yaml
+stream: RU_PDN_TECHNICAL_CRYPTO
+created_at: "2026-08-25T11:23:00Z"
+merge_policy: >-
+  STATUS_AND_PROVENANCE_REFRESH_OVERLAY. Preserve all direct-base rows and all previously merged additive overlays.
+  Do not change effective source counters. Repair only the FSTEC9 immutable-provenance contradiction, refresh the
+  FSTEC55/FSTEC9 status chain and the FSTEC21 regulatory watch.
+
+effective_inventory_inputs:
+  effective_identified_before: 35
+  new_source_records_this_overlay: 0
+  effective_identified_after_overlay: 35
+
+status_refreshes:
+  - id: SEC-SRC-RU-FSTEC55-2018
+    checked_at: "2026-08-25"
+    status: METADATA_VERIFIED
+    raw_capture: IMMUTABLE_CAPTURED
+    finding: CURRENT_REVISION_2026_01_20_ACTING_FROM_2026_05_02_RECONFIRMED
+    applicability: CERTIFICATION_AND_CONFORMITY_CONTEXT_ONLY
+  - id: SEC-SRC-RU-FSTEC9-2026
+    checked_at: "2026-08-25"
+    status: METADATA_VERIFIED
+    raw_capture: IMMUTABLE_CAPTURED
+    finding: ACTING_AMENDMENT_PUBLICATION_ID_AND_EXISTING_IMMUTABLE_PROOF_RECONFIRMED
+    applicability: VERSION_CHAIN_SCOPE
+  - id: SEC-SRC-RU-PP1119-2012
+    checked_at: "2026-08-25"
+    status: METADATA_VERIFIED
+    raw_capture: PENDING
+    finding: CURRENT_ORIGINAL_EDITION_RECONFIRMED_EXACT_GOVERNMENT_DOC_BYTES_PENDING
+  - id: SEC-SRC-RU-FSTEC21-2013
+    checked_at: "2026-08-25"
+    status: METADATA_VERIFIED
+    raw_capture: IMMUTABLE_CAPTURED
+    finding: ACTIVE_BASELINE_RETAINED_PROJECT_169583_NOT_PROVEN_ENACTED
+
+provenance_patch:
+  - id: SEC-SRC-RU-FSTEC9-2026
+    exact_official_artifact_captured: true
+    exact_official_artifact_pending: false
+    manifest_proof_consistent: true
+    manifest_ref: "manifests/SEC-SRC-RU-FSTEC9-2026.json"
+    byte_length: 418438
+    sha256: "99f9659c21136883cbaf30224e47203679d6bd6af6bf21eba66a81bf4b142bb4"
+    correction_reason: SOURCE_CARD_FLAG_CONTRADICTED_EXISTING_IMMUTABLE_MANIFEST_AND_ARTIFACT
+
+counter_patch:
+  identified: 35
+  metadata_verified: 35
+  raw_downloaded_exact: 16
+  immutable_sha256_verified: 16
+  pending_raw_capture: 19
+  exact_official_route_unresolved: 6
+  confirmed_conflicts: 0
+
+latest_run_patch:
+  run_record: "runs/STREAM2_RUN_2026-08-25T1108Z.yaml"
+  new_sources: 0
+  new_immutable_captured: 0
+  existing_immutable_reused: 3
+  provenance_consistency_corrections: 1
+  status_rechecks: 4
+  semantic_promotions: 0
+
+semantic_guards:
+  - FSTEC55/FSTEC9 are certification-system/version-chain context and do not create a universal PDN certification duty by themselves
+  - PP1119 stays pending for immutable promotion until exact issuer DOC bytes are captured and validated
+  - project 169583 remains future-change evidence only until final enactment/registration/publication is proven
+  - secondary future-tense claims about cancellation of Order 21 are narrative evidence, not legal enactment evidence
+
+proof_rule: >-
+  Do not regress a proven immutable artifact to pending because of a stale contradictory source-card flag. Resolve the
+  contradiction against the immutable manifest and raw artifact. Do not change counters when no source or artifact was added.

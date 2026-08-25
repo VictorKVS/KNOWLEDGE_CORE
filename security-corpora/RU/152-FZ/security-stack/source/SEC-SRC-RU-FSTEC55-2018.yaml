@@ -1,4 +1,4 @@
-schema_version: "1.0"
+schema_version: "1.1"
 id: SEC-SRC-RU-FSTEC55-2018
 kind: security-regulatory-source
 status: METADATA_VERIFIED
@@ -15,15 +15,23 @@ document:
   effective_from: "2018-08-01"
   current_revision_date: "2026-01-20"
   current_revision_effective_from: "2026-05-02"
-  checked_at: "2026-08-23"
-  version_chain_note: "Текущая редакция учитывает приказы ФСТЭК России от 05.08.2021 №121, от 19.09.2022 №172 и от 20.01.2026 №9."
+  checked_at: "2026-08-25"
+  current_status: ACTING_CURRENT_REVISION
+  version_chain_note: >-
+    Текущая редакция повторно подтверждена на 25.08.2026 и учитывает приказы ФСТЭК России от 05.08.2021 № 121,
+    от 19.09.2022 № 172 и от 20.01.2026 № 9. Последнее изменение действует с 02.05.2026.
 canonical_source:
   publisher: "Официальный интернет-портал правовой информации"
   url: "https://publication.pravo.gov.ru/document/0001201805140022"
   artifact_scope: BASE_OFFICIAL_PUBLICATION
   expected_mime: "application/pdf"
-  current_status_corroboration: "https://www.consultant.ru/document/cons_doc_LAW_298087/"
+  current_status_corroboration:
+    - "https://www.consultant.ru/document/cons_doc_LAW_298087/"
+    - "https://normativ.kontur.ru/document?documentId=505809&moduleId=1"
   current_status_evidence_class: SECONDARY_INDEX_FOR_CONSOLIDATED_REVISION
+  freshness_check:
+    checked_at: "2026-08-25"
+    result: CURRENT_REVISION_2026_01_20_ACTING_FROM_2026_05_02_RECONFIRMED
 capture:
   raw_artifact_ref: "security-corpora/RU/152-FZ/security-stack/raw/SEC-SRC-RU-FSTEC55-2018/0001201805140022-54383ae620ea1426.pdf"
   manifest_ref: "security-corpora/RU/152-FZ/security-stack/manifests/SEC-SRC-RU-FSTEC55-2018.json"
@@ -35,8 +43,7 @@ capture:
   sha256: "54383ae620ea1426f79ba989d545e709be640c7ee1934dc40ed9788162903efe"
   fingerprint_status: IMMUTABLE_CAPTURED
   semantic_status: UNCHANGED
-  note: "Exact bytes from the registered official route captured; extraction/semantic status is not promoted."
-
+  note: "Exact base-publication bytes from the registered official route are preserved; amendment artifacts are tracked separately in the version chain."
 relations:
   - type: AMENDED_BY
     target: SEC-SRC-RU-FSTEC121-2021
@@ -54,5 +61,10 @@ provenance:
   official_identity_verified: true
   official_publication_route_registered: true
   consolidated_revision_cross_checked: true
+  latest_amendment_immutable_captured: true
+  latest_amendment_source: SEC-SRC-RU-FSTEC9-2026
   review_required: true
-agent_rule: "Use as the FSTEC certification-system framework. Do not infer a standalone universal PDN-operator duty to certify every protection tool; require a separate source locator that makes certified/conformant means applicable to the concrete case."
+agent_rule: >-
+  Use as the FSTEC certification-system framework. Do not infer a standalone universal PDN-operator duty to certify
+  every protection tool; require a separate source locator that makes certified/conformant means applicable to the
+  concrete case. Keep the current-version chain separate from the immutable base-publication artifact.

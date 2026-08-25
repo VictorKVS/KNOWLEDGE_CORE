@@ -1,4 +1,4 @@
-schema_version: "1.0"
+schema_version: "1.1"
 id: SEC-SRC-RU-FSTEC9-2026
 kind: security-regulatory-source
 status: METADATA_VERIFIED
@@ -13,14 +13,24 @@ document:
   official_publication_id: "0001202604210031"
   official_publication_date: "2026-04-21"
   effective_from: "2026-05-02"
-  checked_at: "2026-08-23"
+  checked_at: "2026-08-25"
+  current_status: ACTING_AMENDMENT
+  status_note: >-
+    Текущий правовой индекс и архив официального опубликования повторно подтверждают приказ № 9 как действующее
+    изменение к приказу ФСТЭК России № 55. Приказ зарегистрирован в Минюсте России № 86119, официально опубликован
+    21.04.2026 под номером опубликования 0001202604210031 и вступил в силу 02.05.2026.
 canonical_source:
   publisher: "Официальный интернет-портал правовой информации"
   url: "https://publication.pravo.gov.ru/document/0001202604210031"
   artifact_scope: AMENDMENT_OFFICIAL_PUBLICATION
   expected_mime: "application/pdf"
-  exact_publication_id_corroboration: "https://ipbd.ru/doc/0001202604210031/"
-  current_status_corroboration: "https://www.consultant.ru/document/cons_doc_LAW_532580/"
+  official_file_route: "http://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202604210031"
+  current_status_corroboration:
+    - "https://rg.ru/documents/2026/04/22/fstek-prikaz9-site-dok.html"
+    - "https://www.consultant.ru/document/cons_doc_LAW_532580/"
+  freshness_check:
+    checked_at: "2026-08-25"
+    result: ACTING_AMENDMENT_AND_PUBLICATION_ID_RECONFIRMED
 capture:
   raw_artifact_ref: "security-corpora/RU/152-FZ/security-stack/raw/SEC-SRC-RU-FSTEC9-2026/0001202604210031-99f9659c21136883.pdf"
   manifest_ref: "security-corpora/RU/152-FZ/security-stack/manifests/SEC-SRC-RU-FSTEC9-2026.json"
@@ -32,15 +42,20 @@ capture:
   sha256: "99f9659c21136883cbaf30224e47203679d6bd6af6bf21eba66a81bf4b142bb4"
   fingerprint_status: IMMUTABLE_CAPTURED
   semantic_status: UNCHANGED
-  note: "Exact bytes from the registered official route captured; extraction/semantic status is not promoted."
-
+  note: "Exact bytes from the registered official publication route were captured and fingerprinted; no re-download is required for this status refresh."
 relations:
   - type: AMENDS
     target: SEC-SRC-RU-FSTEC55-2018
     scope: FSTEC_CERTIFICATION_SYSTEM_VERSION_CHAIN
 provenance:
   official_route_registered_from_publication_identifier: true
+  official_publication_identity_verified: true
   current_revision_cross_checked: true
-  exact_official_artifact_pending: true
+  exact_official_artifact_captured: true
+  exact_official_artifact_pending: false
+  manifest_proof_consistent: true
   review_required: true
-agent_rule: "Use as the 2026 amendment in the FSTEC Order No. 55 version chain. Do not derive a universal PDN-operator certification duty without a separate applicability source."
+agent_rule: >-
+  Use as the 2026 amendment in the FSTEC Order No. 55 version chain. Do not derive a universal PDN-operator
+  certification duty without a separate applicability source. The immutable artifact is already captured; do not
+  regress it to PENDING or claim a new download during status-only refreshes.
