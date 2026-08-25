@@ -1,0 +1,135 @@
+schema_version: "1.0"
+id: SEC-PDN-STREAM2-RUN-2026-08-25T0512Z
+stream: RU_PDN_TECHNICAL_CRYPTO
+status: COMPLETED_WITH_PENDING_PRIMARY_BYTES
+started_at: "2026-08-25T05:12:00Z"
+finished_at: "2026-08-25T05:24:00Z"
+
+scope:
+  priorities:
+    - SEC-SRC-RU-PP1119-2012
+    - SEC-SRC-RU-FSTEC21-2013
+    - SEC-SRC-RU-FSTEC-THREAT-METHOD-2021
+    - SEC-SRC-RU-FSB378-2014
+    - SEC-SRC-RU-FSB66-2005
+    - SEC-SRC-RU-FAPSI152-2001
+  applicability_rule: >-
+    Technical, cryptographic, licensing, certification, public-sector/KII and GosSOPKA/NKTsKI sources are
+    reusable in PDN decisions only through an explicit applicability edge. No adjacent regime is promoted
+    into a universal PDN duty by analogy.
+
+inventory_state_before:
+  direct_security_stack_rows: 32
+  effective_identified_after_merged_overlays: 34
+  effective_metadata_verified: 34
+  effective_immutable_sha256_verified: 16
+  effective_pending_raw_capture: 18
+  effective_exact_official_route_unresolved: 6
+  reconciliation_note: >-
+    The direct base inventory is stale relative to already merged additive overlays. The effective set includes
+    SEC-SRC-RU-FSTEC-INFO-240-22-690-2021 from the 2026-08-24T1725Z overlay and
+    SEC-SRC-RU-FSB-SKZI-FORM-NOTICE-2017 from the 2026-08-25T0214Z overlay. The 2016 FSB status notice is already
+    present in the direct base. Effective counters must therefore not regress from 34 to 32.
+
+status_checks:
+  - source: SEC-SRC-RU-PP1119-2012
+    checked_at: "2026-08-25"
+    result: CURRENT_ORIGINAL_EDITION_RECONFIRMED_PRIMARY_BINARY_PENDING
+    findings:
+      - current legal index still shows the 01.11.2012 edition as acting
+      - official Government landing page continues to advertise the DOC
+      - no amending edition was identified in the bounded current check
+      - exact Government OLE/CFB bytes were not obtained
+    capture_result: PENDING
+  - source: SEC-SRC-RU-FSB378-2014
+    checked_at: "2026-08-25"
+    result: CURRENT_ORIGINAL_EDITION_RECONFIRMED_PRIMARY_BYTES_PENDING
+    findings:
+      - current legal index shows status acting and edition 10.07.2014
+      - Ministry of Justice registration No. 33620 of 18.08.2014 remains corroborated
+      - effective date 28.09.2014 remains corroborated
+      - applicability remains bounded to ISPDN where SKZI use is established
+      - exact primary publication bytes were not obtained
+    capture_result: PENDING
+  - source: SEC-SRC-RU-FSTEC21-2013
+    checked_at: "2026-08-25"
+    result: ACTIVE_BASELINE_RETAINED_REPLACEMENT_NOT_PROVEN_ENACTED
+    findings:
+      - Order No. 68/2020 remains an acting amendment to Order No. 21
+      - replacement text prepared 24.07.2026 is still evidenced as project 169583
+      - public discussion ended 08.08.2026
+      - no final signed, Minjust-registered and officially published replacing act was found in the bounded check
+    capture_result: EXISTING_IMMUTABLE_REUSED
+  - source: SEC-SRC-RU-FSB-SKZI-FORM-NOTICE-2017
+    checked_at: "2026-08-25"
+    result: OFFICIAL_FSB_GUIDANCE_CONTENT_RECONFIRMED_EXACT_HTML_PENDING
+    findings:
+      - official FSB indexed page still states strict observance of the specific SKZI formular
+      - environment-impact assessment is conditional on the formular requirement and certificate conditions
+      - this does not create a universal SKZI-use or cryptographic-licence duty
+    capture_result: PENDING
+  - source: SEC-SRC-RU-FSB-PDN-NORMATIVE-STATUS-NOTICE-2016
+    checked_at: "2026-08-25"
+    result: OFFICIAL_FSB_STATUS_EVIDENCE_RECONFIRMED
+    findings:
+      - official FSB notice lists FSB378, FSB66/PKZ-2005, FAPSI152 and 2015 8-Center recommendations as the set identified on 21.06.2016
+      - the notice also marks the two 2008 PDN crypto methodological documents as no longer relevant after PP781 ceased
+      - each listed act retains an independent current-status gate for 2026 use
+    capture_result: PENDING
+
+primary_transport_attempts:
+  - target: SEC-SRC-RU-PP1119-2012
+    official_route: "https://government.ru/media/2012/11/3/53354/file/1119_pril.doc"
+    result: EXACT_BYTES_NOT_OBTAINED
+    proof_floor_effect: NO_PROMOTION
+  - target: SEC-SRC-RU-FSB378-2014
+    official_route: "https://rg.ru/documents/2014/09/17/zashita-dok.html"
+    result: EXACT_PRIMARY_BYTES_NOT_OBTAINED_IN_CURRENT_RETRIEVAL_PATH
+    proof_floor_effect: NO_PROMOTION
+  - target: SEC-SRC-RU-FSB-SKZI-FORM-NOTICE-2017
+    official_route: "https://www.fsb.ru/fsb/science/single.htm!id=10437494@fsbResearchart.html"
+    result: OFFICIAL_CONTENT_INDEXED_EXACT_HTTP_BYTES_NOT_CAPTURED
+    proof_floor_effect: NO_PROMOTION
+
+artifacts:
+  new_immutable_captured: 0
+  existing_immutable_reused: 1
+  source_cards_refreshed:
+    - "source/SEC-SRC-RU-PP1119-2012.yaml"
+    - "source/SEC-SRC-RU-FSB378-2014.yaml"
+  manifests_created: 0
+  reason_no_manifest: "No new exact primary bytes passed the immutable capture gate in this pass."
+
+counters_after:
+  identified: 34
+  metadata_verified: 34
+  raw_downloaded_exact: 16
+  immutable_sha256_verified: 16
+  pending_raw_capture: 18
+  exact_official_route_unresolved: 6
+  confirmed_conflicts: 0
+
+production_statistics:
+  new_sources_this_pass: 0
+  status_rechecks_this_pass: 5
+  primary_byte_targets_attempted_this_pass: 3
+  new_immutable_this_pass: 0
+  semantic_promotions_this_pass: 0
+  new_universal_pdn_duties_this_pass: 0
+  rework_class: EFFECTIVE_COUNTER_RECONCILIATION_PLUS_STATUS_REFRESH
+  forecast: NOT_CALCULATED_INSUFFICIENT_STABLE_THROUGHPUT_TELEMETRY
+
+proof_floor:
+  - do not invent MIME, byte length or SHA-256 when exact official bytes are unavailable
+  - do not replace active FSTEC Order No. 21 with project 169583 before final enactment evidence
+  - do not apply FSB Order No. 378 unless SKZI use is established
+  - do not treat FSB 2016/2017 information notices as independent universal controls
+  - do not infer a PP313 or PP79 licence duty merely from operating an ISPDN
+
+next_priority:
+  - exact Government DOC bytes for PP1119 with OLE/CFB signature validation
+  - exact primary publication bytes for FSB378
+  - exact primary bytes/current status chain for FSB66 and FSB173
+  - exact primary bytes/current status for FAPSI152
+  - exact official bytes for FSTEC information notice No. 240/22/690
+  - exact official attachments for registered FSTEC methodical documents
