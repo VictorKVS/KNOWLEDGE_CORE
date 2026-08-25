@@ -1,9 +1,9 @@
-schema_version: "1.2"
+schema_version: "1.3"
 id: SEC-SRC-RU-FZ-38-2006-A18
 kind: security-regulatory-source
-status: PRIMARY_OFFICIAL_GAZETTE_TEXT_VERIFIED_CURRENT_LOCATOR_CROSSCHECKED_EXACT_ARTIFACT_PENDING
+status: PRIMARY_TEXT_AND_AMENDMENT_METADATA_VERIFIED_CURRENT_LOCATORS_CROSSCHECKED_EXACT_ARTIFACT_PENDING
 
-title: "Федеральный закон от 13.03.2006 № 38-ФЗ «О рекламе» — статья 18 «Реклама, распространяемая по сетям электросвязи»"
+title: "Федеральный закон от 13.03.2006 № 38-ФЗ «О рекламе» — статьи 12, 18 и 18.1"
 jurisdiction: RU
 issuer: "Российская Федерация"
 document:
@@ -19,104 +19,181 @@ canonical_sources:
     url: "https://rg.ru/documents/2006/03/15/reklama-dok.html"
     origin_verified: true
     proof_scope: "Официальное опубликование исходного 38-ФЗ; exact transport bytes не сохранены в immutable corpus."
+  official_government_text_crosscheck:
+    publisher: "Правительство России"
+    url: "https://government.ru/docs/all/98086/"
+    origin_verified: true
+    proof_scope: "Официальный государственный текст закона используется как дополнительный source-level crosscheck; не заменяет exact current artifact."
   current_official_locator:
     publisher: "Официальный интернет-портал правовой информации / pravo.gov.ru"
     url: "http://pravo.gov.ru/proxy/ips/?docbody=&link_id=0&nd=102105292&intelsearch=&firstDoc=1"
     locator_origin: "Перечень обязательных требований ФАС России от 08.06.2026"
-    direct_runtime_fetch_state: PENDING
-    proof_scope: "Актуальный официальный locator закона идентифицирован через действующий перечень обязательных требований ФАС; runtime не получил exact current bytes."
+    direct_runtime_fetch_state: PENDING_DNS_FAILURE_2026_08_25
+    proof_scope: "Актуальный официальный locator закона идентифицирован; runtime 2026-08-25 не получил exact current bytes из-за DNS/name-resolution failure."
+  amendment_primary_publications:
+    - act: "347-ФЗ от 02.07.2021"
+      publication_number: "0001202107020068"
+      publication_date: "2021-07-02"
+      url: "https://publication.pravo.gov.ru/Document/View/0001202107020068"
+      state: PRIMARY_PUBLICATION_METADATA_VERIFIED_EXACT_BYTES_PENDING
+    - act: "479-ФЗ от 26.12.2024"
+      publication_number: "0001202412260005"
+      publication_date: "2024-12-26"
+      url: "https://publication.pravo.gov.ru/document/0001202412260005"
+      official_index_display: "PDF 1297 Кб, 25 стр."
+      state: PRIMARY_PUBLICATION_METADATA_VERIFIED_EXACT_BYTES_PENDING
+    - act: "72-ФЗ от 07.04.2025"
+      publication_number: "0001202504070018"
+      publication_date: "2025-04-07"
+      url: "https://publication.pravo.gov.ru/document/0001202504070018"
+      official_index_display: "PDF 167 Кб, 4 стр."
+      state: PRIMARY_PUBLICATION_METADATA_VERIFIED_EXACT_BYTES_PENDING
 
 protected_information:
   sector: advertising_marketing
-  regime: telecom_advertising_consent_and_suppression
+  regimes:
+    - advertising_material_retention
+    - telecom_advertising_consent_and_suppression
+    - internet_advertising_traceability_and_data_reporting
   protected_locators:
+    - locator: "статья 12"
+      concept: ADVERTISING_MATERIAL_AND_CONTRACT_RETENTION
+      findings:
+        - "Рекламные материалы или их копии, включая изменения, а также договоры на производство, размещение и распространение рекламы хранятся один год."
+        - "Триггер срока: последнее распространение рекламы либо окончание срока действия соответствующего договора; для документов с иным сроком действует специальное законодательство."
+      pdn_guard: "Это срок хранения рекламных материалов/договоров по 38-ФЗ, а не общий срок хранения или удаления персональных данных по 152-ФЗ."
     - locator: "статья 18 часть 1"
       concept: PRIOR_ADVERTISING_CONSENT_AND_PROOF_BURDEN
       findings:
-        - "Распространение рекламы по сетям электросвязи допускается только при предварительном согласии абонента или адресата на получение рекламы."
-        - "Если рекламораспространитель не докажет получение такого согласия, реклама признается распространенной без предварительного согласия."
-        - "Рекламораспространитель обязан немедленно прекратить рекламу в адрес лица, потребовавшего прекращения."
+        - "Распространение рекламы по сетям электросвязи допускается только при предварительном согласии абонента или адресата."
+        - "Бремя доказать получение согласия лежит на рекламораспространителе."
+        - "По требованию лица реклама в его адрес прекращается немедленно."
     - locator: "статья 18 часть 2"
       concept: AUTOMATED_DIALING_AND_AUTOMATED_MAILING_PROHIBITION
       findings:
-        - "Не допускается использование сетей электросвязи для рекламы с применением средств выбора и (или) набора абонентского номера без участия человека, включая автоматическое дозванивание и автоматическую рассылку."
-    - locator: "статья 18 часть 3"
-      concept: DIRECTORY_SERVICE_ADVERTISING_SEQUENCE
+        - "Не допускается реклама с автоматическим выбором/набором абонентского номера без участия человека, включая автоматическое дозванивание и автоматическую рассылку."
+    - locator: "статья 18 части 3-4"
+      concept: TELECOM_ADVERTISING_SERVICE_RULES
       findings:
-        - "При справочном телефонном обслуживании реклама может предоставляться только после сообщения запрашиваемой справки."
-    - locator: "статья 18 часть 4"
-      concept: TIME_BASED_TELEPHONY_ADVERTISING_CHARGE_EXCLUSION
-      findings:
-        - "При повременной оплате телефонных соединений время распространения рекламы не учитывается в стоимости услуги связи."
+        - "При справочном телефонном обслуживании реклама предоставляется после запрашиваемой справки."
+        - "При повременной оплате телефонных соединений время распространения рекламы не включается в стоимость услуги связи."
     - locator: "статья 18 часть 5"
       concept: REPEALED_POSTAL_ADVERTISING_RULE
       findings:
         - "Часть 5 утратила силу по 179-ФЗ от 27.10.2008; не использовать как действующее требование."
+    - locator: "статья 18.1 часть 1"
+      concept: INTERNET_AD_REGULATORY_ACCOUNTING_STORAGE_PROCESSING
+      findings:
+        - "Уполномоченный федеральный орган осуществляет учет, хранение и обработку информации о распространенной в Интернете рекламе и социальной рекламе, включая сведения о рекламодателях, рекламораспространителях и операторах рекламных систем."
+        - "Состав подлежащей учету, хранению и обработке информации определяется Правительством РФ."
+      pdn_guard: "Сведения о рекламодателе/участнике рекламного рынка не являются автоматически ПДн; идентифицируемость физического лица и фактические поля данных проверяются отдельно."
+    - locator: "статья 18.1 части 3, 5 и 8"
+      concept: INTERNET_AD_REPORTING_THROUGH_AD_DATA_OPERATOR
+      findings:
+        - "Установленные законом участники обязаны предоставлять или обеспечивать предоставление информации об интернет-рекламе уполномоченному органу."
+        - "Предоставление осуществляется через операторов рекламных данных; оператор рекламных данных передает полученную информацию уполномоченному органу."
+    - locator: "статья 18.1 часть 11"
+      concept: INTERNET_AD_DATA_QUALITY_RESPONSIBILITY
+      findings:
+        - "Участники и операторы рекламных данных отвечают за полноту, достоверность, актуальность и своевременность предоставления информации."
+    - locator: "статья 18.1 часть 13"
+      concept: INTERNET_AD_REGULATORY_RETENTION_MINIMUM
+      findings:
+        - "Информация об интернет-рекламе, предоставленная уполномоченному органу, хранится им не менее трех лет со дня получения."
+      pdn_guard: "Трехлетний срок относится к установленному законом массиву сведений об интернет-рекламе у уполномоченного органа; не переносить его автоматически на все ПДн рекламодателя или рекламораспространителя."
+    - locator: "статья 18.1 части 14-15"
+      concept: INTERNET_AD_REGULATORY_DATA_ACCESS
+      findings:
+        - "Участники получают доступ к непосредственно касающейся их прав и обязанностей информации в установленном составе и порядке."
+        - "Закон предусматривает доступ антимонопольного, налогового и иных определенных Правительством органов/лиц к имеющейся у уполномоченного органа информации."
+    - locator: "статья 18.1 часть 17"
+      concept: INTERNET_AD_IDENTIFIER_TRACEABILITY
+      findings:
+        - "Распространение интернет-рекламы допускается при присвоении оператором рекламных данных уникального идентификатора, обеспечивающего прослеживаемость и учет."
   applicability_status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
   applicability_guard: >-
-    Согласие на получение рекламы по статье 18 38-ФЗ не тождественно согласию на обработку персональных данных по 152-ФЗ. Наличие телефона, адреса электронной почты или иного контактного идентификатора может создавать пересечение с ПДн, но применимость конкретных требований 152-ФЗ устанавливается отдельно по субъекту, идентифицируемости, полям данных, операции, цели, роли и правовому основанию.
+    38-ФЗ задает самостоятельные рекламные обязанности. Согласие на рекламу не равно согласию на обработку ПДн; сроки статьи 12 и части 13 статьи 18.1 не являются универсальными PDN-retention сроками. Пересечение с 152-ФЗ определяется отдельно по идентифицируемому субъекту, конкретным полям, операции, цели, роли и правовому основанию.
 
 relationship_candidates:
   - target: "152-ФЗ"
     type: MARKETING_CONTACT_PDN_OVERLAP
     state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
-    locators:
-      - "38-ФЗ статья 18 часть 1"
-      - "38-ФЗ статья 18 часть 2"
+    locators: ["38-ФЗ статья 18 части 1-2"]
     guard: "ADVERTISING_CONSENT != PDN_PROCESSING_CONSENT; OVERLAP != APPLICABILITY."
+  - target: "152-ФЗ"
+    type: ADVERTISING_RETENTION_VS_PDN_RETENTION_BOUNDARY
+    state: CANDIDATE_SCOPE_BOUNDARY_REVIEW_REQUIRED
+    locators: ["38-ФЗ статья 12", "38-ФЗ статья 18.1 часть 13"]
+    guard: "Sector retention under 38-ФЗ must not be promoted to a general PDN storage/deletion period."
+  - target: "152-ФЗ"
+    type: INTERNET_AD_DATA_FLOW_PDN_OVERLAP
+    state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    locators: ["38-ФЗ статья 18.1 части 1, 3, 5, 8, 13-15, 17"]
+    guard: "Prove whether the statutory ad-data payload includes data of an identifiable natural person in the concrete scenario before attaching PDN duties."
   - target: "126-ФЗ"
     type: TELECOM_NETWORK_AND_MOBILE_MAILING_OVERLAP
     state: STATUTORY_CONTEXT_RELATION_REVIEW_REQUIRED
-    locators:
-      - "38-ФЗ статья 18 части 1-2"
-      - "126-ФЗ статья 44.1"
-    guard: "Рекламный режим 38-ФЗ и режим рассылки 126-ФЗ могут действовать одновременно, но их согласия, субъекты обязанностей, исключения и доказательства не объединяются автоматически."
+    locators: ["38-ФЗ статья 18 части 1-2", "126-ФЗ статья 44.1"]
+    guard: "38-ФЗ and 126-ФЗ may coexist; do not merge consent, opt-out, actor, exception or proof rules."
+  - target: "126-ФЗ"
+    type: RADIO_FREQUENCY_SERVICE_INTERNET_AD_DATA_INFRASTRUCTURE_CONTEXT
+    state: STATUTORY_CONTEXT_RELATION_REVIEW_REQUIRED
+    locators: ["38-ФЗ статья 18.1 часть 2", "126-ФЗ статья 22.1"]
+    guard: "Infrastructure relationship only; it does not prove PDN applicability."
 
 version_chain:
-  state: LOCATOR_CHAIN_TEXT_VERIFIED_EXACT_BINARY_PENDING
+  state: MULTI_LOCATOR_CHAIN_PRIMARY_METADATA_VERIFIED_EXACT_BINARY_PENDING
   current_consolidation_crosscheck:
     revision_date: "2026-07-26"
+    article_12_state: "CURRENT_TEXT_CROSSCHECKED; no locator-specific amendment annotation found in current consolidation"
     article_18_annotation: "в ред. Федерального закона от 27.10.2008 № 179-ФЗ"
+    article_18_1_annotation: "в ред. Федерального закона от 26.12.2024 № 479-ФЗ; введена 347-ФЗ от 02.07.2021; часть 13 также изменена 72-ФЗ от 07.04.2025"
     state: CURRENT_TEXT_CROSSCHECK_NOT_IMMUTABLE_PROOF
   locator_specific_events:
     - act: "38-ФЗ от 13.03.2006 — исходная редакция"
       official_gazette_url: "https://rg.ru/documents/2006/03/15/reklama-dok.html"
       official_gazette_publication_date: "2006-03-15"
-      locator: "статья 18"
+      locators: ["статья 12", "статья 18"]
       state: OFFICIAL_GAZETTE_PRIMARY_TEXT_VERIFIED_EXACT_BYTES_PENDING
     - act: "179-ФЗ от 27.10.2008"
       official_gazette_url: "https://rg.ru/documents/2008/10/29/fz-reklama-dok.html"
       official_gazette_publication_date: "2008-10-29"
       effective_date: "2008-11-09"
       locator: "статья 18 — наименование и часть 5"
-      effect: "Из наименования исключены слова о почтовых отправлениях; часть 5 признана утратившей силу."
+      effect: "Из наименования исключен почтовый контекст; часть 5 признана утратившей силу."
       state: OFFICIAL_GAZETTE_PRIMARY_AMENDMENT_TEXT_VERIFIED_EXACT_BYTES_PENDING
+    - act: "347-ФЗ от 02.07.2021"
+      publication_number: "0001202107020068"
+      publication_date: "2021-07-02"
+      official_url: "https://publication.pravo.gov.ru/Document/View/0001202107020068"
+      locator: "статья 18.1 — введение режима интернет-рекламы"
+      state: PRIMARY_PUBLICATION_METADATA_VERIFIED_EXACT_BYTES_PENDING
+    - act: "479-ФЗ от 26.12.2024"
+      publication_number: "0001202412260005"
+      publication_date: "2024-12-26"
+      official_url: "https://publication.pravo.gov.ru/document/0001202412260005"
+      locator: "статья 18.1 — новая редакция, включая социальную рекламу и переработку data-flow"
+      effective_date: "2025-03-01"
+      state: PRIMARY_PUBLICATION_METADATA_VERIFIED_CURRENT_TEXT_EFFECT_CROSSCHECKED_EXACT_BYTES_PENDING
+    - act: "72-ФЗ от 07.04.2025"
+      publication_number: "0001202504070018"
+      publication_date: "2025-04-07"
+      official_url: "https://publication.pravo.gov.ru/document/0001202504070018"
+      locator: "статья 18.1 — изменения, включая часть 13"
+      state: PRIMARY_PUBLICATION_METADATA_VERIFIED_CURRENT_TEXT_EFFECT_CROSSCHECKED_EXACT_BYTES_PENDING
   latest_source_level_event_checked:
     act: "272-ФЗ от 26.07.2026"
     official_gazette_url: "https://rg.ru/documents/2026/08/03/fz272-dok.html"
     official_gazette_publication_date: "2026-08-03"
+    publication_number_crosscheck: "0001202607260031"
     effective_date: "2026-08-06"
     changed_locators: ["статья 21", "статья 38"]
-    effect_on_article_18: NONE
-    state: OFFICIAL_GAZETTE_FULL_ACT_TEXT_VERIFIED
+    effect_on_articles_12_18_18_1: NONE
+    state: OFFICIAL_GAZETTE_FULL_ACT_TEXT_VERIFIED_PUBLICATION_LOCATOR_CROSSCHECKED
   pending: >-
-    Получить exact authoritative bytes исходного 38-ФЗ, 179-ФЗ и текущего официального consolidated artifact; сверить первичный publication locator для текущего source-level event 272-ФЗ. До сохранения exact-byte доказательств не повышать источник до immutable/current executable proof.
+    Получить exact authoritative bytes исходного 38-ФЗ, 179-ФЗ, 347-ФЗ, 479-ФЗ, 72-ФЗ и текущего официального consolidated artifact. До сохранения exact-byte доказательств не повышать multi-locator semantics до immutable/current executable proof.
 
 capture:
-  initial_official_gazette:
-    state: EXACT_CAPTURE_PENDING
-    url: "https://rg.ru/documents/2006/03/15/reklama-dok.html"
-    retrieved_at: null
-    mime: null
-    byte_length: null
-    sha256: null
-  amendment_179_fz:
-    state: EXACT_CAPTURE_PENDING
-    url: "https://rg.ru/documents/2008/10/29/fz-reklama-dok.html"
-    retrieved_at: null
-    mime: null
-    byte_length: null
-    sha256: null
   current_exact_authoritative_binary:
     state: PENDING
     official_locator: "http://pravo.gov.ru/proxy/ips/?docbody=&link_id=0&nd=102105292&intelsearch=&firstDoc=1"
@@ -124,11 +201,20 @@ capture:
     mime: null
     byte_length: null
     sha256: null
+  amendment_exact_artifacts:
+    347_fz: {state: PENDING, publication_number: "0001202107020068", retrieved_at: null, mime: null, byte_length: null, sha256: null}
+    479_fz: {state: PENDING, publication_number: "0001202412260005", retrieved_at: null, mime: null, byte_length: null, sha256: null}
+    72_fz: {state: PENDING, publication_number: "0001202504070018", retrieved_at: null, mime: null, byte_length: null, sha256: null}
 
 provenance:
-  checked_at: "2026-08-25T05:22:31+03:00"
+  checked_at: "2026-08-25T11:21:54+03:00"
   review_required: true
-  deduplication: "No existing Stream 3 protected-information source card for 38-ФЗ Article 18 was found before registration."
+  deduplication: "Reused existing 38-ФЗ source node; Articles 12 and 18.1 were added as locators instead of creating duplicate sector source records."
+  runtime_exact_capture_attempt:
+    attempted_at: "2026-08-25T11:21:54+03:00"
+    target_host: "publication.pravo.gov.ru"
+    result: DNS_NAME_RESOLUTION_FAILURE
+    effect: "No exact bytes obtained; no MIME/byte length/SHA-256/immutable promotion."
 
 agent_rule: >-
-  Treat Article 18 as a telecom-advertising regime. Separate advertising consent from PDN-processing consent and from telecom mailing consent under 126-ФЗ. A stop request is a statutory advertising-suppression duty, not proof of a general PDN erasure rule. Do not infer applicability from a phone/email field alone. Do not use repealed Article 18(5). Current executable semantics remain blocked until exact authoritative capture/version proof is complete.
+  Treat Articles 12, 18 and 18.1 as separate advertising obligations inside one deduplicated 38-ФЗ source. Article 12 one-year retention and Article 18.1(13) three-year regulatory retention are not general PDN retention limits. Advertising consent is not PDN-processing consent. Internet-ad reporting/identifier records may overlap PDN only after identifiable-natural-person data and the concrete processing scenario are proven. Do not execute repealed Article 18(5). Current executable semantics remain blocked until exact authoritative capture/version proof is complete.
