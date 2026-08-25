@@ -1,0 +1,87 @@
+schema_version: "1.0"
+id: SEC-SRC-RU-PP-969-2022
+kind: security-regulatory-source
+status: PRIMARY_LOCATOR_RESOLVED_CURRENT_AMENDMENT_PRIMARY_TEXT_VERIFIED_EXACT_ARTIFACT_PENDING
+
+title: "Постановление Правительства РФ от 28.05.2022 № 969 — доступ ФАС и ФНС к информации об интернет-рекламе"
+jurisdiction: RU
+issuer: "Правительство Российской Федерации"
+document:
+  type: government_decree
+  number: "969"
+  adopted_date: "2022-05-28"
+  official_publication_id: "0001202205300042"
+  official_publication_date: "2022-05-30"
+  effective_from: "2022-09-01"
+  effective_until: "2028-09-01"
+  checked_at: "2026-08-25"
+
+canonical_sources:
+  primary_publication_locator:
+    publisher: "Официальное опубликование правовых актов"
+    url: "https://publication.pravo.gov.ru/document/0001202205300042"
+    state: PRIMARY_DIRECT_FETCH_TIMEOUT_LOCATOR_CROSSCHECKED
+    proof_scope: "Официальный publication locator идентифицирован, но прямой fetch в этом проходе завершился timeout; exact bytes отсутствуют."
+  current_amendment_primary_text:
+    act: "Постановление Правительства РФ от 22.05.2025 № 709"
+    publisher: "Правительство России"
+    url: "https://government.ru/docs/all/159150/"
+    origin_verified: true
+    effect: "С 23.05.2025 распространяет формулировки PP 969 на рекламу и (или) социальную рекламу."
+
+protected_information:
+  sector: advertising_marketing
+  regime: internet_advertising_regulatory_access
+  legal_basis: "38-ФЗ статья 18.1 часть 15"
+  protected_locators:
+    - locator: "Правила, пункт 1"
+      concept: AUTHORIZED_AUTHORITY_ACCESS_SCOPE
+      finding: "Определяет доступ антимонопольного и налогового органов к имеющейся у Роскомнадзора информации об интернет-рекламе и социальной рекламе."
+    - locator: "Правила, пункты 2-3"
+      concept: REGULATORY_INFORMATION_EXCHANGE
+      finding: "Устанавливает электронное взаимодействие через информационную систему Роскомнадзора и сценарии запросов/автоматизированного предоставления информации."
+    - locator: "Правила, пункты 4-6"
+      concept: AUTHENTICATED_REGULATORY_ACCESS
+      finding: "Доступ организуется через автоматизированные рабочие места сотрудников; запрос на доступ может оформляться электронно с усиленной квалифицированной электронной подписью."
+  applicability_status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  applicability_guard: "Это специальный режим доступа государственных получателей к массиву интернет-рекламы; он не доказывает наличие ПДн в каждом объекте и не создает универсальный канал раскрытия ПДн."
+
+relationship_candidates:
+  - target: "38-ФЗ статья 18.1"
+    type: DIRECT_SUBORDINATE_ACCESS_IMPLEMENTATION
+    state: STATUTORY_IMPLEMENTATION_RELATION
+  - target: "152-ФЗ"
+    type: REGULATORY_ACCESS_PDN_OVERLAP
+    state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    guard: "Применять PDN-layer только если конкретно доступный набор содержит сведения об идентифицируемом физическом лице."
+  - target: "SEC-SRC-RU-PP-974-2022"
+    type: SAME_REGULATORY_DATASET_DIFFERENT_OPERATION
+    state: CROSS_REGIME_RELATION
+    guard: "PP 974 регулирует передачу в РКН, PP 969 — доступ отдельных органов; операции и субъекты не сливать."
+
+version_chain:
+  state: CURRENT_AMENDMENT_PRIMARY_TEXT_VERIFIED_BASE_EXACT_BYTES_PENDING
+  current_revision_crosscheck: "2025-05-22"
+  events:
+    - act: "Постановление Правительства РФ от 22.05.2025 № 709"
+      effective_from: "2025-05-23"
+      primary_url: "https://government.ru/docs/all/159150/"
+      effect: "Изменяет PP 969 для учета рекламы и (или) социальной рекламы."
+      state: PRIMARY_GOVERNMENT_TEXT_VERIFIED
+
+capture:
+  exact_capture_attempted_at: "2026-08-25T23:25:00+03:00"
+  source_url: "https://publication.pravo.gov.ru/document/0001202205300042"
+  result: TRANSIENT_TIMEOUT
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  raw_artifact_ref: null
+  manifest_ref: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-PP-969-2022-capture-pending.json"
+  fingerprint_status: PENDING_EXACT_PRIMARY_BYTES
+
+proof_floor:
+  - "Authority access to advertising data != automatic PDN applicability."
+  - "No exact bytes means no MIME, byte_length or SHA-256."
+  - "Current executable use remains review-required until exact base/current evidence is captured."
