@@ -1,0 +1,137 @@
+schema_version: "1.0"
+id: GOST-R-59711-2022-INCIDENT-PRIORITY-QUEUE-CORE-PART6
+designation: "ГОСТ Р 59711-2022"
+title: "Mandatory appendix B: incident priority and response queue"
+authority: ROSSTANDART
+order: {number: "1377-ст", date: "2022-11-29"}
+effective_date: "2023-02-01"
+status_observed: CURRENT
+status_observed_date: "2026-08-26"
+status: VERIFIED_MANDATORY_APPENDIX_B_THREE_SECTIONS_NINE_QUEUE_ROUTES
+source_evidence:
+  official_status_and_scope: {url: "https://protect.gost.ru/gost/details/45281d05-ebb9-4819-ae17-f8efa45b69fa", result: VERIFIED_CURRENT_2026_08_26}
+  appendix_text_primary_interface: {url: "https://allgosts.ru/35/020/gost_r_59711-2022", result: VERIFIED_PUBLIC_TEXT_APPENDIX_B}
+  appendix_text_crosscheck: {url: "https://tdocs.su/68584", result: VERIFIED_INDEPENDENT_TABLE_AND_SECTION_CROSSCHECK}
+  immutable_official_document_bytes: PENDING
+priority_model:
+  base_criteria:
+    - INFRASTRUCTURE_ELEMENT_SIGNIFICANCE
+    - INCIDENT_SCALE
+  additional_criteria: ALLOWED_NOT_DEFINED_BY_STANDARD
+  maximum_priorities_per_criterion: 3
+  priority_order: [LOW, MEDIUM, HIGH]
+  final_priority: MAXIMUM_ACROSS_APPLICABLE_CRITERIA
+  impact_level_relation: INDEPENDENT_BUT_JOINTLY_USED_FOR_RESPONSE_QUEUE
+  adaptation: MAY_BE_REFINED_TO_ORGANIZATION_NEEDS
+infrastructure_significance:
+  factors:
+    - SERVICES_RUNNING_ON_AFFECTED_COMPUTING_EQUIPMENT
+    - INFORMATION_PROCESSED_ON_AFFECTED_COMPUTING_EQUIPMENT
+    - PROPAGATION_POTENTIAL_TO_MORE_SIGNIFICANT_COMPUTING_EQUIPMENT
+  high:
+    - SERVICE_DISRUPTION_CAN_STOP_OR_DISRUPT_MOST_CRITICAL_ORGANIZATION_PROCESSES
+    - INFORMATION_IS_NEEDED_FOR_MOST_CRITICAL_ORGANIZATION_PROCESSES
+  medium:
+    - INCIDENT_CAN_MOST_RAPIDLY_PROPAGATE_TO_EQUIPMENT_SUPPORTING_OR_HOLDING_INFORMATION_FOR_MOST_CRITICAL_PROCESSES
+  low: ALL_OTHER_INCIDENTS
+  note: PRIORITY_CONSIDERS_OTHER_CRITICAL_PROCESSES_ON_SAME_EQUIPMENT_WHILE_IMPACT_LEVEL_CONCERNS_AFFECTED_PROCESS
+incident_scale:
+  denominator: ALL_COMPUTING_EQUIPMENT_IN_APPLICABLE_ORGANIZATION_SCOPE
+  numerator: COMPUTING_EQUIPMENT_WITH_REGISTERED_INCIDENT_SIGNS
+  unit: PERCENT
+  high: "x>=30"
+  medium_literal: "10<=x<=30"
+  low: "x<10"
+  boundary_30_status: LITERAL_HIGH_MEDIUM_OVERLAP_REQUIRES_ORGANIZATION_OR_EXPERT_TIE_BREAK
+  invented_normalized_medium: false
+response_queue_table_b1:
+  - {queue: 1, impact_level: CRITICAL, priority: HIGH}
+  - {queue: 2, impact_level: HIGH, priority: HIGH}
+  - {queue: 3, impact_level: HIGH, priority: MEDIUM}
+  - {queue: 4, impact_level: MEDIUM, priority: HIGH}
+  - {queue: 5, impact_level: MEDIUM, priority: MEDIUM}
+  - {queue: 6, impact_level: MEDIUM, priority: LOW}
+  - {queue: 7, impact_level: LOW, priority: HIGH}
+  - {queue: 8, impact_level: LOW, priority: MEDIUM}
+  - {queue: 9, impact_level: LOW, priority: LOW}
+absent_queue_combinations:
+  - {impact_level: CRITICAL, priority: MEDIUM}
+  - {impact_level: CRITICAL, priority: LOW}
+  - {impact_level: HIGH, priority: LOW}
+control_rules:
+  - {id: G59711-B.1-001, clause: "B.1", rule: APPENDIX_B_IS_MANDATORY}
+  - {id: G59711-B.1-002, clause: "B.1", rule: APPROACH_MAY_BE_REFINED_TO_ORGANIZATION_NEEDS}
+  - {id: G59711-B.1-003, clause: "B.1", rule: USE_INFRASTRUCTURE_ELEMENT_SIGNIFICANCE}
+  - {id: G59711-B.1-004, clause: "B.1", rule: USE_INCIDENT_SCALE}
+  - {id: G59711-B.1-005, clause: "B.1", rule: ALLOW_ADDITIONAL_ORGANIZATION_CRITERIA}
+  - {id: G59711-B.1-006, clause: "B.1", rule: LIMIT_EACH_CRITERION_TO_NO_MORE_THAN_THREE_PRIORITIES}
+  - {id: G59711-B.1-007, clause: "B.1", rule: PRIORITY_LEVELS_ARE_HIGH_MEDIUM_LOW}
+  - {id: G59711-B.1-008, clause: "B.1", rule: FINAL_PRIORITY_IS_MAXIMUM_ACROSS_CRITERIA}
+  - {id: G59711-B.1-009, clause: "B.1", rule: PRIORITY_IS_INDEPENDENT_FROM_IMPACT_LEVEL}
+  - {id: G59711-B.1-010, clause: "B.1", rule: USE_PRIORITY_AND_IMPACT_LEVEL_JOINTLY_FOR_QUEUE}
+  - {id: G59711-B.1-011, clause: "B.1", rule: QUEUE_1_IS_CRITICAL_IMPACT_HIGH_PRIORITY}
+  - {id: G59711-B.1-012, clause: "B.1", rule: QUEUE_2_IS_HIGH_IMPACT_HIGH_PRIORITY}
+  - {id: G59711-B.1-013, clause: "B.1", rule: QUEUE_3_IS_HIGH_IMPACT_MEDIUM_PRIORITY}
+  - {id: G59711-B.1-014, clause: "B.1", rule: QUEUE_4_IS_MEDIUM_IMPACT_HIGH_PRIORITY}
+  - {id: G59711-B.1-015, clause: "B.1", rule: QUEUE_5_IS_MEDIUM_IMPACT_MEDIUM_PRIORITY}
+  - {id: G59711-B.1-016, clause: "B.1", rule: QUEUE_6_IS_MEDIUM_IMPACT_LOW_PRIORITY}
+  - {id: G59711-B.1-017, clause: "B.1", rule: QUEUE_7_IS_LOW_IMPACT_HIGH_PRIORITY}
+  - {id: G59711-B.1-018, clause: "B.1", rule: QUEUE_8_IS_LOW_IMPACT_MEDIUM_PRIORITY}
+  - {id: G59711-B.1-019, clause: "B.1", rule: QUEUE_9_IS_LOW_IMPACT_LOW_PRIORITY}
+  - {id: G59711-B.1-020, clause: "B.1", rule: DO_NOT_INVENT_CRITICAL_MEDIUM_OR_LOW_PRIORITY_QUEUE_ROWS}
+  - {id: G59711-B.1-021, clause: "B.1", rule: DO_NOT_INVENT_HIGH_IMPACT_LOW_PRIORITY_QUEUE_ROW}
+  - {id: G59711-B.1-022, clause: "B.1", rule: DO_NOT_REPLACE_RESPONSE_QUEUE_WITH_NUMERIC_SLA}
+  - {id: G59711-B.2-001, clause: "B.2", rule: DETERMINE_PRIORITY_FROM_SIGNIFICANCE_OF_AFFECTED_EQUIPMENT}
+  - {id: G59711-B.2-002, clause: "B.2", rule: CONSIDER_SERVICES_ON_AFFECTED_EQUIPMENT}
+  - {id: G59711-B.2-003, clause: "B.2", rule: CONSIDER_INFORMATION_ON_AFFECTED_EQUIPMENT}
+  - {id: G59711-B.2-004, clause: "B.2", rule: CONSIDER_PROPAGATION_TO_MORE_SIGNIFICANT_EQUIPMENT}
+  - {id: G59711-B.2-005, clause: "B.2", rule: RECOMMEND_HIGH_FOR_SERVICE_SUPPORTING_MOST_CRITICAL_PROCESSES}
+  - {id: G59711-B.2-006, clause: "B.2", rule: RECOMMEND_HIGH_FOR_INFORMATION_NEEDED_BY_MOST_CRITICAL_PROCESSES}
+  - {id: G59711-B.2-007, clause: "B.2", rule: HIGH_ALTERNATIVES_ARE_NOT_CUMULATIVE}
+  - {id: G59711-B.2-008, clause: "B.2", rule: RECOMMEND_MEDIUM_FOR_RAPID_PROPAGATION_TO_MOST_CRITICAL_PROCESS_EQUIPMENT}
+  - {id: G59711-B.2-009, clause: "B.2", rule: RECOMMEND_LOW_FOR_ALL_OTHER_INCIDENTS}
+  - {id: G59711-B.2-010, clause: "B.2", rule: DISTINGUISH_PRIORITY_FROM_IMPACT_LEVEL}
+  - {id: G59711-B.2-011, clause: "B.2", rule: IMPACT_LEVEL_CONCERNS_AFFECTED_PROCESS_CRITICALITY}
+  - {id: G59711-B.2-012, clause: "B.2", rule: PRIORITY_ALSO_CONSIDERS_OTHER_CRITICAL_PROCESSES_ON_SAME_EQUIPMENT}
+  - {id: G59711-B.2-013, clause: "B.2", rule: DO_NOT_REQUIRE_ALL_THREE_SIGNIFICANCE_FACTORS}
+  - {id: G59711-B.2-014, clause: "B.2", rule: DO_NOT_INVENT_NUMERIC_SIGNIFICANCE_SCORE}
+  - {id: G59711-B.3-001, clause: "B.3", rule: DETERMINE_SCALE_FROM_COUNT_OF_EQUIPMENT_WITH_INCIDENT_SIGNS}
+  - {id: G59711-B.3-002, clause: "B.3", rule: EXPRESS_SCALE_AS_PERCENT_OF_EQUIPMENT}
+  - {id: G59711-B.3-003, clause: "B.3", rule: RECOMMEND_HIGH_AT_30_PERCENT_OR_MORE}
+  - {id: G59711-B.3-004, clause: "B.3", rule: RECOMMEND_MEDIUM_AT_LITERAL_10_TO_30_PERCENT}
+  - {id: G59711-B.3-005, clause: "B.3", rule: RECOMMEND_LOW_BELOW_10_PERCENT}
+  - {id: G59711-B.3-006, clause: "B.3", rule: PRESERVE_LITERAL_30_PERCENT_HIGH_MEDIUM_OVERLAP}
+  - {id: G59711-B.3-007, clause: "B.3", rule: REQUIRE_TIE_BREAK_RULE_BEFORE_AUTOMATING_EXACTLY_30_PERCENT}
+  - {id: G59711-B.3-008, clause: "B.3", rule: DO_NOT_NORMALIZE_MEDIUM_TO_BELOW_30_WITHOUT_AUTHORITY}
+  - {id: G59711-B.3-009, clause: "B.3", rule: DO_NOT_USE_NUMBER_OF_USERS_AS_SCALE_DENOMINATOR}
+  - {id: G59711-B.3-010, clause: "B.3", rule: DO_NOT_USE_IMPACT_LEVEL_AS_SCALE_PRIORITY}
+  - {id: G59711-B.3-011, clause: "B.3", rule: DO_NOT_INVENT_ABSOLUTE_EQUIPMENT_COUNT_THRESHOLDS}
+  - {id: G59711-B.3-012, clause: "B.3", rule: DO_NOT_CLAIM_OFFICIAL_IMMUTABLE_BYTES}
+coverage:
+  structural_units: ["B.1", "B.2", "B.3"]
+  structural_unit_count: 3
+  control_rule_count: 48
+  base_criterion_count: 2
+  priority_level_count: 3
+  queue_route_count: 9
+  absent_queue_combination_count: 3
+  exact_numeric_scale_boundary_count: 2
+  literal_boundary_anomaly_count: 1
+  invented_sla_count: 0
+scope_guards:
+  - DO_NOT_EQUATE_PRIORITY_WITH_IMPACT_LEVEL
+  - DO_NOT_INVENT_THREE_ABSENT_QUEUE_COMBINATIONS
+  - DO_NOT_NORMALIZE_EXACTLY_30_PERCENT_WITHOUT_TIE_BREAK
+  - DO_NOT_INVENT_NUMERIC_RESPONSE_SLA
+  - DO_NOT_REQUIRE_ALL_SIGNIFICANCE_FACTORS_CUMULATIVELY
+  - DO_NOT_INVENT_ABSOLUTE_EQUIPMENT_COUNT_THRESHOLDS
+  - DO_NOT_CLAIM_IMMUTABLE_OR_EXPERT_VERIFIED_COMPLETE_STANDARD
+verification_boundary:
+  official_status_and_scope: VERIFIED_ROSSTANDART_2026_08_26
+  mandatory_appendix_b_text: VERIFIED_PUBLIC_TEXT_CROSSCHECK
+  table_b1_nine_routes: VERIFIED_TWO_PUBLIC_INTERFACES
+  exact_30_percent_tie_break: PENDING_EXPERT_OR_ORGANIZATION_RULE
+  immutable_official_bytes: PENDING
+  independent_expert_review: PENDING
+  critical_gap_created: false
+  high_gap_created: false

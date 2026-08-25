@@ -1,0 +1,31 @@
+evidence_id: GOST-R-59711-2022-PART6-APPENDIX-B-OBS-2026-08-26
+observed_at: "2026-08-26"
+subject: "Mandatory appendix B: incident priority and response queue"
+sources:
+  - {type: OFFICIAL_STATUS_AND_SCOPE, url: "https://protect.gost.ru/gost/details/45281d05-ebb9-4819-ae17-f8efa45b69fa", result: VERIFIED_CURRENT_ORDER_1377_ST_EFFECTIVE_2023_02_01}
+  - {type: PUBLIC_STANDARD_TEXT, url: "https://allgosts.ru/35/020/gost_r_59711-2022", result: VERIFIED_APPENDIX_B_SECTIONS_B1_TO_B3_AND_TABLE_B1}
+  - {type: INDEPENDENT_TABLE_CROSSCHECK, url: "https://tdocs.su/68584", result: VERIFIED_NINE_QUEUE_ROUTES}
+observations:
+  - "Appendix B is mandatory but its presented approach may be refined to organization needs."
+  - "The two base priority criteria are infrastructure-element significance and incident scale; additional criteria are allowed but not defined by the standard."
+  - "Each criterion has no more than three priorities and the final priority is the maximum across criteria."
+  - "Priority and incident-impact level are distinct dimensions used jointly for response order."
+  - "Table B.1 contains exactly nine published routes and does not expose critical/medium, critical/low or high-impact/low-priority routes."
+  - "Infrastructure significance considers services, information and propagation to more significant computing equipment."
+  - "Scale recommendations are high at 30 percent or more, medium at literal 10-30 percent, and low below 10 percent."
+anomalies:
+  - id: G59711-B-30-PERCENT-OVERLAP
+    observation: "The public text includes exactly 30 percent in both high and the literal medium 10-30 percent wording."
+    handling: PRESERVED_FAIL_CLOSED_PENDING_ORGANIZATION_OR_EXPERT_TIE_BREAK
+  - id: G59711-B-MISSING-QUEUE-COMBINATIONS
+    observation: "Three of twelve theoretical impact/priority combinations are absent from table B.1."
+    handling: NOT_RECONSTRUCTED
+semantic_guards:
+  - DO_NOT_EQUATE_PRIORITY_WITH_IMPACT_LEVEL
+  - DO_NOT_INVENT_RESPONSE_SLA_FROM_QUEUE_NUMBER
+  - DO_NOT_NORMALIZE_30_PERCENT_OVERLAP
+  - DO_NOT_INVENT_ABSENT_QUEUE_ROWS
+  - DO_NOT_REQUIRE_SIGNIFICANCE_FACTORS_CUMULATIVELY
+pending: [IMMUTABLE_OFFICIAL_BYTES, EXACT_30_PERCENT_TIE_BREAK, INDEPENDENT_EXPERT_REVIEW]
+claim_boundary: VERIFIED_PUBLIC_TEXT_MODEL_NOT_IMMUTABLE_OR_EXPERT_COMPLETE
+
