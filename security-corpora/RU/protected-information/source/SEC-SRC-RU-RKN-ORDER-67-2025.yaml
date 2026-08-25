@@ -1,0 +1,98 @@
+schema_version: "1.0"
+id: SEC-SRC-RU-RKN-ORDER-67-2025
+kind: security-regulatory-source
+status: PRIMARY_PUBLICATION_METADATA_VERIFIED_CURRENT_TEXT_CROSSCHECKED_EXACT_ARTIFACT_PENDING
+
+title: "Приказ Роскомнадзора от 25.03.2025 № 67 — требования к ПО операторов рекламных данных"
+jurisdiction: RU
+issuer: "Роскомнадзор"
+document:
+  type: regulator_order
+  number: "67"
+  adopted_date: "2025-03-25"
+  minjust_registration_number: "81843"
+  registered_date: "2025-04-14"
+  official_publication_id: "0001202504140030"
+  official_publication_date: "2025-04-14"
+  effective_from: "2025-04-25"
+  checked_at: "2026-08-25"
+
+canonical_sources:
+  primary_publication:
+    publisher: "Официальное опубликование правовых актов"
+    url: "https://publication.pravo.gov.ru/document/0001202504140030"
+    origin_verified: true
+    proof_scope: "Первичные реквизиты приказа и госрегистрации подтверждены; exact PDF bytes в этом проходе не получены."
+  current_text_crosscheck:
+    revision_date: "2025-03-25"
+    state: CURRENT_EFFECTIVE_TEXT_CROSSCHECKED_NO_LATER_AMENDMENT_FOUND_AS_OF_2026_08_25
+
+protected_information:
+  sector: advertising_marketing
+  regime: advertising_data_operator_software_security_and_retention
+  legal_basis: "38-ФЗ статья 18.1 часть 6"
+  protected_locators:
+    - locator: "Требования, пункт 1"
+      concept: DIRECT_PDN_AND_INFORMATION_SECURITY_COMPLIANCE
+      finding: "ПО операторов рекламных данных должно соответствовать законодательству РФ об информации, информационных технологиях и защите информации, а также законодательству РФ в области персональных данных."
+      pdn_guard: "Прямая ссылка относится к программам операторов рекламных данных в установленном законом контексте; не переносить автоматически на любого рекламодателя."
+    - locator: "Требования, пункт 6 подпункты а-в"
+      concept: AD_DATA_RECEIVE_STORE_PROCESS_TRANSMIT_IMMUTABILITY
+      finding: "ПО должно обеспечивать получение, хранение и обработку рекламной информации и самой рекламы, передачу в информационную систему Роскомнадзора и неизменность передаваемой информации."
+    - locator: "Требования, пункт 6 подпункт г"
+      concept: ORD_AD_DATA_RETENTION
+      finding: "Информация об интернет-рекламе хранится не менее одного года со дня предоставления в информационную систему; непосредственно реклама — в течение года с даты предоставления информации оператору рекламных данных."
+      pdn_guard: "Это специальный срок режима ОРД, а не универсальный срок хранения ПДн."
+    - locator: "Требования, пункт 6 подпункт з"
+      concept: AD_DISTRIBUTION_AND_AUDIENCE_TELEMETRY
+      finding: "Фиксируются технические идентификаторы ресурсов и рекламных систем, показы, факты доступа, даты и сведения о целевой аудитории, включая пол, возраст, иные социально-демографические параметры и территорию проживания/нахождения при наличии такой информации."
+      pdn_guard: "Параметры аудитории могут быть агрегированными либо относиться к идентифицируемым лицам; статус ПДн доказывается по конкретному payload."
+    - locator: "Требования, пункт 6 подпункт м"
+      concept: INFORMATION_PRESERVATION_AND_PROTECTION
+      finding: "ПО должно обеспечивать сохранность получаемой и передаваемой информации и защиту от преднамеренных и непреднамеренных информационных воздействий."
+    - locator: "Требования, пункт 8"
+      concept: SOFTWARE_HEALTH_MONITORING
+      finding: "Требуется встроенная система оценки работоспособности, автоматического информирования о сбоях/ошибках и передачи таких данных в информационную систему."
+  applicability_status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  applicability_guard: "Прямой PDN-context доказан только для ПО оператора рекламных данных, подпадающего под часть 6 статьи 18.1 38-ФЗ. Для иной роли требуется отдельное основание."
+
+relationship_candidates:
+  - target: "38-ФЗ статья 18.1 часть 6"
+    type: DIRECT_SUBORDINATE_SOFTWARE_REQUIREMENTS
+    state: STATUTORY_IMPLEMENTATION_RELATION
+  - target: "152-ФЗ"
+    type: DIRECT_STATUTORY_PDN_SECURITY_CONTEXT_FOR_ORD_SOFTWARE
+    state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    guard: "Direct reference exists, but actor/role/system scope must be proven."
+  - target: "149-ФЗ"
+    type: DIRECT_INFORMATION_SECURITY_CONTEXT
+    state: STATUTORY_CONTEXT_RELATION
+  - target: "SEC-SRC-RU-PP-974-2022"
+    type: ORD_SOFTWARE_TRANSPORT_AND_REPORTING_CONTEXT
+    state: CROSS_REGIME_RELATION
+
+version_chain:
+  state: CURRENT_TEXT_CROSSCHECKED_PRIMARY_EXACT_BYTES_PENDING
+  original_effective_from: "2025-04-25"
+  predecessor_repealed:
+    - "Приказ Роскомнадзора от 11.04.2022 № 64"
+    - "Приказ Роскомнадзора от 01.12.2022 № 193"
+  currentness_note: "В доступной актуальной консолидации приказ № 67 действует в исходной редакции от 25.03.2025; отдельное доказательство отсутствия всех последующих изменений оставлено review-required."
+
+capture:
+  exact_capture_attempted_at: "2026-08-25T23:25:00+03:00"
+  source_url: "https://publication.pravo.gov.ru/document/0001202504140030"
+  result: TRANSIENT_TIMEOUT
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  raw_artifact_ref: null
+  manifest_ref: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-RKN-ORDER-67-2025-capture-pending.json"
+  fingerprint_status: PENDING_EXACT_PRIMARY_BYTES
+
+proof_floor:
+  - "Direct PDN reference is scoped to ORD software, not the entire advertising market."
+  - "Audience attribute != automatically personal data."
+  - "ORD one-year retention != general PDN retention."
+  - "No exact bytes means no MIME, byte_length or SHA-256."
