@@ -1,0 +1,85 @@
+schema_version: "1.0"
+id: STREAM1-PDN-CORE-2026-08-25T1403+0300
+kind: pdn-core-production-run
+stream: 1
+observed_at: "2026-08-25T14:03:00+03:00"
+scope: general_pdn_core
+
+freshness_review:
+  current_152fz:
+    source_id: SEC-SRC-RU-152FZ-2026-07-26
+    result: CURRENT_REVISION_CONFIRMED
+    revision_date: "2026-07-26"
+    triggering_amendment: SEC-SRC-RU-FZ265-2026
+    later_current_revision_found: false
+    evidence_note: >-
+      Current legal index rechecked on 25.08.2026 still identifies Federal Law No. 152-FZ in the 26.07.2026
+      revision and includes Federal Law No. 265-FZ in the amendment chain. No semantic or extraction promotion
+      follows from this freshness check.
+  pp687:
+    source_id: SEC-SRC-RU-PP687-2008
+    result: CURRENT_REVISION_CONFIRMED
+    revision_source_id: SEC-SRC-RU-PP12-2025
+    revision_date: "2025-01-18"
+    effective_from: "2025-01-26"
+    valid_until: "2030-09-01"
+    evidence_note: >-
+      Official Government portal index rechecked on 25.08.2026 presents PP RF No. 687 in the revision by
+      PP RF No. 12 of 18.01.2025 and states validity through 01.09.2030. This proves freshness only, not
+      byte-exact immutable capture.
+  rkn128_replacement_watch:
+    source_id: SEC-SRC-RU-RKN128-2022
+    result: NO_EFFECTIVE_REPLACEMENT_FOUND
+    project_id: "169785"
+    finding: >-
+      Fresh August 2026 legal monitoring still describes the Roskomnadzor replacement as a draft intended to
+      supersede Order No. 128. No officially published effective replacement was found in this pass; therefore
+      No. 128 remains in the current graph and the existing impact review stays open.
+
+production_counters_snapshot:
+  identified: 29
+  metadata_verified: 28
+  current_revision_identity_pending_raw: 1
+  raw_downloaded_exact: 27
+  immutable_sha256_verified: 27
+  atomized_existing_proposed: 4
+  atomized_verified: 0
+  pending_raw_capture: 2
+  raw_capture_coverage_ratio: 0.9310
+
+reuse_telemetry:
+  latest_completed_fast_run_started_at: "2026-08-25T09:52:02.962276Z"
+  targets_total: 28
+  reused_immutable: 27
+  network_targets_attempted: 0
+  dedicated_transport_pending: 1
+  new_immutable_captured_fast_stage: 0
+  reuse_ratio: 0.9643
+
+latest_dedicated_route_attempt:
+  observed_at: "2026-08-25T10:00:48.953204Z"
+  pp687:
+    status: PENDING
+    failure_classes:
+      - TRANSPORT_TIMEOUT
+      - IDENTITY_MARKER_MISS
+      - ALL_REGISTERED_ROUTES_FAILED
+    proof_floor_held: true
+  current_152fz:
+    status: PENDING
+    failure_classes:
+      - TRANSPORT_TIMEOUT
+      - CURRENT_REVISION_MARKER_MISS
+      - ALL_REGISTERED_ROUTES_FAILED
+    proof_floor_held: true
+
+changes_this_pass:
+  new_sources_registered: 0
+  new_immutable: 0
+  semantic_promotions: 0
+  freshness_checks: 3
+  effective_replacements_found: 0
+
+proof_rule: >-
+  Do not promote either remaining source without exact official returned bytes, source-route identity,
+  retrieved_at, MIME, exact byte length, SHA-256, accepted manifest and locator/version review.
