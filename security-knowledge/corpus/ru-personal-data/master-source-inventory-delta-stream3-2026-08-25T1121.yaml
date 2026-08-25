@@ -1,0 +1,128 @@
+schema_version: "1.0"
+kind: ru-personal-data-master-source-inventory-delta
+owner_stream: STREAM_3_SECTOR_OVERLAYS
+checked_at: "2026-08-25T11:21:54+03:00"
+previous_delta_ref: "security-knowledge/corpus/ru-personal-data/master-source-inventory-delta-stream3-2026-08-25T0522.yaml"
+source_id: SEC-SRC-RU-FZ-38-2006-A18
+status: APPEND_ONLY_ADVERTISING_RETENTION_AND_INTERNET_AD_DATA_DELTA
+
+source_reuse:
+  existing_source_reused: true
+  duplicate_source_created: false
+  new_locators_added: ["38-ФЗ статья 12", "38-ФЗ статья 18.1"]
+
+relationships:
+  - target: "152-ФЗ"
+    type: ADVERTISING_RETENTION_VS_PDN_RETENTION_BOUNDARY
+    locators:
+      - "38-ФЗ статья 12"
+      - "38-ФЗ статья 18.1 часть 13"
+    state: CANDIDATE_SCOPE_BOUNDARY_REVIEW_REQUIRED
+    applicability_promoted: false
+    proof_floor: >-
+      Статья 12 устанавливает годичный срок хранения рекламных материалов/копий/изменений и договоров, а статья 18.1 часть 13 — минимум три года хранения у уполномоченного федерального органа информации об интернет-рекламе, полученной по специальному отчетному режиму. Ни один из этих сроков не является автоматически сроком хранения или удаления ПДн по 152-ФЗ.
+  - target: "152-ФЗ"
+    type: INTERNET_AD_DATA_FLOW_PDN_OVERLAP
+    locators:
+      - "38-ФЗ статья 18.1 часть 1"
+      - "38-ФЗ статья 18.1 части 3,5,8"
+      - "38-ФЗ статья 18.1 часть 11"
+      - "38-ФЗ статья 18.1 часть 13"
+      - "38-ФЗ статья 18.1 части 14-15"
+      - "38-ФЗ статья 18.1 часть 17"
+    state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    applicability_promoted: false
+    proof_floor: >-
+      Законный массив интернет-рекламных данных включает сведения о рекламодателях, рекламораспространителях и других участниках и передается через ОРД в уполномоченный орган. Для применения 152-ФЗ к конкретному элементу этого массива отдельно доказать, что он относится к определенному или определяемому физическому лицу, а также установить операцию, цель, роль и правовое основание.
+
+advertising_requirements_context:
+  - locator: "38-ФЗ статья 12"
+    concept: ADVERTISING_MATERIAL_AND_CONTRACT_RETENTION
+    effect: "Хранение рекламных материалов/копий/изменений и договоров — один год от последнего распространения рекламы или окончания договора, если иное не установлено законом."
+    pdn_relation: RETENTION_SCOPE_BOUNDARY_ONLY
+    applicability_state: NO_GLOBAL_PDN_PROMOTION
+  - locator: "38-ФЗ статья 18.1 часть 1"
+    concept: INTERNET_AD_REGULATORY_ACCOUNTING_STORAGE_PROCESSING
+    effect: "Уполномоченный орган учитывает, хранит и обрабатывает установленный законом массив сведений об интернет-рекламе/социальной рекламе."
+    pdn_relation: POSSIBLE_DATA_PROCESSING_OVERLAP_ONLY
+    applicability_state: NO_GLOBAL_PDN_PROMOTION
+  - locator: "38-ФЗ статья 18.1 части 3,5,8"
+    concept: INTERNET_AD_REPORTING_THROUGH_ORD
+    effect: "Участники передают/обеспечивают передачу информации через оператора рекламных данных; ОРД передает сведения уполномоченному органу."
+    pdn_relation: POSSIBLE_DISCLOSURE_TRANSFER_CONTEXT_ONLY
+    applicability_state: NO_GLOBAL_PDN_PROMOTION
+  - locator: "38-ФЗ статья 18.1 часть 11"
+    concept: INTERNET_AD_DATA_QUALITY_RESPONSIBILITY
+    effect: "Ответственность за полноту, достоверность, актуальность и своевременность отчетных сведений."
+    pdn_relation: DATA_QUALITY_CONTEXT_NOT_PDN_RULE_EQUIVALENCE
+  - locator: "38-ФЗ статья 18.1 часть 13"
+    concept: INTERNET_AD_REGULATORY_RETENTION_MINIMUM
+    effect: "Уполномоченный орган хранит полученные сведения не менее трех лет."
+    pdn_relation: SECTOR_RETENTION_NOT_GENERAL_PDN_RETENTION
+  - locator: "38-ФЗ статья 18.1 части 14-15"
+    concept: INTERNET_AD_REGULATORY_DATA_ACCESS
+    effect: "Закон определяет каналы доступа участников и отдельных государственных органов/лиц к массиву интернет-рекламной информации."
+    pdn_relation: POSSIBLE_ACCESS_DISCLOSURE_CONTEXT_ONLY
+  - locator: "38-ФЗ статья 18.1 часть 17"
+    concept: INTERNET_AD_IDENTIFIER_TRACEABILITY
+    effect: "Уникальный идентификатор обеспечивает прослеживаемость и учет интернет-рекламы/социальной рекламы."
+    pdn_relation: IDENTIFIER_IS_NOT_AUTOMATICALLY_PERSONAL_IDENTIFIER
+
+cross_regime_relations:
+  - target: "126-ФЗ статья 22.1"
+    type: RADIO_FREQUENCY_SERVICE_INTERNET_AD_INFRASTRUCTURE_CONTEXT
+    state: STATUTORY_CONTEXT_RELATION_REVIEW_REQUIRED
+    rationale: "38-ФЗ статья 18.1 часть 2 использует радиочастотную службу для организационно-технической реализации полномочий; это инфраструктурная связь и не является самостоятельным доказательством PDN applicability."
+  - target: "126-ФЗ статья 44.1"
+    type: TELECOM_ADVERTISING_MAILING_OVERLAP_EXISTING
+    state: STATUTORY_CONTEXT_RELATION_REVIEW_REQUIRED
+    changed_this_pass: false
+
+version_evidence:
+  - act: "347-ФЗ от 02.07.2021"
+    publication_number: "0001202107020068"
+    primary_source: "https://publication.pravo.gov.ru/Document/View/0001202107020068"
+    effect: "Введена статья 18.1."
+    source_state: PRIMARY_PUBLICATION_METADATA_VERIFIED_EXACT_BYTES_PENDING
+  - act: "479-ФЗ от 26.12.2024"
+    publication_number: "0001202412260005"
+    primary_source: "https://publication.pravo.gov.ru/document/0001202412260005"
+    effective_date: "2025-03-01"
+    effect: "Текущая статья 18.1 приведена к новой редакции для рекламы и социальной рекламы."
+    source_state: PRIMARY_PUBLICATION_METADATA_VERIFIED_EXACT_BYTES_PENDING
+  - act: "72-ФЗ от 07.04.2025"
+    publication_number: "0001202504070018"
+    primary_source: "https://publication.pravo.gov.ru/document/0001202504070018"
+    effect: "Текущая часть 13 статьи 18.1 отмечена изменением 72-ФЗ; minimum-retention у уполномоченного органа — не менее трех лет."
+    source_state: PRIMARY_PUBLICATION_METADATA_VERIFIED_EXACT_BYTES_PENDING
+
+capture_guard:
+  state: PENDING_AUTHORITATIVE_EXACT_BYTES
+  attempted_at: "2026-08-25T11:21:54+03:00"
+  network_result: DNS_NAME_RESOLUTION_FAILURE
+  new_immutable_artifacts_this_pass: 0
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  executable_use: false
+  reason: "Primary publication metadata and current legal text are crosschecked, but exact authoritative bytes are not registered."
+
+counter_effect:
+  top_level_before: {found: 33, downloaded: 9, immutable: 9, pending: 22, reused: 2}
+  top_level_after: {found: 33, downloaded: 9, immutable: 9, pending: 22, reused: 2}
+  new_sector_sources_added: 0
+  existing_sources_enriched: 1
+  new_pdn_scope_boundary_candidates: 2
+  cross_regime_candidates_added: 1
+  applicability_edges_promoted: 0
+  executable_rules_changed: false
+  duplicate_sources_created: 0
+
+proof_floor:
+  - "OVERLAP != APPLICABILITY."
+  - "Advertising consent != PDN-processing consent."
+  - "38-ФЗ Article 12 retention != general PDN retention/deletion."
+  - "38-ФЗ Article 18.1(13) retention != general PDN retention."
+  - "An advertising identifier or advertiser record is not automatically personal data."
+  - "No MIME, byte length, SHA-256 or retrieved_at without exact bytes."
