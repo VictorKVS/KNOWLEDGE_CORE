@@ -1,0 +1,96 @@
+schema_version: "1.0"
+id: SEC-PDN-SECURITY-STACK-INVENTORY-OVERLAY-2026-08-25T2006Z
+applies_to: PDN_SECURITY_STACK_SOURCE_INVENTORY.yaml
+stream: RU_PDN_TECHNICAL_CRYPTO
+created_at: "2026-08-25T20:06:18Z"
+merge_policy: >-
+  CONCURRENCY_SAFE_ADDITIVE_OVERLAY. Preserve the base inventory and all previously merged Stream-2 overlays.
+  Add only the two newly registered FSTEC licensing-context sources below and the explicit applicability/version edges.
+  Do not rewrite other streams or infer generic PDN obligations from licensing catalog content.
+
+source_additions:
+  - id: SEC-SRC-RU-FSTEC-TZI-EQUIPMENT-LIST-2026
+    role: fstec_tzi_licensed_activity_equipment_catalog_2026
+    metadata_status: METADATA_VERIFIED
+    source_record: "source/SEC-SRC-RU-FSTEC-TZI-EQUIPMENT-LIST-2026.yaml"
+    raw_capture: PENDING
+    exact_document_route: OFFICIAL_LANDING_IDENTIFIED
+    exact_file_route: UNRESOLVED_PUBLIC_DIRECT_ATTACHMENT
+    applicability: LICENSED_TZI_WORKS_SERVICES_ONLY
+  - id: SEC-SRC-RU-FSTEC-INFO-240-13-5521-2026
+    role: fstec_tzi_licensing_equipment_transition_notice_2026
+    metadata_status: METADATA_VERIFIED
+    source_record: "source/SEC-SRC-RU-FSTEC-INFO-240-13-5521-2026.yaml"
+    raw_capture: PENDING
+    exact_document_route: OFFICIAL_LANDING_IDENTIFIED
+    exact_file_route: UNRESOLVED_PUBLIC_DIRECT_ATTACHMENT
+    applicability: STATUS_AND_TRANSITION_EVIDENCE_ONLY
+
+relation_additions:
+  - from: SEC-SRC-RU-FSTEC-TZI-EQUIPMENT-LIST-2026
+    type: EQUIPMENT_REQUIREMENTS_CONTEXT_FOR
+    to: SEC-SRC-RU-PP79-2012
+    scope: LICENSED_TZI_ACTIVITY_ONLY
+    not_universal_pdn_duty: true
+  - from: SEC-SRC-RU-FSTEC-TZI-EQUIPMENT-LIST-2026
+    type: TRANSITION_ANNOUNCED_BY
+    to: SEC-SRC-RU-FSTEC-INFO-240-13-5521-2026
+    scope: STATUS_AND_TRANSITION_EVIDENCE_ONLY
+  - from: SEC-SRC-RU-FSTEC-INFO-240-13-5521-2026
+    type: ANNOUNCES_ADJACENT_LICENSED_ACTIVITY_LIST
+    to: FSTEC-PP171-EQUIPMENT-LIST-2026
+    scope: PP171_DEVELOPMENT_AND_PRODUCTION_ONLY
+    pdn_inventory_import: false
+    not_universal_pdn_duty: true
+
+freshness_checks:
+  - id: SEC-SRC-RU-FSTEC21-2013
+    checked_at: "2026-08-25"
+    result: ACTIVE_BASELINE_REPLACEMENT_PROJECT_STILL_NOT_ENACTED_IN_VERIFIED_EVIDENCE
+    note: >-
+      Fresh current monitoring still identifies project 169583 as a project not yet issued/registered. Same-day secondary
+      publications that write about cancellation from 01.09.2026 still cite the 24.07.2026 draft and are not enactment proof.
+  - id: SEC-SRC-RU-PP1119-2012
+    checked_at: "2026-08-25"
+    result: PRIMARY_DOC_ROUTE_RECONFIRMED_CAPTURE_FAILED
+    note: >-
+      The historical Government DOC route was re-confirmed from contemporaneous references, but exact Government bytes
+      could not be downloaded in the bounded runtime. No MIME, size or SHA-256 was invented.
+  - id: SEC-SRC-RU-FSTEC-TZI-EQUIPMENT-LIST-2026
+    checked_at: "2026-08-25"
+    result: CURRENT_2026_LIST_CROSS_VERIFIED_PENDING_PRIMARY_BYTES
+  - id: SEC-SRC-RU-FSTEC-INFO-240-13-5521-2026
+    checked_at: "2026-08-25"
+    result: CURRENT_NOTICE_CROSS_VERIFIED_PENDING_PRIMARY_BYTES
+
+counter_patch:
+  identified: 38
+  metadata_verified: 38
+  immutable_sha256_verified: 17
+  pending_raw_capture: 21
+  exact_official_route_unresolved: 8
+  confirmed_conflicts: 0
+
+counter_delta_vs_2026-08-25T1713Z:
+  identified: 2
+  metadata_verified: 2
+  immutable_sha256_verified: 0
+  pending_raw_capture: 2
+  exact_official_route_unresolved: 2
+  confirmed_conflicts: 0
+
+proof_guards:
+  - Exact official bytes, MIME, byte length and SHA-256 remain mandatory for IMMUTABLE_CAPTURED.
+  - The 10.08.2026 equipment list is PP79 licensing context, not a mandatory equipment list for every ISPDn operator.
+  - The 11.08.2026 notice is status/transition evidence and does not itself create a generic PDN control.
+  - The PP171 list announced by the same notice is intentionally not imported into the PDN inventory without a separate applicability edge.
+  - FSTEC21 project 169583 remains watch-only until a final issued, registered and officially published act is proven.
+
+latest_run_patch:
+  run_record: "runs/STREAM2_RUN_2026-08-25T2006Z.yaml"
+  new_sources: 2
+  new_immutable_captured: 0
+  status_rechecks: 4
+  primary_byte_targets_attempted: 3
+  semantic_promotions: 0
+  new_universal_pdn_duties_created: 0
