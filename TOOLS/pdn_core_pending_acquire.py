@@ -8,9 +8,9 @@ This turns recurring acquisition into a delta process and prevents repeated down
 of unchanged official publication artifacts.
 
 Sources with dedicated guarded transports are excluded from the generic network loop
-so a slow special route cannot delay easy publication-ID deltas such as PP12.
+so a slow special route cannot delay easy publication-ID deltas.
 
-Inventory invariant (v1.7): a newly discovered source card must be registered in the
+Inventory invariant (v1.8): a newly discovered source card must be registered in the
 PDN master inventory before its immutable manifest can be synchronized. Core identity
 counters are reconciled strictly inside the production_counters block so identically
 named Stream-2 counters can never be overwritten.
@@ -51,6 +51,38 @@ DISCOVERED_SOURCE_BLOCKS = {
     source_record: \"source/SEC-SRC-RU-FZ233-2024.yaml\"
     raw_capture: PENDING
     applicability: VERSION_CHAIN_AND_ARTICLE_13_1_SCOPE
+""",
+    "SEC-SRC-RU-FZ519-2024": """  - id: SEC-SRC-RU-FZ519-2024
+    document: \"Федеральный закон от 28.12.2024 № 519-ФЗ\"
+    role: current_version_amendment_articles_10_11
+    metadata_status: METADATA_VERIFIED
+    source_record: \"source/SEC-SRC-RU-FZ519-2024.yaml\"
+    raw_capture: PENDING
+    applicability: VERSION_CHAIN_CURRENT_FROM_2025_09_01
+""",
+    "SEC-SRC-RU-FZ23-2025": """  - id: SEC-SRC-RU-FZ23-2025
+    document: \"Федеральный закон от 28.02.2025 № 23-ФЗ\"
+    role: current_version_amendment_articles_6_18_19
+    metadata_status: METADATA_VERIFIED
+    source_record: \"source/SEC-SRC-RU-FZ23-2025.yaml\"
+    raw_capture: PENDING
+    applicability: VERSION_CHAIN_CURRENT_FROM_2025_07_01
+""",
+    "SEC-SRC-RU-FZ121-2025": """  - id: SEC-SRC-RU-FZ121-2025
+    document: \"Федеральный закон от 23.05.2025 № 121-ФЗ\"
+    role: current_version_amendment_article_11_part_2
+    metadata_status: METADATA_VERIFIED
+    source_record: \"source/SEC-SRC-RU-FZ121-2025.yaml\"
+    raw_capture: PENDING
+    applicability: VERSION_CHAIN_CURRENT_FROM_2025_09_01
+""",
+    "SEC-SRC-RU-FZ156-2025": """  - id: SEC-SRC-RU-FZ156-2025
+    document: \"Федеральный закон от 24.06.2025 № 156-ФЗ\"
+    role: current_version_amendment_article_9_part_1
+    metadata_status: METADATA_VERIFIED
+    source_record: \"source/SEC-SRC-RU-FZ156-2025.yaml\"
+    raw_capture: PENDING
+    applicability: VERSION_CHAIN_CURRENT_FROM_2025_09_01
 """,
     "SEC-SRC-RU-PP538-2025": """  - id: SEC-SRC-RU-PP538-2025
     document: \"Постановление Правительства РФ от 24.04.2025 № 538\"
@@ -232,7 +264,7 @@ def main() -> int:
     newly_captured = sum(1 for row in attempted if row.get("status") == "IMMUTABLE_CAPTURED")
     pending = sum(1 for row in attempted if row.get("status") == "PENDING")
     run = {
-        "schema_version": "1.7",
+        "schema_version": "1.8",
         "kind": "pdn-core-reuse-first-acquisition-run",
         "identity_scope_guard": "document.official_publication_id only",
         "started_at": started.isoformat().replace("+00:00", "Z"),
