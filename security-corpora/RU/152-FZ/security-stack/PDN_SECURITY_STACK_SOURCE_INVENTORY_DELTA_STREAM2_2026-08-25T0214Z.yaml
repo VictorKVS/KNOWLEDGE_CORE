@@ -1,0 +1,53 @@
+schema_version: "1.0"
+id: SEC-PDN-SECURITY-STACK-INVENTORY-DELTA-2026-08-25T0214Z
+applies_to: PDN_SECURITY_STACK_SOURCE_INVENTORY.yaml
+stream: RU_PDN_TECHNICAL_CRYPTO
+created_at: "2026-08-25T02:14:00Z"
+merge_policy: >-
+  ADDITIVE_OVERLAY. Merge by source id and relation identity. Do not replace unrelated sources or weaken
+  applicability guards. Exact bytes remain mandatory for IMMUTABLE_CAPTURED.
+
+source_additions:
+  - id: SEC-SRC-RU-FSB-SKZI-FORM-NOTICE-2017
+    role: official_fsb_skzi_formular_and_certificate_condition_guidance
+    metadata_status: METADATA_VERIFIED
+    source_record: "source/SEC-SRC-RU-FSB-SKZI-FORM-NOTICE-2017.yaml"
+    raw_capture: PENDING
+    applicability: PDN_OPERATOR_WHEN_SKZI_USED_AND_SPECIFIC_FORMULAR_REQUIREMENT_APPLIES
+
+relation_additions:
+  - from: SEC-SRC-RU-FSB-SKZI-FORM-NOTICE-2017
+    type: CLARIFIES_OPERATIONAL_REQUIREMENT_OF
+    to: SEC-SRC-RU-FSB66-2005
+    scope: SKZI_OPERATION_WHEN_APPLICABLE
+  - from: SEC-SRC-RU-FSB-SKZI-FORM-NOTICE-2017
+    type: OPERATIONAL_CONTEXT_FOR
+    to: SEC-SRC-RU-FSB378-2014
+    scope: ISPDN_WHEN_SKZI_USED
+  - from: SEC-SRC-RU-FSB-SKZI-FORM-NOTICE-2017
+    type: CERTIFICATE_CONDITION_CONTEXT
+    to: FSB_SKZI_CERTIFICATE_AND_FORMULAR
+    scope: ONLY_IF_SPECIFIC_SKZI_FORMULAR_REQUIRES_ENVIRONMENT_IMPACT_ASSESSMENT
+
+counter_patch:
+  identified: 34
+  metadata_verified: 34
+  raw_downloaded_exact: 16
+  immutable_sha256_verified: 16
+  pending_raw_capture: 18
+  exact_official_route_unresolved: 6
+  confirmed_conflicts: 0
+
+latest_run_patch:
+  run_record: "runs/STREAM2_RUN_2026-08-25T0214Z.yaml"
+  new_sources: 1
+  new_immutable_captured: 0
+  existing_immutable_reused: 1
+  semantic_promotions: 0
+
+merge_gate:
+  - guidance applies only after actual SKZI use and a matching formular condition are proven
+  - guidance does not create a universal PDN duty to use SKZI or obtain a crypto-activity licence
+  - the 2017 administrative-liability reference is historical context and is not current-penalty proof
+  - preserve FSTEC21 active baseline until a final enacted replacement is proven
+  - preserve exact-byte requirement for PP1119, FSB378 and the new FSB guidance page
