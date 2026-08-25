@@ -1,4 +1,4 @@
-schema_version: "1.0"
+schema_version: "1.1"
 id: SEC-SRC-RU-FSTEC-INFO-240-22-2457-2026
 kind: security-methodological-source
 status: METADATA_VERIFIED
@@ -9,7 +9,7 @@ document:
   type: informational_notice
   number: "240/22/2457"
   adopted_date: "2026-04-14"
-  checked_at: "2026-08-25"
+  checked_at: "2026-08-26"
   status_note: >-
     Первичное информационное сообщение фиксирует утверждение ФСТЭК России 12.04.2026 методического документа
     «Состав и содержание мероприятий и мер по защите информации, содержащейся в информационных системах».
@@ -17,30 +17,36 @@ document:
 canonical_source:
   publisher: "ФСТЭК России"
   landing_page: "https://fstec.ru/dokumenty/vse-dokumenty/informatsionnye-i-analiticheskie-materialy/informatsionnoe-soobshchenie-fstek-rossii-ot-14-aprelya-2026-g-n-240-22-2457"
-  expected_mime: "text/html"
-  route_status: OFFICIAL_PRIMARY_ROUTE_REGISTERED_CAPTURE_PENDING
+  direct_pdf_url: "https://fstec.ru/files/1486/-----14--2026--N-240-22-2457/3022/-----14--2026--N-240-22-2457.pdf"
+  landing_expected_mime: "text/html"
+  direct_file_expected_mime: "application/pdf"
+  route_status: EXACT_OFFICIAL_PDF_ROUTE_RESOLVED_CAPTURE_PENDING
   freshness_check:
-    checked_at: "2026-08-25"
-    result: PRIMARY_ROUTE_AND_DOCUMENT_IDENTITY_RECONFIRMED
-    direct_transport_result: FSTEC_ROUTE_TIMEOUT_IN_BOUNDED_RUNTIME
+    checked_at: "2026-08-26"
+    result: PRIMARY_ROUTE_DOCUMENT_IDENTITY_AND_EXACT_PDF_TARGET_RECONFIRMED
+    direct_transport_result: FSTEC_EXACT_PDF_ROUTE_TIMEOUT_IN_BOUNDED_RUNTIME
+    route_resolution_note: >-
+      A current independent preservation/navigation index links both the official FSTEC landing page and the official
+      FSTEC PDF. Following the official-PDF link resolves the exact fstec.ru file URL above. The issuer file route timed
+      out during byte retrieval, so the route is proven while the immutable payload remains pending.
 reference_corroboration:
   - url: "https://01.normacs.ru/Doclist/doc/28ROR.html"
     evidence_class: DOCUMENT_IDENTITY_AND_STATUS_CORROBORATION_ONLY
     primary_immutable_eligible: false
   - url: "https://hub.zlonov.ru/laws/Информационные-сообщения-ФСТЭК-России/Информационное-сообщение-ФСТЭК-России-№240-22-2457-от-14.04.2026"
-    evidence_class: SECONDARY_TEXT_AND_OFFICIAL_LINK_CORROBORATION_ONLY
+    evidence_class: SECONDARY_NAVIGATION_TO_EXACT_OFFICIAL_PDF_AND_TEXT_CORROBORATION_ONLY
     primary_immutable_eligible: false
 capture:
   fingerprint_status: PENDING
   semantic_status: UNCHANGED
-  source_url: "https://fstec.ru/dokumenty/vse-dokumenty/informatsionnye-i-analiticheskie-materialy/informatsionnoe-soobshchenie-fstek-rossii-ot-14-aprelya-2026-g-n-240-22-2457"
+  source_url: "https://fstec.ru/files/1486/-----14--2026--N-240-22-2457/3022/-----14--2026--N-240-22-2457.pdf"
   retrieved_at: null
   mime: null
   byte_length: null
   sha256: null
   note: >-
-    Exact primary HTTP bytes were not captured because the issuer route timed out. No secondary rendering is
-    promoted to primary immutable evidence.
+    Exact primary PDF route is now resolved, but primary bytes were not captured because the issuer route timed out.
+    MIME, byte length and SHA-256 remain unset. No secondary rendering is promoted to primary immutable evidence.
 relations:
   - type: ANNOUNCES_APPROVAL_OF
     target: SEC-SRC-RU-FSTEC-PROTECTION-MEASURES-METHOD-2026
@@ -54,9 +60,12 @@ applicability:
   not_crypto_requirement: true
 provenance:
   issuing_authority_route_registered: true
+  exact_official_pdf_route_resolved: true
   primary_bytes_captured: false
   independent_document_identity_corroboration: true
+  independent_exact_route_navigation_corroboration: true
   review_required: true
 agent_rule: >-
   Use this source to prove approval of the 12.04.2026 FSTEC method and its version transition only. Do not infer
-  universal ISPDN applicability or cryptographic duties from the notice.
+  universal ISPDN applicability or cryptographic duties from the notice. Route resolution is not immutable capture:
+  require exact official bytes plus computed MIME/byte length/SHA-256 before promotion.

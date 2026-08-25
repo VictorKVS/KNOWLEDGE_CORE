@@ -1,0 +1,87 @@
+schema_version: "1.0"
+id: STREAM2-RUN-2026-08-25T2315Z
+stream: RU_PDN_TECHNICAL_CRYPTO
+started_at: "2026-08-25T23:15:00Z"
+status: PASS
+objective: >-
+  Continue primary-source/status acquisition for the 152-FZ technical and cryptographic contour. Resolve exact official
+  FSTEC file routes where issuer landing pages are transport-degraded, preserve immutable proof-floor, and recheck the
+  active PP1119/FSTEC21/FSB378 baselines without importing adjacent-regime duties.
+
+findings:
+  - id: SEC-SRC-RU-FSTEC-INFO-240-22-2457-2026
+    result: EXACT_OFFICIAL_PDF_ROUTE_RESOLVED_CAPTURE_PENDING
+    details: >-
+      A current independent preservation/navigation index links both the official FSTEC landing page and the official
+      PDF. Following the official-PDF link resolves the exact FSTEC file target:
+      https://fstec.ru/files/1486/-----14--2026--N-240-22-2457/3022/-----14--2026--N-240-22-2457.pdf .
+      Direct byte retrieval timed out, so no MIME, byte length or SHA-256 is asserted.
+    applicability: APPROVAL_AND_VERSION_CHAIN_EVIDENCE_ONLY
+    immutable: false
+  - id: SEC-SRC-RU-FSTEC-PROTECTION-MEASURES-METHOD-2026
+    result: EXACT_OFFICIAL_PDF_ROUTE_RESOLVED_CAPTURE_PENDING
+    details: >-
+      The current navigation index exposes the official FSTEC PDF target for the 12.04.2026 method:
+      https://fstec.ru/files/1485/---12--2026-/3020/---12--2026-.pdf . Direct byte retrieval timed out; the route is
+      proven, but immutable payload identity remains pending.
+    applicability: PUBLIC_SYSTEMS_KII_OR_EXPLICIT_CROSS_REFERENCE_ONLY
+    immutable: false
+  - id: SEC-SRC-RU-FSTEC21-2013
+    result: ACTIVE_BASELINE_RECONFIRMED_PROJECT_169583_WATCH_ONLY
+    details: >-
+      Fresh 26.08.2026 monitoring still identifies 169583 as the project prepared 24.07.2026. No final issued,
+      Minjust-registered and officially published replacement was proven in this bounded pass. The proposed 01.09.2026
+      date therefore remains draft/future-change evidence only.
+  - id: SEC-SRC-RU-PP1119-2012
+    result: ACTIVE_UNAMENDED_STATUS_RECONFIRMED_PRIMARY_DOC_CAPTURE_PENDING
+    details: >-
+      Current legal indexes still show PP1119 in the 01.11.2012 edition, effective 15.11.2012 and in force. The exact
+      Government legacy DOC route remains the primary immutable target, but exact OLE/CFB bytes were not obtained.
+  - id: SEC-SRC-RU-FSB378-2014
+    result: ACTIVE_SCOPE_RECONFIRMED_PRIMARY_BYTES_PENDING
+    details: >-
+      Current indexes and the official-publication archive continue to show Order 378 dated 10.07.2014, Minjust
+      registration No.33620 of 18.08.2014, effective 28.09.2014. Its scope remains ISPDn processing with SKZI use;
+      no generic cryptographic duty is inferred for ISPDn without established SKZI use.
+
+transport_attempts:
+  - target: SEC-SRC-RU-PP1119-2012
+    route: "https://government.ru/media/2012/11/3/53354/file/1119_pril.doc"
+    result: FAILED_NO_EXACT_OLE_CFB_BYTES
+  - target: SEC-SRC-RU-FSTEC-INFO-240-22-2457-2026
+    route: "https://fstec.ru/files/1486/-----14--2026--N-240-22-2457/3022/-----14--2026--N-240-22-2457.pdf"
+    result: EXACT_OFFICIAL_ROUTE_RESOLVED_FETCH_TIMEOUT_NO_BYTES
+  - target: SEC-SRC-RU-FSTEC-PROTECTION-MEASURES-METHOD-2026
+    route: "https://fstec.ru/files/1485/---12--2026-/3020/---12--2026-.pdf"
+    result: EXACT_OFFICIAL_ROUTE_RESOLVED_FETCH_TIMEOUT_NO_BYTES
+
+metrics:
+  new_sources: 0
+  new_immutable_captured: 0
+  exact_official_routes_resolved: 2
+  status_rechecks: 5
+  primary_byte_targets_attempted: 3
+  semantic_promotions: 0
+  new_universal_pdn_duties_created: 0
+  effective_identified: 38
+  effective_metadata_verified: 38
+  effective_immutable_sha256_verified: 17
+  effective_pending_raw_capture: 21
+  exact_official_route_unresolved: 6
+  confirmed_conflicts: 0
+
+applicability_guards:
+  - Route resolution alone never satisfies IMMUTABLE_CAPTURED; exact official bytes and computed fingerprint fields remain mandatory.
+  - The 12.04.2026 FSTEC method retains its public-system/KII scope and does not silently become a generic private-ISPDn baseline.
+  - The 12.04.2026 method expressly leaves cryptographic protection measures to FSB requirements.
+  - FSB378 applies only where SKZI use in ISPDn is established.
+  - Project 169583 remains watch-only until final issuance, Minjust registration where required, and official publication are proven.
+
+next_priority:
+  - exact Government DOC bytes for PP1119
+  - exact official FSTEC PDF bytes for notice No.240/22/2457 and method dated 12.04.2026
+  - resolve exact official PDF route and capture for FSTEC maturity method dated 07.08.2026
+  - official primary bytes for FSB378
+  - FSB66 and FSB173 primary/version artifacts
+  - FAPSI152 primary artifact
+  - continue primary-enactment watch for project 169583
