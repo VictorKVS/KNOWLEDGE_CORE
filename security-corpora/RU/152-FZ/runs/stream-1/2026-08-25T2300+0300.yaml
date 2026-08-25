@@ -1,0 +1,132 @@
+schema_version: "1.0"
+id: PDN-STREAM1-RUN-2026-08-25T2300+0300
+kind: pdn-core-production-run
+stream: 1
+observed_at: "2026-08-25T23:00:17+03:00"
+status: PARTIAL_PROGRESS
+
+scope:
+  domain: RU_PDN_CORE
+  rule: "General 152-FZ/Roskomnadzor core and direct dependencies only; no sector overlay unless required as a dependency."
+
+baseline_counters:
+  identified: 29
+  raw_downloaded_exact: 27
+  immutable_sha256_verified: 27
+  atomized_existing_proposed: 4
+  atomized_verified: 0
+  pending_raw_capture: 2
+  raw_capture_coverage_ratio: 0.9310
+  reusable_generic_targets: 27
+  generic_targets_total: 28
+  reuse_ratio: 0.9643
+
+changes_this_pass:
+  - type: PROOF_GUARD_HARDENED
+    subject: SEC-SRC-RU-PP687-2008
+    result: >-
+      PP687 exact capture can no longer be accepted solely from generic document identity. The raw response must
+      additionally prove the current PP12 revision by containing the clause-3 validity fingerprint through
+      01.09.2030. This prevents an old 2008/historical IPS rendering from being promoted as the current text.
+    commit: cbf9c1fb6576260222d76e81a8fb2ea857cc1f37
+    semantic_promotion: false
+
+  - type: OFFICIAL_TRANSPORT_REGISTERED_GUARDED
+    subject: SEC-SRC-RU-PP687-2008
+    route: "http://pravo.gov.ru/proxy/ips/?docview&page=1&print=1&nd=102124251"
+    result: >-
+      Registered the official IPS print-rendering family under the existing nd=102124251 identity. No rdk is
+      pinned; an older rendering must fail the new current-revision content fingerprint.
+    commit: 62a4159af34a4ad866fad5707e8651b21c3d6d4b
+    semantic_promotion: false
+
+  - type: OFFICIAL_TRANSPORT_REGISTERED_GUARDED
+    subject: SEC-SRC-RU-152FZ-2026-07-26
+    route: "http://pravo.gov.ru/proxy/ips/?docview&page=1&print=1&nd=102108261"
+    result: >-
+      Registered the official IPS print-rendering family under the same 152-FZ nd identity. The response still must
+      prove the current 26.07.2026 version by explicit No. 265-FZ evidence or the complete Article-12 delta fingerprint.
+    commit: c47ed9cae27d5d069b0d78cd740cac38b95b0803
+    semantic_promotion: false
+
+  - type: WORKFLOW_CONCURRENCY_FIX
+    subject: PDN_Core_Immutable_Acquisition
+    result: >-
+      A telemetry-only fast-stage commit raced main and prevented the dedicated routes from running. The fast stage
+      now commits before slow routes only when it actually captured new immutable bytes; telemetry-only changes are
+      deferred to the final evidence commit.
+    previous_failed_run_evidence: "workflow run 127 failed at 'Commit fast immutable deltas before slow dedicated routes'; dedicated steps were skipped"
+    commit: c8923fab007d4576c84bd04ad6f14d2c78c0063d
+
+freshness_checks:
+  - subject: SEC-SRC-RU-PP687-2008
+    status: CURRENT_REVISION_CONFIRMED
+    current_revision_source: "Постановление Правительства РФ от 18.01.2025 № 12"
+    effective_from: "2025-01-26"
+    valid_until: "2030-09-01"
+    proof_note: >-
+      Official Government text states the PP12 revision and clause 3 validity through 01.09.2030.
+
+  - subject: SEC-SRC-RU-152FZ-2026-07-26
+    status: CURRENT_VERSION_IDENTITY_UNCHANGED
+    effective_from: "2026-07-26"
+    triggering_amendment: "Федеральный закон от 26.07.2026 № 265-ФЗ"
+    semantic_promotion: false
+
+new_dependency_discovery_gaps:
+  - source_id_candidate: SEC-SRC-RU-PP2526-2022
+    document: "Постановление Правительства РФ от 29.12.2022 № 2526"
+    relation_candidate: IMPLEMENTS_EXCEPTION_FOR
+    target: SEC-SRC-RU-152FZ-2026-07-26
+    scope: "Article 12 part 15; exceptions from parts 3-6 and 8-11 for specified public-function cross-border transfers"
+    official_publication_id: "0001202212310018"
+    official_publication_date: "2022-12-31"
+    effective_from: "2023-03-01"
+    status: DISCOVERED_NOT_YET_REGISTERED
+    reason_not_promoted: "Source card/master registration and immutable PDF manifest have not yet been created."
+
+  - source_id_candidate: SEC-SRC-RU-PP6-2023
+    document: "Постановление Правительства РФ от 10.01.2023 № 6"
+    relation_candidate: IMPLEMENTS
+    target: SEC-SRC-RU-152FZ-2026-07-26
+    scope: "Article 12 part 13; rules for prohibition/restriction of cross-border personal-data transfer and operator notification"
+    official_publication_id: "0001202301110015"
+    official_publication_date: "2023-01-11"
+    effective_from: "2023-03-01"
+    status: DISCOVERED_NOT_YET_REGISTERED
+    reason_not_promoted: "Source card/master registration and immutable PDF manifest have not yet been created."
+
+  - source_id_candidate: SEC-SRC-RU-PP1046-2021
+    document: "Постановление Правительства РФ от 29.06.2021 № 1046"
+    relation_candidate: REGULATORY_SUPERVISION_FRAMEWORK_FOR
+    target: SEC-SRC-RU-152FZ-2026-07-26
+    scope: "Federal state control/supervision over personal-data processing"
+    original_publication_id: "0001202106300055"
+    current_revision: "2026-07-03"
+    known_amendment_chain:
+      - "ПП РФ от 16.12.2021 № 2311"
+      - "ПП РФ от 27.08.2025 № 1286"
+      - "ПП РФ от 03.07.2026 № 833"
+    status: DISCOVERED_VERSION_CHAIN_REVIEW_REQUIRED
+    reason_not_promoted: >-
+      This is a current-version dependency, not a single static artifact. Register only after its amendment-source
+      publication identities are reconciled and the current-version compilation path is explicit.
+
+proof_floor:
+  immutable_new_this_pass: 0
+  semantic_promotions_this_pass: 0
+  rejected_or_unaccepted_responses_promoted: 0
+  rule: "No MIME/byte length/SHA-256 is recorded for the two remaining raw gaps without an accepted exact artifact manifest."
+
+remaining_primary_raw_gaps:
+  - SEC-SRC-RU-152FZ-2026-07-26
+  - SEC-SRC-RU-PP687-2008
+
+notes:
+  - >-
+      The latest acquisition run after the workflow fix passed the fast-stage commit gate and entered the guarded
+      PP687 route; no accepted immutable manifest was available at the time this run record was written, so master
+      production counters were intentionally left unchanged.
+  - >-
+      PP2526 and PP6 are direct Article-12 dependencies discovered in this pass and are explicitly recorded as gaps,
+      not silently treated as existing Golden Knowledge.
