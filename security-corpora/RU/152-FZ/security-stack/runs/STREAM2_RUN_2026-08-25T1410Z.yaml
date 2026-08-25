@@ -1,0 +1,121 @@
+schema_version: "1.0"
+id: SEC-PDN-STREAM2-RUN-2026-08-25T1410Z
+stream: RU_PDN_TECHNICAL_CRYPTO
+status: COMPLETED_WITH_NEW_VERSION_CHAIN_SOURCE_NO_NEW_IMMUTABLE
+started_at: "2026-08-25T14:10:36Z"
+finished_at: "2026-08-25T14:36:00Z"
+
+scope:
+  priorities:
+    - SEC-SRC-RU-PP1119-2012
+    - SEC-SRC-RU-FSTEC21-2013
+    - SEC-SRC-RU-FSTEC117-2025
+    - SEC-SRC-RU-FSTEC137-2026
+    - PUBLIC_SYSTEM_VERSION_CHAIN_WITH_EXPLICIT_PDN_APPLICABILITY_GUARD
+  applicability_rule: >-
+    Public-sector, licensing, certification, KII and cryptographic requirements are reusable in PDN decisions only
+    through an explicit applicability edge. An ISPDn does not inherit a neighboring regulatory regime merely because
+    the same security technology or control family is mentioned there.
+
+inventory_state_before:
+  effective_identified: 35
+  effective_metadata_verified: 35
+  effective_immutable_sha256_verified: 16
+  effective_pending_raw_capture: 19
+  effective_exact_official_route_unresolved: 6
+  confirmed_conflicts: 0
+
+new_source:
+  id: SEC-SRC-RU-FSTEC137-2026
+  result: METADATA_VERIFIED_FUTURE_EFFECTIVE_VERSION_CHAIN_DEPENDENCY
+  legal_identity:
+    adopted_date: "2026-05-08"
+    number: "137"
+    minjust_registration_date: "2026-08-10"
+    minjust_registration_number: "87797"
+    official_publication_id: "0001202608110006"
+    official_publication_date: "2026-08-11"
+    effective_from: "2026-09-01"
+    deferred_point_7_effective_from: "2027-03-01"
+  relation:
+    type: AMENDS
+    target: SEC-SRC-RU-FSTEC117-2025
+  temporal_gate: >-
+    On 25.08.2026 the amendment is adopted, registered and published but not yet effective. Order 117 therefore remains
+    the acting text without Order 137 changes until 01.09.2026; point 7 of the appendix remains deferred until 01.03.2027.
+  pdn_applicability_gate: >-
+    This is not a generic private-ISPDn source. It is relevant only where the ISPDn is also within the state/public-system
+    scope of Order 117 or another explicit legal edge establishes applicability.
+  capture_result: PENDING_EXACT_OFFICIAL_PDF_BYTES
+
+status_checks:
+  - source: SEC-SRC-RU-PP1119-2012
+    checked_at: "2026-08-25"
+    result: CURRENT_GOVERNMENT_LANDING_RECONFIRMED_EXACT_DOC_PENDING
+    findings:
+      - official Government page https://government.ru/docs/6339/ continues to present Resolution No.1119 of 01.11.2012
+      - the page labels the No.1119 document as the acting edition and exposes a DOC download control
+      - exact issuer DOC bytes were not obtained in this pass, so immutable metadata was not invented
+    capture_result: PENDING
+  - source: SEC-SRC-RU-FSTEC21-2013
+    checked_at: "2026-08-25"
+    result: ACTIVE_BASELINE_RETAINED_PROJECT_169583_NOT_PROVEN_ENACTED
+    findings:
+      - fresh legal publications continue to identify the 24.07.2026 replacement text as a project
+      - secondary articles use future-tense replacement language and point back to project 169583
+      - no final order number, Minjust registration or official publication identity was proven
+    capture_result: EXISTING_IMMUTABLE_REUSED
+  - source: SEC-SRC-RU-FSTEC117-2025
+    checked_at: "2026-08-25"
+    result: ACTING_PUBLIC_SYSTEM_BASELINE_WITH_FUTURE_AMENDMENT_REGISTERED
+    findings:
+      - Order 117 is acting from 01.03.2026 within its state/enumerated public-system scope
+      - Order 137 is a registered/published future amendment effective 01.09.2026 with point 7 deferred to 01.03.2027
+    capture_result: EXISTING_IMMUTABLE_REUSED
+
+primary_transport_attempts:
+  - target: SEC-SRC-RU-PP1119-2012
+    official_landing: "https://government.ru/docs/6339/"
+    target_route: "https://government.ru/media/2012/11/3/53354/file/1119_pril.doc"
+    result: EXACT_ISSUER_BYTES_NOT_OBTAINED_IN_CURRENT_TRANSPORT
+    proof_floor_effect: NO_PROMOTION
+  - target: SEC-SRC-RU-FSTEC137-2026
+    official_publication_id: "0001202608110006"
+    official_landing: "https://publication.pravo.gov.ru/document/0001202608110006"
+    direct_pdf_route_candidate: "http://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202608110006"
+    result: OFFICIAL_IDENTITY_VERIFIED_EXACT_PDF_BYTES_NOT_OBTAINED_IN_CURRENT_TRANSPORT
+    proof_floor_effect: METADATA_ONLY_NO_IMMUTABLE_PROMOTION
+
+inventory_state_after:
+  effective_identified: 36
+  effective_metadata_verified: 36
+  effective_immutable_sha256_verified: 16
+  effective_pending_raw_capture: 20
+  effective_exact_official_route_unresolved: 6
+  confirmed_conflicts: 0
+
+metrics:
+  new_sources_registered: 1
+  new_immutable_captured: 0
+  existing_immutable_reused: 2
+  source_cards_added: 1
+  priority_status_rechecks: 3
+  primary_routes_attempted: 2
+  version_edges_added: 1
+  temporal_gates_added: 2
+  semantic_promotions: 0
+  new_universal_pdn_duties_created: 0
+
+next_priority:
+  - exact Government DOC bytes for PP1119 with OLE/CFB validation and immutable manifest
+  - exact official PDF bytes for FSTEC137 publication identity 0001202608110006
+  - exact primary publication bytes for FSB378
+  - exact primary bytes/current version chain for FSB66/173 and FAPSI152
+  - exact official PDFs for FSTEC protection-measures method 12.04.2026 and maturity method 07.08.2026
+  - licensing-only review of the August 2026 FSTEC PP79 equipment lists and Information Notice No.240/13/5521 without propagating them into generic PDN
+  - continue FSTEC21 project 169583 enactment watch
+
+proof_rule: >-
+  Legal status/version-chain evidence and immutable-file evidence are distinct gates. Do not fabricate MIME, byte length
+  or SHA-256 when the exact issuer file cannot be captured. Do not apply a future-effective amendment before its legal
+  effective date, and do not generalize Order 117/137 public-system requirements to private ISPDn without an explicit edge.

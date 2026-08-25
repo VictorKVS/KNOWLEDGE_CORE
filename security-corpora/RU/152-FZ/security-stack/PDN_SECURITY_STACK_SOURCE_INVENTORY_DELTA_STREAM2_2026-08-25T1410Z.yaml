@@ -1,0 +1,93 @@
+schema_version: "1.0"
+id: SEC-PDN-SECURITY-STACK-INVENTORY-DELTA-2026-08-25T1410Z
+applies_to: PDN_SECURITY_STACK_SOURCE_INVENTORY.yaml
+stream: RU_PDN_TECHNICAL_CRYPTO
+created_at: "2026-08-25T14:10:36Z"
+merge_policy: >-
+  CONCURRENCY_SAFE_ADDITIVE_OVERLAY. Preserve all direct-base rows and all previously merged Stream-2 overlays.
+  Add the future-effective FSTEC Order No. 137 only as a version-chain dependency of Order No. 117 and refresh the
+  PP1119/FSTEC21 status gates. Do not promote public-sector controls into a generic private-ISPDn baseline.
+
+effective_inventory_inputs:
+  effective_identified_before: 35
+  new_source_records_this_overlay: 1
+  effective_identified_after_overlay: 36
+
+source_additions:
+  - id: SEC-SRC-RU-FSTEC137-2026
+    role: fstec117_future_version_chain_dependency
+    metadata_status: METADATA_VERIFIED
+    source_record: "source/SEC-SRC-RU-FSTEC137-2026.yaml"
+    raw_capture: PENDING
+    temporal_status: ADOPTED_REGISTERED_PUBLISHED_NOT_YET_EFFECTIVE
+    effective_from: "2026-09-01"
+    deferred_effective_provision:
+      locator: "пункт 7 приложения"
+      effective_from: "2027-03-01"
+    applicability: STATE_AND_ENUMERATED_PUBLIC_SYSTEMS_ONLY
+
+version_edge_additions:
+  - from: SEC-SRC-RU-FSTEC117-2025
+    type: AMENDED_BY_FUTURE_EFFECTIVE
+    to: SEC-SRC-RU-FSTEC137-2026
+    effect_from: "2026-09-01"
+    deferred_effect:
+      locator: "пункт 7 приложения"
+      effect_from: "2027-03-01"
+    provenance: OFFICIAL_PUBLICATION_ID_AND_MINJUST_REGISTRATION_CROSS_VERIFIED
+
+status_refreshes:
+  - id: SEC-SRC-RU-PP1119-2012
+    checked_at: "2026-08-25"
+    status: METADATA_VERIFIED
+    raw_capture: PENDING
+    finding: >-
+      OFFICIAL_GOVERNMENT_LANDING_RECONFIRMED_AS_ACTING_EDITION; the Government page continues to expose the
+      01.11.2012 No.1119 document as the acting edition, but the exact issuer DOC bytes were not captured in this pass.
+    official_landing_page: "https://government.ru/docs/6339/"
+  - id: SEC-SRC-RU-FSTEC21-2013
+    checked_at: "2026-08-25"
+    status: METADATA_VERIFIED
+    raw_capture: IMMUTABLE_CAPTURED
+    finding: >-
+      ACTIVE_BASELINE_RETAINED; project 169583 remains evidenced as a July 2026 draft for public discussion and no
+      final order number, Minjust registration or official publication identity was proven in this pass.
+  - id: SEC-SRC-RU-FSTEC137-2026
+    checked_at: "2026-08-25"
+    status: METADATA_VERIFIED
+    raw_capture: PENDING
+    finding: >-
+      FUTURE_EFFECTIVE_AMENDMENT_VERIFIED; Order No.137 was registered by Minjust on 10.08.2026 No.87797 and officially
+      published 11.08.2026 under publication identity 0001202608110006; it enters into force 01.09.2026 except point 7
+      of the appendix, which enters into force 01.03.2027.
+
+counter_patch:
+  identified: 36
+  metadata_verified: 36
+  raw_downloaded_exact: 16
+  immutable_sha256_verified: 16
+  pending_raw_capture: 20
+  exact_official_route_unresolved: 6
+  confirmed_conflicts: 0
+
+latest_run_patch:
+  run_record: "runs/STREAM2_RUN_2026-08-25T1410Z.yaml"
+  new_sources: 1
+  new_immutable_captured: 0
+  existing_immutable_reused: 2
+  priority_status_rechecks: 3
+  primary_byte_targets_attempted: 2
+  semantic_promotions: 0
+  new_universal_pdn_duties_created: 0
+
+semantic_guards:
+  - Order 137 is a future-effective amendment of Order 117 and is not part of the acting Order 117 text before 01.09.2026
+  - point 7 of the Order 137 appendix must remain deferred until 01.03.2027
+  - Orders 117/137 apply only to state and other enumerated public-system scopes; private ISPDn status alone creates no applicability edge
+  - PP1119 immutable promotion remains blocked until exact issuer DOC bytes, MIME, byte length and SHA-256 are captured
+  - project 169583 remains draft/watch evidence until final enactment, registration and official publication are proven
+
+proof_rule: >-
+  Preserve exact-byte proof as the immutable gate. Metadata, legal indexes and official publication identity may prove
+  temporal/version-chain status but do not substitute for the exact primary file. Future-effective amendments must not
+  be executed before their legal effective date, and neighboring public-sector controls must not propagate into generic PDN.

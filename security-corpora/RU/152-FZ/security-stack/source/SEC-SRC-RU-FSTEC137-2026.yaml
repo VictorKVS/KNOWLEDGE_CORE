@@ -1,0 +1,76 @@
+schema_version: "1.0"
+id: SEC-SRC-RU-FSTEC137-2026
+kind: security-regulatory-source
+status: METADATA_VERIFIED
+title: >-
+  Приказ ФСТЭК России от 08.05.2026 № 137 «О внесении изменений в Требования о защите информации,
+  содержащейся в государственных информационных системах, иных информационных системах государственных
+  органов, государственных унитарных предприятий, государственных учреждений, утвержденные приказом
+  ФСТЭК России от 11 апреля 2025 г. № 117»
+jurisdiction: RU
+issuer: "ФСТЭК России"
+document:
+  type: regulator_order_amendment
+  number: "137"
+  adopted_date: "2026-05-08"
+  ministry_registration_date: "2026-08-10"
+  ministry_registration_number: "87797"
+  official_publication_id: "0001202608110006"
+  publication_date: "2026-08-11"
+  effective_from: "2026-09-01"
+  deferred_effective_provision:
+    locator: "пункт 7 приложения"
+    effective_from: "2027-03-01"
+  checked_at: "2026-08-25"
+  temporal_status: ADOPTED_REGISTERED_PUBLISHED_NOT_YET_EFFECTIVE
+  version_chain_note: >-
+    Приказ № 137 является опубликованным и зарегистрированным изменяющим актом к приказу ФСТЭК № 117.
+    На дату проверки 25.08.2026 основная часть еще не вступила в силу: применять изменения как действующую
+    редакцию до 01.09.2026 нельзя; пункт 7 приложения отложен до 01.03.2027.
+canonical_source:
+  publisher: "Официальный интернет-портал правовой информации"
+  landing_page: "https://publication.pravo.gov.ru/document/0001202608110006"
+  publication_identity_status: VERIFIED
+  direct_pdf_route_candidate: "http://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202608110006"
+  exact_file_route_status: ROUTE_PATTERN_IDENTIFIED_BYTES_NOT_CAPTURED
+  acquisition_priority: MEDIUM_PUBLIC_SYSTEM_VERSION_CHAIN
+capture:
+  fingerprint_status: PENDING
+  semantic_status: FUTURE_EFFECTIVE_AMENDMENT_VERIFIED
+  source_url: "https://publication.pravo.gov.ru/document/0001202608110006"
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  note: >-
+    Official publication identity and legal metadata are verified, but exact official PDF bytes were not acquired in
+    this run. Do not populate MIME, byte length or SHA-256 until the official artifact is captured byte-for-byte.
+relations:
+  - type: AMENDS
+    target: SEC-SRC-RU-FSTEC117-2025
+    effect_from: "2026-09-01"
+    deferred_effect:
+      locator: "пункт 7 приложения"
+      effect_from: "2027-03-01"
+applicability_guard:
+  direct_scope: STATE_AND_ENUMERATED_PUBLIC_SYSTEMS_ONLY
+  overlap_with_ispdn: >-
+    Reuse only where an ISPDn is simultaneously within the systems covered by Order 117 (for example, a relevant
+    state/public information system). The existence of a private ISPDn alone does not make Order 117 or Order 137 applicable.
+  generic_private_ispdn: NOT_APPLICABLE_FROM_ISPDN_STATUS_ALONE
+  no_requirement_propagation: >-
+    Do not copy public-sector controls, reporting periods, maturity requirements or authentication requirements into a
+    generic private-sector PDN baseline without an independent applicability edge.
+provenance:
+  official_publication_id_verified: true
+  minjust_registration_cross_verified: true
+  future_effective_date_cross_verified: true
+  exact_official_bytes_captured: false
+  review_required: true
+agent_rule: >-
+  Treat Order 137 as a proven future-effective version-chain dependency of Order 117, not as a current generic PDN rule.
+  Before 01.09.2026 retain Order 117 without these amendments as the acting baseline; after that date re-run the temporal
+  status gate. Preserve the 01.03.2027 deferred date for point 7 separately.
+inventory_registration:
+  role: fstec117_future_version_chain_dependency
+  applicability: STATE_AND_ENUMERATED_PUBLIC_SYSTEMS_ONLY
