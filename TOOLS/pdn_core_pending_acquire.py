@@ -10,7 +10,7 @@ of unchanged official publication artifacts.
 Sources with dedicated guarded transports are excluded from the generic network loop
 so a slow special route cannot delay easy publication-ID deltas such as PP12.
 
-Inventory invariant (v1.6): a newly discovered source card must be registered in the
+Inventory invariant (v1.7): a newly discovered source card must be registered in the
 PDN master inventory before its immutable manifest can be synchronized. Core identity
 counters are reconciled strictly inside the production_counters block so identically
 named Stream-2 counters can never be overwritten.
@@ -44,6 +44,14 @@ PRODUCTION_COUNTERS_RE = re.compile(
 )
 
 DISCOVERED_SOURCE_BLOCKS = {
+    "SEC-SRC-RU-FZ233-2024": """  - id: SEC-SRC-RU-FZ233-2024
+    document: \"Федеральный закон от 08.08.2024 № 233-ФЗ\"
+    role: article_13_1_origin_amendment_dependency
+    metadata_status: METADATA_VERIFIED
+    source_record: \"source/SEC-SRC-RU-FZ233-2024.yaml\"
+    raw_capture: PENDING
+    applicability: VERSION_CHAIN_AND_ARTICLE_13_1_SCOPE
+""",
     "SEC-SRC-RU-PP538-2025": """  - id: SEC-SRC-RU-PP538-2025
     document: \"Постановление Правительства РФ от 24.04.2025 № 538\"
     role: article_13_1_cases_for_forming_depersonalized_data_sets
@@ -224,7 +232,7 @@ def main() -> int:
     newly_captured = sum(1 for row in attempted if row.get("status") == "IMMUTABLE_CAPTURED")
     pending = sum(1 for row in attempted if row.get("status") == "PENDING")
     run = {
-        "schema_version": "1.6",
+        "schema_version": "1.7",
         "kind": "pdn-core-reuse-first-acquisition-run",
         "identity_scope_guard": "document.official_publication_id only",
         "started_at": started.isoformat().replace("+00:00", "Z"),
