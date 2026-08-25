@@ -1,0 +1,93 @@
+schema_version: "1.0"
+id: STREAM1-PDN-CORE-2026-08-25T0810+0300
+kind: pdn-core-production-run
+stream: 1
+observed_at: "2026-08-25T08:10:00+03:00"
+scope: general_pdn_core
+
+freshness_review:
+  current_152fz:
+    source_id: SEC-SRC-RU-152FZ-2026-07-26
+    result: CURRENT_REVISION_CONFIRMED
+    revision_date: "2026-07-26"
+    triggering_amendment: SEC-SRC-RU-FZ265-2026
+    later_current_revision_found: false
+    note: >-
+      Current legal index recheck on 25.08.2026 still identifies the 26.07.2026 edition and No. 265-FZ as the
+      latest effective amendment. No semantic promotion follows from the index recheck.
+  pp687:
+    source_id: SEC-SRC-RU-PP687-2008
+    result: CURRENT_REVISION_CONFIRMED
+    revision_source_id: SEC-SRC-RU-PP12-2025
+    revision_date: "2025-01-18"
+    effective_from: "2025-01-26"
+    valid_until: "2030-09-01"
+    note: >-
+      Official Government portal index recheck on 25.08.2026 presents the full PP687 text in the No. 12 revision
+      and states validity through 01.09.2030. Byte-exact immutable capture remains a separate gate.
+
+production_counters_snapshot:
+  identified: 29
+  raw_downloaded_exact: 27
+  immutable_sha256_verified: 27
+  atomized_existing_proposed: 4
+  atomized_verified: 0
+  pending_raw_capture: 2
+  raw_capture_coverage_ratio: 0.9310
+
+reuse_telemetry:
+  latest_completed_fast_run_started_at: "2026-08-25T05:07:26Z"
+  targets_total: 28
+  reused_immutable: 27
+  network_targets_attempted: 0
+  dedicated_transport_pending: 1
+  new_immutable_captured_fast_stage: 0
+  reuse_ratio: 0.9643
+
+pending_raw_gates:
+  - source_id: SEC-SRC-RU-PP687-2008
+    classes:
+      - TRANSPORT_TIMEOUT
+      - IDENTITY_MARKER_MISS
+      - ALL_REGISTERED_ROUTES_FAILED
+    proof_floor_held: true
+  - source_id: SEC-SRC-RU-152FZ-2026-07-26
+    classes:
+      - TRANSPORT_TIMEOUT
+      - CURRENT_REVISION_MARKER_MISS
+      - ALL_REGISTERED_ROUTES_FAILED
+    proof_floor_held: true
+
+consistency_repair:
+  status: COMPLETED
+  file: security-corpora/RU/152-FZ/CORPUS.yaml
+  defect: >-
+    Corpus-level routing still named SEC-SRC-RU-152FZ-2025-09-01 as the active source after the master inventory
+    had moved current routing to SEC-SRC-RU-152FZ-2026-07-26.
+  correction:
+    active_source: SEC-SRC-RU-152FZ-2026-07-26
+    superseded_source: SEC-SRC-RU-152FZ-2025-09-01
+    future_source: SEC-SRC-RU-FZ200-2025
+    future_effective_from: "2027-03-01"
+  semantic_promotions: 0
+
+version_chain_completeness_review:
+  status: DISCOVERY_GAP_OPEN
+  priority: AFTER_CURRENT_RAW_GAPS
+  finding: >-
+    The current 152-FZ index lists a historical amendment chain extending through 2009-2023, while Stream-1 has
+    individually registered the recent current-chain amendments and future branch but not every historical amending act.
+  action: >-
+    Resolve official identities for historical amending acts incrementally and register them as historical/version-chain
+    evidence without routing them as current obligations. Do not invent publication IDs and do not expand current
+    applicability merely because an act appears in the historical amendment list.
+
+changes_this_pass:
+  source_records_refreshed: 1
+  corpus_routing_repairs: 1
+  new_immutable: 0
+  semantic_promotions: 0
+
+proof_rule: >-
+  Metadata/freshness verification never substitutes for exact official bytes, retrieved_at, MIME, byte length,
+  SHA-256, accepted manifest and locator review required for immutable/extraction promotion.
