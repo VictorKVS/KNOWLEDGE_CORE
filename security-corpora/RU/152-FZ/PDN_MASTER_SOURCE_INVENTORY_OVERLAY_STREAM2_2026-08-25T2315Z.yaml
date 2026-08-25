@@ -1,0 +1,41 @@
+schema_version: "1.0"
+id: SEC-PDN-MASTER-SOURCE-INVENTORY-OVERLAY-STREAM2-2026-08-25T2315Z
+applies_to: PDN_MASTER_SOURCE_INVENTORY.yaml
+stream: RU_PDN_TECHNICAL_CRYPTO
+created_at: "2026-08-25T23:15:00Z"
+merge_policy: >-
+  CONCURRENCY_SAFE_ADDITIVE_OVERLAY. Preserve all master records/counters from other streams and previous Stream-2
+  overlays. Link the effective Security Stack state after resolving two exact FSTEC PDF routes; do not treat route
+  resolution as immutable capture.
+
+security_stack_patch:
+  linked_inventory: "security-stack/PDN_SECURITY_STACK_SOURCE_INVENTORY.yaml"
+  latest_overlay: "security-stack/PDN_SECURITY_STACK_SOURCE_INVENTORY_OVERLAY_STREAM2_2026-08-25T2315Z.yaml"
+  checked_at: "2026-08-26"
+  identified: 38
+  metadata_verified: 38
+  immutable_sha256_verified: 17
+  pending_raw_capture: 21
+  exact_official_route_unresolved: 6
+  confirmed_conflicts: 0
+  latest_stream2_run: "security-stack/runs/STREAM2_RUN_2026-08-25T2315Z.yaml"
+  latest_registry_update: >-
+    2026-08-26: resolved the exact official FSTEC PDF route for information notice No.240/22/2457 of 14.04.2026 and
+    for the approved method dated 12.04.2026. Both exact file requests timed out, therefore immutable counts remain
+    unchanged and fingerprint fields remain null. PP1119 remains the active 2012 edition with exact Government DOC
+    capture pending; FSB378 remains active only for ISPDn where SKZI use is established; FSTEC21 remains the current
+    technical baseline because project 169583 is still not proven as a final enacted replacement.
+
+analysis_metrics_patch:
+  stream2_source_records_added_this_pass: 0
+  stream2_immutable_new_this_pass: 0
+  stream2_exact_official_routes_resolved_this_pass: 2
+  stream2_status_rechecks_this_pass: 5
+  stream2_primary_byte_targets_attempted_this_pass: 3
+  stream2_semantic_promotions_this_pass: 0
+  stream2_new_universal_pdn_duties_this_pass: 0
+
+proof_rule: >-
+  Exact official URL discovery is not payload proof. IMMUTABLE_CAPTURED still requires issuer bytes plus observed MIME,
+  byte length and computed SHA-256. The 12.04.2026 FSTEC method is not silently generalized to all private ISPDn and
+  expressly leaves cryptographic measures to the FSB/SKZI path. Draft project 169583 remains future-change evidence only.
