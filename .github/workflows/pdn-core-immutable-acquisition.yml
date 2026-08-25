@@ -67,7 +67,11 @@ jobs:
             echo "No fast acquisition delta"
           else
             git commit -m "security-kb: sync fast PDN immutable delta [skip ci]"
-            git push
+            if ! git push; then
+              echo "main advanced during fast acquisition; rebasing generated delta"
+              git pull --rebase origin main
+              git push
+            fi
           fi
 
       - name: Try PP687 through guarded curl transport
@@ -211,7 +215,11 @@ jobs:
             exit 0
           fi
           git commit -m "security-kb: sync PDN dedicated-route capture evidence [skip ci]"
-          git push
+          if ! git push; then
+            echo "main advanced during dedicated-route acquisition; rebasing generated evidence"
+            git pull --rebase origin main
+            git push
+          fi
 
       - name: Surface acquisition result
         shell: bash
