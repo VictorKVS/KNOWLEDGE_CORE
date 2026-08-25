@@ -1,0 +1,77 @@
+schema_version: "1.0"
+id: STREAM2-RUN-2026-08-25T2006Z
+stream: RU_PDN_TECHNICAL_CRYPTO
+started_at: "2026-08-25T20:06:18Z"
+status: PASS
+objective: >-
+  Continue primary-source/status acquisition for the 152-FZ technical and cryptographic contour, prioritizing exact
+  official artifacts while preserving strict applicability boundaries for FSTEC licensing/certification material.
+
+findings:
+  - id: SEC-SRC-RU-FSTEC-TZI-EQUIPMENT-LIST-2026
+    result: NEW_METADATA_VERIFIED_SOURCE_REGISTERED
+    details: >-
+      Registered the FSTEC equipment/control-tools list approved 10.08.2026 for licensed technical protection of
+      confidential information under Government Resolution No.79. Official FSTEC landing route is known; fresh current
+      legal publications reproduce the title, approval date and PP79 scope. Exact attachment bytes were not captured.
+    applicability: LICENSED_TZI_WORKS_SERVICES_ONLY
+    immutable: false
+  - id: SEC-SRC-RU-FSTEC-INFO-240-13-5521-2026
+    result: NEW_METADATA_VERIFIED_STATUS_SOURCE_REGISTERED
+    details: >-
+      Registered FSTEC information notice No.240/13/5521 dated 11.08.2026 as status/transition evidence for the new
+      licensing equipment lists. The PP171 branch announced by the same notice is deliberately not imported into the
+      generic PDN inventory without an independent applicability edge.
+    applicability: STATUS_AND_TRANSITION_EVIDENCE_ONLY
+    immutable: false
+  - id: SEC-SRC-RU-FSTEC21-2013
+    result: ACTIVE_BASELINE_RECONFIRMED_PROJECT_169583_WATCH_ONLY
+    details: >-
+      Fresh current monitoring still describes 169583 as the July 2026 draft and states it has not yet been issued or
+      registered. Same-day articles that phrase the planned 01.09.2026 cancellation as certain still cite the draft and
+      therefore fail the primary enactment gate.
+  - id: SEC-SRC-RU-PP1119-2012
+    result: PRIMARY_DOC_ROUTE_RECONFIRMED_EXACT_BYTES_NOT_OBTAINED
+    details: >-
+      The historical Government media route to 1119_pril.doc was independently re-confirmed in a contemporaneous source,
+      but HTTPS/HTTP retrieval remained unavailable in the bounded runtime. No MIME, byte length or SHA-256 was invented.
+
+transport_attempts:
+  - target: SEC-SRC-RU-PP1119-2012
+    route: "https://government.ru/media/2012/11/3/53354/file/1119_pril.doc"
+    result: FAILED_NO_EXACT_BYTES
+  - target: SEC-SRC-RU-FSTEC-TZI-EQUIPMENT-LIST-2026
+    route: "https://fstec.ru/dokumenty/vse-dokumenty/perechni/perechen-kontrolno-izmeritelnogo-i-ispytatelnogo-oborudovaniya-sredstv-kontrolya-effektivnosti-zashchity-informatsii-ot-10-avgusta-2026-g"
+    result: OFFICIAL_LANDING_IDENTIFIED_DIRECT_ATTACHMENT_UNRESOLVED
+  - target: SEC-SRC-RU-FSTEC-INFO-240-13-5521-2026
+    route: "https://fstec.ru/dokumenty/vse-dokumenty/informatsionnye-i-analiticheskie-materialy/informatsionnoe-soobshchenie-fstek-rossii-ot-11-avgusta-2026-g-n-240-13-5521"
+    result: OFFICIAL_LANDING_IDENTIFIED_DIRECT_ATTACHMENT_UNRESOLVED
+
+metrics:
+  new_sources: 2
+  new_immutable_captured: 0
+  status_rechecks: 4
+  primary_byte_targets_attempted: 3
+  semantic_promotions: 0
+  new_universal_pdn_duties_created: 0
+  effective_identified: 38
+  effective_metadata_verified: 38
+  effective_immutable_sha256_verified: 17
+  effective_pending_raw_capture: 21
+  exact_official_route_unresolved: 8
+  confirmed_conflicts: 0
+
+applicability_guards:
+  - The 10.08.2026 list applies to licensed TZI works/services under PP79; ISPDn status alone does not trigger it.
+  - The information notice is transition/status evidence and is not itself a generic PDN control.
+  - The PP171 development/production list announced in the same notice is outside the generic PDN baseline absent a separate scope edge.
+  - Project 169583 remains future-change evidence only until a final issued, registered and officially published replacement is proven.
+
+next_priority:
+  - exact Government DOC for PP1119
+  - official primary bytes for FSB378
+  - FSB66 and FSB173 primary/version artifacts
+  - FAPSI152 primary artifact
+  - official attachments for FSTEC 10.08.2026 list and notice No.240/13/5521
+  - official PDFs for FSTEC methods dated 12.04.2026 and 07.08.2026
+  - continue primary-enactment watch for project 169583
