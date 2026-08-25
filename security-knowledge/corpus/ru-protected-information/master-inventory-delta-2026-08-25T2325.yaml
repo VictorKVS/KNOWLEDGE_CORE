@@ -1,0 +1,123 @@
+schema_version: "1.0"
+kind: ru-protected-information-master-inventory-delta
+base_inventory: "master-inventory.yaml"
+reconciliation_base_delta: "master-inventory-delta-2026-08-25T1121.yaml"
+checked_at: "2026-08-25T23:25:00+03:00"
+owner_stream: STREAM_3_SECTOR_OVERLAYS
+run_ref: "stream-3-run-2026-08-25T2325.yaml"
+status: APPEND_ONLY_RECONCILIATION_READY
+
+proof_floor:
+  - "Subordinate advertising sources are separate source nodes because they are separate normative acts, while remaining linked to the existing 38-ФЗ Article 18.1 node."
+  - "PP 974 data transfer, PP 969 authority access, RKN Order 67 ORD software/security/retention and RKN Order 78 participant access are distinct operations; do not merge actors or duties."
+  - "Order 67 directly references personal-data legislation, but only in the scoped ORD-software context; no universal advertising-market PDN applicability is promoted."
+  - "Target-audience attributes may be aggregate; PDN status requires identifiable-natural-person proof in the concrete payload."
+  - "Exact official bytes were not obtained because official publication endpoints timed out; no MIME, byte length, retrieved_at or SHA-256 was inferred from display metadata."
+
+counter_state_before_reconciled: {found: 33, downloaded: 9, immutable: 9, pending: 22, reused: 2, primary_publication_verified: 11, sectors_registered: 25}
+counter_state_after_reconciliation:
+  found: 37
+  downloaded: 9
+  immutable: 9
+  pending: 26
+  reused: 2
+  primary_publication_verified: 14
+  sectors_registered: 25
+  new_sources_this_run: 4
+  existing_source_nodes_enriched: 0
+  new_immutable_this_run: 0
+  exact_binary_downloads_this_run: 0
+  primary_publication_metadata_verified_this_run: 3
+  primary_locator_resolved_direct_fetch_pending_this_run: 1
+  pdn_relationship_candidates_added_this_run: 4
+  applicability_edges_promoted_this_run: 0
+  legal_conflicts_confirmed_this_run: 0
+  duplicate_sources_created: 0
+
+sources_added:
+  - source_id: SEC-SRC-RU-PP-974-2022
+    sector: advertising_marketing
+    title: "Постановление Правительства РФ от 28.05.2022 № 974"
+    source_card: "security-corpora/RU/protected-information/source/SEC-SRC-RU-PP-974-2022.yaml"
+    primary_publication_id: "0001202205300041"
+    primary_publication_state: PRIMARY_PUBLICATION_METADATA_VERIFIED_EXACT_BYTES_PENDING
+    current_revision_crosscheck: "2025-09-18"
+    core_concepts: [ORD_TO_RKN_DATA_TRANSPORT, INTERNET_AD_REPORTING_DEADLINE, ORD_DISCLOSURE_LIMITATION]
+  - source_id: SEC-SRC-RU-PP-969-2022
+    sector: advertising_marketing
+    title: "Постановление Правительства РФ от 28.05.2022 № 969"
+    source_card: "security-corpora/RU/protected-information/source/SEC-SRC-RU-PP-969-2022.yaml"
+    primary_publication_id: "0001202205300042"
+    primary_publication_state: PRIMARY_LOCATOR_RESOLVED_DIRECT_FETCH_TIMEOUT
+    current_amendment_primary_text: "Постановление Правительства РФ от 22.05.2025 № 709"
+    core_concepts: [AUTHORIZED_AUTHORITY_ACCESS_SCOPE, REGULATORY_INFORMATION_EXCHANGE, AUTHENTICATED_REGULATORY_ACCESS]
+  - source_id: SEC-SRC-RU-RKN-ORDER-67-2025
+    sector: advertising_marketing
+    title: "Приказ Роскомнадзора от 25.03.2025 № 67"
+    source_card: "security-corpora/RU/protected-information/source/SEC-SRC-RU-RKN-ORDER-67-2025.yaml"
+    primary_publication_id: "0001202504140030"
+    minjust_registration_number: "81843"
+    primary_publication_state: PRIMARY_PUBLICATION_METADATA_VERIFIED_EXACT_BYTES_PENDING
+    effective_from: "2025-04-25"
+    core_concepts:
+      - DIRECT_PDN_AND_INFORMATION_SECURITY_COMPLIANCE
+      - AD_DATA_RECEIVE_STORE_PROCESS_TRANSMIT_IMMUTABILITY
+      - ORD_AD_DATA_RETENTION
+      - AD_DISTRIBUTION_AND_AUDIENCE_TELEMETRY
+      - INFORMATION_PRESERVATION_AND_PROTECTION
+  - source_id: SEC-SRC-RU-RKN-ORDER-78-2025
+    sector: advertising_marketing
+    title: "Приказ Роскомнадзора от 31.03.2025 № 78"
+    source_card: "security-corpora/RU/protected-information/source/SEC-SRC-RU-RKN-ORDER-78-2025.yaml"
+    primary_publication_id: "0001202504140032"
+    minjust_registration_number: "81844"
+    primary_publication_state: PRIMARY_PUBLICATION_METADATA_VERIFIED_EXACT_BYTES_PENDING
+    effective_from: "2025-04-25"
+    core_concepts: [ACTOR_SCOPED_AVAILABLE_AD_INFORMATION, PARTICIPANT_ACCESS_TO_RKN_AD_INFORMATION_SYSTEM]
+
+relationship_delta:
+  - source: SEC-SRC-RU-PP-974-2022
+    target: "38-ФЗ статья 18.1"
+    type: DIRECT_SUBORDINATE_IMPLEMENTATION
+    state: STATUTORY_IMPLEMENTATION_RELATION
+  - source: SEC-SRC-RU-PP-969-2022
+    target: "38-ФЗ статья 18.1 часть 15"
+    type: DIRECT_SUBORDINATE_ACCESS_IMPLEMENTATION
+    state: STATUTORY_IMPLEMENTATION_RELATION
+  - source: SEC-SRC-RU-RKN-ORDER-67-2025
+    target: "38-ФЗ статья 18.1 часть 6"
+    type: DIRECT_SUBORDINATE_SOFTWARE_REQUIREMENTS
+    state: STATUTORY_IMPLEMENTATION_RELATION
+  - source: SEC-SRC-RU-RKN-ORDER-67-2025
+    target: "152-ФЗ"
+    type: DIRECT_STATUTORY_PDN_SECURITY_CONTEXT_FOR_ORD_SOFTWARE
+    state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    guard: "Actor/role/system scope must be proven; no universal advertising applicability."
+  - source: SEC-SRC-RU-RKN-ORDER-78-2025
+    target: "152-ФЗ"
+    type: ACTOR_SCOPED_AD_DATA_PDN_OVERLAP
+    state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    guard: "Attach PDN duties only to identifiable-natural-person fields and proven processing operations."
+
+acquisition_delta:
+  exact_binary_attempted: true
+  attempted_sources: 4
+  exact_binary_downloads_succeeded: 0
+  durable_immutable_artifacts_added: 0
+  result: TRANSIENT_OFFICIAL_ENDPOINT_TIMEOUT_OR_DNS_FAILURE
+  pending_capture_manifests:
+    - "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-PP-974-2022-capture-pending.json"
+    - "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-PP-969-2022-capture-pending.json"
+    - "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-RKN-ORDER-67-2025-capture-pending.json"
+    - "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-RKN-ORDER-78-2025-capture-pending.json"
+  exact_fields_guard: {retrieved_at: null, mime: null, byte_length: null, sha256: null}
+
+proof_floor_effect:
+  executable_rules_changed: false
+  applicability_edges_promoted: 0
+  duplicate_source_nodes_created: 0
+  legal_conflicts_confirmed: 0
+  source_nodes_added: 4
+
+merge_rule: >-
+  Reconcile after master-inventory-delta-2026-08-25T1121.yaml. Stream 3 top-level counters become 37 found / 9 downloaded / 9 immutable / 26 pending / 2 reused. Advertising/marketing remains one registered sector; four subordinate normative acts were added as distinct deduplicated source nodes.
