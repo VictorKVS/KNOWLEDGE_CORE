@@ -1,4 +1,4 @@
-schema_version: "1.6"
+schema_version: "1.7"
 id: SEC-SRC-RU-PP687-2008
 kind: security-regulatory-source
 status: METADATA_VERIFIED
@@ -14,20 +14,19 @@ document:
   current_revision_source_id: SEC-SRC-RU-PP12-2025
   current_revision_effective_from: "2025-01-26"
   valid_until: "2030-09-01"
-  checked_at: "2026-08-24"
+  checked_at: "2026-08-25"
 
 canonical_source:
   publisher: "Правительство России"
   url: "https://government.ru/docs/all/65436/"
   origin_verified: true
   freshness_check:
-    checked_at: "2026-08-24"
+    checked_at: "2026-08-25"
     result: CURRENT_REVISION_CONFIRMED
     evidence_note: >-
-      The official Government portal indexed on 24.08.2026 presents PP RF No. 687 in revision of
-      18.01.2025 No. 12 and states that the resolution remains valid through 01.09.2030. The content is
-      externally retrievable as current legal text, but this observation is metadata/freshness evidence only;
-      it is not substituted for the required byte-exact immutable capture.
+      The official Government portal index rechecked on 25.08.2026 presents PP RF No. 687, the full non-automated
+      personal-data processing regulation, revision by PP RF No. 12 of 18.01.2025, and validity through 01.09.2030.
+      This is current legal-text/freshness evidence only and is not substituted for byte-exact immutable capture.
   alternate_official_routes:
     - publisher: "Официальный интернет-портал правовой информации / ИПС Право"
       url: "http://pravo.gov.ru/proxy/ips/?docbody=&link_id=0&nd=102124251&intelsearch=&firstDoc=1"
@@ -35,9 +34,8 @@ canonical_source:
       route_status: OFFICIAL_IPS_ROUTE_REGISTERED_GUARDED
       registered_at: "2026-08-22"
       route_discovery_evidence: >-
-        The current index of Roskomnadzor's 16.12.2025 list of mandatory-requirement acts maps PP RF No. 687
-        to this official pravo.gov.ru IPS route. The route is registered only as a transport fallback;
-        returned bytes must still pass PP687 identity-marker validation before immutable acceptance.
+        Roskomnadzor's mandatory-requirement act index maps PP RF No. 687 to this official pravo.gov.ru IPS route.
+        The route is transport evidence only; returned bytes must still pass PP687 identity-marker validation.
 
 capture:
   raw_artifact_ref: ""
@@ -46,7 +44,7 @@ capture:
   sha256: ""
   fingerprint_status: PENDING_RAW_CAPTURE
   last_attempt:
-    observed_at: "2026-08-24T10:11:28.939106Z"
+    observed_at: "2026-08-25T04:08:43Z"
     route: registered_official_multi_route
     result: ALL_REGISTERED_ROUTES_FAILED
     failure_classes:
@@ -54,19 +52,19 @@ capture:
       - IDENTITY_MARKER_MISS
       - ALL_REGISTERED_ROUTES_FAILED
     detail: >-
-      TLS pravo.gov.ru route timed out; the recorded HTTP IPS response did not pass the PP687/personal-data
-      identity-marker gate; the Government canonical route timed out from the acquisition runner.
+      GitHub acquisition runner: TLS pravo.gov.ru routes timed out; the HTTP IPS response did not pass the
+      PP687/personal-data identity-marker gate; both Government canonical network profiles timed out.
     proof_floor_held: true
     semantic_promotion: false
   acquisition_request:
     status: RETRY_REQUIRED_GUARDED
-    requested_at: "2026-08-24T10:11:29Z"
+    requested_at: "2026-08-25T04:58:00Z"
     route: official_canonical_snapshot_with_registered_ips_fallback
     reason: >-
-      Current revision is reconfirmed, but immutable promotion still requires returned official bytes,
-      retrieved_at, MIME, exact byte length, SHA-256, identity-marker validation and an accepted manifest.
-      The present blocker is transport/route behavior, not uncertainty about the current legal revision.
-  note: "Official text metadata/current revision verified; byte-exact raw artifact not yet accepted."
+      Current revision is reconfirmed. Immutable promotion still requires returned official bytes, retrieved_at,
+      MIME, exact byte length, SHA-256, identity-marker validation and an accepted manifest. The blocker remains
+      transport/route behavior, not uncertainty about the current legal revision.
+  note: "Official current text is reconfirmed; byte-exact raw artifact remains pending."
 
 relations:
   - type: IMPLEMENTS
@@ -81,7 +79,7 @@ relations:
     note: "PP RF No. 12 sets the validity of PP RF No. 687 through 01.09.2030."
 
 provenance:
-  checked_at: "2026-08-24"
+  checked_at: "2026-08-25"
   review_required: true
 
 agent_rule: "Do not promote to VERIFIED_FOR_EXTRACTION until immutable raw capture, exact byte length and SHA-256 are recorded."
