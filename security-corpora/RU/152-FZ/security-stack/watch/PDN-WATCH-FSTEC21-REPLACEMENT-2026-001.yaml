@@ -1,10 +1,10 @@
-schema_version: "1.0"
+schema_version: "1.1"
 id: PDN-WATCH-FSTEC21-REPLACEMENT-2026-001
 kind: regulatory-watch
 status: DRAFT_NOT_ENACTED_IN_VERIFIED_EVIDENCE
 jurisdiction: RU
 domain: personal_data_security
-checked_at: "2026-08-24"
+checked_at: "2026-08-25"
 subject: "Проект замены приказа ФСТЭК России № 21"
 project:
   identifier: "169583"
@@ -20,18 +20,29 @@ current_routing:
   active_source: SEC-SRC-RU-FSTEC21-2013
   active_revision_date: "2020-05-14"
   reason: >-
-    В текущем проходе не найдено первичного доказательства издания окончательного приказа, его регистрации
-    в Минюсте России и официального опубликования. Последние проверяемые публикации 12-24.08.2026 продолжают
-    описывать документ как проект, а приказ № 21 как действующий.
+    На проверке 25.08.2026 свежие материалы по-прежнему идентифицируют документ № 169583 как проект. Первичное
+    доказательство издания окончательного приказа, его регистрации в Минюсте России и официального опубликования
+    в этом проходе не найдено. Поэтому приказ № 21 не помечается утратившим силу, а предложенная проектом дата
+    01.09.2026 не используется как доказанная дата вступления финального акта в силу.
 evidence:
-  - url: "https://www.garant.ru/products/ipo/prime/doc/56961246/"
-    class: SECONDARY_CURRENT_PROJECT_TEXT
-    observed_at: "2026-08-24"
-    note: "Текст проекта содержит пустые поля номера/даты приказа и предполагаемую дату вступления 01.09.2026."
+  - url: "https://regulation.gov.ru/projects/169583/"
+    class: PRIMARY_PROJECT_ROUTE
+    observed_at: "2026-08-25"
+    note: "Маршрут проекта сохраняется как future-change evidence; сам проект не является доказательством принятого акта."
   - url: "https://cisoclub.ru/prikaz-fstek-21/"
-    class: SECONDARY_CURRENT_STATUS_MONITORING
-    observed_at: "2026-08-24"
-    note: "Материал указывает, что приказ № 21 действует, а проект еще не издан и не зарегистрирован в Минюсте."
+    class: SECONDARY_CURRENT_PROJECT_STATUS_MONITORING
+    observed_at: "2026-08-25"
+    note: "Свежая индексируемая публикация продолжает описывать идентификатор 169583 как проект ФСТЭК России."
+  - url: "https://infocenter.cntd.ru/news/read/fstek-zanovo-opredeliaet-sostav-i-soderzanie-mer-po-obespeceniiu-bezopasnosti-pd-proekt-prikaza/novosti-cifrovizacii"
+    class: SECONDARY_CURRENT_PROJECT_STATUS_MONITORING
+    observed_at: "2026-08-25"
+    note: "Публикация от 29.07.2026 прямо называет документ проектом и указывает на общественное обсуждение."
+  - url: "https://buro152.ru/knowledge/blog/novyj-prikaz-fstek-2026-otmena-21/"
+    class: SECONDARY_NARRATIVE_NOT_ENACTMENT_PROOF
+    observed_at: "2026-08-25"
+    note: >-
+      Свежая публикация формулирует будущую отмену приказа № 21 как уже определенное изменение с 01.09.2026,
+      но внутри опирается на проект от 24.07.2026. Не использовать такую формулировку как enactment evidence.
 proof_gate:
   primary_enactment_required: true
   required_before_activation:
@@ -41,7 +52,8 @@ proof_gate:
   semantic_promotion: false
   rule: >-
     Не переносить требования проекта в действующий PDN baseline и не помечать приказ № 21 как утративший силу
-    до прохождения primary-enactment gate.
+    до прохождения primary-enactment gate. Вторичные формулировки «отменяет» или «вступает с 1 сентября» не
+    заменяют первичное доказательство принятия, регистрации и официального опубликования.
 relations:
   - type: POTENTIAL_FUTURE_REPLACEMENT_OF
     target: SEC-SRC-RU-FSTEC21-2013
