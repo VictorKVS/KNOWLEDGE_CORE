@@ -1,0 +1,123 @@
+schema_version: "1.0"
+kind: stream-3-sector-library-run
+stream: STREAM_3_SECTOR_OVERLAYS
+completed_at: "2026-08-25T05:22:31+03:00"
+repository: "VictorKVS/KNOWLEDGE_CORE"
+status: COMPLETED_WITH_ADVERTISING_ARTICLE18_REGISTERED_EXACT_BINARY_PENDING
+
+objective: >-
+  Continue primary-source/version-chain work for sector and special protected-information regimes intersecting with 152-ФЗ. After healthcare Article 13 chain enrichment, move to advertising/marketing Article 18 38-ФЗ, preserving deduplication, immutable proof requirements and the no-invented-applicability rule.
+
+focus:
+  source_id: SEC-SRC-RU-FZ-38-2006-A18
+  title: "Федеральный закон от 13.03.2006 № 38-ФЗ «О рекламе»"
+  sector: advertising_marketing
+  regime: telecom_advertising_consent_and_suppression
+  locator: "статья 18 — реклама, распространяемая по сетям электросвязи"
+  reason: "High-priority marketing/contact-data overlay with direct telecom delivery and potential PDN overlap."
+
+progress:
+  discovery_and_dedup:
+    existing_source_card_found: false
+    new_source_node_registered: true
+    duplicate_source_created: false
+  primary_legal_text:
+    original_act:
+      publisher: "Российская газета"
+      source: "https://rg.ru/documents/2006/03/15/reklama-dok.html"
+      publication_date: "2006-03-15"
+      state: OFFICIAL_GAZETTE_PRIMARY_TEXT_VERIFIED_EXACT_BYTES_PENDING
+    direct_amendment:
+      act: "179-ФЗ от 27.10.2008"
+      publisher: "Российская газета"
+      source: "https://rg.ru/documents/2008/10/29/fz-reklama-dok.html"
+      publication_date: "2008-10-29"
+      effective_date: "2008-11-09"
+      effect: "Из наименования статьи 18 исключены слова о почтовых отправлениях; часть 5 признана утратившей силу."
+      state: OFFICIAL_GAZETTE_PRIMARY_AMENDMENT_TEXT_VERIFIED_EXACT_BYTES_PENDING
+  currentness:
+    official_current_locator: "http://pravo.gov.ru/proxy/ips/?docbody=&link_id=0&nd=102105292&intelsearch=&firstDoc=1"
+    locator_provenance: "Перечень нормативных правовых актов, содержащих обязательные требования, ФАС России от 08.06.2026"
+    current_consolidation_crosscheck_revision: "2026-07-26"
+    article_18_annotation: "в ред. Федерального закона от 27.10.2008 № 179-ФЗ"
+    current_parts:
+      - {locator: "часть 1", concept: PRIOR_ADVERTISING_CONSENT_PROOF_AND_SUPPRESSION}
+      - {locator: "часть 2", concept: AUTOMATED_DIALING_AND_AUTOMATED_MAILING_PROHIBITION}
+      - {locator: "часть 3", concept: DIRECTORY_SERVICE_ADVERTISING_SEQUENCE}
+      - {locator: "часть 4", concept: TIME_BASED_TELEPHONY_ADVERTISING_CHARGE_EXCLUSION}
+      - {locator: "часть 5", concept: REPEALED_RULE, state: DO_NOT_EXECUTE}
+    latest_source_level_event_checked:
+      act: "272-ФЗ от 26.07.2026"
+      source: "https://rg.ru/documents/2026/08/03/fz272-dok.html"
+      publication_date: "2026-08-03"
+      effective_date: "2026-08-06"
+      changes: ["статья 21", "статья 38"]
+      effect_on_article18: NONE
+      state: OFFICIAL_GAZETTE_FULL_ACT_TEXT_VERIFIED
+
+relationships:
+  pdn:
+    target: "152-ФЗ"
+    locator: "38-ФЗ статья 18 части 1-2"
+    type: MARKETING_CONTACT_PDN_OVERLAP
+    state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    applicability_promoted: false
+    guard: "ADVERTISING_CONSENT != PDN_PROCESSING_CONSENT; resolve subject/data/operation/purpose/role/legal basis."
+  telecom:
+    target: "126-ФЗ статья 44.1"
+    type: TELECOM_NETWORK_AND_MOBILE_MAILING_OVERLAP
+    state: STATUTORY_CONTEXT_RELATION_REVIEW_REQUIRED
+    guard: "38-ФЗ and 126-ФЗ may coexist for mobile advertising mailings; do not merge consent, opt-out, actor, exception or proof rules."
+
+network_and_acquisition:
+  exact_binary_attempt_this_pass: true
+  durable_exact_capture_succeeded: false
+  original_official_gazette_direct_byte_result: DIRECT_BYTE_DOWNLOAD_NOT_COMPLETED_IN_RUNTIME
+  current_pravo_locator_exact_byte_result: EXACT_CURRENT_BYTES_NOT_OBTAINED
+  new_durable_downloads: 0
+  new_immutable_artifacts: 0
+  exact_runtime_captures: 0
+  guard: "No MIME, byte length, retrieved_at or SHA-256 recorded without exact bytes."
+
+writes:
+  created:
+    - "security-corpora/RU/protected-information/source/SEC-SRC-RU-FZ-38-2006-A18.yaml"
+    - "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-38-2006-A18-version-capture-pending.json"
+    - "security-knowledge/corpus/ru-protected-information/master-inventory-delta-2026-08-25T0522.yaml"
+    - "security-knowledge/corpus/ru-personal-data/master-source-inventory-delta-stream3-2026-08-25T0522.yaml"
+    - "security-knowledge/corpus/ru-protected-information/stream-3-run-2026-08-25T0522.yaml"
+
+counters:
+  before: {found: 32, downloaded: 9, immutable: 9, pending: 21, reused: 2, primary_publication_verified: 11, sectors_registered: 24}
+  after: {found: 33, downloaded: 9, immutable: 9, pending: 22, reused: 2, primary_publication_verified: 11, sectors_registered: 25}
+  pass_delta:
+    new_sources: 1
+    new_sector_regimes: 1
+    current_protected_locators_crosschecked: 5
+    locator_specific_version_events_verified: 1
+    source_level_no_effect_events_verified: 1
+    new_durable_downloads: 0
+    new_immutable_artifacts: 0
+    pdn_overlap_candidates_added: 1
+    cross_regime_candidates_added: 1
+    applicability_promotions: 0
+    legal_conflicts_declared: 0
+    duplicate_sources_created: 0
+
+version_chain:
+  state: LOCATOR_CHAIN_TEXT_VERIFIED_EXACT_BINARY_PENDING
+  executable_current_rule: false
+  next_steps:
+    - "Acquire exact official bytes for original 38-ФЗ and 179-ФЗ and register immutable manifests."
+    - "Acquire exact current authoritative 38-ФЗ consolidated artifact from the identified pravo.gov.ru locator."
+    - "Cross-check/record primary publication locator for 272-ФЗ while preserving its no-Article-18 effect."
+    - "Deepen the marketing overlay with Article 12 retention and Article 18.1 Internet-ad data flows only after primary current texts are separately verified; do not merge them into Article 18."
+    - "Continue remaining pending sector exact-capture backlog, prioritizing healthcare amendments and marketing/telecom overlaps."
+
+proof_floor:
+  - "Taxonomy is discovery seed only; primary legal text controls."
+  - "OVERLAP != APPLICABILITY."
+  - "Advertising consent != personal-data processing consent."
+  - "Stop advertising != automatic PDN deletion duty."
+  - "Repealed Article 18(5) must never be emitted as a current rule."
+  - "No hash, MIME, length, retrieved_at, applicability or conflict is invented."
