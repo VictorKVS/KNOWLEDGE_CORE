@@ -1,0 +1,86 @@
+schema_version: "1.0"
+id: SEC-SRC-RU-RKN-ORDER-78-2025
+kind: security-regulatory-source
+status: PRIMARY_PUBLICATION_METADATA_VERIFIED_CURRENT_TEXT_CROSSCHECKED_EXACT_ARTIFACT_PENDING
+
+title: "Приказ Роскомнадзора от 31.03.2025 № 78 — состав информации об интернет-рекламе и порядок доступа участников"
+jurisdiction: RU
+issuer: "Роскомнадзор"
+document:
+  type: regulator_order
+  number: "78"
+  adopted_date: "2025-03-31"
+  minjust_registration_number: "81844"
+  registered_date: "2025-04-14"
+  official_publication_id: "0001202504140032"
+  official_publication_date: "2025-04-14"
+  effective_from: "2025-04-25"
+  checked_at: "2026-08-25"
+
+canonical_sources:
+  primary_publication:
+    publisher: "Официальное опубликование правовых актов"
+    url: "https://publication.pravo.gov.ru/document/0001202504140032"
+    origin_verified: true
+    proof_scope: "Первичные реквизиты приказа и регистрации подтверждены; exact PDF bytes в этом проходе не получены."
+  current_text_crosscheck:
+    revision_date: "2025-03-31"
+    state: CURRENT_EFFECTIVE_TEXT_CROSSCHECKED_NO_LATER_AMENDMENT_FOUND_AS_OF_2026_08_25
+
+protected_information:
+  sector: advertising_marketing
+  regime: internet_advertising_participant_data_access
+  legal_basis: "38-ФЗ статья 18.1 часть 14"
+  protected_locators:
+    - locator: "Приложение № 1"
+      concept: ACTOR_SCOPED_AVAILABLE_AD_INFORMATION
+      finding: "Определяет состав имеющейся у Роскомнадзора информации об интернет-рекламе и социальной рекламе, доступной предусмотренным законом участникам рекламного рынка."
+    - locator: "Приложение № 2, пункт 1"
+      concept: PARTICIPANT_ACCESS_TO_RKN_AD_INFORMATION_SYSTEM
+      finding: "Роскомнадзор обеспечивает участникам, перечисленным приказом и 38-ФЗ, доступ к относящейся к ним информации, включая сведения об идентификаторе рекламы, через информационную систему радиочастотной службы."
+    - locator: "Приложение № 2"
+      concept: ACTOR_AND_RIGHTS_SCOPED_ACCESS
+      finding: "Доступ ограничен нормативно определенным составом информации и ролью участника; приказ не устанавливает неограниченное раскрытие всего массива интернет-рекламы."
+  applicability_status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  applicability_guard: "Наличие доступа к регуляторному рекламному массиву не доказывает, что весь массив является ПДн. Проверять конкретный состав доступных полей и идентифицируемость физлица."
+
+relationship_candidates:
+  - target: "38-ФЗ статья 18.1 часть 14"
+    type: DIRECT_SUBORDINATE_PARTICIPANT_ACCESS_IMPLEMENTATION
+    state: STATUTORY_IMPLEMENTATION_RELATION
+  - target: "152-ФЗ"
+    type: ACTOR_SCOPED_AD_DATA_PDN_OVERLAP
+    state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    guard: "Attach PDN requirements only to fields about an identifiable natural person in a proven processing scenario."
+  - target: "SEC-SRC-RU-PP-969-2022"
+    type: PARTICIPANT_ACCESS_VS_AUTHORITY_ACCESS_BOUNDARY
+    state: CROSS_REGIME_RELATION
+    guard: "Order 78 concerns participant access; PP 969 concerns FAS/FNS access. Do not merge actors, purposes or access scopes."
+  - target: "SEC-SRC-RU-RKN-ORDER-67-2025"
+    type: SAME_AD_DATA_ECOSYSTEM_SOFTWARE_VS_ACCESS_SCOPE
+    state: CROSS_REGIME_RELATION
+
+version_chain:
+  state: CURRENT_TEXT_CROSSCHECKED_PRIMARY_EXACT_BYTES_PENDING
+  original_effective_from: "2025-04-25"
+  predecessor_repealed:
+    - "Приказ Роскомнадзора от 11.04.2022 № 63"
+    - "акты, изменявшие приказ № 63"
+  currentness_note: "В доступной актуальной консолидации приказ № 78 действует в исходной редакции от 31.03.2025; полная негативная проверка на отсутствие всех последующих поправок остается review-required."
+
+capture:
+  exact_capture_attempted_at: "2026-08-25T23:25:00+03:00"
+  source_url: "https://publication.pravo.gov.ru/document/0001202504140032"
+  result: TRANSIENT_TIMEOUT
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  raw_artifact_ref: null
+  manifest_ref: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-RKN-ORDER-78-2025-capture-pending.json"
+  fingerprint_status: PENDING_EXACT_PRIMARY_BYTES
+
+proof_floor:
+  - "Regulatory advertising-data access != automatic PDN applicability."
+  - "Participant access and authority access are distinct operations."
+  - "No exact bytes means no MIME, byte_length or SHA-256."
