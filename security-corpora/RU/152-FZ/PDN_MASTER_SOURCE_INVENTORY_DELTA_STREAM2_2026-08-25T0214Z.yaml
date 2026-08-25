@@ -1,0 +1,45 @@
+schema_version: "1.0"
+id: SEC-PDN-MASTER-SOURCE-INVENTORY-DELTA-STREAM2-2026-08-25T0214Z
+applies_to: PDN_MASTER_SOURCE_INVENTORY.yaml
+stream: RU_PDN_TECHNICAL_CRYPTO
+created_at: "2026-08-25T02:14:00Z"
+merge_policy: >-
+  CONCURRENCY_SAFE_OVERLAY. Apply only to the security_stack linked-inventory block and regulatory source linkage.
+  Preserve all Stream-1 counters and unrelated master fields.
+
+security_stack_patch:
+  linked_inventory: "security-stack/PDN_SECURITY_STACK_SOURCE_INVENTORY.yaml"
+  checked_at: "2026-08-25"
+  identified: 34
+  immutable_sha256_verified: 16
+  pending_raw_capture: 18
+  exact_official_route_unresolved: 6
+  latest_stream2_run: "security-stack/runs/STREAM2_RUN_2026-08-25T0214Z.yaml"
+  latest_registry_update: >-
+    2026-08-25: registered the official FSB information notice of 15.06.2017 on strict observance by personal-data
+    operators of the formular requirements for the specific SKZI. The notice is retained as operational/certificate
+    condition guidance only: it applies after SKZI use is established and only where the specific formular requires
+    the environment-impact assessment. It does not create a universal SKZI or licensing duty. Exact FSB page bytes
+    remain pending. Existing immutable FSTEC Threat Method 2021 artifact was reused without claiming a new download;
+    PP1119 and FSB378 primary-byte acquisition remain pending; FSTEC Order No. 21 remains the active PDN baseline
+    because the 24.07.2026 replacement text is still evidenced only as a project in the current check.
+
+source_link_addition:
+  id: SEC-SRC-RU-FSB-SKZI-FORM-NOTICE-2017
+  source_record: "security-stack/source/SEC-SRC-RU-FSB-SKZI-FORM-NOTICE-2017.yaml"
+  role: official_fsb_skzi_formular_and_certificate_condition_guidance
+  applicability: PDN_OPERATOR_WHEN_SKZI_USED_AND_SPECIFIC_FORMULAR_REQUIREMENT_APPLIES
+  raw_capture: PENDING
+
+analysis_metrics_patch:
+  stream2_source_records_added_this_pass: 1
+  stream2_immutable_new_this_pass: 0
+  stream2_existing_immutable_reused_this_pass: 1
+  stream2_status_rechecks_this_pass: 3
+  stream2_semantic_promotions_this_pass: 0
+  stream2_new_universal_pdn_duties_this_pass: 0
+
+proof_rule: >-
+  This delta must not overwrite Stream-1 production counters. It updates only the linked security_stack subinventory,
+  its Stream-2 pointer/counters, and the explicit FSB SKZI-formular guidance link. No guidance source may be promoted
+  into a general PDN control without its SKZI/formular applicability trigger.
