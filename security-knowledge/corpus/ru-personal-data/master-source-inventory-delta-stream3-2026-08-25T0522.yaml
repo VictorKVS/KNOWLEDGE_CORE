@@ -1,0 +1,82 @@
+schema_version: "1.0"
+kind: ru-personal-data-master-source-inventory-delta
+owner_stream: STREAM_3_SECTOR_OVERLAYS
+checked_at: "2026-08-25T05:22:31+03:00"
+previous_delta_ref: "security-knowledge/corpus/ru-personal-data/master-source-inventory-delta-stream3-2026-08-25T0246.yaml"
+source_id: SEC-SRC-RU-FZ-38-2006-A18
+status: APPEND_ONLY_ADVERTISING_MARKETING_RELATION_DELTA
+
+relationship:
+  target: "152-ФЗ"
+  type: MARKETING_CONTACT_PDN_OVERLAP
+  locator: "38-ФЗ статья 18 части 1-2"
+  state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  applicability_promoted: false
+  changed_this_pass: true
+  proof_floor: >-
+    Предварительное согласие абонента/адресата на получение рекламы по статье 18 38-ФЗ является специальным рекламным согласием и не тождественно согласию на обработку персональных данных по 152-ФЗ. Для PDN applicability отдельно доказать идентифицируемость лица, контактные поля, операцию, цель, роль оператора/рекламораспространителя и правовое основание.
+
+advertising_requirements_context:
+  - locator: "38-ФЗ статья 18 часть 1"
+    concept: PRIOR_ADVERTISING_CONSENT_PROOF_AND_SUPPRESSION
+    effect: "Реклама по сетям электросвязи требует предварительного согласия; бремя доказывания получения согласия лежит на рекламораспространителе; по требованию лица реклама в его адрес прекращается немедленно."
+    pdn_relation: POSSIBLE_CONTACT_DATA_PROCESSING_CONTEXT_ONLY
+    applicability_state: NO_GLOBAL_PDN_PROMOTION
+  - locator: "38-ФЗ статья 18 часть 2"
+    concept: AUTOMATED_DIALING_AND_AUTOMATED_MAILING_PROHIBITION
+    effect: "Запрещено использовать сети электросвязи для рекламы с автоматическим выбором/набором номера без участия человека."
+    pdn_relation: MARKETING_DELIVERY_OPERATION_CONTEXT_ONLY
+    applicability_state: NO_GLOBAL_PDN_PROMOTION
+  - locator: "38-ФЗ статья 18 часть 5"
+    concept: REPEALED_RULE_GUARD
+    effect: "Часть 5 утратила силу по 179-ФЗ от 27.10.2008."
+    executable_state: false
+
+cross_regime_relation:
+  target: "126-ФЗ статья 44.1"
+  type: TELECOM_NETWORK_AND_MOBILE_MAILING_OVERLAP
+  state: STATUTORY_CONTEXT_RELATION_REVIEW_REQUIRED
+  rationale: >-
+    126-ФЗ регулирует рассылку по сети подвижной радиотелефонной связи и содержит собственные требования к предварительному согласию/доказательству согласия, а с 01.08.2025 — отдельный отказ абонента от рассылки. Для рекламной рассылки возможна одновременная работа 38-ФЗ и 126-ФЗ, но режимы, согласия и исключения не сливаются.
+
+version_evidence:
+  - act: "179-ФЗ от 27.10.2008"
+    locator: "38-ФЗ статья 18 — наименование и часть 5"
+    effect: "Из наименования исключен почтовый контекст; часть 5 признана утратившей силу."
+    source: "https://rg.ru/documents/2008/10/29/fz-reklama-dok.html"
+    source_state: OFFICIAL_GAZETTE_PRIMARY_AMENDMENT_TEXT_VERIFIED_EXACT_BYTES_PENDING
+    effective_date: "2008-11-09"
+  - act: "272-ФЗ от 26.07.2026"
+    locator: "38-ФЗ статьи 21 и 38"
+    effect_on_article18: NONE
+    source: "https://rg.ru/documents/2026/08/03/fz272-dok.html"
+    source_state: OFFICIAL_GAZETTE_FULL_ACT_TEXT_VERIFIED
+    effective_date: "2026-08-06"
+
+capture_guard:
+  initial_and_current_exact_capture:
+    state: PENDING_AUTHORITATIVE_EXACT_BYTES
+    new_immutable_artifacts_this_pass: 0
+    retrieved_at: null
+    mime: null
+    byte_length: null
+    sha256: null
+  executable_use: false
+  reason: "Official Gazette legal text is verified, but exact immutable primary/current artifacts are not yet registered."
+
+counter_effect:
+  top_level_before: {found: 32, downloaded: 9, immutable: 9, pending: 21, reused: 2}
+  top_level_after: {found: 33, downloaded: 9, immutable: 9, pending: 22, reused: 2}
+  new_sector_sources_added: 1
+  pdn_overlap_candidates_added: 1
+  cross_regime_candidates_added: 1
+  applicability_edges_promoted: 0
+  executable_rules_changed: false
+  duplicate_sources_created: 0
+
+proof_floor:
+  - "OVERLAP != APPLICABILITY."
+  - "Advertising consent != PDN-processing consent."
+  - "A contact field such as phone/email is not enough by itself to prove the full 152-ФЗ obligation set."
+  - "A stop-advertising duty is not automatically a PDN erasure duty."
+  - "No MIME, byte length, SHA-256 or retrieved_at without exact bytes."
