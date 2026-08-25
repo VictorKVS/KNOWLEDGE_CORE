@@ -1,0 +1,140 @@
+schema_version: "1.0"
+kind: stream-3-sector-library-run
+stream: STREAM_3_SECTOR_OVERLAYS
+completed_at: "2026-08-25T23:25:00+03:00"
+repository: "VictorKVS/KNOWLEDGE_CORE"
+status: COMPLETED_WITH_4_ADVERTISING_SUBORDINATE_SOURCES_REGISTERED_EXACT_BINARY_PENDING
+
+objective: >-
+  Continue advertising/marketing discovery after 38-ФЗ Articles 12/18/18.1 by registering primary subordinate instruments that materially define Internet-ad reporting, authority access, ORD software/security/retention and participant access, while preserving PDN applicability guards and attempting exact official capture.
+
+focus:
+  sector: advertising_marketing
+  parent_source: SEC-SRC-RU-FZ-38-2006-A18
+  parent_locators: ["статья 18.1 части 6, 9, 14, 15"]
+  new_sources_registered: 4
+
+sources:
+  - source_id: SEC-SRC-RU-PP-974-2022
+    act: "Постановление Правительства РФ от 28.05.2022 № 974"
+    primary_url: "https://publication.pravo.gov.ru/document/0001202205300041"
+    publication_number: "0001202205300041"
+    publication_date: "2022-05-30"
+    primary_state: PRIMARY_PUBLICATION_METADATA_VERIFIED_EXACT_BYTES_PENDING
+    current_revision_crosscheck: "2025-09-18"
+    amendment_chain_crosschecked: ["2355 от 20.12.2022", "743 от 28.05.2025", "1427 от 18.09.2025"]
+    materiality:
+      - "ORD -> Roskomnadzor Internet-ad data transport/reporting."
+      - "Special reporting deadlines."
+      - "Disclosure limitation for data received by ORD."
+  - source_id: SEC-SRC-RU-PP-969-2022
+    act: "Постановление Правительства РФ от 28.05.2022 № 969"
+    primary_url: "https://publication.pravo.gov.ru/document/0001202205300042"
+    publication_number: "0001202205300042"
+    publication_date: "2022-05-30"
+    primary_state: PRIMARY_LOCATOR_RESOLVED_DIRECT_FETCH_TIMEOUT
+    current_amendment:
+      act: "Постановление Правительства РФ от 22.05.2025 № 709"
+      primary_url: "https://government.ru/docs/all/159150/"
+      effective_from: "2025-05-23"
+      state: PRIMARY_GOVERNMENT_TEXT_VERIFIED
+    effective_until: "2028-09-01"
+    materiality:
+      - "FAS/FNS access to Roskomnadzor Internet-ad information."
+      - "Electronic information-system access and authenticated employee access workflow."
+  - source_id: SEC-SRC-RU-RKN-ORDER-67-2025
+    act: "Приказ Роскомнадзора от 25.03.2025 № 67"
+    primary_url: "https://publication.pravo.gov.ru/document/0001202504140030"
+    publication_number: "0001202504140030"
+    publication_date: "2025-04-14"
+    minjust_registration_number: "81843"
+    effective_from: "2025-04-25"
+    primary_state: PRIMARY_PUBLICATION_METADATA_VERIFIED_EXACT_BYTES_PENDING
+    current_crosscheck: "Действует в редакции от 25.03.2025; later-change negative proof remains review-required."
+    materiality:
+      - "Direct compliance reference to information-security and personal-data legislation for ORD software."
+      - "Receive/store/process/transmit and immutability requirements."
+      - "At least one-year ORD retention for advertising data plus one-year ad-creative retention."
+      - "Target-audience telemetry may include sex, age, sociodemographic parameters and residence/location territory."
+      - "Preservation and protection from intentional/unintentional information impacts."
+  - source_id: SEC-SRC-RU-RKN-ORDER-78-2025
+    act: "Приказ Роскомнадзора от 31.03.2025 № 78"
+    primary_url: "https://publication.pravo.gov.ru/document/0001202504140032"
+    publication_number: "0001202504140032"
+    publication_date: "2025-04-14"
+    minjust_registration_number: "81844"
+    effective_from: "2025-04-25"
+    primary_state: PRIMARY_PUBLICATION_METADATA_VERIFIED_EXACT_BYTES_PENDING
+    current_crosscheck: "Действует в редакции от 31.03.2025; later-change negative proof remains review-required."
+    materiality:
+      - "Defines actor-scoped composition of Internet-ad information available from Roskomnadzor."
+      - "Defines participant access procedure to the radio-frequency-service information system."
+
+pdn_analysis:
+  direct_context:
+    source: SEC-SRC-RU-RKN-ORDER-67-2025
+    locator: "Требования, пункт 1"
+    relation: DIRECT_STATUTORY_PDN_SECURITY_CONTEXT_FOR_ORD_SOFTWARE
+    status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    reason: "The regulation explicitly references Russian personal-data legislation, but only for software used by an advertising-data operator under the statutory ORD regime."
+  overlap_candidates:
+    - {source: SEC-SRC-RU-PP-974-2022, type: INTERNET_AD_DATA_FLOW_PDN_OVERLAP, status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED}
+    - {source: SEC-SRC-RU-PP-969-2022, type: REGULATORY_ACCESS_PDN_OVERLAP, status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED}
+    - {source: SEC-SRC-RU-RKN-ORDER-78-2025, type: ACTOR_SCOPED_AD_DATA_PDN_OVERLAP, status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED}
+  retention_guard:
+    order_67_one_year: "Sector ORD retention only; not a universal PDN term."
+    article_18_1_three_year: "Authorized-body advertising dataset retention only; not a universal PDN term."
+
+network_and_acquisition:
+  exact_binary_attempt_this_pass: true
+  attempted_sources: 4
+  official_hosts: ["publication.pravo.gov.ru", "government.ru"]
+  result: TRANSIENT_TIMEOUT_OR_DNS_FAILURE_FOR_EXACT_BINARY_ROUTE
+  durable_exact_capture_succeeded: false
+  new_durable_downloads: 0
+  new_immutable_artifacts: 0
+  exact_runtime_captures: 0
+  guard: "No MIME, actual byte length, retrieved_at or SHA-256 recorded without exact bytes; official portal display KB/page counts are metadata only."
+
+writes:
+  created_source_cards:
+    - "security-corpora/RU/protected-information/source/SEC-SRC-RU-PP-974-2022.yaml"
+    - "security-corpora/RU/protected-information/source/SEC-SRC-RU-PP-969-2022.yaml"
+    - "security-corpora/RU/protected-information/source/SEC-SRC-RU-RKN-ORDER-67-2025.yaml"
+    - "security-corpora/RU/protected-information/source/SEC-SRC-RU-RKN-ORDER-78-2025.yaml"
+  created_capture_backlogs:
+    - "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-PP-974-2022-capture-pending.json"
+    - "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-PP-969-2022-capture-pending.json"
+    - "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-RKN-ORDER-67-2025-capture-pending.json"
+    - "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-RKN-ORDER-78-2025-capture-pending.json"
+  created_inventory_deltas:
+    - "security-knowledge/corpus/ru-protected-information/master-inventory-delta-2026-08-25T2325.yaml"
+    - "security-knowledge/corpus/ru-personal-data/master-source-inventory-delta-stream3-2026-08-25T2325.yaml"
+
+counters:
+  before: {found: 33, downloaded: 9, immutable: 9, pending: 22, reused: 2, primary_publication_verified: 11, sectors_registered: 25}
+  after: {found: 37, downloaded: 9, immutable: 9, pending: 26, reused: 2, primary_publication_verified: 14, sectors_registered: 25}
+  pass_delta:
+    new_sources: 4
+    exact_binary_downloads: 0
+    new_immutable_artifacts: 0
+    primary_publication_metadata_verified: 3
+    primary_locator_resolved_direct_fetch_pending: 1
+    pdn_relationship_candidates_added: 4
+    applicability_promotions: 0
+    legal_conflicts_declared: 0
+    duplicate_sources_created: 0
+
+next_steps:
+  - "Retry byte-exact official capture for PP 974, PP 969, RKN Orders 67 and 78; compute actual MIME/byte_length/SHA-256 and write immutable manifests only after exact bytes exist."
+  - "Capture amendment acts for PP 974 (2355/743/1427) and PP 969 (709) and close effective-date/version-chain proof."
+  - "Next advertising candidates: PP 948/2022 criteria of obligated actors, RKN Order 68/2025 ad identifier requirements, and current Government composition instrument for Article 18.1(1); register only where primary current proof is available."
+  - "Then return Stream 3 priority to unresolved healthcare/finance/communications/education/public-sector exact-capture backlogs."
+
+proof_floor:
+  - "Taxonomy is discovery seed only; primary normative act controls."
+  - "OVERLAP != APPLICABILITY."
+  - "Direct PDN mention in Order 67 is role/system scoped."
+  - "Advertising-data retention != general PDN retention/deletion."
+  - "Audience attribute != automatically personal data."
+  - "No hash, MIME, byte length, retrieved_at, applicability or conflict is invented."
