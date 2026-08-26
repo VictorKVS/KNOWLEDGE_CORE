@@ -1,0 +1,101 @@
+schema_version: "1.0"
+kind: ru-personal-data-master-source-inventory-delta
+owner_stream: STREAM_3_SECTOR_OVERLAYS
+checked_at: "2026-08-26T17:19:22+03:00"
+reconciliation_base: "master-source-inventory-delta-stream3-2026-08-26T1421.yaml"
+run_ref: "../ru-protected-information/stream-3-run-2026-08-26T1719.yaml"
+status: APPEND_ONLY_RELATIONSHIP_DELTA
+
+proof_floor:
+  - "OVERLAP != APPLICABILITY."
+  - "Глава 14 ТК РФ является прямым трудовым нормативным слоем для персональных данных работника, но не заменяет 152-ФЗ."
+  - "Статус работника должен быть доказан; нормы главы 14 нельзя автоматически переносить на кандидатов, подрядчиков, клиентов и иные категории субъектов."
+  - "Статья 87 устанавливает порядок хранения и использования, но сама по себе не задает единый срок хранения всех кадровых персональных данных."
+  - "Будущие изменения ТК РФ с 01.09.2026 и 01.03.2027 не включены в текущие требования по состоянию на 26.08.2026."
+  - "Exact official bytes не получены; MIME, byte_length, retrieved_at и SHA-256 не синтезировались."
+
+sector_source_counter_overlay:
+  before: {found: 44, downloaded: 9, immutable: 9, pending: 33, reused: 2}
+  after: {found: 45, downloaded: 9, immutable: 9, pending: 34, reused: 2}
+  new_source_nodes: 1
+  new_exact_primary_artifacts: 0
+  applicability_promotions: 0
+
+source_relationships:
+  - source_id: SEC-SRC-RU-TK-197-2001
+    locator: "глава 14, статьи 86-90"
+    target: "152-ФЗ"
+    type: DIRECT_STATUTORY_EMPLOYMENT_PDN_CONTEXT
+    state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    evidence_context:
+      - "Статья 86 ограничивает цели обработки персональных данных работника трудовыми и прямо установленными законом целями."
+      - "Статья 86 регулирует получение данных у самого работника и в определенных случаях у третьих лиц."
+      - "Статья 86 содержит специальное ограничение на получение и обработку специальных категорий персональных данных работника."
+      - "Статьи 87-90 устанавливают правила хранения/использования, передачи, права работника и ответственность."
+    guard: "Attach concrete duties only after proving employee role, record, processing operation, purpose and legal basis."
+
+  - source_id: SEC-SRC-RU-TK-197-2001
+    locator: "статья 86 пункт 1"
+    target: "purpose_limitation"
+    type: DIRECT_EMPLOYMENT_PURPOSE_LIMITATION
+    state: DIRECT_NORMATIVE_CONTEXT
+
+  - source_id: SEC-SRC-RU-TK-197-2001
+    locator: "статья 86 пункт 3"
+    target: "third_party_data_source_and_consent"
+    type: EMPLOYEE_DATA_SOURCE_RULE
+    state: DIRECT_NORMATIVE_CONTEXT_WITH_SCENARIO_GUARD
+    guard: "Do not generalize the written-consent condition beyond the scenario described by Article 86."
+
+  - source_id: SEC-SRC-RU-TK-197-2001
+    locator: "статья 86 пункт 4"
+    target: "special_categories_of_personal_data"
+    type: DIRECT_SPECIAL_CATEGORY_RESTRICTION
+    state: DIRECT_NORMATIVE_CONTEXT
+
+  - source_id: SEC-SRC-RU-TK-197-2001
+    locator: "статья 87"
+    target: "PDN retention"
+    type: STORAGE_GOVERNANCE_NOT_FIXED_RETENTION_PERIOD
+    state: SCOPE_BOUNDARY
+    guard: "Article 87 requires an employer storage/use procedure but does not itself establish one retention period for all HR personal data."
+
+  - source_id: SEC-SRC-RU-TK-197-2001
+    locator: "статья 88"
+    target: "employee_pdn_transfer"
+    type: DIRECT_EMPLOYMENT_TRANSFER_RULES
+    state: DIRECT_NORMATIVE_CONTEXT_WITH_EXCEPTIONS_REVIEW_REQUIRED
+
+  - source_id: SEC-SRC-RU-TK-197-2001
+    locator: "статья 89"
+    target: "data_subject_rights"
+    type: EMPLOYEE_DATA_SUBJECT_RIGHTS_LAYER
+    state: DIRECT_NORMATIVE_CONTEXT
+
+  - source_id: SEC-SRC-RU-TK-197-2001
+    locator: "статья 90"
+    target: "liability"
+    type: EMPLOYEE_PDN_LIABILITY_LAYER
+    state: DIRECT_NORMATIVE_CONTEXT
+
+scope_boundaries:
+  - rule: "EMPLOYEE_PDN_RULES != ALL_WORKFORCE_OR_CUSTOMER_PDN_RULES"
+    source: SEC-SRC-RU-TK-197-2001
+    locator: "глава 14"
+  - rule: "ARTICLE_87_STORAGE_GOVERNANCE != UNIVERSAL_HR_RETENTION_PERIOD"
+    source: SEC-SRC-RU-TK-197-2001
+    locator: "статья 87"
+  - rule: "LABOR_CODE_SPECIAL_CATEGORY_RESTRICTION != AUTOMATIC_ARTICLE_10_152FZ_APPLICABILITY_WITHOUT_SCENARIO"
+    source: SEC-SRC-RU-TK-197-2001
+    locator: "статья 86 пункт 4"
+  - rule: "FUTURE_2026_09_01_OR_2027_03_01_REVISION != CURRENT_ON_2026_08_26"
+    source: SEC-SRC-RU-TK-197-2001
+
+acquisition_state:
+  exact_primary_binary_new: 0
+  pending_exact_capture: 1
+  reason: TRANSIENT_NETWORK_OR_BINARY_DOWNLOAD_FAILURE
+  invariant: "No MIME, byte_length, retrieved_at or SHA-256 synthesized."
+
+merge_rule: >-
+  Merge as a Stream 3 overlay only. Do not overwrite concurrent PDN-core/security-stack counters owned by other streams. Chapter 14 of the Labor Code is a direct employment-personal-data layer but concrete applicability remains role-, record-, operation-, purpose- and legal-basis-specific.
