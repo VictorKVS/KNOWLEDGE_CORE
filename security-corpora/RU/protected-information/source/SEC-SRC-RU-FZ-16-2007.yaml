@@ -1,0 +1,122 @@
+schema_version: "1.0"
+id: SEC-SRC-RU-FZ-16-2007
+kind: security-regulatory-source
+status: PRIMARY_PUBLICATION_VERIFIED_CURRENT_ARTICLE11_CROSSCHECKED_EXACT_ARTIFACT_PENDING
+
+title: "Федеральный закон от 09.02.2007 № 16-ФЗ «О транспортной безопасности»"
+jurisdiction: RU
+issuer: "Российская Федерация"
+document:
+  type: federal_law
+  number: "16-ФЗ"
+  adopted_date: "2007-02-09"
+  official_publication_date: "2007-02-14"
+  official_publication: "Российская газета, № 31, 14.02.2007; Собрание законодательства РФ, № 7, 12.02.2007, ст. 837"
+  effective_from: "2007-08-14"
+  checked_at: "2026-08-26"
+
+canonical_sources:
+  primary_publication:
+    publisher: "Российская газета"
+    url: "https://rg.ru/documents/2007/02/14/transport-bezopasnost-dok.html"
+    origin_verified: true
+    proof_scope: "Исходная официальная публикация закона; статья 11 исходной редакции уже создавала АЦБПДП и содержала прямую ссылку на 152-ФЗ для международного перевозчика."
+  current_regulator_locator:
+    publisher: "Ространснадзор / официальный перечень обязательных требований"
+    url: "https://rostransnadzor.gov.ru/rostransnadzor/podrazdeleniya/security/documents/categories/104/117"
+    origin_verified: true
+    proof_scope: "Официальный отраслевой locator действующего 16-ФЗ; exact current bytes в этом проходе не получены."
+  current_system_authority:
+    publisher: "Министерство транспорта Российской Федерации"
+    url: "https://mintrans.gov.ru/activities/94/7/9"
+    origin_verified: true
+    evidence_state: CURRENT_AUTHORITY_SYSTEM_CONTEXT_VERIFIED
+    proof_scope: "Минтранс подтверждает ЕГИС ОТБ, АЦБПДП и нормативную связку 16-ФЗ / 149-ФЗ / 152-ФЗ / ПП № 1251 / Приказ № 162."
+
+protected_information:
+  sector: transport
+  regime: transport_security_egis_otb_passenger_and_crew_personal_data
+  legal_basis: "16-ФЗ статья 11"
+  protected_locators:
+    - locator: "статья 11 части 1-2"
+      concept: EGIS_OTB_AND_ACBPD
+      finding: "ЕГИС ОТБ является государственной информационной системой; в ее составе формируются автоматизированные централизованные базы персональных данных пассажиров и персонала (экипажа) транспортных средств."
+    - locator: "статья 11 часть 3 и часть 3.1"
+      concept: DATA_SUPPLIERS_AND_AUTHORIZED_TICKETING_AGENTS
+      finding: "Источниками данных выступают субъекты транспортной инфраструктуры, перевозчики, федеральные органы, иностранные государства/организации и уполномоченные билетные/бронирующие лица; для уполномоченных лиц установлен отдельный набор идентификационных и контактных сведений."
+    - locator: "статья 11 часть 4"
+      concept: RESTRICTED_ACCESS_INFORMATION_RESOURCE
+      finding: "Информационные ресурсы ЕГИС ОТБ отнесены законом к информации ограниченного доступа."
+    - locator: "статья 11 части 5, 5.1, 5.1-1, 5.3"
+      concept: PASSENGER_CREW_PERSON_LEVEL_DATASET
+      finding: "Закон задает базовый person-level набор: ФИО, дата рождения, документ, маршрут/пункты, дата поездки, пол, гражданство; для экипажа дополнительно должность; для отдельных воздушных перевозок предусмотрены записи регистрации пассажиров."
+    - locator: "статья 11 часть 6"
+      concept: DELEGATED_FORMATION_RETENTION_DISCLOSURE_RULES
+      finding: "Порядок формирования, ведения, срок хранения и предоставление данных делегированы Минтрансу; действующий подзаконный слой — Приказ Минтранса № 162 от 02.05.2024."
+    - locator: "статья 11 часть 7"
+      concept: DIRECT_152FZ_CROSS_REFERENCE_FOR_INTERNATIONAL_CARRIERS
+      finding: "Для иностранного субъекта транспортной инфраструктуры/перевозчика в соответствующем международном перевозочном сценарии передача данных прямо поставлена в соответствие 152-ФЗ и 16-ФЗ, если международным договором не установлено иное."
+  applicability_status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  applicability_guard: >-
+    16-ФЗ доказывает отраслевой режим ЕГИС ОТБ/АЦБПДП и прямые PDN-контексты. Нельзя переносить требования ЕГИС ОТБ на любую транспортную организацию или любую ее обработку ПДн без доказательства роли, вида перевозки, операции и нормативного основания.
+
+relationship_candidates:
+  - target: "152-ФЗ"
+    locator: "статья 11 часть 7"
+    type: DIRECT_STATUTORY_PDN_TRANSFER_CONTEXT
+    state: STATUTORY_CONTEXT_APPLICABILITY_STILL_REVIEW_REQUIRED
+  - target: "SEC-SRC-RU-MINTRANS-ORDER-162-2024"
+    locator: "статья 11 часть 6"
+    type: DIRECT_SUBORDINATE_IMPLEMENTATION
+    state: STATUTORY_IMPLEMENTATION_RELATION
+  - target: "SEC-SRC-RU-PP-1251-2023"
+    locator: "статья 11 часть 1.1"
+    type: EGIS_OTB_SYSTEM_GOVERNANCE_LAYER
+    state: STATUTORY_IMPLEMENTATION_RELATION
+  - target: "SEC-SRC-RU-FZ-87-2003"
+    type: TRANSPORT_SECTOR_OVERLAP_NOT_SCOPE_EQUIVALENCE
+    state: CROSS_REGIME_RELATION
+    guard: "Транспортно-экспедиционная деятельность и транспортная безопасность — разные нормативные контуры."
+
+version_chain:
+  state: ARTICLE11_CURRENT_CROSSCHECKED_FULL_HISTORICAL_CHAIN_PARTIAL
+  effective_state_as_of: "2026-08-26"
+  article11_relevant_events:
+    - act: "107-ФЗ от 03.04.2023"
+      official_publication_id: "0001202304030019"
+      effect: "Введена часть 5.1-1 статьи 11; соответствующий блок действует с 01.09.2023."
+      evidence_state: PRIMARY_PUBLICATION_METADATA_VERIFIED
+    - act: "387-ФЗ от 24.07.2023"
+      effect: "Изменен пункт 1 части 3 и введена часть 3.1 статьи 11; соответствующие изменения действуют с 01.09.2024."
+      evidence_state: OFFICIAL_PUBLICATION_TEXT_VERIFIED_EXACT_PORTAL_ID_PENDING
+  source_level_currentness:
+    - act: "325-ФЗ от 04.08.2026"
+      official_publication_id: "0001202608040071"
+      effective_from: "2026-08-04"
+      effect_on_16fz: "Изменяет статьи 1 и 2; воздействия на статью 11 не выявлено."
+    - act: "13-ФЗ от 30.01.2026"
+      effective_from: "2026-09-01"
+      state: FUTURE_NOT_CURRENT_AS_OF_CHECK_DATE
+      effect_on_16fz: "Изменение статьи 1; не используется для текущего состояния статьи 11."
+  guard: "Подготовленная редакция закона с будущими изменениями после 01.09.2026 не смешивается с состоянием на 26.08.2026. Полная историческая locator-specific цепочка статьи 11 остается PARTIAL до exact primary sweep."
+
+capture:
+  exact_capture_attempted_at: "2026-08-26T14:21:31+03:00"
+  attempted_urls:
+    - "https://rostransnadzor.gov.ru/rostransnadzor/podrazdeleniya/security/documents/categories/104/117"
+    - "http://pravo.gov.ru/proxy/ips/?docbody=&nd=102074279"
+  result: TRANSIENT_NETWORK_OR_BINARY_ROUTE_FAILURE
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  raw_artifact_ref: null
+  manifest_ref: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-16-2007-capture-pending.json"
+  fingerprint_status: PENDING_EXACT_CURRENT_PRIMARY_BYTES
+
+proof_floor:
+  - "Taxonomy is discovery seed only; legal findings are grounded in the statute and current official authority context."
+  - "EGIS OTB/ACBPD scope != all transport-sector personal-data processing."
+  - "Restricted access under 16-ФЗ != automatic applicability of every 152-ФЗ requirement."
+  - "Future revision effective 01.09.2026 is not current on 26.08.2026."
+  - "No MIME, byte length, retrieved_at or SHA-256 is inferred without exact bytes."
