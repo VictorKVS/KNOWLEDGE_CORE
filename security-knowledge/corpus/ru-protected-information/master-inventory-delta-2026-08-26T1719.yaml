@@ -1,0 +1,117 @@
+schema_version: "1.0"
+kind: ru-protected-information-master-inventory-delta
+base_inventory: "master-inventory.yaml"
+reconciliation_base_delta: "master-inventory-delta-2026-08-26T1421.yaml"
+checked_at: "2026-08-26T17:19:22+03:00"
+owner_stream: STREAM_3_SECTOR_OVERLAYS
+run_ref: "stream-3-run-2026-08-26T1719.yaml"
+status: APPEND_ONLY_RECONCILIATION_READY
+
+proof_floor:
+  - "Taxonomy is discovery seed only; the employee-PDN regime is grounded in the Labor Code itself and authoritative/current authority sources."
+  - "Labor Code Chapter 14 is a special employment-law layer for employee personal data; it is not identical to 152-ФЗ and does not automatically apply to non-employees."
+  - "Article 87 governs storage/use procedure but does not itself create one universal retention period for all HR personal data."
+  - "Future Labor Code amendments effective 2026-09-01 or 2027-03-01 are not folded into current requirements on 2026-08-26."
+  - "Exact official bytes were not obtained; no MIME, byte_length, retrieved_at or SHA-256 was synthesized."
+
+counter_state_before_reconciled: {found: 44, downloaded: 9, immutable: 9, pending: 33, reused: 2, primary_publication_verified: 20, sectors_registered: 25}
+counter_state_after_reconciliation:
+  found: 45
+  downloaded: 9
+  immutable: 9
+  pending: 34
+  reused: 2
+  primary_publication_verified: 20
+  sectors_registered: 26
+  new_sources_this_run: 1
+  existing_source_nodes_enriched: 0
+  new_immutable_this_run: 0
+  exact_binary_downloads_this_run: 0
+  primary_current_authority_texts_verified_this_run: 1
+  pdn_relationship_candidates_added_this_run: 2
+  applicability_edges_promoted_this_run: 0
+  legal_conflicts_confirmed_this_run: 0
+  duplicate_sources_created: 0
+
+sources_added:
+  - source_id: SEC-SRC-RU-TK-197-2001
+    sector: employment_hr
+    title: "Трудовой кодекс Российской Федерации от 30.12.2001 № 197-ФЗ — глава 14 «Защита персональных данных работника»"
+    source_card: "security-corpora/RU/protected-information/source/SEC-SRC-RU-TK-197-2001.yaml"
+    current_authority_url: "https://government.ru/docs/all/97206/"
+    original_publication: "Российская газета №256, 31.12.2001"
+    original_publication_state: OFFICIAL_PUBLICATION_METADATA_CROSSCHECKED_EXACT_PRIMARY_CAPTURE_PENDING
+    current_authority_state: CURRENT_AUTHORITY_TEXT_VERIFIED
+    protected_locators: ["статья 86", "статья 87", "статья 88", "статья 89", "статья 90"]
+    core_concepts: [EMPLOYEE_PDN_PURPOSE_LIMITATION, THIRD_PARTY_SOURCE_AND_CONSENT, SPECIAL_CATEGORY_RESTRICTION, STORAGE_AND_USE_GOVERNANCE, TRANSFER_RULES, DATA_SUBJECT_RIGHTS, LIABILITY]
+
+version_chain_delta:
+  - source: SEC-SRC-RU-TK-197-2001
+    locator: "статья 86"
+    acts: ["90-ФЗ от 30.06.2006", "99-ФЗ от 07.05.2013", "185-ФЗ от 02.07.2013"]
+    state: LOCATOR_EFFECTS_CURRENT_TEXT_VERIFIED_PRIMARY_EXACT_ARTIFACTS_PENDING
+  - source: SEC-SRC-RU-TK-197-2001
+    locator: "статья 87"
+    act: "90-ФЗ от 30.06.2006"
+    state: LOCATOR_EFFECT_CURRENT_TEXT_VERIFIED_PRIMARY_EXACT_ARTIFACT_PENDING
+  - source: SEC-SRC-RU-TK-197-2001
+    locator: "статья 88"
+    act: "90-ФЗ от 30.06.2006"
+    state: LOCATOR_EFFECT_CURRENT_TEXT_VERIFIED_PRIMARY_EXACT_ARTIFACT_PENDING
+  - source: SEC-SRC-RU-TK-197-2001
+    locator: "статья 89"
+    act: "90-ФЗ от 30.06.2006"
+    state: LOCATOR_EFFECT_CURRENT_TEXT_VERIFIED_PRIMARY_EXACT_ARTIFACT_PENDING
+  - source: SEC-SRC-RU-TK-197-2001
+    locator: "статья 90"
+    acts: ["90-ФЗ от 30.06.2006", "99-ФЗ от 07.05.2013"]
+    state: LOCATOR_EFFECTS_CURRENT_TEXT_VERIFIED_PRIMARY_EXACT_ARTIFACTS_PENDING
+  - source: SEC-SRC-RU-TK-197-2001
+    state: FUTURE_SOURCE_LEVEL_EVENTS_NOT_CURRENT
+    events:
+      - {act: "90-ФЗ от 09.04.2026", effective_from: "2026-09-01", chapter_14_impact_identified: false}
+      - {act: "91-ФЗ от 09.04.2026", effective_from: "2026-09-01", chapter_14_impact_identified: false}
+      - {act: "108-ФЗ от 25.04.2026", effective_from: "2026-09-01", chapter_14_impact_identified: false}
+      - {act: "144-ФЗ от 25.05.2026", effective_from: "2026-09-01", chapter_14_impact_identified: false}
+      - {act: "246-ФЗ от 26.07.2026", effective_from: "2027-03-01", chapter_14_impact_identified: false}
+
+relationship_delta:
+  - source: SEC-SRC-RU-TK-197-2001
+    locator: "глава 14 статьи 86-90"
+    target: "152-ФЗ"
+    type: DIRECT_STATUTORY_EMPLOYMENT_PDN_CONTEXT
+    state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    guard: "Prove employee role, record, processing operation, purpose and legal basis before attaching concrete duties."
+  - source: SEC-SRC-RU-TK-197-2001
+    locator: "статья 86 пункт 4"
+    target: "special_categories_of_personal_data"
+    type: DIRECT_SPECIAL_CATEGORY_REFERENCE
+    state: DIRECT_NORMATIVE_CONTEXT
+  - source: SEC-SRC-RU-TK-197-2001
+    locator: "статья 87"
+    target: "retention_model"
+    type: STORAGE_GOVERNANCE_NOT_FIXED_RETENTION_PERIOD
+    state: SCOPE_BOUNDARY
+    guard: "Article 87 does not itself define one retention period for all HR records."
+
+acquisition_delta:
+  exact_binary_attempted: true
+  attempted_sources: 1
+  exact_binary_downloads_succeeded: 0
+  durable_immutable_artifacts_added: 0
+  result: TRANSIENT_NETWORK_OR_BINARY_DOWNLOAD_FAILURE
+  attempted_endpoints:
+    - "https://government.ru/docs/all/97206/"
+    - "https://git15.rostrud.gov.ru/upload/iblock/449/trudovoy-kodeks-rossiyskoy-federatsii-ot-30.12.2001-_-197_fz.pdf"
+  pending_capture_manifest: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-TK-197-2001-capture-pending.json"
+  exact_fields_guard: {retrieved_at: null, mime: null, byte_length: null, sha256: null}
+
+proof_floor_effect:
+  executable_rules_changed: false
+  applicability_edges_promoted: 0
+  duplicate_source_nodes_created: 0
+  legal_conflicts_confirmed: 0
+  source_nodes_added: 1
+
+merge_rule: >-
+  Reconcile after master-inventory-delta-2026-08-26T1421.yaml. Stream 3 counters become 45 found / 9 downloaded / 9 immutable / 34 pending / 2 reused, primary_publication_verified remains 20, and sectors_registered becomes 26. Keep the Labor Code Chapter 14 layer distinct from 152-ФЗ while linking them for proven employment scenarios.
