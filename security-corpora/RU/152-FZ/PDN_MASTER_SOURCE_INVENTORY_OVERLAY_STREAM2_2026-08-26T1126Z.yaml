@@ -1,0 +1,42 @@
+schema_version: "1.0"
+id: SEC-PDN-MASTER-SOURCE-INVENTORY-OVERLAY-STREAM2-2026-08-26T1126Z
+applies_to: PDN_MASTER_SOURCE_INVENTORY.yaml
+stream: RU_PDN_TECHNICAL_CRYPTO
+created_at: "2026-08-26T11:26:00Z"
+merge_policy: >-
+  CONCURRENCY_SAFE_ADDITIVE_OVERLAY. Preserve all records/counters from other streams and previous Stream-2 overlays.
+  Record four newly resolved exact official routes while keeping the authoritative acquisition counter at its last
+  measured value until reuse-first acquisition and master reconciliation run again.
+
+security_stack_patch:
+  linked_inventory: "security-stack/PDN_SECURITY_STACK_SOURCE_INVENTORY.yaml"
+  latest_overlay: "security-stack/PDN_SECURITY_STACK_SOURCE_INVENTORY_OVERLAY_STREAM2_2026-08-26T1126Z.yaml"
+  checked_at: "2026-08-26"
+  identified: 38
+  metadata_verified: 38
+  immutable_sha256_verified: 17
+  pending_raw_capture: 21
+  exact_official_route_unresolved_authoritative_before_reacquisition: 7
+  exact_official_routes_resolved_this_pass: 4
+  projected_exact_official_route_unresolved_after_next_acquisition: 3
+  authoritative_counter_change_deferred_until_reacquisition: true
+  confirmed_conflicts: 0
+  latest_stream2_run: "security-stack/runs/STREAM2_RUN_2026-08-26T1126Z.yaml"
+  latest_registry_update: >-
+    2026-08-26: exact official routes were resolved for the FSTEC maturity method of 07.08.2026, FSTEC security-analysis
+    method of 25.11.2025, FSB Order No.173/2010 primary text, and Government Resolution No.608/1995 primary text.
+    No exact issuer payload was captured in this bounded pass, so immutable and pending counts remain 17 and 21.
+    Applicability guards are unchanged: maturity levels remain recommendations, security-analysis is conditional on its
+    assessment context, FSB173 is version-chain evidence, and PP608 is certification context only.
+
+analysis_metrics_patch:
+  stream2_source_records_added_this_pass: 0
+  stream2_immutable_new_this_pass: 0
+  stream2_exact_official_routes_resolved_this_pass: 4
+  stream2_semantic_promotions_this_pass: 0
+  stream2_new_universal_pdn_duties_this_pass: 0
+
+proof_rule: >-
+  Official-route discovery is provenance progress, not payload proof. IMMUTABLE_CAPTURED still requires exact issuer
+  bytes plus observed MIME, byte length and computed SHA-256. Master unresolved-route counters may only be changed by
+  the accepted acquisition/reconciliation telemetry, not by projection from discovery alone.
