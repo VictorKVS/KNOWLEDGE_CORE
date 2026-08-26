@@ -1,0 +1,139 @@
+schema_version: "1.0"
+id: SEC-SRC-RU-TK-197-2001
+kind: security-regulatory-source
+status: CURRENT_AUTHORITY_TEXT_VERIFIED_EXACT_ARTIFACT_PENDING
+
+title: "Трудовой кодекс Российской Федерации от 30.12.2001 № 197-ФЗ — глава 14 «Защита персональных данных работника»"
+jurisdiction: RU
+issuer: "Российская Федерация"
+document:
+  type: code
+  number: "197-ФЗ"
+  adopted_date: "2001-12-30"
+  original_publication:
+    publisher: "Российская газета"
+    issue: "256"
+    date: "2001-12-31"
+    proof_state: OFFICIAL_PUBLICATION_METADATA_CROSSCHECKED_EXACT_PRIMARY_CAPTURE_PENDING
+  checked_at: "2026-08-26"
+
+canonical_sources:
+  current_authority_text:
+    publisher: "Правительство Российской Федерации"
+    url: "https://government.ru/docs/all/97206/"
+    origin_verified: true
+    evidence_state: CURRENT_AUTHORITY_TEXT_VERIFIED
+  official_labor_authority_copy:
+    publisher: "Федеральная служба по труду и занятости"
+    url: "https://git15.rostrud.gov.ru/upload/iblock/449/trudovoy-kodeks-rossiyskoy-federatsii-ot-30.12.2001-_-197_fz.pdf"
+    revision_observed: "2023-08-04"
+    evidence_state: OFFICIAL_AGENCY_CONSOLIDATION_CROSSCHECK_NOT_CURRENT_ARTIFACT
+  current_locator_crosscheck:
+    publisher: "Ростехнадзор / Кодекс"
+    url: "https://rostehnadzor.kodeks.ru/document/901807664/path/0/1"
+    state_observed: "с изменениями на 15.05.2026"
+    evidence_state: CURRENT_CONSOLIDATION_CROSSCHECK
+  exact_current_artifact_status: PENDING
+
+protected_information:
+  sector: employment_hr
+  regime: employee_personal_data
+  protected_locators:
+    - locator: "глава 14 статьи 86-90"
+      concept: EMPLOYEE_PERSONAL_DATA_PROTECTION_REGIME
+      finding: "Трудовой кодекс устанавливает отдельный отраслевой режим обработки и защиты персональных данных работника у работодателя."
+    - locator: "статья 86 пункт 1"
+      concept: EMPLOYEE_PDN_PURPOSE_LIMITATION
+      finding: "Обработка персональных данных работника ограничена трудовыми и прямо указанными в статье целями."
+      current_amendment_marker: "185-ФЗ от 02.07.2013"
+    - locator: "статья 86 пункт 3"
+      concept: EMPLOYEE_DATA_SOURCE_AND_THIRD_PARTY_CONSENT
+      finding: "По общему правилу данные следует получать у работника; получение у третьей стороны связано с предварительным уведомлением и письменным согласием в описанном статьей сценарии."
+    - locator: "статья 86 пункт 4"
+      concept: SPECIAL_CATEGORY_RESTRICTION
+      finding: "Работодатель не вправе получать и обрабатывать специальные категории персональных данных работника, кроме случаев, предусмотренных ТК РФ и другими федеральными законами."
+      current_amendment_marker: "99-ФЗ от 07.05.2013"
+    - locator: "статья 86 пункты 7-10"
+      concept: EMPLOYEE_PDN_PROTECTION_GUARANTEES
+      finding: "Кодекс устанавливает требования к защите данных, ознакомлению работников с документами о порядке обработки и совместной выработке мер защиты."
+    - locator: "статья 87"
+      concept: EMPLOYEE_PDN_STORAGE_AND_USE_POLICY
+      finding: "Порядок хранения и использования персональных данных работников устанавливается работодателем с соблюдением ТК РФ и иных федеральных законов."
+      current_amendment_marker: "90-ФЗ от 30.06.2006"
+    - locator: "статья 88"
+      concept: EMPLOYEE_PDN_TRANSFER_RULES
+      finding: "Установлены специальные требования к передаче персональных данных работника, включая ограничения передачи третьим лицам и коммерческого использования."
+      current_amendment_marker: "90-ФЗ от 30.06.2006"
+    - locator: "статья 89"
+      concept: EMPLOYEE_DATA_SUBJECT_RIGHTS
+      finding: "Работнику предоставлены права на информацию, доступ, копии, исправление/дополнение и судебное обжалование обработки его персональных данных работодателем."
+      current_amendment_marker: "90-ФЗ от 30.06.2006"
+    - locator: "статья 90"
+      concept: EMPLOYEE_PDN_LIABILITY
+      finding: "Нарушение законодательства о персональных данных при обработке данных работника влечет предусмотренные законом виды ответственности."
+      current_amendment_markers: ["90-ФЗ от 30.06.2006", "99-ФЗ от 07.05.2013"]
+  applicability_status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  pdn_edge_status: DIRECT_STATUTORY_EMPLOYMENT_PDN_CONTEXT
+  guard_rule: >-
+    Глава 14 ТК РФ является прямым специальным трудовым слоем для персональных данных работника, но не заменяет 152-ФЗ и не позволяет автоматически переносить каждую норму главы на кандидатов, подрядчиков, клиентов или иные категории субъектов. Конкретная применимость требует доказать трудовую роль, набор данных, операцию и правовое основание.
+
+relationship_candidates:
+  - target: "152-ФЗ"
+    type: DIRECT_STATUTORY_EMPLOYMENT_PDN_CONTEXT
+    state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    guard: "ТК РФ глава 14 и 152-ФЗ применяются как отдельные, потенциально совместные нормативные слои; правило выбирается по конкретной операции и роли."
+  - target: "special_categories_of_personal_data"
+    locator: "статья 86 пункт 4"
+    type: DIRECT_SPECIAL_CATEGORY_REFERENCE
+    state: DIRECT_NORMATIVE_CONTEXT
+  - target: "employee_record_retention"
+    locator: "статья 87"
+    type: STORAGE_GOVERNANCE_NOT_FIXED_RETENTION_PERIOD
+    state: SCOPE_BOUNDARY
+    guard: "Статья 87 устанавливает порядок хранения/использования, но сама по себе не задает единый срок хранения всех кадровых персональных данных. Не выводить retention period без отдельного документа/вида записи."
+
+version_chain:
+  state: CURRENT_LOCATOR_TEXT_CROSSCHECKED_PRIMARY_HISTORY_PARTIAL
+  locator_events:
+    - act: "90-ФЗ от 30.06.2006"
+      locators: ["статья 86 пункты 5, 7, 8", "статья 87", "статья 88", "статья 89", "статья 90"]
+      effect: "Изменен основной блок правил обработки, хранения, передачи, прав работника и ответственности."
+      proof_status: LOCATOR_EFFECT_VERIFIED_CURRENT_TEXT_PRIMARY_EXACT_ARTIFACT_PENDING
+    - act: "99-ФЗ от 07.05.2013"
+      locators: ["статья 85", "статья 86 пункт 4", "статья 90"]
+      effect: "Статья 85 утратила силу; уточнен режим специальных категорий и ответственность."
+      proof_status: LOCATOR_EFFECT_VERIFIED_CURRENT_TEXT_PRIMARY_EXACT_ARTIFACT_PENDING
+    - act: "185-ФЗ от 02.07.2013"
+      locators: ["статья 86 пункт 1"]
+      effect: "Уточнена цель обработки персональных данных работника."
+      proof_status: LOCATOR_EFFECT_VERIFIED_CURRENT_TEXT_PRIMARY_EXACT_ARTIFACT_PENDING
+  current_state_sweep:
+    as_of: "2026-08-26"
+    finding: >-
+      Текущий 2026 crosscheck сохраняет для главы 14 те же locator-specific amendment markers: статья 86 — 90-ФЗ/99-ФЗ/185-ФЗ; статьи 87-89 — 90-ФЗ; статья 90 — 90-ФЗ/99-ФЗ. Законы 90-ФЗ и 91-ФЗ от 09.04.2026, 108-ФЗ от 25.04.2026, 144-ФЗ от 25.05.2026 и 246-ФЗ от 26.07.2026 имеют будущие даты вступления (01.09.2026 либо 01.03.2027) и не включены в текущий текст на 26.08.2026; подтвержденного воздействия на статьи 86-90 в этом sweep не выявлено.
+    state: CURRENT_TEXT_CROSSCHECKED_LOCATOR_HISTORY_PRIMARY_BINARY_PENDING
+
+capture:
+  exact_capture_attempted_at: "2026-08-26T17:19:22+03:00"
+  attempted_urls:
+    - "https://government.ru/docs/all/97206/"
+    - "https://git15.rostrud.gov.ru/upload/iblock/449/trudovoy-kodeks-rossiyskoy-federatsii-ot-30.12.2001-_-197_fz.pdf"
+  result: TRANSIENT_NETWORK_OR_DOWNLOAD_FAILURE
+  raw_artifact_ref: null
+  manifest_ref: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-TK-197-2001-capture-pending.json"
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  fingerprint_status: PENDING_EXACT_PRIMARY_ARTIFACT
+  note: "Authoritative/current text was verified semantically, but exact official bytes could not be captured in the hashing runtime. Displayed sizes and cached content were not used as byte_length or fingerprint evidence."
+
+provenance:
+  checked_at: "2026-08-26"
+  primary_current_authority_evidence: "https://government.ru/docs/all/97206/"
+  official_labor_authority_copy: "https://git15.rostrud.gov.ru/upload/iblock/449/trudovoy-kodeks-rossiyskoy-federatsii-ot-30.12.2001-_-197_fz.pdf"
+  current_crosscheck: "https://rostehnadzor.kodeks.ru/document/901807664/path/0/1"
+  review_required: true
+
+agent_rule: >-
+  Treat employee personal data as a dedicated employment-law overlay. Do not equate Chapter 14 with the whole 152-ФЗ regime and do not infer a universal retention term from Article 87. Promote requirements only from locator-specific current evidence and a proven employment processing scenario.
