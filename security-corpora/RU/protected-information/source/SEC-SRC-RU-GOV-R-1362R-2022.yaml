@@ -1,0 +1,98 @@
+schema_version: "1.0"
+id: SEC-SRC-RU-GOV-R-1362R-2022
+kind: security-regulatory-source
+status: PRIMARY_PUBLICATION_LOCATOR_CROSSCHECKED_CURRENT_TEXT_CROSSCHECKED_EXACT_ARTIFACT_PENDING
+
+title: "Распоряжение Правительства РФ от 30.05.2022 № 1362-р — состав информации об интернет-рекламе, подлежащей учету, хранению и обработке Роскомнадзором"
+jurisdiction: RU
+issuer: "Правительство Российской Федерации"
+document:
+  type: government_order
+  number: "1362-р"
+  adopted_date: "2022-05-30"
+  official_publication_id: "0001202205310015"
+  official_publication_date: "2022-05-31"
+  effective_from: "2022-09-01"
+  scheduled_expiry: "2028-09-01"
+  checked_at: "2026-08-26"
+
+canonical_sources:
+  primary_publication:
+    publisher: "Официальное опубликование правовых актов"
+    url: "https://publication.pravo.gov.ru/document/0001202205310015"
+    publication_locator_crosschecked: true
+    origin_direct_fetch_pending: true
+    proof_scope: "Номер официального опубликования и реквизиты сведены по текущей правовой консолидации; прямой fetch официальной страницы/байтов в этом проходе не удался."
+  current_text_crosscheck:
+    revision_date: "2025-09-18"
+    effective_revision_from: "2025-09-18"
+    state: CURRENT_TEXT_CROSSCHECK_EXACT_CURRENT_BYTES_PENDING
+    amendments_crosschecked:
+      - "Постановление Правительства РФ от 20.12.2022 № 2355"
+      - "Постановление Правительства РФ от 28.05.2025 № 743"
+      - "Постановление Правительства РФ от 18.09.2025 № 1427"
+
+protected_information:
+  sector: advertising_marketing
+  regime: internet_advertising_regulatory_dataset_composition
+  legal_basis: "38-ФЗ статья 18.1 часть 1"
+  protected_locators:
+    - locator: "Состав информации, пункт 1"
+      concept: INTERNET_AD_REGULATORY_DATASET_SCOPE
+      finding: "В состав учитываемой, хранимой и обрабатываемой Роскомнадзором информации входят сведения о рекламодателях, рекламораспространителях и операторах рекламных систем, которыми могут быть российские и иностранные юридические лица, физические лица и индивидуальные предприниматели, а также сведения о рекламе и социальной рекламе."
+    - locator: "Состав информации, сведения о физическом лице/ИП"
+      concept: PERSON_LEVEL_IDENTIFICATION_FIELDS
+      finding: "Набор предусматривает идентифицирующие сведения о физических лицах и ИП, включая ФИО и иные реквизиты, предусмотренные составом для соответствующей категории участника."
+    - locator: "Состав информации, контактные и адресные реквизиты"
+      concept: PERSON_LEVEL_CONTACT_AND_ADDRESS_FIELDS
+      finding: "Для отдельных категорий физических лиц состав предусматривает контактные/адресные реквизиты; конкретный PDN-статус должен оцениваться по фактически передаваемому набору."
+    - locator: "Состав информации, представители/посредники"
+      concept: REPRESENTATIVE_AND_INTERMEDIARY_PERSON_DATA
+      finding: "Состав включает сведения о лицах, действующих от имени участников рекламного рынка или участвующих в договорной цепочке, когда это предусмотрено соответствующим полем набора."
+  applicability_status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  applicability_guard: "Наличие нормативно заданных person-level полей создает сильное пересечение с 152-ФЗ, но применимость конкретных обязанностей определяется только после доказательства роли, конкретной записи, операции, цели и правового основания. Записи исключительно о юридических лицах не становятся ПДн автоматически."
+
+relationship_candidates:
+  - target: "38-ФЗ статья 18.1 часть 1"
+    type: DIRECT_SUBORDINATE_DATASET_COMPOSITION
+    state: STATUTORY_IMPLEMENTATION_RELATION
+  - target: "152-ФЗ"
+    type: DIRECT_STATUTORY_PERSON_LEVEL_DATASET_OVERLAP
+    state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    guard: "Подключать PDN duties только для сведений об идентифицируемом физическом лице и доказанной операции обработки."
+  - target: "SEC-SRC-RU-PP-948-2022"
+    type: REPORTING_ACTOR_TO_DATASET_SCOPE
+    state: CROSS_REGIME_RELATION
+  - target: "SEC-SRC-RU-PP-974-2022"
+    type: DATASET_TO_ORD_RKN_TRANSPORT
+    state: CROSS_REGIME_RELATION
+  - target: "SEC-SRC-RU-RKN-ORDER-78-2025"
+    type: DATASET_TO_ACTOR_SCOPED_ACCESS
+    state: CROSS_REGIME_RELATION
+
+version_chain:
+  state: CURRENT_REVISION_CROSSCHECKED_PRIMARY_AMENDMENT_BYTES_PENDING
+  latest_crosschecked_revision: "2025-09-18"
+  latest_revision_effective_from: "2025-09-18"
+  events:
+    - {act: "Постановление Правительства РФ от 20.12.2022 № 2355", state: AMENDMENT_EFFECT_CROSSCHECKED_PRIMARY_EXACT_BYTES_PENDING}
+    - {act: "Постановление Правительства РФ от 28.05.2025 № 743", state: AMENDMENT_EFFECT_CROSSCHECKED_PRIMARY_EXACT_BYTES_PENDING}
+    - {act: "Постановление Правительства РФ от 18.09.2025 № 1427", state: AMENDMENT_EFFECT_CROSSCHECKED_PRIMARY_EXACT_BYTES_PENDING}
+
+capture:
+  exact_capture_attempted_at: "2026-08-26T08:22:22+03:00"
+  source_url: "https://publication.pravo.gov.ru/document/0001202205310015"
+  preferred_pdf_url: "https://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202205310015"
+  result: TRANSIENT_DNS_OR_TIMEOUT
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  raw_artifact_ref: null
+  manifest_ref: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-GOV-R-1362R-2022-capture-pending.json"
+  fingerprint_status: PENDING_EXACT_PRIMARY_BYTES
+
+proof_floor:
+  - "The current consolidated text is a crosscheck; exact primary bytes remain required for immutable status."
+  - "Person-level fields create overlap with PDN but do not by themselves prove universal 152-ФЗ applicability."
+  - "No MIME, exact byte length or SHA-256 is inferred from display metadata."
