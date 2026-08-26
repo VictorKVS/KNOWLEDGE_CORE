@@ -1,0 +1,89 @@
+schema_version: "1.0"
+id: STREAM2-RUN-2026-08-26T1126Z
+stream: RU_PDN_TECHNICAL_CRYPTO
+started_at: "2026-08-26T11:26:00Z"
+status: PASS_ROUTE_RECOVERY_BYTES_PENDING
+objective: >-
+  Continue primary-source recovery for the 152-FZ technical and cryptographic contour. Resolve exact official routes
+  for currently unrouted FSTEC/FSB/Government sources without weakening the immutable proof floor or propagating
+  licensing/certification/public-sector requirements into generic PDN duties.
+
+authoritative_input_run:
+  path: "../PDN_SECURITY_STACK_ACQUISITION_RUN.json"
+  started_at: "2026-08-26T11:12:10.661084Z"
+  finished_at: "2026-08-26T11:19:57.172322Z"
+  sources_registered: 38
+  immutable_total: 17
+  pending_after_run: 21
+  exact_official_route_unresolved: 7
+
+findings:
+  - id: SEC-SRC-RU-FSTEC-MATURITY-METHOD-2026
+    result: EXACT_OFFICIAL_PDF_ROUTE_RESOLVED_CAPTURE_PENDING
+    route: "https://fstec.ru/files/1523/---7--2026-/3102/---7--2026-.pdf"
+    details: >-
+      The official FSTEC PDF target for the approved 07.08.2026 maturity method was resolved. Exact issuer bytes were
+      not received in this bounded pass, so retrieved_at, MIME, byte length and SHA-256 remain unset.
+    applicability: ISPDN_MATURITY_ASSESSMENT_WITH_RECOMMENDATIONS_NOT_AUTOMATIC_MANDATORY_MINIMA
+    immutable: false
+  - id: SEC-SRC-RU-FSTEC-SECURITY-ANALYSIS-METHOD-2025
+    result: EXACT_OFFICIAL_PDF_ROUTE_RESOLVED_CAPTURE_PENDING
+    route: "https://fstec.ru/files/1423/---25--2025-/2875/---25--2025-.pdf"
+    details: >-
+      The exact FSTEC PDF route for the 25.11.2025 security-analysis method was resolved. Exact response bytes were not
+      captured; no fingerprint fields are asserted.
+    applicability: ATTESTATION_CONTROL_OR_CONFORMITY_ASSESSMENT_CONTEXT_ONLY
+    immutable: false
+  - id: SEC-SRC-RU-FSB173-2010
+    result: OFFICIAL_PRIMARY_TEXT_ROUTE_RESOLVED_CAPTURE_PENDING
+    route: "https://pravo.gov.ru/proxy/ips/?backlink=1&docbody=&nd=102139358&prevDoc=102155746"
+    details: >-
+      The official pravo.gov.ru primary-text route resolves Order No.173 identity and its version-chain role. Exact
+      response bytes were not captured; the record remains metadata-verified/PENDING and is used only for the surviving
+      Appendix point 1 change to PKZ-2005 point 50.
+    applicability: FSB66_PKZ2005_VERSION_CHAIN_ONLY
+    immutable: false
+  - id: SEC-SRC-RU-PP608-1995
+    result: OFFICIAL_PRIMARY_TEXT_ROUTE_RESOLVED_CAPTURE_PENDING
+    route: "https://pravo.gov.ru/proxy/ips/?backlink=1&docbody=&nd=102036208&prevDoc=102025035"
+    details: >-
+      The official pravo.gov.ru primary-text route for Government Resolution No.608 was resolved and identity-checked.
+      Exact bytes and the full amendment-publication chain are still pending, so no immutable/version-complete status
+      is claimed.
+    applicability: CERTIFICATION_AND_CONFORMITY_CONTEXT_ONLY
+    immutable: false
+
+metrics:
+  new_sources: 0
+  new_immutable_captured: 0
+  exact_official_routes_resolved: 4
+  semantic_promotions: 0
+  new_universal_pdn_duties_created: 0
+  authoritative_identified_before_reacquisition: 38
+  authoritative_metadata_verified_before_reacquisition: 38
+  authoritative_immutable_sha256_verified_before_reacquisition: 17
+  authoritative_pending_raw_capture_before_reacquisition: 21
+  authoritative_exact_official_route_unresolved_before_reacquisition: 7
+  projected_exact_official_route_unresolved_after_next_acquisition: 3
+  confirmed_conflicts: 0
+
+counter_policy: >-
+  The authoritative count is not rewritten from route discovery alone. The next acquisition/reconciliation run must
+  consume canonical_source.url for these four sources and recalculate unrouted_source_ids. Until that run is recorded,
+  38/38/17/21/7 remains the proven acquisition telemetry; 3 unresolved routes is only the deterministic projection
+  after the four new routes are consumed.
+
+applicability_guards:
+  - Route resolution does not satisfy IMMUTABLE_CAPTURED; exact issuer bytes plus computed MIME/length/SHA-256 are mandatory.
+  - The FSTEC maturity method's point-11 levels remain recommendations, not automatic mandatory minima.
+  - The 25.11.2025 security-analysis method remains conditional on attestation/control/conformity-assessment context.
+  - FSB173 remains a version-chain source for PKZ-2005 Appendix point 1 only; unrelated appendix items are excluded.
+  - PP608 remains certification/conformity context only and does not create a universal duty to certify every PDN tool.
+
+next_priority:
+  - rerun reuse-first acquisition so the four resolved routes are attempted and authoritative unrouted_source_ids are reconciled
+  - exact Government DOC bytes for PP1119
+  - official primary bytes for FSB378, FSB66, FSB173 and FAPSI152
+  - exact FSTEC bytes for the 07.08.2026 maturity method and 25.11.2025 security-analysis method
+  - resolve the remaining FSTEC 240/13/5521, PP79 equipment-list and TZI-list routes without broadening applicability
+  - continue primary-enactment watch for FSTEC project 169583
