@@ -1,0 +1,88 @@
+schema_version: "1.0"
+kind: ru-personal-data-master-source-inventory-delta
+owner_stream: STREAM_3_SECTOR_OVERLAYS
+checked_at: "2026-08-26T14:21:31+03:00"
+reconciliation_base: "master-source-inventory-delta-stream3-2026-08-26T1119.yaml"
+run_ref: "../ru-protected-information/stream-3-run-2026-08-26T1421.yaml"
+status: APPEND_ONLY_RELATIONSHIP_DELTA
+
+proof_floor:
+  - "OVERLAP != APPLICABILITY."
+  - "Transport-sector activity alone does not prove EGIS OTB / ACBPDP scope."
+  - "16-ФЗ Article 11 and Order 162 contain direct personal-data rules for the ACBPDP context, but those rules remain locator-, role- and scenario-specific."
+  - "The 7-year Order 162 retention period applies to personal data in ACBPDP at the EGIS OTB operator; it is not a generic PDN retention period."
+  - "PP 1251 governs a multi-resource state information system; not every EGIS OTB resource is personal data."
+  - "No exact official bytes were obtained; no MIME, byte_length, retrieved_at or SHA-256 was synthesized."
+
+sector_source_counter_overlay:
+  before: {found: 41, downloaded: 9, immutable: 9, pending: 30, reused: 2}
+  after: {found: 44, downloaded: 9, immutable: 9, pending: 33, reused: 2}
+  new_source_nodes: 3
+  new_exact_primary_artifacts: 0
+  applicability_promotions: 0
+
+source_relationships:
+  - source_id: SEC-SRC-RU-FZ-16-2007
+    locator: "статья 11 части 2-7"
+    target: "152-ФЗ"
+    type: DIRECT_STATUTORY_PERSONAL_DATA_SYSTEM_AND_TRANSFER_CONTEXT
+    state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    evidence_context:
+      - "Article 11 creates automated centralized databases of personal data for passengers and crew."
+      - "Article 11(4) classifies EGIS OTB information resources as restricted-access information."
+      - "Article 11(5) specifies a person-level data set."
+      - "Article 11(7) expressly references 152-ФЗ for a defined international-carrier transfer scenario."
+    guard: "Attach concrete PDN duties only after proving transport role, covered carriage, record, operation, purpose and legal basis."
+  - source_id: SEC-SRC-RU-MINTRANS-ORDER-162-2024
+    locator: "пункт 13"
+    target: "PDN retention"
+    type: DIRECT_SECTOR_RETENTION_RULE
+    state: DIRECT_NORMATIVE_RULE_WITH_SCOPE_GUARD
+    evidence_context: "Operator EGIS OTB stores personal data in ACBPDP for seven years from receipt."
+    guard: "Do not copy this period to carrier source systems, CRM, ticket archives or other PDN purposes without separate legal evidence."
+  - source_id: SEC-SRC-RU-MINTRANS-ORDER-162-2024
+    locator: "пункт 18 подпункт 7"
+    target: "152-ФЗ статья 19"
+    type: DIRECT_STATUTORY_PDN_SECURITY_CONTEXT
+    state: STATUTORY_CONTEXT_APPLICABILITY_STILL_REVIEW_REQUIRED
+    evidence_context: "The information-exchange channel is organized with cryptographic protection and security of transmitted personal data against threats defined under Article 19(2)(1) 152-ФЗ, or via SMEV."
+    guard: "This is an ACBPDP exchange-channel rule; do not generalize to unrelated systems."
+  - source_id: SEC-SRC-RU-MINTRANS-ORDER-162-2024
+    locator: "пункты 46/50"
+    target: "152-ФЗ"
+    type: EXTENDED_DIGITAL_IDENTIFIER_AND_TRANSACTION_DATASET_OVERLAP
+    state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    evidence_context:
+      - "phone and e-mail"
+      - "account login and stored password hash"
+      - "IP address and port"
+      - "financial service provider and last four digits of account/deposit"
+    guard: "Field presence is tied to actual fixation by the supplier system and to covered transport operations."
+  - source_id: SEC-SRC-RU-PP-1251-2023
+    target: "152-ФЗ"
+    type: EGIS_OTB_PERSONAL_DATA_SUBSYSTEM_OVERLAP
+    state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    evidence_context: "EGIS OTB contains ACBPDP and other sector information resources; Mintrans identifies 152-ФЗ among governing acts."
+    guard: "Do not classify every EGIS OTB resource as PDN merely because ACBPDP is part of the same system."
+
+scope_boundaries:
+  - rule: "SEVEN_YEAR_ACBPD_RETENTION != GENERIC_TRANSPORT_PDN_RETENTION"
+    source: SEC-SRC-RU-MINTRANS-ORDER-162-2024
+    locator: "пункт 13"
+  - rule: "EGIS_OTB_RESTRICTED_ACCESS != ALL_RESOURCES_ARE_PDN"
+    source: SEC-SRC-RU-FZ-16-2007
+    locator: "статья 11 часть 4"
+  - rule: "PAYMENT_METADATA_FIELDS != AUTOMATIC_BANK_SECRECY_FOR_WHOLE_DATASET"
+    source: SEC-SRC-RU-MINTRANS-ORDER-162-2024
+    locator: "пункты 46/50"
+  - rule: "FUTURE_2026_09_01_REVISION != CURRENT_ON_2026_08_26"
+    source: SEC-SRC-RU-FZ-16-2007
+
+acquisition_state:
+  exact_primary_binary_new: 0
+  pending_exact_capture: 3
+  reason: TRANSIENT_DNS_TIMEOUT_OR_BINARY_ROUTE_FAILURE
+  invariant: "No MIME, byte_length, retrieved_at or SHA-256 synthesized."
+
+merge_rule: >-
+  Merge as a Stream 3 overlay only. Do not overwrite concurrent PDN-core/security-stack counters owned by other streams. The transport-security stack establishes strong statutory PDN contexts but keeps organization-level applicability candidate/review-required until roles and operations are proven.
