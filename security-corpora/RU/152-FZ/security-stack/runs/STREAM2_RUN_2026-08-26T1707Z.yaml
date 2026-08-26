@@ -1,0 +1,111 @@
+schema_version: "1.0"
+id: STREAM2-RUN-2026-08-26T1707Z
+stream: RU_PDN_TECHNICAL_CRYPTO
+started_at: "2026-08-26T17:07:00Z"
+status: PASS_OFFICIAL_LANDING_RECOVERED_BYTES_PENDING
+objective: >-
+  Continue primary-source acquisition/status verification for the 152-FZ technical and cryptographic contour.
+  Recover the remaining official FSTEC licensing-context route without lowering the exact-byte proof floor,
+  refresh the active FSTEC21/FSB crypto status gates, and preserve neighboring-regime applicability boundaries.
+
+authoritative_input_run:
+  path: "../PDN_SECURITY_STACK_ACQUISITION_RUN.json"
+  started_at: "2026-08-26T14:42:19.791444Z"
+  finished_at: "2026-08-26T14:52:35.432991Z"
+  sources_registered: 38
+  immutable_total: 17
+  pending_after_run: 21
+  exact_official_route_unresolved: 3
+
+findings:
+  - id: SEC-SRC-RU-FSTEC-TZI-LIST-2024
+    result: OFFICIAL_FSTEC_LANDING_RESOLVED_EXACT_ATTACHMENT_PENDING
+    official_landing: "https://fstec.ru/dokumenty/vse-dokumenty/perechni/perechen-normativnykh-pravovykh-aktov-metodicheskikh-dokumentov-i-natsionalnykh-standartov-ot-10-dekabrya-2024-g"
+    details: >-
+      The official FSTEC index/search result identifies this landing as the PP79 list approved 10.12.2024.
+      The sibling route ending in -g-2 is the separate PP171 development/production list and is not substituted.
+      Exact /files/ attachment URL and issuer bytes remain unresolved because the FSTEC landing transport is degraded.
+    applicability: LICENSED_TZI_WORKS_SERVICES_ONLY
+    immutable: false
+  - id: SEC-SRC-RU-FSTEC21-2013
+    result: ACTIVE_BASELINE_RETAINED_PROJECT_169583_STILL_NOT_PROVEN_ENACTED
+    details: >-
+      Fresh 26.08.2026 searches still identify 169583 as the replacement project. No final issued order number,
+      Minjust registration and official publication identity were proven in this pass. The project's proposed
+      01.09.2026 date remains future-change evidence only and is not executed as current law.
+  - id: SEC-SRC-RU-FSB378-2014
+    result: ACTIVE_UNAMENDED_SCOPE_RECONFIRMED_PRIMARY_BYTES_PENDING
+    details: >-
+      The official FSB current normative-methodical status page continues to list Orders 378/2014 and 66/2005,
+      FAPSI Order 152/2001 and the 8th Center 2015 recommendations as the PDN cryptographic contour.
+      Order 378 remains applicable only where SKZI use in ISPDn is established. Its primary publication route
+      remains byte-capture pending after the latest RG HTTP 401 result.
+  - id: SEC-SRC-RU-FSB66-2005
+    result: CURRENT_CRYPTO_LIFECYCLE_CONTEXT_RECONFIRMED_PRIMARY_BYTES_PENDING
+    applicability: SKZI_LIFECYCLE_WHEN_APPLICABLE
+  - id: SEC-SRC-RU-FAPSI152-2001
+    result: CURRENT_CRYPTO_HANDLING_CONTEXT_RECONFIRMED_PRIMARY_BYTES_PENDING
+    applicability: SKZI_HANDLING_WHEN_APPLICABLE
+
+status_evidence:
+  - source: "ФСТЭК России"
+    url: "https://fstec.ru/dokumenty/vse-dokumenty/perechni/perechen-normativnykh-pravovykh-aktov-metodicheskikh-dokumentov-i-natsionalnykh-standartov-ot-10-dekabrya-2024-g"
+    role: PRIMARY_ISSUER_LANDING_IDENTITY
+  - source: "ФСТЭК России"
+    url: "https://fstec.ru/dokumenty/vse-dokumenty/perechni/perechen-normativnykh-pravovykh-aktov-metodicheskikh-dokumentov-i-natsionalnykh-standartov-ot-10-iyunya-2026-g"
+    role: CURRENT_LICENSED_TZI_CONTEXT_STATUS
+  - source: "ФСБ России"
+    url: "https://www.fsb.ru/fsb/science/single.htm!id=10437725@fsbResearchart.html"
+    role: OFFICIAL_PDN_CRYPTO_STATUS_AND_VERSION_CONTEXT
+
+transport_state:
+  exact_attachment_search:
+    targets:
+      - SEC-SRC-RU-FSTEC-TZI-LIST-2024
+      - SEC-SRC-RU-FSTEC-TZI-EQUIPMENT-LIST-2026
+      - SEC-SRC-RU-FSTEC-INFO-240-13-5521-2026
+    result: NO_INDEXED_EXACT_FSTEC_FILES_ROUTE_FOUND
+    proof_effect: NO_IMMUTABLE_PROMOTION
+  latest_acquisition_failures_preserved:
+    PP1119: GOVERNMENT_DOC_TIMEOUT_AND_HTTP_404_FALLBACK
+    FSB378: RG_OFFICIAL_PUBLICATION_HTTP_401
+    FSB66_FSB173_FAPSI152: PRAVO_GOV_RU_TIMEOUT
+    FSTEC_DIRECT_PDFS: ISSUER_TIMEOUT
+
+metrics:
+  new_sources: 0
+  new_immutable_captured: 0
+  official_landings_resolved: 1
+  exact_official_file_routes_resolved: 0
+  status_rechecks: 5
+  semantic_promotions: 0
+  new_universal_pdn_duties_created: 0
+  effective_identified: 38
+  effective_metadata_verified: 38
+  effective_immutable_sha256_verified: 17
+  effective_pending_raw_capture: 21
+  exact_official_route_unresolved: 3
+  confirmed_conflicts: 0
+
+counter_policy: >-
+  The authoritative unresolved-route counter remains 3 because the acquisition contract requires canonical_source.url
+  for the exact downloadable file, not merely an official landing page. This run records provenance progress only.
+
+applicability_guards:
+  - The 10.12.2024 FSTEC catalogue is PP79 licensed-TZI context only; ISPDn status alone does not make its whole contents mandatory.
+  - The sibling PP171 development/production catalogue is not imported into generic PDN duties.
+  - Order 378 and the FSB crypto lifecycle/handling sources are applied only when SKZI use or the relevant licensed activity is independently established.
+  - Project 169583 remains watch-only until final enactment evidence passes the primary gate.
+
+next_priority:
+  - exact Government DOC bytes for PP1119
+  - exact primary publication bytes for FSB378
+  - exact primary bytes for FSB66, FSB173 and FAPSI152
+  - resolve exact /files/ attachments for the three remaining FSTEC unrouted sources
+  - retry exact official FSTEC PDFs already routed but transport-blocked
+  - continue primary-enactment watch for project 169583
+
+proof_rule: >-
+  Official landing discovery is provenance progress, not immutable evidence. IMMUTABLE_CAPTURED requires exact issuer bytes,
+  observed MIME, byte length and computed SHA-256. No neighboring regulatory requirement may enter the generic PDN baseline
+  without an explicit applicability edge.
