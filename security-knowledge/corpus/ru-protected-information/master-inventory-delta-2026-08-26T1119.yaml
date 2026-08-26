@@ -11,8 +11,8 @@ proof_floor:
   - "Taxonomy remains discovery seed only; normative conclusions require primary/current act evidence."
   - "Advocate secrecy is a professional secrecy regime and is not identical to personal data."
   - "63-ФЗ Article 39.5 creates a direct PDN/information-protection context for KIS AR, but this does not auto-promote all attorney records to every 152-ФЗ obligation."
-  - "Order 296 creates a person-level government registry dataset; registry presence does not mean every field is public."
-  - "63-ФЗ Article 14(7) makes publicness conditional on classification by the federal justice authority."
+  - "Order 296 separates core register fields, the failed-exam journal and person-level inputs/documents used in registry actions; these datasets must not be collapsed."
+  - "63-ФЗ Article 14(7) makes publicness conditional on classification by the federal justice authority; workflow/case-file inputs are not automatically public."
   - "Exact official bytes were not obtained in this run; no MIME, byte length, retrieved_at or SHA-256 was synthesized."
 
 counter_state_before_reconciled: {found: 40, downloaded: 9, immutable: 9, pending: 29, reused: 2, primary_publication_verified: 16, sectors_registered: 25}
@@ -45,7 +45,7 @@ sources_added:
     primary_publication_state: PRIMARY_PUBLICATION_METADATA_VERIFIED_EXACT_BYTES_PENDING
     effective_from: "2024-10-20"
     current_revision_crosscheck: "2024-10-09"
-    core_concepts: [UNIFIED_STATE_REGISTER_OF_ADVOCATES, ADVOCATE_PERSON_LEVEL_REGISTRY_FIELDS, IDENTITY_BIOGRAPHICAL_EDUCATION_DOCUMENT_SET, FAILED_QUALIFICATION_EXAM_APPLICANT_FIELDS]
+    core_concepts: [UNIFIED_STATE_REGISTER_OF_ADVOCATES, CORE_ADVOCATE_REGISTER_FIELDS, REGISTRY_ACTION_WORKFLOW_PERSON_LEVEL_INPUTS, FAILED_QUALIFICATION_EXAM_APPLICANT_FIELDS]
 
 sources_enriched:
   - source_id: SEC-SRC-RU-FZ-63-2002
@@ -65,9 +65,9 @@ relationship_delta:
     state: STATUTORY_IMPLEMENTATION_RELATION
   - source: SEC-SRC-RU-MINJUST-ORDER-296-2024
     target: "152-ФЗ"
-    type: DIRECT_PERSON_LEVEL_REGISTRY_PDN_OVERLAP
+    type: DIRECT_PERSON_LEVEL_REGISTRY_WORKFLOW_PDN_OVERLAP
     state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
-    guard: "Person-level fields prove overlap, not automatic applicability of every PDN obligation to every registry operation."
+    guard: "Core register, journal and registry-workflow person-level data prove overlap, not automatic applicability of every PDN obligation to every operation."
   - source: SEC-SRC-RU-FZ-63-2002
     locator: "статья 39.5 часть 2"
     target: "152-ФЗ"
@@ -84,8 +84,8 @@ relationship_delta:
 publicness_boundary:
   - source_id: SEC-SRC-RU-FZ-63-2002
     locator: "статья 14 пункт 7"
-    rule: "Only register information classified by the federal justice authority as open/public is open/public."
-    implication: "Do not mark address/contact/biographical fields from Order 296 as public merely because they occur in the register workflow."
+    rule: "Only advocate-register information classified by the federal justice authority as open/public is open/public."
+    implication: "Do not mark all core register fields, failed-exam journal fields, registry-action notifications or case-file documents as public merely because they participate in the registry process."
 
 acquisition_delta:
   exact_binary_attempted: true
