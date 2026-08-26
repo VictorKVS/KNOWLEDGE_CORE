@@ -12,6 +12,7 @@ on:
       - "TOOLS/pdn_security_stack_acquire.py"
       - "TOOLS/pdn_security_stack_acquire_fast.py"
       - "TOOLS/pdn_security_stack_curl_pending.py"
+      - "TOOLS/pdn_security_stack_rg_archive_retry.py"
       - "TOOLS/pdn_security_stack_capture_gate.py"
       - "TOOLS/pdn_security_stack_reconcile_telemetry.py"
       - "TOOLS/pdn_security_stack_reconcile_master.py"
@@ -42,6 +43,10 @@ jobs:
         if: github.event_name != 'push'
         shell: bash
         run: python TOOLS/pdn_security_stack_curl_pending.py
+
+      - name: Browser-compatible guarded retry for official RG FSB378 archive
+        shell: bash
+        run: python TOOLS/pdn_security_stack_rg_archive_retry.py
 
       - name: Fast bounded acquisition for change-triggered runs
         if: github.event_name == 'push'
