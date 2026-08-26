@@ -5,66 +5,92 @@ title: "Федеральный закон от 31.05.2002 № 63-ФЗ «Об а�
 jurisdiction: RU
 sector: legal_professional_secrecy
 regime: advocate_secret
-status: SOURCE_PENDING
-checked_at: "2026-08-20T20:22:41+03:00"
+status: CURRENT_AUTHORITY_TEXT_VERIFIED_EXACT_ARTIFACT_PENDING
+checked_at: "2026-08-26T11:19:16+03:00"
 owner_stream: STREAM_3_SECTOR_OVERLAYS
 
 source_identity:
   act_number: "63-ФЗ"
   act_date: "2002-05-31"
-  authority: "Президент России — Банк документов"
-  current_authority_url: "https://www.kremlin.ru/acts/bank/18127/print"
-  authority_state: CURRENT_AUTHORITY_TEXT_IDENTIFIED
+  authority: "Министерство юстиции Российской Федерации"
+  current_authority_url: "https://minjust.gov.ru/ru/documents/7885/"
+  presidential_bank_crosscheck: "https://www.kremlin.ru/acts/bank/18127/print"
+  authority_state: CURRENT_AUTHORITY_TEXT_VERIFIED
 
-legal_anchor:
-  article: "8"
-  heading: "Адвокатская тайна"
-  verified_proposition: >-
-    Article 8(1) defines advocate secrecy as information connected with a lawyer providing legal assistance
-    to the client. This source therefore establishes a distinct legally protected-information regime.
-  evidence_state: CURRENT_AUTHORITY_TEXT_VERIFIED
+legal_anchors:
+  - locator: "статья 6 пункт 4 подпункт 5"
+    concept: CLIENT_INFORMATION_NON_DISCLOSURE
+    verified_proposition: "Адвокат не вправе разглашать сведения, сообщенные доверителем в связи с оказанием юридической помощи, без согласия доверителя."
+    evidence_state: CURRENT_AUTHORITY_TEXT_VERIFIED
+  - locator: "статья 8 части 1-3"
+    concept: ADVOCATE_SECRET_AND_PROCEDURAL_PROTECTION
+    verified_proposition: "Адвокатская тайна охватывает любые сведения, связанные с оказанием юридической помощи; закон устанавливает свидетельский и судебно-процессуальный защитные механизмы."
+    evidence_state: CURRENT_AUTHORITY_TEXT_VERIFIED
+  - locator: "статья 17 пункт 2 подпункт 2.1"
+    concept: UNLAWFUL_DISCLOSURE_PROFESSIONAL_CONSEQUENCE
+    verified_proposition: "Незаконное использование или разглашение информации, связанной с оказанием квалифицированной юридической помощи, выделено как специальное основание реагирования."
+    evidence_state: CURRENT_AUTHORITY_TEXT_VERIFIED
+  - locator: "статьи 27(3) и 28(3)"
+    concept: ASSISTANT_TRAINEE_SECRECY_DUTY
+    verified_proposition: "Помощник адвоката и стажер адвоката обязаны хранить адвокатскую тайну."
+    evidence_state: CURRENT_AUTHORITY_TEXT_VERIFIED
+  - locator: "статья 39.5 части 1-2"
+    concept: KIS_AR_CONFIDENTIALITY_AND_PDN_INFORMATION_PROTECTION
+    verified_proposition: "Для сведений КИС АР установлен запрет раскрытия/распространения вне законных случаев, а их защита осуществляется по законодательству о персональных данных и об информации, информационных технологиях и защите информации."
+    evidence_state: CURRENT_AUTHORITY_TEXT_VERIFIED
+    amendment_event: "83-ФЗ от 22.04.2024"
 
 version_chain:
-  state: VERSION_CHAIN_PARTIAL
+  state: CURRENT_SOURCE_LEVEL_SWEEP_VERIFIED_LOCATOR_HISTORY_PARTIAL
   authority_page_amendments_observed_through:
     act: "83-ФЗ от 22.04.2024"
     official_publication_id: "0001202404220011"
     official_publication_url: "https://publication.pravo.gov.ru/document/0001202404220011"
     evidence_state: PRIMARY_AMENDMENT_EVENT_VERIFIED
+  article_8_current_marker_state: "No amendment marker observed in the current official Minjust Article 8 text."
   guard: >-
-    Do not infer that the amendment sweep is complete through 2026-08-20 merely from the consolidated authority page.
-    A dedicated primary-source amendment sweep remains required before executable use.
+    The current official Minjust integrated text supports source-level currentness through 83-ФЗ, but byte-exact historical amendment capture remains required before VERSION_CHAIN_VERIFIED/executable use.
 
 artifact:
   state: SOURCE_PENDING_PRIMARY_EXACT_CAPTURE
-  retrieval_attempted_at: "2026-08-20T20:22:41+03:00"
-  attempted_url: "https://www.kremlin.ru/acts/bank/18127/print"
+  retrieval_attempted_at: "2026-08-26T11:19:16+03:00"
+  attempted_urls:
+    - "https://minjust.gov.ru/ru/documents/7885/"
+    - "https://www.kremlin.ru/acts/bank/18127/print"
   mime: null
   byte_length: null
   sha256: null
   immutable_path: null
   failure_note: >-
-    Exact network bytes could not be captured in this run. No MIME, byte length, or SHA-256 values were synthesized
-    from search or rendered-page metadata.
+    Exact official bytes were not captured in this run. No MIME, byte length, retrieved_at or SHA-256 was synthesized from rendered or portal metadata.
 
 relations:
   - target: "152-ФЗ"
-    type: POSSIBLE_DUAL_REGIME_ON_SCENARIO_PROOF_ONLY
-    status: DISCOVERY_ONLY_NON_EXECUTABLE
-    guard: >-
-      ADVOCATE_SECRET != PERSONAL_DATA. An overlap exists only when the concrete lawyer/client information is personal
-      data and the independent predicates of the personal-data regime are proven.
+    type: ADVOCATE_SECRET_PDN_OVERLAP
+    status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    guard: "ADVOCATE_SECRET != PERSONAL_DATA; overlap exists only for concrete records/operations meeting independent PDN predicates."
+  - target: "152-ФЗ"
+    locator: "статья 39.5 часть 2"
+    type: DIRECT_STATUTORY_PDN_PROTECTION_CONTEXT_FOR_KIS_AR
+    status: STATUTORY_CONTEXT_APPLICABILITY_STILL_REVIEW_REQUIRED
+    guard: "The direct PDN reference is specific to protection of KIS AR information and does not automatically classify every attorney-secret record under every PDN obligation."
+  - target: SEC-SRC-RU-MINJUST-ORDER-296-2024
+    type: ADVOCACY_REGISTRY_AND_INFORMATION_SYSTEM_CONTEXT
+    status: CROSS_REGIME_RELATION
+    guard: "ЕГРА Минюста и КИС АР are related but distinct information systems/registries."
 
 conflict_guards:
   - id: STREAM3-SCOPE-GUARD-63FZ-001
     classification: SEMANTIC_SCOPE_GUARD
     status: NOT_A_LEGAL_CONFLICT
-    finding: >-
-      Advocate secrecy is a professional secrecy regime broader and differently scoped than personal data; the two
-      concepts must not be collapsed in the glossary or relation graph.
+    finding: "Advocate secrecy and personal data are separate regimes; neither subsumes the other automatically."
+  - id: STREAM3-PUBLICNESS-GUARD-63FZ-002
+    classification: PUBLICNESS_SCOPE_GUARD
+    status: NOT_A_LEGAL_CONFLICT
+    finding: "Under Article 14(7), only the registry information classified as open/public by the federal justice authority is public; registry presence alone is insufficient."
 
 executable_effect: NONE
 next_actions:
-  - "Acquire exact official/current source bytes and create immutable artifact + manifest."
-  - "Close primary amendment sweep through 2026-08-20."
-  - "Compile Article 8 into structure/chunks/concepts only after exact-source gate."
+  - "Acquire exact current official bytes for 63-ФЗ and create immutable artifact + manifest."
+  - "Capture exact 83-ФЗ primary bytes and complete locator-specific historical amendment chain."
+  - "Keep Article 39.5 PDN context distinct from generic advocate-secrecy applicability."
