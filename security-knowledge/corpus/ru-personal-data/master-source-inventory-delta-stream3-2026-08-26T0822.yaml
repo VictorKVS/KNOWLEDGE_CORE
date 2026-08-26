@@ -1,0 +1,66 @@
+schema_version: "1.0"
+kind: ru-personal-data-master-source-inventory-delta
+owner_stream: STREAM_3_SECTOR_OVERLAYS
+checked_at: "2026-08-26T08:22:22+03:00"
+reconciliation_base: "master-source-inventory-delta-stream3-2026-08-25T2325.yaml"
+run_ref: "../ru-protected-information/stream-3-run-2026-08-26T0822.yaml"
+status: APPEND_ONLY_RELATIONSHIP_DELTA
+
+proof_floor:
+  - "OVERLAP != APPLICABILITY."
+  - "PP 948 determines which advertising actors must report; it does not itself prove that a concrete reporting payload contains personal data."
+  - "RKN Order 68 advertising identifiers are traceability tokens; token retention is not automatically PDN retention."
+  - "Government Order 1362-r contains person-level fields in the regulatory advertising dataset, but 152-ФЗ duties are attached only after role/data/operation/legal-basis proof."
+  - "No exact official bytes were obtained in this run; no MIME, byte_length, retrieved_at or SHA-256 was synthesized."
+
+sector_source_counter_overlay:
+  before: {found: 37, downloaded: 9, immutable: 9, pending: 26, reused: 2}
+  after: {found: 40, downloaded: 9, immutable: 9, pending: 29, reused: 2}
+  new_source_nodes: 3
+  new_exact_primary_artifacts: 0
+  applicability_promotions: 0
+
+source_relationships:
+  - source_id: SEC-SRC-RU-PP-948-2022
+    source_title: "Постановление Правительства РФ от 25.05.2022 № 948"
+    target: "152-ФЗ"
+    type: AD_REPORTING_ACTOR_PDN_OVERLAP
+    state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    evidence_context: "Критерии определяют обязанных рекламодателей, рекламораспространителей и операторов рекламных систем, среди которых могут быть физические лица и ИП."
+    guard: "Статус участника рекламной отчетности != доказанная обработка ПДн; проверять конкретный payload, идентифицируемость, роль, цель, операцию и правовое основание."
+  - source_id: SEC-SRC-RU-RKN-ORDER-68-2025
+    source_title: "Приказ Роскомнадзора от 25.03.2025 № 68"
+    target: "152-ФЗ"
+    type: IDENTIFIER_LINKAGE_PDN_OVERLAP
+    state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    evidence_context: "Идентификатор интернет-рекламы обеспечивает прослеживаемость и хранится ОРД один год; сам по себе это отраслевой цифровой токен."
+    guard: "PDN-релевантность появляется только при доказанной связи токена со сведениями об идентифицируемом физическом лице в конкретной системе."
+  - source_id: SEC-SRC-RU-GOV-R-1362R-2022
+    source_title: "Распоряжение Правительства РФ от 30.05.2022 № 1362-р"
+    target: "152-ФЗ"
+    type: DIRECT_STATUTORY_PERSON_LEVEL_DATASET_OVERLAP
+    state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    evidence_context:
+      - "Состав информации охватывает участников рекламного рынка, которыми могут быть физические лица и ИП."
+      - "Нормативный набор включает person-level идентификационные, контактные/адресные и представительские сведения для соответствующих категорий участников."
+      - "Сведения подлежат учету, хранению и обработке Роскомнадзором в контексте статьи 18.1 38-ФЗ."
+    guard: "Присоединять PDN duties только к конкретной записи об идентифицируемом физическом лице и доказанной операции; сведения только о юрлице не являются ПДн автоматически."
+
+retention_boundaries:
+  - source_id: SEC-SRC-RU-RKN-ORDER-68-2025
+    locator: "Требования, пункт 14"
+    sector_rule: "ОРД хранит присвоенные идентификаторы интернет-рекламы один год со дня их присвоения."
+    pdn_interpretation: SECTOR_TRACEABILITY_RETENTION_NOT_GENERAL_PDN_TERM
+  - source_id: SEC-SRC-RU-FZ-38-2006-A18
+    locator: "статья 18.1 часть 13"
+    sector_rule: "Информация у уполномоченного органа хранится не менее трех лет со дня получения."
+    pdn_interpretation: REGULATOR_DATASET_RETENTION_ONLY_NOT_GENERAL_PDN_TERM
+
+acquisition_state:
+  exact_primary_binary_new: 0
+  pending_exact_capture: 3
+  reason: TRANSIENT_OFFICIAL_ENDPOINT_DNS_FAILURE
+  invariant: "No MIME, byte_length, retrieved_at or SHA-256 synthesized."
+
+merge_rule: >-
+  Merge as a Stream 3 overlay only. Do not overwrite concurrent PDN-core/security-stack counters owned by other streams. Applicability remains candidate/review-required for every new PDN relation in this delta.
