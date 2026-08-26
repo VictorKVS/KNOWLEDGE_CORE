@@ -1,0 +1,94 @@
+schema_version: "1.0"
+id: SEC-SRC-RU-RKN-ORDER-68-2025
+kind: security-regulatory-source
+status: PRIMARY_PUBLICATION_METADATA_VERIFIED_CURRENT_TEXT_CROSSCHECKED_EXACT_ARTIFACT_PENDING
+
+title: "Приказ Роскомнадзора от 25.03.2025 № 68 — требования к идентификатору интернет-рекламы"
+jurisdiction: RU
+issuer: "Федеральная служба по надзору в сфере связи, информационных технологий и массовых коммуникаций"
+document:
+  type: federal_service_order
+  number: "68"
+  adopted_date: "2025-03-25"
+  minjust_registration_date: "2025-04-14"
+  minjust_registration_number: "81842"
+  official_publication_id: "0001202504140029"
+  official_publication_date: "2025-04-14"
+  effective_from: "2025-04-25"
+  checked_at: "2026-08-26"
+
+canonical_sources:
+  primary_publication:
+    publisher: "Официальное опубликование правовых актов"
+    url: "https://publication.pravo.gov.ru/document/0001202504140029"
+    origin_verified: true
+    proof_scope: "Официальные реквизиты приказа и государственной регистрации; exact PDF bytes в этом проходе не получены."
+  current_text_crosscheck:
+    revision_date: "2025-03-25"
+    state: CURRENT_ORIGINAL_EDITION_CROSSCHECK_EXACT_BYTES_PENDING
+    later_amendments_identified: false
+
+protected_information:
+  sector: advertising_marketing
+  regime: internet_advertising_identifier_traceability
+  legal_basis: "38-ФЗ статья 18.1"
+  protected_locators:
+    - locator: "Требования, общие положения"
+      concept: AD_IDENTIFIER_TRACEABILITY_TOKEN
+      finding: "Идентификатор является уникальным цифровым обозначением, используемым для прослеживаемости и учета интернет-рекламы и социальной рекламы."
+    - locator: "Требования, присвоение идентификатора"
+      concept: PRE_DISTRIBUTION_IDENTIFIER_ASSIGNMENT
+      finding: "Оператор рекламных данных присваивает идентификатор непосредственно до распространения рекламы после передачи рекламы в программное обеспечение ОРД."
+    - locator: "Требования, взаимодействие с Роскомнадзором"
+      concept: IDENTIFIER_TO_RKN_TRANSPORT
+      finding: "Идентификатор передается в информационную систему Роскомнадзора в рамках установленного протокола взаимодействия."
+    - locator: "Требования, пункт 14"
+      concept: AD_IDENTIFIER_RETENTION_ONE_YEAR
+      finding: "Оператор рекламных данных хранит присвоенные идентификаторы в течение одного года со дня их присвоения."
+    - locator: "Требования, пункт 15"
+      concept: CODED_LINK_DECODING_DATA
+      finding: "При использовании кодированной технической ссылки оператор рекламной системы или ОРД предоставляет в информационную систему коды декодирования для хранения идентификаторов."
+  applicability_status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  applicability_guard: "Идентификатор рекламы является отраслевым traceability-токеном. Его наличие само по себе не доказывает обработку ПДн; связь с физлицом должна быть установлена по конкретным данным и операции."
+
+relationship_candidates:
+  - target: "38-ФЗ статья 18.1"
+    type: DIRECT_SUBORDINATE_IDENTIFIER_IMPLEMENTATION
+    state: STATUTORY_IMPLEMENTATION_RELATION
+  - target: "SEC-SRC-RU-PP-974-2022"
+    type: ORD_PROTOCOL_AND_IDENTIFIER_TRANSPORT_CONTEXT
+    state: CROSS_REGIME_RELATION
+  - target: "152-ФЗ"
+    type: IDENTIFIER_LINKAGE_PDN_OVERLAP
+    state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    guard: "Токен становится PDN-релевантным только если в конкретной системе он связан со сведениями об идентифицируемом физическом лице."
+
+retention_boundary:
+  sector_rule: "Идентификаторы рекламы у ОРД хранятся один год со дня присвоения."
+  pdn_interpretation: SECTOR_TRACEABILITY_RETENTION_NOT_GENERAL_PDN_RETENTION
+
+version_chain:
+  state: CURRENT_ORIGINAL_EDITION_CROSSCHECKED_PRIMARY_EXACT_BYTES_PENDING
+  latest_crosschecked_revision: "2025-03-25"
+  supersedes:
+    - act: "Приказ Роскомнадзора от 30.11.2022 № 191"
+      state: REPEALED_FROM_2025_04_25_BY_CURRENT_REGULATION_CONTEXT
+
+capture:
+  exact_capture_attempted_at: "2026-08-26T08:22:22+03:00"
+  source_url: "https://publication.pravo.gov.ru/document/0001202504140029"
+  preferred_pdf_url: "https://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202504140029"
+  result: TRANSIENT_DNS_OR_TIMEOUT
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  raw_artifact_ref: null
+  manifest_ref: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-RKN-ORDER-68-2025-capture-pending.json"
+  fingerprint_status: PENDING_EXACT_PRIMARY_BYTES
+
+proof_floor:
+  - "One-year advertising-identifier retention is not a universal PDN retention term."
+  - "Identifier != personal data unless linkage/identifiability is proven in the concrete processing context."
+  - "Portal-displayed PDF size is not byte_length."
+  - "No MIME, SHA-256, applicability or conflict is inferred without exact evidence."
