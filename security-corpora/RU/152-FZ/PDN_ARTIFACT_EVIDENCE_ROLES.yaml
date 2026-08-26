@@ -1,0 +1,101 @@
+schema_version: "1.0"
+id: SEC-PDN-ARTIFACT-EVIDENCE-ROLES
+kind: security-regulatory-evidence-policy
+status: ACTIVE
+jurisdiction: RU
+domain: personal_data
+created_at: "2026-08-26"
+
+purpose: >-
+  Separate legal publication evidence from publisher current-text snapshots and from deterministic compiled
+  current text. This prevents a consolidated text from being mislabeled as a separately published primary act
+  while preserving byte-exact provenance and the proof floor required for extraction.
+
+artifact_roles:
+  PRIMARY_ORIGINAL:
+    description: >-
+      Byte-exact official publication of a normative act or amendment as promulgated by the competent publisher.
+    required_evidence:
+      - registered official publication identity or independently reviewed registered official route
+      - retrieved_at
+      - MIME
+      - exact byte_length
+      - SHA-256
+      - immutable artifact
+      - manifest
+    may_promote_raw_status_to: IMMUTABLE_CAPTURED
+    semantic_promotion: false
+
+  OFFICIAL_CURRENT_TEXT_SNAPSHOT:
+    description: >-
+      Byte-exact snapshot of a consolidated/current text returned by a pre-registered official publisher route.
+      It is evidence of the publisher-rendered current text, not a claim that the consolidation was separately promulgated.
+    required_evidence:
+      - registered official route binding
+      - document identity markers
+      - current-revision proof by explicit amendment anchor or revision-specific delta fingerprint
+      - retrieved_at
+      - MIME
+      - exact byte_length
+      - SHA-256
+      - immutable artifact
+      - manifest
+    may_promote_raw_status_to: IMMUTABLE_CURRENT_TEXT_SNAPSHOT_CAPTURED
+    semantic_promotion: false
+    extraction_gate: >-
+      Locator review and version reconciliation against immutable PRIMARY_ORIGINAL amendment evidence remain required.
+
+  DERIVED_COMPILED_CURRENT_TEXT:
+    description: >-
+      Deterministic current-text compilation produced from an immutable base publication plus an immutable amendment chain.
+      This is a derived knowledge artifact and must never be represented as an official original.
+    required_evidence:
+      - immutable base source reference
+      - ordered immutable amendment source references
+      - deterministic compiler version
+      - structural delta log
+      - output SHA-256
+      - reproducibility test
+    may_promote_raw_status_to: DERIVED_REPRODUCIBLE_CURRENT_TEXT
+    semantic_promotion: false
+    extraction_gate: >-
+      Must reconcile with an OFFICIAL_CURRENT_TEXT_SNAPSHOT when such a snapshot is obtainable; discrepancies open a conflict node.
+
+source_role_assignments:
+  SEC-SRC-RU-152FZ-2026-07-26:
+    requested_role: OFFICIAL_CURRENT_TEXT_SNAPSHOT
+    primary_amendment_anchor: SEC-SRC-RU-FZ265-2026
+    status: PENDING
+    note: >-
+      The 26.07.2026 consolidation is not treated as a separately promulgated new act. The immutable No. 265-FZ
+      publication anchors the legal delta; a guarded official current-text snapshot remains pending.
+  SEC-SRC-RU-PP687-2008:
+    requested_role: OFFICIAL_CURRENT_TEXT_SNAPSHOT
+    primary_amendment_anchor: SEC-SRC-RU-PP12-2025
+    status: PENDING
+    note: >-
+      The current PP687 text must prove the PP12 revision fingerprint (valid through 01.09.2030). The immutable
+      PP12 publication is amendment evidence and does not by itself substitute for the current consolidated snapshot.
+
+production_metrics:
+  preserve_existing_core_counters: true
+  additional_dimensions:
+    - primary_originals_required
+    - primary_originals_captured
+    - current_text_snapshots_required
+    - current_text_snapshots_captured
+    - version_chains_complete
+    - derived_current_texts_compiled
+    - snapshot_vs_compiled_conflicts
+  counting_rule: >-
+    Adding these dimensions must not retroactively relabel existing immutable artifacts or inflate the legacy
+    downloaded/immutable counters. A source remains pending in the current core counter until its source-card gate is satisfied.
+
+conflict_rule: >-
+  If an official current-text snapshot and a deterministic compiled current text differ at any locator, create a
+  version/content conflict node with both provenance chains. Do not silently choose, merge, or average the texts.
+
+agent_rule: >-
+  Never call a consolidated snapshot a primary original. Never call a derived compilation official. Never promote
+  semantic/extraction status merely because an artifact of any role was captured. Preserve route identity, exact bytes,
+  SHA-256, version evidence, locator review, and conflict detection as separate proof gates.
