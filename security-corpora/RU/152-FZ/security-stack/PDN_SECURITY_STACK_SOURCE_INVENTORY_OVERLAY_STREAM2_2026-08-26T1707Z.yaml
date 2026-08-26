@@ -1,0 +1,70 @@
+schema_version: "1.0"
+id: SEC-PDN-SECURITY-STACK-INVENTORY-OVERLAY-2026-08-26T1707Z
+applies_to: PDN_SECURITY_STACK_SOURCE_INVENTORY.yaml
+stream: RU_PDN_TECHNICAL_CRYPTO
+created_at: "2026-08-26T17:07:00Z"
+merge_policy: >-
+  CONCURRENCY_SAFE_STATUS_AND_PROVENANCE_OVERLAY. Preserve all source rows, immutable proof and applicability edges.
+  Record one newly recovered official FSTEC landing and refresh status evidence without changing authoritative proof counters.
+
+source_updates:
+  - id: SEC-SRC-RU-FSTEC-TZI-LIST-2024
+    source_record: "source/SEC-SRC-RU-FSTEC-TZI-LIST-2024.yaml"
+    raw_capture: PENDING
+    official_landing_page_status: VERIFIED_OFFICIAL_FSTEC_LANDING
+    landing_page: "https://fstec.ru/dokumenty/vse-dokumenty/perechni/perechen-normativnykh-pravovykh-aktov-metodicheskikh-dokumentov-i-natsionalnykh-standartov-ot-10-dekabrya-2024-g"
+    exact_file_route: UNRESOLVED_PUBLIC_DIRECT_ATTACHMENT
+    applicability: LICENSED_TZI_WORKS_SERVICES_ONLY
+    note: >-
+      The official issuer landing is now proven and the PP79/PP171 sibling routes are disambiguated. Exact attachment bytes
+      remain unresolved, so this source stays pending and remains licensing context only.
+
+freshness_checks:
+  - id: SEC-SRC-RU-FSTEC21-2013
+    checked_at: "2026-08-26"
+    result: ACTIVE_BASELINE_RETAINED_PROJECT_169583_NOT_PROVEN_ENACTED
+  - id: SEC-SRC-RU-FSB378-2014
+    checked_at: "2026-08-26"
+    result: ACTIVE_SCOPE_RECONFIRMED_PRIMARY_BYTES_PENDING
+    applicability: ISPDN_WHEN_SKZI_USED
+  - id: SEC-SRC-RU-FSB66-2005
+    checked_at: "2026-08-26"
+    result: CURRENT_CRYPTO_LIFECYCLE_CONTEXT_RECONFIRMED
+    applicability: SKZI_LIFECYCLE_WHEN_APPLICABLE
+  - id: SEC-SRC-RU-FAPSI152-2001
+    checked_at: "2026-08-26"
+    result: CURRENT_CRYPTO_HANDLING_CONTEXT_RECONFIRMED
+    applicability: SKZI_HANDLING_WHEN_APPLICABLE
+
+counter_patch:
+  identified: 38
+  metadata_verified: 38
+  immutable_sha256_verified: 17
+  pending_raw_capture: 21
+  exact_official_route_unresolved: 3
+  confirmed_conflicts: 0
+
+counter_delta:
+  identified: 0
+  metadata_verified: 0
+  immutable_sha256_verified: 0
+  pending_raw_capture: 0
+  exact_official_route_unresolved: 0
+  official_landings_resolved: 1
+
+proof_guards:
+  - Landing-page resolution is not exact-file resolution and does not reduce the authoritative unrouted counter.
+  - No MIME, byte length or SHA-256 is asserted without issuer bytes.
+  - PP79 catalog requirements remain limited to licensed TZI works/services.
+  - PP171 development/production obligations are not imported from the sibling FSTEC route.
+  - FSB crypto sources remain conditional on independently established SKZI/applicability facts.
+  - FSTEC21 project 169583 remains future-change evidence until final enactment is proven.
+
+latest_run_patch:
+  run_record: "runs/STREAM2_RUN_2026-08-26T1707Z.yaml"
+  new_sources: 0
+  new_immutable_captured: 0
+  official_landings_resolved: 1
+  exact_official_file_routes_resolved: 0
+  semantic_promotions: 0
+  new_universal_pdn_duties_created: 0
