@@ -10,7 +10,7 @@ def main():
     model = yaml.safe_load(MODEL.read_text(encoding="utf-8"))
     fixtures = json.loads(FIXTURES.read_text(encoding="utf-8"))
     rules = {x["id"]: x["rule"] for x in model["control_rules"]}
-    assert model["status"] == "VERIFIED_CURRENT_ROCKET_SPACE_TEXT_FORMULA_IMAGES_AND_DEFENSE_DEPENDENCY_BLOCKED"
+    assert model["status"] == "VERIFIED_CURRENT_ROCKET_SPACE_TEXT_FORMULA_IMAGES_AND_DEFENSE_OVERLAY_LINKED_FAIL_CLOSED"
     assert model["effective_date"] == "2026-04-09"
     assert len(model["scope"]["object_types"]) == 3
     assert len(model["indicator_applicability_routes"]) == 5
@@ -25,7 +25,8 @@ def main():
     assert list(rules) == [f"PP356-RS-{i:03d}" for i in range(1, 65)]
     assert len(fixtures["cases"]) == 64
     assert rules["PP356-RS-017"] == "DO_NOT_INVENT_PP356_ROSCOSMOS_SUBMISSION_DEADLINE"
-    assert rules["PP356-RS-052"] == "BLOCK_POSITIONS_13_AND_13_1_UNTIL_DEFENSE_OVERLAY_IS_VERIFIED"
+    assert rules["PP356-RS-052"] == "ROUTE_POSITIONS_13_AND_13_1_TO_VERIFIED_DEFENSE_OVERLAY_WITH_NUMERIC_FORMULA_GATE"
+    assert model["verification_boundary"]["positions_13_and_13_1_calculation"] == "VERIFIED_SEPARATE_CURRENT_DEFENSE_OVERLAY_TEXT_NUMERIC_FORMULA_EXECUTION_BLOCKED"
     assert model["verification_boundary"]["critical_gap_created"] == 0
     assert model["verification_boundary"]["high_gap_created"] == 0
     failures = []
