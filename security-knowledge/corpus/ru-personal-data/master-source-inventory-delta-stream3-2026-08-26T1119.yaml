@@ -10,8 +10,8 @@ proof_floor:
   - "OVERLAP != APPLICABILITY."
   - "Advocate secrecy and personal data are separate legal regimes."
   - "63-ФЗ Article 39.5 expressly ties protection of KIS AR information to PDN and information-protection legislation, but that statutory context is locator/system-specific."
-  - "Order 296 contains person-level register fields; that proves PDN overlap potential, not universal applicability to every field/operation."
-  - "Registry presence does not equal public availability; 63-ФЗ Article 14(7) imposes a publicness boundary."
+  - "Order 296 distinguishes core advocate-register fields, the failed-exam journal, and additional person-level inputs/documents used in registry actions."
+  - "Registry/workflow presence does not equal public availability; 63-ФЗ Article 14(7) imposes a conditional publicness boundary."
   - "No exact official bytes were obtained; no MIME, byte_length, retrieved_at or SHA-256 was synthesized."
 
 sector_source_counter_overlay:
@@ -26,13 +26,13 @@ source_relationships:
   - source_id: SEC-SRC-RU-MINJUST-ORDER-296-2024
     source_title: "Приказ Минюста России от 09.10.2024 № 296"
     target: "152-ФЗ"
-    type: DIRECT_PERSON_LEVEL_REGISTRY_PDN_OVERLAP
+    type: DIRECT_PERSON_LEVEL_REGISTRY_WORKFLOW_PDN_OVERLAP
     state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
     evidence_context:
-      - "Единый государственный реестр адвокатов содержит ФИО и иные person-level сведения."
-      - "Порядок предусматривает адрес места жительства, контактный телефон и адрес электронной почты при наличии."
-      - "Для лиц, не сдавших квалификационный экзамен, журнал включает ФИО, дату рождения, место рождения и дату экзамена."
-    guard: "Присоединять конкретные PDN duties только после доказательства роли, записи, операции, цели и правового основания; наличие поля в государственном реестре не делает его автоматически общедоступным."
+      - "Core register composition includes registration/status data and ФИО."
+      - "Registry-action notifications and supporting documents include address of residence, contact phone/e-mail, identity-document copy, biographical questionnaire and education/work-experience documents."
+      - "The separate failed-qualification-exam journal includes ФИО, exam date, date of birth and place of birth."
+    guard: "Не смешивать core register fields, failed-exam journal fields и workflow/case-file inputs; присоединять конкретные PDN duties только после доказательства роли, записи, операции, цели и правового основания."
   - source_id: SEC-SRC-RU-FZ-63-2002
     locator: "статья 39.5 часть 2"
     target: "152-ФЗ"
@@ -54,8 +54,9 @@ source_relationships:
 publicness_boundaries:
   - source_id: SEC-SRC-RU-FZ-63-2002
     locator: "статья 14 пункт 7"
-    rule: "Общедоступна только та часть сведений ЕГРА, которая отнесена федеральным органом юстиции к открытой и общедоступной."
+    rule: "Общедоступна только та часть сведений об адвокатах в ЕГРА, которая отнесена федеральным органом юстиции к открытой и общедоступной."
     pdn_interpretation: CONDITIONAL_PUBLICNESS_NOT_BLANKET_PUBLIC_DATA
+    guard: "Не переносить этот статус автоматически на журнал претендентов, уведомления, приложения и реестровые дела."
 
 acquisition_state:
   exact_primary_binary_new: 0
@@ -64,4 +65,4 @@ acquisition_state:
   invariant: "No MIME, byte_length, retrieved_at or SHA-256 synthesized."
 
 merge_rule: >-
-  Merge as a Stream 3 overlay only. Do not overwrite concurrent PDN-core/security-stack counters owned by other streams. Applicability remains candidate/review-required for the Order 296 person-level dataset and system-specific for the direct Article 39.5 KIS AR context.
+  Merge as a Stream 3 overlay only. Do not overwrite concurrent PDN-core/security-stack counters owned by other streams. Applicability remains candidate/review-required for Order 296 person-level registry/workflow datasets and system-specific for the direct Article 39.5 KIS AR context.
