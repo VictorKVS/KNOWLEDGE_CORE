@@ -153,6 +153,23 @@ jobs:
           def classify_result(obj):
               if not isinstance(obj, dict):
                   return obj
+
+              nested_classes = []
+              nested_proof_ok = True
+              nested = obj.get("results")
+              if isinstance(nested, list):
+                  classified_nested = []
+                  for item in nested:
+                      classified = classify_result(item)
+                      classified_nested.append(classified)
+                      if isinstance(classified, dict):
+                          for label in classified.get("failure_classes") or []:
+                              if label not in nested_classes:
+                                  nested_classes.append(label)
+                          if classified.get("proof_floor_held") is False:
+                              nested_proof_ok = False
+                  obj["results"] = classified_nested
+
               err = str(obj.get("error") or "")
               classes = []
               checks = (
@@ -166,8 +183,14 @@ jobs:
               for label, pattern in checks:
                   if re.search(pattern, err, flags=re.I | re.S):
                       classes.append(label)
+              for label in nested_classes:
+                  if label not in classes:
+                      classes.append(label)
+
               obj["failure_classes"] = classes
-              obj["proof_floor_held"] = obj.get("status") != "IMMUTABLE_CAPTURED_RAW_ONLY"
+              obj["proof_floor_held"] = (
+                  obj.get("status") != "IMMUTABLE_CAPTURED_RAW_ONLY" and nested_proof_ok
+              )
               return obj
 
           def read_result(path: str):
@@ -196,7 +219,7 @@ jobs:
               "current_root_curl": read_result("/tmp/pdn-current-root-curl-result.log"),
               "current_root_urllib": read_result("/tmp/pdn-current-root-urllib-result.log"),
               "www_pravo_alias": read_result("/tmp/pdn-pravo-www-alias-result.log"),
-              "failure_taxonomy_version": "1.2",
+              "failure_taxonomy_version": "1.3",
               "failure_taxonomy": [
                   "TRANSPORT_TIMEOUT",
                   "HTTP_FORBIDDEN",
@@ -207,7 +230,7 @@ jobs:
                   "NOT_RUN",
                   "UNPARSEABLE_OUTPUT",
               ],
-              "proof_rule": "Attempt telemetry records transport outcomes only and never promotes semantic or extraction status. Current PP687 capture additionally requires its PP12 validity-through-01.09.2030 fingerprint. The www.pravo.gov.ru attempt is transport-only and remains bound to a pre-registered pravo.gov.ru source identity."
+              "proof_rule": "Attempt telemetry records transport outcomes only and never promotes semantic or extraction status. Current PP687 capture additionally requires its PP12 validity-through-01.09.2030 fingerprint. The www.pravo.gov.ru attempt is transport-only and remains bound to a pre-registered pravo.gov.ru source identity. Nested transport results are classified individually and aggregated at the route level."
           }
           run_path.write_text(json.dumps(run, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
           PY
