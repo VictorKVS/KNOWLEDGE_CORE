@@ -2,7 +2,7 @@
 """Restore authoritative Stream-2 counters in the PDN master inventory.
 
 The PDN core and the technical/crypto security-stack have independent acquisition
-manifests and counters.  This guard reads only the accepted Stream-2 acquisition
+manifests and counters. This guard reads only the accepted Stream-2 acquisition
 run and rewrites only the `security_stack:` block in the shared master inventory.
 It prevents the core synchronizer from accidentally writing its own immutable /
 pending counts into Stream-2 when identically named scalar keys exist later in the
@@ -46,9 +46,17 @@ def main() -> int:
     identified = int(run["sources_registered"])
     immutable = int(run["immutable_total"])
     pending = int(run["pending_after_run"])
+    unrouted = run.get("unrouted_source_ids", [])
+    if not isinstance(unrouted, list):
+        raise RuntimeError("invalid Stream-2 unrouted_source_ids: expected list")
+    unresolved_routes = len(unrouted)
     if immutable < 0 or pending < 0 or immutable + pending != identified:
         raise RuntimeError(
             f"invalid Stream-2 counters: identified={identified}, immutable={immutable}, pending={pending}"
+        )
+    if unresolved_routes < 0 or unresolved_routes > pending:
+        raise RuntimeError(
+            f"invalid Stream-2 unresolved route count: unresolved={unresolved_routes}, pending={pending}"
         )
 
     text = MASTER.read_text(encoding="utf-8")
@@ -60,6 +68,7 @@ def main() -> int:
     block = replace_scalar(block, "identified", identified)
     block = replace_scalar(block, "immutable_sha256_verified", immutable)
     block = replace_scalar(block, "pending_raw_capture", pending)
+    block = replace_scalar(block, "exact_official_route_unresolved", unresolved_routes)
     block = replace_scalar(block, "latest_acquisition_finished_at", str(run["finished_at"]))
 
     finished_date = str(run["finished_at"])[:10]
@@ -74,6 +83,7 @@ def main() -> int:
                 "identified": identified,
                 "immutable_sha256_verified": immutable,
                 "pending_raw_capture": pending,
+                "exact_official_route_unresolved": unresolved_routes,
                 "source_run": str(STACK_RUN.relative_to(ROOT)).replace("\\", "/"),
                 "finished_at": run["finished_at"],
             },
