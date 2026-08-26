@@ -14,6 +14,7 @@ on:
       - "TOOLS/pdn_security_stack_curl_pending.py"
       - "TOOLS/pdn_security_stack_rg_archive_retry.py"
       - "TOOLS/pdn_security_stack_resolve_fstec_maturity_attachment.py"
+      - "TOOLS/pdn_security_stack_resolve_fstec_unrouted_attachments.py"
       - "TOOLS/pdn_security_stack_capture_gate.py"
       - "TOOLS/pdn_security_stack_reconcile_telemetry.py"
       - "TOOLS/pdn_security_stack_reconcile_master.py"
@@ -43,6 +44,10 @@ jobs:
       - name: Resolve exact official FSTEC maturity PDF route fail-closed
         shell: bash
         run: python TOOLS/pdn_security_stack_resolve_fstec_maturity_attachment.py
+
+      - name: Resolve remaining exact official FSTEC attachment routes fail-closed
+        shell: bash
+        run: python TOOLS/pdn_security_stack_resolve_fstec_unrouted_attachments.py
 
       - name: Full guarded curl sweep for scheduled or manual maintenance
         if: github.event_name != 'push'
@@ -99,6 +104,9 @@ jobs:
         run: |
           if [ -f security-corpora/RU/152-FZ/security-stack/PDN_FSTEC_MATURITY_ATTACHMENT_RESOLUTION.json ]; then
             cat security-corpora/RU/152-FZ/security-stack/PDN_FSTEC_MATURITY_ATTACHMENT_RESOLUTION.json
+          fi
+          if [ -f security-corpora/RU/152-FZ/security-stack/PDN_FSTEC_UNROUTED_ATTACHMENT_RESOLUTION.json ]; then
+            cat security-corpora/RU/152-FZ/security-stack/PDN_FSTEC_UNROUTED_ATTACHMENT_RESOLUTION.json
           fi
           if [ -f security-corpora/RU/152-FZ/security-stack/PDN_SECURITY_STACK_CURL_ATTEMPT.json ]; then
             cat security-corpora/RU/152-FZ/security-stack/PDN_SECURITY_STACK_CURL_ATTEMPT.json
