@@ -45,3 +45,8 @@ def test_supported_mime_is_derived_from_route_only():
 
 def test_fstec_5331_licensing_notice_is_in_bounded_resolution_targets():
     assert "SEC-SRC-RU-FSTEC-INFO-240-13-5331-2026" in TARGETS
+
+
+def test_fstec_vundv_transition_notices_are_in_bounded_resolution_targets():
+    assert "SEC-SRC-RU-FSTEC-INFO-240-24-3693-2026" in TARGETS
+    assert "SEC-SRC-RU-FSTEC-INFO-240-24-4974-2026" in TARGETS
