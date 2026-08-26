@@ -1,0 +1,104 @@
+schema_version: "1.0"
+kind: stream-3-run-log
+run_id: STREAM3-2026-08-26T1119
+owner_stream: STREAM_3_SECTOR_OVERLAYS
+started_at: "2026-08-26T11:19:16+03:00"
+status: COMPLETED_WITH_EXACT_CAPTURE_PENDING
+
+objective: >-
+  Continue discovery, current-version validation, deduplication and registration of primary normative sources for sectoral/special protected-information regimes intersecting with 152-ФЗ, while keeping applicability and exact-artifact proof conservative.
+
+focus_this_run:
+  sector: legal_professional_secrecy
+  reason: "Resume high-priority discovery outside advertising while retaining the pending exact-capture queue; deepen an existing attorney-secrecy node and add the current subordinate register act."
+
+existing_source_enriched:
+  id: SEC-SRC-RU-FZ-63-2002
+  act: "Федеральный закон от 31.05.2002 № 63-ФЗ"
+  current_authority_url: "https://minjust.gov.ru/ru/documents/7885/"
+  findings:
+    - "Article 6(4)(5): client-information non-disclosure without consent."
+    - "Article 8(1-3): advocate-secret scope plus testimonial/judicial procedural protections."
+    - "Articles 27(3)/28(3): assistant and trainee secrecy duties."
+    - "Article 39.5(1-2): KIS AR confidentiality and direct protection under PDN and information-protection legislation."
+  version_state: CURRENT_SOURCE_LEVEL_SWEEP_VERIFIED_LOCATOR_HISTORY_PARTIAL
+  latest_authority_amendment_observed: "83-ФЗ от 22.04.2024"
+  latest_primary_publication_id: "0001202404220011"
+  article_8_correction: "No amendment marker is observed under Article 8 in the current official Minjust text; no amendment to Article 8 is asserted without locator-specific evidence."
+
+source_registered:
+  id: SEC-SRC-RU-MINJUST-ORDER-296-2024
+  act: "Приказ Минюста России от 09.10.2024 № 296"
+  role: "procedure for maintaining the Unified State Register of Advocates and composition of included information"
+  primary_publication_id: "0001202410090016"
+  minjust_registration_number: "79744"
+  primary_state: PRIMARY_PUBLICATION_METADATA_VERIFIED_EXACT_BYTES_PENDING
+  effective_from: "2024-10-20"
+  current_revision: "2024-10-09"
+  current_authority_url: "https://minjust.gov.ru/ru/documents/7892/"
+  person_level_fields_verified:
+    - "ФИО"
+    - "адрес места жительства"
+    - "контактный телефон"
+    - "адрес электронной почты при наличии"
+    - "дата рождения"
+    - "место рождения"
+    - "дата квалификационного экзамена для соответствующего журнала"
+  publicness_guard: "63-ФЗ Article 14(7) makes publicness conditional; register presence does not make every field public."
+
+pdn_overlap_findings:
+  - source: SEC-SRC-RU-FZ-63-2002
+    locator: "статья 39.5 часть 2"
+    finding: "The statute expressly routes KIS AR information protection through personal-data and information-protection legislation."
+    state: STATUTORY_CONTEXT_APPLICABILITY_STILL_REVIEW_REQUIRED
+  - source: SEC-SRC-RU-MINJUST-ORDER-296-2024
+    finding: "The state advocacy register workflow contains person-level identification/contact/biographical fields and therefore has a strong PDN overlap."
+    state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  - source: SEC-SRC-RU-MINJUST-ORDER-296-2024
+    finding: "Unified State Register of Advocates and KIS AR are related advocacy information contours but are not treated as identical systems."
+    state: CROSS_REGIME_RELATION
+
+version_chain_result:
+  FZ_63: CURRENT_SOURCE_LEVEL_SWEEP_VERIFIED_LOCATOR_HISTORY_PARTIAL
+  MINJUST_ORDER_296: CURRENT_ORIGINAL_EDITION_CROSSCHECKED_PRIMARY_EXACT_BYTES_PENDING
+  executable_current_rules_promoted: 0
+
+acquisition_attempt:
+  attempted: true
+  attempted_sources: 2
+  attempted_urls:
+    - "https://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202410090016"
+    - "https://to06.minjust.gov.ru/uploaded/files/prikaz-minyusta-rossii-ot-09102024-n-296-ob-utverzhdenii-po.pdf"
+    - "https://minjust.gov.ru/ru/documents/7885/"
+  runtime_result: TRANSIENT_NETWORK_OR_DOWNLOAD_FAILURE
+  exact_downloads: 0
+  immutable_artifacts_added: 0
+  exact_fields_written: false
+  guard: "No retrieved_at, MIME, byte_length or SHA-256 is populated until exact official bytes are received and durably stored."
+
+counter_reconciliation:
+  before: {found: 40, downloaded: 9, immutable: 9, pending: 29, reused: 2, primary_publication_verified: 16, sectors_registered: 25}
+  after: {found: 41, downloaded: 9, immutable: 9, pending: 30, reused: 2, primary_publication_verified: 17, sectors_registered: 25}
+  delta: {found: 1, downloaded: 0, immutable: 0, pending: 1, reused: 0, primary_publication_verified: 1, sectors_registered: 0}
+
+files_written:
+  - "security-corpora/RU/protected-information/source/SEC-SRC-RU-FZ-63-2002.yaml"
+  - "security-knowledge/corpus/ru-protected-information/63-fz-2002-source-card.yaml"
+  - "security-corpora/RU/protected-information/source/SEC-SRC-RU-MINJUST-ORDER-296-2024.yaml"
+  - "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-MINJUST-ORDER-296-2024-capture-pending.json"
+  - "security-knowledge/corpus/ru-protected-information/master-inventory-delta-2026-08-26T1119.yaml"
+  - "security-knowledge/corpus/ru-personal-data/master-source-inventory-delta-stream3-2026-08-26T1119.yaml"
+  - "security-knowledge/corpus/ru-protected-information/stream-3-run-2026-08-26T1119.yaml"
+
+proof_floor:
+  - "Taxonomy is discovery seed only."
+  - "ADVOCATE_SECRET != PERSONAL_DATA."
+  - "Article 39.5 direct PDN reference is KIS AR-specific and not a universal applicability promotion."
+  - "Register presence != public availability of every field."
+  - "Displayed portal file sizes are not exact byte lengths."
+  - "No legal conflicts confirmed."
+  - "No applicability edges promoted."
+
+next_priority:
+  - "Retry byte-exact official capture for 63-ФЗ, 83-ФЗ and Minjust Order 296 when official endpoints are reachable."
+  - "Continue next special-regime discovery with unresolved high-priority healthcare/medical secrecy, finance/banking/insurance/credit histories, communications, education/children, government data, biometrics, transport and archives, while preserving capture backlog."
