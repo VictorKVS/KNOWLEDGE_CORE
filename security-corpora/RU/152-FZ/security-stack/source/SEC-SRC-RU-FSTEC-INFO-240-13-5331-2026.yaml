@@ -1,0 +1,72 @@
+schema_version: "1.0"
+id: SEC-SRC-RU-FSTEC-INFO-240-13-5331-2026
+kind: security-regulatory-status-source
+status: METADATA_VERIFIED
+title: >-
+  Информационное сообщение ФСТЭК России от 04.08.2026 № 240/13/5331
+  «О разъяснении отдельных лицензионных требований по технической защите конфиденциальной информации
+  и по разработке и производству средств защиты конфиденциальной информации»
+jurisdiction: RU
+issuer: "ФСТЭК России"
+document:
+  type: information_notice
+  number: "240/13/5331"
+  adopted_date: "2026-08-04"
+  checked_at: "2026-08-26"
+  temporal_status: CURRENT_LICENSING_GUIDANCE
+  status_note: >-
+    Официальное информационное сообщение ФСТЭК разъясняет выполнение отдельных лицензионных требований,
+    установленных ПП РФ № 79 для деятельности по технической защите конфиденциальной информации и ПП РФ № 171
+    для деятельности по разработке и производству средств защиты конфиденциальной информации. В PDN Security Stack
+    регистрируется только ограниченный контекст ПП № 79; упоминание ПП № 171 не переносит обязанности этого соседнего
+    лицензируемого режима на оператора ПДн без отдельного applicability edge.
+canonical_source:
+  publisher: "ФСТЭК России"
+  landing_page: "https://fstec.ru/dokumenty/vse-dokumenty/informatsionnye-i-analiticheskie-materialy/informatsionnoe-soobshchenie-fstek-rossii-ot-4-avgusta-2026-g-n-240-13-5331"
+  exact_document_route_status: OFFICIAL_LANDING_IDENTIFIED
+  exact_file_route_status: UNRESOLVED_PUBLIC_DIRECT_ATTACHMENT
+  acquisition_priority: MEDIUM_LICENSED_TZI_GUIDANCE
+  freshness_check:
+    checked_at: "2026-08-26"
+    result: CURRENT_NOTICE_CROSS_VERIFIED
+    corroboration:
+      - "https://pik.cntd.ru/news/read/razieiasnenie-otdelnyx-licenzionnyx-trebovanii/novosti-cifrovizacii"
+      - "https://t.me/s/bureaucraticsecurity?before=2724"
+capture:
+  fingerprint_status: PENDING
+  semantic_status: CURRENT_LICENSING_GUIDANCE
+  source_url: "https://fstec.ru/dokumenty/vse-dokumenty/informatsionnye-i-analiticheskie-materialy/informatsionnoe-soobshchenie-fstek-rossii-ot-4-avgusta-2026-g-n-240-13-5331"
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  note: >-
+    Официальная landing page установлена и независимо перекрестно подтверждена. Точный публичный attachment/byte payload
+    в этом проходе не получен; MIME, размер и SHA-256 остаются пустыми, immutable promotion запрещен.
+relations:
+  - type: CLARIFIES_LICENSED_ACTIVITY_REQUIREMENTS
+    target: SEC-SRC-RU-PP79-2012
+    scope: PP79_LICENSED_TZI_ACTIVITY_ONLY
+    not_universal_pdn_duty: true
+  - type: ALSO_ADDRESSES_ADJACENT_LICENSED_ACTIVITY
+    target: PP171_LICENSED_DEVELOPMENT_AND_PRODUCTION
+    scope: PP171_DEVELOPMENT_AND_PRODUCTION_OF_CONFIDENTIAL_INFORMATION_PROTECTION_MEANS_ONLY
+    registered_in_pdn_inventory: false
+applicability_guard:
+  direct_scope: LICENSED_TZI_ACTIVITY_GUIDANCE_ONLY
+  generic_private_ispdn: NOT_APPLICABLE_FROM_ISPDN_STATUS_ALONE
+  pp171_scope_guard: >-
+    Не переносить требования ПП № 171 в общий PDN baseline только потому, что они разъясняются в одном сообщении
+    вместе с требованиями ПП № 79. Нужен отдельный доказанный факт осуществления соответствующей лицензируемой деятельности.
+provenance:
+  official_landing_page_identified: true
+  notice_number_and_date_cross_verified: true
+  exact_official_file_route_verified: false
+  exact_official_bytes_captured: false
+  review_required: true
+agent_rule: >-
+  Use this notice only as guidance/status evidence for the PP79 licensed-TZI branch. It does not create a universal
+  PDN duty, does not import PP171 obligations, and requires exact official bytes before immutable promotion.
+inventory_registration:
+  role: fstec_tzi_licensing_requirements_clarification_2026
+  applicability: LICENSED_TZI_ACTIVITY_GUIDANCE_ONLY
