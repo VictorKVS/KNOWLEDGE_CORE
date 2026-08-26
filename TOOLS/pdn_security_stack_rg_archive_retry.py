@@ -3,22 +3,27 @@
 
 GitHub-hosted acquisition repeatedly receives HTTP 401 from the registered RG
 publication URL for FSB Order No. 378 while the same official publication remains
-publicly indexed and readable through normal browser traffic.  This helper changes
+publicly indexed and readable through normal browser traffic. This helper changes
 transport presentation only: it uses the already-registered official RG URL, keeps
 the existing strict identity/signature gates, writes the normal immutable manifest
 on success, and never changes semantic/applicability status.
+
+Every attempt is also persisted as a small diagnostic JSON record so a transport
+blocker is auditable even when GitHub Actions logs expire.
 """
 from __future__ import annotations
 
+import datetime as dt
 import json
 import subprocess
 import tempfile
 from pathlib import Path
 
 import pdn_security_stack_curl_pending as base
-from pdn_security_stack_acquire import discover_targets, reusable
+from pdn_security_stack_acquire import ROOT, discover_targets, reusable
 
 SOURCE_ID = "SEC-SRC-RU-FSB378-2014"
+REPORT = ROOT / "security-corpora" / "RU" / "152-FZ" / "security-stack" / "PDN_SECURITY_STACK_RG_RETRY.json"
 BROWSER_UA = (
     "Mozilla/5.0 (Windows NT 10.0; Win64; x64) "
     "AppleWebKit/537.36 (KHTML, like Gecko) "
@@ -71,17 +76,37 @@ def _browser_curl(url: str) -> tuple[bytes, str, str]:
         return data, final_url, mime or "application/octet-stream"
 
 
+def _write_report(result: dict) -> None:
+    payload = {
+        "schema_version": "1.0",
+        "record_type": "PDN_SECURITY_STACK_RG_ARCHIVE_RETRY",
+        "attempted_at": dt.datetime.now(dt.timezone.utc).isoformat().replace("+00:00", "Z"),
+        "source_id": SOURCE_ID,
+        "official_route": "https://rg.ru/documents/2014/09/17/zashita-dok.html",
+        "transport_profile": "BROWSER_COMPATIBLE_RG_OFFICIAL_ARCHIVE",
+        "semantic_status_unchanged": True,
+        "result": result,
+    }
+    REPORT.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+
+
 def main() -> int:
     if reusable(SOURCE_ID):
-        print(json.dumps({"source_id": SOURCE_ID, "status": "REUSED_IMMUTABLE"}, ensure_ascii=False))
+        result = {"source_id": SOURCE_ID, "status": "REUSED_IMMUTABLE"}
+        _write_report(result)
+        print(json.dumps(result, ensure_ascii=False))
         return 0
 
     target = next((row for row in discover_targets() if str(row.get("source_id")) == SOURCE_ID), None)
     if target is None:
-        print(json.dumps({"source_id": SOURCE_ID, "status": "SKIPPED", "reason": "REGISTERED_TARGET_NOT_FOUND"}, ensure_ascii=False))
+        result = {"source_id": SOURCE_ID, "status": "SKIPPED", "reason": "REGISTERED_TARGET_NOT_FOUND"}
+        _write_report(result)
+        print(json.dumps(result, ensure_ascii=False))
         return 0
     if not str(target.get("value") or "").startswith("https://rg.ru/"):
-        print(json.dumps({"source_id": SOURCE_ID, "status": "SKIPPED", "reason": "NON_RG_REGISTERED_ROUTE"}, ensure_ascii=False))
+        result = {"source_id": SOURCE_ID, "status": "SKIPPED", "reason": "NON_RG_REGISTERED_ROUTE"}
+        _write_report(result)
+        print(json.dumps(result, ensure_ascii=False))
         return 0
 
     original = base._curl
@@ -93,6 +118,7 @@ def main() -> int:
 
     result["transport_profile"] = "BROWSER_COMPATIBLE_RG_OFFICIAL_ARCHIVE"
     result["semantic_status_unchanged"] = True
+    _write_report(result)
     print(json.dumps(result, ensure_ascii=False, indent=2))
     return 0
 
