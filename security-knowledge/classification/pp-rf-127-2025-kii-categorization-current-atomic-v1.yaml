@@ -24,7 +24,7 @@ decision_core:
   deadlines:
     result_submission_after_act_approval: {value: 10, unit: WORKING_DAYS}
     changed_information_submission: {value: 20, unit: WORKING_DAYS}
-    monitoring_violation_notice: {value: 30, unit: CALENDAR_DAYS}
+    monitoring_violation_notice: {value: 30, unit: DAYS_UNQUALIFIED}
     periodic_review: {value: 5, unit: YEARS, qualifier: AT_LEAST_UNLESS_SECTORAL_RULE_SETS_ANOTHER_PERIOD}
   event_review_triggers: [INDICATOR_OR_VALUE_CHANGE, SECTORAL_CATEGORIZATION_FEATURE_CHANGE]
 current_threshold_rows:
@@ -89,7 +89,7 @@ control_rules:
   - {id: PP127-2025-012, source: DECISION, rule: MODEL_DEPENDENT_OBJECT_CESSATION_OR_PARAMETER_VIOLATION}
   - {id: PP127-2025-013, source: DEADLINE, rule: SUBMIT_RESULT_WITHIN_10_WORKING_DAYS_AFTER_ACT_APPROVAL}
   - {id: PP127-2025-014, source: DEADLINE, rule: SUBMIT_CHANGED_INFORMATION_WITHIN_20_WORKING_DAYS}
-  - {id: PP127-2025-015, source: DEADLINE, rule: NOTIFY_MONITORING_VIOLATION_WITHIN_30_CALENDAR_DAYS}
+  - {id: PP127-2025-015, source: DEADLINE, rule: NOTIFY_MONITORING_VIOLATION_WITHIN_30_DAYS_UNQUALIFIED}
   - {id: PP127-2025-016, source: REVIEW, rule: REVIEW_AT_LEAST_EVERY_5_YEARS_UNLESS_SECTOR_RULE_DIFFERS}
   - {id: PP127-2025-017, source: REVIEW, rule: REVIEW_AFTER_INDICATOR_OR_VALUE_CHANGE}
   - {id: PP127-2025-018, source: REVIEW, rule: REVIEW_AFTER_SECTORAL_FEATURE_CHANGE}
@@ -145,13 +145,13 @@ control_rules:
   - {id: PP127-2025-068, source: GUARD, rule: DO_NOT_TREAT_MAX_ALLOWED_UNAVAILABILITY_AS_OBSERVED_OUTAGE}
   - {id: PP127-2025-069, source: GUARD, rule: DO_NOT_CLAIM_COMPLETE_SECTORAL_OVERLAYS}
   - {id: PP127-2025-070, source: GUARD, rule: DO_NOT_CLAIM_IMMUTABLE_CONSOLIDATED_OFFICIAL_BYTES}
-coverage: {control_rule_count: 70, current_threshold_row_count: 30, criterion_group_count: 5, category_count: 3, crosswalk_entry_count: 15, exact_numeric_deadline_count: 3, exact_periodic_review_count: 1, event_review_trigger_count: 2, current_pp127_overlay_complete_count: 1, sectoral_overlay_complete_count: 0, invented_threshold_count: 0}
+coverage: {control_rule_count: 70, current_threshold_row_count: 30, criterion_group_count: 5, category_count: 3, crosswalk_entry_count: 15, exact_numeric_deadline_count: 3, exact_periodic_review_count: 1, event_review_trigger_count: 2, current_pp127_overlay_complete_count: 1, current_procedure_complete_count: 1, sectoral_overlay_complete_count: 0, invented_threshold_count: 0}
 verification_boundary:
   amendment_text: VERIFIED_PRIMARY_GOVERNMENT_SOURCE
   official_publication_record: VERIFIED
   current_consolidated_decision_and_threshold_core: VERIFIED_CROSSCHECK
   gost_appendix_a_current_kii_gap: CLOSED_BY_CURRENT_PP127_OVERLAY
-  full_pp127_procedural_atomization: PENDING_MEDIUM
+  full_pp127_procedural_atomization: VERIFIED_SEPARATE_CURRENT_MODEL
   sectoral_categorization_features: PENDING_BY_SECTOR
   immutable_consolidated_official_bytes: PENDING
   independent_expert_review: PENDING
