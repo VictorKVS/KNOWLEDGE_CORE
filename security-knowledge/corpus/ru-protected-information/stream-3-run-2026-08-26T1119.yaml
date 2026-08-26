@@ -36,15 +36,26 @@ source_registered:
   effective_from: "2024-10-20"
   current_revision: "2024-10-09"
   current_authority_url: "https://minjust.gov.ru/ru/documents/7892/"
-  person_level_fields_verified:
-    - "ФИО"
-    - "адрес места жительства"
-    - "контактный телефон"
-    - "адрес электронной почты при наличии"
-    - "дата рождения"
-    - "место рождения"
-    - "дата квалификационного экзамена для соответствующего журнала"
-  publicness_guard: "63-ФЗ Article 14(7) makes publicness conditional; register presence does not make every field public."
+  data_model_verified:
+    core_register_fields:
+      - "регистрационный номер"
+      - "субъект РФ"
+      - "ФИО"
+      - "реквизиты решений/распоряжений о статусе"
+    registry_action_inputs_and_case_file_materials:
+      - "адрес места жительства"
+      - "контактный телефон"
+      - "адрес электронной почты при наличии"
+      - "копия документа, удостоверяющего личность"
+      - "анкета с биографическими сведениями"
+      - "документы об образовании и стаже"
+    failed_exam_journal_fields:
+      - "ФИО"
+      - "дата квалификационного экзамена"
+      - "дата рождения"
+      - "место рождения"
+  data_model_guard: "Core register fields, failed-exam journal fields and registry workflow/case-file inputs are kept as distinct datasets."
+  publicness_guard: "63-ФЗ Article 14(7) makes publicness conditional; registry/workflow presence does not make every field or document public."
 
 pdn_overlap_findings:
   - source: SEC-SRC-RU-FZ-63-2002
@@ -52,7 +63,7 @@ pdn_overlap_findings:
     finding: "The statute expressly routes KIS AR information protection through personal-data and information-protection legislation."
     state: STATUTORY_CONTEXT_APPLICABILITY_STILL_REVIEW_REQUIRED
   - source: SEC-SRC-RU-MINJUST-ORDER-296-2024
-    finding: "The state advocacy register workflow contains person-level identification/contact/biographical fields and therefore has a strong PDN overlap."
+    finding: "The advocacy register/journal/workflow contains multiple person-level data groups and therefore has a strong PDN overlap."
     state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
   - source: SEC-SRC-RU-MINJUST-ORDER-296-2024
     finding: "Unified State Register of Advocates and KIS AR are related advocacy information contours but are not treated as identical systems."
@@ -93,8 +104,9 @@ files_written:
 proof_floor:
   - "Taxonomy is discovery seed only."
   - "ADVOCATE_SECRET != PERSONAL_DATA."
+  - "Core register fields, failed-exam journal fields and workflow/case-file inputs are distinct data layers."
   - "Article 39.5 direct PDN reference is KIS AR-specific and not a universal applicability promotion."
-  - "Register presence != public availability of every field."
+  - "Registry/workflow presence != public availability of every field."
   - "Displayed portal file sizes are not exact byte lengths."
   - "No legal conflicts confirmed."
   - "No applicability edges promoted."
