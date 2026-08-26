@@ -1,7 +1,7 @@
 schema_version: "1.0"
 id: SEC-SRC-RU-FZ-63-2002
 kind: security-regulatory-source
-status: METADATA_VERIFIED
+status: CURRENT_AUTHORITY_TEXT_VERIFIED_EXACT_ARTIFACT_PENDING
 
 title: "Федеральный закон от 31.05.2002 № 63-ФЗ «Об адвокатской деятельности и адвокатуре в Российской Федерации»"
 jurisdiction: RU
@@ -10,46 +10,109 @@ document:
   type: federal_law
   number: "63-ФЗ"
   adopted_date: "2002-05-31"
-  official_publication_id: ""
-  official_publication_date: ""
-  checked_at: "2026-08-20"
+  effective_from: "2002-07-01"
+  official_publication_id: null
+  official_publication_date: null
+  checked_at: "2026-08-26"
 
-canonical_source:
-  publisher: "Президент России / официальный банк актов"
-  url: "https://www.kremlin.ru/acts/bank/18127/print"
-  origin_verified: true
+canonical_sources:
+  current_authority_text:
+    publisher: "Министерство юстиции Российской Федерации"
+    url: "https://minjust.gov.ru/ru/documents/7885/"
+    origin_verified: true
+    evidence_state: CURRENT_AUTHORITY_TEXT_VERIFIED
+    amendment_list_observed_through: "83-ФЗ от 22.04.2024"
+  presidential_bank_crosscheck:
+    publisher: "Президент России — Банк документов"
+    url: "https://www.kremlin.ru/acts/bank/18127/print"
+    origin_verified: true
   exact_original_publication_artifact_status: PENDING
 
 protected_information:
   sector: professional_secrecy_advocacy
   regime: advocate_secrecy
-  primary_anchor: "статья 8 часть 1 — адвокатской тайной являются любые сведения, связанные с оказанием адвокатом юридической помощи своему доверителю"
-  applicability_status: PROFESSIONAL_SECRECY_SCOPE_ONLY
-  pdn_edge_status: NONE_UNTIL_PERSONAL_DATA_SCENARIO_PROVED
-  guard_rule: "Адвокатская тайна не тождественна персональным данным; двойной режим моделируется только при независимом выполнении критериев 152-ФЗ."
+  protected_locators:
+    - locator: "статья 6 пункт 4 подпункт 5"
+      concept: CLIENT_INFORMATION_NON_DISCLOSURE
+      finding: "Адвокат не вправе разглашать сведения, сообщенные ему доверителем в связи с оказанием юридической помощи, без согласия доверителя."
+    - locator: "статья 8 часть 1"
+      concept: ADVOCATE_SECRET_SCOPE
+      finding: "Адвокатской тайной являются любые сведения, связанные с оказанием адвокатом юридической помощи своему доверителю."
+    - locator: "статья 8 часть 2"
+      concept: WITNESS_TESTIMONY_PROTECTION
+      finding: "Адвокат не может быть вызван и допрошен как свидетель об обстоятельствах, ставших ему известными в связи с обращением за юридической помощью или ее оказанием."
+    - locator: "статья 8 часть 3"
+      concept: JUDICIAL_AUTHORIZATION_FOR_INVESTIGATIVE_ACTIONS
+      finding: "Оперативно-розыскные мероприятия и следственные действия в отношении адвоката допускаются только на основании судебного решения."
+    - locator: "статья 17 пункт 2 подпункт 2.1"
+      concept: UNLAWFUL_USE_OR_DISCLOSURE_PROFESSIONAL_CONSEQUENCE
+      finding: "Незаконное использование или разглашение информации, связанной с оказанием квалифицированной юридической помощи доверителю, является специальным основанием дисциплинарно-статусного реагирования."
+      amendment: "160-ФЗ от 02.06.2016"
+    - locator: "статья 27 пункт 3; статья 28 пункт 3"
+      concept: ASSISTANT_AND_TRAINEE_SECRECY_DUTY
+      finding: "Помощник адвоката и стажер адвоката обязаны хранить адвокатскую тайну."
+    - locator: "статья 39.5 части 1-2"
+      concept: KIS_AR_CONFIDENTIALITY_AND_PDN_INFORMATION_PROTECTION
+      finding: "Для сведений КИС АР установлен запрет раскрытия/распространения вне законных случаев, а защита сведений осуществляется по законодательству о персональных данных и об информации, информационных технологиях и защите информации."
+      amendment: "83-ФЗ от 22.04.2024"
+  applicability_status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  pdn_edge_status: DIRECT_STATUTORY_PDN_PROTECTION_CONTEXT_FOR_KIS_AR_ONLY
+  guard_rule: >-
+    Адвокатская тайна не тождественна персональным данным. Статья 39.5 прямо связывает защиту сведений КИС АР с законодательством о ПДн, но это не распространяет автоматически все требования 152-ФЗ на любые сведения адвокатского производства. Для иных сценариев двойной режим моделируется только при независимом доказательстве субъекта данных, набора данных, операции, роли, цели и правового основания.
+
+relationship_candidates:
+  - target: "152-ФЗ"
+    type: ADVOCATE_SECRET_PDN_OVERLAP
+    state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    guard: "ADVOCATE_SECRET != PERSONAL_DATA; overlap is scenario-specific."
+  - target: "152-ФЗ"
+    locator: "статья 39.5 часть 2"
+    type: DIRECT_STATUTORY_PDN_PROTECTION_CONTEXT_FOR_KIS_AR
+    state: STATUTORY_CONTEXT_APPLICABILITY_STILL_REVIEW_REQUIRED
+  - target: SEC-SRC-RU-MINJUST-ORDER-296-2024
+    type: ADVOCACY_REGISTRY_AND_INFORMATION_SYSTEM_CONTEXT
+    state: CROSS_REGIME_RELATION
+    guard: "Единый государственный реестр адвокатов Минюста и КИС АР — связанные, но не тождественные информационные контуры."
 
 version_chain:
-  state: VERSION_CHAIN_PARTIAL
-  primary_events_verified:
-    - act: "83-ФЗ от 22.04.2024"
-      official_publication_id: "0001202404220011"
-      official_publication_date: "2024-04-22"
-      proof_status: PRIMARY_AMENDMENT_EVENT_VERIFIED
-  pending: "Complete primary amendment chain through 2026-08-20 and exact current locator review before executable use."
+  state: CURRENT_SOURCE_LEVEL_SWEEP_VERIFIED_LOCATOR_HISTORY_PARTIAL
+  current_authority_amendments_observed_through:
+    act: "83-ФЗ от 22.04.2024"
+    official_publication_id: "0001202404220011"
+    official_publication_date: "2024-04-22"
+    proof_status: PRIMARY_AMENDMENT_EVENT_VERIFIED
+  article_8_current_text_state: CURRENT_AUTHORITY_TEXT_VERIFIED
+  article_8_amendment_marker_observed: false
+  article_39_5_event:
+    act: "83-ФЗ от 22.04.2024"
+    effect: "введена статья 39.5 «Конфиденциальность и защита информации»"
+    proof_status: PRIMARY_AMENDMENT_METADATA_AND_CURRENT_TEXT_VERIFIED
+  article_17_2_2_1_event:
+    act: "160-ФЗ от 02.06.2016"
+    effect: "введен подпункт 2.1 пункта 2 статьи 17"
+    proof_status: CURRENT_AUTHORITY_TEXT_AMENDMENT_MARKER_VERIFIED_PRIMARY_BINARY_PENDING
+  guard: >-
+    Current authoritative Minjust text checked on 2026-08-26 lists source-level amendments through 83-ФЗ of 22.04.2024. This supports current-text status, but a byte-exact historical amendment corpus is still required before VERSION_CHAIN_VERIFIED/executable promotion.
 
 capture:
-  raw_artifact_ref: ""
-  manifest_ref: ""
+  exact_capture_attempted_at: "2026-08-26T11:19:16+03:00"
+  attempted_urls:
+    - "https://minjust.gov.ru/ru/documents/7885/"
+    - "https://www.kremlin.ru/acts/bank/18127/print"
+  result: TRANSIENT_NETWORK_OR_DOWNLOAD_FAILURE
+  raw_artifact_ref: null
+  manifest_ref: null
   mime: null
   byte_length: null
-  sha256: ""
+  sha256: null
   fingerprint_status: PENDING_EXACT_PRIMARY_ARTIFACT
-  note: "No publication.pravo.gov.ru baseline eoNumber is asserted for this 2002 act; do not fabricate a fingerprint."
+  note: "Official current text is verified semantically, but exact official bytes were not captured; no MIME, byte length or SHA-256 was synthesized from displayed metadata."
 
 provenance:
-  checked_at: "2026-08-20"
-  primary_current_authority_evidence: "https://www.kremlin.ru/acts/bank/18127/print"
-  primary_amendment_evidence: "official publication 0001202404220011"
+  checked_at: "2026-08-26"
+  primary_current_authority_evidence: "https://minjust.gov.ru/ru/documents/7885/"
+  primary_amendment_evidence_83_fz: "https://publication.pravo.gov.ru/document/0001202404220011"
   review_required: true
 
-agent_rule: "Professional secrecy and personal data are separate regimes; create an overlap edge only from scenario-specific primary predicates."
+agent_rule: >-
+  Keep attorney secrecy, KIS AR confidentiality and personal-data regulation as distinct but linkable layers. Promote an applicability edge only from locator-specific primary predicates and the concrete processing scenario.
