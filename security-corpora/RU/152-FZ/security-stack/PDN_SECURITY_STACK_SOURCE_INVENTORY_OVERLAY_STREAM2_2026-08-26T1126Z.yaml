@@ -1,0 +1,64 @@
+schema_version: "1.0"
+id: SEC-PDN-SECURITY-STACK-INVENTORY-OVERLAY-2026-08-26T1126Z
+applies_to: PDN_SECURITY_STACK_SOURCE_INVENTORY.yaml
+stream: RU_PDN_TECHNICAL_CRYPTO
+created_at: "2026-08-26T11:26:00Z"
+merge_policy: >-
+  CONCURRENCY_SAFE_ADDITIVE_OVERLAY. Preserve the base inventory and prior Stream-2 overlays. This pass resolves four
+  exact official routes but does not claim immutable capture or overwrite authoritative acquisition counters before the
+  next reuse-first acquisition/reconciliation run consumes the routes.
+
+source_updates:
+  - id: SEC-SRC-RU-FSTEC-MATURITY-METHOD-2026
+    source_record: "source/SEC-SRC-RU-FSTEC-MATURITY-METHOD-2026.yaml"
+    raw_capture: PENDING
+    exact_file_route: EXACT_OFFICIAL_PDF_ROUTE_RESOLVED_CAPTURE_PENDING
+    direct_pdf_url: "https://fstec.ru/files/1523/---7--2026-/3102/---7--2026-.pdf"
+    applicability: ISPDN_MATURITY_ASSESSMENT_WITH_RECOMMENDATIONS_NOT_AUTOMATIC_MANDATORY_MINIMA
+  - id: SEC-SRC-RU-FSTEC-SECURITY-ANALYSIS-METHOD-2025
+    source_record: "source/SEC-SRC-RU-FSTEC-SECURITY-ANALYSIS-METHOD-2025.yaml"
+    raw_capture: PENDING
+    exact_file_route: EXACT_OFFICIAL_PDF_ROUTE_RESOLVED_CAPTURE_PENDING
+    direct_pdf_url: "https://fstec.ru/files/1423/---25--2025-/2875/---25--2025-.pdf"
+    applicability: ATTESTATION_CONTROL_OR_CONFORMITY_ASSESSMENT_CONTEXT_ONLY
+  - id: SEC-SRC-RU-FSB173-2010
+    source_record: "source/SEC-SRC-RU-FSB173-2010.yaml"
+    raw_capture: PENDING
+    exact_primary_text_route: OFFICIAL_PRIMARY_TEXT_ROUTE_RESOLVED_CAPTURE_PENDING
+    url: "https://pravo.gov.ru/proxy/ips/?backlink=1&docbody=&nd=102139358&prevDoc=102155746"
+    applicability: VERSION_CHAIN_SCOPE
+  - id: SEC-SRC-RU-PP608-1995
+    source_record: "source/SEC-SRC-RU-PP608-1995.yaml"
+    raw_capture: PENDING
+    exact_primary_text_route: OFFICIAL_PRIMARY_TEXT_ROUTE_RESOLVED_CAPTURE_PENDING
+    url: "https://pravo.gov.ru/proxy/ips/?backlink=1&docbody=&nd=102036208&prevDoc=102025035"
+    applicability: CERTIFICATION_AND_CONFORMITY_CONTEXT_ONLY
+
+authoritative_counter_before_reacquisition:
+  identified: 38
+  metadata_verified: 38
+  immutable_sha256_verified: 17
+  pending_raw_capture: 21
+  exact_official_route_unresolved: 7
+  confirmed_conflicts: 0
+
+route_resolution_delta:
+  exact_official_routes_resolved: 4
+  projected_exact_official_route_unresolved_after_next_acquisition: 3
+  authoritative_counter_change_deferred_until_reacquisition: true
+
+proof_guards:
+  - No route-only update is counted as IMMUTABLE_CAPTURED.
+  - retrieved_at, MIME, byte length and SHA-256 remain unset until exact issuer bytes are received.
+  - Maturity targets remain recommendations unless a separate binding instrument establishes otherwise.
+  - Security-analysis methodology remains conditional on its attestation/control/conformity context.
+  - FSB173 is confined to the surviving PKZ-2005 version-chain point relevant to the PDN/SKZI branch.
+  - PP608 remains certification/conformity context, not a universal PDN certification mandate.
+
+latest_run_patch:
+  run_record: "runs/STREAM2_RUN_2026-08-26T1126Z.yaml"
+  new_sources: 0
+  new_immutable_captured: 0
+  exact_official_routes_resolved: 4
+  semantic_promotions: 0
+  new_universal_pdn_duties_created: 0
