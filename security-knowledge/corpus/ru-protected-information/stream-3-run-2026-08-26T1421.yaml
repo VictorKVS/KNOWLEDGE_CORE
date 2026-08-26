@@ -1,0 +1,89 @@
+schema_version: "1.0"
+kind: stream-3-sector-library-run
+owner_stream: STREAM_3_SECTOR_OVERLAYS
+started_at: "2026-08-26T14:21:31+03:00"
+checked_at: "2026-08-26T14:21:31+03:00"
+status: COMPLETED_WITH_EXACT_CAPTURE_BACKLOG
+
+focus:
+  primary_sector: transport
+  subdomain: transport_security_egis_otb_acbpd
+  reason: "Transport remained a high-priority discovery sector and no dedicated 16-ФЗ / EGIS OTB / current ACBPDP source nodes were present in the protected-information source registry."
+
+work_completed:
+  discovery:
+    sources_added: 3
+    source_ids:
+      - SEC-SRC-RU-FZ-16-2007
+      - SEC-SRC-RU-PP-1251-2023
+      - SEC-SRC-RU-MINTRANS-ORDER-162-2024
+    duplicate_check: "No matching source cards existed before creation. Existing 87-ФЗ transport-expedition node was treated as a separate transport regime, not duplicated."
+  legal_analysis:
+    - "16-ФЗ Article 11 establishes EGIS OTB and automated centralized passenger/crew personal-data databases and classifies EGIS OTB information resources as restricted-access information."
+    - "16-ФЗ Article 11(7) contains a direct 152-ФЗ transfer context for a defined international-carrier scenario."
+    - "PP 1251 defines EGIS OTB system governance, information resources, participants and protection context."
+    - "Mintrans Order 162 directly implements Article 11(6), sets ACBPDP formation/access/security rules and a seven-year operator retention period."
+    - "Order 162 contains direct 152-ФЗ Article 19 security context for protected exchange channels and references FSTEC Order 77 for attested access means."
+    - "For certain air/rail transaction records, Order 162 includes phone, e-mail, login/password-hash, IP/port and payment-provider/last-four-digits fields when actually captured by the supplier system."
+  version_chain:
+    - "107-ФЗ от 03.04.2023, publication 0001202304030019: Article 11(5.1-1) event verified."
+    - "387-ФЗ от 24.07.2023: Article 11 part 3(1)/3.1 effect verified from official publication text; exact primary portal locator remains pending."
+    - "325-ФЗ от 04.08.2026, publication 0001202608040071: current source-level event; changes Articles 1 and 2, not Article 11."
+    - "13-ФЗ от 30.01.2026: future event effective 01.09.2026; not folded into current state on 26.08.2026."
+    - "Order 162 current original edition crosschecked; effective 01.09.2024 through 01.09.2030; no later amendment identified in this sweep."
+    - "PP 1251 current official-use context confirmed by Mintrans; exact full amendment sweep remains pending with primary bytes."
+
+scope_guards:
+  - "OVERLAP != APPLICABILITY."
+  - "Transport-sector activity != automatic EGIS OTB/ACBPD participation."
+  - "Seven-year ACBPDP retention != generic retention for carrier source systems or all transport PDN."
+  - "EGIS OTB restricted-access classification != every EGIS resource is personal data."
+  - "Payment metadata fields != entire ACBPDP dataset is bank secrecy."
+  - "Future 01.09.2026 revision != current state on 26.08.2026."
+
+acquisition:
+  exact_binary_attempted: true
+  attempted_source_count: 3
+  successful_exact_downloads: 0
+  durable_immutable_artifacts_added: 0
+  result: TRANSIENT_DNS_TIMEOUT_OR_BINARY_DOWNLOAD_FAILURE
+  observations:
+    - "Official publication metadata for Order 162 and PP 1251 remained readable through indexed/official sources."
+    - "Rostransnadzor-hosted Order 162 PDF was text-readable through the web document layer, but exact bytes could not be downloaded into the hashing runtime."
+    - "Direct binary routes to publication.pravo.gov.ru / Rostransnadzor / RG CDN failed transiently; therefore no byte_length or SHA-256 was synthesized."
+  manifests_created:
+    - "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-16-2007-capture-pending.json"
+    - "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-PP-1251-2023-capture-pending.json"
+    - "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-MINTRANS-ORDER-162-2024-capture-pending.json"
+
+inventory_reconciliation:
+  before: {found: 41, downloaded: 9, immutable: 9, pending: 30, reused: 2, primary_publication_verified: 17, sectors_registered: 25}
+  after: {found: 44, downloaded: 9, immutable: 9, pending: 33, reused: 2, primary_publication_verified: 20, sectors_registered: 25}
+  master_delta: "master-inventory-delta-2026-08-26T1421.yaml"
+  pdn_delta: "../ru-personal-data/master-source-inventory-delta-stream3-2026-08-26T1421.yaml"
+  applicability_promotions: 0
+  legal_conflicts_confirmed: 0
+  duplicate_sources_created: 0
+
+production_metrics:
+  new_source_nodes: 3
+  existing_source_nodes_enriched: 0
+  exact_binary_attempts: 3
+  exact_binary_successes: 0
+  new_immutable_artifacts: 0
+  primary_publication_verifications: 3
+  comparable_single_stream_time_baseline_available: false
+  acceleration_percent: null
+  completion_forecast: null
+  note: "No speedup percentage or completion-time forecast is reported because comparable per-source/per-chunk timing telemetry is not available for this run."
+
+next_priority:
+  - "Retry byte-exact primary capture for 16-ФЗ, PP 1251 and Order 162; hash and persist immutable artifacts only after exact bytes are obtained."
+  - "Resolve the primary publication locator and exact bytes for 387-ФЗ of 24.07.2023 and complete the locator-specific Article 11 version chain."
+  - "Analyze the EGIS OTB health-information resource separately before linking it to medical secrecy; do not infer medical-secrecy applicability from the field category alone."
+  - "Return to unresolved high-priority exact-capture queues in healthcare, banking/insurance/credit histories, telecom, education/children, government, biometrics, advertising and archives."
+
+proof_floor:
+  - "No exact-byte claim is made without a durably captured artifact."
+  - "No MIME, byte_length, SHA-256 or retrieved_at is fabricated."
+  - "No applicability edge is promoted from taxonomy, sector label, field overlap or system co-location alone."
