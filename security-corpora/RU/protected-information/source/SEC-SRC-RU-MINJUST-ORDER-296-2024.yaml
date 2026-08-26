@@ -1,0 +1,108 @@
+schema_version: "1.0"
+id: SEC-SRC-RU-MINJUST-ORDER-296-2024
+kind: security-regulatory-source
+status: PRIMARY_PUBLICATION_METADATA_VERIFIED_CURRENT_TEXT_CROSSCHECKED_EXACT_ARTIFACT_PENDING
+
+title: "Приказ Минюста России от 09.10.2024 № 296 «Об утверждении Порядка ведения Единого государственного реестра адвокатов и состава включаемых в него сведений и Порядка выдачи удостоверения адвоката»"
+jurisdiction: RU
+issuer: "Министерство юстиции Российской Федерации"
+document:
+  type: ministry_order
+  number: "296"
+  adopted_date: "2024-10-09"
+  minjust_registration_date: "2024-10-09"
+  minjust_registration_number: "79744"
+  official_publication_id: "0001202410090016"
+  official_publication_date: "2024-10-09"
+  effective_from: "2024-10-20"
+  checked_at: "2026-08-26"
+
+canonical_sources:
+  primary_publication:
+    publisher: "Официальное опубликование правовых актов"
+    url: "https://publication.pravo.gov.ru/document/0001202410090016"
+    origin_verified: true
+    proof_scope: "Официальные реквизиты приказа; exact PDF bytes в этом проходе не получены."
+  current_authority_text:
+    publisher: "Министерство юстиции Российской Федерации"
+    url: "https://minjust.gov.ru/ru/documents/7892/"
+    origin_verified: true
+    evidence_state: CURRENT_AUTHORITY_TEXT_VERIFIED
+  alternate_official_pdf:
+    publisher: "Управление Минюста России по Республике Ингушетия"
+    url: "https://to06.minjust.gov.ru/uploaded/files/prikaz-minyusta-rossii-ot-09102024-n-296-ob-utverzhdenii-po.pdf"
+    origin_verified: true
+    exact_bytes_state: DOWNLOAD_ATTEMPT_FAILED_TRANSIENTLY
+
+protected_information:
+  sector: professional_secrecy_advocacy
+  regime: advocacy_registry_person_level_information
+  legal_basis: "63-ФЗ статьи 14 и 15; Приказ Минюста России № 296"
+  protected_locators:
+    - locator: "Приложение № 1, пункты 1-4"
+      concept: UNIFIED_STATE_REGISTER_OF_ADVOCATES
+      finding: "Минюст ведет Единый государственный реестр адвокатов в бумажной и электронной формах; в него включаются сведения об адвокатах и предусмотренных порядком заявителях."
+    - locator: "Приложение № 1, пункт 5"
+      concept: ADVOCATE_PERSON_LEVEL_REGISTRY_FIELDS
+      finding: "Состав сведений реестра включает регистрационный номер, ФИО, субъект РФ, реквизиты решений о статусе, а также адрес места жительства, контактный телефон и адрес электронной почты при их наличии."
+    - locator: "Приложение № 1, документы и сведения, представляемые для реестровых действий"
+      concept: IDENTITY_BIOGRAPHICAL_EDUCATION_DOCUMENT_SET
+      finding: "Реестровые процедуры предусматривают представление идентификационных, биографических и образовательных документов/сведений, что формирует отдельный person-level data context."
+    - locator: "Приложение № 1, пункт 34"
+      concept: FAILED_QUALIFICATION_EXAM_APPLICANT_FIELDS
+      finding: "В журнале лиц, не сдавших квалификационный экзамен, учитываются ФИО, дата рождения, место рождения и дата экзамена."
+  publicness_boundary:
+    source: "63-ФЗ статья 14 пункт 7"
+    rule: "Сведения Единого государственного реестра адвокатов являются открытыми и общедоступными только в той части, в которой они отнесены к таковым федеральным органом юстиции."
+    guard: "Наличие адресных, контактных, биографических и иных person-level полей в реестровом контуре не означает, что все они являются общедоступными."
+  applicability_status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  applicability_guard: >-
+    Наличие person-level полей создает прямое пересечение с предметом регулирования персональных данных, но конкретные обязанности по 152-ФЗ должны привязываться к доказанным ролям, операциям, целям, составу данных и правовым основаниям. Публичность отдельных реестровых сведений не переносится автоматически на весь массив.
+
+relationship_candidates:
+  - target: "SEC-SRC-RU-FZ-63-2002"
+    locator: "статья 14"
+    type: DIRECT_SUBORDINATE_REGISTER_IMPLEMENTATION
+    state: STATUTORY_IMPLEMENTATION_RELATION
+  - target: "152-ФЗ"
+    type: DIRECT_PERSON_LEVEL_REGISTRY_PDN_OVERLAP
+    state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    guard: "Person-level registry fields create overlap, not automatic applicability of every PDN obligation to every registry operation."
+  - target: "SEC-SRC-RU-FZ-63-2002"
+    locator: "статья 39.5"
+    type: ADVOCACY_REGISTRY_AND_INFORMATION_SYSTEM_CONTEXT
+    state: CROSS_REGIME_RELATION
+    guard: "ЕГРА Минюста и КИС АР являются связанными, но не тождественными информационными контурами."
+
+version_chain:
+  state: CURRENT_ORIGINAL_EDITION_CROSSCHECKED_PRIMARY_EXACT_BYTES_PENDING
+  current_revision_crosscheck: "2024-10-09"
+  no_later_amendment_identified_as_of: "2026-08-26"
+  supersedes_or_replaces_context:
+    - "Приказ Минюста России от 23.04.2014 № 85"
+    - "Приказ Минюста России от 28.07.2016 № 214"
+    - "Приказ Минюста России от 24.02.2020 № 30"
+    - "Приказ Минюста России от 23.12.2022 № 399"
+    - "пункт 19 приказа Минюста России от 09.08.2023 № 210"
+  guard: "Отсутствие выявленной поздней поправки по официальной текущей карточке не заменяет byte-exact archival version sweep."
+
+capture:
+  exact_capture_attempted_at: "2026-08-26T11:19:16+03:00"
+  attempted_urls:
+    - "https://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202410090016"
+    - "https://to06.minjust.gov.ru/uploaded/files/prikaz-minyusta-rossii-ot-09102024-n-296-ob-utverzhdenii-po.pdf"
+  result: TRANSIENT_NETWORK_OR_DOWNLOAD_FAILURE
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  raw_artifact_ref: null
+  manifest_ref: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-MINJUST-ORDER-296-2024-capture-pending.json"
+  fingerprint_status: PENDING_EXACT_PRIMARY_BYTES
+
+proof_floor:
+  - "Taxonomy is discovery seed only; this source is registered from primary/current official act evidence."
+  - "EGR advocate person-level dataset overlap != automatic 152-ФЗ applicability."
+  - "Registry presence != public availability of every field."
+  - "Displayed portal PDF size is not byte_length."
+  - "No MIME, SHA-256, applicability or conflict is inferred without exact evidence."
