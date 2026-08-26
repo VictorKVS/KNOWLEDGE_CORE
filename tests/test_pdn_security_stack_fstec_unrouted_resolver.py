@@ -1,4 +1,4 @@
-from TOOLS.pdn_security_stack_resolve_fstec_unrouted_attachments import candidate_attachment_links, extract_landing, mime_for
+from TOOLS.pdn_security_stack_resolve_fstec_unrouted_attachments import TARGETS, candidate_attachment_links, extract_landing, mime_for
 
 
 def test_resolves_single_same_host_pdf_attachment():
@@ -41,3 +41,7 @@ def test_supported_mime_is_derived_from_route_only():
     assert mime_for("https://fstec.ru/files/a.pdf") == "application/pdf"
     assert mime_for("https://fstec.ru/files/a.doc") == "application/msword"
     assert mime_for("https://fstec.ru/files/a.docx") == "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+
+
+def test_fstec_5331_licensing_notice_is_in_bounded_resolution_targets():
+    assert "SEC-SRC-RU-FSTEC-INFO-240-13-5331-2026" in TARGETS
