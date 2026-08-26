@@ -1,0 +1,147 @@
+schema_version: "1.0"
+kind: ru-protected-information-master-inventory-delta
+base_inventory: "master-inventory.yaml"
+reconciliation_base_delta: "master-inventory-delta-2026-08-26T1119.yaml"
+checked_at: "2026-08-26T14:21:31+03:00"
+owner_stream: STREAM_3_SECTOR_OVERLAYS
+run_ref: "stream-3-run-2026-08-26T1421.yaml"
+status: APPEND_ONLY_RECONCILIATION_READY
+
+proof_floor:
+  - "Taxonomy remains discovery seed only; transport findings are grounded in primary/current statutory and official authority sources."
+  - "16-ФЗ Article 11 proves the EGIS OTB/ACBPD sector regime, but EGIS OTB scope is not equivalent to every transport-sector PDN processing operation."
+  - "Order 162 establishes a 7-year retention period for personal data in ACBPDP at the EGIS OTB operator; this is not a universal retention period for carrier source systems or unrelated processing."
+  - "PP 1251 governs the EGIS OTB system and multiple information resources; not every EGIS resource is automatically personal data."
+  - "As of 2026-08-26, future amendments effective 2026-09-01 are not folded into current requirements."
+  - "Exact official bytes were not obtained in this run; no MIME, byte length, retrieved_at or SHA-256 was synthesized."
+
+counter_state_before_reconciled: {found: 41, downloaded: 9, immutable: 9, pending: 30, reused: 2, primary_publication_verified: 17, sectors_registered: 25}
+counter_state_after_reconciliation:
+  found: 44
+  downloaded: 9
+  immutable: 9
+  pending: 33
+  reused: 2
+  primary_publication_verified: 20
+  sectors_registered: 25
+  new_sources_this_run: 3
+  existing_source_nodes_enriched: 0
+  new_immutable_this_run: 0
+  exact_binary_downloads_this_run: 0
+  primary_publication_metadata_verified_this_run: 3
+  pdn_relationship_candidates_added_this_run: 3
+  statutory_pdn_context_edges_added_this_run: 3
+  applicability_edges_promoted_this_run: 0
+  legal_conflicts_confirmed_this_run: 0
+  duplicate_sources_created: 0
+
+sources_added:
+  - source_id: SEC-SRC-RU-FZ-16-2007
+    sector: transport
+    title: "Федеральный закон от 09.02.2007 № 16-ФЗ «О транспортной безопасности»"
+    source_card: "security-corpora/RU/protected-information/source/SEC-SRC-RU-FZ-16-2007.yaml"
+    primary_publication: "Российская газета № 31, 14.02.2007"
+    primary_publication_state: PRIMARY_PUBLICATION_VERIFIED
+    current_data_locator: "статья 11"
+    core_concepts: [EGIS_OTB, ACBPD, RESTRICTED_ACCESS_INFORMATION, PASSENGER_CREW_PERSONAL_DATA, DIRECT_152FZ_TRANSFER_CONTEXT]
+  - source_id: SEC-SRC-RU-MINTRANS-ORDER-162-2024
+    sector: transport
+    title: "Приказ Минтранса России от 02.05.2024 № 162"
+    source_card: "security-corpora/RU/protected-information/source/SEC-SRC-RU-MINTRANS-ORDER-162-2024.yaml"
+    primary_publication_id: "0001202405310018"
+    minjust_registration_number: "78358"
+    primary_publication_state: PRIMARY_PUBLICATION_METADATA_VERIFIED_EXACT_BYTES_PENDING
+    effective_window: "2024-09-01/2030-09-01"
+    core_concepts: [SEVEN_YEAR_ACBPD_RETENTION, PDN_SECURITY, CRYPTO_CHANNELS, CONTROLLED_ACCESS, EXTENDED_DIGITAL_TRANSACTION_FIELDS]
+  - source_id: SEC-SRC-RU-PP-1251-2023
+    sector: transport
+    title: "Постановление Правительства РФ от 01.08.2023 № 1251"
+    source_card: "security-corpora/RU/protected-information/source/SEC-SRC-RU-PP-1251-2023.yaml"
+    primary_publication_id: "0001202308020035"
+    primary_publication_state: PRIMARY_PUBLICATION_METADATA_VERIFIED_EXACT_BYTES_PENDING
+    effective_from: "2023-09-01"
+    core_concepts: [EGIS_OTB_SYSTEM_GOVERNANCE, INFORMATION_RESOURCES, INFORMATION_PROTECTION, INFORMATION_EXCHANGE_ROLES]
+
+version_chain_delta:
+  - source: SEC-SRC-RU-FZ-16-2007
+    locator: "статья 11"
+    act: "107-ФЗ от 03.04.2023"
+    publication_id: "0001202304030019"
+    state: PRIMARY_PUBLICATION_METADATA_VERIFIED
+    effect: "Introduced Article 11 part 5.1-1; relevant block effective 2023-09-01."
+  - source: SEC-SRC-RU-FZ-16-2007
+    locator: "статья 11"
+    act: "387-ФЗ от 24.07.2023"
+    state: OFFICIAL_PUBLICATION_TEXT_VERIFIED_EXACT_PORTAL_ID_PENDING
+    effect: "Changed part 3(1) and added part 3.1; relevant changes effective 2024-09-01."
+  - source: SEC-SRC-RU-FZ-16-2007
+    act: "325-ФЗ от 04.08.2026"
+    publication_id: "0001202608040071"
+    state: CURRENT_SOURCE_LEVEL_EVENT_VERIFIED
+    effect: "Changes Articles 1 and 2 only; no impact identified on Article 11."
+  - source: SEC-SRC-RU-FZ-16-2007
+    act: "13-ФЗ от 30.01.2026"
+    state: FUTURE_NOT_CURRENT_AS_OF_2026_08_26
+    effective_from: "2026-09-01"
+    effect: "Changes Article 1; excluded from current Article 11 state."
+
+relationship_delta:
+  - source: SEC-SRC-RU-FZ-16-2007
+    locator: "статья 11 часть 7"
+    target: "152-ФЗ"
+    type: DIRECT_STATUTORY_PDN_TRANSFER_CONTEXT
+    state: STATUTORY_CONTEXT_APPLICABILITY_STILL_REVIEW_REQUIRED
+  - source: SEC-SRC-RU-MINTRANS-ORDER-162-2024
+    locator: "пункт 18 подпункт 7"
+    target: "152-ФЗ статья 19"
+    type: DIRECT_STATUTORY_PDN_SECURITY_CONTEXT
+    state: STATUTORY_CONTEXT_APPLICABILITY_STILL_REVIEW_REQUIRED
+  - source: SEC-SRC-RU-MINTRANS-ORDER-162-2024
+    locator: "пункт 13"
+    target: "PDN retention model"
+    type: SECTOR_SPECIFIC_RETENTION_BOUNDARY
+    state: DIRECT_NORMATIVE_RULE_WITH_SCOPE_GUARD
+    guard: "Seven years applies to ACBPDP at the EGIS OTB operator; do not reuse as a generic carrier/PDN retention period."
+  - source: SEC-SRC-RU-PP-1251-2023
+    target: "152-ФЗ"
+    type: EGIS_OTB_PERSONAL_DATA_SUBSYSTEM_OVERLAP
+    state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  - source: SEC-SRC-RU-PP-1251-2023
+    target: SEC-SRC-RU-MINTRANS-ORDER-162-2024
+    type: EGIS_OTB_TO_ACBPD_IMPLEMENTATION_LAYER
+    state: DIRECT_NORMATIVE_CONTEXT
+  - source: SEC-SRC-RU-MINTRANS-ORDER-162-2024
+    locator: "пункты 46/50"
+    target: "financial_special_regimes"
+    type: PAYMENT_METADATA_FIELD_OVERLAP
+    state: CANDIDATE_CROSS_REGIME_REVIEW_REQUIRED
+    guard: "Payment metadata fields do not automatically make the entire ACBPDP dataset bank secrecy."
+
+acquisition_delta:
+  exact_binary_attempted: true
+  attempted_sources: 3
+  exact_binary_downloads_succeeded: 0
+  durable_immutable_artifacts_added: 0
+  result: TRANSIENT_DNS_TIMEOUT_OR_BINARY_ROUTE_FAILURE
+  attempted_endpoints:
+    - "http://pravo.gov.ru/proxy/ips/?docbody=&nd=102074279"
+    - "https://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202405310018"
+    - "https://rostransnadzor.gov.ru/storage/documents/.../Приказ Минтранса России от 02.05.2024 N 162.pdf"
+    - "https://cdnstatic.rg.ru/uploads/attachments/2024/06/03/78358_166.pdf"
+    - "https://government.ru/docs/all/148897/"
+    - "https://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202308020035"
+  pending_capture_manifests:
+    - "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-16-2007-capture-pending.json"
+    - "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-MINTRANS-ORDER-162-2024-capture-pending.json"
+    - "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-PP-1251-2023-capture-pending.json"
+  exact_fields_guard: {retrieved_at: null, mime: null, byte_length: null, sha256: null}
+
+proof_floor_effect:
+  executable_rules_changed: false
+  applicability_edges_promoted: 0
+  duplicate_source_nodes_created: 0
+  legal_conflicts_confirmed: 0
+  source_nodes_added: 3
+
+merge_rule: >-
+  Reconcile after master-inventory-delta-2026-08-26T1119.yaml. Stream 3 counters become 44 found / 9 downloaded / 9 immutable / 33 pending / 2 reused, with primary_publication_verified=20 and sectors_registered=25. These three documents form one transport-security stack (16-ФЗ -> ПП №1251 -> Приказ №162) but remain distinct source nodes with locator-specific applicability guards.
