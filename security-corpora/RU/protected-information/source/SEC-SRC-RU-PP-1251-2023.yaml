@@ -1,0 +1,97 @@
+schema_version: "1.0"
+id: SEC-SRC-RU-PP-1251-2023
+kind: security-regulatory-source
+status: PRIMARY_PUBLICATION_METADATA_VERIFIED_CURRENT_TEXT_CROSSCHECKED_EXACT_ARTIFACT_PENDING
+
+title: "Постановление Правительства Российской Федерации от 01.08.2023 № 1251 «Об утверждении Положения о единой государственной информационной системе обеспечения транспортной безопасности»"
+jurisdiction: RU
+issuer: "Правительство Российской Федерации"
+document:
+  type: government_decree
+  number: "1251"
+  adopted_date: "2023-08-01"
+  official_publication_id: "0001202308020035"
+  official_publication_date: "2023-08-02"
+  effective_from: "2023-09-01"
+  checked_at: "2026-08-26"
+
+canonical_sources:
+  primary_authority:
+    publisher: "Правительство России"
+    url: "https://government.ru/docs/all/148897/"
+    origin_verified: true
+    proof_scope: "Официальный текст постановления и Положения; страница Правительства указывает downloadable PDF, exact bytes не получены в этом run."
+  primary_publication:
+    publisher: "Официальное опубликование правовых актов"
+    url: "https://publication.pravo.gov.ru/document/0001202308020035"
+    origin_verified: true
+    proof_scope: "Официальный publication locator и дата публикации."
+  current_system_authority:
+    publisher: "Министерство транспорта Российской Федерации"
+    url: "https://mintrans.gov.ru/activities/94/7/9"
+    origin_verified: true
+    evidence_state: CURRENT_AUTHORITY_CONTEXT_VERIFIED
+
+protected_information:
+  sector: transport
+  regime: egis_otb_system_governance_and_information_protection
+  legal_basis: "16-ФЗ статья 11 часть 1.1; ПП РФ № 1251"
+  protected_locators:
+    - locator: "Положение, пункт 1"
+      concept: EGIS_OTB_SYSTEM_SCOPE_AND_PROTECTION_REQUIREMENTS
+      finding: "Положение определяет цели, структуру, информационные ресурсы/подсистемы, участников информационного взаимодействия и общие требования к защите информации ЕГИС ОТБ."
+    - locator: "Положение, структура информационных ресурсов"
+      concept: MULTI_REGIME_RESTRICTED_TRANSPORT_DATASETS
+      finding: "В ЕГИС ОТБ входят АЦБПДП пассажиров/экипажа и иные специализированные транспортные ресурсы, включая сведения о состоянии здоровья отдельных авиационных работников, результаты оценки уязвимости, планы безопасности, уведомления об опасных грузах и отраслевые реестры."
+    - locator: "Положение, оператор/участники информационного взаимодействия"
+      concept: EGIS_OTB_OPERATOR_AND_INFORMATION_EXCHANGE_ROLES
+      finding: "Минтранс выступает государственным заказчиком и оператором ЕГИС ОТБ; Положение распределяет полномочия участников информационного взаимодействия."
+  applicability_status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  applicability_guard: >-
+    ПП № 1251 описывает конкретную государственную систему и набор ее ресурсов. Нельзя распространять системные требования ЕГИС ОТБ на любую информационную систему транспортной организации без доказанного включения в соответствующий контур/обмен.
+
+relationship_candidates:
+  - target: "SEC-SRC-RU-FZ-16-2007"
+    locator: "статья 11 часть 1.1"
+    type: DIRECT_SUBORDINATE_SYSTEM_GOVERNANCE_IMPLEMENTATION
+    state: STATUTORY_IMPLEMENTATION_RELATION
+  - target: "SEC-SRC-RU-MINTRANS-ORDER-162-2024"
+    type: ACBPDP_SUBSYSTEM_IMPLEMENTATION_LAYER
+    state: DIRECT_NORMATIVE_CONTEXT
+  - target: "152-ФЗ"
+    type: EGIS_OTB_PERSONAL_DATA_SUBSYSTEM_OVERLAP
+    state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    guard: "Наличие АЦБПДП и person-level ресурсов в составе ЕГИС ОТБ доказывает PDN-контекст системы, но не делает каждый ресурс системы персональными данными."
+  - target: "health_information_regimes"
+    type: TRANSPORT_HEALTH_DATA_SUBSYSTEM_OVERLAP
+    state: CANDIDATE_CROSS_REGIME_REVIEW_REQUIRED
+    guard: "Сведения о здоровье авиационного персонала требуют отдельного locator/source анализа; не приравнивать их автоматически к врачебной тайне."
+
+version_chain:
+  state: CURRENT_TEXT_CROSSCHECKED_EXACT_PRIMARY_BYTES_PENDING
+  current_revision_crosscheck: "2023-08-01"
+  no_later_amendment_identified_as_of: "2026-08-26"
+  special_effective_dates:
+    - locator: "подпункт «м» пункта 4 и подпункт «г» пункта 9 Положения"
+      effective_from: "2024-03-01"
+  guard: "Current authority usage by Mintrans is verified; full amendment sweep and exact official binary remain capture tasks."
+
+capture:
+  exact_capture_attempted_at: "2026-08-26T14:21:31+03:00"
+  attempted_urls:
+    - "https://government.ru/docs/all/148897/"
+    - "https://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202308020035"
+  result: TRANSIENT_TIMEOUT_OR_BINARY_DOWNLOAD_FAILURE
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  raw_artifact_ref: null
+  manifest_ref: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-PP-1251-2023-capture-pending.json"
+  fingerprint_status: PENDING_EXACT_PRIMARY_BYTES
+
+proof_floor:
+  - "System membership and resource type must be proven before applying a subsystem rule."
+  - "EGIS OTB contains both PDN and other restricted/sector information; do not collapse all resources into one regime."
+  - "Displayed downloadable PDF size is not byte_length."
+  - "No MIME, byte length, retrieved_at or SHA-256 is synthesized without exact bytes."
