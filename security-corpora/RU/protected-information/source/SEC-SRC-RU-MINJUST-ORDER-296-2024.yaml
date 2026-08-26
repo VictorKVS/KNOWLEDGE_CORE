@@ -41,23 +41,23 @@ protected_information:
   protected_locators:
     - locator: "Приложение № 1, пункты 1-4"
       concept: UNIFIED_STATE_REGISTER_OF_ADVOCATES
-      finding: "Минюст ведет Единый государственный реестр адвокатов в бумажной и электронной формах; в него включаются сведения об адвокатах и предусмотренных порядком заявителях."
+      finding: "Минюст ведет Единый государственный реестр адвокатов в бумажной и электронной формах; он включает раздел реестра адвокатов и журнал лиц, не сдавших квалификационный экзамен."
     - locator: "Приложение № 1, пункт 5"
-      concept: ADVOCATE_PERSON_LEVEL_REGISTRY_FIELDS
-      finding: "Состав сведений реестра включает регистрационный номер, ФИО, субъект РФ, реквизиты решений о статусе, а также адрес места жительства, контактный телефон и адрес электронной почты при их наличии."
-    - locator: "Приложение № 1, документы и сведения, представляемые для реестровых действий"
-      concept: IDENTITY_BIOGRAPHICAL_EDUCATION_DOCUMENT_SET
-      finding: "Реестровые процедуры предусматривают представление идентификационных, биографических и образовательных документов/сведений, что формирует отдельный person-level data context."
-    - locator: "Приложение № 1, пункт 34"
+      concept: CORE_ADVOCATE_REGISTER_FIELDS
+      finding: "Основной реестровый состав включает регистрационный номер, субъект РФ, ФИО и реквизиты решений/распоряжений о статусе и его изменениях."
+    - locator: "Приложение № 1, пункты 24-33, в том числе пункт 26"
+      concept: REGISTRY_ACTION_WORKFLOW_PERSON_LEVEL_INPUTS
+      finding: "Для реестровых действий в уведомлениях/заявлениях и приложениях обрабатываются дополнительные person-level сведения: адрес места жительства, контактный телефон, адрес электронной почты, копия документа, удостоверяющего личность, анкета с биографическими сведениями, документы об образовании и стаже. Эти сведения являются входами/материалами реестрового процесса и не помечаются автоматически как поля основной реестровой таблицы пункта 5."
+    - locator: "Приложение № 1, пункт 34 и приложение № 2 к Порядку ведения реестра"
       concept: FAILED_QUALIFICATION_EXAM_APPLICANT_FIELDS
-      finding: "В журнале лиц, не сдавших квалификационный экзамен, учитываются ФИО, дата рождения, место рождения и дата экзамена."
+      finding: "Журнал лиц, не сдавших квалификационный экзамен, включает ФИО, дату экзамена, дату рождения и место рождения претендента."
   publicness_boundary:
     source: "63-ФЗ статья 14 пункт 7"
-    rule: "Сведения Единого государственного реестра адвокатов являются открытыми и общедоступными только в той части, в которой они отнесены к таковым федеральным органом юстиции."
-    guard: "Наличие адресных, контактных, биографических и иных person-level полей в реестровом контуре не означает, что все они являются общедоступными."
+    rule: "Сведения об адвокатах, содержащиеся в Едином государственном реестре адвокатов, являются открытыми и общедоступными лишь при условии отнесения их к таковым федеральным органом юстиции."
+    guard: "Нельзя автоматически считать общедоступными ни все поля реестра, ни документы/уведомления реестрового дела и входные данные реестровых процедур."
   applicability_status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
   applicability_guard: >-
-    Наличие person-level полей создает прямое пересечение с предметом регулирования персональных данных, но конкретные обязанности по 152-ФЗ должны привязываться к доказанным ролям, операциям, целям, составу данных и правовым основаниям. Публичность отдельных реестровых сведений не переносится автоматически на весь массив.
+    Приказ № 296 доказывает обработку значимого набора сведений о физических лицах в реестровом контуре. Конкретные обязанности по 152-ФЗ должны привязываться к доказанным ролям, операциям, целям, составу данных и правовым основаниям. Не смешивать core register fields, journal fields и workflow/case-file inputs.
 
 relationship_candidates:
   - target: "SEC-SRC-RU-FZ-63-2002"
@@ -65,9 +65,9 @@ relationship_candidates:
     type: DIRECT_SUBORDINATE_REGISTER_IMPLEMENTATION
     state: STATUTORY_IMPLEMENTATION_RELATION
   - target: "152-ФЗ"
-    type: DIRECT_PERSON_LEVEL_REGISTRY_PDN_OVERLAP
+    type: DIRECT_PERSON_LEVEL_REGISTRY_WORKFLOW_PDN_OVERLAP
     state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
-    guard: "Person-level registry fields create overlap, not automatic applicability of every PDN obligation to every registry operation."
+    guard: "Person-level register/journal/workflow data prove overlap, not automatic applicability of every PDN obligation to every registry operation."
   - target: "SEC-SRC-RU-FZ-63-2002"
     locator: "статья 39.5"
     type: ADVOCACY_REGISTRY_AND_INFORMATION_SYSTEM_CONTEXT
@@ -80,9 +80,9 @@ version_chain:
   no_later_amendment_identified_as_of: "2026-08-26"
   supersedes_or_replaces_context:
     - "Приказ Минюста России от 23.04.2014 № 85"
-    - "Приказ Минюста России от 28.07.2016 № 214"
-    - "Приказ Минюста России от 24.02.2020 № 30"
-    - "Приказ Минюста России от 23.12.2022 № 399"
+    - "Приказ Минюста России от 26.09.2016 № 214"
+    - "Приказ Минюста России от 28.02.2020 № 30"
+    - "Приказ Минюста России от 14.12.2022 № 399"
     - "пункт 19 приказа Минюста России от 09.08.2023 № 210"
   guard: "Отсутствие выявленной поздней поправки по официальной текущей карточке не заменяет byte-exact archival version sweep."
 
@@ -102,7 +102,8 @@ capture:
 
 proof_floor:
   - "Taxonomy is discovery seed only; this source is registered from primary/current official act evidence."
-  - "EGR advocate person-level dataset overlap != automatic 152-ФЗ applicability."
-  - "Registry presence != public availability of every field."
+  - "Core register fields, journal fields and workflow/case-file inputs are distinct datasets and must not be collapsed."
+  - "Person-level registry workflow overlap != automatic 152-ФЗ applicability."
+  - "Registry/workflow presence != public availability of every field."
   - "Displayed portal PDF size is not byte_length."
   - "No MIME, SHA-256, applicability or conflict is inferred without exact evidence."
