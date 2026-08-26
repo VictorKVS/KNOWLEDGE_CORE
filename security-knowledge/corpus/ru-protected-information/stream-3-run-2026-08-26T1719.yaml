@@ -1,0 +1,87 @@
+schema_version: "1.0"
+kind: stream-3-sector-library-run
+owner_stream: STREAM_3_SECTOR_OVERLAYS
+started_at: "2026-08-26T17:19:22+03:00"
+checked_at: "2026-08-26T17:19:22+03:00"
+status: COMPLETED_WITH_EXACT_CAPTURE_BACKLOG
+
+focus:
+  primary_sector: employment_hr
+  subdomain: employee_personal_data_chapter_14
+  reason: "A dedicated Labor Code Chapter 14 source node was absent from the protected-information source registry, despite its direct sectoral regulation of employee personal data and strong overlap with 152-ФЗ."
+
+work_completed:
+  discovery:
+    sources_added: 1
+    source_ids:
+      - SEC-SRC-RU-TK-197-2001
+    duplicate_check: "No existing 197-ФЗ / Labor Code Chapter 14 source card was found in the protected-information source registry."
+  legal_analysis:
+    - "Article 86 limits employee-personal-data processing to employment and expressly stated statutory purposes."
+    - "Article 86 regulates data acquisition from the employee and, for a described scenario, acquisition from third parties with notice/consent safeguards."
+    - "Article 86 contains a special restriction on processing special categories of employee personal data, subject to statutory exceptions."
+    - "Article 87 requires employer rules for storage and use of employee personal data but does not itself establish a single universal HR retention period."
+    - "Article 88 establishes special transfer rules for employee personal data, including third-party and commercial-use restrictions with statutory exceptions."
+    - "Article 89 provides employee rights to information, access, copies, correction/completion and judicial challenge."
+    - "Article 90 establishes liability for violations in employee-personal-data processing."
+    - "The Chapter 14 regime is a special employment-law overlay and is not treated as identical to 152-ФЗ."
+  version_chain:
+    - "90-ФЗ от 30.06.2006 is reflected by current-text amendment markers across Article 86 and Articles 87-90; exact primary amendment artifact remains pending."
+    - "99-ФЗ от 07.05.2013 is reflected by current-text markers for Article 86 special-category wording and Article 90; exact primary artifact remains pending."
+    - "185-ФЗ от 02.07.2013 is reflected by the current-text marker for Article 86(1) purpose wording; exact primary artifact remains pending."
+    - "Current 2026 crosscheck retains those locator-specific Chapter 14 amendment markers."
+    - "90-ФЗ and 91-ФЗ of 09.04.2026, 108-ФЗ of 25.04.2026, 144-ФЗ of 25.05.2026 are future from 01.09.2026; 246-ФЗ of 26.07.2026 is future from 01.03.2027; none is folded into current state on 26.08.2026 and no Chapter 14 impact was identified in this sweep."
+
+scope_guards:
+  - "OVERLAP != APPLICABILITY."
+  - "Employee status must be proven; Chapter 14 is not automatically applied to candidates, contractors, customers or other data subjects."
+  - "Article 87 storage governance != a universal HR/PDN retention period."
+  - "Labor Code special-category wording remains a distinct statutory layer; concrete 152-ФЗ duties are attached only after scenario proof."
+  - "Future 01.09.2026 / 01.03.2027 amendments != current state on 26.08.2026."
+
+acquisition:
+  exact_binary_attempted: true
+  attempted_source_count: 1
+  attempted_endpoint_count: 2
+  successful_exact_downloads: 0
+  durable_immutable_artifacts_added: 0
+  result: TRANSIENT_NETWORK_OR_BINARY_DOWNLOAD_FAILURE
+  observations:
+    - "The Government authority page for 197-ФЗ was verified as the current authority text locator."
+    - "An official Rostrud-hosted PDF consolidation was identified as a useful historical/agency crosscheck but is not treated as a current immutable artifact."
+    - "Direct download attempts for the authority page/artifact and Rostrud PDF failed in the binary runtime; exact bytes were therefore not hashed or persisted."
+  manifest_created: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-TK-197-2001-capture-pending.json"
+
+inventory_reconciliation:
+  before: {found: 44, downloaded: 9, immutable: 9, pending: 33, reused: 2, primary_publication_verified: 20, sectors_registered: 25}
+  after: {found: 45, downloaded: 9, immutable: 9, pending: 34, reused: 2, primary_publication_verified: 20, sectors_registered: 26}
+  master_delta: "master-inventory-delta-2026-08-26T1719.yaml"
+  pdn_delta: "../ru-personal-data/master-source-inventory-delta-stream3-2026-08-26T1719.yaml"
+  applicability_promotions: 0
+  legal_conflicts_confirmed: 0
+  duplicate_sources_created: 0
+
+production_metrics:
+  new_source_nodes: 1
+  existing_source_nodes_enriched: 0
+  exact_binary_source_attempts: 1
+  exact_binary_endpoint_attempts: 2
+  exact_binary_successes: 0
+  new_immutable_artifacts: 0
+  primary_publication_verifications: 0
+  current_authority_text_verifications: 1
+  comparable_single_stream_time_baseline_available: false
+  acceleration_percent: null
+  completion_forecast: null
+  note: "No speedup percentage or completion-time forecast is reported because comparable per-source/per-chunk timing telemetry is not available for this run."
+
+next_priority:
+  - "Retry byte-exact capture of a current authoritative 197-ФЗ artifact and the original official publication; persist/hash only after exact bytes are obtained."
+  - "Capture exact primary amendment artifacts for 90-ФЗ/2006, 99-ФЗ/2013 and 185-ФЗ/2013 to strengthen the locator-specific Chapter 14 version chain."
+  - "Then return to unresolved high-priority healthcare/medical secrecy, banking/insurance/credit histories, telecom, education/children, government, biometrics, transport, advertising and archives/retention queues."
+
+proof_floor:
+  - "No exact-byte claim is made without a durably captured artifact."
+  - "No MIME, byte_length, SHA-256 or retrieved_at is fabricated."
+  - "No applicability edge is promoted from employment-sector label alone."
+  - "No fixed retention term is inferred from Article 87 without a separate record-specific authority."
