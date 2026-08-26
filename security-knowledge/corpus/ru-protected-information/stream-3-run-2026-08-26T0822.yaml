@@ -1,0 +1,102 @@
+schema_version: "1.0"
+kind: stream-3-run-log
+run_id: STREAM3-2026-08-26T0822
+owner_stream: STREAM_3_SECTOR_OVERLAYS
+started_at: "2026-08-26T08:22:22+03:00"
+status: COMPLETED_WITH_EXACT_CAPTURE_PENDING
+
+objective: >-
+  Continue discovery, current-version validation, deduplication and registration of primary normative sources for sectoral/special protected-information regimes intersecting with 152-ФЗ, while keeping applicability and exact-artifact proof conservative.
+
+focus_this_run:
+  sector: advertising_marketing
+  reason: "Continue the subordinate layer of 38-ФЗ Article 18.1 identified by the previous Stream 3 run before returning to other priority sectors."
+
+sources_registered:
+  - id: SEC-SRC-RU-PP-948-2022
+    act: "Постановление Правительства РФ от 25.05.2022 № 948"
+    role: "criteria defining advertising-market actors obliged to provide/ensure provision of internet-ad information to Roskomnadzor"
+    primary_publication_id: "0001202205270045"
+    primary_state: PRIMARY_PUBLICATION_METADATA_VERIFIED_EXACT_BYTES_PENDING
+    current_revision: "2025-05-22"
+    current_revision_effective_from: "2025-05-23"
+    scheduled_expiry: "2028-09-01"
+    amendments_crosschecked: ["2355 от 20.12.2022", "709 от 22.05.2025"]
+  - id: SEC-SRC-RU-RKN-ORDER-68-2025
+    act: "Приказ Роскомнадзора от 25.03.2025 № 68"
+    role: "requirements for online-ad identifiers, assignment, placement, storage and provision to Roskomnadzor"
+    primary_publication_id: "0001202504140029"
+    minjust_registration_number: "81842"
+    primary_state: PRIMARY_PUBLICATION_METADATA_VERIFIED_EXACT_BYTES_PENDING
+    effective_from: "2025-04-25"
+    current_revision: "2025-03-25"
+    key_retention: "one year from identifier assignment"
+  - id: SEC-SRC-RU-GOV-R-1362R-2022
+    act: "Распоряжение Правительства РФ от 30.05.2022 № 1362-р"
+    role: "composition of internet-ad/social-ad information subject to accounting, storage and processing by Roskomnadzor"
+    primary_publication_id: "0001202205310015"
+    primary_state: PRIMARY_PUBLICATION_LOCATOR_CROSSCHECKED_DIRECT_FETCH_PENDING
+    current_revision: "2025-09-18"
+    scheduled_expiry: "2028-09-01"
+    amendments_crosschecked: ["2355 от 20.12.2022", "743 от 28.05.2025", "1427 от 18.09.2025"]
+
+pdn_overlap_findings:
+  - source: SEC-SRC-RU-PP-948-2022
+    finding: "Actor criteria may include natural persons and IPs, but actor scope alone does not establish PDN processing."
+    state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  - source: SEC-SRC-RU-RKN-ORDER-68-2025
+    finding: "Advertising identifier is a traceability token; it becomes PDN-relevant only if linkage to an identifiable natural person is proven in a concrete system."
+    state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  - source: SEC-SRC-RU-GOV-R-1362R-2022
+    finding: "The regulatory dataset includes person-level identifying/contact/representative fields for relevant natural-person categories and is therefore a strong PDN-overlap candidate."
+    state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+
+retention_guard:
+  - "RKN Order 68 one-year identifier retention is sector traceability retention, not a general PDN retention/deletion term."
+  - "Existing 38-ФЗ Article 18.1 regulator retention remains a separate dataset rule; do not merge the periods."
+
+version_chain_result:
+  PP_948: CURRENT_REVISION_CROSSCHECKED_PRIMARY_AMENDMENT_BYTES_PENDING
+  RKN_ORDER_68: CURRENT_ORIGINAL_EDITION_CROSSCHECKED_PRIMARY_EXACT_BYTES_PENDING
+  GOV_R_1362R: CURRENT_REVISION_CROSSCHECKED_PRIMARY_AMENDMENT_BYTES_PENDING
+  executable_current_rules_promoted: 0
+
+acquisition_attempt:
+  attempted: true
+  attempted_sources: 3
+  endpoint_host: "publication.pravo.gov.ru"
+  preferred_pattern: "https://publication.pravo.gov.ru/File/Pdf?eoNumber=<publication_id>"
+  runtime_result: TRANSIENT_DNS_FAILURE
+  runtime_error_class: "socket.gaierror / Temporary failure in name resolution"
+  exact_downloads: 0
+  immutable_artifacts_added: 0
+  exact_fields_written: false
+  guard: "No retrieved_at, MIME, byte_length or SHA-256 is populated until exact bytes are received and durably stored."
+
+counter_reconciliation:
+  before: {found: 37, downloaded: 9, immutable: 9, pending: 26, reused: 2, primary_publication_verified: 14, sectors_registered: 25}
+  after: {found: 40, downloaded: 9, immutable: 9, pending: 29, reused: 2, primary_publication_verified: 16, sectors_registered: 25}
+  delta: {found: 3, downloaded: 0, immutable: 0, pending: 3, reused: 0, primary_publication_verified: 2, sectors_registered: 0}
+
+files_written:
+  - "security-corpora/RU/protected-information/source/SEC-SRC-RU-PP-948-2022.yaml"
+  - "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-PP-948-2022-capture-pending.json"
+  - "security-corpora/RU/protected-information/source/SEC-SRC-RU-RKN-ORDER-68-2025.yaml"
+  - "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-RKN-ORDER-68-2025-capture-pending.json"
+  - "security-corpora/RU/protected-information/source/SEC-SRC-RU-GOV-R-1362R-2022.yaml"
+  - "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-GOV-R-1362R-2022-capture-pending.json"
+  - "security-knowledge/corpus/ru-protected-information/master-inventory-delta-2026-08-26T0822.yaml"
+  - "security-knowledge/corpus/ru-personal-data/master-source-inventory-delta-stream3-2026-08-26T0822.yaml"
+  - "security-knowledge/corpus/ru-protected-information/stream-3-run-2026-08-26T0822.yaml"
+
+proof_floor:
+  - "Taxonomy is discovery seed only."
+  - "OVERLAP != APPLICABILITY."
+  - "Advertising actor/token/dataset rules remain distinct operations and are not merged."
+  - "Displayed portal file sizes are not exact byte lengths."
+  - "No legal conflicts confirmed."
+  - "No applicability edges promoted."
+
+next_priority:
+  - "Retry byte-exact official capture for 948/68/1362-r and prior advertising subordinate acts through official publication endpoints when DNS is available."
+  - "If official capture remains transiently blocked, resume high-priority sector discovery in healthcare/medical secrecy, finance/banking/insurance/credit histories, communications, education/children and government data while preserving the pending-capture queue."
