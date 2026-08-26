@@ -1,0 +1,97 @@
+schema_version: "1.0"
+id: PDN-STREAM1-RUN-2026-08-26T1658+0300
+kind: pdn-core-production-run
+stream: 1
+observed_at: "2026-08-26T16:58:14+03:00"
+status: COMPLETED_WITH_PENDING_TRANSPORT_GAPS
+
+scope:
+  - general 152-FZ core
+  - Roskomnadzor core acts
+  - direct active dependencies only
+
+master_state:
+  identified: 35
+  metadata_verified: 34
+  current_revision_identity_pending_raw: 1
+  raw_downloaded_exact: 33
+  immutable_sha256_verified: 33
+  atomized_existing_proposed: 4
+  atomized_verified: 0
+  pending_raw_capture: 2
+  raw_capture_coverage_ratio: 0.9429
+
+reuse_telemetry:
+  generic_targets_total: 34
+  reused_immutable: 33
+  network_targets_attempted_generic: 0
+  new_immutable_captured: 0
+  generic_reuse_ratio: 0.9705882352941176
+  note: >-
+    Current consolidated 152-FZ is handled by dedicated guarded routes and is therefore outside the ordinary
+    publication-ID target count. PP687 is also handled by a dedicated route.
+
+pending_sources:
+  - source_id: SEC-SRC-RU-152FZ-2026-07-26
+    requested_artifact_role: OFFICIAL_CURRENT_TEXT_SNAPSHOT
+    primary_amendment_anchor: SEC-SRC-RU-FZ265-2026
+    status: PENDING
+    latest_diagnostics:
+      - TRANSPORT_TIMEOUT
+      - CURRENT_REVISION_MARKER_MISS
+      - ALL_REGISTERED_ROUTES_FAILED
+    observed_detail: >-
+      TLS pravo.gov.ru routes timed out. As-recorded IPS responses either failed current-revision proof or returned
+      HTTP 500 on print rendering. Government route timed out. urllib fallback returned content that did not prove
+      the pinned 26.07.2026 revision by explicit 265-FZ citation or Article-12 delta fingerprint.
+    proof_floor_held: true
+    semantic_promotion: false
+
+  - source_id: SEC-SRC-RU-PP687-2008
+    requested_artifact_role: OFFICIAL_CURRENT_TEXT_SNAPSHOT
+    primary_amendment_anchor: SEC-SRC-RU-PP12-2025
+    status: PENDING
+    latest_diagnostics:
+      - TRANSPORT_TIMEOUT
+      - IDENTITY_MARKER_MISS
+      - CURRENT_REVISION_MARKER_MISS
+      - ALL_REGISTERED_ROUTES_FAILED
+    observed_detail: >-
+      TLS pravo.gov.ru routes and Government route timed out. The reachable as-recorded IPS response did not prove
+      the required PP687 identity/current-revision fingerprint; print rendering returned HTTP 500. No response was
+      accepted as immutable current text.
+    proof_floor_held: true
+    semantic_promotion: false
+
+improvement:
+  evidence_policy_added: "../../PDN_ARTIFACT_EVIDENCE_ROLES.yaml"
+  policy_change: >-
+    Artifact evidence is now explicitly separated into PRIMARY_ORIGINAL, OFFICIAL_CURRENT_TEXT_SNAPSHOT, and
+    DERIVED_COMPILED_CURRENT_TEXT. This prevents consolidated current text from being mislabeled as a newly
+    promulgated primary act and preserves distinct provenance for official publication, current rendering, and
+    deterministic compilation.
+  counter_rule: >-
+    Existing master counters are preserved and are not inflated by the new evidence-role model. Both current-text
+    snapshots remain pending until their exact byte/hash/version gates pass.
+
+proof_floor:
+  exact_bytes_required: true
+  mime_required: true
+  exact_byte_length_required: true
+  sha256_required: true
+  registered_official_route_required: true
+  current_revision_proof_required: true
+  automatic_semantic_promotion: false
+
+result:
+  new_sources_registered: 0
+  new_immutable: 0
+  semantic_promotions: 0
+  master_counter_change: 0
+  architecture_improvements: 1
+  unresolved_raw_gaps: 2
+
+next_gate: >-
+  Continue guarded retries only for the two missing official current-text snapshots. Do not re-download the 33
+  immutable reusable sources. In parallel, the 33 immutable sources are eligible for the next factory layer:
+  structure -> legal/semantic chunks -> concepts/definitions -> conflict detection -> atomic requirements -> typed relations.
