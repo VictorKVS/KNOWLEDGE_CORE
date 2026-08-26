@@ -1,0 +1,113 @@
+schema_version: "1.0"
+kind: ru-protected-information-master-inventory-delta
+base_inventory: "master-inventory.yaml"
+reconciliation_base_delta: "master-inventory-delta-2026-08-26T0822.yaml"
+checked_at: "2026-08-26T11:19:16+03:00"
+owner_stream: STREAM_3_SECTOR_OVERLAYS
+run_ref: "stream-3-run-2026-08-26T1119.yaml"
+status: APPEND_ONLY_RECONCILIATION_READY
+
+proof_floor:
+  - "Taxonomy remains discovery seed only; normative conclusions require primary/current act evidence."
+  - "Advocate secrecy is a professional secrecy regime and is not identical to personal data."
+  - "63-ФЗ Article 39.5 creates a direct PDN/information-protection context for KIS AR, but this does not auto-promote all attorney records to every 152-ФЗ obligation."
+  - "Order 296 creates a person-level government registry dataset; registry presence does not mean every field is public."
+  - "63-ФЗ Article 14(7) makes publicness conditional on classification by the federal justice authority."
+  - "Exact official bytes were not obtained in this run; no MIME, byte length, retrieved_at or SHA-256 was synthesized."
+
+counter_state_before_reconciled: {found: 40, downloaded: 9, immutable: 9, pending: 29, reused: 2, primary_publication_verified: 16, sectors_registered: 25}
+counter_state_after_reconciliation:
+  found: 41
+  downloaded: 9
+  immutable: 9
+  pending: 30
+  reused: 2
+  primary_publication_verified: 17
+  sectors_registered: 25
+  new_sources_this_run: 1
+  existing_source_nodes_enriched: 1
+  new_immutable_this_run: 0
+  exact_binary_downloads_this_run: 0
+  primary_publication_metadata_verified_this_run: 1
+  pdn_relationship_candidates_added_this_run: 2
+  statutory_pdn_context_edges_added_this_run: 1
+  applicability_edges_promoted_this_run: 0
+  legal_conflicts_confirmed_this_run: 0
+  duplicate_sources_created: 0
+
+sources_added:
+  - source_id: SEC-SRC-RU-MINJUST-ORDER-296-2024
+    sector: professional_secrecy_advocacy
+    title: "Приказ Минюста России от 09.10.2024 № 296"
+    source_card: "security-corpora/RU/protected-information/source/SEC-SRC-RU-MINJUST-ORDER-296-2024.yaml"
+    primary_publication_id: "0001202410090016"
+    minjust_registration_number: "79744"
+    primary_publication_state: PRIMARY_PUBLICATION_METADATA_VERIFIED_EXACT_BYTES_PENDING
+    effective_from: "2024-10-20"
+    current_revision_crosscheck: "2024-10-09"
+    core_concepts: [UNIFIED_STATE_REGISTER_OF_ADVOCATES, ADVOCATE_PERSON_LEVEL_REGISTRY_FIELDS, IDENTITY_BIOGRAPHICAL_EDUCATION_DOCUMENT_SET, FAILED_QUALIFICATION_EXAM_APPLICANT_FIELDS]
+
+sources_enriched:
+  - source_id: SEC-SRC-RU-FZ-63-2002
+    sector: professional_secrecy_advocacy
+    findings_added:
+      - "Article 6(4)(5): client-information non-disclosure without client consent."
+      - "Article 8(1-3): advocate-secret scope and procedural protections."
+      - "Articles 27(3)/28(3): assistant and trainee secrecy duties."
+      - "Article 39.5(1-2): KIS AR confidentiality plus direct protection under PDN and information-protection legislation."
+    current_authority: "https://minjust.gov.ru/ru/documents/7885/"
+    current_source_level_amendment_sweep_through: "83-ФЗ от 22.04.2024"
+
+relationship_delta:
+  - source: SEC-SRC-RU-MINJUST-ORDER-296-2024
+    target: "63-ФЗ статья 14"
+    type: DIRECT_SUBORDINATE_REGISTER_IMPLEMENTATION
+    state: STATUTORY_IMPLEMENTATION_RELATION
+  - source: SEC-SRC-RU-MINJUST-ORDER-296-2024
+    target: "152-ФЗ"
+    type: DIRECT_PERSON_LEVEL_REGISTRY_PDN_OVERLAP
+    state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    guard: "Person-level fields prove overlap, not automatic applicability of every PDN obligation to every registry operation."
+  - source: SEC-SRC-RU-FZ-63-2002
+    locator: "статья 39.5 часть 2"
+    target: "152-ФЗ"
+    type: DIRECT_STATUTORY_PDN_PROTECTION_CONTEXT_FOR_KIS_AR
+    state: STATUTORY_CONTEXT_APPLICABILITY_STILL_REVIEW_REQUIRED
+    guard: "The direct statutory reference concerns protection of KIS AR information; do not generalize it to every advocate-secret record."
+  - source: SEC-SRC-RU-MINJUST-ORDER-296-2024
+    target: SEC-SRC-RU-FZ-63-2002
+    locator: "статья 39.5"
+    type: ADVOCACY_REGISTRY_AND_INFORMATION_SYSTEM_CONTEXT
+    state: CROSS_REGIME_RELATION
+    guard: "ЕГРА Минюста and KIS AR are related but distinct information contours."
+
+publicness_boundary:
+  - source_id: SEC-SRC-RU-FZ-63-2002
+    locator: "статья 14 пункт 7"
+    rule: "Only register information classified by the federal justice authority as open/public is open/public."
+    implication: "Do not mark address/contact/biographical fields from Order 296 as public merely because they occur in the register workflow."
+
+acquisition_delta:
+  exact_binary_attempted: true
+  attempted_sources: 2
+  exact_binary_downloads_succeeded: 0
+  durable_immutable_artifacts_added: 0
+  result: TRANSIENT_NETWORK_OR_DOWNLOAD_FAILURE
+  attempted_endpoints:
+    - "https://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202410090016"
+    - "https://to06.minjust.gov.ru/uploaded/files/prikaz-minyusta-rossii-ot-09102024-n-296-ob-utverzhdenii-po.pdf"
+    - "https://minjust.gov.ru/ru/documents/7885/"
+  pending_capture_manifests:
+    - "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-MINJUST-ORDER-296-2024-capture-pending.json"
+  exact_fields_guard: {retrieved_at: null, mime: null, byte_length: null, sha256: null}
+
+proof_floor_effect:
+  executable_rules_changed: false
+  applicability_edges_promoted: 0
+  duplicate_source_nodes_created: 0
+  legal_conflicts_confirmed: 0
+  source_nodes_added: 1
+  existing_source_nodes_enriched: 1
+
+merge_rule: >-
+  Reconcile after master-inventory-delta-2026-08-26T0822.yaml. Stream 3 top-level counters become 41 found / 9 downloaded / 9 immutable / 30 pending / 2 reused, with primary_publication_verified=17 and sectors_registered=25. The new Minjust order is a distinct subordinate source node; 63-ФЗ is enriched, not duplicated.
