@@ -100,6 +100,55 @@ DISCOVERED_SOURCE_BLOCKS = {
     raw_capture: PENDING
     applicability: ARTICLE_13_1_SCOPE_ONLY
 """,
+    "SEC-SRC-RU-PP2526-2022": """  - id: SEC-SRC-RU-PP2526-2022
+    document: \"Постановление Правительства РФ от 29.12.2022 № 2526\"
+    role: article_12_part_15_transborder_exceptions
+    metadata_status: METADATA_VERIFIED
+    source_record: \"source/SEC-SRC-RU-PP2526-2022.yaml\"
+    raw_capture: PENDING
+    applicability: TRANSBORDER_STATE_MUNICIPAL_FUNCTION_SCOPE
+""",
+    "SEC-SRC-RU-PP6-2023": """  - id: SEC-SRC-RU-PP6-2023
+    document: \"Постановление Правительства РФ от 10.01.2023 № 6\"
+    role: article_12_part_13_transborder_restriction_decisions
+    metadata_status: METADATA_VERIFIED
+    source_record: \"source/SEC-SRC-RU-PP6-2023.yaml\"
+    raw_capture: PENDING
+    applicability: TRANSBORDER_TRANSFER_RESTRICTION_DECISION_SCOPE
+""",
+    "SEC-SRC-RU-PP1046-2021": """  - id: SEC-SRC-RU-PP1046-2021
+    document: \"Постановление Правительства РФ от 29.06.2021 № 1046, текущая редакция от 03.07.2026\"
+    role: federal_state_control_supervision_current_version
+    metadata_status: METADATA_VERIFIED
+    source_record: \"source/SEC-SRC-RU-PP1046-2021.yaml\"
+    raw_capture: PENDING
+    current_revision_compile_required: true
+    applicability: PDN_CONTROL_SUPERVISION_SCOPE
+""",
+    "SEC-SRC-RU-PP2311-2021": """  - id: SEC-SRC-RU-PP2311-2021
+    document: \"Постановление Правительства РФ от 16.12.2021 № 2311\"
+    role: pp1046_version_chain_dependency
+    metadata_status: METADATA_VERIFIED
+    source_record: \"source/SEC-SRC-RU-PP2311-2021.yaml\"
+    raw_capture: PENDING
+    applicability: VERSION_CHAIN_SCOPE
+""",
+    "SEC-SRC-RU-PP1286-2025": """  - id: SEC-SRC-RU-PP1286-2025
+    document: \"Постановление Правительства РФ от 27.08.2025 № 1286\"
+    role: pp1046_version_chain_dependency
+    metadata_status: METADATA_VERIFIED
+    source_record: \"source/SEC-SRC-RU-PP1286-2025.yaml\"
+    raw_capture: PENDING
+    applicability: VERSION_CHAIN_SCOPE
+""",
+    "SEC-SRC-RU-PP833-2026": """  - id: SEC-SRC-RU-PP833-2026
+    document: \"Постановление Правительства РФ от 03.07.2026 № 833\"
+    role: pp1046_current_version_chain_dependency
+    metadata_status: METADATA_VERIFIED
+    source_record: \"source/SEC-SRC-RU-PP833-2026.yaml\"
+    raw_capture: PENDING
+    applicability: VERSION_CHAIN_SCOPE
+""",
 }
 
 
