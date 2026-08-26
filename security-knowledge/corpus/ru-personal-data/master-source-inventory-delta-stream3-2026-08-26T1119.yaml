@@ -1,0 +1,67 @@
+schema_version: "1.0"
+kind: ru-personal-data-master-source-inventory-delta
+owner_stream: STREAM_3_SECTOR_OVERLAYS
+checked_at: "2026-08-26T11:19:16+03:00"
+reconciliation_base: "master-source-inventory-delta-stream3-2026-08-26T0822.yaml"
+run_ref: "../ru-protected-information/stream-3-run-2026-08-26T1119.yaml"
+status: APPEND_ONLY_RELATIONSHIP_DELTA
+
+proof_floor:
+  - "OVERLAP != APPLICABILITY."
+  - "Advocate secrecy and personal data are separate legal regimes."
+  - "63-ФЗ Article 39.5 expressly ties protection of KIS AR information to PDN and information-protection legislation, but that statutory context is locator/system-specific."
+  - "Order 296 contains person-level register fields; that proves PDN overlap potential, not universal applicability to every field/operation."
+  - "Registry presence does not equal public availability; 63-ФЗ Article 14(7) imposes a publicness boundary."
+  - "No exact official bytes were obtained; no MIME, byte_length, retrieved_at or SHA-256 was synthesized."
+
+sector_source_counter_overlay:
+  before: {found: 40, downloaded: 9, immutable: 9, pending: 29, reused: 2}
+  after: {found: 41, downloaded: 9, immutable: 9, pending: 30, reused: 2}
+  new_source_nodes: 1
+  existing_source_nodes_enriched: 1
+  new_exact_primary_artifacts: 0
+  applicability_promotions: 0
+
+source_relationships:
+  - source_id: SEC-SRC-RU-MINJUST-ORDER-296-2024
+    source_title: "Приказ Минюста России от 09.10.2024 № 296"
+    target: "152-ФЗ"
+    type: DIRECT_PERSON_LEVEL_REGISTRY_PDN_OVERLAP
+    state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    evidence_context:
+      - "Единый государственный реестр адвокатов содержит ФИО и иные person-level сведения."
+      - "Порядок предусматривает адрес места жительства, контактный телефон и адрес электронной почты при наличии."
+      - "Для лиц, не сдавших квалификационный экзамен, журнал включает ФИО, дату рождения, место рождения и дату экзамена."
+    guard: "Присоединять конкретные PDN duties только после доказательства роли, записи, операции, цели и правового основания; наличие поля в государственном реестре не делает его автоматически общедоступным."
+  - source_id: SEC-SRC-RU-FZ-63-2002
+    locator: "статья 39.5 часть 2"
+    target: "152-ФЗ"
+    type: DIRECT_STATUTORY_PDN_PROTECTION_CONTEXT_FOR_KIS_AR
+    state: STATUTORY_CONTEXT_APPLICABILITY_STILL_REVIEW_REQUIRED
+    evidence_context: "Защита информации КИС АР осуществляется в соответствии с законодательством о персональных данных и законодательством об информации, информационных технологиях и защите информации."
+    guard: "Это прямой PDN-контекст для KIS AR; он не превращает любую адвокатскую тайну вне доказанного processing context в автоматически применимое требование 152-ФЗ."
+  - source_id: SEC-SRC-RU-MINJUST-ORDER-296-2024
+    target: SEC-SRC-RU-FZ-63-2002
+    locator: "статья 14"
+    type: DIRECT_SUBORDINATE_REGISTER_IMPLEMENTATION
+    state: STATUTORY_IMPLEMENTATION_RELATION
+  - source_id: SEC-SRC-RU-MINJUST-ORDER-296-2024
+    target: "63-ФЗ статья 39.5 / КИС АР"
+    type: ADVOCACY_REGISTRY_AND_INFORMATION_SYSTEM_CONTEXT
+    state: CROSS_REGIME_RELATION
+    guard: "ЕГРА Минюста и КИС АР — разные контуры; связь не означает тождество систем или наборов данных."
+
+publicness_boundaries:
+  - source_id: SEC-SRC-RU-FZ-63-2002
+    locator: "статья 14 пункт 7"
+    rule: "Общедоступна только та часть сведений ЕГРА, которая отнесена федеральным органом юстиции к открытой и общедоступной."
+    pdn_interpretation: CONDITIONAL_PUBLICNESS_NOT_BLANKET_PUBLIC_DATA
+
+acquisition_state:
+  exact_primary_binary_new: 0
+  pending_exact_capture: 1
+  reason: TRANSIENT_NETWORK_OR_DOWNLOAD_FAILURE
+  invariant: "No MIME, byte_length, retrieved_at or SHA-256 synthesized."
+
+merge_rule: >-
+  Merge as a Stream 3 overlay only. Do not overwrite concurrent PDN-core/security-stack counters owned by other streams. Applicability remains candidate/review-required for the Order 296 person-level dataset and system-specific for the direct Article 39.5 KIS AR context.
