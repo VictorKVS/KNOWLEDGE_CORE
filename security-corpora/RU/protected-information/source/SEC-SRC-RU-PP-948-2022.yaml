@@ -1,0 +1,87 @@
+schema_version: "1.0"
+id: SEC-SRC-RU-PP-948-2022
+kind: security-regulatory-source
+status: PRIMARY_PUBLICATION_METADATA_VERIFIED_CURRENT_TEXT_CROSSCHECKED_EXACT_ARTIFACT_PENDING
+
+title: "Постановление Правительства РФ от 25.05.2022 № 948 — критерии обязанных участников учета интернет-рекламы"
+jurisdiction: RU
+issuer: "Правительство Российской Федерации"
+document:
+  type: government_decree
+  number: "948"
+  adopted_date: "2022-05-25"
+  official_publication_id: "0001202205270045"
+  official_publication_date: "2022-05-27"
+  effective_from: "2022-09-01"
+  scheduled_expiry: "2028-09-01"
+  checked_at: "2026-08-26"
+
+canonical_sources:
+  primary_publication:
+    publisher: "Официальное опубликование правовых актов"
+    url: "https://publication.pravo.gov.ru/document/0001202205270045"
+    origin_verified: true
+    proof_scope: "Официальные реквизиты исходного постановления; exact PDF bytes в этом проходе не получены."
+  current_text_crosscheck:
+    revision_date: "2025-05-22"
+    effective_revision_from: "2025-05-23"
+    state: CURRENT_TEXT_CROSSCHECK_EXACT_CURRENT_BYTES_PENDING
+    amendments_crosschecked:
+      - "Постановление Правительства РФ от 20.12.2022 № 2355"
+      - "Постановление Правительства РФ от 22.05.2025 № 709"
+
+protected_information:
+  sector: advertising_marketing
+  regime: internet_advertising_reporting_actor_scope
+  legal_basis: "38-ФЗ статья 18.1 часть 3"
+  protected_locators:
+    - locator: "Критерии, пункт 1"
+      concept: INTERNET_AD_REPORTING_ACTOR_SCOPE
+      finding: "Определяет категории рекламодателей, рекламораспространителей и операторов рекламных систем, обязанных предоставлять или обеспечивать предоставление сведений об интернет-рекламе в Роскомнадзор."
+    - locator: "Критерии, рекламодатель"
+      concept: ADVERTISER_REPORTING_ROLE_BOUNDARY
+      finding: "Критерии охватывают юридических лиц, физических лиц и индивидуальных предпринимателей при выполнении условий акта; договорная модель может переносить обязанность предоставления сведений на рекламораспространителя или оператора рекламной системы."
+    - locator: "Критерии, рекламораспространитель/оператор рекламной системы"
+      concept: DISTRIBUTOR_PLATFORM_ROLE_BOUNDARY
+      finding: "Выделяет специальные категории участников интернет-распространения рекламы, включая владельцев отдельных интернет-сервисов и информационных ресурсов."
+  applicability_status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  applicability_guard: "Постановление № 948 определяет actor scope рекламной отчетности. Само попадание в actor scope не доказывает наличие персональных данных и не создает универсальную применимость 152-ФЗ."
+
+relationship_candidates:
+  - target: "38-ФЗ статья 18.1 часть 3"
+    type: DIRECT_SUBORDINATE_ACTOR_CRITERIA
+    state: STATUTORY_IMPLEMENTATION_RELATION
+  - target: "SEC-SRC-RU-GOV-R-1362R-2022"
+    type: REPORTING_ACTOR_TO_DATASET_SCOPE
+    state: CROSS_REGIME_RELATION
+  - target: "152-ФЗ"
+    type: AD_REPORTING_ACTOR_PDN_OVERLAP
+    state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    guard: "Физическое лицо как участник рекламного рынка не означает автоматически, что каждый передаваемый набор является ПДн; проверять конкретные поля, операцию, цель, роль и основание."
+
+version_chain:
+  state: CURRENT_REVISION_CROSSCHECKED_PRIMARY_AMENDMENT_BYTES_PENDING
+  latest_crosschecked_revision: "2025-05-22"
+  latest_revision_effective_from: "2025-05-23"
+  events:
+    - {act: "Постановление Правительства РФ от 20.12.2022 № 2355", state: AMENDMENT_EFFECT_CROSSCHECKED_PRIMARY_EXACT_BYTES_PENDING}
+    - {act: "Постановление Правительства РФ от 22.05.2025 № 709", state: AMENDMENT_EFFECT_CROSSCHECKED_PRIMARY_EXACT_BYTES_PENDING}
+
+capture:
+  exact_capture_attempted_at: "2026-08-26T08:22:22+03:00"
+  source_url: "https://publication.pravo.gov.ru/document/0001202205270045"
+  preferred_pdf_url: "https://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202205270045"
+  result: TRANSIENT_DNS_OR_TIMEOUT
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  raw_artifact_ref: null
+  manifest_ref: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-PP-948-2022-capture-pending.json"
+  fingerprint_status: PENDING_EXACT_PRIMARY_BYTES
+
+proof_floor:
+  - "Primary act controls; taxonomy is discovery seed only."
+  - "Actor scope != PDN applicability."
+  - "Portal-displayed PDF size is not byte_length."
+  - "No MIME, SHA-256, applicability or conflict is inferred without evidence."
