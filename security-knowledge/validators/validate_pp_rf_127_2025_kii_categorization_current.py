@@ -17,6 +17,7 @@ def main():
     assert list(crosswalk) == [f"CW{i:02d}" for i in range(1, 16)]
     assert list(rules) == [f"PP127-2025-{i:03d}" for i in range(1, 71)]
     assert len(fixtures["cases"]) == 64
+    assert model["coverage"]["future_sectoral_overlay_registered_count"] == 1
 
     def evaluate(case):
         q = case["query"]

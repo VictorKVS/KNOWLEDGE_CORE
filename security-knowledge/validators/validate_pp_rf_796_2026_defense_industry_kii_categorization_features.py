@@ -10,7 +10,7 @@ def main():
     model = yaml.safe_load(MODEL.read_text(encoding="utf-8"))
     fixtures = json.loads(FIXTURES.read_text(encoding="utf-8"))
     rules = {x["id"]: x["rule"] for x in model["control_rules"]}
-    assert model["status"] == "VERIFIED_CURRENT_DEFENSE_INDUSTRY_TEXT_FORMULA_IMAGES_AND_TRANSPORT_COMMUNICATION_DEPENDENCIES_BLOCKED"
+    assert model["status"] == "VERIFIED_CURRENT_DEFENSE_INDUSTRY_TEXT_FORMULA_IMAGES_COMMUNICATION_FUTURE_OVERLAY_REGISTERED_TRANSPORT_DEPENDENCY_BLOCKED"
     assert model["effective_date"] == "2026-07-07"
     assert len(model["scope"]["object_types"]) == 3
     assert len(model["procedure"]["applicable_pp127_positions"]) == 20
@@ -27,6 +27,8 @@ def main():
     assert list(rules) == [f"PP796-DEF-{i:03d}" for i in range(1, 73)]
     assert len(fixtures["cases"]) == 64
     assert rules["PP796-DEF-014"] == "REVIEW_NO_CATEGORY_DECISION_AT_LEAST_ANNUALLY"
+    assert rules["PP796-DEF-037"] == "BLOCK_POSITION_3_CURRENT_TRANSPORT_CALCULATION_PROJECT_ONLY_NO_ADOPTED_ACT_IDENTIFIED"
+    assert rules["PP796-DEF-038"] == "REGISTER_PP402_FOR_POSITION_4_FROM_2026_09_01_AND_BLOCK_PRE_EFFECTIVE_USE"
     assert rules["PP796-DEF-069"] == "BLOCK_TWELVE_FULL_FORMULAS_UNTIL_EXACT_IMAGE_BYTES_ARE_VERIFIED"
     assert rules["PP796-DEF-070"] == "BLOCK_ONE_VARIABLE_GLYPH_AND_ONE_STOP_CONDITION_UNTIL_EXACT_IMAGE_BYTES_ARE_VERIFIED"
     assert model["verification_boundary"]["critical_gap_created"] == 0
