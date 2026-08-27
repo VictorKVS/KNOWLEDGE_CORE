@@ -1,0 +1,74 @@
+schema_version: "1.0"
+id: SEC-SRC-RU-FSB547-2025
+kind: security-regulatory-source
+status: METADATA_VERIFIED
+title: "Приказ ФСБ России от 25.12.2025 № 547 «Об утверждении Порядка информирования ФСБ России о компьютерных атаках и компьютерных инцидентах, реагирования на них, принятия мер по ликвидации последствий компьютерных атак, проведенных в отношении значимых объектов критической информационной инфраструктуры Российской Федерации и иных информационных ресурсов Российской Федерации, принадлежащих органам и организациям, на которые возложены обязанности, предусмотренные частью 4 статьи 9 Федерального закона от 26 июля 2017 г. № 187-ФЗ»"
+jurisdiction: RU
+issuer: "ФСБ России"
+document:
+  type: regulator_order
+  number: "547"
+  adopted_date: "2025-12-25"
+  ministry_registration_date: "2025-12-30"
+  ministry_registration_number: "84871"
+  official_publication_id: "0001202512300064"
+  publication_date: "2025-12-30"
+  effective_from: "2026-01-30"
+  checked_at: "2026-08-27"
+  current_status: ACTING
+  version_chain_note: >-
+    Приказ №547 с 30.01.2026 установил новый порядок информирования ФСБ России о компьютерных атаках
+    и компьютерных инцидентах для субъектов КИИ и органов/организаций, охваченных частью 4 статьи 9
+    187-ФЗ. Пунктом 2 приказа признаны утратившими силу приказ ФСБ России от 19.06.2019 №282 и
+    изменяющий его приказ ФСБ России от 07.07.2022 №348. Для PDN-ветки этот version-chain учитывается
+    только при одновременной доказанной применимости соответствующего режима ГосСОПКА/КИИ.
+canonical_source:
+  publisher: "Официальный интернет-портал правовой информации"
+  url: "https://publication.pravo.gov.ru/document/0001202512300064"
+  exact_file_route_status: OFFICIAL_PUBLICATION_ID_AND_PDF_ROUTE_RESOLVED_BYTES_PENDING
+capture:
+  capture_kind: "publication_pdf"
+  source_url: "http://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202512300064"
+  expected_mime: "application/pdf"
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  fingerprint_status: PENDING
+  semantic_status: UNCHANGED
+  note: >-
+    Official publication identity and deterministic publication-PDF route are registered. Exact response bytes,
+    MIME, byte length and SHA-256 have not yet passed the immutable acquisition gate in this run.
+relations:
+  - type: REPEALS
+    targets:
+      - "FSB-282-2019"
+      - "FSB-348-2022"
+    scope: GOSSOPKA_INCIDENT_REPORTING_VERSION_CHAIN_ONLY
+  - type: CONTEXTUAL_INTERSECTION_WITH
+    target: SEC-SRC-RU-FSB77-2023
+    scope: PDN_COMPUTER_INCIDENT_ONLY_WHEN_OPERATOR_IS_ALSO_COVERED_BY_FSB547
+    provenance: "NKCKI explanatory letter R-168 dated 20.01.2026 is secondary explanatory evidence; the normative duties remain sourced to the orders themselves."
+    not_universal_pdn_duty: true
+applicability:
+  direct_scope:
+    - SUBJECTS_OF_CRITICAL_INFORMATION_INFRASTRUCTURE
+    - ARTICLE_9_PART_4_187FZ_ORGANS_AND_ORGANIZATIONS
+  pdn_scope: >-
+    Include in the PDN graph only when a personal-data computer incident occurs and the operator is independently
+    within the persons/resources covered by Order No. 547. Order No. 547 does not by itself extend GosSOPKA duties
+    to every private personal-data operator.
+provenance:
+  official_identity_verified: true
+  official_publication_id_verified: true
+  ministry_registration_cross_checked: true
+  effective_date_cross_checked: true
+  version_chain_cross_checked: true
+  pdn_intersection_explanatory_evidence: "НКЦКИ ФСБ России, письмо от 20.01.2026 № Р-168; primary official bytes/route for the letter not found, so the letter is not promoted as an immutable primary source."
+  exact_official_artifact_pending: true
+  review_required: true
+agent_rule: >-
+  Do not import Order No. 547 as a universal 152-FZ duty. Apply it only for a proved intersection: the operator/resource
+  is independently covered by the 187-FZ/GosSOPKA scope and the case is relevant to a PDN computer incident. Keep
+  Order No. 77 as the explicit 152-FZ Article 19(12) PDN-incident source. Do not promote secondary reproductions of
+  NKCKI letter R-168 to primary immutable evidence.
