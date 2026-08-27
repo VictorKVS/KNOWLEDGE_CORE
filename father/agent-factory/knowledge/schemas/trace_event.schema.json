@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "father://knowledge/trace-event/v1",
+  "title": "FATHER Trace Event v1",
+  "type": "object",
+  "required": ["event_id", "trace_id", "span_id", "timestamp", "stage", "status"],
+  "properties": {
+    "event_id": {"type": "string", "minLength": 1},
+    "trace_id": {"type": "string", "minLength": 1},
+    "span_id": {"type": "string", "minLength": 1},
+    "parent_span_id": {"type": ["string", "null"]},
+    "run_id": {"type": ["string", "null"]},
+    "stream_id": {"type": ["string", "null"]},
+    "worker_id": {"type": ["string", "null"]},
+    "timestamp": {"type": "string"},
+    "stage": {"type": "string", "minLength": 1},
+    "event": {"type": ["string", "null"]},
+    "status": {"enum": ["START", "OK", "WARN", "ERROR", "BLOCKED", "RETRY"]},
+    "entity_type": {"type": ["string", "null"]},
+    "entity_id": {"type": ["string", "null"]},
+    "source_sha256": {"type": ["string", "null"]},
+    "fragment_sha256": {"type": ["string", "null"]},
+    "model": {"type": ["string", "null"]},
+    "prompt_profile": {"type": ["string", "null"]},
+    "elapsed_ms": {"type": ["number", "null"], "minimum": 0},
+    "error_type": {"type": ["string", "null"]},
+    "error_message": {"type": ["string", "null"]},
+    "attributes": {"type": "object"}
+  },
+  "additionalProperties": false
+}
