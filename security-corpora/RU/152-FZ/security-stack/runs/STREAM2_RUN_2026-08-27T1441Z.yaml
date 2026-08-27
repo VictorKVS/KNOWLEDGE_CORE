@@ -1,0 +1,102 @@
+schema_version: "1.0"
+id: STREAM2-RUN-2026-08-27T1441Z
+stream: RU_PDN_TECHNICAL_CRYPTO
+created_at: "2026-08-27T14:41:00Z"
+status: SOURCE_REGISTRATION_READY_FOR_ACQUISITION
+
+base_authoritative_state:
+  identified: 42
+  metadata_verified: 42
+  immutable_sha256_verified: 17
+  pending_raw_capture: 25
+  exact_official_route_unresolved: 7
+  latest_acquisition_finished_at: "2026-08-27T14:35:10.367409Z"
+  latest_acquisition_new_immutable: 0
+
+result:
+  new_primary_sources_registered: 2
+  new_primary_routes_registered: 2
+  new_immutable_captured_before_post_merge_acquisition: 0
+  secondary_explanatory_sources_discovered_not_promoted: 1
+  expected_identified_after_registration: 44
+  expected_metadata_verified_after_registration: 44
+  expected_pending_before_acquisition: 27
+  expected_route_gap_after_registration: 7
+  authoritative_reconciliation_required: true
+  confirmed_conflicts: 0
+
+new_sources:
+  - id: SEC-SRC-RU-FSB547-2025
+    status: METADATA_VERIFIED
+    adopted_date: "2025-12-25"
+    ministry_registration_number: "84871"
+    official_publication_id: "0001202512300064"
+    publication_date: "2025-12-30"
+    effective_from: "2026-01-30"
+    current_status: ACTING
+    capture_status: PENDING
+    source_url: "http://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202512300064"
+    version_chain: "Repeals FSB №282/2019 and amendment №348/2022"
+    applicability: >-
+      KII subjects and Article 9 part 4 187-FZ organs/organizations only; in the PDN graph only at a proved
+      PDN-computer-incident intersection. Not a universal private-ISPDN duty.
+  - id: SEC-SRC-RU-FSB548-2025
+    status: METADATA_VERIFIED
+    adopted_date: "2025-12-25"
+    ministry_registration_number: "84872"
+    official_publication_id: "0001202512300058"
+    publication_date: "2025-12-30"
+    effective_from: "2026-01-30"
+    current_status: ACTING
+    capture_status: PENDING
+    source_url: "http://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202512300058"
+    applicability: >-
+      Continuous GosSOPKA interaction only for the order's enumerated KII/public-sector scope; in the PDN graph
+      only when the operator is independently in scope or another proved NKCKI interaction basis exists.
+
+secondary_discovery:
+  - identity: "Письмо НКЦКИ ФСБ России от 20.01.2026 № Р-168"
+    finding: >-
+      The reproduced text explains that FSB Order №77 governs PDN operators' notification path for computer
+      incidents causing unlawful PD transfer/access, while covered KII/public-sector entities also have GosSOPKA
+      duties. Operators interacting with NKCKI under an agreement send incident information to NKCKI within 24h;
+      operators without such agreement use Roskomnadzor notification forms under Order №77/152-FZ routing.
+    evidence_status: SECONDARY_REPRODUCTION_ONLY_NOT_PROMOTED_TO_PRIMARY_INVENTORY
+    reason: "No primary official publication/file route for letter Р-168 was found in this bounded pass."
+
+freshness:
+  pp1119:
+    checked_at: "2026-08-27"
+    verdict: ACTING_BASELINE_EXACT_GOVERNMENT_DOC_BYTES_STILL_PENDING
+  fstec21:
+    checked_at: "2026-08-27"
+    baseline: "Приказ ФСТЭК России от 18.02.2013 №21 с изменениями №49/2017 и №68/2020"
+    replacement_watch: "Проект 169583 от 24.07.2026"
+    verdict: CURRENT_ORDER_REMAINS_BASELINE_NO_PRIMARY_ENACTMENT_PROOF_FOR_REPLACEMENT
+  fstec_threat_method_2021:
+    checked_at: "2026-08-27"
+    verdict: REUSE_EXISTING_IMMUTABLE_ARTIFACT_NO_REDOWLOAD_REQUIRED
+  fsb378:
+    checked_at: "2026-08-27"
+    verdict: ACTING_ORIGINAL_2014_ORDER_ISPDN_WHEN_SKZI_USED_PRIMARY_BYTES_STILL_PENDING
+  fsb77:
+    checked_at: "2026-08-27"
+    verdict: EXPLICIT_152FZ_ARTICLE_19_PART_12_PDN_INCIDENT_SOURCE_REMAINS_ACTIVE
+
+applicability_guards:
+  - FSB77 remains the explicit 152-FZ PDN-computer-incident source
+  - FSB547/548 are admitted only at the proved intersection with their independent KII/public-sector scope
+  - NKCKI letter Р-168 remains explanatory secondary evidence until an official primary route/bytes are found
+  - FSB378 and related SKZI acts remain conditional on actual cryptographic-protection applicability
+  - licensing/certification/GosSOPKA requirements are not promoted into ordinary private ISPDN without a proved edge
+  - no new universal PDN duty was created in this pass
+
+next_targets:
+  - post-merge acquisition of FSB547 and FSB548 official publication PDFs
+  - PP1119 exact official DOC bytes
+  - FSB378 official primary bytes
+  - FSB66 and FSB173 primary bytes
+  - FAPSI152 primary bytes
+  - routed FSTEC methodical PDF attachments
+  - seven unresolved exact attachment routes
+  - primary enactment watch for FSTEC21 replacement
