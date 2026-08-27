@@ -1,0 +1,95 @@
+schema_version: "1.0"
+id: STREAM2-RUN-2026-08-27T1430Z
+kind: pdn-security-stack-maintenance-run
+status: EVIDENCE_AND_PIPELINE_HARDENING
+jurisdiction: RU
+domain: personal_data_security
+observed_at: "2026-08-27T14:30:00Z"
+
+scope:
+  priority:
+    - SEC-SRC-RU-PP1119-2012
+    - SEC-SRC-RU-FSTEC21-2013
+    - SEC-SRC-RU-FSTEC-THREAT-METHOD-2021
+    - FSTEC_METHODICAL_AND_CATALOG_SOURCES
+    - SEC-SRC-RU-FSB378-2014
+    - SEC-SRC-RU-FSB66-2005
+    - SEC-SRC-RU-FAPSI152-2001
+  applicability_policy: >-
+    Technical, cryptographic, licensing, certification, NKTsKI and GosSOPKA requirements are not reused as
+    universal PDN duties without an explicit applicability edge.
+
+status_review:
+  fstec21_replacement_watch:
+    watch_id: PDN-WATCH-FSTEC21-REPLACEMENT-2026-001
+    checked_at: "2026-08-27"
+    result: DRAFT_NOT_ENACTED_IN_VERIFIED_EVIDENCE
+    active_baseline: SEC-SRC-RU-FSTEC21-2013
+    note: >-
+      Project 169583 remains future-change evidence. No primary proof of final issuance, Minjust registration
+      and official publication was established; the proposed 01.09.2026 date is not promoted into active law.
+  fsb66_pkz2005:
+    checked_at: "2026-08-27"
+    result: ACTING_AS_AMENDED
+    amendment: SEC-SRC-RU-FSB173-2010
+    branch_scope: PKZ_2005_POINT_50_ONLY
+    official_metadata_evidence: "https://www.fsb.ru/fsb/npd/more.htm!id=10436382@fsbNpa&_print=true.html"
+    government_reference_landing: "https://it-security.admin-smolensk.ru/zakonodatelstvo/normativnye-dokumenty-fsb-rossii/prikaz-fsb-rf-ot-9-fevralya-2005-g-n-66-ob-utverzhdenii-polozheniya-o-razrabotke-proizvodstve-realizacii-i-ekspluatacii-shifrovalnyh-kriptograficheskih-sredstv-zaschity-informacii-polozhenie-pkz-2005-/"
+    government_reference_file: "https://it-security.admin-smolensk.ru/files/302/20050209-66prfsb.doc"
+    primary_immutable_promotion: false
+  fapsi152:
+    checked_at: "2026-08-27"
+    result: CURRENT_GOVERNMENT_OPERATIONAL_RELEVANCE_CORROBORATED
+    treasury_operational_evidence: "https://roskazna.gov.ru/gis/aokz/"
+    treasury_normative_index: "https://hantymansiysk.roskazna.gov.ru/gis/udostoveryayuschiy-centr/normativnye-dokumenty"
+    government_reference_pdf: "https://mariy-el.roskazna.gov.ru/uploads/migrate/mariy-el/documents/gis/udostoveryayuschiy-centr/normativnye-dokumenty/74.180028.152.pdf"
+    primary_immutable_promotion: false
+    applicability: SKZI_HANDLING_WHEN_APPLICABLE
+
+pipeline_finding:
+  affected_workflow: ".github/workflows/pdn-security-stack-immutable-acquisition.yml"
+  failed_run_id: 33028276888
+  finding: >-
+    The scheduled maintenance path spent most of its 22-minute job budget on guarded issuer-route retries and
+    was cancelled during the full reuse-first acquisition before capture gating, telemetry reconciliation,
+    master reconciliation and evidence commit.
+  fix_pr: 32
+  fix_merge_commit: "34827fcb42fa1690e126f695710ad31daee8e3b1"
+  fix:
+    timeout_minutes_before: 22
+    timeout_minutes_after: 55
+    concurrency_before: SHARED_ACROSS_EVENTS
+    concurrency_after: EVENT_SCOPED
+    proof_gates_changed: false
+    applicability_policy_changed: false
+  expected_effect: >-
+    Scheduled maintenance receives enough budget to reach fail-closed capture gating and authoritative counter
+    reconciliation; push validation no longer cancels a scheduled maintenance run merely because it shares the
+    same workflow.
+
+immutable_evidence:
+  newly_captured_this_manual_pass: 0
+  fingerprints_synthesized: 0
+  note: >-
+    Government, FSB/RG and FSTEC primary transports remain partially blocked by timeout/HTTP transport behavior.
+    Secondary government-hosted copies were registered only as reference evidence and cannot satisfy the
+    primary immutable proof floor.
+
+authoritative_counter_snapshot_before_new_accepted_run:
+  source: "PDN_SECURITY_STACK_SOURCE_INVENTORY.yaml"
+  identified: 42
+  metadata_verified: 42
+  immutable_sha256_verified: 17
+  pending_raw_capture: 25
+  exact_official_route_unresolved: 7
+  latest_acquisition_finished_at: "2026-08-27T11:24:52.497739Z"
+  rule: "Do not change these counters until an accepted acquisition run is reconciled."
+
+next_priority:
+  - PP1119 exact Government legacy DOC with OLE/CFB signature gate
+  - FSB378 primary official publication bytes
+  - FSB66 and FSB173 primary official bytes
+  - FAPSI152 primary official bytes
+  - registered FSTEC methodical attachments
+  - remaining exact-route gaps
+  - primary enactment watch for the FSTEC21 replacement project
