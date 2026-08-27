@@ -1,0 +1,107 @@
+schema_version: "1.0"
+stream: 3
+checked_at: "2026-08-27T23:24:55+03:00"
+mode: APPEND_ONLY_RECONCILIATION
+previous_delta: "master-inventory-delta-2026-08-27T1720.yaml"
+focus: "healthcare / patient access to medical documentation / Minzdrav 1050n"
+
+counters_before:
+  found: 50
+  downloaded: 9
+  immutable: 9
+  pending: 39
+  reused: 2
+  primary_publication_verified: 21
+  sectors_registered: 28
+
+counters_after:
+  found: 51
+  downloaded: 9
+  immutable: 9
+  pending: 40
+  reused: 2
+  primary_publication_verified: 22
+  sectors_registered: 28
+
+changes:
+  new_sources: 1
+  new_immutable_artifacts: 0
+  new_durable_downloads: 0
+  new_pending_exact_capture: 1
+  new_sector_regimes: 0
+  applicability_promotions: 0
+  legal_conflicts_confirmed: 0
+  primary_publication_verified_increment: 1
+
+new_sources:
+  - source_id: SEC-SRC-RU-MINZDRAV-ORDER-1050N-2021
+    sector: healthcare_information_systems
+    regime: patient_access_to_medical_documentation
+    title: "Приказ Минздрава России от 12.11.2021 № 1050н"
+    status: PRIMARY_PUBLICATION_VERIFIED_OPERATIONAL_CROSSCHECK_VERSION_CHAIN_PARTIAL_EXACT_BINARY_PENDING
+    official_publication_id: "0001202111260035"
+    official_publication_date: "2021-11-26"
+    minjust_registration_number: "66007"
+
+protected_information_anchors:
+  - source_id: SEC-SRC-RU-MINZDRAV-ORDER-1050N-2021
+    locator: "пункт 2"
+    concept: authorized_person_scope_for_medical_document_access
+  - source_id: SEC-SRC-RU-MINZDRAV-ORDER-1050N-2021
+    locator: "пункты 4-5 / official Minzdrav template"
+    concept: access_request_person_level_dataset
+  - source_id: SEC-SRC-RU-MINZDRAV-ORDER-1050N-2021
+    locator: "пункт 7 / official Minzdrav template"
+    concept: two_and_five_working_day_access_workflow
+  - source_id: SEC-SRC-RU-MINZDRAV-ORDER-1050N-2021
+    locator: "пункт 10"
+    concept: access_audit_record_in_medical_documentation
+
+relationships:
+  - from: SEC-SRC-RU-MINZDRAV-ORDER-1050N-2021
+    to: "152-ФЗ"
+    relation: PATIENT_ACCESS_REQUEST_AND_MEDICAL_DOCUMENT_PDN_OVERLAP
+    status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  - from: SEC-SRC-RU-MINZDRAV-ORDER-1050N-2021
+    to: "SEC-SRC-RU-FZ-323:article_13"
+    relation: MEDICAL_SECRECY_ACCESS_BOUNDARY
+    status: DIRECT_STATUTORY_CONTEXT_SCENARIO_REVIEW_REQUIRED
+  - from: SEC-SRC-RU-MINZDRAV-ORDER-1050N-2021
+    to: "SEC-SRC-RU-FZ-323:article_22"
+    relation: PATIENT_INFORMATION_ACCESS_PARENT_STATUTE_CONTEXT
+    status: DIRECT_STATUTORY_CONTEXT
+  - from: SEC-SRC-RU-MINZDRAV-ORDER-1050N-2021
+    to: SEC-SRC-RU-MINZDRAV-ORDER-947N-2020
+    relation: ELECTRONIC_MEDICAL_DOCUMENTATION_ACCESS_CONTEXT
+    status: CROSS_REGIME_RELATION
+
+version_events:
+  - act: "12.11.2021 № 1050н"
+    publication_id: "0001202111260035"
+    publication_date: "2021-11-26"
+    minjust_registration_number: "66007"
+    evidence_status: PRIMARY_PUBLICATION_METADATA_VERIFIED
+  - act: "official Minzdrav operational guidance 2024"
+    effect: "1050n is explicitly cited as the governing basis for the patient medical-document access template"
+    evidence_status: OFFICIAL_OPERATIONAL_CROSSCHECK
+
+acquisition:
+  exact_capture_attempted: true
+  exact_capture_succeeded: false
+  attempts:
+    - target: "1050n official publication PDF 0001202111260035"
+      result: TRANSIENT_DNS_NAME_RESOLUTION_FAILURE
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+  displayed_sizes_used_as_exact_bytes: false
+
+proof_floor:
+  taxonomy_used_as_evidence: false
+  primary_normative_act_required: true
+  overlap_is_applicability: false
+  medical_secrecy_consent_equals_generic_pdn_consent: false
+  workflow_deadline_generalized_to_retention: false
+  executable_rules_created: 0
