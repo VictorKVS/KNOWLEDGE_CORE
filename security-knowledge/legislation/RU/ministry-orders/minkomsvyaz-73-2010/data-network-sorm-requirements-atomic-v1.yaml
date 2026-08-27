@@ -1,0 +1,194 @@
+schema_version: "1.0"
+id: RU-MINKOMSVYAZ-73-2010-DATA-NETWORK-SORM-ATOMIC-V1
+title: "Приказ Минкомсвязи России от 27.05.2010 № 73: требования к сетям передачи данных, текущая редакция"
+checked_at: "2026-08-27"
+status: VERIFIED_CURRENT_CONSOLIDATED_TEXT
+scope: >-
+  Открытая нормативная модель пунктов 1–3, приложения № 1 и структуры
+  приложения № 2. Применяется только к сетям, предназначенным для оказания
+  телематических услуг связи и услуг передачи данных, кроме передачи данных
+  для целей голосовой информации. Модель не раскрывает закрытые приемы ОРМ,
+  не заменяет общую часть приказа № 6 и не распространяется на иные виды сетей.
+
+source:
+  act: "Приказ Минкомсвязи России от 27.05.2010 № 73"
+  registration: "Минюст России, 07.07.2010 № 17748"
+  original_publication: "Бюллетень нормативных актов федеральных органов исполнительной власти, № 30, 26.07.2010"
+  current_revision: "2025-12-18"
+  current_revision_effective_from: "2026-03-15"
+  current_index: "https://www.consultant.ru/document/cons_doc_LAW_102523/"
+  current_text: "https://normativ.kontur.ru/document?documentId=505063&moduleId=1"
+  current_as_of: "2026-08-27"
+  amendment:
+    act: "Приказ Минцифры России от 18.12.2025 № 1196"
+    registration: "Минюст России, 03.03.2026 № 85531"
+    official_publication: "https://publication.pravo.gov.ru/document/0001202603040008"
+    published: "2026-03-04"
+    effective_from: "2026-03-15"
+    exact_effect_on_order73: REPLACED_ONLY_FIRST_PARAGRAPH_OF_REQUIREMENTS_POINT1
+
+legal_route:
+  federal_law: "126-ФЗ, статья 64, пункт 2"
+  pp538_points: [4, 6, 11]
+  pp538_model: security-knowledge/legislation/RU/government-decrees/538-2005/sorm-interaction-commissioning-atomic-v1.yaml
+  part_i_dependency:
+    act: "Приказ Мининформсвязи России от 16.01.2008 № 6"
+    relation: ORDER73_SPECIFIES_AND_SUPPLEMENTS_PART_I
+    status: PENDING_SEPARATE_ATOMIZATION
+  plan_dependency:
+    model: security-knowledge/legislation/RU/joint-orders/mindigital-fsb-245-127-2022/sorm-plan-requirements-atomic-v1.yaml
+    relation: PLACEMENT_IN_ACCORDANCE_WITH_IMPLEMENTATION_PLAN
+
+temporal_model:
+  - id: ORIGINAL_EDITION_PUBLICATION
+    published: "2010-07-26"
+    exact_original_effective_date: PENDING_NOT_USED_FOR_CURRENT_ROUTE
+  - id: CURRENT_SCOPE_EDITION
+    from: "2026-03-15"
+    status: CURRENT_AS_OF_2026_08_27
+    amendment: "1196/2025"
+
+applicability:
+  included_services:
+    - TELEMATIC_COMMUNICATIONS_SERVICES
+    - DATA_TRANSMISSION_SERVICES
+  excluded_services:
+    - DATA_TRANSMISSION_FOR_VOICE_INFORMATION
+  prohibited_generalization: DO_NOT_APPLY_BY_ANALOGY_TO_OTHER_NETWORK_TYPES
+
+interface_catalog:
+  family_count: 5
+  interface_count: 25
+  families:
+    - id: ETHERNET_CSMA_CD
+      count: 11
+      values: [10GBASE-S, 10GBASE-L, 10GBASE-E, 10GBASE-LX4, 10GBASE-CX4, 1000BASE-X, GBE, 100BASE-X, 100BASE-T, 10BASE-F, EtherNet]
+    - id: SDH_OPTICAL
+      count: 4
+      values: [STM-1, STM-4, STM-16, STM-64]
+    - id: PDH_OPTICAL
+      count: 2
+      values: [E3_34_MBIT_S, E4_140_MBIT_S]
+    - id: PDH_SDH_ELECTRICAL
+      count: 4
+      values: [E1_2_MBIT_S, E3_34_MBIT_S, E4_140_MBIT_S, STM1_155_MBIT_S]
+    - id: DATA_EQUIPMENT_ELECTRICAL
+      count: 4
+      values: [V24_V28, X21_V11, V35_V28, V36_V11]
+
+dynamic_ip_message_schemas:
+  protocol_count: 3
+  protocols:
+    - id: RADIUS
+      reference: RFC_2865
+      base_field_count: 5
+      attribute_header_field_count: 3
+      allocation: {code: 4, required_attribute_count: 5, required_types: [40_VALUE_1, 1, 8, 44, 31]}
+      termination: {code: 5, required_attribute_count: 6, required_types: [40_VALUE_2, 1, 8, 49, 44, 31]}
+    - id: TACACS_PLUS
+      key_transfer_capability_to_authorized_body: REQUIRED_WHEN_PROTOCOL_USED
+      base_field_count: 7
+      allocation: {type: 3, allowed_flags: [8, 2], required_field_count: 5}
+      termination: {type: 3, flag: 4, required_field_count: 6}
+    - id: DIAMETER
+      base_field_count: 8
+      attribute_header_field_count: 4
+      command_code: 271
+      allocation: {required_attribute_count: 6, attribute_480_value: 2, other_attribute_codes: [263, 264, 1, 31, 8]}
+      termination: {required_attribute_count: 6, attribute_480_value: 4, other_attribute_codes: [263, 264, 1, 31, 8]}
+
+atomic_rules:
+  - {id: MK73-R001, locator: "Требования, пункт 1, абзац 1", rule: APPLY_TO_NETWORKS_FOR_TELEMATIC_COMMUNICATIONS_SERVICES}
+  - {id: MK73-R002, locator: "Требования, пункт 1, абзац 1", rule: APPLY_TO_DATA_TRANSMISSION_SERVICES_EXCEPT_DATA_TRANSMISSION_FOR_VOICE_INFORMATION}
+  - {id: MK73-R003, locator: "Требования, пункт 1, абзац 2", rule: SPECIFY_AND_SUPPLEMENT_ORDER6_PART_I_WITHOUT_REPLACING_IT}
+  - {id: MK73-R004, locator: "Требования, пункт 2, абзац 1", rule: USE_COMMUNICATIONS_EQUIPMENT_INCLUDING_SOFTWARE_WITHIN_DATA_NETWORK_COMMUNICATIONS_MEANS}
+  - {id: MK73-R005, locator: "Требования, пункт 2, абзац 1", rule: PLACE_TECHNICAL_MEANS_IN_ACCORDANCE_WITH_IMPLEMENTATION_PLAN}
+  - {id: MK73-R006, locator: "Требования, пункт 2, абзац 2", rule: PLACE_TECHNICAL_MEANS_AT_OPERATOR_NETWORK_NODES}
+  - {id: MK73-R007, locator: "Требования, пункт 2, абзац 2", rule: PROVIDE_ACCESS_TO_ALL_INFORMATION_TRANSMITTED_IN_OPERATOR_NETWORK_FOR_REQUIRED_SELECTION}
+  - {id: MK73-R008, locator: "Требования, пункт 2, абзац 2", rule: SELECT_ONLY_INFORMATION_RELATING_TO_CONTROLLED_CONNECTIONS_OR_MESSAGES}
+  - {id: MK73-R009, locator: "Требования, пункт 2, абзац 2", rule: TRANSFER_SELECTED_INFORMATION_TO_AUTHORIZED_BODY_CONTROL_POINT}
+  - {id: MK73-R010, locator: "Требования, пункт 2, абзац 3", rule: USE_ONE_OR_MORE_INTERFACES_FROM_APPENDIX1}
+  - {id: MK73-R011, locator: "Требования, пункт 2, абзац 4", rule: PROVIDE_DYNAMIC_IP_ALLOCATION_ACCESS_USING_RADIUS_TACACS_PLUS_OR_DIAMETER_AS_DESCRIBED_IN_APPENDIX2}
+  - {id: MK73-R012, locator: "Требования, пункт 3(а)", rule: PROVIDE_ALLOCATED_IP_ADDRESS_BEFORE_NETWORK_ADDRESS_TRANSLATION}
+  - {id: MK73-R013, locator: "Требования, пункт 3(а)", rule: PROVIDE_ALLOCATED_IP_ADDRESS_BEFORE_FIRST_INFORMATION_PACKET}
+  - {id: MK73-R014, locator: "Требования, пункт 3(а)", rule: PROVIDE_CONTROLLED_CONNECTION_TERMINATION_INFORMATION}
+  - {id: MK73-R015, locator: "Требования, пункт 3(б)", rule: PROVIDE_CONTROLLED_CONNECTION_OR_MESSAGE_INFORMATION_IN_ORIGINAL_RECEIVED_FORM_AND_SEQUENCE}
+  - {id: MK73-R016, locator: "Требования, пункт 3(в)", rule: PROVIDE_USER_EQUIPMENT_LOCATION_WHEN_NETWORK_TECHNOLOGY_SUPPORTS_DETERMINATION}
+  - {id: MK73-R017, locator: "Требования, пункт 3(в)", rule: LOCATION_INFORMATION_EXCEPTION_REQUIRES_ABSENCE_OF_TECHNOLOGICAL_CAPABILITY}
+  - {id: MK73-R018, locator: "Приложение 1, пункт 1", rule: REGISTER_ELEVEN_ETHERNET_CSMA_CD_INTERFACES}
+  - {id: MK73-R019, locator: "Приложение 1, пункт 2", rule: REGISTER_FOUR_SDH_OPTICAL_INTERFACES}
+  - {id: MK73-R020, locator: "Приложение 1, пункт 3", rule: REGISTER_TWO_PDH_OPTICAL_INTERFACES}
+  - {id: MK73-R021, locator: "Приложение 1, пункт 4", rule: REGISTER_FOUR_PDH_SDH_ELECTRICAL_INTERFACES}
+  - {id: MK73-R022, locator: "Приложение 1, пункт 5", rule: REGISTER_FOUR_DATA_EQUIPMENT_ELECTRICAL_INTERFACES}
+  - {id: MK73-R023, locator: "Приложение 1", rule: PRESERVE_FIVE_FAMILIES_AND_TWENTY_FIVE_INTERFACE_ENTRIES_WITH_FAMILY_CONTEXT}
+  - {id: MK73-R024, locator: "Приложение 2, тип 1, сноска", rule: ROUTE_TYPE1_TO_RADIUS_RFC2865}
+  - {id: MK73-R025, locator: "Приложение 2, таблица 1", rule: PRESERVE_RADIUS_FIVE_BASE_FIELDS_AND_BIT_LENGTHS}
+  - {id: MK73-R026, locator: "Приложение 2, таблица 2", rule: PRESERVE_RADIUS_THREE_ATTRIBUTE_HEADER_FIELDS}
+  - {id: MK73-R027, locator: "Приложение 2, таблица 3", rule: REQUIRE_RADIUS_ALLOCATION_CODE4}
+  - {id: MK73-R028, locator: "Приложение 2, таблица 3", rule: REQUIRE_FIVE_RADIUS_ALLOCATION_ATTRIBUTES_WITH_TYPE40_VALUE1}
+  - {id: MK73-R029, locator: "Приложение 2, таблица 4", rule: REQUIRE_RADIUS_TERMINATION_CODE5}
+  - {id: MK73-R030, locator: "Приложение 2, таблица 4", rule: REQUIRE_SIX_RADIUS_TERMINATION_ATTRIBUTES_WITH_TYPE40_VALUE2}
+  - {id: MK73-R031, locator: "Приложение 2, таблицы 3–4", rule: TREAT_ASTERISK_VALUES_AS_ANY_DECIMAL_VALUE_NOT_MISSING_FIELD}
+  - {id: MK73-R032, locator: "Приложение 2, тип 2, сноска", rule: ROUTE_TYPE2_TO_TACACS_PLUS}
+  - {id: MK73-R033, locator: "Приложение 2, тип 2, сноска", rule: WHEN_TACACS_PLUS_USED_ENABLE_KEY_TRANSFER_TO_AUTHORIZED_BODY}
+  - {id: MK73-R034, locator: "Приложение 2, таблица 5", rule: PRESERVE_TACACS_PLUS_SEVEN_BASE_FIELDS}
+  - {id: MK73-R035, locator: "Приложение 2, таблица 6", rule: REQUIRE_TACACS_PLUS_ALLOCATION_TYPE3_AND_FLAG8_OR2}
+  - {id: MK73-R036, locator: "Приложение 2, таблица 6", rule: REQUIRE_FIVE_TACACS_PLUS_ALLOCATION_FIELDS}
+  - {id: MK73-R037, locator: "Приложение 2, таблица 7", rule: REQUIRE_TACACS_PLUS_TERMINATION_TYPE3_AND_FLAG4}
+  - {id: MK73-R038, locator: "Приложение 2, таблица 7", rule: REQUIRE_SIX_TACACS_PLUS_TERMINATION_FIELDS_INCLUDING_ELAPSED_TIME}
+  - {id: MK73-R039, locator: "Приложение 2, тип 3, сноска", rule: ROUTE_TYPE3_TO_DIAMETER}
+  - {id: MK73-R040, locator: "Приложение 2, таблица 8", rule: PRESERVE_DIAMETER_EIGHT_BASE_FIELDS}
+  - {id: MK73-R041, locator: "Приложение 2, таблица 9", rule: PRESERVE_DIAMETER_FOUR_ATTRIBUTE_HEADER_FIELDS}
+  - {id: MK73-R042, locator: "Приложение 2, таблицы 10–11", rule: REQUIRE_DIAMETER_COMMAND_CODE271}
+  - {id: MK73-R043, locator: "Приложение 2, таблица 10", rule: REQUIRE_SIX_DIAMETER_ALLOCATION_ATTRIBUTES_WITH_480_VALUE2}
+  - {id: MK73-R044, locator: "Приложение 2, таблица 11", rule: REQUIRE_SIX_DIAMETER_TERMINATION_ATTRIBUTES_WITH_480_VALUE4}
+  - {id: MK73-R045, locator: "Приложение 2, таблицы 10–11", rule: TREAT_ASTERISK_VALUES_AS_ANY_ALLOWED_VALUE_NOT_MISSING_ATTRIBUTE}
+  - {id: MK73-R046, locator: "Приказ № 1196, приложение, пункт 4", rule: APPLY_2026_AMENDMENT_ONLY_TO_REQUIREMENTS_POINT1_FIRST_PARAGRAPH}
+  - {id: MK73-R047, locator: "Нормативная граница", rule: DO_NOT_INVENT_RETENTION_NOTIFICATION_REMEDIATION_OR_TEST_INTERVALS_NOT_STATED_IN_ORDER73}
+  - {id: MK73-R048, locator: "Нормативная граница", rule: DO_NOT_RECONSTRUCT_CLOSED_ORM_SELECTION_CRITERIA_COMMANDS_OR_METHODS}
+
+evidence_model:
+  - {id: E73-01, proves: [MK73-R001, MK73-R002, MK73-R046], artifacts: [CURRENT_POINT1_TEXT, ORDER1196_OFFICIAL_PUBLICATION, EFFECTIVE_DATE]}
+  - {id: E73-02, proves: [MK73-R003], artifacts: [ORDER6_PART_I_APPLICABILITY_RECORD]}
+  - {id: E73-03, proves: [MK73-R004, MK73-R005, MK73-R006], artifacts: [EQUIPMENT_AND_SOFTWARE_INVENTORY, IMPLEMENTATION_PLAN, NODE_PLACEMENT_MAP]}
+  - {id: E73-04, proves: [MK73-R007, MK73-R008, MK73-R009], artifacts: [ACCESS_ARCHITECTURE, CONTROLLED_INFORMATION_SELECTION_TEST, CONTROL_POINT_TRANSFER_TEST]}
+  - {id: E73-05, proves: [MK73-R010], artifacts: [APPENDIX1_INTERFACE_MAPPING]}
+  - {id: E73-06, proves: [MK73-R011], artifacts: [DYNAMIC_IP_PROTOCOL_CONFIGURATION, APPENDIX2_SCHEMA_CONFORMANCE]}
+  - {id: E73-07, proves: [MK73-R012, MK73-R013, MK73-R014], artifacts: [PRE_NAT_CAPTURE_TEST, PRE_FIRST_PACKET_SEQUENCE_TEST, CONNECTION_TERMINATION_EVENT_TEST]}
+  - {id: E73-08, proves: [MK73-R015], artifacts: [FORM_AND_SEQUENCE_INTEGRITY_TEST]}
+  - {id: E73-09, proves: [MK73-R016, MK73-R017], artifacts: [LOCATION_CAPABILITY_ASSESSMENT, CONDITIONAL_LOCATION_OUTPUT_TEST]}
+  - {id: E73-10, proves: [MK73-R018, MK73-R019, MK73-R020, MK73-R021, MK73-R022, MK73-R023], artifacts: [FIVE_FAMILY_TWENTY_FIVE_INTERFACE_REGISTER]}
+  - {id: E73-11, proves: [MK73-R024, MK73-R025, MK73-R026], artifacts: [RADIUS_BASE_AND_ATTRIBUTE_SCHEMA]}
+  - {id: E73-12, proves: [MK73-R027, MK73-R028, MK73-R029, MK73-R030, MK73-R031], artifacts: [RADIUS_ALLOCATION_FIXTURE, RADIUS_TERMINATION_FIXTURE]}
+  - {id: E73-13, proves: [MK73-R032, MK73-R033, MK73-R034], artifacts: [TACACS_PLUS_CONFIGURATION, CONDITIONAL_KEY_TRANSFER_CAPABILITY, BASE_SCHEMA]}
+  - {id: E73-14, proves: [MK73-R035, MK73-R036, MK73-R037, MK73-R038], artifacts: [TACACS_PLUS_ALLOCATION_FIXTURE, TACACS_PLUS_TERMINATION_FIXTURE]}
+  - {id: E73-15, proves: [MK73-R039, MK73-R040, MK73-R041, MK73-R042], artifacts: [DIAMETER_BASE_AND_ATTRIBUTE_SCHEMA, COMMAND_CODE_TEST]}
+  - {id: E73-16, proves: [MK73-R043, MK73-R044, MK73-R045], artifacts: [DIAMETER_ALLOCATION_FIXTURE, DIAMETER_TERMINATION_FIXTURE]}
+  - {id: E73-17, proves: [MK73-R047], artifacts: [NO_UNSTATED_NUMERIC_PERIOD_ASSERTION]}
+  - {id: E73-18, proves: [MK73-R048], artifacts: [OPEN_TEXT_BOUNDARY_AND_CLOSED_METHOD_EXCLUSION]}
+
+red_team_guardrails:
+  - DO_NOT_APPLY_TO_DATA_TRANSMISSION_FOR_VOICE_INFORMATION
+  - DO_NOT_APPLY_TO_OTHER_NETWORK_TYPES_BY_ANALOGY
+  - DO_NOT_TREAT_ORDER73_AS_REPLACING_ORDER6_PART_I
+  - DO_NOT_DESCRIBE_UNCHANGED_POINTS2_3_AND_APPENDICES_AS_NEW_2026_REQUIREMENTS
+  - DO_NOT_MOVE_IP_CAPTURE_AFTER_NAT_OR_AFTER_FIRST_PACKET
+  - DO_NOT_DROP_THE_TECHNOLOGICAL_CAPABILITY_EXCEPTION_FOR_LOCATION
+  - DO_NOT_COLLAPSE_DUPLICATE_INTERFACE_NAMES_ACROSS_FAMILIES
+  - DO_NOT_TREAT_ASTERISK_AS_AN_OPTIONAL_OR_ABSENT_FIELD
+  - DO_NOT_SWAP_RADIUS_CODES4_AND5_OR_DIAMETER_480_VALUES2_AND4
+  - DO_NOT_INVENT_RETENTION_SLA_NOTIFICATION_OR_REMEDIATION_PERIODS
+  - DO_NOT_RECONSTRUCT_CLOSED_SELECTION_CRITERIA_COMMANDS_OR_METHODS
+
+verification_boundary:
+  current_points_1_to_3: VERIFIED_CURRENT_CONSOLIDATED_TEXT
+  appendix1_five_families_25_entries: VERIFIED_CURRENT_TEXT
+  appendix2_three_protocols_11_tables: VERIFIED_CURRENT_TEXT
+  order1196_official_publication_and_effective_date: VERIFIED
+  current_consolidated_immutable_bytes: PENDING
+  order6_part_i_dependency: PENDING_SEPARATE_ATOMIZATION
+  other_network_type_parts: OUT_OF_SCOPE_FOR_THIS_MODEL
+  closed_orm_methods: OUT_OF_SCOPE_NOT_RECONSTRUCTED
+  independent_expert_review: PENDING
+  critical_gap_created: false
+  high_gap_created: false
