@@ -1,7 +1,7 @@
 {
   "record_id": "PP-RF-92-2026-FINANCIAL-MARKET-KII-OVERLAY-V1",
   "status": "VERIFIED_PRIMARY_IMMUTABLE",
-  "as_of": "2026-08-19",
+  "as_of": "2026-08-27",
   "title": "Sector-specific CII categorization overlay for banking and other financial-market spheres",
   "act": {
     "type": "Government Resolution",
@@ -20,6 +20,7 @@
     "mime": "application/pdf",
     "byte_length": 4272251,
     "sha256": "83e32867b115a18a720a316905b001eed3a2211d1e68183ad57ce21fb4968b38",
+    "git_blob_sha": "cde5d8f5b9c68415c846e9dfa9758ff4437307d2",
     "pdf_pages": 17,
     "encrypted": false,
     "javascript": false,
@@ -54,7 +55,7 @@
     {"id":"PP92-C24-REGISTRAR-AND-FINANCIAL-PLATFORM","clause":"24","object":"SYSTEMS_RECORDING_FINANCIAL_TRANSACTIONS_AND_FINANCIAL_PLATFORM_DEALS","positions":["10^2"]},
     {"id":"PP92-C25-NONSTATE-PENSION-FUNDS","clause":"25","object":"SYSTEMS_RECORDING_REGISTERED_PERSONS_AND_PENSION_RIGHTS_SAVINGS_OR_INSURANCE","positions":["10^3"]},
     {"id":"PP92-C26-INSURANCE","clause":"26","object":"INSURANCE_REINSURANCE_PAYMENT_LOSS_ACCOUNTING_SYSTEMS","positions":["10^4"]},
-    {"id":"PP92-C27-CLIENT-REMOTE-ACCESS","clause":"27","object":"SYSTEMS_PROVIDING_CLIENT_SOFTWARE_OR_REMOTE_PERSONAL_ACCOUNT_ACCESS","positions":["10^5"]},
+    {"id":"PP92-C27-CLIENT-REMOTE-ACCESS","clause":"27","object":"SYSTEMS_PROVIDING_CLIENT_SOFTWARE_OR_REMOTE_PERSONAL_ACCOUNT_ACCESS","positions":["10^4"]},
     {"id":"PP92-C28-MICROFINANCE-CLIENTS","clause":"28","object":"SYSTEMS_RECORDING_MICROFINANCE_CLIENT_INFORMATION","positions":["10^6"]},
     {"id":"PP92-C29-CREDIT-INFORMATION","clause":"29","object":"SYSTEMS_COLLECTING_PROCESSING_STORING_OR_PROVIDING_CREDIT_INFORMATION","positions":["10^7"]},
     {"id":"PP92-C30-PAYMENT-INFRASTRUCTURE-OPERATORS","clause":"30","object":"PAYMENT_INFRASTRUCTURE_OPERATOR_SYSTEMS_EXCEPT_CBR_SYSTEMS","positions":["10"]},
@@ -73,20 +74,20 @@
     {"id":"PP92-C38-POSITION-7","clause":"38","position":"7","rule":"Assess treaty breach or disruption of negotiations or signing by treaty level."},
     {"id":"PP92-C39-POSITION-8","clause":"39","position":"8","rule":"Calculate under the subject's internal documents."},
     {"id":"PP92-C40-POSITION-9-INPUTS","clause":"40","position":"9","rule":"Select downtime or degradation time from applicable Bank of Russia operational-reliability requirements, payment-system or digital-ruble-platform requirements, or the subject's own maximum service-disruption time for other cases."},
-    {"id":"PP92-C41-POSITION-9-FORMULA","clause":"41","position":"9","formula":"((P_avg / (365 * 24)) * (C_max / D) + (0.2 * Y / D)) * 100","variables":{"P_avg":"Average downtime/degradation time in hours","C_max":"Maximum annual subject contributions to Russian budget-system budgets over the last three years","Y":"Associated economic harm averaged over the last three years","D":"Forecast annual federal-budget revenue averaged over the planned three-year period"}},
-    {"id":"PP92-C42-P-AVG","clause":"42","rule":"Average yearly maximum downtime/degradation over three years; if fewer than three years have elapsed, use the actual period and add later years until three years are accumulated.","numeric_rules":[{"kind":"TARGET_LOOKBACK","value":3,"unit":"YEAR"}]},
+    {"id":"PP92-C41-POSITION-9-FORMULA","clause":"41","position":"9","formula":"((P_avg / (365 * 24)) * (C_max / D) + (0.2 * Y / D)) * 100","source_formula":"П₉ = (Пavg / (365 × 24) × Cmax / Д + 0,2Y / Д) × 100","absolute_value_operator":"ABSENT","execution_guard":"FAIL_CLOSED_WHEN_D_IS_ZERO_OR_MISSING","variables":{"P_avg":"Average downtime/degradation time in hours","C_max":"Maximum annual subject contributions to Russian budget-system budgets over the last three years","Y":"Associated economic harm averaged over the last three years","D":"Forecast annual federal-budget revenue averaged over the planned three-year period"}},
+    {"id":"PP92-C42-P-AVG","clause":"42","formula":"P_avg = sum(S_i, lower_bound_shown_as_i, upper_bound=n) / n","source_formula":"Пavg = (Σ from i to n of Sᵢ) / n","source_notation_anomaly":"LOWER_BOUND_IMAGE_SHOWS_i_WITHOUT_EXPLICIT_EQUALS_ONE","execution_guard":"FAIL_CLOSED_WHEN_n_IS_ZERO_OR_MISSING_OR_LOWER_BOUND_INTERPRETATION_IS_MATERIAL","rule":"Average yearly maximum downtime/degradation over three years; if fewer than three years have elapsed, use the actual period and add later years until three years are accumulated.","numeric_rules":[{"kind":"TARGET_LOOKBACK","value":3,"unit":"YEAR"}]},
     {"id":"PP92-C43-S-I","clause":"43","rule":"For each calendar year use the maximum among the allowable cumulative time, the threshold allowable-time level and actual cumulative downtime/degradation over the preceding 12 calendar months when the allowable degradation share was exceeded.","numeric_rules":[{"kind":"ROLLING_CALCULATION_WINDOW","value":12,"unit":"CALENDAR_MONTH"}]},
     {"id":"PP92-C44-C-MAX","clause":"44","rule":"Use the maximum annual contributions to Russian budget-system budgets over the last three years.","numeric_rules":[{"kind":"LOOKBACK","value":3,"unit":"YEAR"}]},
     {"id":"PP92-C45-ASSOCIATED-HARM","clause":"45","rule":"Average over three years the enumerated remediation, personnel, contractual, reputational and direct financial losses.","numeric_rules":[{"kind":"AVERAGING_PERIOD","value":3,"unit":"YEAR"}]},
     {"id":"PP92-C46-BUDGET-DENOMINATOR","clause":"46","rule":"Forecast annual federal-budget revenue averaged over the planned three-year period.","numeric_rules":[{"kind":"PLANNED_AVERAGING_PERIOD","value":3,"unit":"YEAR"}]},
-    {"id":"PP92-C47-POSITION-10","clause":"47","position":"10","formula":"Q_o / 365","variable":"Millions of money-transfer operations for the year, forecast for newly created objects."},
-    {"id":"PP92-C48-POSITION-10-1","clause":"48","position":"10^1","formula":"A_o / 365","variable":"Trillions of rubles of performed clearing money-transfer obligations over the last 12 months.","numeric_rules":[{"kind":"CALCULATION_WINDOW","value":12,"unit":"MONTH"}]},
-    {"id":"PP92-C49-POSITION-10-2","clause":"49","position":"10^2","formula":"Q_o / 365","variable":"Thousands of Russian-issuer securities recorded at the central depository over the last 12 months.","numeric_rules":[{"kind":"CALCULATION_WINDOW","value":12,"unit":"MONTH"}]},
-    {"id":"PP92-C50-POSITION-10-3","clause":"50","position":"10^3","formula":"PENSION_SAVINGS + PENSION_RESERVES","measurement_time":"TENTH_WORKING_DAY_OF_CALENDAR_YEAR","unit":"BILLION_RUBLE"},
-    {"id":"PP92-C51-POSITION-10-4","clause":"51","position":"10^4","formula":"INSURER_ASSET_VOLUME","measurement_time":"TENTH_WORKING_DAY_OF_CALENDAR_YEAR","unit":"BILLION_RUBLE"},
-    {"id":"PP92-C52-POSITION-10-5","clause":"52","position":"10^5","formula":"NUMBER_OF_CONTRACTS_WITH_CREDIT_ORGANIZATIONS","measurement_time":"TENTH_WORKING_DAY_OF_CALENDAR_YEAR"},
-    {"id":"PP92-C53-POSITION-10-6","clause":"53","position":"10^6","formula":"ANNUAL_MICROLOAN_VOLUME","unit":"BILLION_RUBLE"},
-    {"id":"PP92-C54-POSITION-10-7","clause":"54","position":"10^7","formula":"NUMBER_OF_CREDIT_HISTORIES_STORED","unit":"MILLION_UNIT"},
+    {"id":"PP92-C47-POSITION-10","clause":"47","position":"10","formula":"K_10 = Q_o / 365","source_formula":"K₁₀ = Qₒ / 365","variable":"Millions of money-transfer operations for the year, forecast for newly created objects."},
+    {"id":"PP92-C48-POSITION-10-1","clause":"48","position":"10^1","formula":"K_10_1 = A_o / 365","source_formula":"K₁₀¹ = Aₒ / 365","variable":"Trillions of rubles of performed clearing money-transfer obligations over the last 12 months.","numeric_rules":[{"kind":"CALCULATION_WINDOW","value":12,"unit":"MONTH"}]},
+    {"id":"PP92-C49-POSITION-10-2","clause":"49","position":"10^2","formula":"K_10_2 = Q_o / 365","source_formula":"K₁₀² = Qₒ / 365","variable":"Thousands of Russian-issuer securities recorded at the central depository over the last 12 months.","glyph_context_guard":"Q_o glyph is reused by clause 47 with a different meaning; do not merge the variables.","numeric_rules":[{"kind":"CALCULATION_WINDOW","value":12,"unit":"MONTH"}]},
+    {"id":"PP92-C50-POSITION-10-3","clause":"50","position":"10^3","formula":"K_10_3 = PA_npf + PR_npf","source_formula":"K₁₀³ = PAₙpf + PRₙpf","components":{"PA_npf":{"meaning":"PENSION_SAVINGS","measurement_time":"TENTH_WORKING_DAY_OF_CALENDAR_YEAR"},"PR_npf":{"meaning":"PENSION_RESERVES","measurement_time":"NOT_SEPARATELY_SPECIFIED_IN_CLAUSE_50"}},"unit":"BILLION_RUBLE"},
+    {"id":"PP92-C51-POSITION-10-4","clause":"51","position":"10^4","formula":"K_10_4 = V_a","source_formula":"K₁₀⁴ = Vₐ","measurement_time":"TENTH_WORKING_DAY_OF_CALENDAR_YEAR","unit":"BILLION_RUBLE"},
+    {"id":"PP92-C52-POSITION-10-5","clause":"52","position":"10^5","formula":"K_10_5 = Q_c","source_formula":"K₁₀⁵ = Qc","measurement_time":"TENTH_WORKING_DAY_OF_CALENDAR_YEAR"},
+    {"id":"PP92-C53-POSITION-10-6","clause":"53","position":"10^6","formula":"K_10_6 = V_L","source_formula":"K₁₀⁶ = VL","unit":"BILLION_RUBLE"},
+    {"id":"PP92-C54-POSITION-10-7","clause":"54","position":"10^7","formula":"K_10_7 = Q_ch","source_formula":"K₁₀⁷ = Qch","unit":"MILLION_UNIT"},
     {"id":"PP92-C55-CONSEQUENCE-SCENARIOS","clause":"55","normative_strength":"RECOMMENDED","rule":"Use worst-case targeted-attack scenarios, process and object dependencies, threat feasibility and prior incident statistics; do not silently credit existing controls, analogue instruments or paper fallback when estimating maximum possible harm."}
   ],
   "guardrails": [
@@ -95,7 +96,7 @@
     "An object outside the current type list is not automatically out of scope; clauses 9 and 12 require consequence-based review.",
     "The clause 5 ten-working-day period starts on receipt of FSTEC confirmation, not on the commission decision or submission to FSTEC.",
     "The clause 6 annual due point is the tenth working day of the calendar year, not 10 calendar days and not January 10.",
-    "The tenth-working-day values in clauses 50 to 52 are measurement snapshots, not reporting deadlines.",
+    "Clause 50 expressly attaches the tenth-working-day snapshot to PA_npf; do not silently extend it to PR_npf. Clauses 51 and 52 expressly use that snapshot. None is a reporting deadline.",
     "Three-year and twelve-month periods in clauses 41 to 49 are calculation windows, not evidence-retention duties.",
     "Clause 7 permits additional commission members but does not require a universal external member.",
     "Clause 55 is expressly recommendatory and must not be promoted to an unconditional mandatory duty.",
@@ -104,7 +105,10 @@
   "extraction": {
     "method": "OCR_DISCOVERY_THEN_VISUAL_PRIMARY_PDF_AND_AUTHORITATIVE_TEXT_CROSSCHECK",
     "ocr_is_evidence": false,
-    "primary_pages_visually_checked": [1,4,9,12,15,17],
-    "authoritative_text_crosschecks": ["https://www.consultant.ru/document/cons_doc_LAW_526087/","https://rulaws.ru/goverment/Postanovlenie-Pravitelstva-RF-ot-06.02.2026-N-92/"]
+    "all_primary_pages_rendered": true,
+    "primary_pages_visually_checked": [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17],
+    "formula_image_verification": "security-knowledge/evidence/pp-rf-92-2026-formula-image-verification-2026-08-27.yaml",
+    "formula_images_verified": 10,
+    "authoritative_text_crosschecks": ["https://www.consultant.ru/document/cons_doc_LAW_526087/","https://normativ.kontur.ru/document?documentId=504397&moduleId=1"]
   }
 }

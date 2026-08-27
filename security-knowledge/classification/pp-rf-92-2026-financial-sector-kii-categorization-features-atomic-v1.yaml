@@ -4,14 +4,16 @@ designation: "Постановление Правительства РФ от 06
 edition_date: "2026-02-06"
 publication_date: "2026-02-07"
 effective_date: "2026-02-15"
-status_observed_date: "2026-08-26"
-status: VERIFIED_CURRENT_FINANCIAL_SECTOR_TEXT_FORMULA_IMAGES_BLOCKED
+status_observed_date: "2026-08-27"
+status: VERIFIED_CURRENT_FINANCIAL_SECTOR_PRIMARY_FORMULAS_CONDITIONAL
 legal_role: CURRENT_FINANCIAL_SECTOR_OVERLAY_TO_PP_RF_127
 source_evidence:
   official_publication: {url: "https://publication.pravo.gov.ru/document/0001202602070010", publication_number: "0001202602070010", publication_date: "2026-02-07", pages: 17, result: VERIFIED_OFFICIAL_PUBLICATION_METADATA}
   government_index: {url: "https://government.ru/docs/all/96091/?page=3", result: VERIFIED_GOVERNMENT_INDEX_ACT_NUMBER_DATE_AND_TITLE}
   current_legal_interface: {url: "https://www.consultant.ru/document/cons_doc_LAW_526087/", result: VERIFIED_CURRENT_ORIGINAL_EDITION_INDEX}
   full_public_text: {url: "https://pravo.ppt.ru/postanovlenie/pravitelstvo/n-92-326163", result: VERIFIED_PARAGRAPHS_1_TO_55_TEXT_FORMULAS_RENDERED_AS_IMAGES}
+  immutable_official_pdf: {path: "security-knowledge/evidence/primary-artifacts/2026/pp-rf-92-2026-0001202602070010.pdf", sha256: "83e32867b115a18a720a316905b001eed3a2211d1e68183ad57ce21fb4968b38", git_blob_sha: "cde5d8f5b9c68415c846e9dfa9758ff4437307d2", result: VERIFIED_PRIMARY_IMMUTABLE}
+  formula_image_verification: {path: "security-knowledge/evidence/pp-rf-92-2026-formula-image-verification-2026-08-27.yaml", result: VERIFIED_10_OF_10}
 scope:
   sector: BANKING_AND_OTHER_FINANCIAL_MARKET_SPHERES
   actor_classes:
@@ -79,6 +81,12 @@ calculation_core:
     average_downtime_or_degradation: LAST_THREE_YEARS
     shorter_history: USE_ACTUAL_AVAILABLE_PERIOD_THEN_ACCUMULATE_TO_THREE_YEARS
     payment_infrastructure_or_digital_ruble_or_other_route: LAST_YEAR_AS_APPLICABLE
+  position_9_primary_formula: "П₉=(Пavg/(365×24)×Cmax/Д+0,2Y/Д)×100"
+  position_9_absolute_value_operator: ABSENT
+  position_9_zero_Д: FAIL_CLOSED_NOT_DEFINED_BY_ACT
+  average_downtime_primary_formula_literal: "Пavg=(SUM_i_TO_n_Si)/n"
+  average_downtime_lower_bound_source_anomaly: LOWER_BOUND_IMAGE_SHOWS_i_WITHOUT_EXPLICIT_EQUALS_ONE
+  average_downtime_zero_n: FAIL_CLOSED_NOT_DEFINED_BY_ACT
   maximum_downtime_selection: MAXIMUM_OF_THREE_PARAGRAPH_43_VALUES
   associated_economic_damage_components:
     - TARGETED_COMPUTER_ATTACK_CONSEQUENCE_REMEDIATION_COSTS
@@ -88,22 +96,26 @@ calculation_core:
     - LOST_POTENTIAL_CONTRACTS_REPUTATIONAL_LOSSES
     - DIRECT_IRREVERSIBLE_MONEY_OR_PROPERTY_LOSSES
   position_10_family_variables:
-    position_10: {symbol: Qo, meaning: FUNDS_TRANSFER_OPERATIONS, unit: MILLION_OPERATIONS, period: YEAR}
-    position_10_1: {symbol: Ao, meaning: EXECUTED_RUBLE_TRANSFER_OBLIGATIONS_AFTER_CLEARING, unit: TRILLION_RUBLES, period: LAST_12_MONTHS}
-    position_10_2: {symbol: Qo, meaning: RUSSIAN_ISSUER_SECURITIES_HELD_BY_CENTRAL_DEPOSITORY, unit: THOUSAND_SECURITIES, period: LAST_12_MONTHS}
-    position_10_3: {symbols: [PAnpf, PRnpf], meaning: NPF_PENSION_SAVINGS_AND_RESERVES, unit: BILLION_RUBLES, point_in_time: TENTH_WORKING_DAY_OF_CALENDAR_YEAR}
-    position_10_4: {symbol: Va, meaning: INSURANCE_ORGANIZATION_ASSETS, unit: BILLION_RUBLES, point_in_time: TENTH_WORKING_DAY_OF_CALENDAR_YEAR}
-    position_10_5: {symbol: Qc, meaning: CONTRACTS_WITH_CREDIT_ORGANIZATIONS, unit: CONTRACTS, point_in_time: TENTH_WORKING_DAY_OF_CALENDAR_YEAR}
-    position_10_6: {symbol: VL, meaning: MICROLOANS_ISSUED, unit: BILLION_RUBLES, period: ANNUAL_REPORTING_PERIOD}
-    position_10_7: {symbol: Qch, meaning: CREDIT_HISTORIES_STORED, unit: MILLION_HISTORIES}
+    position_10: {symbol: Qo, primary_formula: "K10=Qo/365", meaning: FUNDS_TRANSFER_OPERATIONS, unit: MILLION_OPERATIONS, period: YEAR}
+    position_10_1: {symbol: Ao, primary_formula: "K10(1)=Ao/365", meaning: EXECUTED_RUBLE_TRANSFER_OBLIGATIONS_AFTER_CLEARING, unit: TRILLION_RUBLES, period: LAST_12_MONTHS}
+    position_10_2: {symbol: Qo, primary_formula: "K10(2)=Qo/365", meaning: RUSSIAN_ISSUER_SECURITIES_HELD_BY_CENTRAL_DEPOSITORY, unit: THOUSAND_SECURITIES, period: LAST_12_MONTHS, glyph_context_guard: SAME_Qo_GLYPH_AS_POSITION_10_DIFFERENT_MEANING}
+    position_10_3: {symbols: [PAnpf, PRnpf], primary_formula: "K10(3)=PAnpf+PRnpf", meaning: NPF_PENSION_SAVINGS_AND_RESERVES, unit: BILLION_RUBLES, PA_point_in_time: TENTH_WORKING_DAY_OF_CALENDAR_YEAR, PR_point_in_time: NOT_SEPARATELY_SPECIFIED_IN_CLAUSE_50}
+    position_10_4: {symbol: Va, primary_formula: "K10(4)=Va", meaning: INSURANCE_ORGANIZATION_ASSETS, unit: BILLION_RUBLES, point_in_time: TENTH_WORKING_DAY_OF_CALENDAR_YEAR}
+    position_10_5: {symbol: Qc, primary_formula: "K10(5)=Qc", meaning: CONTRACTS_WITH_CREDIT_ORGANIZATIONS, unit: CONTRACTS, point_in_time: TENTH_WORKING_DAY_OF_CALENDAR_YEAR}
+    position_10_6: {symbol: VL, primary_formula: "K10(6)=VL", meaning: MICROLOANS_ISSUED, unit: BILLION_RUBLES, period: ANNUAL_REPORTING_PERIOD}
+    position_10_7: {symbol: Qch, primary_formula: "K10(7)=Qch", meaning: CREDIT_HISTORIES_STORED, unit: MILLION_HISTORIES}
 formula_image_boundary:
   image_count: 10
   paragraph_positions: ["41", "42", "47", "48", "49", "50", "51", "52", "53", "54"]
-  status: PENDING_IMMUTABLE_FORMULA_IMAGE_BYTES
-  execution_gate: BLOCK_ALL_NUMERIC_FORMULA_EXECUTION_UNTIL_EXACT_OPERATORS_CONSTANTS_AND_DENOMINATORS_VERIFIED
+  verified_formula_images: 10
+  status: VERIFIED_PRIMARY_IMMUTABLE_FORMULAS
+  execution_gate: CONDITIONAL_COMPLETE_INPUTS_NONZERO_DENOMINATORS_AND_DOCUMENTED_CLAUSE42_LOWER_BOUND_INTERPRETATION_WHEN_MATERIAL
   prohibited_actions:
-    - DO_NOT_RECONSTRUCT_FORMULAS_FROM_VARIABLE_DESCRIPTIONS
-    - DO_NOT_USE_UNVERIFIED_FORMULAS_FOR_CATEGORY_ASSIGNMENT
+    - DO_NOT_NORMALIZE_CLAUSE42_LOWER_BOUND_TO_i_EQUALS_1_WITHOUT_DOCUMENTED_BASIS
+    - DO_NOT_EVALUATE_CLAUSE41_WITH_ZERO_OR_MISSING_Д
+    - DO_NOT_EVALUATE_CLAUSE42_WITH_ZERO_OR_MISSING_n
+    - DO_NOT_MERGE_THE_TWO_CONTEXTUAL_Qo_VARIABLES
+    - DO_NOT_EXTEND_PA_npf_TENTH_WORKING_DAY_SNAPSHOT_TO_PR_npf
 scenario_guidance:
   normative_force: RECOMMENDED_NOT_MANDATORY
   items:
@@ -162,19 +174,19 @@ control_rules:
   - {id: PP92-FIN-048, source: "47", rule: DEFINE_POSITION_10_VARIABLE_BY_ANNUAL_FUNDS_TRANSFER_OPERATIONS}
   - {id: PP92-FIN-049, source: "48", rule: DEFINE_POSITION_10_1_VARIABLE_BY_LAST_12_MONTH_RUBLE_CLEARING_OBLIGATIONS}
   - {id: PP92-FIN-050, source: "49", rule: DEFINE_POSITION_10_2_VARIABLE_BY_LAST_12_MONTH_RUSSIAN_SECURITIES_AT_CENTRAL_DEPOSITORY}
-  - {id: PP92-FIN-051, source: "50", rule: DEFINE_POSITION_10_3_VARIABLES_BY_NPF_SAVINGS_AND_RESERVES_AT_TENTH_WORKING_DAY}
+  - {id: PP92-FIN-051, source: "50", rule: DEFINE_POSITION_10_3_BY_PA_NPF_PLUS_PR_NPF_WITH_TENTH_WORKING_DAY_EXPLICIT_ONLY_FOR_PA_NPF}
   - {id: PP92-FIN-052, source: "51", rule: DEFINE_POSITION_10_4_VARIABLE_BY_INSURANCE_ASSETS_AT_TENTH_WORKING_DAY}
   - {id: PP92-FIN-053, source: "52", rule: DEFINE_POSITION_10_5_VARIABLE_BY_CREDIT_ORGANIZATION_CONTRACTS_AT_TENTH_WORKING_DAY}
   - {id: PP92-FIN-054, source: "53", rule: DEFINE_POSITION_10_6_VARIABLE_BY_ANNUAL_MICROLOANS_ISSUED}
   - {id: PP92-FIN-055, source: "54", rule: DEFINE_POSITION_10_7_VARIABLE_BY_CREDIT_HISTORIES_STORED}
   - {id: PP92-FIN-056, source: "55", rule: TREAT_FOUR_SCENARIO_ITEMS_AS_RECOMMENDATIONS_NOT_MANDATORY_CONTROLS}
-  - {id: PP92-FIN-057, source: GUARD, rule: BLOCK_ALL_TEN_FORMULAS_UNTIL_EXACT_IMAGE_BYTES_ARE_VERIFIED}
-  - {id: PP92-FIN-058, source: GUARD, rule: DO_NOT_RECONSTRUCT_FORMULA_OPERATORS_CONSTANTS_OR_DENOMINATORS_FROM_VARIABLES}
+  - {id: PP92-FIN-057, source: GUARD, rule: REQUIRE_ALL_TEN_PRIMARY_FORMULAS_AND_IMMUTABLE_SOURCE_HASHES}
+  - {id: PP92-FIN-058, source: GUARD, rule: PRESERVE_CLAUSE42_LOWER_BOUND_ANOMALY_AND_FAIL_CLOSED_ZERO_D_OR_n}
   - {id: PP92-FIN-059, source: GUARD, rule: DO_NOT_APPLY_FINANCIAL_ROUTES_TO_ANOTHER_SECTOR}
   - {id: PP92-FIN-060, source: GUARD, rule: DO_NOT_TREAT_TYPICAL_OBJECT_MATCH_AS_AUTOMATIC_CATEGORY}
   - {id: PP92-FIN-061, source: GUARD, rule: DO_NOT_TREAT_TENTH_WORKING_DAY_POINT_IN_TIME_AS_SUBMISSION_DEADLINE}
   - {id: PP92-FIN-062, source: GUARD, rule: DO_NOT_INVENT_NUMERIC_OPERATIONAL_RELIABILITY_LIMITS}
-  - {id: PP92-FIN-063, source: GUARD, rule: DO_NOT_CLAIM_IMMUTABLE_OFFICIAL_PDF_OR_FORMULA_BYTES}
+  - {id: PP92-FIN-063, source: GUARD, rule: REQUIRE_IMMUTABLE_OFFICIAL_PDF_AND_REPRODUCIBLE_FORMULA_EVIDENCE}
   - {id: PP92-FIN-064, source: GUARD, rule: REQUIRE_INDEPENDENT_EXPERT_REVIEW_BEFORE_GLOBAL_PASS}
 verification_boundary:
   paragraphs_1_to_55_text: VERIFIED_PUBLIC_TEXT
@@ -182,11 +194,11 @@ verification_boundary:
   ownership_evidence_groups: VERIFIED_THREE
   indicator_routing_paragraphs: VERIFIED_21
   formula_variable_descriptions: VERIFIED_TEN
-  formula_images: PENDING_IMMUTABLE_IMAGE_BYTES
-  numeric_formula_execution: BLOCKED_FAIL_CLOSED
+  formula_images: VERIFIED_10_OF_10_PRIMARY_PDF
+  numeric_formula_execution: CONDITIONAL_FAIL_CLOSED_FOR_ZERO_D_ZERO_n_AND_CLAUSE42_LOWER_BOUND_INTERPRETATION
   pp127_threshold_values: VERIFIED_SEPARATE_CURRENT_MODEL
   official_publication_record: VERIFIED_METADATA
-  immutable_official_pdf_bytes: PENDING
+  immutable_official_pdf_bytes: VERIFIED_SHA256_AND_GIT_BLOB_SHA
   independent_expert_review: PENDING
   critical_gap_created: 0
   high_gap_created: 0
@@ -194,8 +206,8 @@ coverage:
   paragraphs: 55
   actor_classes: 6
   indicator_routing_paragraphs: 21
-  formula_images_blocked: 10
+  formula_images_blocked: 0
   control_rules: 64
   regression_cases: 64
-  models_after_run: 77
-  cases_after_run: 4365
+  models_after_run: 96
+  cases_after_run: 5565

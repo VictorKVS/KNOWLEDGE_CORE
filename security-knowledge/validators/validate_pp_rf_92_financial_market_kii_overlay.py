@@ -29,6 +29,7 @@ def main() -> int:
     check(matrix.get("act", {}).get("effective_from") == "2026-02-15", "effective date drift")
     check(matrix.get("act", {}).get("effective_date_confidence") == "DERIVED_FROM_PRIMARY_PUBLICATION_AND_GENERAL_RULE", "effective-date confidence drift")
     check(source.get("sha256") == EXPECTED_SHA256 == artifact.get("sha256"), "SHA-256 metadata drift")
+    check(source.get("git_blob_sha") == "cde5d8f5b9c68415c846e9dfa9758ff4437307d2" == artifact.get("git_blob_sha"), "Git blob SHA drift")
     check(source.get("byte_length") == 4272251 == artifact.get("byte_length"), "byte length drift")
     check(source.get("pdf_pages") == 17 == artifact.get("pages"), "page count drift")
     check(matrix.get("extraction", {}).get("ocr_is_evidence") is False, "OCR must not be evidence")
@@ -58,13 +59,27 @@ def main() -> int:
 
     routes = by_id.get("PP92-C35-RECIPIENT-ROUTING", {}).get("routes", [])
     check({r.get("recipient") for r in routes} == set(fixture.get("required_recipient_routes", [])), "recipient routing drift")
-    check(by_id.get("PP92-C41-POSITION-9-FORMULA", {}).get("formula") == fixture.get("required_formula"), "position 9 formula drift")
+    for rule_id, formula in fixture.get("required_formulas", {}).items():
+        check(by_id.get(rule_id, {}).get("formula") == formula, f"formula drift: {rule_id}")
+    check(by_id.get("PP92-C27-CLIENT-REMOTE-ACCESS", {}).get("positions") == fixture.get("required_clause_27_route"), "clause 27 route drift")
+    check(by_id.get("PP92-C41-POSITION-9-FORMULA", {}).get("absolute_value_operator") == "ABSENT", "clause 41 absolute-value drift")
+    check(by_id.get("PP92-C41-POSITION-9-FORMULA", {}).get("execution_guard") == "FAIL_CLOSED_WHEN_D_IS_ZERO_OR_MISSING", "clause 41 denominator guard drift")
+    check(by_id.get("PP92-C42-P-AVG", {}).get("source_notation_anomaly") == "LOWER_BOUND_IMAGE_SHOWS_i_WITHOUT_EXPLICIT_EQUALS_ONE", "clause 42 lower-bound anomaly lost")
+    check(by_id.get("PP92-C42-P-AVG", {}).get("execution_guard") == "FAIL_CLOSED_WHEN_n_IS_ZERO_OR_MISSING_OR_LOWER_BOUND_INTERPRETATION_IS_MATERIAL", "clause 42 execution guard drift")
     check(by_id.get("PP92-C55-CONSEQUENCE-SCENARIOS", {}).get("normative_strength") == "RECOMMENDED", "clause 55 promoted to mandatory")
 
-    for rule_id in ("PP92-C50-POSITION-10-3", "PP92-C51-POSITION-10-4", "PP92-C52-POSITION-10-5"):
+    c50 = by_id.get("PP92-C50-POSITION-10-3", {})
+    check(c50.get("components", {}).get("PA_npf", {}).get("measurement_time") == "TENTH_WORKING_DAY_OF_CALENDAR_YEAR", "clause 50 PA snapshot drift")
+    check(c50.get("components", {}).get("PR_npf", {}).get("measurement_time") == "NOT_SEPARATELY_SPECIFIED_IN_CLAUSE_50", "clause 50 PR scope widened")
+    check("measurement_time" not in c50, "clause 50 snapshot incorrectly generalized to whole formula")
+    for rule_id in ("PP92-C51-POSITION-10-4", "PP92-C52-POSITION-10-5"):
         rule = by_id.get(rule_id, {})
         check(rule.get("measurement_time") == "TENTH_WORKING_DAY_OF_CALENDAR_YEAR", f"{rule_id}: measurement time drift")
         check("deadline" not in rule, f"{rule_id}: measurement snapshot converted to deadline")
+    check(by_id.get("PP92-C49-POSITION-10-2", {}).get("glyph_context_guard") is not None, "reused Q_o glyph context guard missing")
+    extraction = matrix.get("extraction", {})
+    check(extraction.get("formula_images_verified") == 10, "formula verification count drift")
+    check(extraction.get("all_primary_pages_rendered") is True, "all-pages render gate drift")
     for rule_id in ("PP92-C42-P-AVG", "PP92-C43-S-I", "PP92-C44-C-MAX", "PP92-C45-ASSOCIATED-HARM", "PP92-C46-BUDGET-DENOMINATOR", "PP92-C48-POSITION-10-1", "PP92-C49-POSITION-10-2"):
         for item in by_id.get(rule_id, {}).get("numeric_rules", []):
             check("RETENTION" not in item.get("kind", ""), f"{rule_id}: calculation period converted to retention")

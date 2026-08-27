@@ -7,11 +7,25 @@
     {"rule_id":"PP92-C6-ANNUAL-INVENTORY-REPORT","kind":"ANNUAL_DUE_POINT","value":10,"unit":"WORKING_DAY_OF_CALENDAR_YEAR","starts_from":"START_OF_CALENDAR_YEAR"}
   ],
   "required_recipient_routes": ["MINISTRY_OF_FINANCE_RF","BANK_OF_RUSSIA"],
-  "required_formula": "((P_avg / (365 * 24)) * (C_max / D) + (0.2 * Y / D)) * 100",
+  "required_formulas": {
+    "PP92-C41-POSITION-9-FORMULA": "((P_avg / (365 * 24)) * (C_max / D) + (0.2 * Y / D)) * 100",
+    "PP92-C42-P-AVG": "P_avg = sum(S_i, lower_bound_shown_as_i, upper_bound=n) / n",
+    "PP92-C47-POSITION-10": "K_10 = Q_o / 365",
+    "PP92-C48-POSITION-10-1": "K_10_1 = A_o / 365",
+    "PP92-C49-POSITION-10-2": "K_10_2 = Q_o / 365",
+    "PP92-C50-POSITION-10-3": "K_10_3 = PA_npf + PR_npf",
+    "PP92-C51-POSITION-10-4": "K_10_4 = V_a",
+    "PP92-C52-POSITION-10-5": "K_10_5 = Q_c",
+    "PP92-C53-POSITION-10-6": "K_10_6 = V_L",
+    "PP92-C54-POSITION-10-7": "K_10_7 = Q_ch"
+  },
+  "required_clause_27_route": ["10^4"],
   "negative_cases": [
     {"case":"working days are not calendar days","forbidden_unit":"CALENDAR_DAY"},
     {"case":"annual due point is not January 10","forbidden_interpretation":"JANUARY_10"},
-    {"case":"clauses 50-52 are snapshots","forbidden_interpretation":"REPORTING_DEADLINE"},
+    {"case":"clause 50 PA_npf snapshot is not silently extended to PR_npf","required_pa_measurement_time":"TENTH_WORKING_DAY_OF_CALENDAR_YEAR","required_pr_measurement_time":"NOT_SEPARATELY_SPECIFIED_IN_CLAUSE_50"},
+    {"case":"clauses 50-52 snapshots are not reporting deadlines","forbidden_interpretation":"REPORTING_DEADLINE"},
+    {"case":"clause 42 lower summation bound is not silently normalized","required_source_notation_anomaly":"LOWER_BOUND_IMAGE_SHOWS_i_WITHOUT_EXPLICIT_EQUALS_ONE"},
     {"case":"three-year and twelve-month periods are calculation windows","forbidden_interpretation":"RETENTION_DUTY"},
     {"case":"clause 55 remains recommendatory","required_normative_strength":"RECOMMENDED"},
     {"case":"objects outside type list are reviewed, not automatically excluded","required_rule_id":"PP92-C9-NEW-OR-CROSS-SECTOR-OBJECTS"},
