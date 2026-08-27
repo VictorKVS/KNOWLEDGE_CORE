@@ -1,0 +1,173 @@
+schema_version: "1.0"
+id: FATHER-KNOWLEDGE-STREAM-REGISTRY-0001
+status: ACTIVE
+parent_issue: 39
+branch: agent/father-translation-factory-m1
+objective: >-
+  Execute FATHER Knowledge Factory M1 through four governed engineering streams with common
+  contracts, trace propagation, acceptance gates and integration checkpoints.
+
+common_rules:
+  - requirements_before_code
+  - analysis_before_implementation
+  - contracts_before_parallel_changes
+  - source_translation_interpretation_separated
+  - one_canonical_knowledge_identity
+  - evidence_first
+  - no_opaque_single_weight
+  - trace_id_propagates_end_to_end
+  - every_stage_emits_start_and_terminal_event
+  - no_bulk_run_before_MIN_green
+  - no_invented_telemetry_or_eta
+
+integration_order:
+  - G0_CONTRACTS
+  - G1_S1_DB_FOUNDATION
+  - G2_S2_INGEST_TRANSLATION_EVIDENCE
+  - G3_S3_GRAPH_WEIGHTS_ROLE_VIEWS
+  - G4_S4_REVIEW_PROMOTION_EXPORT
+  - G5_END_TO_END_GOLDEN_PATH
+  - G6_REAL_PDF_MAX
+
+streams:
+  S1:
+    issue: 41
+    title: DB_SCHEMA_TRACING_FOUNDATION
+    status: READY
+    owns:
+      - father_knowledge_db
+      - schema_and_migrations
+      - stable_ids
+      - constraints_indexes
+      - trace_tables
+      - entity_trace_links
+      - init_and_integrity
+    trace_stages:
+      - DB_SCHEMA
+      - DB_WRITE
+      - ENTITY_LINK
+      - DB_INTEGRITY
+      - KB_READY_GATE
+    blocks:
+      - S2_DB_WRITE
+      - S3_GRAPH_PERSISTENCE
+      - S4_REVIEW_PERSISTENCE
+
+  S2:
+    issue: 42
+    title: PDF_OCR_TRANSLATION_EVIDENCE
+    status: READY
+    owns:
+      - pdf_classification
+      - native_text_extraction
+      - ocr
+      - page_block_bbox_anchors
+      - translation_bridge
+      - provenance
+      - evidence_packages
+    trace_stages:
+      - INGEST
+      - PDF_CLASSIFY
+      - EXTRACT_NATIVE
+      - OCR
+      - STRUCTURE
+      - LANGUAGE
+      - CHUNK
+      - TRANSLATE
+      - REVIEW
+      - QA
+      - EVIDENCE_BUILD
+      - DB_WRITE
+    depends_on:
+      - S1_SCHEMA_CONTRACT
+
+  S3:
+    issue: 43
+    title: GRAPH_WEIGHTS_CONTRADICTIONS_ROLE_VIEWS
+    status: READY
+    owns:
+      - atomic_knowledge
+      - node_taxonomy
+      - edge_taxonomy
+      - dedup
+      - contradictions
+      - score_vectors
+      - role_views
+    trace_stages:
+      - KNOWLEDGE_EXTRACT
+      - NORMALIZE
+      - DEDUP_CHECK
+      - NODE_CREATE_UPDATE
+      - EDGE_INFER
+      - CONTRADICTION_CHECK
+      - SCORE_COMPONENTS
+      - ROLE_PROJECT
+      - GRAPH_INTEGRITY
+    depends_on:
+      - S1_SCHEMA_CONTRACT
+      - S2_EVIDENCE_CONTRACT
+
+  S4:
+    issue: 44
+    title: REVIEW_QA_PROMOTION_EXPORT
+    status: READY
+    owns:
+      - deterministic_qa
+      - model_review
+      - chief_analyst_review
+      - promotion_gate
+      - jsonl_export
+      - round_trip
+      - regression_failures
+    trace_stages:
+      - EVIDENCE_PACKAGE
+      - DETERMINISTIC_QA
+      - MODEL_REVIEW
+      - CHIEF_ANALYST_REVIEW
+      - PROMOTION_DECISION
+      - EXPORT
+      - ROUND_TRIP_VERIFY
+    depends_on:
+      - S1_SCHEMA_CONTRACT
+      - S2_EVIDENCE_CONTRACT
+      - S3_GRAPH_CONTRACT
+
+shared_trace_fields:
+  required:
+    - trace_id
+    - span_id
+    - parent_span_id
+    - run_id
+    - stream_id
+    - worker_id
+    - stage
+    - event_type
+    - started_at_or_timestamp
+    - elapsed_ms_on_terminal
+    - status
+  contextual:
+    - document_id
+    - fragment_id
+    - translation_id
+    - node_id
+    - edge_id
+    - evidence_id
+    - review_id
+    - score_id
+    - role_view_id
+    - model_id
+    - source_sha256
+    - fragment_sha256
+    - error_type
+    - error_message
+
+first_common_fixture:
+  path: father/agent-factory/translation/fixtures/architecture_security_smoke_en.txt
+  purpose: >-
+    Same short English architecture/security source is used by all four streams so defects can be
+    localized by trace stage rather than hidden by different test materials.
+
+completion_rule: >-
+  A stream is complete only when its own acceptance gate is green and the integrated golden path can
+  traverse source -> translation -> evidence -> knowledge -> graph -> review -> role view -> KB_READY
+  with one trace_id and resolvable entity links.
