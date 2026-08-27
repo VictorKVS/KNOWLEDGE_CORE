@@ -1,0 +1,140 @@
+schema_version: "1.0"
+id: RU-PP538-2005-SORM-INTERACTION-COMMISSIONING-ATOMIC-V1
+title: "ПП РФ № 538/2005: взаимодействие оператора связи и органов ОРД"
+checked_at: "2026-08-27"
+status: VERIFIED_CURRENT_CONSOLIDATED_TEXT
+scope: >-
+  Пункты 1–15 Правил, утвержденных постановлением Правительства Российской
+  Федерации от 27.08.2005 № 538, включая ввод технических средств, план,
+  базы данных, сроки и лимиты запросов. Это не модель одноименного ПП № 538
+  от 24.04.2025 об обезличенных данных и не реконструкция закрытых приемов ОРМ.
+
+source:
+  act: "Постановление Правительства РФ от 27.08.2005 № 538"
+  rules_effective_from: "2006-01-01"
+  current_revision: "2021-04-17"
+  current_revision_effective_from: "2021-04-30"
+  current_index: "https://www.consultant.ru/document/cons_doc_LAW_55326/"
+  current_text: "https://normativ.kontur.ru/document?documentId=389986&moduleId=1"
+  original_publications:
+    - "Российская газета, № 195, 02.09.2005"
+    - "Собрание законодательства РФ, 05.09.2005, № 36, ст. 3704"
+  latest_amending_act:
+    act: "Постановление Правительства РФ от 17.04.2021 № 613"
+    official_publication: "https://publication.pravo.gov.ru/Document/View/0001202104220003"
+    published: "2021-04-22"
+    effective_from: "2021-04-30"
+
+identifier_collision_guard:
+  this_act: PP_RF_538_2005_SORM_INTERACTION
+  distinct_act: PP_RF_538_2025_ARTICLE13_1_ANONYMIZED_DATA_CASES
+  distinct_model: security-knowledge/corpus/ru-personal-data/pp-rf-538-2025-art13-1-cases-atomic-v1.yaml
+  rule: NEVER_JOIN_BY_NUMBER_WITHOUT_DATE_AND_TITLE
+
+dependencies:
+  federal_law: "126-ФЗ, статья 64"
+  pp445:
+    relation: DEFINES_COMMISSIONING_DATE_FOR_PP445_POINT6_CAPACITY_ROUTE
+    model: security-knowledge/legislation/RU/government-decrees/445/article64-content-retention-atomic-v1.yaml
+  technical_requirements: MINDIGITAL_REQUIREMENTS_AGREED_WITH_FSB_PENDING_SEPARATE_ATOMIZATION
+
+temporal_model:
+  - id: RULES_EFFECTIVE
+    from: "2006-01-01"
+  - id: CURRENT_REVISION
+    from: "2021-04-30"
+    status: CURRENT_AS_OF_2026_08_27
+  - id: FSB_UNIT_DESIGNATION_ROUTE
+    operator_application_max_calendar_days_from_license: 45
+    fsb_head_designation_max_working_days_from_application: 30
+  - id: IMPLEMENTATION_PLAN_ROUTE
+    plan_development_max_months_from_application: 3
+  - id: USER_IDENTITY_CONFIRMATION_REQUEST_ROUTE
+    operator_response_max_days_from_request: 15
+    request_caps:
+      - {percent_of_numbering_resource: 0.3, period_value: 15, period_unit: DAYS}
+      - {percent_of_numbering_resource: 0.6, period_value: 1, period_unit: CALENDAR_MONTH}
+      - {percent_of_numbering_resource: 5, period_value: 1, period_unit: CALENDAR_YEAR}
+  - id: SUBSCRIBER_DATABASE_RETENTION
+    value: 3
+    unit: YEARS
+    location: RUSSIAN_FEDERATION
+
+atomic_rules:
+  - {id: PP538-2005-R001, locator: "Правила, пункт 1", rule: DEFINE_INTERACTION_SCOPE_FOR_AUTHORIZED_ORD_BODIES_TECHNICAL_MEANS_AND_LAWFUL_INFORMATION_PROVISION}
+  - {id: PP538-2005-R002, locator: "Правила, пункт 2", actors: [FSB_BODY], rule: FSB_INTERACTS_WITH_OPERATOR_FOR_TECHNICAL_MEANS_ORM_INCLUDING_FOR_OTHER_AUTHORIZED_BODIES}
+  - {id: PP538-2005-R003, locator: "Правила, пункт 3", actors: [INTERIOR_BODY], rule: INTERIOR_BODY_USES_TECHNICAL_MEANS_ONLY_WHEN_FSB_LACKS_REQUIRED_OPERATIONAL_TECHNICAL_CAPABILITY}
+  - {id: PP538-2005-R004, locator: "Правила, пункт 4", actors: [COMMUNICATIONS_OPERATOR], rule: NETWORKS_AND_COMMUNICATIONS_MEANS_MUST_MEET_MINDIGITAL_REQUIREMENTS_AGREED_WITH_FSB}
+  - {id: PP538-2005-R005, locator: "Правила, пункт 5", actors: [COMMUNICATIONS_OPERATOR], rule: APPLY_TO_FSB_NO_LATER_THAN_45_DAYS_FROM_COMMUNICATIONS_LICENSE_RECEIPT}
+  - {id: PP538-2005-R006, locator: "Правила, пункт 5", actors: [FSB_BODY_HEAD], rule: DESIGNATE_AUTHORIZED_FSB_UNIT_WITHIN_30_WORKING_DAYS_FROM_OPERATOR_APPLICATION}
+  - {id: PP538-2005-R007, locator: "Правила, пункт 6", actors: [COMMUNICATIONS_OPERATOR], rule: WHEN_POINT4_REQUIREMENTS_ARE_NOT_SET_PROVIDE_CONFORMING_TECHNICAL_ROOMS_ON_FSB_REQUEST}
+  - {id: PP538-2005-R008, locator: "Правила, пункт 6, абзац 2", actors: [INTERIOR_BODY], rule: TECHNICAL_ROOMS_MAY_BE_PROVIDED_TO_INTERIOR_BODY_ONLY_WHEN_FSB_LACKS_REQUIRED_CAPABILITY}
+  - {id: PP538-2005-R009, locator: "Правила, пункт 7, абзац 1", actors: [FSB_BODY, COMMUNICATIONS_OPERATOR], rule: JOINTLY_DEVELOP_IMPLEMENTATION_PLAN_WITH_COMMISSIONING_DEADLINE}
+  - {id: PP538-2005-R010, locator: "Правила, пункт 7, абзац 2", rule: DEVELOP_PLAN_WITHIN_THREE_MONTHS_FROM_OPERATOR_APPLICATION}
+  - {id: PP538-2005-R011, locator: "Правила, пункт 7, абзац 2", rule: MAKE_THREE_PLAN_COPIES_TWO_FOR_SUPERVISION_SERVICE_AND_FSB_AND_ONE_RETAINED_BY_OPERATOR}
+  - {id: PP538-2005-R012, locator: "Правила, пункт 8", actors: [MINDIGITAL, FSB], rule: JOINTLY_ESTABLISH_MODEL_PLAN_REQUIREMENTS}
+  - {id: PP538-2005-R013, locator: "Правила, пункт 8, абзац 2", actors: [INTERIOR_BODY], rule: PARTICIPATE_IN_PLAN_DEVELOPMENT_ONLY_IN_POINT3_CASE}
+  - {id: PP538-2005-R014, locator: "Правила, пункт 9", rule: FSB_AND_OPERATOR_DECIDE_ON_NEW_PLAN_FOR_NEW_MEANS_NEW_TECHNOLOGY_DECOMMISSIONING_OR_MODERNIZATION}
+  - {id: PP538-2005-R015, locator: "Правила, пункт 10", actors: [COMMUNICATIONS_OPERATOR], rule: COMMISSION_TECHNICAL_MEANS_ONLY_ON_SIGNED_COMMISSIONING_ACT}
+  - {id: PP538-2005-R016, locator: "Правила, пункт 10", rule: COMMISSIONING_ACT_REQUIRES_FSB_FEDERAL_SUPERVISION_SERVICE_AND_OPERATOR_REPRESENTATIVES_PLUS_INTERIOR_BODY_IN_POINT3_CASE}
+  - {id: PP538-2005-R017, locator: "Правила, пункт 11", actors: [COMMUNICATIONS_OPERATOR], rule: AGREE_WITH_DESIGNATED_FSB_UNIT_MEASURES_LIMITING_INSTALLATION_AND_SERVICE_PERSONNEL}
+  - {id: PP538-2005-R018, locator: "Правила, пункт 11", actors: [COMMUNICATIONS_OPERATOR], rule: PREVENT_DISCLOSURE_OF_ORGANIZATIONAL_AND_TECHNICAL_ORM_METHODS}
+  - {id: PP538-2005-R019, locator: "Правила, пункт 12, абзац 1", actors: [COMMUNICATIONS_OPERATOR], rule: TIMELY_UPDATE_SUBSCRIBER_AND_SERVICE_DATABASES_INCLUDING_COMMUNICATION_EVENT_FACTS}
+  - {id: PP538-2005-R020, locator: "Правила, пункт 12, абзац 2", actors: [COMMUNICATIONS_OPERATOR], rule: STORE_DATABASE_INFORMATION_FOR_THREE_YEARS_IN_RUSSIA}
+  - {id: PP538-2005-R021, locator: "Правила, пункт 12, абзац 2", actors: [COMMUNICATIONS_OPERATOR], rule: PROVIDE_FSB_AND_CONDITIONAL_INTERIOR_BODY_CONTINUOUS_REMOTE_DATABASE_ACCESS}
+  - {id: PP538-2005-R022, locator: "Правила, пункт 12.1, абзац 1", rule: AUTHORIZED_BODY_SENDS_USER_IDENTITY_CONFIRMATION_REQUEST_THROUGH_FSB_TO_OPERATOR}
+  - {id: PP538-2005-R023, locator: "Правила, пункт 12.1, абзац 2", rule: REQUEST_MUST_REFLECT_ALL_DETECTED_IDENTITY_DISCREPANCIES}
+  - {id: PP538-2005-R024, locator: "Правила, пункт 12.1, абзацы 3–6", rule: ENFORCE_THREE_REQUEST_CAPS_AGAINST_NUMBERING_RESOURCE_AT_REQUEST_DATE}
+  - {id: PP538-2005-R025, locator: "Правила, пункт 12.1, абзац 7", actors: [MINDIGITAL], rule: APPROVE_REQUEST_AND_RESPONSE_FORMS}
+  - {id: PP538-2005-R026, locator: "Правила, пункт 12.2, абзац 1", actors: [COMMUNICATIONS_OPERATOR], rule: SEND_IDENTITY_CONFIRMATION_RESULT_AND_APPLICABLE_SERVICE_END_DATE_WITHIN_15_DAYS_FROM_REQUEST}
+  - {id: PP538-2005-R027, locator: "Правила, пункт 12.2, абзац 2", actors: [COMMUNICATIONS_OPERATOR], rule: WHEN_REQUEST_CAP_EXCEEDED_NOTIFY_EXCESS_AND_PLANNED_COMPLETION_PERIOD_WITH_NO_NUMERIC_NOTIFICATION_DEADLINE_STATED}
+  - {id: PP538-2005-R028, locator: "Правила, пункт 13", actors: [COMMUNICATIONS_OPERATOR], rule: CONNECT_DATABASE_SYSTEMS_AND_TECHNICAL_MEANS_TO_FSB_CONTROL_POINT_THROUGH_FSB_DETERMINED_CONNECTION_POINTS}
+  - {id: PP538-2005-R029, locator: "Правила, пункт 14", rule: DATABASE_MUST_CONTAIN_ENUMERATED_INDIVIDUAL_LEGAL_ENTITY_BILLING_TRAFFIC_PAYMENT_AND_NUMBER_PORTABILITY_INFORMATION}
+  - {id: PP538-2005-R030, locator: "Правила, пункт 15", actors: [COMMUNICATIONS_OPERATOR], rule: STORE_COMMUNICATION_CONTENT_IN_TECHNICAL_MEANS_IN_RUSSIA_AND_PROVIDE_ONLY_IN_FEDERAL_LAW_CASES}
+  - {id: PP538-2005-R031, locator: "Идентификатор акта", rule: NEVER_CONFLATE_PP538_2005_SORM_WITH_PP538_2025_ANONYMIZED_DATA}
+
+evidence_model:
+  - {id: E538-2005-01, proves: [PP538-2005-R004], artifacts: [APPLICABLE_TECHNICAL_REQUIREMENTS_REGISTER, NETWORK_CONFORMANCE_EVIDENCE]}
+  - {id: E538-2005-02, proves: [PP538-2005-R005, PP538-2005-R006], artifacts: [LICENSE_RECEIPT_DATE, OPERATOR_APPLICATION, FSB_UNIT_DESIGNATION]}
+  - {id: E538-2005-03, proves: [PP538-2005-R007, PP538-2005-R008], artifacts: [FSB_REQUEST, ABSENCE_OF_POINT4_REQUIREMENTS, ROOM_CONFORMANCE, CONDITIONAL_CAPABILITY_RECORD]}
+  - {id: E538-2005-04, proves: [PP538-2005-R009, PP538-2005-R010], artifacts: [APPLICATION_DATE, JOINT_IMPLEMENTATION_PLAN, COMMISSIONING_DEADLINE]}
+  - {id: E538-2005-05, proves: [PP538-2005-R011], artifacts: [THREE_COPY_DISTRIBUTION_REGISTER]}
+  - {id: E538-2005-06, proves: [PP538-2005-R012, PP538-2005-R013], artifacts: [MODEL_PLAN_REQUIREMENTS, CONDITIONAL_INTERIOR_PARTICIPATION_BASIS]}
+  - {id: E538-2005-07, proves: [PP538-2005-R014], artifacts: [CHANGE_EVENT, FSB_OPERATOR_NEW_PLAN_DECISION]}
+  - {id: E538-2005-08, proves: [PP538-2005-R015, PP538-2005-R016], artifacts: [SIGNED_COMMISSIONING_ACT, REQUIRED_SIGNATORIES, CONDITIONAL_INTERIOR_SIGNATORY_BASIS]}
+  - {id: E538-2005-09, proves: [PP538-2005-R017, PP538-2005-R018], artifacts: [FSB_AGREED_PERSONNEL_CONTROLS, AUTHORIZED_PERSONNEL_LIST, NONDISCLOSURE_CONTROLS]}
+  - {id: E538-2005-10, proves: [PP538-2005-R019], artifacts: [DATABASE_UPDATE_PROCESS, EVENT_DATA_FRESHNESS_TEST]}
+  - {id: E538-2005-11, proves: [PP538-2005-R020, PP538-2005-R021], artifacts: [RUSSIA_STORAGE_ARCHITECTURE, THREE_YEAR_CONFIGURATION, CONTINUOUS_REMOTE_ACCESS_TEST]}
+  - {id: E538-2005-12, proves: [PP538-2005-R022, PP538-2005-R023], artifacts: [REQUEST_ROUTE, DISCREPANCY_LIST]}
+  - {id: E538-2005-13, proves: [PP538-2005-R024], artifacts: [NUMBERING_RESOURCE_AT_REQUEST_DATE, REQUEST_CAP_CALCULATION]}
+  - {id: E538-2005-14, proves: [PP538-2005-R026, PP538-2005-R027], artifacts: [REQUEST_RECEIPT, RESPONSE, SERVICE_END_DATE, CAP_EXCESS_NOTICE]}
+  - {id: E538-2005-15, proves: [PP538-2005-R028], artifacts: [FSB_CONNECTION_POINT_DECISION, CONNECTION_ARCHITECTURE]}
+  - {id: E538-2005-16, proves: [PP538-2005-R029], artifacts: [DATABASE_SCHEMA_AND_FIELD_COMPLETENESS_TEST]}
+  - {id: E538-2005-17, proves: [PP538-2005-R030], artifacts: [CONTENT_STORAGE_LOCATION, FEDERAL_LAW_PROVISION_BASIS]}
+  - {id: E538-2005-18, proves: [PP538-2005-R031], artifacts: [ACT_DATE_NUMBER_TITLE_COMPOSITE_KEY]}
+
+red_team_guardrails:
+  - DO_NOT_CONFLATE_PP538_2005_WITH_PP538_2025
+  - DO_NOT_TREAT_THE_2005_ACT_AS_A_GENERAL_ANONYMIZATION_RULE
+  - DO_NOT_TREAT_INTERIOR_BODY_AS_AN_UNCONDITIONAL_SIGNATORY_OR_ACCESS_RECIPIENT
+  - DO_NOT_COMMISSION_WITHOUT_THE_POINT10_SIGNED_ACT
+  - DO_NOT_TREAT_PLAN_DEADLINE_AS_COMMISSIONING_DEADLINE
+  - DO_NOT_CONVERT_THREE_MONTHS_INTO_90_DAYS
+  - DO_NOT_CONVERT_30_WORKING_DAYS_INTO_CALENDAR_DAYS
+  - DO_NOT_CONVERT_THE_UNQUALIFIED_15_DAY_RESPONSE_INTO_WORKING_DAYS
+  - DO_NOT_INVENT_A_NUMERIC_DEADLINE_FOR_THE_CAP_EXCESS_NOTICE
+  - DO_NOT_CONFUSE_THREE_YEAR_DATABASE_RETENTION_WITH_PP445_CONTENT_RETENTION
+  - DO_NOT_RECONSTRUCT_CLOSED_ORM_METHODS_OR_TECHNICAL_PARAMETERS
+  - DO_NOT_TREAT_REMOTE_ACCESS_AS_AUTHORITY_BEYOND_FEDERAL_LAW_CASES
+
+verification_boundary:
+  current_points_1_to_15: VERIFIED_CURRENT_CONSOLIDATED_TEXT
+  current_revision_and_effective_date: VERIFIED
+  pp613_official_publication: VERIFIED
+  original_2005_publication_citations: VERIFIED_BIBLIOGRAPHIC
+  current_consolidated_immutable_bytes: PENDING
+  technical_requirements_and_model_plan_requirements: PENDING_SEPARATE_ATOMIZATION
+  closed_orm_organizational_and_technical_methods: OUT_OF_SCOPE_NOT_RECONSTRUCTED
+  independent_expert_review: PENDING
+  critical_gap_created: false
+  high_gap_created: false
