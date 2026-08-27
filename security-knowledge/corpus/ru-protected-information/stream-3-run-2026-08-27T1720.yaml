@@ -1,0 +1,138 @@
+schema_version: "1.0"
+stream: 3
+run_id: "stream-3-run-2026-08-27T1720"
+started_at: "2026-08-27T17:20:00+03:00"
+focus: "healthcare / electronic medical documentation / current 947n and future 209n transition"
+
+result:
+  new_source_nodes: 2
+  new_sector_regimes: 0
+  existing_sources_enriched: 0
+  durable_downloads: 0
+  immutable_artifacts: 0
+  pending_exact_capture: 2
+  applicability_promotions: 0
+  legal_conflicts_confirmed: 0
+
+new_sources:
+  - source_id: SEC-SRC-RU-MINZDRAV-ORDER-947N-2020
+    status: CURRENT_AS_OF_2026_08_27_EXACT_BINARY_PENDING
+    title: "Приказ Минздрава России от 07.09.2020 № 947н"
+    official_publication_id: "0001202101120007"
+    publication_date: "2021-01-12"
+    minjust_registration_number: "62054"
+    effective_from: "2021-02-01"
+    current_until_exclusive: "2026-09-01"
+  - source_id: SEC-SRC-RU-MINZDRAV-ORDER-209N-2026
+    status: FUTURE_NOT_CURRENT_AS_OF_2026_08_27_EXACT_BINARY_PENDING
+    title: "Приказ Минздрава России от 25.03.2026 № 209н"
+    official_publication_id_crosscheck: "0001202604230013"
+    publication_date_crosscheck: "2026-04-23"
+    minjust_registration_number: "86160"
+    effective_from: "2026-09-01"
+    valid_until: "2032-09-01"
+
+primary_evidence:
+  - kind: official_publication_index
+    authority: "Официальный интернет-портал правовой информации"
+    act: "07.09.2020 № 947н"
+    verified:
+      - "title/date/number"
+      - "Minjust registration 12.01.2021 № 62054"
+      - "publication id 0001202101120007"
+      - "publication date 12.01.2021"
+      - "9-page official publication entry"
+  - kind: official_minzdrav_explanation
+    authority: "Министерство здравоохранения Российской Федерации"
+    act: "07.09.2020 № 947н"
+    verified:
+      - "effective from 01.02.2021"
+      - "electronic document formation/signature/storage/exchange/EGISZ transfer/access scope"
+      - "patient paper-duplicate option"
+  - kind: official_supervisory_npa_archive
+    authority: "Росздравнадзор"
+    act: "07.09.2020 № 947н"
+    verified:
+      - "mandatory-requirement locator set points 2,4,6,7,9-15,17,20-30"
+      - "official publication link 0001202101120007"
+      - "departmental DOCX copy locator"
+  - kind: successor_publication_and_text_crosscheck
+    act: "25.03.2026 № 209н"
+    official_publication_id_crosscheck: "0001202604230013"
+    minjust_registration_number: "86160"
+    verified:
+      - "repeals 947n"
+      - "effective 01.09.2026"
+      - "valid through 01.09.2032"
+      - "new scope includes medical/pharmaceutical workers, TFOMS, insurers, IS operators, patients and lawful access recipients"
+      - "new lifecycle expressly includes EGISZ registration"
+    primary_endpoint_status: TRANSIENT_TIMEOUT_OR_DNS_FAILURE
+
+legal_modeling:
+  anchors_added: 7
+  overlap_relations_added: 6
+  important_boundaries:
+    - "947n remains current through 31.08.2026; 209n must remain FUTURE_NOT_CURRENT until 01.09.2026."
+    - "947n point 20 ties EMD retention to the corresponding medical-document retention period; it is not a general PDN retention period."
+    - "947n point 21 preserves all versions/signatures through the document lifecycle."
+    - "Electronic medical documentation overlaps PDN and possible medical secrecy, but neither regime is inferred for every technical field without scenario proof."
+    - "209n introduces/clarifies direct EGISZ registration and wider actor scope, but those rules are future as of this run."
+  guards:
+    - "OVERLAP != APPLICABILITY"
+    - "CURRENT_947N != FUTURE_209N before 2026-09-01"
+    - "MEDICAL_DOCUMENT_RETENTION != GENERAL_PDN_RETENTION"
+    - "MEDICAL_DOCUMENT != AUTOMATIC_MEDICAL_SECRECY_CLASSIFICATION_FOR_EVERY_FIELD"
+    - "EGISZ_REGISTRATION_CONTEXT != PROOF_OF_EXPORT_OF_EVERY_LOCAL_RECORD"
+    - "No applicability without actor/system/record/operation/purpose/legal-basis proof."
+
+acquisition_attempts:
+  - target: "947n official publication PDF"
+    url: "https://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202101120007"
+    result: TRANSIENT_DNS_NAME_RESOLUTION_FAILURE
+  - target: "947n Roszdravnadzor/rg.gov.ru departmental DOCX copy"
+    url: "https://rg.gov.ru/api/file/616817e1e4b033d3119199cf"
+    result: TRANSIENT_DNS_NAME_RESOLUTION_FAILURE
+  - target: "209n official publication PDF"
+    url: "https://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202604230013"
+    result: TRANSIENT_DNS_NAME_RESOLUTION_FAILURE
+
+artifact_integrity:
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+  reason: "Exact official bytes were not obtained due transient name-resolution/endpoint failures; displayed file sizes and mirror sizes were not accepted and no hashes were invented."
+
+counters:
+  before:
+    found: 48
+    downloaded: 9
+    immutable: 9
+    pending: 37
+    reused: 2
+    primary_publication_verified: 20
+    sectors_registered: 28
+  after:
+    found: 50
+    downloaded: 9
+    immutable: 9
+    pending: 39
+    reused: 2
+    primary_publication_verified: 21
+    sectors_registered: 28
+
+next_priority:
+  - "Retry exact-byte capture of 947n and 209n before/after the 01.09.2026 transition; on successful exact capture record retrieved_at/MIME/byte_length/SHA-256 and immutable manifests."
+  - "On or after 01.09.2026, atomically switch current-state modeling: 947n -> SUPERSEDED and 209n -> CURRENT only after date/version check."
+  - "Continue healthcare subordinate layer: electronic medical document formats/registries and patient access, deduplicating against PP 140/2022 and 323-FZ article 13."
+  - "Continue unresolved high-priority exact captures across finance, telecom, education/children, public sector, biometrics, transport, advertising and archives/retention."
+
+production_statistics:
+  throughput_this_pass: "2 new normative source nodes; 7 protected-information/data-lifecycle anchors; 6 relationship candidates; current/future transition explicitly modeled"
+  cumulative_counters_source: "master-inventory-delta-2026-08-27T1720.yaml"
+  rework_share: null
+  speed_vs_single_stream_percent: null
+  remaining_volume_estimate: null
+  completion_forecast: null
+  telemetry_note: "No comparable per-source elapsed-time baseline was captured; speed-up, rework share and ETA are intentionally not fabricated."
