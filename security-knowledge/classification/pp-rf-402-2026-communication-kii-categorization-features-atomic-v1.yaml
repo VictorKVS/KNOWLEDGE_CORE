@@ -5,8 +5,8 @@ edition_date: "2026-04-13"
 publication_date: "2026-04-13"
 effective_date: "2026-09-01"
 valid_until_date_as_stated: "2032-09-01"
-status_observed_date: "2026-08-26"
-status: VERIFIED_ADOPTED_FUTURE_EFFECTIVE_COMMUNICATION_SECTOR_TEXT_FORMULA_IMAGES_BLOCKED
+status_observed_date: "2026-08-27"
+status: VERIFIED_ADOPTED_FUTURE_EFFECTIVE_COMMUNICATION_SECTOR_FORMULAS_PRIMARY_PDF_VERIFIED_PRE_EFFECTIVE_BLOCKED
 legal_role: FUTURE_COMMUNICATION_SECTOR_OVERLAY_TO_PP_RF_127_FROM_2026_09_01
 temporal_gate:
   observed_state: ADOPTED_NOT_YET_EFFECTIVE
@@ -15,7 +15,8 @@ temporal_gate:
   valid_until_qualifier: UNTIL_DATE_AS_STATED_NO_INCLUSIVE_END_ASSUMPTION
   pre_effective_execution: BLOCKED
 source_evidence:
-  official_publication: {url: "https://publication.pravo.gov.ru/document/0001202604130022", publication_number: "0001202604130022", publication_date: "2026-04-13", result: VERIFIED_OFFICIAL_PUBLICATION_METADATA_PDF_FETCH_TIMEOUT}
+  official_publication: {url: "https://publication.pravo.gov.ru/document/0001202604130022", publication_number: "0001202604130022", publication_date: "2026-04-13", result: VERIFIED_OFFICIAL_PUBLICATION_AND_PRIMARY_PDF}
+  immutable_official_pdf: {path: "security-knowledge/evidence/primary-artifacts/2026/pp-rf-402-2026-0001202604130022.pdf", sha256: "f666ccb125601dcf0b413ff7aed8f04dba1a74cd0f14655c98fb4f4277c345fc", byte_length: 2443943, pages: 10, result: VERIFIED_PRIMARY_IMMUTABLE}
   current_legal_interface: {url: "https://www.consultant.ru/document/cons_doc_LAW_531667/", result: VERIFIED_ADOPTED_NOT_YET_EFFECTIVE_INDEX}
   full_public_text: {url: "https://pravo.ppt.ru/postanovlenie/pravitelstvo/n-402-333889", result: VERIFIED_PARAGRAPHS_1_TO_19_TEXT_TWO_FORMULAS_AND_ONE_VARIABLE_GLYPH_RENDERED_AS_IMAGES}
   lifecycle_crosscheck: {url: "https://www.consultant.ru/law/hotdocs/93623.html", result: VERIFIED_EFFECTIVE_FROM_2026_09_01}
@@ -75,11 +76,23 @@ calculation_routes:
   position_6: PROBABILITY_OF_STATE_BODY_OR_FEDERAL_LAW_ORGANIZATION_FUNCTION_OR_POWER_FAILURE_DUE_TO_UNAVAILABLE_OBJECT_SUPPORTED_PROCESS
   position_8:
     result: SUBJECT_INCOME_DECREASE_PERCENT
+    formula_status: VERIFIED_PRIMARY_PDF_IMAGE
+    source_notation_ru: "П₈ = |(Дфакт − Дсредний) / Дсредний| × 100"
+    normalized_expression: "abs((D_ACTUAL - D_AVG_5Y) / D_AVG_5Y) * 100"
+    absolute_value_operator_present: true
+    zero_denominator_behavior: FAIL_CLOSED_NOT_DEFINED_BY_ACT
+    source_locator: {official_pdf_page: 8, printed_page: 7, embedded_page_image_sha256: "11c4c286b5e52f57fde05f10232259b34ec31dea3eb3528083b21a761788934e", reproducible_crop: "1500x700+490+2100", crop_sha256: "3793f0a8228de5c1a103011d7b59ac3cc17ed4f9279ec852c8e762f6ca210c03"}
     annual_income_period_years: 5
     input_groups: [FIVE_YEAR_AVERAGE_FEDERAL_TAXES, FIVE_YEAR_AVERAGE_ANNUAL_INCOME, MAXIMUM_ALLOWED_DOWNTIME_FROM_PREVENTIVE_MAINTENANCE_RULES, ATTACK_RECOVERY_TIME]
     recovery_time_order: [OPERATING_TECHNICAL_CONTRACTUAL_OR_OTHER_DOCUMENTS, FIVE_YEAR_STATISTICS, TEN_DAYS_FALLBACK]
   position_9:
     result: FEDERAL_BUDGET_DAMAGE_PERCENT
+    formula_status: VERIFIED_PRIMARY_PDF_IMAGE
+    source_notation_ru: "П₉ = ΔВыплат / Бсредний × 100"
+    normalized_expression: "(DELTA_PAYMENTS / B_AVG_FORECAST_3Y) * 100"
+    absolute_value_operator_present: false
+    zero_denominator_behavior: FAIL_CLOSED_NOT_DEFINED_BY_ACT
+    source_locator: {official_pdf_page: 9, printed_page: 8, embedded_page_image_sha256: "91784e71822f3771efe4fa5e72e6b444af32f2f5866370d248dd56ee42e6f254", reproducible_crop: "1500x650+490+2050", crop_sha256: "31ddcd75c27ba7eb1e83726758092eadcebe42a7d6dec66a37ffc0bf97a1326d"}
     federal_budget_income_basis: PLANNED_THREE_YEAR_AVERAGE
     input_groups: [ANNUAL_TAXES, ATTACK_AND_INCIDENT_REMEDIATION_COSTS, PERSONNEL_AND_FIXED_DOWNTIME_COSTS, OVERTIME_COSTS, CONTRACT_PENALTIES, MAXIMUM_SERVICE_INTERRUPTION_PERIOD, MAXIMUM_COMMUNICATION_SERVICE_PROFIT_REDUCTION]
 formula_boundary:
@@ -87,10 +100,11 @@ formula_boundary:
   variable_glyph_images: 1
   mathematical_image_fragments: 3
   image_paragraphs: ["16", "18"]
-  status: PENDING_IMMUTABLE_FORMULA_AND_VARIABLE_GLYPH_IMAGE_BYTES
-  execution_gate: BLOCK_POSITION_8_AND_POSITION_9_NUMERIC_EXECUTION_UNTIL_EXACT_OPERATORS_CONSTANTS_DENOMINATORS_AND_GLYPH_ARE_VERIFIED
+  status: VERIFIED_PRIMARY_IMMUTABLE_TWO_FORMULAS_AND_VARIABLE_GLYPH
+  pre_effective_execution: BLOCK_ALL_PP402_EXECUTION_BEFORE_2026_09_01
+  post_effective_numeric_guard: REQUIRE_NONZERO_DENOMINATOR_OTHERWISE_FAIL_CLOSED
 control_rules:
-  - {id: PP402-COM-001, source: LIFECYCLE, rule: REGISTER_ADOPTED_PP402_AS_NOT_YET_EFFECTIVE_ON_2026_08_26}
+  - {id: PP402-COM-001, source: LIFECYCLE, rule: REGISTER_ADOPTED_PP402_AS_NOT_YET_EFFECTIVE_ON_2026_08_27}
   - {id: PP402-COM-002, source: LIFECYCLE, rule: BLOCK_PP402_EXECUTION_BEFORE_2026_09_01}
   - {id: PP402-COM-003, source: LIFECYCLE, rule: ACTIVATE_PP402_ON_OR_AFTER_2026_09_01}
   - {id: PP402-COM-004, source: LIFECYCLE, rule: PRESERVE_VALID_UNTIL_2032_09_01_AS_STATED_WITHOUT_INCLUSIVE_END_ASSUMPTION}
@@ -133,7 +147,7 @@ control_rules:
   - {id: PP402-COM-041, source: "13", rule: DO_NOT_INFER_ARITHMETIC_SUM_OR_UNSTATED_MULTI_SERVICE_AGGREGATION_FORMULA}
   - {id: PP402-COM-042, source: "14", rule: CALCULATE_POSITION_4_B_BY_LEVEL_AND_COUNT_OF_LISTED_BODIES_OR_ORGANIZATIONS}
   - {id: PP402-COM-043, source: "15", rule: ASSESS_PROBABILITY_OF_QUALIFYING_FUNCTION_OR_POWER_FAILURE_FOR_POSITION_6}
-  - {id: PP402-COM-044, source: "16", rule: CALCULATE_POSITION_8_ONLY_AFTER_EXACT_FORMULA_IMAGE_GATE_PASSES}
+  - {id: PP402-COM-044, source: "16", rule: CALCULATE_POSITION_8_AS_ABSOLUTE_DFACT_MINUS_DAVERAGE_DIVIDED_BY_DAVERAGE_TIMES_100}
   - {id: PP402-COM-045, source: "16", rule: PRESERVE_DFACT_AS_ACTUAL_INCOME_WITH_TAXES_EXCISES_AND_OTHER_MANDATORY_PAYMENTS}
   - {id: PP402-COM-046, source: "16", rule: PRESERVE_DAVERAGE_AS_FIVE_YEAR_AVERAGE_ANNUAL_INCOME}
   - {id: PP402-COM-047, source: "17(a)", rule: USE_FIVE_YEAR_AVERAGE_FEDERAL_TAXES_FOR_POSITION_8}
@@ -141,7 +155,7 @@ control_rules:
   - {id: PP402-COM-049, source: "17(c)", rule: USE_MAXIMUM_ALLOWED_DOWNTIME_FROM_PREVENTIVE_MAINTENANCE_RULES}
   - {id: PP402-COM-050, source: "17(d)", rule: DETERMINE_ATTACK_RECOVERY_TIME_FROM_DOCUMENTS_THEN_FIVE_YEAR_STATISTICS_THEN_TEN_DAYS}
   - {id: PP402-COM-051, source: "17(d)", rule: APPLY_TEN_DAY_RECOVERY_FALLBACK_ONLY_WHEN_DOCUMENTS_AND_FIVE_YEAR_STATISTICS_ARE_ABSENT}
-  - {id: PP402-COM-052, source: "18", rule: CALCULATE_POSITION_9_ONLY_AFTER_EXACT_FORMULA_AND_VARIABLE_GLYPH_IMAGE_GATES_PASS}
+  - {id: PP402-COM-052, source: "18", rule: CALCULATE_POSITION_9_AS_DELTA_PAYMENTS_DIVIDED_BY_BAVERAGE_TIMES_100_WITHOUT_ABSOLUTE_VALUE}
   - {id: PP402-COM-053, source: "18", rule: USE_PLANNED_THREE_YEAR_AVERAGE_FEDERAL_BUDGET_INCOME_FOR_POSITION_9}
   - {id: PP402-COM-054, source: "19(a)", rule: DETERMINE_PROJECTED_FEDERAL_BUDGET_INCOME_UNDER_BUDGET_LAW_AND_OTHER_LEGISLATION}
   - {id: PP402-COM-055, source: "19(b)", rule: DETERMINE_ANNUAL_TAXES_FROM_DATA_PROVIDED_TO_FEDERAL_TAX_SERVICE}
@@ -150,24 +164,24 @@ control_rules:
   - {id: PP402-COM-058, source: "19(b)", rule: INCLUDE_OVERTIME_COSTS_FOR_REMEDIATION}
   - {id: PP402-COM-059, source: "19(b)", rule: INCLUDE_CONTRACT_PENALTIES_FROM_SERVICE_DOWNTIME_OR_DEGRADATION}
   - {id: PP402-COM-060, source: "19(c)", rule: DETERMINE_MAXIMUM_SERVICE_INTERRUPTION_PERIOD_AND_PROFIT_REDUCTION}
-  - {id: PP402-COM-061, source: GUARD, rule: BLOCK_TWO_FULL_FORMULAS_AND_ONE_VARIABLE_GLYPH_UNTIL_EXACT_IMAGE_BYTES_ARE_VERIFIED}
-  - {id: PP402-COM-062, source: GUARD, rule: DO_NOT_RECONSTRUCT_IMAGE_FORMULA_OPERATORS_CONSTANTS_DENOMINATORS_OR_GLYPH}
+  - {id: PP402-COM-061, source: GUARD, rule: REQUIRE_TWO_FORMULAS_AND_VARIABLE_GLYPH_TO_MATCH_IMMUTABLE_PRIMARY_PDF_IMAGES}
+  - {id: PP402-COM-062, source: GUARD, rule: FAIL_CLOSED_ON_ZERO_DENOMINATOR_BECAUSE_PP402_DOES_NOT_DEFINE_THE_CASE}
   - {id: PP402-COM-063, source: GUARD, rule: DO_NOT_ROUTE_PP796_POSITION_4_TO_PP402_BEFORE_2026_09_01}
   - {id: PP402-COM-064, source: GUARD, rule: REQUIRE_INDEPENDENT_EXPERT_REVIEW_BEFORE_GLOBAL_PASS}
 verification_boundary:
   paragraphs_1_to_19_text: VERIFIED_PUBLIC_TEXT
-  lifecycle: VERIFIED_ADOPTED_NOT_YET_EFFECTIVE_2026_08_26_EFFECTIVE_2026_09_01_VALID_UNTIL_2032_09_01_AS_STATED
+  lifecycle: VERIFIED_ADOPTED_NOT_YET_EFFECTIVE_2026_08_27_EFFECTIVE_2026_09_01_VALID_UNTIL_2032_09_01_AS_STATED
   subject_classes: VERIFIED_FOUR
   commission_special_representation_routes: VERIFIED_THREE
   applicability_indicator_groups: VERIFIED_FIVE
   additional_input_groups: VERIFIED_FIVE
   calculation_methods: VERIFIED_TWO
-  formula_and_variable_glyph_images: PENDING_IMMUTABLE_IMAGE_BYTES
-  image_dependent_numeric_execution: BLOCKED_FAIL_CLOSED
+  formula_and_variable_glyph_images: VERIFIED_PRIMARY_PDF
+  image_dependent_numeric_execution: BLOCKED_PRE_EFFECTIVE_DATE_AND_ZERO_DENOMINATOR_FAIL_CLOSED
   pp796_position_4_dependency: REGISTERED_FUTURE_EFFECTIVE_PRE_EFFECTIVE_EXECUTION_BLOCKED
   transport_sector_dependency: PROJECT_ONLY_NO_ADOPTED_ACT_IDENTIFIED_IN_BOUNDED_AUTHORITATIVE_SEARCH
-  official_publication_record: VERIFIED_METADATA_PDF_FETCH_TIMEOUT
-  immutable_official_pdf_bytes: PENDING
+  official_publication_record: VERIFIED_CURRENT_OFFICIAL_RECORD_2026_08_27
+  immutable_official_pdf_bytes: VERIFIED_SHA256
   independent_expert_review: PENDING
   critical_gap_created: 0
   high_gap_created: 0
@@ -179,9 +193,10 @@ coverage:
   applicability_indicator_groups: 5
   additional_input_groups: 5
   calculation_methods: 2
-  full_formula_images_blocked: 2
-  variable_glyph_images_blocked: 1
+  full_formula_images_verified: 2
+  variable_glyph_images_verified: 1
+  mathematical_image_fragments_blocked: 0
   control_rules: 64
   regression_cases: 64
-  models_after_run: 80
-  cases_after_run: 4557
+  models_after_run: 96
+  cases_after_run: 5565

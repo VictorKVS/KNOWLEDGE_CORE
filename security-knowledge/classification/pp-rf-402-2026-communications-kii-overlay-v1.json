@@ -1,13 +1,14 @@
 {
   "record_id": "PP-RF-402-2026-COMMUNICATIONS-KII-OVERLAY-V1",
   "status": "VERIFIED_PRIMARY_IMMUTABLE",
-  "as_of": "2026-08-19",
+  "as_of": "2026-08-27",
   "title": "Sector-specific CII categorization overlay for communications",
   "lifecycle": {
     "state_as_of": "ADOPTED_NOT_IN_FORCE",
     "effective_from": "2026-09-01",
-    "effective_until_exclusive": "2032-09-01",
-    "basis": "Resolution clause 2 expressly states both dates"
+    "valid_until_as_stated": "2032-09-01",
+    "valid_until_qualifier": "UNTIL_DATE_AS_STATED_NO_INCLUSIVE_END_ASSUMPTION",
+    "basis": "Resolution clause 2 states effective from 2026-09-01 and valid until 2032-09-01; no inclusive end assumption is added"
   },
   "act": {
     "type": "Government Resolution",
@@ -55,14 +56,14 @@
     {"id":"PP402-C13-POSITION-4A","clause":"13","position":"4(a)","rule":"Count subscribers, including legal entities, with communications-service contracts; when one object supports several services, calculate each service separately and assign by the aggregate of those values."},
     {"id":"PP402-C14-POSITION-4B","clause":"14","position":"4(b)","rule":"Calculate by the level and number of listed public bodies or organizations for which communications services may be disrupted or unavailable."},
     {"id":"PP402-C15-POSITION-6","clause":"15","position":"6","rule":"Assess probability that a listed public body or statutory organization cannot perform its function because the object-supported process cannot be realized."},
-    {"id":"PP402-C16-POSITION-8-FORMULA","clause":"16","position":"8","formula":"P8 = abs((D_actual - D_average) / D_average) * 100","units":"PERCENT","D_actual":"Income including VAT, excise and other mandatory payments for the assessed period","D_average":"Annual income averaged over the preceding five-year period"},
+    {"id":"PP402-C16-POSITION-8-FORMULA","clause":"16","position":"8","source_notation_ru":"П₈ = |(Дфакт − Дсредний) / Дсредний| × 100","formula":"P8 = abs((D_actual - D_average) / D_average) * 100","units":"PERCENT","D_actual":"Income including VAT, excise and other mandatory payments for the assessed period","D_average":"Annual income averaged over the preceding five-year period","absolute_value_operator_present":true,"zero_denominator_behavior":"FAIL_CLOSED_NOT_DEFINED_BY_ACT","source":{"official_pdf_page":8,"printed_page":7,"crop_sha256":"3793f0a8228de5c1a103011d7b59ac3cc17ed4f9279ec852c8e762f6ca210c03"}},
     {"id":"PP402-C17-POSITION-8-INPUTS","clause":"17","position":"8","lookback":{"value":5,"unit":"YEAR"},"inputs":["AVERAGE_ANNUAL_FEDERAL_TAXES_FROM_TAX_REPORTING","AVERAGE_ANNUAL_INCOME_FROM_MANAGEMENT_AND_ACCOUNTING_RECORDS","MAXIMUM_TOLERABLE_DOWNTIME_FROM_PREVENTIVE_MAINTENANCE_RULES","ATTACK_CONSEQUENCE_REMEDIATION_TIME_FROM_DOCUMENTS_OR_FIVE_YEAR_STATISTICS"],"fallback":{"trigger":"NO_DOCUMENTS_AND_NO_FIVE_YEAR_STATISTICS_FOR_REMEDIATION_TIME","value":10,"unit":"DAY"}},
-    {"id":"PP402-C18-POSITION-9-FORMULA","clause":"18","position":"9","formula":"P9 = Delta_payments / B_average * 100","units":"PERCENT","Delta_payments":"Reduction of the subject's payments to budgets of the Russian budget system","B_average":"Forecast annual federal-budget income averaged over the planned three-year period"},
+    {"id":"PP402-C18-POSITION-9-FORMULA","clause":"18","position":"9","source_notation_ru":"П₉ = ΔВыплат / Бсредний × 100","formula":"P9 = Delta_payments / B_average * 100","units":"PERCENT","Delta_payments":"Reduction of the subject's payments to budgets of the Russian budget system","B_average":"Forecast annual federal-budget income averaged over the planned three-year period","absolute_value_operator_present":false,"zero_denominator_behavior":"FAIL_CLOSED_NOT_DEFINED_BY_ACT","source":{"official_pdf_page":9,"printed_page":8,"crop_sha256":"31ddcd75c27ba7eb1e83726758092eadcebe42a7d6dec66a37ffc0bf97a1326d"}},
     {"id":"PP402-C19-POSITION-9-INPUTS","clause":"19","position":"9","budget_window":{"value":3,"unit":"YEAR","direction":"PLANNED"},"rules":["Derive B_average under the federal budget law and other Russian legislation","Derive annual taxes from Federal Tax Service data and fully account for the listed incident-response, downtime, overtime and contract-penalty costs","Determine the maximum possible communications-service interruption period and maximum possible profit reduction for that period"]}
   ],
   "guardrails": [
-    "As of 2026-08-19 this act is adopted but not yet in force; do not present it as currently operative before 2026-09-01.",
-    "The act ceases to operate at 2026-09-01; preserve this lifecycle boundary.",
+    "As of 2026-08-27 this act is adopted but not yet in force; do not present it as currently operative before 2026-09-01.",
+    "The act states that it operates until 2032-09-01; preserve that wording without inventing an inclusive end assumption.",
     "Commission representatives in clause 5 apply only to the listed subject classes and require agreement with the named authority.",
     "Do not apply positions 4(b), 6 or 8 outside their clause 8 subject conditions.",
     "Clause 9 does not make every unlisted indicator automatically applicable.",
@@ -70,6 +71,7 @@
     "The five-year periods in clauses 16-17 are calculation and fallback-data lookbacks, not evidence-retention duties.",
     "The 10-day value in clause 17 is a calculation fallback for remediation time, not a remediation SLA or incident-reporting deadline.",
     "The three-year period for B_average is planned, not historical.",
+    "For positions 8 and 9, a zero denominator remains fail-closed because the act does not define the case.",
     "No category is proven until applicable PP 127 thresholds are compared against complete object facts."
   ],
   "extraction": {

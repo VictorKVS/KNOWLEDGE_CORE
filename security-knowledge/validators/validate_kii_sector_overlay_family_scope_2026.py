@@ -74,7 +74,8 @@ def main() -> int:
     lifecycle402 = m402.get("lifecycle", {})
     check(lifecycle402.get("state_as_of") == "ADOPTED_NOT_IN_FORCE", "PP 402 prematurely marked in force")
     check(lifecycle402.get("effective_from") == "2026-09-01", "PP 402 commencement drift")
-    check(lifecycle402.get("effective_until_exclusive") == "2032-09-01", "PP 402 sunset drift")
+    check(lifecycle402.get("valid_until_as_stated") == "2032-09-01", "PP 402 valid-until date drift")
+    check(lifecycle402.get("valid_until_qualifier") == "UNTIL_DATE_AS_STATED_NO_INCLUSIVE_END_ASSUMPTION", "PP 402 valid-until qualifier drift")
     routed402 = {p for rule in m402.get("indicator_routing_rules", []) for p in rule.get("positions", [])}
     check(routed402 == {"4(a)", "4(b)", "6", "8", "9"}, "PP 402 routing positions drift")
     check(by402.get("PP402-C13-POSITION-4A", {}).get("rule", "").find("separately") >= 0, "PP 402 per-service split lost")
