@@ -1,0 +1,104 @@
+schema_version: "1.0"
+stream: 3
+checked_at: "2026-08-27T05:21:35+03:00"
+mode: APPEND_ONLY_RECONCILIATION
+previous_delta: "master-inventory-delta-2026-08-26T1719.yaml"
+
+counters_before:
+  found: 45
+  downloaded: 9
+  immutable: 9
+  pending: 34
+  reused: 2
+  primary_publication_verified: 20
+  sectors_registered: 26
+
+counters_after:
+  found: 46
+  downloaded: 9
+  immutable: 9
+  pending: 35
+  reused: 2
+  primary_publication_verified: 20
+  sectors_registered: 27
+
+changes:
+  new_sources: 1
+  new_immutable_artifacts: 0
+  new_durable_downloads: 0
+  new_pending_exact_capture: 1
+  new_sector_regimes: 1
+  applicability_promotions: 0
+  legal_conflicts_confirmed: 0
+
+new_sources:
+  - source_id: SEC-SRC-RU-FZ-98-2004
+    sector: commercial_secrets
+    regime: commercial_secret
+    title: "Федеральный закон от 29.07.2004 № 98-ФЗ «О коммерческой тайне»"
+    status: SOURCE_PENDING_PRIMARY_EXACT_CAPTURE
+    current_primary_authority_url: "https://special.kremlin.ru/acts/bank/21227"
+    current_text_verified: true
+    current_revision_crosscheck: "08.08.2024"
+    latest_amendment_on_current_authority: "08.08.2024 № 251-ФЗ"
+    primary_publication_counter_increment: 0
+    note: "Current primary authority verified, but exact original electronic publication locator/binary is still pending; primary_publication_verified counter is not inflated."
+
+protected_information_anchors:
+  - source_id: SEC-SRC-RU-FZ-98-2004
+    locator: article_5
+    concept: information_that_cannot_be_commercial_secret
+  - source_id: SEC-SRC-RU-FZ-98-2004
+    locator: article_10
+    concept: commercial_secret_regime_controls
+  - source_id: SEC-SRC-RU-FZ-98-2004
+    locator: article_11
+    concept: employment_commercial_secret_confidentiality
+  - source_id: SEC-SRC-RU-FZ-98-2004
+    locator: article_13
+    concept: confidentiality_after_provision_to_public_authorities
+
+relationships:
+  - from: SEC-SRC-RU-FZ-98-2004
+    to: RU-152-FZ
+    relation: POSSIBLE_DUAL_REGIME_ON_RECORD_AND_OPERATION_PROOF_ONLY
+    status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    guard: "COMMERCIAL_SECRET != PERSONAL_DATA"
+  - from: SEC-SRC-RU-FZ-98-2004:article_5
+    to: SEC-SRC-RU-TK-197-2001:chapter_14
+    relation: REGIME_BOUNDARY_EMPLOYMENT_DATA_EXCLUSION_FROM_COMMERCIAL_SECRET_NOT_PDN_EXCLUSION
+    status: CANDIDATE_RELATION_VERIFIED_TEXT_APPLICABILITY_NOT_PROMOTED
+
+version_events:
+  - amendment: "14.07.2022 № 311-ФЗ"
+    target: SEC-SRC-RU-FZ-98-2004:article_6
+    official_publication_id: "0001202207140119"
+    publication_date: "2022-07-14"
+    evidence_status: PRIMARY_PUBLICATION_METADATA_VERIFIED_EXACT_BINARY_PENDING
+  - amendment: "08.08.2024 № 251-ФЗ"
+    target: SEC-SRC-RU-FZ-98-2004:article_5
+    official_publication_id: "0001202408080046"
+    publication_date: "2024-08-08"
+    evidence_status: PRIMARY_PUBLICATION_METADATA_VERIFIED_EXACT_BINARY_PENDING
+  - amendment: "09.03.2021 № 39-ФЗ"
+    target: SEC-SRC-RU-FZ-98-2004:article_5
+    official_publication_id: null
+    evidence_status: LOCATOR_SPECIFIC_EFFECT_VERIFIED_EXACT_PRIMARY_LOCATOR_PENDING
+
+acquisition:
+  exact_capture_attempted: true
+  exact_capture_succeeded: false
+  reason: TRANSIENT_OFFICIAL_ENDPOINT_DNS_OR_DOWNLOAD_FAILURE
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+  displayed_pdf_sizes_used_as_exact_bytes: false
+
+proof_floor:
+  taxonomy_used_as_evidence: false
+  primary_current_act_used_as_evidence: true
+  overlap_is_applicability: false
+  article_5_exclusion_means_public_pdn: false
+  executable_rule_created: false
