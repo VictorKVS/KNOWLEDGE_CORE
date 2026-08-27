@@ -1,0 +1,78 @@
+schema_version: "1.0"
+factory_id: FATHER-AGENT-L1-TRANSLATOR
+status: M1_PILOT_READY
+language_pair: EN_RU
+
+purpose: >-
+  Produce faithful, terminology-consistent Russian working translations of high-value
+  technical books before knowledge extraction and analyst review.
+
+domain_priority:
+  - id: architecture
+    priority: 100
+    keywords: [architecture, architect, system design, software architecture, solution architecture, enterprise architecture, distributed systems, patterns, c4, ddd]
+  - id: software-engineering
+    priority: 95
+    keywords: [programming, software engineering, clean code, refactoring, algorithms, data structures, python, java, c++, golang, rust, testing, api, design patterns]
+  - id: information-security
+    priority: 90
+    keywords: [security, cybersecurity, information security, appsec, devsecops, threat modeling, zero trust, cryptography, privacy, pentest, soc, siem, secure coding]
+  - id: cloud-devops-sre
+    priority: 80
+    keywords: [cloud, kubernetes, docker, devops, sre, reliability, terraform, gitops, observability, microservices]
+  - id: ai-data
+    priority: 70
+    keywords: [machine learning, artificial intelligence, llm, rag, data engineering, database, distributed data]
+
+source_policy:
+  preserve_original: true
+  calculate_sha256: true
+  never_delete_source: true
+  never_move_source: true
+  public_full_book_upload: false
+  public_full_translation_upload: false
+
+translation_policy:
+  preserve_code_blocks: true
+  preserve_identifiers: true
+  preserve_urls: true
+  preserve_numbers: true
+  preserve_formulae: true
+  preserve_author_claims_without_editorial_correction: true
+  glossary_required: true
+  reviewer_pass_required: true
+  bilingual_artifact_required: true
+  trace_source_chunk_sha256: true
+
+promotion_states:
+  - EXTRACTED
+  - TRANSLATED_DRAFT
+  - QA_REVIEW_REQUIRED
+  - QA_PASSED
+  - READY_FOR_KNOWLEDGE_EXTRACTION
+  - BLOCKED
+
+runtime_defaults:
+  local_output_root: "G:\\1\\FATHER_TRANSLATION_FACTORY"
+  llm_base_url: "http://127.0.0.1:8080/v1/chat/completions"
+  translator_model: "local-model"
+  reviewer_model: "local-model"
+  workers: 4
+  qa_enabled: true
+  chunk_chars: 4500
+  pilot_max_chunks: 8
+
+quality_gates:
+  - source_sha256_present
+  - source_chunk_sha256_present
+  - glossary_version_present
+  - numbers_preserved
+  - urls_preserved
+  - code_fences_preserved
+  - reviewer_verdict_pass_or_corrected
+  - no_empty_translation
+
+handoff:
+  next_layer: FATHER_KNOWLEDGE_FACTORY
+  next_role: CHIEF_ANALYST
+  handoff_status: READY_FOR_KNOWLEDGE_EXTRACTION
