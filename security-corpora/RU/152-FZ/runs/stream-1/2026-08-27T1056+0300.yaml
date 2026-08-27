@@ -1,0 +1,60 @@
+schema_version: "1.0"
+run_id: "PDN-CORE-STREAM1-2026-08-27T1056+0300"
+observed_at: "2026-08-27T10:56:10+03:00"
+stream: 1
+scope: "RU PDN general core acquisition/freshness"
+
+production_snapshot:
+  identified: 35
+  byte_exact_downloaded: 33
+  immutable_sha256_verified: 33
+  atomized_proposed: 4
+  atomized_verified: 0
+  pending_raw_capture: 2
+  raw_capture_coverage_ratio: 0.9429
+  latest_reuse_ratio: 0.9706
+
+pending_sources:
+  - source_id: "SEC-SRC-RU-152FZ-2026-07-26"
+    required_artifact_role: "OFFICIAL_CURRENT_TEXT_SNAPSHOT"
+    status: "PENDING_RAW_CAPTURE"
+    freshness_check:
+      current_revision: "2026-07-26"
+      amendment_anchor: "Federal Law No. 265-FZ of 2026-07-26"
+      result: "CURRENT_VERSION_IDENTITY_CONFIRMED_NO_NEWER_EFFECTIVE_REVISION_FOUND"
+    acquisition_gate: "registered official route + exact bytes + identity markers + current-revision proof + SHA-256"
+    semantic_promotion: false
+
+  - source_id: "SEC-SRC-RU-PP687-2008"
+    required_artifact_role: "OFFICIAL_CURRENT_TEXT_SNAPSHOT"
+    status: "PENDING_RAW_CAPTURE"
+    freshness_check:
+      current_revision_anchor: "PP RF No. 12 of 2025-01-18"
+      current_revision_effective_from: "2025-01-26"
+      valid_until: "2030-09-01"
+      result: "CURRENT_VERSION_METADATA_PREVIOUSLY_VERIFIED; OFFICIAL GOVERNMENT ROUTE TIMED_OUT DURING THIS CHECK"
+    acquisition_gate: "registered official route + exact bytes + PP687 identity + non-automated-processing marker + valid-through-2030 fingerprint + SHA-256"
+    semantic_promotion: false
+
+transport_observations:
+  - route: "https://government.ru/docs/all/65436/"
+    source_id: "SEC-SRC-RU-PP687-2008"
+    result: "TRANSPORT_TIMEOUT"
+    interpretation: "transient transport failure; not evidence of source withdrawal or legal-status change"
+
+quality_gates:
+  proof_floor_held: true
+  immutable_new_this_pass: 0
+  semantic_promotions_this_pass: 0
+  existing_immutable_reused: 33
+  repeat_downloads_of_verified_corpus: 0
+
+next_action:
+  - "Retry only the two pending official current-text routes; do not re-download 33 accepted immutable artifacts."
+  - "Keep current 152-FZ revision gate pinned to 2026-07-26/265-FZ or equivalent Article-12 delta fingerprint."
+  - "Keep PP687 current-revision gate pinned to PP12 validity-through-01.09.2030 fingerprint."
+  - "After both snapshots close, move Stream-1 capacity to structure/chunks/concepts/definitions/conflicts/requirements/typed-relations."
+
+notes:
+  - "No status was promoted without accepted exact-byte evidence and SHA-256."
+  - "Sector overlays were not touched."
