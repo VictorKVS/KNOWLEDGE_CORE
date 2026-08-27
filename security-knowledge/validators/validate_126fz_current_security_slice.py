@@ -85,6 +85,8 @@ def main():
     assert model["temporal_model"][1]["from"] == "2027-03-01"
     assert model["temporal_model"][2]["value"] == 3
     assert model["temporal_model"][3]["maximum_value"] == 6
+    assert model["temporal_model"][3]["exact_period_volume_and_order"] == "PP445_DEPENDENCY_VERIFIED_CURRENT_WITH_PP1066_FUTURE_SCOPE_VERSION"
+    assert model["verification_boundary"]["current_government_content_retention_order_period_volume"] == "VERIFIED_BY_PP445_ATOMIC_MODEL"
     assert model["verification_boundary"]["full_126fz_structure_definitions_and_requirements"] == "PENDING"
     assert model["verification_boundary"]["official_immutable_current_consolidated_bytes"] == "PENDING"
     assert model["verification_boundary"]["critical_gap_created"] is False

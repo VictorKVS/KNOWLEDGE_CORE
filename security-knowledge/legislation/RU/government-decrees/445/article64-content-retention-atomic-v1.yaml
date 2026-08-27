@@ -1,0 +1,200 @@
+schema_version: "1.0"
+id: RU-PP445-ARTICLE64-CONTENT-RETENTION-ATOMIC-V1
+title: "ПП РФ № 445: хранение содержания сообщений электросвязи"
+checked_at: "2026-08-27"
+status: VERIFIED_CURRENT_WITH_REGISTERED_FUTURE_SCOPE_CHANGE
+scope: >-
+  Действующие пункты 1–8 Правил, утвержденных постановлением Правительства
+  Российской Федерации от 12.04.2018 № 445, и только относящиеся к этим
+  Правилам изменения постановления от 24.08.2026 № 1066. Модель не заменяет
+  требования к СОРМ, техническим средствам или лицензированию связи.
+
+sources:
+  pp445:
+    act: "Постановление Правительства РФ от 12.04.2018 № 445"
+    effective_from: "2018-07-01"
+    current_revision: "2022-03-28"
+    official_original_publication: "https://publication.pravo.gov.ru/Document/View/0001201804190032"
+    current_index: "https://www.consultant.ru/document/cons_doc_LAW_296195/"
+    current_text_crosscheck: "https://legalacts.ru/doc/postanovlenie-pravitelstva-rf-ot-12042018-n-445-ob-utverzhdenii/"
+  pp1066:
+    act: "Постановление Правительства РФ от 24.08.2026 № 1066"
+    official_publication_date: "2026-08-25"
+    effective_from: "2026-09-01"
+    status_as_of_checked_at: REGISTERED_NOT_YET_EFFECTIVE
+    official_publication: "https://publication.pravo.gov.ru/document/0001202608250032"
+    current_index: "https://www.consultant.ru/document/cons_doc_LAW_542690/"
+    amendments_text: "https://www.consultant.ru/document/cons_doc_LAW_542690/fef1db9e27c611b5b932f67b1ec898f06bc62d38/"
+
+legal_dependency:
+  federal_law: "126-ФЗ, статья 64, пункт 1, подпункт 2"
+  federal_cap: UP_TO_SIX_MONTHS
+  model_path: security-knowledge/legislation/RU/federal-laws/126-FZ/requirements/security-relevant-atomic-v1.yaml
+
+temporal_model:
+  - id: PP445_CURRENT_SCOPE
+    as_of: "2026-08-27"
+    through: "2026-08-31"
+    status: CURRENT_AS_OF_2026_08_27
+    note: >-
+      Дата редакции 28.03.2022 не превращена в неподтвержденную дату ее
+      вступления в силу; более ранние редакции не атомизированы этой моделью.
+  - id: PP1066_FUTURE_SCOPE
+    from: "2026-09-01"
+    status: REGISTERED_NOT_YET_EFFECTIVE
+    changes:
+      - PP445_POINT5_REMOVE_FOR_VOICE_PURPOSE_LIMITATION
+      - PP445_POINT6_REMOVE_DATA_TRANSMISSION_FOR_VOICE_EXCEPTION
+    note: >-
+      После удаления слов оба пункта охватывают услуги передачи данных.
+      Источник не задает правило устранения этого перекрытия, поэтому модель
+      сохраняет оба маршрута и не выбирает один из них по догадке.
+  - id: PP445_HISTORICAL_P6_ZERO_VOLUME
+    from: "2018-07-01"
+    through: "2018-09-30"
+    applies_to: PP445_POINT6_SERVICE_SCOPE_AT_RELEVANT_DATE
+    volume: ZERO
+  - id: PP445_P6_CAPACITY_ROUTE
+    from: "2018-10-01"
+    applies_to: PP445_POINT6_SERVICE_SCOPE_AT_RELEVANT_DATE
+    initial_capacity_reference: PRECEDING_30_DAYS_MESSAGE_VOLUME
+    annual_capacity_increase_percent: 15
+    annual_increase_duration_years: 5
+    increase_start: COMMISSIONING_DATE
+    note: >-
+      Пять лет — длительность наращивания емкости конкретного введенного в
+      эксплуатацию средства, а не срок хранения сообщения и не единая
+      календарная дата завершения для всех операторов.
+
+atomic_rules:
+  - id: PP445-R001
+    locator: "Правила, пункт 1"
+    rule: ESTABLISH_ORDER_PERIOD_AND_VOLUME_FOR_CONTENT_RETENTION_IN_RUSSIA
+    strength: SCOPE
+  - id: PP445-R002
+    locator: "Правила, пункт 2, абзац 1"
+    actors: [COMMUNICATIONS_OPERATOR]
+    rule: STORE_OWN_USERS_MESSAGES_IN_RUSSIA_IN_OPERATOR_OWNED_TECHNICAL_ACCUMULATION_MEANS
+  - id: PP445-R003
+    locator: "Правила, пункт 2, абзац 2"
+    rule: STORE_INFORMATION_FROM_MANDATORY_PUBLIC_TV_OR_RADIO_CHANNELS_AT_ZERO_VOLUME
+  - id: PP445-R004
+    locator: "Правила, пункт 2, абзац 3"
+    rule: STORE_AUDIOVIDEO_FROM_REGISTERED_AUDIOVISUAL_SERVICES_AT_ZERO_VOLUME
+  - id: PP445-R005
+    locator: "Правила, пункт 3"
+    actors: [COMMUNICATIONS_OPERATOR]
+    rule: MAY_USE_ANOTHER_OPERATOR_STORAGE_RESOURCE_ONLY_WITH_AGREEMENT_OF_AUTHORIZED_FSB_UNIT
+  - id: PP445-R006
+    locator: "Правила, пункт 4"
+    rule: STORAGE_MEANS_FORM_PART_OF_COMMUNICATIONS_EQUIPMENT_AND_SOFTWARE_FOR_OPERATIONAL_SEARCH_ACTIONS
+  - id: PP445-R007
+    locator: "Правила, пункт 4"
+    actors: [MINDIGITAL, FSB]
+    rule: MINDIGITAL_ESTABLISHES_STORAGE_MEANS_REQUIREMENTS_IN_AGREEMENT_WITH_FSB
+    strength: REGULATORY_DEPENDENCY_NOT_A_RECONSTRUCTED_CONTROL_CATALOG
+  - id: PP445-R008
+    locator: "Правила, пункт 4(1)"
+    actors: [COMMUNICATIONS_OPERATOR]
+    rule: STORAGE_MEANS_MUST_HAVE_VALID_RUSSIAN_INDUSTRIAL_PRODUCTION_CONFIRMATION_AT_INSTALLATION
+    dependency: "ПП РФ № 719, требования к системам хранения данных"
+  - id: PP445-R009
+    locator: "Правила, пункт 5"
+    actors: [COMMUNICATIONS_OPERATOR]
+    rule: LISTED_POINT5_SERVICES_STORE_VOICE_AND_TEXT_MESSAGES_IN_FULL_VOLUME_FOR_SIX_MONTHS_FROM_END_OF_RELEVANT_ACTION
+  - id: PP445-R010
+    locator: "Правила, пункт 6"
+    actors: [COMMUNICATIONS_OPERATOR]
+    rule: POINT6_SERVICES_USED_ZERO_VOLUME_FROM_2018_07_01_THROUGH_2018_09_30
+    strength: HISTORICAL_ROUTE
+  - id: PP445-R011
+    locator: "Правила, пункт 6, абзац 1"
+    actors: [COMMUNICATIONS_OPERATOR]
+    rule: FROM_2018_10_01_POINT6_SERVICES_STORE_FULL_VOLUME_WITH_INITIAL_CAPACITY_EQUAL_TO_PRECEDING_30_DAYS_MESSAGE_VOLUME
+  - id: PP445-R012
+    locator: "Правила, пункт 6, абзац 2"
+    actors: [COMMUNICATIONS_OPERATOR]
+    rule: INCREASE_STORAGE_CAPACITY_ANNUALLY_BY_15_PERCENT_FOR_FIVE_YEARS_FROM_COMMISSIONING
+  - id: PP445-R013
+    locator: "Правила, пункт 6, абзац 3"
+    rule: COMMISSIONING_DATE_IS_DATE_OF_ACT_SIGNED_BY_FSB_ROSKOMNADZOR_AND_OPERATOR_REPRESENTATIVES_UNDER_PP538_POINT10
+  - id: PP445-R014
+    locator: "Правила, пункт 7"
+    actors: [COMMUNICATIONS_OPERATOR]
+    rule: PROTECT_STORAGE_MEANS_AND_STORED_INFORMATION_FROM_UNAUTHORIZED_ACCESS_UNDER_MINDIGITAL_REQUIREMENTS
+  - id: PP445-R015
+    locator: "Правила, пункт 8"
+    actors: [COMMUNICATIONS_OPERATOR]
+    rule: DELETE_MESSAGES_AUTOMATICALLY_UNDER_SOFTWARE_ALGORITHMS_AND_TECHNICAL_REQUIREMENTS_USING_SIX_MONTH_MAXIMUM_FROM_END_OF_RELEVANT_ACTION
+  - id: PP445-R016
+    locator: "ПП № 1066, изменения, пункт 1(a)"
+    from: "2026-09-01"
+    rule: POINT5_DATA_TRANSMISSION_SCOPE_NO_LONGER_LIMITED_TO_VOICE_PURPOSE
+  - id: PP445-R017
+    locator: "ПП № 1066, изменения, пункт 1(b)"
+    from: "2026-09-01"
+    rule: POINT6_DATA_TRANSMISSION_SCOPE_NO_LONGER_EXCLUDES_VOICE_PURPOSE
+  - id: PP445-R018
+    locator: "ПП № 1066, пункт 3"
+    rule: DO_NOT_APPLY_PP1066_AMENDMENTS_BEFORE_2026_09_01
+
+service_scopes:
+  point5_current_through_2026_08_31:
+    - INTERCITY_AND_INTERNATIONAL_TELEPHONE
+    - PERSONAL_RADIO_CALL
+    - PUBLIC_MOBILE_RADIO
+    - MOBILE_RADIOTELEPHONE
+    - SATELLITE
+    - DATA_TRANSMISSION_FOR_VOICE_PURPOSE
+    - INTRAZONE_TELEPHONE
+    - LOCAL_TELEPHONE_INCLUDING_PAYPHONES_AND_COLLECTIVE_ACCESS
+  point6_current_through_2026_08_31:
+    - TELEMATIC
+    - DATA_TRANSMISSION_EXCEPT_FOR_VOICE_PURPOSE
+  point5_from_2026_09_01:
+    rule: CURRENT_POINT5_LIST_WITH_ALL_DATA_TRANSMISSION_SERVICES
+  point6_from_2026_09_01:
+    rule: TELEMATIC_AND_ALL_DATA_TRANSMISSION_SERVICES
+  overlap_from_2026_09_01: PRESERVED_SOURCE_OVERLAP_REQUIRES_DOCUMENTED_INTERPRETATION
+
+evidence_model:
+  - {id: E445-01, proves: [PP445-R002], artifacts: [RUSSIA_STORAGE_ARCHITECTURE, OWNERSHIP_RECORD]}
+  - {id: E445-02, proves: [PP445-R003, PP445-R004], artifacts: [SOURCE_CLASSIFICATION, ZERO_VOLUME_CONFIGURATION]}
+  - {id: E445-03, proves: [PP445-R005], artifacts: [FSB_AUTHORIZED_UNIT_AGREEMENT, OTHER_OPERATOR_RESOURCE_CONTRACT, RESOURCE_MAP]}
+  - {id: E445-04, proves: [PP445-R006, PP445-R007], artifacts: [SORM_ARCHITECTURE, APPLICABLE_TECHNICAL_REQUIREMENTS_REGISTER]}
+  - {id: E445-05, proves: [PP445-R008], artifacts: [VALID_PP719_PRODUCTION_CONFIRMATION_AT_INSTALLATION, INSTALLATION_RECORD]}
+  - {id: E445-06, proves: [PP445-R009], artifacts: [LICENSED_SERVICE_SCOPE, EVENT_END_TIMESTAMPS, SIX_MONTH_RETENTION_CONFIGURATION]}
+  - {id: E445-07, proves: [PP445-R010], artifacts: [HISTORICAL_CONFIGURATION_AND_DATE_EVIDENCE]}
+  - {id: E445-08, proves: [PP445-R011], artifacts: [PRECEDING_30_DAY_TRAFFIC_MEASUREMENT, INITIAL_CAPACITY_CALCULATION]}
+  - {id: E445-09, proves: [PP445-R012], artifacts: [COMMISSIONING_DATE, ANNUAL_CAPACITY_BASELINE_AND_CHANGE_RECORDS]}
+  - {id: E445-10, proves: [PP445-R013], artifacts: [SIGNED_COMMISSIONING_ACT, PP538_POINT10_ROUTE]}
+  - {id: E445-11, proves: [PP445-R014], artifacts: [ACCESS_PROTECTION_CONFIGURATION, ACCESS_LOGS, CONTROL_TEST_RESULTS]}
+  - {id: E445-12, proves: [PP445-R015], artifacts: [AUTOMATIC_DELETION_CONFIGURATION, EVENT_END_TIMESTAMP, DELETION_AUDIT_TRAIL]}
+  - {id: E445-13, proves: [PP445-R016, PP445-R017, PP445-R018], artifacts: [AS_OF_DATE, PP1066_EFFECTIVE_DATE, VERSIONED_SERVICE_SCOPE]}
+
+red_team_guardrails:
+  - DO_NOT_REPLACE_THE_126FZ_UP_TO_SIX_MONTH_CAP_WITH_ONE_UNIVERSAL_EXACT_PERIOD
+  - DO_NOT_APPLY_THE_POINT5_SIX_MONTH_ROUTE_TO_CURRENT_POINT6_ONLY_SERVICES
+  - DO_NOT_TREAT_30_DAYS_AS_A_UNIVERSAL_RETENTION_PERIOD_INSTEAD_OF_INITIAL_CAPACITY_REFERENCE
+  - DO_NOT_TREAT_FIVE_YEARS_AS_MESSAGE_RETENTION_OR_AS_ONE_GLOBAL_EXPIRY_DATE
+  - DO_NOT_INFER_A_COMPOUND_OR_LINEAR_CAPACITY_FORMULA_NOT_STATED_IN_THE_TEXT
+  - DO_NOT_USE_ANOTHER_OPERATOR_RESOURCE_WITHOUT_THE_REQUIRED_FSB_AGREEMENT
+  - DO_NOT_APPLY_PP1066_BEFORE_2026_09_01
+  - DO_NOT_SILENTLY_RESOLVE_THE_POST_2026_09_01_POINT5_POINT6_OVERLAP
+  - DO_NOT_TREAT_THE_2022_12_01_GOVERNMENT_ASSIGNMENT_AS_AN_OPERATOR_DEADLINE
+  - DO_NOT_CLAIM_THE_MINDIGITAL_TECHNICAL_CONTROL_CATALOG_IS_ATOMIZED_HERE
+
+verification_boundary:
+  pp445_current_points_1_to_8: VERIFIED_CURRENT_TEXT
+  pp1066_pp445_amendments_and_effective_date: VERIFIED_REGISTERED_NOT_YET_EFFECTIVE
+  pp445_official_original_publication_record: VERIFIED
+  pp445_current_consolidated_immutable_bytes: PENDING
+  pp1066_official_pdf_bytes: PENDING_TRANSIENT_FETCH_TIMEOUT
+  historical_pp445_revisions_before_2022_04_07: PENDING
+  mindigital_storage_means_requirements: PENDING_SEPARATE_ATOMIZATION
+  pp719_current_product_confirmation_route: PENDING_SEPARATE_ATOMIZATION
+  pp538_commissioning_procedure: PENDING_SEPARATE_ATOMIZATION
+  post_2026_09_01_point5_point6_overlap_interpretation: PENDING_DOCUMENTED_INTERPRETATION
+  independent_expert_review: PENDING
+  critical_gap_created: false
+  high_gap_created: false
