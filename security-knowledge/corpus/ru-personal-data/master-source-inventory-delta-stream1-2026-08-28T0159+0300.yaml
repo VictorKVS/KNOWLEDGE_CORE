@@ -1,0 +1,69 @@
+schema_version: "1.0"
+delta_id: PDN-MASTER-DELTA-STREAM1-2026-08-28T0159+0300
+parent_inventory: "../../../security-corpora/RU/152-FZ/PDN_MASTER_SOURCE_INVENTORY.yaml"
+stream: 1
+scope: GENERAL_152FZ_ROSKOMNADZOR_CORE
+observed_at: "2026-08-28T01:59:03+03:00"
+
+counter_snapshot:
+  identified: 37
+  downloaded_exact: 35
+  immutable_sha256: 35
+  atomized_proposed: 4
+  atomized_verified: 0
+  pending_raw: 2
+  raw_coverage: 0.9459
+
+pending_raw_sources:
+  - SEC-SRC-RU-152FZ-2026-07-26
+  - SEC-SRC-RU-PP687-2008
+
+freshness_delta:
+  SEC-SRC-RU-152FZ-2026-07-26:
+    checked_at: "2026-08-28"
+    result: CURRENT_REVISION_IDENTITY_CONFIRMED
+    current_revision: "2026-07-26"
+    amendment_anchor: SEC-SRC-RU-FZ265-2026
+    note: >-
+      Current legal indexes still identify the 26.07.2026 revision and Article 12 amendment by No. 265-FZ.
+      Exact official consolidated bytes remain pending; no semantic promotion.
+  SEC-SRC-RU-PP687-2008:
+    checked_at: "2026-08-28"
+    result: CURRENT_REVISION_METADATA_UNCHANGED_RAW_PENDING
+    current_revision_anchor: SEC-SRC-RU-PP12-2025
+    effective_from: "2025-01-26"
+    valid_until: "2030-09-01"
+    note: >-
+      Current text remains the PP12 revision with validity through 01.09.2030. Exact-byte current-text snapshot
+      is still not accepted, so MIME, byte length and SHA-256 remain pending.
+  SEC-SRC-RU-RKN128-2022:
+    checked_at: "2026-08-28"
+    result: CURRENT_RULE_WITH_REPLACEMENT_PROJECT_ONLY
+    note: >-
+      The Roskomnadzor replacement prepared 31.07.2026 remains a draft in current evidence; no enacted official
+      publication identity was found. Preserve Order No. 128 and keep the alignment review open.
+
+acquisition_delta:
+  exact_bytes_accepted: 0
+  immutable_new: 0
+  semantic_promotions: 0
+  existing_immutable_preserved: 35
+  repeat_downloads_of_verified_corpus: 0
+  execution_environment_observation: EXECUTION_ENV_DNS_UNAVAILABLE
+  execution_environment_note: >-
+    Direct probes for the registered government.ru/pravo.gov.ru routes returned curl exit 6 because DNS resolution
+    was unavailable in this execution environment. Treat as an environment observation only; do not overwrite
+    canonical GitHub acquisition telemetry or source status.
+
+quality_gates:
+  proof_floor_held: true
+  sector_overlays_touched: false
+
+traceability:
+  run_record: "../../../security-corpora/RU/152-FZ/runs/stream-1/2026-08-28T0159+0300.yaml"
+  run_record_commit: "47c9739100e5aad13de2731fa6611aede7436548"
+
+merge_rule: >-
+  Concurrency-safe Stream-1 delta. Preserve 35/37 immutable and two pending sources until accepted manifests
+  provide exact official bytes, source URL, retrieved_at, MIME, byte length and SHA-256. Merge freshness/watch
+  evidence without changing semantic or extraction status.
