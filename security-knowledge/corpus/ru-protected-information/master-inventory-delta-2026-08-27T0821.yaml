@@ -1,0 +1,117 @@
+schema_version: "1.0"
+stream: 3
+checked_at: "2026-08-27T08:21:12+03:00"
+mode: APPEND_ONLY_RECONCILIATION
+previous_delta: "master-inventory-delta-2026-08-27T0521.yaml"
+
+counters_before:
+  found: 46
+  downloaded: 9
+  immutable: 9
+  pending: 35
+  reused: 2
+  primary_publication_verified: 20
+  sectors_registered: 27
+
+counters_after:
+  found: 47
+  downloaded: 9
+  immutable: 9
+  pending: 36
+  reused: 2
+  primary_publication_verified: 20
+  sectors_registered: 28
+
+changes:
+  new_sources: 1
+  new_immutable_artifacts: 0
+  new_durable_downloads: 0
+  new_pending_exact_capture: 1
+  new_sector_regimes: 1
+  applicability_promotions: 0
+  legal_conflicts_confirmed: 0
+
+new_sources:
+  - source_id: SEC-SRC-RU-FZ-59-2006
+    sector: citizen_appeals_public_sector
+    regime: citizen_appeal_confidentiality
+    title: "Федеральный закон от 02.05.2006 № 59-ФЗ «О порядке рассмотрения обращений граждан Российской Федерации»"
+    status: SOURCE_PENDING_PRIMARY_EXACT_CAPTURE
+    current_official_consolidation_url: "https://mintrud.gov.ru/docs/laws/108"
+    original_official_publication_url: "https://rg.ru/documents/2006/05/05/obraschenie-dok.html"
+    current_text_verified: true
+    current_revision_crosscheck: "28.12.2024"
+    current_effective_from: "2025-03-30"
+    latest_amendment: "28.12.2024 № 547-ФЗ"
+    primary_publication_counter_increment: 0
+    note: "Original official print text is verified, but no exact immutable original/current artifact was captured in this runtime; primary_publication_verified counter is intentionally not inflated."
+
+protected_information_anchors:
+  - source_id: SEC-SRC-RU-FZ-59-2006
+    locator: article_6_part_2
+    concept: citizen_appeal_non_disclosure_and_private_life
+  - source_id: SEC-SRC-RU-FZ-59-2006
+    locator: article_7_parts_1_3
+    concept: citizen_identity_contact_and_attachment_dataset
+  - source_id: SEC-SRC-RU-FZ-59-2006
+    locator: article_10_part_2
+    concept: special_secret_provision_boundary
+  - source_id: SEC-SRC-RU-FZ-59-2006
+    locator: article_10_part_4
+    concept: response_channel_and_publication_confidentiality_guard
+  - source_id: SEC-SRC-RU-FZ-59-2006
+    locator: article_11_part_6
+    concept: protected_secret_answer_non_disclosure_boundary
+  - source_id: SEC-SRC-RU-FZ-59-2006
+    locator: article_13_parts_2_3
+    concept: identity_document_and_personal_reception_card
+
+relationships:
+  - from: SEC-SRC-RU-FZ-59-2006
+    to: RU-152-FZ
+    relation: DIRECT_PERSON_LEVEL_DATASET_AND_CONFIDENTIALITY_OVERLAP
+    status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    guard: "CITIZEN_APPEAL_CONFIDENTIALITY != PERSONAL_DATA_APPLICABILITY"
+  - from: SEC-SRC-RU-FZ-59-2006:articles_5_10_11
+    to: RU_PROTECTED_INFORMATION_SECTORAL_REGIMES
+    relation: PARALLEL_SPECIAL_SECRET_REGIMES_PRESERVED
+    status: CANDIDATE_RELATION_VERIFIED_TEXT_APPLICABILITY_NOT_PROMOTED
+    guard: "59-FZ does not replace sector-specific secrecy or protected-information rules."
+
+version_events:
+  - amendment: "04.08.2023 № 480-ФЗ"
+    target: SEC-SRC-RU-FZ-59-2006:articles_4_7_10
+    official_publication_id: "0001202308040085"
+    publication_date: "2023-08-04"
+    effective_from: "2023-09-01"
+    article_6_effect: none_identified
+    evidence_status: PRIMARY_PUBLICATION_METADATA_VERIFIED_EXACT_BINARY_PENDING
+  - amendment: "28.12.2024 № 547-ФЗ"
+    target: SEC-SRC-RU-FZ-59-2006:article_6_part_3_and_articles_4_7_10
+    official_publication_id: "0001202412280052"
+    publication_date: "2024-12-28"
+    effective_from: "2025-03-30"
+    evidence_status: PRIMARY_PUBLICATION_METADATA_AND_LOCATOR_EFFECT_VERIFIED_EXACT_BINARY_PENDING
+
+acquisition:
+  exact_capture_attempted: true
+  exact_capture_succeeded: false
+  attempts:
+    - target: publication.pravo.gov.ru/File/Pdf?eoNumber=0001202412280052
+      result: TRANSIENT_DNS_NAME_RESOLUTION_FAILURE
+    - target: current official departmental PDF on 38.mchs.gov.ru
+      result: TRANSIENT_DNS_DOWNLOAD_FAILURE
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+  displayed_pdf_sizes_used_as_exact_bytes: false
+
+proof_floor:
+  taxonomy_used_as_evidence: false
+  primary_normative_text_used_as_evidence: true
+  overlap_is_applicability: false
+  article_6_consent_is_152_fz_consent: false
+  competent_authority_routing_automatically_supplies_pdn_legal_basis: false
+  executable_rule_created: false
