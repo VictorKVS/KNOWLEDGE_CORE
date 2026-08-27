@@ -1,4 +1,4 @@
-schema_version: "1.0"
+schema_version: "1.1"
 id: SEC-SRC-RU-FSB548-2025
 kind: security-regulatory-source
 status: METADATA_VERIFIED
@@ -23,7 +23,10 @@ document:
 canonical_source:
   publisher: "Официальный интернет-портал правовой информации"
   url: "https://publication.pravo.gov.ru/document/0001202512300058"
-  exact_file_route_status: OFFICIAL_PUBLICATION_ID_AND_PDF_ROUTE_RESOLVED_BYTES_PENDING
+  fallback_url: "https://cdnstatic.rg.ru/uploads/attachments/2026/01/08/84872_dc0.pdf"
+  official_publication_archive_page: "https://rg.ru/documents/2026/01/08/fsb-prikaz548-site-dok.html"
+  fallback_publisher: "Российская газета — архив официальной публикации"
+  exact_file_route_status: OFFICIAL_PUBLICATION_ID_AND_TWO_OFFICIAL_PDF_ROUTES_RESOLVED_BYTES_PENDING
 capture:
   capture_kind: "publication_pdf"
   source_url: "http://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202512300058"
@@ -35,8 +38,9 @@ capture:
   fingerprint_status: PENDING
   semantic_status: UNCHANGED
   note: >-
-    Official publication identity and deterministic publication-PDF route are registered. Exact response bytes,
-    MIME, byte length and SHA-256 have not yet passed the immutable acquisition gate in this run.
+    Primary publication identity is preserved. A second exact PDF route was verified through the official Russian
+    Gazette publication archive and is configured only as a fail-closed transport fallback. Exact response bytes,
+    byte length and SHA-256 still require the immutable acquisition gate.
 relations:
   - type: INTERACTION_CHANNEL_CONTEXT_FOR
     target: SEC-SRC-RU-FSB547-2025
@@ -60,6 +64,9 @@ provenance:
   official_publication_id_verified: true
   ministry_registration_cross_checked: true
   effective_date_cross_checked: true
+  official_rg_archive_page_verified: true
+  official_rg_pdf_route_verified: true
+  official_rg_pdf_pages_observed: 8
   pdn_intersection_explanatory_evidence: "НКЦКИ ФСБ России, письмо от 20.01.2026 № Р-168; primary official bytes/route for the letter not found, so the letter is not promoted as an immutable primary source."
   exact_official_artifact_pending: true
   review_required: true
