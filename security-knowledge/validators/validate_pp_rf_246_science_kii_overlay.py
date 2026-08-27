@@ -10,6 +10,7 @@ MATRIX_PATH = ROOT / "security-knowledge" / "classification" / "pp-rf-246-2026-s
 FIXTURE_PATH = ROOT / "security-knowledge" / "classification" / "pp-rf-246-2026-science-kii-overlay-regression-v1.json"
 MANIFEST_PATH = ROOT / "security-knowledge" / "evidence" / "primary-artifact-pp-rf-246-2026.json"
 ARTIFACT_PATH = ROOT / "security-knowledge" / "evidence" / "primary-artifacts" / "2026" / "pp-rf-246-2026-0001202603070013.pdf"
+VISUAL_EVIDENCE_PATH = ROOT / "security-knowledge" / "evidence" / "pp-rf-246-2026-primary-pdf-visual-verification-2026-08-27.yaml"
 EXPECTED_SHA256 = "07047bc77584b469d0be258540b10565f12e8d8c3d54ba387ecdc4a397073aef"
 
 
@@ -17,6 +18,7 @@ def main() -> int:
     matrix = json.loads(MATRIX_PATH.read_text(encoding="utf-8"))
     fixture = json.loads(FIXTURE_PATH.read_text(encoding="utf-8"))
     manifest = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
+    visual_evidence = VISUAL_EVIDENCE_PATH.read_text(encoding="utf-8")
     failures: list[str] = []
 
     def check(condition: bool, message: str) -> None:
@@ -33,6 +35,11 @@ def main() -> int:
     check(source.get("byte_length") == 2509532 == artifact.get("byte_length"), "byte length drift")
     check(source.get("pdf_pages") == 10 == artifact.get("pages"), "page count drift")
     check(matrix.get("extraction", {}).get("ocr_is_evidence") is False, "OCR must not be evidence")
+    check(matrix.get("extraction", {}).get("primary_pages_visually_checked") == list(range(1, 11)), "all primary pages must be visually checked")
+    check(matrix.get("extraction", {}).get("standalone_formula_images_expected") == 0, "prose-only act formula count drift")
+    check(manifest.get("verification", {}).get("all_pages_visually_checked") == list(range(1, 11)), "manifest visual page gate drift")
+    check("VERIFIED_PRIMARY_IMMUTABLE_PROSE_ONLY_NO_STANDALONE_FORMULAS" in visual_evidence, "visual evidence status drift")
+    check(visual_evidence.count("pdf_page:") == 10, "visual page hash count drift")
 
     data = ARTIFACT_PATH.read_bytes()
     check(data.startswith(b"%PDF-1.5"), "artifact PDF magic/version drift")

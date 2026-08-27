@@ -12,7 +12,7 @@ def main():
     rules = {x["id"]: x["rule"] for x in model["control_rules"]}
     indicators = {x["id"]: x for x in model["indicator_applicability"]}
 
-    assert model["status"] == "VERIFIED_CURRENT_SCIENCE_SECTOR_FEATURES_PARAGRAPHS_1_TO_21"
+    assert model["status"] == "VERIFIED_CURRENT_SCIENCE_SECTOR_FEATURES_PARAGRAPHS_1_TO_21_PRIMARY_PDF_ALL_PAGES"
     assert model["effective_date"] == "2026-03-15"
     assert model["scope"]["rp360r_global_rows"] == list(range(13, 22))
     assert len(model["scope"]["actors"]) == 3
@@ -29,6 +29,8 @@ def main():
     assert rules["PP246-SCI-070"] == "DO_NOT_INVENT_CATEGORIZATION_OR_SUBMISSION_DEADLINE"
     assert model["verification_boundary"]["critical_gap_created"] == 0
     assert model["verification_boundary"]["high_gap_created"] == 0
+    assert model["verification_boundary"]["immutable_official_pdf_bytes"].startswith("VERIFIED_SHA256_07047BC")
+    assert model["verification_boundary"]["standalone_formula_images_expected"] == 0
 
     failures = []
     for case in fixtures["cases"]:
