@@ -1,0 +1,148 @@
+schema_version: "1.0"
+source_id: SEC-SRC-RU-CBR-851P-2025
+stream: 3
+jurisdiction: RU
+authority: "Банк России"
+sector: finance_banking
+regime: banking_protected_information_and_unauthorized_transfer_security
+act_type: "Положение Банка России"
+act_number: "851-П"
+act_date: "2025-01-30"
+title: "Об установлении обязательных для кредитных организаций, иностранных банков, осуществляющих деятельность на территории Российской Федерации через свои филиалы, требований к обеспечению защиты информации при осуществлении банковской деятельности в целях противодействия осуществлению переводов денежных средств без согласия клиента"
+
+status:
+  current_as_of: "2026-08-28"
+  value: CURRENT_PRIMARY_TEXT_VERIFIED_VERSION_CHAIN_PARTIAL_EXACT_BINARY_PENDING
+  applicability: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  executable_rule_status: NOT_PROMOTED
+
+primary_publication:
+  minjust_registration_date: "2025-03-06"
+  minjust_registration_number: "81462"
+  official_publication_date: "2025-03-18"
+  official_publication_evidence_url: "https://www.cbr.ru/analytics/na_vr/"
+  official_file_url: "https://www.cbr.ru/Queries/XsltBlock/File/87500/-1/2547"
+  official_file_container: "Вестник Банка России № 16 (2547) от 28.03.2025"
+  official_file_content_type_crosscheck: application/pdf
+  official_file_pages_crosscheck: 30
+  exact_byte_capture_status: PENDING_TRANSIENT_DNS_FAILURE
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+  note: "Web evidence establishes the official CBR PDF and publication metadata, but the binary acquisition runtime could not resolve cbr.ru; page count/content-type are not used as substitutes for exact byte length or hash."
+
+legal_basis:
+  - locator: "преамбула"
+    basis: "статья 57.4 Федерального закона № 86-ФЗ о Банке России"
+
+protected_information_anchors:
+  - locator: "пункт 1, абзацы 2-5"
+    concept: protected_information_scope
+    includes:
+      - "информация, в том числе составляющая банковскую тайну, в электронных документах банковских операций"
+      - "информация для авторизации клиентов и удостоверения права распоряжаться денежными средствами"
+      - "информация об осуществленных банковских операциях"
+      - "информация по распоряжениям пользователя платформы цифрового рубля"
+      - "ключевая информация СКЗИ и электронной подписи"
+  - locator: "пункт 1, последний абзац"
+    concept: direct_pdn_security_overlay
+    rule: "Если защищаемая информация содержит персональные данные, применяются меры безопасности персональных данных при обработке в соответствии со статьей 19 152-ФЗ."
+  - locator: "пункт 5.2"
+    concept: protected_information_processing_lifecycle
+    includes:
+      - identification_authentication_authorization
+      - message_creation_transfer_receipt
+      - customer_disposition_authority
+      - banking_operation_and_accounting
+      - storage_of_messages_and_operation_information
+  - locator: "пункт 5.2.1"
+    concept: customer_device_and_mobile_identifier_security
+    note: "Включает идентификацию устройств клиента, проверку использования абонентского номера и контроль изменения идентификационного модуля устройства в предусмотренных сценариях."
+  - locator: "пункт 13.2"
+    concept: conformity_assessment_report_retention
+    retention: "не менее 5 лет с даты выдачи отчета проверяющей организацией"
+    guard: "SECTOR_SECURITY_ASSESSMENT_RETENTION != GENERAL_PDN_RETENTION"
+  - locator: "пункт 13.4"
+    concept: security_conformity_assessment_frequency
+    frequency: "не реже одного раза в 2 года"
+  - locator: "Приложение 1"
+    concept: unauthorized_transfer_case_person_level_dataset
+    examples:
+      - "ФИО заявителя/плательщика"
+      - "дата рождения"
+      - "реквизиты документа, удостоверяющего личность"
+      - "идентификаторы операции, платежной карты/счета/электронного средства платежа"
+      - "в предусмотренных сценариях абонентский номер подвижной радиотелефонной связи"
+      - "сумма, валюта, дата и время операции"
+  - locator: "Приложение 2"
+    concept: incident_reporting_deadlines
+    deadlines:
+      information_security_incident_or_illegal_disclosure: "в течение 3 часов с момента выявления"
+      investigation_result: "в течение 30 дней после направления первичного сообщения"
+      kii_significant_object_related_computer_incident: "в течение 3 часов"
+      other_computer_incident: "в течение 24 часов"
+    guard: "CBR_851P_INCIDENT_DEADLINES != GENERIC_152FZ_BREACH_DEADLINES"
+  - locator: "пункт 14"
+    concept: kii_conditional_overlay
+    rule: "Для объектов информационной инфраструктуры, являющихся объектами КИИ, применяются также требования законодательства о КИИ."
+    guard: "BANK_SYSTEM != AUTOMATIC_KII_OBJECT"
+
+relationships:
+  - to: "SEC-SRC-RU-LAW-395-1:article_26"
+    relation: BANKING_SECRECY_PROTECTED_INFORMATION_OVERLAP
+    status: DIRECT_STATUTORY_CONTEXT
+  - to: "152-ФЗ:article_19"
+    relation: DIRECT_CONDITIONAL_PDN_SECURITY_REFERENCE
+    status: DIRECT_STATUTORY_CONTEXT_SCENARIO_BOUND
+  - to: "SEC-SRC-RU-FZ-126"
+    relation: MOBILE_NUMBER_AND_IDENTIFICATION_MODULE_CONTEXT
+    status: CROSS_REGIME_RELATION
+  - to: "187-ФЗ"
+    relation: KII_SECURITY_OVERLAY_WHEN_OBJECT_IS_KII
+    status: CONDITIONAL_APPLICABILITY_REVIEW_REQUIRED
+  - to: "SEC-SRC-RU-CBR-683P-2019"
+    relation: SUPERSEDES
+    status: DIRECT_VERSION_RELATION
+  - to: "SEC-SRC-RU-CBR-821P-2023"
+    relation: ADJACENT_PAYMENT_INFORMATION_PROTECTION_REGIME
+    status: CROSS_REGIME_RELATION_REVIEW_REQUIRED
+
+version_chain:
+  status: PARTIAL_PRIMARY_CURRENT_TEXT_VERIFIED
+  events:
+    - act: "Положение Банка России № 851-П от 30.01.2025"
+      effect: ADOPTED
+      minjust_registration_number: "81462"
+      official_publication_date: "2025-03-18"
+      evidence_status: PRIMARY_CBR_PUBLICATION_VERIFIED
+    - act: "Положение Банка России № 683-П от 17.04.2019"
+      effect: SUPERSEDED_ON_851P_GENERAL_EFFECTIVE_DATE
+      evidence_status: DIRECT_TEXT_POINT_16
+    - act: "Указание Банка России № 6071-У от 18.02.2022"
+      effect: SUPERSEDED_WITH_683P_CHAIN
+      evidence_status: DIRECT_TEXT_POINT_16
+    - act: "Указание Банка России № 6620-У от 06.12.2023"
+      effect: SUPERSEDED_WITH_683P_CHAIN
+      evidence_status: DIRECT_TEXT_POINT_16
+  temporal_rules:
+    - "Основная часть: вступление по истечении 10 дней после официального опубликования 18.03.2025."
+    - "Отдельные положения пункта 15: с 01.10.2025 — CURRENT на 28.08.2026."
+    - "Отдельные положения пункта 15: с 01.01.2027 — FUTURE_NOT_CURRENT на 28.08.2026."
+    - "Отдельные переходные положения действуют по 31.12.2026."
+  latest_sweep:
+    checked_at: "2026-08-28T02:18:09+03:00"
+    result: "No locator-specific amendment to 851-P was identified in the current CBR official-act sweep; 2026 CBR acts continue to cite 851-P. This negative search result is not promoted to a complete historical version chain."
+
+proof_floor:
+  taxonomy_used_as_evidence: false
+  primary_normative_act_required: true
+  bank_secrecy_equals_pdn: false
+  protected_information_equals_pdn: false
+  article_19_reference_makes_all_bank_data_pdn: false
+  bank_system_equals_kii: false
+  sector_incident_deadlines_generalized_to_all_pdn_operators: false
+  five_year_security_report_retention_generalized_to_pdn: false
+  applicability_promoted: false
+  legal_conflict_declared: false
