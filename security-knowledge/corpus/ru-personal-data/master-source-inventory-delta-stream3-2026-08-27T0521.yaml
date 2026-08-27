@@ -1,0 +1,55 @@
+schema_version: "1.0"
+stream: 3
+checked_at: "2026-08-27T05:21:35+03:00"
+mode: APPEND_ONLY_RELATIONSHIP_DELTA
+
+source:
+  source_id: SEC-SRC-RU-FZ-98-2004
+  title: "Федеральный закон от 29.07.2004 № 98-ФЗ «О коммерческой тайне»"
+  sector: commercial_secrets
+  pdn_source_status: EXTERNAL_PROTECTED_INFORMATION_REGIME_WITH_PDN_OVERLAP_CANDIDATE
+
+relationship_candidates:
+  - relationship_id: PDN-REL-98FZ-152FZ-001
+    from: SEC-SRC-RU-FZ-98-2004
+    to: RU-152-FZ
+    type: POSSIBLE_DUAL_REGIME_ON_RECORD_AND_OPERATION_PROOF_ONLY
+    status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    rationale: "Коммерческая тайна может включать сведения о физическом лице, но также защищает неперсональные бизнес-сведения. Применимость 152-ФЗ требует отдельного доказательства идентифицируемости, операции, цели, роли и правового основания."
+  - relationship_id: PDN-REL-98FZ-TK14-001
+    from: SEC-SRC-RU-FZ-98-2004:article_5
+    to: SEC-SRC-RU-TK-197-2001:chapter_14
+    type: REGIME_BOUNDARY_EMPLOYMENT_DATA_EXCLUSION_FROM_COMMERCIAL_SECRET_NOT_PDN_EXCLUSION
+    status: CANDIDATE_RELATION_VERIFIED_TEXT_APPLICABILITY_NOT_PROMOTED
+    rationale: "Запрет устанавливать коммерческую тайну для части сведений о работниках, оплате и условиях труда не отменяет самостоятельные требования к ПДн работников."
+
+scope_guards:
+  - "COMMERCIAL_SECRET != PERSONAL_DATA"
+  - "ARTICLE_5_EXCLUSION_FROM_COMMERCIAL_SECRET != PUBLIC_DATA"
+  - "ARTICLE_5_EXCLUSION_FROM_COMMERCIAL_SECRET != EXCLUSION_FROM_152_FZ"
+  - "DUAL_REGIME requires scenario-level proof."
+  - "No applicability promotion from taxonomy or sector membership."
+
+version_evidence:
+  current_primary_authority: "https://special.kremlin.ru/acts/bank/21227"
+  current_revision_crosscheck: "08.08.2024"
+  latest_verified_amendment:
+    act: "08.08.2024 № 251-ФЗ"
+    target: "article_5 points 1 and 9"
+    official_publication_id: "0001202408080046"
+  interagency_amendment:
+    act: "14.07.2022 № 311-ФЗ"
+    target: "article_6"
+    official_publication_id: "0001202207140119"
+
+acquisition_status:
+  exact_primary_binary: PENDING
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+
+proof_floor:
+  applicability_promotions: 0
+  conflicts_confirmed: 0
+  executable_rules_created: 0
