@@ -1,0 +1,108 @@
+schema_version: "1.0"
+stream: 3
+run_id: "stream-3-run-2026-08-27T0521"
+started_at: "2026-08-27T05:21:35+03:00"
+focus: "special protected information regimes / commercial secret"
+
+result:
+  new_source_nodes: 1
+  new_sector_regimes: 1
+  existing_sources_enriched: 0
+  durable_downloads: 0
+  immutable_artifacts: 0
+  pending_exact_capture: 1
+  applicability_promotions: 0
+  legal_conflicts_confirmed: 0
+
+new_source:
+  source_id: SEC-SRC-RU-FZ-98-2004
+  title: "Федеральный закон от 29.07.2004 № 98-ФЗ «О коммерческой тайне»"
+  current_primary_authority: "https://special.kremlin.ru/acts/bank/21227"
+  current_revision_crosscheck: "08.08.2024"
+  dedupe_check: "No dedicated SEC-SRC-RU-FZ-98-2004 / commercial_secrets source node found before creation."
+
+primary_evidence:
+  - kind: current_consolidated_primary_authority
+    url: "https://special.kremlin.ru/acts/bank/21227"
+    verified:
+      - "98-ФЗ current text"
+      - "amendment list through 08.08.2024 № 251-ФЗ"
+      - "article 5 exclusions"
+      - "article 6 public-authority provision"
+      - "article 10 confidentiality measures"
+      - "article 11 employment confidentiality"
+      - "article 13 public-authority recipient confidentiality"
+  - kind: official_publication_metadata
+    act: "08.08.2024 № 251-ФЗ"
+    publication_id: "0001202408080046"
+    date: "2024-08-08"
+    effect: "article 5 points 1 and 9"
+  - kind: official_publication_metadata
+    act: "14.07.2022 № 311-ФЗ"
+    publication_id: "0001202207140119"
+    date: "2022-07-14"
+    effect: "article 6"
+  - kind: official_print_crosscheck
+    publisher: "Российская газета"
+    date: "2004-08-05"
+    url: "https://rg.ru/2004/08/05/kommercheskaya.html"
+    status: "original publication date crosschecked; exact original electronic locator pending"
+
+legal_modeling:
+  anchors_added: 7
+  overlap_relations_added: 2
+  guards:
+    - "COMMERCIAL_SECRET != PERSONAL_DATA"
+    - "ARTICLE_5_EXCLUSION_FROM_COMMERCIAL_SECRET != PUBLIC_DATA"
+    - "ARTICLE_5_EXCLUSION_FROM_COMMERCIAL_SECRET != EXCLUSION_FROM_152_FZ"
+    - "No applicability without record/operation/role/purpose/legal-basis proof."
+
+acquisition_attempts:
+  - target: "current official authority / exact bytes"
+    result: "TRANSIENT_NETWORK_DNS_OR_DOWNLOAD_FAILURE"
+  - target: "251-FZ official PDF 0001202408080046"
+    result: "OFFICIAL_ENDPOINT_UNAVAILABLE_TO_BINARY_RUNTIME"
+  - target: "311-FZ official PDF 0001202207140119"
+    result: "OFFICIAL_ENDPOINT_UNAVAILABLE_TO_BINARY_RUNTIME"
+  - target: "original exact electronic publication locator"
+    result: "PENDING"
+
+artifact_integrity:
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+  reason: "Exact official bytes were not obtained; no cryptographic metadata was invented."
+
+counters:
+  before:
+    found: 45
+    downloaded: 9
+    immutable: 9
+    pending: 34
+    reused: 2
+    primary_publication_verified: 20
+    sectors_registered: 26
+  after:
+    found: 46
+    downloaded: 9
+    immutable: 9
+    pending: 35
+    reused: 2
+    primary_publication_verified: 20
+    sectors_registered: 27
+
+next_priority:
+  - "Retry exact-byte capture for 98-FZ current/original artifact and 251-FZ/311-FZ amendment PDFs."
+  - "Continue high-priority pending exact captures in healthcare, finance, telecom, education/children, public sector, biometrics, transport, advertising, archives/retention."
+  - "Discover next non-duplicate special regime from RU Protected Information seeds only where a current primary normative act can be proven."
+
+production_statistics:
+  throughput_this_pass: "1 new source node; 1 new sector regime; 2 overlap relations; 2 recent primary publication metadata events verified"
+  cumulative_counters_source: "master-inventory-delta-2026-08-27T0521.yaml"
+  rework_share: null
+  speed_vs_single_stream_percent: null
+  remaining_volume_estimate: null
+  completion_forecast: null
+  telemetry_note: "No comparable per-source timing baseline in this pass; acceleration and ETA are intentionally not fabricated."
