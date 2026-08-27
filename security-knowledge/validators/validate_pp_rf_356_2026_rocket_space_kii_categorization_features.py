@@ -32,8 +32,8 @@ def main():
     assert list(rules) == [f"PP356-RS-{i:03d}" for i in range(1, 65)]
     assert len(fixtures["cases"]) == 64
     assert rules["PP356-RS-017"] == "DO_NOT_INVENT_PP356_ROSCOSMOS_SUBMISSION_DEADLINE"
-    assert rules["PP356-RS-052"] == "ROUTE_POSITIONS_13_AND_13_1_TO_VERIFIED_DEFENSE_OVERLAY_WITH_NUMERIC_FORMULA_GATE"
-    assert model["verification_boundary"]["positions_13_and_13_1_calculation"] == "VERIFIED_SEPARATE_CURRENT_DEFENSE_OVERLAY_TEXT_NUMERIC_FORMULA_EXECUTION_BLOCKED"
+    assert rules["PP356-RS-052"] == "ROUTE_POSITIONS_13_AND_13_1_TO_VERIFIED_PP796_PRIMARY_FORMULAS_WITH_SOURCE_ANOMALY_GATES"
+    assert model["verification_boundary"]["positions_13_and_13_1_calculation"] == "VERIFIED_SEPARATE_CURRENT_PP796_PRIMARY_FORMULAS_SOURCE_ANOMALIES_AND_ZERO_DENOMINATORS_FAIL_CLOSED"
     assert model["verification_boundary"]["immutable_official_pdf_bytes"] == "VERIFIED_SHA256"
     assert model["verification_boundary"]["critical_gap_created"] == 0
     assert model["verification_boundary"]["high_gap_created"] == 0

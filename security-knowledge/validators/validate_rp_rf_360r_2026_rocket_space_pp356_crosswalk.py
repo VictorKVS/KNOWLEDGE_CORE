@@ -38,7 +38,7 @@ def main():
     assert overlay["formula_images_blocked"] == 0
     assert overlay["variable_glyph_images_blocked"] == 0
     assert overlay["zero_r_annual_avg"] == "FAIL_CLOSED_NOT_DEFINED_BY_ACT"
-    assert overlay["positions13_and13_1_dependency"] == "CURRENT_PP796_TEXT_MODEL_NUMERIC_IMAGES_FAIL_CLOSED"
+    assert overlay["positions13_and13_1_dependency"] == "CURRENT_PP796_PRIMARY_FORMULAS_SOURCE_ANOMALIES_AND_ZERO_DENOMINATORS_FAIL_CLOSED"
     assert len(rules) == 64
     assert list(rules) == [f"RP360R-RS-{i:03d}" for i in range(1, 65)]
     assert len(fixtures["cases"]) == 64

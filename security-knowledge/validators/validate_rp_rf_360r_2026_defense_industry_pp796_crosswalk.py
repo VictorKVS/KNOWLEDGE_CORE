@@ -13,7 +13,7 @@ def main():
     shared = model["shared_activity_qualification"]
     overlay = model["pp796_overlay_dependency"]
     rules = {item["id"]: item["rule"] for item in model["control_rules"]}
-    assert model["status"] == "VERIFIED_CURRENT_DEFENSE_ROWS156_195_PP796_TEXT_FORMULA_IMAGES_FAIL_CLOSED"
+    assert model["status"] == "VERIFIED_CURRENT_DEFENSE_ROWS156_195_PP796_PRIMARY_FORMULAS_GLYPH_CONDITION_SOURCE_ANOMALIES_FAIL_CLOSED"
     assert [row["row"] for row in rows] == list(range(156, 196))
     assert sum(len(row["processes"]) for row in rows) == 83
     assert shared["applies_to_rows"] == list(range(157, 196))
@@ -21,9 +21,12 @@ def main():
     assert rows[0]["activity_codes"] == ["84"]
     assert all(row.get("activity_scope") == "DEFENSE_SHARED_157_195" for row in rows[1:])
     assert overlay["effective_from"] == "2026-07-07"
-    assert overlay["formula_images_blocked"] == 12
-    assert overlay["variable_glyph_images_blocked"] == 1
-    assert overlay["condition_expression_images_blocked"] == 1
+    assert overlay["formula_images_verified"] == 12
+    assert overlay["variable_glyph_images_verified"] == 1
+    assert overlay["condition_expression_images_verified"] == 1
+    assert overlay["formula_images_blocked"] == 0
+    assert overlay["variable_glyph_images_blocked"] == 0
+    assert overlay["condition_expression_images_blocked"] == 0
     assert len(rules) == 64
     assert list(rules) == [f"RP360R-DEF-{i:03d}" for i in range(1, 65)]
     assert len(fixtures["cases"]) == 64
@@ -37,6 +40,6 @@ def main():
         raise SystemExit(1)
     assert model["verification_boundary"]["critical_gap_created"] == 0
     assert model["verification_boundary"]["high_gap_created"] == 0
-    print("PASS: RP RF 360-r defense rows 156-195 plus PP RF 796 crosswalk; 40 rows, 83 process groups, 9 activity routes, 14 image fragments blocked, 64 rules/cases")
+    print("PASS: RP RF 360-r defense rows 156-195 plus PP RF 796 crosswalk; 40 rows, 83 process groups, 9 activity routes, 12 formulas, DeltaV glyph and stop condition verified; source anomalies fail closed; 64 rules/cases")
 
 if __name__ == "__main__": main()
