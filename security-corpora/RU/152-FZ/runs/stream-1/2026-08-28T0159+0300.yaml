@@ -1,0 +1,92 @@
+schema_version: "1.0"
+run_id: "PDN-CORE-STREAM1-2026-08-28T0159+0300"
+observed_at: "2026-08-28T01:59:03+03:00"
+stream: 1
+scope: "RU PDN general core acquisition/freshness"
+
+production_snapshot:
+  identified: 37
+  byte_exact_downloaded: 35
+  immutable_sha256_verified: 35
+  atomized_proposed: 4
+  atomized_verified: 0
+  pending_raw_capture: 2
+  raw_capture_coverage_ratio: 0.9459
+
+freshness_checks:
+  - source_id: "SEC-SRC-RU-152FZ-2026-07-26"
+    checked_at: "2026-08-28"
+    result: "CURRENT_VERSION_IDENTITY_CONFIRMED_NO_NEWER_EFFECTIVE_REVISION_FOUND"
+    evidence_class: "CURRENT_LEGAL_INDEX_CROSSCHECK_PLUS_IMMUTABLE_AMENDMENT_ANCHOR"
+    evidence: >-
+      Current legal indexes still present Federal Law No. 152-FZ in the edition of 26.07.2026;
+      Federal Law No. 265-FZ remains the current effective amendment anchor for Article 12.
+    external_evidence:
+      - "https://www.consultant.ru/law/hotdocs/94986.html"
+      - "https://base.garant.ru/12148567/b6e02e45ca70d110df0019b9fe339c70/"
+    semantic_promotion: false
+  - source_id: "SEC-SRC-RU-PP687-2008"
+    checked_at: "2026-08-28"
+    result: "CURRENT_REVISION_METADATA_UNCHANGED_RAW_PENDING"
+    evidence_class: "CURRENT_LEGAL_TEXT_CROSSCHECK_PLUS_IMMUTABLE_PP12_AMENDMENT"
+    evidence: >-
+      Current legal text remains PP687 as amended on 18.01.2025, with validity through 01.09.2030.
+      The exact official current-text snapshot remains pending.
+    external_evidence:
+      - "https://www.consultant.ru/document/cons_doc_LAW_80028/"
+    semantic_promotion: false
+  - source_id: "SEC-SRC-RU-RKN128-2022"
+    checked_at: "2026-08-28"
+    result: "CURRENT_RULE_WITH_REPLACEMENT_PROJECT_ONLY"
+    evidence_class: "CURRENT_LEGAL_INDEX_AND_DRAFT_WATCH"
+    evidence: >-
+      The Roskomnadzor replacement prepared 31.07.2026 is still represented as a draft in current evidence;
+      no enacted official publication identity was found in this pass. Keep Order No. 128 active and review open.
+    external_evidence:
+      - "https://base.garant.ru/57061930/"
+      - "https://base.garant.ru/405309273/"
+    semantic_promotion: false
+
+pending_sources:
+  - source_id: "SEC-SRC-RU-152FZ-2026-07-26"
+    required_artifact_role: "OFFICIAL_CURRENT_TEXT_SNAPSHOT"
+    status: "PENDING_RAW_CAPTURE"
+    acquisition_gate: "registered official route + exact bytes + 152-FZ/personal-data identity + current-revision proof + MIME + byte length + SHA-256"
+  - source_id: "SEC-SRC-RU-PP687-2008"
+    required_artifact_role: "OFFICIAL_CURRENT_TEXT_SNAPSHOT"
+    status: "PENDING_RAW_CAPTURE"
+    acquisition_gate: "registered official route + exact bytes + PP687 identity + non-automated-processing marker + PP12 validity-through-2030 fingerprint + MIME + byte length + SHA-256"
+
+orchestrator_transport_observation:
+  checked_at: "2026-08-28T01:59:03+03:00"
+  result: "EXECUTION_ENV_DNS_UNAVAILABLE"
+  affected_registered_routes:
+    - "https://government.ru/docs/all/65436/"
+    - "https://pravo.gov.ru/proxy/ips/?docbody=&nd=102124251"
+    - "https://pravo.gov.ru/proxy/ips/?docbody=&nd=102108261"
+  direct_probe_results:
+    government_ru_pp687: "curl exit 6 / could not resolve host"
+    pravo_ru_pp687: "curl exit 6 / could not resolve host"
+    pravo_ru_152fz: "curl exit 6 / could not resolve host"
+  interpretation: >-
+    The execution environment could not resolve the official hosts during direct byte-capture attempts.
+    This is an environment observation only; it is not promoted to a source failure and does not overwrite
+    canonical GitHub acquisition telemetry or source-card evidence.
+
+quality_gates:
+  proof_floor_held: true
+  immutable_new_this_pass: 0
+  semantic_promotions_this_pass: 0
+  existing_immutable_preserved: 35
+  repeat_downloads_of_verified_corpus: 0
+  sector_overlays_touched: false
+
+next_action:
+  - "Retry only the two pending current-text snapshots through the canonical GitHub acquisition workflow."
+  - "Do not re-download the 35 accepted immutable artifacts."
+  - "Do not replace RKN Order No. 128 until an enacted official publication identity is found."
+  - "Do not increase immutable counters without an accepted manifest containing source URL, retrieved_at, MIME, exact byte length and SHA-256."
+
+notes:
+  - "No status was promoted without exact-byte evidence."
+  - "The authoritative counter state remains 37/35/35/4 proposed/0 verified/2 pending."
