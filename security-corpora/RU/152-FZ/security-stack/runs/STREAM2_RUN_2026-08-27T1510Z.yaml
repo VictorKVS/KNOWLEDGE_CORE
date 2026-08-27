@@ -1,0 +1,61 @@
+schema_version: "1.0"
+id: STREAM2-RUN-2026-08-27T1510Z
+stream: RU_PDN_TECHNICAL_CRYPTO
+created_at: "2026-08-27T15:10:00Z"
+status: OFFICIAL_ARCHIVE_FALLBACK_READY_FOR_ACQUISITION
+
+base_authoritative_state:
+  identified: 42
+  metadata_verified: 42
+  immutable_sha256_verified: 17
+  pending_raw_capture: 25
+  exact_official_route_unresolved: 7
+  latest_acquisition_finished_at: "2026-08-27T14:35:10.367409Z"
+
+pending_registration_overlay:
+  source_additions:
+    - SEC-SRC-RU-FSB547-2025
+    - SEC-SRC-RU-FSB548-2025
+  expected_identified_after_registration: 44
+  expected_metadata_verified_after_registration: 44
+  expected_pending_before_acquisition: 27
+
+result:
+  official_archive_fallback_routes_verified: 2
+  new_immutable_captured_before_post_merge_acquisition: 0
+  counter_reconciliation_required: true
+
+route_recovery:
+  - source_id: SEC-SRC-RU-FSB547-2025
+    canonical_publication_id: "0001202512300064"
+    official_archive_page: "https://rg.ru/documents/2026/01/08/fsb-prikaz547-site-dok.html"
+    official_archive_pdf: "https://cdnstatic.rg.ru/uploads/attachments/2026/01/08/84871_525.pdf"
+    pdf_pages_observed: 12
+    identity_cross_check: "Order No.547; MinJust registration No.84871 dated 30.12.2025"
+    byte_proof_status: PENDING_POST_MERGE_ACQUISITION
+  - source_id: SEC-SRC-RU-FSB548-2025
+    canonical_publication_id: "0001202512300058"
+    official_archive_page: "https://rg.ru/documents/2026/01/08/fsb-prikaz548-site-dok.html"
+    official_archive_pdf: "https://cdnstatic.rg.ru/uploads/attachments/2026/01/08/84872_dc0.pdf"
+    pdf_pages_observed: 8
+    identity_cross_check: "Order No.548; MinJust registration No.84872 dated 30.12.2025"
+    byte_proof_status: PENDING_POST_MERGE_ACQUISITION
+
+transport_change:
+  file: "TOOLS/pdn_security_stack_acquire_fast.py"
+  rule: >-
+    For publication-PDF sources with a curated official fallback_url, the change-triggered acquirer first attempts
+    the canonical publication.pravo.gov.ru route and only after failure tries the declared official publication
+    archive PDF. Promotion still requires PDF signature validation, exact downloaded bytes, SHA-256 and the normal
+    immutable manifest/write path.
+
+applicability_guards:
+  - FSB547 and FSB548 remain GosSOPKA/KII/public-sector context only when independent coverage is proved
+  - FSB77 remains the explicit 152-FZ Article 19 part 12 PDN-computer-incident source
+  - no universal PDN duty is inferred from FSB547 or FSB548
+  - no MIME, byte length or SHA-256 is recorded before actual byte acquisition
+
+next_gate:
+  - merge and let the push-triggered Stream-2 acquisition register the two cards
+  - attempt canonical publication route, then the verified Russian Gazette official archive fallback
+  - reconcile PDN security-stack counters and PDN master inventory only from the accepted acquisition run
