@@ -1,0 +1,81 @@
+run_id: SECURITY-KB-RUN-241
+run_date: '2026-08-27'
+strict_readiness:
+  overall_percent: 10
+  domains:
+    russian_npa: 56
+    gost_iso: 27
+    classification_categorization: 72
+    fstec_bdu: 34
+    risk_methods: 10
+    legal_consequences_koap_uk_gk_tk: 10
+    szi_skzi_licenses_lifecycle: 36
+    roles_deadlines_responsibility: 61
+    evidence_audit: 96
+    practical_cases: 49
+inventory:
+  verified: 293
+  pending: 31
+  count_change: 0
+red_team:
+  critical_gaps: 0
+  high_gaps: 0
+  source_model_status: PASS_CURRENT_ORDER268_APPENDICES5_TO11_PROTOCOL_HEADERS_COMMAND_MESSAGE_CODE_REGISTRIES_AND_SEQUENCE_GUARDS_DEEP_FIELD_TABLES_PENDING
+  global_status: FAIL_SCOPE_INCOMPLETE
+  residuals:
+  - MEDIUM_ORDER268_APPENDICES5_TO11_DEEP_PER_COMMAND_MESSAGE_FIELD_AND_BIT_TABLES_PENDING
+  - MEDIUM_ORDER645_APPENDICES3_TO9_DEEP_PER_COMMAND_MESSAGE_FIELD_AND_BIT_TABLES_PENDING
+  - MEDIUM_ORDER268_COMPLETE_OFFICIAL_PDF_BYTES_AND_HASH_PENDING_DOWNLOAD_RATE_LIMIT
+  - MEDIUM_ORDER645_CURRENT_CONSOLIDATED_IMMUTABLE_BYTES_PENDING
+  - MEDIUM_PP538_OTHER_NETWORK_TYPE_TECHNICAL_SOURCE_FAMILY_PENDING
+  - MEDIUM_PP719_LIVE_REGISTRY_SNAPSHOT_FOR_INSTALLED_STORAGE_MEANS_PENDING
+  - MEDIUM_PP719_CURRENT_CONSOLIDATED_OFFICIAL_IMMUTABLE_BYTES_PENDING
+  - MEDIUM_PP445_POST_2026_09_01_POINT5_POINT6_SCOPE_OVERLAP_REQUIRES_DOCUMENTED_INTERPRETATION
+  - MEDIUM_126FZ_FULL_STRUCTURE_DEFINITIONS_AND_REQUIREMENTS_PENDING
+  - MEDIUM_OTHER_FIXED_SCOPE_DOMAINS_PENDING
+  - MEDIUM_INDEPENDENT_EXPERT_REVIEW_PENDING
+added_this_run:
+- Atomized the protocol-header, code-registry and sequencing core of Order 268 appendices 5 through 11 into thirty-six rules, two temporal routes and eighteen evidence nodes.
+- Preserved the exact ten-byte command header, CCH preamble and six-byte password in bytes 5 through 10.
+- Preserved all seventeen command codes from 01H through 11H and the exact serial-versus-priority split for commands 2, 7, 8, 13 and 14.
+- Protected rejection, wrong-password and wrong-technical-means-number routes without treating acceptance for execution as actual execution.
+- Preserved the ten-minute KPD inactivity stop, unsent-data destruction, no-content-block and resume conditions without treating ten minutes as retention.
+- Preserved the ten-byte KPD1 header, 245-byte content maximum, version 02H, twelve codes 21H through 2CH, 400-millisecond message-7 route and 200-millisecond message-9 route.
+- Preserved the twelve-byte KPD2 header, FFFEH-to-0000H call-number rollover and seven codes 41H through 44H and 51H through 53H.
+- Added an explicit cross-act guard that blocks the mobile-only Order 645 codes 45H and 46H from Order 268.
+- Verified the Minjust official publication metadata and 61-page topology; kept the complete PDF bytes and SHA-256 pending because the server returned only a rate-limited partial download.
+- Kept deep per-command and per-message fields and bit-combination tables fail-closed pending immutable page review.
+source_quality:
+  order268_current_original_edition: VERIFIED_AS_OF_2026_08_27
+  appendices5_to11_common_headers_code_registries_and_sequence: VERIFIED_CURRENT_TEXT
+  minjust_official_copy_page_count_and_publication_metadata: VERIFIED
+  complete_official_pdf_bytes_and_sha256: PENDING_DOWNLOAD_RATE_LIMIT
+  deep_per_command_and_per_message_field_and_bit_tables: PENDING
+  independent_expert_review: PENDING
+readiness_change:
+  overall: 0
+  russian_npa: 1
+  classification_categorization: 0
+  szi_skzi_licenses_lifecycle: 1
+  roles_deadlines_responsibility: 1
+  evidence_audit: 1
+  practical_cases: 1
+reason_overall_unchanged: Common protocol headers, registries and sequencing are closed, but deep field tables, complete immutable bytes, live product records and the fixed inventory remain incomplete.
+verification:
+  validators: PASS_171_OF_171
+  order268_protocol_atomic_rules: PASS_36_OF_36
+  order268_protocol_temporal_routes: PASS_2_OF_2
+  order268_protocol_command_codes: PASS_17_OF_17
+  order268_protocol_kpd1_message_codes: PASS_12_OF_12
+  order268_protocol_kpd2_message_codes: PASS_7_OF_7
+  order268_protocol_evidence_nodes: PASS_18_OF_18
+  order268_protocol_cases: PASS_52_OF_52
+  corpus: PASS_6279_CASES_109_MODELS
+  yaml_json_parse: PASS_840_FILES
+  github_actions: NOT_YET_OBSERVED_FOR_THIS_HEAD
+github_publication:
+  pull_request: https://github.com/VictorKVS/KNOWLEDGE_CORE/pull/5
+  claim_boundary: LOCAL_GATES_PASS_REMOTE_CI_NOT_CLAIMED_UNTIL_RUN_OR_STATUS_EXISTS
+next_bottleneck:
+  primary: Capture complete immutable official bytes and verify deep per-command and per-message field and bit tables for Orders 268 and 645.
+  secondary: Verify a live GISP registry record only for a supplied installed storage-system model and installation date; continue the remaining PP 538 network-type sources.

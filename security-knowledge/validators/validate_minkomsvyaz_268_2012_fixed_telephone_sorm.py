@@ -53,7 +53,8 @@ def main():
     assert len(model["evidence_model"]) == len({x["id"] for x in model["evidence_model"]}) == 16
     assert len(model["temporal_model"]) == 2
     assert model["verified_structure"] == {"body_numbered_points": 19, "appendices": 12, "body_point4_function_groups": 14, "appendix1_numbered_points": 6, "appendix11_message_families": 7}
-    assert model["verification_boundary"]["appendix5_to11_exact_byte_command_message_and_bit_tables"] == "PENDING_IMMUTABLE_PAGE_REVIEW"
+    assert model["verification_boundary"]["appendix5_to11_protocol_headers_code_registries_and_sequence"] == "VERIFIED_CURRENT_TEXT_SEPARATE_MODEL"
+    assert model["verification_boundary"]["appendix5_to11_deep_per_command_message_field_and_bit_tables"] == "PENDING_IMMUTABLE_PAGE_REVIEW"
     assert model["verification_boundary"]["critical_gap_created"] is False
     assert model["verification_boundary"]["high_gap_created"] is False
     assert len(fixtures["cases"]) == 56
@@ -64,7 +65,7 @@ def main():
     if failures:
         for failure in failures: print("FAIL", failure)
         raise SystemExit(1)
-    print("PASS: Order 268 fixed-telephone open core; 50 rules, 2 temporal routes, 16 evidence nodes, 19 body points, 12 appendices, 14 function groups, 56 cases; exact byte tables pending")
+    print("PASS: Order 268 fixed-telephone open core; 50 rules, 2 temporal routes, 16 evidence nodes, 19 body points, 12 appendices, 14 function groups, 56 cases; protocol core linked, deep tables pending")
 
 
 if __name__ == "__main__": main()

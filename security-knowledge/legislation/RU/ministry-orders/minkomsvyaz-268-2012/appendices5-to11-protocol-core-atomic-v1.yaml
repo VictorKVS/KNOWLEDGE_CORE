@@ -1,0 +1,237 @@
+schema_version: "1.0"
+id: RU-MINKOMSVYAZ-268-2012-APPENDICES5-TO11-PROTOCOL-CORE-ATOMIC-V1
+title: "Приказ Минкомсвязи № 268: протокольное ядро приложений № 5–11"
+checked_at: "2026-08-27"
+status: VERIFIED_CURRENT_PROTOCOL_HEADERS_CODE_REGISTRIES_AND_SEQUENCE_DEEP_TABLES_PENDING
+scope: >-
+  Общие заголовки команд, сообщений КПД1 и сообщений КПД2, реестры кодов
+  семнадцати команд, двенадцати сообщений КПД1 и семи сообщений КПД2,
+  а также правила последовательности приложения № 7. Детальные поля каждой
+  команды и сообщения и таблицы сочетаний бит остаются отдельной границей до
+  проверки неизменяемого официального PDF по страницам.
+
+sources:
+  act: "Приказ Минкомсвязи России от 19.11.2012 № 268"
+  registration: "Минюст России, 29.12.2012 № 26431"
+  official_publication: "Бюллетень нормативных актов федеральных органов исполнительной власти, № 9, 04.03.2013"
+  effective_from: "2013-03-15"
+  current_revision: "2012-11-19"
+  current_index: "https://www.consultant.ru/document/cons_doc_LAW_141224/"
+  minjust_publication_copy: "https://minjust.consultant.ru/documents/4286"
+  minjust_pdf: "https://minjust.consultant.ru/files/4286"
+  minjust_pdf_pages: 61
+  appendix5: "https://www.consultant.ru/document/cons_doc_LAW_141224/dd81c5cf8aa096458c9fdab39b46438ec4184c6a/"
+  appendix6: "https://www.consultant.ru/document/cons_doc_LAW_141224/189c6e8b1feccc73171dda52977286b12ee5d9f3/"
+  appendix7: "https://www.consultant.ru/document/cons_doc_LAW_141224/08e00af016beece9cae9d24dbaba4ca00169f301/"
+  appendix8: "https://www.consultant.ru/document/cons_doc_LAW_141224/7156d727b7e82df838832b9a8e1ae37befcf3ca3/"
+  appendix9: "https://www.consultant.ru/document/cons_doc_LAW_141224/11785aae24c5b9e1c41b11e5debad6b6253e2ddc/"
+  appendix10: "https://www.consultant.ru/document/cons_doc_LAW_141224/10edd6a7fa1b67a3b69490234433694c201c9832/"
+  pp1656_official: "https://publication.pravo.gov.ru/document/0001202310110045"
+
+linked_parent_model: security-knowledge/legislation/RU/ministry-orders/minkomsvyaz-268-2012/fixed-telephone-sorm-equipment-atomic-v1.yaml
+
+temporal_model:
+  - {id: PRE_ORDER268, until_exclusive: "2013-03-15", status: OUT_OF_SCOPE_USE_PREDECESSOR_ROUTE}
+  - {id: ORDER268_CURRENT, from: "2013-03-15", status: CURRENT_AS_OF_2026_08_27}
+
+byte_orientation:
+  multi_byte_order: LOWER_BYTE_FIRST_IN_FIGURES
+  bit_order: D7_LEFT_D0_RIGHT
+  nibble_order: HIGH_D7_D4_LEFT_LOW_D3_D0_RIGHT
+
+command_header:
+  bytes: 10
+  fields:
+    - {byte: 1, field: PREAMBLE, exact: CCH}
+    - {byte: 2, field: TECHNICAL_MEANS_ORM_NUMBER}
+    - {byte: 3, field: COMMAND_CODE}
+    - {byte: 4, field: COMMAND_CONTENT_LENGTH_BYTES}
+    - {bytes: "5-10", field: PASSWORD, length_bytes: 6}
+
+command_codes:
+  - {number: 1, code: 01H, name: START_TECHNICAL_MEANS_ORM}
+  - {number: 2, code: 02H, name: STOP_TECHNICAL_MEANS_ORM}
+  - {number: 3, code: 03H, name: SET_PASSWORD}
+  - {number: 4, code: 04H, name: ASSIGN_KSL_TO_GROUP}
+  - {number: 5, code: 05H, name: PLACE_OBJECT_UNDER_CONTROL}
+  - {number: 6, code: 06H, name: REMOVE_OBJECT_FROM_CONTROL}
+  - {number: 7, code: 07H, name: CONNECT_TO_SPEECH_PATH}
+  - {number: 8, code: 08H, name: RELEASE_CONTROL_CONNECTION_LINE}
+  - {number: 9, code: 09H, name: EXCLUDE_CONTROL_CONNECTION_LINE_FROM_GROUP}
+  - {number: 10, code: 0AH, name: REQUEST_CONTROL_OBJECT_DATA}
+  - {number: 11, code: 0BH, name: REQUEST_KSL_GROUP_MAPPING}
+  - {number: 12, code: 0CH, name: REQUEST_COMMUNICATION_SERVICES_LIST}
+  - {number: 13, code: 0DH, name: INTERRUPT_TABLE_CONTENT_OUTPUT}
+  - {number: 14, code: 0EH, name: TEST_DATA_CHANNELS}
+  - {number: 15, code: 0FH, name: CHANGE_CONTROL_OBJECT_PARAMETERS}
+  - {number: 16, code: 10H, name: REQUEST_TRUNK_NAME_TO_CONDITIONAL_NUMBER_MAPPING}
+  - {number: 17, code: 11H, name: REQUEST_NODE_SOFTWARE_VERSION}
+
+sequence_rules:
+  ordinary_serial_commands:
+    excluded_priority_commands: [2, 7, 8, 13, 14]
+    next_command_gate: MESSAGE7_REJECTED_OR_MESSAGE8_ANY_RESULT_FOR_PREVIOUS_COMMAND
+  priority_commands:
+    numbers: [2, 7, 8, 13, 14]
+    accepted_any_time: true
+  before_start: {accepted: false, response: MESSAGE7_COMMAND_REJECTED}
+  malformed_format_or_parameters: {accepted: false, response: MESSAGE7_COMMAND_REJECTED}
+  wrong_password_or_technical_means_number:
+    accepted_for_execution: true
+    executed: false
+    responses: [MESSAGE7_ACCEPTED, MESSAGE8_NON_EXECUTION_REASON, MESSAGE6_UNAUTHORIZED_ACCESS]
+  inactivity:
+    threshold_minutes: 10
+    qualifying_input: ANY_COMMAND_EXCEPT_COMMAND1_WITH_VALID_PASSWORD_AND_TECHNICAL_MEANS_NUMBER_ON_ANY_KPD1
+    effects: [STOP_ALL_KPD1_AND_KPD2_DATA, DESTROY_UNSENT_KPD1_AND_KPD2_DATA]
+    controlled_connection_content_blocked: false
+  resume:
+    alternatives:
+      - COMMAND1_WITH_ANY_TECHNICAL_MEANS_NUMBER_AND_VALID_PASSWORD
+      - ANY_OTHER_COMMAND_WITH_NUMBER_SET_BY_COMMAND1_AND_VALID_PASSWORD
+
+kpd1_header:
+  bytes: 10
+  fields:
+    - {byte: 1, field: PREAMBLE, exact: CCH}
+    - {byte: 2, field: TECHNICAL_MEANS_ORM_NUMBER}
+    - {byte: 3, field: MESSAGE_CODE}
+    - {byte: 4, field: CONTENT_LENGTH_BYTES, range: "1-245"}
+    - {bytes: "5-6", field: TOTAL_MESSAGES, range: "1-65535"}
+    - {bytes: "7-8", field: CURRENT_MESSAGE_NUMBER, range: "1-65535"}
+    - {byte: 9, field: REGISTER_TYPE_OR_MESSAGE12_COUNTER}
+    - {byte: 10, field: TECHNICAL_REQUIREMENTS_VERSION, exact: 02H}
+  content_max_bytes: 245
+  message12_counter: {range: 00H-FFH, after_ff: 00H}
+
+kpd1_message_codes:
+  - {number: 1, code: 21H, name: ALARM}
+  - {number: 2, code: 22H, name: NODE_SOFTWARE_RESTART}
+  - {number: 3, code: 23H, name: CONTROL_OBJECT_DATA}
+  - {number: 4, code: 24H, name: KSL_GROUP_MAPPING}
+  - {number: 5, code: 25H, name: COMMUNICATION_SERVICES_LIST}
+  - {number: 6, code: 26H, name: UNAUTHORIZED_SOFTWARE_ACCESS}
+  - {number: 7, code: 27H, name: COMMAND_RECEIPT_CONFIRMATION}
+  - {number: 8, code: 28H, name: COMMAND_EXECUTION_CONFIRMATION}
+  - {number: 9, code: 29H, name: TEST_RESPONSE}
+  - {number: 10, code: 2AH, name: TRUNK_NAME_TO_CONDITIONAL_NUMBER_MAPPING}
+  - {number: 11, code: 2BH, name: NODE_SOFTWARE_VERSION}
+  - {number: 12, code: 2CH, name: TELECOMMUNICATION_MESSAGE_TRANSFER}
+
+kpd1_exact_controls:
+  message7_max_latency_ms: 400
+  message8_status_codes:
+    00H: COMMAND_EXECUTED
+    01H: COMMAND_NOT_EXECUTED
+    03H: WRONG_PASSWORD
+    05H: WRONG_TECHNICAL_MEANS_NUMBER
+    07H: NOT_EXECUTED_TECHNICAL_MEANS_ALREADY_STARTED
+  message9_max_latency_ms: 200
+  message9_trigger: COMMAND14
+
+kpd2_header:
+  bytes: 12
+  fields:
+    - {byte: 1, field: PREAMBLE, exact: CCH}
+    - {byte: 2, field: TECHNICAL_MEANS_ORM_NUMBER}
+    - {byte: 3, field: MESSAGE_CODE}
+    - {byte: 4, field: CONTENT_LENGTH_BYTES}
+    - {bytes: "5-6", field: CALL_NUMBER, rollover: FFFEH_TO_0000H}
+    - {byte: 7, field: CONTROL_OBJECT_TYPE}
+    - {bytes: "8-9", field: CONDITIONAL_CONTROL_OBJECT_NUMBER}
+    - {byte: 10, field: CONTROL_OBJECT_SELECTION_FLAG}
+    - {byte: 11, field: CONNECTION_PARAMETERS}
+    - {byte: 12, field: SERVICE_PHASE_CODE}
+
+kpd2_message_codes:
+  - {number: "1.1", code: 41H, name: RECEIVE_FULL_CALLED_PARTY_NUMBER}
+  - {number: "1.2", code: 42H, name: CALLED_PARTY_ANSWER}
+  - {number: "1.3", code: 43H, name: DISCONNECTION}
+  - {number: "1.4", code: 44H, name: COMMUNICATION_SERVICE_USE}
+  - {number: "2.1", code: 51H, name: CONNECT_CONTROL_CONNECTION_LINE}
+  - {number: "2.2", code: 52H, name: RELEASE_CONTROL_CONNECTION_LINE}
+  - {number: "2.3", code: 53H, name: TEST_RESPONSE}
+
+atomic_rules:
+  - {id: MK268-P-R001, locator: "временной маршрут", rule: APPLY_ORDER268_PROTOCOL_ONLY_FROM_2013_03_15}
+  - {id: MK268-P-R002, locator: "статус", rule: USE_CURRENT_ORIGINAL_EDITION_AS_OF_2026_08_27}
+  - {id: MK268-P-R003, locator: "приложения 5–11", rule: KEEP_KPD1_AND_KPD2_SCHEMAS_DISTINCT}
+  - {id: MK268-P-R004, locator: "приложение 5", rule: COMMAND_HEADER_IS_EXACTLY_10_BYTES}
+  - {id: MK268-P-R005, locator: "приложение 5", rule: COMMAND_PREAMBLE_BYTE1_IS_CCH}
+  - {id: MK268-P-R006, locator: "приложение 5", rule: COMMAND_BYTES2_TO4_ARE_TECHNICAL_MEANS_NUMBER_CODE_AND_CONTENT_LENGTH}
+  - {id: MK268-P-R007, locator: "приложение 5", rule: COMMAND_PASSWORD_OCCUPIES_BYTES5_TO10}
+  - {id: MK268-P-R008, locator: "приложение 5", rule: PRESERVE_SOURCE_BYTE_BIT_AND_NIBBLE_ORIENTATION}
+  - {id: MK268-P-R009, locator: "приложение 6, команды 1–5", rule: COMMAND_CODES_1_TO5_ARE_01H_TO05H}
+  - {id: MK268-P-R010, locator: "приложение 6, команды 6–9", rule: COMMAND_CODES_6_TO9_ARE_06H_TO09H}
+  - {id: MK268-P-R011, locator: "приложение 6, команды 10–13", rule: COMMAND_CODES_10_TO13_ARE_0AH_TO0DH}
+  - {id: MK268-P-R012, locator: "приложение 6, команды 14–17", rule: COMMAND_CODES_14_TO17_ARE_0EH_TO11H}
+  - {id: MK268-P-R013, locator: "приложение 7, пункт 1", rule: SERIALIZE_ALL_COMMANDS_EXCEPT_2_7_8_13_14}
+  - {id: MK268-P-R014, locator: "приложение 7, пункт 2", rule: COMMANDS_2_7_8_13_14_ARE_PRIORITY_AND_ACCEPTED_ANY_TIME}
+  - {id: MK268-P-R015, locator: "приложение 7, пункт 3", rule: REJECT_COMMAND_BEFORE_START_WITH_MESSAGE7}
+  - {id: MK268-P-R016, locator: "приложение 7, пункт 4", rule: REJECT_MALFORMED_COMMAND_WITH_MESSAGE7}
+  - {id: MK268-P-R017, locator: "приложение 7, пункт 5", rule: WRONG_PASSWORD_OR_NUMBER_IS_ACCEPTED_BUT_NOT_EXECUTED_AND_EMITS_MESSAGES7_8_6}
+  - {id: MK268-P-R018, locator: "приложение 7, пункты 6–7", rule: APPLY_EXACT_10_MINUTE_STOP_DESTROY_NO_CONTENT_BLOCK_AND_RESUME_ROUTE}
+  - {id: MK268-P-R019, locator: "приложение 8", rule: KPD1_HEADER_IS_EXACTLY_10_BYTES}
+  - {id: MK268-P-R020, locator: "приложение 8", rule: KPD1_CONTENT_LENGTH_IS_1_TO245_AND_FRAGMENT_COUNTERS_ARE_1_TO65535}
+  - {id: MK268-P-R021, locator: "приложение 8", rule: KPD1_BYTE9_DISTINGUISHES_REGISTER_TYPE_FROM_MESSAGE12_COUNTER}
+  - {id: MK268-P-R022, locator: "приложение 8", rule: KPD1_VERSION_BYTE10_IS_02H}
+  - {id: MK268-P-R023, locator: "приложение 8", rule: MESSAGE12_COUNTER_ROLLS_FROM_FFH_TO00H}
+  - {id: MK268-P-R024, locator: "приложение 9", rule: KPD1_MESSAGE_CODES_ARE_21H_THROUGH2CH_WITH_EXACT_FAMILY_MAPPING}
+  - {id: MK268-P-R025, locator: "приложение 9, сообщение 7", rule: COMMAND_RECEIPT_CONFIRMATION_MAXIMUM_IS_400_MILLISECONDS}
+  - {id: MK268-P-R026, locator: "приложение 9, сообщение 8", rule: PRESERVE_00H_01H_03H_05H_07H_EXECUTION_STATUS_CODES}
+  - {id: MK268-P-R027, locator: "приложение 9, сообщение 9", rule: COMMAND14_TEST_RESPONSE_MAXIMUM_IS_200_MILLISECONDS}
+  - {id: MK268-P-R028, locator: "приложение 9, сообщения 10–12", rule: PRESERVE_TRUNK_VERSION_AND_TELECOMMUNICATION_MESSAGE_FAMILY_BOUNDARIES}
+  - {id: MK268-P-R029, locator: "приложение 10", rule: KPD2_HEADER_IS_EXACTLY_12_BYTES}
+  - {id: MK268-P-R030, locator: "приложение 10", rule: CALL_NUMBER_OCCUPIES_BYTES5_TO6_AND_ROLLS_FFFEH_TO0000H}
+  - {id: MK268-P-R031, locator: "приложение 10", rule: KEEP_OBJECT_TYPE_CONDITIONAL_NUMBER_SELECTION_CONNECTION_AND_PHASE_FIELDS_DISTINCT}
+  - {id: MK268-P-R032, locator: "приложение 11", rule: KPD2_CONNECTION_EVENT_CODES_ARE_41H_THROUGH44H}
+  - {id: MK268-P-R033, locator: "приложение 11", rule: KPD2_KSL_AND_TEST_MESSAGE_CODES_ARE_51H_THROUGH53H}
+  - {id: MK268-P-R034, locator: "межактовая граница", rule: DO_NOT_IMPORT_ORDER645_MOBILE_CODES_45H_OR46H}
+  - {id: MK268-P-R035, locator: "единицы", rule: DO_NOT_TREAT_10_MINUTES_400MS_OR200MS_AS_RETENTION}
+  - {id: MK268-P-R036, locator: "граница", rule: DEEP_PER_COMMAND_AND_PER_MESSAGE_FIELD_AND_BIT_TABLES_REQUIRE_IMMUTABLE_PAGE_REVIEW, strength: FAIL_CLOSED}
+
+evidence_model:
+  - {id: E268-P-01, proves: [MK268-P-R001, MK268-P-R002], artifacts: [EFFECTIVE_DATE, CURRENT_ORIGINAL_EDITION_INDEX, PP1656_ROUTE]}
+  - {id: E268-P-02, proves: [MK268-P-R003, MK268-P-R019, MK268-P-R029], artifacts: [KPD1_KPD2_TOPOLOGY]}
+  - {id: E268-P-03, proves: [MK268-P-R004, MK268-P-R005, MK268-P-R006, MK268-P-R007], artifacts: [COMMAND_HEADER_BYTE_MAP]}
+  - {id: E268-P-04, proves: [MK268-P-R008], artifacts: [BYTE_BIT_NIBBLE_ORIENTATION]}
+  - {id: E268-P-05, proves: [MK268-P-R009, MK268-P-R010], artifacts: [COMMAND_CODE_REGISTRY_01H_TO09H]}
+  - {id: E268-P-06, proves: [MK268-P-R011, MK268-P-R012], artifacts: [COMMAND_CODE_REGISTRY_0AH_TO11H]}
+  - {id: E268-P-07, proves: [MK268-P-R013, MK268-P-R014], artifacts: [SERIAL_AND_PRIORITY_COMMAND_MATRIX]}
+  - {id: E268-P-08, proves: [MK268-P-R015, MK268-P-R016, MK268-P-R017], artifacts: [COMMAND_REJECTION_AND_NON_EXECUTION_MATRIX]}
+  - {id: E268-P-09, proves: [MK268-P-R018], artifacts: [TEN_MINUTE_INACTIVITY_AND_RESUME_TEST]}
+  - {id: E268-P-10, proves: [MK268-P-R020, MK268-P-R021, MK268-P-R022, MK268-P-R023], artifacts: [KPD1_HEADER_AND_FRAGMENTATION_MAP]}
+  - {id: E268-P-11, proves: [MK268-P-R024], artifacts: [KPD1_MESSAGE_CODE_REGISTRY_21H_TO2CH]}
+  - {id: E268-P-12, proves: [MK268-P-R025, MK268-P-R026, MK268-P-R027], artifacts: [KPD1_LATENCY_AND_STATUS_TESTS]}
+  - {id: E268-P-13, proves: [MK268-P-R028], artifacts: [TRUNK_VERSION_AND_TELECOMMUNICATION_MESSAGE_FAMILY_MAP]}
+  - {id: E268-P-14, proves: [MK268-P-R030, MK268-P-R031], artifacts: [KPD2_HEADER_BYTE_MAP]}
+  - {id: E268-P-15, proves: [MK268-P-R032, MK268-P-R033], artifacts: [KPD2_MESSAGE_CODE_REGISTRY]}
+  - {id: E268-P-16, proves: [MK268-P-R034], artifacts: [ORDER268_ORDER645_KPD2_DIFFERENCE_MATRIX]}
+  - {id: E268-P-17, proves: [MK268-P-R035], artifacts: [UNIT_SEMANTICS_TEST]}
+  - {id: E268-P-18, proves: [MK268-P-R036], artifacts: [DEEP_TABLE_PENDING_REGISTER, OFFICIAL_MINJUST_61_PAGE_PDF_ACQUISITION_LOG]}
+
+red_team_guardrails:
+  - DO_NOT_SWAP_KPD1_AND_KPD2_HEADERS_OR_CODES
+  - DO_NOT_SHIFT_PASSWORD_OUTSIDE_COMMAND_BYTES5_TO10
+  - DO_NOT_TREAT_PRIORITY_COMMANDS_AS_ORDINARY_SERIAL_COMMANDS
+  - DO_NOT_EXECUTE_WRONG_PASSWORD_OR_WRONG_TECHNICAL_MEANS_NUMBER_COMMAND
+  - DO_NOT_TREAT_TEN_MINUTES_400MS_OR200MS_AS_RETENTION
+  - DO_NOT_BLOCK_CONTROLLED_CONNECTION_CONTENT_ON_KPD_INACTIVITY_STOP
+  - DO_NOT_EXTEND_KPD1_CONTENT_BEYOND245_BYTES_WITHOUT_FRAGMENTATION
+  - DO_NOT_IMPORT_ORDER645_MOBILE_KPD2_EVENTS_45H_OR46H
+  - DO_NOT_CLAIM_DEEP_FIELD_OR_BIT_TABLES_WITHOUT_IMMUTABLE_PAGE_REVIEW
+
+verification_boundary:
+  current_original_edition: VERIFIED_AS_OF_2026_08_27
+  minjust_official_copy_page_count_and_publication_metadata: VERIFIED
+  minjust_official_pdf_complete_bytes_and_hash: PENDING_DOWNLOAD_RATE_LIMIT
+  command_header_and_17_code_registry: VERIFIED_CURRENT_TEXT
+  command_sequence_and_10_minute_route: VERIFIED_CURRENT_TEXT
+  kpd1_header_fragmentation_version_and_12_code_registry: VERIFIED_CURRENT_TEXT
+  kpd1_message7_message8_message9_controls: VERIFIED_CURRENT_TEXT
+  kpd2_header_and_7_code_registry: VERIFIED_CURRENT_TEXT
+  order268_order645_kpd2_difference: VERIFIED_CURRENT_TEXT
+  deep_per_command_and_per_message_field_bit_tables: PENDING_IMMUTABLE_PAGE_REVIEW
+  independent_expert_review: PENDING
+  critical_gap_created: false
+  high_gap_created: false
