@@ -1,0 +1,143 @@
+schema_version: "1.0"
+stream: 3
+checked_at: "2026-08-27T17:20:00+03:00"
+mode: APPEND_ONLY_RECONCILIATION
+previous_delta: "master-inventory-delta-2026-08-27T1120.yaml"
+focus: "healthcare / electronic medical documentation / transition 947n -> 209n"
+
+counters_before:
+  found: 48
+  downloaded: 9
+  immutable: 9
+  pending: 37
+  reused: 2
+  primary_publication_verified: 20
+  sectors_registered: 28
+
+counters_after:
+  found: 50
+  downloaded: 9
+  immutable: 9
+  pending: 39
+  reused: 2
+  primary_publication_verified: 21
+  sectors_registered: 28
+
+changes:
+  new_sources: 2
+  new_immutable_artifacts: 0
+  new_durable_downloads: 0
+  new_pending_exact_capture: 2
+  new_sector_regimes: 0
+  applicability_promotions: 0
+  legal_conflicts_confirmed: 0
+  primary_publication_verified_increment: 1
+
+new_sources:
+  - source_id: SEC-SRC-RU-MINZDRAV-ORDER-947N-2020
+    sector: healthcare_information_systems
+    regime: electronic_medical_documentation
+    title: "Приказ Минздрава России от 07.09.2020 № 947н об электронных медицинских документах"
+    status: CURRENT_PRIMARY_PUBLICATION_METADATA_VERIFIED_EXACT_BINARY_PENDING
+    current_as_of: "2026-08-27"
+    effective_from: "2021-02-01"
+    current_until_exclusive: "2026-09-01"
+    official_publication_id: "0001202101120007"
+    minjust_registration_number: "62054"
+  - source_id: SEC-SRC-RU-MINZDRAV-ORDER-209N-2026
+    sector: healthcare_information_systems
+    regime: electronic_medical_documentation
+    title: "Приказ Минздрава России от 25.03.2026 № 209н — будущий новый порядок электронных медицинских документов"
+    status: FUTURE_NOT_CURRENT_AS_OF_2026_08_27_EXACT_BINARY_PENDING
+    effective_from: "2026-09-01"
+    valid_until: "2032-09-01"
+    official_publication_id_crosscheck: "0001202604230013"
+    minjust_registration_number: "86160"
+    primary_publication_counter_increment: 0
+
+protected_information_anchors:
+  - source_id: SEC-SRC-RU-MINZDRAV-ORDER-947N-2020
+    locator: procedure_point_9
+    concept: qualified_electronic_signature_for_medical_document
+  - source_id: SEC-SRC-RU-MINZDRAV-ORDER-947N-2020
+    locator: procedure_point_20
+    concept: electronic_medical_document_retention_bound_to_corresponding_paper_document
+  - source_id: SEC-SRC-RU-MINZDRAV-ORDER-947N-2020
+    locator: procedure_point_21
+    concept: retain_all_document_versions_and_signatures
+  - source_id: SEC-SRC-RU-MINZDRAV-ORDER-209N-2026
+    locator: procedure_point_1
+    concept: expanded_actor_scope_including_is_operators_oms_and_patients
+  - source_id: SEC-SRC-RU-MINZDRAV-ORDER-209N-2026
+    locator: procedure_point_3
+    concept: formation_signature_storage_egisz_registration_and_access_lifecycle
+  - source_id: SEC-SRC-RU-MINZDRAV-ORDER-209N-2026
+    locator: procedure_point_4
+    concept: local_governance_information_systems_access_signature_and_oms_provision
+  - source_id: SEC-SRC-RU-MINZDRAV-ORDER-209N-2026
+    locator: procedure_point_29
+    concept: person_level_fields_in_electronic_medical_document_image
+
+relationships:
+  - from: SEC-SRC-RU-MINZDRAV-ORDER-947N-2020
+    to: SEC-SRC-RU-MINZDRAV-ORDER-209N-2026
+    relation: REPLACED_BY_FROM_2026_09_01
+    status: VERSION_TRANSITION_VERIFIED_TEXT_CROSSCHECK_EXACT_BINARY_PENDING
+  - from: SEC-SRC-RU-MINZDRAV-ORDER-947N-2020
+    to: RU-152-FZ
+    relation: ELECTRONIC_MEDICAL_RECORD_PDN_OVERLAP
+    status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  - from: SEC-SRC-RU-MINZDRAV-ORDER-947N-2020
+    to: SEC-SRC-RU-FZ-323:article_13
+    relation: ELECTRONIC_MEDICAL_DOCUMENT_POSSIBLE_MEDICAL_SECRECY_DUAL_REGIME
+    status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  - from: SEC-SRC-RU-MINZDRAV-ORDER-209N-2026
+    to: SEC-SRC-RU-PP-140-2022
+    relation: FUTURE_DIRECT_EGISZ_REGISTRATION_CONTEXT
+    status: FUTURE_CANDIDATE_RELATION_NOT_CURRENT
+  - from: SEC-SRC-RU-MINZDRAV-ORDER-209N-2026
+    to: SEC-SRC-RU-FZ-326
+    relation: FUTURE_OMS_DOCUMENT_ACCESS_AND_CONTROL_CONTEXT
+    status: FUTURE_CANDIDATE_RELATION_NOT_CURRENT
+
+version_events:
+  - act: "07.09.2020 № 947н"
+    publication_id: "0001202101120007"
+    publication_date: "2021-01-12"
+    effective_from: "2021-02-01"
+    current_status: CURRENT_AS_OF_2026_08_27
+    evidence_status: PRIMARY_PUBLICATION_METADATA_VERIFIED_EXACT_BINARY_PENDING
+  - act: "25.03.2026 № 209н"
+    publication_id_crosscheck: "0001202604230013"
+    publication_date_crosscheck: "2026-04-23"
+    minjust_registration_number: "86160"
+    effective_from: "2026-09-01"
+    valid_until: "2032-09-01"
+    effect: "repeals 947n and establishes successor procedure"
+    current_status: FUTURE_NOT_CURRENT_AS_OF_2026_08_27
+    evidence_status: PUBLICATION_LOCATOR_AND_TEXT_CROSSCHECK_EXACT_PRIMARY_CAPTURE_PENDING
+
+acquisition:
+  exact_capture_attempted: true
+  exact_capture_succeeded: false
+  attempts:
+    - target: "947n official publication PDF 0001202101120007"
+      result: TRANSIENT_DNS_NAME_RESOLUTION_FAILURE
+    - target: "947n official supervisory departmental DOCX copy on rg.gov.ru"
+      result: TRANSIENT_DNS_NAME_RESOLUTION_FAILURE
+    - target: "209n official publication PDF 0001202604230013"
+      result: TRANSIENT_DNS_NAME_RESOLUTION_FAILURE
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+  displayed_sizes_used_as_exact_bytes: false
+
+proof_floor:
+  taxonomy_used_as_evidence: false
+  primary_normative_act_required: true
+  overlap_is_applicability: false
+  future_replacement_promoted_to_current: false
+  sector_retention_generalized_to_all_pdn: false
+  executable_rules_created: 0
