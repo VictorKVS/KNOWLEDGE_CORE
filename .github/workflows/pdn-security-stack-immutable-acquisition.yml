@@ -24,13 +24,19 @@ permissions:
   contents: write
 
 concurrency:
-  group: pdn-security-stack-immutable-acquisition
+  # Do not let a quick source-card push cancel a long scheduled maintenance run.
+  # Same-event duplicates still supersede one another safely.
+  group: pdn-security-stack-immutable-acquisition-${{ github.event_name }}
   cancel-in-progress: true
 
 jobs:
   acquire:
     runs-on: ubuntu-latest
-    timeout-minutes: 22
+    # A scheduled run performs the guarded curl sweep first and then the reuse-first
+    # acquisition/reconciliation pass. The former alone can consume ~14 minutes on
+    # issuer timeouts, so the old 22-minute job budget could kill the run before the
+    # capture gate, telemetry reconciliation and master-inventory commit.
+    timeout-minutes: 55
     steps:
       - name: Checkout
         uses: actions/checkout@v4
