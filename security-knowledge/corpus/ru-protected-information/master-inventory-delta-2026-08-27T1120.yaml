@@ -1,0 +1,143 @@
+schema_version: "1.0"
+stream: 3
+checked_at: "2026-08-27T11:20:08+03:00"
+mode: APPEND_ONLY_RECONCILIATION
+previous_delta: "master-inventory-delta-2026-08-27T0821.yaml"
+
+counters_before:
+  found: 47
+  downloaded: 9
+  immutable: 9
+  pending: 36
+  reused: 2
+  primary_publication_verified: 20
+  sectors_registered: 28
+
+counters_after:
+  found: 48
+  downloaded: 9
+  immutable: 9
+  pending: 37
+  reused: 2
+  primary_publication_verified: 20
+  sectors_registered: 28
+
+changes:
+  new_sources: 1
+  new_immutable_artifacts: 0
+  new_durable_downloads: 0
+  new_pending_exact_capture: 1
+  new_sector_regimes: 0
+  applicability_promotions: 0
+  legal_conflicts_confirmed: 0
+
+new_sources:
+  - source_id: SEC-SRC-RU-PP-140-2022
+    sector: healthcare_information_systems
+    regime: egisz_health_data_and_information_security
+    title: "Постановление Правительства Российской Федерации от 09.02.2022 № 140 «О единой государственной информационной системе в сфере здравоохранения»"
+    status: SOURCE_PENDING_PRIMARY_EXACT_CAPTURE
+    current_official_consolidation_url: "https://government.ru/docs/all/139211/"
+    current_official_pdf_url: "https://static.government.ru/media/files/vDARAPaBhOENFuH2snVFrAmp0ANK2tYx.pdf"
+    original_publication_id_crosscheck: "0001202202110036"
+    current_text_verified: true
+    current_revision_crosscheck: "26.12.2025"
+    current_effective_from: "2026-03-01"
+    valid_until: "2028-03-01"
+    primary_publication_counter_increment: 0
+    note: "Official Government current text and official Pravo new-arrivals entry are verified; direct exact primary publication capture failed, so primary_publication_verified is intentionally not inflated."
+
+protected_information_anchors:
+  - source_id: SEC-SRC-RU-PP-140-2022
+    locator: regulation_point_30
+    concept: egisz_information_security_subsystem_and_cia
+  - source_id: SEC-SRC-RU-PP-140-2022
+    locator: regulation_point_63
+    concept: direct_personal_data_and_information_security_reference
+  - source_id: SEC-SRC-RU-PP-140-2022
+    locator: regulation_point_64
+    concept: operator_organizational_and_technical_security_measures
+  - source_id: SEC-SRC-RU-PP-140-2022
+    locator: regulation_point_65
+    concept: certified_controls_attestation_transmission_security_and_continuous_protection
+  - source_id: SEC-SRC-RU-PP-140-2022
+    locator: appendix_1_section_I_point_1
+    concept: medical_worker_person_level_dataset
+  - source_id: SEC-SRC-RU-PP-140-2022
+    locator: appendix_1_federal_electronic_medical_documents_registry
+    concept: patient_medical_document_data_flow
+  - source_id: SEC-SRC-RU-PP-140-2022
+    locator: regulation_point_56
+    concept: intersystem_exchange_graph_including_population_register
+
+relationships:
+  - from: SEC-SRC-RU-PP-140-2022:regulation_point_63
+    to: RU-152-FZ
+    relation: DIRECT_STATUTORY_PDN_SECURITY_CONTEXT_IN_EGISZ
+    status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    guard: "EGISZ_SYSTEM_SCOPE != AUTOMATIC_152_FZ_APPLICABILITY_TO_EVERY_HEALTHCARE_PROCESS"
+  - from: SEC-SRC-RU-PP-140-2022
+    to: SEC-SRC-RU-FZ-323:articles_91_91_1
+    relation: DIRECT_HEALTH_INFORMATION_SYSTEM_STATUTORY_BASIS
+    status: VERIFIED_RELATION_APPLICABILITY_NOT_PROMOTED
+    guard: "PP 140 implements the EGISZ framework authorized by 323-FZ; this does not collapse all 323-FZ medical-secrecy rules into PP 140."
+  - from: SEC-SRC-RU-PP-140-2022:regulation_point_56
+    to: SEC-SRC-RU-FZ-168-2020
+    relation: INTERSYSTEM_EXCHANGE_WITH_FEDERAL_POPULATION_REGISTER_AFTER_2164_2025
+    status: CANDIDATE_RELATION_CURRENT_TEXT_VERIFIED
+    guard: "Exchange capability does not prove that every EGISZ record is transferred or that every 168-FZ requirement applies to each EGISZ participant."
+  - from: SEC-SRC-RU-PP-140-2022
+    to: SEC-SRC-RU-FZ-326
+    relation: INTERSYSTEM_EXCHANGE_WITH_OMS_INFORMATION_SYSTEM
+    status: CANDIDATE_RELATION_CURRENT_TEXT_VERIFIED
+
+version_events:
+  - amendment: "31.05.2025 № 822"
+    target: SEC-SRC-RU-PP-140-2022:specialized_patient_registries
+    official_publication_id: "0001202506020010"
+    publication_date: "2025-06-02"
+    effective_from: "2026-03-01"
+    evidence_status: PRIMARY_PUBLICATION_METADATA_VERIFIED_EXACT_BINARY_PENDING
+  - amendment: "26.12.2025 № 2164"
+    target: SEC-SRC-RU-PP-140-2022:point_56_and_appendices
+    official_publication_id_crosscheck: "0001202512270032"
+    publication_date: "2025-12-27"
+    effective_from: "2026-01-04"
+    effect: "Adds interaction with the unified federal population register and changes selected EGISZ user/data composition."
+    evidence_status: OFFICIAL_GOVERNMENT_CURRENT_TEXT_EFFECT_VERIFIED_EXACT_BINARY_PENDING
+  - amendment: "02.03.2026 № 211"
+    target: SEC-SRC-RU-PP-140-2022:points_18_56_and_appendices
+    official_publication_id_crosscheck: "0001202603020026"
+    publication_date: "2026-03-02"
+    effective_from: "2026-09-01"
+    current_status: FUTURE_NOT_CURRENT_AS_OF_2026_08_27
+    effect: "Adds/changes EGISZ medical-examination information flows concerning private guards/detectives and Rosgvardiya."
+
+acquisition:
+  exact_capture_attempted: true
+  exact_capture_succeeded: false
+  attempts:
+    - target: "static.government.ru current consolidated PP 140 PDF"
+      result: TRANSIENT_DNS_NAME_RESOLUTION_FAILURE
+    - target: "publication.pravo.gov.ru original publication 0001202202110036"
+      result: TRANSIENT_DNS_NAME_RESOLUTION_FAILURE
+    - target: "publication.pravo.gov.ru amendment 0001202512270032"
+      result: TRANSIENT_DNS_NAME_RESOLUTION_FAILURE
+    - target: "publication.pravo.gov.ru future amendment 0001202603020026"
+      result: TRANSIENT_DNS_NAME_RESOLUTION_FAILURE
+    - target: "Roszdravnadzor departmental current-copy PDF"
+      result: TRANSIENT_DOWNLOAD_FAILURE
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+  displayed_pdf_sizes_used_as_exact_bytes: false
+
+proof_floor:
+  taxonomy_used_as_evidence: false
+  primary_current_normative_text_used_as_evidence: true
+  overlap_is_applicability: false
+  future_amendment_promoted_to_current: false
+  security_controls_imply_kii_applicability: false
+  executable_rule_created: false
