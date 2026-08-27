@@ -1,0 +1,87 @@
+schema_version: 1
+delta_id: RU_PD_MASTER_SOURCE_INVENTORY_STREAM2_DELTA_2026_08_27T0818_0300
+applies_to: master-source-inventory.yaml
+created_at: "2026-08-27T08:18:24+03:00"
+stream_id: RU_PD_STREAM_2_TECHNICAL_CRYPTO
+merge_policy: >-
+  CONCURRENCY_SAFE_OVERLAY. Merge by source_id and stream_progress keys. Do not replace unrelated
+  stream-1/stream-3 fields. Exact-byte evidence controls SOURCE_ACQUIRED/IMMUTABLE. A verified legal
+  identity and exact official route may be registered while the artifact remains SOURCE_PENDING.
+
+source_patches:
+  RU_FSB_ORDER_117_2025:
+    domain: PUBLIC_SECTOR_INFORMATION_SYSTEM_CRYPTO_PROTECTION
+    priority: P1
+    local_record: "technical-security-delta-2026-08-27T0818+0300.yaml"
+    registration_status: PRIMARY_PUBLICATION_AND_CURRENT_STATUS_VERIFIED_2026_08_27
+    official_publication_number: "0001202503260008"
+    justice_registration_number: "81647"
+    effective_from: 2025-04-06
+    current_status: CURRENT_EFFECTIVE_WITH_REPLACEMENT_PROJECT_PENDING
+    immutable_status: SOURCE_PENDING
+    analysis_status: REGISTERED_VERSION_CHAIN_VERIFIED
+    applicability_gate: PUBLIC_SECTOR_SYSTEM_SCOPE_AND_SKZI_APPLICABILITY
+    version_chain_status: >-
+      Order 117/2025 effective 2025-04-06 -> repealed FSB Order 524/2022 on the same date;
+      FSB replacement project prepared 2026-08-04 remains draft/watch-only as of 2026-08-27.
+    official_source_url: "https://publication.pravo.gov.ru/document/0001202503260008"
+    auxiliary_exact_pdf_url: "https://minjust.consultant.ru/files/54916"
+    exact_file_locator_resolved: true
+    exact_bytes_obtained: false
+    applicability_warning: >-
+      Adjacent public-system crypto overlay only. Do not import into ordinary private ISPDn;
+      use FSB Order 378 for the direct PDn/SKZI branch when SKZI is used.
+
+  RU_FSTEC_ORDER_21_2013:
+    registration_status: STATUS_VERIFIED_CURRENT_BASELINE_AS_OF_2026_08_27
+    version_chain_status: "2013 base -> Order 49/2017 -> Order 68/2020; project 169583 remains watch-only"
+    immutable_status: SOURCE_PENDING
+    replacement_project_status: DRAFT_NOT_PROMOTED_TO_LAW
+
+  RU_FSB_ORDER_378_2014:
+    registration_status: STATUS_VERIFIED_DIRECT_PDN_SKZI_BASELINE_AS_OF_2026_08_27
+    applicability_gate: SKZI_USED_IN_ISPDN
+    immutable_status: SOURCE_PENDING
+    adjacency_note: "FSB Order 117/2025 does not replace this PDn-specific branch."
+
+stream_progress_patch:
+  stream_2_technical_crypto:
+    status: ACTIVE
+    source_pack_delta: "technical-security-delta-2026-08-27T0818+0300.yaml"
+    new_source_records_this_run: 1
+    metadata_verified_sources_added_this_run: 1
+    version_chain_gaps_closed_this_run: 1
+    exact_official_routes_resolved_this_run: 2
+    exact_artifact_endpoint_attempts_this_run: 1
+    exact_artifact_successes_this_run: 0
+    immutable_artifacts_added_this_run: 0
+    bytes_downloaded_this_run: 0
+    hashes_recorded_this_run: 0
+    new_executable_universal_pdn_duties: 0
+    confirmed_legal_contradictions_this_run: 0
+    counter_reconciliation_required: true
+    counter_delta_expected:
+      identified: 1
+      metadata_verified: 1
+      immutable_sha256_verified: 0
+      pending_raw_capture: 1
+      exact_official_route_unresolved: 0
+    counter_note: >-
+      Do not hand-replace the authoritative aggregate with stale base-inventory numbers.
+      Apply this delta to the latest reconciled Stream-2 aggregate; the exact official route is known,
+      while exact bytes remain pending.
+    run_record: "runs/stream-2/2026-08-27T0818+0300.yaml"
+
+next_priority_patch:
+  - RU_GOV_PP_1119_2012_exact_current_A0_A1_artifact
+  - RU_FSB_ORDER_378_2014_exact_official_artifact
+  - RU_FSB_ORDER_66_2005_exact_artifact_and_Order_173_delta
+  - RU_FAPSI_ORDER_152_2001_exact_artifact
+  - RU_FSB_ORDER_117_2025_exact_primary_bytes_and_replacement_project_watch
+  - RU_FSTEC_ORDER_21_2013_project_169583_primary_enactment_watch
+
+quality_note: >-
+  A previously missing current FSB cryptographic public-system node was registered with a verified
+  repeal edge from FSB Order 524/2022 and a separate 2026 draft-replacement watch. No artifact was
+  promoted without exact bytes and no neighboring public-system requirement was imported into
+  ordinary PDn logic.
