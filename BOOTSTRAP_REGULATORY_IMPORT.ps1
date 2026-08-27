@@ -21,12 +21,47 @@ function Require-Command([string]$Name) {
     }
 }
 
+function Is-DirectoryEmpty([string]$Path) {
+    if (-not (Test-Path -LiteralPath $Path)) { return $true }
+    $one = Get-ChildItem -LiteralPath $Path -Force -ErrorAction SilentlyContinue | Select-Object -First 1
+    return ($null -eq $one)
+}
+
+function Resolve-SafeRepoRoot([string]$RequestedRoot) {
+    if (Test-Path -LiteralPath (Join-Path $RequestedRoot ".git")) {
+        return $RequestedRoot
+    }
+
+    if (-not (Test-Path -LiteralPath $RequestedRoot) -or (Is-DirectoryEmpty $RequestedRoot)) {
+        return $RequestedRoot
+    }
+
+    $fallback = $RequestedRoot + "_GIT"
+    Write-Host "Requested repository folder already exists and is not a Git clone:" -ForegroundColor Yellow
+    Write-Host "  $RequestedRoot" -ForegroundColor Yellow
+    Write-Host "It will NOT be deleted, reset, moved, or overwritten." -ForegroundColor Yellow
+    Write-Host "Using separate Git clone folder instead:" -ForegroundColor Yellow
+    Write-Host "  $fallback" -ForegroundColor Yellow
+
+    if (Test-Path -LiteralPath (Join-Path $fallback ".git")) {
+        return $fallback
+    }
+
+    if (-not (Test-Path -LiteralPath $fallback) -or (Is-DirectoryEmpty $fallback)) {
+        return $fallback
+    }
+
+    throw "Fallback folder also exists and is not an empty Git clone: $fallback"
+}
+
 Step "1. Preflight"
 Require-Command "git"
 
 if (-not (Test-Path -LiteralPath $InventoryCsv)) {
     throw "Inventory CSV not found: $InventoryCsv"
 }
+
+$RepoRoot = Resolve-SafeRepoRoot $RepoRoot
 
 Write-Host "Inventory: $InventoryCsv"
 Write-Host "Repository: $RepoRoot"
@@ -42,9 +77,7 @@ if (-not (Test-Path -LiteralPath (Join-Path $RepoRoot ".git"))) {
     }
 
     & git clone --branch $Branch --single-branch "https://github.com/VictorKVS/KNOWLEDGE_CORE.git" $RepoRoot
-    if ($LASTEXITCODE -ne 0) {
-        throw "git clone failed"
-    }
+    if ($LASTEXITCODE -ne 0) { throw "git clone failed" }
 }
 else {
     Push-Location $RepoRoot
@@ -114,11 +147,9 @@ if (Test-Path -LiteralPath $manifestPath) {
 Write-Host ""
 Write-Host "Local consolidated folder:" -ForegroundColor Green
 Write-Host (Join-Path $RepoRoot "_LOCAL_SOURCE_PACK\RU_REGULATORY_ALL")
-
 Write-Host ""
 Write-Host "GitHub knowledge import folder:" -ForegroundColor Green
 Write-Host (Join-Path $RepoRoot "security-knowledge\corpus\ru-local-regulatory-import")
-
 Write-Host ""
 Write-Host "Safety: source files deleted = 0; source files moved = 0."
 Write-Host "Full GOST binaries remain local; public GitHub gets GOST metadata/SHA/provenance."
