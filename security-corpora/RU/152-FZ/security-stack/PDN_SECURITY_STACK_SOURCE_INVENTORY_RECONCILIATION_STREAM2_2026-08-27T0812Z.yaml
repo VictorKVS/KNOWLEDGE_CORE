@@ -1,0 +1,84 @@
+schema_version: "1.0"
+id: SEC-PDN-SECURITY-STACK-INVENTORY-RECONCILIATION-2026-08-27T0812Z
+applies_to: PDN_SECURITY_STACK_SOURCE_INVENTORY.yaml
+stream: RU_PDN_TECHNICAL_CRYPTO
+created_at: "2026-08-27T08:12:25Z"
+merge_policy: >-
+  CONCURRENCY_SAFE_RECONCILIATION_OVERLAY. Preserve all source rows, version edges and applicability guards from the
+  base inventory and previously merged Stream-2 overlays. This patch corrects proof accounting only: FSB Order No.117/2025
+  already has an exact official publication PDF, immutable raw artifact and manifest in main, while the aggregate counters
+  still count only 17 immutable artifacts and 24 pending captures.
+
+reconciled_source:
+  id: SEC-SRC-RU-FSB117-2025
+  source_record: "source/SEC-SRC-RU-FSB117-2025.yaml"
+  manifest: "manifests/SEC-SRC-RU-FSB117-2025.json"
+  raw_artifact: "raw/SEC-SRC-RU-FSB117-2025/0001202503260008-0a740d4daa781466.pdf"
+  official_publication_id: "0001202503260008"
+  source_url: "http://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202503260008"
+  retrieved_at: "2026-08-22T08:40:22.655723Z"
+  mime: "application/pdf"
+  byte_length: 505389
+  sha256: "0a740d4daa78146661c6fc0ca803da29b72fdc2b8dec4d5be750a0c15c3ca3f6"
+  fingerprint_status: IMMUTABLE_CAPTURED
+  semantic_status: UNCHANGED
+  effective_from: "2025-04-06"
+  applicability: STATE_AND_ENUMERATED_PUBLIC_SYSTEMS_WHEN_SKZI_USED
+  accounting_action: >-
+    Move one already-registered source from pending_raw_capture to immutable_sha256_verified. This is reconciliation of
+    pre-existing exact official bytes, not a claim that a new file was downloaded during this run.
+
+freshness_checks:
+  - id: SEC-SRC-RU-FSB117-2025
+    checked_at: "2026-08-27"
+    result: CURRENT_BASELINE_RECONFIRMED_REPLACEMENT_DRAFT_ONLY
+    finding: >-
+      Order No.117/2025 remains the adopted baseline in this branch. A replacement text prepared by FSB on 04.08.2026 is
+      still identified as a project and explicitly proposes repealing No.117; no final adopted replacement is promoted here.
+  - id: SEC-SRC-RU-FSTEC21-2013
+    checked_at: "2026-08-27"
+    result: CURRENT_BASELINE_RECONFIRMED_REPLACEMENT_DRAFT_ONLY
+    finding: >-
+      The 24.07.2026 replacement text is still identified in fresh legal indexes as a draft/project. The proposed 01.09.2026
+      effective date is not treated as an enacted legal fact until a final signed, registered and officially published order is proven.
+  - id: SEC-SRC-RU-PP1119-2012
+    checked_at: "2026-08-27"
+    result: PRIMARY_BYTE_TARGET_UNCHANGED
+    finding: >-
+      PP1119 remains a priority immutable target. No new exact issuer bytes are asserted by this reconciliation overlay.
+
+counter_patch:
+  identified: 41
+  metadata_verified: 41
+  raw_downloaded_exact: 18
+  immutable_sha256_verified: 18
+  pending_raw_capture: 23
+  exact_official_route_unresolved: 6
+  confirmed_conflicts: 0
+
+counter_delta_vs_current_base_inventory:
+  identified: 0
+  metadata_verified: 0
+  raw_downloaded_exact: 1
+  immutable_sha256_verified: 1
+  pending_raw_capture: -1
+  exact_official_route_unresolved: 0
+  confirmed_conflicts: 0
+  note: "Accounting correction for pre-existing FSB117 immutable artifact; not a new network download in this run."
+
+proof_guards:
+  - exact official bytes plus SHA-256 remain the immutable gate
+  - semantic extraction/readiness is not promoted by byte capture alone
+  - FSB117 applies only to its state/enumerated public-system scope and only where SKZI is used
+  - the 04.08.2026 FSB replacement text remains DRAFT_WATCH_ONLY until final primary enactment evidence exists
+  - FSTEC21 replacement project remains watch-only until final primary enactment evidence exists
+  - PP1119 remains pending immutable capture until exact issuer bytes are captured
+  - no licensing, certification, KII, NKCKI or GosSOPKA duty is transferred into ordinary private ISPDN without an explicit applicability edge
+
+latest_run_patch:
+  run_record: "runs/STREAM2_RUN_2026-08-27T0812Z.yaml"
+  new_sources: 0
+  new_immutable_captured_this_run: 0
+  existing_immutable_reconciled: 1
+  semantic_promotions: 0
+  new_universal_pdn_duties_created: 0
