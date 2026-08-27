@@ -1,0 +1,113 @@
+schema_version: "1.0"
+id: STREAM2_RUN_2026-08-27T0209Z
+kind: pdn-security-stack-run
+observed_at: "2026-08-27T02:09:45Z"
+status: PARTIAL_TRANSPORT_BLOCKED
+
+scope:
+  - PP1119
+  - FSTEC21
+  - FSTEC_THREAT_METHOD_2021
+  - FSTEC_METHODICAL_AND_LICENSING_CONTEXT
+  - FSB378_AND_SKZI_CHAIN
+  - PDN_INCIDENT_GOSSOPKA_ONLY_WHEN_EXPLICITLY_APPLICABLE
+
+authoritative_counts:
+  identified: 41
+  metadata_verified: 41
+  immutable_sha256_verified: 17
+  pending_raw_capture: 24
+  exact_official_route_unresolved: 6
+  latest_acquisition_finished_at: "2026-08-26T23:27:21.667199Z"
+  reused_immutable_in_latest_acquisition: 17
+  network_targets_attempted_in_latest_acquisition: 18
+  new_immutable_captured_in_latest_acquisition: 0
+
+status_review:
+  PP1119:
+    source_id: SEC-SRC-RU-PP1119-2012
+    verdict: CURRENT_UNAMENDED_STATUS_CROSS_VERIFIED
+    checked_at: "2026-08-27"
+    active_revision_date: "2012-11-01"
+    binary_status: PENDING
+    immutable_target: GOVERNMENT_LEGACY_DOC_OLE_CFB_REQUIRED
+    note: >-
+      Current review did not find a separate amending revision. The registered Government primary DOC remains
+      the immutable target. A government-hosted commercial legal-database copy remains reference-only.
+  FSTEC21:
+    source_id: SEC-SRC-RU-FSTEC21-2013
+    verdict: CURRENT_REVISION_ACTIVE_REPLACEMENT_PROJECT_WATCH_ONLY
+    checked_at: "2026-08-27"
+    active_revision_date: "2020-05-14"
+    immutable_status: IMMUTABLE_CAPTURED
+    replacement_project_id: "169583"
+    replacement_verdict: DRAFT_NOT_ENACTED_IN_VERIFIED_EVIDENCE
+    note: >-
+      Fresh indexed evidence still describes 169583 as a project. No primary evidence of a final issued,
+      Minjust-registered where required, and officially published replacement was found in this bounded review.
+  FSTEC_THREAT_METHOD_2021:
+    source_id: SEC-SRC-RU-FSTEC-THREAT-METHOD-2021
+    verdict: REUSE_EXISTING_IMMUTABLE
+    immutable_status: IMMUTABLE_CAPTURED
+    byte_length: 2744210
+    sha256: "dfb473137de462f8c10fbbdccbea62bd136925e803e1c58aa6d4e790325c49b1"
+    note: "No duplicate download was required; existing immutable evidence is reused."
+  FSB378:
+    source_id: SEC-SRC-RU-FSB378-2014
+    verdict: CURRENT_UNAMENDED_STATUS_CROSS_VERIFIED
+    checked_at: "2026-08-27"
+    active_revision_date: "2014-07-10"
+    applicability: ISPDN_WHEN_SKZI_USED
+    binary_status: PENDING
+    note: >-
+      Current material continues to reference Order 378 for PDN protection with SKZI. No applicability expansion
+      is made to ISPDn where SKZI use is not established.
+
+transport_blockers:
+  PP1119:
+    primary_route: "https://government.ru/media/2012/11/3/53354/file/1119_pril.doc"
+    latest_result: "HTTPS timeout; legacy HTTP fallback returned 404 in latest completed acquisition"
+  FSB378:
+    primary_route: "https://rg.ru/documents/2014/09/17/zashita-dok.html"
+    latest_result: "HTTP 401 on official publication archive route"
+  pravo_gov_ru:
+    latest_result: "timeouts on FSB66, FSB173, FAPSI152 and related registered primary routes"
+  fstec_ru:
+    latest_result: "timeouts on registered exact PDFs and landing-page attachment resolution"
+
+unresolved_exact_route_source_ids:
+  - SEC-SRC-RU-FSTEC-INFO-240-13-5331-2026
+  - SEC-SRC-RU-FSTEC-INFO-240-13-5521-2026
+  - SEC-SRC-RU-FSTEC-INFO-240-24-3693-2026
+  - SEC-SRC-RU-FSTEC-INFO-240-24-4974-2026
+  - SEC-SRC-RU-FSTEC-TZI-EQUIPMENT-LIST-2026
+  - SEC-SRC-RU-FSTEC-TZI-LIST-2024
+
+applicability_guard:
+  neighboring_regimes_require_explicit_edge: true
+  crypto_requires_established_skzi_use: true
+  licensing_and_certification_not_universal_pdn_duties: true
+  gossopka_scope: PDN_COMPUTER_INCIDENT_SCOPE_ONLY
+  project_requirements_not_active_law: true
+
+evidence:
+  acquisition_run: "../PDN_SECURITY_STACK_ACQUISITION_RUN.json"
+  master_inventory: "../../PDN_MASTER_SOURCE_INVENTORY.yaml"
+  stream_inventory: "../PDN_SECURITY_STACK_SOURCE_INVENTORY.yaml"
+  fstec21_watch: "../watch/PDN-WATCH-FSTEC21-REPLACEMENT-2026-001.yaml"
+  current_project_text_index: "https://www.garant.ru/products/ipo/prime/doc/56961246/"
+  current_project_status_monitor: "https://infocenter.cntd.ru/news/read/fstek-zanovo-opredeliaet-sostav-i-soderzanie-mer-po-obespeceniiu-bezopasnosti-pd-proekt-prikaza/novosti-cifrovizacii"
+  current_fsb378_usage_context: "https://base.garant.ru/414753631/"
+
+next_priority:
+  - PP1119_EXACT_GOVERNMENT_DOC
+  - FSB378_PRIMARY_BYTES
+  - FSB66_FSB173_FAPSI152_PRIMARY_BYTES
+  - FSTEC_REGISTERED_EXACT_PDFS
+  - FSTEC_UNRESOLVED_ATTACHMENT_ROUTES
+  - FSTEC21_PRIMARY_ENACTMENT_WATCH
+
+proof_rule: >-
+  Do not fabricate MIME, byte length, SHA-256, effective dates, or applicability. Promote to immutable only after
+  exact official bytes are captured and fingerprinted. Do not transfer neighboring-regime requirements into PDN
+  without an explicit applicability edge.
