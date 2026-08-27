@@ -1,0 +1,138 @@
+schema_version: "1.0"
+stream: 3
+run_id: "stream-3-run-2026-08-27T1120"
+started_at: "2026-08-27T11:20:08+03:00"
+focus: "healthcare / EGISZ / patient and medical-worker datasets / information security"
+
+result:
+  new_source_nodes: 1
+  new_sector_regimes: 0
+  existing_sources_enriched: 0
+  durable_downloads: 0
+  immutable_artifacts: 0
+  pending_exact_capture: 1
+  applicability_promotions: 0
+  legal_conflicts_confirmed: 0
+
+new_source:
+  source_id: SEC-SRC-RU-PP-140-2022
+  title: "Постановление Правительства Российской Федерации от 09.02.2022 № 140 «О единой государственной информационной системе в сфере здравоохранения»"
+  sector: healthcare_information_systems
+  regime: egisz_health_data_and_information_security
+  current_official_consolidation: "https://government.ru/docs/all/139211/"
+  current_official_pdf: "https://static.government.ru/media/files/vDARAPaBhOENFuH2snVFrAmp0ANK2tYx.pdf"
+  original_publication_id_crosscheck: "0001202202110036"
+  current_revision_crosscheck: "26.12.2025"
+  current_effective_from: "2026-03-01"
+  valid_until: "2028-03-01"
+  dedupe_check: "Repository code search returned no dedicated PP-140-2022/EGISZ source node before creation."
+
+primary_evidence:
+  - kind: official_current_government_consolidation
+    authority: "Правительство Российской Федерации"
+    url: "https://government.ru/docs/all/139211/"
+    verified:
+      - "act title/date/number"
+      - "current amendment list through 26.12.2025 № 2164"
+      - "validity period through 01.03.2028"
+      - "current P140/EGISZ legal text available from Government"
+  - kind: official_pravo_new_arrivals_entry
+    authority: "Официальный интернет-портал правовой информации"
+    verified:
+      - "PP RF 09.02.2022 № 140 was officially received/published as EGISZ regulation"
+  - kind: original_electronic_publication_locator_crosscheck
+    act: "09.02.2022 № 140"
+    publication_id_crosscheck: "0001202202110036"
+    publication_date: "2022-02-11"
+    status: EXACT_PRIMARY_ENDPOINT_UNAVAILABLE_IN_RUNTIME
+  - kind: official_publication_metadata
+    act: "31.05.2025 № 822"
+    publication_id: "0001202506020010"
+    publication_date: "2025-06-02"
+    effect: "specialized patient registries / EGISZ data composition changes effective 01.03.2026"
+  - kind: official_government_current_text_plus_publication_locator_crosscheck
+    act: "26.12.2025 № 2164"
+    publication_id_crosscheck: "0001202512270032"
+    publication_date: "2025-12-27"
+    effective_from: "2026-01-04"
+    effect: "point 56 and appendices; adds interaction with federal population register and changes selected users/data"
+  - kind: future_amendment_crosscheck
+    act: "02.03.2026 № 211"
+    publication_id_crosscheck: "0001202603020026"
+    publication_date: "2026-03-02"
+    effective_from: "2026-09-01"
+    current_status: FUTURE_NOT_CURRENT_AS_OF_2026_08_27
+
+legal_modeling:
+  anchors_added: 7
+  overlap_relations_added: 4
+  important_boundaries:
+    - "Point 63 directly places EGISZ information protection in the context of Russian personal-data law."
+    - "Point 30 defines a dedicated information-security subsystem with access control, security-event logging, antimalware, intrusion detection/prevention, security analysis, technical/virtualization protection and cryptography, protecting confidentiality/integrity/availability."
+    - "Points 64-65 place organizational/technical security obligations on the EGISZ operator, including certified FSB/FSTEC tools, attestation and protection in transit."
+    - "Appendix 1 contains explicit person-level medical-worker fields and patient/medical-document flows."
+    - "PP 2164/2025 adds EGISZ interaction with the unified federal population register; this is a data-flow relation, not proof that all EGISZ data is exchanged."
+    - "PP 211/2026 is future law until 01.09.2026 and must not be represented as current on 27.08.2026."
+  guards:
+    - "EGISZ_SYSTEM_SCOPE != AUTOMATIC_152_FZ_APPLICABILITY_TO_EVERY_HEALTHCARE_PROCESS"
+    - "DIRECT_PDN_REFERENCE != AUTOMATIC_LEGAL_BASIS_FOR_EVERY_OPERATION"
+    - "MEDICAL_DOCUMENT != AUTOMATIC_MEDICAL_SECRECY_CLASSIFICATION_FOR_EVERY_FIELD"
+    - "CERTIFIED_FSB_FSTEC_CONTROLS != AUTOMATIC_KII_187_FZ_APPLICABILITY"
+    - "No applicability without actor/system/record/operation/purpose/legal-basis proof."
+
+acquisition_attempts:
+  - target: "Government current consolidated PDF"
+    url: "https://static.government.ru/media/files/vDARAPaBhOENFuH2snVFrAmp0ANK2tYx.pdf"
+    result: TRANSIENT_DNS_NAME_RESOLUTION_FAILURE
+  - target: "original PP 140 official PDF, publication 0001202202110036"
+    url: "https://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202202110036"
+    result: TRANSIENT_DNS_NAME_RESOLUTION_FAILURE
+  - target: "PP 2164 official PDF, publication 0001202512270032"
+    url: "https://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202512270032"
+    result: TRANSIENT_DNS_NAME_RESOLUTION_FAILURE
+  - target: "PP 211 official PDF, publication 0001202603020026"
+    url: "https://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202603020026"
+    result: TRANSIENT_DNS_NAME_RESOLUTION_FAILURE
+  - target: "Roszdravnadzor departmental PP 140 PDF crosscheck"
+    url: "https://roszdravnadzor.gov.ru/i/upload/images/2025/5/28/1748423820.22104-1-784347.pdf"
+    result: TRANSIENT_DOWNLOAD_FAILURE
+
+artifact_integrity:
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+  reason: "Exact official bytes were not obtained in runtime; displayed PDF sizes were not accepted as exact byte lengths and no hashes were invented."
+
+counters:
+  before:
+    found: 47
+    downloaded: 9
+    immutable: 9
+    pending: 36
+    reused: 2
+    primary_publication_verified: 20
+    sectors_registered: 28
+  after:
+    found: 48
+    downloaded: 9
+    immutable: 9
+    pending: 37
+    reused: 2
+    primary_publication_verified: 20
+    sectors_registered: 28
+
+next_priority:
+  - "Retry byte-exact acquisition of PP 140 original/current PDFs and PP 822/2164/211 amendment PDFs after official endpoint recovery; only then calculate MIME/byte_length/SHA-256 and create immutable artifacts/manifests."
+  - "Deepen healthcare subordinate layer around EGISZ patient registries and electronic medical documents, deduplicating against 323-FZ article 13 and existing sector sources."
+  - "Continue unresolved high-priority exact captures across finance/banking/insurance/credit histories, telecom, education/children, public sector, biometrics, transport, advertising and archives/retention."
+
+production_statistics:
+  throughput_this_pass: "1 new source node; 7 protected-information/data-flow anchors; 4 overlap/relationship candidates; current and future EGISZ version boundary modeled"
+  cumulative_counters_source: "master-inventory-delta-2026-08-27T1120.yaml"
+  rework_share: null
+  speed_vs_single_stream_percent: null
+  remaining_volume_estimate: null
+  completion_forecast: null
+  telemetry_note: "No comparable per-source elapsed-time baseline was captured; speed-up, rework share and ETA are intentionally not fabricated."
