@@ -1,0 +1,74 @@
+schema_version: "1.0"
+delta_id: PDN-MASTER-DELTA-STREAM1-2026-08-27T2256+0300
+parent_inventory: "../../../security-corpora/RU/152-FZ/PDN_MASTER_SOURCE_INVENTORY.yaml"
+stream: 1
+scope: GENERAL_152FZ_ROSKOMNADZOR_CORE
+observed_at: "2026-08-27T22:56:53+03:00"
+
+counter_snapshot:
+  identified: 37
+  downloaded_exact: 35
+  immutable_sha256: 35
+  atomized_proposed: 4
+  atomized_verified: 0
+  pending_raw: 2
+  raw_coverage: 0.9459
+
+pending_raw_sources:
+  - SEC-SRC-RU-152FZ-2026-07-26
+  - SEC-SRC-RU-PP687-2008
+
+freshness_delta:
+  SEC-SRC-RU-152FZ-2026-07-26:
+    checked_at: "2026-08-27"
+    result: CURRENT_REVISION_IDENTITY_CONFIRMED
+    current_revision: "2026-07-26"
+    amendment_anchor: SEC-SRC-RU-FZ265-2026
+    note: >-
+      Current Article 12 text and current-law indexes continue to identify the 26.07.2026 revision. No newer
+      effective revision was found. Exact official consolidated bytes remain pending; no semantic promotion.
+  SEC-SRC-RU-PP687-2008:
+    checked_at: "2026-08-27"
+    result: CURRENT_REVISION_METADATA_UNCHANGED_RAW_PENDING
+    current_revision_anchor: SEC-SRC-RU-PP12-2025
+    effective_from: "2025-01-26"
+    valid_until: "2030-09-01"
+    note: >-
+      Current text remains the PP12 revision and validity through 01.09.2030. No exact-byte current-text snapshot
+      was accepted in this pass, so MIME, byte length and SHA-256 remain pending.
+  SEC-SRC-RU-RKN128-2022:
+    checked_at: "2026-08-27"
+    result: CURRENT_RULE_WITH_REPLACEMENT_PROJECT_ONLY
+    note: >-
+      The Roskomnadzor replacement prepared 31.07.2026 remains a project in the evidence found in this pass;
+      no enacted official-publication identity was found. Keep Order No. 128 active and its alignment review open.
+  SEC-SRC-RU-RKN253-2021:
+    checked_at: "2026-08-27"
+    result: CURRENT_EDITION_2023_01_10_CONFIRMED
+    note: >-
+      Current legal indexes continue to present Order No. 253 in the edition of 10.01.2023. No later amendment
+      was found in this pass; its immutable original and Order No. 1 amendment remain preserved.
+
+acquisition_delta:
+  exact_bytes_accepted: 0
+  immutable_new: 0
+  semantic_promotions: 0
+  existing_immutable_preserved: 35
+  repeat_downloads_of_verified_corpus: 0
+  execution_environment_observation: EXECUTION_ENV_DNS_UNAVAILABLE
+  execution_environment_note: >-
+    Direct byte-capture attempts in this orchestration environment could not resolve government.ru/pravo.gov.ru.
+    This is not promoted to a source transport failure and does not overwrite canonical GitHub acquisition telemetry.
+
+quality_gates:
+  proof_floor_held: true
+  sector_overlays_touched: false
+
+traceability:
+  run_record: "../../../security-corpora/RU/152-FZ/runs/stream-1/2026-08-27T2256+0300.yaml"
+  run_record_commit: "813a2c58535f74eaeb07885de6300437a69dd08e"
+
+merge_rule: >-
+  Concurrency-safe Stream-1 delta. Preserve 35/37 immutable and two pending sources until accepted manifests
+  provide exact official bytes, MIME, byte length and SHA-256. Merge freshness/watch state without changing
+  semantic or extraction status.
