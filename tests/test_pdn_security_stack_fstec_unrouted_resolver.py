@@ -50,3 +50,7 @@ def test_fstec_5331_licensing_notice_is_in_bounded_resolution_targets():
 def test_fstec_vundv_transition_notices_are_in_bounded_resolution_targets():
     assert "SEC-SRC-RU-FSTEC-INFO-240-24-3693-2026" in TARGETS
     assert "SEC-SRC-RU-FSTEC-INFO-240-24-4974-2026" in TARGETS
+
+
+def test_fstec_vundv_primary_method_is_in_bounded_resolution_targets():
+    assert "SEC-SRC-RU-FSTEC-VU-NDV-METHOD-2026" in TARGETS
