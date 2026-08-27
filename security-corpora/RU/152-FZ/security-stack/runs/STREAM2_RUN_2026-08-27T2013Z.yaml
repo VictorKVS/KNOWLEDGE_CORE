@@ -1,0 +1,102 @@
+schema_version: "1.0"
+id: STREAM2-RUN-2026-08-27T2013Z
+stream: RU_PDN_TECHNICAL_CRYPTO
+created_at: "2026-08-27T20:13:27Z"
+status: PRIMARY_STATUS_RECHECK_AND_ACQUISITION_RETRY_RECORDED
+
+authoritative_state_before_retry:
+  identified: 44
+  metadata_verified: 44
+  immutable_sha256_verified: 19
+  pending_raw_capture: 25
+  exact_official_route_unresolved: 7
+  latest_acquisition_finished_at: "2026-08-27T17:31:45.907079Z"
+  source: "../../PDN_MASTER_SOURCE_INVENTORY.yaml#security_stack"
+
+freshness:
+  pp1119:
+    checked_at: "2026-08-27"
+    verdict: ACTING_BASELINE_PRIMARY_GOVERNMENT_DOC_BYTES_STILL_PENDING
+    current_revision: "2012-11-01"
+    exact_primary_route: "https://government.ru/media/2012/11/3/53354/file/1119_pril.doc"
+    landing_page: "https://government.ru/docs/6339/"
+    route_reverified: true
+    byte_capture_result: NOT_OBTAINED_IN_BOUNDED_PASS
+    fingerprint_promotion: false
+    note: >-
+      The historical exact Government DOC path was reverified from indexed publication evidence, but the
+      primary document bytes were not obtained in the bounded retrieval path. MIME, byte length and SHA-256
+      remain unset until the OLE/CFB artifact is fetched and signature-gated.
+
+  fstec21:
+    checked_at: "2026-08-27"
+    baseline: "Приказ ФСТЭК России от 18.02.2013 №21, редакция от 14.05.2020"
+    amendment_chain: ["№49/2017", "№68/2020"]
+    replacement_project: "169583, prepared 2026-07-24"
+    verdict: CURRENT_ORDER_REMAINS_BASELINE_NO_PRIMARY_ENACTMENT_PROOF_FOR_REPLACEMENT
+    immutable_artifact_reused: true
+    byte_length: 72618
+    sha256: "6522074c76beea01b6c4e3ab33bae368d9a72ce7c49f1372e87cc0ea6f2bcd42"
+    note: >-
+      Current indexed legal material still presents Order No. 21 in the 14.05.2020 revision. No primary
+      evidence of a final numbered replacement, Minjust registration and official publication was found in
+      this bounded pass. The project's proposed 01.09.2026 date is not promoted into effective law.
+
+  fstec_threat_method_2021:
+    checked_at: "2026-08-27"
+    verdict: REUSE_EXISTING_IMMUTABLE_ARTIFACT
+    applicability: ISPDN_AND_OTHER_ENUMERATED_SYSTEMS_EXCLUDING_SKZI_THREAT_ASSESSMENT_SCOPE
+    byte_length: 2744210
+    sha256: "dfb473137de462f8c10fbbdccbea62bd136925e803e1c58aa6d4e790325c49b1"
+    note: >-
+      Existing accepted immutable snapshot is reused. The methodology remains separate from cryptographic
+      threat assessment and does not replace FSB-specific SKZI analysis.
+
+  fsb378:
+    checked_at: "2026-08-27"
+    verdict: ACTING_ORIGINAL_2014_ORDER_ISPDN_WHEN_SKZI_USED_PRIMARY_BYTES_STILL_PENDING
+    ministry_registration_number: "33620"
+    ministry_registration_date: "2014-08-18"
+    official_publication_date: "2014-09-17"
+    effective_from: "2014-09-28"
+    applicability: ISPDN_WHEN_SKZI_USED
+    byte_capture_result: PRIMARY_BYTES_NOT_OBTAINED_IN_BOUNDED_PASS
+    fingerprint_promotion: false
+    note: >-
+      Current legal index corroborates the original 2014 order and its PDN-with-SKZI scope. No universal
+      SKZI obligation is inferred for ISPDN where cryptographic applicability is not independently established.
+
+acquisition_policy:
+  primary_bytes_required_for_immutable: true
+  record_source_url_retrieved_at_mime_byte_length_sha256_only_after_actual_capture: true
+  no_secondary_mirror_promotion_to_primary: true
+  no_hash_or_mime_synthesis: true
+
+work_done:
+  fresh_status_checks: 4
+  exact_primary_routes_reverified: 1
+  existing_immutable_artifacts_reused: 2
+  new_primary_sources_registered: 0
+  new_immutable_captured_in_this_bounded_pass: 0
+  confirmed_legal_contradictions_added: 0
+  universal_pdn_duties_imported_from_neighboring_regimes: 0
+
+applicability_guards:
+  - PP1119 remains the general ISPDN protection-level baseline.
+  - FSTEC21 remains the non-crypto ISPDN measures baseline until a final replacement passes the enactment gate.
+  - FSB378, FSB66/173 and FAPSI152 remain conditional on actual SKZI applicability.
+  - Licensing and certification sources remain activity/conformity context unless a separate applicability edge is proved.
+  - NKCKI/GosSOPKA sources enter PDN reasoning only through the explicit PDN incident edge or independently proved KII/public-sector scope.
+
+next_targets:
+  - PP1119 exact Government DOC bytes with OLE/CFB signature gate
+  - FSB378 official primary bytes
+  - FSB66 and FSB173 official primary bytes and amendment delta
+  - FAPSI152 official primary bytes
+  - routed FSTEC methodological PDF attachments
+  - seven unresolved exact official attachment routes
+  - primary enactment watch for FSTEC21 replacement project 169583
+
+counter_rule: >-
+  Do not change 44/19/25/7 by hand. The push-triggered Stream-2 acquisition workflow must recompute and
+  reconcile the authoritative master inventory from its accepted run record after actual retrieval attempts.
