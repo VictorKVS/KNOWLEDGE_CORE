@@ -2,13 +2,14 @@ schema_version: "1.0"
 id: RU-MINKOMSVYAZ-645-2016-MOBILE-RADIOTELEPHONE-SORM-ATOMIC-V1
 title: "Приказ Минкомсвязи России от 12.12.2016 № 645: оборудование СОРМ ОТУС сетей подвижной радиотелефонной связи"
 checked_at: "2026-08-27"
-status: VERIFIED_CURRENT_ORIGINAL_EDITION_OPEN_CORE_EXACT_BYTE_TABLES_PENDING
+status: VERIFIED_CURRENT_OPEN_CORE_AND_LINKED_PROTOCOL_HEADER_CODE_SEQUENCE_CORE_DEEP_TABLES_PENDING
 scope: >-
   Открытая нормативная модель пунктов 1–21 Правил, функциональной топологии
   тринадцати приложений, функций приложения № 1, интерфейсов приложения № 2
-  и распределенного многопультового маршрута приложения № 10. Точные
-  байтовые форматы команд, сообщений, битовых таблиц и кодов приложений
-  № 3–9 не реконструируются без неизменяемой постраничной проверки.
+  и распределенного многопультового маршрута приложения № 10. Общие заголовки,
+  реестры кодов и последовательность приложений № 3–9 вынесены в связанную
+  модель. Глубокие поля содержания команд и сообщений и таблицы сочетаний
+  бит не реконструируются без неизменяемой постраничной проверки.
 
 source:
   act: "Приказ Минкомсвязи России от 12.12.2016 № 645"
@@ -36,6 +37,8 @@ legal_route:
     listed_item: "ПП РФ № 532/2009, пункт 27"
     procedure: "ПП РФ № 214/2005"
     current_product_confirmation_lifecycle: PENDING_SEPARATE_REVIEW
+
+linked_protocol_model: security-knowledge/legislation/RU/ministry-orders/minkomsvyaz-645-2016/appendices3-to9-protocol-core-atomic-v1.yaml
 
 temporal_model:
   - id: ORDER174_PREDECESSOR_ROUTE
@@ -114,7 +117,7 @@ atomic_rules:
   - {id: MK645-R051, locator: "Приложение 12", rule: APPLY_LOCATION_PARAMETER_SCHEMA_WITHOUT_RECONSTRUCTING_UNVERIFIED_BYTE_VALUES}
   - {id: MK645-R052, locator: "Нормативная граница", rule: DO_NOT_TREAT_TECHNICAL_CAPABILITY_AS_INDEPENDENT_AUTHORITY_FOR_A_SPECIFIC_ORM}
   - {id: MK645-R053, locator: "Нормативная граница", rule: DO_NOT_TREAT_200_MILLISECONDS_OR_CAPACITY_VALUES_AS_RETENTION_PERIODS}
-  - {id: MK645-R054, locator: "Нормативная граница", rule: DO_NOT_RECONSTRUCT_UNVERIFIED_COMMAND_MESSAGE_BYTE_BIT_OR_CODE_VALUES}
+  - {id: MK645-R054, locator: "Нормативная граница", rule: USE_LINKED_PROTOCOL_CORE_BUT_DO_NOT_RECONSTRUCT_UNVERIFIED_DEEP_COMMAND_MESSAGE_FIELD_OR_BIT_VALUES}
 
 evidence_model:
   - {id: E645-01, proves: [MK645-R001, MK645-R002, MK645-R003, MK645-R004, MK645-R005], artifacts: [ACT_COMPOSITE_KEY, LIFECYCLE_ROUTE, NETWORK_AND_ARCHITECTURE_SCOPE]}
@@ -146,7 +149,7 @@ red_team_guardrails:
   - DO_NOT_SWAP_KPD1_AND_KPD2_ROLES
   - DO_NOT_BLOCK_CONNECTION_CONTENT_WHEN_ALL_X25_KPD_PAIRS_FAIL
   - DO_NOT_TREAT_200MS_OR_INTERFACE_CAPACITY_AS_RETENTION
-  - DO_NOT_RECONSTRUCT_UNVERIFIED_BYTE_BIT_COMMAND_MESSAGE_OR_CODE_VALUES
+  - DO_NOT_BYPASS_LINKED_PROTOCOL_CORE_OR_RECONSTRUCT_UNVERIFIED_DEEP_FIELD_OR_BIT_VALUES
 
 verification_boundary:
   current_body_points_1_to_21: VERIFIED_CURRENT_TEXT
@@ -154,7 +157,8 @@ verification_boundary:
   appendix1_functions_1_1_to_1_16: VERIFIED_CURRENT_TEXT
   appendix2_interface_open_core: VERIFIED_CURRENT_TEXT
   appendix10_points_1_to_4: VERIFIED_CURRENT_TEXT
-  appendices3_to9_exact_command_message_byte_bit_and_code_tables: PENDING_IMMUTABLE_PAGE_REVIEW
+  appendices3_to9_protocol_headers_code_registries_and_sequence: VERIFIED_BY_LINKED_MODEL
+  appendices3_to9_deep_per_command_message_field_and_bit_tables: PENDING_IMMUTABLE_PAGE_REVIEW
   registration_publication_and_effective_date: VERIFIED
   pp1656_official_current_preservation_route: VERIFIED
   current_consolidated_immutable_bytes: PENDING

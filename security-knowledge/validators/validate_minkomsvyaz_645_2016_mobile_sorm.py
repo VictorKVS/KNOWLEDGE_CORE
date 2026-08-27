@@ -64,7 +64,8 @@ def main():
         "appendix9_kpd2_message_families": 9,
         "appendix10_numbered_points": 4,
     }
-    assert model["verification_boundary"]["appendices3_to9_exact_command_message_byte_bit_and_code_tables"] == "PENDING_IMMUTABLE_PAGE_REVIEW"
+    assert model["verification_boundary"]["appendices3_to9_protocol_headers_code_registries_and_sequence"] == "VERIFIED_BY_LINKED_MODEL"
+    assert model["verification_boundary"]["appendices3_to9_deep_per_command_message_field_and_bit_tables"] == "PENDING_IMMUTABLE_PAGE_REVIEW"
     assert model["verification_boundary"]["critical_gap_created"] is False
     assert model["verification_boundary"]["high_gap_created"] is False
     assert len(fixtures["cases"]) == 56
@@ -75,7 +76,7 @@ def main():
     if failures:
         for failure in failures: print("FAIL", failure)
         raise SystemExit(1)
-    print("PASS: Order 645 mobile open core; 54 rules, 2 temporal routes, 18 evidence nodes, 21 body points, 13 appendices, 16 appendix-1 functions, 56 cases; exact byte tables pending")
+    print("PASS: Order 645 mobile open core; 54 rules, 2 temporal routes, 18 evidence nodes, 21 body points, 13 appendices, 16 appendix-1 functions, 56 cases; linked protocol core verified, deep tables pending")
 
 
 if __name__ == "__main__": main()
