@@ -1,0 +1,124 @@
+schema_version: "1.0"
+stream: 3
+run_id: "stream-3-run-2026-08-27T0821"
+started_at: "2026-08-27T08:21:12+03:00"
+focus: "public sector / citizen appeals / confidentiality and protected information"
+
+result:
+  new_source_nodes: 1
+  new_sector_regimes: 1
+  existing_sources_enriched: 0
+  durable_downloads: 0
+  immutable_artifacts: 0
+  pending_exact_capture: 1
+  applicability_promotions: 0
+  legal_conflicts_confirmed: 0
+
+new_source:
+  source_id: SEC-SRC-RU-FZ-59-2006
+  title: "Федеральный закон от 02.05.2006 № 59-ФЗ «О порядке рассмотрения обращений граждан Российской Федерации»"
+  sector: citizen_appeals_public_sector
+  regime: citizen_appeal_confidentiality
+  current_official_consolidation: "https://mintrud.gov.ru/docs/laws/108"
+  original_official_publication: "https://rg.ru/documents/2006/05/05/obraschenie-dok.html"
+  current_revision_crosscheck: "28.12.2024"
+  current_effective_from: "2025-03-30"
+  dedupe_check: "No dedicated SEC-SRC-RU-FZ-59-2006 / citizen_appeal_confidentiality source node was found in repository code search before creation."
+
+primary_evidence:
+  - kind: original_official_print_text
+    act: "02.05.2006 № 59-ФЗ"
+    publisher: "Российская газета"
+    issue: "№ 95"
+    print_date: "2006-05-05"
+    url: "https://rg.ru/documents/2006/05/05/obraschenie-dok.html"
+    verified:
+      - "source act title/date/number"
+      - "original article 6 confidentiality rule"
+  - kind: current_official_federal_agency_consolidation
+    authority: "Минтруд России"
+    url: "https://mintrud.gov.ru/docs/laws/108"
+    verified:
+      - "amendment list through 28.12.2024 № 547-ФЗ"
+      - "article 6 parts 1-3"
+      - "article 7 person/contact fields and electronic identifiers"
+      - "article 10 protected-secret and response-channel boundaries"
+      - "article 11 part 6 protected-secret non-disclosure boundary"
+      - "article 13 personal reception identity/card records"
+  - kind: official_publication_metadata
+    act: "04.08.2023 № 480-ФЗ"
+    publication_id: "0001202308040085"
+    publication_date: "2023-08-04"
+    effective_from: "2023-09-01"
+    effect: "articles 4, 7, 10; electronic appeal channels/identifiers"
+  - kind: official_publication_metadata_and_locator_effect
+    act: "28.12.2024 № 547-ФЗ"
+    publication_id: "0001202412280052"
+    publication_date: "2024-12-28"
+    effective_from: "2025-03-30"
+    effect: "article 6 part 3 introduced; articles 4, 7, 10 updated"
+
+legal_modeling:
+  anchors_added: 8
+  overlap_relations_added: 2
+  important_boundaries:
+    - "Article 6(2) prohibits disclosure of appeal/private-life information without consent."
+    - "Routing a written appeal to a competent authority is not disclosure for article 6(2), but this does not automatically establish a 152-FZ legal basis."
+    - "Article 7 creates an explicit person-level dataset context: identity/contact/electronic-account identifiers and attachments."
+    - "Articles 5, 10 and 11 preserve special handling for state or other federally protected secrets."
+  guards:
+    - "CITIZEN_APPEAL_CONFIDENTIALITY != PERSONAL_DATA_APPLICABILITY"
+    - "ARTICLE_6_PART_2_CONSENT_TO_DISCLOSE != AUTOMATIC_152_FZ_PROCESSING_CONSENT"
+    - "COMPETENT_AUTHORITY_ROUTING_NOT_DISCLOSURE != AUTOMATIC_PDN_LEGAL_BASIS"
+    - "59-FZ does not replace sector-specific secrecy regimes."
+    - "No applicability without record/operation/actor/purpose/legal-basis proof."
+
+acquisition_attempts:
+  - target: "547-FZ official PDF, publication 0001202412280052"
+    url: "https://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202412280052"
+    result: "TRANSIENT_DNS_NAME_RESOLUTION_FAILURE"
+  - target: "current official departmental PDF copy on MChS domain"
+    url: "https://38.mchs.gov.ru/uploads/resource/2025-11-12/normativnye-dokumenty-reglamentiruyushchie-poryadok-rassmotreniya-obrashcheniy-grazhdan_17629305181700189292.pdf"
+    result: "TRANSIENT_DNS_DOWNLOAD_FAILURE"
+  - target: "480-FZ official PDF, publication 0001202308040085"
+    result: "QUEUED_EXACT_CAPTURE_AFTER_OFFICIAL_ENDPOINT_RECOVERY"
+
+artifact_integrity:
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+  reason: "Exact official bytes were not obtained in runtime; no cryptographic metadata or byte length was invented."
+
+counters:
+  before:
+    found: 46
+    downloaded: 9
+    immutable: 9
+    pending: 35
+    reused: 2
+    primary_publication_verified: 20
+    sectors_registered: 27
+  after:
+    found: 47
+    downloaded: 9
+    immutable: 9
+    pending: 36
+    reused: 2
+    primary_publication_verified: 20
+    sectors_registered: 28
+
+next_priority:
+  - "Retry exact-byte capture for 59-FZ current departmental copy and official 480-FZ/547-FZ PDFs; only then calculate MIME/byte_length/SHA-256 and create immutable manifests."
+  - "Continue high-priority pending exact captures in healthcare/medical secrecy, finance/banking/insurance/credit histories, telecom, education/children, public sector, biometrics, transport, advertising and archives/retention."
+  - "Discover another non-duplicate special regime only when the current primary normative act can be proven."
+
+production_statistics:
+  throughput_this_pass: "1 new source node; 1 new sector regime; 8 protected-information/data-flow anchors; 2 overlap relations; 2 recent amendment publication metadata events verified"
+  cumulative_counters_source: "master-inventory-delta-2026-08-27T0821.yaml"
+  rework_share: null
+  speed_vs_single_stream_percent: null
+  remaining_volume_estimate: null
+  completion_forecast: null
+  telemetry_note: "No comparable per-source processing-time baseline in this pass; acceleration, rework share and ETA are intentionally not fabricated."
