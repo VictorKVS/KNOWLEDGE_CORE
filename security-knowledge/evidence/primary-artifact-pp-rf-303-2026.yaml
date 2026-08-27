@@ -34,11 +34,35 @@ verification:
   pdf_magic_match: true
   mime_match: true
   byte_length_match: true
-  rendered_pages_visually_inspected: [3, 4, 5]
+  rendered_pages_visually_inspected: [3, 4, 5, 6]
   formulas_visually_verified:
-    clause_11: "indicator_2 = ((T_service - T_downtime) / T_service) * 100%"
-    clause_14_primary: "indicator_4 = (delta_budget_revenue / average_federal_budget_revenue) * 100%"
-    clause_14_delta: "delta_budget_revenue = (annual_state_service_revenue / 365 days) * max_disruption_days"
+    clause_11:
+      source_notation: "Показатель 2 = (Тпу − Тпростоя) / Тпу × 100%"
+      pdf_page: 5
+      printed_page: 4
+      page_image_sha256: "050e876e5090ee7090cd3bb68efa6140e19e6853660af865284a037d484dd1f9"
+      crop_geometry: "1600x700+430+500"
+      crop_sha256: "6b23abc756f0de2d844f9a3a54a5525208c61e59c95876ad6e066e97754960df"
+    clause_14_primary:
+      source_notation: "Показатель 4 = ΔДБ / Бср × 100%"
+      pdf_page: 6
+      printed_page: 5
+      page_image_sha256: "3a96fadf5df3775b84df41d18043f31a8e322111d04208a0ae4a4b4fc87dd2cc"
+      crop_geometry: "1500x650+480+350"
+      crop_sha256: "1230dc0fd4823b0177132b450d466ea7db2d8f96a71bb92f52aa3aa68d70bfc3"
+    clause_14_delta:
+      source_notation: "ΔДБ = ГУ / (365 суток) × T"
+      pdf_page: 6
+      printed_page: 5
+      page_image_sha256: "3a96fadf5df3775b84df41d18043f31a8e322111d04208a0ae4a4b4fc87dd2cc"
+      crop_geometry: "1500x600+480+1320"
+      crop_sha256: "8cc6fd48fae5616f1da3c1ad26b4d0b8e386a61505dc8f4748d147d7f4060db9"
+  absolute_value_operators:
+    clause_11_indicator_2: ABSENT
+    clause_14_indicator_4: ABSENT
+  zero_denominator_boundary:
+    T_service: FAIL_CLOSED_NOT_DEFINED_BY_ACT
+    average_federal_budget_revenue: FAIL_CLOSED_NOT_DEFINED_BY_ACT
 promotion:
   previous: PRIMARY_WEB_VERIFIED
   current: PRIMARY_IMMUTABLE

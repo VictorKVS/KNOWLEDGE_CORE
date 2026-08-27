@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import hashlib
 from decimal import Decimal
 from pathlib import Path
 
@@ -11,6 +12,15 @@ FIXTURE = (
     / "classification"
     / "pp-rf-303-2026-egrn-formula-regression-v1.json"
 )
+PDF = (
+    ROOT
+    / "security-knowledge"
+    / "evidence"
+    / "primary-artifacts"
+    / "2026"
+    / "pp-rf-303-2026-0001202603240036.pdf"
+)
+PDF_SHA256 = "e93e8a0cba5bc7817c53b2f6a233ed2283e1cf9e1ee2a01e30281a4dced91079"
 
 
 def d(value: str) -> Decimal:
@@ -63,6 +73,11 @@ def evaluate(case: dict) -> dict:
 
 def main() -> int:
     data = json.loads(FIXTURE.read_text(encoding="utf-8"))
+    actual_sha256 = hashlib.sha256(PDF.read_bytes()).hexdigest()
+    if actual_sha256 != PDF_SHA256:
+        print(f"FAIL PP 303 official PDF SHA-256: expected={PDF_SHA256} actual={actual_sha256}")
+        return 1
+    assert data["primary_artifact_sha256"] == PDF_SHA256
     failures = []
     for case in data["cases"]:
         actual = evaluate(case)

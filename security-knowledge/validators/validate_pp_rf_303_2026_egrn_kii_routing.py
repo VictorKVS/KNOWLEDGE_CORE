@@ -53,8 +53,12 @@ def evaluate(case: dict) -> str:
             return "NEEDS_RECOVERY_TIME_HOURS"
         if case.get("statutory_service_time_hours") is None:
             return "NEEDS_STATUTORY_SERVICE_TIME_HOURS"
+        if str(case.get("statutory_service_time_hours")) == "0":
+            return "FAIL_CLOSED_ZERO_DENOMINATOR"
     if indicator == 4 and not case.get("economic_inputs_complete", False):
         return "NEEDS_EXPERT_ECONOMIC_ASSESSMENT_INPUTS"
+    if indicator == 4 and str(case.get("average_federal_budget_revenue")) == "0":
+        return "FAIL_CLOSED_ZERO_DENOMINATOR"
 
     return "EVALUATE_INDICATORS_1_2_3_4"
 

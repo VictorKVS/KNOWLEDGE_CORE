@@ -1,0 +1,67 @@
+evidence_id: PP-RF-303-2026-FORMULA-IMAGE-VERIFICATION-2026-08-27
+observed_at: "2026-08-27"
+subject: "Three image-rendered formulas in PP RF No. 303 of 23 March 2026"
+act:
+  designation: "Постановление Правительства РФ от 23.03.2026 № 303"
+  official_publication_number: "0001202603240036"
+  publication_date: "2026-03-24"
+  effective_from: "2026-04-01"
+sources:
+  - {type: OFFICIAL_PUBLICATION, url: "https://publication.pravo.gov.ru/document/0001202603240036", result: VERIFIED_IDENTITY_AND_PRESERVED_PRIMARY_PDF}
+  - {type: CURRENT_LEGAL_INTERFACE, url: "https://www.consultant.ru/document/cons_doc_LAW_529733/", result: VERIFIED_CURRENT_ORIGINAL_EDITION_2026_08_27}
+  - {type: EFFECTIVE_DATE_CROSSCHECK, url: "https://ppt.ru/obzory/vstupaet-v-silu/postanovlenie-pravitelstva-rf-23-03-2026-303", result: VERIFIED_EFFECTIVE_FROM_2026_04_01}
+artifact:
+  path: "security-knowledge/evidence/primary-artifacts/2026/pp-rf-303-2026-0001202603240036.pdf"
+  mime: application/pdf
+  pdf_version: "1.5"
+  pages: 6
+  bytes: 1351967
+  encrypted: false
+  javascript: false
+  sha256: "e93e8a0cba5bc7817c53b2f6a233ed2283e1cf9e1ee2a01e30281a4dced91079"
+  github_blob_sha: "fecc55fafc13bf38d0efcdd61a5601828c71a8c0"
+visual_verification:
+  - id: PP303-INDICATOR-2
+    paragraph: 11
+    pdf_page: 5
+    printed_page: 4
+    source_notation: "Показатель 2 = (Тпу − Тпростоя) / Тпу × 100%"
+    normalized_expression: "((T_SERVICE - T_DOWNTIME) / T_SERVICE) * 100"
+    absolute_value_operator: ABSENT
+    page_image_sha256: "050e876e5090ee7090cd3bb68efa6140e19e6853660af865284a037d484dd1f9"
+    crop_geometry: "1600x700+430+500"
+    crop_sha256: "6b23abc756f0de2d844f9a3a54a5525208c61e59c95876ad6e066e97754960df"
+  - id: PP303-INDICATOR-4
+    paragraph: 14
+    pdf_page: 6
+    printed_page: 5
+    source_notation: "Показатель 4 = ΔДБ / Бср × 100%"
+    normalized_expression: "(DELTA_DB / B_AVG_FORECAST_3Y) * 100"
+    absolute_value_operator: ABSENT
+    page_image_sha256: "3a96fadf5df3775b84df41d18043f31a8e322111d04208a0ae4a4b4fc87dd2cc"
+    crop_geometry: "1500x650+480+350"
+    crop_sha256: "1230dc0fd4823b0177132b450d466ea7db2d8f96a71bb92f52aa3aa68d70bfc3"
+  - id: PP303-DELTA-BUDGET-REVENUE
+    paragraph: 14
+    pdf_page: 6
+    printed_page: 5
+    source_notation: "ΔДБ = ГУ / (365 суток) × T"
+    normalized_expression: "(GU_AVG_FORECAST_3Y / 365_DAYS) * T_MAX_DISRUPTION_DAYS"
+    page_image_sha256: "3a96fadf5df3775b84df41d18043f31a8e322111d04208a0ae4a4b4fc87dd2cc"
+    crop_geometry: "1500x600+480+1320"
+    crop_sha256: "8cc6fd48fae5616f1da3c1ad26b4d0b8e386a61505dc8f4748d147d7f4060db9"
+semantic_boundaries:
+  - "No absolute-value operator appears in indicator 2 or indicator 4."
+  - "The act does not define behavior for a zero Tпу denominator; execution fails closed."
+  - "The act does not define behavior for a zero Бср denominator; execution fails closed."
+  - "The 365-day divisor is a fixed source constant, not a retention period."
+  - "The planned three-year periods for Бср and ГУ are calculation periods, not retention periods."
+  - "Formula output is an indicator input to the current PP RF No. 127 route, not automatic category assignment."
+verification:
+  formulas_verified: 3
+  formulas_pending: 0
+  operators_and_denominators_verified: true
+  glyphs_verified: ["Тпу", "Тпростоя", "ΔДБ", "Бср", "ГУ", "T"]
+  zero_denominators: FAIL_CLOSED_NOT_DEFINED_BY_ACT
+  independent_expert_review: PENDING
+claim_boundary: VERIFIED_THREE_PRIMARY_PDF_FORMULAS_ZERO_DENOMINATORS_FAIL_CLOSED

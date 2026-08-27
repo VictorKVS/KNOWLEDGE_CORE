@@ -2,8 +2,8 @@ schema_version: "1.0"
 id: RP-RF-360R-2026-REAL-ESTATE-REGISTRATION-ROW108-CROSSWALK
 designation: "Распоряжение Правительства РФ от 26.02.2026 № 360-р, позиция 108"
 edition_date: "2026-05-27"
-status_observed_date: "2026-08-26"
-status: VERIFIED_CURRENT_ROW108_WITH_CURRENT_PP303_FAIL_CLOSED_CROSSWALK
+status_observed_date: "2026-08-27"
+status: VERIFIED_CURRENT_ROW108_WITH_CURRENT_PP303_PRIMARY_FORMULAS_ZERO_DENOMINATORS_FAIL_CLOSED_CROSSWALK
 legal_role: CURRENT_TYPICAL_OBJECT_GATE_WITH_SEPARATE_PP303_SECTOR_FEATURE_ROUTE
 source_evidence:
   rp360r_official_publication: {url: "https://publication.pravo.gov.ru/document/0001202602260020", publication_date: "2026-02-26", result: VERIFIED_OFFICIAL_RECORD}
@@ -12,6 +12,7 @@ source_evidence:
   pp303_official_publication: {url: "https://publication.pravo.gov.ru/document/0001202603240036", publication_date: "2026-03-24", result: VERIFIED_OFFICIAL_RECORD}
   pp303_authoritative_summary: {url: "https://pravo.gov.ru/novye-postupleniya/", result: VERIFIED_ROSREESTR_ROSKADASTR_AND_EGRN_SCOPE}
   pp303_full_public_text: {url: "https://www.zakonrf.info/postanovlenie-pravitelstvo-rf-303-23032026/", result: VERIFIED_PARAGRAPHS_1_TO_14_FORMULAS_RENDERED_AS_IMAGES}
+  pp303_immutable_official_pdf: {path: "security-knowledge/evidence/primary-artifacts/2026/pp-rf-303-2026-0001202603240036.pdf", sha256: "e93e8a0cba5bc7817c53b2f6a233ed2283e1cf9e1ee2a01e30281a4dced91079", result: VERIFIED_PRIMARY_IMMUTABLE_THREE_FORMULAS}
 row108:
   section: STATE_REGISTRATION_OF_REAL_ESTATE_RIGHTS_AND_TRANSACTIONS
   object_type: INFORMATION_SYSTEMS_AND_NETWORKS_FOR_STATE_REGISTRATION_OF_REAL_ESTATE_RIGHTS_AND_TRANSACTIONS
@@ -29,8 +30,8 @@ pp303_crosswalk:
   sector_functions: [STATE_REGISTRATION_OF_RIGHTS_AND_TRANSACTIONS, STATE_CADASTRAL_REGISTRATION, EGRN_MAINTENANCE, PROVISION_OF_EGRN_INFORMATION]
   pp127_routes: ["5(a)", "5(b)", "6", "9"]
   activation_condition: ROW108_MATCH_AND_PP303_ACTOR_OBJECT_FUNCTION_SCOPE_MATCH
-  formula_images_pending: 3
-  numeric_formula_execution: BLOCKED_PENDING_IMMUTABLE_OFFICIAL_BYTES
+  formula_images_verified: 3
+  numeric_formula_execution: EXECUTABLE_WITH_COMPLETE_VALID_INPUTS_ZERO_DENOMINATORS_FAIL_CLOSED
 control_rules:
   - {id: RP360R-RE108-001, source: "row 108 object", rule: REQUIRE_ROW108_OBJECT_TYPE_MATCH}
   - {id: RP360R-RE108-002, source: "row 108 process", rule: REQUIRE_STATE_RIGHTS_AND_TRANSACTIONS_REGISTRATION_PROCESS}
@@ -66,18 +67,18 @@ control_rules:
   - {id: RP360R-RE108-032, source: PP303_6, rule: ROUTE_PP127_5B_TO_PUBLIC_SERVICE_TIME_EXCESS}
   - {id: RP360R-RE108-033, source: PP303_6, rule: ROUTE_PP127_6_TO_ACTOR_FUNCTION_NONPERFORMANCE}
   - {id: RP360R-RE108-034, source: PP303_6, rule: ROUTE_PP127_9_TO_BUDGET_PAYMENT_OR_CONTRIBUTION_DECREASE}
-  - {id: RP360R-RE108-035, source: PP303_11, rule: BLOCK_INDICATOR2_NUMERIC_CALCULATION_PENDING_FORMULA_IMAGE_BYTES}
-  - {id: RP360R-RE108-036, source: PP303_14, rule: BLOCK_INDICATOR4_FIRST_NUMERIC_CALCULATION_PENDING_FORMULA_IMAGE_BYTES}
-  - {id: RP360R-RE108-037, source: PP303_14, rule: BLOCK_INDICATOR4_SECOND_NUMERIC_CALCULATION_PENDING_FORMULA_IMAGE_BYTES}
-  - {id: RP360R-RE108-038, source: FORMULA_BOUNDARY, rule: DO_NOT_INFER_FORMULA_OPERATORS_CONSTANTS_OR_DENOMINATORS}
+  - {id: RP360R-RE108-035, source: PP303_11, rule: APPLY_VERIFIED_INDICATOR2_TPU_MINUS_TPROSTOI_OVER_TPU_TIMES100}
+  - {id: RP360R-RE108-036, source: PP303_14, rule: APPLY_VERIFIED_INDICATOR4_DELTA_DB_OVER_BSR_TIMES100}
+  - {id: RP360R-RE108-037, source: PP303_14, rule: APPLY_VERIFIED_DELTA_DB_GU_OVER_365_DAYS_TIMES_T}
+  - {id: RP360R-RE108-038, source: FORMULA_BOUNDARY, rule: PRESERVE_PRIMARY_FORMULA_OPERATORS_CONSTANTS_AND_DENOMINATORS}
   - {id: RP360R-RE108-039, source: PP303_BOUNDARY, rule: DO_NOT_INVENT_SECTOR_SPECIFIC_CATEGORY_THRESHOLDS}
   - {id: RP360R-RE108-040, source: PP303_BOUNDARY, rule: DO_NOT_INVENT_CATEGORIZATION_OR_SUBMISSION_DEADLINES}
   - {id: RP360R-RE108-041, source: PP303_10, rule: DO_NOT_INVENT_NUMERIC_UNAVAILABILITY_LIMIT}
-  - {id: RP360R-RE108-042, source: PP303_11, rule: DO_NOT_CALCULATE_PUBLIC_SERVICE_PERCENT_WITHOUT_FORMULA_BYTES}
+  - {id: RP360R-RE108-042, source: PP303_11, rule: FAIL_CLOSED_INDICATOR2_WHEN_TPU_ZERO_OR_MISSING}
   - {id: RP360R-RE108-043, source: PP303_12, rule: REQUIRE_CAUSAL_ASSIGNED_FUNCTION_FAILURE_FOR_INDICATOR3}
   - {id: RP360R-RE108-044, source: PP303_12, rule: DO_NOT_GENERALIZE_CATEGORY_II_TO_ANY_TECHNICAL_FAILURE}
-  - {id: RP360R-RE108-045, source: PP303_13_14, rule: DO_NOT_CALCULATE_BUDGET_LOSS_WITHOUT_BOTH_FORMULA_IMAGES}
-  - {id: RP360R-RE108-046, source: EVIDENCE, rule: KEEP_IMMUTABLE_OFFICIAL_FORMULA_BYTES_PENDING}
+  - {id: RP360R-RE108-045, source: PP303_13_14, rule: FAIL_CLOSED_INDICATOR4_WHEN_BSR_ZERO_OR_MISSING}
+  - {id: RP360R-RE108-046, source: EVIDENCE, rule: REQUIRE_IMMUTABLE_OFFICIAL_PP303_PDF_SHA256_MATCH}
   - {id: RP360R-RE108-047, source: REVIEW, rule: KEEP_INDEPENDENT_EXPERT_REVIEW_PENDING}
   - {id: RP360R-RE108-048, source: APPLICATION, rule: REQUIRE_CURRENT_RP360R_PP303_AND_PP127_EVIDENCE_BEFORE_EXECUTION}
 verification_boundary:
@@ -88,9 +89,9 @@ verification_boundary:
   pp303_sector_functions: 4
   pp303_indicator_routes: 4
   pp303_formula_images: 3
-  numeric_formula_execution: BLOCKED
-  immutable_official_formula_bytes: PENDING
+  numeric_formula_execution: EXECUTABLE_WITH_COMPLETE_VALID_INPUTS_ZERO_DENOMINATORS_FAIL_CLOSED
+  immutable_official_formula_bytes: VERIFIED_SHA256
   independent_expert_review: PENDING
   critical_gap_created: 0
   high_gap_created: 0
-coverage: {typical_rows: 1, process_groups: 1, activity_codes: 3, crosswalk_rules: 48, regression_cases: 48, models_after_run: 88, cases_after_run: 5053}
+coverage: {typical_rows: 1, process_groups: 1, activity_codes: 3, crosswalk_rules: 48, regression_cases: 48, models_after_run: 96, cases_after_run: 5565}

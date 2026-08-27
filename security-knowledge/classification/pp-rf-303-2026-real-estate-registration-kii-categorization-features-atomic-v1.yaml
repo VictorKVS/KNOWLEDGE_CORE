@@ -4,8 +4,8 @@ designation: "Постановление Правительства РФ от 23
 edition_date: "2026-03-23"
 publication_date: "2026-03-24"
 effective_date: "2026-04-01"
-status_observed_date: "2026-08-26"
-status: VERIFIED_CURRENT_REAL_ESTATE_REGISTRATION_TEXT_FORMULA_IMAGES_BLOCKED
+status_observed_date: "2026-08-27"
+status: VERIFIED_CURRENT_REAL_ESTATE_REGISTRATION_FORMULAS_PRIMARY_PDF_VERIFIED_ZERO_DENOMINATOR_FAIL_CLOSED
 legal_role: CURRENT_REAL_ESTATE_REGISTRATION_ONLY_OVERLAY_TO_PP_RF_127
 source_evidence:
   official_publication: {url: "https://publication.pravo.gov.ru/document/0001202603240036", publication_number: "0001202603240036", publication_date: "2026-03-24", pages: 6, result: VERIFIED_OFFICIAL_RECORD_METADATA_DIRECT_PAGE_TIMEOUT}
@@ -13,6 +13,8 @@ source_evidence:
   full_public_text: {url: "https://www.zakonrf.info/postanovlenie-pravitelstvo-rf-303-23032026/", result: VERIFIED_PARAGRAPHS_1_TO_14_TEXT_FORMULAS_RENDERED_AS_IMAGES}
   independent_text_crosscheck: {url: "https://sudact.ru/law/postanovlenie-pravitelstva-rf-ot-23032026-n-303/", result: VERIFIED_PARAGRAPHS_1_TO_14_TEXT_FORMULAS_RENDERED_AS_IMAGES}
   effective_date_crosscheck: {url: "https://ppt.ru/obzory/vstupaet-v-silu/postanovlenie-pravitelstva-rf-23-03-2026-303", result: VERIFIED_EFFECTIVE_2026_04_01}
+  immutable_official_pdf: {path: "security-knowledge/evidence/primary-artifacts/2026/pp-rf-303-2026-0001202603240036.pdf", pages: 6, bytes: 1351967, sha256: "e93e8a0cba5bc7817c53b2f6a233ed2283e1cf9e1ee2a01e30281a4dced91079", result: VERIFIED_PRIMARY_IMMUTABLE}
+  formula_image_verification: {path: "security-knowledge/evidence/pp-rf-303-2026-formula-image-verification-2026-08-27.yaml", result: VERIFIED_THREE_OF_THREE}
 scope:
   sector: STATE_REGISTRATION_OF_REAL_ESTATE_RIGHTS_AND_TRANSACTIONS
   actors: [ROSREESTR, PUBLIC_LAW_COMPANY_ROSKADASTR]
@@ -56,8 +58,13 @@ calculations:
     variables:
       TPU: PUBLIC_SERVICE_PROVISION_TIME_SET_BY_FEDERAL_LAW
       TPROSTOI: OBJECT_DOWNTIME_TIME_EQUAL_TO_RE_I1
-    formula: PENDING_FORMULA_IMAGE_BYTES
-    execution_gate: BLOCK_NUMERIC_CALCULATION_UNTIL_FORMULA_IMAGE_VERIFIED
+    formula:
+      source_notation: "Показатель 2 = (Тпу − Тпростоя) / Тпу × 100%"
+      normalized_expression: "((T_SERVICE - T_DOWNTIME) / T_SERVICE) * 100"
+      absolute_value_operator: ABSENT
+      source_location: {pdf_page: 5, printed_page: 4, paragraph: 11}
+      verification: VERIFIED_PRIMARY_PDF_IMAGE
+    execution_gate: FAIL_CLOSED_WHEN_T_SERVICE_ZERO_OR_MISSING
   RE-I3:
     effect: CATEGORY_II
     condition: OBJECT_DISRUPTION_CAUSES_NONPERFORMANCE_OR_IMPROPER_PERFORMANCE_OF_ACTOR_FUNCTION_ASSIGNED_BY_LAW
@@ -72,14 +79,24 @@ calculations:
       GU: FORECAST_ANNUAL_ACTOR_PUBLIC_SERVICE_RECEIPTS_RELATED_TO_OBJECT_AVERAGED_OVER_PLANNED_THREE_YEAR_PERIOD
       T: MAXIMUM_PERMISSIBLE_OBJECT_DISRUPTION_TIME_IN_DAYS
     formulas:
-      budget_revenue_reduction: PENDING_FORMULA_IMAGE_BYTES
-      public_service_receipt_reduction: PENDING_FORMULA_IMAGE_BYTES
-    execution_gate: BLOCK_NUMERIC_CALCULATION_UNTIL_BOTH_FORMULA_IMAGES_VERIFIED
+      indicator_4:
+        source_notation: "Показатель 4 = ΔДБ / Бср × 100%"
+        normalized_expression: "(DELTA_DB / B_AVG_FORECAST_3Y) * 100"
+        absolute_value_operator: ABSENT
+        source_location: {pdf_page: 6, printed_page: 5, paragraph: 14}
+        verification: VERIFIED_PRIMARY_PDF_IMAGE
+      delta_budget_revenue:
+        source_notation: "ΔДБ = ГУ / (365 суток) × T"
+        normalized_expression: "(GU_AVG_FORECAST_3Y / 365_DAYS) * T_MAX_DISRUPTION_DAYS"
+        source_location: {pdf_page: 6, printed_page: 5, paragraph: 14}
+        verification: VERIFIED_PRIMARY_PDF_IMAGE
+    execution_gate: FAIL_CLOSED_WHEN_BSR_ZERO_OR_MISSING
 formula_image_boundary:
   image_count: 3
-  paragraph_11_formula: PENDING_FORMULA_IMAGE_BYTES
-  paragraph_14_formula_1: PENDING_FORMULA_IMAGE_BYTES
-  paragraph_14_formula_2: PENDING_FORMULA_IMAGE_BYTES
+  status: VERIFIED_PRIMARY_IMMUTABLE_THREE_FORMULAS
+  paragraph_11_formula: VERIFIED_PRIMARY_PDF_IMAGE
+  paragraph_14_formula_1: VERIFIED_PRIMARY_PDF_IMAGE
+  paragraph_14_formula_2: VERIFIED_PRIMARY_PDF_IMAGE
   prohibited_actions:
     - DO_NOT_INFER_OPERATORS_CONSTANTS_PARENTHESES_OR_DENOMINATORS_FROM_VARIABLE_DESCRIPTIONS
     - DO_NOT_USE_UNVERIFIED_FORMULA_FOR_CATEGORY_ASSIGNMENT
@@ -117,9 +134,9 @@ control_rules:
   - {id: PP303-RE-031, source: "11", rule: DEFINE_TPU_AS_FEDERAL_LAW_PUBLIC_SERVICE_TIME}
   - {id: PP303-RE-032, source: "11", rule: DEFINE_TPROSTOI_AS_OBJECT_DOWNTIME_TIME}
   - {id: PP303-RE-033, source: "11", rule: BIND_TPROSTOI_TO_INDICATOR_1_VALUE}
-  - {id: PP303-RE-034, source: "11", rule: MARK_INDICATOR_2_FORMULA_AS_PENDING_IMAGE_BYTES}
-  - {id: PP303-RE-035, source: "11", rule: BLOCK_INDICATOR_2_NUMERIC_CALCULATION_WITHOUT_FORMULA_BYTES}
-  - {id: PP303-RE-036, source: "11", rule: DO_NOT_INFER_INDICATOR_2_FORMULA_OPERATORS}
+  - {id: PP303-RE-034, source: "11", rule: REQUIRE_INDICATOR2_FORMULA_TPU_MINUS_TPROSTOI_OVER_TPU_TIMES100_FROM_PRIMARY_PDF}
+  - {id: PP303-RE-035, source: "11", rule: FAIL_CLOSED_INDICATOR2_WHEN_TPU_ZERO_OR_MISSING}
+  - {id: PP303-RE-036, source: "11", rule: DO_NOT_INSERT_ABSOLUTE_VALUE_OR_ALTER_INDICATOR2_PRIMARY_FORMULA}
   - {id: PP303-RE-037, source: "12", rule: ASSIGN_CATEGORY_II_ONLY_ON_CAUSAL_ACTOR_FUNCTION_FAILURE}
   - {id: PP303-RE-038, source: "12", rule: INCLUDE_FUNCTION_NONPERFORMANCE}
   - {id: PP303-RE-039, source: "12", rule: INCLUDE_FUNCTION_IMPROPER_PERFORMANCE}
@@ -136,17 +153,17 @@ control_rules:
   - {id: PP303-RE-050, source: "14", rule: REQUIRE_GU_RECEIPTS_TO_RELATE_TO_OBJECT}
   - {id: PP303-RE-051, source: "14", rule: APPLY_PLANNED_THREE_YEAR_PERIOD_TO_GU}
   - {id: PP303-RE-052, source: "14", rule: DEFINE_T_AS_MAXIMUM_PERMISSIBLE_OBJECT_DISRUPTION_TIME_IN_DAYS}
-  - {id: PP303-RE-053, source: "14", rule: MARK_FIRST_INDICATOR_4_FORMULA_AS_PENDING_IMAGE_BYTES}
-  - {id: PP303-RE-054, source: "14", rule: MARK_SECOND_INDICATOR_4_FORMULA_AS_PENDING_IMAGE_BYTES}
-  - {id: PP303-RE-055, source: "14", rule: BLOCK_INDICATOR_4_NUMERIC_CALCULATION_WITHOUT_BOTH_FORMULA_IMAGES}
-  - {id: PP303-RE-056, source: "14", rule: DO_NOT_INFER_INDICATOR_4_FORMULA_OPERATORS}
+  - {id: PP303-RE-053, source: "14", rule: REQUIRE_INDICATOR4_FORMULA_DELTA_DB_OVER_BSR_TIMES100_FROM_PRIMARY_PDF}
+  - {id: PP303-RE-054, source: "14", rule: REQUIRE_DELTA_DB_FORMULA_GU_OVER_365_DAYS_TIMES_T_FROM_PRIMARY_PDF}
+  - {id: PP303-RE-055, source: "14", rule: FAIL_CLOSED_INDICATOR4_WHEN_BSR_ZERO_OR_MISSING}
+  - {id: PP303-RE-056, source: "14", rule: DO_NOT_INSERT_ABSOLUTE_VALUE_OR_ALTER_INDICATOR4_PRIMARY_FORMULAS}
   - {id: PP303-RE-057, source: GUARD, rule: DO_NOT_TRANSFER_PP303_FEATURES_TO_ANOTHER_SECTOR}
   - {id: PP303-RE-058, source: GUARD, rule: DO_NOT_TRANSFER_PP303_FEATURES_TO_ANOTHER_ACTOR}
   - {id: PP303-RE-059, source: GUARD, rule: DO_NOT_TRANSFER_PP303_FEATURES_TO_ANOTHER_INFORMATION_SYSTEM}
   - {id: PP303-RE-060, source: GUARD, rule: DO_NOT_INVENT_SECTOR_SPECIFIC_CATEGORY_THRESHOLDS}
   - {id: PP303-RE-061, source: GUARD, rule: DO_NOT_INVENT_CATEGORIZATION_OR_SUBMISSION_DEADLINES}
-  - {id: PP303-RE-062, source: GUARD, rule: DO_NOT_CLAIM_FORMULA_VERIFICATION_FROM_VARIABLE_DESCRIPTIONS}
-  - {id: PP303-RE-063, source: GUARD, rule: DO_NOT_CLAIM_IMMUTABLE_OFFICIAL_BYTES_UNTIL_RETRIEVED}
+  - {id: PP303-RE-062, source: GUARD, rule: REQUIRE_FORMULA_OPERATORS_AND_GLYPHS_TO_MATCH_PRIMARY_PDF}
+  - {id: PP303-RE-063, source: GUARD, rule: REQUIRE_IMMUTABLE_OFFICIAL_PDF_SHA256_MATCH}
   - {id: PP303-RE-064, source: GUARD, rule: REQUIRE_INDEPENDENT_EXPERT_REVIEW_BEFORE_GLOBAL_PASS}
 verification_boundary:
   paragraphs_1_to_14: VERIFIED_PUBLIC_TEXT_CROSSCHECK
@@ -154,11 +171,11 @@ verification_boundary:
   sector_functions: VERIFIED_FOUR
   indicator_routes: VERIFIED_FOUR
   formula_text_descriptions: VERIFIED
-  formula_images: PENDING_IMMUTABLE_IMAGE_BYTES
-  numeric_formula_execution: BLOCKED_FAIL_CLOSED
+  formula_images: VERIFIED_THREE_OF_THREE_PRIMARY_PDF
+  numeric_formula_execution: EXECUTABLE_WITH_COMPLETE_VALID_INPUTS_ZERO_DENOMINATORS_FAIL_CLOSED
   pp127_threshold_values: VERIFIED_SEPARATE_CURRENT_MODEL
-  official_publication_record: VERIFIED_METADATA_DIRECT_PAGE_TIMEOUT
-  immutable_official_pdf_bytes: PENDING
+  official_publication_record: VERIFIED_METADATA_AND_PRIMARY_IMMUTABLE_PDF
+  immutable_official_pdf_bytes: VERIFIED_SHA256
   independent_expert_review: PENDING
   critical_gap_created: 0
   high_gap_created: 0
@@ -167,8 +184,9 @@ coverage:
   actors: 2
   sector_functions: 4
   indicator_routes: 4
-  formula_images_blocked: 3
+  formula_images_verified: 3
+  formula_images_blocked: 0
   control_rules: 64
   regression_cases: 64
-  models_after_run: 75
-  cases_after_run: 4237
+  models_after_run: 96
+  cases_after_run: 5565

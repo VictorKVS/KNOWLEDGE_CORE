@@ -12,13 +12,14 @@ def main():
     rules = {item["id"]: item["rule"] for item in model["control_rules"]}
     row = model["row108"]
     crosswalk = model["pp303_crosswalk"]
-    assert model["status"] == "VERIFIED_CURRENT_ROW108_WITH_CURRENT_PP303_FAIL_CLOSED_CROSSWALK"
+    assert model["status"] == "VERIFIED_CURRENT_ROW108_WITH_CURRENT_PP303_PRIMARY_FORMULAS_ZERO_DENOMINATORS_FAIL_CLOSED_CROSSWALK"
     assert row["okved"] == ["84.11.11", "84.11.12", "84.11.13"]
     assert row["automated_management_systems_in_object_column"] == "ABSENT"
     assert crosswalk["actors"] == ["ROSREESTR", "PPK_ROSKADASTR"]
     assert len(crosswalk["sector_functions"]) == 4
     assert crosswalk["pp127_routes"] == ["5(a)", "5(b)", "6", "9"]
-    assert crosswalk["numeric_formula_execution"] == "BLOCKED_PENDING_IMMUTABLE_OFFICIAL_BYTES"
+    assert crosswalk["numeric_formula_execution"] == "EXECUTABLE_WITH_COMPLETE_VALID_INPUTS_ZERO_DENOMINATORS_FAIL_CLOSED"
+    assert crosswalk["formula_images_verified"] == 3
     assert len(rules) == 48
     assert list(rules) == [f"RP360R-RE108-{i:03d}" for i in range(1, 49)]
     assert len(fixtures["cases"]) == 48
@@ -32,6 +33,6 @@ def main():
     if failures:
         for failure in failures: print("FAIL", failure)
         raise SystemExit(1)
-    print("PASS: RP RF 360-r row 108 and PP RF 303 crosswalk; 1 row, 3 activity codes, 2 actors, 4 functions/routes, 3 formula images blocked, 48 rules/cases")
+    print("PASS: RP RF 360-r row 108 and PP RF 303 crosswalk; 1 row, 3 activity codes, 2 actors, 4 functions/routes, 3/3 formula images verified, 48 rules/cases")
 
 if __name__ == "__main__": main()

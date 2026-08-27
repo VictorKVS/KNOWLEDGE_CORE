@@ -1,6 +1,6 @@
 record_id: PP-RF-303-2026-EGRN-KII-OVERLAY-V1
 status: VERIFIED_PRIMARY_IMMUTABLE
-as_of: "2026-08-17"
+as_of: "2026-08-27"
 title: "Sector-specific CII categorization overlay for state registration of real-estate rights and transactions"
 act:
   type: "Government Resolution"
@@ -15,6 +15,7 @@ sources:
   official_pdf_url: "http://publication.pravo.gov.ru/file/pdf?eoNumber=0001202603240036"
   preserved_artifact: "security-knowledge/evidence/primary-artifacts/2026/pp-rf-303-2026-0001202603240036.pdf"
   provenance_manifest: "security-knowledge/evidence/primary-artifact-pp-rf-303-2026.yaml"
+  formula_image_verification: "security-knowledge/evidence/pp-rf-303-2026-formula-image-verification-2026-08-27.yaml"
 scope:
   subjects:
     clause: 3
@@ -61,13 +62,16 @@ calculation_semantics:
     value: "Restoration and processed-information access recovery time after a computer incident, in hours."
   indicator_2:
     clause: 11
+    source_notation: "Показатель 2 = (Тпу − Тпростоя) / Тпу × 100%"
     formula: "((T_service - T_downtime) / T_service) * 100"
+    absolute_value_operator: absent
     unit: percent
     variables:
       T_service: "Statutory state-service delivery time under the Federal Law on State Registration of Real Estate, hours."
       T_downtime: "State-service downtime caused by restoration and information-access recovery, hours; equals indicator 1."
     validation:
       - "T_service must be greater than zero."
+      - "A zero or missing T_service denominator is not defined by the act and must fail closed."
       - "Inputs and result must not be silently clamped; anomalous values require review."
   indicator_3:
     clause: 12
@@ -75,7 +79,10 @@ calculation_semantics:
   indicator_4:
     clauses: [13, 14]
     method: "Expert assessment of maximum possible economic harm from cessation or disruption after a computer incident."
+    source_notation: "Показатель 4 = ΔДБ / Бср × 100%"
     formula: "(delta_budget_revenue / average_federal_budget_revenue) * 100"
+    absolute_value_operator: absent
+    delta_source_notation: "ΔДБ = ГУ / (365 суток) × T"
     delta_formula: "(annual_state_service_revenue / 365) * max_disruption_days"
     unit: percent
     variables:
@@ -85,7 +92,14 @@ calculation_semantics:
       max_disruption_days: "Maximum permissible cessation/disruption time, days."
     validation:
       - "average_federal_budget_revenue must be greater than zero."
+      - "A zero or missing average_federal_budget_revenue denominator is not defined by the act and must fail closed."
       - "annual_state_service_revenue and max_disruption_days must be non-negative."
+      - "The planned three-year periods are calculation periods, not evidence-retention terms."
+formula_visual_provenance:
+  official_pdf_sha256: "e93e8a0cba5bc7817c53b2f6a233ed2283e1cf9e1ee2a01e30281a4dced91079"
+  indicator_2: {pdf_page: 5, printed_page: 4, page_image_sha256: "050e876e5090ee7090cd3bb68efa6140e19e6853660af865284a037d484dd1f9", crop_sha256: "6b23abc756f0de2d844f9a3a54a5525208c61e59c95876ad6e066e97754960df"}
+  indicator_4: {pdf_page: 6, printed_page: 5, page_image_sha256: "3a96fadf5df3775b84df41d18043f31a8e322111d04208a0ae4a4b4fc87dd2cc", crop_sha256: "1230dc0fd4823b0177132b450d466ea7db2d8f96a71bb92f52aa3aa68d70bfc3"}
+  delta_budget_revenue: {pdf_page: 6, printed_page: 5, page_image_sha256: "3a96fadf5df3775b84df41d18043f31a8e322111d04208a0ae4a4b4fc87dd2cc", crop_sha256: "8cc6fd48fae5616f1da3c1ad26b4d0b8e386a61505dc8f4748d147d7f4060db9"}
 guardrails:
   - "Subject identity alone does not prove that every information system is in scope."
   - "Object identity alone does not prove significance or a category."
