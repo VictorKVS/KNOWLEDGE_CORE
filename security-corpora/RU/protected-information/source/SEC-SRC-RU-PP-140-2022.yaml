@@ -1,0 +1,138 @@
+schema_version: "1.0"
+source_id: SEC-SRC-RU-PP-140-2022
+title: "Постановление Правительства Российской Федерации от 09.02.2022 № 140 «О единой государственной информационной системе в сфере здравоохранения»"
+jurisdiction: RU
+source_type: government_decree
+sector: healthcare_information_systems
+regime: egisz_health_data_and_information_security
+status: SOURCE_PENDING_PRIMARY_EXACT_CAPTURE
+
+authority:
+  current_official_consolidation_url: "https://government.ru/docs/all/139211/"
+  current_official_consolidation_authority: "Правительство Российской Федерации"
+  current_official_pdf_url: "https://static.government.ru/media/files/vDARAPaBhOENFuH2snVFrAmp0ANK2tYx.pdf"
+  current_text_verified: true
+  current_revision_crosscheck: "26.12.2025"
+  current_effective_from: "2026-03-01"
+  current_valid_until: "2028-03-01"
+  current_revision_basis: "Официальная страница Правительства РФ содержит консолидированный текст в редакции постановлений № 2199/2022, № 2111/2023, № 261/2024, № 295/2025, № 582/2025, № 822/2025 и № 2164/2025. Поправки № 822 действуют с 01.03.2026; № 2164 — с 04.01.2026."
+  future_amendment:
+    act: "Постановление Правительства РФ от 02.03.2026 № 211"
+    effective_from: "2026-09-01"
+    status: FUTURE_NOT_CURRENT_AS_OF_2026_08_27
+    official_publication_id_crosscheck: "0001202603020026"
+
+original_publication:
+  signed_at: "2022-02-09"
+  publication_date: "2022-02-11"
+  official_publication_id_crosscheck: "0001202202110036"
+  publication_portal_document_url: "https://publication.pravo.gov.ru/document/0001202202110036"
+  official_pravo_new_arrivals_url: "https://www.pravo.gov.ru/novye-postupleniya/"
+  status: OFFICIAL_ACT_AND_PUBLICATION_DATE_VERIFIED_EXACT_PRIMARY_BINARY_PENDING
+  note: "Номер электронного опубликования подтвержден crosscheck-источниками; прямой exact-byte fetch publication.pravo.gov.ru в runtime недоступен. Счетчик primary_publication_verified не повышается до прямого первичного захвата/верификации."
+
+statutory_basis:
+  - target: "SEC-SRC-RU-FZ-323:article_91_1_part_2"
+    relation: GOVERNMENT_REGULATION_EXPLICITLY_AUTHORIZED_BY_323_FZ
+    status: DIRECT_STATUTORY_BASIS
+  - target: "SEC-SRC-RU-FZ-323:article_91_part_2"
+    relation: HEALTH_INFORMATION_SYSTEM_PDN_AND_MEDICAL_SECRECY_CONTEXT
+    status: CROSS_REGIME_CONTEXT_APPLICABILITY_REVIEW_REQUIRED
+
+protected_regime:
+  name: egisz_health_data_and_information_security
+  anchors:
+    - locator: "regulation_point_30"
+      type: information_security_subsystem
+      rule: "Подсистема защиты информации предназначена для защиты информации ЕГИСЗ от утечки по техническим каналам, несанкционированного доступа и иных неправомерных воздействий; реализует идентификацию и аутентификацию, управление доступом, регистрацию событий безопасности, антивирусную защиту, обнаружение/предотвращение вторжений, контроль защищенности, защиту технических средств, виртуализации и криптографическую защиту."
+    - locator: "regulation_point_30_cia"
+      type: confidentiality_integrity_availability
+      rule: "Подсистема защиты информации обеспечивает конфиденциальность, целостность и доступность информации ЕГИСЗ."
+    - locator: "regulation_point_63"
+      type: direct_pdn_and_information_security_reference
+      rule: "Информация ЕГИСЗ подлежит защите по законодательству об информации, информационных технологиях и защите информации, а также по законодательству Российской Федерации о персональных данных."
+    - locator: "regulation_point_64"
+      type: operator_security_obligation
+      rule: "Оператор ЕГИСЗ обеспечивает защиту организационными и техническими мерами и контролем эксплуатации системы."
+    - locator: "regulation_point_65"
+      type: security_lifecycle_controls
+      rule: "Для защиты информации предусматриваются требования к защите, функционирование/модернизация подсистемы защиты, применение сертифицированных ФСБ и/или ФСТЭК средств защиты, аттестация системы по требованиям защиты информации и защита при передаче по сетям."
+    - locator: "appendix_1_section_I_point_1"
+      type: medical_worker_person_level_dataset
+      rule: "Федеральный регистр медицинских и фармацевтических работников содержит ФИО, пол, дату и место рождения, гражданство, данные удостоверяющего личность документа, место жительства/регистрации и СНИЛС и иные предусмотренные сведения."
+    - locator: "appendix_1_federal_electronic_medical_documents_registry"
+      type: patient_medical_document_data_flow
+      rule: "В ЕГИСЗ размещаются сведения о медицинской документации пациента и медицинской организации; это отдельный медицинский data-flow, требующий сценарной проверки врачебной тайны и ПДн."
+    - locator: "regulation_point_56"
+      type: intersystem_exchange_graph
+      rule: "ЕГИСЗ взаимодействует с иными государственными и отраслевыми информационными системами; редакция № 2164/2025 добавила взаимодействие с единым федеральным регистром населения."
+
+pdn_relationship:
+  status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  relationship_type: DIRECT_STATUTORY_PDN_SECURITY_CONTEXT_IN_EGISZ
+  proof_guards:
+    - "EGISZ_SYSTEM_SCOPE != AUTOMATIC_152_FZ_APPLICABILITY_TO_EVERY_HEALTHCARE_PROCESS"
+    - "POINT_63_DIRECT_PDN_REFERENCE establishes a statutory PDN context for information in EGISZ but does not prove every external system/operation is in scope."
+    - "MEDICAL_DOCUMENT_IN_EGISZ != AUTOMATIC_MEDICAL_SECRECY_CLASSIFICATION_FOR_EVERY_FIELD; article 13/91 of 323-FZ and scenario-level content must be checked."
+    - "CERTIFIED_FSB_FSTEC_CONTROLS_IN_POINT_65 != AUTOMATIC_KII_CATEGORY_OR_187_FZ_APPLICABILITY."
+    - "No applicability without actor/system/record/operation/purpose/legal-basis proof."
+  overlap_candidates:
+    - target: "RU-152-FZ"
+      relation: DIRECT_STATUTORY_PDN_SECURITY_CONTEXT
+    - target: "SEC-SRC-RU-FZ-323"
+      relation: DIRECT_HEALTH_INFORMATION_SYSTEM_AND_MEDICAL_DOCUMENT_CONTEXT
+    - target: "SEC-SRC-RU-FZ-168-2020"
+      relation: INTERSYSTEM_EXCHANGE_WITH_FEDERAL_POPULATION_REGISTER_AFTER_2164_2025
+      status: CANDIDATE_RELATION_CURRENT_TEXT_VERIFIED
+    - target: "SEC-SRC-RU-FZ-326"
+      relation: INTERSYSTEM_EXCHANGE_WITH_OMS_INFORMATION_SYSTEM
+      status: CANDIDATE_RELATION_CURRENT_TEXT_VERIFIED
+
+version_chain:
+  status: PARTIAL_PRIMARY_CURRENT_TEXT_VERIFIED_EXACT_BINARY_PENDING
+  current_amendments:
+    - "30.11.2022 № 2199"
+    - "11.12.2023 № 2111"
+    - "04.03.2024 № 261"
+    - "08.03.2025 № 295"
+    - "30.04.2025 № 582"
+    - "31.05.2025 № 822"
+    - "26.12.2025 № 2164"
+  verified_recent_events:
+    - amendment: "31.05.2025 № 822"
+      official_publication_id: "0001202506020010"
+      publication_date: "2025-06-02"
+      effective_from_for_egisz_changes: "2026-03-01"
+      effect: "Изменяет специализированные регистры/реестры и связанные составы данных ЕГИСЗ."
+      status: PRIMARY_PUBLICATION_METADATA_VERIFIED_EXACT_BINARY_PENDING
+    - amendment: "26.12.2025 № 2164"
+      official_publication_id_crosscheck: "0001202512270032"
+      publication_date: "2025-12-27"
+      effective_from: "2026-01-04"
+      effect: "Изменяет состав пользователей/данных и пункт 56; добавляет взаимодействие ЕГИСЗ с единым федеральным регистром населения."
+      status: OFFICIAL_GOVERNMENT_CURRENT_TEXT_EFFECT_VERIFIED_EXACT_BINARY_PENDING
+    - amendment: "02.03.2026 № 211"
+      official_publication_id_crosscheck: "0001202603020026"
+      publication_date: "2026-03-02"
+      effective_from: "2026-09-01"
+      effect: "Будущая редакция: сведения/медицинские заключения для частных охранников и детективов, изменения точки взаимодействия с Росгвардией."
+      status: FUTURE_NOT_CURRENT_AS_OF_2026_08_27_EXACT_BINARY_PENDING
+
+binary_artifact:
+  status: PENDING
+  source_url: "https://static.government.ru/media/files/vDARAPaBhOENFuH2snVFrAmp0ANK2tYx.pdf"
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_path: null
+  acquisition_failure: TRANSIENT_DNS_NAME_RESOLUTION_FAILURE
+  note: "Exact-byte download from official Government/static and publication.pravo.gov.ru endpoints failed in runtime. Displayed PDF size was not used as byte_length."
+
+proof_floor:
+  taxonomy_used_as_evidence: false
+  primary_current_normative_act_used_as_evidence: true
+  overlap_is_applicability: false
+  future_amendment_promoted_to_current: false
+  displayed_pdf_size_used_as_exact_bytes: false
+  executable_rule_created: false
