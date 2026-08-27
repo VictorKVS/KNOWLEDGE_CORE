@@ -1,0 +1,42 @@
+schema_version: "1.0"
+id: PDN-MASTER-SOURCE-INVENTORY-STREAM2-RECONCILIATION-2026-08-27T0812Z
+applies_to: PDN_MASTER_SOURCE_INVENTORY.yaml
+stream: RU_PDN_TECHNICAL_CRYPTO
+created_at: "2026-08-27T08:12:25Z"
+merge_policy: >-
+  CONCURRENCY_SAFE_MASTER_OVERLAY. Apply this patch to the technical_security_stack aggregate without deleting source rows,
+  other stream counters or previously merged overlays. It reconciles one already-captured official FSB117 artifact that is
+  present in main but not yet reflected in the aggregate immutable/pending counters.
+
+effective_technical_security_stack:
+  identified: 41
+  metadata_verified: 41
+  immutable_sha256_verified: 18
+  pending_raw_capture: 23
+  exact_official_route_unresolved: 6
+  confirmed_conflicts: 0
+
+counter_delta:
+  identified: 0
+  metadata_verified: 0
+  immutable_sha256_verified: 1
+  pending_raw_capture: -1
+  exact_official_route_unresolved: 0
+  confirmed_conflicts: 0
+
+proof_basis:
+  source_id: SEC-SRC-RU-FSB117-2025
+  source_record: "security-stack/source/SEC-SRC-RU-FSB117-2025.yaml"
+  manifest: "security-stack/manifests/SEC-SRC-RU-FSB117-2025.json"
+  artifact: "security-stack/raw/SEC-SRC-RU-FSB117-2025/0001202503260008-0a740d4daa781466.pdf"
+  byte_length: 505389
+  sha256: "0a740d4daa78146661c6fc0ca803da29b72fdc2b8dec4d5be750a0c15c3ca3f6"
+  fingerprint_status: IMMUTABLE_CAPTURED
+
+legal_guards:
+  - FSB117 is not a universal private-ISPDN duty; its applicability is STATE_AND_ENUMERATED_PUBLIC_SYSTEMS_WHEN_SKZI_USED
+  - FSB replacement draft prepared 04.08.2026 is watch-only until final enactment evidence exists
+  - FSTEC21 replacement draft prepared 24.07.2026 is watch-only until final enactment evidence exists
+  - neighboring licensing, certification, KII, NKCKI and GosSOPKA regimes require explicit applicability evidence
+
+run_record: "security-stack/runs/STREAM2_RUN_2026-08-27T0812Z.yaml"
