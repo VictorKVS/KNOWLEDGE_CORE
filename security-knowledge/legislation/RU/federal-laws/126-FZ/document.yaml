@@ -1,7 +1,7 @@
 schema_version: "1.0"
 id: SEC-SRC-RU-FZ-126
 kind: regulatory-source
-status: INGESTED
+status: PARTIAL_VERIFIED_SECURITY_SLICE
 jurisdiction: RU
 authority_level: federal_law
 number: "126-ФЗ"
@@ -17,7 +17,11 @@ uploaded_source:
   note: "Original ODT is retained as an uploaded working source; GitHub currently stores normalized knowledge artifacts and the immutable fingerprint."
 revision_evidence:
   source_lists_changes_through: "2026-08-04"
-  verification_state: SOURCE_TEXT_AVAILABLE
+  current_consolidated_revision_date: "2026-02-20"
+  changes_effective_through: "2026-07-01"
+  future_changes_prepared: true
+  future_article_64_change_from: "2027-03-01"
+  verification_state: CURRENT_SECURITY_SLICE_VERIFIED
 content_profile:
   pages_in_uploaded_render: 114
   domains:
@@ -35,5 +39,13 @@ extraction_state:
   links_complete: false
   seed_requirements_present: true
 provenance:
-  extraction_basis: uploaded_user_document
+  extraction_basis: uploaded_user_document_plus_current_authoritative_consolidated_text
+  current_text_url: "https://www.consultant.ru/document/cons_doc_LAW_43224/"
+  current_text_checked_at: "2026-08-27"
   review_required: true
+verified_slices:
+  - id: RU-126FZ-SECURITY-SLICE-V1
+    articles: ["7", "12", "53", "63", "64"]
+    model: security-knowledge/legislation/RU/federal-laws/126-FZ/requirements/security-relevant-atomic-v1.yaml
+    regression: security-knowledge/legislation/RU/federal-laws/126-FZ/requirements/security-relevant-regression-v1.json
+    completeness: BOUNDED_SECURITY_RELEVANT_SLICE_NOT_FULL_LAW
