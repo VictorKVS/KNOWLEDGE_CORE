@@ -2,13 +2,14 @@ schema_version: "1.0"
 id: RU-PP719-PP445-STORAGE-MEANS-PRODUCTION-CONFIRMATION-ATOMIC-V1
 title: "ПП РФ № 719: реестровое подтверждение производства средств хранения для ПП № 445"
 checked_at: "2026-08-27"
-status: VERIFIED_CURRENT_REGISTRY_ROUTE_PRODUCT_SPECIFIC_REQUIREMENTS_PENDING
+status: VERIFIED_CURRENT_REGISTRY_AND_LINKED_STORAGE_SYSTEM_PRODUCT_REQUIREMENTS_LIVE_RECORD_PENDING
 scope: >-
   Действующий общий маршрут подтверждения производства российской промышленной
   продукции и ведения реестра по ПП РФ № 719 применительно только к проверке
-  пункта 4(1) Правил ПП РФ № 445. Модель не подтверждает конкретную систему
-  хранения, не воспроизводит требования раздела IX для каждого кода продукции
-  и не заменяет проверку живой реестровой записи на дату установки.
+  пункта 4(1) Правил ПП РФ № 445. Точные требования раздела IX для систем
+  хранения вынесены в связанную модель; настоящая модель не подтверждает
+  конкретное изделие и не заменяет проверку живой реестровой записи на дату
+  установки.
 
 sources:
   pp719:
@@ -33,6 +34,7 @@ linked_requirement:
   source: "ПП РФ № 445, Правила, пункт 4(1)"
   rule: STORAGE_MEANS_MUST_HAVE_VALID_RUSSIAN_INDUSTRIAL_PRODUCTION_CONFIRMATION_AT_INSTALLATION
   model: security-knowledge/legislation/RU/government-decrees/445/article64-content-retention-atomic-v1.yaml
+  product_specific_model: security-knowledge/legislation/RU/government-decrees/719/section-ix-storage-systems-requirements-atomic-v1.yaml
 
 temporal_model:
   - id: PP719_ORIGINAL_ACT
@@ -86,7 +88,7 @@ atomic_rules:
   - {id: PP719-R031, locator: "ПП № 445, пункт 4(1)", rule: AUDIT_MATCHES_RECORD_TO_EXACT_STORAGE_PRODUCT_AND_INSTALLATION_DATE}
   - {id: PP719-R032, locator: "ПП № 445, пункт 4(1)", rule: EXPIRED_OR_EXCLUDED_RECORD_DOES_NOT_PROVE_VALID_CONFIRMATION_AT_INSTALLATION}
   - {id: PP719-R033, locator: "ПП № 1026, пункт 3", rule: DO_NOT_APPLY_AMENDMENT_POINTS_2_TO_6_BEFORE_2027_01_01}
-  - {id: PP719-R034, locator: "scope boundary", rule: LIVE_RECORD_AND_SECTION_IX_PRODUCT_CRITERIA_REQUIRE_SEPARATE_PRODUCT_SPECIFIC_VERIFICATION, strength: FAIL_CLOSED}
+  - {id: PP719-R034, locator: "scope boundary", rule: LINKED_SECTION_IX_MODEL_MUST_PASS_AND_LIVE_PRODUCT_RECORD_REQUIRES_SEPARATE_VERIFICATION, strength: FAIL_CLOSED}
 
 evidence_model:
   - {id: E719-01, proves: [PP719-R001, PP719-R002, PP719-R003], artifacts: [APPLICABLE_CONFIRMATION_BASIS]}
@@ -114,7 +116,7 @@ red_team_guardrails:
   - DO_NOT_TREAT_THREE_OR_FIVE_YEAR_MAXIMUM_AS_UNIVERSAL_FOR_EVERY_CONFIRMATION_BASIS
   - DO_NOT_IGNORE_EARLY_EXCLUSION_OR_ANNUAL_REPORTING_FAILURE
   - DO_NOT_APPLY_PP1026_POINTS_2_TO_6_BEFORE_2027_01_01
-  - DO_NOT_INFER_SECTION_IX_STORAGE_SYSTEM_THRESHOLDS_NOT_VERIFIED_IN_THIS_MODEL
+  - DO_NOT_REIMPLEMENT_SECTION_IX_STORAGE_SYSTEM_THRESHOLDS_OUTSIDE_THE_LINKED_MODEL
   - DO_NOT_TREAT_GISP_TRANSPORT_FAILURE_AS_PROOF_OF_ABSENCE
 
 verification_boundary:
@@ -122,7 +124,7 @@ verification_boundary:
   current_record_composition_and_lifecycle: VERIFIED
   pp1026_official_publication_and_effective_split: VERIFIED
   pp445_installation_evidence_route: VERIFIED_FAIL_CLOSED
-  section_ix_storage_system_exact_operations_points_and_thresholds: PENDING_PRODUCT_SPECIFIC_ATOMIZATION
+  section_ix_storage_system_exact_operations_points_and_thresholds: VERIFIED_BY_LINKED_MODEL
   live_registry_snapshot_for_each_installed_storage_product: PENDING_PER_IMPLEMENTATION
   current_consolidated_immutable_bytes: PENDING
   historical_pre_2024_registry_routes: PENDING

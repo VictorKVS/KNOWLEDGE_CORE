@@ -91,7 +91,7 @@ def main():
     assert model["sources"]["pp1026"]["official_publication_date"] == "2026-08-21"
     assert model["sources"]["pp1026"]["amendment_points_2_to_6_effective_from"] == "2027-01-01"
     assert model["verification_boundary"]["current_pp719_general_registry_route"] == "VERIFIED"
-    assert model["verification_boundary"]["section_ix_storage_system_exact_operations_points_and_thresholds"].startswith("PENDING")
+    assert model["verification_boundary"]["section_ix_storage_system_exact_operations_points_and_thresholds"] == "VERIFIED_BY_LINKED_MODEL"
     assert model["verification_boundary"]["critical_gap_created"] is False
     assert model["verification_boundary"]["high_gap_created"] is False
     assert len(fixtures["cases"]) == 52

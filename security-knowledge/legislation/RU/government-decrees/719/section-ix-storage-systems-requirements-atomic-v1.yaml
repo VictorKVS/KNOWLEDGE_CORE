@@ -1,0 +1,225 @@
+schema_version: "1.0"
+id: RU-PP719-SECTION-IX-STORAGE-SYSTEMS-REQUIREMENTS-ATOMIC-V1
+title: "ПП РФ № 719, раздел IX: системы хранения данных — обязательные требования, операции, формулы и пороги"
+checked_at: "2026-08-27"
+status: VERIFIED_CURRENT_REQUIREMENTS_POINTS_FORMULAS_AND_THRESHOLD_LIVE_RECORD_PENDING
+scope: >-
+  Позиция раздела IX приложения к ПП РФ № 719 с кодом ОКПД2 26.20.2,
+  за исключением 26.20.21 и 26.20.22, только в отношении систем хранения
+  данных. Модель определяет требования к продукции, но не подтверждает
+  наличие действующей записи конкретной модели изделия в реестре ГИСП.
+
+sources:
+  current_pp719:
+    act: "Постановление Правительства РФ от 17.07.2015 № 719"
+    current_revision_label: "2026-08-19"
+    section_ix: "https://www.consultant.ru/document/cons_doc_LAW_183175/bd619500675e317ea6264602152bfd3a9bf6e1f3/"
+    current_index: "https://www.consultant.ru/document/cons_doc_LAW_183175/"
+  pp1599:
+    act: "Постановление Правительства РФ от 13.09.2022 № 1599"
+    official_publication_date: "2022-09-15"
+    official_publication: "https://publication.pravo.gov.ru/Document/View/0001202209150028"
+    authoritative_full_text: "https://normativ.kontur.ru/document?documentId=473977&moduleId=1"
+    effective_from: "2022-10-15"
+    effective_rule: "истечение 30 дней со дня официального опубликования"
+  formula_images:
+    electronic_modules:
+      url: "https://normativ.kontur.ru/image?imageId=155146&moduleId=1"
+      sha256: "13b38502a837fecbaf91b1077ac5ad8b1c011252c8ede3273239bdc1f9ec020a"
+      bytes: 2332
+      glyph_preserved: "B = Σ_(i = 1, 2 … K) (B_i / K_i)"
+    proportional_operations:
+      url: "https://normativ.kontur.ru/image?imageId=155145&moduleId=1"
+      sha256: "c57d0e0ccd287eaf32a8c56792cf5b94d660d4bc57b01e6c8b071516b62a7612"
+      bytes: 1395
+      glyph_preserved: "B = B_top × K"
+
+product_key:
+  okpd2: "26.20.2"
+  exclusions: ["26.20.21", "26.20.22"]
+  description: "Устройства запоминающие и прочие устройства хранения данных (только в отношении систем хранения данных)"
+  exact_product_and_code_match_required: true
+
+temporal_thresholds:
+  - {id: THRESHOLD-2022, through: "2022-12-31", minimum_points: 110, status: HISTORICAL}
+  - {id: THRESHOLD-2023, from: "2023-01-01", through: "2023-12-31", minimum_points: 120, status: HISTORICAL}
+  - {id: THRESHOLD-2024-PLUS, from: "2024-01-01", minimum_points: 150, status: CURRENT}
+
+formula_model:
+  electronic_modules:
+    exact_glyph: "B = Σ_(i = 1, 2 … K) (B_i / K_i)"
+    B: "суммарное количество баллов за применение электронных модулей"
+    K: "количество неповторяющихся электронных модулей по спецификации изделия"
+    K_i: "общее количество неповторяющихся электронных модулей i-го вида по спецификации"
+    B_i: "баллы i-го неповторяющегося электронного модуля"
+    zero_denominator: BLOCK_UNREGULATED
+    special_k_equals_one_multiplier: NOT_PRESENT_FOR_THIS_STORAGE_SYSTEM_ROW
+  proportional_operations:
+    exact_glyph: "B = B_top × K"
+    B_top: "верхняя величина баллов конкретной операции"
+    K: "доля российских элементов соответствующего вида, определенная текстом строки"
+    denominator_zero: BLOCK_OPERATION_NOT_COMPUTABLE
+    clamp_outside_zero_one: BLOCK_SOURCE_DATA_INVALID
+
+mandatory_requirements_20_points:
+  all_required: true
+  requirements:
+    - RUSSIAN_TAX_RESIDENT_ENTITY_NOT_UNDER_ENUMERATED_FOREIGN_CONTROL
+    - RIGHTS_TO_DESIGN_AND_TECHNOLOGICAL_DOCUMENTATION_SUFFICIENT_FOR_DESIGN_PRODUCTION_MODERNIZATION_AND_DEVELOPMENT_IN_RUSSIA
+    - TECHNICAL_CONDITIONS
+    - FINISHED_PRODUCT_SPECIFICATION_WITH_ASSEMBLIES_AND_PARTS
+    - OPERATION_MANUAL_OR_INSTRUCTION
+    - PRODUCT_DIVISION_SCHEME
+    - FUNCTIONAL_ELECTRICAL_DIAGRAM
+    - TECHNOLOGICAL_INSTRUCTION
+    - RIGHTS_TO_USE_MODIFY_MODERNIZE_AND_CHANGE_EMBEDDED_BIOS_FIRMWARE
+    - FIRMWARE_SOURCE_TEXTS_AND_BINARY_MICROCODE_FILES
+    - FIRMWARE_COMPILATION_AND_BUILD_MANUAL
+    - TRADEMARK_EXCLUSIVE_OR_USE_RIGHTS_WITH_QUALIFYING_RUSSIAN_RIGHTHOLDER_IF_MARK_EXISTS
+    - RUSSIAN_SERVICE_CENTER_FOR_REPAIR_WARRANTY_AND_POST_WARRANTY_SERVICE
+    - OWN_OR_CONTRACT_RUSSIAN_RESEARCH_AND_PRODUCTION_BASE
+  awarded_points_if_complete: 20
+
+operations:
+  - id: OP-CPU
+    condition: IF_APPLICABLE_AND_FOOTNOTE_28_CONDITION_MET
+    requirement: RUSSIAN_FIRST_OR_SECOND_LEVEL_CENTRAL_PROCESSOR
+    points: 50
+  - id: OP-ELECTRONIC-MODULES
+    condition: FOOTNOTE_34_REQUIRES_RUSSIAN_SYSTEM_MAIN_BOARD_WITH_AT_LEAST_50_POINTS
+    requirement: RUSSIAN_ELECTRONIC_MODULES
+    formula: "B = Σ_(i = 1, 2 … K) (B_i / K_i)"
+  - id: OP-CABLE-ASSEMBLIES
+    okpd2: "27.3"
+    B_top: 5
+    K: RUSSIAN_CABLE_ASSEMBLY_COUNT_DIVIDED_BY_TOTAL_CABLE_ASSEMBLY_COUNT
+    formula: "B = B_top × K"
+  - id: OP-CHASSIS
+    okpd2: "26.20.4"
+    B_top: 20
+    K: RUSSIAN_CHASSIS_COUNT_DIVIDED_BY_TOTAL_CHASSIS_COUNT
+    formula: "B = B_top × K"
+  - id: OP-POWER-SUPPLIES
+    okpd2: "26.20.40.110"
+    B_top: 10
+    K: RUSSIAN_POWER_SUPPLY_COUNT_DIVIDED_BY_TOTAL_POWER_SUPPLY_COUNT
+    formula: "B = B_top × K"
+  - id: OP-BATTERIES
+    okpd2: "27.2"
+    B_top: 10
+    K: RUSSIAN_BATTERY_COUNT_DIVIDED_BY_TOTAL_BATTERY_COUNT
+    formula: "B = B_top × K"
+  - id: OP-FIRMWARE-WRITE
+    requirement: WRITE_FIRMWARE_TO_NONVOLATILE_MEMORY_IN_RUSSIA
+    points: 5
+    mandatory: true
+    no_double_count_rule_footnote_32: true
+  - id: OP-ASSEMBLY-TEST-ACCEPTANCE
+    requirement: ASSEMBLY_INSTALLATION_FUNCTIONAL_TEST_AND_TECHNICAL_CONTROL_AGAINST_TECHNICAL_CONDITIONS_IN_RUSSIA
+    points: 10
+    mandatory: true
+  - id: OP-MICROCONTROLLER-OR-NPU
+    requirement: RUSSIAN_FIRST_OR_SECOND_LEVEL_CENTRAL_MICROCONTROLLER_EXCLUDING_CHIPSET_OR_COMMUNICATION_PROCESSOR
+    B_top: 30
+    K: QUALIFYING_UNIT_COUNT_DIVIDED_BY_TOTAL_CENTRAL_MICROCONTROLLER_AND_COMMUNICATION_PROCESSOR_COUNT_PER_SPECIFICATION
+    formula: "B = B_top × K"
+    no_double_count_rule_footnote_32: true
+  - id: OP-OTHER-ECB
+    requirement: OTHER_RUSSIAN_ELECTRONIC_COMPONENT_BASE
+    B_top: 20
+    K: RUSSIAN_COMPONENT_TYPENOMINAL_COUNT_DIVIDED_BY_TOTAL_TYPENOMINAL_COUNT_PER_SPECIFICATION
+    formula: "B = B_top × K"
+    no_double_count_rule_footnote_32: true
+
+module_score_routes:
+  - id: MODULE-WITH-CONFIRMATION
+    B_i: SCORE_IN_MODULE_PRODUCTION_CONFIRMATION
+  - id: MODULE-WITHOUT-CONFIRMATION
+    B_i: ACTUAL_OPERATION_SCORE
+    condition: MODULE_SCORE_MUST_MEET_ITS_OWN_MINIMUM_RECOGNITION_THRESHOLD
+  - id: LEGACY-MODULE-CONFIRMATION-WITHOUT-SCORING
+    B_i: 50
+
+atomic_rules:
+  - {id: PP719-SDS-R001, locator: "раздел IX, позиция 26.20.2", rule: APPLY_ONLY_TO_STORAGE_SYSTEMS_UNDER_26_20_2_EXCLUDING_26_20_21_AND_26_20_22}
+  - {id: PP719-SDS-R002, locator: "позиция, обязательные требования", rule: ALL_MANDATORY_REQUIREMENTS_TOGETHER_AWARD_20_POINTS}
+  - {id: PP719-SDS-R003, locator: "позиция, обязательные требования", rule: ENTITY_MUST_BE_RUSSIAN_TAX_RESIDENT_AND_NOT_UNDER_ENUMERATED_FOREIGN_CONTROL}
+  - {id: PP719-SDS-R004, locator: "позиция, документация", rule: QUALIFYING_DOCUMENTATION_RIGHTS_MUST_COVER_DESIGN_PRODUCTION_MODERNIZATION_AND_DEVELOPMENT_IN_RUSSIA}
+  - {id: PP719-SDS-R005, locator: "позиция, документация", rule: DOCUMENT_SET_MUST_INCLUDE_ALL_SIX_ENUMERATED_TECHNICAL_DOCUMENTS}
+  - {id: PP719-SDS-R006, locator: "позиция, firmware", rule: FIRMWARE_RIGHTS_MUST_COVER_USE_MODIFICATION_MODERNIZATION_AND_CHANGE}
+  - {id: PP719-SDS-R007, locator: "позиция, firmware", rule: FIRMWARE_EVIDENCE_MUST_INCLUDE_SOURCE_BINARY_MICROCODES_AND_BUILD_MANUAL}
+  - {id: PP719-SDS-R008, locator: "позиция, товарный знак", rule: TRADEMARK_RIGHTS_REQUIRED_ONLY_IF_TRADEMARK_EXISTS_AND_RIGHTHOLDER_MUST_QUALIFY}
+  - {id: PP719-SDS-R009, locator: "позиция, сервис", rule: RUSSIAN_REPAIR_WARRANTY_AND_POST_WARRANTY_SERVICE_CENTER_REQUIRED}
+  - {id: PP719-SDS-R010, locator: "позиция, база", rule: OWN_OR_CONTRACT_RUSSIAN_RESEARCH_AND_PRODUCTION_BASE_REQUIRED}
+  - {id: PP719-SDS-R011, locator: "операция CPU", rule: QUALIFYING_FIRST_OR_SECOND_LEVEL_RUSSIAN_CPU_AWARDS_50_POINTS_IF_APPLICABLE}
+  - {id: PP719-SDS-R012, locator: "операция модулей", rule: MODULE_SCORE_USES_EXACT_SUM_OF_BI_DIVIDED_BY_KI_GLYPH_ROUTE}
+  - {id: PP719-SDS-R013, locator: "сноска 34", rule: MODULE_SCORE_ROUTE_REQUIRES_RUSSIAN_SYSTEM_MAIN_BOARD_WITH_AT_LEAST_50_POINTS}
+  - {id: PP719-SDS-R014, locator: "операция модулей", rule: MODULE_CONFIRMATION_SUPPLIES_BI_WHERE_AVAILABLE}
+  - {id: PP719-SDS-R015, locator: "операция модулей", rule: UNCONFIRMED_MODULE_USES_ACTUAL_OPERATIONS_ONLY_IF_OWN_MINIMUM_IS_MET}
+  - {id: PP719-SDS-R016, locator: "операция модулей", rule: LEGACY_NONSCORED_MODULE_CONFIRMATION_USES_BI_EQUAL_50}
+  - {id: PP719-SDS-R017, locator: "операция кабельных сборок", rule: CABLE_ASSEMBLY_BTOP_IS_5_AND_K_IS_RUSSIAN_COUNT_OVER_TOTAL}
+  - {id: PP719-SDS-R018, locator: "операция шасси", rule: CHASSIS_BTOP_IS_20_AND_K_IS_RUSSIAN_COUNT_OVER_TOTAL}
+  - {id: PP719-SDS-R019, locator: "операция блоков питания", rule: POWER_SUPPLY_BTOP_IS_10_AND_K_IS_RUSSIAN_COUNT_OVER_TOTAL}
+  - {id: PP719-SDS-R020, locator: "операция батарей", rule: BATTERY_BTOP_IS_10_AND_K_IS_RUSSIAN_COUNT_OVER_TOTAL}
+  - {id: PP719-SDS-R021, locator: "операция firmware", rule: FIRMWARE_WRITE_IN_RUSSIA_IS_MANDATORY_AND_AWARDS_5_POINTS}
+  - {id: PP719-SDS-R022, locator: "операция сборки", rule: ASSEMBLY_INSTALLATION_FUNCTIONAL_TEST_AND_TECHNICAL_CONTROL_IN_RUSSIA_IS_MANDATORY_AND_AWARDS_10_POINTS}
+  - {id: PP719-SDS-R023, locator: "операция MCU/NPU", rule: MCU_OR_NPU_BTOP_IS_30_AND_K_USES_QUALIFYING_COUNT_OVER_TOTAL_COUNT}
+  - {id: PP719-SDS-R024, locator: "операция прочей ЭКБ", rule: OTHER_ECB_BTOP_IS_20_AND_K_USES_RUSSIAN_TYPENOMINALS_OVER_TOTAL_TYPENOMINALS}
+  - {id: PP719-SDS-R025, locator: "формула долевых операций", rule: ALL_PROPORTIONAL_OPERATION_SCORES_USE_B_EQUALS_BTOP_TIMES_K}
+  - {id: PP719-SDS-R026, locator: "сноска 32", rule: DO_NOT_DOUBLE_COUNT_POINTS_ALREADY_COUNTED_IN_INCLUDED_ELECTRONIC_MODULE}
+  - {id: PP719-SDS-R027, locator: "примечание 26", rule: MINIMUM_THROUGH_2022_12_31_IS_110}
+  - {id: PP719-SDS-R028, locator: "примечание 26", rule: MINIMUM_FROM_2023_01_01_THROUGH_2023_12_31_IS_120}
+  - {id: PP719-SDS-R029, locator: "примечание 26", rule: MINIMUM_FROM_2024_01_01_IS_150}
+  - {id: PP719-SDS-R030, locator: "formula guard", rule: ZERO_DENOMINATOR_IS_NOT_DEFINED_AND_MUST_BLOCK_CALCULATION, strength: FAIL_CLOSED}
+  - {id: PP719-SDS-R031, locator: "formula guard", rule: K_OUTSIDE_ZERO_TO_ONE_FOR_PROPORTIONAL_OPERATION_IS_INVALID_SOURCE_DATA, strength: FAIL_CLOSED}
+  - {id: PP719-SDS-R032, locator: "scope guard", rule: DO_NOT_APPLY_STORAGE_SYSTEM_ROW_TO_26_20_21_OR_26_20_22}
+  - {id: PP719-SDS-R033, locator: "scope guard", rule: DO_NOT_TREAT_POINTS_AS_RETENTION_OR_RESPONSE_DEADLINES}
+  - {id: PP719-SDS-R034, locator: "qualification", rule: MANDATORY_REQUIREMENTS_AND_MANDATORY_OPERATIONS_MUST_PASS_IN_ADDITION_TO_POINT_THRESHOLD}
+  - {id: PP719-SDS-R035, locator: "qualification", rule: CURRENT_2026_POINT_THRESHOLD_IS_150}
+  - {id: PP719-SDS-R036, locator: "evidence boundary", rule: PRODUCT_SPECIFICATION_DRIVES_COUNTS_AND_APPLICABILITY}
+  - {id: PP719-SDS-R037, locator: "evidence boundary", rule: LIVE_GISP_RECORD_MUST_MATCH_EXACT_PRODUCT_MODEL_CODE_AND_RELEVANT_DATE}
+  - {id: PP719-SDS-R038, locator: "evidence boundary", rule: SECTION_IX_SCORE_ALONE_DOES_NOT_PROVE_ACTIVE_REGISTRY_STATUS}
+  - {id: PP719-SDS-R039, locator: "formula glyph", rule: DO_NOT_REPLACE_SOURCE_SUM_GLYPH_WITH_AVERAGE_OR_UNWEIGHTED_MODULE_COUNT}
+  - {id: PP719-SDS-R040, locator: "temporal guard", rule: DO_NOT_APPLY_110_OR_120_POINT_HISTORICAL_THRESHOLD_TO_2026}
+
+evidence_model:
+  - {id: E719-SDS-01, proves: [PP719-SDS-R001, PP719-SDS-R032], artifacts: [OKPD2_CODE, PRODUCT_DESCRIPTION_AND_SCOPE]}
+  - {id: E719-SDS-02, proves: [PP719-SDS-R002, PP719-SDS-R003], artifacts: [RUSSIAN_TAX_RESIDENCY, FOREIGN_CONTROL_DECLARATION_AND_CORPORATE_CHAIN]}
+  - {id: E719-SDS-03, proves: [PP719-SDS-R004, PP719-SDS-R005], artifacts: [RIGHTS_DOCUMENTS, SIX_DOCUMENT_SET]}
+  - {id: E719-SDS-04, proves: [PP719-SDS-R006, PP719-SDS-R007], artifacts: [FIRMWARE_RIGHTS, SOURCE_AND_BINARY_FILES, BUILD_MANUAL]}
+  - {id: E719-SDS-05, proves: [PP719-SDS-R008], artifacts: [TRADEMARK_STATUS_AND_RIGHTS_IF_APPLICABLE]}
+  - {id: E719-SDS-06, proves: [PP719-SDS-R009, PP719-SDS-R010], artifacts: [SERVICE_CENTER, RUSSIAN_RESEARCH_AND_PRODUCTION_BASE]}
+  - {id: E719-SDS-07, proves: [PP719-SDS-R011, PP719-SDS-R023], artifacts: [CPU_MCU_NPU_CONFIRMATIONS, PRODUCT_SPECIFICATION]}
+  - {id: E719-SDS-08, proves: [PP719-SDS-R012, PP719-SDS-R013, PP719-SDS-R014, PP719-SDS-R015, PP719-SDS-R016], artifacts: [MODULE_SPECIFICATION, MODULE_CONFIRMATIONS, MODULE_OPERATION_SCORES, SYSTEM_BOARD_SCORE]}
+  - {id: E719-SDS-09, proves: [PP719-SDS-R017, PP719-SDS-R018], artifacts: [CABLE_AND_CHASSIS_ORIGIN_AND_COUNTS]}
+  - {id: E719-SDS-10, proves: [PP719-SDS-R019, PP719-SDS-R020], artifacts: [POWER_SUPPLY_AND_BATTERY_ORIGIN_AND_COUNTS]}
+  - {id: E719-SDS-11, proves: [PP719-SDS-R021, PP719-SDS-R022], artifacts: [FIRMWARE_WRITE_LOG, ASSEMBLY_INSTALLATION_TEST_AND_ACCEPTANCE_RECORDS]}
+  - {id: E719-SDS-12, proves: [PP719-SDS-R024, PP719-SDS-R025], artifacts: [ECB_TYPENOMINAL_LIST, CALCULATION_WORKBOOK]}
+  - {id: E719-SDS-13, proves: [PP719-SDS-R026], artifacts: [NO_DOUBLE_COUNT_RECONCILIATION]}
+  - {id: E719-SDS-14, proves: [PP719-SDS-R027, PP719-SDS-R028, PP719-SDS-R029, PP719-SDS-R035, PP719-SDS-R040], artifacts: [AS_OF_DATE, THRESHOLD_ROUTE]}
+  - {id: E719-SDS-15, proves: [PP719-SDS-R030, PP719-SDS-R031, PP719-SDS-R039], artifacts: [FORMULA_INPUT_VALIDATION, SOURCE_FORMULA_IMAGE_HASHES]}
+  - {id: E719-SDS-16, proves: [PP719-SDS-R033, PP719-SDS-R034, PP719-SDS-R036], artifacts: [QUALIFICATION_DECISION, MANDATORY_CHECKLIST, PRODUCT_SPECIFICATION]}
+  - {id: E719-SDS-17, proves: [PP719-SDS-R037, PP719-SDS-R038], artifacts: [LIVE_GISP_RECORD_SNAPSHOT, MODEL_CODE_AND_DATE_MATCH]}
+  - {id: E719-SDS-18, proves: [PP719-SDS-R001, PP719-SDS-R029], artifacts: [CURRENT_SECTION_IX_CONSOLIDATED_TEXT, PP1599_OFFICIAL_PUBLICATION]}
+
+red_team_guardrails:
+  - DO_NOT_USE_150_POINTS_WITHOUT_ALL_MANDATORY_REQUIREMENTS
+  - DO_NOT_USE_150_POINTS_WITHOUT_FIRMWARE_WRITE_AND_ASSEMBLY_TEST_ACCEPTANCE_OPERATIONS
+  - DO_NOT_REPLACE_BI_DIVIDED_BY_KI_SUM_WITH_SUM_BI_OR_AVERAGE_BI
+  - DO_NOT_APPLY_K_EQUALS_ONE_MULTIPLIER_FROM_OTHER_PRODUCT_ROWS
+  - DO_NOT_COUNT_MODULE_POINTS_TWICE_IN_FINISHED_PRODUCT
+  - DO_NOT_ALLOW_ZERO_DENOMINATORS_OR_K_OUTSIDE_ZERO_TO_ONE
+  - DO_NOT_APPLY_THIS_ROW_TO_STANDALONE_STORAGE_DEVICES_26_20_21_OR_26_20_22
+  - DO_NOT_TREAT_SCORE_CALCULATION_AS_LIVE_GISP_RECORD_PROOF
+
+verification_boundary:
+  current_code_scope: VERIFIED
+  mandatory_requirements_and_20_points: VERIFIED
+  operations_points_and_applicability: VERIFIED
+  formula_glyphs_and_image_hashes: VERIFIED
+  current_150_point_threshold: VERIFIED
+  live_registry_snapshot_for_installed_product: PENDING_PER_IMPLEMENTATION
+  current_consolidated_official_immutable_bytes: PENDING
+  independent_expert_review: PENDING
+  critical_gap_created: false
+  high_gap_created: false
