@@ -1,0 +1,114 @@
+schema_version: "1.0"
+stream: 3
+run_id: "stream-3-run-2026-08-27T2324"
+started_at: "2026-08-27T23:24:55+03:00"
+focus: "healthcare / patient access to medical documentation / Minzdrav 1050n"
+
+result:
+  new_source_nodes: 1
+  new_sector_regimes: 0
+  existing_sources_enriched: 0
+  durable_downloads: 0
+  immutable_artifacts: 0
+  pending_exact_capture: 1
+  applicability_promotions: 0
+  legal_conflicts_confirmed: 0
+  primary_publication_verified_increment: 1
+
+new_sources:
+  - source_id: SEC-SRC-RU-MINZDRAV-ORDER-1050N-2021
+    status: PRIMARY_PUBLICATION_VERIFIED_OPERATIONAL_CROSSCHECK_VERSION_CHAIN_PARTIAL_EXACT_BINARY_PENDING
+    title: "Приказ Минздрава России от 12.11.2021 № 1050н"
+    official_publication_id: "0001202111260035"
+    publication_date: "2021-11-26"
+    minjust_registration_number: "66007"
+
+primary_evidence:
+  - kind: official_publication_index
+    authority: "Официальный интернет-портал правовой информации"
+    act: "12.11.2021 № 1050н"
+    verified:
+      - "title/date/number"
+      - "Minjust registration 26.11.2021 № 66007"
+      - "publication id 0001202111260035"
+      - "publication date 26.11.2021"
+  - kind: official_minzdrav_operational_guidance
+    authority: "Министерство здравоохранения Российской Федерации"
+    verified:
+      - "Template 8 expressly states it is provided pursuant to order 1050n"
+      - "authorized-person access context linked to medical secrecy"
+      - "request person-level identity/contact fields"
+      - "2 working day notification plus 5 working day review window"
+
+version_chain:
+  state: PARTIAL
+  currentness_model: PRIMARY_ISSUANCE_PLUS_OFFICIAL_2024_OPERATIONAL_CROSSCHECK
+  repeal_replacement_sweep: "No primary repeal/replacement act found in this pass; this absence is not treated as complete-history proof."
+  validity_end_crosscheck: "2028-03-01 secondary current-text crosscheck only; primary exact-text verification pending"
+
+legal_modeling:
+  anchors_added: 4
+  overlap_relations_added: 4
+  important_boundaries:
+    - "Patient medical-document access and medical secrecy must be evaluated together."
+    - "Medical-secrecy disclosure consent/absence of prohibition is not a universal 152-FZ consent."
+    - "2/5 working-day access deadlines are workflow deadlines, not PDN retention periods."
+    - "Identity/authority document details in the access request are workflow data and are not automatically medical-record fields."
+  guards:
+    - "OVERLAP != APPLICABILITY"
+    - "ACCESS_RIGHT != UNRESTRICTED_REDISTRIBUTION_RIGHT"
+    - "WORKFLOW_DEADLINE != RETENTION"
+    - "No applicability without actor/record/operation/purpose/legal-basis proof."
+
+acquisition_attempts:
+  - target: "1050n official publication PDF"
+    url: "https://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202111260035"
+    result: TRANSIENT_DNS_NAME_RESOLUTION_FAILURE
+
+artifact_integrity:
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+  reason: "Exact official bytes were not obtained due transient name-resolution failure; displayed or mirror file sizes were not accepted and no hashes were invented."
+
+counters:
+  before:
+    found: 50
+    downloaded: 9
+    immutable: 9
+    pending: 39
+    reused: 2
+    primary_publication_verified: 21
+    sectors_registered: 28
+  after:
+    found: 51
+    downloaded: 9
+    immutable: 9
+    pending: 40
+    reused: 2
+    primary_publication_verified: 22
+    sectors_registered: 28
+
+files_written:
+  - "ru-protected-information/minzdrav-order-1050n-2021-source-card.yaml"
+  - "ru-protected-information/minzdrav-order-1050n-2021-capture-pending.json"
+  - "ru-protected-information/master-inventory-delta-2026-08-27T2324.yaml"
+  - "ru-personal-data/master-source-inventory-delta-stream3-2026-08-27T2324.yaml"
+  - "ru-protected-information/stream-3-run-2026-08-27T2324.yaml"
+
+next_priority:
+  - "Retry exact-byte capture of 1050n official PDF and create immutable artifact + manifest."
+  - "Complete primary version-chain/currentness verification for 1050n, including exact validity-end language."
+  - "Continue healthcare layer with concrete electronic-document access/registry rules, deduplicating against 323-FZ Article 13, PP 140/2022, 947n and future 209n."
+  - "Continue unresolved high-priority exact captures across finance, telecom, education/children, public sector, biometrics, transport, advertising and archives/retention."
+
+production_statistics:
+  throughput_this_pass: "1 new normative source node; 4 protected-information/data-flow anchors; 4 relationship candidates; 1 primary publication verified"
+  cumulative_counters_source: "master-inventory-delta-2026-08-27T2324.yaml"
+  rework_share: null
+  speed_vs_single_stream_percent: null
+  remaining_volume_estimate: null
+  completion_forecast: null
+  telemetry_note: "No comparable per-source elapsed-time baseline was captured; speed-up, rework share and ETA are intentionally not fabricated."
