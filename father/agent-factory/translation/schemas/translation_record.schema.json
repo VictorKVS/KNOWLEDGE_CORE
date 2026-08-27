@@ -1,0 +1,55 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://father.local/schemas/translation_record.schema.json",
+  "title": "FATHER Translation Chunk Record",
+  "type": "object",
+  "required": [
+    "book_id",
+    "source_sha256",
+    "chunk_index",
+    "source_chunk_sha256",
+    "source_language",
+    "target_language",
+    "translator_model",
+    "glossary_version",
+    "status"
+  ],
+  "properties": {
+    "book_id": {"type": "string"},
+    "source_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "chunk_index": {"type": "integer", "minimum": 0},
+    "source_chunk_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "source_language": {"const": "en"},
+    "target_language": {"const": "ru"},
+    "domain": {"type": "string"},
+    "translator_model": {"type": "string"},
+    "reviewer_model": {"type": "string"},
+    "glossary_version": {"type": "string"},
+    "source_text": {"type": "string"},
+    "draft_translation": {"type": "string"},
+    "final_translation": {"type": "string"},
+    "qa": {
+      "type": "object",
+      "properties": {
+        "numbers_preserved": {"type": "boolean"},
+        "urls_preserved": {"type": "boolean"},
+        "code_fences_preserved": {"type": "boolean"},
+        "non_empty": {"type": "boolean"},
+        "reviewer_verdict": {"type": "string"},
+        "issues": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": true
+    },
+    "status": {
+      "enum": [
+        "EXTRACTED",
+        "TRANSLATED_DRAFT",
+        "QA_REVIEW_REQUIRED",
+        "QA_PASSED",
+        "READY_FOR_KNOWLEDGE_EXTRACTION",
+        "BLOCKED"
+      ]
+    }
+  },
+  "additionalProperties": true
+}
