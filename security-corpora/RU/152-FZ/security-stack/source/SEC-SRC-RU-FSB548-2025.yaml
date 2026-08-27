@@ -1,10 +1,13 @@
-schema_version: "1.0"
+schema_version: "1.1"
 id: SEC-SRC-RU-FSB548-2025
 kind: security-regulatory-source
 status: METADATA_VERIFIED
-title: "Приказ ФСБ России от 25.12.2025 № 548 «Об утверждении Порядка осуществления непрерывного взаимодействия субъектов критической информационной инфраструктуры Российской Федерации, которым принадлежат значимые объекты критической информационной инфраструктуры Российской Федерации, а также руководителей органов и организаций, на которых возложены обязанности, предусмотренные частью 4 статьи 9 Федерального закона от 26 июля 2017 г. № 187-ФЗ, с ГосСОПКА»"
+title: "Приказ ФСБ России от 25.12.2025 № 548"
 jurisdiction: RU
 issuer: "ФСБ России"
+inventory_registration:
+  role: bounded_public_sector_continuous_interaction_context
+  applicability: PDN_INCIDENT_ONLY_WHEN_INDEPENDENT_SCOPE_IS_PROVED
 document:
   type: regulator_order
   number: "548"
@@ -16,14 +19,11 @@ document:
   effective_from: "2026-01-30"
   checked_at: "2026-08-27"
   current_status: ACTING
-  version_chain_note: >-
-    Current order governing continuous interaction with GosSOPKA for the enumerated KII/public-sector scope from
-    30.01.2026. No predecessor repeal edge is asserted here without an exact proved provision; the card records
-    only the current operative identity and its bounded applicability.
+  version_chain_note: "Current interaction order for its enumerated direct scope from 30.01.2026."
 canonical_source:
   publisher: "Официальный интернет-портал правовой информации"
   url: "https://publication.pravo.gov.ru/document/0001202512300058"
-  exact_file_route_status: OFFICIAL_PUBLICATION_ID_AND_PDF_ROUTE_RESOLVED_BYTES_PENDING
+  exact_file_route_status: VERIFIED_CAPTURED
 capture:
   raw_artifact_ref: "security-corpora/RU/152-FZ/security-stack/raw/SEC-SRC-RU-FSB548-2025/0001202512300058-61b0d81c56cfa8aa.pdf"
   manifest_ref: "security-corpora/RU/152-FZ/security-stack/manifests/SEC-SRC-RU-FSB548-2025.json"
@@ -35,35 +35,25 @@ capture:
   sha256: "61b0d81c56cfa8aa76ac335d98237efd9a4768ae05c0cdf7fe83a2137ca79430"
   fingerprint_status: IMMUTABLE_CAPTURED
   semantic_status: UNCHANGED
-  note: "Exact bytes from the registered official route captured; extraction/semantic status is not promoted."
-
 relations:
   - type: INTERACTION_CHANNEL_CONTEXT_FOR
     target: SEC-SRC-RU-FSB547-2025
-    scope: GOSSOPKA_CONTINUOUS_INTERACTION_FOR_COVERED_PERSONS_ONLY
+    scope: COVERED_PERSONS_ONLY
     not_universal_pdn_duty: true
   - type: CONTEXTUAL_INTERSECTION_WITH
     target: SEC-SRC-RU-FSB77-2023
-    scope: PDN_COMPUTER_INCIDENT_ONLY_WHEN_OPERATOR_IS_ALSO_IN_FSB548_SCOPE_OR_HAS_APPLICABLE_NKCKI_INTERACTION
-    provenance: "NKCKI explanatory letter R-168 dated 20.01.2026 is secondary explanatory evidence; the normative duties remain sourced to the orders themselves."
+    scope: ONLY_WHEN_INDEPENDENT_APPLICABILITY_IS_PROVED
     not_universal_pdn_duty: true
 applicability:
   direct_scope:
-    - KII_SUBJECTS_WITH_SIGNIFICANT_KII_OBJECTS
-    - ARTICLE_9_PART_4_187FZ_ORGANS_AND_ORGANIZATIONS
-  pdn_scope: >-
-    Use only as GosSOPKA/NKCKI interaction context when a PDN operator is independently within the order's covered
-    KII/public-sector scope or another proved interaction basis exists. Do not infer that every private PDN operator
-    must establish continuous GosSOPKA interaction merely because it processes personal data or suffered a leak.
+    - KII_AND_ENUMERATED_PUBLIC_SECTOR_SCOPE
+  pdn_scope: "Use only when a PDN case independently falls within the order's direct scope; do not infer a universal private-ISPDN duty."
 provenance:
   official_identity_verified: true
   official_publication_id_verified: true
   ministry_registration_cross_checked: true
   effective_date_cross_checked: true
-  pdn_intersection_explanatory_evidence: "НКЦКИ ФСБ России, письмо от 20.01.2026 № Р-168; primary official bytes/route for the letter not found, so the letter is not promoted as an immutable primary source."
-  exact_official_artifact_pending: true
+  exact_official_artifact_pending: false
+  immutable_manifest_verified: true
   review_required: true
-agent_rule: >-
-  Do not import Order No. 548 as a universal PDN/GosSOPKA obligation. Keep it as a bounded interaction layer for
-  entities independently covered by its KII/public-sector scope. Order No. 77 remains the explicit PDN-incident
-  source under 152-FZ Article 19(12). Do not promote secondary reproductions of NKCKI letter R-168 to primary evidence.
+agent_rule: "Keep this source bounded to its proved direct scope; FSB Order 77 remains the explicit 152-FZ Article 19(12) PDN incident source."
