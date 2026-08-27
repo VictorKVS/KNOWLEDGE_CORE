@@ -1,0 +1,81 @@
+schema_version: "1.0"
+stream: 3
+checked_at: "2026-08-28T02:18:09+03:00"
+mode: APPEND_ONLY_RELATIONSHIP_DELTA
+focus: "finance / banking protected information / conditional PDN security overlay in CBR 851-P"
+
+source:
+  source_id: SEC-SRC-RU-CBR-851P-2025
+  title: "Положение Банка России от 30.01.2025 № 851-П"
+  authority: "Банк России"
+  minjust_registration_number: "81462"
+  official_publication_date: "2025-03-18"
+  primary_publication_status: VERIFIED
+  exact_binary_status: PENDING_TRANSIENT_DNS_FAILURE
+
+pdn_overlap:
+  status: DIRECT_STATUTORY_CONTEXT_SCENARIO_BOUND
+  direct_reference:
+    locator: "пункт 1, последний абзац"
+    rule: "Если защищаемая информация содержит персональные данные, кредитные организации и филиалы иностранных банков применяют меры безопасности персональных данных при их обработке в соответствии со статьей 19 152-ФЗ."
+  reasons:
+    - "Приложение 1 содержит person-level идентификационные и транзакционные поля, включая ФИО, дату рождения и реквизиты удостоверяющего личность документа заявителя/плательщика."
+    - "В отдельных платежных сценариях используются абонентские номера и иные идентификаторы клиента/операции."
+    - "Пункт 5.2 охватывает идентификацию, аутентификацию, авторизацию, передачу, учет и хранение защищаемой информации."
+  guard: "DIRECT_REFERENCE != UNIVERSAL_APPLICABILITY: сначала доказать, что конкретная защищаемая запись содержит PDN, а затем установить субъект, операцию, цель, роль и правовое основание."
+
+relationships:
+  - from: SEC-SRC-RU-CBR-851P-2025
+    to: "152-ФЗ:article_19"
+    type: DIRECT_CONDITIONAL_PDN_SECURITY_REFERENCE
+    status: DIRECT_STATUTORY_CONTEXT_SCENARIO_BOUND
+  - from: SEC-SRC-RU-CBR-851P-2025
+    to: "SEC-SRC-RU-LAW-395-1:article_26"
+    type: BANKING_SECRECY_AND_PDN_POSSIBLE_DUAL_REGIME
+    status: SCENARIO_REVIEW_REQUIRED
+    guard: "BANKING_SECRECY != PDN; a field may fall under both regimes only on record-level proof."
+  - from: SEC-SRC-RU-CBR-851P-2025
+    to: "SEC-SRC-RU-FZ-126"
+    type: MOBILE_NUMBER_AND_IDENTIFICATION_MODULE_CROSS_REGIME_CONTEXT
+    status: CROSS_REGIME_RELATION
+  - from: SEC-SRC-RU-CBR-851P-2025
+    to: "187-ФЗ"
+    type: KII_OVERLAY_FOR_BANK_OBJECTS_THAT_ARE_KII
+    status: CONDITIONAL_APPLICABILITY_REVIEW_REQUIRED
+    guard: "A bank information system is not automatically a KII object."
+
+retention_and_deadline_boundaries:
+  - locator: "пункт 13.2"
+    value: "не менее 5 лет"
+    object: "отчет о результатах оценки соответствия защиты информации"
+    guard: "SECURITY_ASSESSMENT_REPORT_RETENTION != GENERAL_PDN_RETENTION"
+  - locator: "Приложение 2"
+    value: "3 часа / 30 дней; для компьютерных инцидентов 3 или 24 часа по указанным условиям"
+    object: "sector-specific reporting to Bank of Russia"
+    guard: "CBR_851P_REPORTING_DEADLINES != GENERIC_152FZ_INCIDENT_NOTIFICATION_RULE"
+
+semantic_guards:
+  - id: PDN-CBR851P-001
+    rule: "BANKING_SECRECY != PERSONAL_DATA"
+  - id: PDN-CBR851P-002
+    rule: "PROTECTED_INFORMATION != PERSONAL_DATA"
+  - id: PDN-CBR851P-003
+    rule: "ARTICLE19_REFERENCE_APPLIES_WHEN_PROTECTED_INFORMATION_CONTAINS_PDN"
+  - id: PDN-CBR851P-004
+    rule: "FIVE_YEAR_SECURITY_ASSESSMENT_REPORT_RETENTION != PDN_RETENTION"
+  - id: PDN-CBR851P-005
+    rule: "CBR_INCIDENT_REPORTING_DEADLINES != GENERIC_PDN_BREACH_DEADLINES"
+  - id: PDN-CBR851P-006
+    rule: "BANK_INFORMATION_SYSTEM != AUTOMATIC_KII_OBJECT"
+
+counters_reference:
+  ru_protected_information_delta: "master-inventory-delta-2026-08-28T0218.yaml"
+  found: 52
+  downloaded: 9
+  immutable: 9
+  pending: 41
+  reused: 2
+  primary_publication_verified: 23
+  sectors_registered: 28
+
+executable_effect: NONE
