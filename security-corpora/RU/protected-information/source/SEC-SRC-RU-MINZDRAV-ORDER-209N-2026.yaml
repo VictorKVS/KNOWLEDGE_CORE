@@ -1,0 +1,112 @@
+schema_version: "1.0"
+source_id: SEC-SRC-RU-MINZDRAV-ORDER-209N-2026
+title: "Приказ Министерства здравоохранения Российской Федерации от 25.03.2026 № 209н «Об утверждении Порядка организации системы документооборота в сфере охраны здоровья в части ведения медицинской документации в форме электронных документов»"
+jurisdiction: RU
+source_type: federal_executive_order
+sector: healthcare_information_systems
+regime: electronic_medical_documentation
+status: FUTURE_PRIMARY_ACT_NOT_CURRENT_UNTIL_2026_09_01_EXACT_BINARY_PENDING
+
+current_state:
+  current_as_of: "2026-08-27"
+  effective_from: "2026-09-01"
+  valid_until: "2032-09-01"
+  current_status: FUTURE_NOT_CURRENT_AS_OF_2026_08_27
+  predecessor: "SEC-SRC-RU-MINZDRAV-ORDER-947N-2020"
+  transition: "Пункт 2 № 209н признает приказ № 947н утратившим силу; пункт 3 вводит новый Порядок с 01.09.2026."
+
+authority:
+  official_publication_document_url: "https://publication.pravo.gov.ru/document/0001202604230013"
+  official_publication_id_crosscheck: "0001202604230013"
+  publication_date_crosscheck: "2026-04-23"
+  minjust_registration_date: "2026-04-22"
+  minjust_registration_number: "86160"
+  publication_metadata_status: OFFICIAL_PUBLICATION_LOCATOR_CROSSCHECKED_DIRECT_PRIMARY_ENDPOINT_TEMPORARILY_UNAVAILABLE
+  note: "Publication locator and registration details are crosschecked against multiple legal-publication references; direct publication.pravo.gov.ru fetch timed out in this runtime, therefore primary_publication_verified counter is not incremented for this source in this pass."
+
+statutory_basis:
+  - target: "SEC-SRC-RU-FZ-323:article_14_part_2_point_11"
+    relation: MINZDRAV_ORDER_EXPLICITLY_AUTHORIZED_BY_323_FZ
+    status: VERIFIED_TEXT_CROSSCHECK_EXACT_BINARY_PENDING
+  - target: "SEC-SRC-RU-MINZDRAV-ORDER-947N-2020"
+    relation: REPEALS_AND_REPLACES
+    effective_from: "2026-09-01"
+    status: FUTURE_VERSION_TRANSITION_VERIFIED
+  - target: "SEC-SRC-RU-PP-140-2022"
+    relation: DIRECT_EGISZ_ELECTRONIC_MEDICAL_DOCUMENT_REGISTRATION_CONTEXT
+    status: FUTURE_CROSS_REGIME_CONTEXT
+
+protected_regime:
+  name: electronic_medical_documentation
+  anchors:
+    - locator: "procedure_point_1"
+      type: actor_scope
+      rule: "Порядок охватывает медицинских и фармацевтических работников, территориальные фонды ОМС, страховые медицинские организации, операторов используемых информационных систем, пациентов, законно допущенные органы/организации, а также медицинские и фармацевтические организации при переходе на электронную медицинскую документацию."
+      evidence_status: PUBLISHED_TEXT_CROSSCHECK_EXACT_PRIMARY_BINARY_PENDING
+    - locator: "procedure_point_3"
+      type: electronic_medical_document_lifecycle
+      rule: "Электронное ведение включает формирование, подписание и хранение документов, регистрацию в ЕГИСЗ и предоставление доступа к медицинской документации."
+      evidence_status: PUBLISHED_TEXT_CROSSCHECK_EXACT_PRIMARY_BINARY_PENDING
+    - locator: "procedure_point_4"
+      type: local_governance_and_access
+      rule: "Локальный акт организации определяет перечень электронных документов и используемых информационных систем, порядок доступа работников и иных уполномоченных лиц, лиц с правом подписи и порядок предоставления документации для контроля ОМС."
+      evidence_status: PUBLISHED_TEXT_CROSSCHECK_EXACT_PRIMARY_BINARY_PENDING
+    - locator: "electronic_signature_layer"
+      type: qualified_electronic_signature
+      rule: "Новый Порядок сохраняет юридически значимый слой электронной подписи; при совместном формировании документа каждый участвующий медицинский/фармацевтический работник подписывает документ своей усиленной квалифицированной электронной подписью."
+      evidence_status: PUBLISHED_TEXT_CROSSCHECK_EXACT_PRIMARY_BINARY_PENDING
+    - locator: "procedure_point_29"
+      type: person_level_medical_document_fields
+      rule: "Образ электронного медицинского документа содержит персональные данные получателя медицинской услуги, включая ФИО, пол, дату рождения и место жительства, наряду с текстом и датой документа."
+      evidence_status: PUBLISHED_TEXT_CROSSCHECK_EXACT_PRIMARY_BINARY_PENDING
+
+pdn_relationship:
+  status: FUTURE_CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  relationship_type: PERSON_LEVEL_MEDICAL_DOCUMENT_DATASET_AND_ACCESS_OVERLAP
+  overlap_candidates:
+    - target: "RU-152-FZ"
+      relation: PERSON_LEVEL_MEDICAL_RECORD_PROCESSING_CONTEXT
+    - target: "SEC-SRC-RU-FZ-323:article_13"
+      relation: ELECTRONIC_MEDICAL_DOCUMENT_POSSIBLE_MEDICAL_SECRECY_DUAL_REGIME
+    - target: "SEC-SRC-RU-PP-140-2022"
+      relation: EGISZ_REGISTRATION_AND_INFORMATION_SYSTEM_CONTEXT
+    - target: "SEC-SRC-RU-FZ-326"
+      relation: OMS_DOCUMENT_ACCESS_AND_CONTROL_CONTEXT
+  proof_guards:
+    - "FUTURE_ORDER_209N != CURRENT_REQUIREMENT_BEFORE_2026_09_01"
+    - "PERSON_LEVEL_MEDICAL_FIELDS create PDN overlap but do not prove every 152-FZ obligation for every actor/system."
+    - "ELECTRONIC_MEDICAL_DOCUMENT != AUTOMATIC_MEDICAL_SECRECY_CLASSIFICATION_FOR_EVERY_FIELD"
+    - "OMS_ACCESS_CONTEXT != AUTOMATIC_TRANSFER_PERMISSION_OUTSIDE_THE_PROVEN_PROCEDURE"
+    - "OVERLAP != APPLICABILITY; prove actor/system/record/operation/purpose/legal basis."
+
+version_chain:
+  status: PRIMARY_SUCCESSOR_LOCATOR_CROSSCHECKED_EXACT_BINARY_PENDING
+  events:
+    - act: "07.09.2020 № 947н"
+      relation: PREDECESSOR_CURRENT_UNTIL_2026_09_01
+      status: CURRENT_AS_OF_2026_08_27
+    - act: "25.03.2026 № 209н"
+      official_publication_id_crosscheck: "0001202604230013"
+      minjust_registration_number: "86160"
+      effective_from: "2026-09-01"
+      valid_until: "2032-09-01"
+      status: FUTURE_NOT_CURRENT_AS_OF_2026_08_27
+
+binary_artifact:
+  status: PENDING
+  source_url: "https://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202604230013"
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_path: null
+  acquisition_failure: TRANSIENT_DNS_NAME_RESOLUTION_FAILURE
+  note: "Displayed mirror/publication sizes were not accepted as byte_length; no checksum was inferred without exact official bytes."
+
+proof_floor:
+  taxonomy_used_as_evidence: false
+  primary_normative_act_locator_used_as_evidence: true
+  overlap_is_applicability: false
+  future_act_promoted_to_current: false
+  displayed_pdf_size_used_as_exact_bytes: false
+  executable_rule_created: false
