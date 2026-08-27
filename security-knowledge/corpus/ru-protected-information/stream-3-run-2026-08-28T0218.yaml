@@ -1,0 +1,170 @@
+schema_version: "1.0"
+stream: 3
+run_id: "stream-3-run-2026-08-28T0218"
+started_at: "2026-08-28T02:18:09+03:00"
+completed_at: "2026-08-28T02:18:09+03:00"
+focus: "finance / banking protected information / Bank of Russia Regulation 851-P"
+mode: DISCOVERY_PRIMARY_VERIFICATION_VERSION_CHAIN_EXACT_CAPTURE_ATTEMPT_APPEND_ONLY_RECONCILIATION
+repository: "VictorKVS/KNOWLEDGE_CORE"
+branch: main
+
+baseline:
+  previous_ru_protected_information_delta: "master-inventory-delta-2026-08-27T2324.yaml"
+  counters:
+    found: 51
+    downloaded: 9
+    immutable: 9
+    pending: 40
+    reused: 2
+    primary_publication_verified: 22
+    sectors_registered: 28
+
+result:
+  new_source:
+    source_id: SEC-SRC-RU-CBR-851P-2025
+    title: "Положение Банка России от 30.01.2025 № 851-П"
+    authority: "Банк России"
+    sector: finance_banking
+    regime: banking_protected_information_and_unauthorized_transfer_security
+    current_as_of: "2026-08-28"
+    status: CURRENT_PRIMARY_TEXT_VERIFIED_VERSION_CHAIN_PARTIAL_EXACT_BINARY_PENDING
+  discovery_correction:
+    stale_act_detected: "Положение Банка России № 683-П от 17.04.2019"
+    correction: "851-П is the current replacement; point 16 of 851-P invalidates 683-P and related amending instructions from the effective date of 851-P."
+    significance: "Prevents the knowledge base from treating 683-P as the current banking information-protection baseline."
+
+primary_evidence:
+  - authority: "Банк России"
+    locator: "official normative-act publication index"
+    url: "https://www.cbr.ru/analytics/na_vr/"
+    facts:
+      - "851-П dated 30.01.2025"
+      - "MinJust registration 06.03.2025 № 81462"
+      - "official publication 18.03.2025"
+  - authority: "Банк России"
+    locator: "Вестник Банка России № 16 (2547) от 28.03.2025"
+    url: "https://www.cbr.ru/Queries/XsltBlock/File/87500/-1/2547"
+    web_crosscheck:
+      content_type: application/pdf
+      pages: 30
+    note: "Web rendering confirms the official text; exact bytes were not available to the binary acquisition runtime."
+
+verified_anchors:
+  - locator: "пункт 1"
+    finding: "Protected information scope includes banking-secret information in electronic banking-operation documents, client authorization information, banking-operation information, digital-ruble instruction information and cryptographic key information."
+  - locator: "пункт 1, последний абзац"
+    finding: "If the protected information contains personal data, security measures under Article 19 of 152-FZ apply to that PDN processing."
+  - locator: "пункт 5.2"
+    finding: "Protected-information lifecycle covers identification/authentication/authorization, message creation/transfer/receipt, banking operations and storage."
+  - locator: "пункт 5.2.1"
+    finding: "Sector controls include client-device identification and mobile-number/identification-module checks in prescribed scenarios."
+  - locator: "пункт 13.2"
+    finding: "Conformity-assessment report is retained for at least five years from issuance."
+    guard: "This is not a generic PDN retention period."
+  - locator: "пункт 13.4"
+    finding: "Conformity assessment is performed at least once every two years."
+  - locator: "Приложение 1"
+    finding: "Unauthorized-transfer case data include person-level identity and transaction fields, including FIO, date of birth and identity-document details in applicable scenarios."
+  - locator: "Приложение 2"
+    finding: "Sector-specific incident notification windows include 3 hours / 30 days and, for specified computer incidents, 3 or 24 hours."
+    guard: "These are not generalized to all 152-FZ operators."
+  - locator: "пункт 14"
+    finding: "KII legislation overlays only where the information-infrastructure object is actually a KII object."
+    guard: "A bank information system is not automatically a KII object."
+
+version_chain:
+  status: PARTIAL_PRIMARY_CURRENT_TEXT_VERIFIED
+  current_events:
+    - act: "Положение Банка России № 851-П от 30.01.2025"
+      effect: CURRENT_REPLACEMENT
+    - act: "Положение Банка России № 683-П от 17.04.2019"
+      effect: SUPERSEDED_BY_851P
+    - act: "Указание Банка России № 6071-У от 18.02.2022"
+      effect: SUPERSEDED_WITH_683P_CHAIN
+    - act: "Указание Банка России № 6620-У от 06.12.2023"
+      effect: SUPERSEDED_WITH_683P_CHAIN
+  temporal_state_as_of_2026_08_28:
+    general_effective_layer: CURRENT
+    provisions_effective_2025_10_01: CURRENT
+    provisions_effective_2027_01_01: FUTURE_NOT_CURRENT
+    transition_provisions_through_2026_12_31: CURRENT_TRANSITIONAL
+  amendment_sweep_2026:
+    locator_specific_amendments_found: 0
+    guard: "Negative search result is not promoted to proof of a complete historical version chain."
+
+relationships_added:
+  - from: SEC-SRC-RU-CBR-851P-2025
+    to: "SEC-SRC-RU-LAW-395-1:article_26"
+    type: BANKING_SECRECY_PROTECTED_INFORMATION_OVERLAP
+    status: DIRECT_STATUTORY_CONTEXT
+  - from: SEC-SRC-RU-CBR-851P-2025
+    to: "152-ФЗ:article_19"
+    type: DIRECT_CONDITIONAL_PDN_SECURITY_REFERENCE
+    status: DIRECT_STATUTORY_CONTEXT_SCENARIO_BOUND
+  - from: SEC-SRC-RU-CBR-851P-2025
+    to: "SEC-SRC-RU-FZ-126"
+    type: MOBILE_NUMBER_AND_IDENTIFICATION_MODULE_CONTEXT
+    status: CROSS_REGIME_RELATION
+  - from: SEC-SRC-RU-CBR-851P-2025
+    to: "187-ФЗ"
+    type: KII_OVERLAY_ONLY_FOR_OBJECTS_THAT_ARE_KII
+    status: CONDITIONAL_APPLICABILITY_REVIEW_REQUIRED
+
+acquisition:
+  exact_capture_attempted: true
+  exact_capture_succeeded: false
+  target: "https://www.cbr.ru/Queries/XsltBlock/File/87500/-1/2547"
+  binary_runtime_result: "URLError: Temporary failure in name resolution"
+  transient_failure: true
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+  displayed_sizes_used_as_exact_bytes: false
+  action: "Exact capture backlog created for local/retry acquisition; no downloaded or immutable counter increment."
+
+files_written:
+  - "security-knowledge/corpus/ru-protected-information/cbr-851p-2025-source-card.yaml"
+  - "security-knowledge/corpus/ru-protected-information/cbr-851p-2025-capture-pending.json"
+  - "security-knowledge/corpus/ru-protected-information/master-inventory-delta-2026-08-28T0218.yaml"
+  - "security-knowledge/corpus/ru-personal-data/master-source-inventory-delta-stream3-2026-08-28T0218.yaml"
+  - "security-knowledge/corpus/ru-protected-information/stream-3-run-2026-08-28T0218.yaml"
+
+counters_after:
+  found: 52
+  downloaded: 9
+  immutable: 9
+  pending: 41
+  reused: 2
+  primary_publication_verified: 23
+  sectors_registered: 28
+
+quality_gates:
+  deduplication: PASSED
+  primary_act_required: PASSED
+  current_state_checked: PASSED_WITH_PARTIAL_VERSION_CHAIN
+  exact_byte_integrity: BLOCKED_TRANSIENTLY_NO_FABRICATION
+  applicability_not_invented: PASSED
+  legal_conflicts_not_invented: PASSED
+  executable_rules_created: 0
+
+production_statistics:
+  new_sources: 1
+  enriched_or_corrected_legacy_current_state_nodes: 1
+  new_primary_publications_verified: 1
+  new_pending_exact_capture: 1
+  new_durable_downloads: 0
+  new_immutable_artifacts: 0
+  applicability_promotions: 0
+  legal_conflicts_confirmed: 0
+  acceleration_vs_one_stream_percent: null
+  throughput_time_normalized: null
+  rework_share_percent: null
+  completion_eta: null
+  telemetry_note: "No comparable elapsed-time/source baseline for this pass; acceleration, rework share and ETA are intentionally not fabricated."
+
+next_priority:
+  - "Retry byte-exact capture of 851-P from the official CBR PDF endpoint and create immutable artifact/manifest when DNS is available."
+  - "Inspect the adjacent current CBR 821-P payment-information protection regime and the 2025/2026 amendment chain, especially biometric-PDN references, with deduplication against 851-P."
+  - "Continue high-priority healthcare/finance/connectivity/education/public-sector/biometry/transport/advertising/archive pending exact captures without promoting applicability from overlap alone."
