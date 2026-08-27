@@ -1,0 +1,57 @@
+name: PDN Stream1 Register RKN Checklist Sources
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+    paths:
+      - ".github/workflows/pdn-stream1-register-rkn-checklist.yml"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: pdn-core-immutable-acquisition
+  cancel-in-progress: true
+
+jobs:
+  register-acquire-sync:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 1
+
+      - name: Register missing checklist sources in authoritative master inventory
+        run: python TOOLS/pdn_core_register_rkn_checklist_sources.py
+
+      - name: Acquire only missing publication-ID originals with reuse-first policy
+        run: python TOOLS/pdn_core_pending_acquire.py
+
+      - name: Sync accepted immutable evidence
+        run: python TOOLS/pdn_core_sync_capture.py
+
+      - name: Restore authoritative Stream-2 counters
+        run: python TOOLS/pdn_security_stack_reconcile_master.py
+
+      - name: Commit registration and accepted immutable evidence
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add security-corpora/RU/152-FZ/PDN_MASTER_SOURCE_INVENTORY.yaml \
+                  security-corpora/RU/152-FZ/PDN_ACQUISITION_RUN.json \
+                  security-corpora/RU/152-FZ/source \
+                  security-corpora/RU/152-FZ/raw \
+                  security-corpora/RU/152-FZ/manifests
+          if git diff --cached --quiet; then
+            echo "No Stream-1 registration/acquisition delta"
+            exit 0
+          fi
+          git commit -m "security-kb: register and capture RKN checklist core sources [skip ci]"
+          if ! git push; then
+            git pull --rebase origin main
+            git push
+          fi
