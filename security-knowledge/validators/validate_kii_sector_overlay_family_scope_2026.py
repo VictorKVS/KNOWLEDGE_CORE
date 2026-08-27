@@ -105,6 +105,8 @@ def main() -> int:
     expected_positions = {"1", "2", "3", "4", "6", "7", "8", "9", "10", "10^1", "10^2", "10^3", "10^4", "10^5", "10^6", "10^7", "11", "12", "13", "13^1"}
     check(set(by796.get("PP796-C7-APPLICABLE-POSITIONS", {}).get("positions", [])) == expected_positions, "PP 796 applicable positions drift")
     check(by796.get("PP796-C14-POSITION-3-DELEGATION", {}).get("calculation_source") == "TRANSPORT_SECTOR_CII_CATEGORIZATION_OVERLAY", "PP 796 transport delegation drift")
+    check(by796.get("PP796-C14-POSITION-3-DELEGATION", {}).get("dependency_status_as_of_2026_08_27") == "PROJECT_ONLY_ADOPTED_ACT_NOT_IDENTIFIED_IN_BOUNDED_SEARCH", "PP 796 transport project-only status drift")
+    check(by796.get("PP796-C14-POSITION-3-DELEGATION", {}).get("execution_guard") == "FAIL_CLOSED_PENDING_ADOPTED_EFFECTIVE_ACT_AND_PRIMARY_BYTES", "PP 796 transport execution guard drift")
     check(by796.get("PP796-C15-POSITION-4-DELEGATION", {}).get("calculation_source", "").endswith("PP_RF_402_2026"), "PP 796 communications delegation drift")
     check(by796.get("PP796-C30-POSITIONS-10-10_7-DELEGATION", {}).get("calculation_source", "").endswith("PP_RF_92_2026"), "PP 796 financial delegation drift")
     formula_expectations = {
@@ -133,7 +135,7 @@ def main() -> int:
     check(states.get("PP_RF_402_2026") == "ADOPTED_NOT_IN_FORCE", "family loses PP 402 temporal state")
     check(states.get("PP_RF_796_2026") == "IN_FORCE", "family loses PP 796 temporal state")
     pending_transport = [edge for edge in family.get("dependency_edges", []) if edge.get("to", "").startswith("TRANSPORT_")]
-    check(len(pending_transport) == 1 and pending_transport[0].get("status") == "PENDING_EXTERNAL_DEPENDENCY_NOT_OFFICIALLY_PUBLISHED", "transport dependency silently resolved or lost")
+    check(len(pending_transport) == 1 and pending_transport[0].get("status") == "PENDING_ADOPTED_PRIMARY_PUBLICATION_PROJECT_ONLY", "transport dependency silently resolved or lost")
     decisions = {row.get("candidate"): row.get("decision") for row in family.get("candidate_reconciliation", [])}
     check(decisions == {"PP_RF_402_2026": "INCLUDE", "PP_RF_796_2026": "INCLUDE"}, "candidate reconciliation drift")
 

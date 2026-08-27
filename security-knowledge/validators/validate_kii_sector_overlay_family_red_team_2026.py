@@ -181,12 +181,15 @@ def main() -> int:
     transport = json.loads((SK / "classification/transport-kii-sector-overlay-status-2026-08-19-v1.json").read_text(encoding="utf-8"))
     legal = transport.get("legal_state", {})
     operation = transport.get("operational_rule", {})
-    check(transport.get("status") == "PENDING_PRIMARY_PUBLICATION", "transport pending state")
-    check(legal == {"adoption_state":"NOT_PROVEN","publication_state":"NO_MATCH_FOUND_AS_OF_DATE","effective_state":"NOT_ESTABLISHED","dependency_closure":"OPEN"}, "transport legal state")
+    check(transport.get("status") == "PENDING_ADOPTED_PRIMARY_PUBLICATION_PROJECT_ONLY", "transport pending state")
+    check(legal == {"adoption_state":"NOT_PROVEN","publication_state":"NO_MATCH_FOUND_IN_IMMUTABLE_2026_08_19_REPLAY_OR_2026_08_27_BOUNDED_SEARCH","effective_state":"NOT_ESTABLISHED","dependency_closure":"OPEN"}, "transport legal state")
     check(operation.get("mode") == "FAIL_CLOSED", "transport fail-closed mode")
     check("PROJECT_EQUALS_ADOPTED_ACT" in operation.get("forbidden_inferences", []), "transport project/adoption guard")
+    check("METHODICAL_RECOMMENDATIONS_EQUAL_GOVERNMENT_SECTOR_OVERLAY" in operation.get("forbidden_inferences", []), "transport recommendations/overlay guard")
+    check(transport.get("methodical_recommendations_boundary", {}).get("status") == "METHODICAL_RECOMMENDATIONS_NOT_GOVERNMENT_SECTOR_OVERLAY", "transport recommendation boundary")
+    check(transport.get("official_publication_check", {}).get("fresh_bounded_search", {}).get("absence_claim_scope") == "BOUNDED_SEARCH_ONLY_NOT_UNIVERSAL_NONEXISTENCE", "transport negative-search scope widened")
     transport_edges = [edge for edge in family.get("dependency_edges", []) if edge.get("positions") == ["3"]]
-    check(len(transport_edges) == 1 and transport_edges[0].get("status") == "PENDING_EXTERNAL_DEPENDENCY_NOT_OFFICIALLY_PUBLISHED", "transport edge status")
+    check(len(transport_edges) == 1 and transport_edges[0].get("status") == "PENDING_ADOPTED_PRIMARY_PUBLICATION_PROJECT_ONLY", "transport edge status")
 
     audit = json.loads((SK / "audits/kii-sector-overlay-family-red-team-2026-08-19-v1.json").read_text(encoding="utf-8"))
     check(audit.get("scope_decision") == "PASSED", "bounded red-team decision")
