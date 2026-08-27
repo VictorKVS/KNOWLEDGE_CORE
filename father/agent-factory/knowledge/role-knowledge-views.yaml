@@ -1,0 +1,155 @@
+schema_version: "1.0"
+id: FATHER-ROLE-KNOWLEDGE-VIEWS-0001
+status: ACTIVE
+purpose: >-
+  Define role-specific views over one shared evidence-backed FATHER Knowledge graph.
+  Knowledge is not duplicated per agent: the same canonical node may be consumed by multiple roles
+  with different relevance and decision-weight profiles.
+
+canonical_pipeline:
+  - SOURCE_DOCUMENT
+  - SOURCE_FRAGMENT
+  - TRANSLATION_FRAGMENT
+  - KNOWLEDGE_NODE
+  - KNOWLEDGE_EDGE
+  - EVIDENCE_LINK
+  - REVIEW
+  - SCORE_VECTOR
+  - KB_READY
+
+shared_node_rule: >-
+  One semantic knowledge item has one canonical identity. Agents receive role-specific projections,
+  priorities and weights instead of private copies of the same fact.
+
+roles:
+  architect:
+    id: ROLE-ARCHITECT
+    focus:
+      - architecture
+      - distributed_systems
+      - reliability
+      - integration
+      - trade_offs
+      - nonfunctional_requirements
+    weight_profile:
+      source_authority: 0.18
+      cross_source_support: 0.18
+      recency: 0.12
+      applicability: 0.18
+      implementation_evidence: 0.18
+      reviewer_confidence: 0.16
+
+  software_engineer:
+    id: ROLE-SOFTWARE-ENGINEER
+    focus:
+      - programming
+      - software_engineering
+      - algorithms
+      - testing
+      - maintainability
+      - performance
+    weight_profile:
+      source_authority: 0.14
+      cross_source_support: 0.15
+      recency: 0.14
+      applicability: 0.16
+      implementation_evidence: 0.25
+      reviewer_confidence: 0.16
+
+  security:
+    id: ROLE-SECURITY
+    focus:
+      - information_security
+      - appsec
+      - devsecops
+      - threat_modeling
+      - controls
+      - compliance
+    weight_profile:
+      source_authority: 0.24
+      cross_source_support: 0.14
+      recency: 0.15
+      applicability: 0.20
+      implementation_evidence: 0.12
+      reviewer_confidence: 0.15
+
+  lawyer:
+    id: ROLE-LAWYER
+    focus:
+      - law
+      - regulation
+      - legal_definition
+      - applicability
+      - exceptions
+      - version_chain
+      - conflicts_of_norms
+    weight_profile:
+      source_authority: 0.30
+      currentness: 0.22
+      exact_anchor: 0.18
+      applicability: 0.15
+      cross_source_support: 0.05
+      reviewer_confidence: 0.10
+    hard_gates:
+      - verified_source_required
+      - exact_article_or_clause_anchor_required
+      - currentness_separate_from_applicability
+      - interpretation_separate_from_normative_text
+
+  manager:
+    id: ROLE-MANAGER
+    focus:
+      - governance
+      - organization
+      - process
+      - risk
+      - cost
+      - staffing
+      - metrics
+      - accountability
+    weight_profile:
+      source_authority: 0.14
+      cross_source_support: 0.14
+      recency: 0.10
+      applicability: 0.20
+      implementation_evidence: 0.18
+      business_impact: 0.14
+      reviewer_confidence: 0.10
+
+  product:
+    id: ROLE-PRODUCT
+    focus:
+      - product_management
+      - user_value
+      - discovery
+      - prioritization
+      - metrics
+      - experimentation
+      - economics
+      - roadmap
+    weight_profile:
+      source_authority: 0.10
+      cross_source_support: 0.14
+      recency: 0.14
+      applicability: 0.18
+      implementation_evidence: 0.16
+      user_value_evidence: 0.18
+      reviewer_confidence: 0.10
+
+multi_role_usage:
+  examples:
+    - node_type: REQUIREMENT
+      roles: [security, lawyer, architect, manager]
+    - node_type: TRADE_OFF
+      roles: [architect, software_engineer, product, manager]
+    - node_type: METRIC
+      roles: [software_engineer, security, manager, product]
+    - node_type: DECISION_RULE
+      roles: [architect, security, lawyer, manager, product]
+
+review_policy:
+  - role_weight_does_not_change_source_truth
+  - role_projection_must_preserve_provenance
+  - low_confidence_nodes_are_not_promoted_to_KB_READY_without_review
+  - disagreement_between_roles_creates_a_review_task_not_a_duplicate_node
+  - legal_and_regulatory_nodes_follow_regulatory_extraction_policy
