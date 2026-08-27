@@ -8,8 +8,11 @@ import uuid
 from datetime import datetime, timezone
 from pathlib import Path
 
+from father_trace import TraceWriter
+
 REPO_ROOT = Path(__file__).resolve().parents[1]
 SCHEMA = REPO_ROOT / "father" / "agent-factory" / "knowledge" / "schema" / "father_knowledge_v1.sql"
+TRACE_SCHEMA = REPO_ROOT / "father" / "agent-factory" / "knowledge" / "schema" / "trace_v1.sql"
 DEFAULT_DB = Path(r"G:\1\FATHER_KNOWLEDGE\db\father_knowledge.db")
 
 
@@ -31,8 +34,8 @@ def connect(path: Path) -> sqlite3.Connection:
 
 
 def apply_schema(conn: sqlite3.Connection) -> None:
-    sql = SCHEMA.read_text(encoding="utf-8")
-    conn.executescript(sql)
+    conn.executescript(SCHEMA.read_text(encoding="utf-8"))
+    conn.executescript(TRACE_SCHEMA.read_text(encoding="utf-8"))
     conn.commit()
 
 
@@ -46,6 +49,7 @@ def golden_fixture(conn: sqlite3.Connection) -> dict:
     evd_id = new_id("EVD")
     rev_id = new_id("REV")
     score_id = new_id("SCORE")
+    view_ids = []
 
     source_text = (
         "A resilient service should make failure boundaries explicit and preserve enough evidence "
@@ -97,15 +101,27 @@ def golden_fixture(conn: sqlite3.Connection) -> dict:
             (rev_id, node_id, "DETERMINISTIC", "golden-fixture", "APPROVE", 1.0, 1, "v1", "golden-v1", "{}", ts),
         )
         for role in ("ROLE-ARCHITECT", "ROLE-SOFTWARE-ENGINEER", "ROLE-SECURITY", "ROLE-LAWYER", "ROLE-MANAGER", "ROLE-PRODUCT"):
+            view_id = new_id("VIEW")
+            view_ids.append(view_id)
             conn.execute(
                 """INSERT INTO role_views(role_view_id,node_id,role_id,relevance,role_weight,profile_version,created_at)
                    VALUES(?,?,?,?,?,?,?)""",
-                (new_id("VIEW"), node_id, role, 0.5, 0.5, "golden-v1", ts),
+                (view_id, node_id, role, 0.5, 0.5, "golden-v1", ts),
             )
         conn.execute("UPDATE knowledge_nodes SET status='KB_READY', updated_at=? WHERE node_id=?", (ts, node_id))
         conn.execute("UPDATE processing_runs SET finished_at=?, status='SUCCESS' WHERE run_id=?", (ts, run_id))
 
-    return {"run_id": run_id, "document_id": doc_id, "fragment_id": frg_id, "translation_id": trn_id, "node_id": node_id}
+    return {
+        "run_id": run_id,
+        "document_id": doc_id,
+        "fragment_id": frg_id,
+        "translation_id": trn_id,
+        "node_id": node_id,
+        "evidence_id": evd_id,
+        "review_id": rev_id,
+        "score_id": score_id,
+        "role_view_ids": view_ids,
+    }
 
 
 def integrity(conn: sqlite3.Connection) -> dict:
@@ -120,6 +136,24 @@ def integrity(conn: sqlite3.Connection) -> dict:
     }
 
 
+def link_fixture(trace: TraceWriter, span_id: str, fixture: dict) -> None:
+    mapping = [
+        ("RUN", fixture["run_id"]),
+        ("DOC", fixture["document_id"]),
+        ("FRG", fixture["fragment_id"]),
+        ("TRN", fixture["translation_id"]),
+        ("KN", fixture["node_id"]),
+        ("EVD", fixture["evidence_id"]),
+        ("REV", fixture["review_id"]),
+        ("SCORE", fixture["score_id"]),
+    ] + [("VIEW", x) for x in fixture["role_view_ids"]]
+    for entity_type, entity_id in mapping:
+        trace.link_entity(entity_type, entity_id, span_id)
+        trace.emit(stage="ENTITY_LINK", status="OK", event="LINK", span_id=span_id,
+                   entity_type=entity_type, entity_id=entity_id,
+                   attributes={"relation": "CREATED_BY"})
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description="Initialize FATHER Knowledge Factory SQLite M1")
     parser.add_argument("--db", default=str(DEFAULT_DB))
@@ -129,13 +163,38 @@ def main() -> int:
     db = Path(args.db)
     if not SCHEMA.exists():
         raise FileNotFoundError(SCHEMA)
+    if not TRACE_SCHEMA.exists():
+        raise FileNotFoundError(TRACE_SCHEMA)
+
+    trace = TraceWriter(run_id=new_id("RUN-INIT"), stream_id="S1", db_path=db)
+    print(f"FATHER_TRACE_ID={trace.trace_id}")
+    print(f"TRACE_FILE={trace.path}")
 
     conn = connect(db)
     try:
-        apply_schema(conn)
-        fixture = None if args.no_fixture else golden_fixture(conn)
-        result = integrity(conn)
-        report = {"db": str(db), "schema": str(SCHEMA), "fixture": fixture, "integrity": result}
+        with trace.span("DB_SCHEMA", event="APPLY_SCHEMA", entity_type="DB", entity_id=str(db)):
+            apply_schema(conn)
+
+        fixture = None
+        if not args.no_fixture:
+            with trace.span("GOLDEN_FIXTURE", event="INSERT_FIXTURE") as fixture_span:
+                fixture = golden_fixture(conn)
+                link_fixture(trace, fixture_span, fixture)
+
+        with trace.span("DB_INTEGRITY", event="CHECK_INTEGRITY"):
+            result = integrity(conn)
+            trace.emit(stage="KB_READY_GATE", status="OK" if result["ok"] else "BLOCKED",
+                       event="GOLDEN_PROMOTION", attributes=result)
+
+        report = {
+            "db": str(db),
+            "schema": str(SCHEMA),
+            "trace_schema": str(TRACE_SCHEMA),
+            "trace_id": trace.trace_id,
+            "trace_file": str(trace.path),
+            "fixture": fixture,
+            "integrity": result,
+        }
         print(json.dumps(report, ensure_ascii=False, indent=2))
         return 0 if result["ok"] or args.no_fixture else 2
     finally:
