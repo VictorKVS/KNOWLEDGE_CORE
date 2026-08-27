@@ -1,0 +1,111 @@
+schema_version: "1.0"
+source_id: SEC-SRC-RU-MINZDRAV-ORDER-947N-2020
+title: "Приказ Министерства здравоохранения Российской Федерации от 07.09.2020 № 947н «Об утверждении Порядка организации системы документооборота в сфере охраны здоровья в части ведения медицинской документации в форме электронных документов»"
+jurisdiction: RU
+source_type: federal_executive_order
+sector: healthcare_information_systems
+regime: electronic_medical_documentation
+status: CURRENT_PRIMARY_PUBLICATION_METADATA_VERIFIED_EXACT_BINARY_PENDING
+
+current_state:
+  current_as_of: "2026-08-27"
+  effective_from: "2021-02-01"
+  current_until_exclusive: "2026-09-01"
+  replacement_act: "Приказ Минздрава России от 25.03.2026 № 209н"
+  replacement_status: FUTURE_NOT_CURRENT_AS_OF_2026_08_27
+  note: "№ 209н признает № 947н утратившим силу с 01.09.2026. До этой даты № 947н остается действующим порядком электронного медицинского документооборота."
+
+authority:
+  official_publication_document_url: "https://publication.pravo.gov.ru/document/0001202101120007"
+  official_publication_id: "0001202101120007"
+  publication_date: "2021-01-12"
+  minjust_registration_date: "2021-01-12"
+  minjust_registration_number: "62054"
+  official_publication_index_evidence: "Официальный интернет-портал правовой информации, раздел актов Минздрава: № 947н, публикация 0001202101120007, PDF 9 страниц."
+  official_ministry_explanation_url: "https://minzdrav.gov.ru/special/news/2021/01/13/15829-meditsina-perehodit-v-tsifru"
+  official_supervisory_archive_url: "https://roszdravnadzor.gov.ru/pages/reform/npa-archive/16-03-2023"
+  departmental_text_copy_url: "https://rg.gov.ru/api/file/616817e1e4b033d3119199cf"
+
+statutory_basis:
+  - target: "SEC-SRC-RU-FZ-323:article_14_part_2_point_11"
+    relation: MINZDRAV_ORDER_EXPLICITLY_AUTHORIZED_BY_323_FZ
+    status: VERIFIED_STATUTORY_BASIS
+  - target: "SEC-SRC-RU-PP-140-2022"
+    relation: ELECTRONIC_MEDICAL_DOCUMENT_REGISTRATION_AND_EGISZ_CONTEXT
+    status: CROSS_REGIME_CONTEXT_APPLICABILITY_REVIEW_REQUIRED
+
+protected_regime:
+  name: electronic_medical_documentation
+  anchors:
+    - locator: "order_scope_and_effect"
+      type: electronic_medical_document_lifecycle
+      rule: "Порядок регулирует формирование, подписание, хранение электронных медицинских документов, обмен ими, передачу/регистрацию в ЕГИСЗ и предоставление доступа к электронной медицинской документации."
+      evidence_status: OFFICIAL_MINZDRAV_EXPLANATION_PLUS_PRIMARY_PUBLICATION_METADATA
+    - locator: "procedure_point_9"
+      type: qualified_electronic_signature
+      rule: "Электронный медицинский документ подписывается усиленной квалифицированной электронной подписью медицинского работника, сформировавшего документ, кроме предусмотренных Порядком исключений."
+      evidence_status: PRIMARY_TEXT_CROSSCHECK_EXACT_BINARY_PENDING
+    - locator: "procedure_point_20"
+      type: sector_document_retention
+      rule: "Электронные медицинские документы хранятся в используемой для их формирования информационной системе не менее срока хранения соответствующих медицинских документов на бумажном носителе."
+      evidence_status: PRIMARY_TEXT_CROSSCHECK_EXACT_BINARY_PENDING
+    - locator: "procedure_point_21"
+      type: version_history_retention
+      rule: "При исправлении электронного медицинского документа должны сохраняться все его версии и подписи в составе метаданных на протяжении всего срока хранения документа."
+      evidence_status: PRIMARY_TEXT_CROSSCHECK_EXACT_BINARY_PENDING
+    - locator: "patient_paper_copy_choice"
+      type: patient_access_and_format_choice
+      rule: "Официальное разъяснение Минздрава подтверждает право пациента/законного представителя потребовать дублирование медицинской документации на бумажном носителе."
+      evidence_status: OFFICIAL_MINZDRAV_EXPLANATION
+
+pdn_relationship:
+  status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  relationship_type: ELECTRONIC_MEDICAL_RECORD_PDN_AND_MEDICAL_SECRECY_OVERLAP
+  overlap_candidates:
+    - target: "RU-152-FZ"
+      relation: PERSON_LEVEL_MEDICAL_RECORD_PROCESSING_CONTEXT
+    - target: "SEC-SRC-RU-FZ-323:article_13"
+      relation: ELECTRONIC_MEDICAL_DOCUMENT_POSSIBLE_MEDICAL_SECRECY_DUAL_REGIME
+    - target: "SEC-SRC-RU-PP-140-2022"
+      relation: EGISZ_REGISTRATION_AND_EXCHANGE_CONTEXT
+  proof_guards:
+    - "ELECTRONIC_MEDICAL_DOCUMENT != AUTOMATIC_PROOF_THAT_EVERY_FIELD_IS_MEDICAL_SECRECY"
+    - "MEDICAL_RECORD_RETENTION_PERIOD != GENERAL_PDN_RETENTION_PERIOD"
+    - "POINT_20 RETENTION applies to the corresponding medical document and must not be generalized to every healthcare database."
+    - "OVERLAP != APPLICABILITY; prove actor/system/record/operation/purpose/legal basis."
+
+version_chain:
+  status: CURRENT_TO_2026_09_01_REPLACEMENT_VERIFIED_EXACT_BINARIES_PENDING
+  events:
+    - act: "07.09.2020 № 947н"
+      publication_id: "0001202101120007"
+      publication_date: "2021-01-12"
+      effective_from: "2021-02-01"
+      status: CURRENT_AS_OF_2026_08_27
+    - act: "25.03.2026 № 209н"
+      relation: REPEALS_AND_REPLACES_947N
+      official_publication_id_crosscheck: "0001202604230013"
+      minjust_registration_number: "86160"
+      effective_from: "2026-09-01"
+      status: FUTURE_NOT_CURRENT_AS_OF_2026_08_27
+
+binary_artifact:
+  status: PENDING
+  source_url: "https://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202101120007"
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_path: null
+  acquisition_failure: TRANSIENT_DNS_NAME_RESOLUTION_FAILURE
+  departmental_copy_attempt:
+    url: "https://rg.gov.ru/api/file/616817e1e4b033d3119199cf"
+    result: TRANSIENT_DNS_NAME_RESOLUTION_FAILURE
+
+proof_floor:
+  taxonomy_used_as_evidence: false
+  primary_normative_act_used_as_evidence: true
+  overlap_is_applicability: false
+  future_replacement_promoted_to_current: false
+  displayed_pdf_size_used_as_exact_bytes: false
+  executable_rule_created: false
