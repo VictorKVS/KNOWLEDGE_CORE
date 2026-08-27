@@ -1,0 +1,104 @@
+schema_version: "1.0"
+stream: 3
+checked_at: "2026-08-27T11:20:08+03:00"
+mode: APPEND_ONLY_RELATIONSHIP_DELTA
+
+source:
+  source_id: SEC-SRC-RU-PP-140-2022
+  title: "Постановление Правительства Российской Федерации от 09.02.2022 № 140 «О единой государственной информационной системе в сфере здравоохранения»"
+  sector: healthcare_information_systems
+  pdn_source_status: EXTERNAL_HEALTHCARE_INFORMATION_SYSTEM_REGIME_WITH_DIRECT_PDN_SECURITY_REFERENCE
+
+relationship_candidates:
+  - relationship_id: PDN-REL-PP140-152FZ-001
+    from: SEC-SRC-RU-PP-140-2022:regulation_point_63
+    to: RU-152-FZ
+    type: DIRECT_STATUTORY_PDN_SECURITY_CONTEXT_IN_EGISZ
+    status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    rationale: "Пункт 63 Положения прямо требует защищать информацию ЕГИСЗ в соответствии в том числе с законодательством Российской Федерации о персональных данных. Это доказывает PDN-контекст внутри ЕГИСЗ, но не доказывает автоматическую применимость каждого требования 152-ФЗ к любому внешнему медицинскому процессу, системе или участнику."
+  - relationship_id: PDN-REL-PP140-323FZ-001
+    from: SEC-SRC-RU-PP-140-2022
+    to: SEC-SRC-RU-FZ-323:articles_91_91_1
+    type: DIRECT_HEALTH_INFORMATION_SYSTEM_STATUTORY_BASIS
+    status: VERIFIED_RELATION_APPLICABILITY_NOT_PROMOTED
+    rationale: "ПП РФ № 140 принято во исполнение части 2 статьи 91.1 323-ФЗ; статья 91 323-ФЗ отдельно задает PDN/врачебно-тайный контекст информационных систем здравоохранения."
+  - relationship_id: PDN-REL-PP140-323FZ-MEDSECRET-001
+    from: SEC-SRC-RU-PP-140-2022:electronic_medical_document_and_patient_registry_flows
+    to: SEC-SRC-RU-FZ-323:article_13
+    type: MEDICAL_DOCUMENT_AND_PATIENT_DATA_POSSIBLE_DUAL_REGIME
+    status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    rationale: "ЕГИСЗ содержит медицинские документы и специализированные регистры пациентов. Применимость врачебной тайны определяется содержанием и сценарием по 323-ФЗ; не вся информация ЕГИСЗ автоматически является врачебной тайной."
+  - relationship_id: PDN-REL-PP140-168FZ-001
+    from: SEC-SRC-RU-PP-140-2022:regulation_point_56
+    to: SEC-SRC-RU-FZ-168-2020
+    type: INTERSYSTEM_EXCHANGE_WITH_FEDERAL_POPULATION_REGISTER
+    status: CANDIDATE_RELATION_CURRENT_TEXT_VERIFIED
+    rationale: "Редакция после ПП РФ № 2164/2025 предусматривает взаимодействие ЕГИСЗ с единым федеральным информационным регистром населения; фактический состав передаваемых записей и основания передачи требуют отдельного сценарного доказательства."
+
+scope_guards:
+  - "EGISZ_SYSTEM_SCOPE != AUTOMATIC_152_FZ_APPLICABILITY_TO_EVERY_HEALTHCARE_PROCESS"
+  - "DIRECT_PDN_REFERENCE_IN_POINT_63 != AUTOMATIC_PDN_LEGAL_BASIS_FOR_EVERY_OPERATION"
+  - "MEDICAL_DOCUMENT_OR_PATIENT_REGISTER != AUTOMATIC_MEDICAL_SECRECY_CLASSIFICATION_FOR_EVERY_FIELD"
+  - "POINT_65_CERTIFIED_FSB_FSTEC_CONTROLS != AUTOMATIC_187_FZ_KII_APPLICABILITY"
+  - "FUTURE_PP_211_2026_EFFECTIVE_2026_09_01 != CURRENT_REQUIREMENT_AS_OF_2026_08_27"
+  - "DUAL_REGIME requires actor/system/record/operation/purpose/legal-basis proof."
+
+verified_data_context:
+  regulation_point_30:
+    security_functions:
+      - "идентификация и аутентификация"
+      - "управление доступом"
+      - "регистрация событий безопасности"
+      - "антивирусная защита"
+      - "обнаружение/предотвращение вторжений"
+      - "контроль защищенности"
+      - "криптографическая защита"
+    security_properties:
+      - "конфиденциальность"
+      - "целостность"
+      - "доступность"
+  appendix_1_section_I_point_1:
+    person_level_fields:
+      - "ФИО"
+      - "пол"
+      - "дата рождения"
+      - "место рождения"
+      - "гражданство"
+      - "данные документа, удостоверяющего личность"
+      - "место жительства/регистрации"
+      - "СНИЛС"
+  patient_data_flows:
+    - "федеральный реестр электронных медицинских документов"
+    - "специализированные регистры пациентов по отдельным заболеваниям/состояниям и категориям"
+
+version_evidence:
+  current_official_consolidation: "https://government.ru/docs/all/139211/"
+  current_revision_crosscheck: "26.12.2025"
+  current_effective_from: "2026-03-01"
+  original_publication:
+    act: "09.02.2022 № 140"
+    publication_date: "2022-02-11"
+    official_publication_id_crosscheck: "0001202202110036"
+  current_amendment:
+    act: "26.12.2025 № 2164"
+    official_publication_id_crosscheck: "0001202512270032"
+    effective_from: "2026-01-04"
+  future_amendment:
+    act: "02.03.2026 № 211"
+    official_publication_id_crosscheck: "0001202603020026"
+    effective_from: "2026-09-01"
+    current_status: FUTURE_NOT_CURRENT
+
+acquisition_status:
+  exact_primary_binary: PENDING
+  exact_capture_attempted: true
+  failure_class: TRANSIENT_DNS_OR_DOWNLOAD_FAILURE
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+
+proof_floor:
+  applicability_promotions: 0
+  conflicts_confirmed: 0
+  executable_rules_created: 0
