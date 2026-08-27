@@ -34,6 +34,10 @@ legal_dependency:
     relation: DEFINES_SIGNED_ACT_AND_COMMISSIONING_DATE_USED_BY_POINT6
     model: security-knowledge/legislation/RU/government-decrees/538-2005/sorm-interaction-commissioning-atomic-v1.yaml
     status: VERIFIED_CURRENT
+  pp719_product_confirmation:
+    relation: DEFINES_CURRENT_REGISTRY_EVIDENCE_ROUTE_FOR_POINT4_1
+    model: security-knowledge/legislation/RU/government-decrees/719/pp445-storage-means-production-confirmation-atomic-v1.yaml
+    status: VERIFIED_GENERAL_ROUTE_PRODUCT_SPECIFIC_REQUIREMENTS_AND_LIVE_RECORD_PENDING
 
 temporal_model:
   - id: PP445_CURRENT_SCOPE
@@ -101,7 +105,8 @@ atomic_rules:
     locator: "Правила, пункт 4(1)"
     actors: [COMMUNICATIONS_OPERATOR]
     rule: STORAGE_MEANS_MUST_HAVE_VALID_RUSSIAN_INDUSTRIAL_PRODUCTION_CONFIRMATION_AT_INSTALLATION
-    dependency: "ПП РФ № 719, требования к системам хранения данных"
+    dependency: "ПП РФ № 719, реестровая запись для конкретного средства хранения"
+    dependency_model: security-knowledge/legislation/RU/government-decrees/719/pp445-storage-means-production-confirmation-atomic-v1.yaml
   - id: PP445-R009
     locator: "Правила, пункт 5"
     actors: [COMMUNICATIONS_OPERATOR]
@@ -166,7 +171,7 @@ evidence_model:
   - {id: E445-02, proves: [PP445-R003, PP445-R004], artifacts: [SOURCE_CLASSIFICATION, ZERO_VOLUME_CONFIGURATION]}
   - {id: E445-03, proves: [PP445-R005], artifacts: [FSB_AUTHORIZED_UNIT_AGREEMENT, OTHER_OPERATOR_RESOURCE_CONTRACT, RESOURCE_MAP]}
   - {id: E445-04, proves: [PP445-R006, PP445-R007], artifacts: [SORM_ARCHITECTURE, APPLICABLE_TECHNICAL_REQUIREMENTS_REGISTER]}
-  - {id: E445-05, proves: [PP445-R008], artifacts: [VALID_PP719_PRODUCTION_CONFIRMATION_AT_INSTALLATION, INSTALLATION_RECORD]}
+  - {id: E445-05, proves: [PP445-R008], artifacts: [ACTIVE_PP719_PRODUCT_REGISTRY_RECORD_SNAPSHOT_AT_INSTALLATION, PRODUCT_MODEL_AND_CODE_MATCH, INSTALLATION_RECORD]}
   - {id: E445-06, proves: [PP445-R009], artifacts: [LICENSED_SERVICE_SCOPE, EVENT_END_TIMESTAMPS, SIX_MONTH_RETENTION_CONFIGURATION]}
   - {id: E445-07, proves: [PP445-R010], artifacts: [HISTORICAL_CONFIGURATION_AND_DATE_EVIDENCE]}
   - {id: E445-08, proves: [PP445-R011], artifacts: [PRECEDING_30_DAY_TRAFFIC_MEASUREMENT, INITIAL_CAPACITY_CALCULATION]}
@@ -187,6 +192,7 @@ red_team_guardrails:
   - DO_NOT_SILENTLY_RESOLVE_THE_POST_2026_09_01_POINT5_POINT6_OVERLAP
   - DO_NOT_TREAT_THE_2022_12_01_GOVERNMENT_ASSIGNMENT_AS_AN_OPERATOR_DEADLINE
   - DO_NOT_CLAIM_THE_MINDIGITAL_TECHNICAL_CONTROL_CATALOG_IS_ATOMIZED_HERE
+  - DO_NOT_TREAT_MANUFACTURER_LISTING_OR_EXPERTISE_ACT_ALONE_AS_AN_ACTIVE_PRODUCT_RECORD
 
 verification_boundary:
   pp445_current_points_1_to_8: VERIFIED_CURRENT_TEXT
@@ -196,7 +202,9 @@ verification_boundary:
   pp1066_official_pdf_bytes: PENDING_TRANSIENT_FETCH_TIMEOUT
   historical_pp445_revisions_before_2022_04_07: PENDING
   mindigital_storage_means_requirements: PENDING_SEPARATE_ATOMIZATION
-  pp719_current_product_confirmation_route: PENDING_SEPARATE_ATOMIZATION
+  pp719_current_product_confirmation_route: VERIFIED_BY_LINKED_ATOMIC_MODEL
+  pp719_section_ix_storage_system_product_requirements: PENDING_PRODUCT_SPECIFIC_ATOMIZATION
+  pp719_live_record_snapshot_for_installed_product: PENDING_PER_IMPLEMENTATION
   pp538_2005_commissioning_procedure: VERIFIED_BY_LINKED_ATOMIC_MODEL
   post_2026_09_01_point5_point6_overlap_interpretation: PENDING_DOCUMENTED_INTERPRETATION
   independent_expert_review: PENDING
