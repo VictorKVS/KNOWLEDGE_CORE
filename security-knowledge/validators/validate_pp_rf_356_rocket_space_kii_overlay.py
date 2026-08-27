@@ -4,11 +4,13 @@ import hashlib
 import json
 import re
 from pathlib import Path
+import yaml
 
 ROOT = Path(__file__).resolve().parents[2]
 MATRIX_PATH = ROOT / "security-knowledge" / "classification" / "pp-rf-356-2026-rocket-space-kii-overlay-v1.json"
 FIXTURE_PATH = ROOT / "security-knowledge" / "classification" / "pp-rf-356-2026-rocket-space-kii-overlay-regression-v1.json"
 MANIFEST_PATH = ROOT / "security-knowledge" / "evidence" / "primary-artifact-pp-rf-356-2026.json"
+FORMULA_EVIDENCE_PATH = ROOT / "security-knowledge" / "evidence" / "pp-rf-356-2026-formula-image-verification-2026-08-27.yaml"
 ARTIFACT_PATH = ROOT / "security-knowledge" / "evidence" / "primary-artifacts" / "2026" / "pp-rf-356-2026-0001202604010039.pdf"
 EXPECTED_SHA256 = "830efe29784ac04b57b9d6f56ab2d3c9a7cf4c75c2ddc6f18ba9efbbd8d9df1b"
 
@@ -17,6 +19,7 @@ def main() -> int:
     matrix = json.loads(MATRIX_PATH.read_text(encoding="utf-8"))
     fixture = json.loads(FIXTURE_PATH.read_text(encoding="utf-8"))
     manifest = json.loads(MANIFEST_PATH.read_text(encoding="utf-8"))
+    formula_evidence = yaml.safe_load(FORMULA_EVIDENCE_PATH.read_text(encoding="utf-8"))
     failures: list[str] = []
 
     def check(condition: bool, message: str) -> None:
@@ -67,6 +70,10 @@ def main() -> int:
         rule = by_id.get(rule_id, {})
         check(rule.get("percentage_formula") == formulas.get("percentage"), f"percentage formula drift: {rule_id}")
         check(rule.get("damage_formula") == formulas.get("damage"), f"damage formula drift: {rule_id}")
+        check(rule.get("source_percentage_formula") == formulas.get("source_percentage"), f"source percentage formula drift: {rule_id}")
+        check(rule.get("source_damage_formula") == formulas.get("source_damage"), f"source damage formula drift: {rule_id}")
+        check(rule.get("absolute_value_operator") == "ABSENT", f"absolute-value operator inserted: {rule_id}")
+        check("FAIL_CLOSED_NOT_DEFINED_BY_ACT" in rule.get("zero_denominator_rule", ""), f"zero denominator not fail-closed: {rule_id}")
         check(rule.get("lookback", {}).get("value") == lookback, f"lookback drift: {rule_id}")
         check(rule.get("lookback", {}).get("unit") == "YEAR", f"lookback unit drift: {rule_id}")
         check(rule.get("negative_delta_rule", {}).get("stated_basis") == "t_maintenance", f"negative-delta basis drift: {rule_id}")
@@ -74,12 +81,19 @@ def main() -> int:
     delegated = by_id.get("PP356-C15-POSITIONS-13-13-1", {})
     check(delegated.get("calculation_source") == "SECTOR_SPECIFIC_CATEGORIZATION_FEATURES_FOR_DEFENCE_INDUSTRY_CII", "delegated defence-industry calculation source drift")
     check("formula" not in delegated, "delegated positions received an invented formula")
+    formula_images = formula_evidence.get("formula_images", [])
+    check(len(formula_images) == 4, "formula evidence count drift")
+    check(all(item.get("absolute_value_operator") == "ABSENT" for item in formula_images), "formula evidence absolute-value drift")
+    check(len({item.get("crop_sha256") for item in formula_images}) == 4, "formula crop SHA drift")
+    glyphs = formula_evidence.get("image_only_variable_glyphs", [])
+    check(len(glyphs) == 2 and all(item.get("glyph") == "RΣ" for item in glyphs), "R-sigma glyph evidence drift")
+    check(formula_evidence.get("primary_artifact", {}).get("sha256") == EXPECTED_SHA256, "formula evidence PDF SHA drift")
 
     if failures:
         for failure in failures:
             print(f"FAIL {failure}")
         return 1
-    print("PASS PP RF 356/2026: immutable source, 7 governance, 1 submission, 5 routing, 4 assessment and 5 calculation rules")
+    print("PASS PP RF 356/2026: immutable source, 4 formula images, 2 R-sigma glyphs, zero-denominator and negative-difference fail-closed boundaries")
     return 0
 
 

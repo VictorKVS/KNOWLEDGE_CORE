@@ -1,7 +1,7 @@
 {
   "record_id": "PP-RF-356-2026-ROCKET-SPACE-KII-OVERLAY-V1",
   "status": "VERIFIED_PRIMARY_IMMUTABLE",
-  "as_of": "2026-08-19",
+  "as_of": "2026-08-27",
   "title": "Sector-specific CII categorization overlay for the rocket and space industry",
   "act": {
     "type": "Government Resolution",
@@ -52,8 +52,8 @@
   ],
   "calculation_rules": [
     {"id":"PP356-C11-POSITION-1","clause":"11","position":"1","inputs":["PROJECT_AND_OPERATIONAL_DOCUMENTATION_FOR_HAZARDOUS_FACTORS","MODELED_LIFE_AND_HEALTH_HARM_FROM_INCIDENT_CONSEQUENCES","HISTORICAL_ABNORMAL_EVENT_STATISTICS","PERSONS_POTENTIALLY_IN_THE_EMERGENCY_AFFECTED_ZONE"]},
-    {"id":"PP356-C12-POSITION-8","clause":"12","position":"8","percentage_formula":"U_pct = (U / R_annual_avg) * 100","damage_formula":"U = ((R_annual_avg + R_tax_avg) / 365) * (t_remediation - t_maintenance)","lookback":{"value":5,"unit":"YEAR","applies_to":["R_annual_avg","R_tax_avg"]},"negative_delta_rule":{"condition":"t_remediation - t_maintenance < 0","stated_basis":"t_maintenance","interpretation_guard":"The act states that t_maintenance is used as the calculation basis; do not silently replace this with zero or invent a transformed formula."}},
-    {"id":"PP356-C13-POSITION-9","clause":"13","position":"9","percentage_formula":"U_pct = (U / R_annual_avg) * 100","damage_formula":"U = ((R_annual_avg + R_tax_avg) / 365) * (t_remediation - t_maintenance)","lookback":{"value":3,"unit":"YEAR","applies_to":["R_annual_avg","R_tax_avg"]},"negative_delta_rule":{"condition":"t_remediation - t_maintenance < 0","stated_basis":"t_maintenance","interpretation_guard":"The act states that t_maintenance is used as the calculation basis; do not silently replace this with zero or invent a transformed formula."}},
+    {"id":"PP356-C12-POSITION-8","clause":"12","position":"8","source_percentage_formula":"U% = U / Rгод × 100%","percentage_formula":"U_pct = (U / R_annual_avg) * 100","source_damage_formula":"U = [(Rгод + RΣ) / 365] × (tустр − tрегл)","damage_formula":"U = ((R_annual_avg + R_tax_avg) / 365) * (t_remediation - t_maintenance)","absolute_value_operator":"ABSENT","zero_denominator_rule":"R_annual_avg <= 0 OR MISSING => FAIL_CLOSED_NOT_DEFINED_BY_ACT","lookback":{"value":5,"unit":"YEAR","applies_to":["R_annual_avg","R_tax_avg"]},"negative_delta_rule":{"condition":"t_remediation - t_maintenance < 0","stated_basis":"t_maintenance","execution":"FAIL_CLOSED_PENDING_DOCUMENTED_INTERPRETATION","interpretation_guard":"The act states that t_maintenance is used as the calculation basis; do not silently replace this with zero or invent a transformed formula."}},
+    {"id":"PP356-C13-POSITION-9","clause":"13","position":"9","source_percentage_formula":"U% = U / Rгод × 100%","percentage_formula":"U_pct = (U / R_annual_avg) * 100","source_damage_formula":"U = [(Rгод + RΣ) / 365] × (tустр − tрегл)","damage_formula":"U = ((R_annual_avg + R_tax_avg) / 365) * (t_remediation - t_maintenance)","absolute_value_operator":"ABSENT","zero_denominator_rule":"R_annual_avg <= 0 OR MISSING => FAIL_CLOSED_NOT_DEFINED_BY_ACT","lookback":{"value":3,"unit":"YEAR","applies_to":["R_annual_avg","R_tax_avg"]},"negative_delta_rule":{"condition":"t_remediation - t_maintenance < 0","stated_basis":"t_maintenance","execution":"FAIL_CLOSED_PENDING_DOCUMENTED_INTERPRETATION","interpretation_guard":"The act states that t_maintenance is used as the calculation basis; do not silently replace this with zero or invent a transformed formula."}},
     {"id":"PP356-C14-POSITION-11","clause":"14","position":"11","inputs":["PRESENCE_OF_CII_OBJECTS_CLASSIFIED_AS_HAZARDOUS_PRODUCTION_FACILITIES","OBJECTS_SUPPORTING_CONTROL_OR_MONITORING_OF_HAZARDOUS_PRODUCTION_FACILITIES","ENVIRONMENTAL_IMPACT_TERRITORY_COMPARED_WITH_POSITION_11_SUBPOSITION_A","POTENTIALLY_AFFECTED_PERSONS_COMPARED_WITH_POSITION_11_SUBPOSITION_B"]},
     {"id":"PP356-C15-POSITIONS-13-13-1","clause":"15","positions":["13","13^1"],"calculation_source":"SECTOR_SPECIFIC_CATEGORIZATION_FEATURES_FOR_DEFENCE_INDUSTRY_CII","rule":"Use the defence-industry sector overlay for calculation; PP 356 does not reproduce or replace those calculation rules."}
   ],
@@ -66,6 +66,8 @@
     "Positions 13 and 13^1 have different state-defence-order role boundaries and must not be merged.",
     "The five-year window in clause 12 and three-year window in clause 13 are calculation lookbacks, not evidence-retention periods.",
     "Do not convert the negative-delta fallback wording into a zero clamp or a new formula not stated by the act.",
+    "Do not execute positions 8 or 9 when R_annual_avg is zero or missing; the act does not define that case.",
+    "Do not insert an absolute-value operator: it is absent from all four primary formula images.",
     "Do not invent position 13 or 13^1 formulas: clause 15 delegates calculation to the defence-industry sector overlay.",
     "No category is proven until complete facts and the applicable PP 127 threshold comparison are documented."
   ],
@@ -74,6 +76,12 @@
     "ocr_is_evidence": false,
     "all_primary_pages_rendered": true,
     "primary_pages_visually_checked": [1,4,6,7,8],
+    "formula_pages": [6,7],
+    "formula_verification_record": "security-knowledge/evidence/pp-rf-356-2026-formula-image-verification-2026-08-27.yaml",
+    "formula_images_verified": 4,
+    "variable_glyph_images_verified": 2,
+    "variable_glyph": "RΣ",
+    "absolute_value_operators": "VERIFIED_ABSENT",
     "authoritative_text_crosschecks": ["https://www.consultant.ru/document/cons_doc_LAW_530539/","https://pravo.ppt.ru/postanovlenie/pravitelstvo/n-356-332139"]
   }
 }

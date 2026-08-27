@@ -5,7 +5,9 @@
   "required_indicator_positions": ["1","8","9","11","13","13^1"],
   "required_formulas": {
     "percentage":"U_pct = (U / R_annual_avg) * 100",
-    "damage":"U = ((R_annual_avg + R_tax_avg) / 365) * (t_remediation - t_maintenance)"
+    "damage":"U = ((R_annual_avg + R_tax_avg) / 365) * (t_remediation - t_maintenance)",
+    "source_percentage":"U% = U / Rгод × 100%",
+    "source_damage":"U = [(Rгод + RΣ) / 365] × (tустр − tрегл)"
   },
   "required_lookbacks": {"PP356-C12-POSITION-8":5,"PP356-C13-POSITION-9":3},
   "negative_cases": [
@@ -15,6 +17,8 @@
     {"case":"Roscosmos exclusions do not apply to positions 8 and 9","rule_id":"PP356-C9B-POSITIONS-8-9","required_subjects":"ALL_ROCKET_SPACE_CII_SUBJECTS"},
     {"case":"five-year and three-year values are lookbacks","forbidden_interpretation":"RETENTION_DUTY"},
     {"case":"negative delta is not silently clamped to zero","forbidden_interpretation":"ZERO_CLAMP"},
+    {"case":"zero or missing R annual average fails closed","required_interpretation":"FAIL_CLOSED_NOT_DEFINED_BY_ACT"},
+    {"case":"absolute value is absent from all formula images","forbidden_interpretation":"ABSOLUTE_VALUE_OPERATOR"},
     {"case":"positions 13 and 13^1 remain delegated","rule_id":"PP356-C15-POSITIONS-13-13-1","required_calculation_source":"SECTOR_SPECIFIC_CATEGORIZATION_FEATURES_FOR_DEFENCE_INDUSTRY_CII"},
     {"case":"effective date remains derived","required_effective_date":"2026-04-09","required_confidence":"DERIVED_FROM_PRIMARY_PUBLICATION_AND_GENERAL_RULE"}
   ]

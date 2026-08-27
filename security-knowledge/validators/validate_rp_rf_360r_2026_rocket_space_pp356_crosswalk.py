@@ -15,7 +15,7 @@ def main():
     shared = model["shared_activity_code_domain"]
     overlay = model["pp356_overlay_dependency"]
     rules = {item["id"]: item["rule"] for item in model["control_rules"]}
-    assert model["status"] == "VERIFIED_CURRENT_ROCKET_SPACE_ROWS196_268_PP356_TEXT_FORMULA_IMAGES_FAIL_CLOSED"
+    assert model["status"] == "VERIFIED_CURRENT_ROCKET_SPACE_ROWS196_268_PP356_PRIMARY_FORMULAS_AND_R_SIGMA_VERIFIED_SEMANTIC_EDGE_CASES_FAIL_CLOSED"
     assert [row["row"] for row in rows] == list(range(196, 269))
     assert len(rows) == 73
     assert all(row["object_text_ru"] and row["processes_ru"] for row in rows)
@@ -33,8 +33,11 @@ def main():
     assert digest == model["verification_boundary"]["canonical_rows_sha256"] == EXPECTED_ROWS_SHA256
     assert overlay["effective_from"] == "2026-04-09"
     assert overlay["indicator_applicability_routes"] == 5
-    assert overlay["formula_images_blocked"] == 4
-    assert overlay["variable_glyph_images_blocked"] == 2
+    assert overlay["formula_images_verified"] == 4
+    assert overlay["variable_glyph_images_verified"] == 2
+    assert overlay["formula_images_blocked"] == 0
+    assert overlay["variable_glyph_images_blocked"] == 0
+    assert overlay["zero_r_annual_avg"] == "FAIL_CLOSED_NOT_DEFINED_BY_ACT"
     assert overlay["positions13_and13_1_dependency"] == "CURRENT_PP796_TEXT_MODEL_NUMERIC_IMAGES_FAIL_CLOSED"
     assert len(rules) == 64
     assert list(rules) == [f"RP360R-RS-{i:03d}" for i in range(1, 65)]
@@ -50,7 +53,7 @@ def main():
         raise SystemExit(1)
     assert model["verification_boundary"]["critical_gap_created"] == 0
     assert model["verification_boundary"]["high_gap_created"] == 0
-    print("PASS: RP RF 360-r rocket-space rows 196-268 plus PP RF 356; 73 rows, 151 process groups, 15 codes, canonical source-text digest, 6 image fragments blocked, 64 rules/cases")
+    print("PASS: RP RF 360-r rocket-space rows 196-268 plus PP RF 356; 73 rows, 151 process groups, 15 codes, 4 formulas and 2 R-sigma glyphs verified, 64 rules/cases")
 
 if __name__ == "__main__":
     main()

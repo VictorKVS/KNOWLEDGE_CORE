@@ -1,0 +1,82 @@
+record_id: PP-RF-356-2026-FORMULA-IMAGE-VERIFICATION-2026-08-27
+observed_at: '2026-08-27'
+status: VERIFIED_PRIMARY_IMMUTABLE_FOUR_FORMULAS_TWO_R_SIGMA_GLYPHS
+act:
+  designation: Постановление Правительства РФ от 31.03.2026 № 356
+  official_publication_number: '0001202604010039'
+  official_document_url: https://publication.pravo.gov.ru/document/0001202604010039
+  current_legal_interface: https://www.consultant.ru/document/cons_doc_LAW_530539/
+  full_public_text_crosscheck: https://pravo.ppt.ru/postanovlenie/pravitelstvo/n-356-332139
+primary_artifact:
+  path: security-knowledge/evidence/primary-artifacts/2026/pp-rf-356-2026-0001202604010039.pdf
+  sha256: 830efe29784ac04b57b9d6f56ab2d3c9a7cf4c75c2ddc6f18ba9efbbd8d9df1b
+  git_blob_sha: bfcd49152ee2311e2a8bbbb442503fe1cebf5a67
+  byte_length: 1686133
+  pages: 8
+  pdf_version: '1.5'
+rendering:
+  tool: pdftoppm
+  resolution_dpi: 300
+  page_pixel_size: 2480x3508
+  ocr_is_evidence: false
+  method: VISUAL_INSPECTION_OF_PRIMARY_PDF_PAGE_IMAGES_AND_REPRODUCIBLE_CROPS
+formula_images:
+- id: PP356-CLAUSE12-POSITION8-PERCENTAGE
+  pdf_page: 6
+  printed_page: 5
+  source_notation: U% = U / Rгод × 100%
+  normalized_expression: (U / R_ANNUAL_AVG_5Y) * 100
+  absolute_value_operator: ABSENT
+  page_image_sha256: 6163f114ba06c314da811e5a329fbeae19f26c0b5d858ddefd24c60106793257
+  crop_geometry: 1100x300+690+950
+  crop_sha256: faac9044cf000feba4221687f09f933499620c14d86f6414647ca60a5f98c60d
+- id: PP356-CLAUSE12-POSITION8-DAMAGE
+  pdf_page: 6
+  printed_page: 5
+  source_notation: U = [(Rгод + RΣ) / 365] × (tустр − tрегл)
+  normalized_expression: ((R_ANNUAL_AVG_5Y + R_TAX_AVG_5Y) / 365_DAYS) * (T_REMEDIATION - T_MAINTENANCE)
+  absolute_value_operator: ABSENT
+  page_image_sha256: 6163f114ba06c314da811e5a329fbeae19f26c0b5d858ddefd24c60106793257
+  crop_geometry: 1500x340+490+1590
+  crop_sha256: e5a8a792af8fd185bcf955f575b58de5d8bed9a119940477bd3b652616147c41
+- id: PP356-CLAUSE13-POSITION9-PERCENTAGE
+  pdf_page: 7
+  printed_page: 6
+  source_notation: U% = U / Rгод × 100%
+  normalized_expression: (U / R_ANNUAL_AVG_3Y) * 100
+  absolute_value_operator: ABSENT
+  page_image_sha256: f76fde21c9ddf0d4f7bbaef427e65c6f39f9b4501483bccf174cba224ca48adc
+  crop_geometry: 1100x300+690+240
+  crop_sha256: adbc280f899d04243cb073b310dbb414de9a7302c507d3820dfb1af425114866
+- id: PP356-CLAUSE13-POSITION9-DAMAGE
+  pdf_page: 7
+  printed_page: 6
+  source_notation: U = [(Rгод + RΣ) / 365] × (tустр − tрегл)
+  normalized_expression: ((R_ANNUAL_AVG_3Y + R_TAX_AVG_3Y) / 365_DAYS) * (T_REMEDIATION - T_MAINTENANCE)
+  absolute_value_operator: ABSENT
+  page_image_sha256: f76fde21c9ddf0d4f7bbaef427e65c6f39f9b4501483bccf174cba224ca48adc
+  crop_geometry: 1500x340+490+830
+  crop_sha256: c4caf09d8cc178fbf40e0b696ebcfdbf59a34541f1598b2480edb4239de4152b
+image_only_variable_glyphs:
+- clause: '12'
+  glyph: RΣ
+  meaning: FIVE_YEAR_AVERAGE_TOTAL_ANNUAL_FEDERAL_TAX_AMOUNT
+- clause: '13'
+  glyph: RΣ
+  meaning: THREE_YEAR_AVERAGE_TOTAL_ANNUAL_FEDERAL_TAX_AMOUNT
+semantic_boundaries:
+  zero_r_annual_avg: FAIL_CLOSED_NOT_DEFINED_BY_ACT
+  negative_time_difference: FAIL_CLOSED_PENDING_DOCUMENTED_LITERAL_T_MAINTENANCE_BASIS_INTERPRETATION
+  negative_time_difference_source_rule: IF_T_REMEDIATION_MINUS_T_MAINTENANCE_IS_NEGATIVE_T_MAINTENANCE_IS_USED_AS_CALCULATION_BASIS
+  forbidden_transformations:
+  - DO_NOT_INSERT_ABSOLUTE_VALUE
+  - DO_NOT_CLAMP_NEGATIVE_DIFFERENCE_TO_ZERO
+  - DO_NOT_INVENT_A_TRANSFORMED_NEGATIVE_DIFFERENCE_FORMULA
+  - DO_NOT_TREAT_FIVE_YEAR_OR_THREE_YEAR_LOOKBACK_AS_RETENTION
+  - DO_NOT_TREAT_FIXED_365_DAY_DENOMINATOR_AS_RETENTION
+verification_result:
+  formulas: PASS_4_OF_4
+  variable_glyphs: PASS_2_OF_2_R_SIGMA
+  source_operators_constants_denominators_and_brackets: PASS
+  executable_boundary: CONDITIONAL_COMPLETE_INPUTS_POSITIVE_R_ANNUAL_AVG_NONNEGATIVE_TIME_DIFFERENCE
+
