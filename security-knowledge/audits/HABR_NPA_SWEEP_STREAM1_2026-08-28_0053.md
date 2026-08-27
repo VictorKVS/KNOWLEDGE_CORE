@@ -38,7 +38,7 @@ Body explicitly identifies itself as an implementation audit/compliance plan and
 
 It is not Roskomnadzor Order 140/2025 and must not be mapped by topic keywords alone.
 
-## New structural conflict in old corpus
+## New structural conflicts in old corpus
 
 `VictorKVS/gpt-agent/дОКУМЕНТЫ ЗАГРУЖАЕМЫЕ В АГЕНТ/Государственные регуляторы/Роскомнадзор/` contains only one file at the checked commit:
 
@@ -50,6 +50,17 @@ It is not Roskomnadzor Order 140/2025 and must not be mapped by topic keywords a
 No Roskomnadzor Orders 128/178/179/180/187/140 are present in that regulator directory. Classification: `REGULATOR_FOLDER_CONTAMINATION / COVERAGE_GAP`. Folder placement cannot be used as authority identity.
 
 The separate `Персональные данные ФЗ 152` directory likewise contains the 152-FZ TXT/PDF plus user-authored checklists/algorithms/lists, but no files named as Orders 178/179/180/187. This confirms the existing rule `folder != legal ontology`.
+
+### Number 140 collision across authorities and dates
+
+The same `gpt-agent` commit contains a distinct binary:
+
+- path: `дОКУМЕНТЫ ЗАГРУЖАЕМЫЕ В АГЕНТ/Постановление Правительства РФ от 9 февраля 2022 г N 140 О единой государственно.pdf`
+- type: PDF
+- size: 318,368 bytes
+- blob: `25cffc2f3d09b9b0702cefb2a634fa2b331dfb9b`
+
+This is named as a **Government Decree** No. 140 dated 09.02.2022, while the target anonymization act is **Roskomnadzor Order** No. 140 dated 19.06.2025. Classification: `AUTHORITY_NUMBER_DATE_COLLISION`. Normalization must match `authority + act_type + date + number + title/body`, never number alone.
 
 ## Blockers after this pass
 
@@ -63,6 +74,6 @@ The separate `Персональные данные ФЗ 152` directory likewise
 - confirmed `FULL_TEXT`: +0
 - reliable act-level binary candidate: +1 (PP 1119)
 - rejected secondary/wrong candidates: +2
-- structural conflicts: +1
+- structural/identity conflicts: +2
 - exact duplicates: +0
 - CURRENT promotions: +0
