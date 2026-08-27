@@ -1,0 +1,75 @@
+schema_version: "1.0"
+stream: 3
+checked_at: "2026-08-27T08:21:12+03:00"
+mode: APPEND_ONLY_RELATIONSHIP_DELTA
+
+source:
+  source_id: SEC-SRC-RU-FZ-59-2006
+  title: "Федеральный закон от 02.05.2006 № 59-ФЗ «О порядке рассмотрения обращений граждан Российской Федерации»"
+  sector: citizen_appeals_public_sector
+  pdn_source_status: EXTERNAL_PROTECTED_INFORMATION_REGIME_WITH_DIRECT_PERSON_LEVEL_DATASET_OVERLAP
+
+relationship_candidates:
+  - relationship_id: PDN-REL-59FZ-152FZ-001
+    from: SEC-SRC-RU-FZ-59-2006
+    to: RU-152-FZ
+    type: DIRECT_PERSON_LEVEL_DATASET_AND_CONFIDENTIALITY_OVERLAP
+    status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    rationale: "59-ФЗ требует или предусматривает ФИО, почтовый адрес, e-mail либо уникальный идентификатор личного кабинета, документы/материалы, данные документа, удостоверяющего личность при личном приеме, и содержание обращения. Это создает прямой person-level data context, но применимость конкретных требований 152-ФЗ требует отдельного доказательства субъекта, записи, операции, цели, роли и правового основания."
+  - relationship_id: PDN-REL-59FZ-SECRETS-001
+    from: SEC-SRC-RU-FZ-59-2006:articles_5_10_11
+    to: RU_PROTECTED_INFORMATION_SECTORAL_REGIMES
+    type: PARALLEL_SPECIAL_SECRET_REGIMES_PRESERVED
+    status: CANDIDATE_RELATION_VERIFIED_TEXT_APPLICABILITY_NOT_PROMOTED
+    rationale: "59-ФЗ прямо сохраняет особый порядок для государственной и иной охраняемой федеральным законом тайны. Содержание обращения может одновременно подпадать под врачебную, банковскую, страховую, коммерческую, налоговую или иную специальную тайну; такие режимы не заменяются общим режимом обращений."
+
+scope_guards:
+  - "CITIZEN_APPEAL_CONFIDENTIALITY != PERSONAL_DATA_APPLICABILITY"
+  - "ARTICLE_6_PART_2_CONSENT_TO_DISCLOSE != AUTOMATIC_152_FZ_PROCESSING_CONSENT"
+  - "ROUTING_TO_COMPETENT_AUTHORITY_IS_NOT_DISCLOSURE_UNDER_59_FZ != AUTOMATIC_PDN_LEGAL_BASIS"
+  - "59-FZ does not collapse medical, banking, insurance, commercial, tax or other protected-information regimes."
+  - "DUAL_REGIME requires scenario-level proof."
+  - "No applicability promotion from taxonomy, public-sector status or presence of person-level fields alone."
+
+verified_data_context:
+  article_7_parts_1_3:
+    fields_or_identifiers:
+      - "ФИО"
+      - "почтовый адрес"
+      - "адрес электронной почты"
+      - "уникальный идентификатор личного кабинета ЕПГУ/иной идентифицирующей системы"
+      - "приложенные документы и материалы"
+  article_13_parts_2_3:
+    fields_or_records:
+      - "документ, удостоверяющий личность"
+      - "карточка личного приема с содержанием устного обращения"
+  article_6_part_2:
+    confidentiality_object:
+      - "сведения, содержащиеся в обращении"
+      - "сведения, касающиеся частной жизни гражданина"
+
+version_evidence:
+  current_official_consolidation: "https://mintrud.gov.ru/docs/laws/108"
+  current_revision_crosscheck: "28.12.2024"
+  current_effective_from: "2025-03-30"
+  electronic_channel_amendment:
+    act: "04.08.2023 № 480-ФЗ"
+    official_publication_id: "0001202308040085"
+  latest_amendment:
+    act: "28.12.2024 № 547-ФЗ"
+    official_publication_id: "0001202412280052"
+    locator_effect: "article 6 part 3; articles 4, 7, 10"
+
+acquisition_status:
+  exact_primary_binary: PENDING
+  exact_capture_attempted: true
+  failure_class: TRANSIENT_DNS_OR_DOWNLOAD_FAILURE
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+
+proof_floor:
+  applicability_promotions: 0
+  conflicts_confirmed: 0
+  executable_rules_created: 0
