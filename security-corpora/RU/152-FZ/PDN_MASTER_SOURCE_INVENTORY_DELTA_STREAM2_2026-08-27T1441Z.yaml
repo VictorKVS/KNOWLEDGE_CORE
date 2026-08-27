@@ -1,0 +1,42 @@
+schema_version: "1.0"
+id: SEC-PDN-MASTER-SOURCE-INVENTORY-DELTA-STREAM2-2026-08-27T1441Z
+applies_to: PDN_MASTER_SOURCE_INVENTORY.yaml
+stream: RU_PDN_TECHNICAL_CRYPTO
+created_at: "2026-08-27T14:41:00Z"
+merge_policy: >-
+  CONCURRENCY_SAFE_OVERLAY. Apply only to the linked security_stack block and Stream-2 status pointers. Preserve
+  Stream-1/3 counters, unrelated master fields and concurrent commits. The authoritative master must be reconciled
+  by the normal Stream-2 registration/acquisition job after merge.
+
+security_stack_patch:
+  linked_inventory: "security-stack/PDN_SECURITY_STACK_SOURCE_INVENTORY.yaml"
+  checked_at: "2026-08-27"
+  base_identified: 42
+  additive_metadata_verified_sources: 2
+  expected_identified_after_registration: 44
+  expected_metadata_verified_after_registration: 44
+  immutable_sha256_verified_before_acquisition: 17
+  expected_pending_raw_capture_before_acquisition: 27
+  exact_official_route_unresolved_expected: 7
+  latest_status_review_at: "2026-08-27T14:41:00Z"
+  latest_stream2_run: "security-stack/runs/STREAM2_RUN_2026-08-27T1441Z.yaml"
+  latest_registry_update: >-
+    2026-08-27: register FSB Orders №547 and №548 as primary GosSOPKA/NKCKI incident-routing context only for
+    operators/resources independently covered by their KII/public-sector scope. Both have verified official
+    publication identities and deterministic publication-PDF routes; bytes are still pending at registration time.
+    FSB Order №77 remains the explicit 152-FZ Article 19(12) PDN-incident source. NKCKI letter Р-168 of 20.01.2026
+    was found only through a secondary reproduction and is therefore used as explanatory discovery evidence only,
+    not as a promoted primary/immutable source.
+
+analysis_metrics_patch:
+  stream2_source_records_added_this_pass: 2
+  stream2_primary_official_routes_registered_this_pass: 2
+  stream2_immutable_new_before_acquisition_this_pass: 0
+  stream2_secondary_discoveries_not_promoted_this_pass: 1
+  stream2_new_universal_pdn_duties_this_pass: 0
+  stream2_counter_reconciliation_required: true
+
+proof_rule: >-
+  Keep PP1119, FSTEC21, FSB378 and existing immutable evidence unchanged unless exact fresh primary bytes or enacted
+  version-chain evidence prove a change. Do not transform 187-FZ/GosSOPKA duties into universal 152-FZ duties.
+  FSB547/548 enter the PDN graph only at a proved PDN-computer-incident intersection for a covered entity/resource.
