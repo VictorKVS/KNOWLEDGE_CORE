@@ -1,0 +1,78 @@
+schema_version: "1.0"
+delta_id: PDN-MASTER-DELTA-STREAM1-2026-08-27T1704+0300
+parent_inventory: "../../../security-corpora/RU/152-FZ/PDN_MASTER_SOURCE_INVENTORY.yaml"
+stream: 1
+scope: GENERAL_152FZ_ROSKOMNADZOR_CORE
+observed_at: "2026-08-27T17:04:11+03:00"
+
+counter_snapshot:
+  identified: 35
+  downloaded_exact: 33
+  immutable_sha256: 33
+  atomized_proposed: 4
+  atomized_verified: 0
+  pending_raw: 2
+  raw_coverage: 0.9429
+  latest_reuse_ratio: 0.9706
+
+pending_raw_sources:
+  - SEC-SRC-RU-152FZ-2026-07-26
+  - SEC-SRC-RU-PP687-2008
+
+freshness_delta:
+  SEC-SRC-RU-152FZ-2026-07-26:
+    checked_at: "2026-08-27"
+    result: CURRENT_REVISION_IDENTITY_CONFIRMED
+    current_revision: "2026-07-26"
+    amendment_anchor: SEC-SRC-RU-FZ265-2026
+    note: >-
+      Fresh current-law indexes continue to identify 152-FZ in the 26.07.2026 revision. No newer effective
+      revision was found. Exact official consolidated bytes remain pending; no semantic promotion was made.
+  SEC-SRC-RU-PP687-2008:
+    checked_at: "2026-08-27"
+    result: CURRENT_REVISION_METADATA_UNCHANGED_RAW_PENDING
+    current_revision_anchor: SEC-SRC-RU-PP12-2025
+    effective_from: "2025-01-26"
+    valid_until: "2030-09-01"
+    note: >-
+      Current legal text continues to show the PP12 revision and validity through 01.09.2030. The registered
+      official Government and IPS routes timed out during this pass, so no new exact-byte artifact was accepted.
+  SEC-SRC-RU-RKN128-2022:
+    checked_at: "2026-08-27"
+    result: CURRENT_RULE_WITH_UNSIGNED_REPLACEMENT_DRAFT_WATCH
+    note: >-
+      Current-law indexes continue to present Order No. 128 as operative. The 31.07.2026 Roskomnadzor replacement
+      dossier still identifies the replacement as a project and states that it is not signed; no enacted official
+      publication identity was found. Keep Order No. 128 active and the alignment conflict open.
+
+transport_delta:
+  SEC-SRC-RU-PP687-2008:
+    routes_checked:
+      - "https://government.ru/docs/all/65436/"
+      - "https://pravo.gov.ru/proxy/ips/?docbody=&nd=102124251"
+    result: TRANSPORT_TIMEOUT
+    exact_bytes_accepted: false
+    semantic_promotion: false
+  SEC-SRC-RU-152FZ-2026-07-26:
+    routes_checked:
+      - "https://pravo.gov.ru/proxy/ips/?docbody=&nd=102108261"
+    result: TRANSPORT_TIMEOUT
+    exact_bytes_accepted: false
+    semantic_promotion: false
+
+quality_gates:
+  proof_floor_held: true
+  immutable_new_this_pass: 0
+  semantic_promotions_this_pass: 0
+  existing_immutable_reused: 33
+  repeat_downloads_of_verified_corpus: 0
+
+traceability:
+  current_152fz_source_refresh_commit: "f324fff88ca4b1769b689351390401c8633aabcd"
+  rkn128_watch_refresh_commit: "1d636b7be7bff6016324b8948201b20168eb65bf"
+  run_record: "../../../security-corpora/RU/152-FZ/runs/stream-1/2026-08-27T1704+0300.yaml"
+
+merge_rule: >-
+  Concurrency-safe Stream-1 delta. Preserve 33/35 immutable and two pending sources until accepted manifests
+  provide exact official bytes, MIME, byte length and SHA-256. Merge freshness dates/watch state into the master
+  inventory without changing semantic or extraction status.
