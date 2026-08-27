@@ -1,0 +1,257 @@
+schema_version: "1.0"
+id: RU-MINKOMSVYAZ-83-2014-PACKET-SWITCHING-SORM-CURRENT-ATOMIC-V1
+title: "Приказ Минкомсвязи № 83: ТС ОРМ коммутации и маршрутизации пакетов, редакция № 139"
+checked_at: "2026-08-28"
+status: VERIFIED_CURRENT_OPEN_CORE_ORDER139_DELTA_APPLIED_DEEP_PROTOCOL_TABLES_PENDING
+scope: >-
+  Действующее публичное ядро требований к оборудованию коммутации и
+  маршрутизации пакетов информации в сетях передачи данных. Изменения
+  приказа № 139 применяются с 14.07.2019; удаленные положения о
+  двенадцатичасовом кольцевом буфере не выдаются за текущие требования.
+  Детальные таблицы команд, ответов, извещений, элементов данных и правил
+  фильтрации приложений № 2, 2.1 и 2.2 остаются отдельной границей проверки.
+
+sources:
+  act: "Приказ Минкомсвязи России от 16.04.2014 № 83"
+  registration: "Минюст России, 04.06.2014 № 32560"
+  ministry_publication_date: "2014-06-09"
+  official_effective_date: "2014-07-29"
+  current_revision_act: "Приказ Минкомсвязи России от 15.04.2019 № 139"
+  revision_registration: "Минюст России, 02.07.2019 № 55102"
+  revision_official_publication_date: "2019-07-03"
+  revision_effective_from: "2019-07-14"
+  current_index: "https://www.consultant.ru/document/cons_doc_LAW_165356/"
+  ministry_card: "https://digital.gov.ru/documents/prikaz-minkomsvyazi-rossii-ob-utverzhdenii-pravil-primeneniya-oborudovaniya-sistem-kommutaczii-vklyuchaya-programmnoe-obespechenie-obespechivayushhego-vypolnenie-ustanovlennyh-dejstvij-pri-pro"
+  revision_official_publication: "https://publication.pravo.gov.ru/document/0001201907030003"
+  revision_ministry_card: "https://digital.gov.ru/documents/prikaz-minkomsvyazi-rossii-o-vnesenii-izmenenij-v-pravila-primeneniya-oborudovaniya-sistem-kommutaczii-vklyuchaya-programmnoe-obespechenie-obespechivayushhego-vypolnenie-ustanovlennyh-dejstvij"
+  revision_text: "https://www.consultant.ru/document/cons_doc_LAW_328561/"
+  pp1656_current_text: "https://normativ.kontur.ru/document?documentId=473034&moduleId=1"
+
+dependencies:
+  federal_law: "126-ФЗ, статьи 41 и 64"
+  pp538_point4:
+    model: security-knowledge/legislation/RU/government-decrees/538-2005/sorm-interaction-commissioning-atomic-v1.yaml
+    relation: TECHNICAL_REQUIREMENTS_BY_NETWORK_AND_EQUIPMENT_TYPE
+  order573_is_bd_orm: PENDING_SEPARATE_ATOMIC_MODEL
+  order86_voice_storage: PENDING_SEPARATE_ATOMIC_MODEL
+
+temporal_model:
+  - {id: PRE_ORDER83, until_exclusive: "2014-07-29", status: OUT_OF_SCOPE_PREDECESSOR_ROUTE}
+  - {id: ORDER83_ORIGINAL, from: "2014-07-29", until_exclusive: "2019-07-14", status: HISTORICAL}
+  - {id: ORDER83_ORDER139_CURRENT, from: "2019-07-14", status: CURRENT_AS_OF_2026_08_28}
+  - {id: ORIGINAL_TRANSITION_DEADLINE, date: "2015-03-31", status: HISTORICAL_ONE_TIME_NOT_RECURRING}
+
+applicability:
+  networks: [PUBLIC_COMMUNICATIONS_NETWORK, DEDICATED_COMMUNICATIONS_NETWORK]
+  services:
+    - TELEMATIC_COMMUNICATIONS
+    - DATA_TRANSMISSION_FOR_VOICE
+    - DATA_TRANSMISSION_EXCEPT_FOR_VOICE
+  equipment: PACKET_INFORMATION_SWITCHING_AND_ROUTING_EQUIPMENT_WITH_SORM_SOFTWARE
+
+current_point4:
+  network_connection:
+    min_interfaces_from_appendix1: 1
+  control_points:
+    count: 16
+    interface: ETHERNET_IEEE_802_3_TX
+    head_control_points: 1
+    other_management_interfaces_allowed: false
+  is_bd_orm_connection_required: true
+  protocols:
+    control_point: APPENDIX2
+    is_bd_orm: APPENDIX2_1
+  control_parameters:
+    count: 20
+    original_a_to_n:
+      - FIXED_IPV4_OR_IPV6_ADDRESS
+      - MASKED_IP_ADDRESS
+      - USER_ACCOUNT_WITH_STAR_AND_QUESTION_WILDCARDS
+      - UNENCRYPTED_SMTP_POP3_IMAP4_EMAIL_ADDRESS
+      - UNENCRYPTED_WEBMAIL_ADDRESS
+      - CALLING_OR_CALLED_PHONE_NUMBER
+      - SUBSCRIBER_LINE_IDENTIFIER
+      - CALLING_OR_CALLED_VOICE_DATA_USER_IDENTIFIER
+      - IMSI
+      - IMEI
+      - MAC_ADDRESS
+      - MESSAGING_SERVICE_IDENTIFIER
+      - MIN
+    added_by_order139_o_to_f:
+      - URI
+      - SERVER_DOMAIN_NAME
+      - APPLICATION_PROTOCOL_CODE
+      - APPLICATION_PROTOCOL_TYPE
+      - APPLICATION_PROTOCOL_CONTENT_TYPE
+      - APPLICATION_PROTOCOL_FIELD
+      - TRAFFIC_SELECTION_AND_FILTER_RULE_SYNTAX
+  max_control_parameter_values_minimum: 2000
+  failure_route:
+    events: [TECHNICAL_FAILURE, POWER_LOSS, CONTROL_POINT_RESTART]
+    action: DELETE_ALL_CONTROL_PARAMETERS_AND_SELECTED_INFORMATION
+  authentication_and_connection_processing_includes_location_when_present: true
+  volatile_selected_information_buffer_min_gib: 2
+  volatile_buffer_purpose: CONTROL_POINT_CHANNEL_LOAD_LEVELING
+  current_processing: PROCESS_ALL_NETWORK_INPUT_ACCORDING_TO_CLASS
+  is_bd_orm_statistics: ALL_SUBSCRIBER_CONNECTIONS
+  is_bd_orm_content:
+    default_without_head_control_point_filters: FULL_VOLUME
+    excluded_when: MATCHES_HEAD_CONTROL_POINT_MESSAGE_FILTER
+    max_filter_criteria: 2000
+    filter_types:
+      - IP_ADDRESS
+      - VLAN_OR_MPLS_IDENTIFIER
+      - PORT_RANGE
+      - URI
+      - SERVER_DOMAIN_NAME
+      - APPLICATION_PROTOCOL_CODE
+      - APPLICATION_PROTOCOL_TYPE
+      - APPLICATION_PROTOCOL_CONTENT_TYPE
+      - APPLICATION_PROTOCOL_FIELD
+      - TRAFFIC_SELECTION_AND_FILTER_RULE_SYNTAX
+
+class_table:
+  - {class: I, input_mbps_min: 100, output_rule: AT_LEAST_5_PERCENT_OF_INPUT}
+  - {class: II, input_mbps_min: 400, output_rule: AT_LEAST_5_PERCENT_OF_INPUT}
+  - {class: III, input_mbps_min: 900, output_rule: AT_LEAST_5_PERCENT_OF_INPUT}
+  - {class: IV, input_mbps_min: 4000, output_mbps: GREATER_THAN_100}
+  - {class: V, input_mbps_min: 9000, output_mbps: GREATER_THAN_100}
+  - {class: VI, input_mbps_min: 20000, output_mbps: GREATER_THAN_1000}
+  - {class: VII, input_mbps_min: 100000, output_mbps: GREATER_THAN_1000}
+
+monitoring:
+  head_control_point_receives:
+    - INPUT_FLOW_RATE_TOTAL_AND_PER_INTERFACE
+    - FREE_SELECTED_DATA_MEMORY
+    - START_AND_STOP_DATE_TIME
+    - SUCCESSFUL_AND_UNSUCCESSFUL_CONTROL_POINT_CONNECTION_DATE_TIME
+    - POWER_VOLTAGE_CPU_TEMPERATURE_CASE_TEMPERATURE_AND_FAN_THRESHOLD_EVENTS
+    - CASE_OPENING
+  offline_nonvolatile_preservation:
+    - CONTROL_POINT_CONNECTION_EVENTS
+    - PARAMETER_THRESHOLD_EVENTS
+    - CASE_OPENING
+  transfer_after_reconnection: true
+
+interface_and_hardware_guards:
+  data_network_egress: ONLY_TECHNICAL_MEANS_MAC_IDENTIFIER
+  other_interfaces_point8: PROHIBITED_EXCEPT_POINT4_1_AND_POINT4_2
+  point4_2_1_textual_tension: KEEP_FAIL_CLOSED_DO_NOT_INVENT_EXCEPTION
+  must_not_affect_network_means: true
+  separate_locked_case_required: true
+  appendix1:
+    interface_families: 5
+    interface_entries: 25
+
+protocol_open_core:
+  protocols: [CONTROL, DATA_TRANSFER]
+  logical_transport: TCP_SESSION_OVER_TCP_IP
+  separate_tcp_connections: true
+  l2tp_ipsec_vpn_capability: true
+  ports_outside_standard_service_range: true
+  multiple_control_points_on_one_port_allowed: false
+  head_control_channel0_ports: [16117, 16118]
+  common_message_header:
+    cod_bytes: 1
+    ident_bytes: 2
+    length_bytes: 4
+    total_service_bytes: 7
+    data_length_formula: LENGTH_MINUS_7
+  deep_command_response_notice_item_and_filter_tables: PENDING_IMMUTABLE_PAGE_REVIEW
+
+historical_delta_guard:
+  deleted_by_order139:
+    - OLD_POINT4_10_TWELVE_HOUR_RING_BUFFER_RECORDING
+    - OLD_POINT4_11_RING_BUFFER_REPROCESSING
+  renumbered: OLD_POINT4_12_TO_CURRENT_POINT4_10
+  rule: NEVER_APPLY_DELETED_TWELVE_HOUR_RING_BUFFER_AS_CURRENT_REQUIREMENT
+
+atomic_rules:
+  - {id: MK83-R001, locator: "временной маршрут", rule: APPLY_CURRENT_ORDER139_REVISION_FROM_2019_07_14}
+  - {id: MK83-R002, locator: "приказ, пункт 2", rule: KEEP_2015_03_31_AS_HISTORICAL_ONE_TIME_DEADLINE}
+  - {id: MK83-R003, locator: "Правила, пункты 1–3", rule: APPLY_ONLY_TO_PACKET_SWITCHING_AND_ROUTING_EQUIPMENT_IN_ENUMERATED_NETWORKS_AND_SERVICES}
+  - {id: MK83-R004, locator: "Правила, пункт 3", rule: KEEP_CURRENT_PRODUCT_CONFIRMATION_LIFECYCLE_AS_SEPARATE_PENDING_CROSSWALK}
+  - {id: MK83-R005, locator: "пункт 4.1", rule: REQUIRE_AT_LEAST_ONE_APPENDIX1_NETWORK_INTERFACE}
+  - {id: MK83-R006, locator: "пункт 4.2", rule: SUPPORT_EXACTLY_SIXTEEN_CONTROL_POINTS_AND_ONE_HEAD_POINT}
+  - {id: MK83-R007, locator: "пункт 4.2", rule: USE_ETHERNET_IEEE_802_3_TX_AND_FORBID_OTHER_MANAGEMENT_INTERFACES}
+  - {id: MK83-R008, locator: "пункт 4.2.1", rule: REQUIRE_IS_BD_ORM_CONNECTION}
+  - {id: MK83-R009, locator: "пункт 4.3", rule: KEEP_CONTROL_POINT_AND_IS_BD_ORM_PROTOCOLS_DISTINCT}
+  - {id: MK83-R010, locator: "пункт 4.4", rule: PROCESS_ALL_PACKETS_FOR_IS_BD_ORM_STATISTICS_CONTENT_SELECTION_AND_CONTROL_POINT_TRANSFER}
+  - {id: MK83-R011, locator: "пункт 4.4 а–н", rule: PRESERVE_THIRTEEN_ORIGINAL_CONTROL_PARAMETER_TYPES}
+  - {id: MK83-R012, locator: "пункт 4.4 о–ф", rule: PRESERVE_SEVEN_ORDER139_ADDED_CONTROL_PARAMETER_TYPES}
+  - {id: MK83-R013, locator: "пункт 4.4 в", rule: STAR_IS_ANY_SEQUENCE_AND_QUESTION_MARK_IS_ONE_CHARACTER}
+  - {id: MK83-R014, locator: "пункт 4.4 г–д", rule: DO_NOT_EXTEND_EMAIL_SELECTION_TO_CRYPTOGRAPHICALLY_PROTECTED_SERVICES}
+  - {id: MK83-R015, locator: "пункт 4.5", rule: TRANSFER_USER_IDENTIFIER_FOR_THE_EXACT_ENUMERATED_SELECTION_SUBSET}
+  - {id: MK83-R016, locator: "пункт 4.6", rule: SUPPORT_AT_LEAST_2000_CONTROL_PARAMETER_VALUES_FOR_ALL_CONTROL_POINTS}
+  - {id: MK83-R017, locator: "пункт 4.7", rule: DELETE_PARAMETERS_AND_SELECTED_INFORMATION_ON_FAILURE_POWER_LOSS_OR_CONTROL_POINT_RESTART}
+  - {id: MK83-R018, locator: "пункт 4.8", rule: TRANSFER_AUTHENTICATION_AND_CONNECTION_RESULTS_INCLUDING_LOCATION_WHEN_PRESENT}
+  - {id: MK83-R019, locator: "пункт 4.9", rule: PROVIDE_AT_LEAST_2_GIB_VOLATILE_SELECTED_INFORMATION_MEMORY_FOR_LOAD_LEVELING}
+  - {id: MK83-R020, locator: "текущий пункт 4.10", rule: PROCESS_ALL_NETWORK_INPUT_ACCORDING_TO_CLASS}
+  - {id: MK83-R021, locator: "текущий пункт 4.11", rule: TRANSFER_ALL_SUBSCRIBER_CONNECTION_STATISTICS_TO_IS_BD_ORM}
+  - {id: MK83-R022, locator: "текущий пункт 4.12", rule: TRANSFER_USER_MESSAGE_CONTENT_EXCEPT_MESSAGES_MATCHING_HEAD_CONTROL_POINT_FILTERS}
+  - {id: MK83-R023, locator: "текущий пункт 4.12", rule: TRANSFER_FULL_CONTENT_VOLUME_WHEN_HEAD_CONTROL_POINT_FILTERS_ARE_ABSENT}
+  - {id: MK83-R024, locator: "текущий пункт 4.12", rule: SUPPORT_UP_TO_2000_MESSAGE_FILTER_CRITERIA}
+  - {id: MK83-R025, locator: "текущий пункт 4.13", rule: SUPPORT_EXACTLY_TEN_ENUMERATED_FILTER_TYPE_FAMILIES}
+  - {id: MK83-R026, locator: "таблица 1", rule: PRESERVE_SEVEN_INPUT_CAPACITY_CLASSES}
+  - {id: MK83-R027, locator: "таблица 1, классы I–III", rule: REQUIRE_OUTPUT_AT_LEAST_FIVE_PERCENT_OF_INPUT}
+  - {id: MK83-R028, locator: "таблица 1, классы IV–V", rule: REQUIRE_OUTPUT_GREATER_THAN100_MBIT_S}
+  - {id: MK83-R029, locator: "таблица 1, классы VI–VII", rule: REQUIRE_OUTPUT_GREATER_THAN1000_MBIT_S}
+  - {id: MK83-R030, locator: "пункт 5.1", rule: REPORT_TOTAL_AND_PER_INTERFACE_INPUT_FLOW_RATE_TO_HEAD_CONTROL_POINT}
+  - {id: MK83-R031, locator: "пункт 5.2", rule: REPORT_FREE_SELECTED_DATA_MEMORY}
+  - {id: MK83-R032, locator: "пункт 5.3", rule: REPORT_START_AND_STOP_DATE_TIME}
+  - {id: MK83-R033, locator: "пункт 5.4", rule: REPORT_SUCCESSFUL_AND_UNSUCCESSFUL_CONTROL_POINT_CONNECTION_EVENTS}
+  - {id: MK83-R034, locator: "пункт 5.5", rule: REPORT_FOUR_ENUMERATED_HARDWARE_THRESHOLD_EVENT_TYPES}
+  - {id: MK83-R035, locator: "пункт 5.6", rule: REPORT_CASE_OPENING}
+  - {id: MK83-R036, locator: "пункт 6", rule: PRESERVE_POINTS5_4_TO5_6_EVENTS_OFFLINE_AND_TRANSFER_AFTER_RECONNECTION}
+  - {id: MK83-R037, locator: "пункт 7", rule: BLOCK_DATA_NETWORK_EGRESS_EXCEPT_TECHNICAL_MEANS_MAC_IDENTIFIER}
+  - {id: MK83-R038, locator: "пункт 8 и пункт 4.2.1", rule: PRESERVE_POINT8_INTERFACE_TEXT_AND_FAIL_CLOSED_POINT4_2_1_TENSION}
+  - {id: MK83-R039, locator: "пункт 9", rule: DO_NOT_AFFECT_DATA_NETWORK_COMMUNICATION_MEANS}
+  - {id: MK83-R040, locator: "пункт 10", rule: REQUIRE_SEPARATE_LOCKED_CASE_PREVENTING_FREE_HARDWARE_ACCESS}
+  - {id: MK83-R041, locator: "приложение 1", rule: PRESERVE_FIVE_INTERFACE_FAMILIES_AND_TWENTY_FIVE_ENTRIES}
+  - {id: MK83-R042, locator: "приложение 2, пункт 1", rule: KEEP_CONTROL_AND_DATA_TRANSFER_PROTOCOLS_AND_TCP_CONNECTIONS_DISTINCT}
+  - {id: MK83-R043, locator: "приложение 2, пункт 1", rule: SUPPORT_L2TP_IPSEC_VPN_CAPABILITY_FOR_WORKING_TCP_IP_TRAFFIC}
+  - {id: MK83-R044, locator: "приложение 2, пункт 1", rule: USE_NONSTANDARD_SERVICE_PORTS_ONE_CONTROL_POINT_PER_PORT_AND_CHANNEL0_PORTS16117_16118}
+  - {id: MK83-R045, locator: "приложение 2, пункт 2.1.1", rule: COMMON_MESSAGE_SERVICE_HEADER_IS_SEVEN_BYTES_AND_DATA_LENGTH_IS_LENGTH_MINUS7}
+  - {id: MK83-R046, locator: "приказ № 139, пункты 6–8", rule: NEVER_APPLY_DELETED_TWELVE_HOUR_RING_BUFFER_OR_REPROCESSING_AS_CURRENT}
+  - {id: MK83-R047, locator: "граница", rule: DEEP_PROTOCOL_AND_FILTER_TABLES_REQUIRE_IMMUTABLE_PAGE_REVIEW, strength: FAIL_CLOSED}
+
+evidence_model:
+  - {id: E83-01, proves: [MK83-R001, MK83-R002], artifacts: [EFFECTIVE_DATE_ROUTE, HISTORICAL_DEADLINE]}
+  - {id: E83-02, proves: [MK83-R003, MK83-R004], artifacts: [CURRENT_SCOPE_INDEX, PRODUCT_LIFECYCLE_PENDING_REGISTER]}
+  - {id: E83-03, proves: [MK83-R005, MK83-R006, MK83-R007], artifacts: [NETWORK_AND_CONTROL_INTERFACE_MAP]}
+  - {id: E83-04, proves: [MK83-R008, MK83-R009], artifacts: [IS_BD_ORM_CONNECTION_AND_PROTOCOL_MAP]}
+  - {id: E83-05, proves: [MK83-R010, MK83-R011, MK83-R012], artifacts: [TWENTY_CONTROL_PARAMETER_TYPE_MAP]}
+  - {id: E83-06, proves: [MK83-R013, MK83-R014, MK83-R015], artifacts: [WILDCARD_CRYPTOGRAPHIC_AND_USER_IDENTIFIER_GUARDS]}
+  - {id: E83-07, proves: [MK83-R016, MK83-R017, MK83-R018], artifacts: [CONTROL_CAPACITY_FAILURE_AND_LOCATION_TESTS]}
+  - {id: E83-08, proves: [MK83-R019, MK83-R020], artifacts: [VOLATILE_BUFFER_AND_CURRENT_PROCESSING_RULE]}
+  - {id: E83-09, proves: [MK83-R021, MK83-R022, MK83-R023], artifacts: [IS_BD_ORM_STATISTICS_AND_CONTENT_ROUTING]}
+  - {id: E83-10, proves: [MK83-R024, MK83-R025], artifacts: [MESSAGE_FILTER_CAPACITY_AND_TYPE_MAP]}
+  - {id: E83-11, proves: [MK83-R026, MK83-R027, MK83-R028, MK83-R029], artifacts: [SEVEN_CLASS_CAPACITY_TABLE]}
+  - {id: E83-12, proves: [MK83-R030, MK83-R031, MK83-R032], artifacts: [MONITORING_BASELINE]}
+  - {id: E83-13, proves: [MK83-R033, MK83-R034, MK83-R035, MK83-R036], artifacts: [EVENT_AND_OFFLINE_PRESERVATION_TESTS]}
+  - {id: E83-14, proves: [MK83-R037, MK83-R038], artifacts: [EGRESS_AND_INTERFACE_TENSION_GUARDS]}
+  - {id: E83-15, proves: [MK83-R039, MK83-R040], artifacts: [NONINTERFERENCE_AND_LOCKED_CASE_EVIDENCE]}
+  - {id: E83-16, proves: [MK83-R041, MK83-R042], artifacts: [APPENDIX1_TOPOLOGY_AND_PROTOCOL_SPLIT]}
+  - {id: E83-17, proves: [MK83-R043, MK83-R044, MK83-R045], artifacts: [VPN_PORT_AND_HEADER_TESTS]}
+  - {id: E83-18, proves: [MK83-R046, MK83-R047], artifacts: [ORDER139_DELETION_DELTA, DEEP_TABLE_PENDING_REGISTER]}
+
+red_team_guardrails:
+  - DO_NOT_APPLY_ORIGINAL_RING_BUFFER_POINTS4_10_AND4_11_AFTER_2019_07_14
+  - DO_NOT_TREAT_TWO_GIB_VOLATILE_LOAD_LEVELING_MEMORY_AS_RETENTION
+  - DO_NOT_TREAT_HISTORICAL_2015_03_31_DEADLINE_AS_RECURRING
+  - DO_NOT_REDUCE_FULL_CONTENT_DEFAULT_TO_FILTERED_ONLY
+  - DO_NOT_INVENT_RESOLUTION_OF_POINT8_AND_POINT4_2_1_INTERFACE_TENSION
+  - DO_NOT_CLAIM_CURRENT_PRODUCT_CERTIFICATION_ROUTE_FROM_STALE_EMBEDDED_REFERENCES
+  - DO_NOT_CLAIM_DEEP_PROTOCOL_OR_FILTER_TABLES_WITHOUT_IMMUTABLE_PAGE_REVIEW
+
+verification_boundary:
+  current_revision_and_effective_date: VERIFIED_AS_OF_2026_08_28
+  points1_to11_and_order139_top_level_delta: VERIFIED_CURRENT_TEXT
+  class_table_and_appendix1_interface_topology: VERIFIED_CURRENT_TEXT
+  appendix2_protocol_open_core: VERIFIED_CURRENT_TEXT
+  deep_protocol_and_filter_tables: PENDING_IMMUTABLE_PAGE_REVIEW
+  current_consolidated_official_immutable_bytes: PENDING
+  current_product_confirmation_lifecycle_crosswalk: PENDING_SEPARATE_REVIEW
+  independent_expert_review: PENDING
+  critical_gap_created: false
+  high_gap_created: false
