@@ -1,0 +1,61 @@
+schema_version: "1.0"
+stream: 3
+checked_at: "2026-08-27T23:24:55+03:00"
+mode: APPEND_ONLY_RELATIONSHIP_DELTA
+focus: "healthcare / patient medical-document access / 1050n overlap with PDN and medical secrecy"
+
+source:
+  source_id: SEC-SRC-RU-MINZDRAV-ORDER-1050N-2021
+  title: "Приказ Минздрава России от 12.11.2021 № 1050н"
+  official_publication_id: "0001202111260035"
+  primary_publication_status: VERIFIED
+  exact_binary_status: PENDING_TRANSIENT_DNS_FAILURE
+
+pdn_overlap:
+  status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  reasons:
+    - "Access request contains person-level identity/contact fields: FIO, residence/stay, identity-document details, authority-document details, postal/e-mail address and optional phone."
+    - "The target documentation reflects a patient's state of health and therefore contains a strong special-category/medical-information overlap candidate."
+    - "The access event itself creates audit metadata identifying the person who reviewed the documentation."
+  guard: "OVERLAP != APPLICABILITY; determine actor, concrete record, processing operation, purpose and legal basis before attaching any 152-FZ requirement."
+
+relationships:
+  - from: SEC-SRC-RU-MINZDRAV-ORDER-1050N-2021
+    to: "152-ФЗ"
+    type: PATIENT_ACCESS_REQUEST_AND_MEDICAL_DOCUMENT_PDN_OVERLAP
+    status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  - from: SEC-SRC-RU-MINZDRAV-ORDER-1050N-2021
+    to: "SEC-SRC-RU-FZ-323:article_13"
+    type: MEDICAL_SECRECY_ACCESS_BOUNDARY
+    status: SCENARIO_REVIEW_REQUIRED
+    guard: "Consent or absence of a prohibition to disclose medical secrecy is not automatically a universal PDN-processing consent."
+  - from: SEC-SRC-RU-MINZDRAV-ORDER-1050N-2021
+    to: "SEC-SRC-RU-FZ-323:article_22"
+    type: PATIENT_INFORMATION_ACCESS_PARENT_STATUTE_CONTEXT
+    status: DIRECT_STATUTORY_CONTEXT
+  - from: SEC-SRC-RU-MINZDRAV-ORDER-1050N-2021
+    to: SEC-SRC-RU-MINZDRAV-ORDER-947N-2020
+    type: ACCESS_TO_ELECTRONIC_MEDICAL_DOCUMENT_CONTEXT
+    status: CROSS_REGIME_RELATION
+
+semantic_guards:
+  - id: PDN-1050N-001
+    rule: "MEDICAL_SECRECY_DISCLOSURE_CONSENT != GENERIC_152FZ_CONSENT"
+  - id: PDN-1050N-002
+    rule: "2_OR_5_WORKING_DAY_ACCESS_DEADLINE != PDN_RETENTION_PERIOD"
+  - id: PDN-1050N-003
+    rule: "REQUEST_IDENTITY_DOCUMENT_FIELDS != AUTOMATIC_MEDICAL_RECORD_FIELDS"
+  - id: PDN-1050N-004
+    rule: "ACCESS_TO_MEDICAL_DOCUMENT != AUTOMATIC_RIGHT_TO_EXPORT_OR_REDISTRIBUTE_ALL_CONTENT"
+
+counters_reference:
+  ru_protected_information_delta: "master-inventory-delta-2026-08-27T2324.yaml"
+  found: 51
+  downloaded: 9
+  immutable: 9
+  pending: 40
+  reused: 2
+  primary_publication_verified: 22
+  sectors_registered: 28
+
+executable_effect: NONE
