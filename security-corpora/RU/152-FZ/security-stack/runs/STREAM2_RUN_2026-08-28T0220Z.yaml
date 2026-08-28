@@ -1,0 +1,88 @@
+schema_version: "1.0"
+id: STREAM2-RUN-2026-08-28T0220Z
+stream: 2
+kind: security-stack-source-discovery-and-route-recovery
+created_at: "2026-08-28T02:20:00Z"
+status: SOURCE_CARDS_PREPARED_RECONCILIATION_PENDING
+scope:
+  primary_domain: "152-FZ technical and cryptographic security stack"
+  focus:
+    - FSTEC product trust requirements relevant to protected ISPDn tooling
+    - FSTEC Order 76 current version chain
+    - certification/secure-software linkage to the 2026 VU/NDV methodology
+pre_run_authoritative_counters:
+  identified: 44
+  metadata_verified: 44
+  immutable_sha256_verified: 19
+  pending_raw_capture: 25
+  exact_official_route_unresolved: 7
+  source: "PDN_SECURITY_STACK_ACQUISITION_RUN.json finished 2026-08-27T20:37:34.318782Z"
+new_source_cards:
+  - id: SEC-SRC-RU-FSTEC76-2020
+    metadata_status: METADATA_VERIFIED
+    exact_official_pdf_route: "https://fstec.ru/files/585/---------2--2020--N-76/1116/---------2--2020--N-76.pdf"
+    immutable_status: PENDING_TRANSPORT
+    applicability: CERTIFICATION_PRODUCT_TRUST_AND_EXPLICIT_ISPDN_PRODUCT_REQUIREMENT_ONLY
+  - id: SEC-SRC-RU-FSTEC205-2025
+    metadata_status: METADATA_VERIFIED
+    exact_primary_route: UNRESOLVED
+    immutable_status: PENDING_ROUTE
+    applicability: VERSION_CHAIN_AND_CERTIFICATION_PRODUCT_TRUST_CONTEXT_ONLY
+  - id: SEC-SRC-RU-FSTEC-INFO-240-24-5531-2025
+    metadata_status: METADATA_VERIFIED
+    exact_official_pdf_route: "https://fstec.ru/files/1407/-----16--2025--N-240-24-5531/2848/-----16--2025--N-240-24-5531.pdf"
+    immutable_status: PENDING_TRANSPORT
+    applicability: STATUS_AND_VERSION_CHAIN_EVIDENCE_ONLY
+version_chain:
+  current_source: SEC-SRC-RU-FSTEC76-2020
+  amended_by: SEC-SRC-RU-FSTEC205-2025
+  amendment_evidence: SEC-SRC-RU-FSTEC-INFO-240-24-5531-2025
+  predecessor_note: >-
+    Order 76 replaced the prior trust requirements approved by FSTEC Order 131/2018 from 2021-01-01.
+    The predecessor is recorded as historical chain context and is not promoted to a current requirement.
+status_verification:
+  checked_at: "2026-08-28"
+  findings:
+    - >-
+      Order 76 remains the current trust-requirements source; the official FSTEC notice 240/24/5531 confirms
+      that Order 205/2025 amended it and identifies Minjust registration 83505 dated 2025-09-10.
+    - >-
+      Order 76 is bounded to product trust/certification and related conformity contexts. Its linkage to ISPDn
+      is through applicable protection-product requirements, not by copying developer/laboratory duties into
+      the generic operator baseline.
+    - >-
+      The exact official FSTEC PDF routes for Order 76 and notice 240/24/5531 are identified, but fstec.ru
+      transport timed out in this run, so no exact payload, MIME, length or SHA-256 was asserted.
+proof_floor:
+  immutable_requires:
+    - exact official file bytes
+    - observed MIME/type and signature check
+    - byte length
+    - computed SHA-256
+    - immutable artifact plus manifest
+  secondary_copy_can_promote_primary: false
+  status_notice_bytes_can_substitute_amending_order_bytes: false
+applicability_guards:
+  - no universal PDN duty from certification/product-development requirements
+  - no developer or test-laboratory duties copied into PP1119/FSTEC21 operator baseline without explicit edge
+  - crypto branch remains governed separately by FSB/SKZI applicability
+  - neighboring KII/GosSOPKA duties remain excluded without independent PDN incident applicability
+registration_delta_before_reconciliation:
+  identified: 3
+  metadata_verified: 3
+  immutable: 0
+  pending_raw: 3
+  newly_unresolved_primary_route: 1
+  exact_routes_recovered: 2
+counter_policy: >-
+  Do not publish post-run authoritative totals until the normal Stream-2 registration/acquisition/reconciliation
+  workflow has accepted these cards. If one of the two exact FSTEC PDFs is captured, immutable/pending totals must
+  come from that workflow rather than arithmetic in this record.
+next_priority:
+  - exact primary route and bytes for SEC-SRC-RU-FSTEC205-2025
+  - retry exact official PDF bytes for SEC-SRC-RU-FSTEC76-2020
+  - retry exact official PDF bytes for SEC-SRC-RU-FSTEC-INFO-240-24-5531-2025
+  - PP1119 exact Government DOC
+  - FSB378 primary bytes
+  - FSB66/173 and FAPSI152 primary bytes
+  - remaining FSTEC exact attachment route gaps
