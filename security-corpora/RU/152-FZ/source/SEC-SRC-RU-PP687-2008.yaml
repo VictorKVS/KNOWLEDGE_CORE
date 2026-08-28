@@ -1,4 +1,4 @@
-schema_version: "1.9"
+schema_version: "1.10"
 id: SEC-SRC-RU-PP687-2008
 kind: security-regulatory-source
 status: METADATA_VERIFIED
@@ -56,21 +56,22 @@ capture:
   sha256: ""
   fingerprint_status: PENDING_RAW_CAPTURE
   last_attempt:
-    observed_at: "2026-08-25T04:08:43Z"
+    observed_at: "2026-08-28T08:28:22.672364Z"
     route: registered_official_multi_route
     result: ALL_REGISTERED_ROUTES_FAILED
     failure_classes:
       - TRANSPORT_TIMEOUT
       - IDENTITY_MARKER_MISS
+      - CURRENT_REVISION_MARKER_MISS
       - ALL_REGISTERED_ROUTES_FAILED
     detail: >-
-      Earlier GitHub acquisition: TLS pravo.gov.ru routes timed out; the HTTP IPS response did not pass the PP687
-      identity gate; Government canonical profiles timed out. Those attempts predated the current-revision hardening
-      and print-route registration. No failed response was promoted.
+      Latest GitHub acquisition telemetry shows TLS pravo.gov.ru and Government routes timing out, the available
+      HTTP IPS response failing the required PP687/current-revision markers, and the print rendering returning HTTP 500.
+      No failed response was promoted and no byte/hash evidence was fabricated.
     proof_floor_held: true
     semantic_promotion: false
   runtime_probe:
-    observed_at: "2026-08-28T08:07:00Z"
+    observed_at: "2026-08-28T11:03:16Z"
     routes_probed:
       - "https://government.ru/docs/all/65436/"
       - "http://pravo.gov.ru/proxy/ips/?docbody=&link_id=0&nd=102124251&intelsearch=&firstDoc=1"
@@ -79,7 +80,7 @@ capture:
     retry_policy: KEEP_GUARDED_RETRY_ENABLED
   acquisition_request:
     status: RETRY_REQUIRED_GUARDED
-    requested_at: "2026-08-28T08:07:00Z"
+    requested_at: "2026-08-28T11:03:16Z"
     route: official_canonical_snapshot_with_registered_ips_and_print_fallback
     reason: >-
       Immutable promotion requires returned official bytes, retrieved_at, MIME, exact byte length, SHA-256,
