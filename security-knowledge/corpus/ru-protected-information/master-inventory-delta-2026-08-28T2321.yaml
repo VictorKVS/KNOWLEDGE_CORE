@@ -1,0 +1,151 @@
+schema_version: "1.0"
+stream: 3
+checked_at: "2026-08-28T23:21:00+03:00"
+mode: APPEND_ONLY_RECONCILIATION
+previous_delta: "master-inventory-delta-2026-08-28T2031.yaml"
+focus: "finance / insurance / CBR 822-P / protected information in automated insurance information system / direct conditional PDN security / biometrics / incident retention"
+
+counters_before:
+  found: 57
+  downloaded: 9
+  immutable: 9
+  pending: 46
+  reused: 2
+  primary_publication_verified: 28
+  sectors_registered: 31
+
+counters_after:
+  found: 58
+  downloaded: 9
+  immutable: 9
+  pending: 47
+  reused: 2
+  primary_publication_verified: 29
+  sectors_registered: 31
+
+changes:
+  new_sources: 1
+  new_immutable_artifacts: 0
+  new_durable_downloads: 0
+  new_pending_exact_capture: 1
+  new_sector_regimes: 0
+  applicability_promotions: 0
+  legal_conflicts_confirmed: 0
+  primary_publication_verified_increment: 1
+  metadata_anomalies_preserved: 1
+
+new_sources:
+  - source_id: SEC-SRC-RU-CBR-822P-2023
+    sector: insurance
+    regime: insurance_ais_protected_information_security
+    title: "Положение Банка России от 30.08.2023 № 822-П «О требованиях к обеспечению защиты информации, содержащейся в автоматизированной информационной системе страхования»"
+    status: CURRENT_PRIMARY_TEXT_VERIFIED_VERSION_CHAIN_PARTIAL_EXACT_BINARY_PENDING
+    primary_source: "Вестник Банка России № 1 (2475) от 11.01.2024"
+    official_site_publication_date: "2023-12-27"
+    effective_date: "2024-04-01"
+    minjust_registration_number_used: "76558"
+
+protected_information_anchors:
+  - source_id: SEC-SRC-RU-CBR-822P-2023
+    locator: "пункт 1"
+    concept: conditional_pdn_security
+    note: "Если защищаемая информация АИС страхования содержит ПДн, оператор применяет меры безопасности по статье 19 152-ФЗ и приказу ФСТЭК № 21."
+    guard: "PROTECTED_INFORMATION != PII/PDN_BY_DEFINITION"
+  - source_id: SEC-SRC-RU-CBR-822P-2023
+    locator: "пункты 2-4"
+    concept: security_control_stack
+    note: "Установлены направления управления доступом, сетевой защиты, контроля целостности, мониторинга, malware/leak prevention, incident response, virtualization/remote access и криптографической защиты."
+  - source_id: SEC-SRC-RU-CBR-822P-2023
+    locator: "пункты 3, 10.1"
+    concept: biometric_ebs_security_context
+    note: "Специальный слой связан с биометрическими ПДн и ЕБС по 572-ФЗ."
+    guard: "BIOMETRICS_APPLY_ONLY_WHEN_SCENARIO_PROVEN"
+  - source_id: SEC-SRC-RU-CBR-822P-2023
+    locator: "пункты 11-13"
+    concept: audit_incident_and_cbr_notification
+    note: "Оператор регистрирует данные для расследования инцидентов и информирует Банк России об инцидентах, причинах и мерах реагирования."
+  - source_id: SEC-SRC-RU-CBR-822P-2023
+    locator: "пункт 14"
+    concept: sector_retention
+    note: "Incident/audit data из определенного пунктом состава хранится не менее пяти лет."
+    guard: "FIVE_YEAR_SECURITY_RECORD_RETENTION != GENERAL_PDN_RETENTION"
+  - source_id: SEC-SRC-RU-CBR-822P-2023
+    locator: "пункт 15"
+    concept: conditional_kii_overlay
+    note: "КИИ-требования применяются только к объектам инфраструктуры оператора, фактически являющимся объектами КИИ."
+    guard: "INSURANCE_AIS != KII_BY_DEFINITION"
+
+relationships:
+  - from: SEC-SRC-RU-CBR-822P-2023
+    to: "152-ФЗ"
+    relation: DIRECT_CONDITIONAL_PDN_SECURITY_REFERENCE
+    status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  - from: SEC-SRC-RU-CBR-822P-2023
+    to: "приказ ФСТЭК России № 21"
+    relation: DIRECT_PDN_SECURITY_MEASURES_REFERENCE
+    status: STATUTORY_CONTEXT_ONLY
+  - from: SEC-SRC-RU-CBR-822P-2023
+    to: "ПП РФ № 1119"
+    relation: DIRECT_PDN_SECURITY_LEVEL_CONTEXT_FOR_CRYPTO
+    status: STATUTORY_CONTEXT_ONLY
+  - from: SEC-SRC-RU-CBR-822P-2023
+    to: "приказ ФСБ России № 378"
+    relation: DIRECT_CRYPTO_PDN_SECURITY_REFERENCE
+    status: STATUTORY_CONTEXT_ONLY
+  - from: SEC-SRC-RU-CBR-822P-2023
+    to: "572-ФЗ"
+    relation: BIOMETRIC_EBS_SCENARIO_CONTEXT
+    status: CANDIDATE_SCENARIO_REVIEW_REQUIRED
+  - from: SEC-SRC-RU-CBR-822P-2023
+    to: "Закон РФ № 4015-I"
+    relation: PARENT_INSURANCE_AIS_STATUTORY_CONTEXT
+    status: DIRECT_STATUTORY_PARENT
+  - from: SEC-SRC-RU-CBR-822P-2023
+    to: SEC-SRC-RU-GK2-1996-A946
+    relation: INSURANCE_SECRECY_OVERLAP_CANDIDATE
+    status: CANDIDATE_DATA_CLASSIFICATION_REVIEW_REQUIRED
+  - from: SEC-SRC-RU-CBR-822P-2023
+    to: "187-ФЗ"
+    relation: CONDITIONAL_KII_OVERLAY
+    status: CANDIDATE_ASSET_CLASSIFICATION_REVIEW_REQUIRED
+
+version_events:
+  - act: "Положение Банка России от 30.08.2023 № 822-П"
+    effect: ADOPTED
+    evidence_status: PRIMARY_CBR_TEXT_VERIFIED
+  - date: "2023-12-22"
+    effect: MINJUST_REGISTERED
+    registration_number: "76558"
+    evidence_status: PRIMARY_CBR_VESTNIK_VERIFIED
+  - date: "2023-12-27"
+    effect: OFFICIAL_CBR_SITE_PUBLICATION
+    evidence_status: PRIMARY_ACT_FOOTNOTE_VERIFIED
+  - date: "2024-04-01"
+    effect: ENTERED_INTO_FORCE
+    evidence_status: PRIMARY_ACT_POINT_16_VERIFIED
+
+metadata_anomaly:
+  field: minjust_registration_number
+  official_vestnik_value: "76558"
+  cbr_unidb_rendering_value: "76658"
+  handling: "Use 76558 from official Vestnik; preserve discrepancy until separate register-level validation."
+
+acquisition_state:
+  exact_binary_obtained: false
+  exact_binary_attempted: true
+  official_url: "https://www.cbr.ru/Queries/XsltBlock/File/158093/-1/2475"
+  alternate_url: "https://www.cbr.ru/Queries/XsltBlock/File/105012/-1/2475"
+  reason: TEMPORARY_DNS_FAILURE_ON_CBR_HOST_IN_BINARY_RUNTIME
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+
+quality_gates:
+  taxonomy_as_evidence: false
+  primary_act_required: true
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+  fabricated_binary_metadata: false
+  sector_count_not_incremented_reason: "insurance sector already registered through existing insurance secrecy/source nodes"
