@@ -1,0 +1,105 @@
+schema_version: "1.0"
+stream: 3
+checked_at: "2026-08-28T20:31:00+03:00"
+mode: APPEND_ONLY_PDN_RELATIONSHIP_RECONCILIATION
+previous_stream3_delta: "master-source-inventory-delta-stream3-2026-08-28T1728.yaml"
+focus: "353-FZ consumer credit: direct PDN transfer/security rule on assignment, credit-history self-ban flow and future EPGU notifications"
+
+stream3_counters_before:
+  found: 56
+  downloaded: 9
+  immutable: 9
+  pending: 45
+  reused: 2
+  primary_publication_verified: 27
+  sectors_registered: 30
+
+stream3_counters_after:
+  found: 57
+  downloaded: 9
+  immutable: 9
+  pending: 46
+  reused: 2
+  primary_publication_verified: 28
+  sectors_registered: 31
+
+source_added:
+  source_id: SEC-SRC-RU-FZ-353-2013
+  title: "Федеральный закон от 21.12.2013 № 353-ФЗ «О потребительском кредите (займе)»"
+  sector: consumer_credit
+  applicability_status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  executable_effect: NONE
+
+pdn_relationships:
+  - from: SEC-SRC-RU-FZ-353-2013
+    locator: "статья 12 часть 2"
+    to: "152-ФЗ"
+    relation: DIRECT_STATUTORY_PDN_TRANSFER_CONTEXT_ON_ASSIGNMENT
+    status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    rationale: "353-ФЗ прямо разрешает передачу ПДн заемщика и лиц, предоставивших обеспечение, при уступке только в соответствии с законодательством РФ о персональных данных."
+    guard: "STATUTORY_TRANSFER_CONTEXT != UNRESTRICTED_PROCESSING_OR_REUSE"
+  - from: SEC-SRC-RU-FZ-353-2013
+    locator: "статья 12 часть 3"
+    to: "152-ФЗ"
+    relation: DIRECT_CONFIDENTIALITY_AND_SECURITY_CONTEXT_FOR_ASSIGNEE
+    status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    rationale: "Новый кредитор обязан обеспечивать конфиденциальность и безопасность полученных ПДн наряду с банковской и иной охраняемой законом тайной."
+    guard: "CONFIDENTIALITY_DUTY != PROOF_THAT_EVERY_TRANSFERRED_FIELD_IS_PDN_OR_BANK_SECRECY"
+  - from: SEC-SRC-RU-FZ-353-2013
+    locator: "статья 12 части 4-5"
+    to: "152-ФЗ"
+    relation: DEBT_BURDEN_INDICATOR_TRANSFER_OVERLAP
+    status: CANDIDATE_DATA_CLASSIFICATION_REVIEW_REQUIRED
+    guard: "PDN_INDICATOR_VALUE != AUTOMATIC_SPECIAL_CATEGORY_OR_CREDIT_HISTORY_CLASSIFICATION"
+  - from: SEC-SRC-RU-FZ-353-2013
+    locator: "статья 7; 31-ФЗ/2024"
+    to: SEC-SRC-RU-FZ-218
+    relation: CREDIT_HISTORY_SELF_BAN_QUERY_FLOW
+    status: CANDIDATE_SCENARIO_REVIEW_REQUIRED
+    effective_date: "2025-03-01"
+    guard: "CREDIT_HISTORY_PURPOSE_LIMITATION_AND_SPECIAL_REGIME_REMAIN_SEPARATE"
+  - from: SEC-SRC-RU-FZ-353-2013
+    locator: "статья 7 будущие части 9.6-9.11 по 332-ФЗ/2026"
+    to: SEC-SRC-RU-FZ-218
+    relation: FUTURE_QUALIFIED_BKI_TO_EPGU_NOTIFICATION_FLOW
+    status: FUTURE_NOT_CURRENT
+    effective_date: "2027-10-01"
+    guard: "DO_NOT_PROMOTE_BEFORE_EFFECTIVE_DATE"
+  - from: SEC-SRC-RU-FZ-353-2013
+    to: SEC-SRC-RU-FZ-230-2016
+    relation: DEBT_COLLECTION_SPECIAL_REGIME_BOUNDARY
+    status: CANDIDATE_SCENARIO_REVIEW_REQUIRED
+    guard: "Current debt-collection obligations are taken from 230-FZ; repealed historical 353-FZ article 15 is not used as current authority."
+  - from: SEC-SRC-RU-FZ-353-2013
+    to: SEC-SRC-RU-FZ-151-2010
+    relation: MFO_CONSUMER_CREDIT_DUAL_REGIME_CONTEXT
+    status: CANDIDATE_SCENARIO_REVIEW_REQUIRED
+  - from: SEC-SRC-RU-FZ-353-2013
+    to: SEC-SRC-RU-LAW-395-1
+    relation: BANK_SECRECY_PRESERVATION_ON_ASSIGNMENT_CONTEXT
+    status: CANDIDATE_SCENARIO_REVIEW_REQUIRED
+    guard: "353-FZ names banking secrecy in assignee duties but does not classify every consumer-credit datum as banking secrecy."
+
+version_boundaries:
+  - "353-FZ original publication 0001201312230003 is verified; current article 12(2)-(3) retains the direct PDN/confidentiality core in the 04.08.2026 prepared consolidation."
+  - "31-FZ/2024 publication 0001202402260017 introduced the credit-history self-ban framework effective 01.03.2025."
+  - "9-FZ/2025 publication 0001202502130045 changed article 7 self-ban/contract-processing rules; exact binary remains pending."
+  - "229-FZ/2026 and 254-FZ/2026 have 01.09.2026 effective dates and remain FUTURE_NOT_CURRENT on 28.08.2026."
+  - "332-FZ/2026 future EPGU/BKI notification parts of article 7 are not current until 01.10.2027."
+
+acquisition_state:
+  primary_original_official_publication_verified: true
+  exact_binary_obtained: false
+  reason: TEMPORARY_DNS_FAILURE_ON_OFFICIAL_HOST
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+
+quality_gates:
+  taxonomy_as_evidence: false
+  applicability_promotions: 0
+  future_rule_promoted_early: false
+  legal_conflicts_declared: 0
+  fabricated_binary_metadata: false
