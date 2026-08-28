@@ -1,0 +1,153 @@
+schema_version: "1.0"
+id: SEC-SRC-RU-CBR-822P-2023
+kind: security-regulatory-source
+status: CURRENT_PRIMARY_TEXT_VERIFIED_VERSION_CHAIN_PARTIAL_EXACT_BINARY_PENDING
+
+jurisdiction: RU
+authority: "Банк России"
+sector: insurance
+regime: insurance_ais_protected_information_security
+
+document:
+  type: "Положение Банка России"
+  number: "822-П"
+  adopted_date: "2023-08-30"
+  title: "О требованиях к обеспечению защиты информации, содержащейся в автоматизированной информационной системе страхования"
+  minjust_registration_date: "2023-12-22"
+  minjust_registration_number: "76558"
+  effective_date: "2024-04-01"
+  checked_at: "2026-08-28"
+
+canonical_source:
+  publisher: "Банк России"
+  official_publication: "Вестник Банка России № 1 (2475) от 11.01.2024"
+  url: "https://www.cbr.ru/Queries/XsltBlock/File/158093/-1/2475"
+  alternate_official_url: "https://www.cbr.ru/Queries/XsltBlock/File/105012/-1/2475"
+  act_index_url: "https://www.cbr.ru/about_br/publ/vestnik-akts/?year=2024"
+  origin_verified: true
+  official_site_publication_date_stated_in_act: "2023-12-27"
+  proof_scope: >-
+    Официальный Вестник Банка России содержит полный текст 822-П, сведения о регистрации в Минюсте,
+    дату официального опубликования на сайте Банка России и дату вступления в силу. Exact-byte
+    binary capture в данном проходе не выполнен из-за временной ошибки DNS в binary runtime.
+
+metadata_anomaly:
+  field: minjust_registration_number
+  authoritative_value_used: "76558"
+  authoritative_evidence: "Вестник Банка России № 1 (2475), официальный текст 822-П"
+  conflicting_official_rendering:
+    url: "https://www.cbr.ru/queries/unidbquery/file/90134/3958"
+    value: "76658"
+  handling: "Не нормализовать молча; использовать 76558 как значение официального Вестника до отдельной проверки регистрационного реестра."
+
+protected_information:
+  scope_actor: "оператор автоматизированной информационной системы страхования"
+  protected_locators:
+    - locator: "пункт 1"
+      concept: PROTECTED_INFORMATION_LIFECYCLE_AND_CONDITIONAL_PDN_SECURITY
+      findings:
+        - "Защита охватывает получение, подготовку, обработку, хранение и предоставление защищаемой информации АИС страхования."
+        - "Если защищаемая информация содержит персональные данные, применяются меры безопасности по статье 19 152-ФЗ и приказу ФСТЭК России № 21."
+      guard: "PROTECTED_INFORMATION != PERSONAL_DATA_BY_DEFINITION; условие о ПДн должно быть доказано для конкретного набора."
+    - locator: "пункты 2-4"
+      concept: ORGANIZATIONAL_TECHNICAL_AND_CRYPTO_PROTECTION
+      findings:
+        - "Установлены процессы управления доступом, сетевой защиты, контроля целостности, мониторинга, антивирусной защиты, предотвращения утечек, реагирования на инциденты, защиты виртуализации и удаленного доступа."
+        - "При криптографической защите ПДн применяются ПП РФ № 1119 и приказ ФСБ России № 378."
+      guard: "CRYPTO_REFERENCE != REQUIREMENT_TO_USE_CRYPTO_IN_EVERY_SCENARIO; применять по условиям конкретной обработки и модели угроз."
+    - locator: "пункты 3, 10.1"
+      concept: BIOMETRIC_AND_EBS_SECURITY_CONTEXT
+      findings:
+        - "Положение содержит специальный контекст биометрических персональных данных и взаимодействия с единой биометрической системой по 572-ФЗ."
+      guard: "BIOMETRIC_CONTEXT_IS_SCENARIO_SPECIFIC; наличие страхового процесса не означает автоматическую обработку биометрии."
+    - locator: "пункты 11-13"
+      concept: SECURITY_EVENT_LOGGING_INCIDENT_RESPONSE_AND_CBR_NOTIFICATION
+      findings:
+        - "Предусмотрена регистрация событий и сведений, необходимых для расследования инцидентов защиты информации."
+        - "Оператор информирует Банк России о выявленных инцидентах, причинах и мерах реагирования."
+      guard: "SECTOR_INCIDENT_FLOW != AUTOMATIC_SUBSTITUTE_FOR_OTHER_STATUTORY_INCIDENT_NOTIFICATION_DUTIES."
+    - locator: "пункт 14"
+      concept: SECTOR_RETENTION
+      findings:
+        - "Защищаемая информация хранится в течение срока, установленного подпунктом 1 пункта 7 статьи 33.10 Закона РФ № 4015-I."
+        - "Информация об инцидентах и определенные audit-данные хранятся не менее пяти лет."
+      guard: "FIVE_YEAR_INCIDENT_AUDIT_RETENTION != GENERAL_PERSONAL_DATA_RETENTION_PERIOD."
+    - locator: "пункт 15"
+      concept: KII_CONDITIONAL_OVERLAY
+      findings:
+        - "Требования по КИИ применяются к тем объектам инфраструктуры оператора АИС страхования, которые фактически являются объектами КИИ."
+      guard: "INSURANCE_AIS != KII_BY_DEFINITION; статус конкретного объекта должен быть доказан отдельно."
+
+relationship_candidates:
+  - target: "152-ФЗ"
+    type: DIRECT_CONDITIONAL_PDN_SECURITY_REFERENCE
+    state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    locator: "пункт 1"
+  - target: "приказ ФСТЭК России № 21"
+    type: DIRECT_PDN_SECURITY_MEASURES_REFERENCE
+    state: STATUTORY_CONTEXT_ONLY
+  - target: "ПП РФ № 1119"
+    type: DIRECT_PDN_SECURITY_LEVEL_CONTEXT_FOR_CRYPTO
+    state: STATUTORY_CONTEXT_ONLY
+  - target: "приказ ФСБ России № 378"
+    type: DIRECT_CRYPTO_PDN_SECURITY_REFERENCE
+    state: STATUTORY_CONTEXT_ONLY
+  - target: "572-ФЗ"
+    type: BIOMETRIC_AND_EBS_SCENARIO_CONTEXT
+    state: CANDIDATE_SCENARIO_REVIEW_REQUIRED
+  - target: "Закон РФ № 4015-I"
+    type: PARENT_INSURANCE_AIS_STATUTORY_CONTEXT
+    state: DIRECT_STATUTORY_PARENT
+  - target: "SEC-SRC-RU-GK2-1996-A946"
+    type: INSURANCE_SECRECY_OVERLAP_CANDIDATE
+    state: CANDIDATE_DATA_CLASSIFICATION_REVIEW_REQUIRED
+    guard: "INFORMATION_IN_INSURANCE_AIS != INSURANCE_SECRECY_BY_DEFINITION."
+  - target: "187-ФЗ"
+    type: CONDITIONAL_KII_OVERLAY
+    state: CANDIDATE_ASSET_CLASSIFICATION_REVIEW_REQUIRED
+
+applicability:
+  state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  guards:
+    - "822-П адресовано оператору АИС страхования; не переносить его требования автоматически на любую страховую организацию или внешнюю ИС."
+    - "Для ПДн сначала доказать, что конкретная защищаемая информация содержит ПДн."
+    - "Для биометрии доказать фактический EBS/biometric scenario."
+    - "Для КИИ доказать статус конкретного объекта КИИ."
+  executable_rule_status: NOT_PROMOTED
+
+version_chain:
+  state: VERSION_CHAIN_PARTIAL_CURRENT_PRIMARY_TEXT_VERIFIED_NO_AMENDMENT_OR_REPEAL_FOUND_IN_THIS_PASS
+  events:
+    - date: "2023-08-30"
+      act: "Положение Банка России № 822-П"
+      effect: ADOPTED
+      evidence: PRIMARY_CBR_TEXT
+    - date: "2023-12-22"
+      effect: MINJUST_REGISTERED
+      registration_number: "76558"
+      evidence: PRIMARY_CBR_VESTNIK
+    - date: "2023-12-27"
+      effect: OFFICIALLY_PUBLISHED_ON_CBR_SITE
+      evidence: PRIMARY_ACT_FOOTNOTE
+    - date: "2024-01-11"
+      effect: PUBLISHED_IN_VESTNIK_BANKA_ROSSII_1_2475
+      evidence: PRIMARY_CBR_VESTNIK
+    - date: "2024-04-01"
+      effect: ENTERED_INTO_FORCE
+      evidence: PRIMARY_ACT_POINT_16
+  currentness_note: >-
+    Поиск по официальным материалам Банка России в этом проходе не выявил акта об изменении или отмене 822-П.
+    Отсутствие результата поиска не считается доказательством полного version-chain, поэтому статус остается PARTIAL.
+
+acquisition:
+  exact_binary:
+    status: PENDING_TRANSIENT_DNS_FAILURE
+    attempted_at: "2026-08-28T23:21:00+03:00"
+    attempted_url: "https://www.cbr.ru/Queries/XsltBlock/File/105012/-1/2475"
+    error: "Temporary failure in name resolution"
+    retrieved_at: null
+    mime: null
+    byte_length: null
+    sha256: null
+    immutable_artifact: null
+    displayed_sizes_used_as_exact_bytes: false
