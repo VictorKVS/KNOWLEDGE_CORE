@@ -1,0 +1,48 @@
+{
+  "schema_version": "1.0",
+  "stream": 3,
+  "source_id": "SEC-SRC-RU-PP-408-2024",
+  "checked_at": "2026-08-28T11:22:54+03:00",
+  "capture_status": "PENDING_TRANSIENT_DNS_FAILURE",
+  "primary_metadata": {
+    "authority": "Правительство Российской Федерации",
+    "act": "Постановление Правительства Российской Федерации от 01.04.2024 № 408",
+    "publication_id": "0001202404050032",
+    "official_publication_date": "2024-04-05",
+    "effective_date": "2024-09-01",
+    "sunset": "2027-09-01"
+  },
+  "targets": [
+    {
+      "priority": 1,
+      "url": "https://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202404050032",
+      "expected_role": "byte-exact official publication PDF",
+      "binary_attempt_result": "TEMPORARY_FAILURE_IN_NAME_RESOLUTION",
+      "retrieved_at": null,
+      "mime": null,
+      "byte_length": null,
+      "sha256": null,
+      "immutable_artifact": null
+    },
+    {
+      "priority": 2,
+      "url": "https://publication.pravo.gov.ru/document/0001202404050032",
+      "expected_role": "official publication metadata card",
+      "metadata_verified": true,
+      "publication_id": "0001202404050032",
+      "publication_date": "2024-04-05"
+    }
+  ],
+  "capture_requirements": [
+    "download exact bytes from the official publication endpoint",
+    "record resolved final source URL and retrieved_at timestamp",
+    "detect MIME from actual response/file bytes",
+    "record exact byte length",
+    "calculate SHA-256 over stored bytes",
+    "store immutable artifact durably in repository evidence/artifact location",
+    "create immutable manifest bound to stored artifact SHA-256",
+    "do not use displayed portal size or page count as byte length",
+    "re-verify current/sunset status against primary sources before executable promotion"
+  ],
+  "proof_guard": "No downloaded/immutable counter increment until byte-exact official bytes are durably stored and hash-verifiable."
+}
