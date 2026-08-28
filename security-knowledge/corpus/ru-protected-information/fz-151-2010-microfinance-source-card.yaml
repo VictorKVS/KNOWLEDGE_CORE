@@ -1,0 +1,148 @@
+schema_version: "1.0"
+source_id: SEC-SRC-RU-FZ-151-2010
+stream: 3
+jurisdiction: RU
+authority: "Российская Федерация"
+sector: microfinance
+regime: mfo_confidentiality_pdn_biometric_and_information_disclosure
+act_type: "Федеральный закон"
+act_number: "151-ФЗ"
+act_date: "2010-07-02"
+title: "О микрофинансовой деятельности и микрофинансовых организациях"
+
+status:
+  current_as_of: "2026-08-28"
+  value: CURRENT_PRIMARY_ORIGINAL_VERIFIED_CURRENT_CONSOLIDATION_CROSSCHECKED_VERSION_CHAIN_PARTIAL_EXACT_BINARY_PENDING
+  applicability: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  executable_rule_status: NOT_PROMOTED
+  current_edition_crosscheck: "ред. от 09.04.2026"
+  future_change_boundary: "332-ФЗ от 04.08.2026 меняет часть 8 статьи 9 с 01.10.2027 и на 28.08.2026 не является текущей нормой"
+
+primary_publication:
+  publication_id: null
+  official_publisher: "Российская газета"
+  official_web_publication_date: "2010-07-06"
+  printed_issue_crosscheck: "Российская газета, 07.07.2010, № 147 (5226), полоса 20"
+  source_url: "https://rg.ru/documents/2010/07/07/mikrofinans-dok.html"
+  exact_byte_capture_status: PENDING_TRANSIENT_DNS_FAILURE
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+  note: "Official Russian Gazette publication is verified. Exact bytes could not be acquired because rg.ru and publication.pravo.gov.ru failed DNS resolution in the binary runtime."
+
+protected_information_anchors:
+  - locator: "исходная редакция, статья 9 часть 2"
+    concept: borrower_transaction_secrecy_baseline
+    rule: "Исходная официальная редакция устанавливала обязанность работников микрофинансовой организации соблюдать тайну об операциях заемщиков и иных сведениях, кроме установленных федеральными законами случаев."
+    evidence_role: PRIMARY_ORIGINAL
+    guard: "ORIGINAL_TRANSACTION_SECRECY_BASELINE != PROOF_OF_UNCHANGED_CURRENT_WORDING"
+  - locator: "статья 14 часть 4 пункт 5.7"
+    concept: public_disclosure_pdn_guard
+    rule: "Банк России устанавливает перечень информации, подлежащей раскрытию МФО на официальном сайте и в местах обслуживания, с учетом требований законодательства Российской Федерации в области персональных данных."
+    evidence_role: CURRENT_CONSOLIDATION_CROSSCHECK
+    guard: "DISCLOSURE_REQUIREMENT != PUBLIC_AVAILABILITY_OF_ALL_PERSONAL_DATA"
+  - locator: "статья 9.1 часть 17"
+    concept: applicant_pdn_and_protected_secrets_confidentiality
+    rule: "МФО и ее должностные лица не вправе использовать вне предусмотренных законом целей и разглашать полученные при рассмотрении обращения персональные данные заявителя, а также коммерческую, служебную, банковскую тайну, тайну страхования и иную охраняемую законом тайну, кроме предусмотренных законом случаев."
+    evidence_role: CURRENT_CONSOLIDATION_CROSSCHECK
+    guard: "APPEAL_CONFIDENTIALITY_RULE != UNIVERSAL_MFO_DATA_PROCESSING_RULE"
+  - locator: "статья 9 часть 14"
+    concept: biometric_identification_for_electronic_consumer_microloan
+    rule: "Для заключения договора потребительского займа в электронной форме предусмотрена идентификация или аутентификация заемщика с использованием ЕСИА с биометрическими персональными данными в соответствии со статьями 9 и 10 572-ФЗ."
+    evidence_role: PRIMARY_AMENDMENT_TEXT_PLUS_CURRENT_CONSOLIDATION_CROSSCHECK
+    guard: "BIOMETRIC_IDENTIFICATION_SCENARIO != UNIVERSAL_BIOMETRIC_PROCESSING_REQUIREMENT_FOR_ALL_MFO_OPERATIONS"
+    staged_application: "Общее вступление части 14 — 01.03.2026; для микрофинансовых организаций, определенных пунктом 2.2 части 1 статьи 2 151-ФЗ, применение отложено до 01.03.2027."
+  - locator: "статья 9 части 12-13"
+    concept: consumer_loan_attempt_and_fraud_prevention_data_exchange
+    rule: "Текущая редакция предусматривает запрос Банком России информации о договоре потребительского займа и попытках его заключения, а также получение МФО информации из базы случаев и попыток переводов без добровольного согласия клиента."
+    evidence_role: CURRENT_CONSOLIDATION_CROSSCHECK
+    guard: "FRAUD_PREVENTION_DATA_FLOW != AUTOMATIC_LEGAL_BASIS_FOR_UNRELATED_PROCESSING"
+
+relationships:
+  - to: "152-ФЗ"
+    relation: DIRECT_STATUTORY_PDN_CONTEXT_IN_MFO_DISCLOSURE_AND_APPEAL_RULES
+    status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    guard: "151FZ names personal-data constraints, but each 152-FZ obligation still requires data, operation, purpose, role and legal-basis analysis."
+  - to: "572-ФЗ:articles_9_10"
+    relation: DIRECT_BIOMETRIC_IDENTIFICATION_REFERENCE_FOR_ELECTRONIC_CONSUMER_LOANS
+    status: SCENARIO_SPECIFIC_STATUTORY_RELATION
+    guard: "Apply only to the statutory electronic-consumer-loan scenario and respect staged effective dates."
+  - to: SEC-SRC-RU-FZ-230-2016
+    relation: OVERDUE_DEBT_COLLECTION_SPECIAL_REGIME_BOUNDARY
+    status: CANDIDATE_SCENARIO_REVIEW_REQUIRED
+    guard: "MFO_STATUS != AUTOMATIC_APPLICATION_OF_230FZ_TO_EVERY_CUSTOMER_INTERACTION"
+  - to: SEC-SRC-RU-FZ-218
+    relation: CREDIT_HISTORY_DATA_FLOW_CONTEXT
+    status: CANDIDATE_SCENARIO_REVIEW_REQUIRED
+    guard: "CREDIT_HISTORY_INFORMATION_HAS_ITS_OWN_SPECIAL_REGIME"
+  - to: "353-ФЗ"
+    relation: CONSUMER_CREDIT_STATUTORY_CONTEXT
+    status: CANDIDATE_SCENARIO_REVIEW_REQUIRED
+  - to: "115-ФЗ:article_7"
+    relation: AML_IDENTIFICATION_CONTEXT
+    status: CANDIDATE_SCENARIO_REVIEW_REQUIRED
+
+version_chain:
+  status: PRIMARY_ORIGINAL_VERIFIED_RELEVANT_RECENT_EVENTS_PARTIALLY_VERIFIED_CURRENT_CONSOLIDATION_CROSSCHECKED
+  events:
+    - act: "Федеральный закон от 02.07.2010 № 151-ФЗ"
+      effect: ADOPTED
+      source: "Российская газета"
+      official_web_publication_date: "2010-07-06"
+      printed_issue_date: "2010-07-07"
+      evidence_status: PRIMARY_OFFICIAL_PUBLICATION_VERIFIED
+    - act: "Федеральный закон от 04.08.2023 № 442-ФЗ"
+      effect: INTRODUCED_ARTICLE_9_1_APPEALS_REGIME
+      publication_id_crosscheck: "0001202308040037"
+      effective_boundary: "from 01.07.2024 for the relevant financial-consumer-appeals framework"
+      evidence_status: EFFECT_TEXT_CROSSCHECKED_PRIMARY_EXACT_CAPTURE_PENDING
+    - act: "Федеральный закон от 01.04.2025 № 41-ФЗ"
+      effect: INTRODUCED_ARTICLE_9_PART_14_BIOMETRIC_IDENTIFICATION
+      publication_id: "0001202504010010"
+      publication_date: "2025-04-01"
+      general_effective_date: "2026-03-01"
+      special_deferred_application: "2027-03-01 for MFO described by point 2.2 part 1 article 2"
+      evidence_status: PRIMARY_PUBLICATION_METADATA_VERIFIED_EFFECT_TEXT_VERIFIED
+    - act: "Федеральный закон от 09.04.2026 № 86-ФЗ"
+      effect: CURRENT_SOURCE_LEVEL_AMENDMENT_ARTICLE_4_4
+      locator_note: "Changes IFRS terminology in article 4.4; no effect on mapped PDN/biometric/confidentiality anchors found in this sweep."
+      evidence_status: OFFICIAL_TEXT_CROSSCHECK_EXACT_PRIMARY_CAPTURE_PENDING
+    - act: "Федеральный закон от 04.08.2026 № 332-ФЗ"
+      effect: FUTURE_CHANGE_TO_ARTICLE_9_PART_8
+      publication_id: "0001202608040077"
+      publication_date: "2026-08-04"
+      effective_date: "2027-10-01"
+      evidence_status: PRIMARY_PUBLICATION_LOCATOR_CROSSCHECK_FUTURE_NOT_CURRENT
+  current_text_crosscheck:
+    edition_date: "2026-04-09"
+    current_as_of: "2026-08-28"
+    evidence_role: SECONDARY_CONSOLIDATION_CROSSCHECK_ONLY
+  guard: "CURRENT_CONSOLIDATION_CROSSCHECK != COMPLETE_PRIMARY_BYTE_EXACT_VERSION_CHAIN; future 332-FZ must not be promoted early."
+
+acquisition:
+  attempted_at: "2026-08-28T17:20:00+03:00"
+  targets:
+    - "https://rg.ru/documents/2010/07/07/mikrofinans-dok.html"
+    - "https://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202504010010"
+  result: TEMPORARY_FAILURE_IN_NAME_RESOLUTION
+  exact_bytes_obtained: false
+  durable_download: false
+  immutable_manifest_created: false
+  displayed_size_used_as_byte_length: false
+
+proof_floor:
+  taxonomy_used_as_evidence: false
+  primary_normative_act_required: true
+  mfo_customer_data_always_pdn: false
+  mfo_data_always_bank_secrecy: false
+  public_disclosure_rule_means_public_pdn: false
+  biometric_rule_applies_to_all_mfo_operations: false
+  applicability_promoted: false
+  legal_conflict_declared: false
+
+sources:
+  - "https://rg.ru/documents/2010/07/07/mikrofinans-dok.html"
+  - "https://publication.pravo.gov.ru/document/0001202504010010"
+  - "https://rg.ru/documents/2026/08/12/izmenenia-akty-doc.html"
