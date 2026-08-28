@@ -1,0 +1,80 @@
+schema_version: "1.0"
+delta_id: PDN-MASTER-DELTA-STREAM1-2026-08-28T1058+0300
+parent_inventory: "../../../security-corpora/RU/152-FZ/PDN_MASTER_SOURCE_INVENTORY.yaml"
+stream: 1
+scope: GENERAL_152FZ_ROSKOMNADZOR_CORE
+observed_at: "2026-08-28T10:58:37+03:00"
+
+counter_snapshot:
+  identified: 37
+  downloaded_exact: 35
+  immutable_sha256: 35
+  atomized_proposed: 4
+  atomized_verified: 0
+  pending_raw: 2
+  raw_coverage: 0.9459
+
+pending_raw_sources:
+  - SEC-SRC-RU-152FZ-2026-07-26
+  - SEC-SRC-RU-PP687-2008
+
+freshness_delta:
+  SEC-SRC-RU-152FZ-2026-07-26:
+    checked_at: "2026-08-28"
+    result: CURRENT_REVISION_CONFIRMED_RAW_PENDING
+    current_revision: "2026-07-26"
+    amendment_anchor: SEC-SRC-RU-FZ265-2026
+  SEC-SRC-RU-PP687-2008:
+    checked_at: "2026-08-28"
+    result: CURRENT_REVISION_CONFIRMED_RAW_PENDING
+    current_revision: "2025-01-18"
+    effective_from: "2025-01-26"
+    valid_until: "2030-09-01"
+  SEC-SRC-RU-RKN128-2022:
+    checked_at: "2026-08-28"
+    result: CURRENT_RULE_WITH_REPLACEMENT_PROJECT_ONLY
+
+cross_inventory_reuse:
+  - source_id: SEC-SRC-RU-PP1119-2012
+    role: DIRECT_ARTICLE_19_SECURITY_DEPENDENCY
+    registry: "../../../security-corpora/RU/152-FZ/security-stack/PDN_SECURITY_STACK_SOURCE_INVENTORY.yaml"
+    source_record: "../../../security-corpora/RU/152-FZ/security-stack/source/SEC-SRC-RU-PP1119-2012.yaml"
+    current_status: METADATA_VERIFIED_RAW_PENDING
+    owner_stream: 2
+    action: REUSE_EXISTING_SOURCE_ID_DO_NOT_DUPLICATE
+    stream1_counter_effect: 0
+    rationale: >-
+      The dependency is general PDN security context, not a sector overlay, but it is already registered and worked by the
+      sibling security-stack stream. Stream 1 references the existing identity instead of creating a second node.
+
+catalog_freshness_signal:
+  roscomnadzor_mandatory_requirements_list_page:
+    observed_update_date: "2026-07-21"
+    pdn_control_list_present: true
+    primary_xlsx_capture: PENDING
+    evidence_use: DISCOVERY_AND_FRESHNESS_ONLY
+    promotion_allowed: false
+
+acquisition_delta:
+  exact_bytes_accepted_at_delta_write: 0
+  immutable_new_at_delta_write: 0
+  semantic_promotions: 0
+  existing_immutable_preserved: 35
+  repeat_downloads_of_verified_corpus: 0
+  transport_note: >-
+    Current runtime could not resolve the registered government.ru/pravo.gov.ru hosts for the two remaining Stream-1 raw gaps.
+    Treat this as transient transport/environment evidence only; it does not change legal-currentness or source status.
+
+quality_gates:
+  proof_floor_held: true
+  duplicate_source_registration_prevented: true
+  sector_overlays_touched: false
+
+traceability:
+  run_record: "../../../security-corpora/RU/152-FZ/runs/stream-1/2026-08-28T1058+0300.yaml"
+  run_record_commit: "bdc1b043146355d876252979682b6809ab43cc53"
+
+merge_rule: >-
+  Preserve 35/37 immutable and the two pending Stream-1 sources unless an accepted manifest supplies official returned bytes,
+  source URL, retrieved_at, MIME, exact byte length, SHA-256 and source-specific current-revision proof. PP1119 must be reused
+  from the security-stack registry and must not increase the Stream-1 identified counter by duplicate registration.
