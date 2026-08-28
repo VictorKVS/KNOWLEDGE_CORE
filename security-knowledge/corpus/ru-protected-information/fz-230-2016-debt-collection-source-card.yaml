@@ -1,0 +1,137 @@
+schema_version: "1.0"
+source_id: SEC-SRC-RU-FZ-230-2016
+stream: 3
+jurisdiction: RU
+authority: "Российская Федерация"
+sector: debt_collection_consumer_finance
+regime: overdue_debt_collection_confidentiality_and_contact_controls
+act_type: "Федеральный закон"
+act_number: "230-ФЗ"
+act_date: "2016-07-03"
+title: "О защите прав и законных интересов физических лиц при осуществлении деятельности по возврату просроченной задолженности и о внесении изменений в Федеральный закон «О микрофинансовой деятельности и микрофинансовых организациях»"
+
+status:
+  current_as_of: "2026-08-28"
+  value: CURRENT_PRIMARY_ORIGINAL_VERIFIED_CURRENT_CONSOLIDATION_CROSSCHECKED_VERSION_CHAIN_PARTIAL_EXACT_BINARY_PENDING
+  applicability: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  executable_rule_status: NOT_PROMOTED
+  current_edition_crosscheck: "ред. от 31.07.2025"
+  future_change_boundary: "20-ФЗ от 11.02.2026 вступает в силу 01.09.2026 и на 28.08.2026 не является текущей нормой"
+
+primary_publication:
+  publication_id: "0001201607030002"
+  official_publication_date: "2016-07-03"
+  source_url: "https://publication.pravo.gov.ru/Document/View/0001201607030002"
+  official_file_url: "https://publication.pravo.gov.ru/File/Pdf?eoNumber=0001201607030002"
+  primary_metadata_status: VERIFIED
+  exact_byte_capture_status: PENDING_TRANSIENT_DNS_FAILURE
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+  note: "Primary publication metadata are verified. Exact official PDF bytes could not be acquired because publication.pravo.gov.ru failed DNS resolution in the binary runtime."
+
+protected_information_anchors:
+  - locator: "статья 1"
+    concept: statutory_scope_natural_person_overdue_debt
+    rule: "Специальный режим регулирует действия по возврату просроченной задолженности физических лиц в пределах установленной законом сферы."
+    guard: "DEBT_COLLECTION_CONTEXT != UNIVERSAL_SCOPE_FOR_ALL_DEBT_OR_ALL_PERSONAL_DATA_PROCESSING"
+  - locator: "статья 6 часть 3"
+    concept: debtor_information_third_party_disclosure_restriction
+    rule: "Если иное не предусмотрено федеральным законом, кредитор или представитель кредитора не вправе без согласия должника передавать третьим лицам либо делать доступными сведения о должнике, просроченной задолженности и ее взыскании и любые другие персональные данные должника."
+    guard: "SPECIAL_DISCLOSURE_RESTRICTION != COMPLETE_LEGAL_BASIS_ANALYSIS_UNDER_152FZ"
+  - locator: "статья 6 часть 4"
+    concept: separate_written_pdn_consent
+    rule: "Согласие из части 3 оформляется как согласие должника на обработку его персональных данных в письменной форме отдельным документом."
+    guard: "CONSENT_REQUIRED_BY_230FZ_FOR_THIS_OPERATION != UNIVERSAL_CONSENT_REQUIREMENT_FOR_EVERY_PROCESSING_OPERATION"
+  - locator: "статья 6 части 6-7"
+    concept: confidentiality_and_withdrawal
+    rule: "Получатели конфиденциальных сведений в предусмотренных законом переговорах обязаны сохранять конфиденциальность; отзыв согласия прекращает соответствующее раскрытие, если иное не предусмотрено федеральным законом."
+    guard: "WITHDRAWAL_EFFECT_IS_OPERATION_AND_CONTEXT_SPECIFIC"
+  - locator: "статья 6 часть 8"
+    concept: public_disclosure_prohibition
+    rule: "Раскрытие сведений о должнике, задолженности, взыскании и иных персональных данных неограниченному кругу лиц, включая Интернет и сообщение по месту работы или учебы, не допускается независимо от наличия согласия из части 3."
+    guard: "PUBLIC_DISCLOSURE_PROHIBITION_DOES_NOT_DEFINE_ALL_152FZ_PUBLIC_AVAILABILITY_CASES"
+  - locator: "статья 17"
+    concept: collection_interaction_records_and_retention
+    rule: "Для профессиональной коллекторской организации действуют специальные обязанности по записи взаимодействий и хранению соответствующих информационных ресурсов не менее трех лет; текущая locator-specific редакция требует первичного version-chain capture перед executable promotion."
+    evidence_role: PRIMARY_ORIGINAL_PLUS_CURRENT_CONSOLIDATION_CROSSCHECK
+    guard: "THREE_YEAR_COLLECTION_RECORD_RETENTION != UNIVERSAL_PDN_RETENTION_PERIOD"
+
+relationships:
+  - to: "152-ФЗ:articles_5_6_9"
+    relation: DIRECT_STATUTORY_PDN_REFERENCE_IN_SPECIAL_DEBT_COLLECTION_REGIME
+    status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    guard: "230FZ directly regulates particular disclosures and consent mechanics; applicability of each 152-FZ rule still requires data, operation, role, purpose and legal-basis analysis."
+  - to: SEC-SRC-RU-LAW-395-1
+    relation: BANK_DEBT_COLLECTION_MAY_HAVE_DUAL_BANKING_SECRECY_CONTEXT
+    status: CANDIDATE_SCENARIO_REVIEW_REQUIRED
+    guard: "DEBT_INFORMATION != AUTOMATIC_BANKING_SECRECY_FOR_EVERY_CREDITOR"
+  - to: SEC-SRC-RU-FZ-218
+    relation: DIRECT_SCOPE_BOUNDARY_CREDIT_HISTORY_RELATIONS
+    status: STATUTORY_SCOPE_BOUNDARY
+    guard: "Article 3 excludes relations arising under credit-history legislation from the 230-FZ regime; regimes must not be merged."
+  - to: SEC-SRC-RU-FZ-126
+    relation: TELECOM_CHANNEL_OVERLAP_FOR_CALLS_AND_MESSAGES
+    status: CANDIDATE_SCENARIO_REVIEW_REQUIRED
+    guard: "USE_OF_TELECOM_CHANNEL != AUTOMATIC_APPLICATION_OF_EVERY_TELECOM_SECRECY_RULE"
+
+version_chain:
+  status: PRIMARY_ORIGINAL_VERIFIED_RECENT_EVENTS_PARTIALLY_VERIFIED_CURRENT_CONSOLIDATION_CROSSCHECKED
+  events:
+    - act: "Федеральный закон от 03.07.2016 № 230-ФЗ"
+      effect: ADOPTED
+      publication_id: "0001201607030002"
+      publication_date: "2016-07-03"
+      evidence_status: PRIMARY_PUBLICATION_METADATA_VERIFIED
+    - act: "Федеральный закон от 07.06.2025 № 137-ФЗ"
+      effect: CURRENT_SOURCE_LEVEL_AMENDMENT
+      publication_id: "0001202506070014"
+      publication_date: "2025-06-07"
+      current_effect_boundary: "changes reflected in the consolidation with provisions entering into force by 01.12.2025"
+      evidence_status: PRIMARY_PUBLICATION_METADATA_VERIFIED_LOCATOR_MAP_PARTIAL
+    - act: "Федеральный закон от 31.07.2025 № 304-ФЗ"
+      effect: CURRENT_AMENDMENT_TO_230FZ_REGISTRY_PROCEDURE
+      publication_id: "0001202507310080"
+      publication_date: "2025-07-31"
+      effective_date: "2026-03-01"
+      locator_note: "Article 61 changes 230-FZ; article 12 change is directly crosschecked, full locator map remains pending primary exact capture."
+      evidence_status: PRIMARY_PUBLICATION_METADATA_VERIFIED_EFFECT_TEXT_CROSSCHECKED
+    - act: "Федеральный закон от 11.02.2026 № 20-ФЗ"
+      effect: FUTURE_CHANGE_TO_ARTICLE_17_1_REPORTING
+      publication_id: "0001202602110015"
+      publication_date: "2026-02-11"
+      effective_date: "2026-09-01"
+      evidence_status: PRIMARY_PUBLICATION_METADATA_VERIFIED_FUTURE_NOT_CURRENT
+  current_text_crosscheck:
+    edition_date: "2025-07-31"
+    current_as_of: "2026-08-28"
+    evidence_role: SECONDARY_CONSOLIDATION_CROSSCHECK_ONLY
+  guard: "CURRENT_CONSOLIDATION_CROSSCHECK != COMPLETE_PRIMARY_BYTE_EXACT_VERSION_CHAIN; future 20-FZ must not be promoted before 2026-09-01."
+
+acquisition:
+  attempted_at: "2026-08-28T14:22:02+03:00"
+  target: "https://publication.pravo.gov.ru/File/Pdf?eoNumber=0001201607030002"
+  result: TEMPORARY_FAILURE_IN_NAME_RESOLUTION
+  exact_bytes_obtained: false
+  durable_download: false
+  immutable_manifest_created: false
+  displayed_size_used_as_byte_length: false
+
+proof_floor:
+  taxonomy_used_as_evidence: false
+  primary_normative_act_required: true
+  debt_information_always_pdn: false
+  debt_information_always_bank_secrecy: false
+  special_consent_equals_universal_152fz_consent: false
+  three_year_retention_equals_general_pdn_retention: false
+  applicability_promoted: false
+  legal_conflict_declared: false
+
+sources:
+  - "https://publication.pravo.gov.ru/Document/View/0001201607030002"
+  - "https://publication.pravo.gov.ru/document/0001202506070014"
+  - "https://publication.pravo.gov.ru/document/0001202507310080"
+  - "https://publication.pravo.gov.ru/document/0001202602110015"
+  - "https://rg.ru/documents/2016/07/06/finansi-dok.html"
