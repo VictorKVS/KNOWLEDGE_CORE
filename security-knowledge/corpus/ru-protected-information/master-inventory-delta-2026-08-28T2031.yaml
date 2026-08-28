@@ -1,0 +1,170 @@
+schema_version: "1.0"
+stream: 3
+checked_at: "2026-08-28T20:31:00+03:00"
+mode: APPEND_ONLY_RECONCILIATION
+previous_delta: "master-inventory-delta-2026-08-28T1728.yaml"
+focus: "finance / consumer credit / 353-FZ personal-data transfer, assignee confidentiality, credit-history and future EPGU notification flows"
+
+counters_before:
+  found: 56
+  downloaded: 9
+  immutable: 9
+  pending: 45
+  reused: 2
+  primary_publication_verified: 27
+  sectors_registered: 30
+
+counters_after:
+  found: 57
+  downloaded: 9
+  immutable: 9
+  pending: 46
+  reused: 2
+  primary_publication_verified: 28
+  sectors_registered: 31
+
+changes:
+  new_sources: 1
+  new_immutable_artifacts: 0
+  new_durable_downloads: 0
+  new_pending_exact_capture: 1
+  new_sector_regimes: 1
+  applicability_promotions: 0
+  legal_conflicts_confirmed: 0
+  primary_publication_verified_increment: 1
+
+new_sources:
+  - source_id: SEC-SRC-RU-FZ-353-2013
+    sector: consumer_credit
+    regime: consumer_credit_personal_data_assignment_confidentiality_and_credit_history_flows
+    title: "Федеральный закон от 21.12.2013 № 353-ФЗ «О потребительском кредите (займе)»"
+    status: CURRENT_PRIMARY_ORIGINAL_VERIFIED_CURRENT_ARTICLE12_CROSSCHECKED_VERSION_CHAIN_PARTIAL_EXACT_BINARY_PENDING
+    primary_publication_id: "0001201312230003"
+    primary_publication_date: "2013-12-23"
+    current_edition_crosscheck: "ред. от 04.08.2026; prepared edition includes future amendments"
+
+protected_information_anchors:
+  - source_id: SEC-SRC-RU-FZ-353-2013
+    locator: "статья 12 часть 2"
+    concept: assignment_personal_data_transfer
+    note: "При уступке требований кредитор вправе передавать ПДн заемщика и лиц, предоставивших обеспечение, только в соответствии с законодательством РФ о персональных данных."
+    guard: "STATUTORY_ASSIGNMENT_TRANSFER != UNRESTRICTED_REUSE_OR_DISCLOSURE"
+  - source_id: SEC-SRC-RU-FZ-353-2013
+    locator: "статья 12 часть 3"
+    concept: assignee_confidentiality_and_security
+    note: "Новый кредитор обязан хранить банковскую и иную охраняемую законом тайну и ПДн, обеспечивать конфиденциальность и безопасность и отвечает за разглашение."
+    guard: "CONSUMER_CREDIT_DATA != BANK_SECRECY_BY_DEFINITION"
+  - source_id: SEC-SRC-RU-FZ-353-2013
+    locator: "статья 12 части 4-5"
+    concept: debt_burden_indicator_transfer_on_assignment
+    note: "601-ФЗ ввел передачу последнего рассчитанного значения показателя долговой нагрузки при определенной уступке; действует с 01.01.2024."
+    guard: "DEBT_BURDEN_INDICATOR_FLOW != CREDIT_HISTORY_OR_PDN_CLASSIFICATION_BY_DEFINITION"
+  - source_id: SEC-SRC-RU-FZ-353-2013
+    locator: "статья 10"
+    concept: borrower_debt_payment_information_flow
+    note: "Кредитор направляет заемщику либо обеспечивает доступ к текущей задолженности и сведениям о платежах; это адресный информационный поток, а не публичное раскрытие."
+    guard: "BORROWER_INFORMATION_DUTY != PUBLIC_DISCLOSURE"
+  - source_id: SEC-SRC-RU-FZ-353-2013
+    locator: "статья 7; 31-ФЗ/2024"
+    concept: credit_history_self_ban_flow
+    note: "С 01.03.2025 кредитный процесс связан со сведениями о запрете на заключение потребительского кредита в специальном режиме кредитных историй."
+    guard: "CREDIT_HISTORY_SELF_BAN_FLOW != GENERAL_REUSE_PERMISSION"
+  - source_id: SEC-SRC-RU-FZ-353-2013
+    locator: "статья 7 части 9.6-9.11 по 332-ФЗ/2026"
+    concept: future_epgu_credit_notification_flow
+    note: "Будущий с 01.10.2027 поток уведомлений через квалифицированное БКИ в ЕПГУ о подписании индивидуальных условий и параметрах кредита."
+    guard: "FUTURE_NOT_CURRENT_DO_NOT_PROMOTE_BEFORE_2027_10_01"
+
+relationships:
+  - from: SEC-SRC-RU-FZ-353-2013
+    to: "152-ФЗ"
+    relation: DIRECT_STATUTORY_PDN_TRANSFER_AND_SECURITY_CONTEXT_IN_ASSIGNMENT
+    status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  - from: SEC-SRC-RU-FZ-353-2013
+    to: SEC-SRC-RU-FZ-218
+    relation: CREDIT_HISTORY_SELF_BAN_AND_IDENTIFIER_DATA_FLOW_CONTEXT
+    status: CANDIDATE_SCENARIO_REVIEW_REQUIRED
+  - from: SEC-SRC-RU-FZ-353-2013
+    to: SEC-SRC-RU-FZ-230-2016
+    relation: OVERDUE_DEBT_COLLECTION_SPECIAL_REGIME_BOUNDARY
+    status: CANDIDATE_SCENARIO_REVIEW_REQUIRED
+  - from: SEC-SRC-RU-FZ-353-2013
+    to: SEC-SRC-RU-FZ-151-2010
+    relation: MICROFINANCE_CONSUMER_LOAN_CONTEXT
+    status: CANDIDATE_SCENARIO_REVIEW_REQUIRED
+  - from: SEC-SRC-RU-FZ-353-2013
+    to: SEC-SRC-RU-LAW-395-1
+    relation: BANK_SECRECY_PRESERVATION_ON_ASSIGNMENT_CONTEXT
+    status: CANDIDATE_SCENARIO_REVIEW_REQUIRED
+
+version_events:
+  - act: "Федеральный закон от 21.12.2013 № 353-ФЗ"
+    effect: ADOPTED
+    publication_id: "0001201312230003"
+    publication_date: "2013-12-23"
+    evidence_status: PRIMARY_OFFICIAL_PUBLICATION_VERIFIED
+  - act: "Федеральный закон от 27.12.2018 № 554-ФЗ"
+    effect: CHANGED_ARTICLE_12_PART_1_ASSIGNMENT_SCOPE
+    evidence_status: CURRENT_LOCATOR_HISTORY_CROSSCHECK_EXACT_PRIMARY_CAPTURE_PENDING
+  - act: "Федеральный закон от 29.12.2022 № 601-ФЗ"
+    effect: ADDED_ARTICLE_12_PARTS_4_5_DEBT_BURDEN_INDICATOR_TRANSFER
+    effective_date: "2024-01-01"
+    evidence_status: PRIMARY_RUSSIAN_GAZETTE_AMENDMENT_TEXT_VERIFIED_EXACT_BINARY_PENDING
+  - act: "Федеральный закон от 26.02.2024 № 31-ФЗ"
+    effect: CREDIT_HISTORY_SELF_BAN_AND_CONSUMER_CREDIT_CHECKING_FLOW
+    publication_id: "0001202402260017"
+    effective_date: "2025-03-01"
+    evidence_status: PRIMARY_PUBLICATION_METADATA_VERIFIED_EFFECT_CROSSCHECKED
+  - act: "Федеральный закон от 13.02.2025 № 9-ФЗ"
+    effect: CHANGED_ARTICLE_7_SELF_BAN_CONTRACT_PROCESSING_RULES
+    publication_id: "0001202502130045"
+    evidence_status: PRIMARY_PUBLICATION_METADATA_AND_AMENDMENT_TEXT_VERIFIED_EXACT_BINARY_PENDING
+  - act: "Федеральный закон от 04.07.2026 № 229-ФЗ"
+    effect: FUTURE_CHANGE_ARTICLE_6_1_1
+    effective_date: "2026-09-01"
+    evidence_status: OFFICIAL_TEXT_VERIFIED_FUTURE_NOT_CURRENT
+  - act: "Федеральный закон от 26.07.2026 № 254-ФЗ"
+    effect: FUTURE_CHANGE_ARTICLE_5
+    effective_date: "2026-09-01"
+    evidence_status: OFFICIAL_TEXT_VERIFIED_FUTURE_NOT_CURRENT
+  - act: "Федеральный закон от 04.08.2026 № 332-ФЗ"
+    effect: FUTURE_ARTICLE_7_PARTS_9_6_TO_9_11_EPGU_NOTIFICATION_FLOW
+    publication_id_crosscheck: "0001202608040077"
+    effective_date: "2027-10-01"
+    evidence_status: AMENDMENT_TEXT_CROSSCHECKED_FUTURE_NOT_CURRENT_EXACT_PRIMARY_CAPTURE_PENDING
+
+version_chain_review:
+  current_as_of: "2026-08-28"
+  current_edition_crosscheck: "ред. от 04.08.2026"
+  complete_primary_byte_exact_chain: false
+  guard: "Prepared consolidation contains amendments not yet in force; executable current state must respect each effective date."
+
+acquisition:
+  exact_capture_attempted: true
+  exact_capture_succeeded: false
+  target: "https://publication.pravo.gov.ru/File/Pdf?eoNumber=0001201312230003"
+  binary_attempt_result: "curl exit 6: Could not resolve host: publication.pravo.gov.ru"
+  transient_failure: true
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+  displayed_sizes_used_as_exact_bytes: false
+
+proof_floor:
+  taxonomy_used_as_evidence: false
+  primary_normative_act_required: true
+  consumer_credit_data_always_pdn: false
+  consumer_credit_data_always_bank_secrecy: false
+  assignment_transfer_means_unrestricted_reuse: false
+  ancillary_service_consent_equals_pdn_consent: false
+  future_rule_promoted_early: false
+  applicability_promoted: false
+  legal_conflict_declared: false
+
+next_actions:
+  - "Retry byte-exact capture of 353-FZ and relevant amendments after official-host DNS recovery; compute MIME, exact byte_length and SHA-256 only from actual bytes."
+  - "Close the primary locator-specific chain for article 12 and the current article 7 self-ban data flow."
+  - "Recheck 229-FZ and 254-FZ on/after 01.09.2026 and keep 332-FZ non-current until 01.10.2027."
+  - "Continue finance discovery with Bank of Russia consumer-credit/MFO information and data-security acts, deduplicated against 151-FZ, 218-FZ, 230-FZ, 821-P and 851-P."
