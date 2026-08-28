@@ -1,0 +1,175 @@
+schema_version: "1.0"
+stream: 3
+run_id: "stream-3-run-2026-08-28T1729"
+started_at: "2026-08-28T17:20:04+03:00"
+completed_at: "2026-08-28T17:29:00+03:00"
+focus: "finance / microfinance / 151-FZ confidentiality, personal-data controls, biometric identification and staged effective dates"
+mode: DISCOVERY_PRIMARY_VERIFICATION_VERSION_REVIEW_EXACT_CAPTURE_ATTEMPT_APPEND_ONLY_RECONCILIATION
+repository: "VictorKVS/KNOWLEDGE_CORE"
+branch: main
+
+baseline:
+  previous_ru_protected_information_delta: "master-inventory-delta-2026-08-28T1422.yaml"
+  counters:
+    found: 55
+    downloaded: 9
+    immutable: 9
+    pending: 44
+    reused: 2
+    primary_publication_verified: 26
+    sectors_registered: 29
+
+result:
+  new_source:
+    source_id: SEC-SRC-RU-FZ-151-2010
+    title: "Федеральный закон от 02.07.2010 № 151-ФЗ «О микрофинансовой деятельности и микрофинансовых организациях»"
+    sector: microfinance
+    regime: mfo_confidentiality_pdn_biometric_and_information_disclosure
+    current_as_of: "2026-08-28"
+    status: CURRENT_PRIMARY_ORIGINAL_VERIFIED_CURRENT_CONSOLIDATION_CROSSCHECKED_VERSION_CHAIN_PARTIAL_EXACT_BINARY_PENDING
+  deduplication:
+    duplicate_found: false
+    repository_searches:
+      - "SEC-SRC-RU-FZ-151"
+      - "151-ФЗ микрофинансовой деятельности"
+      - "микрофинансовой деятельности 151-ФЗ"
+    decision: "Register one new microfinance source node and link, rather than merge, debt collection, credit histories, consumer credit, AML and biometric regimes."
+
+primary_evidence:
+  - authority: "Российская газета"
+    url: "https://rg.ru/documents/2010/07/07/mikrofinans-dok.html"
+    facts:
+      - "151-FZ signed 02.07.2010"
+      - "official RG web publication dated 06.07.2010"
+      - "printed issue crosscheck: 07.07.2010 №147 (5226)"
+      - "entered into force 04.01.2011"
+  - authority: "Официальный интернет-портал правовой информации"
+    url: "https://publication.pravo.gov.ru/document/0001202504010010"
+    facts:
+      - "41-FZ dated 01.04.2025"
+      - "publication ID 0001202504010010"
+      - "Article 12 adds part 14 to Article 9 of 151-FZ"
+      - "general effect from 01.03.2026; special MFO-category application deferred to 01.03.2027"
+  - authority: "Российская газета"
+    url: "https://rg.ru/documents/2026/08/12/izmenenia-akty-doc.html"
+    facts:
+      - "332-FZ dated 04.08.2026 changes part 8 of Article 9 of 151-FZ"
+      - "future effective date crosscheck 01.10.2027; not current on 28.08.2026"
+
+verified_anchors:
+  - locator: "исходная статья 9 часть 2"
+    finding: "The original official act contained a borrower-transaction secrecy duty for MFO employees."
+    guard: "Historical baseline is not assumed to be unchanged current wording."
+  - locator: "статья 9.1 часть 17"
+    finding: "Current consolidation directly protects applicant personal data and commercial, official, banking, insurance and other legally protected secrets in the MFO appeals process."
+    guard: "Appeal confidentiality is not a universal rule for every MFO processing operation."
+  - locator: "статья 14 часть 4 пункт 5.7"
+    finding: "Bank of Russia disclosure rules for MFO information are set with regard to Russian personal-data legislation."
+    guard: "A disclosure obligation does not make all person-related information publicly available PDN."
+  - locator: "статья 9 часть 14"
+    finding: "Electronic consumer-loan identification/authentication uses ESIA with biometric personal data under Articles 9 and 10 of 572-FZ."
+    guard: "Scenario-specific and staged; not a blanket biometric-processing requirement."
+  - locator: "статья 9 части 12-13"
+    finding: "Current law creates special data flows around consumer-loan contracts/attempts and transfers without voluntary customer consent for fraud-prevention purposes."
+    guard: "Special fraud-prevention flows do not authorize unrelated reuse."
+
+version_chain:
+  primary_original_verified: true
+  current_consolidation_crosscheck: "ред. от 09.04.2026"
+  complete_primary_byte_exact_version_chain_proved: false
+  current_relevant_events:
+    - "41-FZ/2025 Article 12 -> 151-FZ Article 9(14); current generally from 01.03.2026, deferred for special MFO category until 01.03.2027"
+    - "86-FZ/2026 -> Article 4.4 terminology; no mapped PDN/biometric/confidentiality anchor impact found in this sweep"
+  future_events:
+    - "332-FZ/2026 -> Article 9(8), effective 01.10.2027"
+  historical_provenance_pending_exact_capture:
+    - "442-FZ/2023 -> Article 9.1 appeals regime"
+
+relationships_added:
+  - from: SEC-SRC-RU-FZ-151-2010
+    to: "152-ФЗ"
+    type: DIRECT_STATUTORY_PDN_CONTEXT_IN_MFO_DISCLOSURE_AND_APPEAL_RULES
+    status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  - from: SEC-SRC-RU-FZ-151-2010
+    to: "572-ФЗ:articles_9_10"
+    type: DIRECT_BIOMETRIC_IDENTIFICATION_REFERENCE_FOR_ELECTRONIC_CONSUMER_LOANS
+    status: SCENARIO_SPECIFIC_STATUTORY_RELATION
+  - from: SEC-SRC-RU-FZ-151-2010
+    to: SEC-SRC-RU-FZ-230-2016
+    type: OVERDUE_DEBT_COLLECTION_SPECIAL_REGIME_BOUNDARY
+    status: CANDIDATE_SCENARIO_REVIEW_REQUIRED
+  - from: SEC-SRC-RU-FZ-151-2010
+    to: SEC-SRC-RU-FZ-218
+    type: CREDIT_HISTORY_DATA_FLOW_CONTEXT
+    status: CANDIDATE_SCENARIO_REVIEW_REQUIRED
+  - from: SEC-SRC-RU-FZ-151-2010
+    to: "353-ФЗ"
+    type: CONSUMER_CREDIT_STATUTORY_CONTEXT
+    status: CANDIDATE_SCENARIO_REVIEW_REQUIRED
+  - from: SEC-SRC-RU-FZ-151-2010
+    to: "115-ФЗ:article_7"
+    type: AML_IDENTIFICATION_CONTEXT
+    status: CANDIDATE_SCENARIO_REVIEW_REQUIRED
+
+acquisition:
+  exact_capture_attempted: true
+  exact_capture_succeeded: false
+  targets:
+    - "https://rg.ru/documents/2010/07/07/mikrofinans-dok.html"
+    - "https://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202504010010"
+  binary_runtime_result: "NameResolutionError / Temporary failure in name resolution"
+  transient_failure: true
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+  displayed_sizes_used_as_exact_bytes: false
+
+counters_after:
+  found: 56
+  downloaded: 9
+  immutable: 9
+  pending: 45
+  reused: 2
+  primary_publication_verified: 27
+  sectors_registered: 30
+
+production_statistics:
+  new_sources_this_pass: 1
+  new_sectors_this_pass: 1
+  relationships_added_this_pass: 6
+  primary_original_publications_verified_this_pass: 1
+  relevant_amendment_events_reviewed_this_pass: 4
+  new_durable_downloads_this_pass: 0
+  new_immutable_artifacts_this_pass: 0
+  rework_items_this_pass: 0
+  speed_vs_single_stream_pct: null
+  cumulative_throughput_per_hour: null
+  rework_share_pct: null
+  remaining_volume_estimate: null
+  eta: null
+  telemetry_guard: "Comparable single-stream throughput and remaining-volume telemetry are insufficient; do not fabricate acceleration or ETA."
+
+quality_gates:
+  taxonomy_as_evidence: false
+  primary_act_required: true
+  duplicate_created: false
+  applicability_promoted: false
+  legal_conflict_declared: false
+  fabricated_binary_metadata: false
+  future_rule_promoted_early: false
+  executable_effect: NONE
+
+artifacts_written:
+  - "security-knowledge/corpus/ru-protected-information/fz-151-2010-microfinance-source-card.yaml"
+  - "security-knowledge/corpus/ru-protected-information/fz-151-2010-microfinance-capture-pending.json"
+  - "security-knowledge/corpus/ru-protected-information/master-inventory-delta-2026-08-28T1728.yaml"
+  - "security-knowledge/corpus/ru-personal-data/master-source-inventory-delta-stream3-2026-08-28T1728.yaml"
+  - "security-knowledge/corpus/ru-protected-information/stream-3-run-2026-08-28T1729.yaml"
+
+next_priority:
+  - "Retry byte-exact official acquisition for 151-FZ and 41-FZ after DNS recovery; compute MIME/byte_length/SHA-256 only from actual retrieved bytes."
+  - "Complete primary locator-specific chain for Article 9.1(17), Article 14(4)(5.7) and Article 9(12-14)."
+  - "Recheck the special biometric boundary on 01.03.2027 and 332-FZ only on/after 01.10.2027."
+  - "Continue finance discovery with 353-FZ and Bank of Russia microfinance data/security acts, deduplicated against already registered 230-FZ, 218-FZ, 821-P and 851-P."
