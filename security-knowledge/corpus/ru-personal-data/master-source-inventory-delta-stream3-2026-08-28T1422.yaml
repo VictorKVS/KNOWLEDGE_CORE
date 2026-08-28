@@ -1,0 +1,85 @@
+schema_version: "1.0"
+stream: 3
+checked_at: "2026-08-28T14:22:02+03:00"
+mode: APPEND_ONLY_RELATIONSHIP_DELTA
+focus: "finance / debt collection / direct debtor-PDN disclosure and consent rules / special retention boundary"
+
+source:
+  source_id: SEC-SRC-RU-FZ-230-2016
+  title: "Федеральный закон от 03.07.2016 № 230-ФЗ"
+  authority: "Российская Федерация"
+  publication_id: "0001201607030002"
+  official_publication_date: "2016-07-03"
+  current_edition_crosscheck: "31.07.2025"
+  primary_publication_status: VERIFIED
+  exact_binary_status: PENDING_TRANSIENT_DNS_FAILURE
+
+pdn_overlap:
+  status: DIRECT_STATUTORY_PDN_REFERENCE_SPECIAL_OPERATION_APPLICABILITY_REVIEW_REQUIRED
+  direct_scope:
+    locators:
+      - "статья 6 часть 3"
+      - "статья 6 часть 4"
+      - "статья 6 части 6-8"
+    findings:
+      - "230-ФЗ прямо регулирует передачу третьим лицам сведений о должнике, задолженности/взыскании и иных персональных данных должника."
+      - "Для специального случая из статьи 6 предусмотрено письменное согласие на обработку ПДн отдельным документом."
+      - "Закон отдельно регулирует конфиденциальность получателей, отзыв согласия и запрет раскрытия неограниченному кругу лиц."
+  guard: "Direct PDN wording in 230-FZ proves a special PDN context, not automatic applicability of every 152-FZ requirement to every debt-processing operation."
+
+relationships:
+  - from: SEC-SRC-RU-FZ-230-2016
+    to: "152-ФЗ:articles_5_6_9"
+    type: DIRECT_STATUTORY_PDN_REFERENCE_IN_SPECIAL_DEBT_COLLECTION_CONTEXT
+    status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    guard: "Prove concrete data fields, operation, role, purpose and legal basis before promoting a 152-FZ requirement."
+  - from: SEC-SRC-RU-FZ-230-2016
+    to: SEC-SRC-RU-LAW-395-1
+    type: POSSIBLE_DUAL_REGIME_WITH_BANKING_SECRECY
+    status: CANDIDATE_SCENARIO_REVIEW_REQUIRED
+    guard: "A debt record is not automatically banking secrecy unless the banking-secrecy statutory scope is independently satisfied."
+  - from: SEC-SRC-RU-FZ-230-2016
+    to: SEC-SRC-RU-FZ-218
+    type: DIRECT_SCOPE_BOUNDARY_CREDIT_HISTORY_RELATIONS
+    status: STATUTORY_SCOPE_BOUNDARY
+    guard: "Do not merge debt-collection rules with credit-history regime; Article 3 creates a scope boundary."
+  - from: SEC-SRC-RU-FZ-230-2016
+    to: SEC-SRC-RU-FZ-126
+    type: TELECOM_CHANNEL_INTERACTION_OVERLAP
+    status: CANDIDATE_SCENARIO_REVIEW_REQUIRED
+    guard: "Calls/messages as a channel do not automatically prove application of every telecom confidentiality requirement."
+
+semantic_guards:
+  - id: PDN-FZ230-001
+    rule: "SPECIAL_230FZ_DISCLOSURE_CONSENT != UNIVERSAL_152FZ_CONSENT_MODEL_FOR_ALL_PROCESSING"
+  - id: PDN-FZ230-002
+    rule: "DEBT_INFORMATION != AUTOMATIC_BANKING_SECRECY"
+  - id: PDN-FZ230-003
+    rule: "THREE_YEAR_COLLECTION_RECORD_RETENTION != GENERAL_PDN_RETENTION_PERIOD"
+  - id: PDN-FZ230-004
+    rule: "PUBLIC_DISCLOSURE_PROHIBITION_UNDER_230FZ != COMPLETE_PUBLIC_AVAILABILITY_CLASSIFICATION_UNDER_152FZ"
+  - id: PDN-FZ230-005
+    rule: "FUTURE_20FZ_2026_ART17_1_REPORTING != CURRENT_BEFORE_2026_09_01"
+
+version_boundary:
+  current_as_of: "2026-08-28"
+  current_edition_crosscheck: "31.07.2025"
+  primary_original_publication_verified: true
+  recent_primary_publication_events_verified:
+    - "137-ФЗ / 0001202506070014"
+    - "304-ФЗ / 0001202507310080"
+    - "20-ФЗ / 0001202602110015 / FUTURE until 2026-09-01"
+  complete_primary_byte_exact_version_chain: false
+  guard: "Current consolidated text is a crosscheck; executable promotion waits for locator-specific primary capture."
+
+counters_reference:
+  ru_protected_information_delta: "master-inventory-delta-2026-08-28T1422.yaml"
+  found: 55
+  downloaded: 9
+  immutable: 9
+  pending: 44
+  reused: 2
+  primary_publication_verified: 26
+  sectors_registered: 29
+
+executable_effect: NONE
