@@ -1,0 +1,39 @@
+schema_version: "1.0"
+id: EVIDENCE-RU-MINKOMSVYAZ-573-APPENDIX9-DICTIONARIES-ROAMING-SWITCHES-GATES-2026-08-28
+checked_at: "2026-08-28"
+subject: "Order 573 appendix 9 Dictionaries.asn roaming, switches and gates records"
+observations:
+  - Order 630 point 21 replaced appendix 9 in full with effect from 1 March 2024.
+  - RoamingPartnerRecord has five fields; telco-id, roaming-id, begin-time and description are required while end-time is optional.
+  - RoamingPartnerRecord constrains roaming-id to 0..4294967295 and description to UTF8String length 1..256.
+  - SwitchesRecord has nine fields; only end-time and switch-sign are optional.
+  - SwitchesRecord constrains switch-id to length 1..128, description to 1..256 and optional NumericString switch-sign to 1..18.
+  - SwitchesRecord requires NetworkType, ReportedAddress and switch-type.
+  - Switch type contains exactly internal(0) and border(1).
+  - GatesRecord has eight fields; only end-time is optional.
+  - GatesRecord constrains gate-id to 0..4294967295 and description to length 1..256.
+  - GatesRecord requires IPList and ReportedAddress.
+  - Gate type contains exactly sgsn(0), ggsn(1), smsc(2), gmsc(3), hss(4), pstn(5), voip-gw(6), aaa(7) and nat(8).
+  - IPList is SEQUENCE OF NetworkPeerInfo without a published element-count constraint.
+  - An empty IPList is syntactically possible under that ASN.1 shape, but no operational meaning or usable-gate conclusion was inferred.
+  - No retention, refresh, deactivation grace period or unknown enum extension was added.
+sources:
+  current_appendix9_open_text: "https://legalacts.ru/doc/prikaz-minkomsvjazi-rossii-ot-29102018-n-573-ob-utverzhdenii/"
+  order630_official_publication: "https://publication.pravo.gov.ru/document/0001202309050014"
+  order630_exact_delta: "https://www.garant.ru/products/ipo/prime/doc/407511660/"
+source_quality:
+  order630_appendix9_replacement_and_effective_date: VERIFIED
+  current_three_record_fields_requiredness_ranges_sizes_and_enums: VERIFIED_CONSOLIDATED_PUBLIC_TEXT
+  report_wrapper_oid_and_item_type_mappings: VERIFIED_CONSOLIDATED_PUBLIC_TEXT
+  date_and_time_and_network_type_deep_dependency_models: PENDING_SEPARATE_ATOMIZATION
+  official_immutable_pdf_bytes: PENDING_SERVER_502_FROM_PRIOR_SAME_DATE_CHECK
+  independent_expert_review: PENDING
+linked_model: security-knowledge/legislation/RU/ministry-orders/minkomsvyaz-573-2018/appendix9-dictionaries-roaming-switches-gates-records-atomic-v1.yaml
+linked_regression: security-knowledge/legislation/RU/ministry-orders/minkomsvyaz-573-2018/appendix9-dictionaries-roaming-switches-gates-records-regression-v1.json
+claims_not_made:
+  - EMPTY_GATE_IP_LIST_IS_OPERATIONALLY_USABLE
+  - IP_LIST_HAS_A_MINIMUM_OR_MAXIMUM_ELEMENT_COUNT
+  - END_TIME_IS_REQUIRED_IN_ANY_OF_THE_THREE_RECORDS
+  - UNKNOWN_SWITCH_OR_GATE_ENUM_VALUES_ARE_ACCEPTED
+  - DEACTIVATION_GRACE_RETENTION_OR_REFRESH_PERIOD_IS_SPECIFIED
+  - ALL_REMAINING_DICTIONARY_RECORDS_ARE_VERIFIED
