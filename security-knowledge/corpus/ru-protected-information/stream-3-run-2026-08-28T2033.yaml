@@ -1,0 +1,183 @@
+schema_version: "1.0"
+stream: 3
+run_id: "stream-3-run-2026-08-28T2033"
+started_at: "2026-08-28T20:24:32+03:00"
+completed_at: "2026-08-28T20:33:00+03:00"
+focus: "finance / consumer credit / 353-FZ personal-data assignment, assignee confidentiality, credit-history and future EPGU flows"
+mode: DISCOVERY_PRIMARY_VERIFICATION_VERSION_REVIEW_EXACT_CAPTURE_ATTEMPT_APPEND_ONLY_RECONCILIATION
+repository: "VictorKVS/KNOWLEDGE_CORE"
+branch: main
+
+baseline:
+  previous_ru_protected_information_delta: "master-inventory-delta-2026-08-28T1728.yaml"
+  counters:
+    found: 56
+    downloaded: 9
+    immutable: 9
+    pending: 45
+    reused: 2
+    primary_publication_verified: 27
+    sectors_registered: 30
+
+result:
+  new_source:
+    source_id: SEC-SRC-RU-FZ-353-2013
+    title: "Федеральный закон от 21.12.2013 № 353-ФЗ «О потребительском кредите (займе)»"
+    sector: consumer_credit
+    regime: consumer_credit_personal_data_assignment_confidentiality_and_credit_history_flows
+    current_as_of: "2026-08-28"
+    status: CURRENT_PRIMARY_ORIGINAL_VERIFIED_CURRENT_ARTICLE12_CROSSCHECKED_VERSION_CHAIN_PARTIAL_EXACT_BINARY_PENDING
+  deduplication:
+    duplicate_found: false
+    repository_searches:
+      - "fz-353-2013 consumer credit"
+      - "353-ФЗ потребительском кредите"
+    decision: "Register one new consumer-credit source node and link it to existing microfinance, debt-collection, credit-history and banking-secrecy nodes rather than duplicate those regimes."
+
+primary_evidence:
+  - authority: "Официальный интернет-портал правовой информации"
+    url: "https://publication.pravo.gov.ru/document/0001201312230003"
+    facts:
+      - "353-FZ dated 21.12.2013"
+      - "publication ID 0001201312230003"
+      - "publication date 23.12.2013"
+  - authority: "Российская газета"
+    url: "https://rg.ru/documents/2013/12/23/kredit-dok.html"
+    facts:
+      - "original full text crosscheck"
+      - "article 12(2) directly conditions assignment transfer of borrower/security-provider personal data on Russian personal-data legislation"
+      - "article 12(3) requires assignee confidentiality/security for personal data and protected secrets"
+  - authority: "Российская газета"
+    url: "https://rg.ru/documents/2023/01/09/document-o-potrebitelskom-kredite.html"
+    facts:
+      - "601-FZ dated 29.12.2022"
+      - "added article 12 parts 4-5 on transfer of debt-burden indicator"
+      - "effective 01.01.2024"
+  - authority: "Официальный интернет-портал правовой информации"
+    url: "https://publication.pravo.gov.ru/document/0001202402260017"
+    facts:
+      - "31-FZ dated 26.02.2024"
+      - "publication ID 0001202402260017"
+      - "amends 218-FZ and 353-FZ in the credit-history self-ban framework"
+      - "effective 01.03.2025"
+  - authority: "Официальный интернет-портал правовой информации"
+    publication_id: "0001202502130045"
+    facts:
+      - "9-FZ dated 13.02.2025"
+      - "changes article 7 of 353-FZ"
+
+verified_anchors:
+  - locator: "статья 12 часть 2"
+    finding: "Assignment of claims may include personal data of the borrower and security providers only in accordance with Russian personal-data legislation."
+    guard: "STATUTORY_ASSIGNMENT_TRANSFER != UNRESTRICTED_REUSE_OR_DISCLOSURE"
+  - locator: "статья 12 часть 3"
+    finding: "Assignee must preserve banking and other legally protected secrets and personal data and ensure confidentiality and security."
+    guard: "CONSUMER_CREDIT_DATA != BANK_SECRECY_BY_DEFINITION"
+  - locator: "статья 12 части 4-5"
+    finding: "601-FZ added transfer of the latest debt-burden indicator in specified assignments."
+    guard: "DEBT_BURDEN_INDICATOR != CREDIT_HISTORY_OR_PDN_CLASSIFICATION_BY_DEFINITION"
+  - locator: "статья 10"
+    finding: "Current debt/payment information is an addressed borrower information flow, not public disclosure."
+  - locator: "статья 7 / 31-FZ self-ban flow"
+    finding: "Current consumer-credit decision flow interacts with the special credit-history self-ban regime."
+    guard: "SPECIAL_CREDIT_HISTORY_PURPOSE_LIMITATION_REMAINS_SEPARATE"
+  - locator: "статья 7 части 9.6-9.11 / 332-FZ"
+    finding: "Future qualified-BKI to EPGU notification flow includes contract parameters and creditor contact data."
+    guard: "FUTURE_NOT_CURRENT_UNTIL_2027_10_01"
+
+version_chain:
+  primary_original_verified: true
+  current_consolidation_crosscheck: "ред. от 04.08.2026; prepared edition includes amendments not yet in force"
+  complete_primary_byte_exact_version_chain_proved: false
+  relevant_events:
+    - "554-FZ/2018 -> article 12(1) assignment-scope change; exact primary capture pending"
+    - "601-FZ/2022 -> article 12(4)-(5), effective 01.01.2024"
+    - "31-FZ/2024 -> credit-history self-ban / 353-FZ interaction, effective 01.03.2025"
+    - "9-FZ/2025 -> article 7 self-ban/contract-processing changes"
+  future_events:
+    - "229-FZ/2026 -> article 6(1-1), effective 01.09.2026"
+    - "254-FZ/2026 -> article 5, effective 01.09.2026"
+    - "332-FZ/2026 -> article 7 parts 9.6-9.11, effective 01.10.2027"
+
+relationships_added:
+  - from: SEC-SRC-RU-FZ-353-2013
+    to: "152-ФЗ"
+    type: DIRECT_STATUTORY_PDN_TRANSFER_AND_SECURITY_CONTEXT_IN_ASSIGNMENT
+    status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  - from: SEC-SRC-RU-FZ-353-2013
+    to: SEC-SRC-RU-FZ-218
+    type: CREDIT_HISTORY_SELF_BAN_AND_IDENTIFIER_DATA_FLOW_CONTEXT
+    status: CANDIDATE_SCENARIO_REVIEW_REQUIRED
+  - from: SEC-SRC-RU-FZ-353-2013
+    to: SEC-SRC-RU-FZ-230-2016
+    type: OVERDUE_DEBT_COLLECTION_SPECIAL_REGIME_BOUNDARY
+    status: CANDIDATE_SCENARIO_REVIEW_REQUIRED
+  - from: SEC-SRC-RU-FZ-353-2013
+    to: SEC-SRC-RU-FZ-151-2010
+    type: MICROFINANCE_CONSUMER_LOAN_CONTEXT
+    status: CANDIDATE_SCENARIO_REVIEW_REQUIRED
+  - from: SEC-SRC-RU-FZ-353-2013
+    to: SEC-SRC-RU-LAW-395-1
+    type: BANK_SECRECY_PRESERVATION_ON_ASSIGNMENT_CONTEXT
+    status: CANDIDATE_SCENARIO_REVIEW_REQUIRED
+
+acquisition:
+  exact_capture_attempted: true
+  exact_capture_succeeded: false
+  target: "https://publication.pravo.gov.ru/File/Pdf?eoNumber=0001201312230003"
+  binary_runtime_result: "curl exit 6 / Could not resolve host: publication.pravo.gov.ru"
+  transient_failure: true
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+  displayed_sizes_used_as_exact_bytes: false
+
+counters_after:
+  found: 57
+  downloaded: 9
+  immutable: 9
+  pending: 46
+  reused: 2
+  primary_publication_verified: 28
+  sectors_registered: 31
+
+production_statistics:
+  new_sources_this_pass: 1
+  new_sectors_this_pass: 1
+  relationships_added_this_pass: 5
+  primary_original_publications_verified_this_pass: 1
+  relevant_amendment_events_reviewed_this_pass: 7
+  new_durable_downloads_this_pass: 0
+  new_immutable_artifacts_this_pass: 0
+  rework_items_this_pass: 0
+  speed_vs_single_stream_pct: null
+  cumulative_throughput_per_hour: null
+  rework_share_pct: null
+  remaining_volume_estimate: null
+  eta: null
+  telemetry_guard: "Comparable single-stream throughput and remaining-volume telemetry are insufficient; do not fabricate acceleration or ETA."
+
+quality_gates:
+  taxonomy_as_evidence: false
+  primary_act_required: true
+  duplicate_created: false
+  applicability_promoted: false
+  legal_conflict_declared: false
+  fabricated_binary_metadata: false
+  future_rule_promoted_early: false
+  executable_effect: NONE
+
+artifacts_written:
+  - "security-knowledge/corpus/ru-protected-information/fz-353-2013-consumer-credit-source-card.yaml"
+  - "security-knowledge/corpus/ru-protected-information/fz-353-2013-consumer-credit-capture-pending.json"
+  - "security-knowledge/corpus/ru-protected-information/master-inventory-delta-2026-08-28T2031.yaml"
+  - "security-knowledge/corpus/ru-personal-data/master-source-inventory-delta-stream3-2026-08-28T2031.yaml"
+  - "security-knowledge/corpus/ru-protected-information/stream-3-run-2026-08-28T2033.yaml"
+
+next_priority:
+  - "Retry byte-exact official acquisition for 353-FZ, 601-FZ, 31-FZ and 9-FZ after DNS recovery; compute MIME/byte_length/SHA-256 only from actual retrieved bytes."
+  - "Close the exact primary locator-specific chain for article 12 and current article 7 self-ban flow."
+  - "Recheck 229-FZ and 254-FZ on/after 01.09.2026; keep 332-FZ non-current until 01.10.2027."
+  - "Continue finance discovery with Bank of Russia consumer-credit and microfinance data/security acts, deduplicated against 151-FZ, 218-FZ, 230-FZ, 821-P and 851-P."
