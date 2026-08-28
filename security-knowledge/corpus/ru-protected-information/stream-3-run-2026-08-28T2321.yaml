@@ -1,0 +1,97 @@
+schema_version: "1.0"
+stream: 3
+run_at: "2026-08-28T23:21:00+03:00"
+focus: "insurance / automated insurance information system / protected information / PDN security / biometrics / retention"
+
+result:
+  new_source: SEC-SRC-RU-CBR-822P-2023
+  source_added: true
+  dedupe_checked: true
+  primary_text_verified: true
+  exact_binary_obtained: false
+  immutable_created: false
+  applicability_promoted: false
+  legal_conflict_declared: false
+
+primary_evidence:
+  - publisher: "Банк России"
+    title: "Вестник Банка России № 1 (2475) от 11.01.2024"
+    url: "https://www.cbr.ru/Queries/XsltBlock/File/158093/-1/2475"
+    proves:
+      - "Положение Банка России от 30.08.2023 № 822-П"
+      - "Минюст: 22.12.2023, рег. № 76558"
+      - "прямая условная ссылка на статью 19 152-ФЗ и приказ ФСТЭК № 21"
+      - "криптографический PDN-контекст ПП № 1119 / приказ ФСБ № 378"
+      - "биометрический/EBS контекст по 572-ФЗ"
+      - "incident/audit retention не менее пяти лет"
+      - "условный KII overlay только для объектов, являющихся КИИ"
+      - "вступление в силу 01.04.2024"
+
+metadata_quality:
+  anomaly_detected: true
+  field: minjust_registration_number
+  official_vestnik_value: "76558"
+  cbr_unidb_rendering_value: "76658"
+  treatment: "76558 retained as authoritative Vestnik value; discrepancy queued for registry-level follow-up."
+
+version_chain:
+  status: PARTIAL
+  current_primary_text_status: VERIFIED
+  amendment_or_repeal_found_in_official_cbr_search: false
+  caveat: "Search non-result is not proof of complete currentness; no executable promotion performed."
+
+binary_acquisition:
+  attempted: true
+  target: "https://www.cbr.ru/Queries/XsltBlock/File/105012/-1/2475"
+  transport_result: "Temporary failure in name resolution"
+  retry_class: TRANSIENT
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+  displayed_size_used_as_exact_bytes: false
+
+counters_before:
+  found: 57
+  downloaded: 9
+  immutable: 9
+  pending: 46
+  reused: 2
+  primary_publication_verified: 28
+  sectors_registered: 31
+
+counters_after:
+  found: 58
+  downloaded: 9
+  immutable: 9
+  pending: 47
+  reused: 2
+  primary_publication_verified: 29
+  sectors_registered: 31
+
+files_written:
+  - "security-corpora/RU/protected-information/source/SEC-SRC-RU-CBR-822P-2023.yaml"
+  - "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-CBR-822P-2023-capture-pending.json"
+  - "security-knowledge/corpus/ru-protected-information/cbr-822p-2023-insurance-ais-info-security-source-card.yaml"
+  - "security-knowledge/corpus/ru-protected-information/master-inventory-delta-2026-08-28T2321.yaml"
+  - "security-knowledge/corpus/ru-personal-data/master-source-inventory-delta-stream3-2026-08-28T2321.yaml"
+  - "security-knowledge/corpus/ru-protected-information/stream-3-run-2026-08-28T2321.yaml"
+
+next_priority:
+  - "Retry exact-byte capture of official CBR 822-P publication and store immutable artifact + SHA-256."
+  - "Resolve 76558/76658 registration-number discrepancy against registration-level primary evidence."
+  - "Continue insurance data layer: primary acts for composition/retention of AИС insurance information under Law 4015-I, deduped against insurance secrecy article 946 GK and existing financial-security nodes."
+  - "Continue high-priority pending exact captures across health, finance, telecom, education/children, public sector, biometrics, transport, advertising and archives."
+
+production_statistics:
+  throughput_this_pass:
+    new_sources: 1
+    source_cards_written: 2
+    manifests_written: 1
+    inventory_deltas_written: 2
+    run_logs_written: 1
+  speed_vs_single_stream_percent: null
+  rework_share_percent: null
+  eta: null
+  reason_for_null_metrics: "No comparable elapsed-time baseline/telemetry for a valid calculation; values were not fabricated."
