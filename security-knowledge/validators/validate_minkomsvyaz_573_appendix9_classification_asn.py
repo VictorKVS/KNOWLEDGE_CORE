@@ -62,6 +62,16 @@ def main():
     assert model["asn1_module"]["oid_alias"]["semantic_type"] == "OBJECT_DESCRIPTOR"
     assert model["asn1_module"]["oid_alias"]["prohibited_interpretation"] == "ASN1_OBJECT_IDENTIFIER"
     assert model["temporal_model"]["effective_from"] == "2024-03-01"
+    assert symbols["sorm-message-session"] == "280"
+    assert symbols["sorm-report-abonent-abonent"] == "40"
+    assert symbols["sorm-request-payment-express-pays"] == "221"
+    assert symbols["sorm-report-payment-bank-account-transfer"] == "89"
+    assert symbols["sorm-report-data-content-raw"] == "50"
+    prohibited_normalizations = {
+        "sorm-session", "sorm-report-abonent", "sorm-report-service",
+        "sorm-request-payment-express-payment", "sorm-report-raw-content",
+    }
+    assert prohibited_normalizations.isdisjoint(symbols)
     assert len(fixtures["cases"]) == 64
     assert len({case["id"] for case in fixtures["cases"]}) == 64
 

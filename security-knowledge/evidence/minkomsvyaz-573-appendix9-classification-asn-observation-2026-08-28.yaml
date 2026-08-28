@@ -12,6 +12,7 @@ observations:
   - The current HTML rendering exposes the token for sorm-request-identifier-pstn as 141 with an unmatched trailing quote; sequence inference is not accepted as primary-byte evidence.
   - Connection-request values jump from 162 to 164. No meaning is invented for 163.
   - The source identifier is literally spelled presense. A corrected presence alias is not accepted as an ASN.1 symbol.
+  - A second line-by-line pass corrected 28 previously normalized symbol names: all seven sorm-message-* names, four sorm-report-abonent-* names, sixteen payment names and sorm-report-data-content-raw. Numeric values and the 101/100 counts were unchanged.
   - Both the official publication PDF URL and the Ministry card returned 502 Connection refused in a controlled-browser check on 28 August 2026; no incomplete response was stored as an immutable artifact.
 sources:
   current_index: "https://www.consultant.ru/document/cons_doc_LAW_313954/"
@@ -27,6 +28,7 @@ source_quality:
   pstn141_token: PENDING_PRIMARY_PDF_FAIL_CLOSED
   connection_request_163: VERIFIED_ABSENT_NO_SEMANTICS_INVENTED
   literal_presense_spelling: VERIFIED
+  source_exact_symbol_names_after_corrective_pass: VERIFIED_28_NORMALIZATIONS_REMOVED
   official_immutable_pdf_bytes: PENDING_SERVER_502
   independent_expert_review: PENDING
 linked_model: security-knowledge/legislation/RU/ministry-orders/minkomsvyaz-573-2018/appendix9-classification-asn-oid-registry-atomic-v1.yaml
@@ -38,3 +40,4 @@ claims_not_made:
   - PRESENCE_IS_A_SOURCE_ASN1_SYMBOL
   - OID_MEANS_ASN1_OBJECT_IDENTIFIER
   - OFFICIAL_IMMUTABLE_PDF_BYTES_ACQUIRED
+  - NORMALIZED_SHORT_SYMBOL_NAMES_ARE_SOURCE_IDENTIFIERS

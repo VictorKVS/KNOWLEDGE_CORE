@@ -1,0 +1,33 @@
+schema_version: "1.0"
+id: EVIDENCE-RU-MINKOMSVYAZ-573-APPENDIX9-ADDRESSES-ASN-2026-08-28
+checked_at: "2026-08-28"
+subject: "Order 573 appendix 9 Addresses.asn exact module"
+observations:
+  - Order 630 point 21 replaced appendix 9 in full with effect from 1 March 2024.
+  - Addresses uses IMPLICIT TAGS, has no imports and exports exactly AddressType, ReportedAddresses, ReportedAddress and RequestedAddress.
+  - AddressType has five exact values registered(0), postal(1), invoice(2), device-location(3) and reserved(4).
+  - ReportedAddresses is SEQUENCE OF ReportedAddress without a published SIZE constraint.
+  - ReportedAddress requires both title and address-info.
+  - AddressInfoReport is a CHOICE between struct-info tag 1 and unstruct-info tag 2; the latter is UTF8String of 1 through 1024 characters.
+  - AddressStructInfoReport and RequestedAddress each contain nine OPTIONAL UTF8String fields tagged 0 through 8.
+  - zip is limited to 1 through 32 characters; the other eight structured fields are limited to 1 through 128 characters.
+  - All-OPTIONAL structure permits an empty ASN.1 SEQUENCE, but the act does not define useful business or query semantics for it.
+  - RequestedAddress has neither an AddressType field nor an unstructured-address alternative.
+sources:
+  current_appendix9_open_text: "https://legalacts.ru/doc/prikaz-minkomsvjazi-rossii-ot-29102018-n-573-ob-utverzhdenii/"
+  order630_official_publication: "https://publication.pravo.gov.ru/document/0001202309050014"
+  order630_exact_delta: "https://www.garant.ru/products/ipo/prime/doc/407511660/"
+source_quality:
+  order630_appendix9_replacement_and_effective_date: VERIFIED
+  current_addresses_asn_full_module: VERIFIED_CONSOLIDATED_PUBLIC_TEXT
+  exact_fields_tags_optionality_and_sizes: VERIFIED
+  official_immutable_pdf_bytes: PENDING_SERVER_502_FROM_PRIOR_SAME_DATE_CHECK
+  independent_expert_review: PENDING
+linked_model: security-knowledge/legislation/RU/ministry-orders/minkomsvyaz-573-2018/appendix9-addresses-asn-atomic-v1.yaml
+linked_regression: security-knowledge/legislation/RU/ministry-orders/minkomsvyaz-573-2018/appendix9-addresses-asn-regression-v1.json
+claims_not_made:
+  - EMPTY_ADDRESS_HAS_DEFINED_BUSINESS_MEANING
+  - REPORTED_ADDRESSES_HAS_A_MINIMUM_OR_MAXIMUM_COUNT
+  - REQUESTED_ADDRESS_SUPPORTS_UNSTRUCTURED_TEXT
+  - ADDRESS_INFO_INTERNAL_TYPES_ARE_EXPORTED
+  - OFFICIAL_IMMUTABLE_BYTES_ARE_VERIFIED
