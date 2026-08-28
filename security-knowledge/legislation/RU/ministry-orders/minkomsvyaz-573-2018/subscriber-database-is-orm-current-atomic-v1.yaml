@@ -1,0 +1,280 @@
+schema_version: "1.0"
+id: RU-MINKOMSVYAZ-573-2018-SUBSCRIBER-DATABASE-IS-ORM-CURRENT-ATOMIC-V1
+title: "Приказ Минкомсвязи № 573: ИС баз данных абонентов, текущая редакция"
+checked_at: "2026-08-28"
+status: VERIFIED_CURRENT_OPEN_CORE_ORDER630_AND_ORDER1196_DELTAS_APPLIED_DEEP_ASN1_AND_FIELD_TABLES_PENDING
+scope: >-
+  Действующее публичное ядро требований к ИС ОРМ, содержащим базы данных
+  абонентов, пользователей и оказанных услуг. Приказ № 630 применяется с
+  01.03.2024, приказ № 1196 — с 15.03.2026. Утратившие силу подпункт 13
+  пункта 5 и строка 13 приложения № 10 заблокированы. Глубокие ASN.1,
+  поля, коды и таблицы приложений остаются отдельной fail-closed границей.
+
+sources:
+  act: "Приказ Минкомсвязи России от 29.10.2018 № 573"
+  registration: "Минюст России, 18.12.2018 № 53028"
+  official_publication_date: "2018-12-19"
+  effective_from: "2018-12-30"
+  current_revision_date: "2025-12-18"
+  order630:
+    act: "Приказ Минцифры России от 12.07.2023 № 630"
+    registration: "Минюст России, 05.09.2023 № 75102"
+    official_publication_date: "2023-09-05"
+    effective_from: "2024-03-01"
+  order1196:
+    act: "Приказ Минцифры России от 18.12.2025 № 1196"
+    registration: "Минюст России, 03.03.2026 № 85531"
+    official_publication_date: "2026-03-04"
+    effective_from: "2026-03-15"
+  validity_until_exclusive: "2030-03-01"
+  official_original_publication: "https://publication.pravo.gov.ru/Document/View/0001201812190001"
+  official_original_copy: "https://minjust.consultant.ru/documents/41292"
+  current_index: "https://www.consultant.ru/document/cons_doc_LAW_313954/"
+  current_open_text: "https://legalacts.ru/doc/prikaz-minkomsvjazi-rossii-ot-29102018-n-573-ob-utverzhdenii/"
+  order630_official_publication: "https://publication.pravo.gov.ru/document/0001202309050014"
+  order630_exact_delta: "https://www.garant.ru/products/ipo/prime/doc/407511660/"
+  order1196_official_publication: "https://publication.pravo.gov.ru/document/0001202603040008"
+  order1196_exact_delta: "https://www.garant.ru/products/ipo/prime/doc/413698280/"
+
+dependencies:
+  federal_law: "126-ФЗ, статьи 41 и 64"
+  pp445_retention:
+    model: security-knowledge/legislation/RU/government-decrees/445/article64-content-retention-atomic-v1.yaml
+    relation: CONTENT_RETENTION_AND_DELETION_ROUTE
+  pp538:
+    model: security-knowledge/legislation/RU/government-decrees/538-2005/sorm-interaction-commissioning-atomic-v1.yaml
+    relation: INTERACTION_PLACEMENT_AND_THREE_YEAR_DATABASE_ROUTE
+  order83:
+    model: security-knowledge/legislation/RU/ministry-orders/minkomsvyaz-83-2014/packet-switching-sorm-current-atomic-v1.yaml
+    relation: PACKET_COLLECTION_SOURCE
+  order86:
+    model: security-knowledge/legislation/RU/ministry-orders/minkomsvyaz-86-2018/voice-information-storage-current-atomic-v1.yaml
+    relation: VOICE_STORAGE_SOURCE_AND_ADDITIONAL_CONTROL_POINT
+
+temporal_model:
+  - {id: PRE_ORDER573, until_exclusive: "2018-12-30", status: OUT_OF_SCOPE_PREDECESSOR_ROUTE}
+  - {id: ORDER573_ORIGINAL, from: "2018-12-30", until_exclusive: "2024-03-01", status: HISTORICAL}
+  - {id: ORDER573_ORDER630, from: "2024-03-01", until_exclusive: "2026-03-15", status: HISTORICAL}
+  - {id: ORDER573_ORDER630_ORDER1196, from: "2026-03-15", until_exclusive: "2030-03-01", status: CURRENT_AS_OF_2026_08_28}
+  - {id: ORDER573_EXPIRED, from: "2030-03-01", status: FUTURE_EXPIRY_ROUTE}
+
+applicability:
+  installed_on_operator_networks_in_licensed_scope: true
+  current_point5_service_routes:
+    - LOCAL_TELEPHONE_EXCEPT_PAYPHONE_AND_COLLECTIVE_ACCESS
+    - INTERCITY_AND_INTERNATIONAL_TELEPHONE
+    - TELEPHONE_IN_DEDICATED_NETWORK
+    - INTRAZONE_TELEPHONE
+    - LOCAL_TELEPHONE_PAYPHONE
+    - LOCAL_TELEPHONE_COLLECTIVE_ACCESS
+    - MOBILE_RADIO_PUBLIC_NETWORK
+    - MOBILE_RADIO_DEDICATED_NETWORK
+    - MOBILE_RADIOTELEPHONE_PUBLIC_NETWORK
+    - MOBILE_SATELLITE_RADIO
+    - COMMUNICATION_CHANNEL_PROVISION
+    - DATA_TRANSMISSION_EXCEPT_VOICE
+    - TELEMATIC_INTERNET_ACCESS
+  repealed_point5_subpoint13_from_2026_03_15: DATA_TRANSMISSION_FOR_VOICE
+  repealed_appendix10_row13_from_2026_03_15: true
+  certification:
+    pp113_item: 30
+    pp113_validity_until_exclusive: "2028-09-01"
+    pp1387_validity_until_exclusive: "2029-09-01"
+  placement: OPERATOR_COMMUNICATION_NODES_IN_RUSSIAN_FEDERATION
+
+system_functions:
+  operations: [COLLECT, ACCUMULATE, STORE, SEARCH, PROVIDE_TO_AUTHORIZED_BODIES]
+  information_families:
+    - SUBSCRIBERS
+    - SERVICE_USERS
+    - SERVICES_AND_CONNECTIONS_INCLUDING_FAILED_ATTEMPTS
+    - DELIVERED_AND_UNDELIVERED_STORED_MESSAGES
+    - VOICE_TEXT_IMAGE_SOUND_VIDEO_AND_OTHER_MESSAGES_FOR_ENUMERATED_LICENSES
+    - OTHER_INFORMATION_ONLY_WHERE_FEDERAL_LAW_PROVIDES
+  control_point_channels:
+    - {id: KPD1, function: CONTROL}
+    - {id: KPD2, function: DATA}
+    - {id: KPD3, function: MONITORING}
+    - {id: KPD4, function: UNFORMATTED_DATA}
+    - {id: KPD5, function: USER_MESSAGE_DELIVERY}
+  additional_data_network_services_use_appendix13_formats: true
+  order86_integration:
+    protocol: ORDER86_APPENDIX3
+    additional_operator_record_required: true
+    textual_description_required: true
+
+retention_routes:
+  message_content:
+    duration: UP_TO_SIX_MONTHS
+    clock_start: END_OF_RECEIPT_TRANSMISSION_DELIVERY_OR_PROCESSING
+    deletion: AUTOMATIC_PER_PP445_POINT8
+  subscriber_user_identifier_and_service_information:
+    duration: THREE_YEARS
+    service_data_accumulates_without_identifier_allocation_record: true
+  data_network_actions:
+    duration: THREE_YEARS_FROM_ACTION_END
+  telephone_connections_and_location:
+    duration: THREE_YEARS_FROM_ACTION_END
+  order573_does_not_replace_pp445_capacity_route: true
+
+order630_current_features:
+  data_network_connection_families: 11
+  includes: [DNS, STUN, HOSTING_ACCOUNT_ACTIONS, ADDRESS_TRANSLATION, REMOTE_TERMINAL_ACCESS]
+  telephone_connection_families: 4
+  vowifi:
+    stored_as_telephone_connection_statistics: true
+    location: GEOGRAPHIC_COORDINATES_OR_WIFI_ACCESS_POINT_IP_AND_PORT
+    multiple_location_types_create_separate_updates: true
+  data_flow_aggregation:
+    window_minutes: 5
+    key: SAME_IP_PAIR_AND_TCP_UDP_PORTS
+  tls_control_interface:
+    mutual_authentication: true
+    version: "1.2"
+    certificate_trust_anchor: SELF_SIGNED_ROOT_CREATED_BY_CONTROL_POINT
+  content_filters:
+    create_drop_list_queries: true
+    full_traffic_recording_when_no_rules: true
+    media_filter_criteria: [IP_OR_SUBNET, VLAN, MPLS_LABEL, SNI_OR_URL]
+  cyclic_buffer_minimums:
+    mobile_connection_disconnection_location_days: 3
+    data_network_connections_days: 1
+    location_event_available_via_kpd4_minutes: 5
+
+timing_requirements:
+  preliminary_processing:
+    subscriber_or_user_identifier_seconds: 5
+    access_card_identifier_seconds: 5
+    sms_issued_identifier_seconds: 30
+    temporary_identifier_seconds: 30
+    network_change_seconds: 30
+    telephone_service_or_location_minutes: 5
+    data_network_connection_minutes: 10
+  direct_search:
+    identifier_ownership_seconds: 1
+    telephone_payment_card_seconds: 1
+    registered_identifiers_seconds: 3
+    balance_replenishment_seconds: 1
+  simultaneous_search_tasks_min: 100
+  detailed_interval_table_point36: VERIFIED_OPEN_TEXT_DEEP_ROWS_NOT_ATOMIZED
+
+security_and_audit:
+  protect_from_unauthorized_access_by: [MANUFACTURERS, UNAUTHORIZED_USERS, OPERATOR_TECHNICAL_PERSONNEL, THIRD_PARTIES]
+  inform_control_point_on_attempts:
+    - ACCESS_BY_STANDARD_COMMAND_OR_SERVICE_PROGRAM
+    - ACCESS_TO_ORM_RELATED_INFORMATION
+    - BACKUP_OF_ORM_RELATED_DATA
+    - ACCESS_THROUGH_UNAPPROVED_PORT
+    - OPENING_RECEIVING_EQUIPMENT_CASE
+  access_control_and_health_monitoring_required: true
+  round_the_clock_remote_authorized_access_required: true
+  preserve_accumulated_data_during_modernization: true
+  technical_personnel_actions_logged: true
+
+appendices_boundary:
+  appendix_count: 14
+  appendix9_asn1_replaced_by_order630: true
+  appendix10_row13_repealed_by_order1196: true
+  exact_fields_codes_asn1_and_deep_tables: PENDING_IMMUTABLE_PAGE_REVIEW
+  current_consolidated_official_immutable_bytes: PENDING
+
+atomic_rules:
+  - {id: MK573-R001, locator: "временной маршрут", rule: APPLY_ORIGINAL_FROM_2018_12_30}
+  - {id: MK573-R002, locator: "приказ № 630", rule: APPLY_ORDER630_FROM_2024_03_01}
+  - {id: MK573-R003, locator: "приказ № 1196", rule: APPLY_ORDER1196_FROM_2026_03_15}
+  - {id: MK573-R004, locator: "пункт 3 приказа", rule: STOP_CURRENT_ROUTE_AT_2030_03_01}
+  - {id: MK573-R005, locator: "пункты 1–2", rule: APPLY_ONLY_TO_LICENSED_OPERATOR_NETWORK_IS_ORM}
+  - {id: MK573-R006, locator: "пункт 3", rule: REQUIRE_CERTIFICATION_UNDER_CURRENT_PP113_AND_PP1387_ROUTE}
+  - {id: MK573-R007, locator: "пункт 5 подпункт 13", rule: BLOCK_REPEALED_VOICE_DATA_SERVICE_FROM_2026_03_15}
+  - {id: MK573-R008, locator: "приложение 10 строка 13", rule: BLOCK_REPEALED_ROW_FROM_2026_03_15}
+  - {id: MK573-R009, locator: "пункт 4", rule: SUPPORT_COLLECTION_ACCUMULATION_STORAGE_SEARCH_AND_PROVISION}
+  - {id: MK573-R010, locator: "пункты 5–6", rule: PROVIDE_DATA_ONLY_FOR_ENUMERATED_SERVICE_AND_INFORMATION_ROUTES}
+  - {id: MK573-R011, locator: "пункт 6.3", rule: INCLUDE_FAILED_AND_UNSUCCESSFUL_CONNECTION_ATTEMPTS}
+  - {id: MK573-R012, locator: "пункт 6.3", rule: INCLUDE_DELIVERED_AND_UNDELIVERED_STORED_MESSAGES}
+  - {id: MK573-R013, locator: "пункт 6.4", rule: LIMIT_CONTENT_ROUTE_TO_ENUMERATED_LICENSES}
+  - {id: MK573-R014, locator: "пункт 6.5", rule: REQUIRE_FEDERAL_LAW_FOR_OTHER_INFORMATION}
+  - {id: MK573-R015, locator: "пункт 7", rule: REQUIRE_EXACTLY_FIVE_CONTROL_POINT_CHANNEL_FAMILIES}
+  - {id: MK573-R016, locator: "пункт 8", rule: USE_APPENDIX13_FOR_ADDITIONAL_DATA_NETWORK_SERVICES}
+  - {id: MK573-R017, locator: "пункт 9", rule: PLACE_IS_ORM_AT_OPERATOR_NODES_IN_RUSSIA}
+  - {id: MK573-R018, locator: "пункты 10–18", rule: ROUTE_FUNCTIONS_TO_APPENDICES1_TO9}
+  - {id: MK573-R019, locator: "пункт 19.2", rule: STORE_MESSAGE_CONTENT_UP_TO_SIX_MONTHS}
+  - {id: MK573-R020, locator: "пункт 19.2", rule: START_MESSAGE_CLOCK_AT_END_OF_RECEIPT_TRANSMISSION_DELIVERY_OR_PROCESSING}
+  - {id: MK573-R021, locator: "пункт 19.3", rule: DELETE_MESSAGE_CONTENT_AUTOMATICALLY_PER_PP445_POINT8}
+  - {id: MK573-R022, locator: "пункт 19.5", rule: STORE_SUBSCRIBER_USER_IDENTIFIER_AND_SERVICE_INFORMATION_THREE_YEARS}
+  - {id: MK573-R023, locator: "пункт 19.5", rule: ACCUMULATE_SERVICE_DATA_WITHOUT_IDENTIFIER_ALLOCATION_RECORD}
+  - {id: MK573-R024, locator: "пункт 19.7", rule: PROTECT_STORED_AND_ORM_RELATED_INFORMATION_FROM_FOUR_ACTOR_CLASSES}
+  - {id: MK573-R025, locator: "пункт 19.8", rule: INFORM_CONTROL_POINT_ON_FIVE_UNAUTHORIZED_ATTEMPT_CLASSES}
+  - {id: MK573-R026, locator: "пункт 19.11", rule: PROVIDE_ROUND_THE_CLOCK_REMOTE_AUTHORIZED_ACCESS}
+  - {id: MK573-R027, locator: "пункт 19.15", rule: INTEGRATE_ORDER86_AND_CREATE_ADDITIONAL_OPERATOR_RECORD}
+  - {id: MK573-R028, locator: "пункт 19.19", rule: PRESERVE_ACCUMULATED_DATA_DURING_MODERNIZATION}
+  - {id: MK573-R029, locator: "пункт 20", rule: ALLOW_AUTHORIZED_TECHNICAL_REPAIR_OF_ERRONEOUS_REPORT_RECORDS}
+  - {id: MK573-R030, locator: "пункт 21", rule: COLLECT_SUCCESSFUL_FAILED_SHORT_AND_LICENSED_SERVICE_EVENTS}
+  - {id: MK573-R031, locator: "пункт 22", rule: COLLECT_ELEVEN_DATA_NETWORK_CONNECTION_FAMILIES_CONTINUOUSLY}
+  - {id: MK573-R032, locator: "пункт 22", rule: INCLUDE_DNS_STUN_HOSTING_AND_ADDRESS_TRANSLATION_ROUTES}
+  - {id: MK573-R033, locator: "пункт 22", rule: STORE_DATA_NETWORK_ACTION_INFORMATION_THREE_YEARS_FROM_ACTION_END}
+  - {id: MK573-R034, locator: "пункт 23", rule: COLLECT_FOUR_TELEPHONE_CONNECTION_FAMILIES_CONTINUOUSLY}
+  - {id: MK573-R035, locator: "пункт 23", rule: STORE_VOWIFI_AS_TELEPHONE_CONNECTION_STATISTICS}
+  - {id: MK573-R036, locator: "пункт 23", rule: RECORD_VOWIFI_COORDINATES_OR_ACCESS_POINT_IP_AND_PORT}
+  - {id: MK573-R037, locator: "пункт 23", rule: CREATE_SEPARATE_RECORDS_FOR_SIMULTANEOUS_LOCATION_TYPES}
+  - {id: MK573-R038, locator: "пункты 24 и 26", rule: COLLECT_LOCATION_CHANGES_AND_STORE_TELEPHONE_LOCATION_INFORMATION_THREE_YEARS}
+  - {id: MK573-R039, locator: "пункт 25", rule: AGGREGATE_DATA_FLOWS_IN_FIVE_MINUTE_WINDOWS_BY_EXACT_KEY}
+  - {id: MK573-R040, locator: "пункт 25", rule: PRESERVE_HTTP_STUN_AND_DNS_CURRENT_ROUTES}
+  - {id: MK573-R041, locator: "пункт 27", rule: APPLY_CONTENT_FILTERS_WITH_FULL_RECORDING_WHEN_NO_RULES_EXIST}
+  - {id: MK573-R042, locator: "пункты 31–33", rule: PRESERVE_TERRITORIAL_AND_DISTRIBUTED_NETWORK_QUERY_SCOPE}
+  - {id: MK573-R043, locator: "пункт 34.1", rule: MAKE_SUBSCRIBER_IDENTIFIER_DATA_AVAILABLE_WITHIN_FIVE_SECONDS}
+  - {id: MK573-R044, locator: "пункт 34.2", rule: MAKE_ACCESS_CARD_IDENTIFIER_DATA_AVAILABLE_WITHIN_FIVE_SECONDS}
+  - {id: MK573-R045, locator: "пункты 34.3–34.5", rule: APPLY_THIRTY_SECOND_PREPROCESSING_TO_THREE_ENUMERATED_ROUTES}
+  - {id: MK573-R046, locator: "пункт 34.6", rule: MAKE_TELEPHONE_SERVICE_AND_LOCATION_DATA_AVAILABLE_WITHIN_FIVE_MINUTES}
+  - {id: MK573-R047, locator: "пункт 34.7", rule: MAKE_DATA_NETWORK_CONNECTION_DATA_AVAILABLE_WITHIN_TEN_MINUTES}
+  - {id: MK573-R048, locator: "пункт 35.1", rule: COMPLETE_IDENTIFIER_OWNERSHIP_SEARCH_WITHIN_ONE_SECOND}
+  - {id: MK573-R049, locator: "пункт 35.2", rule: COMPLETE_PAYMENT_CARD_SEARCH_WITHIN_ONE_SECOND}
+  - {id: MK573-R050, locator: "пункт 35.3", rule: COMPLETE_REGISTERED_IDENTIFIER_SEARCH_WITHIN_THREE_SECONDS}
+  - {id: MK573-R051, locator: "пункт 35.4", rule: COMPLETE_BALANCE_REPLENISHMENT_SEARCH_WITHIN_ONE_SECOND}
+  - {id: MK573-R052, locator: "пункт 37", rule: SUPPORT_AT_LEAST_ONE_HUNDRED_SIMULTANEOUS_SEARCH_TASKS}
+  - {id: MK573-R053, locator: "приложение 2 пункт 43", rule: REQUIRE_MUTUAL_TLS12_AUTHENTICATION}
+  - {id: MK573-R054, locator: "приложение 2 пункт 61", rule: SUPPORT_CREATE_DROP_AND_LIST_CONTENT_FILTERS}
+  - {id: MK573-R055, locator: "приложение 2 пункт 61", rule: PRESERVE_FOUR_MEDIA_FILTER_CRITERIA}
+  - {id: MK573-R056, locator: "приложение 6 пункт 4", rule: KEEP_MOBILE_CONNECTION_LOCATION_BUFFER_AT_LEAST_THREE_DAYS}
+  - {id: MK573-R057, locator: "приложение 6 пункт 4", rule: KEEP_DATA_NETWORK_CONNECTION_BUFFER_AT_LEAST_ONE_DAY}
+  - {id: MK573-R058, locator: "приложение 6 пункт 5", rule: MAKE_LOCATION_EVENTS_AVAILABLE_VIA_KPD4_WITHIN_FIVE_MINUTES}
+  - {id: MK573-R059, locator: "приложение 9", rule: TREAT_ORDER630_ASN1_REPLACEMENT_AS_CURRENT}
+  - {id: MK573-R060, locator: "приложения 1–14", rule: REQUIRE_IMMUTABLE_PAGE_REVIEW_FOR_DEEP_FIELDS_CODES_ASN1_AND_TABLES, strength: FAIL_CLOSED}
+
+evidence_model:
+  - {id: E573-01, proves: [MK573-R001, MK573-R002, MK573-R003, MK573-R004], artifacts: [TEMPORAL_ROUTE]}
+  - {id: E573-02, proves: [MK573-R005, MK573-R006, MK573-R007, MK573-R008], artifacts: [CURRENT_SCOPE_CERTIFICATION_AND_REPEALS]}
+  - {id: E573-03, proves: [MK573-R009, MK573-R010, MK573-R011, MK573-R012], artifacts: [SYSTEM_FUNCTION_AND_INFORMATION_MAP]}
+  - {id: E573-04, proves: [MK573-R013, MK573-R014], artifacts: [CONTENT_AND_OTHER_INFORMATION_GUARDS]}
+  - {id: E573-05, proves: [MK573-R015, MK573-R016, MK573-R017, MK573-R018], artifacts: [CHANNEL_AND_PLACEMENT_MAP]}
+  - {id: E573-06, proves: [MK573-R019, MK573-R020, MK573-R021], artifacts: [CONTENT_RETENTION_AND_DELETION_TESTS]}
+  - {id: E573-07, proves: [MK573-R022, MK573-R023], artifacts: [THREE_YEAR_SUBSCRIBER_DATA_TESTS]}
+  - {id: E573-08, proves: [MK573-R024, MK573-R025, MK573-R026], artifacts: [ACCESS_AND_ALERT_TESTS]}
+  - {id: E573-09, proves: [MK573-R027, MK573-R028, MK573-R029], artifacts: [ORDER86_AND_MODERNIZATION_ROUTE]}
+  - {id: E573-10, proves: [MK573-R030, MK573-R031, MK573-R032, MK573-R033], artifacts: [CONNECTION_FAMILY_TESTS]}
+  - {id: E573-11, proves: [MK573-R034, MK573-R035, MK573-R036, MK573-R037, MK573-R038], artifacts: [TELEPHONE_VOWIFI_AND_LOCATION_TESTS]}
+  - {id: E573-12, proves: [MK573-R039, MK573-R040, MK573-R041], artifacts: [AGGREGATION_PROTOCOL_AND_FILTER_TESTS]}
+  - {id: E573-13, proves: [MK573-R042], artifacts: [DISTRIBUTED_SCOPE_TEST]}
+  - {id: E573-14, proves: [MK573-R043, MK573-R044, MK573-R045], artifacts: [PREPROCESSING_SECONDS_TESTS]}
+  - {id: E573-15, proves: [MK573-R046, MK573-R047], artifacts: [PREPROCESSING_MINUTES_TESTS]}
+  - {id: E573-16, proves: [MK573-R048, MK573-R049, MK573-R050, MK573-R051], artifacts: [DIRECT_SEARCH_TIME_TESTS]}
+  - {id: E573-17, proves: [MK573-R052], artifacts: [CONCURRENCY_TEST]}
+  - {id: E573-18, proves: [MK573-R053, MK573-R054, MK573-R055], artifacts: [TLS_AND_FILTER_TESTS]}
+  - {id: E573-19, proves: [MK573-R056, MK573-R057, MK573-R058], artifacts: [CYCLIC_BUFFER_TESTS]}
+  - {id: E573-20, proves: [MK573-R059, MK573-R060], artifacts: [DEEP_APPENDIX_PENDING_REGISTER]}
+
+verification_boundary:
+  verified:
+    - CURRENT_REVISION_IDENTITY_AND_EFFECTIVE_DATES
+    - CURRENT_POINTS1_TO37_OPEN_CORE
+    - ORDER630_TOP_LEVEL_DELTA_AND_SELECTED_CURRENT_APPENDIX_REQUIREMENTS
+    - ORDER1196_EXACT_TWO_REPEALS
+    - RETENTION_AND_PREPROCESSING_ROUTES
+  pending:
+    - CURRENT_CONSOLIDATED_OFFICIAL_IMMUTABLE_BYTES
+    - COMPLETE_DEEP_ASN1_FIELDS_CODES_AND_TABLES
+    - POINT36_COMPLETE_DETAILED_INTERVAL_TABLE_ATOMIZATION
+    - CURRENT_CERTIFIED_PRODUCT_LIFECYCLE_CROSSWALK
+    - INDEPENDENT_EXPERT_REVIEW
+  critical_gap_created: false
+  high_gap_created: false
+
