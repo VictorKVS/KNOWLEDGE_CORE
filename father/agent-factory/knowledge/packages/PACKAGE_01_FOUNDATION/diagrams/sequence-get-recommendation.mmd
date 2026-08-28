@@ -1,0 +1,41 @@
+sequenceDiagram
+    actor A as Analyst
+    participant F as Frontend
+    participant B as Backend API
+    participant C as Recommendation Controller
+    participant P as Policy Guard
+    participant R as RAG Manager
+    participant V as Vector DB
+    participant E as Evidence Retriever
+    participant T as Prompt Template Factory
+    participant L as LLM Client
+    participant X as LLM Endpoint
+    participant CVal as Citation Validator
+    participant K as Knowledge Projector
+    participant Aud as Audit Emitter
+
+    A->>F: Enter question + project_id
+    F->>B: POST /projects/{id}/recommendations
+    B->>C: POST /get_recommendation
+    C->>P: validate scope/role/request
+    P-->>C: allowed / denied
+    C->>R: retrieve(question, filters, top_k)
+    R->>V: semantic search
+    V-->>R: fragment candidates
+    R->>E: resolve exact text/locator/hash/version
+    E-->>R: evidence package
+    R->>T: build versioned evidence-first prompt
+    T-->>R: prompt
+    R->>L: generate recommendation + claims
+    L->>X: inference
+    X-->>L: model output
+    L-->>R: recommendation + claim candidates
+    R-->>C: candidate response
+    C->>CVal: validate claims vs evidence
+    CVal-->>C: citations + validation verdict
+    C->>K: apply role view
+    K-->>C: role-projected result
+    C->>Aud: emit trace/outcome
+    C-->>B: result + citations + warnings + trace_id
+    B-->>F: response
+    F-->>A: recommendation/evidence/review status
