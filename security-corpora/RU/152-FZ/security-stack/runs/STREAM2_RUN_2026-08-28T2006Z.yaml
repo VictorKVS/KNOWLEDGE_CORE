@@ -1,0 +1,87 @@
+schema_version: "1.0"
+id: STREAM2-RUN-2026-08-28T2006Z
+stream: 2
+kind: security-stack-primary-source-registration-and-version-chain-pass
+created_at: "2026-08-28T20:06:59Z"
+status: SOURCE_REGISTERED_EXACT_BYTES_PENDING
+scope:
+  primary_domain: "152-FZ technical and cryptographic security stack"
+  focus:
+    - current technical and cryptographic baseline status
+    - bounded licensing/certification dependencies
+    - exact primary acquisition targets
+
+pre_run_authoritative_counters:
+  identified: 52
+  metadata_verified: 52
+  immutable_sha256_verified: 21
+  pending_raw_capture: 31
+  exact_official_route_unresolved: 8
+  source: "PDN_SECURITY_STACK_ACQUISITION_RUN.json finished 2026-08-28T17:32:49.583203Z"
+
+new_source_cards:
+  - id: SEC-SRC-RU-FSTEC164-2025
+    metadata_status: METADATA_VERIFIED
+    official_publication_id: "0001202507020007"
+    official_document_route: "https://publication.pravo.gov.ru/document/0001202507020007"
+    official_pdf_target: "http://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202507020007"
+    immutable_status: PENDING_TRANSPORT
+    applicability: LICENSED_SZI_DEVELOPMENT_PRODUCTION_ACTIVITY_ONLY
+
+status_verification:
+  checked_at: "2026-08-28"
+  findings:
+    - >-
+      The official publication portal lists FSTEC Order 164 dated 12.05.2025, Minjust registration 82775 dated
+      01.07.2025, publication identifier 0001202507020007 and publication date 02.07.2025; the index displays an
+      11-page PDF of approximately 743 KB.
+    - >-
+      Existing repository lifecycle evidence and the already registered immutable amending act FSTEC Order 487/2025
+      establish that Order 164 is current as amended. The licensing-control branch must therefore not be evaluated from
+      the original 2025 sunset metadata without Order 487.
+    - >-
+      Order 164 is a neighboring licensing-control procedure for organizations performing development/production of
+      confidential-information protection tools. It is not a generic PP1119/FSTEC21 duty for every PDN operator.
+    - >-
+      The official PDF bytes could not be obtained in this runtime pass. No observed MIME, exact byte length or SHA-256
+      is asserted; the displayed 743 KB portal metadata is not used as a byte fingerprint.
+
+version_chain:
+  current_source: SEC-SRC-RU-FSTEC164-2025
+  amended_by: SEC-SRC-RU-FSTEC487-2025
+  relation: LICENSE_CONTROL_PROCEDURE_VERSION_CHAIN
+  current_state: CURRENT_AS_AMENDED
+
+proof_floor:
+  immutable_requires:
+    - exact official file bytes
+    - observed MIME/type and signature check
+    - byte length
+    - computed SHA-256
+    - immutable artifact plus manifest
+  official_index_metadata_can_replace_exact_bytes: false
+  secondary_copy_can_promote_primary: false
+
+applicability_guards:
+  - no universal PDN licence duty from Order 164
+  - no developer/producer licensing procedures copied into PP1119/FSTEC21 operator controls
+  - keep TZI licensing under Order 163 separate from SZI development/production licensing under Order 164
+  - keep certification and FSB/SKZI licensing branches separate unless an explicit applicability edge is proven
+  - KII/NCCCI/GosSOPKA remains incident-only where independent PDN applicability is proven
+
+post_run_effective_counters_before_reconciliation:
+  identified: 53
+  metadata_verified: 53
+  immutable_sha256_verified: 21
+  pending_raw_capture: 32
+  exact_official_route_unresolved: 8
+  confirmed_conflicts: 0
+
+next_priority:
+  - PP1119 exact Government DOC bytes
+  - FSB378 primary official bytes
+  - FSB66/173 and FAPSI152 primary bytes
+  - exact primary route and bytes for FSTEC205-2025
+  - resolve/capture remaining FSTEC methodical attachments
+  - capture FSTEC164 official publication PDF and create manifest
+  - continue primary-enactment watch for final replacement of FSTEC21
