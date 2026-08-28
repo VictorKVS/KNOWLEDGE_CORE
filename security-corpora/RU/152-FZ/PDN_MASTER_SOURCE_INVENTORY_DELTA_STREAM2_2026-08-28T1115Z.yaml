@@ -1,0 +1,40 @@
+schema_version: "1.0"
+id: SEC-PDN-MASTER-SOURCE-INVENTORY-DELTA-STREAM2-2026-08-28T1115Z
+applies_to: PDN_MASTER_SOURCE_INVENTORY.yaml
+stream: RU_PDN_TECHNICAL_CRYPTO
+created_at: "2026-08-28T11:15:00Z"
+merge_policy: >-
+  ADDITIVE_SECURITY_STACK_OVERLAY. Apply only to the linked technical/cryptographic security-stack counters and
+  latest Stream-2 run pointer. Preserve all non-Stream-2 master sources, counters and freshness alerts.
+
+security_stack_patch:
+  checked_at: "2026-08-28"
+  identified: 50
+  metadata_verified: 50
+  immutable_sha256_verified: 21
+  pending_raw_capture: 29
+  exact_official_route_unresolved: 9
+  confirmed_conflicts: 0
+  latest_status_review_at: "2026-08-28T11:15:00Z"
+  latest_stream2_run: "security-stack/runs/STREAM2_RUN_2026-08-28T1115Z.yaml"
+  new_source:
+    id: SEC-SRC-RU-FSTEC-INFO-240-24-5405-2025
+    status: METADATA_VERIFIED
+    raw_capture: PENDING
+    route: UNRESOLVED_OFFICIAL_FSTEC_ROUTE
+    applicability: SECURE_SOFTWARE_DEVELOPMENT_PROCESS_CERTIFICATION_ONLY
+
+counter_basis: >-
+  The accepted security-stack baseline was 49/49/21/28/8. One newly registered METADATA_VERIFIED source has
+  no immutable bytes and no exact official route, so identified and metadata become 50, pending becomes 29,
+  unresolved route becomes 9, and immutable remains 21. The normal acquisition/reconciliation workflow may
+  subsequently reduce pending/unresolved only when proof-floor-compliant evidence is captured.
+
+applicability_guard: >-
+  Do not propagate secure-development certification requirements into the generic ISPDn operator baseline.
+  FSTEC 240/2023, 230/2025 and notice 240/24/5405 remain product/certification context unless an explicit
+  applicability edge is proved for a concrete protected system or protection product.
+
+proof_rule: >-
+  No source becomes immutable or extraction-ready without exact official bytes, MIME/signature verification,
+  byte length, computed SHA-256, immutable artifact and manifest.
