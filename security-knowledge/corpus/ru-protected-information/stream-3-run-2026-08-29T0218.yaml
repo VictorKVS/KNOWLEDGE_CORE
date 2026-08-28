@@ -1,0 +1,104 @@
+schema_version: "1.0"
+stream: 3
+run_at: "2026-08-29T02:18:00+03:00"
+focus: "insurance / Law 4015-I / AIS insurance / PDN / protected information / retention / biometrics / statutory transfer boundaries"
+
+result:
+  new_source: SEC-SRC-RU-LAW-4015I-1992
+  source_added: true
+  dedupe_checked: true
+  primary_ais_amendment_text_verified: true
+  current_consolidated_text_crosschecked: true
+  exact_binary_obtained: false
+  immutable_created: false
+  applicability_promoted: false
+  legal_conflict_declared: false
+
+primary_evidence:
+  - publisher: "Российская газета"
+    act: "Федеральный закон от 29.12.2022 № 594-ФЗ"
+    url: "https://rg.ru/documents/2023/01/09/document-strakhovanie.html"
+    proves:
+      - "введение главы IV.2 Закона 4015-I"
+      - "статья 33.10: конфиденциальность, обработка ПДн, 10-летнее хранение, инфраструктура в РФ, защита информации и ПДн"
+      - "статья 33.11: состав данных, качество и специальная граница тайны страхования/служебной/налоговой/коммерческой тайны при законном представлении в АИС"
+      - "статья 33.12: узкое правило об отсутствии отдельного согласия, права лица на доступ и access-trace, обезличенная аналитическая выдача"
+  - publisher: "Российская газета / Официальный интернет-портал правовой информации"
+    act: "Федеральный закон от 28.12.2024 № 521-ФЗ"
+    url: "https://rg.ru/documents/2025/01/09/fz521-doc.html"
+    publication_locator: "0001202412280023"
+    proves:
+      - "изменение пункта 9 статьи 33.10 по государственной биометрической системе"
+  - publisher: "Российская газета / Банк документов Президента РФ"
+    act: "Федеральный закон от 10.06.2026 № 172-ФЗ"
+    url: "https://rg.ru/documents/2026/06/16/fz172-dok.html"
+    proves:
+      - "последнее выявленное source-level изменение Закона 4015-I"
+      - "первичный текст 172-ФЗ не изменяет статьи 33.10-33.15"
+
+currentness:
+  consolidated_revision_crosscheck: "2026-06-10"
+  locator_chain_status: PARTIAL
+  caveat: "Current consolidated text was crosschecked, but no exact official current consolidated binary was captured; full historical locator-specific version-chain is not claimed."
+
+binary_acquisition:
+  attempted: true
+  targets:
+    - "https://rg.ru/documents/2023/01/09/document-strakhovanie.html"
+    - "https://rg.ru/documents/2025/01/09/fz521-doc.html"
+  transport_result: "curl exit 6 / Could not resolve host: rg.ru"
+  retry_class: TRANSIENT
+  current_consolidated_primary_binary: NOT_LOCATED_IN_THIS_PASS
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+  displayed_size_used_as_exact_bytes: false
+
+counters_before:
+  found: 58
+  downloaded: 9
+  immutable: 9
+  pending: 47
+  reused: 2
+  primary_publication_verified: 29
+  sectors_registered: 31
+
+counters_after:
+  found: 59
+  downloaded: 9
+  immutable: 9
+  pending: 48
+  reused: 2
+  primary_publication_verified: 29
+  sectors_registered: 31
+
+files_written:
+  - "security-corpora/RU/protected-information/source/SEC-SRC-RU-LAW-4015I-1992.yaml"
+  - "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-LAW-4015I-1992-capture-pending.json"
+  - "security-knowledge/corpus/ru-protected-information/law-4015i-1992-insurance-ais-source-card.yaml"
+  - "security-knowledge/corpus/ru-protected-information/master-inventory-delta-2026-08-29T0218.yaml"
+  - "security-knowledge/corpus/ru-personal-data/master-source-inventory-delta-stream3-2026-08-29T0218.yaml"
+  - "security-knowledge/corpus/ru-protected-information/stream-3-run-2026-08-29T0218.yaml"
+
+next_priority:
+  - "Retry exact-byte capture for official 594-FZ/521-FZ evidence and locate an authoritative complete current 4015-I artifact; promote only after durable storage and SHA-256."
+  - "Continue AIS insurance subordinate layer: CBR Direction 6863-U operational audit and other current acts under articles 33.10-33.14, deduped against 822-P and existing financial security sources."
+  - "Return to high-priority pending exact captures across health, banking/insurance/credit histories, telecom, education/children, public sector, biometrics, transport, advertising and archives."
+
+production_statistics:
+  throughput_this_pass:
+    new_sources: 1
+    new_sectors: 0
+    canonical_source_cards_written: 1
+    corpus_source_cards_written: 1
+    manifests_written: 1
+    inventory_deltas_written: 2
+    run_logs_written: 1
+    relationship_edges_added: 6
+    applicability_promotions: 0
+  speed_vs_single_stream_percent: null
+  rework_share_percent: null
+  eta: null
+  reason_for_null_metrics: "No comparable elapsed-time baseline/telemetry for a valid calculation; values were not fabricated."
