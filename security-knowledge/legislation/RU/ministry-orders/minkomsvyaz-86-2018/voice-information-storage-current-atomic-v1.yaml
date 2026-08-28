@@ -1,0 +1,278 @@
+schema_version: "1.0"
+id: RU-MINKOMSVYAZ-86-2018-VOICE-STORAGE-CURRENT-ATOMIC-V1
+title: "Приказ Минкомсвязи № 86: ТС накопления голосовой информации, текущая редакция"
+checked_at: "2026-08-28"
+status: VERIFIED_CURRENT_OPEN_CORE_ORDER47_AND_ORDER1196_DELTAS_APPLIED_DEEP_PROTOCOL_TABLES_PENDING
+scope: >-
+  Действующее публичное ядро требований к оборудованию систем коммутации,
+  программному обеспечению и техническим средствам накопления голосовой
+  информации. Дельты приказов № 47 и № 1196 применены по датам; удаленные
+  пункт 5.7 и подпункт 2.9 не выдаются за текущие требования. Глубокие поля,
+  коды, диаграммы и битовые таблицы приложения № 3 остаются отдельной
+  fail-closed границей до проверки неизменяемых страниц.
+
+sources:
+  act: "Приказ Минкомсвязи России от 26.02.2018 № 86"
+  registration: "Минюст России, 28.03.2018 № 50536"
+  official_publication_date: "2018-03-29"
+  effective_from: "2018-04-09"
+  current_revision_date: "2025-12-18"
+  order47:
+    act: "Приказ Минцифры России от 26.01.2023 № 47"
+    registration: "Минюст России, 02.06.2023 № 73715"
+    official_publication_date: "2023-06-02"
+    effective_from: "2023-09-01"
+  order1196:
+    act: "Приказ Минцифры России от 18.12.2025 № 1196"
+    registration: "Минюст России, 03.03.2026 № 85531"
+    official_publication_date: "2026-03-04"
+    effective_from: "2026-03-15"
+  validity_until_exclusive: "2029-09-01"
+  official_original_publication: "https://publication.pravo.gov.ru/document/0001201803290001"
+  current_index: "https://www.consultant.ru/document/cons_doc_LAW_294567/"
+  ministry_card: "https://digital.gov.ru/documents/prikaz-minkomsvyazi-rossii-ob-utverzhdenii-pravil-primeneniya-oborudovaniya-sistem-kommutaczii-vklyuchaya-programmnoe-obespechenie-obespechivayushhego-vypolnenie-ustanovlennyh-dejstvij-pri-pro-3"
+  current_open_text: "https://sudact.ru/law/prikaz-minkomsviazi-rossii-ot-26022018-n-86/"
+  order47_official_publication: "https://publication.pravo.gov.ru/document/0001202306020022"
+  order47_text: "https://www.garant.ru/products/ipo/prime/doc/406877588/"
+  order1196_official_publication: "https://publication.pravo.gov.ru/document/0001202603040008"
+  order1196_text: "https://www.garant.ru/products/ipo/prime/doc/413698280/"
+  pp1656_current_text: "https://normativ.kontur.ru/document?documentId=473034&moduleId=1"
+
+dependencies:
+  federal_law: "126-ФЗ, статьи 41 и 64"
+  pp445_retention_duration:
+    model: security-knowledge/legislation/RU/government-decrees/445/article64-content-retention-atomic-v1.yaml
+    relation: DEFINES_RETENTION_DURATION_AND_CAPACITY_ROUTE_NOT_DEFINED_BY_ORDER86
+  pp538_point4_and6:
+    model: security-knowledge/legislation/RU/government-decrees/538-2005/sorm-interaction-commissioning-atomic-v1.yaml
+    relation: TECHNICAL_REQUIREMENTS_AND_COMMISSIONING_CONTEXT
+  order573_is_bd_orm: PENDING_SEPARATE_ATOMIC_MODEL
+
+temporal_model:
+  - {id: PRE_ORDER86, until_exclusive: "2018-04-09", status: OUT_OF_SCOPE_PREDECESSOR_ROUTE}
+  - {id: ORDER86_ORIGINAL, from: "2018-04-09", until_exclusive: "2023-09-01", status: HISTORICAL}
+  - {id: ORDER86_ORDER47, from: "2023-09-01", until_exclusive: "2026-03-15", status: HISTORICAL}
+  - {id: ORDER86_ORDER47_ORDER1196, from: "2026-03-15", until_exclusive: "2029-09-01", status: CURRENT_AS_OF_2026_08_28}
+  - {id: ORDER86_EXPIRED, from: "2029-09-01", status: FUTURE_EXPIRY_ROUTE}
+
+applicability:
+  equipment_location: TERMINAL_TRANSIT_AND_TERMINAL_TRANSIT_NODES
+  current_license_services:
+    - LOCAL_TELEPHONE
+    - INTERNATIONAL_INTERCITY_TELEPHONE
+    - TELEPHONE_IN_DEDICATED_NETWORK
+    - INTRAZONE_TELEPHONE
+    - MOBILE_RADIO_PUBLIC_NETWORK
+    - MOBILE_RADIO_DEDICATED_NETWORK
+    - MOBILE_RADIOTELEPHONE_INCLUDING_MVNO
+    - MOBILE_SATELLITE
+  repealed_license_service_from_2026_03_15: DATA_TRANSMISSION_FOR_VOICE
+  additional_information_service_over_voice_data_network_point4: TEXT_REMAINS_CURRENT
+  appendix2_row9_voice_data: TEXT_REMAINS_BUT_DOES_NOT_RESTORE_REPEALED_POINT2_9
+  scope_tension_rule: KEEP_POINT4_AND_APPENDIX2_ROW9_TENSION_FAIL_CLOSED
+  embedded_product_confirmation_references: STALE_PP532_AND_PP214_REQUIRE_CURRENT_CROSSWALK
+
+common_requirements:
+  interface_from_appendix1_minimum: 1
+  passive_collection_no_network_transmission: true
+  accumulated_content: [STATISTICS, TEXT_MESSAGES, VOICE_AND_SOUNDS, VIDEO_CALLS]
+  distributed_node:
+    every_responsibility_area_covered: true
+    independent_control_point_interface: true
+    head_control_points: 1
+    other_control_points: ADDITIONAL
+    is_bd_orm_connects_as_additional_control_point: true
+    control_points_max: 100
+    territory_and_control_point_isolation_required: true
+  continuous_remote_access_from: [CONTROL_POINT, IS_BD_ORM]
+  point5_7_current_status: REPEALED_FROM_2023_09_01
+  connection_metadata:
+    fields: [START_DATE, START_TIME, DURATION]
+    precision_seconds: true
+    failed_connection_duration_seconds: 0
+    clock: UTC_SYNCHRONIZED
+  content_access_max_seconds_after_connection_end: 10
+  simultaneous_processing_required: true
+  self_monitoring_and_state_reporting_required: true
+  control_interface:
+    redundant_physical_ethernet_per_control_point: 1
+    network_and_transport_channels_separate: true
+  query_content_types: [STATISTICS, TEXT, VOICE_AND_VIDEO]
+  statistics_always_unloaded_except_exact_connection_id_query: true
+  multiple_filters_allowed: true
+  filter_logic: LOGICAL_AND
+  wildcards: {star: ANY_SEQUENCE_INCLUDING_EMPTY, question_mark: EXACTLY_ONE_CHARACTER}
+  encodings:
+    voice: [A_LAW_STEREO, ORIGINAL_WITH_CODING_METHOD]
+    hd_voice: [PCM_16_BIT_STEREO_16_KHZ, ORIGINAL_WITH_CODING_METHOD]
+    video: [H223_H245_G723_1_OR_AMR_H264, ORIGINAL_WITH_CODING_METHOD]
+  telephone_number_format: E164
+  locked_enclosures_required: true
+  working_interfaces_only: [PASSIVE_NETWORK_INTERFACES, CONTROL_POINT_INTERFACES]
+  l2tp_ipsec_vpn: RECOMMENDED_NOT_ABSOLUTE_MANDATE
+  retention_clock_starts_at: CONNECTION_END_OR_MESSAGE_TRANSFER_END
+  retention_duration: EXTERNAL_PP445_NOT_DEFINED_HERE
+  query_transfer_total_rate_max_percent_of_control_channel: 70
+
+channel_capacity_tables:
+  mobile_and_historical_voice_data_table1:
+    subscriber_base_thousands_to_min_mbps:
+      - {up_to: 10, min_mbps: 4}
+      - {up_to: 100, min_mbps: 10}
+      - {up_to: 1000, min_mbps: 100}
+      - {up_to: 10000, min_mbps: 300}
+      - {above: 10000, min_mbps: 500}
+  fixed_table2:
+    boundary_at_100_thousand: TEXTUAL_OVERLAP_FAIL_CLOSED
+    subscriber_base_thousands_to_min_mbps:
+      - {up_to: 10, min_mbps: 4}
+      - {up_to: 100, min_mbps: 10}
+      - {from: 100, min_mbps: 100}
+
+fixed_network_requirements:
+  stored_content: [ALL_TEXT_MESSAGES, ALL_VOICE_INFORMATION, ALL_VIDEO_CALLS]
+  party_identifiers_required: true
+  dpc_opc_when_transmitted_required: true
+  simultaneous_statistical_queries_min: 100
+  timed_query_ceiling: 100
+  table3:
+    user_identifier_seconds: {up_to_1_day: 3, up_to_1_month: 5, up_to_6_months: 15}
+    dpc_opc_minutes: 7
+    absent_identifiers_may_take_longer: true
+  result_transfer_start_max_seconds_per_requested_day: 2
+  matching_content_transfer_start_max_seconds: 10
+
+mobile_network_requirements:
+  received_content: [SIGNALLING, TEXT, VOICE, VIDEO]
+  stored_content: [ALL_TEXT_MESSAGES, ALL_VOICE_INFORMATION]
+  mobile_video_storage_not_stated_in_point18_2: true
+  party_identifiers: [MSISDN_OR_ANALOG, IMSI_OR_ANALOG, IMEI_OR_ANALOG, EXTERNAL_PHONE_NUMBER]
+  location:
+    mobile: BASE_STATION_SECTOR_OR_GEOGRAPHIC_COORDINATES
+    satellite: GEOGRAPHIC_COORDINATES_IF_TECHNICALLY_POSSIBLE
+  simultaneous_statistical_queries_min: 100
+  timed_query_ceiling: 100
+  table4:
+    msisdn_imsi_imei_seconds: {up_to_1_day: 3, up_to_1_month: 5, up_to_6_months: 15}
+    base_station_minutes: 7
+    absent_identifiers_may_take_longer: true
+  result_transfer_start_max_seconds_per_requested_day: 2
+  matching_content_transfer_start_max_seconds: 10
+  continuity_during_base_station_handover_required: true
+
+appendices_open_core:
+  appendix1:
+    interface_families: 5
+    interface_entries: 25
+  appendix2:
+    service_rows: 9
+    all_available_network_information_to_consolidation_points: true
+    row9_does_not_restore_repealed_point2_9: true
+  appendix3:
+    protocol_families: [CONTROL, DATA_TRANSFER]
+    order47_deep_delta_present: true
+    deep_field_code_bit_and_state_tables: PENDING_IMMUTABLE_PAGE_REVIEW
+
+atomic_rules:
+  - {id: MK86-R001, locator: "временной маршрут", rule: APPLY_ORIGINAL_FROM_2018_04_09}
+  - {id: MK86-R002, locator: "приказ № 47", rule: APPLY_ORDER47_FROM_2023_09_01}
+  - {id: MK86-R003, locator: "приказ № 1196", rule: APPLY_ORDER1196_FROM_2026_03_15}
+  - {id: MK86-R004, locator: "пункт 1(1)", rule: STOP_CURRENT_ROUTE_AT_2029_09_01}
+  - {id: MK86-R005, locator: "пункты 1–2", rule: APPLY_TO_ENUMERATED_NODE_TYPES_AND_EIGHT_CURRENT_LICENSE_SERVICES}
+  - {id: MK86-R006, locator: "бывший подпункт 2.9", rule: NEVER_APPLY_VOICE_DATA_LICENSE_ROUTE_AFTER_2026_03_15}
+  - {id: MK86-R007, locator: "пункт 4 и приложение 2 строка 9", rule: KEEP_REMAINING_VOICE_DATA_TEXT_TENSION_FAIL_CLOSED}
+  - {id: MK86-R008, locator: "пункт 3", rule: REQUIRE_CURRENT_PRODUCT_CONFIRMATION_CROSSWALK_BEFORE_USE}
+  - {id: MK86-R009, locator: "пункт 5.1", rule: REQUIRE_AT_LEAST_ONE_APPENDIX1_INTERFACE}
+  - {id: MK86-R010, locator: "пункт 5.2", rule: REQUIRE_PASSIVE_COLLECTION_WITHOUT_TRANSMISSION_TO_NETWORK}
+  - {id: MK86-R011, locator: "пункт 5.3", rule: ACCUMULATE_FOUR_ENUMERATED_CONTENT_FAMILIES}
+  - {id: MK86-R012, locator: "пункт 5.4", rule: COVER_EVERY_DISTRIBUTED_NODE_RESPONSIBILITY_AREA}
+  - {id: MK86-R013, locator: "пункт 5.4", rule: REQUIRE_INDEPENDENT_CONTROL_POINT_INTERFACE_PER_TECHNICAL_MEANS}
+  - {id: MK86-R014, locator: "пункт 5.4", rule: REQUIRE_EXACTLY_ONE_HEAD_CONTROL_POINT}
+  - {id: MK86-R015, locator: "пункт 5.4", rule: TREAT_IS_BD_ORM_AS_ADDITIONAL_CONTROL_POINT}
+  - {id: MK86-R016, locator: "пункт 5.4", rule: LIMIT_CONTROL_POINTS_TO_ONE_HUNDRED}
+  - {id: MK86-R017, locator: "пункт 5.5", rule: ISOLATE_RESPONSIBILITY_TERRITORIES_AND_CONTROL_POINTS}
+  - {id: MK86-R018, locator: "пункт 5.6", rule: PROVIDE_CONTINUOUS_REMOTE_ACCESS_FROM_CONTROL_POINT_AND_IS_BD_ORM}
+  - {id: MK86-R019, locator: "бывший пункт 5.7", rule: NEVER_APPLY_REPEALED_POINT5_7_AFTER_2023_09_01}
+  - {id: MK86-R020, locator: "пункт 5.8", rule: STORE_START_DATE_TIME_AND_DURATION_TO_SECOND}
+  - {id: MK86-R021, locator: "пункт 5.8", rule: SET_FAILED_CONNECTION_DURATION_TO_ZERO}
+  - {id: MK86-R022, locator: "пункт 5.8", rule: SYNCHRONIZE_TECHNICAL_MEANS_CLOCK_TO_UTC}
+  - {id: MK86-R023, locator: "пункт 5.9", rule: PROVIDE_CONTENT_ACCESS_WITHIN_TEN_SECONDS_AFTER_CONNECTION_END}
+  - {id: MK86-R024, locator: "пункты 5.10–5.11", rule: SUPPORT_SIMULTANEOUS_PROCESSING_SELF_MONITORING_AND_STATE_REPORTING}
+  - {id: MK86-R025, locator: "пункт 6", rule: REQUIRE_ONE_REDUNDANT_PHYSICAL_ETHERNET_INTERFACE_PER_CONTROL_POINT}
+  - {id: MK86-R026, locator: "пункт 7", rule: SEPARATE_NETWORK_AND_TRANSPORT_CHANNELS}
+  - {id: MK86-R027, locator: "пункт 8", rule: ALLOW_STATISTICS_TEXT_VOICE_AND_VIDEO_QUERY_TYPES}
+  - {id: MK86-R028, locator: "пункт 8", rule: ALWAYS_UNLOAD_STATISTICS_EXCEPT_EXACT_CONNECTION_ID_QUERY}
+  - {id: MK86-R029, locator: "пункты 9–10", rule: COMBINE_MULTIPLE_FILTERS_BY_LOGICAL_AND_AND_PRESERVE_WILDCARDS}
+  - {id: MK86-R030, locator: "пункт 11", rule: PRESERVE_EXACT_VOICE_HD_VOICE_AND_VIDEO_ENCODING_ROUTES}
+  - {id: MK86-R031, locator: "пункт 12", rule: USE_E164_PHONE_NUMBER_FORMAT}
+  - {id: MK86-R032, locator: "пункт 13", rule: REQUIRE_LOCKED_ENCLOSURES}
+  - {id: MK86-R033, locator: "пункт 14", rule: LIMIT_WORKING_INTERFACES_TO_PASSIVE_NETWORK_AND_CONTROL_POINT_INTERFACES}
+  - {id: MK86-R034, locator: "пункт 14", rule: TREAT_L2TP_IPSEC_VPN_AS_RECOMMENDATION_NOT_ABSOLUTE_DUTY}
+  - {id: MK86-R035, locator: "пункт 15", rule: START_RETENTION_CLOCK_AT_CONNECTION_OR_MESSAGE_TRANSFER_END}
+  - {id: MK86-R036, locator: "пункт 15 и ПП № 445", rule: TAKE_DURATION_FROM_EXTERNAL_PP445_AND_NOT_FROM_ORDER86}
+  - {id: MK86-R037, locator: "таблица 1", rule: PRESERVE_FIVE_MOBILE_CAPACITY_BANDS}
+  - {id: MK86-R038, locator: "таблица 2", rule: PRESERVE_THREE_FIXED_CAPACITY_BANDS}
+  - {id: MK86-R039, locator: "пункт 16", rule: LIMIT_TOTAL_QUERY_TRANSFER_RATE_TO_SEVENTY_PERCENT_OF_CONTROL_CHANNEL}
+  - {id: MK86-R040, locator: "пункт 17.2", rule: STORE_ALL_FIXED_TEXT_VOICE_AND_VIDEO_CONTENT}
+  - {id: MK86-R041, locator: "пункты 17.3–17.4", rule: SUPPORT_AT_LEAST_ONE_HUNDRED_SIMULTANEOUS_FIXED_STATISTICAL_QUERIES}
+  - {id: MK86-R042, locator: "таблица 3", rule: PRESERVE_FIXED_IDENTIFIER_THRESHOLDS_THREE_FIVE_FIFTEEN_SECONDS}
+  - {id: MK86-R043, locator: "таблица 3", rule: PRESERVE_DPC_OPC_SEVEN_MINUTE_ROUTE}
+  - {id: MK86-R044, locator: "пункт 17.4.1", rule: START_FIXED_QUERY_RESULT_TRANSFER_WITHIN_TWO_SECONDS_PER_REQUESTED_DAY}
+  - {id: MK86-R045, locator: "пункт 17.5", rule: START_MATCHING_FIXED_CONTENT_TRANSFER_WITHIN_TEN_SECONDS}
+  - {id: MK86-R046, locator: "пункт 18.2", rule: STORE_ALL_MOBILE_TEXT_AND_VOICE_CONTENT}
+  - {id: MK86-R047, locator: "пункт 18.2", rule: DO_NOT_INVENT_MOBILE_VIDEO_STORAGE_DUTY_FROM_RECEIPT_ONLY_TEXT}
+  - {id: MK86-R048, locator: "пункт 18.2", rule: PRESERVE_MOBILE_IDENTIFIERS_AND_LOCATION_ROUTES}
+  - {id: MK86-R049, locator: "пункты 18.3–18.4", rule: SUPPORT_AT_LEAST_ONE_HUNDRED_SIMULTANEOUS_MOBILE_STATISTICAL_QUERIES}
+  - {id: MK86-R050, locator: "таблица 4", rule: PRESERVE_MSISDN_IMSI_IMEI_THRESHOLDS_THREE_FIVE_FIFTEEN_SECONDS}
+  - {id: MK86-R051, locator: "таблица 4", rule: PRESERVE_BASE_STATION_SEVEN_MINUTE_ROUTE}
+  - {id: MK86-R052, locator: "пункты 18.4.1–18.5", rule: PRESERVE_TWO_SECONDS_PER_DAY_AND_TEN_SECOND_MOBILE_TRANSFER_START_ROUTES}
+  - {id: MK86-R053, locator: "приложения 1–2", rule: PRESERVE_FIVE_INTERFACE_FAMILIES_TWENTY_FIVE_ENTRIES_AND_NINE_SERVICE_ROWS}
+  - {id: MK86-R054, locator: "приложение 3", rule: REQUIRE_IMMUTABLE_PAGE_REVIEW_FOR_DEEP_FIELDS_CODES_BITS_AND_STATE_TABLES, strength: FAIL_CLOSED}
+
+evidence_model:
+  - {id: E86-01, proves: [MK86-R001, MK86-R002, MK86-R003, MK86-R004], artifacts: [TEMPORAL_REVISION_ROUTE]}
+  - {id: E86-02, proves: [MK86-R005, MK86-R006, MK86-R007], artifacts: [CURRENT_SCOPE_AND_REPEAL_DELTA]}
+  - {id: E86-03, proves: [MK86-R008], artifacts: [PRODUCT_LIFECYCLE_PENDING_CROSSWALK]}
+  - {id: E86-04, proves: [MK86-R009, MK86-R010, MK86-R011], artifacts: [INTERFACE_PASSIVE_AND_CONTENT_TESTS]}
+  - {id: E86-05, proves: [MK86-R012, MK86-R013, MK86-R014, MK86-R015, MK86-R016], artifacts: [DISTRIBUTED_NODE_CONTROL_POINT_MAP]}
+  - {id: E86-06, proves: [MK86-R017, MK86-R018, MK86-R019], artifacts: [ISOLATION_ACCESS_AND_DELETION_DELTA]}
+  - {id: E86-07, proves: [MK86-R020, MK86-R021, MK86-R022], artifacts: [CONNECTION_TIME_FIELDS_AND_UTC]}
+  - {id: E86-08, proves: [MK86-R023, MK86-R024], artifacts: [ACCESS_MONITORING_AND_SIMULTANEITY_TESTS]}
+  - {id: E86-09, proves: [MK86-R025, MK86-R026], artifacts: [REDUNDANT_INTERFACE_AND_CHANNEL_SPLIT]}
+  - {id: E86-10, proves: [MK86-R027, MK86-R028, MK86-R029], artifacts: [QUERY_FILTER_AND_WILDCARD_TESTS]}
+  - {id: E86-11, proves: [MK86-R030, MK86-R031], artifacts: [ENCODING_AND_E164_TESTS]}
+  - {id: E86-12, proves: [MK86-R032, MK86-R033, MK86-R034], artifacts: [ENCLOSURE_INTERFACE_AND_RECOMMENDATION_GUARDS]}
+  - {id: E86-13, proves: [MK86-R035, MK86-R036], artifacts: [RETENTION_CLOCK_AND_EXTERNAL_DURATION_ROUTE]}
+  - {id: E86-14, proves: [MK86-R037, MK86-R038, MK86-R039], artifacts: [CAPACITY_TABLES_AND_SEVENTY_PERCENT_CEILING]}
+  - {id: E86-15, proves: [MK86-R040, MK86-R041], artifacts: [FIXED_CONTENT_AND_QUERY_CAPACITY]}
+  - {id: E86-16, proves: [MK86-R042, MK86-R043, MK86-R044, MK86-R045], artifacts: [FIXED_QUERY_TIMING_TABLE]}
+  - {id: E86-17, proves: [MK86-R046, MK86-R047, MK86-R048], artifacts: [MOBILE_CONTENT_IDENTIFIER_AND_LOCATION_MAP]}
+  - {id: E86-18, proves: [MK86-R049, MK86-R050, MK86-R051, MK86-R052], artifacts: [MOBILE_QUERY_TIMING_TABLE]}
+  - {id: E86-19, proves: [MK86-R053], artifacts: [APPENDIX1_AND2_TOPOLOGY]}
+  - {id: E86-20, proves: [MK86-R054], artifacts: [DEEP_PROTOCOL_PENDING_REGISTER]}
+
+red_team_guardrails:
+  - DO_NOT_APPLY_REPEALED_POINT5_7_AFTER_2023_09_01
+  - DO_NOT_APPLY_REPEALED_POINT2_9_AFTER_2026_03_15
+  - DO_NOT_USE_APPENDIX2_ROW9_TO_RESTORE_REPEALED_LICENSE_SCOPE
+  - DO_NOT_INVENT_RETENTION_DURATION_FROM_ORDER86
+  - DO_NOT_TREAT_VPN_RECOMMENDATION_AS_ABSOLUTE_REQUIREMENT
+  - DO_NOT_INVENT_MOBILE_VIDEO_STORAGE_DUTY_FROM_RECEIPT_ONLY_RULE
+  - DO_NOT_GUARANTEE_TABLE_TIMES_ABOVE_ONE_HUNDRED_SIMULTANEOUS_QUERIES
+  - DO_NOT_INVENT_RESOLUTION_OF_FIXED_TABLE2_EXACT_100_THOUSAND_BOUNDARY
+  - DO_NOT_CLAIM_CURRENT_PRODUCT_CONFIRMATION_FROM_STALE_PP532_PP214_REFERENCES
+  - DO_NOT_CLAIM_DEEP_PROTOCOL_TABLES_WITHOUT_IMMUTABLE_PAGE_REVIEW
+
+verification_boundary:
+  current_revision_identity_and_temporal_route: VERIFIED_AS_OF_2026_08_28
+  points1_to21_and_tables1_to4_open_core: VERIFIED_CURRENT_TEXT
+  order47_top_level_delta: VERIFIED
+  order1196_point2_9_repeal: VERIFIED
+  pp1656_current_listing: VERIFIED
+  appendix1_and2_open_core: VERIFIED_CURRENT_TEXT
+  appendix3_deep_protocol_tables: PENDING_IMMUTABLE_PAGE_REVIEW
+  current_consolidated_official_immutable_bytes: PENDING
+  current_product_confirmation_lifecycle_crosswalk: PENDING_SEPARATE_REVIEW
+  independent_expert_review: PENDING
+  critical_gap_created: false
+  high_gap_created: false
