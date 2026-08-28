@@ -1,0 +1,120 @@
+schema_version: "1.0"
+stream: 3
+run_id: "stream-3-run-2026-08-28T1122"
+started_at: "2026-08-28T11:22:54+03:00"
+completed_at: "2026-08-28T11:22:54+03:00"
+focus: "biometrics / PP 408 / 572-FZ biometric data types / 152-FZ boundary"
+mode: DISCOVERY_PRIMARY_VERIFICATION_VERSION_REVIEW_EXACT_CAPTURE_ATTEMPT_APPEND_ONLY_RECONCILIATION
+repository: "VictorKVS/KNOWLEDGE_CORE"
+branch: main
+
+baseline:
+  previous_ru_protected_information_delta: "master-inventory-delta-2026-08-28T0518.yaml"
+  counters:
+    found: 53
+    downloaded: 9
+    immutable: 9
+    pending: 42
+    reused: 2
+    primary_publication_verified: 24
+    sectors_registered: 28
+
+result:
+  new_source:
+    source_id: SEC-SRC-RU-PP-408-2024
+    title: "Постановление Правительства РФ от 01.04.2024 № 408"
+    authority: "Правительство Российской Федерации"
+    sector: biometrics_digital_identity
+    regime: 572fz_biometric_personal_data_scope
+    current_as_of: "2026-08-28"
+    status: CURRENT_PRIMARY_ORIGINAL_VERIFIED_CURRENT_STATUS_CROSSCHECKED_EXACT_BINARY_PENDING
+  deduplication:
+    duplicate_found: false
+    existing_related_source: SEC-SRC-RU-FZ-572-2022
+    decision: "Register PP 408 separately as an implementing act under Article 26 of 572-FZ; do not duplicate the federal-law source node."
+
+primary_evidence:
+  - authority: "Официальный интернет-портал правовой информации"
+    url: "https://publication.pravo.gov.ru/document/0001202404050032"
+    facts:
+      - "Постановление Правительства РФ от 01.04.2024 № 408"
+      - "publication ID 0001202404050032"
+      - "official publication date 05.04.2024"
+  - authority: "Официальный интернет-портал правовой информации"
+    locator: "Новые поступления законодательства РФ, 01.04.2024-07.04.2024"
+    finding: "Official summary states that the 572-FZ biometric-data types are a human face image obtained with photo/video devices and a human voice recording obtained with audio-recording devices."
+
+verified_anchors:
+  - locator: "пункт 1"
+    finding: "Face image from photo/video devices is included in the biometric personal data types governed by 572-FZ."
+    guard: "Every photo is not automatically classified under this regime without statutory-scope analysis."
+  - locator: "пункт 1"
+    finding: "Voice recording from audio-recording devices is included in the biometric personal data types governed by 572-FZ."
+    guard: "Every audio recording is not automatically classified under this regime without statutory-scope analysis."
+  - locator: "пункт 2"
+    finding: "Current-status crosscheck: effective from 01.09.2024 through 01.09.2027."
+    evidence_role: SECONDARY_CURRENT_STATUS_CROSSCHECK
+
+version_chain:
+  primary_original_verified: true
+  amendments_identified_in_this_sweep: 0
+  current_status_crosschecked: true
+  complete_primary_version_chain_proved: false
+  guard: "No amendment found in this sweep is not treated as proof of a complete primary historical chain."
+
+relationships_added:
+  - from: SEC-SRC-RU-PP-408-2024
+    to: SEC-SRC-RU-FZ-572-2022
+    type: DIRECT_IMPLEMENTING_ACT_DEFINING_BIOMETRIC_PDN_TYPES
+    status: DIRECT_STATUTORY_CONTEXT
+  - from: SEC-SRC-RU-PP-408-2024
+    to: "152-ФЗ:article_11"
+    type: BIOMETRIC_PDN_SCOPE_OVERLAP
+    status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  - from: SEC-SRC-RU-PP-408-2024
+    to: SEC-SRC-RU-CBR-821P-2023
+    type: FUTURE_PAYMENT_BIOMETRIC_SCOPE_CONTEXT_FROM_7220U
+    status: FUTURE_NOT_CURRENT_UNTIL_2026_10_01
+
+acquisition:
+  exact_capture_attempted: true
+  exact_capture_succeeded: false
+  target: "https://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202404050032"
+  binary_runtime_result: "NameResolutionError / Temporary failure in name resolution"
+  transient_failure: true
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+  displayed_sizes_used_as_exact_bytes: false
+
+counters_after:
+  found: 54
+  downloaded: 9
+  immutable: 9
+  pending: 43
+  reused: 2
+  primary_publication_verified: 25
+  sectors_registered: 28
+
+quality_gates:
+  taxonomy_as_evidence: false
+  primary_act_required: true
+  duplicate_created: false
+  applicability_promoted: false
+  legal_conflict_declared: false
+  fabricated_binary_metadata: false
+  executable_effect: NONE
+
+artifacts_written:
+  - "security-knowledge/corpus/ru-protected-information/pp-408-2024-source-card.yaml"
+  - "security-knowledge/corpus/ru-protected-information/pp-408-2024-capture-pending.json"
+  - "security-knowledge/corpus/ru-protected-information/master-inventory-delta-2026-08-28T1122.yaml"
+  - "security-knowledge/corpus/ru-personal-data/master-source-inventory-delta-stream3-2026-08-28T1122.yaml"
+  - "security-knowledge/corpus/ru-protected-information/stream-3-run-2026-08-28T1122.yaml"
+
+next_priority:
+  - "Retry PP 408 byte-exact official PDF acquisition after official portal DNS recovery."
+  - "Continue biometric implementing-layer discovery with deduplication against 572-FZ and banking/payment sources."
+  - "Re-verify future CBR 7220-U only on/after 01.10.2026 before promotion to current requirements."
