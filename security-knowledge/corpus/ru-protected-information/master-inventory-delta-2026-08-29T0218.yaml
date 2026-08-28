@@ -1,0 +1,91 @@
+schema_version: "1.0"
+stream: 3
+checked_at: "2026-08-29T02:18:00+03:00"
+mode: APPEND_ONLY_RU_PROTECTED_INFORMATION_RECONCILIATION
+previous_stream3_delta: "master-inventory-delta-2026-08-28T2321.yaml"
+focus: "insurance / Law 4015-I / AIS insurance statutory data layer / PDN / retention / confidentiality / biometrics / secret-transfer boundaries"
+
+counters_before:
+  found: 58
+  downloaded: 9
+  immutable: 9
+  pending: 47
+  reused: 2
+  primary_publication_verified: 29
+  sectors_registered: 31
+
+counters_after:
+  found: 59
+  downloaded: 9
+  immutable: 9
+  pending: 48
+  reused: 2
+  primary_publication_verified: 29
+  sectors_registered: 31
+
+source_added:
+  source_id: SEC-SRC-RU-LAW-4015I-1992
+  title: "Закон РФ от 27.11.1992 № 4015-I «Об организации страхового дела в Российской Федерации»"
+  sector: insurance
+  regime: insurance_ais_statutory_data_confidentiality_pdn_security_retention_access
+  dedupe_result: NEW_CANONICAL_SOURCE_NODE
+  exact_capture: PENDING
+  applicability_status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  executable_effect: NONE
+
+key_findings:
+  - locator: "статья 33.10 п. 5(3), п. 6"
+    finding: "Прямая обязанность оператора обеспечивать защиту/конфиденциальность и прямой контекст обработки ПДн."
+  - locator: "статья 33.10 п. 7(1)"
+    finding: "Информация АИС хранится 10 лет после прекращения договора, если более длительный срок не установлен страховым законодательством."
+    guard: "TEN_YEAR_AIS_RETENTION != GENERAL_PDN_RETENTION"
+  - locator: "статья 33.10 п. 7(3)-(6)"
+    finding: "Основной/резервный ПАС в РФ; сохранность, резервирование, защита информации и ПДн от угроз."
+  - locator: "статья 33.10 п. 9"
+    finding: "Сценарий идентификации с ЕСИА/государственной биометрической системой."
+    guard: "BIOMETRIC_OPTION != UNIVERSAL_BIOMETRIC_APPLICABILITY"
+  - locator: "статья 33.11 п. 6"
+    finding: "Законное представление данных в АИС не является нарушением тайны страхования, служебной, налоговой или коммерческой тайны."
+    guard: "AUTHORIZED_AIS_TRANSFER != ABOLITION_OF_SECRET_REGIMES"
+  - locator: "статья 33.12 п. 3"
+    finding: "Узкое специальное правило об отсутствии отдельного согласия на обработку ПДн в прямо описанных договорных сценариях."
+    guard: "NARROW_NO_SEPARATE_CONSENT_RULE != BLANKET_NO_CONSENT"
+
+relationships_added:
+  - "SEC-SRC-RU-LAW-4015I-1992 -> 152-ФЗ: DIRECT_STATUTORY_PDN_PROCESSING_SECURITY_AND_NARROW_CONSENT_CONTEXT / candidate applicability"
+  - "SEC-SRC-RU-LAW-4015I-1992 -> SEC-SRC-RU-CBR-822P-2023: parent statute to subordinate AIS security requirements"
+  - "SEC-SRC-RU-LAW-4015I-1992 -> 572-ФЗ: biometric identification scenario candidate"
+  - "SEC-SRC-RU-LAW-4015I-1992 -> SEC-SRC-RU-GK2-1996-A946: insurance secrecy overlap/transfer boundary"
+  - "SEC-SRC-RU-LAW-4015I-1992 -> SEC-SRC-RU-NK1-1998-A102: tax-secret transfer boundary"
+  - "SEC-SRC-RU-LAW-4015I-1992 -> SEC-SRC-RU-FZ-98-2004: commercial-secret transfer boundary"
+
+version_chain:
+  status: PARTIAL
+  verified_events:
+    - "594-ФЗ от 29.12.2022: первичный официальный текст подтверждает введение главы IV.2 статей 33.10-33.15."
+    - "521-ФЗ от 28.12.2024: первичный текст меняет п. 9 ст. 33.10; publication locator 0001202412280023."
+    - "172-ФЗ от 10.06.2026: последнее выявленное source-level изменение Закона 4015-I; первичный текст не затрагивает главу IV.2."
+  current_consolidation_crosscheck: "редакция от 10.06.2026"
+  executable_current_rule_promoted: false
+
+acquisition_state:
+  exact_binary_attempted: true
+  exact_binary_obtained: false
+  reason: "TRANSIENT_DNS_FAILURE_IN_BINARY_RUNTIME; official current consolidated exact artifact not located"
+  attempted_urls:
+    - "https://rg.ru/documents/2023/01/09/document-strakhovanie.html"
+    - "https://rg.ru/documents/2025/01/09/fz521-doc.html"
+  transport_result: "curl exit 6 / Could not resolve host"
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+
+quality_gates:
+  taxonomy_as_evidence: false
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+  fabricated_binary_metadata: false
+  primary_publication_counter_incremented: false
+  primary_publication_counter_note: "The AIS amendment acts are verified from official publications, but the canonical 4015-I source node lacks a direct exact primary current/original artifact in this pass; counter held conservatively."
