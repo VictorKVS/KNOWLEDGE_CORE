@@ -1,0 +1,103 @@
+schema_version: "1.0"
+stream: 3
+checked_at: "2026-08-28T23:21:00+03:00"
+mode: APPEND_ONLY_PDN_RELATIONSHIP_RECONCILIATION
+previous_stream3_delta: "master-source-inventory-delta-stream3-2026-08-28T2031.yaml"
+focus: "CBR 822-P insurance AIS: conditional direct PDN security reference, cryptographic protection, biometrics/EBS, incident records and KII boundary"
+
+stream3_counters_before:
+  found: 57
+  downloaded: 9
+  immutable: 9
+  pending: 46
+  reused: 2
+  primary_publication_verified: 28
+  sectors_registered: 31
+
+stream3_counters_after:
+  found: 58
+  downloaded: 9
+  immutable: 9
+  pending: 47
+  reused: 2
+  primary_publication_verified: 29
+  sectors_registered: 31
+
+source_added:
+  source_id: SEC-SRC-RU-CBR-822P-2023
+  title: "Положение Банка России от 30.08.2023 № 822-П"
+  sector: insurance
+  applicability_status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  executable_effect: NONE
+
+pdn_relationships:
+  - from: SEC-SRC-RU-CBR-822P-2023
+    locator: "пункт 1"
+    to: "152-ФЗ статья 19"
+    relation: DIRECT_CONDITIONAL_PDN_SECURITY_REFERENCE
+    status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    rationale: "822-П прямо требует применять меры безопасности ПДн, если защищаемая информация АИС страхования содержит персональные данные."
+    guard: "DIRECT_CONDITIONAL_REFERENCE != PROOF_THAT_ALL_INSURANCE_AIS_DATA_IS_PDN"
+  - from: SEC-SRC-RU-CBR-822P-2023
+    locator: "пункт 1"
+    to: "приказ ФСТЭК России № 21"
+    relation: DIRECT_SECURITY_MEASURES_REFERENCE
+    status: STATUTORY_CONTEXT_ONLY
+    guard: "APPLY_WITHIN_PROVEN_PDN_PROCESSING_SCOPE"
+  - from: SEC-SRC-RU-CBR-822P-2023
+    locator: "пункт 3"
+    to: "ПП РФ № 1119"
+    relation: PDN_SECURITY_LEVEL_CONTEXT_WITH_CRYPTO
+    status: STATUTORY_CONTEXT_ONLY
+  - from: SEC-SRC-RU-CBR-822P-2023
+    locator: "пункт 3"
+    to: "приказ ФСБ России № 378"
+    relation: CRYPTO_PDN_SECURITY_CONTEXT
+    status: STATUTORY_CONTEXT_ONLY
+  - from: SEC-SRC-RU-CBR-822P-2023
+    locator: "пункты 3, 10.1"
+    to: "572-ФЗ"
+    relation: BIOMETRIC_EBS_SECURITY_CONTEXT
+    status: CANDIDATE_SCENARIO_REVIEW_REQUIRED
+    guard: "DO_NOT_APPLY_BIOMETRIC_REQUIREMENTS_WITHOUT_PROVEN_BIOMETRIC_EBS_FLOW"
+  - from: SEC-SRC-RU-CBR-822P-2023
+    locator: "пункт 14"
+    to: "152-ФЗ"
+    relation: RETENTION_BOUNDARY
+    status: SCOPE_BOUNDARY_ONLY
+    rationale: "Пятилетнее хранение относится к incident/audit data, а не ко всем ПДн в страховой системе."
+    guard: "SECTOR_SECURITY_RECORD_RETENTION != GENERAL_PDN_RETENTION"
+  - from: SEC-SRC-RU-CBR-822P-2023
+    locator: "пункт 15"
+    to: "187-ФЗ"
+    relation: CONDITIONAL_KII_OVERLAY
+    status: CANDIDATE_ASSET_CLASSIFICATION_REVIEW_REQUIRED
+    guard: "INSURANCE_AIS_OR_OPERATOR_STATUS_ALONE_DOES_NOT_PROVE_KII_OBJECT_STATUS"
+  - from: SEC-SRC-RU-CBR-822P-2023
+    to: SEC-SRC-RU-GK2-1996-A946
+    relation: INSURANCE_SECRECY_OVERLAP_CANDIDATE
+    status: CANDIDATE_DATA_CLASSIFICATION_REVIEW_REQUIRED
+    guard: "INFORMATION_IN_AIS_INSURANCE != INSURANCE_SECRECY_BY_DEFINITION"
+
+version_boundaries:
+  - "822-П зарегистрировано Минюстом 22.12.2023; официальный Вестник указывает регистрационный № 76558."
+  - "Официальный текст указывает публикацию на сайте Банка России 27.12.2023 и вступление в силу 01.04.2024."
+  - "Поиск официальных материалов Банка России в этом проходе не выявил изменения или отмены 822-П; это не считается доказательством полного version-chain."
+  - "В CBR UniDB rendering встречается № 76658; это сохранено как metadata anomaly и не используется вместо значения официального Вестника."
+
+acquisition_state:
+  exact_binary_obtained: false
+  exact_binary_attempted: true
+  reason: TEMPORARY_DNS_FAILURE_ON_CBR_HOST_IN_BINARY_RUNTIME
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+
+quality_gates:
+  taxonomy_as_evidence: false
+  applicability_promotions: 0
+  future_rule_promoted_early: false
+  legal_conflicts_declared: 0
+  fabricated_binary_metadata: false
