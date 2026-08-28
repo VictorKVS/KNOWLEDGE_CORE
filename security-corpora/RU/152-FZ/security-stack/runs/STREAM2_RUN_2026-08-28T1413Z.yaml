@@ -1,0 +1,93 @@
+schema_version: "1.0"
+id: STREAM2_RUN_2026-08-28T1413Z
+stream: RU_PDN_TECHNICAL_CRYPTO
+created_at: "2026-08-28T14:13:00Z"
+status: COMPLETED_WITH_TRANSPORT_BLOCKERS
+
+baseline_before_run:
+  identified: 50
+  metadata_verified: 50
+  immutable_sha256_verified: 21
+  pending_raw_capture: 29
+  exact_official_route_unresolved: 9
+  confirmed_conflicts: 0
+
+work_completed:
+  - source_id: SEC-SRC-RU-FSTEC-INFO-240-24-5405-2025
+    action: RECOVER_OFFICIAL_LANDING_ROUTE
+    result: >-
+      Recovered exact official FSTEC landing page for notice 240/24/5405 via an independent link
+      that points directly to fstec.ru. Official attachment/file bytes remain unavailable.
+    official_landing: "https://fstec.ru/dokumenty/vse-dokumenty/informatsionnye-i-analiticheskie-materialy/informatsionnoe-soobshchenie-fstek-rossii-ot-9-oktyabrya-2025-g-n-240-24-5405"
+    immutable_promotion: false
+  - source_id: SEC-SRC-RU-FSTEC-INFO-240-24-4734-2025
+    action: REGISTER_PRIMARY_METHODICAL_STATUS_SOURCE_AND_EXACT_PDF_ROUTE
+    result: >-
+      Registered the FSTEC notice approving the penetration-testing methodology and recovered both
+      the official FSTEC landing page and exact official PDF route. Byte acquisition failed because
+      fstec.ru was unreachable/timed out in the current runtime.
+    official_landing: "https://fstec.ru/dokumenty/vse-dokumenty/informatsionnye-i-analiticheskie-materialy/informatsionnoe-soobshchenie-fstek-rossii-ot-8-sentyabrya-2025-g-n-240-24-4734"
+    exact_pdf: "https://fstec.ru/files/1397/-----8--2025--N-240-24-4734/2826/-----8--2025--N-240-24-4734.pdf"
+    immutable_promotion: false
+
+transport_attempts:
+  - target: SEC-SRC-RU-FSTEC-INFO-240-24-5405-2025
+    result: TRANSPORT_FAILED
+    detail: >-
+      Direct runtime request to the recovered fstec.ru landing page failed with DNS/transport error.
+      No attachment bytes were observed.
+  - target: SEC-SRC-RU-FSTEC-INFO-240-24-4734-2025
+    result: TRANSPORT_FAILED
+    detail: >-
+      Exact official PDF route was attempted but no bytes were obtained. No MIME, length or SHA-256
+      was synthesized.
+
+status_checks:
+  fstec21_replacement_project_169583:
+    checked_at: "2026-08-28"
+    result: DRAFT_WATCH_ONLY
+    note: >-
+      Fresh public material continues to identify 169583 as a draft replacement for FSTEC Order 21.
+      No primary evidence of a final numbered, MinJustice-registered and officially published replacement
+      was found in this run; FSTEC Order 21 remains active baseline pending primary enactment evidence.
+
+applicability_guards:
+  - >-
+    Notice 240/24/4734 and the approved penetration-testing methodology are not a universal private-ISPDn
+    duty. The explicitly described mandatory scope concerns enumerated public-sector information systems
+    of classes 1 and 2 under stated connectivity conditions; other use requires a separate decision or
+    applicability basis.
+  - >-
+    Notice 240/24/5405 remains secure-development certification/version-chain evidence only and does not
+    propagate developer/certification laboratory requirements into the generic PP1119/FSTEC21 baseline.
+  - >-
+    No licensing, certification, KII/NCCCI/GosSOPKA or cryptographic requirement is propagated to a PDN
+    system without an explicit applicability edge.
+
+proof_floor:
+  rule: >-
+    IMMUTABLE_CAPTURED requires exact official bytes plus observed MIME/signature, byte length, computed
+    SHA-256, immutable artifact and manifest. Discovery links, portal metadata and mirrored copies do not
+    satisfy this proof floor.
+
+counter_patch_after_run:
+  identified: 51
+  metadata_verified: 51
+  immutable_sha256_verified: 21
+  pending_raw_capture: 30
+  exact_official_route_unresolved: 8
+  confirmed_conflicts: 0
+  basis: >-
+    One new metadata-verified source with an exact official PDF route was added (+1 identified/+1 pending),
+    and one previously unresolved source gained a verified official FSTEC document route (-1 unresolved).
+    No new immutable bytes were captured.
+
+next_priority:
+  - PP1119_EXACT_GOVERNMENT_DOC_BYTES
+  - FSB378_PRIMARY_OFFICIAL_BYTES
+  - FSB66_FSB173_FAPSI152_PRIMARY_BYTES
+  - FSTEC_240_24_4734_EXACT_PDF_BYTES
+  - FSTEC_240_24_5405_ATTACHMENT_ROUTE_AND_BYTES
+  - FSTEC205_2025_EXACT_PRIMARY_ROUTE
+  - REMAINING_FSTEC_METHODICAL_ATTACHMENTS
+  - FSTEC21_REPLACEMENT_PRIMARY_ENACTMENT_WATCH
