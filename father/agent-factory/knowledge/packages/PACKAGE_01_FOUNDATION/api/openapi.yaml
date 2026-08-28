@@ -1,0 +1,201 @@
+openapi: 3.1.0
+info:
+  title: FATHER AI / Evidence Service API
+  version: 0.1.0
+  description: Internal Backend-to-AI integration contract for evidence-backed recommendations.
+servers:
+  - url: http://127.0.0.1:8001
+paths:
+  /get_recommendation:
+    post:
+      operationId: getRecommendation
+      summary: Build an evidence-backed recommendation for a project question
+      tags: [recommendations]
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RecommendationRequest'
+      responses:
+        '200':
+          description: Recommendation completed, possibly with review warnings
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/RecommendationResponse'
+        '403':
+          description: Request denied by policy/scope gate
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '422':
+          description: Invalid request or unsupported parameters
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+        '503':
+          description: Model or required dependency is unavailable
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ErrorResponse'
+components:
+  schemas:
+    RecommendationRequest:
+      type: object
+      additionalProperties: false
+      required:
+        - request_id
+        - trace_id
+        - project_id
+        - question
+        - role
+      properties:
+        request_id:
+          type: string
+          minLength: 1
+        trace_id:
+          type: string
+          minLength: 1
+        project_id:
+          type: string
+          minLength: 1
+        question:
+          type: string
+          minLength: 3
+        role:
+          type: string
+          enum: [architect, software_engineer, security, lawyer, manager, product, analyst]
+        language:
+          type: string
+          default: ru
+          enum: [ru, en]
+        retrieval:
+          $ref: '#/components/schemas/RetrievalOptions'
+    RetrievalOptions:
+      type: object
+      additionalProperties: false
+      properties:
+        top_k:
+          type: integer
+          minimum: 1
+          maximum: 50
+          default: 8
+        document_ids:
+          type: array
+          items:
+            type: string
+        domains:
+          type: array
+          items:
+            type: string
+        kb_status:
+          type: array
+          items:
+            type: string
+            enum: [KB_READY, UNDER_REVIEW]
+    RecommendationResponse:
+      type: object
+      additionalProperties: false
+      required:
+        - recommendation_id
+        - request_id
+        - trace_id
+        - status
+        - answer
+        - citations
+        - warnings
+      properties:
+        recommendation_id:
+          type: string
+        request_id:
+          type: string
+        trace_id:
+          type: string
+        status:
+          type: string
+          enum: [OK, REVIEW_REQUIRED, INSUFFICIENT_EVIDENCE]
+        answer:
+          type: string
+        claims:
+          type: array
+          items:
+            $ref: '#/components/schemas/ClaimCandidate'
+        citations:
+          type: array
+          items:
+            $ref: '#/components/schemas/Citation'
+        warnings:
+          type: array
+          items:
+            type: string
+        audit:
+          $ref: '#/components/schemas/AuditMetadata'
+    ClaimCandidate:
+      type: object
+      required: [claim_id, text, validation_status]
+      properties:
+        claim_id:
+          type: string
+        text:
+          type: string
+        validation_status:
+          type: string
+          enum: [SUPPORTED, PARTIALLY_SUPPORTED, UNSUPPORTED, REVIEW_REQUIRED]
+        citation_ids:
+          type: array
+          items:
+            type: string
+    Citation:
+      type: object
+      additionalProperties: false
+      required:
+        - citation_id
+        - document_id
+        - fragment_id
+        - locator
+        - source_sha256
+      properties:
+        citation_id:
+          type: string
+        document_id:
+          type: string
+        fragment_id:
+          type: string
+        translation_id:
+          type: [string, 'null']
+        locator:
+          type: string
+        source_sha256:
+          type: string
+          pattern: '^[A-Fa-f0-9]{64}$'
+        evidence_preview:
+          type: string
+          description: Short safe preview only; full copyrighted payload is not required in API response.
+    AuditMetadata:
+      type: object
+      properties:
+        model_id:
+          type: string
+        prompt_profile:
+          type: string
+        retrieval_profile:
+          type: string
+        elapsed_ms:
+          type: integer
+          minimum: 0
+    ErrorResponse:
+      type: object
+      required: [trace_id, code, message]
+      properties:
+        trace_id:
+          type: string
+        code:
+          type: string
+        message:
+          type: string
+        stage:
+          type: string
