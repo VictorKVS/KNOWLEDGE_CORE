@@ -1,0 +1,233 @@
+schema_version: "1.0"
+id: RU-MINKOMSVYAZ-573-2018-SECTION-IV-SEARCH-TIMING-ATOMIC-V1
+title: "Приказ Минкомсвязи № 573: таблицы времени поиска и комбинированные запросы"
+checked_at: "2026-08-28"
+status: VERIFIED_CURRENT_SECTION_IV_TABLE1_TABLE2_STRICT_BOUNDARIES_AND_BLANK_CELLS_FAIL_CLOSED
+scope: >-
+  Действующие пункты 34–42 приказа № 573. Таблица № 1 атомизирована
+  с сохранением строгого знака «менее» и пустых ячеек; таблица № 2,
+  добавленная приказом № 630 с 01.03.2024, атомизирована по всем десяти
+  диапазонам. Пустая ячейка не означает ноль, отсутствие требования или
+  наследование соседнего срока.
+
+sources:
+  act: "Приказ Минкомсвязи России от 29.10.2018 № 573"
+  current_revision_date: "2025-12-18"
+  current_index: "https://www.consultant.ru/document/cons_doc_LAW_313954/"
+  current_table1: "https://www.consultant.ru/document/cons_doc_LAW_313954/f2c9bc58a1b942200c75f9b3f0435c58bd04ba3f/"
+  current_open_text: "https://legalacts.ru/doc/prikaz-minkomsvjazi-rossii-ot-29102018-n-573-ob-utverzhdenii/"
+  order630_official_publication: "https://publication.pravo.gov.ru/document/0001202309050014"
+  order630_exact_delta: "https://www.garant.ru/products/ipo/prime/doc/407511660/"
+
+temporal_model:
+  table1:
+    effective_from: "2018-12-30"
+    status: CURRENT_UNCHANGED_BY_ORDER630_SECTION_IV_DELTA
+  table2:
+    added_by: "Приказ Минцифры России от 12.07.2023 № 630, пункт 15 изменений"
+    effective_from: "2024-03-01"
+    validity_until_exclusive: "2030-03-01"
+    status: CURRENT_AS_OF_2026_08_28
+
+normalization:
+  canonical_unit: SECOND
+  strict_less_than: LT
+  less_than_or_equal: LE
+  blank_cell: NOT_SPECIFIED_IN_TABLE
+  blank_cell_policy: PENDING_FAIL_CLOSED_NO_INHERITANCE
+  decimal_hour_conversion:
+    source_value: "1,5 часа"
+    seconds: 5400
+
+point34_preprocessing_maximums:
+  - {route: SUBSCRIBER_OR_USER_ASSIGNED_IDENTIFIER, seconds: 5, comparator: LE}
+  - {route: ACCESS_CARD_IDENTIFIER, seconds: 5, comparator: LE}
+  - {route: SMS_ISSUED_IDENTIFIER, seconds: 30, comparator: LE}
+  - {route: TEMPORARY_IDENTIFIER, seconds: 30, comparator: LE}
+  - {route: NETWORK_CHANGE, seconds: 30, comparator: LE}
+  - {route: TELEPHONE_SERVICE_OR_LOCATION, seconds: 300, comparator: LE}
+  - {route: DATA_NETWORK_CONNECTION, seconds: 600, comparator: LE}
+
+point35_direct_search_maximums:
+  - {route: IDENTIFIER_OWNERSHIP, seconds: 1, comparator: LE}
+  - {route: TELEPHONE_PAYMENT_CARD_USE, seconds: 1, comparator: LE}
+  - {route: IDENTIFIERS_REGISTERED_TO_PERSON, seconds: 3, comparator: LE}
+  - {route: BALANCE_REPLENISHMENT, seconds: 1, comparator: LE}
+
+table1_periods:
+  - {id: UP_TO_ONE_DAY, source: "до суток"}
+  - {id: UP_TO_ONE_MONTH, source: "до 1 месяца"}
+  - {id: UP_TO_SIX_MONTHS, source: "до 6 месяцев"}
+  - {id: UP_TO_ONE_YEAR, source: "до 1 года"}
+  - {id: UP_TO_THREE_YEARS, source: "до 3 лет"}
+
+table1_rows:
+  - id: T1-R1-SUBSCRIBER_AND_CARD_IDENTIFIERS
+    criteria:
+      - OPERATOR_NETWORK_SUBSCRIBER_PHONE_NUMBER
+      - MOBILE_STATION_IDENTIFIER_IMEI_ESN_MIN
+      - MOBILE_SUBSCRIBER_IDENTIFIER_IMSI
+      - TELEPHONE_OR_PAYPHONE_CARD_NUMBER
+    limits_seconds:
+      UP_TO_ONE_DAY: 3
+      UP_TO_ONE_MONTH: 5
+      UP_TO_SIX_MONTHS: 15
+      UP_TO_ONE_YEAR: 25
+      UP_TO_THREE_YEARS: 50
+    comparator: LT
+  - id: T1-R2-DATA_NETWORK_IDENTIFIERS
+    criteria:
+      - DATA_NETWORK_SUBSCRIBER_IDENTIFIER_INCLUDING_OTHER_OPERATOR
+      - DATA_NETWORK_USER_IDENTIFIER_INCLUDING_OTHER_OPERATOR
+      - APPLICATION_LEVEL_IDENTIFIER_FOR_DATA_NETWORK_SERVICE
+    limits_seconds:
+      UP_TO_ONE_DAY: 60
+      UP_TO_ONE_MONTH: 600
+      UP_TO_SIX_MONTHS: 900
+      UP_TO_ONE_YEAR: 3600
+      UP_TO_THREE_YEARS: 5400
+    comparator: LT
+  - id: T1-R3-NETWORK_EQUIPMENT_IDENTIFIERS
+    criteria:
+      - BASE_STATION_NUMBER
+      - CHANNEL_GROUP_NUMBER
+      - SWITCH_NUMBER
+      - COMMUNICATION_NODE_IDENTIFIER
+      - DATA_NETWORK_DEVICE_IDENTIFIER
+    limits_seconds:
+      UP_TO_ONE_DAY: 420
+      UP_TO_ONE_MONTH: null
+      UP_TO_SIX_MONTHS: null
+      UP_TO_ONE_YEAR: null
+      UP_TO_THREE_YEARS: null
+    comparator: LT_WHERE_SPECIFIED
+  - id: T1-R4-USER_MESSAGE_IDENTIFIER
+    criteria:
+      - USER_MESSAGE_IDENTIFIER_CRITERIA
+    limits_seconds:
+      UP_TO_ONE_DAY: 10
+      UP_TO_ONE_MONTH: null
+      UP_TO_SIX_MONTHS: null
+      UP_TO_ONE_YEAR: null
+      UP_TO_THREE_YEARS: null
+    comparator: LT_WHERE_SPECIFIED
+
+concurrency:
+  minimum_simultaneous_tasks: 100
+  timing_guarantee: EACH_OF_FIRST_100_TASKS_MEETS_TABLE1
+  above_100: CAPACITY_AND_TIMING_NOT_SPECIFIED
+
+combined_queries:
+  required: true
+  supported_operators: [AND, OR, GROUP_OPEN, GROUP_CLOSE, NOT]
+  not_admissibility: >-
+    NOT is allowed only if its result, or the result of an operation containing
+    it, is combined by AND with an admissible search criterion.
+  timing:
+    AND: {comparator: LT, reference: SUM_OF_INDIVIDUAL_CRITERION_TIMES}
+    OR: {comparator: LE, reference: SUM_OF_INDIVIDUAL_CRITERION_TIMES}
+    NOT: {comparator: LE, reference: ANALOGOUS_QUERY_WITHOUT_NOT}
+    GROUPED: APPLY_AND_OR_NOT_RULES_TO_COMPOSITE_CRITERION
+
+table2_result_delivery:
+  added_by_order630: true
+  effective_from: "2024-03-01"
+  comparator: LT
+  canonical_unit: SECOND
+  bands:
+    - {id: T2-B01, records_min: 0, records_max: 100000, max_seconds: 180}
+    - {id: T2-B02, records_min: 100001, records_max: 200000, max_seconds: 360}
+    - {id: T2-B03, records_min: 200001, records_max: 300000, max_seconds: 540}
+    - {id: T2-B04, records_min: 300001, records_max: 400000, max_seconds: 720}
+    - {id: T2-B05, records_min: 400001, records_max: 500000, max_seconds: 900}
+    - {id: T2-B06, records_min: 500001, records_max: 600000, max_seconds: 1080}
+    - {id: T2-B07, records_min: 600001, records_max: 700000, max_seconds: 1260}
+    - {id: T2-B08, records_min: 700001, records_max: 800000, max_seconds: 1440}
+    - {id: T2-B09, records_min: 800001, records_max: 900000, max_seconds: 1620}
+    - {id: T2-B10, records_min: 900001, records_max: 1000000, max_seconds: 1800}
+  above_1000000_records: OUT_OF_TABLE_FAIL_CLOSED
+
+atomic_rules:
+  - {id: MK573S-R001, locator: "пункт 34", rule: APPLY_SEVEN_LE_PREPROCESSING_LIMITS}
+  - {id: MK573S-R002, locator: "пункт 35", rule: APPLY_FOUR_LE_DIRECT_SEARCH_LIMITS}
+  - {id: MK573S-R003, locator: "пункт 36 таблица 1", rule: PRESERVE_FIVE_EXACT_PERIOD_COLUMNS}
+  - {id: MK573S-R004, locator: "таблица 1 строка 1", rule: APPLY_STRICT_3_5_15_25_50_SECOND_LIMITS}
+  - {id: MK573S-R005, locator: "таблица 1 строка 2", rule: APPLY_STRICT_60_600_900_3600_5400_SECOND_LIMITS}
+  - {id: MK573S-R006, locator: "таблица 1 строка 3", rule: APPLY_STRICT_420_SECONDS_ONLY_TO_ONE_DAY_CELL}
+  - {id: MK573S-R007, locator: "таблица 1 строка 4", rule: APPLY_STRICT_10_SECONDS_ONLY_TO_ONE_DAY_CELL}
+  - {id: MK573S-R008, locator: "таблица 1", rule: DO_NOT_TREAT_LT_AS_LE}
+  - {id: MK573S-R009, locator: "таблица 1", rule: DO_NOT_INHERIT_BLANK_CELLS}
+  - {id: MK573S-R010, locator: "таблица 1", rule: DO_NOT_TREAT_BLANK_CELL_AS_ZERO}
+  - {id: MK573S-R011, locator: "таблица 1 строка 2", rule: NORMALIZE_ONE_POINT_FIVE_HOURS_TO_5400_SECONDS}
+  - {id: MK573S-R012, locator: "пункт 37", rule: REQUIRE_AT_LEAST_100_SIMULTANEOUS_TASKS}
+  - {id: MK573S-R013, locator: "пункт 37", rule: REQUIRE_TABLE1_TIMING_FOR_EACH_OF_FIRST_100_TASKS}
+  - {id: MK573S-R014, locator: "пункт 37", rule: DO_NOT_INVENT_TIMING_GUARANTEE_ABOVE_100_TASKS}
+  - {id: MK573S-R015, locator: "пункт 38", rule: REQUIRE_COMBINED_QUERY_FUNCTION}
+  - {id: MK573S-R016, locator: "пункт 39", rule: SUPPORT_AND_OR_GROUPING_AND_NOT}
+  - {id: MK573S-R017, locator: "пункт 40", rule: RESTRICT_NOT_TO_AND_WITH_ADMISSIBLE_CRITERION}
+  - {id: MK573S-R018, locator: "пункт 41.1", rule: REQUIRE_AND_TIME_STRICTLY_LESS_THAN_SUM}
+  - {id: MK573S-R019, locator: "пункт 41.2", rule: ALLOW_OR_TIME_EQUAL_TO_SUM}
+  - {id: MK573S-R020, locator: "пункт 41.3", rule: ALLOW_NOT_TIME_EQUAL_TO_ANALOGOUS_QUERY}
+  - {id: MK573S-R021, locator: "пункт 41", rule: APPLY_TIMING_RULES_TO_GROUPED_CRITERIA}
+  - {id: MK573S-R022, locator: "приказ № 630 пункт 15", rule: APPLY_TABLE2_ONLY_FROM_2024_03_01}
+  - {id: MK573S-R023, locator: "таблица 2 строка 1", rule: APPLY_0_TO_100000_STRICT_180_SECOND_LIMIT}
+  - {id: MK573S-R024, locator: "таблица 2 строка 2", rule: APPLY_100001_TO_200000_STRICT_360_SECOND_LIMIT}
+  - {id: MK573S-R025, locator: "таблица 2 строка 3", rule: APPLY_200001_TO_300000_STRICT_540_SECOND_LIMIT}
+  - {id: MK573S-R026, locator: "таблица 2 строка 4", rule: APPLY_300001_TO_400000_STRICT_720_SECOND_LIMIT}
+  - {id: MK573S-R027, locator: "таблица 2 строка 5", rule: APPLY_400001_TO_500000_STRICT_900_SECOND_LIMIT}
+  - {id: MK573S-R028, locator: "таблица 2 строка 6", rule: APPLY_500001_TO_600000_STRICT_1080_SECOND_LIMIT}
+  - {id: MK573S-R029, locator: "таблица 2 строка 7", rule: APPLY_600001_TO_700000_STRICT_1260_SECOND_LIMIT}
+  - {id: MK573S-R030, locator: "таблица 2 строка 8", rule: APPLY_700001_TO_800000_STRICT_1440_SECOND_LIMIT}
+  - {id: MK573S-R031, locator: "таблица 2 строка 9", rule: APPLY_800001_TO_900000_STRICT_1620_SECOND_LIMIT}
+  - {id: MK573S-R032, locator: "таблица 2 строка 10", rule: APPLY_900001_TO_1000000_STRICT_1800_SECOND_LIMIT}
+  - {id: MK573S-R033, locator: "таблица 2", rule: DO_NOT_TREAT_LT_AS_LE}
+  - {id: MK573S-R034, locator: "таблица 2", rule: TREAT_100000_AND_100001_AS_DISTINCT_INCLUSIVE_BOUNDARIES}
+  - {id: MK573S-R035, locator: "таблица 2", rule: TREAT_1000000_AS_LAST_SPECIFIED_RECORD_COUNT}
+  - {id: MK573S-R036, locator: "таблица 2", rule: FAIL_CLOSED_ABOVE_1000000_RECORDS}
+  - {id: MK573S-R037, locator: "таблицы 1 и 2", rule: KEEP_QUERY_EXECUTION_AND_RESULT_DELIVERY_TIMES_DISTINCT}
+  - {id: MK573S-R038, locator: "пункты 34–42", rule: KEEP_PREPROCESSING_SEARCH_AND_DELIVERY_CLOCKS_DISTINCT}
+  - {id: MK573S-R039, locator: "таблица 1", rule: REQUIRE_CRITERION_ROW_AND_PERIOD_MATCH}
+  - {id: MK573S-R040, locator: "таблица 2", rule: REQUIRE_NONNEGATIVE_INTEGER_RECORD_COUNT}
+  - {id: MK573S-R041, locator: "таблицы 1 и 2", rule: NORMALIZE_UNITS_WITHOUT_CHANGING_COMPARATOR}
+  - {id: MK573S-R042, locator: "пункты 36–42", rule: REJECT_UNSUPPORTED_EXTRAPOLATION}
+  - {id: MK573S-R043, locator: "приказ № 1196", rule: CONFIRM_NO_SECTION_IV_DELTA_FROM_2026_03_15}
+  - {id: MK573S-R044, locator: "текущая редакция", rule: PRESERVE_TABLE1_AND_TABLE2_AS_CURRENT}
+  - {id: MK573S-R045, locator: "источники", rule: REQUIRE_CURRENT_CONSOLIDATED_TEXT_FOR_CURRENT_CLAIM}
+  - {id: MK573S-R046, locator: "источники", rule: REQUIRE_ORDER630_DELTA_FOR_TABLE2_ORIGIN_CLAIM}
+  - {id: MK573S-R047, locator: "граница проверки", rule: LEAVE_DEEP_ASN1_AND_FIELD_TABLES_SEPARATE}
+  - {id: MK573S-R048, locator: "граница проверки", rule: KEEP_IMMUTABLE_CURRENT_BYTES_PENDING}
+
+evidence_model:
+  - {id: E573S-01, proves: [MK573S-R001, MK573S-R002], artifacts: [POINT34_AND_POINT35_ROUTE_TESTS]}
+  - {id: E573S-02, proves: [MK573S-R003, MK573S-R004], artifacts: [TABLE1_ROW1_MATRIX]}
+  - {id: E573S-03, proves: [MK573S-R005, MK573S-R011], artifacts: [TABLE1_ROW2_MATRIX_AND_UNIT_NORMALIZATION]}
+  - {id: E573S-04, proves: [MK573S-R006, MK573S-R007], artifacts: [TABLE1_SPARSE_ROWS]}
+  - {id: E573S-05, proves: [MK573S-R008, MK573S-R009, MK573S-R010], artifacts: [STRICT_AND_BLANK_CELL_GUARDS]}
+  - {id: E573S-06, proves: [MK573S-R012, MK573S-R013, MK573S-R014], artifacts: [CONCURRENCY_BOUNDARY_TESTS]}
+  - {id: E573S-07, proves: [MK573S-R015, MK573S-R016, MK573S-R017], artifacts: [COMBINED_QUERY_OPERATOR_TESTS]}
+  - {id: E573S-08, proves: [MK573S-R018, MK573S-R019, MK573S-R020, MK573S-R021], artifacts: [COMBINED_QUERY_TIMING_TESTS]}
+  - {id: E573S-09, proves: [MK573S-R022, MK573S-R023, MK573S-R024], artifacts: [ORDER630_AND_TABLE2_BANDS_1_2]}
+  - {id: E573S-10, proves: [MK573S-R025, MK573S-R026], artifacts: [TABLE2_BANDS_3_4]}
+  - {id: E573S-11, proves: [MK573S-R027, MK573S-R028], artifacts: [TABLE2_BANDS_5_6]}
+  - {id: E573S-12, proves: [MK573S-R029, MK573S-R030], artifacts: [TABLE2_BANDS_7_8]}
+  - {id: E573S-13, proves: [MK573S-R031, MK573S-R032], artifacts: [TABLE2_BANDS_9_10]}
+  - {id: E573S-14, proves: [MK573S-R033, MK573S-R034, MK573S-R035, MK573S-R036], artifacts: [TABLE2_STRICT_AND_RECORD_BOUNDARY_TESTS]}
+  - {id: E573S-15, proves: [MK573S-R037, MK573S-R038], artifacts: [CLOCK_SEPARATION_TESTS]}
+  - {id: E573S-16, proves: [MK573S-R039, MK573S-R040, MK573S-R041, MK573S-R042], artifacts: [INPUT_AND_EXTRAPOLATION_GUARDS]}
+  - {id: E573S-17, proves: [MK573S-R043, MK573S-R044, MK573S-R045, MK573S-R046], artifacts: [CURRENT_TEXT_AND_DELTA_CROSSCHECK]}
+  - {id: E573S-18, proves: [MK573S-R047, MK573S-R048], artifacts: [RESIDUAL_PENDING_REGISTER]}
+
+verification_boundary:
+  verified:
+    - CURRENT_SECTION_IV_POINTS34_TO42
+    - TABLE1_ALL_FOUR_ROWS_AND_FIVE_PERIOD_COLUMNS
+    - TABLE1_STRICT_COMPARATORS_AND_SPARSE_BLANK_CELLS
+    - COMBINED_QUERY_OPERATOR_AND_TIMING_RULES
+    - TABLE2_ALL_TEN_INCLUSIVE_RECORD_BANDS_AND_STRICT_TIME_LIMITS
+    - TABLE2_ADDED_BY_ORDER630_FROM_2024_03_01
+  pending:
+    - CURRENT_CONSOLIDATED_OFFICIAL_IMMUTABLE_BYTES
+    - DEEP_ASN1_FIELDS_CODES_AND_OTHER_APPENDIX_TABLES
+    - INDEPENDENT_EXPERT_REVIEW
+  critical_gap_created: false
+  high_gap_created: false

@@ -1,0 +1,45 @@
+schema_version: "1.0"
+id: EVIDENCE-RU-MINKOMSVYAZ-573-SECTION-IV-SEARCH-TIMING-2026-08-28
+checked_at: "2026-08-28"
+subject: "Current Order 573 section IV search timing, sparse Table 1 and Order 630 Table 2"
+observations:
+  - Points 34 and 35 use inclusive maximums expressed as “not exceeding”; their seven preprocessing and four direct-search clocks remain distinct from Tables 1 and 2.
+  - Table 1 contains five period columns: up to one day, one month, six months, one year and three years.
+  - Table 1 row 1 uses strict limits of 3, 5, 15, 25 and 50 seconds.
+  - Table 1 row 2 uses strict limits of 1, 10 and 15 minutes, 1 hour and 1.5 hours; these normalize to 60, 600, 900, 3600 and 5400 seconds without changing the strict comparator.
+  - Table 1 row 3 specifies only less than 7 minutes for the up-to-one-day column; its four longer-period cells are blank.
+  - Table 1 row 4 specifies only less than 10 seconds for the up-to-one-day column; its four longer-period cells are blank.
+  - Blank cells are preserved as not specified and are not treated as zero, unlimited, waived or inherited from the one-day column.
+  - Point 37 requires at least 100 simultaneous search tasks and preserves Table 1 timing for each of the first 100; it does not state a timing guarantee for tasks above 100.
+  - Points 38–40 require combined queries with AND, OR, grouping and conditionally admissible NOT.
+  - Point 41 makes AND strict below the sum of individual times, while OR may equal that sum and NOT may equal the analogous query without NOT.
+  - Order 630 point 15 added point 42 and Table 2 from 1 March 2024.
+  - Table 2 has ten inclusive record-count bands through 1,000,000 records and strict delivery limits increasing from less than 3 to less than 30 minutes in three-minute steps.
+  - A result exactly at a stated Table 1 or Table 2 limit fails the strict “less than” test.
+  - A Table 2 result above 1,000,000 records is outside the published table and remains fail-closed; no extrapolated 33-minute band is invented.
+  - Order 1196, effective 15 March 2026, did not change section IV.
+sources:
+  current_index: "https://www.consultant.ru/document/cons_doc_LAW_313954/"
+  current_table1: "https://www.consultant.ru/document/cons_doc_LAW_313954/f2c9bc58a1b942200c75f9b3f0435c58bd04ba3f/"
+  current_points34_to42: "https://legalacts.ru/doc/prikaz-minkomsvjazi-rossii-ot-29102018-n-573-ob-utverzhdenii/"
+  order630_official_publication: "https://publication.pravo.gov.ru/document/0001202309050014"
+  order630_exact_point42_delta: "https://www.garant.ru/products/ipo/prime/doc/407511660/"
+source_quality:
+  current_table1_all_cells: VERIFIED
+  current_points34_to41: VERIFIED
+  point42_and_table2_current_text: VERIFIED
+  table2_order630_origin_and_effective_date: VERIFIED
+  strict_comparator_normalization: VERIFIED
+  sparse_blank_cell_semantics: VERIFIED_FAIL_CLOSED
+  current_consolidated_official_immutable_bytes: PENDING
+  independent_expert_review: PENDING
+linked_model: security-knowledge/legislation/RU/ministry-orders/minkomsvyaz-573-2018/search-timing-tables-and-combined-queries-atomic-v1.yaml
+linked_regression: security-knowledge/legislation/RU/ministry-orders/minkomsvyaz-573-2018/search-timing-tables-and-combined-queries-regression-v1.json
+claims_not_made:
+  - TABLE1_LT_IS_INCLUSIVE
+  - BLANK_TABLE1_CELLS_INHERIT_ONE_DAY_LIMIT
+  - BLANK_TABLE1_CELLS_MEAN_NO_LIMIT
+  - TABLE2_APPLIED_BEFORE_2024_03_01
+  - TABLE2_HAS_A_BAND_ABOVE_1000000_RECORDS
+  - ORDER573_SECTION_IV_DEFINES_RETENTION_DURATION
+  - CURRENT_CONSOLIDATED_OFFICIAL_IMMUTABLE_BYTES_ARE_VERIFIED

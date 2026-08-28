@@ -2,7 +2,7 @@ schema_version: "1.0"
 id: RU-MINKOMSVYAZ-573-2018-SUBSCRIBER-DATABASE-IS-ORM-CURRENT-ATOMIC-V1
 title: "Приказ Минкомсвязи № 573: ИС баз данных абонентов, текущая редакция"
 checked_at: "2026-08-28"
-status: VERIFIED_CURRENT_OPEN_CORE_ORDER630_AND_ORDER1196_DELTAS_APPLIED_DEEP_ASN1_AND_FIELD_TABLES_PENDING
+status: VERIFIED_CURRENT_OPEN_CORE_AND_SECTION_IV_ORDER630_AND_ORDER1196_DELTAS_APPLIED_DEEP_ASN1_AND_FIELD_TABLES_PENDING
 scope: >-
   Действующее публичное ядро требований к ИС ОРМ, содержащим базы данных
   абонентов, пользователей и оказанных услуг. Приказ № 630 применяется с
@@ -50,6 +50,9 @@ dependencies:
   order86:
     model: security-knowledge/legislation/RU/ministry-orders/minkomsvyaz-86-2018/voice-information-storage-current-atomic-v1.yaml
     relation: VOICE_STORAGE_SOURCE_AND_ADDITIONAL_CONTROL_POINT
+  section_iv_search_timing:
+    model: security-knowledge/legislation/RU/ministry-orders/minkomsvyaz-573-2018/search-timing-tables-and-combined-queries-atomic-v1.yaml
+    relation: EXACT_TABLE1_TABLE2_AND_COMBINED_QUERY_TIMING_ROUTE
 
 temporal_model:
   - {id: PRE_ORDER573, until_exclusive: "2018-12-30", status: OUT_OF_SCOPE_PREDECESSOR_ROUTE}
@@ -156,7 +159,12 @@ timing_requirements:
     registered_identifiers_seconds: 3
     balance_replenishment_seconds: 1
   simultaneous_search_tasks_min: 100
-  detailed_interval_table_point36: VERIFIED_OPEN_TEXT_DEEP_ROWS_NOT_ATOMIZED
+  detailed_interval_table_point36:
+    model: security-knowledge/legislation/RU/ministry-orders/minkomsvyaz-573-2018/search-timing-tables-and-combined-queries-atomic-v1.yaml
+    status: VERIFIED_CURRENT_EXACT_STRICT_LIMITS_AND_BLANK_CELLS_FAIL_CLOSED
+  result_delivery_table_point42:
+    model: security-knowledge/legislation/RU/ministry-orders/minkomsvyaz-573-2018/search-timing-tables-and-combined-queries-atomic-v1.yaml
+    status: VERIFIED_CURRENT_FROM_2024_03_01_ALL_TEN_STRICT_BANDS
 
 security_and_audit:
   protect_from_unauthorized_access_by: [MANUFACTURERS, UNAUTHORIZED_USERS, OPERATOR_TECHNICAL_PERSONNEL, THIRD_PARTIES]
@@ -269,12 +277,11 @@ verification_boundary:
     - ORDER630_TOP_LEVEL_DELTA_AND_SELECTED_CURRENT_APPENDIX_REQUIREMENTS
     - ORDER1196_EXACT_TWO_REPEALS
     - RETENTION_AND_PREPROCESSING_ROUTES
+    - SECTION_IV_TABLE1_TABLE2_AND_COMBINED_QUERY_EXACT_TIMING
   pending:
     - CURRENT_CONSOLIDATED_OFFICIAL_IMMUTABLE_BYTES
     - COMPLETE_DEEP_ASN1_FIELDS_CODES_AND_TABLES
-    - POINT36_COMPLETE_DETAILED_INTERVAL_TABLE_ATOMIZATION
     - CURRENT_CERTIFIED_PRODUCT_LIFECYCLE_CROSSWALK
     - INDEPENDENT_EXPERT_REVIEW
   critical_gap_created: false
   high_gap_created: false
-
