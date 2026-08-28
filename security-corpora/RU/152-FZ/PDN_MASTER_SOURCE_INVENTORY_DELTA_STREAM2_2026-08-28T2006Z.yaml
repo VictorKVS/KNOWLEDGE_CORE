@@ -1,0 +1,45 @@
+schema_version: "1.0"
+id: SEC-PDN-MASTER-SOURCE-INVENTORY-DELTA-STREAM2-2026-08-28T2006Z
+applies_to: PDN_MASTER_SOURCE_INVENTORY.yaml
+stream: RU_PDN_TECHNICAL_CRYPTO
+created_at: "2026-08-28T20:06:59Z"
+merge_policy: >-
+  ADDITIVE_SECURITY_STACK_OVERLAY. Apply only to Stream-2 technical/cryptographic counters, latest-run pointer and the
+  bounded FSTEC Order 164 source below. Preserve all non-Stream-2 master data and all existing immutable evidence.
+
+security_stack_patch:
+  checked_at: "2026-08-28"
+  identified: 53
+  metadata_verified: 53
+  immutable_sha256_verified: 21
+  pending_raw_capture: 32
+  exact_official_route_unresolved: 8
+  confirmed_conflicts: 0
+  latest_status_review_at: "2026-08-28T20:06:59Z"
+  latest_stream2_run: "security-stack/runs/STREAM2_RUN_2026-08-28T2006Z.yaml"
+  new_source:
+    id: SEC-SRC-RU-FSTEC164-2025
+    status: METADATA_VERIFIED
+    raw_capture: PENDING
+    official_publication_id: "0001202507020007"
+    official_document_route: "https://publication.pravo.gov.ru/document/0001202507020007"
+    acquisition_pdf_target: "http://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202507020007"
+    applicability: LICENSED_SZI_DEVELOPMENT_PRODUCTION_ACTIVITY_ONLY
+    not_universal_pdn_duty: true
+
+counter_basis: >-
+  Authoritative pre-run state was 52 identified / 52 metadata / 21 immutable / 31 pending / 8 unresolved. Order 164
+  adds one metadata-verified pending primary act. The official publication page and identifier are verified and an
+  official-portal PDF acquisition target is registered, but exact bytes were not captured. Immutable remains 21,
+  pending becomes 32 and unresolved remains 8.
+
+applicability_guard: >-
+  FSTEC Order 164 governs license-control procedures for development and production of confidential-information
+  protection tools. It does not create a licence requirement for an organization merely because it operates an ISPDn,
+  applies PP1119/FSTEC21, or uses protection tools. Neighboring TZI, certification, KII/NCCCI/GosSOPKA and FSB/SKZI
+  duties remain separate unless an explicit applicability edge is independently proven.
+
+proof_rule: >-
+  No source becomes immutable or extraction-ready without exact official bytes, observed MIME/signature, byte length,
+  computed SHA-256, immutable artifact and manifest. Rounded PDF size/page metadata from the official index is metadata
+  only and must not be used as an exact fingerprint.
