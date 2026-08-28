@@ -1,0 +1,185 @@
+schema_version: "1.0"
+source_id: SEC-SRC-RU-CBR-821P-2023
+stream: 3
+jurisdiction: RU
+authority: "Банк России"
+sector: finance_banking
+regime: national_payment_system_protected_information
+act_type: "Положение Банка России"
+act_number: "821-П"
+act_date: "2023-08-17"
+title: "О требованиях к обеспечению защиты информации при осуществлении переводов денежных средств и о порядке осуществления Банком России контроля за соблюдением требований к обеспечению защиты информации при осуществлении переводов денежных средств"
+
+status:
+  current_as_of: "2026-08-28"
+  value: CURRENT_PRIMARY_TEXT_VERIFIED_FUTURE_AMENDMENT_IDENTIFIED_EXACT_BINARY_PENDING
+  applicability: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  executable_rule_status: NOT_PROMOTED
+
+primary_publication:
+  minjust_registration_date: "2023-12-06"
+  minjust_registration_number: "76286"
+  official_publication_date: "2023-12-13"
+  official_publication_evidence_url: "https://cbr.ru/na/?la.Search=821-%D0%9F"
+  official_file_url: "https://www.cbr.ru/Queries/XsltBlock/File/87500/-1/2472"
+  official_file_container: "Вестник Банка России № 76 (2472) от 21.12.2023"
+  official_file_content_type_crosscheck: application/pdf
+  official_file_pages_crosscheck: 71
+  exact_byte_capture_status: PENDING_TRANSIENT_DNS_FAILURE
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+  note: "Web evidence establishes the official CBR PDF and complete primary text. Exact binary acquisition from cbr.ru failed with temporary name-resolution error; page count/content-type are crosschecks only and are not used as exact byte evidence."
+
+legal_basis:
+  - locator: "преамбула"
+    basis: "часть 3 статьи 27 Федерального закона № 161-ФЗ «О национальной платежной системе»"
+
+protected_information_anchors:
+  - locator: "пункт 1.3"
+    concept: protected_information_processing_lifecycle
+    includes:
+      - identification_authentication_authorization
+      - electronic_message_creation_transfer_receipt
+      - customer_funds_disposition_authority
+      - funds_transfer_processing
+      - transfer_result_accounting
+      - electronic_message_and_transfer_information_storage
+    security_properties:
+      - confidentiality
+      - integrity
+      - availability
+      - authenticity
+  - locator: "пункты 1.4, 1.4.1, 1.4.2"
+    concept: access_and_action_audit_logging
+    includes:
+      - action_timestamp
+      - employee_or_customer_identifier
+      - technology_segment_code
+      - action_result
+      - device_identification_information
+    guard: "AUDIT_IDENTIFIER_OR_DEVICE_DATA != AUTOMATIC_PDN_CLASSIFICATION_WITHOUT_RECORD_CONTEXT"
+  - locator: "пункт 1.6"
+    concept: direct_pdn_security_overlay
+    rule: "Если защищаемая информация содержит персональные данные, применяются меры безопасности персональных данных при обработке в соответствии со статьей 19 152-ФЗ."
+    implementation_references:
+      - "Приказ ФСТЭК России № 21 от 18.02.2013"
+      - "Постановление Правительства РФ № 1119 от 01.11.2012"
+      - "Приказ ФСБ России № 378 от 10.07.2014 при использовании СКЗИ"
+    guard: "DIRECT_PDN_SECURITY_REFERENCE != UNIVERSAL_CLASSIFICATION_OF_ALL_PAYMENT_INFORMATION_AS_PDN"
+  - locator: "пункт 1.1"
+    concept: conformity_assessment_report_retention
+    retention: "не менее 5 лет с даты выдачи отчета проверяющей организацией"
+    guard: "SECURITY_ASSESSMENT_REPORT_RETENTION != GENERAL_PDN_RETENTION"
+  - locator: "пункт 1.5"
+    concept: information_security_incident_reporting_context
+    note: "Инциденты защиты информации связаны с перечнем типов инцидентов, согласуемым в контексте законодательства о КИИ; сроки/форма сообщения определяются отдельным согласованным порядком."
+    guard: "CBR_PAYMENT_SECURITY_INCIDENT_CONTEXT != GENERIC_152FZ_BREACH_RULE"
+  - locator: "пункт 9.1"
+    concept: conditional_kii_overlay
+    rule: "Требования законодательства о КИИ накладываются дополнительно только на объекты информационной инфраструктуры, которые являются объектами КИИ."
+    guard: "PAYMENT_INFORMATION_INFRASTRUCTURE != AUTOMATIC_KII_OBJECT"
+  - locator: "Приложение 2"
+    concept: payment_message_and_cryptographic_information
+    examples:
+      - "электронные сообщения физических и юридических лиц"
+      - "реестры электронных сообщений"
+      - "ключевая информация СКЗИ"
+      - "информация для идентификации/аутентификации и совершения платежных операций"
+
+relationships:
+  - to: "152-ФЗ:article_19"
+    relation: DIRECT_CONDITIONAL_PDN_SECURITY_REFERENCE
+    status: DIRECT_STATUTORY_CONTEXT_SCENARIO_BOUND
+  - to: "ПП РФ № 1119/2012"
+    relation: PDN_IS_SECURITY_REQUIREMENTS_REFERENCE
+    status: DIRECT_STATUTORY_CONTEXT_SCENARIO_BOUND
+  - to: "Приказ ФСТЭК России № 21/2013"
+    relation: PDN_SECURITY_MEASURES_REFERENCE
+    status: DIRECT_STATUTORY_CONTEXT_SCENARIO_BOUND
+  - to: "Приказ ФСБ России № 378/2014"
+    relation: PDN_CRYPTO_SECURITY_MEASURES_REFERENCE
+    status: DIRECT_STATUTORY_CONTEXT_WHEN_CRYPTO_USED
+  - to: "187-ФЗ"
+    relation: KII_SECURITY_OVERLAY_WHEN_OBJECT_IS_KII
+    status: CONDITIONAL_APPLICABILITY_REVIEW_REQUIRED
+  - to: "SEC-SRC-RU-CBR-851P-2025"
+    relation: ADJACENT_BANKING_INFORMATION_PROTECTION_REGIME
+    status: CROSS_REGIME_RELATION_REVIEW_REQUIRED
+    guard: "821-P regulates payment-system information protection under 161-FZ; 851-P is a separate banking information-protection regime. Overlap of actors or information does not merge the two acts."
+  - to: "SEC-SRC-RU-FZ-572-2022"
+    relation: FUTURE_BIOMETRIC_PAYMENT_SECURITY_OVERLAP_FROM_7220U
+    status: FUTURE_NOT_CURRENT_UNTIL_2026_10_01
+
+version_chain:
+  status: CURRENT_PRIMARY_TEXT_VERIFIED_FUTURE_AMENDMENT_IDENTIFIED
+  events:
+    - act: "Положение Банка России № 821-П от 17.08.2023"
+      effect: ADOPTED
+      minjust_registration_number: "76286"
+      official_publication_date: "2023-12-13"
+      effective_date: "2024-04-01"
+      evidence_status: PRIMARY_CBR_TEXT_VERIFIED
+    - act: "Положение Банка России № 719-П от 04.06.2020"
+      effect: SUPERSEDED_BY_821P_FROM_2024_04_01
+      evidence_status: DIRECT_TEXT_POINT_9_3
+    - act: "Указание Банка России № 7220-У от 28.10.2025"
+      effect: FUTURE_AMENDMENT
+      minjust_registration_number: "85263"
+      minjust_registration_date: "2026-02-06"
+      official_publication_date: "2026-02-17"
+      effective_date: "2026-10-01"
+      evidence_status: PRIMARY_CBR_VESTNIK_VERIFIED
+      current_as_of_2026_08_28: FUTURE_NOT_CURRENT
+      future_effects:
+        - "expands 821-P for transfers initiated using biometric personal data"
+        - "adds biometric identification/authentication information to protected-information lifecycle"
+        - "replaces point 2.1 reference from 683-P to current 851-P"
+        - "adds protected information concerning identification/authentication using biometric personal data"
+  temporal_guard: "Do not apply 7220-U changes before 2026-10-01. The currently effective 821-P text is the pre-7220-U wording."
+  cross_reference_transition:
+    current_text_locator: "пункты 2.1-2.2"
+    current_reference: "683-П/2019"
+    future_7220u_reference: "851-П/2025"
+    status: VERSION_TRANSITION_REVIEW_REQUIRED_NOT_DECLARED_CONFLICT
+    guard: "The temporary mismatch between current 821-P wording and the newer 851-P regime is not automatically classified as a legal contradiction; 7220-U expressly resolves the reference from 2026-10-01."
+
+future_biometric_layer_from_7220u:
+  effective_date: "2026-10-01"
+  current_status: FUTURE_NOT_CURRENT
+  protected_information_examples:
+    - "сведения об идентификации и (или) аутентификации с использованием биометрических персональных данных"
+    - "результат идентификации/аутентификации"
+    - "информация для получения идентификатора электронного средства платежа"
+    - "идентификатор электронного средства платежа в соответствующем биометрическом сценарии"
+  relationship_to_572fz: CANDIDATE_DIRECT_STATUTORY_BIOMETRIC_CONTEXT_FROM_EFFECTIVE_DATE
+  guard: "FUTURE_AMENDMENT_DISCOVERY != CURRENT_EXECUTABLE_REQUIREMENT"
+
+acquisition:
+  exact_capture_attempted: true
+  exact_capture_succeeded: false
+  attempted_at: "2026-08-28T05:18:00+03:00"
+  official_file_url: "https://www.cbr.ru/Queries/XsltBlock/File/87500/-1/2472"
+  binary_attempt_result: "URLError: Temporary failure in name resolution"
+  transient_failure: true
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+  displayed_sizes_used_as_exact_bytes: false
+
+proof_floor:
+  taxonomy_used_as_evidence: false
+  primary_normative_act_required: true
+  protected_information_equals_pdn: false
+  payment_information_equals_banking_secrecy: false
+  821p_equals_851p: false
+  audit_identifier_is_automatically_pdn: false
+  five_year_security_report_retention_generalized_to_pdn: false
+  payment_system_is_automatically_kii: false
+  future_7220u_treated_as_current: false
+  applicability_promoted: false
+  legal_conflict_declared: false
