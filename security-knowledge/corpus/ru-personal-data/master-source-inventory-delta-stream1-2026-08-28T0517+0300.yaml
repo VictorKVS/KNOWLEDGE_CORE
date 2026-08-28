@@ -1,0 +1,70 @@
+schema_version: "1.0"
+delta_id: PDN-MASTER-DELTA-STREAM1-2026-08-28T0517+0300
+parent_inventory: "../../../security-corpora/RU/152-FZ/PDN_MASTER_SOURCE_INVENTORY.yaml"
+stream: 1
+scope: GENERAL_152FZ_ROSKOMNADZOR_CORE
+observed_at: "2026-08-28T05:17:00+03:00"
+
+counter_snapshot:
+  identified: 37
+  downloaded_exact: 35
+  immutable_sha256: 35
+  atomized_proposed: 4
+  atomized_verified: 0
+  pending_raw: 2
+  raw_coverage: 0.9459
+
+pending_raw_sources:
+  - SEC-SRC-RU-152FZ-2026-07-26
+  - SEC-SRC-RU-PP687-2008
+
+freshness_delta:
+  SEC-SRC-RU-152FZ-2026-07-26:
+    checked_at: "2026-08-28"
+    result: CURRENT_REVISION_IDENTITY_CONFIRMED_ROUTE_SET_EXTENDED
+    current_revision: "2026-07-26"
+    amendment_anchor: SEC-SRC-RU-FZ265-2026
+    canonical_route_delta:
+      added:
+        - "https://ips.pravo.gov.ru/api/ips/legislation/document?baseid=None&hash=98490812b3409e2a8d78a11ca9010f434ea3d9250a11dbbdb78690cd5551bdd6"
+      status: OFFICIAL_IPS_API_ROUTE_REGISTERED_GUARDED
+    note: >-
+      The additional official IPS API transport is accepted only as a route candidate. It does not change the raw or
+      semantic status until returned bytes prove 152-FZ/personal-data identity and the 26.07.2026 revision, then pass
+      exact-byte, SHA-256 and manifest gates.
+  SEC-SRC-RU-PP687-2008:
+    checked_at: "2026-08-28"
+    result: CURRENT_REVISION_METADATA_UNCHANGED_RAW_PENDING
+    current_revision_anchor: SEC-SRC-RU-PP12-2025
+    effective_from: "2025-01-26"
+    valid_until: "2030-09-01"
+  SEC-SRC-RU-RKN128-2022:
+    checked_at: "2026-08-28"
+    result: CURRENT_RULE_WITH_REPLACEMENT_PROJECT_ONLY
+    note: >-
+      Current evidence still describes the 31.07.2026 replacement as a project; no enacted official-publication
+      identity was found in this pass. Preserve No. 128 and its open alignment review.
+
+acquisition_delta:
+  exact_bytes_accepted_at_delta_write: 0
+  immutable_new_at_delta_write: 0
+  semantic_promotions: 0
+  existing_immutable_preserved: 35
+  repeat_downloads_of_verified_corpus: 0
+  canonical_routes_registered: 1
+  triggered_acquisition_workflow_run_id: 33135413401
+  workflow_state_at_delta_write: IN_PROGRESS
+
+quality_gates:
+  proof_floor_held: true
+  sector_overlays_touched: false
+
+traceability:
+  source_card_commit: "33ce0ca5b1361f32bca396aebdcd0014e39061ab"
+  run_record: "../../../security-corpora/RU/152-FZ/runs/stream-1/2026-08-28T0517+0300.yaml"
+  run_record_commit: "93d77baabfef4cd1daa5c7caeace3a19c87aa572"
+
+merge_rule: >-
+  Preserve 35/37 immutable and the two pending sources unless the acquisition workflow produces an accepted manifest
+  with official returned bytes, source URL, retrieved_at, MIME, byte length, SHA-256 and the source-specific current-
+  revision proof. Route registration alone cannot promote raw, semantic or extraction status.
