@@ -1,0 +1,41 @@
+schema_version: "1.0"
+id: SEC-PDN-MASTER-SOURCE-INVENTORY-DELTA-STREAM2-2026-08-28T1713Z
+applies_to: PDN_MASTER_SOURCE_INVENTORY.yaml
+stream: RU_PDN_TECHNICAL_CRYPTO
+created_at: "2026-08-28T17:13:00Z"
+merge_policy: >-
+  ADDITIVE_SECURITY_STACK_OVERLAY. Apply only to technical/cryptographic security-stack counters, the latest Stream-2
+  pointer and the BDU provenance source below. Preserve all non-Stream-2 master data and all existing immutable evidence.
+
+security_stack_patch:
+  checked_at: "2026-08-28"
+  identified: 52
+  metadata_verified: 52
+  immutable_sha256_verified: 21
+  pending_raw_capture: 31
+  exact_official_route_unresolved: 8
+  confirmed_conflicts: 0
+  latest_status_review_at: "2026-08-28T17:13:00Z"
+  latest_stream2_run: "security-stack/runs/STREAM2_RUN_2026-08-28T1713Z.yaml"
+  new_source:
+    id: SEC-SRC-RU-FSTEC-INFO-240-22-879-2015
+    status: METADATA_VERIFIED
+    raw_capture: PENDING
+    official_document_route: VERIFIED_HISTORICAL_OFFICIAL_FSTEC_HTML_ROUTE_CAPTURE_PENDING
+    dynamic_reference_url: "https://bdu.fstec.ru/"
+    applicability: ISPDN_THREAT_AND_VULNERABILITY_MODELING_REFERENCE
+    not_new_universal_pdn_control: true
+
+counter_basis: >-
+  Authoritative pre-run state was 51 identified / 51 metadata / 21 immutable / 30 pending / 8 unresolved. FSTEC notice
+  240/22/879 adds one metadata-verified pending source with a known exact official FSTEC HTML document route. Transport
+  prevented exact-byte capture, so immutable remains 21 and pending becomes 31; unresolved remains 8.
+
+applicability_guard: >-
+  Notice 240/22/879 explicitly establishes BDU relevance to ISPDn threat and vulnerability work, but BDU records remain
+  reference/candidate evidence requiring system-specific applicability analysis. No neighboring licensing, certification,
+  KII/NCCCI/GosSOPKA, GIS or SKZI obligation is promoted into the generic PDN baseline without an explicit applicability edge.
+
+proof_rule: >-
+  No source becomes immutable or extraction-ready without exact official bytes, observed MIME/signature, byte length,
+  computed SHA-256, immutable artifact and manifest.
