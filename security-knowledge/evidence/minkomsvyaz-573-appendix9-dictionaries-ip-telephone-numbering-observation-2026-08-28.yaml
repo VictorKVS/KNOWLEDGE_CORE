@@ -1,0 +1,42 @@
+schema_version: "1.0"
+id: EVIDENCE-RU-MINKOMSVYAZ-573-APPENDIX9-DICTIONARIES-IP-TELEPHONE-NUMBERING-2026-08-28
+checked_at: "2026-08-28"
+subject: "Order 573 appendix 9 Dictionaries.asn IP and telephone numbering records"
+observations:
+  - Order 630 point 21 replaced appendix 9 in full with effect from 1 March 2024.
+  - IpNumberingPlanRecord has six fields; only end-time is optional.
+  - Its description is UTF8String length 1..256 and both IPAddress and IPMask fields are required.
+  - TelephoneNumberingPlanRecord has 24 fields; 20 are required and four are optional.
+  - The four optional fields have explicit tags 0, 1, 2 and 3 in source order.
+  - Country code is UTF8String of exact length 3, not NumericString.
+  - National significant number is UTF8String of exact length 14.
+  - Area-code length is 0..6; subscriber-number minimum and maximum fields are each independently 1..15.
+  - UTC minimum and maximum fields are each independently -12..12.
+  - Capacity boundaries are NumericString length 1..15 and capacity-size is 1..10000000.
+  - Location and registrar allow UTF8String length 0..256 syntactically; no business meaning was assigned to an empty value.
+  - MCC and MNC are required NumericString fields of exact length 3.
+  - The rendered range-deactivation token joins DateAndTime and OPTIONAL; exact syntax is pending primary-PDF confirmation.
+  - The rendered range-status size expression has mismatched parentheses; exact syntax is pending primary-PDF confirmation.
+  - No ISO registry membership, uppercase rule, min/max ordering or capacity-cardinality equation was inferred.
+sources:
+  current_appendix9_open_text: "https://legalacts.ru/doc/prikaz-minkomsvjazi-rossii-ot-29102018-n-573-ob-utverzhdenii/"
+  order630_official_publication: "https://publication.pravo.gov.ru/document/0001202309050014"
+  order630_exact_delta: "https://www.garant.ru/products/ipo/prime/doc/407511660/"
+source_quality:
+  order630_appendix9_replacement_and_effective_date: VERIFIED
+  current_two_record_fields_requiredness_ranges_sizes_and_tags: VERIFIED_CONSOLIDATED_PUBLIC_TEXT
+  report_wrapper_oid_and_item_type_mappings: VERIFIED_CONSOLIDATED_PUBLIC_TEXT
+  range_deactivation_and_range_status_rendered_syntax: PENDING_PRIMARY_PDF
+  dependency_type_deep_models: PENDING_SEPARATE_ATOMIZATION
+  official_immutable_pdf_bytes: PENDING_SERVER_502_FROM_PRIOR_SAME_DATE_CHECK
+  independent_expert_review: PENDING
+linked_model: security-knowledge/legislation/RU/ministry-orders/minkomsvyaz-573-2018/appendix9-dictionaries-ip-telephone-numbering-records-atomic-v1.yaml
+linked_regression: security-knowledge/legislation/RU/ministry-orders/minkomsvyaz-573-2018/appendix9-dictionaries-ip-telephone-numbering-records-regression-v1.json
+claims_not_made:
+  - ISO_FIELDS_ARE_VALIDATED_AGAINST_AN_EXTERNAL_REGISTRY
+  - UTC_MIN_MUST_NOT_EXCEED_UTC_MAX
+  - MIN_SUBSCRIBER_LENGTH_MUST_NOT_EXCEED_MAX_SUBSCRIBER_LENGTH
+  - CAPACITY_FROM_MUST_NOT_EXCEED_CAPACITY_TO
+  - CAPACITY_SIZE_EQUALS_NUMERIC_RANGE_CARDINALITY
+  - EMPTY_LOCATION_OR_REGISTRAR_HAS_A_DEFINED_BUSINESS_MEANING
+  - RENDERED_ASN1_COMPILES_WITHOUT_PRIMARY_PDF_CORRECTION
