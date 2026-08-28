@@ -1,0 +1,153 @@
+schema_version: "1.0"
+stream: 3
+checked_at: "2026-08-28T17:28:00+03:00"
+mode: APPEND_ONLY_RECONCILIATION
+previous_delta: "master-inventory-delta-2026-08-28T1422.yaml"
+focus: "finance / microfinance / MFO confidentiality, personal-data disclosure controls and staged biometric identification"
+
+counters_before:
+  found: 55
+  downloaded: 9
+  immutable: 9
+  pending: 44
+  reused: 2
+  primary_publication_verified: 26
+  sectors_registered: 29
+
+counters_after:
+  found: 56
+  downloaded: 9
+  immutable: 9
+  pending: 45
+  reused: 2
+  primary_publication_verified: 27
+  sectors_registered: 30
+
+changes:
+  new_sources: 1
+  new_immutable_artifacts: 0
+  new_durable_downloads: 0
+  new_pending_exact_capture: 1
+  new_sector_regimes: 1
+  applicability_promotions: 0
+  legal_conflicts_confirmed: 0
+  primary_publication_verified_increment: 1
+
+new_sources:
+  - source_id: SEC-SRC-RU-FZ-151-2010
+    sector: microfinance
+    regime: mfo_confidentiality_pdn_biometric_and_information_disclosure
+    title: "Федеральный закон от 02.07.2010 № 151-ФЗ"
+    status: CURRENT_PRIMARY_ORIGINAL_VERIFIED_CURRENT_CONSOLIDATION_CROSSCHECKED_VERSION_CHAIN_PARTIAL_EXACT_BINARY_PENDING
+    official_publisher: "Российская газета"
+    official_web_publication_date: "2010-07-06"
+    printed_issue_crosscheck: "07.07.2010 № 147 (5226)"
+    current_edition_crosscheck: "09.04.2026"
+
+protected_information_anchors:
+  - source_id: SEC-SRC-RU-FZ-151-2010
+    locator: "статья 9.1 часть 17"
+    concept: applicant_pdn_and_protected_secrets_confidentiality
+    note: "МФО и должностные лица не вправе использовать вне предусмотренных законом целей и разглашать полученные при рассмотрении обращения ПДн заявителя, коммерческую, служебную, банковскую тайну, тайну страхования и иную охраняемую законом тайну."
+    guard: "APPEAL_CONFIDENTIALITY_RULE != UNIVERSAL_MFO_DATA_PROCESSING_RULE"
+  - source_id: SEC-SRC-RU-FZ-151-2010
+    locator: "статья 14 часть 4 пункт 5.7"
+    concept: public_disclosure_pdn_guard
+    note: "Перечень раскрываемой МФО информации определяется Банком России с учетом законодательства РФ в области персональных данных."
+    guard: "DISCLOSURE_REQUIREMENT != PUBLIC_AVAILABILITY_OF_ALL_PDN"
+  - source_id: SEC-SRC-RU-FZ-151-2010
+    locator: "статья 9 часть 14"
+    concept: biometric_identification_for_electronic_consumer_microloan
+    note: "Электронный потребительский заем связан с идентификацией/аутентификацией через ЕСИА с биометрическими ПДн по статьям 9 и 10 572-ФЗ; общее действие с 01.03.2026, для специальной категории МФО применение отложено до 01.03.2027."
+    guard: "STAGED_SCENARIO_RULE != UNIVERSAL_BIOMETRIC_REQUIREMENT"
+  - source_id: SEC-SRC-RU-FZ-151-2010
+    locator: "статья 9 части 12-13"
+    concept: fraud_prevention_consumer_loan_data_exchange
+    note: "Текущая редакция формирует отдельные потоки данных о договоре/попытках заключения потребительского займа и случаях/попытках переводов без добровольного согласия клиента."
+    guard: "FRAUD_PREVENTION_FLOW != LEGAL_BASIS_FOR_UNRELATED_PROCESSING"
+
+relationships:
+  - from: SEC-SRC-RU-FZ-151-2010
+    to: "152-ФЗ"
+    relation: DIRECT_STATUTORY_PDN_CONTEXT_IN_MFO_DISCLOSURE_AND_APPEAL_RULES
+    status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  - from: SEC-SRC-RU-FZ-151-2010
+    to: "572-ФЗ:articles_9_10"
+    relation: DIRECT_BIOMETRIC_IDENTIFICATION_REFERENCE_FOR_ELECTRONIC_CONSUMER_LOANS
+    status: SCENARIO_SPECIFIC_STATUTORY_RELATION
+  - from: SEC-SRC-RU-FZ-151-2010
+    to: SEC-SRC-RU-FZ-230-2016
+    relation: OVERDUE_DEBT_COLLECTION_SPECIAL_REGIME_BOUNDARY
+    status: CANDIDATE_SCENARIO_REVIEW_REQUIRED
+  - from: SEC-SRC-RU-FZ-151-2010
+    to: SEC-SRC-RU-FZ-218
+    relation: CREDIT_HISTORY_DATA_FLOW_CONTEXT
+    status: CANDIDATE_SCENARIO_REVIEW_REQUIRED
+  - from: SEC-SRC-RU-FZ-151-2010
+    to: "353-ФЗ"
+    relation: CONSUMER_CREDIT_STATUTORY_CONTEXT
+    status: CANDIDATE_SCENARIO_REVIEW_REQUIRED
+  - from: SEC-SRC-RU-FZ-151-2010
+    to: "115-ФЗ:article_7"
+    relation: AML_IDENTIFICATION_CONTEXT
+    status: CANDIDATE_SCENARIO_REVIEW_REQUIRED
+
+version_events:
+  - act: "Федеральный закон от 02.07.2010 № 151-ФЗ"
+    effect: ADOPTED
+    official_source: "Российская газета"
+    official_web_publication_date: "2010-07-06"
+    evidence_status: PRIMARY_OFFICIAL_PUBLICATION_VERIFIED
+  - act: "Федеральный закон от 04.08.2023 № 442-ФЗ"
+    effect: INTRODUCED_ARTICLE_9_1_APPEALS_REGIME
+    publication_id_crosscheck: "0001202308040037"
+    evidence_status: EFFECT_TEXT_CROSSCHECKED_PRIMARY_EXACT_CAPTURE_PENDING
+  - act: "Федеральный закон от 01.04.2025 № 41-ФЗ"
+    effect: INTRODUCED_ARTICLE_9_PART_14_BIOMETRIC_IDENTIFICATION
+    publication_id: "0001202504010010"
+    general_effective_date: "2026-03-01"
+    special_deferred_application: "2027-03-01 for the MFO category identified by point 2.2 part 1 article 2"
+    evidence_status: PRIMARY_PUBLICATION_METADATA_VERIFIED_EFFECT_TEXT_VERIFIED
+  - act: "Федеральный закон от 09.04.2026 № 86-ФЗ"
+    effect: CURRENT_SOURCE_LEVEL_AMENDMENT_ARTICLE_4_4
+    evidence_status: OFFICIAL_TEXT_CROSSCHECK_EXACT_PRIMARY_CAPTURE_PENDING
+  - act: "Федеральный закон от 04.08.2026 № 332-ФЗ"
+    effect: FUTURE_CHANGE_TO_ARTICLE_9_PART_8
+    publication_id: "0001202608040077"
+    effective_date: "2027-10-01"
+    evidence_status: PRIMARY_PUBLICATION_LOCATOR_CROSSCHECK_FUTURE_NOT_CURRENT
+
+version_chain_review:
+  current_edition_crosscheck: "ред. от 09.04.2026"
+  current_as_of: "2026-08-28"
+  complete_primary_byte_exact_chain: false
+  guard: "Do not promote consolidated crosschecks or future events into executable current rules before primary version proof."
+
+acquisition:
+  exact_capture_attempted: true
+  exact_capture_succeeded: false
+  targets:
+    - "https://rg.ru/documents/2010/07/07/mikrofinans-dok.html"
+    - "https://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202504010010"
+  binary_attempt_result: TEMPORARY_FAILURE_IN_NAME_RESOLUTION
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+  displayed_sizes_used_as_exact_bytes: false
+
+proof_floor:
+  taxonomy_used_as_evidence: false
+  primary_normative_act_required: true
+  mfo_customer_data_always_pdn: false
+  mfo_data_always_bank_secrecy: false
+  biometric_rule_applies_to_all_mfo_operations: false
+  applicability_promoted: false
+  legal_conflict_declared: false
+
+next_actions:
+  - "Retry byte-exact capture of the original 151-FZ publication and 41-FZ amendment after official-host DNS recovery."
+  - "Close the exact primary locator-specific chain for article 9.1(17), article 14(4)(5.7) and article 9(12-14)."
+  - "Keep the special 01.03.2027 biometric applicability boundary and 01.10.2027 332-FZ event non-current until their dates."
+  - "Continue finance discovery with 353-FZ and relevant Bank of Russia microfinance information-security/data-handling acts, deduplicated against 230-FZ, 218-FZ, 821-P and 851-P."
