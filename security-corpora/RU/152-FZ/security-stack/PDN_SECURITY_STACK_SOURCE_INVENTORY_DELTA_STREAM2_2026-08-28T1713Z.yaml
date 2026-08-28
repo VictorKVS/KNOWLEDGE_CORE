@@ -1,0 +1,75 @@
+schema_version: "1.0"
+id: SEC-PDN-SECURITY-STACK-INVENTORY-DELTA-2026-08-28T1713Z
+applies_to: PDN_SECURITY_STACK_SOURCE_INVENTORY.yaml
+stream: RU_PDN_TECHNICAL_CRYPTO
+created_at: "2026-08-28T17:13:00Z"
+merge_policy: >-
+  ADDITIVE_AND_RECONCILIATION_OVERLAY. Preserve the accepted 51-source baseline and every existing immutable artifact.
+  Add FSTEC notice 240/22/879 exactly once as BDU provenance for ISPDn threat/vulnerability work. Do not promote the
+  notice or any dynamic BDU record beyond its demonstrated evidence state.
+
+baseline_counters:
+  identified: 51
+  metadata_verified: 51
+  immutable_sha256_verified: 21
+  pending_raw_capture: 30
+  exact_official_route_unresolved: 8
+  confirmed_conflicts: 0
+
+source_additions:
+  - id: SEC-SRC-RU-FSTEC-INFO-240-22-879-2015
+    role: fstec_bdu_creation_scope_and_methodical_reference_notice
+    metadata_status: METADATA_VERIFIED
+    source_record: "source/SEC-SRC-RU-FSTEC-INFO-240-22-879-2015.yaml"
+    raw_capture: PENDING
+    exact_official_route: VERIFIED_HISTORICAL_OFFICIAL_FSTEC_HTML_ROUTE_CAPTURE_PENDING
+    dynamic_reference_url: "https://bdu.fstec.ru/"
+    applicability: ISPDN_THREAT_AND_VULNERABILITY_MODELING_REFERENCE
+    not_new_universal_pdn_control: true
+
+methodical_relation_delta:
+  - from: SEC-SRC-RU-FSTEC-INFO-240-22-879-2015
+    type: METHODICAL_REFERENCE_CONTEXT_FOR
+    to: SEC-SRC-RU-FSTEC-THREAT-METHOD-2021
+    scope: ISPDN_THREAT_AND_VULNERABILITY_MODELING
+    normative_relation: false
+    guard: >-
+      BDU entries are candidate/reference evidence for system-specific threat and vulnerability analysis. A BDU entry
+      does not by itself prove applicability to a concrete ISPDn and does not import controls from neighboring regimes.
+
+counter_patch:
+  identified: 52
+  metadata_verified: 52
+  raw_downloaded_exact: 21
+  immutable_sha256_verified: 21
+  pending_raw_capture: 31
+  exact_official_route_unresolved: 8
+  confirmed_conflicts: 0
+
+counter_basis: >-
+  Starting from authoritative 51/51/21/30/8, one metadata-verified pending primary FSTEC notice is added. Its exact
+  official FSTEC HTML document route is known, so the unresolved-route count does not increase. Official bytes were not
+  captured because fstec.ru transport failed; immutable remains 21 and pending becomes 31.
+
+semantic_guards:
+  - >-
+    BDU is relevant to ISPDn threat and vulnerability modeling because notice 240/22/879 explicitly names ISPDn, but
+    catalog entries are not a universal set of applicable threats or mandatory controls.
+  - >-
+    FSTEC21 remains the active baseline until a final replacement is proven issued, Minjust-registered where required,
+    and officially published; project 169583 remains watch-only.
+  - >-
+    FSB66/173, FSB378, FAPSI152, licensing, certification, KII/NCCCI/GosSOPKA duties remain conditional on explicit
+    applicability edges.
+
+latest_run_patch:
+  run_record: "runs/STREAM2_RUN_2026-08-28T1713Z.yaml"
+  new_sources: 1
+  new_immutable_captured: 0
+  exact_document_routes_recovered: 1
+  exact_file_routes_recovered: 0
+  semantic_promotions: 0
+
+proof_rule: >-
+  Exact official bytes, observed MIME/signature, byte length, computed SHA-256, immutable artifact and manifest are
+  mandatory before extraction readiness or IMMUTABLE_CAPTURED status.
