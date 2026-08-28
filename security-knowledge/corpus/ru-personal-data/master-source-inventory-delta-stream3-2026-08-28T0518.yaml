@@ -1,0 +1,118 @@
+schema_version: "1.0"
+stream: 3
+checked_at: "2026-08-28T05:18:00+03:00"
+mode: APPEND_ONLY_RELATIONSHIP_DELTA
+focus: "finance / national payment system / current CBR 821-P PDN security overlay and future 7220-U biometric layer"
+
+source:
+  source_id: SEC-SRC-RU-CBR-821P-2023
+  title: "Положение Банка России от 17.08.2023 № 821-П"
+  authority: "Банк России"
+  minjust_registration_number: "76286"
+  official_publication_date: "2023-12-13"
+  effective_date: "2024-04-01"
+  primary_publication_status: VERIFIED
+  exact_binary_status: PENDING_TRANSIENT_DNS_FAILURE
+
+pdn_overlap:
+  status: DIRECT_STATUTORY_CONTEXT_SCENARIO_BOUND
+  direct_reference:
+    locator: "пункт 1.6"
+    rule: "Если защищаемая информация содержит персональные данные, применяются меры безопасности персональных данных при обработке в соответствии со статьей 19 152-ФЗ."
+    referenced_security_acts:
+      - "Приказ ФСТЭК России № 21/2013"
+      - "Постановление Правительства РФ № 1119/2012"
+      - "Приказ ФСБ России № 378/2014 при использовании СКЗИ"
+  reasons:
+    - "Пункт 1.3 охватывает идентификацию, аутентификацию, авторизацию, электронные сообщения, переводы и хранение защищаемой информации."
+    - "Пункты 1.4.1-1.4.2 предусматривают идентификаторы работников/клиентов и информацию для идентификации устройств в audit trail."
+    - "Приложение 2 охватывает электронные сообщения физических лиц, реестры сообщений и криптографическую ключевую информацию."
+  guard: "DIRECT_REFERENCE != UNIVERSAL_APPLICABILITY: сначала доказать, что конкретная запись содержит PDN, затем определить субъекта, операцию, цель, роль и правовое основание."
+
+relationships:
+  - from: SEC-SRC-RU-CBR-821P-2023
+    to: "152-ФЗ:article_19"
+    type: DIRECT_CONDITIONAL_PDN_SECURITY_REFERENCE
+    status: DIRECT_STATUTORY_CONTEXT_SCENARIO_BOUND
+  - from: SEC-SRC-RU-CBR-821P-2023
+    to: "ПП РФ № 1119/2012"
+    type: PDN_IS_SECURITY_REQUIREMENTS_REFERENCE
+    status: DIRECT_STATUTORY_CONTEXT_SCENARIO_BOUND
+  - from: SEC-SRC-RU-CBR-821P-2023
+    to: "Приказ ФСТЭК России № 21/2013"
+    type: PDN_SECURITY_MEASURES_REFERENCE
+    status: DIRECT_STATUTORY_CONTEXT_SCENARIO_BOUND
+  - from: SEC-SRC-RU-CBR-821P-2023
+    to: "Приказ ФСБ России № 378/2014"
+    type: PDN_CRYPTO_SECURITY_MEASURES_REFERENCE
+    status: DIRECT_STATUTORY_CONTEXT_WHEN_CRYPTO_USED
+  - from: SEC-SRC-RU-CBR-821P-2023
+    to: SEC-SRC-RU-CBR-851P-2025
+    type: PAYMENT_SYSTEM_AND_BANKING_INFORMATION_PROTECTION_OVERLAP
+    status: CROSS_REGIME_REVIEW_REQUIRED
+    guard: "821-P != 851-P; actor and information overlap does not merge applicability."
+  - from: SEC-SRC-RU-CBR-821P-2023
+    to: "187-ФЗ"
+    type: KII_OVERLAY_FOR_PAYMENT_OBJECTS_THAT_ARE_KII
+    status: CONDITIONAL_APPLICABILITY_REVIEW_REQUIRED
+    guard: "Payment information infrastructure is not automatically a KII object."
+  - from: "Указание Банка России № 7220-У/2025"
+    to: SEC-SRC-RU-FZ-572-2022
+    type: FUTURE_EXPLICIT_BIOMETRIC_PDN_PAYMENT_CONTEXT
+    status: FUTURE_NOT_CURRENT_UNTIL_2026_10_01
+    guard: "Do not apply the biometric expansion before 2026-10-01."
+
+retention_boundaries:
+  - locator: "пункт 1.1"
+    value: "не менее 5 лет"
+    object: "отчет о результатах оценки соответствия защиты информации"
+    guard: "SECURITY_ASSESSMENT_REPORT_RETENTION != GENERAL_PDN_RETENTION"
+
+future_biometric_boundary:
+  amendment: "Указание Банка России № 7220-У от 28.10.2025"
+  minjust_registration_number: "85263"
+  official_publication_date: "2026-02-17"
+  effective_date: "2026-10-01"
+  current_as_of_2026_08_28: FUTURE_NOT_CURRENT
+  future_scope:
+    - "переводы, инициируемые с использованием биометрических персональных данных клиентов"
+    - "сведения об идентификации/аутентификации с использованием биометрических персональных данных"
+    - "результат идентификации/аутентификации"
+    - "информация об идентификаторе электронного средства платежа в соответствующем сценарии"
+    - "передача и хранение этой информации в платежной инфраструктуре"
+  guard: "FUTURE_BIOMETRIC_SCOPE != CURRENT_EXECUTABLE_RULE"
+
+cross_reference_transition:
+  current_821p_text: "пункты 2.1-2.2 ссылаются на 683-П/2019"
+  current_adjacent_act: "851-П/2025"
+  future_7220u_effect: "с 01.10.2026 заменяет ссылку 683-П на 851-П"
+  status: VERSION_TRANSITION_REVIEW_REQUIRED
+  legal_conflict_declared: false
+
+semantic_guards:
+  - id: PDN-CBR821P-001
+    rule: "PAYMENT_PROTECTED_INFORMATION != PERSONAL_DATA"
+  - id: PDN-CBR821P-002
+    rule: "ARTICLE19_REFERENCE_APPLIES_ONLY_WHEN_PROTECTED_INFORMATION_CONTAINS_PDN"
+  - id: PDN-CBR821P-003
+    rule: "AUDIT_IDENTIFIERS_AND_DEVICE_INFORMATION_REQUIRE_RECORD_LEVEL_CLASSIFICATION"
+  - id: PDN-CBR821P-004
+    rule: "FIVE_YEAR_SECURITY_ASSESSMENT_REPORT_RETENTION != PDN_RETENTION"
+  - id: PDN-CBR821P-005
+    rule: "821P != 851P"
+  - id: PDN-CBR821P-006
+    rule: "PAYMENT_INFRASTRUCTURE != AUTOMATIC_KII_OBJECT"
+  - id: PDN-CBR821P-007
+    rule: "7220U_BIOMETRIC_AMENDMENT_IS_FUTURE_UNTIL_2026_10_01"
+
+counters_reference:
+  ru_protected_information_delta: "master-inventory-delta-2026-08-28T0518.yaml"
+  found: 53
+  downloaded: 9
+  immutable: 9
+  pending: 42
+  reused: 2
+  primary_publication_verified: 24
+  sectors_registered: 28
+
+executable_effect: NONE
