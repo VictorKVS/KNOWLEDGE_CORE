@@ -1,0 +1,40 @@
+schema_version: "1.0"
+id: EVIDENCE-RU-MINKOMSVYAZ-573-APPENDIX9-CLASSIFICATION-ASN-2026-08-28
+checked_at: "2026-08-28"
+subject: "Order 573 appendix 9 Classification.asn OID registry and source anomalies"
+observations:
+  - Order 630 point 21 replaced appendix 9 in full; the replacement applies from 1 March 2024.
+  - The current public consolidated text declares module Classification with IMPLICIT TAGS.
+  - TAGGED contains a unique ObjectDescriptor field &id and an open field &Data, with syntax OID &id DATA &Data.
+  - OID is an alias of ObjectDescriptor in this module; it is not treated as ASN.1 OBJECT IDENTIFIER.
+  - The bounded registry contains 101 declared symbols across message, identifier, connection, abonent, location, payment, dictionary, presense and raw-content families.
+  - Exactly 100 values are safe to execute from the cross-checked public text.
+  - The current HTML rendering exposes the token for sorm-request-identifier-pstn as 141 with an unmatched trailing quote; sequence inference is not accepted as primary-byte evidence.
+  - Connection-request values jump from 162 to 164. No meaning is invented for 163.
+  - The source identifier is literally spelled presense. A corrected presence alias is not accepted as an ASN.1 symbol.
+  - Both the official publication PDF URL and the Ministry card returned 502 Connection refused in a controlled-browser check on 28 August 2026; no incomplete response was stored as an immutable artifact.
+sources:
+  current_index: "https://www.consultant.ru/document/cons_doc_LAW_313954/"
+  current_appendix9_open_text: "https://legalacts.ru/doc/prikaz-minkomsvjazi-rossii-ot-29102018-n-573-ob-utverzhdenii/"
+  order630_official_publication: "https://publication.pravo.gov.ru/document/0001202309050014"
+  order630_official_pdf: "https://publication.pravo.gov.ru/file/pdf?eoNumber=0001202309050014"
+  order630_exact_delta: "https://www.garant.ru/products/ipo/prime/doc/407511660/"
+  ministry_card: "https://digital.gov.ru/documents/prikaz-minczifry-%E2%84%96-630-o-vnesenii-izmenenij-v-prikaz-minkomsvyazi-rossii-ot-29-oktyabrya-2018-g-%E2%84%96-573-ob-utverzhdenii-trebovanij-k-tehnicheskim-i-programmnym-sredstvam-informa"
+source_quality:
+  order630_appendix9_replacement_and_effective_date: VERIFIED
+  current_classification_asn_module_and_registry: VERIFIED_CONSOLIDATED_PUBLIC_TEXT
+  executable_values: VERIFIED_100_OF_101
+  pstn141_token: PENDING_PRIMARY_PDF_FAIL_CLOSED
+  connection_request_163: VERIFIED_ABSENT_NO_SEMANTICS_INVENTED
+  literal_presense_spelling: VERIFIED
+  official_immutable_pdf_bytes: PENDING_SERVER_502
+  independent_expert_review: PENDING
+linked_model: security-knowledge/legislation/RU/ministry-orders/minkomsvyaz-573-2018/appendix9-classification-asn-oid-registry-atomic-v1.yaml
+linked_regression: security-knowledge/legislation/RU/ministry-orders/minkomsvyaz-573-2018/appendix9-classification-asn-oid-registry-regression-v1.json
+claims_not_made:
+  - COMPLETE_APPENDIX9_ASN1_VERIFIED
+  - PSTN_REQUEST_IDENTIFIER_141_PRIMARY_BYTES_VERIFIED
+  - CONNECTION_REQUEST_163_HAS_RESERVED_MEANING
+  - PRESENCE_IS_A_SOURCE_ASN1_SYMBOL
+  - OID_MEANS_ASN1_OBJECT_IDENTIFIER
+  - OFFICIAL_IMMUTABLE_PDF_BYTES_ACQUIRED
