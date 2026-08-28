@@ -1,0 +1,39 @@
+schema_version: "1.0"
+id: EVIDENCE-RU-MINKOMSVYAZ-573-APPENDIX9-DICTIONARIES-BUNCHES-MAP-2026-08-28
+checked_at: "2026-08-28"
+subject: "Order 573 appendix 9 Dictionaries.asn bunches map records"
+observations:
+  - Order 630 point 21 replaced appendix 9 in full with effect from 1 March 2024.
+  - bunchesMapRecords maps sorm-report-dictionary-bunches-map to SEQUENCE OF BunchesMapRecord.
+  - BunchesMapRecord has four fields; a-bunch, b-bunch and begin-time are required, while end-time is optional.
+  - Both endpoint fields have type BunchMapPoint.
+  - BunchMapPoint has three required fields: telco-id, switch-id and bunch-id.
+  - switch-id is UTF8String length 1..128.
+  - telco-id has imported type TelcoID and bunch-id has imported type Bunch.
+  - No directionality was inferred from the endpoint names a-bunch and b-bunch.
+  - No endpoint-distinctness, cross-telco, symmetric deduplication or global uniqueness rule was inferred.
+  - No switch or bunch referential-integrity rule was inferred from the imported types alone.
+  - The report value is SEQUENCE OF BunchesMapRecord without a published element-count constraint.
+  - No retention, refresh, reconciliation or identifier-reuse period was added.
+sources:
+  current_appendix9_open_text: "https://legalacts.ru/doc/prikaz-minkomsvjazi-rossii-ot-29102018-n-573-ob-utverzhdenii/"
+  order630_official_publication: "https://publication.pravo.gov.ru/document/0001202309050014"
+  order630_exact_delta: "https://www.garant.ru/products/ipo/prime/doc/407511660/"
+source_quality:
+  order630_appendix9_replacement_and_effective_date: VERIFIED
+  current_bunches_map_fields_requiredness_and_switch_id_size: VERIFIED_CONSOLIDATED_PUBLIC_TEXT
+  report_wrapper_oid_and_item_type_mapping: VERIFIED_CONSOLIDATED_PUBLIC_TEXT
+  dependency_type_deep_models: PENDING_SEPARATE_ATOMIZATION
+  official_immutable_pdf_bytes: PENDING_SERVER_502_FROM_PRIOR_SAME_DATE_CHECK
+  independent_expert_review: PENDING
+linked_model: security-knowledge/legislation/RU/ministry-orders/minkomsvyaz-573-2018/appendix9-dictionaries-bunches-map-records-atomic-v1.yaml
+linked_regression: security-knowledge/legislation/RU/ministry-orders/minkomsvyaz-573-2018/appendix9-dictionaries-bunches-map-records-regression-v1.json
+claims_not_made:
+  - A_BUNCH_TO_B_BUNCH_DIRECTION_IS_NORMATIVE
+  - ENDPOINTS_MUST_DIFFER
+  - ENDPOINTS_MUST_BELONG_TO_DIFFERENT_TELCOS
+  - REVERSED_ENDPOINT_PAIR_IS_A_DUPLICATE
+  - SWITCH_OR_BUNCH_REFERENTIAL_INTEGRITY_IS_DEFINED_HERE
+  - REPORT_SEQUENCE_HAS_A_MINIMUM_OR_MAXIMUM_ELEMENT_COUNT
+  - END_TIME_MUST_BE_AFTER_BEGIN_TIME
+  - RETENTION_REFRESH_RECONCILIATION_OR_IDENTIFIER_REUSE_PERIOD_IS_SPECIFIED
