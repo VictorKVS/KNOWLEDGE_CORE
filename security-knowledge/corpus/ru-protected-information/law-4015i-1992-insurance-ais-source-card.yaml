@@ -1,0 +1,119 @@
+schema_version: "1.0"
+source_id: SEC-SRC-RU-LAW-4015I-1992
+stream: 3
+jurisdiction: RU
+authority: "Российская Федерация"
+sector: insurance
+regime: insurance_ais_statutory_data_confidentiality_pdn_security_retention_access
+act_type: "Закон Российской Федерации"
+act_number: "4015-I"
+act_date: "1992-11-27"
+title: "Об организации страхового дела в Российской Федерации"
+
+status:
+  current_as_of: "2026-08-29"
+  current_revision_crosscheck: "2026-06-10"
+  value: CURRENT_STATUTORY_TEXT_CROSSCHECKED_PRIMARY_AIS_AMENDMENT_VERIFIED_VERSION_CHAIN_PARTIAL_EXACT_BINARY_PENDING
+  applicability: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  executable_rule_status: NOT_PROMOTED
+
+primary_statutory_evidence:
+  ais_origin:
+    act: "Федеральный закон от 29.12.2022 № 594-ФЗ"
+    official_source: "Российская газета"
+    source_url: "https://rg.ru/documents/2023/01/09/document-strakhovanie.html"
+    official_publication_date: "2023-01-09"
+    proves: "Введение главы IV.2 и статей 33.10-33.15 Закона № 4015-I"
+  biometric_amendment:
+    act: "Федеральный закон от 28.12.2024 № 521-ФЗ"
+    official_source: "Российская газета / publication.pravo.gov.ru"
+    source_url: "https://rg.ru/documents/2025/01/09/fz521-doc.html"
+    publication_locator: "0001202412280023"
+    proves: "Изменение пункта 9 статьи 33.10 по биометрической системе"
+  latest_source_level_check:
+    act: "Федеральный закон от 10.06.2026 № 172-ФЗ"
+    source_url: "https://rg.ru/documents/2026/06/16/fz172-dok.html"
+    effect: "Изменяет Закон № 4015-I, но в первичном тексте не затрагивает статьи 33.10-33.15"
+
+protected_information_anchors:
+  - locator: "ст. 33.10 п. 5(3), п. 6"
+    concept: confidentiality_and_pdn_processing
+    rule: "Оператор обеспечивает защиту/конфиденциальность информации и обрабатывает в том числе ПДн с соблюдением законодательства о ПДн."
+  - locator: "ст. 33.10 п. 7(1)"
+    concept: sector_retention
+    rule: "Информация в АИС страхования хранится 10 лет со дня прекращения действия договора, если страховым законодательством не установлен более длительный срок."
+    guard: "TEN_YEAR_AIS_RETENTION != GENERAL_PDN_RETENTION"
+  - locator: "ст. 33.10 п. 7(3)-(6)"
+    concept: infrastructure_and_security
+    rule: "Основной и резервный комплексы ПАС находятся в РФ; обеспечиваются сохранность, резервирование, защита информации и защита ПДн от угроз."
+  - locator: "ст. 33.10 п. 7(11)"
+    concept: access_audit
+    rule: "Оператор ведет учет запросов на предоставление информации."
+  - locator: "ст. 33.10 п. 9"
+    concept: biometric_identification
+    rule: "В предусмотренном сценарии идентификация физлица возможна с использованием ЕСИА и государственной биометрической системы."
+    guard: "BIOMETRIC_OPTION != UNIVERSAL_BIOMETRIC_APPLICABILITY"
+  - locator: "ст. 33.11 п. 1, 4"
+    concept: person_level_insurance_dataset_quality
+    rule: "АИС содержит сведения о страхователях/застрахованных/выгодоприобретателях и страховых отношениях; страховщик отвечает за достоверность, полноту и актуальность."
+  - locator: "ст. 33.11 п. 6"
+    concept: secret_transfer_boundary
+    rule: "Предусмотренное законом представление информации в АИС не является нарушением тайны страхования, служебной, налоговой или коммерческой тайны."
+    guard: "AUTHORIZED_AIS_TRANSFER != ABOLITION_OF_SECRET_REGIMES"
+  - locator: "ст. 33.12 п. 3"
+    concept: narrow_no_separate_consent_rule
+    rule: "Отдельное согласие на обработку ПДн не требуется только в прямо описанных договорных сценариях получения/использования страховщиком информации."
+    guard: "NARROW_STATUTORY_RULE != BLANKET_NO_CONSENT"
+  - locator: "ст. 33.12 п. 4-6"
+    concept: subject_access_and_non_pdn_analytics
+    rule: "Субъект получает относящуюся к нему информацию и сведения о доступах; отдельная аналитическая выдача по страховой сумме/премии не должна содержать ПДн физлиц."
+
+relationships:
+  - to: "152-ФЗ"
+    relation: DIRECT_STATUTORY_PDN_PROCESSING_SECURITY_AND_NARROW_CONSENT_CONTEXT
+    status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  - to: SEC-SRC-RU-CBR-822P-2023
+    relation: PARENT_STATUTE_TO_SUBORDINATE_INSURANCE_AIS_SECURITY_REQUIREMENTS
+    status: DIRECT_STATUTORY_RELATION
+  - to: "572-ФЗ"
+    relation: BIOMETRIC_IDENTIFICATION_SCENARIO_CONTEXT
+    status: CANDIDATE_SCENARIO_REVIEW_REQUIRED
+  - to: SEC-SRC-RU-GK2-1996-A946
+    relation: INSURANCE_SECRECY_OVERLAP_AND_TRANSFER_BOUNDARY
+    status: CANDIDATE_DATA_CLASSIFICATION_REVIEW_REQUIRED
+  - to: SEC-SRC-RU-NK1-1998-A102
+    relation: TAX_SECRET_TRANSFER_BOUNDARY
+    status: SCOPE_BOUNDARY_ONLY
+  - to: SEC-SRC-RU-FZ-98-2004
+    relation: COMMERCIAL_SECRET_TRANSFER_BOUNDARY
+    status: SCOPE_BOUNDARY_ONLY
+
+version_chain:
+  status: PARTIAL
+  events:
+    - act: "594-ФЗ от 29.12.2022"
+      effect: INTRODUCED_CHAPTER_IV_2
+      evidence_status: PRIMARY_OFFICIAL_TEXT_VERIFIED
+    - act: "521-ФЗ от 28.12.2024"
+      effect: AMENDED_ARTICLE_33_10_POINT_9
+      publication_locator: "0001202412280023"
+      evidence_status: PRIMARY_OFFICIAL_TEXT_AND_METADATA_VERIFIED
+    - act: "172-ФЗ от 10.06.2026"
+      effect: LATEST_SOURCE_LEVEL_EVENT_NO_EFFECT_ON_CHAPTER_IV_2_IDENTIFIED
+      evidence_status: PRIMARY_OFFICIAL_TEXT_VERIFIED
+
+acquisition_state:
+  exact_binary_obtained: false
+  reason: TRANSIENT_DNS_FAILURE_AND_CURRENT_CONSOLIDATED_PRIMARY_BINARY_NOT_LOCATED
+  attempted_at: "2026-08-29T02:18:00+03:00"
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+
+quality_gates:
+  taxonomy_as_evidence: false
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+  fabricated_binary_metadata: false
