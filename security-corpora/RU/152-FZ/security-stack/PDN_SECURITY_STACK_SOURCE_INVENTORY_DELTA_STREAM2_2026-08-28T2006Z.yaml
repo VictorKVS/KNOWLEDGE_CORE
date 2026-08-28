@@ -1,0 +1,76 @@
+schema_version: "1.0"
+id: SEC-PDN-SECURITY-STACK-INVENTORY-DELTA-2026-08-28T2006Z
+applies_to: PDN_SECURITY_STACK_SOURCE_INVENTORY.yaml
+stream: RU_PDN_TECHNICAL_CRYPTO
+created_at: "2026-08-28T20:06:59Z"
+merge_policy: >-
+  ADDITIVE_AND_RECONCILIATION_OVERLAY. Preserve the authoritative 52-source baseline and every existing immutable
+  artifact. Add FSTEC Order 164 exactly once as a bounded neighboring licensing-control source. Do not propagate its
+  developer/producer licensing procedures into the generic PDN operator baseline.
+
+baseline_counters:
+  identified: 52
+  metadata_verified: 52
+  immutable_sha256_verified: 21
+  pending_raw_capture: 31
+  exact_official_route_unresolved: 8
+  confirmed_conflicts: 0
+
+source_additions:
+  - id: SEC-SRC-RU-FSTEC164-2025
+    role: fstec_szi_development_production_licensing_control_procedure_context
+    metadata_status: METADATA_VERIFIED
+    source_record: "source/SEC-SRC-RU-FSTEC164-2025.yaml"
+    raw_capture: PENDING
+    official_publication_id: "0001202507020007"
+    official_document_route: "https://publication.pravo.gov.ru/document/0001202507020007"
+    acquisition_pdf_target: "http://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202507020007"
+    applicability: LICENSED_SZI_DEVELOPMENT_PRODUCTION_ACTIVITY_ONLY
+    not_universal_pdn_duty: true
+
+version_edge_delta:
+  - from: SEC-SRC-RU-FSTEC164-2025
+    type: AMENDED_BY
+    to: SEC-SRC-RU-FSTEC487-2025
+    provenance: OFFICIAL_PUBLICATION_INDEX_AND_EXISTING_IMMUTABLE_AMENDMENT
+    scope: LICENSE_CONTROL_PROCEDURE_VERSION_CHAIN
+
+counter_patch:
+  identified: 53
+  metadata_verified: 53
+  raw_downloaded_exact: 21
+  immutable_sha256_verified: 21
+  pending_raw_capture: 32
+  exact_official_route_unresolved: 8
+  confirmed_conflicts: 0
+
+counter_basis: >-
+  Starting from authoritative 52/52/21/31/8, one metadata-verified pending FSTEC primary act is added. The official
+  publication page and publication identifier are verified and a standard official PDF acquisition target is registered,
+  so no additional unresolved-document-route gap is introduced. Exact bytes were not captured in this pass; immutable
+  remains 21 and pending becomes 32.
+
+semantic_guards:
+  - >-
+    Order 164 governs license-control procedures for development and production of confidential-information protection
+    tools. Generic ISPDn operation, use of protection tools or PP1119/FSTEC21 applicability does not itself prove this
+    separate licensed activity.
+  - >-
+    Keep Order 164 distinct from Order 163 (TZI licensed activity), PP79, PP171-like neighboring development/production
+    licensing context, certification requirements and the FSB/SKZI branch.
+  - >-
+    FSTEC21 remains the active generic ISPDn technical-measures baseline until a final replacement is proven issued,
+    registered where required and officially published.
+
+latest_run_patch:
+  run_record: "runs/STREAM2_RUN_2026-08-28T2006Z.yaml"
+  new_sources: 1
+  new_immutable_captured: 0
+  exact_document_routes_recovered: 1
+  exact_file_targets_registered: 1
+  semantic_promotions: 0
+
+proof_rule: >-
+  Exact official bytes, observed MIME/signature, byte length, computed SHA-256, immutable artifact and manifest are
+  mandatory before extraction readiness or IMMUTABLE_CAPTURED status. Displayed PDF KB/page metadata is not an exact
+  byte fingerprint.
