@@ -1,0 +1,21 @@
+flowchart LR
+    BE["Backend API"] --> RC["Recommendation Controller"]
+    RC --> PG["Policy Guard"]
+    RC --> RM["RAG Manager"]
+    RM --> ER["Evidence Retriever"]
+    RM --> PF["Prompt Template Factory"]
+    RM --> LC["LLM Client"]
+    RC --> CV["Citation Validator"]
+    RC --> KP["Knowledge Projector"]
+    RC --> AE["Audit Emitter"]
+
+    ER --> VDB[("Vector DB")]
+    ER --> SQL[("SQL DB")]
+    ER --> OS[("Original Store")]
+    LC --> LLM["LLM Endpoint"]
+    CV --> SQL
+    KP --> SQL
+    AE --> TR[("Trace/Audit Store")]
+
+    PG -. blocks invalid scope .-> RC
+    CV -. REVIEW_REQUIRED on mismatch .-> RC
