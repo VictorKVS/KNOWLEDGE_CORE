@@ -1,0 +1,173 @@
+schema_version: "1.0"
+source_id: SEC-SRC-RU-FZ-353-2013
+stream: 3
+jurisdiction: RU
+authority: "Российская Федерация"
+sector: consumer_credit
+regime: consumer_credit_personal_data_assignment_confidentiality_and_credit_history_flows
+act_type: "Федеральный закон"
+act_number: "353-ФЗ"
+act_date: "2013-12-21"
+title: "О потребительском кредите (займе)"
+
+status:
+  current_as_of: "2026-08-28"
+  value: CURRENT_PRIMARY_ORIGINAL_VERIFIED_CURRENT_ARTICLE12_CROSSCHECKED_VERSION_CHAIN_PARTIAL_EXACT_BINARY_PENDING
+  applicability: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  executable_rule_status: NOT_PROMOTED
+  current_edition_crosscheck: "ред. от 04.08.2026; prepared consolidation includes amendments not yet in force"
+  future_change_boundaries:
+    - "229-ФЗ от 04.07.2026 меняет статью 6(1-1) с 01.09.2026; FUTURE_NOT_CURRENT на 28.08.2026."
+    - "254-ФЗ от 26.07.2026 меняет статью 5 с 01.09.2026; FUTURE_NOT_CURRENT на 28.08.2026."
+    - "332-ФЗ от 04.08.2026 дополняет статью 7 частями 9.6-9.11 с 01.10.2027; FUTURE_NOT_CURRENT на 28.08.2026."
+
+primary_publication:
+  publication_id: "0001201312230003"
+  official_publisher: "Официальный интернет-портал правовой информации"
+  publication_date: "2013-12-23"
+  source_url: "https://publication.pravo.gov.ru/document/0001201312230003"
+  official_full_text_crosscheck: "https://rg.ru/documents/2013/12/23/kredit-dok.html"
+  exact_byte_capture_status: PENDING_TRANSIENT_DNS_FAILURE
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+  displayed_sizes_used_as_exact_bytes: false
+  note: "Primary publication metadata is verified. Binary acquisition from publication.pravo.gov.ru was attempted at 2026-08-28T20:30+03:00 and failed on DNS resolution; no displayed PDF size was converted into an exact byte count."
+
+protected_information_anchors:
+  - locator: "статья 1 часть 1; статья 3 пункт 2"
+    concept: borrower_natural_person_scope
+    rule: "Закон регулирует потребительский кредит (заем) физическому лицу для целей, не связанных с предпринимательской деятельностью; заемщик определен как физическое лицо."
+    evidence_role: PRIMARY_ORIGINAL_PLUS_CURRENT_CONSOLIDATION_CROSSCHECK
+    guard: "NATURAL_PERSON_SCOPE != AUTOMATIC_APPLICABILITY_OF_EVERY_152FZ_REQUIREMENT_TO_EVERY_CREDITOR_OPERATION"
+  - locator: "статья 12 часть 2"
+    concept: assignment_personal_data_transfer
+    rule: "При уступке прав по договору потребительского кредита кредитор вправе передавать персональные данные заемщика и лиц, предоставивших обеспечение, в соответствии с законодательством Российской Федерации о персональных данных."
+    evidence_role: PRIMARY_ORIGINAL_AND_CURRENT_CONSOLIDATION_CROSSCHECK
+    guard: "STATUTORY_ASSIGNMENT_TRANSFER != UNRESTRICTED_REUSE_OR_DISCLOSURE"
+  - locator: "статья 12 часть 3"
+    concept: assignee_confidentiality_and_security
+    rule: "Новый кредитор обязан хранить банковскую и иную охраняемую законом тайну, персональные данные, обеспечивать их конфиденциальность и безопасность и несет ответственность за разглашение."
+    evidence_role: PRIMARY_ORIGINAL_AND_CURRENT_CONSOLIDATION_CROSSCHECK
+    guard: "BANK_SECRECY_APPLIES_ONLY_WHEN_THE_TRANSFERRED_INFORMATION_FALLS_WITHIN_THAT_SPECIAL_REGIME"
+  - locator: "статья 12 части 4-5"
+    concept: debt_burden_indicator_transfer_on_assignment
+    rule: "При уступке кредитной или микрофинансовой организации передается последнее рассчитанное значение показателя долговой нагрузки заемщика; норма введена 601-ФЗ и действует с 01.01.2024."
+    evidence_role: PRIMARY_AMENDMENT_TEXT_VERIFIED_CURRENT_CONSOLIDATION_CROSSCHECK
+    guard: "DEBT_BURDEN_INDICATOR_FLOW != CREDIT_HISTORY_OR_BANK_SECRECY_BY_DEFINITION"
+  - locator: "статья 10"
+    concept: borrower_debt_and_payment_information_flow
+    rule: "После заключения договора кредитор направляет заемщику либо обеспечивает доступ к сведениям о текущей задолженности, произведенных и предстоящих платежах и иных предусмотренных договором сведениях."
+    evidence_role: CURRENT_CONSOLIDATION_CROSSCHECK
+    guard: "BORROWER_INFORMATION_DUTY != PUBLIC_DISCLOSURE"
+  - locator: "статья 7; 31-ФЗ/2024 и 9-ФЗ/2025"
+    concept: credit_history_self_ban_query_and_contract_decision_flow
+    rule: "Действующий кредитный процесс включает проверку сведений о запрете на заключение договоров потребительского кредита через специальный режим кредитных историй; соответствующий data-flow действует с 01.03.2025."
+    evidence_role: PRIMARY_AMENDMENT_METADATA_PLUS_EFFECT_CROSSCHECK
+    guard: "CREDIT_HISTORY_SELF_BAN_FLOW != GENERAL_PERMISSION_TO_PROCESS_CREDIT_HISTORY_DATA_FOR_UNRELATED_PURPOSES"
+  - locator: "статья 7, будущие части 9.6-9.11 по 332-ФЗ/2026"
+    concept: future_egov_credit_contract_notification_flow
+    rule: "С 01.10.2027 предусмотрен будущий поток уведомлений через квалифицированное бюро кредитных историй в личный кабинет физического лица на ЕПГУ о подписании индивидуальных условий договора и параметрах кредита/контактах кредитора."
+    evidence_role: FUTURE_AMENDMENT_TEXT_CROSSCHECK
+    guard: "FUTURE_NOT_CURRENT; DO_NOT_PROMOTE_BEFORE_2027_10_01"
+
+relationships:
+  - to: "152-ФЗ"
+    relation: DIRECT_STATUTORY_PDN_TRANSFER_AND_SECURITY_CONTEXT_IN_ASSIGNMENT
+    status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    guard: "353-FZ directly names personal data, but each 152-FZ obligation still requires the concrete data set, operation, purpose, role and legal basis."
+  - to: SEC-SRC-RU-FZ-218
+    relation: CREDIT_HISTORY_SELF_BAN_AND_IDENTIFIER_DATA_FLOW_CONTEXT
+    status: CANDIDATE_SCENARIO_REVIEW_REQUIRED
+    guard: "CONSUMER_CREDIT_FLOW != CREDIT_HISTORY_REGIME_EQUIVALENCE"
+  - to: SEC-SRC-RU-FZ-230-2016
+    relation: OVERDUE_DEBT_COLLECTION_SPECIAL_REGIME_BOUNDARY
+    status: CANDIDATE_SCENARIO_REVIEW_REQUIRED
+    guard: "Use current 230-FZ debt-collection rules; repealed historical article 15 of 353-FZ is not treated as the current collection regime."
+  - to: SEC-SRC-RU-FZ-151-2010
+    relation: MICROFINANCE_CONSUMER_LOAN_CONTEXT
+    status: CANDIDATE_SCENARIO_REVIEW_REQUIRED
+    guard: "MFO_STATUS_AND_CONSUMER_CREDIT_SCOPE_MUST_BOTH_BE_PROVED_FOR_DUAL_REGIME_APPLICATION"
+  - to: SEC-SRC-RU-LAW-395-1
+    relation: BANK_SECRECY_PRESERVATION_ON_ASSIGNMENT_CONTEXT
+    status: CANDIDATE_SCENARIO_REVIEW_REQUIRED
+    guard: "353-FZ preserves banking secrecy on assignment; it does not make every consumer-credit datum banking secrecy."
+
+version_chain:
+  status: PRIMARY_ORIGINAL_VERIFIED_RELEVANT_LOCATOR_EVENTS_PARTIALLY_VERIFIED_CURRENT_CONSOLIDATION_CROSSCHECKED_FUTURE_EVENTS_SEPARATED
+  events:
+    - act: "Федеральный закон от 21.12.2013 № 353-ФЗ"
+      effect: ADOPTED
+      publication_id: "0001201312230003"
+      publication_date: "2013-12-23"
+      evidence_status: PRIMARY_OFFICIAL_PUBLICATION_VERIFIED
+    - act: "Федеральный закон от 27.12.2018 № 554-ФЗ"
+      effect: CHANGED_ARTICLE_12_PART_1_ASSIGNMENT_SCOPE
+      evidence_status: CURRENT_LOCATOR_HISTORY_CROSSCHECK_EXACT_PRIMARY_CAPTURE_PENDING
+    - act: "Федеральный закон от 29.12.2022 № 601-ФЗ"
+      effect: ADDED_ARTICLE_12_PARTS_4_5_DEBT_BURDEN_INDICATOR_TRANSFER
+      effective_date: "2024-01-01"
+      evidence_status: PRIMARY_RUSSIAN_GAZETTE_AMENDMENT_TEXT_VERIFIED_EXACT_BINARY_PENDING
+    - act: "Федеральный закон от 26.02.2024 № 31-ФЗ"
+      effect: CREDIT_HISTORY_SELF_BAN_AND_CONSUMER_CREDIT_CHECKING_FLOW
+      publication_id: "0001202402260017"
+      publication_date: "2024-02-26"
+      effective_date: "2025-03-01"
+      evidence_status: PRIMARY_PUBLICATION_METADATA_VERIFIED_EFFECT_CROSSCHECKED
+    - act: "Федеральный закон от 13.02.2025 № 9-ФЗ"
+      effect: CHANGED_ARTICLE_7_SELF_BAN_CONTRACT_PROCESSING_RULES
+      publication_id: "0001202502130045"
+      publication_date: "2025-02-13"
+      evidence_status: PRIMARY_PUBLICATION_METADATA_AND_AMENDMENT_TEXT_VERIFIED_EXACT_BINARY_PENDING
+    - act: "Федеральный закон от 04.07.2026 № 229-ФЗ"
+      effect: FUTURE_CHANGE_ARTICLE_6_1_1
+      effective_date: "2026-09-01"
+      evidence_status: OFFICIAL_RUSSIAN_GAZETTE_TEXT_VERIFIED_FUTURE_NOT_CURRENT
+    - act: "Федеральный закон от 26.07.2026 № 254-ФЗ"
+      effect: FUTURE_CHANGE_ARTICLE_5
+      effective_date: "2026-09-01"
+      evidence_status: OFFICIAL_RUSSIAN_GAZETTE_TEXT_VERIFIED_FUTURE_NOT_CURRENT
+    - act: "Федеральный закон от 04.08.2026 № 332-ФЗ"
+      effect: FUTURE_ARTICLE_7_PARTS_9_6_TO_9_11_EPGU_NOTIFICATION_FLOW
+      publication_id_crosscheck: "0001202608040077"
+      effective_date: "2027-10-01"
+      evidence_status: AMENDMENT_TEXT_CROSSCHECKED_FUTURE_NOT_CURRENT_EXACT_PRIMARY_CAPTURE_PENDING
+  current_text_crosscheck:
+    edition_date_label: "2026-08-04"
+    current_as_of: "2026-08-28"
+    evidence_role: SECONDARY_CONSOLIDATION_CROSSCHECK_ONLY
+    warning: "Prepared edition includes amendments not yet in force; current executable state must respect individual effective dates."
+  guard: "CURRENT_CONSOLIDATION_CROSSCHECK != COMPLETE_PRIMARY_BYTE_EXACT_VERSION_CHAIN"
+
+acquisition:
+  attempted_at: "2026-08-28T20:30:00+03:00"
+  targets:
+    - "https://publication.pravo.gov.ru/File/Pdf?eoNumber=0001201312230003"
+    - "https://publication.pravo.gov.ru/document/0001202402260017"
+    - "https://publication.pravo.gov.ru/document/0001202502130045"
+  result: TEMPORARY_FAILURE_IN_NAME_RESOLUTION
+  exact_bytes_obtained: false
+  durable_download: false
+  immutable_manifest_created: false
+  displayed_size_used_as_byte_length: false
+
+proof_floor:
+  taxonomy_used_as_evidence: false
+  primary_normative_act_required: true
+  consumer_credit_data_always_pdn: false
+  consumer_credit_data_always_bank_secrecy: false
+  assignment_transfer_means_unrestricted_reuse: false
+  ancillary_service_consent_equals_pdn_consent: false
+  credit_history_flow_equals_bank_secrecy: false
+  future_rule_promoted_early: false
+  applicability_promoted: false
+  legal_conflict_declared: false
+
+sources:
+  - "https://publication.pravo.gov.ru/document/0001201312230003"
+  - "https://rg.ru/documents/2013/12/23/kredit-dok.html"
+  - "https://rg.ru/documents/2023/01/09/document-o-potrebitelskom-kredite.html"
+  - "https://publication.pravo.gov.ru/document/0001202402260017"
+  - "https://publication.pravo.gov.ru/document/0001202502130045"
