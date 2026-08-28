@@ -1,0 +1,42 @@
+schema_version: "1.0"
+id: EVIDENCE-RU-MINKOMSVYAZ-573-APPENDIX9-DICTIONARIES-MOBILE-IDENTITY-SIGNAL-POINT-2026-08-28
+checked_at: "2026-08-28"
+subject: "Order 573 appendix 9 Dictionaries.asn mobile identity plan and signal point records"
+observations:
+  - Order 630 point 21 replaced appendix 9 in full with effect from 1 March 2024.
+  - The source literally spells mobileSubscriberIdenityPlanRecords and MobileSubscriberIdenityPlanRecord without the second letter t in Identity.
+  - MobileSubscriberIdenityPlanRecord has thirteen fields, eleven required and two optional.
+  - range-deactivation is optional with tag 0; range-status is optional with tag 1.
+  - MCC and MNC are NumericString of exact length 3; area-code is NumericString length 3..10.
+  - capacity-from and capacity-to are NumericString length 0..7, so zero length is syntactically admitted without assigning it a business meaning.
+  - capacity-size is INTEGER 1..10000000; description is UTF8String 2..255; region and city are UTF8String 1..128.
+  - The rendered range-activation token contains a split DateAnd Time and range-deactivation joins DateAndTimeOPTIONAL; both remain pending primary PDF.
+  - The signal report wrapper is literally signalPointCodes without a Records suffix.
+  - SignalPointCodesRecord has five fields, four required and optional end-time; it has no telco-id field.
+  - ss7-point-code is UTF8String length 1..32, switch-id is UTF8String 1..128 and description is UTF8String 1..256.
+  - The rendered signal switch-id and begin-time tokens are joined and remain pending primary PDF.
+  - No interval ordering, capacity equation, MCC/MNC registry validation, OPC/DPC direction enum or global uniqueness was inferred.
+sources:
+  current_appendix9_open_text: "https://legalacts.ru/doc/prikaz-minkomsvjazi-rossii-ot-29102018-n-573-ob-utverzhdenii/"
+  order630_official_publication: "https://publication.pravo.gov.ru/document/0001202309050014"
+  order630_exact_delta: "https://www.garant.ru/products/ipo/prime/doc/407511660/"
+source_quality:
+  order630_appendix9_replacement_and_effective_date: VERIFIED
+  current_mobile_and_signal_fields_requiredness_tags_ranges_and_sizes: VERIFIED_CONSOLIDATED_PUBLIC_TEXT
+  literal_record_and_wrapper_names: VERIFIED_CONSOLIDATED_PUBLIC_TEXT
+  rendered_token_compilability: PENDING_PRIMARY_PDF
+  dependency_type_deep_models: PENDING_SEPARATE_ATOMIZATION
+  official_immutable_pdf_bytes: PENDING_SERVER_502_FROM_PRIOR_SAME_DATE_CHECK
+  independent_expert_review: PENDING
+linked_model: security-knowledge/legislation/RU/ministry-orders/minkomsvyaz-573-2018/appendix9-dictionaries-mobile-identity-signal-point-records-atomic-v1.yaml
+linked_regression: security-knowledge/legislation/RU/ministry-orders/minkomsvyaz-573-2018/appendix9-dictionaries-mobile-identity-signal-point-records-regression-v1.json
+claims_not_made:
+  - NORMALIZED_IDENTITY_SPELLING_IS_THE_SOURCE_IDENTIFIER
+  - EMPTY_CAPACITY_BOUND_HAS_A_DEFINED_BUSINESS_MEANING
+  - CAPACITY_FROM_IS_LESS_THAN_OR_EQUAL_TO_CAPACITY_TO
+  - CAPACITY_SIZE_EQUALS_THE_INTERVAL_CARDINALITY
+  - MCC_OR_MNC_IS_VALIDATED_AGAINST_AN_EXTERNAL_REGISTRY
+  - SIGNAL_POINT_RECORD_HAS_A_TELCO_ID_FIELD
+  - SS7_POINT_CODE_IS_DIGIT_ONLY_OR_HAS_AN_OPC_DPC_DIRECTION_ENUM
+  - REPORT_SEQUENCE_HAS_A_MINIMUM_OR_MAXIMUM_ELEMENT_COUNT
+  - RENDERED_HTML_IS_COMPILABLE_ASN1
