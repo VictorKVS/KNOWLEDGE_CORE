@@ -1,0 +1,182 @@
+schema_version: "1.0"
+id: SEC-SRC-RU-LAW-4015I-1992
+kind: security-regulatory-source
+status: CURRENT_STATUTORY_TEXT_CROSSCHECKED_PRIMARY_AIS_AMENDMENT_VERIFIED_VERSION_CHAIN_PARTIAL_EXACT_BINARY_PENDING
+
+jurisdiction: RU
+authority: "Российская Федерация"
+sector: insurance
+regime: insurance_ais_statutory_data_confidentiality_pdn_security_retention_access
+
+document:
+  type: "Закон Российской Федерации"
+  number: "4015-I"
+  adopted_date: "1992-11-27"
+  title: "Об организации страхового дела в Российской Федерации"
+  current_consolidated_revision_crosscheck: "2026-06-10"
+  checked_at: "2026-08-29"
+
+publication_history:
+  original_publication_bibliographic_crosscheck:
+    - "Российская газета, № 6, 12.01.1993"
+    - "Ведомости СНД и ВС РФ, 14.01.1993, № 2, ст. 56"
+  original_exact_primary_binary_status: NOT_CAPTURED
+  ais_chapter_primary_origin:
+    act: "Федеральный закон от 29.12.2022 № 594-ФЗ"
+    title: "О внесении изменений в отдельные законодательные акты Российской Федерации в части создания автоматизированной информационной системы страхования"
+    official_publication: "Российская газета, 09.01.2023"
+    url: "https://rg.ru/documents/2023/01/09/document-strakhovanie.html"
+    evidence_status: PRIMARY_OFFICIAL_PUBLICATION_TEXT_VERIFIED_WEB_LAYER
+  biometric_locator_amendment:
+    act: "Федеральный закон от 28.12.2024 № 521-ФЗ"
+    official_publication: "Российская газета, 09.01.2025"
+    url: "https://rg.ru/documents/2025/01/09/fz521-doc.html"
+    official_publication_locator: "0001202412280023"
+    official_portal_search_url: "https://publication.pravo.gov.ru/"
+    evidence_status: PRIMARY_OFFICIAL_PUBLICATION_TEXT_AND_OFFICIAL_PORTAL_METADATA_VERIFIED
+  latest_source_level_amendment_crosscheck:
+    act: "Федеральный закон от 10.06.2026 № 172-ФЗ"
+    official_publication: "Российская газета, 16.06.2026"
+    url: "https://rg.ru/documents/2026/06/16/fz172-dok.html"
+    president_bank_url: "https://kremlin.ru/acts/bank"
+    effect_on_ais_locators: NO_EFFECT_IDENTIFIED_IN_PRIMARY_AMENDMENT_TEXT
+
+current_text_crosscheck:
+  source: "КонсультантПлюс"
+  revision: "2026-06-10"
+  urls:
+    article_33_10: "https://www.consultant.ru/document/cons_doc_LAW_1307/61891c43f33d72df3c59a90fa91df0097f4af72f/"
+    article_33_11: "https://www.consultant.ru/document/cons_doc_LAW_1307/f6ffd365980d438dc1235386d4fbcbc33cf2dba6/"
+    article_33_12: "https://www.consultant.ru/document/cons_doc_LAW_1307/350fd8f247a9cddd9dfb085107bd70bb98216dc4/"
+  evidence_role: CURRENT_CONSOLIDATED_CROSSCHECK_NOT_PRIMARY_BINARY
+
+protected_information:
+  scope_actor: "оператор АИС страхования, страховщики и иные пользователи в пределах прямо установленных законом ролей"
+  protected_locators:
+    - locator: "статья 33.10 пункт 2"
+      concept: STATE_SECRET_EXCLUSION_FROM_AIS
+      findings:
+        - "Сведения, составляющие государственную тайну, не подлежат представлению в АИС страхования."
+      guard: "EXCLUSION_FROM_AIS != DECLASSIFICATION_OR_CHANGE_OF_STATE_SECRET_REGIME"
+    - locator: "статья 33.10 пункты 5(3), 6"
+      concept: CONFIDENTIALITY_AND_DIRECT_PDN_PROCESSING_CONTEXT
+      findings:
+        - "Оператор обеспечивает защиту и конфиденциальность информации, обрабатываемой в АИС страхования."
+        - "Оператор вправе обрабатывать информацию, включая персональные данные, в соответствии со страховым законодательством, законодательством об информации и законодательством о персональных данных."
+      guard: "INFORMATION_IN_AIS != PERSONAL_DATA_BY_DEFINITION; классифицировать конкретные поля и операции отдельно."
+    - locator: "статья 33.10 пункт 7 подпункт 1"
+      concept: SECTOR_AIS_RETENTION
+      findings:
+        - "Представленная в АИС страхования информация хранится в электронной форме 10 лет со дня прекращения действия договора страхования, если более длительный срок не установлен страховым законодательством."
+      guard: "TEN_YEAR_AIS_INSURANCE_RETENTION != GENERAL_PERSONAL_DATA_RETENTION_PERIOD_OUTSIDE_THIS_STATUTORY_AIS_SCOPE"
+    - locator: "статья 33.10 пункт 7 подпункты 3-6"
+      concept: LOCAL_INFRASTRUCTURE_RESILIENCE_INFORMATION_AND_PDN_SECURITY
+      findings:
+        - "Основной и резервный комплексы программно-аппаратных средств должны находиться на территории Российской Федерации."
+        - "Оператор обеспечивает сохранность информации, резервное копирование и соблюдает требования Банка России к защите информации."
+        - "Оператор обеспечивает защиту ПДн от угроз безопасности при обработке в АИС страхования."
+      guard: "AIS_OPERATOR_REQUIREMENTS != AUTOMATIC_REQUIREMENTS_FOR_EVERY_INSURER_INFORMATION_SYSTEM"
+    - locator: "статья 33.10 пункт 7 подпункт 11"
+      concept: ACCESS_REQUEST_AUDIT
+      findings:
+        - "Оператор ведет учет запросов о предоставлении содержащейся в АИС страхования информации."
+    - locator: "статья 33.10 пункт 9"
+      concept: BIOMETRIC_IDENTIFICATION_OPTION
+      findings:
+        - "Для идентификации физического лица при предоставлении ему информации допускается использование ЕСИА либо ЕСИА и государственной системы идентификации и аутентификации с использованием биометрических ПДн."
+      guard: "BIOMETRIC_OPTION != PROOF_OF_BIOMETRIC_PROCESSING_IN_EVERY_INSURANCE_SCENARIO"
+    - locator: "статья 33.11 пункты 1, 4"
+      concept: INSURANCE_AIS_DATASET_AND_QUALITY
+      findings:
+        - "В АИС содержится информация о страхователе, застрахованном лице, выгодоприобретателе, лице, ответственность которого застрахована, а также сведения о договоре, риске, страховом случае, выплате и другие предусмотренные законом сведения."
+        - "Страховщик обязан обеспечивать достоверность, полноту и актуальность представляемой информации."
+      guard: "PERSON_LEVEL_INSURANCE_RECORDS_REQUIRE_FIELD_LEVEL_PDN_AND_SECRET_CLASSIFICATION"
+    - locator: "статья 33.11 пункт 6"
+      concept: STATUTORY_TRANSFER_SECRET_BOUNDARY
+      findings:
+        - "Представление предусмотренной законом информации в АИС страхования не является нарушением тайны страхования, служебной, налоговой или коммерческой тайны."
+      guard: "STATUTORY_TRANSFER_CARVEOUT != REMOVAL_OF_THE_UNDERLYING_SECRET_REGIME_FOR_OTHER_OPERATIONS"
+    - locator: "статья 33.12 пункт 3"
+      concept: NARROW_NO_SEPARATE_PDN_CONSENT_RULE
+      findings:
+        - "Отдельное согласие субъекта ПДн не требуется для получения и использования страховщиком информации об осуществлении страхования только в прямо указанных договорных сценариях."
+      guard: "NO_SEPARATE_CONSENT_IN_ARTICLE_33_12_3 != BLANKET_NO_CONSENT_RULE_FOR_INSURANCE_PDN_PROCESSING"
+    - locator: "статья 33.12 пункты 4-6"
+      concept: SUBJECT_ACCESS_ACCESS_TRACE_AND_NON_PDN_ANALYTICS
+      findings:
+        - "Лицо вправе получать относящуюся к нему информацию из АИС и сведения о лицах, получавших информацию о нем, с установленными законом исключениями."
+        - "Определенные сведения о страховой сумме и премии предоставляются страховщикам только как аналитическая информация, не содержащая ПДн физических лиц."
+
+relationship_candidates:
+  - target: "152-ФЗ"
+    type: DIRECT_STATUTORY_PDN_PROCESSING_SECURITY_AND_NARROW_CONSENT_CONTEXT
+    state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  - target: SEC-SRC-RU-CBR-822P-2023
+    type: PARENT_STATUTE_TO_SUBORDINATE_INSURANCE_AIS_SECURITY_REQUIREMENTS
+    state: DIRECT_STATUTORY_RELATION
+    locators: "статья 33.10 пункт 7 подпункты 5-6"
+  - target: "572-ФЗ"
+    type: BIOMETRIC_IDENTIFICATION_SCENARIO_CONTEXT
+    state: CANDIDATE_SCENARIO_REVIEW_REQUIRED
+    locator: "статья 33.10 пункт 9"
+  - target: SEC-SRC-RU-GK2-1996-A946
+    type: INSURANCE_SECRECY_OVERLAP_AND_STATUTORY_TRANSFER_BOUNDARY
+    state: CANDIDATE_DATA_CLASSIFICATION_REVIEW_REQUIRED
+  - target: SEC-SRC-RU-NK1-1998-A102
+    type: TAX_SECRET_STATUTORY_TRANSFER_BOUNDARY
+    state: SCOPE_BOUNDARY_ONLY
+  - target: SEC-SRC-RU-FZ-98-2004
+    type: COMMERCIAL_SECRET_STATUTORY_TRANSFER_BOUNDARY
+    state: SCOPE_BOUNDARY_ONLY
+  - target: "государственная тайна"
+    type: EXCLUDED_FROM_AIS_DATASET_BY_STATUTE
+    state: DIRECT_STATUTORY_BOUNDARY
+
+applicability:
+  state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  guards:
+    - "Глава IV.2 регулирует конкретную АИС страхования и роли ее участников; не переносить требования автоматически на все страховые ИС."
+    - "Десятилетний срок относится к информации, представленной в АИС страхования, а не ко всем ПДн страховщика."
+    - "Пункт 3 статьи 33.12 содержит узкое специальное правило об отсутствии отдельного согласия только для прямо описанного получения/использования информации страховщиком."
+    - "Статья 33.11(6) разрешает предусмотренное законом представление информации в АИС без нарушения перечисленных тайн, но не отменяет эти режимы для иных операций."
+    - "Биометрический контур применяется только при фактическом использовании предусмотренного законом механизма идентификации."
+  executable_rule_status: NOT_PROMOTED
+
+version_chain:
+  state: VERSION_CHAIN_PARTIAL_CURRENT_CONSOLIDATED_CROSSCHECKED
+  events:
+    - date: "1992-11-27"
+      act: "Закон РФ № 4015-I"
+      effect: ADOPTED
+      evidence: BIBLIOGRAPHIC_PUBLICATION_CROSSCHECK_ONLY
+    - date: "2022-12-29"
+      act: "Федеральный закон № 594-ФЗ"
+      effect: INTRODUCED_CHAPTER_IV_2_ARTICLES_33_10_TO_33_15
+      evidence: PRIMARY_OFFICIAL_RG_TEXT_VERIFIED_WEB_LAYER
+    - date: "2024-12-28"
+      act: "Федеральный закон № 521-ФЗ"
+      effect: AMENDED_ARTICLE_33_10_POINT_9_BIOMETRIC_SYSTEM_REFERENCE
+      evidence: PRIMARY_OFFICIAL_RG_TEXT_AND_PRAVO_METADATA_VERIFIED
+      publication_locator: "0001202412280023"
+    - date: "2026-06-10"
+      act: "Федеральный закон № 172-ФЗ"
+      effect: LATEST_SOURCE_LEVEL_AMENDMENT_CHECKED_NO_EFFECT_ON_ARTICLES_33_10_TO_33_15_IDENTIFIED
+      evidence: PRIMARY_OFFICIAL_RG_TEXT_AND_PRESIDENT_BANK_METADATA_VERIFIED
+  currentness_note: >-
+    Current consolidated text is crosschecked in revision dated 10.06.2026. The primary text of 172-FZ changes other provisions of Law 4015-I and does not amend Chapter IV.2. A complete historical locator-specific chain for every provision of Chapter IV.2 is not claimed; executable promotion remains blocked.
+
+acquisition:
+  exact_binary:
+    status: PENDING_TRANSIENT_DNS_FAILURE
+    attempted_at: "2026-08-29T02:18:00+03:00"
+    attempted_targets:
+      - "https://rg.ru/documents/2023/01/09/document-strakhovanie.html"
+      - "https://rg.ru/documents/2025/01/09/fz521-doc.html"
+      - "https://publication.pravo.gov.ru/"
+    binary_runtime_result: "curl exit 6 / Could not resolve host"
+    retrieved_at: null
+    mime: null
+    byte_length: null
+    sha256: null
+    immutable_artifact: null
+    displayed_sizes_used_as_exact_bytes: false
