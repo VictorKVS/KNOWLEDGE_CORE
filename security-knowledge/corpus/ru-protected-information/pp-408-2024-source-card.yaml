@@ -1,0 +1,105 @@
+schema_version: "1.0"
+source_id: SEC-SRC-RU-PP-408-2024
+stream: 3
+jurisdiction: RU
+authority: "Правительство Российской Федерации"
+sector: biometrics_digital_identity
+regime: 572fz_biometric_personal_data_scope
+act_type: "Постановление Правительства Российской Федерации"
+act_number: "408"
+act_date: "2024-04-01"
+title: "О видах биометрических персональных данных, на которые распространяется действие Федерального закона об осуществлении идентификации и (или) аутентификации физических лиц с использованием биометрических персональных данных"
+
+status:
+  current_as_of: "2026-08-28"
+  value: CURRENT_PRIMARY_ORIGINAL_VERIFIED_CURRENT_STATUS_CROSSCHECKED_EXACT_BINARY_PENDING
+  applicability: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  executable_rule_status: NOT_PROMOTED
+  effective_from: "2024-09-01"
+  sunset: "2027-09-01"
+
+primary_publication:
+  publication_id: "0001202404050032"
+  official_publication_date: "2024-04-05"
+  source_url: "https://publication.pravo.gov.ru/document/0001202404050032"
+  official_file_url: "https://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202404050032"
+  primary_metadata_status: VERIFIED
+  exact_byte_capture_status: PENDING_TRANSIENT_DNS_FAILURE
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+  note: "Official publication card and official pravo.gov.ru new-arrivals material verify the act and its biometric-data scope. Exact PDF bytes could not be acquired because publication.pravo.gov.ru failed DNS resolution in the binary runtime."
+
+legal_basis:
+  - locator: "преамбула"
+    basis: "статья 26 Федерального закона от 29.12.2022 № 572-ФЗ"
+
+protected_information_anchors:
+  - locator: "пункт 1"
+    concept: biometric_pdn_type_face_image
+    rule: "Изображение лица человека, полученное с помощью фотовидеоустройств, является видом биометрических персональных данных, на который распространяется 572-ФЗ."
+    guard: "FACE_IMAGE_WITHIN_408_SCOPE != UNIVERSAL_CLASSIFICATION_OF_EVERY_PHOTO_AS_572FZ_BIOMETRIC_PDN"
+  - locator: "пункт 1"
+    concept: biometric_pdn_type_voice_recording
+    rule: "Запись голоса человека, полученная с помощью звукозаписывающих устройств, является видом биометрических персональных данных, на который распространяется 572-ФЗ."
+    guard: "VOICE_RECORDING_WITHIN_408_SCOPE != UNIVERSAL_CLASSIFICATION_OF_EVERY_AUDIO_RECORD_AS_572FZ_BIOMETRIC_PDN"
+  - locator: "пункт 2"
+    concept: temporal_scope
+    effective_from: "2024-09-01"
+    valid_until: "2027-09-01"
+    guard: "REVERIFY_BEFORE_OR_ON_2027_09_01"
+
+relationships:
+  - to: SEC-SRC-RU-FZ-572-2022
+    relation: DIRECT_IMPLEMENTING_ACT_DEFINING_BIOMETRIC_PDN_TYPES
+    status: DIRECT_STATUTORY_CONTEXT
+  - to: "152-ФЗ:article_11"
+    relation: BIOMETRIC_PDN_OVERLAP_REQUIRES_SCOPE_AND_PURPOSE_ANALYSIS
+    status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    guard: "572FZ_TYPE_SCOPE != AUTOMATIC_ARTICLE11_APPLICABILITY_TO_EVERY_FACE_OR_VOICE_RECORD"
+  - to: SEC-SRC-RU-CBR-821P-2023
+    relation: FUTURE_PAYMENT_BIOMETRIC_SCOPE_REFERENCE_CONTEXT
+    status: FUTURE_NOT_CURRENT_UNTIL_2026_10_01
+    guard: "7220-U future biometric payment amendments do not become current before 2026-10-01."
+
+version_chain:
+  status: ORIGINAL_PRIMARY_PUBLICATION_VERIFIED_CURRENT_STATUS_CROSSCHECKED
+  events:
+    - act: "Постановление Правительства РФ № 408 от 01.04.2024"
+      effect: ADOPTED
+      publication_id: "0001202404050032"
+      publication_date: "2024-04-05"
+      effective_date: "2024-09-01"
+      sunset: "2027-09-01"
+      evidence_status: PRIMARY_PUBLICATION_METADATA_VERIFIED_TEXT_SCOPE_OFFICIAL_PRAVO_SUMMARY_VERIFIED
+  amendments_identified_in_this_sweep: 0
+  current_text_crosscheck:
+    edition_date: "2024-04-01"
+    status: "Действует"
+    effective_date: "2024-09-01"
+    sunset: "2027-09-01"
+    evidence_role: SECONDARY_CURRENT_STATUS_CROSSCHECK_ONLY
+  guard: "NO_AMENDMENT_FOUND_IN_SWEEP != PROOF_OF_COMPLETE_HISTORICAL_VERSION_CHAIN; re-check primary publication index before executable promotion."
+
+acquisition:
+  attempted_at: "2026-08-28T11:22:54+03:00"
+  target: "https://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202404050032"
+  result: TEMPORARY_FAILURE_IN_NAME_RESOLUTION
+  exact_bytes_obtained: false
+  durable_download: false
+  immutable_manifest_created: false
+  displayed_size_used_as_byte_length: false
+
+proof_floor:
+  taxonomy_used_as_evidence: false
+  primary_normative_act_required: true
+  face_or_voice_always_572fz_biometric_pdn: false
+  572fz_scope_equals_152fz_article11_scope: false
+  applicability_promoted: false
+  legal_conflict_declared: false
+
+sources:
+  - "https://publication.pravo.gov.ru/document/0001202404050032"
+  - "https://pravo.gov.ru/novye-postupleniya/"
