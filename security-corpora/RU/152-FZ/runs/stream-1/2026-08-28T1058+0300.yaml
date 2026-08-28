@@ -1,0 +1,89 @@
+schema_version: "1.0"
+run_id: STREAM1-RUN-2026-08-28T1058+0300
+stream: 1
+scope: GENERAL_152FZ_ROSKOMNADZOR_CORE
+observed_at: "2026-08-28T10:58:37+03:00"
+
+counter_snapshot:
+  identified: 37
+  downloaded_exact: 35
+  immutable_sha256: 35
+  atomized_proposed: 4
+  atomized_verified: 0
+  pending_raw: 2
+  raw_coverage: 0.9459
+
+pending_raw_sources:
+  - SEC-SRC-RU-152FZ-2026-07-26
+  - SEC-SRC-RU-PP687-2008
+
+freshness_checks:
+  - source_id: SEC-SRC-RU-152FZ-2026-07-26
+    checked_at: "2026-08-28"
+    result: CURRENT_REVISION_CONFIRMED
+    current_revision: "2026-07-26"
+    amendment_anchor: SEC-SRC-RU-FZ265-2026
+    raw_status: PENDING_CURRENT_CONSOLIDATED_RAW_CAPTURE
+  - source_id: SEC-SRC-RU-PP687-2008
+    checked_at: "2026-08-28"
+    result: CURRENT_REVISION_CONFIRMED
+    current_revision: "2025-01-18"
+    effective_from: "2025-01-26"
+    valid_until: "2030-09-01"
+    raw_status: PENDING_CURRENT_TEXT_RAW_CAPTURE
+  - source_id: SEC-SRC-RU-RKN128-2022
+    checked_at: "2026-08-28"
+    result: CURRENT_RULE_WITH_REPLACEMENT_PROJECT_ONLY
+    note: "No enacted replacement publication identity was found in this pass; preserve Order No. 128 and the open Article 12 alignment review."
+
+reconciliation:
+  - source_id: SEC-SRC-RU-PP1119-2012
+    relation_to_stream1_scope: DIRECT_ARTICLE_19_SECURITY_DEPENDENCY
+    existing_registry: "../../security-stack/PDN_SECURITY_STACK_SOURCE_INVENTORY.yaml"
+    existing_source_record: "../../security-stack/source/SEC-SRC-RU-PP1119-2012.yaml"
+    owner_stream: 2
+    existing_status: METADATA_VERIFIED_RAW_PENDING
+    action: REUSE_EXISTING_SOURCE_ID_DO_NOT_DUPLICATE
+    counter_effect_stream1: 0
+    note: >-
+      PP RF No. 1119 is a general Article 19 dependency, but it is already registered in the sibling PDN security-stack inventory.
+      Stream 1 must reference/reuse that source identity rather than create a duplicate source card or count it again.
+
+regulator_catalog_signal:
+  observed_at: "2026-08-28"
+  finding: >-
+    The Roskomnadzor public NPA-list page is indexed as updated on 21.07.2026 and includes a dedicated XLSX list for
+    federal state control over personal-data processing. The exact primary XLSX was not captured in this runtime,
+    so this is retained only as a freshness/discovery signal and cannot promote any source.
+  status: PRIMARY_CATALOG_ARTIFACT_PENDING
+
+acquisition_attempts:
+  - source_id: SEC-SRC-RU-152FZ-2026-07-26
+    registered_route: "https://ips.pravo.gov.ru/?docbody=&nd=102108261"
+    result: TEMPORARY_DNS_RESOLUTION_FAILURE_IN_RUNTIME
+    exact_bytes_accepted: false
+  - source_id: SEC-SRC-RU-PP687-2008
+    registered_route: "https://government.ru/docs/all/65436/"
+    result: TEMPORARY_DNS_RESOLUTION_FAILURE_IN_RUNTIME
+    exact_bytes_accepted: false
+  - source_id: SEC-SRC-RU-PP687-2008
+    registered_route: "http://pravo.gov.ru/proxy/ips/?docbody=&link_id=0&nd=102124251&intelsearch=&firstDoc=1"
+    result: TEMPORARY_DNS_RESOLUTION_FAILURE_IN_RUNTIME
+    exact_bytes_accepted: false
+
+acquisition_delta:
+  exact_bytes_accepted: 0
+  immutable_new: 0
+  semantic_promotions: 0
+  existing_immutable_preserved: 35
+  repeat_downloads_of_verified_corpus: 0
+
+quality_gates:
+  proof_floor_held: true
+  duplicate_source_registration_prevented: true
+  sector_overlays_touched: false
+
+next_gate: >-
+  Continue guarded acquisition only for the two Stream-1 raw gaps. Reuse the already registered PP1119 identity in
+  the sibling security-stack inventory. Do not promote current 152-FZ or PP687 until official returned bytes, source URL,
+  retrieved_at, MIME, exact byte length, SHA-256 and source-specific current-revision proof are accepted.
