@@ -1,0 +1,99 @@
+schema_version: "1.0"
+stream: 3
+checked_at: "2026-08-28T17:28:00+03:00"
+mode: APPEND_ONLY_PDN_RELATIONSHIP_RECONCILIATION
+previous_stream3_delta: "master-source-inventory-delta-stream3-2026-08-28T1422.yaml"
+focus: "151-FZ microfinance: direct PDN confidentiality/disclosure context, biometric identification, fraud-prevention data flows"
+
+stream3_counters_before:
+  found: 55
+  downloaded: 9
+  immutable: 9
+  pending: 44
+  reused: 2
+  primary_publication_verified: 26
+  sectors_registered: 29
+
+stream3_counters_after:
+  found: 56
+  downloaded: 9
+  immutable: 9
+  pending: 45
+  reused: 2
+  primary_publication_verified: 27
+  sectors_registered: 30
+
+source_added:
+  source_id: SEC-SRC-RU-FZ-151-2010
+  title: "Федеральный закон от 02.07.2010 № 151-ФЗ"
+  sector: microfinance
+  applicability_status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  executable_effect: NONE
+
+pdn_relationships:
+  - from: SEC-SRC-RU-FZ-151-2010
+    locator: "статья 9.1 часть 17"
+    to: "152-ФЗ"
+    relation: DIRECT_STATUTORY_PDN_CONFIDENTIALITY_CONTEXT_FOR_APPEALS
+    status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    rationale: "Норма прямо называет персональные данные заявителя и запрещает использование вне предусмотренных законом целей и разглашение, одновременно охватывая иные специальные тайны."
+    guard: "APPEAL_CONFIDENTIALITY != ALL_MFO_PROCESSING"
+  - from: SEC-SRC-RU-FZ-151-2010
+    locator: "статья 14 часть 4 пункт 5.7"
+    to: "152-ФЗ"
+    relation: DIRECT_STATUTORY_PDN_GUARD_FOR_PUBLIC_DISCLOSURE
+    status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    guard: "PUBLIC_DISCLOSURE_DUTY != PUBLICLY_AVAILABLE_PERSONAL_DATA"
+  - from: SEC-SRC-RU-FZ-151-2010
+    locator: "статья 9 часть 14"
+    to: "572-ФЗ:articles_9_10"
+    relation: DIRECT_BIOMETRIC_IDENTIFICATION_REFERENCE
+    status: SCENARIO_SPECIFIC_STATUTORY_RELATION
+    effective_boundary:
+      general: "2026-03-01"
+      deferred_for_special_mfo_category: "2027-03-01"
+    guard: "ELECTRONIC_CONSUMER_LOAN_SCENARIO_ONLY"
+  - from: SEC-SRC-RU-FZ-151-2010
+    locator: "статья 9 части 12-13"
+    to: "152-ФЗ"
+    relation: FRAUD_PREVENTION_DATA_FLOW_OVERLAP
+    status: CANDIDATE_OPERATION_PURPOSE_REVIEW_REQUIRED
+    guard: "SPECIAL_FRAUD_PREVENTION_FLOW != GENERAL_REUSE_PERMISSION"
+  - from: SEC-SRC-RU-FZ-151-2010
+    to: SEC-SRC-RU-FZ-230-2016
+    relation: MFO_TO_DEBT_COLLECTION_SPECIAL_REGIME_BOUNDARY
+    status: CANDIDATE_SCENARIO_REVIEW_REQUIRED
+  - from: SEC-SRC-RU-FZ-151-2010
+    to: SEC-SRC-RU-FZ-218
+    relation: MFO_TO_CREDIT_HISTORY_SPECIAL_REGIME
+    status: CANDIDATE_SCENARIO_REVIEW_REQUIRED
+  - from: SEC-SRC-RU-FZ-151-2010
+    to: "353-ФЗ"
+    relation: CONSUMER_CREDIT_CONTEXT
+    status: CANDIDATE_SCENARIO_REVIEW_REQUIRED
+  - from: SEC-SRC-RU-FZ-151-2010
+    to: "115-ФЗ:article_7"
+    relation: AML_IDENTIFICATION_CONTEXT
+    status: CANDIDATE_SCENARIO_REVIEW_REQUIRED
+
+version_boundaries:
+  - "41-ФЗ/2025 introduced 151-FZ article 9 part 14; general effect from 01.03.2026, special MFO-category application deferred to 01.03.2027."
+  - "332-ФЗ/2026 changes article 9 part 8 only from 01.10.2027; FUTURE_NOT_CURRENT on 28.08.2026."
+  - "Current consolidation is crosschecked to 09.04.2026, but full primary byte-exact chain remains pending."
+
+acquisition_state:
+  primary_original_official_publication_verified: true
+  exact_binary_obtained: false
+  reason: TEMPORARY_DNS_FAILURE_ON_OFFICIAL_HOSTS
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+
+quality_gates:
+  taxonomy_as_evidence: false
+  applicability_promotions: 0
+  future_rule_promoted_early: false
+  legal_conflicts_declared: 0
+  fabricated_binary_metadata: false
