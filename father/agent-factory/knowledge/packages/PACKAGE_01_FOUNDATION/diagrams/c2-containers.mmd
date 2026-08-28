@@ -1,0 +1,21 @@
+flowchart LR
+    U["Analyst / Expert"] -->|HTTPS| FE["Frontend\nNext.js / React"]
+    FE -->|REST/JSON| BE["Backend API\nFastAPI"]
+    BE -->|POST /get_recommendation| AI["AI / Evidence Service\nPython"]
+
+    AI -->|semantic search| VDB[("Vector DB\npgvector / Qdrant")]
+    AI -->|canonical read/write| SQL[("SQL DB\nSQLite M1 -> PostgreSQL")]
+    AI -->|resolve immutable source| OS[("Original Store\nlocal/S3-compatible")]
+    AI -->|inference| LLM["LLM Endpoint\nlocal / approved cloud"]
+
+    DP["Document Pipeline\nextract/OCR/chunk"] --> OS
+    DP --> SQL
+    TS["Translation Service\nEN->RU + reviewer"] --> SQL
+    RP["Review / Promotion Service"] --> SQL
+    TR[("Trace / Audit Store")] --- BE
+    TR --- AI
+    TR --- DP
+    TR --- TS
+    TR --- RP
+
+    classDef boundary stroke-width:2px,stroke-dasharray: 5 5;
