@@ -1,0 +1,73 @@
+schema_version: "1.0"
+stream: 3
+checked_at: "2026-08-28T11:22:54+03:00"
+mode: APPEND_ONLY_RELATIONSHIP_DELTA
+focus: "biometrics / PP 408 implementation of 572-FZ / boundary with 152-FZ article 11"
+
+source:
+  source_id: SEC-SRC-RU-PP-408-2024
+  title: "Постановление Правительства РФ от 01.04.2024 № 408"
+  authority: "Правительство Российской Федерации"
+  publication_id: "0001202404050032"
+  official_publication_date: "2024-04-05"
+  effective_date: "2024-09-01"
+  sunset: "2027-09-01"
+  primary_publication_status: VERIFIED
+  exact_binary_status: PENDING_TRANSIENT_DNS_FAILURE
+
+pdn_overlap:
+  status: DIRECT_BIOMETRIC_PDN_TYPE_SCOPE_FOR_572FZ_APPLICABILITY_REVIEW_REQUIRED_FOR_152FZ_ART11
+  direct_scope:
+    locator: "пункт 1"
+    types:
+      - "изображение лица человека, полученное с помощью фотовидеоустройств"
+      - "запись голоса человека, полученная с помощью звукозаписывающих устройств"
+    legal_context: "Виды биометрических персональных данных, на которые распространяется 572-ФЗ."
+  guard: "PP 408 directly defines 572-FZ biometric-data types; it does not by itself prove that every photo/audio record is used to establish identity and therefore subject to every rule of Article 11 of 152-FZ."
+
+relationships:
+  - from: SEC-SRC-RU-PP-408-2024
+    to: SEC-SRC-RU-FZ-572-2022
+    type: DIRECT_IMPLEMENTING_ACT_FOR_BIOMETRIC_PDN_TYPES
+    status: DIRECT_STATUTORY_CONTEXT
+  - from: SEC-SRC-RU-PP-408-2024
+    to: "152-ФЗ:article_11"
+    type: BIOMETRIC_PDN_SCOPE_OVERLAP
+    status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    guard: "Classify concrete processing purpose and use before promoting Article 11 applicability."
+  - from: SEC-SRC-RU-PP-408-2024
+    to: SEC-SRC-RU-CBR-821P-2023
+    type: FUTURE_PAYMENT_BIOMETRIC_SCOPE_CONTEXT
+    status: FUTURE_NOT_CURRENT_UNTIL_2026_10_01
+    guard: "CBR 7220-U biometric-payment expansion remains future on 2026-08-28."
+
+semantic_guards:
+  - id: PDN-PP408-001
+    rule: "PP408_572FZ_BIOMETRIC_TYPE != UNIVERSAL_CLASSIFICATION_OF_EVERY_FACE_IMAGE_AS_ARTICLE11_152FZ_BIOMETRIC_PROCESSING"
+  - id: PDN-PP408-002
+    rule: "PP408_572FZ_BIOMETRIC_TYPE != UNIVERSAL_CLASSIFICATION_OF_EVERY_VOICE_RECORDING_AS_ARTICLE11_152FZ_BIOMETRIC_PROCESSING"
+  - id: PDN-PP408-003
+    rule: "BIOMETRIC_TYPE_SCOPE != AUTOMATIC_APPLICABILITY_WITHOUT_PROCESSING_PURPOSE_ROLE_AND_OPERATION"
+  - id: PDN-PP408-004
+    rule: "PP408_HAS_TEMPORAL_SUNSET_2027_09_01_REVERIFY_BEFORE_PROMOTION"
+
+version_boundary:
+  current_as_of: "2026-08-28"
+  effective_from: "2024-09-01"
+  valid_until: "2027-09-01"
+  amendments_identified_in_this_sweep: 0
+  primary_original_publication_verified: true
+  current_status_crosscheck_only: true
+  guard: "No amendment found is not proof of a complete primary version chain."
+
+counters_reference:
+  ru_protected_information_delta: "master-inventory-delta-2026-08-28T1122.yaml"
+  found: 54
+  downloaded: 9
+  immutable: 9
+  pending: 43
+  reused: 2
+  primary_publication_verified: 25
+  sectors_registered: 28
+
+executable_effect: NONE
