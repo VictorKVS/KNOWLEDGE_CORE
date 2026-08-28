@@ -1,0 +1,193 @@
+schema_version: "1.0"
+stream: 3
+run_id: "stream-3-run-2026-08-28T0518"
+started_at: "2026-08-28T05:18:00+03:00"
+completed_at: "2026-08-28T05:18:00+03:00"
+focus: "finance / national payment system / CBR 821-P / conditional PDN security / future biometric amendment"
+mode: DISCOVERY_PRIMARY_VERIFICATION_VERSION_CHAIN_EXACT_CAPTURE_ATTEMPT_APPEND_ONLY_RECONCILIATION
+repository: "VictorKVS/KNOWLEDGE_CORE"
+branch: main
+
+baseline:
+  previous_ru_protected_information_delta: "master-inventory-delta-2026-08-28T0218.yaml"
+  counters:
+    found: 52
+    downloaded: 9
+    immutable: 9
+    pending: 41
+    reused: 2
+    primary_publication_verified: 23
+    sectors_registered: 28
+
+result:
+  new_source:
+    source_id: SEC-SRC-RU-CBR-821P-2023
+    title: "Положение Банка России от 17.08.2023 № 821-П"
+    authority: "Банк России"
+    sector: finance_banking
+    regime: national_payment_system_protected_information
+    current_as_of: "2026-08-28"
+    status: CURRENT_PRIMARY_TEXT_VERIFIED_FUTURE_AMENDMENT_IDENTIFIED_EXACT_BINARY_PENDING
+  deduplication:
+    duplicate_found: false
+    adjacent_existing_source: SEC-SRC-RU-CBR-851P-2025
+    decision: "Register 821-P separately: it is a 161-FZ national-payment-system information-protection regime and is not the same act/regime as 851-P."
+
+primary_evidence:
+  - authority: "Банк России"
+    locator: "official legal-acts index"
+    url: "https://cbr.ru/na/?la.Search=821-%D0%9F"
+    facts:
+      - "821-П dated 17.08.2023"
+      - "MinJust registration 06.12.2023 № 76286"
+      - "official publication 13.12.2023"
+  - authority: "Банк России"
+    locator: "Вестник Банка России № 76 (2472) от 21.12.2023"
+    url: "https://www.cbr.ru/Queries/XsltBlock/File/87500/-1/2472"
+    web_crosscheck:
+      content_type: application/pdf
+      pages: 71
+    note: "Contains complete official text of 821-P."
+  - authority: "Банк России"
+    locator: "Вестник Банка России № 6 (2595) от 25.02.2026"
+    url: "https://www.cbr.ru/Queries/XsltBlock/File/105012/-1/2595"
+    facts:
+      - "Instruction 7220-U dated 28.10.2025"
+      - "MinJust registration 06.02.2026 № 85263"
+      - "official publication on CBR site 17.02.2026"
+      - "effective 01.10.2026"
+    note: "7220-U is a verified future amendment and is not current as of 28.08.2026."
+
+verified_current_anchors:
+  - locator: "пункт 1.3"
+    finding: "Protected-information lifecycle covers identification/authentication/authorization, electronic-message processing, customer authority over funds, transfers, accounting and storage; confidentiality, integrity, availability and authenticity must be protected."
+  - locator: "пункты 1.4-1.4.2"
+    finding: "Audit trail includes timestamps, employee/client identifiers, operation result and device-identification information."
+    guard: "These identifiers require record-level PDN classification; they are not automatically labeled PDN solely by this fact."
+  - locator: "пункт 1.6"
+    finding: "If protected information contains personal data, Article 19 of 152-FZ applies; current text also references FSTEC Order 21, PP 1119 and FSB Order 378 for relevant PDN/security contexts."
+  - locator: "пункт 1.1"
+    finding: "Conformity-assessment report must be stored for at least five years from issuance."
+    guard: "This is security-assessment report retention, not general PDN retention."
+  - locator: "пункт 9.1"
+    finding: "KII requirements overlay only for payment information-infrastructure objects that are actually KII objects."
+    guard: "Payment infrastructure is not automatically KII."
+  - locator: "пункт 9.2"
+    finding: "821-P entered into force 01.04.2024, except specified 5.6 provisions effective 01.01.2031."
+  - locator: "пункт 9.3"
+    finding: "821-P superseded 719-P from its effective date."
+
+version_chain:
+  status: CURRENT_PRIMARY_TEXT_VERIFIED_FUTURE_AMENDMENT_IDENTIFIED
+  current_events:
+    - act: "Положение Банка России № 821-П от 17.08.2023"
+      effect: CURRENT
+      effective_date: "2024-04-01"
+    - act: "Положение Банка России № 719-П от 04.06.2020"
+      effect: SUPERSEDED_BY_821P
+      effective_date: "2024-04-01"
+  future_events:
+    - act: "Указание Банка России № 7220-У от 28.10.2025"
+      effect: FUTURE_AMENDMENT
+      effective_date: "2026-10-01"
+      current_status: FUTURE_NOT_CURRENT
+      future_changes:
+        - "explicit biometric-personal-data payment scenarios"
+        - "biometric identification/authentication information in message/storage protection lifecycle"
+        - "point 2.1/2.2 cross-reference update from 683-P to 851-P"
+  current_cross_reference_observation:
+    locator: "пункты 2.1-2.2"
+    current_wording: "references 683-P/2019"
+    adjacent_current_banking_regime: "851-P/2025"
+    future_resolution: "7220-U replaces 683-P reference with 851-P from 01.10.2026"
+    classification: VERSION_TRANSITION_REVIEW_REQUIRED_NOT_DECLARED_CONFLICT
+
+future_biometric_layer:
+  current_as_of_2026_08_28: FUTURE_NOT_CURRENT
+  effective_date: "2026-10-01"
+  evidence: "Primary CBR text of 7220-U"
+  includes:
+    - "transfers initiated using biometric personal data"
+    - "biometric identification/authentication information and result"
+    - "payment-instrument identifier information in the biometric scenario"
+    - "protection during transmission and storage"
+  relationship: "572-FZ biometric regime overlap candidate from effective date"
+  guard: "Do not turn future text into current executable requirements."
+
+relationships_added:
+  - from: SEC-SRC-RU-CBR-821P-2023
+    to: "152-ФЗ:article_19"
+    type: DIRECT_CONDITIONAL_PDN_SECURITY_REFERENCE
+    status: DIRECT_STATUTORY_CONTEXT_SCENARIO_BOUND
+  - from: SEC-SRC-RU-CBR-821P-2023
+    to: SEC-SRC-RU-CBR-851P-2025
+    type: ADJACENT_PAYMENT_AND_BANKING_INFORMATION_PROTECTION_REGIMES
+    status: CROSS_REGIME_REVIEW_REQUIRED
+  - from: SEC-SRC-RU-CBR-821P-2023
+    to: "187-ФЗ"
+    type: KII_OVERLAY_ONLY_FOR_OBJECTS_THAT_ARE_KII
+    status: CONDITIONAL_APPLICABILITY_REVIEW_REQUIRED
+  - from: "Указание Банка России № 7220-У/2025"
+    to: SEC-SRC-RU-FZ-572-2022
+    type: FUTURE_EXPLICIT_BIOMETRIC_PDN_PAYMENT_CONTEXT
+    status: FUTURE_NOT_CURRENT_UNTIL_2026_10_01
+
+acquisition:
+  exact_capture_attempted: true
+  exact_capture_succeeded: false
+  target: "https://www.cbr.ru/Queries/XsltBlock/File/87500/-1/2472"
+  binary_runtime_result: "URLError: Temporary failure in name resolution"
+  transient_failure: true
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+  displayed_sizes_used_as_exact_bytes: false
+  action: "Exact-capture backlog created for 821-P and future amendment 7220-U; no downloaded or immutable counter increment."
+
+files_written:
+  - "security-knowledge/corpus/ru-protected-information/cbr-821p-2023-source-card.yaml"
+  - "security-knowledge/corpus/ru-protected-information/cbr-821p-2023-capture-pending.json"
+  - "security-knowledge/corpus/ru-protected-information/master-inventory-delta-2026-08-28T0518.yaml"
+  - "security-knowledge/corpus/ru-personal-data/master-source-inventory-delta-stream3-2026-08-28T0518.yaml"
+  - "security-knowledge/corpus/ru-protected-information/stream-3-run-2026-08-28T0518.yaml"
+
+counters_after:
+  found: 53
+  downloaded: 9
+  immutable: 9
+  pending: 42
+  reused: 2
+  primary_publication_verified: 24
+  sectors_registered: 28
+
+quality_gates:
+  deduplication: PASSED
+  primary_act_required: PASSED
+  current_state_checked: PASSED_WITH_EXPLICIT_FUTURE_BOUNDARY
+  exact_byte_integrity: BLOCKED_TRANSIENTLY_NO_FABRICATION
+  applicability_not_invented: PASSED
+  legal_conflicts_not_invented: PASSED
+  executable_rules_created: 0
+
+production_statistics:
+  new_sources: 1
+  new_primary_publications_verified: 1
+  new_future_amendment_events_verified: 1
+  new_pending_exact_capture: 1
+  new_durable_downloads: 0
+  new_immutable_artifacts: 0
+  applicability_promotions: 0
+  legal_conflicts_confirmed: 0
+  acceleration_vs_one_stream_percent: null
+  throughput_time_normalized: null
+  rework_share_percent: null
+  completion_eta: null
+  telemetry_note: "No comparable elapsed-time/source baseline for this pass; acceleration, rework share and ETA are intentionally not fabricated."
+
+next_priority:
+  - "Retry byte-exact capture of 821-P and 7220-U from official CBR PDF endpoints and create immutable artifacts/manifests when DNS is available."
+  - "Re-verify the 7220-U temporal switch on/after 01.10.2026 before promoting any biometric-payment requirement to CURRENT."
+  - "Continue finance/biometrics discovery with current CBR non-credit-financial-organization protection rules and deduplicate against 821-P/851-P/572-FZ."
+  - "Continue pending healthcare, telecom, education/children, public-sector, transport, advertising and archive exact captures without promoting applicability from overlap alone."
