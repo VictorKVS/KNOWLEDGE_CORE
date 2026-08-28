@@ -1,0 +1,80 @@
+schema_version: "1.0"
+id: SEC-PDN-SECURITY-STACK-INVENTORY-DELTA-2026-08-28T1413Z
+applies_to: PDN_SECURITY_STACK_SOURCE_INVENTORY.yaml
+stream: RU_PDN_TECHNICAL_CRYPTO
+created_at: "2026-08-28T14:13:00Z"
+merge_policy: >-
+  ADDITIVE_AND_RECONCILIATION_OVERLAY. Preserve the accepted 50-source baseline and all existing immutable manifests.
+  Add notice 240/24/4734 exactly once, recover the official landing route for notice 240/24/5405, and do not promote
+  either source beyond METADATA_VERIFIED until exact official bytes satisfy the normal proof floor.
+
+baseline_counters:
+  identified: 50
+  metadata_verified: 50
+  immutable_sha256_verified: 21
+  pending_raw_capture: 29
+  exact_official_route_unresolved: 9
+  confirmed_conflicts: 0
+
+source_updates:
+  - id: SEC-SRC-RU-FSTEC-INFO-240-24-5405-2025
+    metadata_status: METADATA_VERIFIED
+    raw_capture: PENDING
+    official_document_route: VERIFIED_OFFICIAL_FSTEC_LANDING
+    official_file_route: ATTACHMENT_PENDING
+    applicability: SECURE_SOFTWARE_DEVELOPMENT_PROCESS_CERTIFICATION_ONLY
+    not_new_universal_pdn_control: true
+
+source_additions:
+  - id: SEC-SRC-RU-FSTEC-INFO-240-24-4734-2025
+    role: fstec_penetration_testing_method_approval_and_scope_notice_2025
+    metadata_status: METADATA_VERIFIED
+    source_record: "source/SEC-SRC-RU-FSTEC-INFO-240-24-4734-2025.yaml"
+    raw_capture: PENDING
+    exact_official_route: VERIFIED_EXACT_OFFICIAL_PDF_ROUTE
+    applicability: ATTESTATION_CONTROL_AND_CONFORMITY_ASSESSMENT_CONTEXT_ONLY
+    not_new_universal_pdn_control: true
+
+methodical_relation_delta:
+  - from: SEC-SRC-RU-FSTEC-INFO-240-24-4734-2025
+    type: APPROVES_METHODICAL_DOCUMENT
+    to: FSTEC-PENTEST-METHOD-2025-06-25
+    scope: INFORMATION_SYSTEM_PROTECTION_TESTING
+    normative_scope_guard: >-
+      Mandatory scope described by the notice is not generalized to every private ISPDn; other use requires a separate
+      operator/customer decision or explicit applicability basis.
+
+counter_patch:
+  identified: 51
+  metadata_verified: 51
+  raw_downloaded_exact: 21
+  immutable_sha256_verified: 21
+  pending_raw_capture: 30
+  exact_official_route_unresolved: 8
+  confirmed_conflicts: 0
+
+counter_basis: >-
+  Starting from the reconciled 50/50/21/29/9 state, notice 240/24/4734 adds one metadata-verified pending source with
+  an exact official PDF route, while recovery of the official fstec.ru document route for notice 240/24/5405 removes
+  one unresolved-route gap. No exact bytes were captured, so immutable remains 21 and pending becomes 30.
+
+semantic_guards:
+  - >-
+    Penetration-testing methodology scope must remain bounded to attestation/control/conformity contexts and the explicit
+    public-sector scope stated by FSTEC; it is not a blanket requirement for private ISPDn.
+  - >-
+    Notice 240/24/5405 remains secure-development certification/version-chain evidence only.
+  - >-
+    Neighboring licensing, certification, KII/NCCCI/GosSOPKA and cryptographic duties require explicit applicability edges.
+
+latest_run_patch:
+  run_record: "runs/STREAM2_RUN_2026-08-28T1413Z.yaml"
+  new_sources: 1
+  new_immutable_captured: 0
+  exact_document_routes_recovered: 2
+  exact_file_routes_recovered: 1
+  semantic_promotions: 0
+
+proof_rule: >-
+  Exact official bytes, observed MIME/signature, byte length, SHA-256, immutable artifact and manifest are mandatory
+  before extraction readiness or IMMUTABLE_CAPTURED status.
