@@ -1,0 +1,60 @@
+schema_version: "1.0"
+sprint_id: FATHER-KF-SPRINT-01
+status: ACTIVE_DEVELOPMENT
+parent_package: PACKAGE_01_FOUNDATION
+parent_issue: 39
+integration_branch: agent/father-translation-factory-m1
+shared_trace_required: true
+bulk_processing_allowed: false
+
+streams:
+  S1:
+    issue: 41
+    branch: agent/father-kf-s1-db-tracing
+    mission: canonical_db_ids_migrations_tracing
+    exit_gate: DB_MIN_GREEN
+    dependencies: []
+  S2:
+    issue: 42
+    branch: agent/father-kf-s2-ingest-ocr-translation
+    mission: ingest_pdf_ocr_translation_evidence
+    exit_gate: INGEST_MED_GREEN
+    dependencies: [S1_contracts]
+  S3:
+    issue: 43
+    branch: agent/father-kf-s3-graph-roleviews
+    mission: knowledge_graph_weights_contradictions_role_views
+    exit_gate: GRAPH_MED_GREEN
+    dependencies: [S1_contracts, S2_evidence_contract]
+  S4:
+    issue: 44
+    branch: agent/father-kf-s4-review-export
+    mission: qa_review_kb_ready_export_roundtrip
+    exit_gate: REVIEW_MED_GREEN
+    dependencies: [S1_contracts, S2_evidence_contract, S3_knowledge_contract]
+
+integration_gates:
+  - G0_PRODUCT_ANALYTICS_ARCHITECTURE_DRAFTED
+  - G1_S1_DB_MIN_GREEN
+  - G2_S2_INGEST_MED_GREEN
+  - G3_S3_GRAPH_MED_GREEN
+  - G4_S4_REVIEW_MED_GREEN
+  - G5_SHORT_EN_END_TO_END_GREEN
+  - G6_REAL_PDF_MAX_GATE
+
+telemetry:
+  baseline_required_before_speedup: true
+  eta_without_measured_throughput: forbidden
+  required_fields:
+    - run_id
+    - stream_id
+    - worker_count
+    - items_total
+    - items_processed
+    - accepted
+    - rejected
+    - rework
+    - errors
+    - elapsed_seconds
+    - throughput
+    - runtime_profile
