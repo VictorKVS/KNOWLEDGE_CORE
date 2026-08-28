@@ -1,0 +1,103 @@
+schema_version: "1.0"
+stream: 3
+checked_at: "2026-08-29T02:18:00+03:00"
+mode: APPEND_ONLY_PDN_RELATIONSHIP_RECONCILIATION
+previous_stream3_delta: "master-source-inventory-delta-stream3-2026-08-28T2321.yaml"
+focus: "Law 4015-I Chapter IV.2 insurance AIS: direct PDN processing/security, 10-year sector retention, narrow no-separate-consent rule, biometrics and protected-secret transfer boundaries"
+
+stream3_counters_before:
+  found: 58
+  downloaded: 9
+  immutable: 9
+  pending: 47
+  reused: 2
+  primary_publication_verified: 29
+  sectors_registered: 31
+
+stream3_counters_after:
+  found: 59
+  downloaded: 9
+  immutable: 9
+  pending: 48
+  reused: 2
+  primary_publication_verified: 29
+  sectors_registered: 31
+
+source_added:
+  source_id: SEC-SRC-RU-LAW-4015I-1992
+  title: "Закон РФ от 27.11.1992 № 4015-I"
+  sector: insurance
+  applicability_status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  executable_effect: NONE
+
+pdn_relationships:
+  - from: SEC-SRC-RU-LAW-4015I-1992
+    locator: "статья 33.10 пункты 5(3), 6"
+    to: "152-ФЗ"
+    relation: DIRECT_STATUTORY_PDN_PROCESSING_AND_CONFIDENTIALITY_CONTEXT
+    status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    guard: "AIS_INFORMATION != PＤN_BY_DEFINITION; classify actual person-level fields and processing operation."
+  - from: SEC-SRC-RU-LAW-4015I-1992
+    locator: "статья 33.10 пункт 7 подпункт 1"
+    to: "152-ФЗ"
+    relation: RETENTION_BOUNDARY
+    status: SCOPE_BOUNDARY_ONLY
+    rationale: "10-летний срок установлен для информации, представленной в АИС страхования, и не является общим сроком хранения ПДн страховщика."
+    guard: "SECTOR_AIS_RETENTION != GENERAL_PDN_RETENTION"
+  - from: SEC-SRC-RU-LAW-4015I-1992
+    locator: "статья 33.12 пункт 3"
+    to: "152-ФЗ"
+    relation: NARROW_STATUTORY_NO_SEPARATE_CONSENT_CONTEXT
+    status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    rationale: "Отдельное согласие не требуется только для получения/использования страховщиком информации в прямо описанных договорных сценариях."
+    guard: "NARROW_STATUTORY_RULE != BLANKET_NO_CONSENT_FOR_INSURANCE_PDN"
+  - from: SEC-SRC-RU-LAW-4015I-1992
+    locator: "статья 33.10 пункт 9"
+    to: "572-ФЗ"
+    relation: BIOMETRIC_IDENTIFICATION_SCENARIO_CONTEXT
+    status: CANDIDATE_SCENARIO_REVIEW_REQUIRED
+    guard: "DO_NOT_APPLY_BIOMETRIC_REQUIREMENTS_WITHOUT_PROVEN_ESIA_EBS_FLOW"
+  - from: SEC-SRC-RU-LAW-4015I-1992
+    locator: "статья 33.10 пункт 7 подпункты 5-6"
+    to: SEC-SRC-RU-CBR-822P-2023
+    relation: PARENT_STATUTE_TO_SUBORDINATE_INFORMATION_AND_PDN_SECURITY_RULES
+    status: DIRECT_STATUTORY_RELATION
+  - from: SEC-SRC-RU-LAW-4015I-1992
+    locator: "статья 33.11 пункт 6"
+    to: SEC-SRC-RU-GK2-1996-A946
+    relation: INSURANCE_SECRECY_AUTHORIZED_TRANSFER_BOUNDARY
+    status: SCOPE_BOUNDARY_ONLY
+    guard: "AUTHORIZED_TRANSFER_TO_AIS != GENERAL_DISCLOSURE_PERMISSION"
+  - from: SEC-SRC-RU-LAW-4015I-1992
+    locator: "статья 33.11 пункт 6"
+    to: SEC-SRC-RU-NK1-1998-A102
+    relation: TAX_SECRET_AUTHORIZED_TRANSFER_BOUNDARY
+    status: SCOPE_BOUNDARY_ONLY
+  - from: SEC-SRC-RU-LAW-4015I-1992
+    locator: "статья 33.11 пункт 6"
+    to: SEC-SRC-RU-FZ-98-2004
+    relation: COMMERCIAL_SECRET_AUTHORIZED_TRANSFER_BOUNDARY
+    status: SCOPE_BOUNDARY_ONLY
+
+version_boundaries:
+  - "594-ФЗ от 29.12.2022 первичным официальным текстом вводит главу IV.2 Закона 4015-I."
+  - "521-ФЗ от 28.12.2024 меняет пункт 9 статьи 33.10; официальный publication locator 0001202412280023."
+  - "Текущая консолидация crosschecked на редакцию 10.06.2026."
+  - "172-ФЗ от 10.06.2026 изменяет Закон 4015-I, но его первичный текст не затрагивает статьи 33.10-33.15."
+  - "Полный locator-specific version-chain не объявлен закрытым; executable promotion отсутствует."
+
+acquisition_state:
+  exact_binary_obtained: false
+  exact_binary_attempted: true
+  reason: TRANSIENT_DNS_FAILURE_AND_CURRENT_CONSOLIDATED_PRIMARY_BINARY_NOT_LOCATED
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+
+quality_gates:
+  taxonomy_as_evidence: false
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+  fabricated_binary_metadata: false
