@@ -1,0 +1,85 @@
+schema_version: "1.0"
+id: SEC-SRC-RU-FSTEC76-2020
+kind: security-regulatory-source
+status: METADATA_VERIFIED
+title: >-
+  Приказ ФСТЭК России от 02.06.2020 № 76 «Об утверждении Требований по безопасности информации,
+  устанавливающих уровни доверия к средствам технической защиты информации и средствам обеспечения
+  безопасности информационных технологий»
+jurisdiction: RU
+issuer: "ФСТЭК России"
+document:
+  type: fstec_trust_requirements_order
+  number: "76"
+  adopted_date: "2020-06-02"
+  effective_from: "2021-01-01"
+  checked_at: "2026-08-28"
+  temporal_status: CURRENT_WITH_2025_AMENDMENT
+  public_access_note: >-
+    Требования доверия имеют ограничительную пометку ДСП; официальный публичный PDF-маршрут ФСТЭК
+    идентифицирован, но полнота публично доступного текста относительно служебной версии не презюмируется.
+  version_chain_note: >-
+    Приказ № 76 заменил предыдущие Требования доверия, утвержденные приказом ФСТЭК России № 131 от
+    30.07.2018, с 01.01.2021. В 2025 году приказом ФСТЭК России № 205 от 11.06.2025 в Требования доверия
+    внесены изменения; факт и содержание изменения подтверждены официальным информационным сообщением
+    ФСТЭК России от 16.10.2025 № 240/24/5531. Отдельные положения приказа № 76 имели отложенные сроки
+    применения в 2022, 2024 и 2028 годах; temporal gate должен проверяться по конкретному пункту.
+canonical_source:
+  publisher: "ФСТЭК России"
+  landing_page: "https://fstec.ru/dokumenty/vse-dokumenty/spetsialnye-normativnye-dokumenty/trebovaniya-po-bezopasnosti-informatsii-utverzhdeny-prikazom-fstek-rossii-ot-2-iyunya-2020-g-n-76"
+  url: "https://fstec.ru/files/585/---------2--2020--N-76/1116/---------2--2020--N-76.pdf"
+  expected_mime: "application/pdf"
+  exact_file_route_status: EXACT_OFFICIAL_PDF_ROUTE_RESOLVED_CAPTURE_PENDING
+  acquisition_priority: HIGH_CERTIFICATION_AND_ISPDN_PRODUCT_TRUST_CONTEXT
+  freshness_check:
+    checked_at: "2026-08-28"
+    result: CURRENT_WITH_ORDER205_2025_AMENDMENT_RECONFIRMED
+    status_evidence:
+      - "SEC-SRC-RU-FSTEC-INFO-240-24-5531-2025"
+capture:
+  fingerprint_status: PENDING
+  semantic_status: CURRENT_WITH_2025_AMENDMENT
+  source_url: "https://fstec.ru/files/585/---------2--2020--N-76/1116/---------2--2020--N-76.pdf"
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  note: >-
+    Exact official FSTEC PDF route is known, but primary bytes were not obtained in this run because fstec.ru
+    timed out. MIME, byte length and SHA-256 remain unset. Do not promote to IMMUTABLE_CAPTURED until the
+    exact payload is received and its type/signature is verified.
+relations:
+  - type: AMENDED_BY
+    target: SEC-SRC-RU-FSTEC205-2025
+    evidence: SEC-SRC-RU-FSTEC-INFO-240-24-5531-2025
+    scope: TRUST_REQUIREMENTS_VERSION_CHAIN
+  - type: AMENDMENT_EXPLAINED_BY
+    target: SEC-SRC-RU-FSTEC-INFO-240-24-5531-2025
+    scope: OFFICIAL_STATUS_AND_CHANGE_EVIDENCE
+  - type: METHODICAL_DEPENDENCY_FOR
+    target: SEC-SRC-RU-FSTEC-VU-NDV-METHOD-2026
+    scope: CERTIFICATION_AND_TRUST_LEVEL_TESTING_CONTEXT
+applicability_guard:
+  direct_scope: CERTIFICATION_PRODUCT_TRUST_AND_CONFORMITY_CONTEXT
+  ispdn_link: >-
+    Требования доверия релевантны ИСПДн как контекст требований к средствам защиты и уровням доверия,
+    когда применимость конкретного сертифицированного средства/уровня доверия доказана требованиями к системе,
+    проектным решением или иным нормативным основанием.
+  generic_private_ispdn: NOT_A_STANDALONE_ORGANIZATIONAL_MEASURE_SET
+  no_requirement_propagation: >-
+    Не переносить обязанности разработчиков, изготовителей, испытательных лабораторий и органов по сертификации
+    в общий baseline оператора ПДн только на основании наличия ИСПДн. Не подменять приказ ФСТЭК № 21 этим приказом.
+provenance:
+  official_landing_page_identified: true
+  exact_official_file_route_verified: true
+  current_status_cross_verified: true
+  amendment_2025_official_notice_verified: true
+  exact_official_bytes_captured: false
+  review_required: true
+agent_rule: >-
+  Keep Order 76 as a bounded trust/certification and protected-product source. Preserve the 2025 amendment chain,
+  keep developer/certification obligations separate from generic PDN operator duties, and require exact official bytes,
+  observed MIME, byte length and computed SHA-256 before immutable promotion.
+inventory_registration:
+  role: fstec_information_security_product_trust_requirements
+  applicability: CERTIFICATION_PRODUCT_TRUST_AND_EXPLICIT_ISPDN_PRODUCT_REQUIREMENT_ONLY

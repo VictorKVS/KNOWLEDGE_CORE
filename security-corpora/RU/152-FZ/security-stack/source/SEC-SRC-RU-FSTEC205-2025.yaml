@@ -1,0 +1,76 @@
+schema_version: "1.0"
+id: SEC-SRC-RU-FSTEC205-2025
+kind: security-regulatory-source
+status: METADATA_VERIFIED
+title: >-
+  Приказ ФСТЭК России от 11.06.2025 № 205, внесший изменения в Требования по безопасности информации,
+  устанавливающие уровни доверия к средствам технической защиты информации и средствам обеспечения
+  безопасности информационных технологий, утвержденные приказом ФСТЭК России от 02.06.2020 № 76
+jurisdiction: RU
+issuer: "ФСТЭК России"
+document:
+  type: regulator_order_amendment
+  number: "205"
+  adopted_date: "2025-06-11"
+  ministry_registration_date: "2025-09-10"
+  ministry_registration_number: "83505"
+  checked_at: "2026-08-28"
+  temporal_status: CURRENT_AMENDING_ACT_EFFECT_CONFIRMED
+  status_note: >-
+    Факт принятия приказа № 205, его регистрацию Минюстом России 10.09.2025 № 83505 и содержание
+    изменения подтверждает официальное информационное сообщение ФСТЭК России от 16.10.2025
+    № 240/24/5531. В этом проходе точный официальный primary publication/file route самого приказа
+    № 205 не установлен, поэтому дата официального опубликования и точная дата вступления в силу
+    не выводятся предположительно.
+canonical_source:
+  publisher: "ФСТЭК России / официальный правовой источник подлежит установлению"
+  landing_page: null
+  url: null
+  status_evidence_url: "https://fstec.ru/files/1407/-----16--2025--N-240-24-5531/2848/-----16--2025--N-240-24-5531.pdf"
+  exact_document_route_status: UNRESOLVED_PRIMARY_PUBLICATION_ROUTE
+  exact_file_route_status: UNRESOLVED_PRIMARY_PUBLICATION_ROUTE
+  acquisition_priority: HIGH_VERSION_CHAIN_PRIMARY_BYTES
+  freshness_check:
+    checked_at: "2026-08-28"
+    result: EXISTENCE_REGISTRATION_AND_EFFECT_CROSS_VERIFIED_VIA_OFFICIAL_FSTEC_NOTICE
+capture:
+  fingerprint_status: PENDING
+  semantic_status: CURRENT_AMENDING_ACT_EFFECT_CONFIRMED
+  source_url: null
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  note: >-
+    Exact official primary bytes of Order 205 were not located in this run. The official FSTEC notice is status
+    evidence only and must not be stored as if it were the Order 205 payload. Do not synthesize a publication ID,
+    MIME, byte length or SHA-256. Immutable promotion requires the exact primary act file.
+relations:
+  - type: AMENDS
+    target: SEC-SRC-RU-FSTEC76-2020
+    evidence: SEC-SRC-RU-FSTEC-INFO-240-24-5531-2025
+    scope: TRUST_REQUIREMENTS_VERSION_CHAIN
+  - type: STATUS_EVIDENCED_BY
+    target: SEC-SRC-RU-FSTEC-INFO-240-24-5531-2025
+    scope: OFFICIAL_FSTEC_CONFIRMATION
+applicability_guard:
+  direct_scope: VERSION_CHAIN_AND_CERTIFICATION_PRODUCT_TRUST_CONTEXT_ONLY
+  generic_private_ispdn: NOT_A_STANDALONE_PDN_DUTY
+  no_requirement_propagation: >-
+    Приказ № 205 учитывается как изменение продуктовых требований доверия. Не переносить его положения
+    в общий перечень организационных и технических мер ИСПДн без доказанной связи с применимым средством
+    защиты, сертификацией или иным нормативным требованием к уровню доверия.
+provenance:
+  official_fstec_notice_identified: true
+  minjust_registration_from_official_fstec_notice: true
+  amendment_effect_from_official_fstec_notice: true
+  exact_primary_route_verified: false
+  exact_official_bytes_captured: false
+  review_required: true
+agent_rule: >-
+  Treat Order 205 as a verified version-chain dependency of Order 76, but keep its primary payload pending.
+  Never substitute the 240/24/5531 notice bytes for Order 205. Require an exact official primary route and payload
+  before immutable promotion, and retain certification/product scope guards.
+inventory_registration:
+  role: fstec76_version_chain_amending_act_2025
+  applicability: VERSION_CHAIN_AND_CERTIFICATION_PRODUCT_TRUST_CONTEXT_ONLY
