@@ -16,33 +16,34 @@ document:
   checked_at: "2026-08-28"
   temporal_status: CURRENT_VERSION_CHAIN_EVIDENCE
   status_note: >-
-    Текст сообщения подтверждается несколькими опубликованными копиями регуляторного материала.
-    Сообщение фиксирует, что приказом ФСТЭК России от 30.06.2025 № 230,
-    зарегистрированным Минюстом России 18.09.2025 № 83573, изменен Порядок,
-    утвержденный приказом ФСТЭК России № 240/2023, в части перехода на ГОСТ Р 56939-2024.
-    Точный официальный landing/file route самого сообщения на fstec.ru в текущем проходе
-    не восстановлен, поэтому immutable promotion запрещен.
+    Официальный landing route ФСТЭК России восстановлен 28.08.2026 через независимую ссылочную
+    цепочку, ведущую непосредственно на fstec.ru. Сообщение подтверждает, что приказом ФСТЭК
+    России от 30.06.2025 № 230, зарегистрированным Минюстом России 18.09.2025 № 83573, изменен
+    Порядок, утвержденный приказом ФСТЭК России № 240/2023, в части перехода на ГОСТ Р 56939-2024.
+    Точный официальный file/attachment route и exact bytes пока не получены, поэтому immutable
+    promotion запрещен.
 canonical_source:
   publisher: "ФСТЭК России"
-  landing_page: null
-  url: null
-  exact_document_route_status: UNRESOLVED_OFFICIAL_FSTEC_ROUTE
-  exact_file_route_status: UNRESOLVED_OFFICIAL_FSTEC_ROUTE
+  landing_page: "https://fstec.ru/dokumenty/vse-dokumenty/informatsionnye-i-analiticheskie-materialy/informatsionnoe-soobshchenie-fstek-rossii-ot-9-oktyabrya-2025-g-n-240-24-5405"
+  url: "https://fstec.ru/dokumenty/vse-dokumenty/informatsionnye-i-analiticheskie-materialy/informatsionnoe-soobshchenie-fstek-rossii-ot-9-oktyabrya-2025-g-n-240-24-5405"
+  exact_document_route_status: VERIFIED_OFFICIAL_FSTEC_LANDING
+  exact_file_route_status: UNRESOLVED_OFFICIAL_FSTEC_ATTACHMENT
   acquisition_priority: HIGH_VERSION_CHAIN_EVIDENCE
   freshness_check:
     checked_at: "2026-08-28"
-    result: MESSAGE_EXISTENCE_AND_CONTENT_CROSS_VERIFIED_OFFICIAL_ROUTE_PENDING
+    result: OFFICIAL_FSTEC_LANDING_VERIFIED_ATTACHMENT_PENDING_TRANSPORT
 capture:
   fingerprint_status: PENDING
   semantic_status: CURRENT_VERSION_CHAIN_EVIDENCE
-  source_url: null
+  source_url: "https://fstec.ru/dokumenty/vse-dokumenty/informatsionnye-i-analiticheskie-materialy/informatsionnoe-soobshchenie-fstek-rossii-ot-9-oktyabrya-2025-g-n-240-24-5405"
   retrieved_at: null
   mime: null
   byte_length: null
   sha256: null
   note: >-
-    Exact official FSTEC bytes were not located in this run. Do not use mirrored copies as
-    immutable primary evidence and do not synthesize MIME, byte length or SHA-256.
+    Official FSTEC landing was resolved, but the runtime could not fetch fstec.ru and no exact
+    attachment bytes were obtained. Do not use mirrored copies as immutable primary evidence and
+    do not synthesize MIME, byte length or SHA-256.
 relations:
   - type: CONFIRMS_AMENDMENT_OF
     target: SEC-SRC-RU-FSTEC240-2023
@@ -67,16 +68,18 @@ applicability_guard:
     в общий baseline ПП РФ № 1119 / приказа ФСТЭК № 21 без отдельного applicability-edge.
 provenance:
   official_document_identity_cross_verified: true
-  exact_official_route_verified: false
+  exact_official_route_verified: true
   exact_official_bytes_captured: false
+  route_recovery_evidence:
+    - "https://ib-bank.ru/bisjournal/reader/208"
   secondary_evidence:
     - "https://secure-software.ru/news/informatsionnoe-soobshchenie-fstek-rossii-ot-9-oktyabrya-2025-g-n-240-24-5405.html"
     - "https://www.normacs.com/doc/d2362330/"
   review_required: true
 agent_rule: >-
   Use this notice only as status/version-chain evidence for FSTEC Orders 240/2023 and 230/2025
-  and the migration to GOST R 56939-2024. Require an exact official FSTEC route and exact bytes
-  before immutable promotion.
+  and the migration to GOST R 56939-2024. Require exact official attachment bytes before immutable
+  promotion.
 inventory_registration:
   role: fstec240_230_secure_development_certification_version_chain_notice_2025
   applicability: SECURE_SOFTWARE_DEVELOPMENT_PROCESS_CERTIFICATION_ONLY
