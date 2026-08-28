@@ -1,0 +1,39 @@
+schema_version: "1.0"
+id: EVIDENCE-RU-MINKOMSVYAZ-573-APPENDIX9-DICTIONARIES-CORE-ASN-2026-08-28
+checked_at: "2026-08-28"
+subject: "Order 573 appendix 9 Dictionaries.asn bounded core"
+observations:
+  - Order 630 point 21 replaced appendix 9 in full with effect from 1 March 2024.
+  - Dictionaries uses IMPLICIT TAGS and exports exactly TelcoID, TelcoList, DictionaryTask, DictionaryReport and PhoneAbonentType.
+  - The module imports thirty identifiers in five source-module groups.
+  - TelcoID is INTEGER 0 through 65535; TelcoList is SEQUENCE OF TelcoID without a published SIZE constraint.
+  - DictionaryTask has required dependent id/data fields and one TAGGED variant with sorm-request-dictionaries and ObjectDescriptor data.
+  - The permitted ObjectDescriptor comment lists exactly eighteen report OIDs.
+  - DictionaryReport has required dependent id/data fields and its report registry contains exactly eighteen variants.
+  - The eighteen report wrapper OIDs equal the task descriptor set and each wrapper carries a SEQUENCE OF record data type.
+  - The literal source identifier mobileSubscriberIdenityPlanRecords retains the Identy spelling; signalPointCodes has no Records suffix.
+  - PhoneAbonentType contains local(0), network(1), roamer(2) and undefined(3).
+  - Consolidated HTML renders the registry declaration as Dictionary Records VariantsTAGGED while the fields reference DictionaryRecordsVariants.
+  - Consolidated HTML renders the termination-causes OID with a closing parenthesis instead of a closing brace.
+  - Those two rendered syntax anomalies are recorded fail-closed and are not silently repaired or presented as compile-ready ASN.1.
+sources:
+  current_appendix9_open_text: "https://legalacts.ru/doc/prikaz-minkomsvjazi-rossii-ot-29102018-n-573-ob-utverzhdenii/"
+  order630_official_publication: "https://publication.pravo.gov.ru/document/0001202309050014"
+  order630_exact_delta: "https://www.garant.ru/products/ipo/prime/doc/407511660/"
+source_quality:
+  order630_appendix9_replacement_and_effective_date: VERIFIED
+  current_dictionaries_asn_header_and_core_registries: VERIFIED_CONSOLIDATED_PUBLIC_TEXT
+  exact_descriptor_and_report_variant_sets: VERIFIED
+  rendered_registry_declaration_and_termination_oid_delimiter: PENDING_PRIMARY_PDF
+  deep_record_fields: PENDING_SEPARATE_ATOMIZATION
+  official_immutable_pdf_bytes: PENDING_SERVER_502_FROM_PRIOR_SAME_DATE_CHECK
+  independent_expert_review: PENDING
+linked_model: security-knowledge/legislation/RU/ministry-orders/minkomsvyaz-573-2018/appendix9-dictionaries-core-asn-atomic-v1.yaml
+linked_regression: security-knowledge/legislation/RU/ministry-orders/minkomsvyaz-573-2018/appendix9-dictionaries-core-asn-regression-v1.json
+claims_not_made:
+  - CONSOLIDATED_HTML_IS_COMPILE_READY_ASN1
+  - RENDERED_SYNTAX_ANOMALIES_HAVE_BEEN_AUTHORITATIVELY_CORRECTED
+  - EMPTY_TELCO_LIST_HAS_DEFINED_BUSINESS_MEANING
+  - REPORT_SEQUENCE_OF_TYPES_HAVE_COUNT_LIMITS
+  - DICTIONARY_REFRESH_OR_ORDERING_PERIOD_IS_SPECIFIED
+  - ALL_DEEP_DICTIONARY_RECORD_FIELDS_ARE_VERIFIED
