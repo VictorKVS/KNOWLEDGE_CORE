@@ -1,0 +1,119 @@
+schema_version: "1.0"
+stream: 3
+checked_at: "2026-08-28T11:22:54+03:00"
+mode: APPEND_ONLY_RECONCILIATION
+previous_delta: "master-inventory-delta-2026-08-28T0518.yaml"
+focus: "biometrics / 572-FZ implementing layer / PP 408 types of biometric personal data"
+
+counters_before:
+  found: 53
+  downloaded: 9
+  immutable: 9
+  pending: 42
+  reused: 2
+  primary_publication_verified: 24
+  sectors_registered: 28
+
+counters_after:
+  found: 54
+  downloaded: 9
+  immutable: 9
+  pending: 43
+  reused: 2
+  primary_publication_verified: 25
+  sectors_registered: 28
+
+changes:
+  new_sources: 1
+  new_immutable_artifacts: 0
+  new_durable_downloads: 0
+  new_pending_exact_capture: 1
+  new_sector_regimes: 0
+  applicability_promotions: 0
+  legal_conflicts_confirmed: 0
+  primary_publication_verified_increment: 1
+
+new_sources:
+  - source_id: SEC-SRC-RU-PP-408-2024
+    sector: biometrics_digital_identity
+    regime: 572fz_biometric_personal_data_scope
+    title: "Постановление Правительства РФ от 01.04.2024 № 408"
+    status: CURRENT_PRIMARY_ORIGINAL_VERIFIED_CURRENT_STATUS_CROSSCHECKED_EXACT_BINARY_PENDING
+    publication_id: "0001202404050032"
+    official_publication_date: "2024-04-05"
+    effective_date: "2024-09-01"
+    sunset: "2027-09-01"
+
+protected_information_anchors:
+  - source_id: SEC-SRC-RU-PP-408-2024
+    locator: "пункт 1"
+    concept: face_image_as_572fz_biometric_pdn_type
+    note: "Изображение лица человека, полученное с помощью фотовидеоустройств, включено в виды БПД, на которые распространяется 572-ФЗ."
+    guard: "EVERY_PHOTO != AUTOMATIC_572FZ_BIOMETRIC_PDN_WITHOUT_STATUTORY_SCOPE_ANALYSIS"
+  - source_id: SEC-SRC-RU-PP-408-2024
+    locator: "пункт 1"
+    concept: voice_recording_as_572fz_biometric_pdn_type
+    note: "Запись голоса человека, полученная с помощью звукозаписывающих устройств, включена в виды БПД, на которые распространяется 572-ФЗ."
+    guard: "EVERY_AUDIO_RECORD != AUTOMATIC_572FZ_BIOMETRIC_PDN_WITHOUT_STATUTORY_SCOPE_ANALYSIS"
+  - source_id: SEC-SRC-RU-PP-408-2024
+    locator: "пункт 2"
+    concept: temporary_validity_boundary
+    effective_from: "2024-09-01"
+    valid_until: "2027-09-01"
+
+relationships:
+  - from: SEC-SRC-RU-PP-408-2024
+    to: SEC-SRC-RU-FZ-572-2022
+    relation: DIRECT_IMPLEMENTING_ACT_DEFINING_BIOMETRIC_PDN_TYPES
+    status: DIRECT_STATUTORY_CONTEXT
+  - from: SEC-SRC-RU-PP-408-2024
+    to: "152-ФЗ:article_11"
+    relation: BIOMETRIC_PDN_SCOPE_OVERLAP
+    status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    guard: "PP408_572FZ_SCOPE != AUTOMATIC_ARTICLE11_APPLICABILITY_FOR_EVERY_FACE_OR_VOICE_RECORD"
+  - from: SEC-SRC-RU-PP-408-2024
+    to: SEC-SRC-RU-CBR-821P-2023
+    relation: FUTURE_BIOMETRIC_PAYMENT_SECURITY_CONTEXT_FROM_7220U
+    status: FUTURE_NOT_CURRENT_UNTIL_2026_10_01
+
+version_events:
+  - act: "Постановление Правительства РФ № 408 от 01.04.2024"
+    effect: ADOPTED_CURRENT
+    publication_id: "0001202404050032"
+    publication_date: "2024-04-05"
+    effective_date: "2024-09-01"
+    sunset: "2027-09-01"
+    evidence_status: PRIMARY_PUBLICATION_METADATA_AND_OFFICIAL_SCOPE_SUMMARY_VERIFIED
+
+version_chain_review:
+  amendments_identified_in_this_sweep: 0
+  current_status_crosscheck: "Редакция от 01.04.2024; действует с 01.09.2024 до 01.09.2027"
+  crosscheck_role: SECONDARY_ONLY_FOR_CURRENT_STATUS
+  guard: "NO_AMENDMENT_FOUND_IN_SWEEP != COMPLETE_PRIMARY_VERSION_CHAIN_PROOF"
+
+acquisition:
+  exact_capture_attempted: true
+  exact_capture_succeeded: false
+  official_publication_url: "https://publication.pravo.gov.ru/document/0001202404050032"
+  official_file_url: "https://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202404050032"
+  binary_attempt_result: TEMPORARY_FAILURE_IN_NAME_RESOLUTION
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+  displayed_sizes_used_as_exact_bytes: false
+
+proof_floor:
+  taxonomy_used_as_evidence: false
+  primary_normative_act_required: true
+  face_or_voice_always_biometric_pdn: false
+  572fz_scope_equals_152fz_article11_scope: false
+  applicability_promoted: false
+  legal_conflict_declared: false
+
+next_actions:
+  - "Retry byte-exact official PDF capture when publication.pravo.gov.ru DNS is available."
+  - "On successful capture, store immutable artifact + manifest and only then increment downloaded/immutable."
+  - "Re-verify PP 408 primary current/version status before executable promotion and before 2027-09-01 sunset."
+  - "Continue biometric sector discovery with deduplication against 572-FZ, CBR 821-P/851-P and future 7220-U."
