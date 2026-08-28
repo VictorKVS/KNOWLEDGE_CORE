@@ -1,0 +1,438 @@
+{
+  "schema_version": "1.0",
+  "model_id": "RU-MINKOMSVYAZ-573-2018-APPENDIX9-LOCATIONS-ASN-CORE-ATOMIC-V1",
+  "cases": [
+    {
+      "id": "MK573L-T001",
+      "query": "temporal",
+      "date": "2024-02-29",
+      "expected": "HISTORICAL_PRE_REPLACEMENT"
+    },
+    {
+      "id": "MK573L-T002",
+      "query": "temporal",
+      "date": "2024-03-01",
+      "expected": "PASS_CURRENT_LOCATIONS_VERSION"
+    },
+    {
+      "id": "MK573L-T003",
+      "query": "temporal",
+      "date": "2030-03-01",
+      "expected": "EXPIRED_ROUTE"
+    },
+    {
+      "id": "MK573L-T004",
+      "query": "export",
+      "name": "Location",
+      "expected": "PASS"
+    },
+    {
+      "id": "MK573L-T005",
+      "query": "export",
+      "name": "GeoLocation",
+      "expected": "PASS"
+    },
+    {
+      "id": "MK573L-T006",
+      "query": "export",
+      "name": "MobileLocation",
+      "expected": "BLOCK_NOT_EXPORTED"
+    },
+    {
+      "id": "MK573L-T007",
+      "query": "location_variant",
+      "name": "mobile-location",
+      "tag": 0,
+      "expected": "PASS"
+    },
+    {
+      "id": "MK573L-T008",
+      "query": "location_variant",
+      "name": "wireless-location",
+      "tag": 1,
+      "expected": "PASS"
+    },
+    {
+      "id": "MK573L-T009",
+      "query": "location_variant",
+      "name": "geo-location",
+      "tag": 2,
+      "expected": "PASS"
+    },
+    {
+      "id": "MK573L-T010",
+      "query": "location_variant",
+      "name": "ip-location",
+      "tag": 3,
+      "expected": "PASS"
+    },
+    {
+      "id": "MK573L-T011",
+      "query": "location_variant",
+      "name": "mobile-location",
+      "tag": 1,
+      "expected": "BLOCK_TAG_MISMATCH"
+    },
+    {
+      "id": "MK573L-T012",
+      "query": "location_variant",
+      "name": "satellite-location",
+      "tag": 4,
+      "expected": "BLOCK_UNKNOWN_VARIANT"
+    },
+    {
+      "id": "MK573L-T013",
+      "query": "field",
+      "type": "MobileLocation",
+      "name": "lac",
+      "expected": "PASS_REQUIRED"
+    },
+    {
+      "id": "MK573L-T014",
+      "query": "field",
+      "type": "MobileLocation",
+      "name": "cell",
+      "expected": "PASS_REQUIRED"
+    },
+    {
+      "id": "MK573L-T015",
+      "query": "field",
+      "type": "MobileLocation",
+      "name": "ta",
+      "expected": "PASS_OPTIONAL"
+    },
+    {
+      "id": "MK573L-T016",
+      "query": "field",
+      "type": "MobileLocation",
+      "name": "mcc",
+      "expected": "PASS_OPTIONAL"
+    },
+    {
+      "id": "MK573L-T017",
+      "query": "field",
+      "type": "MobileLocation",
+      "name": "mnc",
+      "expected": "PASS_OPTIONAL"
+    },
+    {
+      "id": "MK573L-T018",
+      "query": "boundary",
+      "target": "lac",
+      "value": -1,
+      "expected": "BLOCK_RANGE"
+    },
+    {
+      "id": "MK573L-T019",
+      "query": "boundary",
+      "target": "lac",
+      "value": 0,
+      "expected": "PASS"
+    },
+    {
+      "id": "MK573L-T020",
+      "query": "boundary",
+      "target": "lac",
+      "value": 65535,
+      "expected": "PASS"
+    },
+    {
+      "id": "MK573L-T021",
+      "query": "boundary",
+      "target": "lac",
+      "value": 65536,
+      "expected": "BLOCK_RANGE"
+    },
+    {
+      "id": "MK573L-T022",
+      "query": "boundary",
+      "target": "mobile-cell",
+      "value": -1,
+      "expected": "BLOCK_RANGE"
+    },
+    {
+      "id": "MK573L-T023",
+      "query": "boundary",
+      "target": "mobile-cell",
+      "value": 0,
+      "expected": "PASS"
+    },
+    {
+      "id": "MK573L-T024",
+      "query": "boundary",
+      "target": "mobile-cell",
+      "value": 100000000000,
+      "expected": "PASS"
+    },
+    {
+      "id": "MK573L-T025",
+      "query": "boundary",
+      "target": "mobile-cell",
+      "value": 100000000001,
+      "expected": "BLOCK_RANGE"
+    },
+    {
+      "id": "MK573L-T026",
+      "query": "boundary",
+      "target": "ta",
+      "value": -1,
+      "expected": "BLOCK_RANGE"
+    },
+    {
+      "id": "MK573L-T027",
+      "query": "boundary",
+      "target": "ta",
+      "value": 0,
+      "expected": "PASS"
+    },
+    {
+      "id": "MK573L-T028",
+      "query": "boundary",
+      "target": "ta",
+      "value": 63,
+      "expected": "PASS"
+    },
+    {
+      "id": "MK573L-T029",
+      "query": "boundary",
+      "target": "ta",
+      "value": 64,
+      "expected": "BLOCK_RANGE"
+    },
+    {
+      "id": "MK573L-T030",
+      "query": "boundary",
+      "target": "mcc-size",
+      "value": 2,
+      "expected": "BLOCK_SIZE"
+    },
+    {
+      "id": "MK573L-T031",
+      "query": "boundary",
+      "target": "mcc-size",
+      "value": 3,
+      "expected": "PASS"
+    },
+    {
+      "id": "MK573L-T032",
+      "query": "boundary",
+      "target": "mcc-size",
+      "value": 4,
+      "expected": "BLOCK_SIZE"
+    },
+    {
+      "id": "MK573L-T033",
+      "query": "boundary",
+      "target": "mnc-size",
+      "value": 2,
+      "expected": "BLOCK_SIZE"
+    },
+    {
+      "id": "MK573L-T034",
+      "query": "boundary",
+      "target": "mnc-size",
+      "value": 3,
+      "expected": "PASS"
+    },
+    {
+      "id": "MK573L-T035",
+      "query": "boundary",
+      "target": "mnc-size",
+      "value": 4,
+      "expected": "BLOCK_SIZE"
+    },
+    {
+      "id": "MK573L-T036",
+      "query": "field",
+      "type": "WirelessLocation",
+      "name": "cell",
+      "expected": "PASS_REQUIRED"
+    },
+    {
+      "id": "MK573L-T037",
+      "query": "field",
+      "type": "WirelessLocation",
+      "name": "mac",
+      "expected": "PASS_REQUIRED"
+    },
+    {
+      "id": "MK573L-T038",
+      "query": "boundary",
+      "target": "wireless-cell-size",
+      "value": 0,
+      "expected": "BLOCK_SIZE"
+    },
+    {
+      "id": "MK573L-T039",
+      "query": "boundary",
+      "target": "wireless-cell-size",
+      "value": 1,
+      "expected": "PASS"
+    },
+    {
+      "id": "MK573L-T040",
+      "query": "boundary",
+      "target": "wireless-cell-size",
+      "value": 64,
+      "expected": "PASS"
+    },
+    {
+      "id": "MK573L-T041",
+      "query": "boundary",
+      "target": "wireless-cell-size",
+      "value": 65,
+      "expected": "BLOCK_SIZE"
+    },
+    {
+      "id": "MK573L-T042",
+      "query": "boundary",
+      "target": "mac-size",
+      "value": 5,
+      "expected": "BLOCK_SIZE"
+    },
+    {
+      "id": "MK573L-T043",
+      "query": "boundary",
+      "target": "mac-size",
+      "value": 6,
+      "expected": "PASS"
+    },
+    {
+      "id": "MK573L-T044",
+      "query": "boundary",
+      "target": "mac-size",
+      "value": 7,
+      "expected": "BLOCK_SIZE"
+    },
+    {
+      "id": "MK573L-T045",
+      "query": "field",
+      "type": "GeoLocation",
+      "name": "latitude-grade",
+      "expected": "PASS_REQUIRED"
+    },
+    {
+      "id": "MK573L-T046",
+      "query": "field",
+      "type": "GeoLocation",
+      "name": "longitude-grade",
+      "expected": "PASS_REQUIRED"
+    },
+    {
+      "id": "MK573L-T047",
+      "query": "field",
+      "type": "GeoLocation",
+      "name": "projection-type",
+      "expected": "PASS_REQUIRED"
+    },
+    {
+      "id": "MK573L-T048",
+      "query": "projection",
+      "name": "wgs84",
+      "value": 0,
+      "expected": "PASS"
+    },
+    {
+      "id": "MK573L-T049",
+      "query": "projection",
+      "name": "utm",
+      "value": 1,
+      "expected": "PASS"
+    },
+    {
+      "id": "MK573L-T050",
+      "query": "projection",
+      "name": "sgs85",
+      "value": 2,
+      "expected": "PASS"
+    },
+    {
+      "id": "MK573L-T051",
+      "query": "projection",
+      "name": "unknown",
+      "value": 3,
+      "expected": "BLOCK_UNKNOWN_ENUM"
+    },
+    {
+      "id": "MK573L-T052",
+      "query": "projection",
+      "name": "sks85",
+      "value": 2,
+      "expected": "BLOCK_NORMALIZED_ALIAS"
+    },
+    {
+      "id": "MK573L-T053",
+      "query": "business_claim",
+      "claim": "LATITUDE_RANGE_MINUS90_TO90",
+      "expected": "BLOCK_NOT_SPECIFIED"
+    },
+    {
+      "id": "MK573L-T054",
+      "query": "business_claim",
+      "claim": "LONGITUDE_RANGE_MINUS180_TO180",
+      "expected": "BLOCK_NOT_SPECIFIED"
+    },
+    {
+      "id": "MK573L-T055",
+      "query": "business_claim",
+      "claim": "EXACT_FIVE_DECIMAL_ASN1_SCALE",
+      "expected": "BLOCK_NOT_SPECIFIED"
+    },
+    {
+      "id": "MK573L-T056",
+      "query": "business_claim",
+      "claim": "MCC_MNC_EXTERNAL_REGISTRY_VALID",
+      "expected": "BLOCK_NOT_SPECIFIED"
+    },
+    {
+      "id": "MK573L-T057",
+      "query": "business_claim",
+      "claim": "LAC_CELL_REFERENTIAL_INTEGRITY",
+      "expected": "BLOCK_NOT_SPECIFIED"
+    },
+    {
+      "id": "MK573L-T058",
+      "query": "business_claim",
+      "claim": "LOCATION_HAS_TIMESTAMP",
+      "expected": "BLOCK_NOT_SPECIFIED"
+    },
+    {
+      "id": "MK573L-T059",
+      "query": "business_claim",
+      "claim": "LOCATION_HAS_ACCURACY",
+      "expected": "BLOCK_NOT_SPECIFIED"
+    },
+    {
+      "id": "MK573L-T060",
+      "query": "business_claim",
+      "claim": "MAC_VENDOR_VALIDATION",
+      "expected": "BLOCK_NOT_SPECIFIED"
+    },
+    {
+      "id": "MK573L-T061",
+      "query": "syntax_claim",
+      "claim": "OCTETSTRING_TOKEN_COMPILES",
+      "expected": "PENDING_PRIMARY_PDF"
+    },
+    {
+      "id": "MK573L-T062",
+      "query": "alias",
+      "name": "IpLocation",
+      "expected": "PASS"
+    },
+    {
+      "id": "MK573L-T063",
+      "query": "alias",
+      "name": "IPLocation",
+      "expected": "BLOCK_NORMALIZED_ALIAS"
+    },
+    {
+      "id": "MK573L-T064",
+      "query": "import",
+      "module": "NetworkIdentifiers",
+      "name": "NetworkPeerInfo",
+      "expected": "PASS"
+    }
+  ]
+}
+
