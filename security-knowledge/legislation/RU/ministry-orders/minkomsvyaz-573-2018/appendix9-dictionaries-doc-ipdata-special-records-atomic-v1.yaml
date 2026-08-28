@@ -1,0 +1,146 @@
+schema_version: "1.0"
+id: RU-MINKOMSVYAZ-573-2018-APPENDIX9-DICTIONARIES-DOC-IPDATA-SPECIAL-RECORDS-ATOMIC-V1
+title: "Приказ Минкомсвязи № 573: документы, точки подключения и специальные номера"
+checked_at: "2026-08-28"
+status: VERIFIED_CURRENT_CONSOLIDATED_PUBLIC_TEXT_DOC_IPDATA_SPECIAL_FIELDS_REQUIREDNESS_RANGES_AND_TYPES_FAIL_CLOSED
+scope: >-
+  Ограниченный глубокий срез Dictionaries.asn действующей замены приложения
+  № 9: три оболочки отчетов и DocTypesRecord, IpDataPointRecord,
+  SpecialNumberRecord с точными полями, обязательностью, диапазонами, типами
+  и размерами. Неприведенные бизнес-правила и ограничения не выводятся.
+
+sources:
+  act: "Приказ Минкомсвязи России от 29.10.2018 № 573"
+  current_revision_date: "2025-12-18"
+  current_consolidated_open_text: "https://legalacts.ru/doc/prikaz-minkomsvjazi-rossii-ot-29102018-n-573-ob-utverzhdenii/"
+  order630_official_publication: "https://publication.pravo.gov.ru/document/0001202309050014"
+  order630_exact_delta: "https://www.garant.ru/products/ipo/prime/doc/407511660/"
+
+temporal_model:
+  replaced_by: "Приказ Минцифры России от 12.07.2023 № 630, пункт 21 изменений"
+  effective_from: "2024-03-01"
+  validity_until_exclusive: "2030-03-01"
+  status: CURRENT_AS_OF_2026_08_28
+
+report_wrappers:
+  - {name: docTypesRecords, oid: sorm-report-dictionary-doc-types, item_type: DocTypesRecord, count_constraint: NOT_SPECIFIED}
+  - {name: ipDataPointsRecords, oid: sorm-report-dictionary-ip-data-points, item_type: IpDataPointRecord, count_constraint: NOT_SPECIFIED}
+  - {name: specialNumbersRecords, oid: sorm-report-dictionary-special-numbers, item_type: SpecialNumberRecord, count_constraint: NOT_SPECIFIED}
+
+records:
+  DocTypesRecord:
+    kind: SEQUENCE
+    fields:
+      - {name: telco-id, type: TelcoID, optional: false}
+      - {name: doc-type-id, type: INTEGER, minimum: 0, maximum: 65535, optional: false}
+      - {name: begin-time, type: DateAndTime, optional: false}
+      - {name: end-time, type: DateAndTime, optional: true}
+      - {name: description, type: UTF8String, size_min: 1, size_max: 256, optional: false}
+  IpDataPointRecord:
+    kind: SEQUENCE
+    fields:
+      - {name: telco-id, type: TelcoID, optional: false}
+      - {name: point-id, type: INTEGER, minimum: 0, maximum: 1000, optional: false}
+      - {name: description, type: UTF8String, size_min: 1, size_max: 256, optional: false}
+      - {name: begin-time, type: DateAndTime, optional: false}
+      - {name: end-time, type: DateAndTime, optional: true}
+  SpecialNumberRecord:
+    kind: SEQUENCE
+    fields:
+      - {name: telco-id, type: TelcoID, optional: false}
+      - {name: directory-number, type: UTF8String, size_min: 1, size_max: 32, optional: false}
+      - {name: description, type: UTF8String, size_min: 1, size_max: 256, optional: false}
+      - {name: begin-time, type: DateAndTime, optional: false}
+      - {name: end-time, type: DateAndTime, optional: true}
+      - {name: network-address, type: IPAddress, optional: true}
+
+dependencies:
+  TelcoID: appendix9-dictionaries-core-asn-atomic-v1.yaml
+  DateAndTime: Sorm.asn_PENDING_SEPARATE_MODEL
+  IPAddress: NetworkIdentifiers.asn_PENDING_SEPARATE_MODEL
+
+semantic_guards:
+  - DOC_TYPES_HAS_FIVE_FIELDS_AND_ONLY_END_TIME_IS_OPTIONAL
+  - IP_DATA_POINT_HAS_FIVE_FIELDS_AND_ONLY_END_TIME_IS_OPTIONAL
+  - SPECIAL_NUMBER_HAS_SIX_FIELDS_WITH_END_TIME_AND_NETWORK_ADDRESS_OPTIONAL
+  - DIRECTORY_NUMBER_IS_UTF8STRING_NOT_NUMERICSTRING
+  - NO_DIGIT_ONLY_DIRECTORY_NUMBER_RULE_IS_INFERRED
+  - NO_SPECIAL_NUMBER_TYPE_ENUM_IS_PRESENT_IN_THIS_RECORD
+  - NO_GLOBAL_UNIQUENESS_IS_INFERRED_FOR_DOC_TYPE_ID_OR_POINT_ID
+  - NO_REGISTRY_SEMANTICS_IS_INFERRED_FOR_DOC_TYPE_ID
+  - OPTIONAL_NETWORK_ADDRESS_IS_NOT_PROMOTED_TO_REQUIRED
+  - REPORT_SEQUENCE_OF_WRAPPERS_HAVE_NO_PUBLISHED_COUNT_CONSTRAINT
+  - EMPTY_SEQUENCE_HAS_NO_INFERRED_BUSINESS_MEANING
+  - NO_RETENTION_REFRESH_OR_IDENTIFIER_REUSE_PERIOD_IS_INFERRED
+  - NO_ASN1_COMPILABILITY_CLAIM_FROM_CONSOLIDATED_HTML
+
+atomic_rules:
+  - {id: MK573DIS-R001, rule: APPLY_ORDER630_RECORDS_ONLY_FROM_2024_03_01}
+  - {id: MK573DIS-R002, rule: STOP_CURRENT_ROUTE_AT_2030_03_01}
+  - {id: MK573DIS-R003, rule: PRESERVE_THREE_REPORT_WRAPPER_OID_TYPE_MAPPINGS}
+  - {id: MK573DIS-R004, rule: DO_NOT_INVENT_REPORT_WRAPPER_COUNT_LIMITS}
+  - {id: MK573DIS-R005, rule: PRESERVE_FIVE_DOC_TYPE_FIELDS}
+  - {id: MK573DIS-R006, rule: REQUIRE_FOUR_DOC_TYPE_FIELDS}
+  - {id: MK573DIS-R007, rule: KEEP_DOC_TYPE_END_TIME_OPTIONAL}
+  - {id: MK573DIS-R008, rule: APPLY_DOC_TYPE_ID_RANGE_0_TO_65535}
+  - {id: MK573DIS-R009, rule: APPLY_DOC_TYPE_DESCRIPTION_SIZE_1_TO_256}
+  - {id: MK573DIS-R010, rule: BLOCK_DOC_TYPE_ID_BELOW_ZERO}
+  - {id: MK573DIS-R011, rule: BLOCK_DOC_TYPE_ID_ABOVE_65535}
+  - {id: MK573DIS-R012, rule: PRESERVE_FIVE_IP_DATA_POINT_FIELDS}
+  - {id: MK573DIS-R013, rule: REQUIRE_FOUR_IP_DATA_POINT_FIELDS}
+  - {id: MK573DIS-R014, rule: KEEP_IP_DATA_POINT_END_TIME_OPTIONAL}
+  - {id: MK573DIS-R015, rule: APPLY_POINT_ID_RANGE_0_TO_1000}
+  - {id: MK573DIS-R016, rule: APPLY_IP_DATA_POINT_DESCRIPTION_SIZE_1_TO_256}
+  - {id: MK573DIS-R017, rule: BLOCK_POINT_ID_BELOW_ZERO}
+  - {id: MK573DIS-R018, rule: BLOCK_POINT_ID_ABOVE_1000}
+  - {id: MK573DIS-R019, rule: PRESERVE_SIX_SPECIAL_NUMBER_FIELDS}
+  - {id: MK573DIS-R020, rule: REQUIRE_FOUR_SPECIAL_NUMBER_FIELDS}
+  - {id: MK573DIS-R021, rule: KEEP_SPECIAL_NUMBER_END_TIME_OPTIONAL}
+  - {id: MK573DIS-R022, rule: KEEP_SPECIAL_NETWORK_ADDRESS_OPTIONAL}
+  - {id: MK573DIS-R023, rule: APPLY_DIRECTORY_NUMBER_UTF8_SIZE_1_TO_32}
+  - {id: MK573DIS-R024, rule: APPLY_SPECIAL_NUMBER_DESCRIPTION_SIZE_1_TO_256}
+  - {id: MK573DIS-R025, rule: BLOCK_EMPTY_DIRECTORY_NUMBER}
+  - {id: MK573DIS-R026, rule: BLOCK_DIRECTORY_NUMBER_OVER_32_CHARACTERS}
+  - {id: MK573DIS-R027, rule: REQUIRE_SPECIAL_NETWORK_ADDRESS_TYPE_IPADDRESS_WHEN_PRESENT}
+  - {id: MK573DIS-R028, rule: DO_NOT_REQUIRE_SPECIAL_NETWORK_ADDRESS}
+  - {id: MK573DIS-R029, rule: DO_NOT_COERCE_DIRECTORY_NUMBER_TO_NUMERICSTRING}
+  - {id: MK573DIS-R030, rule: DO_NOT_INFER_DIRECTORY_NUMBER_DIGIT_ONLY_CONTENT}
+  - {id: MK573DIS-R031, rule: DO_NOT_INVENT_SPECIAL_NUMBER_TYPE_ENUM}
+  - {id: MK573DIS-R032, rule: DO_NOT_INFER_DOC_TYPE_ID_GLOBAL_UNIQUENESS}
+  - {id: MK573DIS-R033, rule: DO_NOT_INFER_POINT_ID_GLOBAL_UNIQUENESS}
+  - {id: MK573DIS-R034, rule: DO_NOT_INFER_DOC_TYPE_EXTERNAL_REGISTRY_SEMANTICS}
+  - {id: MK573DIS-R035, rule: DO_NOT_INFER_EMPTY_REPORT_SEQUENCE_BUSINESS_MEANING}
+  - {id: MK573DIS-R036, rule: DO_NOT_INFER_IDENTIFIER_REUSE_OR_REFRESH_PERIOD}
+  - {id: MK573DIS-R037, rule: DO_NOT_INFER_RECORD_RETENTION_PERIOD}
+  - {id: MK573DIS-R038, rule: BLOCK_UNKNOWN_RECORD_FIELDS}
+  - {id: MK573DIS-R039, rule: DO_NOT_CLAIM_ASN1_COMPILABILITY_FROM_HTML}
+  - {id: MK573DIS-R040, rule: KEEP_PRIMARY_BYTES_DEPENDENCY_TYPES_AND_EXPERT_REVIEW_PENDING}
+
+evidence_model:
+  - {id: E573DIS-01, proves: [MK573DIS-R001, MK573DIS-R002], artifacts: [ORDER630_POINT21_DELTA_AND_VALIDITY]}
+  - {id: E573DIS-02, proves: [MK573DIS-R003, MK573DIS-R004], artifacts: [THREE_REPORT_WRAPPER_MATRIX]}
+  - {id: E573DIS-03, proves: [MK573DIS-R005, MK573DIS-R006, MK573DIS-R007], artifacts: [DOC_TYPE_FIELD_TESTS]}
+  - {id: E573DIS-04, proves: [MK573DIS-R008, MK573DIS-R009, MK573DIS-R010, MK573DIS-R011], artifacts: [DOC_TYPE_BOUNDARY_TESTS]}
+  - {id: E573DIS-05, proves: [MK573DIS-R012, MK573DIS-R013, MK573DIS-R014], artifacts: [IP_DATA_POINT_FIELD_TESTS]}
+  - {id: E573DIS-06, proves: [MK573DIS-R015, MK573DIS-R016, MK573DIS-R017, MK573DIS-R018], artifacts: [IP_DATA_POINT_BOUNDARY_TESTS]}
+  - {id: E573DIS-07, proves: [MK573DIS-R019, MK573DIS-R020, MK573DIS-R021, MK573DIS-R022], artifacts: [SPECIAL_NUMBER_FIELD_TESTS]}
+  - {id: E573DIS-08, proves: [MK573DIS-R023, MK573DIS-R024, MK573DIS-R025, MK573DIS-R026], artifacts: [SPECIAL_NUMBER_SIZE_TESTS]}
+  - {id: E573DIS-09, proves: [MK573DIS-R027, MK573DIS-R028], artifacts: [OPTIONAL_IPADDRESS_TESTS]}
+  - {id: E573DIS-10, proves: [MK573DIS-R029, MK573DIS-R030], artifacts: [DIRECTORY_NUMBER_TYPE_GUARDS]}
+  - {id: E573DIS-11, proves: [MK573DIS-R031], artifacts: [ABSENT_ENUM_GUARD]}
+  - {id: E573DIS-12, proves: [MK573DIS-R032, MK573DIS-R033, MK573DIS-R034], artifacts: [UNSTATED_IDENTIFIER_SEMANTIC_GUARDS]}
+  - {id: E573DIS-13, proves: [MK573DIS-R035, MK573DIS-R036, MK573DIS-R037, MK573DIS-R038], artifacts: [UNSTATED_CONSTRAINT_GUARDS]}
+  - {id: E573DIS-14, proves: [MK573DIS-R039, MK573DIS-R040], artifacts: [PENDING_BOUNDARY_REGISTER]}
+
+verification_boundary:
+  verified:
+    - THREE_REPORT_WRAPPER_OID_AND_ITEM_TYPE_MAPPINGS
+    - ALL_FIVE_DOC_TYPE_FIELDS_REQUIREDNESS_RANGE_AND_SIZE
+    - ALL_FIVE_IP_DATA_POINT_FIELDS_REQUIREDNESS_RANGE_AND_SIZE
+    - ALL_SIX_SPECIAL_NUMBER_FIELDS_REQUIREDNESS_TYPES_AND_SIZES
+  pending:
+    - CURRENT_CONSOLIDATED_OFFICIAL_IMMUTABLE_BYTES
+    - DATE_TIME_AND_IP_ADDRESS_DEEP_DEPENDENCY_MODELS
+    - INDEPENDENT_EXPERT_REVIEW
+  critical_gap_created: false
+  high_gap_created: false

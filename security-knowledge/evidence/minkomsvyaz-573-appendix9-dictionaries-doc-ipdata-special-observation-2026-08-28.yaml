@@ -1,0 +1,38 @@
+schema_version: "1.0"
+id: EVIDENCE-RU-MINKOMSVYAZ-573-APPENDIX9-DICTIONARIES-DOC-IPDATA-SPECIAL-2026-08-28
+checked_at: "2026-08-28"
+subject: "Order 573 appendix 9 Dictionaries.asn document, IP data point and special number records"
+observations:
+  - Order 630 point 21 replaced appendix 9 in full with effect from 1 March 2024.
+  - DocTypesRecord has five fields; only end-time is optional.
+  - Document type identifier is INTEGER 0..65535 and description is UTF8String length 1..256.
+  - IpDataPointRecord has five fields; only end-time is optional.
+  - IP data point identifier is INTEGER 0..1000 and description is UTF8String length 1..256.
+  - SpecialNumberRecord has six fields; end-time and network-address are optional.
+  - Directory number is UTF8String length 1..32, not NumericString.
+  - Special-number description is UTF8String length 1..256.
+  - Optional network-address has type IPAddress.
+  - No digit-only directory format, special-number type enumeration, global identifier uniqueness or external document-type registry semantics was inferred.
+  - The three report values are SEQUENCE OF their respective record types without a published element-count constraint.
+  - No retention, refresh or identifier-reuse period was added.
+sources:
+  current_appendix9_open_text: "https://legalacts.ru/doc/prikaz-minkomsvjazi-rossii-ot-29102018-n-573-ob-utverzhdenii/"
+  order630_official_publication: "https://publication.pravo.gov.ru/document/0001202309050014"
+  order630_exact_delta: "https://www.garant.ru/products/ipo/prime/doc/407511660/"
+source_quality:
+  order630_appendix9_replacement_and_effective_date: VERIFIED
+  current_three_record_fields_requiredness_ranges_sizes_and_types: VERIFIED_CONSOLIDATED_PUBLIC_TEXT
+  report_wrapper_oid_and_item_type_mappings: VERIFIED_CONSOLIDATED_PUBLIC_TEXT
+  dependency_type_deep_models: PENDING_SEPARATE_ATOMIZATION
+  official_immutable_pdf_bytes: PENDING_SERVER_502_FROM_PRIOR_SAME_DATE_CHECK
+  independent_expert_review: PENDING
+linked_model: security-knowledge/legislation/RU/ministry-orders/minkomsvyaz-573-2018/appendix9-dictionaries-doc-ipdata-special-records-atomic-v1.yaml
+linked_regression: security-knowledge/legislation/RU/ministry-orders/minkomsvyaz-573-2018/appendix9-dictionaries-doc-ipdata-special-records-regression-v1.json
+claims_not_made:
+  - DIRECTORY_NUMBER_IS_DIGIT_ONLY
+  - SPECIAL_NUMBER_TYPE_ENUM_EXISTS
+  - SPECIAL_NETWORK_ADDRESS_IS_REQUIRED
+  - DOC_TYPE_OR_POINT_IDENTIFIER_IS_GLOBALLY_UNIQUE
+  - DOC_TYPE_IDENTIFIER_HAS_AN_EXTERNAL_REGISTRY_MEANING
+  - REPORT_SEQUENCE_HAS_A_MINIMUM_OR_MAXIMUM_ELEMENT_COUNT
+  - RETENTION_REFRESH_OR_IDENTIFIER_REUSE_PERIOD_IS_SPECIFIED
