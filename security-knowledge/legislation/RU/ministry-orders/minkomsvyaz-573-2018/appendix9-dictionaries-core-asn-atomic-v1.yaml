@@ -6,8 +6,9 @@ status: VERIFIED_CURRENT_CONSOLIDATED_PUBLIC_TEXT_DICTIONARIES_CORE_WITH_RENDERE
 scope: >-
   Ограниченное ядро действующего Dictionaries.asn: заголовок модуля,
   экспорты и импорты, TelcoID, TelcoList, DictionaryTask, DictionaryReport,
-  одиночный вариант запроса и восемнадцать вариантов отчетов. Глубокие поля
-  записей справочников и компилируемость искаженных HTML-токенов не заявлены.
+  одиночный вариант запроса и восемнадцать вариантов отчетов. Первый глубокий
+  срез записей вынесен в связанную модель; оставшиеся записи и компилируемость
+  искаженных HTML-токенов не заявлены.
 
 sources:
   act: "Приказ Минкомсвязи России от 29.10.2018 № 573"
@@ -132,6 +133,11 @@ phone_abonent_type:
     - {name: roamer, value: 2}
     - {name: undefined, value: 3}
 
+deep_record_models:
+  - path: appendix9-dictionaries-telco-bunch-basic-station-records-atomic-v1.yaml
+    covers: [TelcosRecord, BunchRecord, BasicStationSectorRecord, BasicStationIdentifiers, TelephoneIdentifiers, WirelessIdentifiers, BasicStationAntenna, GsmAntenna, CdmaAntenna, WirelessAntenna, BroadbandWirelessParameters]
+    status: VERIFIED_CURRENT_CONSOLIDATED_PUBLIC_TEXT_WITH_RENDERED_SYNTAX_ANOMALIES_PENDING_PRIMARY_PDF
+
 semantic_guards:
   - DICTIONARY_TASK_HAS_ONE_TAGGED_VARIANT_ONLY
   - TASK_OBJECT_DESCRIPTOR_MUST_BE_ONE_OF_EIGHTEEN_REPORT_OIDS
@@ -184,7 +190,7 @@ atomic_rules:
   - {id: MK573D-R035, rule: KEEP_RENDERED_REGISTRY_DECLARATION_TOKEN_PENDING}
   - {id: MK573D-R036, rule: KEEP_TERMINATION_CAUSES_OID_DELIMITER_PENDING}
   - {id: MK573D-R037, rule: DO_NOT_CLAIM_ASN1_COMPILABILITY_FROM_HTML}
-  - {id: MK573D-R038, rule: KEEP_DEEP_RECORD_FIELD_TABLES_PENDING}
+  - {id: MK573D-R038, rule: ROUTE_DEEP_RECORD_FIELDS_TO_LINKED_MODELS_AND_KEEP_REMAINDER_PENDING}
   - {id: MK573D-R039, rule: KEEP_PRIMARY_IMMUTABLE_BYTES_PENDING}
   - {id: MK573D-R040, rule: KEEP_INDEPENDENT_EXPERT_REVIEW_PENDING}
 
@@ -215,7 +221,7 @@ verification_boundary:
     - PHONE_ABONENT_TYPE_ENUMERATION
   pending:
     - PRIMARY_PDF_REGISTRY_DECLARATION_AND_TERMINATION_CAUSES_DELIMITER
-    - DEEP_DICTIONARY_RECORD_FIELDS_AND_RENDERED_TOKEN_CORRECTIONS
+    - REMAINING_DICTIONARY_RECORD_FIELDS_AND_RENDERED_TOKEN_CORRECTIONS
     - CURRENT_CONSOLIDATED_OFFICIAL_IMMUTABLE_BYTES
     - INDEPENDENT_EXPERT_REVIEW
   critical_gap_created: false

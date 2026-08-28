@@ -1,0 +1,42 @@
+schema_version: "1.0"
+id: EVIDENCE-RU-MINKOMSVYAZ-573-APPENDIX9-DICTIONARIES-TELCO-BUNCH-BASIC-STATION-2026-08-28
+checked_at: "2026-08-28"
+subject: "Order 573 appendix 9 Dictionaries.asn telco, bunch and basic-station records"
+observations:
+  - Order 630 point 21 replaced appendix 9 in full with effect from 1 March 2024.
+  - TelcosRecord has exactly six fields; telco-id, begin-time and description are required, end-time, mcc and mnc are optional.
+  - TelcosRecord mcc and mnc use tags 0 and 1 and exact NumericString length three; description is UTF8String length 1 through 256.
+  - BunchRecord has exactly seven fields and its end-time is optional.
+  - BunchRecord bunch-type contains inbound(0), outbound(1) and bidirectional(3); value 2 is not assigned and no meaning was inferred.
+  - BasicStationSectorRecord has exactly nine fields and, unlike the other two records, its end-time is required.
+  - BasicStationSectorRecord structured-address and location are optional with tags 0 and 1.
+  - BasicStationIdentifiers has telephone tag 0 and wireless tag 1 alternatives.
+  - TelephoneIdentifiers constrains lac to 0..65535, cell to 0..100000000000 and optional cell-sign to length 1..18.
+  - WirelessIdentifiers requires cell length 1..64 and makes IPList and a six-octet mac optional.
+  - BasicStationAntenna has GSM tag 0, CDMA tag 1 and wireless tag 2 alternatives; no count limits were added to SEQUENCE OF branches.
+  - GsmAntenna has three required geometry fields and fourteen optional fields tagged consecutively 0 through 13.
+  - CdmaAntenna and WirelessAntenna both alias BroadbandWirelessParameters, which has three required and seven optional fields.
+  - BsCellType, BsGeneration, BsSetting values and BasicStationType were preserved literally from the consolidated text.
+  - Consolidated HTML omits an assignment token in the rendered BsSetting declaration and joins several type/OPTIONAL tokens.
+  - The GsmAntenna azimuth range includes -1 while the rendered explanatory comment mentions 1; no special-value semantics were normalized.
+sources:
+  current_appendix9_open_text: "https://legalacts.ru/doc/prikaz-minkomsvjazi-rossii-ot-29102018-n-573-ob-utverzhdenii/"
+  order630_official_publication: "https://publication.pravo.gov.ru/document/0001202309050014"
+  order630_exact_delta: "https://www.garant.ru/products/ipo/prime/doc/407511660/"
+source_quality:
+  order630_appendix9_replacement_and_effective_date: VERIFIED
+  current_three_record_and_nested_type_fields: VERIFIED_CONSOLIDATED_PUBLIC_TEXT
+  exact_requiredness_tags_sizes_ranges_and_enum_values: VERIFIED_CONSOLIDATED_PUBLIC_TEXT
+  bs_setting_joined_tokens_and_azimuth_special_value_comment: PENDING_PRIMARY_PDF
+  official_immutable_pdf_bytes: PENDING_SERVER_502_FROM_PRIOR_SAME_DATE_CHECK
+  independent_expert_review: PENDING
+linked_model: security-knowledge/legislation/RU/ministry-orders/minkomsvyaz-573-2018/appendix9-dictionaries-telco-bunch-basic-station-records-atomic-v1.yaml
+linked_regression: security-knowledge/legislation/RU/ministry-orders/minkomsvyaz-573-2018/appendix9-dictionaries-telco-bunch-basic-station-records-regression-v1.json
+claims_not_made:
+  - CONSOLIDATED_HTML_IS_COMPILE_READY_ASN1
+  - BUNCH_TYPE_VALUE_2_HAS_ANY_DEFINED_MEANING
+  - END_TIME_IS_OPTIONAL_FOR_BASIC_STATION_SECTOR_RECORD
+  - SEQUENCE_OF_REPORT_IDENTIFIER_OR_ANTENNA_LISTS_HAVE_COUNT_LIMITS
+  - AZIMUTH_SPECIAL_VALUE_COMMENT_HAS_BEEN_AUTHORITATIVELY_CORRECTED
+  - ANTENNA_FIELDS_DEFINE_OPERATIONAL_COMPLIANCE_THRESHOLDS_OUTSIDE_THE_ASN1_SCHEMA
+  - ALL_REMAINING_DICTIONARY_RECORDS_ARE_VERIFIED
