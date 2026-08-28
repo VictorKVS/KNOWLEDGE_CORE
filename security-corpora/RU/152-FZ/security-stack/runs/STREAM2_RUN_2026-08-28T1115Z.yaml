@@ -1,0 +1,79 @@
+schema_version: "1.0"
+id: STREAM2-RUN-2026-08-28T1115Z
+stream: 2
+kind: security-stack-source-discovery-and-version-chain-refresh
+created_at: "2026-08-28T11:15:00Z"
+status: SOURCE_REGISTERED_PRIMARY_ROUTE_PENDING
+scope:
+  primary_domain: "152-FZ technical and cryptographic security stack"
+  focus:
+    - FSTEC secure-development certification version chain
+    - applicability guards for neighboring certification regime
+    - continued exact-primary-route acquisition
+pre_run_authoritative_counters:
+  identified: 49
+  metadata_verified: 49
+  immutable_sha256_verified: 21
+  pending_raw_capture: 28
+  exact_official_route_unresolved: 8
+  source: "PDN_SECURITY_STACK_SOURCE_INVENTORY.yaml checked 2026-08-28"
+new_source_cards:
+  - id: SEC-SRC-RU-FSTEC-INFO-240-24-5405-2025
+    metadata_status: METADATA_VERIFIED
+    immutable_status: PENDING_ROUTE
+    applicability: SECURE_SOFTWARE_DEVELOPMENT_PROCESS_CERTIFICATION_ONLY
+    finding: >-
+      The notice records the Order 240/2023 -> Order 230/2025 amendment chain and the transition
+      from GOST R 56939-2016 to GOST R 56939-2024 for certification of secure software-development processes.
+version_chain:
+  current_root: SEC-SRC-RU-FSTEC240-2023
+  amended_by: SEC-SRC-RU-FSTEC230-2025
+  additional_status_evidence: SEC-SRC-RU-FSTEC-INFO-240-24-5405-2025
+  standard_reference_transition:
+    from: GOST-R-56939-2016
+    to: GOST-R-56939-2024
+status_verification:
+  checked_at: "2026-08-28"
+  findings:
+    - >-
+      The existence and text of notice 240/24/5405 dated 09.10.2025 were cross-verified in independent
+      regulatory copies. It states that Order 230/2025, registered by Minjust on 18.09.2025 No. 83573,
+      amended the Order 240/2023 certification procedure for alignment with GOST R 56939-2024.
+    - >-
+      The exact official fstec.ru landing/file route for the notice was not recovered in this pass.
+      Mirrored copies are discovery/status evidence only and are not allowed to promote immutable status.
+    - >-
+      Direct retrieval of an already known official fstec.ru PDF target was retried and failed on transport;
+      no MIME, byte length or SHA-256 was asserted from that failure.
+proof_floor:
+  immutable_requires:
+    - exact official file bytes
+    - observed MIME/type and signature check
+    - byte length
+    - computed SHA-256
+    - immutable artifact plus manifest
+  mirrored_copy_can_promote_primary: false
+applicability_guards:
+  - no universal PDN duty from secure-development certification requirements
+  - no developer, certification-body or test-laboratory duties copied into PP1119/FSTEC21 operator baseline without explicit edge
+  - FSB/SKZI duties remain conditional on proved crypto applicability
+  - KII/NKTsKI/GosSOPKA duties remain excluded unless independently connected to PDN incidents or another explicit scope edge
+counter_patch_after_registration:
+  identified: 50
+  metadata_verified: 50
+  immutable_sha256_verified: 21
+  pending_raw_capture: 29
+  exact_official_route_unresolved: 9
+  confirmed_conflicts: 0
+counter_basis: >-
+  One new METADATA_VERIFIED source card is registered in the counted security-stack source directory.
+  It has neither immutable bytes nor an exact official route, therefore identified/metadata/pending/unresolved each increase by one;
+  immutable count is unchanged. A subsequent acquisition may replace PENDING/UNRESOLVED only with proof-floor-compliant evidence.
+next_priority:
+  - recover exact official fstec.ru route and bytes for SEC-SRC-RU-FSTEC-INFO-240-24-5405-2025
+  - recover exact primary route and bytes for SEC-SRC-RU-FSTEC205-2025
+  - PP1119 exact Government DOC
+  - FSB378 primary bytes
+  - FSB66/173 and FAPSI152 primary bytes
+  - remaining registered FSTEC attachment route gaps
+  - continue FSTEC21 replacement enactment watch without promoting project 169583
