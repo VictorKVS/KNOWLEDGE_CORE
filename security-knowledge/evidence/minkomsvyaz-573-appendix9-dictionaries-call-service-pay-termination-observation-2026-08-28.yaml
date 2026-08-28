@@ -1,0 +1,41 @@
+schema_version: "1.0"
+id: EVIDENCE-RU-MINKOMSVYAZ-573-APPENDIX9-DICTIONARIES-CALL-SERVICE-PAY-TERMINATION-2026-08-28
+checked_at: "2026-08-28"
+subject: "Order 573 appendix 9 Dictionaries.asn call, service, pay and termination records"
+observations:
+  - Order 630 point 21 replaced appendix 9 in full with effect from 1 March 2024.
+  - CallsTypesRecord is the literal source identifier; it has five fields and only end-time is optional.
+  - CallTypesRecord is not introduced as a normalized alias.
+  - Call type, service and pay identifiers each have the exact range 0..4294967295.
+  - SupplementServicesRecord has six fields; mnemonic and end-time are optional.
+  - The optional service mnemonic is UTF8String length 1..64.
+  - PayTypesRecord has five fields and only end-time is optional.
+  - TerminationCausesRecord has six fields and only end-time is optional.
+  - The termination cause identifier has the narrower exact range 0..16384.
+  - NetworkType is required in TerminationCausesRecord.
+  - Each description is required UTF8String length 1..256.
+  - The four report values are SEQUENCE OF their respective record types without a published element-count constraint.
+  - The consolidated HTML renders the termination-causes OID with a closing parenthesis instead of a closing brace; the delimiter is pending primary-PDF confirmation.
+  - No retention, refresh, identifier-reuse period or ASN.1 compilability claim was inferred.
+sources:
+  current_appendix9_open_text: "https://legalacts.ru/doc/prikaz-minkomsvjazi-rossii-ot-29102018-n-573-ob-utverzhdenii/"
+  order630_official_publication: "https://publication.pravo.gov.ru/document/0001202309050014"
+  order630_exact_delta: "https://www.garant.ru/products/ipo/prime/doc/407511660/"
+source_quality:
+  order630_appendix9_replacement_and_effective_date: VERIFIED
+  current_four_record_fields_requiredness_ranges_and_sizes: VERIFIED_CONSOLIDATED_PUBLIC_TEXT
+  report_wrapper_oid_and_item_type_mappings: VERIFIED_CONSOLIDATED_PUBLIC_TEXT
+  termination_causes_oid_closing_delimiter: PENDING_PRIMARY_PDF
+  date_and_time_and_network_type_deep_dependency_models: PENDING_SEPARATE_ATOMIZATION
+  official_immutable_pdf_bytes: PENDING_SERVER_502_FROM_PRIOR_SAME_DATE_CHECK
+  independent_expert_review: PENDING
+linked_model: security-knowledge/legislation/RU/ministry-orders/minkomsvyaz-573-2018/appendix9-dictionaries-call-service-pay-termination-records-atomic-v1.yaml
+linked_regression: security-knowledge/legislation/RU/ministry-orders/minkomsvyaz-573-2018/appendix9-dictionaries-call-service-pay-termination-records-regression-v1.json
+claims_not_made:
+  - CALL_TYPES_RECORD_NORMALIZED_ALIAS_EXISTS
+  - TERMINATION_CAUSE_IDENTIFIER_HAS_UINT32_MAXIMUM
+  - END_TIME_IS_REQUIRED_IN_ANY_OF_THE_FOUR_RECORDS
+  - REPORT_SEQUENCE_OF_HAS_A_MINIMUM_OR_MAXIMUM_ELEMENT_COUNT
+  - TERMINATION_CAUSES_OID_RENDERED_DELIMITER_IS_CONFIRMED_CORRECT
+  - DEACTIVATION_GRACE_RETENTION_REFRESH_OR_IDENTIFIER_REUSE_PERIOD_IS_SPECIFIED
+  - ASN1_COMPILES_FROM_RENDERED_HTML
