@@ -1,0 +1,142 @@
+schema_version: "1.0"
+stream: 3
+checked_at: "2026-08-28T14:22:02+03:00"
+mode: APPEND_ONLY_RECONCILIATION
+previous_delta: "master-inventory-delta-2026-08-28T1122.yaml"
+focus: "finance / overdue-debt collection / confidentiality of debtor information / direct PDN consent-disclosure rules"
+
+counters_before:
+  found: 54
+  downloaded: 9
+  immutable: 9
+  pending: 43
+  reused: 2
+  primary_publication_verified: 25
+  sectors_registered: 28
+
+counters_after:
+  found: 55
+  downloaded: 9
+  immutable: 9
+  pending: 44
+  reused: 2
+  primary_publication_verified: 26
+  sectors_registered: 29
+
+changes:
+  new_sources: 1
+  new_immutable_artifacts: 0
+  new_durable_downloads: 0
+  new_pending_exact_capture: 1
+  new_sector_regimes: 1
+  applicability_promotions: 0
+  legal_conflicts_confirmed: 0
+  primary_publication_verified_increment: 1
+
+new_sources:
+  - source_id: SEC-SRC-RU-FZ-230-2016
+    sector: debt_collection_consumer_finance
+    regime: overdue_debt_collection_confidentiality_and_contact_controls
+    title: "Федеральный закон от 03.07.2016 № 230-ФЗ"
+    status: CURRENT_PRIMARY_ORIGINAL_VERIFIED_CURRENT_CONSOLIDATION_CROSSCHECKED_VERSION_CHAIN_PARTIAL_EXACT_BINARY_PENDING
+    publication_id: "0001201607030002"
+    official_publication_date: "2016-07-03"
+    current_edition_crosscheck: "31.07.2025"
+
+protected_information_anchors:
+  - source_id: SEC-SRC-RU-FZ-230-2016
+    locator: "статья 6 часть 3"
+    concept: debtor_information_third_party_disclosure_restriction
+    note: "Без согласия должника нельзя передавать третьим лицам или делать доступными сведения о должнике, задолженности/взыскании и иные ПДн, если иное не предусмотрено федеральным законом."
+    guard: "SPECIAL_DISCLOSURE_RESTRICTION != COMPLETE_152FZ_LEGAL_BASIS_ANALYSIS"
+  - source_id: SEC-SRC-RU-FZ-230-2016
+    locator: "статья 6 часть 4"
+    concept: separate_written_pdn_consent
+    note: "Специальное согласие на соответствующую передачу оформляется как письменное согласие на обработку ПДн отдельным документом."
+    guard: "SPECIAL_230FZ_CONSENT != UNIVERSAL_CONSENT_REQUIREMENT_FOR_ALL_PDN_OPERATIONS"
+  - source_id: SEC-SRC-RU-FZ-230-2016
+    locator: "статья 6 часть 8"
+    concept: public_disclosure_prohibition
+    note: "Независимо от согласия из части 3 не допускается раскрытие указанных сведений и ПДн неограниченному кругу лиц, в Интернете либо по месту работы/учебы должника."
+  - source_id: SEC-SRC-RU-FZ-230-2016
+    locator: "статья 17"
+    concept: debt_collection_interaction_record_retention
+    note: "Для профессиональных коллекторских организаций действует специальный режим записи взаимодействий и хранения соответствующих ресурсов не менее трех лет; locator-specific current chain remains pending primary capture."
+    guard: "THREE_YEAR_COLLECTION_RECORD_RETENTION != GENERAL_PDN_RETENTION"
+
+relationships:
+  - from: SEC-SRC-RU-FZ-230-2016
+    to: "152-ФЗ:articles_5_6_9"
+    relation: DIRECT_STATUTORY_PDN_REFERENCE_IN_SPECIAL_DEBT_COLLECTION_REGIME
+    status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  - from: SEC-SRC-RU-FZ-230-2016
+    to: SEC-SRC-RU-LAW-395-1
+    relation: BANK_DEBT_COLLECTION_MAY_HAVE_DUAL_BANKING_SECRECY_CONTEXT
+    status: CANDIDATE_SCENARIO_REVIEW_REQUIRED
+  - from: SEC-SRC-RU-FZ-230-2016
+    to: SEC-SRC-RU-FZ-218
+    relation: DIRECT_SCOPE_BOUNDARY_CREDIT_HISTORY_RELATIONS
+    status: STATUTORY_SCOPE_BOUNDARY
+  - from: SEC-SRC-RU-FZ-230-2016
+    to: SEC-SRC-RU-FZ-126
+    relation: TELECOM_CHANNEL_OVERLAP_FOR_CALLS_AND_MESSAGES
+    status: CANDIDATE_SCENARIO_REVIEW_REQUIRED
+
+version_events:
+  - act: "Федеральный закон от 03.07.2016 № 230-ФЗ"
+    effect: ADOPTED
+    publication_id: "0001201607030002"
+    publication_date: "2016-07-03"
+    evidence_status: PRIMARY_PUBLICATION_METADATA_VERIFIED
+  - act: "Федеральный закон от 07.06.2025 № 137-ФЗ"
+    effect: CURRENT_SOURCE_LEVEL_AMENDMENT
+    publication_id: "0001202506070014"
+    publication_date: "2025-06-07"
+    evidence_status: PRIMARY_PUBLICATION_METADATA_VERIFIED_LOCATOR_MAP_PARTIAL
+  - act: "Федеральный закон от 31.07.2025 № 304-ФЗ"
+    effect: CURRENT_AMENDMENT_TO_230FZ_REGISTRY_PROCEDURE
+    publication_id: "0001202507310080"
+    publication_date: "2025-07-31"
+    effective_date: "2026-03-01"
+    evidence_status: PRIMARY_PUBLICATION_METADATA_VERIFIED_EFFECT_TEXT_CROSSCHECKED
+  - act: "Федеральный закон от 11.02.2026 № 20-ФЗ"
+    effect: FUTURE_CHANGE_TO_ARTICLE_17_1_REPORTING
+    publication_id: "0001202602110015"
+    publication_date: "2026-02-11"
+    effective_date: "2026-09-01"
+    evidence_status: PRIMARY_PUBLICATION_METADATA_VERIFIED_FUTURE_NOT_CURRENT
+
+version_chain_review:
+  current_edition_crosscheck: "ред. от 31.07.2025"
+  current_as_of: "2026-08-28"
+  complete_primary_byte_exact_chain: false
+  guard: "Current consolidation crosscheck is not treated as complete primary byte-exact version proof; 20-FZ remains future until 2026-09-01."
+
+acquisition:
+  exact_capture_attempted: true
+  exact_capture_succeeded: false
+  official_publication_url: "https://publication.pravo.gov.ru/Document/View/0001201607030002"
+  official_file_url: "https://publication.pravo.gov.ru/File/Pdf?eoNumber=0001201607030002"
+  binary_attempt_result: TEMPORARY_FAILURE_IN_NAME_RESOLUTION
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+  displayed_sizes_used_as_exact_bytes: false
+
+proof_floor:
+  taxonomy_used_as_evidence: false
+  primary_normative_act_required: true
+  debt_information_always_pdn: false
+  debt_information_always_bank_secrecy: false
+  special_consent_equals_universal_152fz_consent: false
+  three_year_retention_equals_general_pdn_retention: false
+  applicability_promoted: false
+  legal_conflict_declared: false
+
+next_actions:
+  - "Retry byte-exact official PDF capture for 230-FZ, 137-FZ, 304-FZ and future 20-FZ when publication.pravo.gov.ru DNS is available."
+  - "Complete locator-specific primary version chain for Articles 4, 6, 17 and 17.1 before executable promotion."
+  - "Re-verify and, if appropriate, switch the 20-FZ event from FUTURE to CURRENT on or after 2026-09-01."
+  - "Continue finance discovery with deduplication against banking secrecy, credit histories, microfinance and payment-sector nodes."
