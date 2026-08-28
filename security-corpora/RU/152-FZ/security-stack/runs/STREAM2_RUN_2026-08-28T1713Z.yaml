@@ -1,0 +1,95 @@
+schema_version: "1.0"
+id: STREAM2_RUN_2026-08-28T1713Z
+stream: RU_PDN_TECHNICAL_CRYPTO
+created_at: "2026-08-28T17:13:00Z"
+status: COMPLETED_WITH_TRANSPORT_BLOCKERS
+
+baseline_before_run:
+  identified: 51
+  metadata_verified: 51
+  immutable_sha256_verified: 21
+  pending_raw_capture: 30
+  exact_official_route_unresolved: 8
+  confirmed_conflicts: 0
+
+work_completed:
+  - source_id: SEC-SRC-RU-FSTEC-INFO-240-22-879-2015
+    action: REGISTER_PRIMARY_BDU_SCOPE_AND_PROVENANCE_NOTICE
+    result: >-
+      Registered FSTEC notice 240/22/879 as primary provenance for the Bank of Information Security Threats (BDU),
+      including its explicit ISPDn scope and stated use for threat modeling and vulnerability analysis. Recovered the
+      historical official FSTEC HTML document route; exact official bytes were not obtained in this runtime.
+    official_document_route: "https://fstec.ru/normotvorcheskaya/informatsionnye-i-analiticheskie-materialy/956-informatsionnoe-soobshchenie-fstek-rossii-ot-6-marta-2015-g-240-22-879"
+    dynamic_reference_url: "https://bdu.fstec.ru/"
+    immutable_promotion: false
+
+transport_attempts:
+  - target: SEC-SRC-RU-FSTEC-INFO-240-22-879-2015
+    result: TRANSPORT_FAILED
+    detail: >-
+      Direct download of the official fstec.ru HTML document route failed in the runtime. No official response bytes,
+      observed MIME, byte length or SHA-256 were available; no mirror was substituted.
+  - target: FSTEC_BDU_DYNAMIC_REFERENCE
+    result: TRANSPORT_FAILED
+    detail: >-
+      The main bdu.fstec.ru endpoint could not be fetched in the current web runtime. Dynamic-catalog unavailability
+      does not affect the historical notice identity and does not justify copying third-party catalog data into the
+      immutable primary-document layer.
+
+status_checks:
+  fstec21_replacement_project_169583:
+    checked_at: "2026-08-28"
+    result: DRAFT_WATCH_ONLY
+    note: >-
+      Fresh material still states that Order No. 21 is acting and that project 169583 is a draft replacement not yet
+      issued and Minjust-registered. The proposed 2026-09-01 date is not promoted into the active baseline.
+  fsb66_pkz2005:
+    checked_at: "2026-08-28"
+    result: CURRENT_VERSION_CHAIN_RECONFIRMED
+    note: >-
+      Official FSB status data confirms Order No. 66 dated 09.02.2005, Minjust registration No. 6382, effective date
+      30.03.2005, and amendment by FSB Order No. 173 dated 12.04.2010. Primary exact bytes remain a capture target.
+  pp1119:
+    checked_at: "2026-08-28"
+    result: ACTIVE_BASELINE_NO_PRIMARY_BYTE_DELTA
+    note: >-
+      No replacement evidence was found in this pass. Exact Government primary DOC bytes remain pending and no
+      secondary reproduction is accepted as immutable evidence.
+
+applicability_guards:
+  - >-
+    Notice 240/22/879 explicitly includes ISPDn in BDU scope, so it is relevant to PDN threat/vulnerability analysis.
+    Individual BDU entries are reference/candidate evidence and must still pass system-specific applicability analysis.
+  - >-
+    The BDU notice does not create a universal mandatory-control list and does not import GIS, KII, certification,
+    licensing, NCCCI/GosSOPKA or crypto obligations into a private ISPDn without an explicit applicability edge.
+  - >-
+    FSB378/FSB66/FSB173/FAPSI152 remain conditional cryptographic/lifecycle sources; the existence of an ISPDn alone
+    does not prove that every SKZI-related duty applies.
+
+proof_floor:
+  rule: >-
+    IMMUTABLE_CAPTURED requires exact official bytes plus observed MIME/signature, byte length, computed SHA-256,
+    immutable artifact and manifest. Search results, portal metadata and secondary copies do not satisfy this floor.
+
+counter_patch_after_run:
+  identified: 52
+  metadata_verified: 52
+  immutable_sha256_verified: 21
+  pending_raw_capture: 31
+  exact_official_route_unresolved: 8
+  confirmed_conflicts: 0
+  basis: >-
+    One new metadata-verified primary FSTEC notice is added with a known official document route. No official bytes
+    were captured, so immutable stays 21 and pending increases to 31; the route-gap counter remains 8.
+
+next_priority:
+  - PP1119_EXACT_GOVERNMENT_DOC_BYTES
+  - FSB378_PRIMARY_OFFICIAL_BYTES
+  - FSB66_FSB173_FAPSI152_PRIMARY_BYTES
+  - FSTEC205_2025_EXACT_PRIMARY_ROUTE
+  - FSTEC_240_24_4734_EXACT_PDF_BYTES
+  - FSTEC_240_24_5405_ATTACHMENT_ROUTE_AND_BYTES
+  - FSTEC_240_22_879_OFFICIAL_HTML_BYTES
+  - REMAINING_FSTEC_METHODICAL_ATTACHMENTS
+  - FSTEC21_REPLACEMENT_PRIMARY_ENACTMENT_WATCH
