@@ -1,0 +1,63 @@
+schema_version: "1.0"
+run_id: PDN-STREAM1-2026-08-28T0517+0300
+stream: 1
+scope: GENERAL_152FZ_ROSKOMNADZOR_CORE
+observed_at: "2026-08-28T05:17:00+03:00"
+
+counter_snapshot:
+  identified: 37
+  downloaded_exact: 35
+  immutable_sha256: 35
+  atomized_proposed: 4
+  atomized_verified: 0
+  pending_raw: 2
+  raw_coverage: 0.9459
+
+pending_raw_sources:
+  - SEC-SRC-RU-152FZ-2026-07-26
+  - SEC-SRC-RU-PP687-2008
+
+work_performed:
+  - source_id: SEC-SRC-RU-152FZ-2026-07-26
+    action: REGISTER_GUARDED_OFFICIAL_TRANSPORT
+    result: ROUTE_REGISTERED_CAPTURE_NOT_YET_ACCEPTED
+    route: "https://ips.pravo.gov.ru/api/ips/legislation/document?baseid=None&hash=98490812b3409e2a8d78a11ca9010f434ea3d9250a11dbbdb78690cd5551bdd6"
+    route_class: OFFICIAL_IPS_API_ROUTE_REGISTERED_GUARDED
+    source_card_commit: "33ce0ca5b1361f32bca396aebdcd0014e39061ab"
+    proof_rule: >-
+      Route registration alone does not prove current text. Returned bytes must independently pass the 152-FZ and
+      personal-data identity gate plus current-revision proof by explicit No. 265-FZ citation or the complete
+      Article 12 part 2 wording fingerprint introduced on 26.07.2026, then exact-byte and SHA-256 manifest gates.
+    semantic_promotion: false
+  - source_id: SEC-SRC-RU-PP687-2008
+    action: RETAIN_EXISTING_GUARDED_ROUTES
+    result: PENDING
+    note: >-
+      Current revision remains anchored by PP RF No. 12 of 18.01.2025, effective 26.01.2025, with validity through
+      01.09.2030. No new byte-exact artifact was accepted in this pass.
+
+freshness:
+  current_152fz_revision: "2026-07-26"
+  current_152fz_amendment_anchor: SEC-SRC-RU-FZ265-2026
+  rkn128_replacement_watch: DRAFT_ONLY_NO_ENACTED_REPLACEMENT_FOUND
+
+acquisition:
+  existing_immutable_preserved: 35
+  new_immutable_accepted_at_run_record_write: 0
+  semantic_promotions: 0
+  proof_floor_held: true
+  acquisition_workflow_run_id: 33135413401
+  acquisition_workflow_state_at_run_record_write: IN_PROGRESS
+  note: >-
+    The source-card change triggered the existing PDN Core Immutable Acquisition workflow. This run record does not
+    predict its result and does not promote either remaining source without an accepted immutable manifest.
+
+quality_gates:
+  sector_overlays_touched: false
+  repeat_downloads_of_verified_corpus: 0
+  source_status_inflation: false
+
+next_gate:
+  - accept exact current 152-FZ bytes only if the newly registered API transport passes the unchanged identity/revision proof
+  - retain PP687 pending until an official current-text response passes identity, PP12 revision, exact-byte and SHA-256 gates
+  - after raw closure, move Stream 1 capacity to structure, chunks, concept/definition reconciliation and conflict detection
