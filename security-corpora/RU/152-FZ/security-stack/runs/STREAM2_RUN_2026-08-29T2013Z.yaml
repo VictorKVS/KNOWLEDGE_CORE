@@ -1,0 +1,110 @@
+schema_version: "1.0"
+id: STREAM2-RUN-2026-08-29T2013Z
+stream: 2
+kind: security-stack-primary-byte-acquisition-and-proof-chain-reconciliation
+created_at: "2026-08-29T20:13:32Z"
+status: COMPLETED_WITH_TRANSIENT_PRIMARY_BYTE_BLOCKERS
+scope:
+  primary_domain: "152-FZ technical and cryptographic security stack"
+  focus:
+    - PP RF No. 1119 primary Government DOC acquisition
+    - FSTEC Order No. 21 and Threat Assessment Methodology 2021 baseline status
+    - FSB Order No. 378 and related SKZI chain
+    - FSTEC methodical, attestation, licensing and certification sources only through explicit applicability edges
+    - NCTKI/GosSOPKA only where a direct PDN incident edge is evidenced
+
+counter_state_before:
+  identified: 55
+  metadata_verified: 55
+  immutable_sha256_verified: 24
+  pending_raw_capture: 31
+  exact_official_route_unresolved: 8
+  confirmed_conflicts: 0
+
+effective_counter_state_after:
+  identified: 55
+  metadata_verified: 55
+  immutable_sha256_verified: 24
+  pending_raw_capture: 31
+  exact_official_route_unresolved: 8
+  confirmed_conflicts: 0
+  reconciliation_basis: >-
+    No new primary payload was captured in this pass. Existing immutable evidence for FSTEC Orders
+    77/2021, 60/2026 and 164/2025 was reconciled into their source-card provenance fields. Counters
+    therefore remain unchanged; this pass repairs proof-chain consistency rather than inventing a new
+    source or fingerprint.
+
+proof_chain_repairs:
+  - id: SEC-SRC-RU-FSTEC77-2021
+    action: RECONCILED_CAPTURE_PROVENANCE
+    exact_file_route_status: OFFICIAL_BYTES_CAPTURED
+    exact_official_bytes_captured: true
+    byte_length: 1842851
+    sha256: "05b481fb9a2a73c0500b85fe73490945cde3aa295cea899857ca93157e5a04b4"
+    manifest_ref: "security-corpora/RU/152-FZ/security-stack/manifests/SEC-SRC-RU-FSTEC77-2021.json"
+  - id: SEC-SRC-RU-FSTEC60-2026
+    action: RECONCILED_CAPTURE_PROVENANCE
+    exact_file_route_status: OFFICIAL_BYTES_CAPTURED
+    exact_official_bytes_captured: true
+    byte_length: 499237
+    sha256: "6e593135c8a5eaf574bc4751b0782f840eb905e5341ed23270485deccef6d74a"
+    manifest_ref: "security-corpora/RU/152-FZ/security-stack/manifests/SEC-SRC-RU-FSTEC60-2026.json"
+  - id: SEC-SRC-RU-FSTEC164-2025
+    action: RECONCILED_CAPTURE_PROVENANCE
+    exact_file_route_status: OFFICIAL_BYTES_CAPTURED
+    exact_official_bytes_captured: true
+    byte_length: 761026
+    sha256: "ea8cd11ad17743f6e80ad8144ace50e9f743fde6e365bb8d7a9fda8a73a86de6"
+    manifest_ref: "security-corpora/RU/152-FZ/security-stack/manifests/SEC-SRC-RU-FSTEC164-2025.json"
+
+primary_byte_acquisition_attempts:
+  - target: SEC-SRC-RU-PP1119-2012
+    official_route: "https://government.ru/media/2012/11/3/53354/file/1119_pril.doc"
+    result: TRANSIENT_DNS_FAILURE_NO_BYTES
+    immutable_promotion: false
+    note: "Current acquisition environment could not resolve government.ru; no MIME, byte length or SHA-256 was synthesized."
+  - target: SEC-SRC-RU-FSB378-2014
+    official_route: "https://rg.ru/documents/2014/09/17/zashita-dok.html"
+    result: TRANSIENT_DNS_FAILURE_NO_BYTES
+    immutable_promotion: false
+    note: "Current acquisition environment could not resolve rg.ru; the official archive route remains registered and byte-pending."
+
+baseline_status_review:
+  checked_at: "2026-08-29"
+  pp1119: CURRENT_PRIMARY_BYTES_PENDING
+  fstec21: CURRENT_REPLACEMENT_PROJECT_NOT_PROMOTED_WITHOUT_PRIMARY_ENACTMENT_EVIDENCE
+  fstec_threat_method_2021: CURRENT_IMMUTABLE_CAPTURED
+  fsb378: CURRENT_WHEN_SKZI_USED_PRIMARY_BYTES_PENDING
+  fstec77: CURRENT_PRE_2026_09_01_ATTESTATION_CONTEXT_IMMUTABLE_CAPTURED
+  fstec60: PUBLISHED_REGISTERED_FUTURE_EFFECTIVE_2026_09_01_IMMUTABLE_CAPTURED
+  fstec164: CURRENT_AS_AMENDED_LICENSED_SZI_DEVELOPMENT_PRODUCTION_CONTEXT_ONLY
+
+version_chain_review:
+  - from: SEC-SRC-RU-FSTEC77-2021
+    relation: AMENDED_BY
+    to: SEC-SRC-RU-FSTEC60-2026
+    effective_from: "2026-09-01"
+    status_on_2026_08_29: FUTURE_EFFECTIVE_NOT_YET_ACTIVE
+  - source: SEC-SRC-RU-FSTEC21-2013
+    replacement_project: "169583"
+    status_on_2026_08_29: DRAFT_NOT_ENACTED_IN_VERIFIED_PRIMARY_EVIDENCE
+    rule: "Do not switch the active baseline until final order identity, Minjust registration and official publication are verified from primary evidence."
+
+applicability_guard: >-
+  Keep the PP1119/FSTEC21 ISPDN baseline separate from attestation, licensing, certification,
+  KII/NCTKI/GosSOPKA and SKZI lifecycle branches. FSB378 is relevant only when SKZI use is established.
+  FSTEC77/60 are routed through proved attestation applicability; FSTEC164 applies only to independently
+  licensed development/production of confidential-information protection tools. No neighboring-regime
+  requirement is propagated into generic private ISPDN solely from PDN processing status.
+
+proof_rule: >-
+  Immutable promotion requires exact official payload bytes, observed MIME/signature, exact byte length,
+  computed SHA-256, immutable artifact and manifest. Transient transport evidence is recorded separately
+  and never converted into a synthetic fingerprint.
+
+next_priority:
+  - "retry exact Government primary DOC bytes for PP1119"
+  - "retry FSB378 primary bytes, then FSB66/173 and FAPSI152"
+  - "recover exact primary route for FSTEC Order 205/2025"
+  - "capture exact routed FSTEC methodical PDFs, including penetration-testing and maturity materials"
+  - "continue primary-enactment watch for project 169583 before any switch away from FSTEC21"
