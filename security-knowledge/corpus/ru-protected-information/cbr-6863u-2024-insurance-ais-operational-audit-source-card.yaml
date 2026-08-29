@@ -1,0 +1,114 @@
+schema_version: "1.0"
+source_id: SEC-SRC-RU-CBR-6863U-2024
+stream: 3
+jurisdiction: RU
+authority: "Банк России"
+sector: insurance
+regime: insurance_ais_operational_audit_pdn_security_assurance
+act_type: "Указание Банка России"
+act_number: "6863-У"
+act_date: "2024-09-26"
+title: "О порядке проведения оператором автоматизированной информационной системы страхования операционного аудита"
+
+status:
+  current_as_of: "2026-08-29"
+  value: CURRENT_PRIMARY_TEXT_VERIFIED_VERSION_CHAIN_PARTIAL_EXACT_BINARY_PENDING
+  applicability: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  executable_rule_status: NOT_PROMOTED
+
+primary_publication:
+  publisher: "Банк России"
+  official_site_publication_date: "2024-11-07"
+  vestnik_issue: "Вестник Банка России № 45 (2519) от 13.11.2024"
+  source_url: "https://cbr.ru/Queries/XsltBlock/File/158093/-1/2519"
+  alternate_source_url: "https://www.cbr.ru/Queries/XsltBlock/File/87500/-1/2519"
+  minjust_registration_date: "2024-10-31"
+  minjust_registration_number: "79973"
+  effective_rule: "по истечении 10 дней после дня официального опубликования"
+  exact_byte_capture_status: PENDING_TRANSIENT_DNS_FAILURE
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+  displayed_sizes_used_as_exact_bytes: false
+
+protected_information_anchors:
+  - locator: "пункт 1"
+    concept: operational_audit_periodicity
+    rule: "Оператор АИС страхования проводит операционный аудит не реже одного раза в два года."
+    evidence_role: PRIMARY_CBR_VESTNIK
+    guard: "TWO_YEAR_AUDIT_PERIODICITY != PDN_RETENTION"
+  - locator: "пункт 1"
+    concept: protected_information_security_assurance
+    rule: "Аудит охватывает меры защиты информации, содержащейся в АИС страхования, требования к которой установлены Банком России на основании статьи 33.10 Закона РФ № 4015-I."
+    evidence_role: PRIMARY_CBR_VESTNIK
+  - locator: "пункт 1"
+    concept: direct_personal_data_security_audit_reference
+    rule: "Аудит прямо охватывает меры защиты ПДн при их обработке в АИС страхования в соответствии со статьей 19 152-ФЗ и от угроз, определенных Банком России."
+    evidence_role: PRIMARY_CBR_VESTNIK
+    guard: "DIRECT_ARTICLE_19_REFERENCE != ALL_AIS_INFORMATION_IS_PDN"
+  - locator: "пункт 2"
+    concept: audit_plan_and_normative_traceability
+    rule: "План аудита фиксирует проверяемые системы, процедуры и меры, перечень применимых законов/НПА/актов Банка России, срок аудита и порядок утверждения и направления отчета."
+    evidence_role: PRIMARY_CBR_VESTNIK
+  - locator: "пункт 2"
+    concept: regulator_reporting_deadline
+    rule: "Отчет направляется в Банк России через личный кабинет в течение пяти рабочих дней со дня его утверждения."
+    evidence_role: PRIMARY_CBR_VESTNIK
+    guard: "FIVE_WORKING_DAY_AUDIT_REPORT_DEADLINE != INCIDENT_NOTIFICATION_OR_DATA_SUBJECT_RESPONSE_DEADLINE"
+  - locator: "пункты 3-5"
+    concept: audit_actor_and_evidence
+    rule: "Аудит выполняет внутреннее уполномоченное лицо/подразделение либо привлеченный аудитор; отчет содержит scope, нормативную базу, результаты, недостатки и рекомендации."
+    evidence_role: PRIMARY_CBR_VESTNIK
+
+relationships:
+  - to: "152-ФЗ"
+    relation: DIRECT_PDN_SECURITY_AUDIT_REFERENCE
+    status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    locator: "пункт 1 / статья 19"
+  - to: SEC-SRC-RU-LAW-4015I-1992
+    relation: DIRECT_STATUTORY_PARENT_INSURANCE_AIS_AUDIT_CONTEXT
+    status: DIRECT_STATUTORY_RELATION
+    locator: "подпункт 9 пункта 7 статьи 33.10"
+  - to: SEC-SRC-RU-CBR-822P-2023
+    relation: SECURITY_REQUIREMENTS_TO_OPERATIONAL_AUDIT_ASSURANCE_LAYER
+    status: NORMATIVE_LAYER_OVERLAP_REVIEWED
+    guard: "Не трактовать как буквальную ссылку 6863-У на номер 822-П; связь проведена через общий statutory security layer статьи 33.10 и предмет аудита мер защиты информации."
+
+version_chain:
+  status: PRIMARY_TEXT_VERIFIED_VERSION_CHAIN_PARTIAL
+  events:
+    - act: "Указание Банка России № 6863-У"
+      effect: ADOPTED
+      date: "2024-09-26"
+      evidence_status: PRIMARY_CBR_VESTNIK
+    - effect: MINJUST_REGISTERED
+      date: "2024-10-31"
+      registration_number: "79973"
+      evidence_status: PRIMARY_CBR_VESTNIK
+    - effect: OFFICIALLY_PUBLISHED_ON_CBR_SITE
+      date: "2024-11-07"
+      evidence_status: PRIMARY_ACT_FOOTNOTE
+    - effect: PUBLISHED_IN_VESTNIK_BANKA_ROSSII
+      date: "2024-11-13"
+      issue: "45 (2519)"
+      evidence_status: PRIMARY_CBR_VESTNIK
+  latest_check: "Official CBR sweep through 2026-08-29 did not identify an amendment or repeal; absence of search hits is not treated as exhaustive version-chain proof."
+
+acquisition_state:
+  exact_binary_obtained: false
+  reason: TEMPORARY_DNS_FAILURE_ON_CBR_HOST_IN_BINARY_RUNTIME
+  attempted_at: "2026-08-29T05:29:40+03:00"
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+
+quality_gates:
+  taxonomy_as_evidence: false
+  dedupe_checked: true
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+  fabricated_binary_metadata: false
