@@ -1,0 +1,115 @@
+schema_version: "1.0"
+id: SEC-SRC-RU-ROSARCHIVE-236-2019
+kind: security-regulatory-source
+status: CURRENT_PRIMARY_PUBLICATION_VERIFIED_OPERATION_CONFIRMED_NO_AMENDMENT_LOCATED_IN_THIS_SWEEP_HISTORICAL_CHAIN_PARTIAL_EXACT_BINARY_PENDING
+
+jurisdiction: RU
+authority: "Федеральное архивное агентство (Росархив)"
+sector: archives_retention
+regime: typical_management_document_retention_pdn_protected_information
+
+document:
+  type: "Приказ Росархива"
+  number: "236"
+  adopted_date: "2019-12-20"
+  title: "Об утверждении Перечня типовых управленческих архивных документов, образующихся в процессе деятельности государственных органов, органов местного самоуправления и организаций, с указанием сроков их хранения"
+  minjust_registration_date: "2020-02-06"
+  minjust_registration_number: "57449"
+  official_publication_id: "0001202002070036"
+  official_publication_date: "2020-02-07"
+  effective_date: "2020-02-18"
+  checked_at: "2026-08-29"
+
+canonical_source:
+  rosarchive_text_url: "https://archives.gov.ru/documents/2019-perechen-typdocs-organization.shtml"
+  rosarchive_orders_url: "https://archives.gov.ru/documents/rosarhiv-orders.shtml"
+  primary_publication_url: "https://publication.pravo.gov.ru/Document/View/0001202002070036"
+  primary_publication_verified: true
+  current_operation_evidence:
+    - "Официальный перечень приказов Росархива продолжает содержать приказ № 236 с регистрацией Минюста № 57449."
+    - "Росархив включает нормативный Перечень № 236 в актуальный контур обязательных требований архивного законодательства."
+
+version_chain:
+  status: CURRENT_OPERATION_CONFIRMED_NO_AMENDMENT_LOCATED_IN_THIS_SWEEP_HISTORICAL_CHAIN_PARTIAL
+  predecessor:
+    act: "Приказ Минкультуры России от 25.08.2010 № 558"
+    repeal_act: "Приказ Минкультуры России от 17.12.2019 № 1964"
+    replacement_effective_date: "2020-02-18"
+  amendments_located_in_this_sweep: []
+  current_as_of: "2026-08-29"
+  full_historical_chain_claimed_complete: false
+
+normative_scope:
+  parent_act: "Федеральный закон от 22.10.2004 № 125-ФЗ"
+  parent_locator: "часть 3 статьи 6"
+  finding: "Перечень устанавливает сроки хранения по конкретным типовым управленческим документам; срок определяется документным классом, точкой отсчета и примечаниями, а не только категорией содержащихся данных."
+  guard: "RETENTION_PERIOD_REQUIRES_MATCHED_DOCUMENT_SERIES_AND_TRIGGER; DO_NOT_INFER_PERIOD_FROM_PDN_CATEGORY_ALONE"
+
+pdn_retention:
+  - locator: "статья 440"
+    concept: PDN_POLICY_AND_INSTRUCTION_RECORD_RETENTION
+    finding: "Документы (положения, инструкции) об обработке персональных данных: по месту утверждения — постоянно; в других организациях — 3 года после замены новыми."
+    guard: "PDN_POLICY_DOCUMENT_RETENTION != RETENTION_OF_UNDERLYING_PDN_DATASETS"
+  - locator: "статья 441"
+    concept: PDN_CONSENT_RECORD_RETENTION
+    finding: "Согласие на обработку персональных данных хранится 3 года после истечения срока его действия или отзыва, если иное не предусмотрено федеральным законом или договором."
+    guard: "THREE_YEAR_CONSENT_RECORD_RETENTION != GENERAL_PDN_RETENTION; FEDERAL_LAW_OR_CONTRACT_EXCEPTION_MUST_BE_CHECKED"
+  - locator: "статьи 444-445"
+    concept: EMPLOYMENT_PERSONNEL_RECORD_RETENTION
+    finding: "Личные карточки работников и личные дела руководителей/работников имеют срок 50/75 лет ЭПК; значение 50/75 зависит от даты завершения делопроизводства и специальных правил Перечня/125-ФЗ."
+    guard: "LONG_PERSONNEL_DOCUMENT_RETENTION != ALL_EMPLOYEE_PDN_RETENTION"
+  - locator: "статьи 438-439"
+    concept: RECRUITMENT_AND_PERSONNEL_RESERVE_RECORD_RETENTION
+    finding: "Документы претендентов, не допущенных к конкурсу или не прошедших конкурсный отбор, хранятся 3 года; документы лиц, не принятых на работу, — 1 год; документы кадрового резерва — 5 лет."
+    guard: "RECRUITMENT_RETENTION_IS_DOCUMENT_CLASS_SPECIFIC; DO_NOT_COLLAPSE_TO_ONE_CANDIDATE_PDN_PERIOD"
+
+protected_information_retention:
+  - locator: "статья 166"
+    concept: RESTRICTED_INFORMATION_NDA_RECORD_RETENTION
+    finding: "Соглашения (договоры) о неразглашении информации ограниченного доступа хранятся 3 года после истечения срока неразглашения, установленного соглашением (договором)."
+    guard: "NDA_RECORD_RETENTION != DURATION_OF_UNDERLYING_SECRET_OR_CONFIDENTIALITY_REGIME"
+  - locator: "статья 167"
+    concept: RESTRICTED_INFORMATION_NONDISCLOSURE_UNDERTAKING_RETENTION
+    finding: "Расписки (обязательства) о неразглашении информации ограниченного доступа хранятся 3 года после прекращения трудовых отношений."
+    guard: "UNDERTAKING_RECORD_RETENTION != UNIVERSAL_RESTRICTED_INFORMATION_RETENTION"
+  - locator: "статья 183 подпункт ж"
+    concept: RESTRICTED_INFORMATION_COPY_MEDIA_ACCOUNTING_RETENTION
+    finding: "Документы учета экземпляров (копий) документов и носителей, содержащих информацию ограниченного доступа, хранятся 5 лет."
+    guard: "ACCOUNTING_RECORD_RETENTION != RETENTION_OF_PROTECTED_CONTENT_OR_SECRET_REGIME_DURATION"
+
+relationships:
+  - target: "SEC-SRC-RU-FZ-125-2004"
+    type: DIRECT_RETENTION_LIST_IMPLEMENTATION
+    note: "Перечень подготовлен в соответствии с ч. 3 ст. 6 125-ФЗ."
+  - target: "SEC-SRC-RU-ROSARCHIVE-77-2023"
+    type: COMPLEMENTARY_ARCHIVAL_LIFECYCLE_RULES
+    note: "№ 236 задает сроки по классам документов; № 77 регулирует организацию хранения, комплектования, учета и использования архивных документов."
+  - target: "152-ФЗ"
+    type: DOCUMENT_RETENTION_OVERLAP_WITH_SCOPE_GUARD
+    note: "Статьи 440-441 прямо описывают документы об обработке ПДн и согласия; это не устанавливает универсальный срок хранения самих ПДн и не отменяет архивную scope-boundary ст. 1(2)(2) 152-ФЗ."
+  - target: "RU protected information regimes"
+    type: RESTRICTED_INFORMATION_RECORD_RETENTION_UMBRELLA
+    note: "Статьи 166, 167 и 183 используют категорию информации ограниченного доступа; конкретный режим тайны должен быть доказан отдельным первичным актом."
+
+acquisition:
+  exact_binary_attempted: true
+  attempted_at: "2026-08-29T17:24:07+03:00"
+  attempted_urls:
+    - "https://publication.pravo.gov.ru/Document/View/0001202002070036"
+    - "https://archives.gov.ru/documents/2019-perechen-typdocs-organization.shtml"
+  transport_result: "curl exit 6 / Could not resolve host: publication.pravo.gov.ru; Could not resolve host: archives.gov.ru"
+  retry_class: TRANSIENT
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+  state: PENDING_EXACT_CAPTURE
+
+quality_gates:
+  taxonomy_used_as_evidence: false
+  primary_normative_act_required: true
+  applicability_invented: false
+  legal_conflict_declared: false
+  fabricated_binary_metadata: false
+  document_series_matching_required: true
