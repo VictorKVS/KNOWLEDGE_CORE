@@ -1,0 +1,106 @@
+schema_version: "1.0"
+stream: 3
+checked_at: "2026-08-29T05:32:00+03:00"
+mode: APPEND_ONLY_PDN_RELATIONSHIP_RECONCILIATION
+previous_stream3_delta: "master-source-inventory-delta-stream3-2026-08-29T0529.yaml"
+focus: "CBR 6568-U as amended by 7283-U: person-level insurance AIS datasets and bounded cross-sector overlaps"
+
+stream3_counters_before:
+  found: 60
+  downloaded: 9
+  immutable: 9
+  pending: 49
+  reused: 2
+  primary_publication_verified: 30
+  sectors_registered: 31
+
+stream3_counters_after:
+  found: 61
+  downloaded: 9
+  immutable: 9
+  pending: 50
+  reused: 2
+  primary_publication_verified: 31
+  sectors_registered: 31
+
+source_added:
+  source_id: SEC-SRC-RU-CBR-6568U-2023
+  title: "Указание Банка России от 06.10.2023 № 6568-У"
+  sector: insurance
+  applicability_status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  executable_effect: NONE
+
+pdn_relationships:
+  - from: SEC-SRC-RU-CBR-6568U-2023
+    locator: "приложение 1, пункт 1.1"
+    to: "152-ФЗ"
+    relation: EXPLICIT_PERSON_LEVEL_INSURANCE_AIS_DATASET_CONTEXT
+    status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    rationale: "Нормативный состав включает СНИЛС, мобильный номер, e-mail, удостоверяющий документ, ФИО, дату/место рождения, адрес регистрации и водительские документы."
+    guard: "DATASET_FIELDS != AUTOMATIC_PROMOTION_OF_EVERY_152FZ_REQUIREMENT_WITHOUT_PROCESSING_CONTEXT"
+  - from: SEC-SRC-RU-CBR-6568U-2023
+    locator: "7283-У, приложение 5"
+    to: "152-ФЗ"
+    relation: DMS_FOREIGNERS_PERSON_LEVEL_DATASET_CONTEXT
+    status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    rationale: "Для ДМС иностранных граждан/лиц без гражданства предусмотрены ФИО, дата рождения, документ, пол, гражданство, мобильный номер, e-mail и договорные данные."
+  - from: SEC-SRC-RU-CBR-6568U-2023
+    locator: "статья 33.11 Закона № 4015-I / пункт 1 6568-У"
+    to: SEC-SRC-RU-LAW-4015I-1992
+    relation: DIRECT_STATUTORY_PARENT_DATASET_CONTEXT
+    status: DIRECT_STATUTORY_RELATION
+  - from: SEC-SRC-RU-CBR-6568U-2023
+    locator: "общий поток АИС страхования"
+    to: SEC-SRC-RU-CBR-822P-2023
+    relation: DATASET_PROCESSING_FLOW_TO_INFORMATION_SECURITY_REQUIREMENTS
+    status: NORMATIVE_LAYER_OVERLAP_REVIEWED
+  - from: SEC-SRC-RU-CBR-6568U-2023
+    locator: "общий поток АИС страхования"
+    to: SEC-SRC-RU-CBR-6863U-2024
+    relation: DATASET_PROCESSING_FLOW_TO_OPERATIONAL_AUDIT_ASSURANCE
+    status: NORMATIVE_LAYER_OVERLAP_REVIEWED
+  - from: SEC-SRC-RU-CBR-6568U-2023
+    locator: "приложение 1, person/vehicle fields"
+    to: SEC-SRC-RU-FZ-16-2007
+    relation: TRANSPORT_INSURANCE_DATASET_OVERLAP_CANDIDATE
+    status: CANDIDATE_DATASET_OVERLAP_REVIEW_REQUIRED
+  - from: SEC-SRC-RU-CBR-6568U-2023
+    locator: "приложение 1 health-event fields; 7283-У приложение 5 DMS"
+    to: SEC-SRC-RU-PP-140-2022
+    relation: HEALTHCARE_DMS_CONTEXT_OVERLAP_CANDIDATE
+    status: CANDIDATE_CONTEXT_REVIEW_REQUIRED
+    guard: "INSURANCE_HEALTH_DATA != MEDICAL_SECRECY_OR_EGISZ_DATA_BY_DEFINITION"
+  - from: SEC-SRC-RU-CBR-6568U-2023
+    locator: "mobile subscriber number fields"
+    to: "126-ФЗ"
+    relation: COMMUNICATIONS_FIELD_OVERLAP_CANDIDATE
+    status: CANDIDATE_DATA_CLASSIFICATION_REVIEW_REQUIRED
+    guard: "MOBILE_NUMBER_FIELD != COMMUNICATIONS_SECRECY_FOR_THE_ENTIRE_INSURANCE_RECORD"
+
+scope_boundaries:
+  - "48 часов для передачи данных ДМС в АИС — отраслевой data-submission SLA, не срок уведомления об инциденте ПДн."
+  - "36 часов после отказа — срок исправления/повторной передачи сообщения, не срок исправления ПДн по обращению субъекта."
+  - "30.06.2026 — переходный backfill deadline, не срок хранения."
+  - "Сведения о повреждении здоровья и лечении в страховом наборе не объявляются врачебной тайной без доказанного происхождения из медицинского контекста."
+
+version_boundaries:
+  - "6568-У: Минюст № 76711 от 28.12.2023, вступление 01.04.2024."
+  - "7283-У: Минюст № 86241 от 28.04.2026, официальная публикация 07.05.2026, вступление 15.05.2026."
+  - "Полный исторический version-chain иных возможных событий не объявлен закрытым."
+
+acquisition_state:
+  exact_binary_obtained: false
+  exact_binary_attempted: true
+  reason: TRANSIENT_DNS_FAILURE_ON_CBR_HOST_IN_BINARY_RUNTIME
+  attempted_at: "2026-08-29T05:31:50+03:00"
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+
+quality_gates:
+  taxonomy_as_evidence: false
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+  fabricated_binary_metadata: false
