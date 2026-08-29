@@ -1,0 +1,134 @@
+schema_version: "1.0"
+stream: 3
+run_at: "2026-08-29T08:20:00+03:00"
+focus: "communications / PP 1994 current 1137 revision / telephone secrecy / subscriber PDN / ESIA-EBS / identity verification / action retention / marketing overlap"
+
+result:
+  new_source: SEC-SRC-RU-PP-1994-2024
+  source_added: true
+  dedupe_checked: true
+  primary_base_text_verified: true
+  current_amendment_primary_text_verified: true
+  future_version_events_verified: 2
+  exact_binary_obtained: false
+  immutable_created: false
+  applicability_promoted: false
+  legal_conflict_declared: false
+
+primary_evidence:
+  - publisher: "Правительство России / Официальный интернет-портал правовой информации"
+    act: "Постановление Правительства Российской Федерации от 30.12.2024 № 1994"
+    current_text_url: "https://government.ru/docs/all/157314/"
+    original_publication_url: "https://publication.pravo.gov.ru/document/0001202412310007"
+    publication_id: "0001202412310007"
+    publication_date: "2024-12-31"
+    current_revision: "Постановление Правительства Российской Федерации от 31.07.2025 № 1137"
+  - publisher: "Правительство России / Официальный интернет-портал правовой информации"
+    act: "Постановление Правительства Российской Федерации от 31.07.2025 № 1137"
+    current_amendment_url: "https://government.ru/docs/all/160366/"
+    publication_url: "https://publication.pravo.gov.ru/document/0001202507310105"
+    publication_id: "0001202507310105"
+    effective_layers: ["2025-08-01", "2025-09-01"]
+  - publisher: "Официальный интернет-портал правовой информации"
+    act: "Постановление Правительства Российской Федерации от 30.04.2026 № 510"
+    publication_url: "https://publication.pravo.gov.ru/document/0001202605060029"
+    publication_id: "0001202605060029"
+    effective_date: "2026-09-01"
+    state: FUTURE_NOT_CURRENT
+  - publisher: "Правительство России / Официальный интернет-портал правовой информации"
+    act: "Постановление Правительства Российской Федерации от 01.08.2026 № 966"
+    government_url: "https://government.ru/docs/all/165746/"
+    publication_url: "https://publication.pravo.gov.ru/document/0001202608030048"
+    publication_id: "0001202608030048"
+    effective_date: "2027-03-01"
+    state: FUTURE_NOT_CURRENT
+
+key_findings:
+  - "Пункт 4: оператор обязан обеспечивать тайну телефонных переговоров; ограничение допускается только в предусмотренных федеральным законом случаях."
+  - "Пункт 4: сведения об абоненте-физлице ограничены по передаче/использованию, а отдельное согласие на обработку ПДн не требуется только для прямо перечисленных отраслевых целей."
+  - "Пункт 18: физлицо может идентифицироваться документом, через ЕСИА либо в предусмотренном сценарии через ЕСИА+ЕБС по статье 9 572-ФЗ."
+  - "Пункты 22, 24, 26: subscriber dataset включает ФИО, место жительства, дату рождения и реквизиты удостоверяющего документа; установлены отдельные 3-дневные verification notices и 60-дневный update deadline."
+  - "Пункт 28: электронно фиксируемые subscriber actions имеют специальный retention не менее 3 лет по установленным точкам отсчета."
+  - "1137/2025, пункты 222-226: добавлен workflow отказа/возврата массовых и автоматических вызовов; рекламная классификация по 38-ФЗ автоматически не выводится."
+
+proof_guards:
+  - "PURPOSE_SPECIFIC_NO_CONSENT_RULE != UNIVERSAL_WAIVER_OF_152FZ_REQUIREMENTS"
+  - "TELEPHONE_SECRECY != EVERY_PIECE_OF_OPERATOR_DATA"
+  - "EBS_IDENTIFICATION_ROUTE != UNIVERSAL_BIOMETRIC_REQUIREMENT"
+  - "TELECOM_VERIFICATION_DEADLINES != 152FZ_INCIDENT_OR_DATA_SUBJECT_DEADLINES"
+  - "THREE_YEAR_ACTION_LOG_RETENTION != GENERAL_SUBSCRIBER_PDN_RETENTION"
+  - "MASS_AUTOMATED_CALL != ADVERTISING_BY_DEFINITION"
+  - "510/2026_AND_966/2026_REMAIN_FUTURE_NOT_CURRENT_UNTIL_EFFECTIVE_DATES"
+
+binary_acquisition:
+  attempted: true
+  attempted_at: "2026-08-29T08:19:09+03:00"
+  targets:
+    - "https://static.government.ru/media/files/CCc135Fhq2U.pdf"
+    - "https://publication.pravo.gov.ru/document/0001202412310007"
+    - "https://government.ru/docs/all/157314/"
+  transport_result: "curl exit 6 / Could not resolve host: static.government.ru / publication.pravo.gov.ru / government.ru"
+  retry_class: TRANSIENT
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+
+counters_before:
+  found: 61
+  downloaded: 9
+  immutable: 9
+  pending: 50
+  reused: 2
+  primary_publication_verified: 31
+  sectors_registered: 31
+
+counters_after:
+  found: 62
+  downloaded: 9
+  immutable: 9
+  pending: 51
+  reused: 2
+  primary_publication_verified: 32
+  sectors_registered: 31
+
+files_written:
+  - "security-corpora/RU/protected-information/source/SEC-SRC-RU-PP-1994-2024.yaml"
+  - "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-PP-1994-2024-capture-pending.json"
+  - "security-knowledge/corpus/ru-protected-information/pp-1994-2024-telephone-communications-pdn-source-card.yaml"
+  - "security-knowledge/corpus/ru-protected-information/master-inventory-delta-2026-08-29T0820.yaml"
+  - "security-knowledge/corpus/ru-personal-data/master-source-inventory-delta-stream3-2026-08-29T0820.yaml"
+  - "security-knowledge/corpus/ru-protected-information/stream-3-run-2026-08-29T0820.yaml"
+
+relationships_added:
+  - "1994 -> 126-ФЗ: direct statutory communications parent"
+  - "1994 -> 152-ФЗ: explicit PDN processing context / candidate applicability"
+  - "1994 -> 572-ФЗ: direct EBS identification scenario"
+  - "1994 -> 38-ФЗ: advertising/marketing overlap candidate only"
+  - "1994 -> ЕСИА/public-sector identity layer: bounded system-flow overlap"
+
+next_priority:
+  - "Retry exact-byte capture of PP1994 current official PDF and primary publication, plus 1137/510/966 version artifacts; promote downloaded/immutable only after exact bytes, retrieved_at, MIME, byte length and SHA-256 are durably stored."
+  - "On or after 2026-09-01, verify PP510 effective transition before changing the current-version layer; do not pre-promote it now."
+  - "Continue communications discovery against 126-ФЗ and subordinate protected-information flows, with dedupe against this PP1994 node."
+  - "Then resume education/children, public-sector identity/registers and archives/retention discovery using primary current acts only."
+
+production_statistics:
+  throughput_this_pass:
+    new_sources: 1
+    new_sectors: 0
+    primary_publications_verified: 1
+    current_amendment_events_verified: 1
+    future_version_events_verified: 2
+    canonical_source_cards_written: 1
+    corpus_source_cards_written: 1
+    manifests_written: 1
+    inventory_deltas_written: 2
+    run_logs_written: 1
+    relationship_edges_added: 5
+    applicability_promotions: 0
+  speed_vs_single_stream_percent: null
+  rework_share_percent: null
+  eta: null
+  reason_for_null_metrics: "No comparable elapsed-time baseline/telemetry for a valid calculation; values were not fabricated."
