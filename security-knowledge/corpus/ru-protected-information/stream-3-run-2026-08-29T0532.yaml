@@ -1,0 +1,114 @@
+schema_version: "1.0"
+stream: 3
+run_at: "2026-08-29T05:32:00+03:00"
+focus: "insurance / CBR 6568-U + 7283-U / insurance AIS datasets / PDN / DMS foreigners / cross-sector overlap"
+
+result:
+  new_source: SEC-SRC-RU-CBR-6568U-2023
+  source_added: true
+  dedupe_checked: true
+  primary_base_text_verified: true
+  current_amendment_primary_text_verified: true
+  exact_binary_obtained: false
+  immutable_created: false
+  applicability_promoted: false
+  legal_conflict_declared: false
+
+primary_evidence:
+  - publisher: "Банк России"
+    act: "Указание Банка России от 06.10.2023 № 6568-У"
+    official_publication: "Вестник Банка России № 3 (2477) от 17.01.2024"
+    source_url: "https://cbr.ru/Queries/XsltBlock/File/158093/-1/2477"
+    minjust_registration: "№ 76711 от 28.12.2023"
+    effective_date: "2024-04-01"
+  - publisher: "Банк России"
+    act: "Указание Банка России от 13.01.2026 № 7283-У"
+    official_publication: "Вестник Банка России № 15 (2604) от 28.05.2026"
+    source_url: "https://www.cbr.ru/Queries/XsltBlock/File/185926/-1/2604"
+    minjust_registration: "№ 86241 от 28.04.2026"
+    official_site_publication_date: "2026-05-07"
+    effective_date: "2026-05-15"
+
+key_findings:
+  - "Приложение 1: СНИЛС, мобильный номер, e-mail, удостоверяющий документ, ФИО, дата/место рождения, адрес регистрации, водительские документы."
+  - "Страховые event-поля могут включать сведения о повреждении здоровья, расходах на лечение, утраченном заработке и свидетелях."
+  - "7283-У добавило приложение 5 для ДМС иностранных граждан/лиц без гражданства: ФИО, дата рождения, документ, пол, гражданство, мобильный номер, e-mail и договорные данные."
+  - "Для предусмотренных DMS-событий действует отраслевой срок передачи 48 часов; при отказе оператора исправленное сообщение — 36 часов."
+  - "Переходный backfill по соответствующим действующим договорам должен был быть завершен до 30.06.2026."
+
+proof_guards:
+  - "PERSON_LEVEL_DATASET != AUTOMATIC_APPLICABILITY_OF_EVERY_152FZ_REQUIREMENT"
+  - "HEALTH_RELATED_INSURANCE_DATA != MEDICAL_SECRECY_BY_DEFINITION"
+  - "48_HOUR_SUBMISSION != PDN_INCIDENT_NOTIFICATION"
+  - "36_HOUR_MESSAGE_CORRECTION != DATA_SUBJECT_CORRECTION_DEADLINE"
+  - "TRANSITIONAL_BACKFILL_DEADLINE != RETENTION_PERIOD"
+  - "MOBILE_NUMBER_FIELD != COMMUNICATIONS_SECRECY_FOR_ENTIRE_INSURANCE_RECORD"
+
+binary_acquisition:
+  attempted: true
+  attempted_at: "2026-08-29T05:31:50+03:00"
+  targets:
+    - "https://cbr.ru/Queries/XsltBlock/File/158093/-1/2477"
+    - "https://www.cbr.ru/Queries/XsltBlock/File/185926/-1/2604"
+  transport_result: "curl exit 6 / Could not resolve host: cbr.ru / www.cbr.ru"
+  retry_class: TRANSIENT
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+
+counters_before:
+  found: 60
+  downloaded: 9
+  immutable: 9
+  pending: 49
+  reused: 2
+  primary_publication_verified: 30
+  sectors_registered: 31
+
+counters_after:
+  found: 61
+  downloaded: 9
+  immutable: 9
+  pending: 50
+  reused: 2
+  primary_publication_verified: 31
+  sectors_registered: 31
+
+files_written:
+  - "security-corpora/RU/protected-information/source/SEC-SRC-RU-CBR-6568U-2023.yaml"
+  - "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-CBR-6568U-2023-capture-pending.json"
+  - "security-knowledge/corpus/ru-protected-information/cbr-6568u-2023-insurance-ais-submission-dataset-source-card.yaml"
+  - "security-knowledge/corpus/ru-protected-information/master-inventory-delta-2026-08-29T0532.yaml"
+  - "security-knowledge/corpus/ru-personal-data/master-source-inventory-delta-stream3-2026-08-29T0532.yaml"
+  - "security-knowledge/corpus/ru-protected-information/stream-3-run-2026-08-29T0532.yaml"
+
+relationships_added:
+  - "6568-У -> 4015-I Article 33.11: direct statutory parent"
+  - "6568-У -> 152-ФЗ: person-level dataset processing context, candidate applicability"
+  - "6568-У -> 822-П: dataset flow to security layer"
+  - "6568-У -> 6863-У: dataset flow to audit-assurance layer"
+  - "6568-У -> transport / health / communications regimes: bounded candidate overlaps only"
+
+next_priority:
+  - "Retry exact-byte capture of Vestnik issues 2477 and 2604; only then populate retrieved_at/MIME/byte length/SHA-256 and immutable artifact."
+  - "Continue insurance AIS subordinate acts under Articles 33.10-33.14, deduped against 4015-I/822-P/6863-U/6568-U."
+  - "Resume high-priority exact captures and discovery in healthcare, banking/credit histories, telecom, education/children, public sector, biometrics, transport, advertising and archives."
+
+production_statistics:
+  throughput_this_pass:
+    new_sources: 1
+    current_amendment_events_verified: 1
+    new_sectors: 0
+    canonical_source_cards_written: 1
+    corpus_source_cards_written: 1
+    manifests_written: 1
+    inventory_deltas_written: 2
+    run_logs_written: 1
+    relationship_edges_added: 7
+    applicability_promotions: 0
+  speed_vs_single_stream_percent: null
+  rework_share_percent: null
+  eta: null
+  reason_for_null_metrics: "No comparable elapsed-time baseline/telemetry for a valid calculation; values were not fabricated."
