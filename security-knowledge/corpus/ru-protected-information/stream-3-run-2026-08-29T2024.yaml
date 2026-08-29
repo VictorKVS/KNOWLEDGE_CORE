@@ -1,0 +1,112 @@
+schema_version: "1.0"
+stream: 3
+run_at: "2026-08-29T20:24:40+03:00"
+objective: "continue sector/special-regime primary-source discovery, exact capture, deduplication, relationship linking and master reconciliation"
+
+selected_source:
+  id: SEC-SRC-RU-CBR-801P-2022
+  act: "Положение Росархива и Банка России от 12.07.2022 № 1/801-П"
+  sector_overlap:
+    - finance
+    - banking
+    - credit_histories
+    - archives_retention
+    - personal_data
+  rationale: "direct sector-specific retention list for credit organizations; bridges archival lifecycle with borrower dossiers and BKI records"
+
+discovery:
+  taxonomy_role: DISCOVERY_SEED_ONLY
+  primary_proof_floor_met: true
+  official_publication:
+    id: "0001202207190003"
+    date: "2022-07-19"
+    minjust_registration: "69304"
+  current_authority_listing_verified: true
+  amendment_search_completed_this_sweep: true
+  amendment_found: false
+  complete_historical_version_chain_claimed: false
+
+dedupe:
+  canonical_id_probe: "SEC-SRC-RU-CBR-801P-2022"
+  repository_code_probe_for_801P: "no existing canonical source located before registration"
+  result: NEW_CANONICAL_SOURCE_NODE
+
+normative_findings:
+  - "Borrower-individual credit dossiers: 5 years after closure/final settlement subject to completion of check; 35 years where a court decision exists."
+  - "Item 8 includes credit-history-subject consent records in a defined government/municipal-guarantee credit document class with 5-year EK/EPK retention after performance/write-off."
+  - "BKI interaction correspondence/documents: 5 years EK/EPK; agreements with BKI: permanent retention."
+  - "These are record-class retention periods and are not generalized to all PDN, banking secrecy or credit-history storage."
+
+relationships:
+  added:
+    - "1/801-П -> 125-ФЗ"
+    - "1/801-П -> 218-ФЗ"
+    - "1/801-П -> 152-ФЗ"
+    - "1/801-П -> 395-1"
+    - "1/801-П -> 353-ФЗ"
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+
+acquisition:
+  exact_binary_attempted: true
+  official_binary_targets:
+    - "https://archives.gov.ru/sites/default/files/2022-pologenie-credit-org.pdf"
+    - "https://cbr.ru/Queries/XsltBlock/File/105253?fileId=-1&scope=ves220817_042%282374%29.pdf"
+    - "https://cdnstatic.rg.ru/uploads/attachments/2022/07/20/69304_8bc.pdf"
+  result: TRANSIENT_FAILURE
+  exact_bytes_obtained: false
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+  immutable_promotions: 0
+
+counters:
+  before:
+    found: 65
+    downloaded: 9
+    immutable: 9
+    pending: 54
+    reused: 2
+    primary_publication_verified: 35
+    sectors_registered: 32
+  after:
+    found: 66
+    downloaded: 9
+    immutable: 9
+    pending: 55
+    reused: 2
+    primary_publication_verified: 36
+    sectors_registered: 32
+
+files_written:
+  - "security-corpora/RU/protected-information/source/SEC-SRC-RU-CBR-801P-2022.yaml"
+  - "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-CBR-801P-2022-capture-pending.json"
+  - "security-knowledge/corpus/ru-protected-information/master-inventory-delta-2026-08-29T2024.yaml"
+  - "security-knowledge/corpus/ru-personal-data/master-source-inventory-delta-stream3-2026-08-29T2024.yaml"
+  - "security-knowledge/corpus/ru-protected-information/stream-3-run-2026-08-29T2024.yaml"
+
+unpromoted_discovery:
+  - candidate: "Положение Росархива и Банка России от 27.08.2025 № 1/867-П"
+    sector: insurance + archives_retention
+    evidence_found:
+      - "Rosarchive official page confirms Minjust registration № 83672 on 26.09.2025"
+      - "Rosarchive official current positions collection lists 1/867-П"
+      - "official Rosarchive PDF located"
+    state: DISCOVERY_CANDIDATE_NOT_YET_PROMOTED_IN_THIS_RUN
+    reason: "kept separate for its own primary publication/version-chain and exact-capture pass"
+
+quality_gates:
+  primary_act_as_proof: true
+  taxonomy_as_evidence: false
+  applicability_invented: false
+  fabricated_binary_metadata: false
+  downloaded_increment_without_bytes: false
+  immutable_increment_without_hash: false
+  general_pdn_retention_inferred: false
+
+next_actions:
+  - "Retry exact official bytes for 1/801-П and create immutable artifact only after byte length/SHA-256 are computed."
+  - "Promote 1/867-П only after its own primary publication/version-chain check and dedupe."
+  - "Return to education/children and public-sector retention/identity flows after the finance-retention bridge is captured."
