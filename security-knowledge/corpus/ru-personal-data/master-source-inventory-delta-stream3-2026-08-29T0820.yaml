@@ -1,0 +1,102 @@
+schema_version: "1.0"
+stream: 3
+checked_at: "2026-08-29T08:20:00+03:00"
+mode: APPEND_ONLY_PDN_RELATIONSHIP_RECONCILIATION
+previous_stream3_delta: "master-source-inventory-delta-stream3-2026-08-29T0532.yaml"
+focus: "PP 1994 telephone communications: subscriber PDN, consent boundaries, identity verification, ESIA/EBS and retention"
+
+stream3_counters_before:
+  found: 61
+  downloaded: 9
+  immutable: 9
+  pending: 50
+  reused: 2
+  primary_publication_verified: 31
+  sectors_registered: 31
+
+stream3_counters_after:
+  found: 62
+  downloaded: 9
+  immutable: 9
+  pending: 51
+  reused: 2
+  primary_publication_verified: 32
+  sectors_registered: 31
+
+source_added:
+  source_id: SEC-SRC-RU-PP-1994-2024
+  title: "Постановление Правительства РФ от 30.12.2024 № 1994"
+  sector: communications
+  applicability_status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  executable_effect: NONE
+
+pdn_relationships:
+  - from: SEC-SRC-RU-PP-1994-2024
+    locator: "пункт 4"
+    to: "152-ФЗ"
+    relation: EXPLICIT_PURPOSE_BOUND_PERSONAL_DATA_NO_CONSENT_CONTEXT
+    status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    rationale: "Правила прямо перечисляют цели, для которых согласие соответствующего физлица на обработку ПДн не требуется."
+    guard: "LISTED_TELECOM_PURPOSES_DO_NOT_CREATE_A_GENERAL_NO_CONSENT_RULE"
+  - from: SEC-SRC-RU-PP-1994-2024
+    locator: "пункт 4"
+    to: "126-ФЗ"
+    relation: TELEPHONE_CONVERSATION_SECRECY_AND_SUBSCRIBER_INFORMATION_CONTEXT
+    status: DIRECT_STATUTORY_RELATION
+    guard: "TELEPHONE_SECRECY_AND_SUBSCRIBER_INFORMATION_REQUIRE_FIELD_FLOW_LEVEL_CLASSIFICATION"
+  - from: SEC-SRC-RU-PP-1994-2024
+    locator: "пункт 18"
+    to: "572-ФЗ"
+    relation: EBS_IDENTIFICATION_AND_AUTHENTICATION_ROUTE
+    status: DIRECT_SCENARIO_RELATION
+    rationale: "Правила прямо отсылают к статье 9 572-ФЗ для предусмотренного варианта идентификации/аутентификации."
+    guard: "BIOMETRIC_ROUTE_AVAILABLE != BIOMETRIC_PROCESSING_REQUIRED_FOR_ALL_SUBSCRIBERS"
+  - from: SEC-SRC-RU-PP-1994-2024
+    locator: "пункты 22, 24, 26"
+    to: "152-ФЗ"
+    relation: SUBSCRIBER_IDENTITY_DATA_AND_VERIFICATION_WORKFLOW
+    status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    rationale: "Договор/верификация оперируют ФИО, местом жительства, датой рождения, реквизитами удостоверяющего документа и проверкой соответствия ПДн фактического пользователя."
+  - from: SEC-SRC-RU-PP-1994-2024
+    locator: "пункт 28"
+    to: "152-ФЗ"
+    relation: SPECIAL_TELECOM_ACTION_RECORD_RETENTION
+    status: CANDIDATE_RETENTION_MAPPING_REQUIRED
+    rationale: "Специальные action records хранятся не менее 3 лет по отраслевым точкам отсчета."
+    guard: "SPECIAL_ACTION_LOG_RETENTION != GENERAL_PDN_RETENTION"
+  - from: SEC-SRC-RU-PP-1994-2024
+    locator: "1137/2025, пункты 222-226"
+    to: "38-ФЗ"
+    relation: MASS_AUTOMATED_CALL_ADVERTISING_MARKETING_OVERLAP_CANDIDATE
+    status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    guard: "MASS_OR_AUTOMATED_CALL_STATUS_UNDER_126FZ_DOES_NOT_BY_ITSELF_PROVE_ADVERTISING_UNDER_38FZ"
+
+scope_boundaries:
+  - "Согласие не требуется только для перечисленных в пункте 4 целей; это не отменяет прочие требования 152-ФЗ."
+  - "3-дневные сроки подтверждения subscriber data и 60-дневный срок обновления сведений — отраслевые workflow deadlines, не incident/data-subject deadlines 152-ФЗ."
+  - "Трехлетний retention относится к фиксируемым действиям после идентификации, а не ко всем ПДн абонента."
+  - "Использование ЕБС является нормативным способом идентификации в определенном сценарии, но не универсальной обязанностью собирать биометрию."
+  - "Режим массовых/автоматических вызовов не смешивается автоматически с рекламой и маркетингом."
+
+version_boundaries:
+  - "На 29.08.2026 текущая редакция — с изменениями ПП РФ № 1137 от 31.07.2025."
+  - "ПП РФ № 510 от 30.04.2026 опубликовано 06.05.2026, но вступает 01.09.2026: FUTURE_NOT_CURRENT."
+  - "ПП РФ № 966 от 01.08.2026 опубликовано 03.08.2026, но вступает 01.03.2027: FUTURE_NOT_CURRENT."
+  - "Полный исторический version-chain не объявлен закрытым."
+
+acquisition_state:
+  exact_binary_obtained: false
+  exact_binary_attempted: true
+  reason: TRANSIENT_DNS_FAILURE_ON_GOVERNMENT_AND_PRAVO_HOSTS_IN_BINARY_RUNTIME
+  attempted_at: "2026-08-29T08:19:09+03:00"
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+
+quality_gates:
+  taxonomy_as_evidence: false
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+  fabricated_binary_metadata: false
