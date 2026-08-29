@@ -1,0 +1,106 @@
+schema_version: "1.0"
+id: STREAM2-RUN-2026-08-29T1413Z
+stream: 2
+kind: security-stack-primary-status-version-chain-and-byte-acquisition-review
+created_at: "2026-08-29T14:13:00Z"
+status: COMPLETED_WITH_PENDING_PRIMARY_BYTES
+scope:
+  primary_domain: "152-FZ technical and cryptographic security stack"
+  focus:
+    - PP RF No. 1119 primary Government DOC acquisition target
+    - FSTEC Order No. 21 and Threat Assessment Methodology 2021 baseline
+    - FSTEC attestation / penetration-testing methodical dependency closure
+    - FSB Order No. 378 and related SKZI chain
+    - licensing/certification and GosSOPKA only through explicit applicability edges
+
+counter_state_before:
+  identified: 53
+  metadata_verified: 53
+  immutable_sha256_verified: 22
+  pending_raw_capture: 31
+  exact_official_route_unresolved: 8
+  confirmed_conflicts: 0
+
+effective_counter_state_after:
+  identified: 55
+  metadata_verified: 55
+  immutable_sha256_verified: 22
+  pending_raw_capture: 33
+  exact_official_route_unresolved: 9
+  confirmed_conflicts: 0
+  reconciliation_basis: >-
+    Two metadata-verified sources were registered. Neither produced exact official bytes in this run.
+    Order 77 adds one unresolved primary-route target; Order 60 has a verified official publication
+    identity and standard official PDF route but remains byte-pending.
+
+source_changes:
+  - id: SEC-SRC-RU-FSTEC77-2021
+    action: REGISTERED_METADATA_VERIFIED
+    finding: >-
+      Registered FSTEC Order 77/2021 as the attestation-procedure dependency already referenced by
+      the 2025 FSTEC penetration-testing notice. Minjust registration 10.08.2021 No. 64589 and the
+      future amendment chain were cross-verified. Exact primary publication/file route remains unresolved.
+    raw_capture: PENDING
+  - id: SEC-SRC-RU-FSTEC60-2026
+    action: REGISTERED_METADATA_VERIFIED_FUTURE_EFFECTIVE
+    finding: >-
+      Registered FSTEC Order 60/2026, Minjust registration 24.06.2026 No. 87202, official publication
+      25.06.2026, publication identity 0001202606250029, effective 01.09.2026. It amends Order 77.
+    raw_capture: PENDING
+  - id: SEC-SRC-RU-FSTEC-INFO-240-24-4734-2025
+    action: REFERENCE_GAP_CLOSED
+    finding: >-
+      Its Order-77 target changed from reference-only/not separately registered to a registered
+      metadata-verified source. The exact FSTEC notice PDF itself remains byte-pending.
+
+version_chain_review:
+  checked_at: "2026-08-29"
+  edges:
+    - from: SEC-SRC-RU-FSTEC77-2021
+      type: AMENDED_BY
+      to: SEC-SRC-RU-FSTEC60-2026
+      effective_from: "2026-09-01"
+      status_on_check_date: FUTURE_EFFECTIVE_NOT_YET_ACTIVE
+  temporal_rule: >-
+    Keep Order 77 pre-01.09.2026 requirements active for decisions dated through 31.08.2026. Do not
+    apply the amendments in Order 60 before 01.09.2026 merely because the order is already published
+    and registered.
+
+applicability_review:
+  order77_private_ispdn: >-
+    Private ISPDN are not universally placed under mandatory attestation by Order 77. Retain the
+    branch only where the owner establishes attestation as the conformity-assessment form or another
+    explicit applicability basis is proven.
+  order60_pentest: >-
+    The mandatory penetration-testing provision introduced by Order 60 is bounded to the enumerated
+    public/state class-1/2 systems under the specified Internet/inter-system interaction conditions,
+    with the stated protected-interaction exception. It is not promoted to a universal private-ISPDN duty.
+  separation_rule: >-
+    No requirement from attestation, licensing, certification, KII/NKTsKI/GosSOPKA or SKZI branches
+    is merged into the PP1119/FSTEC21 baseline without a proved applicability edge.
+
+byte_acquisition_state:
+  new_immutable_captured_this_run: 0
+  attempts:
+    - target: SEC-SRC-RU-FSTEC60-2026
+      official_route: "http://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202606250029"
+      result: PENDING_TRANSIENT_DNS_OR_TRANSPORT
+    - target: SEC-SRC-RU-FSTEC77-2021
+      result: PRIMARY_PUBLICATION_ROUTE_UNRESOLVED
+  proof_rule: >-
+    No MIME, exact byte length, SHA-256, immutable artifact or manifest without exact official payload bytes.
+
+primary_baseline_status:
+  pp1119: CURRENT_PRIMARY_BYTES_PENDING
+  fstec21: CURRENT_REPLACEMENT_PROJECT_NOT_PROMOTED_WITHOUT_PRIMARY_ENACTMENT_EVIDENCE
+  fstec_threat_method_2021: CURRENT_IMMUTABLE_CAPTURED
+  fsb378: CURRENT_WHEN_SKZI_USED_PRIMARY_BYTES_PENDING
+
+next_priority:
+  - "capture exact Government primary bytes for PP1119"
+  - "capture exact primary bytes for FSB378, then FSB66/173 and FAPSI152"
+  - "retry Order 60 publication PDF and recover exact primary Order 77 route/bytes"
+  - "capture exact FSTEC penetration-testing notice/methodical PDF bytes"
+  - "recover exact primary route for FSTEC Order 205/2025"
+  - "retry exact routed FSTEC methodical PDFs, especially the 07.08.2026 maturity method"
+  - "continue primary-enactment watch for project 169583 before any switch away from FSTEC21"
