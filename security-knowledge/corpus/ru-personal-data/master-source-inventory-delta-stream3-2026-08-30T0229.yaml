@@ -1,0 +1,75 @@
+schema_version: "1.0"
+stream: 3
+checked_at: "2026-08-30T02:29:25+03:00"
+focus: "PDN and insurance-document retention overlay from Rosarchive/Bank of Russia 1/867-P"
+
+new_relationship_nodes:
+  - source_id: SEC-SRC-RU-CBR-867P-2025
+    relationship_to_pdn: DOCUMENT_RETENTION_LIST_WITH_EXPLICIT_PDN_CONSENT_EMPLOYEE_AND_INSURANCE_RECORD_CLASSES
+    evidence:
+      parent_locator: "Закон РФ № 4015-I; legal bases cited in 1/867-П"
+      relevant_locators:
+        - "Перечень 1/867-П, пункт 243"
+        - "Перечень 1/867-П, пункт 244"
+        - "Перечень 1/867-П, пункты 247-248"
+        - "Перечень 1/867-П, пункты 306-308"
+      finding: "Перечень устанавливает сроки хранения конкретных страховых и кадровых документных серий, прямо включая документы об обработке персональных данных и согласия на обработку ПДн. Эти сроки относятся к документным сериям и их триггерам, а не образуют общий срок хранения персональных данных."
+    guards:
+      - "867P_RETENTION_LIST != INDEPENDENT_LAWFUL_BASIS_FOR_ACTIVE_PDN_PROCESSING"
+      - "ITEM244_3_YEAR_CONSENT_RECORD_RETENTION != CONSENT_VALIDITY_PERIOD"
+      - "ITEM244_3_YEARS != GENERAL_PDN_RETENTION"
+      - "ITEM247_248_50_OR_75_YEARS != ALL_EMPLOYEE_PDN_RETENTION"
+      - "ITEM306_307_5_YEARS != GENERAL_CUSTOMER_PDN_RETENTION"
+      - "152FZ_ARCHIVAL_SCOPE_BOUNDARY_REQUIRES_LIFECYCLE_REVIEW"
+    applicability_promoted: false
+
+retention_nodes:
+  - source_id: SEC-SRC-RU-CBR-867P-2025
+    locator: "пункт 244"
+    retention_type: PDN_CONSENT_DOCUMENT_RETENTION
+    value: "3 years after consent expiry or withdrawal, unless otherwise provided by Russian law or contract"
+    guard: "CONSENT_DOCUMENT_ONLY_NOT_CONSENT_VALIDITY_OR_GENERAL_PDN_RETENTION"
+  - source_id: SEC-SRC-RU-CBR-867P-2025
+    locator: "пункты 247-248"
+    retention_type: INSURANCE_EMPLOYEE_PERSONNEL_RECORD_RETENTION
+    value: "50/75 years EPK"
+    guard: "PERSONNEL_RECORD_SERIES_ONLY"
+  - source_id: SEC-SRC-RU-CBR-867P-2025
+    locator: "пункты 306-307"
+    retention_type: INSURANCE_CONTRACT_AND_CLAIM_DOCUMENT_RETENTION
+    value: "5 years after expiration of the insurance/reinsurance contract or agreement"
+    guard: "DEFINED_INSURANCE_RECORD_CLASSES_ONLY"
+  - source_id: SEC-SRC-RU-CBR-867P-2025
+    locator: "пункт 308"
+    retention_type: INSURANCE_OPERATION_PRIMARY_ACCOUNTING_RECORD_RETENTION
+    value: "5 years"
+    guard: "ACCOUNTING_RECORD_CLASS_ONLY"
+
+protected_information_overlap:
+  - target: "ГК РФ статья 946"
+    finding: "Страховые документы могут находиться в контексте тайны страхования, но классификация каждого массива должна быть доказана независимым источником режима."
+    guard: "INSURANCE_ORGANIZATION_RECORD != INSURANCE_SECRET_AUTOMATICALLY"
+  - target: "125-ФЗ"
+    finding: "Архивный lifecycle влияет на применение retention-сроков и границу отношений, регулируемых архивным законодательством."
+    guard: "ARCHIVAL_STATUS_AND_LIFECYCLE_STAGE_MUST_BE_PROVEN"
+
+pdn_master_effect:
+  applicability_promotions: 0
+  new_direct_pdn_document_retention_sources: 1
+  new_general_pdn_retention_periods: 0
+  legal_conflicts_declared: 0
+  immutable_promotions: 0
+
+lifecycle_boundary:
+  stages:
+    - active_insurance_processing
+    - contract_and_claim_servicing
+    - contract_expiry_or_termination
+    - records_management
+    - archival_storage
+    - destruction_or_permanent_preservation_if_required
+  rule: "Select a 1/867-P retention period only after the concrete record class, trigger and lifecycle stage are proven; do not infer a general PDN retention period or a secrecy regime."
+
+next_review:
+  - "Retry exact official capture of 1/867-P and promote only after actual bytes plus retrieved_at, MIME, byte length and SHA-256 are stored."
+  - "Continue education/children and public-sector retention/identity discovery with deduplication against existing sources."
