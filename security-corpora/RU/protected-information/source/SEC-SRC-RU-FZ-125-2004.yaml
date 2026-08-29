@@ -1,0 +1,108 @@
+schema_version: "1.0"
+id: SEC-SRC-RU-FZ-125-2004
+kind: security-regulatory-source
+status: CURRENT_PRIMARY_ORIGIN_AND_LATEST_AMENDMENT_VERIFIED_CURRENT_CONSOLIDATED_TEXT_CROSSCHECK_EXACT_BINARY_PENDING
+
+jurisdiction: RU
+authority: "Российская Федерация"
+sector: archives_retention
+regime: archival_access_personal_family_secrecy_personnel_retention
+
+document:
+  type: "Федеральный закон"
+  number: "125-ФЗ"
+  adopted_date: "2004-10-22"
+  title: "Об архивном деле в Российской Федерации"
+  original_official_publications:
+    - "Собрание законодательства Российской Федерации, 25.10.2004, № 43, ст. 4169"
+    - "Российская газета, № 237, 27.10.2004"
+    - "Парламентская газета, № 201, 27.10.2004"
+  current_revision: "Федеральный закон от 13.12.2024 № 469-ФЗ"
+  current_revision_effective_date: "2024-12-24"
+  checked_at: "2026-08-29"
+
+canonical_source:
+  official_current_text_locator: "https://pravo.gov.ru/proxy/ips/?docbody=&nd=102089077"
+  official_presidential_act_bank: "https://www.kremlin.ru/acts/bank/21556/print"
+  latest_amendment_primary_publication_url: "https://publication.pravo.gov.ru/document/0001202412130022"
+  latest_amendment_publication_id: "0001202412130022"
+  latest_amendment_publication_date: "2024-12-13"
+  primary_origin_verified: true
+  current_consolidated_text_direct_fetch: false
+  current_consolidated_text_crosscheck: "ред. от 13.12.2024; начало действия редакции 24.12.2024"
+
+version_chain:
+  status: CURRENT_LATEST_AMENDMENT_PRIMARY_VERIFIED_HISTORICAL_CHAIN_PARTIAL
+  latest_amendment:
+    act: "Федеральный закон от 13.12.2024 № 469-ФЗ"
+    changes: "статья 24 Федерального закона № 125-ФЗ"
+    affects_article_25: false
+    primary_publication_id: "0001202412130022"
+  article_25_known_amendment:
+    act: "Федеральный закон от 18.06.2017 № 127-ФЗ"
+    effect: "изменение части 2 статьи 25 и других норм архивного законодательства"
+  current_revision_secondary_crosscheck: "ред. от 13.12.2024"
+  full_historical_chain_claimed_complete: false
+
+protected_information:
+  scope_actor: "государственные органы, органы местного самоуправления, организации, архивы, владельцы и пользователи архивных документов"
+  protected_locators:
+    - locator: "статья 25 часть 2"
+      concept: ARCHIVAL_PROTECTED_SECRETS_ACCESS_RESTRICTION
+      finding: "Доступ ограничивается к архивным документам, содержащим государственную и иную охраняемую законодательством Российской Федерации тайну; снятие ограничения производится по соответствующему законодательству."
+      guard: "ARCHIVAL_DOCUMENT_CONTAINING_PROTECTED_SECRET != ONE_UNIVERSAL_SECRET_REGIME"
+    - locator: "статья 25 часть 3"
+      concept: PERSONAL_FAMILY_PRIVATE_LIFE_ARCHIVAL_ACCESS_RESTRICTION
+      finding: "Для архивных документов со сведениями о личной и семейной тайне гражданина, его частной жизни или сведениями, создающими угрозу его безопасности, ограничение доступа установлено на 75 лет со дня создания документа; возможно досрочное снятие с письменного разрешения гражданина, а после его смерти — наследников."
+      guard: "SEVENTY_FIVE_YEAR_ACCESS_RESTRICTION != GENERAL_PDN_RETENTION_PERIOD"
+    - locator: "статья 22.1 части 1-2"
+      concept: PERSONNEL_DOCUMENT_RETENTION
+      finding: "Документы по личному составу, законченные делопроизводством до 01.01.2003, хранятся 75 лет; после 01.01.2003 — 50 лет, если специальным перечнем не установлен иной срок."
+      guard: "PERSONNEL_DOCUMENT_RETENTION != UNIVERSAL_RETENTION_FOR_ALL_EMPLOYEE_PDN"
+    - locator: "статья 17 часть 1"
+      concept: ARCHIVAL_PRESERVATION_DUTY
+      finding: "Органы, организации и ИП обеспечивают сохранность архивных документов в течение сроков, установленных федеральными законами, иными НПА и нормативными перечнями."
+      guard: "ARCHIVAL_RETENTION_REQUIRES_DOCUMENT_CLASS_AND_APPLICABLE_LIST; DO_NOT_INFER_PERIOD_FROM_DATA_CATEGORY_ALONE"
+
+pdn_boundary:
+  relationship_to_152fz: EXPLICIT_SCOPE_EXCLUSION_FOR_ARCHIVAL_RELATIONS
+  152fz_locator: "статья 1 часть 2 пункт 2"
+  finding: "152-ФЗ прямо исключает отношения по организации хранения, комплектования, учета и использования содержащих ПДн документов Архивного фонда РФ и других архивных документов, когда эти отношения осуществляются в соответствии с законодательством об архивном деле."
+  guard: "ARCHIVE_SCOPE_EXCLUSION_IS_ACTIVITY_AND_LEGAL_REGIME_BOUND; IT_DOES_NOT_RECLASSIFY_NON_ARCHIVAL_PROCESSING_OR_EVERY_DATABASE_AS_ARCHIVAL"
+  applicability_promoted: false
+
+relationships:
+  - target: "152-ФЗ"
+    type: EXPLICIT_SCOPE_BOUNDARY
+    note: "п. 2 ч. 2 ст. 1 152-ФЗ выводит определенные архивные отношения из его сферы"
+  - target: "149-ФЗ"
+    type: PROTECTED_INFORMATION_OVERLAP
+    note: "общий режим защиты информации может пересекаться с архивными документами; применимость устанавливается по конкретному потоку"
+  - target: "Закон РФ № 5485-1 о государственной тайне"
+    type: SECRET_REGIME_OVERLAP
+    note: "ст. 25 ч. 2 125-ФЗ отсылает к законодательству о соответствующей тайне"
+  - target: "Приказ Росархива № 77 от 31.07.2023"
+    type: DIRECT_SUBORDINATE_ARCHIVAL_RULES
+
+acquisition:
+  exact_binary_attempted: true
+  attempted_at: "2026-08-29T11:29:26+03:00"
+  attempted_urls:
+    - "https://pravo.gov.ru/proxy/ips/?docbody=&nd=102089077"
+    - "https://www.kremlin.ru/acts/bank/21556/print"
+    - "https://publication.pravo.gov.ru/document/0001202412130022"
+  transport_result: "Temporary failure in name resolution / DNS failure in binary runtime"
+  retry_class: TRANSIENT
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+  state: PENDING_EXACT_CAPTURE
+
+quality_gates:
+  taxonomy_used_as_evidence: false
+  primary_normative_act_required: true
+  applicability_invented: false
+  legal_conflict_declared: false
+  fabricated_binary_metadata: false
