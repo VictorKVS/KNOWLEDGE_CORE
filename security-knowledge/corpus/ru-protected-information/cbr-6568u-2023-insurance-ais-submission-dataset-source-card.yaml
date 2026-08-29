@@ -1,0 +1,124 @@
+schema_version: "1.0"
+source_id: SEC-SRC-RU-CBR-6568U-2023
+stream: 3
+jurisdiction: RU
+authority: "Банк России"
+sector: insurance
+regime: insurance_ais_submission_dataset_personal_data_cross_sector_flows
+act_type: "Указание Банка России"
+act_number: "6568-У"
+act_date: "2023-10-06"
+title: "О составе, порядке и сроках представления страховщиками в АИС страхования информации по статье 33.11 Закона РФ № 4015-I"
+
+status:
+  current_as_of: "2026-08-29"
+  value: CURRENT_PRIMARY_BASE_AND_7283U_AMENDMENT_VERIFIED_VERSION_CHAIN_PARTIAL_EXACT_BINARY_PENDING
+  applicability: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  executable_rule_status: NOT_PROMOTED
+
+primary_publication:
+  publisher: "Банк России"
+  official_site_publication_date: "2023-12-29"
+  vestnik_issue: "Вестник Банка России № 3 (2477) от 17.01.2024"
+  source_url: "https://cbr.ru/Queries/XsltBlock/File/158093/-1/2477"
+  minjust_registration_date: "2023-12-28"
+  minjust_registration_number: "76711"
+  effective_date: "2024-04-01"
+  exact_byte_capture_status: PENDING_TRANSIENT_DNS_FAILURE
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+
+current_amendment:
+  act: "Указание Банка России от 13.01.2026 № 7283-У"
+  minjust_registration_date: "2026-04-28"
+  minjust_registration_number: "86241"
+  official_site_publication_date: "2026-05-07"
+  effective_date: "2026-05-15"
+  vestnik_issue: "Вестник Банка России № 15 (2604) от 28.05.2026"
+  source_url: "https://www.cbr.ru/Queries/XsltBlock/File/185926/-1/2604"
+  exact_byte_capture_status: PENDING_TRANSIENT_DNS_FAILURE
+
+protected_information_anchors:
+  - locator: "пункт 1 и приложения 1-4"
+    concept: insurance_ais_submission_dataset
+    rule: "Страховщики представляют в АИС страхования предусмотренную статьей 33.11 информацию в составе установленных приложений."
+    evidence_role: PRIMARY_CBR_VESTNIK
+  - locator: "приложение 1, пункт 1.1"
+    concept: osago_person_level_fields
+    rule: "Для физлица набор включает СНИЛС, мобильный номер, e-mail, удостоверяющий документ, ФИО, дату/место рождения, место жительства/пребывания и сведения водительского документа."
+    evidence_role: PRIMARY_CBR_VESTNIK
+    guard: "PERSON_LEVEL_DATASET != UNIVERSAL_INSURER_DATASET"
+  - locator: "приложение 1, пункты 10.20-10.21"
+    concept: accident_health_and_witness_fields
+    rule: "Для отдельных страховых событий передаются ФИО, сведения о повреждении здоровья, расходах на лечение, утраченном заработке и данные свидетеля."
+    evidence_role: PRIMARY_CBR_VESTNIK
+    guard: "HEALTH_RELATED_INSURANCE_DATA != MEDICAL_SECRECY_BY_DEFINITION"
+  - locator: "7283-У, пункт 1.2 и приложение 5"
+    concept: dms_foreigners_person_level_dataset
+    rule: "С 15.05.2026 установлен поток ДМС иностранных граждан/лиц без гражданства; приложение 5 включает ФИО, дату рождения, удостоверяющий документ, пол, гражданство, мобильный номер, e-mail и сведения договора."
+    evidence_role: PRIMARY_CBR_VESTNIK
+    guard: "48_HOUR_SUBMISSION_FLOW != PDN_INCIDENT_NOTIFICATION"
+  - locator: "7283-У, пункт 1.5"
+    concept: rejected_message_correction
+    rule: "Исправленное сообщение по данным приложения 5 после отказа оператора передается не позднее 36 часов."
+    evidence_role: PRIMARY_CBR_VESTNIK
+    guard: "36_HOUR_INSURANCE_MESSAGE_CORRECTION != DATA_SUBJECT_CORRECTION_DEADLINE"
+  - locator: "7283-У, пункт 3"
+    concept: transitional_backfill
+    rule: "По соответствующим действующим договорам ДМС информация приложения 5 представлялась до 30.06.2026 включительно."
+    evidence_role: PRIMARY_CBR_VESTNIK
+    guard: "TRANSITIONAL_BACKFILL != RETENTION_PERIOD"
+
+relationships:
+  - to: SEC-SRC-RU-LAW-4015I-1992
+    relation: DIRECT_STATUTORY_PARENT_ARTICLE_33_11
+    status: DIRECT_STATUTORY_RELATION
+  - to: "152-ФЗ"
+    relation: PERSON_LEVEL_INSURANCE_AIS_PROCESSING_CONTEXT
+    status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  - to: SEC-SRC-RU-CBR-822P-2023
+    relation: DATASET_FLOW_TO_INFORMATION_SECURITY_LAYER
+    status: NORMATIVE_LAYER_OVERLAP_REVIEWED
+  - to: SEC-SRC-RU-CBR-6863U-2024
+    relation: DATASET_FLOW_TO_OPERATIONAL_AUDIT_ASSURANCE_LAYER
+    status: NORMATIVE_LAYER_OVERLAP_REVIEWED
+  - to: SEC-SRC-RU-FZ-16-2007
+    relation: TRANSPORT_INSURANCE_DATA_OVERLAP_CANDIDATE
+    status: CANDIDATE_DATASET_OVERLAP_REVIEW_REQUIRED
+  - to: SEC-SRC-RU-PP-140-2022
+    relation: DMS_HEALTHCARE_CONTEXT_OVERLAP_CANDIDATE
+    status: CANDIDATE_CONTEXT_REVIEW_REQUIRED
+    guard: "DMS_INSURANCE_DATA != EGISZ_OR_MEDICAL_SECRECY_BY_DEFINITION"
+  - to: "126-ФЗ"
+    relation: MOBILE_NUMBER_FIELD_OVERLAP_CANDIDATE
+    status: CANDIDATE_DATA_CLASSIFICATION_REVIEW_REQUIRED
+
+version_chain:
+  status: PRIMARY_BASE_AND_CURRENT_AMENDMENT_VERIFIED_VERSION_CHAIN_PARTIAL
+  events:
+    - {date: "2023-10-06", act: "6568-У", effect: ADOPTED, evidence_status: PRIMARY_CBR_VESTNIK}
+    - {date: "2023-12-28", effect: MINJUST_REGISTERED, registration_number: "76711", evidence_status: PRIMARY_CBR_VESTNIK}
+    - {date: "2024-04-01", effect: ENTERED_INTO_FORCE, evidence_status: PRIMARY_ACT_POINT_10}
+    - {date: "2026-01-13", act: "7283-У", effect: AMENDMENT_ADOPTED, evidence_status: PRIMARY_CBR_VESTNIK}
+    - {date: "2026-05-15", effect: AMENDMENT_ENTERED_INTO_FORCE, evidence_status: PRIMARY_7283U_POINT_2}
+  latest_check: "7283-У is current amendment evidence verified from the official CBR Vestnik; full historical chain is not claimed complete."
+
+acquisition_state:
+  exact_binary_obtained: false
+  reason: TEMPORARY_DNS_FAILURE_ON_CBR_HOST_IN_BINARY_RUNTIME
+  attempted_at: "2026-08-29T05:31:50+03:00"
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+
+quality_gates:
+  taxonomy_as_evidence: false
+  dedupe_checked: true
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+  fabricated_binary_metadata: false
