@@ -1,4 +1,4 @@
-schema_version: "1.2"
+schema_version: "1.3"
 id: SEC-SRC-RU-FAPSI152-2001
 kind: security-regulatory-source
 status: METADATA_VERIFIED
@@ -12,20 +12,45 @@ document:
   ministry_registration_number: "2848"
   ministry_registration_date: "2001-08-06"
   current_revision_date: "2001-06-13"
-  checked_at: "2026-08-24"
+  checked_at: "2026-08-27"
   current_status: ACTING_ORIGINAL_REVISION
   status_note: >-
-    Актуальный правовой индекс, перепроверенный 24.08.2026, показывает приказ ФАПСИ №152
-    действующим в редакции от 13.06.2001; регистрация Минюста №2848 от 06.08.2001.
-    ФСБ России продолжает включать Инструкцию №152 в нормативно-методический контур защиты
-    ПДн с использованием криптографических средств. Это подтверждает текущий контекст,
-    но не расширяет применимость за пределы доказанного SKZI-контура.
+    На проверке 27.08.2026 официальный контур Федерального казначейства продолжает прямо
+    применять Инструкцию ФАПСИ №152 для организации работы с СКЗИ, включая поэкземплярный
+    учет, эксплуатацию и передачу криптосредств. Официальный материал ФСБ о действующих
+    нормативно-методических документах в области безопасности ПДн также включает Инструкцию
+    №152 в криптографический контур. Это подтверждает текущую операционную релевантность,
+    но не расширяет применимость за пределы доказанного SKZI-контура и не заменяет
+    первичную byte-exact фиксацию официального текста.
 canonical_source:
   publisher: "Официальный интернет-портал правовой информации"
   url: "https://pravo.gov.ru/proxy/ips/?docbody=&nd=102095483"
   official_legal_text_nd: "102095483"
   current_context_evidence_url: "https://www.fsb.ru/fsb/science/single.htm!id=10437725@fsbResearchart.html"
   exact_original_route_status: OFFICIAL_LEGAL_TEXT_ROUTE_REGISTERED
+reference_mirrors:
+  - publisher: "Федеральное казначейство — УФК по Республике Марий Эл"
+    file_url: "https://mariy-el.roskazna.gov.ru/uploads/migrate/mariy-el/documents/gis/udostoveryayuschiy-centr/normativnye-dokumenty/74.180028.152.pdf"
+    evidence_class: GOVERNMENT_HOSTED_SECONDARY_TEXT_COPY
+    acquisition_eligibility: REFERENCE_ONLY_NOT_PRIMARY_IMMUTABLE
+    checked_at: "2026-08-27"
+    reason: >-
+      Full text is hosted by an official Federal Treasury territorial site and includes the order identity
+      and Minjust registration No. 2848. It is suitable for text comparison/navigation, but is not the
+      issuer-primary publication artifact and cannot satisfy the immutable proof floor.
+current_operational_corroboration:
+  - publisher: "Федеральное казначейство"
+    url: "https://roskazna.gov.ru/gis/aokz/"
+    checked_at: "2026-08-27"
+    evidence_class: CURRENT_GOVERNMENT_OPERATIONAL_USE
+    note: >-
+      The current AOKZ service description states that the Treasury crypto-protection workflow is organized
+      in accordance with FAPSI Order No. 152, including per-instance SKZI accounting and related operational records.
+  - publisher: "Федеральное казначейство — УФК по Ханты-Мансийскому автономному округу — Югре"
+    url: "https://hantymansiysk.roskazna.gov.ru/gis/udostoveryayuschiy-centr/normativnye-dokumenty"
+    checked_at: "2026-08-27"
+    evidence_class: CURRENT_GOVERNMENT_NORMATIVE_INDEX
+    note: "Current Treasury normative-documents page continues to list FAPSI Order No. 152."
 capture:
   fingerprint_status: PENDING
   semantic_status: UNCHANGED
@@ -38,7 +63,15 @@ relations:
 provenance:
   official_current_pdn_crypto_context_corroborated: true
   official_legal_text_route_registered: true
-  current_status_cross_verified_at: "2026-08-24"
+  current_status_cross_verified_at: "2026-08-27"
+  government_reference_mirror_found: true
+  government_reference_mirror_primary_eligible: false
+  current_government_operational_use_corroborated: true
   exact_official_artifact_pending: true
   review_required: true
-agent_rule: "Do not use a third-party copy to satisfy the immutable-source gate and do not generalize this instruction beyond a proved SKZI applicability path. The pravo.gov.ru capture proves official text bytes only after exact acquisition; current applicability remains governed by the explicit SKZI edge and FSB context evidence. Do not invent MIME, byte length or SHA-256 while transport is pending."
+agent_rule: >-
+  Do not use a third-party or secondary government-hosted copy to satisfy the immutable-source gate and do not
+  generalize this instruction beyond a proved SKZI applicability path. The pravo.gov.ru capture proves official
+  text bytes only after exact acquisition; Treasury evidence corroborates current operational relevance but does
+  not create a universal crypto duty for every PDN operator. Do not invent MIME, byte length or SHA-256 while
+  primary transport is pending.
