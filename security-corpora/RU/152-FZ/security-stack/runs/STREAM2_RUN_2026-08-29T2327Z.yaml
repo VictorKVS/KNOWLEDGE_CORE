@@ -1,0 +1,82 @@
+schema_version: "1.0"
+id: STREAM2-RUN-2026-08-29T2327Z
+stream: 2
+kind: security-stack-status-review-and-acquisition-trigger
+created_at: "2026-08-29T23:27:45Z"
+status: STATUS_REVIEW_COMMITTED_ACQUISITION_RUNNING
+scope:
+  primary_domain: "152-FZ technical and cryptographic security stack"
+  focus:
+    - PP RF No. 1119 exact primary bytes
+    - FSTEC Order No. 21 current-enactment gate and Threat Assessment Methodology 2021
+    - FSB Order No. 378 plus FSB66/173 and FAPSI152 SKZI chain
+    - FSTEC methodical, certification and licensing material only through explicit applicability edges
+    - NCTKI/GosSOPKA only where a direct PDN incident edge is evidenced
+
+counter_state_before:
+  identified: 55
+  metadata_verified: 55
+  immutable_sha256_verified: 24
+  pending_raw_capture: 31
+  exact_official_route_unresolved: 8
+  confirmed_conflicts: 0
+
+effective_counter_state_at_record_time:
+  identified: 55
+  metadata_verified: 55
+  immutable_sha256_verified: 24
+  pending_raw_capture: 31
+  exact_official_route_unresolved: 8
+  confirmed_conflicts: 0
+  note: >-
+    Counters remain at the last authoritative reconciled state. The acquisition workflow triggered by this
+    pass is still executing; any accepted new immutable payload must be committed by the guarded workflow
+    and then reconciled into the canonical Stream-2 and PDN master inventories before counters change.
+
+status_review:
+  fsb66:
+    checked_at: "2026-08-30"
+    result: CURRENT_AS_AMENDED_BY_FSB173_RECONFIRMED
+    official_status_evidence: "https://www.fsb.ru/fsb/npd/more.htm!id=10436382@fsbNpa&_print=true.html"
+    crypto_pdn_context_evidence: "https://www.fsb.ru/fsb/science/single.htm!id=10437725@fsbResearchart.html"
+    exact_primary_payload: PENDING
+    applicability: SKZI_LIFECYCLE_ONLY_WHEN_APPLICABLE
+  fstec205:
+    checked_at: "2026-08-30"
+    result: EXISTENCE_REGISTRATION_AND_EFFECT_RECONFIRMED_PRIMARY_ROUTE_STILL_UNRESOLVED
+    status_evidence: "https://fstec.ru/files/1407/-----16--2025--N-240-24-5531/2848/-----16--2025--N-240-24-5531.pdf"
+    exact_primary_payload: PENDING
+    applicability: VERSION_CHAIN_AND_CERTIFICATION_PRODUCT_TRUST_CONTEXT_ONLY
+  fstec21:
+    checked_at: "2026-08-30"
+    replacement_project: "169583"
+    result: NO_PRIMARY_ENACTMENT_EVIDENCE_FOUND_FOR_REPLACEMENT
+    active_baseline_rule: KEEP_FSTEC21_UNTIL_FINAL_ORDER_MINJUST_AND_OFFICIAL_PUBLICATION_ARE_PROVEN
+
+acquisition:
+  workflow: ".github/workflows/pdn-security-stack-immutable-acquisition.yml"
+  trigger_commit: "017be871ef15fc54afb0f7c52a12b10bfdcdb903"
+  job_id: 99175692956
+  state_at_record_time: IN_PROGRESS
+  completed_steps:
+    - register_explicit_stream2_source_cards
+    - resolve_fstec_maturity_route_fail_closed
+    - resolve_remaining_fstec_attachment_routes_fail_closed
+    - browser_compatible_rg_fsb378_retry
+  current_step: fast_bounded_acquisition
+  proof_floor: >-
+    Only exact official bytes may be promoted. Observed MIME/signature, exact byte length, computed SHA-256,
+    immutable artifact and manifest are mandatory. Mirrors and status notices cannot substitute for the act.
+
+applicability_guard: >-
+  Do not propagate attestation, licensing, certification, KII/NCTKI/GosSOPKA or broad SKZI lifecycle duties
+  into the generic PP1119/FSTEC21 private-ISPDN baseline without an explicit evidence-backed applicability edge.
+  FSB378 applies only where SKZI use is established; FSB66/173/FAPSI152 remain bounded lifecycle context.
+
+next_priority:
+  - "accept guarded acquisition results and reconcile counters/master only after exact primary proof passes"
+  - "PP1119 exact Government DOC bytes"
+  - "FSB378 official primary bytes, then FSB66/173 and FAPSI152"
+  - "recover exact primary publication/file route for FSTEC205/2025"
+  - "capture remaining exact-routed FSTEC methodical PDFs"
+  - "continue primary-enactment watch for FSTEC21 replacement project 169583"
