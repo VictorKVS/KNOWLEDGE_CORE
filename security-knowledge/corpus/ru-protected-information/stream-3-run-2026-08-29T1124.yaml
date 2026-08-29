@@ -1,0 +1,110 @@
+schema_version: "1.0"
+stream: 3
+run_at: "2026-08-29T11:24:00+03:00"
+focus: "archives/retention / 125-FZ / Rosarchive Order 77 / PDN scope boundary / electronic archive protection"
+
+result:
+  new_sources:
+    - SEC-SRC-RU-FZ-125-2004
+    - SEC-SRC-RU-ROSARCHIVE-77-2023
+  sources_added: 2
+  new_sectors: 1
+  dedupe_checked: true
+  primary_sources_verified: 2
+  exact_binary_obtained: false
+  immutable_created: false
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+
+primary_evidence:
+  - act: "Федеральный закон от 22.10.2004 № 125-ФЗ"
+    official_current_locator: "https://pravo.gov.ru/proxy/ips/?docbody=&nd=102089077"
+    presidential_act_bank: "https://www.kremlin.ru/acts/bank/21556/print"
+    original_official_publications:
+      - "СЗ РФ, 25.10.2004, № 43, ст. 4169"
+      - "Российская газета, № 237, 27.10.2004"
+    latest_amendment: "469-ФЗ от 13.12.2024"
+    latest_amendment_publication_id: "0001202412130022"
+  - act: "Приказ Росархива от 31.07.2023 № 77"
+    rosarchive_notice: "https://archives.gov.ru/press/06-09-2023.shtml"
+    primary_publication_id: "0001202309060005"
+    minjust_number: "75119"
+    effective_date: "2023-09-17"
+
+key_findings:
+  - "125-ФЗ ст.25(3): 75 лет — срок ограничения доступа к определенным архивным документам с личной/семейной тайной, частной жизнью или угрозой безопасности; это не общий срок хранения ПДн."
+  - "125-ФЗ ст.22.1: personnel-document retention разделен на 75 лет (до 01.01.2003) и 50 лет (после 01.01.2003), с guard по специальным перечням."
+  - "152-ФЗ ст.1(2)(2): определенные отношения по организации хранения, комплектования, учета и использования архивных документов с ПДн прямо исключены из сферы 152-ФЗ."
+  - "Приказ Росархива №77 п.134: для информации и ПДн в СХЭД действует прямое архивное security-требование с нормативными ссылками на ст.7 152-ФЗ и ст.16 149-ФЗ."
+  - "Связка 125-ФЗ/152-ФЗ/Приказ №77 сохранена как scope-boundary problem, а не объявлена юридическим конфликтом."
+
+proof_guards:
+  - "75_YEAR_ARCHIVAL_ACCESS_RESTRICTION != GENERAL_PDN_RETENTION"
+  - "PERSONNEL_DOCUMENT_RETENTION != ALL_EMPLOYEE_PDN_RETENTION"
+  - "ARCHIVAL_SCOPE_EXCLUSION_IS_ACTIVITY_AND_LEGAL_REGIME_BOUND"
+  - "RULE77_ART7_REFERENCE != ALL_152FZ_REQUIREMENTS_APPLY_TO_EVERY_ARCHIVAL_RELATION"
+  - "NO_CONFLICT_DECLARED_WITHOUT_FORMAL_LEGAL_ANALYSIS"
+
+binary_acquisition:
+  attempted: true
+  attempted_at: "2026-08-29T11:29:26+03:00"
+  targets:
+    - "https://pravo.gov.ru/proxy/ips/?docbody=&nd=102089077"
+    - "https://www.kremlin.ru/acts/bank/21556/print"
+    - "https://publication.pravo.gov.ru/document/0001202412130022"
+    - "https://archives.gov.ru/documents/rules/pravila-2023.shtml"
+    - "https://publication.pravo.gov.ru/document/0001202309060005"
+  transport_result: "Temporary failure in name resolution / DNS failure in binary runtime"
+  retry_class: TRANSIENT
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+
+counters_before:
+  found: 62
+  downloaded: 9
+  immutable: 9
+  pending: 51
+  reused: 2
+  primary_publication_verified: 32
+  sectors_registered: 31
+
+counters_after:
+  found: 64
+  downloaded: 9
+  immutable: 9
+  pending: 53
+  reused: 2
+  primary_publication_verified: 34
+  sectors_registered: 32
+
+files_written:
+  - "security-corpora/RU/protected-information/source/SEC-SRC-RU-FZ-125-2004.yaml"
+  - "security-corpora/RU/protected-information/source/SEC-SRC-RU-ROSARCHIVE-77-2023.yaml"
+  - "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-125-2004-capture-pending.json"
+  - "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-ROSARCHIVE-77-2023-capture-pending.json"
+  - "security-knowledge/corpus/ru-protected-information/master-inventory-delta-2026-08-29T1124.yaml"
+  - "security-knowledge/corpus/ru-personal-data/master-source-inventory-delta-stream3-2026-08-29T1124.yaml"
+  - "security-knowledge/corpus/ru-protected-information/stream-3-run-2026-08-29T1124.yaml"
+
+production_statistics:
+  throughput_this_pass:
+    new_sources: 2
+    new_sectors: 1
+    primary_sources_verified: 2
+    exact_captures: 0
+    immutable_promotions: 0
+  acceleration_vs_single_stream_percent: null
+  cumulative_throughput: null
+  rework_share: null
+  remaining_volume: null
+  eta: null
+  telemetry_note: "Comparable timing and remaining-universe telemetry is insufficient; no estimates fabricated."
+
+next_priority:
+  - "Retry exact official capture for 125-FZ, 469-FZ and Order 77; promote downloaded/immutable only after actual bytes, retrieved_at, MIME, byte length and SHA-256 are stored."
+  - "Register current Rosarchive retention list acts (including the active typical management-document retention list) as separate normative nodes; do not collapse delegated retention periods into 125-FZ."
+  - "Map lifecycle boundary: active processing -> records management -> archive transfer -> archival storage/use -> disclosure/export, to resolve exactly where the 152-FZ exclusion and Rule 77 security reference operate."
+  - "Resume education/children and public-sector register/identity special regimes after archive layer."
