@@ -3,6 +3,7 @@ id: STREAM2-RUN-2026-08-29T1413Z
 stream: 2
 kind: security-stack-primary-status-version-chain-and-byte-acquisition-review
 created_at: "2026-08-29T14:13:00Z"
+updated_at: "2026-08-29T14:30:00Z"
 status: COMPLETED_WITH_PENDING_PRIMARY_BYTES
 scope:
   primary_domain: "152-FZ technical and cryptographic security stack"
@@ -26,26 +27,28 @@ effective_counter_state_after:
   metadata_verified: 55
   immutable_sha256_verified: 22
   pending_raw_capture: 33
-  exact_official_route_unresolved: 9
+  exact_official_route_unresolved: 8
   confirmed_conflicts: 0
   reconciliation_basis: >-
     Two metadata-verified sources were registered. Neither produced exact official bytes in this run.
-    Order 77 adds one unresolved primary-route target; Order 60 has a verified official publication
-    identity and standard official PDF route but remains byte-pending.
+    Official publication identities and standard PDF routes were resolved for both Order 77 and Order 60,
+    so these additions do not increase the existing unresolved-route counter.
 
 source_changes:
   - id: SEC-SRC-RU-FSTEC77-2021
-    action: REGISTERED_METADATA_VERIFIED
+    action: REGISTERED_METADATA_VERIFIED_OFFICIAL_ROUTE_RESOLVED
     finding: >-
       Registered FSTEC Order 77/2021 as the attestation-procedure dependency already referenced by
-      the 2025 FSTEC penetration-testing notice. Minjust registration 10.08.2021 No. 64589 and the
-      future amendment chain were cross-verified. Exact primary publication/file route remains unresolved.
+      the 2025 FSTEC penetration-testing notice. Official publication identity 0001202108100027,
+      publication date 10.08.2021 and Minjust registration No. 64589 were verified from the official
+      FSTEC publication index. Standard official PDF route registered; exact bytes remain pending.
     raw_capture: PENDING
   - id: SEC-SRC-RU-FSTEC60-2026
-    action: REGISTERED_METADATA_VERIFIED_FUTURE_EFFECTIVE
+    action: REGISTERED_METADATA_VERIFIED_FUTURE_EFFECTIVE_OFFICIAL_ROUTE_RESOLVED
     finding: >-
       Registered FSTEC Order 60/2026, Minjust registration 24.06.2026 No. 87202, official publication
       25.06.2026, publication identity 0001202606250029, effective 01.09.2026. It amends Order 77.
+      Standard official PDF route registered; exact bytes remain pending.
     raw_capture: PENDING
   - id: SEC-SRC-RU-FSTEC-INFO-240-24-4734-2025
     action: REFERENCE_GAP_CLOSED
@@ -83,10 +86,13 @@ byte_acquisition_state:
   new_immutable_captured_this_run: 0
   attempts:
     - target: SEC-SRC-RU-FSTEC60-2026
+      official_publication_id: "0001202606250029"
       official_route: "http://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202606250029"
       result: PENDING_TRANSIENT_DNS_OR_TRANSPORT
     - target: SEC-SRC-RU-FSTEC77-2021
-      result: PRIMARY_PUBLICATION_ROUTE_UNRESOLVED
+      official_publication_id: "0001202108100027"
+      official_route: "http://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202108100027"
+      result: PENDING_TRANSIENT_DNS_OR_TRANSPORT
   proof_rule: >-
     No MIME, exact byte length, SHA-256, immutable artifact or manifest without exact official payload bytes.
 
@@ -99,7 +105,7 @@ primary_baseline_status:
 next_priority:
   - "capture exact Government primary bytes for PP1119"
   - "capture exact primary bytes for FSB378, then FSB66/173 and FAPSI152"
-  - "retry Order 60 publication PDF and recover exact primary Order 77 route/bytes"
+  - "retry Order 77 and Order 60 official publication PDFs"
   - "capture exact FSTEC penetration-testing notice/methodical PDF bytes"
   - "recover exact primary route for FSTEC Order 205/2025"
   - "retry exact routed FSTEC methodical PDFs, especially the 07.08.2026 maturity method"
