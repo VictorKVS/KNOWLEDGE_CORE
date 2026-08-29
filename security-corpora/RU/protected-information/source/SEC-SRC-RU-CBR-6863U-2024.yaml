@@ -1,0 +1,134 @@
+schema_version: "1.0"
+id: SEC-SRC-RU-CBR-6863U-2024
+kind: security-regulatory-source
+status: CURRENT_PRIMARY_TEXT_VERIFIED_VERSION_CHAIN_PARTIAL_EXACT_BINARY_PENDING
+
+jurisdiction: RU
+authority: "Банк России"
+sector: insurance
+regime: insurance_ais_operational_audit_pdn_security_assurance
+
+document:
+  type: "Указание Банка России"
+  number: "6863-У"
+  adopted_date: "2024-09-26"
+  title: "О порядке проведения оператором автоматизированной информационной системы страхования операционного аудита"
+  minjust_registration_date: "2024-10-31"
+  minjust_registration_number: "79973"
+  checked_at: "2026-08-29"
+
+canonical_source:
+  publisher: "Банк России"
+  official_publication: "Вестник Банка России № 45 (2519) от 13.11.2024"
+  official_site_publication_date_stated_in_act: "2024-11-07"
+  source_url: "https://cbr.ru/Queries/XsltBlock/File/158093/-1/2519"
+  alternate_official_url: "https://www.cbr.ru/Queries/XsltBlock/File/87500/-1/2519"
+  act_index_url: "https://www.cbr.ru/about_br/publ/vestnik-akts/?year=2024"
+  origin_verified: true
+  effective_rule: "Вступает в силу по истечении 10 дней после дня официального опубликования."
+  proof_scope: >-
+    Официальный Вестник Банка России содержит полный текст 6863-У, сведения о регистрации в Минюсте,
+    прямую ссылку на статью 19 152-ФЗ в составе предмета операционного аудита и правила формирования
+    и направления отчета. Exact-byte binary capture в данном проходе не выполнен из-за временной DNS-ошибки.
+
+protected_information:
+  scope_actor: "оператор автоматизированной информационной системы страхования"
+  protected_locators:
+    - locator: "пункт 1"
+      concept: OPERATIONAL_AUDIT_PERIODICITY
+      findings:
+        - "Оператор АИС страхования обязан проводить операционный аудит не реже одного раза в два года."
+        - "Аудит проводится как оценка соответствия систем, процедур и мер федеральным законам, иным НПА РФ и нормативным актам Банка России, регулирующим деятельность оператора."
+      guard: "TWO_YEAR_AUDIT_PERIODICITY != PERSONAL_DATA_RETENTION_PERIOD"
+    - locator: "пункт 1, абзац о защите информации"
+      concept: PROTECTED_INFORMATION_SECURITY_ASSURANCE
+      findings:
+        - "Предмет аудита включает меры защиты информации, содержащейся в АИС страхования, требования к которым установлены Банком России на основании статьи 33.10 Закона РФ № 4015-I."
+      guard: "AUDIT_SCOPE != AUTOMATIC_APPLICABILITY_TO_EVERY_INSURANCE_INFORMATION_SYSTEM"
+    - locator: "пункт 1, абзац о защите персональных данных"
+      concept: DIRECT_PDN_SECURITY_AUDIT_REFERENCE
+      findings:
+        - "Предмет аудита прямо включает меры защиты персональных данных при их обработке в АИС страхования в соответствии со статьей 19 152-ФЗ."
+        - "Оценка охватывает угрозы безопасности ПДн, определенные Банком России на основании части 5 статьи 19 152-ФЗ и подпункта 6 пункта 7 статьи 33.10 Закона РФ № 4015-I."
+      guard: "DIRECT_ARTICLE_19_REFERENCE != CLASSIFICATION_OF_ALL_AIS_INSURANCE_INFORMATION_AS_PERSONAL_DATA"
+    - locator: "пункт 2"
+      concept: AUDIT_PLAN_AND_REGULATORY_TRACEABILITY
+      findings:
+        - "До аудита оператор формирует план с перечнем проверяемых систем, процедур и мер, применимых законов и нормативных актов, сроком аудита, порядком утверждения отчета и его направления в Банк России."
+    - locator: "пункт 2"
+      concept: REGULATOR_REPORTING_DEADLINE
+      findings:
+        - "Отчет об операционном аудите направляется в Банк России через личный кабинет в течение пяти рабочих дней со дня его утверждения."
+      guard: "FIVE_WORKING_DAY_AUDIT_REPORT_DEADLINE != PDN_INCIDENT_NOTIFICATION_OR_DATA_SUBJECT_RESPONSE_PERIOD"
+    - locator: "пункты 3-5"
+      concept: AUDIT_EXECUTION_AND_EVIDENCE
+      findings:
+        - "Оператор определяет внутреннее уполномоченное лицо/подразделение либо привлекает юридическое лицо-аудитора."
+        - "План передается аудитору не позднее чем за 10 календарных дней, исключая нерабочие праздничные дни, до начала срока аудита."
+        - "Отчет фиксирует проверенные системы, процедуры и меры, применимые нормативные источники, результаты, недостатки и рекомендации."
+
+relationship_candidates:
+  - target: "152-ФЗ"
+    type: DIRECT_PDN_SECURITY_AUDIT_REFERENCE
+    state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    locator: "пункт 1, статья 19"
+  - target: SEC-SRC-RU-LAW-4015I-1992
+    type: DIRECT_STATUTORY_PARENT_INSURANCE_AIS_AUDIT_CONTEXT
+    state: DIRECT_STATUTORY_RELATION
+    locator: "подпункт 9 пункта 7 статьи 33.10"
+  - target: SEC-SRC-RU-CBR-822P-2023
+    type: INSURANCE_AIS_SECURITY_REQUIREMENTS_TO_OPERATIONAL_AUDIT_ASSURANCE_LAYER
+    state: NORMATIVE_LAYER_OVERLAP_REVIEWED
+    guard: "6863-У не используется как доказательство буквальной ссылки на номер 822-П; связь установлена через общий statutory security layer статьи 33.10 и предмет аудита мер защиты информации."
+
+applicability:
+  state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  guards:
+    - "6863-У адресовано оператору АИС страхования; не переносить его требования автоматически на всех страховщиков и все их ИС."
+    - "Прямая ссылка на статью 19 152-ФЗ относится к мерам защиты ПДн при фактической обработке ПДн в АИС страхования."
+    - "Периодичность аудита не является сроком хранения ПДн."
+    - "Пятидневный срок направления отчета Банку России не является сроком уведомления об инциденте или ответа субъекту ПДн."
+  executable_rule_status: NOT_PROMOTED
+
+version_chain:
+  state: VERSION_CHAIN_PARTIAL_CURRENT_PRIMARY_TEXT_VERIFIED_NO_AMENDMENT_OR_REPEAL_FOUND_IN_THIS_PASS
+  events:
+    - date: "2024-09-26"
+      act: "Указание Банка России № 6863-У"
+      effect: ADOPTED
+      evidence: PRIMARY_CBR_VESTNIK
+    - date: "2024-10-31"
+      effect: MINJUST_REGISTERED
+      registration_number: "79973"
+      evidence: PRIMARY_CBR_VESTNIK
+    - date: "2024-11-07"
+      effect: OFFICIALLY_PUBLISHED_ON_CBR_SITE
+      evidence: PRIMARY_ACT_FOOTNOTE
+    - date: "2024-11-13"
+      effect: PUBLISHED_IN_VESTNIK_BANKA_ROSSII_45_2519
+      evidence: PRIMARY_CBR_VESTNIK
+  currentness_note: >-
+    Поиск по официальным материалам Банка России 29.08.2026 не выявил акта об изменении или отмене 6863-У.
+    Отсутствие результата поиска не считается доказательством полного исторического version-chain; статус остается PARTIAL.
+
+acquisition:
+  exact_binary:
+    status: PENDING_TRANSIENT_DNS_FAILURE
+    attempted_at: "2026-08-29T05:29:40+03:00"
+    attempted_url: "https://cbr.ru/Queries/XsltBlock/File/158093/-1/2519"
+    error: "curl exit 6 / Could not resolve host: cbr.ru"
+    retrieved_at: null
+    mime: null
+    byte_length: null
+    sha256: null
+    immutable_artifact: null
+    displayed_sizes_used_as_exact_bytes: false
+
+quality_gates:
+  taxonomy_as_evidence: false
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+  fabricated_binary_metadata: false
+  dedupe_checked_against:
+    - SEC-SRC-RU-LAW-4015I-1992
+    - SEC-SRC-RU-CBR-822P-2023
