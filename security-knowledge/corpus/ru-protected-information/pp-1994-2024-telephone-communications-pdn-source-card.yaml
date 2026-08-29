@@ -1,0 +1,70 @@
+schema_version: "1.0"
+source_id: SEC-SRC-RU-PP-1994-2024
+stream: 3
+checked_at: "2026-08-29T08:20:00+03:00"
+sector: communications
+regime: telephone_communications_secrecy_subscriber_pdn_identity_verification_retention
+
+act:
+  number: "1994"
+  date: "2024-12-30"
+  title: "Правила оказания услуг телефонной связи и перечень организаций, имеющих право подтверждать сведения об абоненте-физическом лице"
+  current_revision: "ПП РФ от 31.07.2025 № 1137"
+  current_as_of: "2026-08-29"
+  primary_publication_id: "0001202412310007"
+  current_text_url: "https://government.ru/docs/all/157314/"
+
+normative_anchors:
+  - locator: "п. 4"
+    anchor: TELEPHONE_CONVERSATION_SECRECY
+    rule: "оператор обеспечивает тайну телефонных переговоров; ограничение только в федерально-законных случаях"
+  - locator: "п. 4"
+    anchor: SUBSCRIBER_INFO_CONSENT_AND_PURPOSE_BOUND_PDN_BASES
+    rule: "передача/информационное использование subscriber information ограничены; для конкретно перечисленных целей обработки ПДн отдельное согласие не требуется"
+    guard: "NO_CONSENT_FOR_LISTED_PURPOSE != UNLIMITED_PROCESSING"
+  - locator: "п. 18"
+    anchor: IDENTITY_DOCUMENT_ESIA_EBS_IDENTIFICATION
+    rule: "идентификация физлица возможна документом, ЕСИА либо ЕСИА+ЕБС по статье 9 572-ФЗ в нормативно предусмотренном сценарии"
+  - locator: "пп. 22, 24, 26"
+    anchor: PERSON_LEVEL_SUBSCRIBER_DATA_AND_VERIFICATION
+    fields: ["ФИО", "место жительства", "дата рождения", "реквизиты документа, удостоверяющего личность"]
+    deadlines: ["3 календарных дня на запрос подтверждения после регуляторного/ОРД запроса", "повторное уведомление не позднее чем за 3 календарных дня до прекращения услуг", "до 60 календарных дней на сообщение абонентом об изменении ряда сведений"]
+    guard: "TELECOM_WORKFLOW_DEADLINES != 152FZ_INCIDENT_OR_DATA_SUBJECT_DEADLINES"
+  - locator: "п. 28"
+    anchor: SUBSCRIBER_ACTION_AUDIT_RETENTION
+    rule: "не менее 3 лет для предусмотренных action records: от расторжения договора для изменений условий договора и от совершения действия для остальных действий"
+    guard: "ACTION_LOG_RETENTION != GENERAL_SUBSCRIBER_PDN_RETENTION"
+  - locator: "1137/2025, пп. 222-226"
+    anchor: MASS_AUTOMATED_CALL_OPT_OUT
+    rule: "отказ абонента от массовых/автоматических вызовов и восстановление после отмены отказа"
+    guard: "MASS_OR_AUTOMATED_CALL != ADVERTISING_BY_DEFINITION"
+
+overlap_graph:
+  - "1994 -> 126-ФЗ: прямой отраслевой родитель (ст. 44)"
+  - "1994 -> 152-ФЗ: явная обработка ПДн и purpose-bound no-consent scenarios; applicability review required"
+  - "1994 -> 572-ФЗ: прямой EBS identification reference"
+  - "1994 -> 38-ФЗ: только кандидатный overlap массовых/автоматических вызовов с рекламно-маркетинговым режимом"
+  - "1994 -> ЕСИА/public-sector identity: системный межсекторный flow candidate"
+
+version_boundary:
+  current: "1137/2025 действует; на 2026-08-29 это текущая нормативная редакция"
+  future:
+    - "510/2026 — опубликовано 06.05.2026, вступает 01.09.2026; FUTURE_NOT_CURRENT"
+    - "966/2026 — опубликовано 03.08.2026, вступает 01.03.2027; FUTURE_NOT_CURRENT"
+  full_historical_chain_claimed_complete: false
+
+acquisition:
+  current_exact_binary: PENDING_TRANSIENT_DNS_FAILURE
+  attempted_at: "2026-08-29T08:19:09+03:00"
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+
+quality:
+  taxonomy_used_as_seed_only: true
+  primary_normative_text_used_as_evidence: true
+  applicability_promoted: false
+  legal_conflict_declared: false
+  fabricated_binary_metadata: false
