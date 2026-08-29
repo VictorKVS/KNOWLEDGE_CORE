@@ -1,0 +1,81 @@
+schema_version: "1.0"
+stream: 3
+checked_at: "2026-08-29T05:29:40+03:00"
+mode: APPEND_ONLY_PDN_RELATIONSHIP_RECONCILIATION
+previous_stream3_delta: "master-source-inventory-delta-stream3-2026-08-29T0218.yaml"
+focus: "CBR 6863-U operational audit of insurance AIS: explicit article 19 152-FZ security-assurance scope, statutory parent and security-control overlap"
+
+stream3_counters_before:
+  found: 59
+  downloaded: 9
+  immutable: 9
+  pending: 48
+  reused: 2
+  primary_publication_verified: 29
+  sectors_registered: 31
+
+stream3_counters_after:
+  found: 60
+  downloaded: 9
+  immutable: 9
+  pending: 49
+  reused: 2
+  primary_publication_verified: 30
+  sectors_registered: 31
+
+source_added:
+  source_id: SEC-SRC-RU-CBR-6863U-2024
+  title: "Указание Банка России от 26.09.2024 № 6863-У"
+  sector: insurance
+  applicability_status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  executable_effect: NONE
+
+pdn_relationships:
+  - from: SEC-SRC-RU-CBR-6863U-2024
+    locator: "пункт 1, абзац о мерах защиты персональных данных"
+    to: "152-ФЗ"
+    relation: DIRECT_PDN_SECURITY_AUDIT_REFERENCE
+    status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    rationale: "Операционный аудит прямо включает оценку мер защиты ПДн при их обработке в АИС страхования в соответствии со статьей 19 152-ФЗ и угроз, определенных Банком России."
+    guard: "DIRECT_ARTICLE_19_REFERENCE != CLASSIFICATION_OF_ALL_AIS_INSURANCE_INFORMATION_AS_PDN"
+  - from: SEC-SRC-RU-CBR-6863U-2024
+    locator: "пункт 1 / подпункт 9 пункта 7 статьи 33.10"
+    to: SEC-SRC-RU-LAW-4015I-1992
+    relation: DIRECT_STATUTORY_PARENT_INSURANCE_AIS_OPERATIONAL_AUDIT
+    status: DIRECT_STATUTORY_RELATION
+  - from: SEC-SRC-RU-CBR-6863U-2024
+    locator: "пункт 1, меры защиты информации"
+    to: SEC-SRC-RU-CBR-822P-2023
+    relation: INFORMATION_SECURITY_REQUIREMENTS_TO_AUDIT_ASSURANCE_LAYER
+    status: NORMATIVE_LAYER_OVERLAP_REVIEWED
+    rationale: "822-П задает требования защиты информации АИС страхования; 6863-У задает assurance/audit слой для мер защиты, установленных Банком России на основании общей статьи 33.10."
+    guard: "DO_NOT_TREAT_THIS_GRAPH_EDGE_AS_A_LITERAL_6863U_CROSS_CITATION_TO_822P_NUMBER"
+
+scope_boundaries:
+  - "6863-У адресовано оператору АИС страхования; не применять автоматически ко всем страховым организациям и всем их ИС."
+  - "Двухлетняя периодичность операционного аудита не является сроком хранения персональных данных."
+  - "Пятидневный срок направления аудиторского отчета в Банк России не является сроком уведомления об инциденте или ответа субъекту ПДн."
+  - "Прямая ссылка на статью 19 152-ФЗ доказывает PDN-security audit context только при фактической обработке ПДн в АИС страхования."
+
+version_boundaries:
+  - "Первичный текст Банка России: Указание № 6863-У от 26.09.2024."
+  - "Минюст: регистрация № 79973 от 31.10.2024."
+  - "Официальная публикация на сайте Банка России указана в первичном тексте как 07.11.2024; Вестник № 45 (2519) от 13.11.2024."
+  - "Официальный sweep 29.08.2026 не выявил изменения/отмены; полный version-chain не объявлен закрытым."
+
+acquisition_state:
+  exact_binary_obtained: false
+  exact_binary_attempted: true
+  reason: TRANSIENT_DNS_FAILURE_ON_CBR_HOST_IN_BINARY_RUNTIME
+  attempted_at: "2026-08-29T05:29:40+03:00"
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+
+quality_gates:
+  taxonomy_as_evidence: false
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+  fabricated_binary_metadata: false
