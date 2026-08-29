@@ -1,0 +1,90 @@
+schema_version: "1.0"
+id: SEC-SRC-RU-FSTEC60-2026
+kind: security-regulatory-source
+status: METADATA_VERIFIED
+title: >-
+  Приказ ФСТЭК России от 27.02.2026 № 60 «О внесении изменений в Порядок организации и проведения
+  работ по аттестации объектов информатизации на соответствие требованиям о защите информации
+  ограниченного доступа, не составляющей государственную тайну, утвержденный приказом ФСТЭК
+  России от 29 апреля 2021 г. № 77»
+jurisdiction: RU
+issuer: "ФСТЭК России"
+document:
+  type: regulator_order
+  number: "60"
+  adopted_date: "2026-02-27"
+  ministry_registration_number: "87202"
+  ministry_registration_date: "2026-06-24"
+  official_publication_id: "0001202606250029"
+  official_publication_date: "2026-06-25"
+  effective_from: "2026-09-01"
+  checked_at: "2026-08-29"
+  temporal_status: PUBLISHED_REGISTERED_FUTURE_EFFECTIVE_2026_09_01
+  version_chain_note: >-
+    Приказ № 60 опубликован и зарегистрирован, но по состоянию на 29.08.2026 еще не вступил в силу.
+    Он изменяет приказ № 77 с 01.09.2026. Будущая редакция хранится как version-chain evidence и
+    не применяется к решениям с датой до 01.09.2026.
+canonical_source:
+  publisher: "Официальный интернет-портал правовой информации"
+  landing_page: "https://publication.pravo.gov.ru/document/0001202606250029"
+  url: "http://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202606250029"
+  official_publication_id: "0001202606250029"
+  standard_pdf_route: "http://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202606250029"
+  expected_mime: "application/pdf"
+  exact_document_route_status: OFFICIAL_PUBLICATION_ID_VERIFIED
+  exact_file_route_status: STANDARD_OFFICIAL_PUBLICATION_PDF_ROUTE_BYTES_PENDING
+  acquisition_priority: HIGH_FUTURE_ATTESTATION_VERSION_CHAIN
+  freshness_check:
+    checked_at: "2026-08-29"
+    result: REGISTERED_PUBLISHED_FUTURE_EFFECTIVE_FROM_2026_09_01
+capture:
+  fingerprint_status: PENDING
+  semantic_status: FUTURE_EFFECTIVE_NOT_ACTIVE_ON_2026_08_29
+  source_url: "http://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202606250029"
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  note: >-
+    Официальная publication identity и стандартный PDF-route установлены, но текущая среда не
+    получила байты из-за временной ошибки DNS/transport. Никакой MIME, точный размер или SHA-256
+    не синтезированы; immutable promotion отложен до byte-exact capture.
+relations:
+  - type: AMENDS
+    target: SEC-SRC-RU-FSTEC77-2021
+    effective_from: "2026-09-01"
+    provenance: OFFICIAL_PUBLICATION_AND_MINJUST_REGISTRATION
+  - type: INTEGRATES_PENETRATION_TESTING_METHODICAL_CONTEXT
+    target: SEC-SRC-RU-FSTEC-INFO-240-24-4734-2025
+    scope: ATTESTATION_TESTING_AND_PERIODIC_PROTECTION_CONTROL
+    normative_relation: false
+applicability_guard:
+  active_before_2026_09_01: false
+  generic_private_ispdn: NOT_UNIVERSALLY_APPLICABLE
+  private_ispdn_attestation_scope: >-
+    После вступления № 60 в силу частная ИСПДн остается в контуре приказа № 77 только когда ее
+    владелец установил аттестацию как форму оценки соответствия либо есть иное доказанное основание.
+  mandatory_pentest_scope: >-
+    Новая обязательность тестирования на проникновение по пункту 16.1 относится к перечисленным
+    государственным и иным публичным системам 1 и 2 классов защищенности при предусмотренных
+    условиях подключения к Интернету и/или взаимодействия с иными системами, с учетом установленных
+    исключений. Она не переносится автоматически на любую частную ИСПДн.
+  no_requirement_propagation: >-
+    До 01.09.2026 не применять будущие изменения. После 01.09.2026 не превращать требования
+    публичного/аттестационного контура в универсальный baseline ПП № 1119 / приказа № 21 без
+    отдельного applicability-edge.
+provenance:
+  official_publication_id_verified: true
+  official_publication_date_verified: true
+  minjust_registration_verified: true
+  effective_date_verified: true
+  amendment_target_verified: true
+  exact_official_bytes_captured: false
+  review_required: true
+agent_rule: >-
+  Store Order 60 as a future-effective amendment until 01.09.2026. On and after that date, route it
+  through Order 77 attestation applicability and keep the bounded mandatory-pentest scope distinct
+  from generic private ISPDN duties. Require exact official bytes and manifest before immutable promotion.
+inventory_registration:
+  role: fstec77_future_effective_amendment_and_pentest_attestation_context
+  applicability: FUTURE_VERSION_CHAIN_AND_BOUNDED_ATTESTATION_SCOPE_FROM_2026_09_01
