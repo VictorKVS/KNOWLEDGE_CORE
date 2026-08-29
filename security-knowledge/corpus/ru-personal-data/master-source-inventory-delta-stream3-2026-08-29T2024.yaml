@@ -1,0 +1,74 @@
+schema_version: "1.0"
+stream: 3
+checked_at: "2026-08-29T20:24:40+03:00"
+focus: "PDN and credit-history retention overlay from Rosarchive/Bank of Russia 1/801-P"
+
+new_relationship_nodes:
+  - source_id: SEC-SRC-RU-CBR-801P-2022
+    relationship_to_pdn: DOCUMENT_RETENTION_LIST_WITH_PERSON_LEVEL_CREDIT_RECORDS_AND_CREDIT_HISTORY_OVERLAP
+    evidence:
+      parent_locator: "125-ФЗ ч. 1.1 ст. 23"
+      relevant_locators:
+        - "Перечень 1/801-П, раздел 1.1, пункт 2"
+        - "Перечень 1/801-П, раздел 1.1, пункт 8"
+        - "Перечень 1/801-П, раздел 1.1, пункт 9"
+        - "Перечень 1/801-П, раздел 1.1, пункты 17-19"
+      finding: "Перечень задает сроки хранения конкретных кредитных документных серий, в том числе досье заемщиков-физических лиц и документов, связанных с БКИ/согласиями субъектов кредитных историй. Эти сроки относятся к документным сериям и их триггерам, а не образуют общий срок хранения персональных данных или кредитной истории."
+    guards:
+      - "801P_RETENTION_LIST != INDEPENDENT_LAWFUL_BASIS_FOR_ACTIVE_PDN_PROCESSING"
+      - "DOCUMENT_RETENTION_PERIOD != UNDERLYING_PDN_RETENTION_BY_DEFAULT"
+      - "ITEM8_CONSENT_RECORD_RETENTION != UNIVERSAL_CREDIT_HISTORY_CONSENT_RETENTION"
+      - "ITEM9_5_OR_35_YEARS != GENERAL_BORROWER_PDN_RETENTION"
+      - "BKI_INTERACTION_RECORD_RETENTION != CREDIT_HISTORY_STORAGE_PERIOD_BY_DEFAULT"
+      - "152FZ_ARCHIVAL_SCOPE_BOUNDARY_REQUIRES_LIFECYCLE_REVIEW"
+    applicability_promoted: false
+
+retention_nodes:
+  - source_id: SEC-SRC-RU-CBR-801P-2022
+    locator: "раздел 1.1, пункт 9"
+    retention_type: BORROWER_CREDIT_DOSSIER_RECORD_RETENTION
+    values:
+      - "5 years after file closure and final settlement, provided audit/check is complete"
+      - "35 years for credit files of borrowers where a court decision was issued"
+    guard: "CREDIT_DOSSIER_RECORD_ONLY"
+  - source_id: SEC-SRC-RU-CBR-801P-2022
+    locator: "раздел 1.1, пункт 8"
+    retention_type: CREDIT_HISTORY_CONSENT_CONTAINING_DOCUMENT_CLASS_RETENTION
+    value: "5 years EK/EPK after full performance of credit obligations or write-off"
+    guard: "ONLY_FOR_THE_DEFINED_ITEM8_DOCUMENT_CLASS"
+  - source_id: SEC-SRC-RU-CBR-801P-2022
+    locator: "раздел 1.1, пункты 17-19"
+    retention_type: CREDIT_BUREAU_INTERACTION_RECORD_RETENTION
+    values:
+      - "5 years EK/EPK for correspondence and interaction documents"
+      - "permanent for agreements with credit history bureaus"
+    guard: "NOT_THE_STORAGE_PERIOD_OF_A_CREDIT_HISTORY_ITSELF"
+
+protected_information_overlap:
+  - target: "218-ФЗ"
+    finding: "The list explicitly includes records involving credit history bureaus and consent documents; 218-ФЗ remains the independent source for the legal regime of credit histories."
+    guard: "RETENTION_LIST_DOES_NOT_REPLACE_CREDIT_HISTORY_LEGAL_REGIME"
+  - target: "395-1"
+    finding: "Records arise in credit-organization operations, but classification as banking secrecy must be proven under the banking-secrecy source."
+    guard: "CREDIT_ORGANIZATION_RECORD != BANKING_SECRET_AUTOMATICALLY"
+
+pdn_master_effect:
+  applicability_promotions: 0
+  new_direct_pdn_document_retention_sources: 1
+  new_general_pdn_retention_periods: 0
+  legal_conflicts_declared: 0
+  immutable_promotions: 0
+
+lifecycle_boundary:
+  stages:
+    - active_credit_processing
+    - servicing_and_settlement
+    - record_closure
+    - records_management
+    - archival_storage
+    - destruction_or_permanent_preservation_if_required
+  rule: "Select a 1/801-P retention period only after the concrete record class, event trigger and lifecycle stage are proven; do not infer a general PDN retention period."
+
+next_review:
+  - "Retry exact official capture of 1/801-P and promote only after actual bytes plus retrieved_at, MIME, byte length and SHA-256 are stored."
+  - "Continue sector-specific retention discovery, including insurance 1/867-P and high-priority education/public-sector records, with deduplication against existing sources."
