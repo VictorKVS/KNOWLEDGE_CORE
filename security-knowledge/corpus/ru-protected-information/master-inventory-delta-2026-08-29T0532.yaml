@@ -1,0 +1,105 @@
+schema_version: "1.0"
+stream: 3
+checked_at: "2026-08-29T05:32:00+03:00"
+mode: APPEND_ONLY_RU_PROTECTED_INFORMATION_RECONCILIATION
+previous_stream3_delta: "master-inventory-delta-2026-08-29T0529.yaml"
+focus: "insurance / CBR 6568-U as amended by 7283-U / AIS insurance submission datasets / person-level data / DMS foreigners / transport-health-communications overlaps"
+
+counters_before:
+  found: 60
+  downloaded: 9
+  immutable: 9
+  pending: 49
+  reused: 2
+  primary_publication_verified: 30
+  sectors_registered: 31
+
+counters_after:
+  found: 61
+  downloaded: 9
+  immutable: 9
+  pending: 50
+  reused: 2
+  primary_publication_verified: 31
+  sectors_registered: 31
+
+source_added:
+  source_id: SEC-SRC-RU-CBR-6568U-2023
+  title: "Указание Банка России от 06.10.2023 № 6568-У о составе, порядке и сроках представления страховщиками информации в АИС страхования"
+  sector: insurance
+  regime: insurance_ais_submission_dataset_personal_data_cross_sector_flows
+  dedupe_result: NEW_CANONICAL_SOURCE_NODE
+  exact_capture: PENDING_TRANSIENT_DNS_FAILURE
+  applicability_status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  executable_effect: NONE
+
+current_amendment_verified:
+  act: "Указание Банка России от 13.01.2026 № 7283-У"
+  minjust_registration: "№ 86241 от 28.04.2026"
+  official_site_publication_date: "2026-05-07"
+  effective_date: "2026-05-15"
+  official_publication: "Вестник Банка России № 15 (2604) от 28.05.2026"
+  effect: "добавляет приложение 5 и правила для ДМС иностранных граждан/лиц без гражданства, обновляет сроки/корректирующие потоки"
+
+key_findings:
+  - locator: "приложение 1, пункт 1.1"
+    finding: "Person-level набор ОСАГО включает СНИЛС, мобильный номер, e-mail, реквизиты удостоверяющего документа, ФИО, дату/место рождения, регистрацию и сведения водительского документа."
+    guard: "PERSON_LEVEL_INSURANCE_DATASET != UNIVERSAL_INSURER_DATASET"
+  - locator: "приложение 1, пункты 10.20-10.21"
+    finding: "Для отдельных страховых событий присутствуют ФИО, сведения о повреждении здоровья, расходах на лечение, утраченном заработке и сведения о свидетеле."
+    guard: "HEALTH_RELATED_INSURANCE_DATA != MEDICAL_SECRECY_BY_DEFINITION"
+  - locator: "7283-У, пункт 1.2 и приложение 5"
+    finding: "С 15.05.2026 добавлен поток ДМС иностранных граждан/лиц без гражданства; передача в ряде событий не позднее 48 часов."
+    guard: "48_HOUR_AIS_SUBMISSION != PDN_INCIDENT_NOTIFICATION"
+  - locator: "7283-У, приложение 5"
+    finding: "Набор включает ФИО кириллицей/латиницей, дату рождения, реквизиты удостоверяющего документа, пол, гражданство, мобильный номер, e-mail и договорные сведения."
+  - locator: "7283-У, пункт 1.5"
+    finding: "После отказа оператора исправленное сообщение по приложению 5 направляется не позднее 36 часов."
+    guard: "36_HOUR_MESSAGE_CORRECTION != DATA_SUBJECT_CORRECTION_DEADLINE"
+  - locator: "7283-У, пункт 3"
+    finding: "Переходный backfill по действующим договорам ДМС должен был быть выполнен до 30.06.2026 включительно."
+    guard: "TRANSITIONAL_BACKFILL_DEADLINE != RETENTION_PERIOD"
+
+relationships_added:
+  - "SEC-SRC-RU-CBR-6568U-2023 -> SEC-SRC-RU-LAW-4015I-1992: direct parent Article 33.11 dataset context"
+  - "SEC-SRC-RU-CBR-6568U-2023 -> 152-ФЗ: person-level insurance AIS processing context / candidate applicability"
+  - "SEC-SRC-RU-CBR-6568U-2023 -> SEC-SRC-RU-CBR-822P-2023: dataset flow to AIS security layer"
+  - "SEC-SRC-RU-CBR-6568U-2023 -> SEC-SRC-RU-CBR-6863U-2024: dataset flow to audit-assurance layer"
+  - "SEC-SRC-RU-CBR-6568U-2023 -> SEC-SRC-RU-FZ-16-2007: transport-insurance dataset overlap candidate"
+  - "SEC-SRC-RU-CBR-6568U-2023 -> SEC-SRC-RU-PP-140-2022: DMS/health context overlap candidate only"
+  - "SEC-SRC-RU-CBR-6568U-2023 -> 126-ФЗ: mobile-number field overlap candidate only"
+
+version_chain:
+  status: PARTIAL_CURRENT_AMENDMENT_PRIMARY_VERIFIED
+  verified_events:
+    - "06.10.2023 — 6568-У принято."
+    - "28.12.2023 — зарегистрировано Минюстом № 76711."
+    - "29.12.2023 — официально опубликовано на сайте Банка России."
+    - "01.04.2024 — базовый акт вступил в силу."
+    - "13.01.2026 — 7283-У принято."
+    - "28.04.2026 — 7283-У зарегистрировано Минюстом № 86241."
+    - "15.05.2026 — 7283-У вступило в силу."
+  full_historical_chain_claimed_complete: false
+  executable_current_rule_promoted: false
+
+acquisition_state:
+  exact_binary_attempted: true
+  exact_binary_obtained: false
+  reason: TRANSIENT_DNS_FAILURE_IN_BINARY_RUNTIME
+  attempted_at: "2026-08-29T05:31:50+03:00"
+  attempted_urls:
+    - "https://cbr.ru/Queries/XsltBlock/File/158093/-1/2477"
+    - "https://www.cbr.ru/Queries/XsltBlock/File/185926/-1/2604"
+  transport_result: "curl exit 6 / Could not resolve host: cbr.ru / www.cbr.ru"
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+
+quality_gates:
+  taxonomy_as_evidence: false
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+  fabricated_binary_metadata: false
+  primary_publication_counter_incremented: true
