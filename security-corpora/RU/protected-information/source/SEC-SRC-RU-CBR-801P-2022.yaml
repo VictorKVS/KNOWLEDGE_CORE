@@ -1,0 +1,121 @@
+schema_version: "1.0"
+id: SEC-SRC-RU-CBR-801P-2022
+kind: PRIMARY_NORMATIVE_SOURCE
+status: PRIMARY_PUBLICATION_VERIFIED
+jurisdiction: RU
+authorities:
+  - "Федеральное архивное агентство"
+  - "Центральный банк Российской Федерации"
+sector:
+  - financial
+  - archives_retention
+regime: credit_organization_document_retention
+
+document:
+  type: "совместное положение"
+  date: "2022-07-12"
+  number: "1/801-П"
+  title: "Об утверждении Перечня документов, образующихся в процессе деятельности кредитных организаций, с указанием сроков их хранения"
+  minjust_registration_number: "69304"
+  minjust_registration_date: "2022-07-19"
+  effective_date: "2022-07-30"
+
+canonical_source:
+  official_publication_id: "0001202207190003"
+  official_publication_date: "2022-07-19"
+  source_url: "https://publication.pravo.gov.ru/document/0001202207190003"
+  official_rosarchive_pdf: "https://archives.gov.ru/sites/default/files/2022-pologenie-credit-org.pdf"
+  official_cbr_vestnik: "https://cbr.ru/Queries/XsltBlock/File/105253?fileId=-1&scope=ves220817_042%282374%29.pdf"
+  cbr_vestnik_issue: "№ 42 (2374), 17.08.2022"
+  proof_state: PRIMARY_PUBLICATION_VERIFIED
+
+legal_basis:
+  - locator: "часть 1.1 статьи 23 125-ФЗ"
+    relation: "sector-specific archival retention list for credit organizations"
+
+version_chain:
+  state: VERSION_CHAIN_PARTIAL
+  current_as_of: "2026-08-29"
+  current_authority_evidence:
+    - "Росархив продолжает размещать 1/801-П в действующем разделе Положений"
+    - "Банк России сохраняет 1/801-П в официальном перечне актов Вестника Банка России"
+  amendment_sweep:
+    checked_at: "2026-08-29"
+    result: "NO_AMENDING_ACT_LOCATED_IN_THIS_SWEEP"
+  full_historical_chain_claimed_complete: false
+
+normative_scope:
+  applies_to: "документы, образующиеся в процессе деятельности кредитных организаций, по конкретным документным сериям Перечня"
+  not_a_lawful_basis_for_active_processing: true
+  document_class_match_required: true
+  lifecycle_trigger_match_required: true
+
+retention_anchors:
+  - locator: "Перечень, раздел 1.1, пункт 2"
+    record_class: "документы по централизации кредитного портфеля физических лиц"
+    retention: "5 лет"
+    guard: "RECORD_CLASS_RETENTION_NOT_GENERAL_PDN_RETENTION"
+  - locator: "Перечень, раздел 1.1, пункт 5"
+    record_class: "договоры о предоставлении кредитов и кредитные досье заемщиков-юридических лиц"
+    retention: "5 лет ЭК (ЭПК) после полного исполнения обязательств либо списания задолженности"
+    guard: "CREDIT_FILE_RETENTION_NOT_BANKING_SECRET_DURATION"
+  - locator: "Перечень, раздел 1.1, пункт 8"
+    record_class: "документы по кредитам под государственные/муниципальные гарантии, включая документы о согласии субъектов кредитных историй на получение основной части кредитной истории"
+    retention: "5 лет ЭК (ЭПК) после полного исполнения обязательств либо списания задолженности"
+    guard: "CONSENT_RECORD_RETENTION_IN_THIS_DOCUMENT_CLASS_NOT_UNIVERSAL_CREDIT_HISTORY_CONSENT_RETENTION"
+  - locator: "Перечень, раздел 1.1, пункт 9"
+    record_class: "кредитные досье заемщиков-физических лиц"
+    retention: "5 лет после закрытия дела и окончания взаиморасчетов при условии завершения проверки; кредитные дела заемщиков, по которым вынесено решение суда, — 35 лет"
+    guard: "5_OR_35_YEAR_CREDIT_DOSSIER_RETENTION_NOT_GENERAL_PDN_RETENTION"
+  - locator: "Перечень, раздел 1.1, пункты 17-19"
+    record_class: "переписка, договоры/соглашения и документы по взаимодействию с бюро кредитных историй"
+    retention: "5 лет ЭК (ЭПК) для переписки/документов; постоянно для договоров и соглашений с БКИ"
+    guard: "BKI_INTERACTION_RECORD_RETENTION_NOT_CREDIT_HISTORY_STORAGE_PERIOD_BY_DEFAULT"
+
+relationships:
+  - target: "125-ФЗ"
+    type: IMPLEMENTS_SECTOR_SPECIFIC_RETENTION_LIST
+    status: DIRECT_LEGAL_BASIS
+  - target: "218-ФЗ"
+    type: OVERLAPPING_CREDIT_HISTORY_RECORDS
+    status: DOCUMENT_CLASS_SPECIFIC_REVIEW_REQUIRED
+  - target: "152-ФЗ"
+    type: OVERLAPPING_PERSONAL_DATA_RECORDS
+    status: DOCUMENT_CLASS_AND_LIFECYCLE_REVIEW_REQUIRED
+  - target: "395-1"
+    type: OVERLAPPING_BANKING_SECRECY_CONTEXT
+    status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  - target: "353-ФЗ"
+    type: OVERLAPPING_CONSUMER_CREDIT_CONTEXT
+    status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+
+proof_guards:
+  - "RETENTION_LIST != LAWFUL_BASIS_FOR_ACTIVE_PDN_PROCESSING"
+  - "CREDIT_ORGANIZATION_DOCUMENT != BANKING_SECRET_AUTOMATICALLY"
+  - "DOCUMENT_RETENTION_PERIOD != DURATION_OF_BANKING_SECRECY_OR_CREDIT_HISTORY_REGIME"
+  - "DOCUMENT_RETENTION_PERIOD != GENERAL_PDN_RETENTION"
+  - "APPLICABILITY_REQUIRES_CONCRETE_RECORD_CLASS_AND_TRIGGER"
+
+acquisition:
+  exact_binary_attempted: true
+  attempted_at: "2026-08-29T20:24:40+03:00"
+  attempted_urls:
+    - "https://archives.gov.ru/sites/default/files/2022-pologenie-credit-org.pdf"
+    - "https://cbr.ru/Queries/XsltBlock/File/105253?fileId=-1&scope=ves220817_042%282374%29.pdf"
+    - "https://cdnstatic.rg.ru/uploads/attachments/2022/07/20/69304_8bc.pdf"
+  transport_result: "binary runtime could not fetch official PDF endpoints; transient DNS/download failure"
+  retry_class: TRANSIENT
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+  state: PENDING_EXACT_CAPTURE
+
+quality_gates:
+  taxonomy_used_as_evidence: false
+  primary_act_used_as_proof: true
+  applicability_invented: false
+  fabricated_binary_metadata: false
+  exact_bytes_required_before_immutable: true
+  version_chain_claimed_complete: false
