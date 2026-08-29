@@ -1,4 +1,4 @@
-schema_version: "1.10"
+schema_version: "1.11"
 id: SEC-SRC-RU-PP687-2008
 kind: security-regulatory-source
 status: METADATA_VERIFIED
@@ -15,19 +15,20 @@ document:
   current_revision_effective_from: "2025-01-26"
   current_revision_fingerprint: "пункт 3 содержит срок действия до 1 сентября 2030 г."
   valid_until: "2030-09-01"
-  checked_at: "2026-08-28"
+  checked_at: "2026-08-29"
 
 canonical_source:
   publisher: "Правительство России"
   url: "https://government.ru/docs/all/65436/"
   origin_verified: true
   freshness_check:
-    checked_at: "2026-08-28"
+    checked_at: "2026-08-29"
     result: CURRENT_REVISION_CONFIRMED
     evidence_note: >-
-      Current legal-text indexes re-confirmed on 28.08.2026 that PP RF No. 687 remains in the revision made by
-      PP RF No. 12 of 18.01.2025, effective from 26.01.2025, and clause 3 states that PP687 remains in force
-      through 01.09.2030. Freshness evidence alone is not substituted for byte-exact capture.
+      The official Government document page was re-confirmed on 29.08.2026 as PP RF No. 687 in the revision made by
+      PP RF No. 12 of 18.01.2025. The indexed official text explicitly states that clause 3 remains in force through
+      01.09.2030 and contains the current non-automated-processing regulation. Freshness/content confirmation does not
+      substitute for byte-exact acquisition, MIME, exact byte length, SHA-256 and an accepted immutable manifest.
   alternate_official_routes:
     - publisher: "Официальный интернет-портал правовой информации / ИПС Право"
       url: "http://pravo.gov.ru/proxy/ips/?docbody=&link_id=0&nd=102124251&intelsearch=&firstDoc=1"
@@ -65,22 +66,27 @@ capture:
       - CURRENT_REVISION_MARKER_MISS
       - ALL_REGISTERED_ROUTES_FAILED
     detail: >-
-      Latest GitHub acquisition telemetry shows TLS pravo.gov.ru and Government routes timing out, the available
-      HTTP IPS response failing the required PP687/current-revision markers, and the print rendering returning HTTP 500.
-      No failed response was promoted and no byte/hash evidence was fabricated.
+      Latest accepted GitHub acquisition telemetry shows TLS pravo.gov.ru and Government routes timing out, the
+      available HTTP IPS response failing the required PP687/current-revision markers, and the print rendering
+      returning HTTP 500. No failed response was promoted and no byte/hash evidence was fabricated.
     proof_floor_held: true
     semantic_promotion: false
   runtime_probe:
-    observed_at: "2026-08-28T11:03:16Z"
+    observed_at: "2026-08-29T05:11:13Z"
     routes_probed:
       - "https://government.ru/docs/all/65436/"
-      - "http://pravo.gov.ru/proxy/ips/?docbody=&link_id=0&nd=102124251&intelsearch=&firstDoc=1"
     result: TEMPORARY_DNS_RESOLUTION_FAILURE_IN_RUNTIME
+    transport_detail: "curl exit 6: Could not resolve host: government.ru"
+    independent_freshness_result: OFFICIAL_PAGE_CURRENT_TEXT_CONFIRMED_VIA_WEB_INDEX
     proof_effect: NONE
     retry_policy: KEEP_GUARDED_RETRY_ENABLED
+    note: >-
+      The official page is current and its revision fingerprint is independently visible, while this execution
+      environment cannot resolve government.ru for raw-byte capture. This is classified as a transport/runtime
+      blocker only and must not be converted into immutable evidence.
   acquisition_request:
     status: RETRY_REQUIRED_GUARDED
-    requested_at: "2026-08-28T11:03:16Z"
+    requested_at: "2026-08-29T05:11:13Z"
     route: official_canonical_snapshot_with_registered_ips_and_print_fallback
     reason: >-
       Immutable promotion requires returned official bytes, retrieved_at, MIME, exact byte length, SHA-256,
@@ -101,7 +107,7 @@ relations:
     note: "PP RF No. 12 sets the validity of PP RF No. 687 through 01.09.2030."
 
 provenance:
-  checked_at: "2026-08-28"
+  checked_at: "2026-08-29"
   review_required: true
 
 agent_rule: >-
