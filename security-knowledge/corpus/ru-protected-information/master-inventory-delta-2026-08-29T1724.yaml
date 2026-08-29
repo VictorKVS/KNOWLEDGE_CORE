@@ -1,0 +1,107 @@
+schema_version: "1.0"
+stream: 3
+checked_at: "2026-08-29T17:24:07+03:00"
+mode: APPEND_ONLY_RU_PROTECTED_INFORMATION_RECONCILIATION
+previous_stream3_delta: "master-inventory-delta-2026-08-29T1124.yaml"
+focus: "archives/retention / Rosarchive Order 236 / PDN consent and personnel records / restricted-information record retention"
+
+counters_before:
+  found: 64
+  downloaded: 9
+  immutable: 9
+  pending: 53
+  reused: 2
+  primary_publication_verified: 34
+  sectors_registered: 32
+
+counters_after:
+  found: 65
+  downloaded: 9
+  immutable: 9
+  pending: 54
+  reused: 2
+  primary_publication_verified: 35
+  sectors_registered: 32
+
+sources_added:
+  - source_id: SEC-SRC-RU-ROSARCHIVE-236-2019
+    title: "Приказ Росархива от 20.12.2019 № 236 — Перечень типовых управленческих архивных документов с указанием сроков хранения"
+    sector: archives_retention
+    regime: typical_management_document_retention_pdn_protected_information
+    dedupe_result: NEW_CANONICAL_SOURCE_NODE
+    exact_capture: PENDING_TRANSIENT_DNS_FAILURE
+    applicability_status: DOCUMENT_CLASS_AND_LIFECYCLE_MATCH_REQUIRED
+    executable_effect: NONE
+
+primary_evidence:
+  source_id: SEC-SRC-RU-ROSARCHIVE-236-2019
+  primary_publication_url: "https://publication.pravo.gov.ru/Document/View/0001202002070036"
+  official_publication_id: "0001202002070036"
+  official_publication_date: "2020-02-07"
+  minjust_registration_number: "57449"
+  minjust_registration_date: "2020-02-06"
+  official_rosarchive_text: "https://archives.gov.ru/documents/2019-perechen-typdocs-organization.shtml"
+  effective_date: "2020-02-18"
+  parent_act: "125-ФЗ, ч. 3 ст. 6"
+
+key_findings:
+  - locator: "статья 440"
+    finding: "Документы (положения, инструкции) об обработке персональных данных: постоянно по месту утверждения; 3 года после замены новыми в других организациях."
+    guard: "PDN_POLICY_DOCUMENT_RETENTION != UNDERLYING_PDN_DATASET_RETENTION"
+  - locator: "статья 441"
+    finding: "Согласие на обработку ПДн: 3 года после истечения срока действия или отзыва, если иное не предусмотрено федеральным законом или договором."
+    guard: "3_YEAR_CONSENT_RECORD_RETENTION != GENERAL_PDN_RETENTION"
+  - locator: "статьи 438-439"
+    finding: "Документы кандидатов/конкурсного отбора и кадрового резерва имеют разные сроки 3 года, 1 год и 5 лет по конкретному документному классу."
+    guard: "NO_SINGLE_CANDIDATE_PDN_RETENTION_PERIOD"
+  - locator: "статьи 444-445"
+    finding: "Личные карточки и личные дела работников: 50/75 лет ЭПК по правилам Перечня и архивного законодательства."
+    guard: "50_75_YEAR_PERSONNEL_DOCUMENT_RETENTION != ALL_EMPLOYEE_PDN_RETENTION"
+  - locator: "статья 166"
+    finding: "Соглашения о неразглашении информации ограниченного доступа: 3 года после истечения установленного соглашением срока неразглашения."
+    guard: "NDA_RECORD_RETENTION != SECRET_REGIME_DURATION"
+  - locator: "статья 167"
+    finding: "Обязательства о неразглашении информации ограниченного доступа: 3 года после прекращения трудовых отношений."
+    guard: "UNDERTAKING_RECORD_RETENTION != UNIVERSAL_RESTRICTED_INFORMATION_RETENTION"
+  - locator: "статья 183 подпункт ж"
+    finding: "Учет экземпляров/копий документов и носителей с информацией ограниченного доступа: 5 лет."
+    guard: "ACCOUNTING_LOG_RETENTION != PROTECTED_CONTENT_RETENTION"
+
+relationships_added:
+  - "Order 236 -> 125-ФЗ: direct retention-list implementation under ch.3 art.6"
+  - "Order 236 -> Order 77/2023: complementary retention-period vs archival lifecycle rules"
+  - "Order 236 -> 152-ФЗ: direct PDN-document retention overlap with archive scope guard"
+  - "Order 236 -> RU protected-information regimes: umbrella restricted-information record-retention overlap; concrete secret regime requires independent proof"
+
+version_chain:
+  status: CURRENT_OPERATION_CONFIRMED_NO_AMENDMENT_LOCATED_IN_THIS_SWEEP_HISTORICAL_CHAIN_PARTIAL
+  current_as_of: "2026-08-29"
+  predecessor: "Приказ Минкультуры России от 25.08.2010 № 558"
+  predecessor_repeal: "Приказ Минкультуры России от 17.12.2019 № 1964"
+  full_historical_chain_claimed_complete: false
+
+acquisition_state:
+  exact_binary_attempted: true
+  exact_binary_obtained: false
+  attempted_at: "2026-08-29T17:24:07+03:00"
+  reason: TRANSIENT_DNS_FAILURE_IN_BINARY_RUNTIME
+  transport_result: "curl exit 6 / Could not resolve host: publication.pravo.gov.ru; Could not resolve host: archives.gov.ru"
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+
+unpromoted_discovery:
+  - act: "Приказ Росархива от 17.06.2026 № 83 — об организации работы с персональными данными в Росархиве"
+    state: NOT_PROMOTED_CURRENT_SOURCE
+    reason: "В этом sweep не подтверждены первичная официальная публикация и дата вступления в силу; найденные внешние сведения недостаточны для current proof floor."
+
+quality_gates:
+  taxonomy_as_evidence: false
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+  fabricated_binary_metadata: false
+  primary_publication_counter_incremented: true
+  document_series_matching_required: true
+  archive_scope_boundary_preserved: true
