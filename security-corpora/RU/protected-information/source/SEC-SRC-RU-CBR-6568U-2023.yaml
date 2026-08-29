@@ -1,0 +1,157 @@
+schema_version: "1.0"
+id: SEC-SRC-RU-CBR-6568U-2023
+kind: security-regulatory-source
+status: CURRENT_PRIMARY_BASE_AND_2026_AMENDMENT_VERIFIED_VERSION_CHAIN_PARTIAL_EXACT_BINARY_PENDING
+
+jurisdiction: RU
+authority: "Банк России"
+sector: insurance
+regime: insurance_ais_submission_dataset_personal_data_cross_sector_flows
+
+document:
+  type: "Указание Банка России"
+  number: "6568-У"
+  adopted_date: "2023-10-06"
+  title: "О составе, порядке и сроках представления страховщиками в автоматизированную информационную систему страхования информации, предусмотренной пунктом 1 статьи 33.11 Закона РФ № 4015-I, а также о порядке отказа оператора АИС страхования в размещении указанной информации"
+  minjust_registration_date: "2023-12-28"
+  minjust_registration_number: "76711"
+  effective_date: "2024-04-01"
+  current_amendment: "Указание Банка России от 13.01.2026 № 7283-У"
+  checked_at: "2026-08-29"
+
+canonical_source:
+  publisher: "Банк России"
+  official_publication: "Вестник Банка России № 3 (2477) от 17.01.2024"
+  source_url: "https://cbr.ru/Queries/XsltBlock/File/158093/-1/2477"
+  official_site_publication_date_stated_in_act: "2023-12-29"
+  origin_verified: true
+
+current_amendment_primary_source:
+  act: "Указание Банка России от 13.01.2026 № 7283-У"
+  title: "О внесении изменений в Указание Банка России от 6 октября 2023 года № 6568-У"
+  minjust_registration_date: "2026-04-28"
+  minjust_registration_number: "86241"
+  official_site_publication_date_stated_in_act: "2026-05-07"
+  effective_date: "2026-05-15"
+  official_publication: "Вестник Банка России № 15 (2604) от 28.05.2026"
+  source_url: "https://www.cbr.ru/Queries/XsltBlock/File/185926/-1/2604"
+  evidence_status: PRIMARY_CBR_VESTNIK_VERIFIED
+
+protected_information:
+  scope_actor: "страховщики, представляющие предусмотренную законом информацию в АИС страхования"
+  protected_locators:
+    - locator: "пункт 1 и приложения 1-4"
+      concept: STATUTORY_INSURANCE_AIS_DATASET_AND_SUBMISSION_FLOW
+      findings:
+        - "Страховщики представляют в АИС страхования имеющуюся у них информацию из статьи 33.11 Закона № 4015-I в составе, установленном приложениями."
+      guard: "DATASET_SUBMISSION_RULE != AUTOMATIC_CLASSIFICATION_OF_EVERY_FIELD_AS_PDN_OR_INSURANCE_SECRET"
+    - locator: "приложение 1, пункт 1.1"
+      concept: PERSON_LEVEL_OSAGO_DATASET
+      findings:
+        - "Для физлица предусмотрены СНИЛС, номер мобильной связи, e-mail, реквизиты документа, удостоверяющего личность, ФИО, дата и место рождения, регистрация по месту жительства/пребывания, сведения о водительском удостоверении."
+      guard: "PERSON_LEVEL_FIELDS_REQUIRE_FIELD_AND_PURPOSE_LEVEL_PDN_ANALYSIS; do not infer a universal insurer dataset."
+    - locator: "приложение 1, пункты 10.20-10.21"
+      concept: ACCIDENT_HEALTH_AND_WITNESS_DATA
+      findings:
+        - "В отдельных страховых событиях передаются ФИО потерпевшего, характер и степень повреждения здоровья, расходы на лечение, утраченный заработок, а также ФИО/адрес свидетеля."
+      guard: "HEALTH_RELATED_INSURANCE_EVENT_DATA != AUTOMATIC_MEDICAL_SECRECY; врачебная тайна требует отдельного источника/контекста получения сведений."
+    - locator: "7283-У, пункт 1.2 и приложение 5"
+      concept: FOREIGNER_DMS_PERSON_LEVEL_DATASET_AND_48H_FLOW
+      findings:
+        - "С 15.05.2026 для ДМС иностранных граждан/лиц без гражданства добавлен отдельный массив и передача не позднее 48 часов для предусмотренных событий."
+        - "Приложение 5 включает ФИО на кириллице/латинице, дату рождения, реквизиты документа, пол, гражданство, мобильный номер, e-mail и договорные сведения."
+      guard: "48_HOUR_INSURANCE_AIS_SUBMISSION != PDN_INCIDENT_NOTIFICATION_PERIOD"
+    - locator: "7283-У, пункт 1.5"
+      concept: REJECTED_MESSAGE_CORRECTION_FLOW
+      findings:
+        - "Для информации приложения 5 исправленное сообщение после отказа оператора должно быть передано не позднее 36 часов с момента отказа."
+      guard: "36_HOUR_CORRECTION_FLOW != DATA_SUBJECT_CORRECTION_DEADLINE_UNDER_152FZ"
+    - locator: "7283-У, пункт 3"
+      concept: TRANSITIONAL_BACKFILL_DMS_FOREIGNERS
+      findings:
+        - "По действующим на дату вступления в силу договорам соответствующая информация приложения 5 должна была быть представлена до 30.06.2026 включительно."
+      guard: "TRANSITIONAL_BACKFILL_DEADLINE != RETENTION_PERIOD"
+
+relationship_candidates:
+  - target: SEC-SRC-RU-LAW-4015I-1992
+    type: DIRECT_STATUTORY_PARENT_ARTICLE_33_11_DATASET_CONTEXT
+    state: DIRECT_STATUTORY_RELATION
+  - target: "152-ФЗ"
+    type: PERSON_LEVEL_INSURANCE_AIS_DATASET_PROCESSING_CONTEXT
+    state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  - target: SEC-SRC-RU-CBR-822P-2023
+    type: DATASET_FLOW_TO_AIS_SECURITY_REQUIREMENTS
+    state: NORMATIVE_LAYER_OVERLAP_REVIEWED
+  - target: SEC-SRC-RU-CBR-6863U-2024
+    type: DATASET_FLOW_TO_OPERATIONAL_AUDIT_ASSURANCE_SCOPE
+    state: NORMATIVE_LAYER_OVERLAP_REVIEWED
+  - target: SEC-SRC-RU-FZ-16-2007
+    type: TRANSPORT_INSURANCE_PERSON_AND_VEHICLE_DATA_OVERLAP_CANDIDATE
+    state: CANDIDATE_DATASET_OVERLAP_REVIEW_REQUIRED
+  - target: SEC-SRC-RU-PP-140-2022
+    type: HEALTHCARE_DMS_CONTEXT_OVERLAP_CANDIDATE
+    state: CANDIDATE_CONTEXT_REVIEW_REQUIRED
+    guard: "INSURANCE_DMS_DATA != EGISZ_OR_MEDICAL_SECRECY_BY_DEFINITION"
+  - target: "126-ФЗ"
+    type: MOBILE_SUBSCRIBER_NUMBER_FIELD_OVERLAP_CANDIDATE
+    state: CANDIDATE_DATA_CLASSIFICATION_REVIEW_REQUIRED
+
+applicability:
+  state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  guards:
+    - "6568-У регулирует конкретный поток страховщик -> АИС страхования; не переносить его состав полей на все системы страховщика."
+    - "Наличие health-related полей в страховом событии не доказывает врачебную тайну без происхождения из медицинского профессионального контекста."
+    - "Сроки 48/36 часов и переходный срок до 30.06.2026 не являются сроками хранения ПДн."
+    - "Мобильный номер в наборе не означает автоматическую применимость тайны связи ко всему страховому набору."
+  executable_rule_status: NOT_PROMOTED
+
+version_chain:
+  state: VERSION_CHAIN_PARTIAL_CURRENT_AMENDMENT_PRIMARY_VERIFIED
+  events:
+    - date: "2023-10-06"
+      act: "Указание Банка России № 6568-У"
+      effect: ADOPTED
+      evidence: PRIMARY_CBR_VESTNIK
+    - date: "2023-12-28"
+      effect: MINJUST_REGISTERED
+      registration_number: "76711"
+      evidence: PRIMARY_CBR_VESTNIK
+    - date: "2023-12-29"
+      effect: OFFICIALLY_PUBLISHED_ON_CBR_SITE
+      evidence: PRIMARY_ACT_FOOTNOTE
+    - date: "2024-04-01"
+      effect: ENTERED_INTO_FORCE
+      evidence: PRIMARY_ACT_POINT_10
+    - date: "2026-01-13"
+      act: "Указание Банка России № 7283-У"
+      effect: AMENDS_6568U_ADDING_APP_5_AND_RELATED_RULES
+      evidence: PRIMARY_CBR_VESTNIK
+    - date: "2026-05-15"
+      effect: AMENDMENT_7283U_ENTERED_INTO_FORCE
+      evidence: PRIMARY_7283U_POINT_2
+  currentness_note: "Текущая связь с 7283-У первично подтверждена. Полный исторический chain иных возможных изменений не объявлен закрытым."
+
+acquisition:
+  exact_binary:
+    status: PENDING_TRANSIENT_DNS_FAILURE
+    attempted_at: "2026-08-29T05:31:50+03:00"
+    attempted_targets:
+      - "https://cbr.ru/Queries/XsltBlock/File/158093/-1/2477"
+      - "https://www.cbr.ru/Queries/XsltBlock/File/185926/-1/2604"
+    error: "curl exit 6 / Could not resolve host: cbr.ru / www.cbr.ru"
+    retrieved_at: null
+    mime: null
+    byte_length: null
+    sha256: null
+    immutable_artifact: null
+    displayed_sizes_used_as_exact_bytes: false
+
+quality_gates:
+  taxonomy_as_evidence: false
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+  fabricated_binary_metadata: false
+  dedupe_checked_against:
+    - SEC-SRC-RU-LAW-4015I-1992
+    - SEC-SRC-RU-CBR-822P-2023
+    - SEC-SRC-RU-CBR-6863U-2024
