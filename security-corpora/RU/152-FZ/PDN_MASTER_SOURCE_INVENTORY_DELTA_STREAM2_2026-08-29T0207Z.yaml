@@ -1,0 +1,66 @@
+schema_version: "1.0"
+id: SEC-PDN-MASTER-SOURCE-INVENTORY-DELTA-STREAM2-2026-08-29T0207Z
+applies_to: PDN_MASTER_SOURCE_INVENTORY.yaml
+stream: RU_PDN_TECHNICAL_CRYPTO
+created_at: "2026-08-29T02:07:56Z"
+merge_policy: >-
+  ADDITIVE_SECURITY_STACK_OVERLAY. Preserve all non-Stream-2 master data and all existing immutable evidence.
+  Apply the authoritative counters from the accepted acquisition run, the FSTEC164 immutable promotion already
+  materialized in source/artifact/manifest records, the FSTEC487 version-chain repair, and the refreshed FSTEC21 watch.
+
+security_stack_patch:
+  checked_at: "2026-08-29"
+  identified: 53
+  metadata_verified: 53
+  immutable_sha256_verified: 22
+  pending_raw_capture: 31
+  exact_official_route_unresolved: 8
+  confirmed_conflicts: 0
+  latest_status_review_at: "2026-08-29T02:07:56Z"
+  latest_stream2_run: "security-stack/runs/STREAM2_RUN_2026-08-29T0207Z.yaml"
+  latest_acquisition_finished_at: "2026-08-28T20:31:21.413370Z"
+
+immutable_reconciliation:
+  source_id: SEC-SRC-RU-FSTEC164-2025
+  raw_capture: IMMUTABLE_CAPTURED
+  official_publication_id: "0001202507020007"
+  source_url: "http://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202507020007"
+  retrieved_at: "2026-08-28T20:27:24.763742Z"
+  mime: "application/pdf"
+  byte_length: 761026
+  sha256: "ea8cd11ad17743f6e80ad8144ace50e9f743fde6e365bb8d7a9fda8a73a86de6"
+  applicability: LICENSED_SZI_DEVELOPMENT_PRODUCTION_ACTIVITY_ONLY
+  not_universal_pdn_duty: true
+
+version_chain_patch:
+  - from: SEC-SRC-RU-FSTEC487-2025
+    type: AMENDS
+    to: SEC-SRC-RU-FSTEC164-2025
+    scope: SZI_DEVELOPMENT_PRODUCTION_LICENSING_CONTROL_VERSION_CHAIN
+    counter_effect: NONE
+
+regulatory_watch_patch:
+  source_id: SEC-SRC-RU-FSTEC21-2013
+  checked_at: "2026-08-29"
+  active_revision_date: "2020-05-14"
+  project_id: "169583"
+  project_status: DRAFT_NOT_ENACTED_IN_VERIFIED_EVIDENCE
+  proposed_effective_from: "2026-09-01"
+  proposed_effect_only: true
+
+counter_basis: >-
+  The accepted Stream-2 acquisition run registered 53 sources and finished with 22 immutable SHA-256 verified
+  artifacts and 31 pending raw captures. One new immutable in that run was FSTEC Order 164/2025. This overlay
+  does not invent arithmetic beyond the accepted acquisition output and does not change counters for the
+  FSTEC487 relation repair or the FSTEC21 status-watch refresh.
+
+applicability_guard: >-
+  FSTEC Orders 164 and 487 govern licensing-control/version-chain context for licensable protection-tool activity.
+  They do not create a licence obligation merely because an organization operates an ISPDn. KII, NCCCI/GosSOPKA,
+  certification and FSB/SKZI requirements remain outside the generic PDN baseline unless an independent applicability
+  condition is proven.
+
+proof_rule: >-
+  No source becomes immutable or extraction-ready without exact official bytes, observed MIME/signature, exact byte
+  length, computed SHA-256, immutable artifact and manifest. Secondary notices and rounded display sizes cannot
+  substitute for the primary act payload.
