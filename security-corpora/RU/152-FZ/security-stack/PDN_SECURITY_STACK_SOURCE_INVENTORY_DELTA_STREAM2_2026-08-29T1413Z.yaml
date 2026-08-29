@@ -1,0 +1,84 @@
+schema_version: "1.0"
+id: SEC-PDN-SECURITY-STACK-INVENTORY-DELTA-STREAM2-2026-08-29T1413Z
+applies_to: PDN_SECURITY_STACK_SOURCE_INVENTORY.yaml
+stream: RU_PDN_TECHNICAL_CRYPTO
+created_at: "2026-08-29T14:13:00Z"
+merge_policy: >-
+  ADDITIVE_STREAM2_RECONCILIATION_DELTA. Add the two registered source records and the verified
+  future-effective version edge; update Stream-2 counters only after reconciliation. Preserve all
+  existing sources, immutable evidence, applicability guards and other-stream data.
+
+source_additions:
+  - id: SEC-SRC-RU-FSTEC77-2021
+    source_record: "source/SEC-SRC-RU-FSTEC77-2021.yaml"
+    role: fstec_attestation_procedure_pdn_conditional_context
+    metadata_status: METADATA_VERIFIED
+    raw_capture: PENDING
+    applicability: PUBLIC_ISPDN_AND_PRIVATE_ISPDN_WHEN_ATTESTATION_FORM_ESTABLISHED
+    exact_official_route: UNRESOLVED
+  - id: SEC-SRC-RU-FSTEC60-2026
+    source_record: "source/SEC-SRC-RU-FSTEC60-2026.yaml"
+    role: fstec77_future_effective_amendment_and_pentest_attestation_context
+    metadata_status: METADATA_VERIFIED
+    raw_capture: PENDING
+    applicability: FUTURE_VERSION_CHAIN_AND_BOUNDED_ATTESTATION_SCOPE_FROM_2026_09_01
+    exact_official_route: RESOLVED_PUBLICATION_ID_STANDARD_PDF_ROUTE_BYTES_PENDING
+
+version_edges_additions:
+  - from: SEC-SRC-RU-FSTEC77-2021
+    type: AMENDED_BY
+    to: SEC-SRC-RU-FSTEC60-2026
+    effective_from: "2026-09-01"
+    provenance: OFFICIAL_PUBLICATION_ID_AND_MINJUST_REGISTRATION
+
+reference_gap_closures:
+  - source: SEC-SRC-RU-FSTEC-INFO-240-24-4734-2025
+    target: SEC-SRC-RU-FSTEC77-2021
+    before: REFERENCE_ONLY_NOT_YET_SEPARATELY_REGISTERED_IN_THIS_STREAM
+    after: REGISTERED_METADATA_VERIFIED
+
+counter_patch:
+  basis_before:
+    identified: 53
+    metadata_verified: 53
+    immutable_sha256_verified: 22
+    pending_raw_capture: 31
+    exact_official_route_unresolved: 8
+    confirmed_conflicts: 0
+  effective_after_additive_reconciliation:
+    identified: 55
+    metadata_verified: 55
+    immutable_sha256_verified: 22
+    pending_raw_capture: 33
+    exact_official_route_unresolved: 9
+    confirmed_conflicts: 0
+  delta:
+    identified: 2
+    metadata_verified: 2
+    immutable_sha256_verified: 0
+    pending_raw_capture: 2
+    exact_official_route_unresolved: 1
+    confirmed_conflicts: 0
+
+status_gate:
+  checked_at: "2026-08-29"
+  fstec77: CURRENT_PRE_2026_09_01_VERSION
+  fstec60: PUBLISHED_REGISTERED_FUTURE_EFFECTIVE_FROM_2026_09_01
+  rule: >-
+    Do not apply Order 60 changes to decisions dated before 01.09.2026. After 01.09.2026, route
+    Order 60 through the attestation applicability of Order 77 rather than treating it as a new
+    universal private-ISPDN baseline.
+
+applicability_guard: >-
+  Order 77 does not establish universal attestation for every private ISPDN; private-system scope
+  is conditional where the owner has selected attestation as conformity assessment or another
+  evidenced basis exists. The mandatory penetration-testing rule added by Order 60 is bounded to
+  the enumerated public/state class-1/2 systems and stated network conditions. Do not propagate it
+  to generic private ISPDN, PP1119/FSTEC21, licensing, crypto or GosSOPKA branches without an
+  explicit applicability edge.
+
+proof_rule: >-
+  Immutable promotion requires exact official payload bytes, observed MIME/signature, exact byte
+  length, computed SHA-256, immutable artifact and manifest. This delta performs no immutable
+  promotion: current transport/DNS did not yield the Order 60 PDF, and Order 77 exact primary route
+  remains unresolved.
