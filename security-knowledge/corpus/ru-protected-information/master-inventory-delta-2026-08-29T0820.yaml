@@ -1,0 +1,114 @@
+schema_version: "1.0"
+stream: 3
+checked_at: "2026-08-29T08:20:00+03:00"
+mode: APPEND_ONLY_RU_PROTECTED_INFORMATION_RECONCILIATION
+previous_stream3_delta: "master-inventory-delta-2026-08-29T0532.yaml"
+focus: "communications / PP 1994 current 1137 revision / telephone secrecy / subscriber PDN / ESIA-EBS / identity verification / action retention / marketing overlap"
+
+counters_before:
+  found: 61
+  downloaded: 9
+  immutable: 9
+  pending: 50
+  reused: 2
+  primary_publication_verified: 31
+  sectors_registered: 31
+
+counters_after:
+  found: 62
+  downloaded: 9
+  immutable: 9
+  pending: 51
+  reused: 2
+  primary_publication_verified: 32
+  sectors_registered: 31
+
+source_added:
+  source_id: SEC-SRC-RU-PP-1994-2024
+  title: "Постановление Правительства РФ от 30.12.2024 № 1994 — Правила оказания услуг телефонной связи"
+  sector: communications
+  regime: telephone_communications_secrecy_subscriber_pdn_identity_verification_retention
+  dedupe_result: NEW_CANONICAL_SOURCE_NODE
+  exact_capture: PENDING_TRANSIENT_DNS_FAILURE
+  applicability_status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  executable_effect: NONE
+
+primary_evidence:
+  base:
+    publication_id: "0001202412310007"
+    publication_date: "2024-12-31"
+    current_government_text: "https://government.ru/docs/all/157314/"
+    current_revision_shown: "ПП РФ от 31.07.2025 № 1137"
+  current_amendment:
+    act: "ПП РФ от 31.07.2025 № 1137"
+    government_url: "https://government.ru/docs/all/160366/"
+    publication_id: "0001202507310105"
+    effective_layers: ["2025-08-01", "2025-09-01"]
+  future_events:
+    - act: "ПП РФ от 30.04.2026 № 510"
+      publication_id: "0001202605060029"
+      effective_date: "2026-09-01"
+      state: FUTURE_NOT_CURRENT
+    - act: "ПП РФ от 01.08.2026 № 966"
+      publication_id: "0001202608030048"
+      effective_date: "2027-03-01"
+      state: FUTURE_NOT_CURRENT
+
+key_findings:
+  - locator: "п. 4"
+    finding: "Тайна телефонных переговоров является прямым отраслевым режимом; ограничение допускается только в федерально-законных случаях."
+    guard: "TELEPHONE_CONVERSATION_SECRECY != EVERY_PIECE_OF_OPERATOR_DATA"
+  - locator: "п. 4"
+    finding: "Для перечисленных целей обработки ПДн отдельное согласие не требуется: расчеты, payer transfer, subscriber verification transfer, debt notice, ESIA interaction, claims."
+    guard: "LISTED_NO_CONSENT_PURPOSES != UNIVERSAL_NO_CONSENT_BASIS"
+  - locator: "п. 18"
+    finding: "Идентификация физлица может проходить по документу, через ЕСИА или ЕСИА+ЕБС по статье 9 572-ФЗ."
+    guard: "EBS_OPTION_IN_DEFINED_SCENARIO != UNIVERSAL_BIOMETRIC_REQUIREMENT"
+  - locator: "пп. 22, 24, 26"
+    finding: "Нормативный subscriber dataset включает ФИО, место жительства, дату рождения и реквизиты удостоверяющего документа; установлены отдельные verification/update deadlines."
+    guard: "TELECOM_VERIFICATION_DEADLINES != PDN_INCIDENT_OR_DATA_SUBJECT_DEADLINES"
+  - locator: "п. 28"
+    finding: "Action/audit records после идентификации хранятся не менее 3 лет по специальным точкам отсчета."
+    guard: "THREE_YEAR_ACTION_RETENTION != GENERAL_PDN_RETENTION"
+  - locator: "1137/2025, пп. 222-226"
+    finding: "Введен workflow отказа/возврата массовых и автоматических вызовов."
+    guard: "MASS_AUTOMATED_CALL != ADVERTISING_BY_DEFINITION"
+
+relationships_added:
+  - "SEC-SRC-RU-PP-1994-2024 -> 126-ФЗ: direct statutory communications parent"
+  - "SEC-SRC-RU-PP-1994-2024 -> 152-ФЗ: explicit PDN processing context / candidate applicability"
+  - "SEC-SRC-RU-PP-1994-2024 -> 572-ФЗ: direct EBS identification scenario"
+  - "SEC-SRC-RU-PP-1994-2024 -> 38-ФЗ: marketing/advertising overlap candidate only"
+  - "SEC-SRC-RU-PP-1994-2024 -> ЕСИА/public-sector identity layer: bounded system-flow overlap"
+
+version_chain:
+  status: CURRENT_1137_VERIFIED_TWO_FUTURE_EVENTS_VERIFIED_HISTORICAL_CHAIN_PARTIAL
+  current_as_of: "2026-08-29"
+  future_not_current:
+    - "510/2026 until 2026-09-01"
+    - "966/2026 until 2027-03-01"
+  full_historical_chain_claimed_complete: false
+  executable_current_rule_promoted: false
+
+acquisition_state:
+  exact_binary_attempted: true
+  exact_binary_obtained: false
+  reason: TRANSIENT_DNS_FAILURE_IN_BINARY_RUNTIME
+  attempted_at: "2026-08-29T08:19:09+03:00"
+  attempted_urls:
+    - "https://static.government.ru/media/files/CCc135Fhq2U.pdf"
+    - "https://publication.pravo.gov.ru/document/0001202412310007"
+    - "https://government.ru/docs/all/157314/"
+  transport_result: "curl exit 6 / Could not resolve host"
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+
+quality_gates:
+  taxonomy_as_evidence: false
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+  fabricated_binary_metadata: false
+  primary_publication_counter_incremented: true
