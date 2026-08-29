@@ -1,0 +1,53 @@
+schema_version: "1.0"
+stream: 3
+checked_at: "2026-08-29T11:24:00+03:00"
+focus: "PDN boundary with archival legislation / retention / electronic archives"
+
+new_relationship_nodes:
+  - source_id: SEC-SRC-RU-FZ-125-2004
+    relationship_to_pdn: EXPLICIT_152FZ_SCOPE_EXCLUSION_FOR_DEFINED_ARCHIVAL_RELATIONS
+    evidence:
+      archival_locator: "125-ФЗ ст. 25 ч. 3"
+      pdn_locator: "152-ФЗ ст. 1 ч. 2 п. 2"
+      finding: "Архивное законодательство устанавливает собственный режим доступа к документам с личной/семейной тайной и частной жизнью, а 152-ФЗ прямо исключает определенные архивные отношения по хранению, комплектованию, учету и использованию из своей сферы."
+    guards:
+      - "ARCHIVE_SCOPE_EXCLUSION != EXCLUSION_FOR_ALL_PRE_ARCHIVE_OR_NON_ARCHIVE_PROCESSING"
+      - "75_YEAR_ARCHIVAL_ACCESS_RESTRICTION != GENERAL_PDN_RETENTION"
+      - "PERSONAL_OR_FAMILY_SECRET != AUTOMATIC_SPECIAL_CATEGORY_PDN_CLASSIFICATION"
+    applicability_promoted: false
+  - source_id: SEC-SRC-RU-ROSARCHIVE-77-2023
+    relationship_to_pdn: DIRECT_ARCHIVAL_RULE_CROSS_REFERENCE_TO_152FZ_ART7_WITH_SCOPE_REVIEW
+    evidence:
+      locator: "Правила № 77, п. 134"
+      finding: "ПДн в СХЭД подлежат защите в соответствии с законодательством РФ; нормативная сноска связывает требование со ст. 7 152-ФЗ и ст. 16 149-ФЗ."
+    guards:
+      - "RULE77_ART7_REFERENCE != ALL_152FZ_REQUIREMENTS_APPLY_TO_EVERY_ARCHIVAL_RELATION"
+      - "125FZ_SPECIAL_ARCHIVAL_REGIME_AND_RULE77_SYSTEM_SECURITY_REQUIREMENT_MUST_BE_EVALUATED_BY_ACTIVITY_AND_SYSTEM_CONTEXT"
+      - "NO_LEGAL_CONFLICT_DECLARED"
+    applicability_promoted: false
+
+retention_nodes:
+  - source_id: SEC-SRC-RU-FZ-125-2004
+    locator: "ст. 22.1 ч. 1-2"
+    retention_type: PERSONNEL_DOCUMENT_RETENTION
+    values:
+      - "75 years for personnel documents completed before 2003-01-01"
+      - "50 years for personnel documents completed after 2003-01-01"
+    override_guard: "special document lists may set another period"
+  - source_id: SEC-SRC-RU-FZ-125-2004
+    locator: "ст. 25 ч. 3"
+    retention_type: ACCESS_RESTRICTION_NOT_RETENTION
+    value: "75 years from document creation"
+    guard: "DO_NOT_STORE_AS_GENERAL_RETENTION_REQUIREMENT"
+
+pdn_master_effect:
+  applicability_promotions: 0
+  new_explicit_scope_boundaries: 1
+  new_direct_subordinate_cross_references: 1
+  new_general_pdn_retention_periods: 0
+  legal_conflicts_declared: 0
+  immutable_promotions: 0
+
+next_review:
+  - "Resolve exact scope of 152-FZ article 1(2)(2) against Rule 77 paragraph 134 by concrete lifecycle stages: pre-archive processing, transfer to archive, archival storage/use, SHED administration, disclosure/export."
+  - "Register current Rosarchive retention-list acts separately; do not infer retention from 125-FZ alone where the law delegates to lists."
