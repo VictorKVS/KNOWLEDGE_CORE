@@ -72,21 +72,22 @@ capture:
     proof_floor_held: true
     semantic_promotion: false
   runtime_probe:
-    observed_at: "2026-08-29T05:11:13Z"
+    observed_at: "2026-08-29T17:12:15Z"
     routes_probed:
       - "https://government.ru/docs/all/65436/"
+      - "http://pravo.gov.ru/proxy/ips/?docbody=&link_id=0&nd=102124251&intelsearch=&firstDoc=1"
     result: TEMPORARY_DNS_RESOLUTION_FAILURE_IN_RUNTIME
-    transport_detail: "curl exit 6: Could not resolve host: government.ru"
+    transport_detail: "curl exit 6: Could not resolve host for government.ru and pravo.gov.ru in the execution runtime"
     independent_freshness_result: OFFICIAL_PAGE_CURRENT_TEXT_CONFIRMED_VIA_WEB_INDEX
     proof_effect: NONE
     retry_policy: KEEP_GUARDED_RETRY_ENABLED
     note: >-
-      The official page is current and its revision fingerprint is independently visible, while this execution
-      environment cannot resolve government.ru for raw-byte capture. This is classified as a transport/runtime
-      blocker only and must not be converted into immutable evidence.
+      The official PP12 amendment publication identity remains confirmed and the current PP687 revision fingerprint
+      remains independently visible, while this execution environment cannot resolve the official hosts for raw-byte
+      capture. This is a transport/runtime blocker only and must not be converted into immutable evidence.
   acquisition_request:
     status: RETRY_REQUIRED_GUARDED
-    requested_at: "2026-08-29T05:11:13Z"
+    requested_at: "2026-08-29T17:12:15Z"
     route: official_canonical_snapshot_with_registered_ips_and_print_fallback
     reason: >-
       Immutable promotion requires returned official bytes, retrieved_at, MIME, exact byte length, SHA-256,
