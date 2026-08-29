@@ -1,0 +1,97 @@
+schema_version: "1.0"
+stream: 3
+checked_at: "2026-08-29T05:29:40+03:00"
+mode: APPEND_ONLY_RU_PROTECTED_INFORMATION_RECONCILIATION
+previous_stream3_delta: "master-inventory-delta-2026-08-29T0218.yaml"
+focus: "insurance / CBR 6863-U / AIS insurance operational audit / PDN article 19 / protected information assurance"
+
+counters_before:
+  found: 59
+  downloaded: 9
+  immutable: 9
+  pending: 48
+  reused: 2
+  primary_publication_verified: 29
+  sectors_registered: 31
+
+counters_after:
+  found: 60
+  downloaded: 9
+  immutable: 9
+  pending: 49
+  reused: 2
+  primary_publication_verified: 30
+  sectors_registered: 31
+
+source_added:
+  source_id: SEC-SRC-RU-CBR-6863U-2024
+  title: "Указание Банка России от 26.09.2024 № 6863-У «О порядке проведения оператором автоматизированной информационной системы страхования операционного аудита»"
+  sector: insurance
+  regime: insurance_ais_operational_audit_pdn_security_assurance
+  dedupe_result: NEW_CANONICAL_SOURCE_NODE
+  exact_capture: PENDING_TRANSIENT_DNS_FAILURE
+  applicability_status: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  executable_effect: NONE
+
+primary_evidence:
+  publisher: "Банк России"
+  official_publication: "Вестник Банка России № 45 (2519) от 13.11.2024"
+  official_site_publication_date_stated_in_act: "2024-11-07"
+  minjust_registration: "№ 79973 от 31.10.2024"
+  source_url: "https://cbr.ru/Queries/XsltBlock/File/158093/-1/2519"
+  status: PRIMARY_TEXT_VERIFIED_WEB_LAYER_EXACT_BINARY_PENDING
+
+key_findings:
+  - locator: "пункт 1"
+    finding: "Оператор АИС страхования проводит операционный аудит не реже одного раза в два года."
+    guard: "TWO_YEAR_AUDIT_PERIODICITY != PDN_RETENTION"
+  - locator: "пункт 1"
+    finding: "Предмет аудита включает меры защиты информации в АИС страхования, требования к которым установлены Банком России на основании статьи 33.10 Закона РФ № 4015-I."
+  - locator: "пункт 1"
+    finding: "Предмет аудита прямо включает меры защиты ПДн при их обработке в АИС страхования в соответствии со статьей 19 152-ФЗ и от угроз, определенных Банком России."
+    guard: "DIRECT_ARTICLE_19_REFERENCE != ALL_AIS_INSURANCE_INFORMATION_IS_PDN"
+  - locator: "пункт 2"
+    finding: "План аудита содержит scope, применимую нормативную базу, срок аудита и порядок утверждения/направления отчета."
+  - locator: "пункт 2"
+    finding: "Отчет направляется Банку России в течение пяти рабочих дней после утверждения."
+    guard: "FIVE_WORKING_DAY_AUDIT_REPORT_DEADLINE != INCIDENT_OR_DATA_SUBJECT_DEADLINE"
+  - locator: "пункты 3-5"
+    finding: "Допустим внутренний уполномоченный субъект либо привлеченный аудитор; отчет фиксирует проверенные системы/меры, нормативную базу, результаты, недостатки и рекомендации."
+
+relationships_added:
+  - "SEC-SRC-RU-CBR-6863U-2024 -> 152-ФЗ: DIRECT_PDN_SECURITY_AUDIT_REFERENCE / candidate applicability"
+  - "SEC-SRC-RU-CBR-6863U-2024 -> SEC-SRC-RU-LAW-4015I-1992: DIRECT_STATUTORY_PARENT_INSURANCE_AIS_AUDIT_CONTEXT"
+  - "SEC-SRC-RU-CBR-6863U-2024 -> SEC-SRC-RU-CBR-822P-2023: SECURITY_REQUIREMENTS_TO_OPERATIONAL_AUDIT_ASSURANCE_LAYER / normative overlap, not asserted as a literal numbered cross-citation"
+
+version_chain:
+  status: PARTIAL
+  verified_events:
+    - "26.09.2024 — Указание № 6863-У принято."
+    - "31.10.2024 — зарегистрировано Минюстом РФ № 79973."
+    - "07.11.2024 — официально опубликовано на сайте Банка России, согласно сноске первичного текста."
+    - "13.11.2024 — опубликовано в Вестнике Банка России № 45 (2519)."
+  latest_official_sweep: "2026-08-29"
+  currentness_caveat: "Официальный поиск не выявил изменения/отмены, но отсутствие search hits не считается полным доказательством исторического version-chain."
+  executable_current_rule_promoted: false
+
+acquisition_state:
+  exact_binary_attempted: true
+  exact_binary_obtained: false
+  reason: TRANSIENT_DNS_FAILURE_IN_BINARY_RUNTIME
+  attempted_url: "https://cbr.ru/Queries/XsltBlock/File/158093/-1/2519"
+  attempted_at: "2026-08-29T05:29:40+03:00"
+  transport_result: "curl exit 6 / Could not resolve host: cbr.ru"
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+
+quality_gates:
+  taxonomy_as_evidence: false
+  dedupe_checked: true
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+  fabricated_binary_metadata: false
+  primary_publication_counter_incremented: true
+  primary_publication_counter_note: "Primary CBR Vestnik text is directly verified; exact binary is still pending, so downloaded/immutable remain unchanged."
