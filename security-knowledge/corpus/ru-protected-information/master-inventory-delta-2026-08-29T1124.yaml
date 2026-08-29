@@ -1,0 +1,115 @@
+schema_version: "1.0"
+stream: 3
+checked_at: "2026-08-29T11:24:00+03:00"
+mode: APPEND_ONLY_RU_PROTECTED_INFORMATION_RECONCILIATION
+previous_stream3_delta: "master-inventory-delta-2026-08-29T0820.yaml"
+focus: "archives/retention / 125-FZ archival secrecy and access / personnel retention / Rosarchive Order 77 electronic archives / PDN scope boundary"
+
+counters_before:
+  found: 62
+  downloaded: 9
+  immutable: 9
+  pending: 51
+  reused: 2
+  primary_publication_verified: 32
+  sectors_registered: 31
+
+counters_after:
+  found: 64
+  downloaded: 9
+  immutable: 9
+  pending: 53
+  reused: 2
+  primary_publication_verified: 34
+  sectors_registered: 32
+
+sources_added:
+  - source_id: SEC-SRC-RU-FZ-125-2004
+    title: "Федеральный закон от 22.10.2004 № 125-ФЗ — Об архивном деле в Российской Федерации"
+    sector: archives_retention
+    regime: archival_access_personal_family_secrecy_personnel_retention
+    dedupe_result: NEW_CANONICAL_SOURCE_NODE
+    exact_capture: PENDING_TRANSIENT_DNS_FAILURE
+    applicability_status: EXPLICIT_SCOPE_BOUNDARY_WITH_152FZ
+    executable_effect: NONE
+  - source_id: SEC-SRC-RU-ROSARCHIVE-77-2023
+    title: "Приказ Росархива от 31.07.2023 № 77 — Правила хранения, комплектования, учета и использования архивных документов"
+    sector: archives_retention
+    regime: organizational_archives_electronic_archive_pdn_protection
+    dedupe_result: NEW_CANONICAL_SOURCE_NODE
+    exact_capture: PENDING_TRANSIENT_DNS_FAILURE
+    applicability_status: NORMATIVE_CROSS_REFERENCE_WITH_SCOPE_BOUNDARY_REVIEW
+    executable_effect: NONE
+
+primary_evidence:
+  - source_id: SEC-SRC-RU-FZ-125-2004
+    official_current_locator: "https://pravo.gov.ru/proxy/ips/?docbody=&nd=102089077"
+    official_presidential_act_bank: "https://www.kremlin.ru/acts/bank/21556/print"
+    original_publications:
+      - "Собрание законодательства РФ, 25.10.2004, № 43, ст. 4169"
+      - "Российская газета, № 237, 27.10.2004"
+    latest_amendment: "Федеральный закон от 13.12.2024 № 469-ФЗ"
+    latest_amendment_publication_id: "0001202412130022"
+    current_revision: "13.12.2024 / effective 24.12.2024"
+  - source_id: SEC-SRC-RU-ROSARCHIVE-77-2023
+    rosarchive_notice: "https://archives.gov.ru/press/06-09-2023.shtml"
+    official_rules_locator: "https://archives.gov.ru/documents/rules/pravila-2023.shtml"
+    primary_publication_id: "0001202309060005"
+    minjust_registration_number: "75119"
+    effective_date: "2023-09-17"
+    current_operation_evidence: "Росархив продолжает ссылаться на Правила № 77 в планировании работы на 2026 год"
+
+key_findings:
+  - locator: "125-ФЗ ст. 25 ч. 3"
+    finding: "75-летний срок — ограничение доступа к конкретным архивным документам с личной/семейной тайной, сведениями о частной жизни или угрозе безопасности, а не общий срок хранения ПДн."
+    guard: "75_YEAR_ACCESS_RESTRICTION != GENERAL_PDN_RETENTION"
+  - locator: "125-ФЗ ст. 22.1"
+    finding: "Документы по личному составу: 75 лет для завершенных до 01.01.2003 и 50 лет для завершенных после 01.01.2003, если специальный перечень не устанавливает иной срок."
+    guard: "PERSONNEL_DOCUMENT_RETENTION != ALL_EMPLOYEE_PDN_RETENTION"
+  - locator: "152-ФЗ ст. 1 ч. 2 п. 2"
+    finding: "Организация хранения, комплектования, учета и использования содержащих ПДн архивных документов по архивному законодательству прямо исключена из сферы 152-ФЗ."
+    guard: "ARCHIVAL_SCOPE_EXCLUSION_IS_ACTIVITY_AND_REGIME_BOUND"
+  - locator: "Приказ Росархива № 77, п. 134"
+    finding: "Для ПДн в СХЭД Правила прямо требуют защиты по законодательству РФ и ссылаются на ст. 7 152-ФЗ и ст. 16 149-ФЗ."
+    guard: "DIRECT_RULE77_PDN_PROTECTION_REFERENCE != AUTOMATIC_APPLICATION_OF_ALL_152FZ_TO_ARCHIVAL_RELATIONS"
+  - locator: "Приказ Росархива № 77, пп. 135-137"
+    finding: "СХЭД должна поддерживать прием, хранение, учет, резервное копирование, восстановление, контроль состояния, миграцию/конвертацию и нормативное удаление электронных архивных документов."
+    guard: "SYSTEM_CONTROL_REQUIREMENT != INDEPENDENT_RETENTION_PERIOD"
+
+relationships_added:
+  - "125-ФЗ -> 152-ФЗ: explicit scope exclusion for defined archival relations"
+  - "125-ФЗ -> protected secrecy regimes: art.25(2) umbrella reference to state/other legally protected secrets"
+  - "125-ФЗ -> Order 77/2023: direct parent/subordinate archival implementation"
+  - "Order 77/2023 -> 152-ФЗ art.7: direct PDN confidentiality/protection cross-reference for SHED"
+  - "Order 77/2023 -> 149-ФЗ art.16: direct information-protection cross-reference"
+
+version_chain:
+  source_125fz:
+    status: CURRENT_LATEST_AMENDMENT_PRIMARY_VERIFIED_HISTORICAL_CHAIN_PARTIAL
+    current_as_of: "2026-08-29"
+    latest_amendment: "469-ФЗ/2024; changes art.24, not art.25"
+    full_historical_chain_claimed_complete: false
+  source_order77:
+    status: CURRENT_OPERATION_CONFIRMED_NO_AMENDMENT_LOCATED_IN_THIS_SWEEP_HISTORICAL_CHAIN_PARTIAL
+    current_as_of: "2026-08-29"
+    full_historical_chain_claimed_complete: false
+
+acquisition_state:
+  exact_binary_attempted: true
+  exact_binary_obtained: false
+  attempted_at: "2026-08-29T11:29:26+03:00"
+  reason: TRANSIENT_DNS_FAILURE_IN_BINARY_RUNTIME
+  transport_result: "Temporary failure in name resolution"
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+
+quality_gates:
+  taxonomy_as_evidence: false
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+  fabricated_binary_metadata: false
+  primary_publication_counter_incremented: true
+  scope_boundary_preserved: true
