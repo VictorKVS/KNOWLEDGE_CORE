@@ -1,0 +1,76 @@
+schema_version: "1.0"
+stream: 3
+checked_at: "2026-08-29T17:24:07+03:00"
+focus: "PDN document-retention overlay from Rosarchive Order 236 with archival scope boundary"
+
+new_relationship_nodes:
+  - source_id: SEC-SRC-RU-ROSARCHIVE-236-2019
+    relationship_to_pdn: DOCUMENT_RETENTION_LIST_WITH_DIRECT_PDN_DOCUMENT_TYPES_AND_SCOPE_GUARD
+    evidence:
+      parent_locator: "125-ФЗ ч. 3 ст. 6"
+      pdn_locators:
+        - "Перечень № 236, статья 440"
+        - "Перечень № 236, статья 441"
+        - "Перечень № 236, статьи 438-439"
+        - "Перечень № 236, статьи 444-445"
+      finding: "Перечень задает сроки хранения конкретных документов, в том числе документов об обработке ПДн, согласий, материалов кандидатов, личных карточек и личных дел; эти сроки относятся к документным сериям и их триггерам, а не образуют единый срок хранения содержащихся в них или связанных с ними ПДн."
+    guards:
+      - "ORDER236_RETENTION_LIST != INDEPENDENT_LAWFUL_BASIS_FOR_ACTIVE_PDN_PROCESSING"
+      - "DOCUMENT_RETENTION_PERIOD != UNDERLYING_PDN_RETENTION_BY_DEFAULT"
+      - "ARTICLE441_3_YEARS != GENERAL_PDN_RETENTION"
+      - "50_75_YEAR_PERSONNEL_RECORD_RETENTION != ALL_EMPLOYEE_PDN_RETENTION"
+      - "152FZ_ART1_2_2_ARCHIVAL_SCOPE_BOUNDARY_MUST_BE_RESOLVED_BY_LIFECYCLE_STAGE"
+    applicability_promoted: false
+
+retention_nodes:
+  - source_id: SEC-SRC-RU-ROSARCHIVE-236-2019
+    locator: "статья 440"
+    retention_type: PDN_POLICY_INSTRUCTION_DOCUMENT_RETENTION
+    values:
+      - "permanent at place of approval"
+      - "3 years after replacement by new in other organizations"
+    guard: "POLICY_RECORD_RETENTION_ONLY"
+  - source_id: SEC-SRC-RU-ROSARCHIVE-236-2019
+    locator: "статья 441"
+    retention_type: PDN_CONSENT_RECORD_RETENTION
+    value: "3 years after consent expiration or withdrawal"
+    exception: "unless otherwise provided by federal law or contract"
+    guard: "CONSENT_RECORD_RETENTION_ONLY; CHECK_OVERRIDE"
+  - source_id: SEC-SRC-RU-ROSARCHIVE-236-2019
+    locator: "статьи 438-439"
+    retention_type: RECRUITMENT_DOCUMENT_RETENTION
+    values:
+      - "3 years for applicants not admitted to competition or not selected"
+      - "1 year for persons not hired"
+      - "5 years for personnel-reserve documents"
+    guard: "DOCUMENT_CLASS_SPECIFIC"
+  - source_id: SEC-SRC-RU-ROSARCHIVE-236-2019
+    locator: "статьи 444-445"
+    retention_type: PERSONNEL_DOCUMENT_RETENTION
+    value: "50/75 years EPK"
+    guard: "50/75 interpretation depends on completion date and archival rules; not universal employee-PDN retention"
+
+protected_information_overlap:
+  - locator: "статьи 166-167, статья 183 подпункт ж"
+    finding: "Перечень также устанавливает сроки хранения NDA/обязательств и учетных документов по носителям/копиям с информацией ограниченного доступа."
+    guard: "RECORD_RETENTION != DURATION_OR_APPLICABILITY_OF_THE_UNDERLYING_SECRET_REGIME"
+
+pdn_master_effect:
+  applicability_promotions: 0
+  new_direct_pdn_document_retention_sources: 1
+  new_general_pdn_retention_periods: 0
+  legal_conflicts_declared: 0
+  immutable_promotions: 0
+
+lifecycle_boundary:
+  stages:
+    - active_processing
+    - records_management
+    - archive_transfer
+    - archival_storage_and_use
+    - disclosure_or_export
+  rule: "Order 236 period selection and the 152-FZ article 1(2)(2) archive exclusion must be evaluated against the concrete document class and lifecycle stage."
+
+next_review:
+  - "Register sector-specific archival retention lists as separate nodes; prioritize credit-organization retention list because it intersects finance/bank secrecy/PDN."
+  - "Retry exact official capture and promote only after actual bytes plus retrieved_at, MIME, byte length and SHA-256 are stored."
