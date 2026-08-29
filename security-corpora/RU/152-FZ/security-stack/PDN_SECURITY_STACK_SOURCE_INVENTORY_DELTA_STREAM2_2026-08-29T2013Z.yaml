@@ -1,0 +1,65 @@
+schema_version: "1.0"
+id: SEC-PDN-SECURITY-STACK-INVENTORY-DELTA-STREAM2-2026-08-29T2013Z
+applies_to: PDN_SECURITY_STACK_SOURCE_INVENTORY.yaml
+stream: RU_PDN_TECHNICAL_CRYPTO
+created_at: "2026-08-29T20:13:32Z"
+merge_policy: >-
+  ADDITIVE_STREAM2_RECONCILIATION_DELTA. Reconcile immutable provenance for already-captured sources,
+  preserve all existing source registrations/version edges/applicability guards, and keep counters
+  unchanged unless a new exact primary payload or source is actually proven.
+
+source_reconciliations:
+  - id: SEC-SRC-RU-FSTEC77-2021
+    source_record: "source/SEC-SRC-RU-FSTEC77-2021.yaml"
+    raw_capture: IMMUTABLE_CAPTURED
+    exact_official_route: RESOLVED_AND_CAPTURED
+    exact_official_bytes_captured: true
+    sha256: "05b481fb9a2a73c0500b85fe73490945cde3aa295cea899857ca93157e5a04b4"
+  - id: SEC-SRC-RU-FSTEC60-2026
+    source_record: "source/SEC-SRC-RU-FSTEC60-2026.yaml"
+    raw_capture: IMMUTABLE_CAPTURED
+    exact_official_route: RESOLVED_AND_CAPTURED
+    exact_official_bytes_captured: true
+    sha256: "6e593135c8a5eaf574bc4751b0782f840eb905e5341ed23270485deccef6d74a"
+  - id: SEC-SRC-RU-FSTEC164-2025
+    source_record: "source/SEC-SRC-RU-FSTEC164-2025.yaml"
+    raw_capture: IMMUTABLE_CAPTURED
+    exact_official_route: RESOLVED_AND_CAPTURED
+    exact_official_bytes_captured: true
+    sha256: "ea8cd11ad17743f6e80ad8144ace50e9f743fde6e365bb8d7a9fda8a73a86de6"
+
+counter_patch:
+  authoritative_after_reconciliation:
+    identified: 55
+    metadata_verified: 55
+    immutable_sha256_verified: 24
+    pending_raw_capture: 31
+    exact_official_route_unresolved: 8
+    confirmed_conflicts: 0
+  delta:
+    identified: 0
+    metadata_verified: 0
+    immutable_sha256_verified: 0
+    pending_raw_capture: 0
+    exact_official_route_unresolved: 0
+    confirmed_conflicts: 0
+  basis: >-
+    This pass repairs stale source-card provenance fields that still described exact bytes as pending
+    after immutable artifacts and manifests had already been captured. No new artifact was obtained,
+    so production counters remain 55 / 55 / 24 / 31 / 8 / 0.
+
+primary_pending_state:
+  pp1119: CURRENT_PRIMARY_BYTES_PENDING_TRANSIENT_DNS_ON_THIS_PASS
+  fsb378: CURRENT_WHEN_SKZI_USED_PRIMARY_BYTES_PENDING_TRANSIENT_DNS_ON_THIS_PASS
+  fstec21: CURRENT_REPLACEMENT_PROJECT_NOT_PROMOTED_WITHOUT_PRIMARY_ENACTMENT_EVIDENCE
+  fstec_threat_method_2021: CURRENT_IMMUTABLE_CAPTURED
+
+applicability_guard: >-
+  Do not propagate FSTEC77/60 attestation requirements, FSTEC164 licensed developer/producer controls,
+  SKZI lifecycle duties, certification requirements or KII/NCTKI/GosSOPKA duties into the generic
+  PP1119/FSTEC21 private-ISPDN baseline without an explicit evidence-backed applicability edge.
+
+proof_rule: >-
+  Exact official bytes, observed MIME/signature, exact byte length, computed SHA-256, immutable artifact
+  and manifest remain mandatory for immutable promotion. Transport failures do not justify secondary-copy
+  substitution or fabricated fingerprint fields.
