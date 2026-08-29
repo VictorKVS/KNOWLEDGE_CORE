@@ -1,0 +1,107 @@
+schema_version: "1.0"
+stream: 3
+run_at: "2026-08-29T05:29:40+03:00"
+focus: "insurance / CBR 6863-U / AIS operational audit / article 19 152-FZ / protected-information assurance"
+
+result:
+  new_source: SEC-SRC-RU-CBR-6863U-2024
+  source_added: true
+  dedupe_checked: true
+  primary_text_verified: true
+  version_chain_status: PARTIAL
+  exact_binary_obtained: false
+  immutable_created: false
+  applicability_promoted: false
+  legal_conflict_declared: false
+
+primary_evidence:
+  - publisher: "Банк России"
+    act: "Указание Банка России от 26.09.2024 № 6863-У"
+    official_publication: "Вестник Банка России № 45 (2519) от 13.11.2024"
+    source_url: "https://cbr.ru/Queries/XsltBlock/File/158093/-1/2519"
+    official_site_publication_date_stated_in_act: "2024-11-07"
+    minjust_registration: "№ 79973 от 31.10.2024"
+    proves:
+      - "операционный аудит не реже одного раза в два года"
+      - "audit scope мер защиты информации АИС страхования"
+      - "прямой audit scope мер защиты ПДн по статье 19 152-ФЗ"
+      - "план аудита с нормативной трассируемостью"
+      - "направление утвержденного отчета Банку России в течение пяти рабочих дней"
+      - "структуру отчета с результатами, недостатками и рекомендациями"
+
+currentness:
+  official_cbr_sweep_through: "2026-08-29"
+  locator_chain_status: PARTIAL
+  amendment_or_repeal_found_in_this_pass: false
+  caveat: "Absence of an official search hit is not treated as exhaustive proof of a complete version-chain."
+
+binary_acquisition:
+  attempted: true
+  target: "https://cbr.ru/Queries/XsltBlock/File/158093/-1/2519"
+  attempted_at: "2026-08-29T05:29:40+03:00"
+  transport_result: "curl exit 6 / Could not resolve host: cbr.ru"
+  retry_class: TRANSIENT
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+  displayed_size_used_as_exact_bytes: false
+
+counters_before:
+  found: 59
+  downloaded: 9
+  immutable: 9
+  pending: 48
+  reused: 2
+  primary_publication_verified: 29
+  sectors_registered: 31
+
+counters_after:
+  found: 60
+  downloaded: 9
+  immutable: 9
+  pending: 49
+  reused: 2
+  primary_publication_verified: 30
+  sectors_registered: 31
+
+files_written:
+  - "security-corpora/RU/protected-information/source/SEC-SRC-RU-CBR-6863U-2024.yaml"
+  - "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-CBR-6863U-2024-capture-pending.json"
+  - "security-knowledge/corpus/ru-protected-information/cbr-6863u-2024-insurance-ais-operational-audit-source-card.yaml"
+  - "security-knowledge/corpus/ru-protected-information/master-inventory-delta-2026-08-29T0529.yaml"
+  - "security-knowledge/corpus/ru-personal-data/master-source-inventory-delta-stream3-2026-08-29T0529.yaml"
+  - "security-knowledge/corpus/ru-protected-information/stream-3-run-2026-08-29T0529.yaml"
+
+relationships_added:
+  - "6863-У -> 152-ФЗ статья 19: direct PDN security audit reference, candidate applicability only"
+  - "6863-У -> 4015-I статья 33.10: direct statutory parent"
+  - "6863-У -> 822-П: security-requirements-to-assurance overlap through common statutory layer; no invented literal cross-citation"
+
+proof_guards:
+  - "TWO_YEAR_AUDIT_PERIODICITY != PDN_RETENTION"
+  - "FIVE_WORKING_DAY_AUDIT_REPORT_DEADLINE != INCIDENT_NOTIFICATION_OR_DATA_SUBJECT_RESPONSE_DEADLINE"
+  - "DIRECT_ARTICLE_19_REFERENCE != ALL_AIS_INSURANCE_INFORMATION_IS_PDN"
+  - "AIS_OPERATOR_SCOPE != ALL_INSURER_INFORMATION_SYSTEMS"
+
+next_priority:
+  - "Retry byte-exact capture of official Vestnik issue containing 6863-U; promote downloaded/immutable only after exact bytes, MIME, length and SHA-256 are stored."
+  - "Continue insurance AIS subordinate layer with CBR Direction 6568-U on composition/procedure/timing of insurer submissions to AIS, deduped against 4015-I, 822-P and 6863-U."
+  - "Return to high-priority pending exact captures across healthcare, banking/insurance/credit histories, telecom, education/children, public sector, biometrics, transport, advertising and archives."
+
+production_statistics:
+  throughput_this_pass:
+    new_sources: 1
+    new_sectors: 0
+    canonical_source_cards_written: 1
+    corpus_source_cards_written: 1
+    manifests_written: 1
+    inventory_deltas_written: 2
+    run_logs_written: 1
+    relationship_edges_added: 3
+    applicability_promotions: 0
+  speed_vs_single_stream_percent: null
+  rework_share_percent: null
+  eta: null
+  reason_for_null_metrics: "No comparable elapsed-time baseline/telemetry for a valid calculation; values were not fabricated."
