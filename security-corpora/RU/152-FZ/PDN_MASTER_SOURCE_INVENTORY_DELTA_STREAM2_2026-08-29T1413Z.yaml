@@ -1,0 +1,45 @@
+schema_version: "1.0"
+id: SEC-PDN-MASTER-SOURCE-INVENTORY-DELTA-STREAM2-2026-08-29T1413Z
+applies_to: PDN_MASTER_SOURCE_INVENTORY.yaml
+stream: RU_PDN_TECHNICAL_CRYPTO
+created_at: "2026-08-29T14:13:00Z"
+merge_policy: >-
+  ADDITIVE_SECURITY_STACK_STATUS_OVERLAY. Update only Stream-2 security-stack counters, current
+  status review and latest-run pointer. Preserve all non-Stream-2 master sources, version chains,
+  immutable evidence and parallel-stream state.
+
+security_stack_patch:
+  checked_at: "2026-08-29"
+  identified: 55
+  metadata_verified: 55
+  immutable_sha256_verified: 22
+  pending_raw_capture: 33
+  exact_official_route_unresolved: 9
+  confirmed_conflicts: 0
+  latest_status_review_at: "2026-08-29T14:13:00Z"
+  latest_stream2_run: "security-stack/runs/STREAM2_RUN_2026-08-29T1413Z.yaml"
+  baseline_status:
+    pp1119: CURRENT_PRIMARY_BYTES_PENDING
+    fstec21: CURRENT_REPLACEMENT_PROJECT_NOT_ENACTED_IN_PRIMARY_EVIDENCE_GATE
+    fstec_threat_method_2021: CURRENT_IMMUTABLE_CAPTURED
+    fsb378: CURRENT_WHEN_SKZI_USED_PRIMARY_BYTES_PENDING
+    fstec77_2021: CURRENT_ATTESTATION_CONTEXT_PRE_2026_09_01_PRIMARY_ROUTE_UNRESOLVED
+    fstec60_2026: PUBLISHED_REGISTERED_FUTURE_EFFECTIVE_2026_09_01_BYTES_PENDING
+
+counter_basis: >-
+  Previous Stream-2 authoritative counters were 53 identified / 53 metadata-verified / 22 immutable /
+  31 pending / 8 unresolved routes. This pass registers FSTEC Order 77/2021 and future-effective
+  amending Order 60/2026. Both are raw-pending. Order 60 has verified official publication identity
+  0001202606250029 and standard official PDF route; Order 77 exact primary publication/file route
+  remains unresolved. Effective additive counters are therefore 55 / 55 / 22 / 33 / 9.
+
+applicability_guard: >-
+  Keep PP1119/FSTEC21 ISPDN baseline distinct from attestation, licensing, certification, SKZI and
+  GosSOPKA/KII branches. Order 77 private-ISPDN applicability is conditional on an attestation-form
+  basis. Order 60 does not take effect until 01.09.2026 and its mandatory penetration-testing rule
+  is not a universal private-ISPDN obligation.
+
+proof_rule: >-
+  Exact official bytes, observed MIME/signature, exact byte length, computed SHA-256, immutable
+  artifact and manifest are required before immutable promotion. No synthetic fingerprint or
+  secondary-copy substitution is permitted.
