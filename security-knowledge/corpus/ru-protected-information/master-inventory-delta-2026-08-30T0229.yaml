@@ -1,0 +1,107 @@
+schema_version: "1.0"
+stream: 3
+checked_at: "2026-08-30T02:29:25+03:00"
+mode: APPEND_ONLY_RU_PROTECTED_INFORMATION_RECONCILIATION
+previous_stream3_delta: "master-inventory-delta-2026-08-29T2024.yaml"
+focus: "insurance + archives/retention / Rosarchive and Bank of Russia 1/867-P / insurance files / PDN consent and employee records"
+
+counters_before:
+  found: 66
+  downloaded: 9
+  immutable: 9
+  pending: 55
+  reused: 2
+  primary_publication_verified: 36
+  sectors_registered: 32
+
+counters_after:
+  found: 67
+  downloaded: 9
+  immutable: 9
+  pending: 56
+  reused: 2
+  primary_publication_verified: 37
+  sectors_registered: 32
+
+sources_added:
+  - source_id: SEC-SRC-RU-CBR-867P-2025
+    title: "Положение Росархива и Банка России от 27.08.2025 № 1/867-П — Перечень документов страховых организаций со сроками хранения"
+    sector: insurance + archives_retention
+    regime: insurance_organization_document_retention
+    dedupe_result: NEW_CANONICAL_SOURCE_NODE
+    exact_capture: PENDING_TRANSIENT_BINARY_FETCH_FAILURE
+    applicability_status: DOCUMENT_CLASS_AND_LIFECYCLE_MATCH_REQUIRED
+    executable_effect: NONE
+
+primary_evidence:
+  source_id: SEC-SRC-RU-CBR-867P-2025
+  primary_publication_url: "https://publication.pravo.gov.ru/document/0001202509260016"
+  official_publication_id: "0001202509260016"
+  official_publication_date: "2025-09-26"
+  minjust_registration_number: "83672"
+  minjust_registration_date: "2025-09-26"
+  official_rosarchive_pdf: "https://archives.gov.ru/sites/default/files/perechen-strah-2025.pdf"
+  official_cbr_vestnik_issue: "№ 44 (2575), 22.10.2025"
+  effective_date: "2025-10-07"
+  parent_sector_act: "Закон РФ № 4015-I"
+
+key_findings:
+  - locator: "Перечень, пункт 243"
+    finding: "Положения и инструкции об обработке персональных данных: постоянно*."
+    guard: "PDN_POLICY_DOCUMENT_RETENTION != GENERAL_PDN_RETENTION"
+  - locator: "Перечень, пункт 244"
+    finding: "Согласие на обработку персональных данных: 3 года* после истечения срока действия или отзыва, если иное не установлено законодательством РФ или договором."
+    guard: "CONSENT_RECORD_RETENTION != GENERAL_PDN_RETENTION_AND_NOT_CONSENT_VALIDITY"
+  - locator: "Перечень, пункты 247-248"
+    finding: "Личные карточки и личные дела работников страховой организации: 50/75 лет ЭПК."
+    guard: "EMPLOYEE_RECORD_SERIES_RETENTION != ALL_EMPLOYEE_PDN_RETENTION"
+  - locator: "Перечень, пункт 306"
+    finding: "Документы для заключения/изменения/прекращения договора страхования и получения страховой выплаты: 5 лет после истечения срока действия договора страхования (перестрахования), соглашения."
+    guard: "INSURANCE_CASE_RECORD_RETENTION != GENERAL_CUSTOMER_PDN_RETENTION"
+  - locator: "Перечень, пункт 307"
+    finding: "Заявления страхователей/выгодоприобретателей/представителей и документы-основания договора: 5 лет после истечения срока действия договора страхования (перестрахования), соглашения."
+    guard: "INSURANCE_CONTRACT_FILE_RETENTION != INSURANCE_SECRECY_DURATION"
+  - locator: "Перечень, пункт 308"
+    finding: "Первичные учетные документы по страховым операциям: 5 лет."
+    guard: "ACCOUNTING_RECORD_RETENTION != GENERAL_PDN_RETENTION"
+
+relationships_added:
+  - "1/867-П -> 4015-I: direct insurance-sector document-retention framework"
+  - "1/867-П -> 125-ФЗ: archival lifecycle/appraisal overlap; lifecycle review required"
+  - "1/867-П -> 152-ФЗ: direct overlap through PDN-policy, PDN-consent, employee and customer document classes; no independent lawful basis created"
+  - "1/867-П -> ГК РФ ст. 946: insurance-secrecy context candidate; no automatic secrecy classification"
+  - "1/867-П -> Росархив №236/2019: general versus sector-specific retention relationship; document-class/lex-specialis review required"
+  - "1/867-П -> 822-П: insurance AIS security context candidate only; no automatic applicability promotion"
+
+version_chain:
+  status: CURRENT_OPERATION_CONFIRMED_NO_AMENDING_OR_REPEALING_ACT_LOCATED_IN_THIS_SWEEP_HISTORICAL_CHAIN_PARTIAL
+  current_as_of: "2026-08-30"
+  current_authority_evidence:
+    - "Росархив currently lists 1/867-П in its official 'Положения' collection"
+    - "Bank of Russia official Vestnik issue 44 (2575), 22.10.2025 contains 1/867-П"
+  full_historical_chain_claimed_complete: false
+
+acquisition_state:
+  exact_binary_attempted: true
+  exact_binary_obtained: false
+  attempted_at: "2026-08-30T02:29:25+03:00"
+  reason: TRANSIENT_BINARY_DOWNLOAD_DNS_FAILURE
+  attempted_urls:
+    - "https://archives.gov.ru/sites/default/files/perechen-strah-2025.pdf"
+    - "https://www.cbr.ru/Queries/XsltBlock/File/131643/-1/2575"
+    - "https://publication.pravo.gov.ru/document/0001202509260016"
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+
+quality_gates:
+  taxonomy_as_evidence: false
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+  fabricated_binary_metadata: false
+  primary_publication_counter_incremented: true
+  document_series_matching_required: true
+  archive_scope_boundary_preserved: true
+  general_pdn_retention_inferred: false
