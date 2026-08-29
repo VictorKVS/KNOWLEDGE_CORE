@@ -3,6 +3,7 @@ id: SEC-PDN-SECURITY-STACK-INVENTORY-DELTA-STREAM2-2026-08-29T1413Z
 applies_to: PDN_SECURITY_STACK_SOURCE_INVENTORY.yaml
 stream: RU_PDN_TECHNICAL_CRYPTO
 created_at: "2026-08-29T14:13:00Z"
+updated_at: "2026-08-29T14:30:00Z"
 merge_policy: >-
   ADDITIVE_STREAM2_RECONCILIATION_DELTA. Add the two registered source records and the verified
   future-effective version edge; update Stream-2 counters only after reconciliation. Preserve all
@@ -15,13 +16,15 @@ source_additions:
     metadata_status: METADATA_VERIFIED
     raw_capture: PENDING
     applicability: PUBLIC_ISPDN_AND_PRIVATE_ISPDN_WHEN_ATTESTATION_FORM_ESTABLISHED
-    exact_official_route: UNRESOLVED
+    official_publication_id: "0001202108100027"
+    exact_official_route: RESOLVED_PUBLICATION_ID_STANDARD_PDF_ROUTE_BYTES_PENDING
   - id: SEC-SRC-RU-FSTEC60-2026
     source_record: "source/SEC-SRC-RU-FSTEC60-2026.yaml"
     role: fstec77_future_effective_amendment_and_pentest_attestation_context
     metadata_status: METADATA_VERIFIED
     raw_capture: PENDING
     applicability: FUTURE_VERSION_CHAIN_AND_BOUNDED_ATTESTATION_SCOPE_FROM_2026_09_01
+    official_publication_id: "0001202606250029"
     exact_official_route: RESOLVED_PUBLICATION_ID_STANDARD_PDF_ROUTE_BYTES_PENDING
 
 version_edges_additions:
@@ -36,6 +39,10 @@ reference_gap_closures:
     target: SEC-SRC-RU-FSTEC77-2021
     before: REFERENCE_ONLY_NOT_YET_SEPARATELY_REGISTERED_IN_THIS_STREAM
     after: REGISTERED_METADATA_VERIFIED
+  - source: SEC-SRC-RU-FSTEC77-2021
+    target: OFFICIAL_PRIMARY_PUBLICATION_ROUTE
+    before: UNRESOLVED
+    after: RESOLVED_PUBLICATION_ID_0001202108100027_STANDARD_PDF_ROUTE_BYTES_PENDING
 
 counter_patch:
   basis_before:
@@ -50,14 +57,14 @@ counter_patch:
     metadata_verified: 55
     immutable_sha256_verified: 22
     pending_raw_capture: 33
-    exact_official_route_unresolved: 9
+    exact_official_route_unresolved: 8
     confirmed_conflicts: 0
   delta:
     identified: 2
     metadata_verified: 2
     immutable_sha256_verified: 0
     pending_raw_capture: 2
-    exact_official_route_unresolved: 1
+    exact_official_route_unresolved: 0
     confirmed_conflicts: 0
 
 status_gate:
@@ -80,5 +87,5 @@ applicability_guard: >-
 proof_rule: >-
   Immutable promotion requires exact official payload bytes, observed MIME/signature, exact byte
   length, computed SHA-256, immutable artifact and manifest. This delta performs no immutable
-  promotion: current transport/DNS did not yield the Order 60 PDF, and Order 77 exact primary route
-  remains unresolved.
+  promotion: current transport/DNS did not yield either official PDF. Both official publication
+  identities and standard PDF routes are now resolved, but byte-exact capture remains pending.
