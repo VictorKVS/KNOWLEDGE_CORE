@@ -1,0 +1,43 @@
+schema_version: "1.0"
+id: SEC-PDN-MASTER-SOURCE-INVENTORY-DELTA-STREAM2-2026-08-29T2013Z
+applies_to: PDN_MASTER_SOURCE_INVENTORY.yaml
+stream: RU_PDN_TECHNICAL_CRYPTO
+created_at: "2026-08-29T20:13:32Z"
+merge_policy: >-
+  ADDITIVE_SECURITY_STACK_STATUS_OVERLAY. Update only the Stream-2 security-stack status-review pointer
+  and proof-chain reconciliation state. Preserve all non-Stream-2 master sources and parallel-stream data.
+
+security_stack_patch:
+  checked_at: "2026-08-29"
+  identified: 55
+  metadata_verified: 55
+  immutable_sha256_verified: 24
+  pending_raw_capture: 31
+  exact_official_route_unresolved: 8
+  confirmed_conflicts: 0
+  latest_status_review_at: "2026-08-29T20:13:32Z"
+  latest_stream2_run: "security-stack/runs/STREAM2_RUN_2026-08-29T2013Z.yaml"
+  baseline_status:
+    pp1119: CURRENT_PRIMARY_BYTES_PENDING
+    fstec21: CURRENT_REPLACEMENT_PROJECT_NOT_ENACTED_IN_PRIMARY_EVIDENCE_GATE
+    fstec_threat_method_2021: CURRENT_IMMUTABLE_CAPTURED
+    fsb378: CURRENT_WHEN_SKZI_USED_PRIMARY_BYTES_PENDING
+    fstec77_2021: CURRENT_PRE_2026_09_01_ATTESTATION_CONTEXT_IMMUTABLE_CAPTURED
+    fstec60_2026: PUBLISHED_REGISTERED_FUTURE_EFFECTIVE_2026_09_01_IMMUTABLE_CAPTURED
+    fstec164_2025: CURRENT_AS_AMENDED_LICENSED_SZI_DEVELOPMENT_PRODUCTION_CONTEXT_ONLY
+
+counter_basis: >-
+  Authoritative Stream-2 counters remain 55 identified / 55 metadata-verified / 24 immutable /
+  31 pending / 8 unresolved exact routes / 0 confirmed conflicts. This pass changed no counts; it
+  reconciled stale provenance in three already-captured FSTEC source cards and recorded transient
+  primary-byte transport failures for PP1119 and FSB378 without fabricating fingerprints.
+
+applicability_guard: >-
+  Keep PP1119/FSTEC21 ISPDN baseline distinct from attestation, licensing, certification, SKZI lifecycle,
+  KII/NCTKI and GosSOPKA branches. Neighboring requirements require an explicit applicability edge before
+  reuse in PDN decisions.
+
+proof_rule: >-
+  Exact official payload bytes, observed MIME/signature, exact byte length, computed SHA-256, immutable
+  artifact and manifest are required before immutable promotion. No secondary-copy substitution or
+  synthetic fingerprint is permitted.
