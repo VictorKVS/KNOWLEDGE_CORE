@@ -1,0 +1,180 @@
+schema_version: "1.0"
+id: SEC-SRC-RU-PP-1994-2024
+kind: security-regulatory-source
+status: CURRENT_PRIMARY_TEXT_VERIFIED_VERSION_CHAIN_WITH_FUTURE_EVENTS_PARTIAL_EXACT_BINARY_PENDING
+
+jurisdiction: RU
+authority: "Правительство Российской Федерации"
+sector: communications
+regime: telephone_communications_secrecy_subscriber_pdn_identity_verification_retention
+
+document:
+  type: "Постановление Правительства Российской Федерации"
+  number: "1994"
+  adopted_date: "2024-12-30"
+  title: "Об утверждении Правил оказания услуг телефонной связи и перечня организаций, имеющих право осуществлять подтверждение сведений об абоненте - физическом лице"
+  official_publication_date: "2024-12-31"
+  official_publication_id: "0001202412310007"
+  effective_date: "2024-12-31"
+  current_revision_act: "Постановление Правительства Российской Федерации от 31.07.2025 № 1137"
+  current_revision_effective_layers:
+    - "2025-08-01 — основная часть изменений 1137"
+    - "2025-09-01 — пункт 1 и абзацы 8-12 пункта 2 изменений 1137"
+  validity_rule: "действует в течение 6 лет со дня вступления в силу, если дальнейшими актами не изменено"
+  checked_at: "2026-08-29"
+
+canonical_source:
+  publisher: "Правительство России"
+  current_text_url: "https://government.ru/docs/all/157314/"
+  original_primary_publication_url: "https://publication.pravo.gov.ru/document/0001202412310007"
+  official_pdf_route: "https://static.government.ru/media/files/CCc135Fhq2U.pdf"
+  origin_verified: true
+  current_text_fingerprint: "Правительственная страница показывает редакцию Постановления РФ от 31.07.2025 № 1137"
+
+current_amendment_primary_source:
+  act: "Постановление Правительства Российской Федерации от 31.07.2025 № 1137"
+  government_url: "https://government.ru/docs/all/160366/"
+  primary_publication_url: "https://publication.pravo.gov.ru/document/0001202507310105"
+  publication_id: "0001202507310105"
+  evidence_status: PRIMARY_GOVERNMENT_CURRENT_AMENDMENT_TEXT_VERIFIED
+
+future_version_events:
+  - act: "Постановление Правительства Российской Федерации от 30.04.2026 № 510"
+    primary_publication_url: "https://publication.pravo.gov.ru/document/0001202605060029"
+    publication_id: "0001202605060029"
+    publication_date: "2026-05-06"
+    effective_date: "2026-09-01"
+    state_as_of_checked_at: FUTURE_NOT_CURRENT
+    effect_note: "изменяет правила переноса абонентского номера, включая межрегиональный перенос; не применять как текущую редакцию до 01.09.2026"
+  - act: "Постановление Правительства Российской Федерации от 01.08.2026 № 966"
+    government_url: "https://government.ru/docs/all/165746/"
+    primary_publication_url: "https://publication.pravo.gov.ru/document/0001202608030048"
+    publication_id: "0001202608030048"
+    publication_date: "2026-08-03"
+    effective_date: "2027-03-01"
+    state_as_of_checked_at: FUTURE_NOT_CURRENT
+    effect_note: "вводит правила для абонентских терминалов пропуска трафика; не применять как текущую редакцию до 01.03.2027"
+
+protected_information:
+  scope_actor: "операторы связи, абоненты и пользователи услуг телефонной связи"
+  protected_locators:
+    - locator: "Правила, пункт 4"
+      concept: TELEPHONE_CONVERSATION_SECRECY_AND_SUBSCRIBER_INFORMATION
+      findings:
+        - "Оператор обязан обеспечивать тайну телефонных переговоров; ограничение допускается только в случаях, предусмотренных федеральными законами."
+        - "Сведения об абоненте-физическом лице, ставшие известными оператору из исполнения договора, для справочных/иных информационных услуг или передачи третьим лицам требуют согласия, кроме федерально-законных случаев."
+      guard: "TELEPHONE_SECRECY_AND_SUBSCRIBER_INFORMATION_ARE_RELATED_BUT_NOT_IDENTICAL_DATA_CLASSIFICATIONS"
+    - locator: "Правила, пункт 4"
+      concept: PURPOSE_BOUND_PDN_NO_CONSENT_RULES
+      findings:
+        - "Согласие на обработку ПДн не требуется для прямо перечисленных целей: расчеты за услуги связи; передача информации о плательщике; передача оператору ПДн организациями, подтверждающими сведения об абоненте; уведомление о задолженности; взаимодействие с ЕСИА; рассмотрение претензий."
+      guard: "PURPOSE_SPECIFIC_STATUTORY_NO_CONSENT_RULE != UNIVERSAL_WAIVER_OF_152FZ_REQUIREMENTS"
+    - locator: "Правила, пункт 18"
+      concept: SUBSCRIBER_IDENTIFICATION_ESIA_EBS
+      findings:
+        - "Физлицо идентифицируется по документу, через ЕСИА либо посредством идентификации/аутентификации с ЕСИА и ЕБС по статье 9 572-ФЗ в предусмотренном сценарии."
+      guard: "EBS_IS_AN_AVAILABLE_NORMATIVE_IDENTIFICATION_ROUTE_IN_DEFINED_SCENARIOS; NOT_EVERY_TELECOM_CONTRACT_REQUIRES_BIOMETRICS"
+    - locator: "Правила, пункты 22, 24, 26"
+      concept: SUBSCRIBER_PERSON_LEVEL_DATA_AND_VERIFICATION_WORKFLOW
+      findings:
+        - "Договор физлица включает ФИО, место жительства, дату рождения и реквизиты удостоверяющего личность документа."
+        - "При нормативном запросе оператор в течение 3 календарных дней требует подтвердить соответствие ПДн фактического пользователя сведениям договора и повторно уведомляет не позднее чем за 3 дня до прекращения услуг."
+        - "Абонент сообщает оператору об изменениях ряда идентификационных сведений в срок не более 60 календарных дней."
+      guard: "TELECOM_VERIFICATION_DEADLINES != 152FZ_DATA_SUBJECT_REQUEST_OR_INCIDENT_DEADLINES"
+    - locator: "Правила, пункт 28"
+      concept: IDENTIFIED_SUBSCRIBER_ACTION_AUDIT_RETENTION
+      findings:
+        - "Оператор фиксирует электронно действия после идентификации и хранит сведения об изменении условий договора не менее 3 лет со дня расторжения договора; сведения об остальных предусмотренных действиях — не менее 3 лет со дня действия."
+      guard: "THREE_YEAR_ACTION_LOG_RETENTION != GENERAL_RETENTION_PERIOD_FOR_ALL_SUBSCRIBER_PDN"
+      evidence_note: "Текст пункта подтвержден индексированным официальным PDF Правительства; byte-exact локальный capture пока не получен."
+    - locator: "1137, пункты 222-226 Правил"
+      concept: MASS_AUTOMATED_CALL_OPT_OUT_WORKFLOW
+      findings:
+        - "Абонент может отказаться от массовых/автоматических вызовов; оператор прекращает их со следующего календарного дня; предусмотрена отмена отказа."
+      guard: "MASS_AUTOMATED_CALL_REGIME_UNDER_126FZ != AUTOMATIC_CLASSIFICATION_AS_ADVERTISING_UNDER_38FZ"
+
+relationship_candidates:
+  - target: "126-ФЗ"
+    type: DIRECT_STATUTORY_PARENT_ARTICLE_44_AND_COMMUNICATIONS_SECRECY_CONTEXT
+    state: DIRECT_STATUTORY_RELATION
+  - target: "152-ФЗ"
+    type: EXPLICIT_PERSONAL_DATA_PROCESSING_AND_PURPOSE_BOUND_CONSENT_CONTEXT
+    state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  - target: "572-ФЗ"
+    type: DIRECT_EBS_IDENTIFICATION_REFERENCE
+    state: DIRECT_SCENARIO_RELATION
+  - target: "38-ФЗ"
+    type: MASS_AUTOMATED_CALL_MARKETING_ADVERTISING_OVERLAP_CANDIDATE
+    state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+    guard: "CALL_TYPE_ALONE_DOES_NOT_PROVE_ADVERTISING_LEGAL_CLASSIFICATION"
+  - target: "ЕСИА / государственный identity layer"
+    type: PUBLIC_SECTOR_IDENTITY_INTERACTION_OVERLAP
+    state: CANDIDATE_SYSTEM_FLOW_REVIEW_REQUIRED
+
+applicability:
+  state: CANDIDATE_APPLICABILITY_REVIEW_REQUIRED
+  guards:
+    - "Не переносить отраслевые основания обработки без согласия за пределы прямо названных целей и ролей."
+    - "Не считать все сведения оператора тайной телефонных переговоров; классификация определяется конкретной категорией и потоком."
+    - "Не считать использование ЕБС обязательным для каждого договора связи."
+    - "Срок хранения action/audit records не является общим сроком хранения ПДн абонента."
+    - "События 510/2026 и 966/2026 остаются FUTURE_NOT_CURRENT до дат вступления."
+  executable_rule_status: NOT_PROMOTED
+
+version_chain:
+  state: CURRENT_1137_VERIFIED_TWO_FUTURE_EVENTS_VERIFIED_HISTORICAL_CHAIN_PARTIAL
+  events:
+    - date: "2024-12-30"
+      act: "ПП РФ № 1994"
+      effect: ADOPTED
+      evidence: PRIMARY_GOVERNMENT_TEXT
+    - date: "2024-12-31"
+      effect: OFFICIALLY_PUBLISHED_AND_BASE_ACT_ENTERED_INTO_FORCE
+      evidence: "publication.pravo.gov.ru 0001202412310007"
+    - date: "2025-07-31"
+      act: "ПП РФ № 1137"
+      effect: AMENDS_PP1994
+      evidence: PRIMARY_GOVERNMENT_TEXT_AND_PRIMARY_PUBLICATION_LOCATOR
+    - date: "2025-08-01"
+      effect: MAIN_1137_AMENDMENTS_ENTERED_INTO_FORCE
+      evidence: PRIMARY_1137_TEXT
+    - date: "2025-09-01"
+      effect: DEFERRED_1137_PROVISIONS_ENTERED_INTO_FORCE
+      evidence: PRIMARY_1137_TEXT
+    - date: "2026-09-01"
+      act: "ПП РФ № 510"
+      effect: FUTURE_AMENDMENT_ENTERS_INTO_FORCE
+      evidence: "publication.pravo.gov.ru 0001202605060029"
+    - date: "2027-03-01"
+      act: "ПП РФ № 966"
+      effect: FUTURE_AMENDMENT_ENTERS_INTO_FORCE
+      evidence: "publication.pravo.gov.ru 0001202608030048 / Government page"
+  full_historical_chain_claimed_complete: false
+
+acquisition:
+  exact_binary:
+    status: PENDING_TRANSIENT_DNS_FAILURE
+    attempted_at: "2026-08-29T08:19:09+03:00"
+    attempted_targets:
+      - "https://static.government.ru/media/files/CCc135Fhq2U.pdf"
+      - "https://publication.pravo.gov.ru/document/0001202412310007"
+      - "https://government.ru/docs/all/157314/"
+    error: "curl exit 6 / Could not resolve host: static.government.ru / publication.pravo.gov.ru / government.ru"
+    retrieved_at: null
+    mime: null
+    byte_length: null
+    sha256: null
+    immutable_artifact: null
+    displayed_sizes_used_as_exact_bytes: false
+
+quality_gates:
+  taxonomy_as_evidence: false
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+  fabricated_binary_metadata: false
+  dedupe_checked_against:
+    - "126-ФЗ relationship references"
+    - "152-ФЗ corpus"
+    - "572-ФЗ biometric layer"
+    - "38-ФЗ advertising/marketing layer"
+  dedupe_result: NEW_CANONICAL_SOURCE_NODE
