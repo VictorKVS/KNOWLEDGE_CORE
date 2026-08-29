@@ -1,0 +1,106 @@
+schema_version: "1.0"
+stream: 3
+run_at: "2026-08-30T02:29:25+03:00"
+objective: "continue sector/special-regime primary-source discovery, exact capture, deduplication, relationship linking and master reconciliation"
+
+selected_source:
+  id: SEC-SRC-RU-CBR-867P-2025
+  act: "Положение Росархива и Банка России от 27.08.2025 № 1/867-П"
+  sector_overlap:
+    - insurance
+    - archives_retention
+    - personal_data
+    - protected_information
+  rationale: "sector-specific insurance document-retention list with explicit PDN consent, employee records and insurance contract/claim record classes"
+
+discovery:
+  taxonomy_role: DISCOVERY_SEED_ONLY
+  primary_proof_floor_met: true
+  official_publication:
+    id: "0001202509260016"
+    date: "2025-09-26"
+    minjust_registration: "83672"
+  effective_date: "2025-10-07"
+  current_authority_listing_verified: true
+  amendment_search_completed_this_sweep: true
+  amendment_found: false
+  complete_historical_version_chain_claimed: false
+
+dedupe:
+  canonical_id_probe: "SEC-SRC-RU-CBR-867P-2025"
+  repository_code_probe_for_867P: "no existing canonical source located before registration"
+  result: NEW_CANONICAL_SOURCE_NODE
+
+normative_findings:
+  - "Item 243: PDN-processing policies/instructions — permanent* retention."
+  - "Item 244: PDN consent document — 3 years after consent expiry/withdrawal unless another rule is set by law or contract."
+  - "Items 247-248: employee personal cards and personal files — 50/75 years EPK."
+  - "Items 306-307: defined insurance contract/claim applications, notices and supporting documents — 5 years after expiry of the insurance/reinsurance contract or agreement."
+  - "Item 308: primary accounting documents for insurance operations — 5 years."
+  - "All values are record-class retention periods; none is generalized to all PDN or to the duration of insurance secrecy."
+
+relationships:
+  added:
+    - "1/867-П -> 4015-I"
+    - "1/867-П -> 125-ФЗ"
+    - "1/867-П -> 152-ФЗ"
+    - "1/867-П -> ГК РФ ст. 946"
+    - "1/867-П -> Росархив №236/2019"
+    - "1/867-П -> 822-П"
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+
+acquisition:
+  exact_binary_attempted: true
+  official_binary_targets:
+    - "https://archives.gov.ru/sites/default/files/perechen-strah-2025.pdf"
+    - "https://www.cbr.ru/Queries/XsltBlock/File/131643/-1/2575"
+    - "https://publication.pravo.gov.ru/document/0001202509260016"
+  result: TRANSIENT_FAILURE
+  detail: "curl exit 6 / Could not resolve host: archives.gov.ru"
+  exact_bytes_obtained: false
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+  immutable_promotions: 0
+
+counters:
+  before:
+    found: 66
+    downloaded: 9
+    immutable: 9
+    pending: 55
+    reused: 2
+    primary_publication_verified: 36
+    sectors_registered: 32
+  after:
+    found: 67
+    downloaded: 9
+    immutable: 9
+    pending: 56
+    reused: 2
+    primary_publication_verified: 37
+    sectors_registered: 32
+
+files_written:
+  - "security-corpora/RU/protected-information/source/SEC-SRC-RU-CBR-867P-2025.yaml"
+  - "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-CBR-867P-2025-capture-pending.json"
+  - "security-knowledge/corpus/ru-protected-information/master-inventory-delta-2026-08-30T0229.yaml"
+  - "security-knowledge/corpus/ru-personal-data/master-source-inventory-delta-stream3-2026-08-30T0229.yaml"
+  - "security-knowledge/corpus/ru-protected-information/stream-3-run-2026-08-30T0229.yaml"
+
+quality_gates:
+  primary_act_as_proof: true
+  taxonomy_as_evidence: false
+  applicability_invented: false
+  fabricated_binary_metadata: false
+  downloaded_increment_without_bytes: false
+  immutable_increment_without_hash: false
+  general_pdn_retention_inferred: false
+  secrecy_classification_inferred: false
+
+next_actions:
+  - "Retry exact official bytes for 1/867-П and create immutable artifact only after byte length/SHA-256 are computed."
+  - "Return to education/children and public-sector retention/identity flows while retaining finance/insurance exact-capture backlog."
