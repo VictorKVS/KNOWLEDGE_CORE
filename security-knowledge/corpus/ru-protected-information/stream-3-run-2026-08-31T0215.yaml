@@ -1,0 +1,141 @@
+schema_version: "1.0"
+stream: 3
+run_at: "2026-08-31T02:15:00+03:00"
+objective: "continue sector/special-regime primary-source discovery, exact capture, deduplication, relationship linking and master reconciliation"
+
+selected_sources:
+  - id: SEC-SRC-RU-FZ-67-2002
+    act: "Федеральный закон от 12.06.2002 № 67-ФЗ"
+    action: NEW_CANONICAL_SOURCE_REGISTERED
+    sector_overlap:
+      - public_sector
+      - personal_data
+      - elections
+      - identity_registry
+      - information_security
+      - archives_retention
+
+repository_dedupe:
+  fz_67_2002:
+    canonical_id_probe: "SEC-SRC-RU-FZ-67-2002"
+    title_probe: "Об основных гарантиях избирательных прав и права на участие в референдуме граждан Российской Федерации"
+    prior_node_found: false
+    result: NEW_CANONICAL_NODE_CREATED
+    found_counter_increment: 1
+    reused_counter_increment: 0
+
+primary_proof:
+  fz_67_2002:
+    official_presidential_legal_bank: "https://www.kremlin.ru/acts/bank/18173/print"
+    official_pravo_integrated_bank: "http://pravo.gov.ru/proxy/ips/?docbody=&nd=102074279"
+    original_official_publications:
+      - "Российская газета, № 106, 15.06.2002"
+      - "Парламентская газета, № 110-111, 15.06.2002"
+      - "Собрание законодательства РФ, № 24, 17.06.2002, ст. 2253"
+    current_consolidated_edition_crosscheck: "2026-07-26"
+    latest_amendment: "Федеральный закон от 26.07.2026 № 261-ФЗ"
+    latest_amendment_official_newspaper: "https://rg.ru/documents/2026/08/03/fz261-dok.html"
+    relevant_2026_amendment: "Федеральный закон от 02.05.2026 № 130-ФЗ"
+    relevant_2026_amendment_publication_id: "0001202605020015"
+    latest_amendment_portal_publication_id: null
+
+normative_findings:
+  - "Article 16(5) defines an electoral-registration PDN dataset including identity, citizenship, address and identity-document fields supplied by designated public authorities."
+  - "Article 16(6)-(10) establishes controlled update routes from civil-status death data, military accounting, penitentiary status and incapacity/capacity decisions, with voter accounting using GAS Vybory."
+  - "Article 16(12) gives the voter direct access/correction and usage/provision traceability rights for documented personal data about them."
+  - "Article 17(11) defines voter-list person-level fields and passport/document series-number capture at ballot issuance."
+  - "Article 17(15.2),(16),(19) separates electronic-list lifecycle, correction/exclusion records and post-election register-clarification use."
+  - "Article 70(10)-(11) creates an election-document retention floor and delegates exact archive/storage/destruction rules to election commissions with archive authorities."
+
+retention:
+  voter_lists_signature_sheets_ballots_minimum: "not less than 1 year from official publication of voting/election/referendum results"
+  litigation_or_criminal_case_extension: "until court decision enters into force or relevant case terminates under law"
+  exact_election_record_series_periods: "require election-specific federal/regional law or CEC/regional archive order"
+  guards:
+    - "ONE_YEAR_MINIMUM_NOT_GENERAL_PDN_RETENTION"
+    - "VOTER_LIST_RETENTION_NOT_VOTER_REGISTER_RETENTION"
+
+relationships:
+  reconciled:
+    - "67-FZ -> 152-FZ / direct personal-data processing and sector-specific person-rights overlap"
+    - "67-FZ -> 20-FZ on GAS Vybory / direct special-system companion relationship, separate source candidate"
+    - "67-FZ -> 143-FZ / civil-status death-data feed"
+    - "67-FZ -> 125-FZ and election archival rules / record-series-specific retention overlap"
+    - "67-FZ -> identity/residence-registration regimes / controlled statutory source-data route"
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+
+version_chain:
+  state: CURRENT_EDITION_2026_07_26_CONFIRMED_AS_OF_2026_08_31_VERSION_CHAIN_PARTIAL
+  recent_chain:
+    - "23.05.2025 № 115-ФЗ"
+    - "29.12.2025 № 546-ФЗ"
+    - "02.05.2026 № 130-ФЗ"
+    - "26.07.2026 № 261-ФЗ"
+  later_amendment_after_2026_07_26_located_in_this_sweep: false
+  full_historical_primary_locator_chain_claimed: false
+
+acquisition:
+  exact_binary_attempted: true
+  latest_attempt: "2026-08-31T02:15:00+03:00"
+  targets:
+    - "https://www.kremlin.ru/acts/bank/18173/print"
+    - "https://rg.ru/documents/2026/08/03/fz261-dok.html"
+  result: TRANSIENT_DNS_DOWNLOAD_FAILURE
+  error: "curl exit 6 / Could not resolve host: www.kremlin.ru"
+  exact_bytes_obtained: false
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+  immutable_promotions: 0
+
+candidate_discovery:
+  - candidate: "Федеральный закон от 10.01.2003 № 20-ФЗ «О Государственной автоматизированной системе Российской Федерации «Выборы»»"
+    sector_overlap: "public_sector + election_system + personal_data + information_security + voter_registry"
+    promotion: NOT_PROMOTED_THIS_RUN
+    reason: "requires a separate repository dedupe/current-version/primary-file and retention/security pass"
+
+counters:
+  before:
+    found: 72
+    downloaded: 9
+    immutable: 9
+    pending: 61
+    reused: 4
+    primary_publication_verified: 41
+    sectors_registered: 32
+  after:
+    found: 73
+    downloaded: 9
+    immutable: 9
+    pending: 62
+    reused: 4
+    primary_publication_verified: 42
+    sectors_registered: 32
+
+files_written_or_updated:
+  - "security-corpora/RU/protected-information/source/SEC-SRC-RU-FZ-67-2002.yaml"
+  - "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-67-2002-capture-pending.json"
+  - "security-knowledge/corpus/ru-protected-information/master-inventory-delta-2026-08-31T0215.yaml"
+  - "security-knowledge/corpus/ru-personal-data/master-source-inventory-delta-stream3-2026-08-31T0215.yaml"
+  - "security-knowledge/corpus/ru-protected-information/stream-3-run-2026-08-31T0215.yaml"
+
+quality_gates:
+  primary_original_source_verified: true
+  current_edition_verified: true
+  taxonomy_as_evidence: false
+  applicability_invented: false
+  fabricated_binary_metadata: false
+  downloaded_increment_without_bytes: false
+  immutable_increment_without_hash: false
+  duplicate_source_created: false
+  voter_status_treated_as_special_category: false
+  passport_data_treated_as_separate_secret: false
+  general_pdn_retention_inferred: false
+
+next_actions:
+  - "Retry exact official bytes for 67-FZ and 261-FZ; calculate MIME, byte length and SHA-256 only after exact capture."
+  - "Register and analyze the current primary source for Federal Law 20-FZ on GAS Vybory after dedupe and current-version verification."
+  - "Continue public-sector/advertising/communications and special-regime discovery without duplicating existing 152-FZ, 149-FZ, archival and sector nodes."
