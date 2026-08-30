@@ -1,0 +1,49 @@
+schema_version: "1.0"
+id: SEC-PDN-MASTER-SOURCE-INVENTORY-DELTA-STREAM2-2026-08-30T2311Z
+applies_to: PDN_MASTER_SOURCE_INVENTORY.yaml
+stream: RU_PDN_TECHNICAL_CRYPTO
+created_at: "2026-08-30T23:11:08Z"
+merge_policy: >-
+  ADDITIVE_SECURITY_STACK_STATUS_OVERLAY. Update only Stream-2 status/acquisition pointers and preserve all
+  non-Stream-2 master sources and parallel-stream data. Canonical counters change only after guarded reconciliation.
+
+security_stack_patch:
+  checked_at: "2026-08-31"
+  identified: 55
+  metadata_verified: 55
+  immutable_sha256_verified: 24
+  pending_raw_capture: 31
+  exact_official_route_unresolved: 8
+  confirmed_conflicts: 0
+  latest_status_review_at: "2026-08-30T23:11:08Z"
+  latest_stream2_run: "security-stack/runs/STREAM2_RUN_2026-08-30T2311Z.yaml"
+  acquisition_state: FRESH_STATUS_REVIEW_AND_PUSH_TRIGGERED_GUARDED_ACQUISITION
+  baseline_status:
+    pp1119: CURRENT_PRIMARY_BYTES_PENDING_LATEST_ENV_DNS_FAILURE
+    fstec21: CURRENT_REVISION_2020_05_14_REPLACEMENT_PRIMARY_GATE_NOT_PASSED_ON_2026_08_31
+    fstec_threat_method_2021: CURRENT_IMMUTABLE_CAPTURED
+    fsb378: CURRENT_WHEN_SKZI_USED_PRIMARY_BYTES_PENDING_LATEST_ENV_DNS_FAILURE
+    fsb66: CURRENT_AS_AMENDED_SKZI_LIFECYCLE_PRIMARY_BYTES_PENDING
+    fstec205: CURRENT_VERSION_CHAIN_ACT_PRIMARY_ROUTE_UNRESOLVED
+  fstec21_latest_finding: >-
+    Fresh review on 31.08.2026, immediately before the project's proposed 01.09.2026 date, still did not surface
+    primary evidence of a final issued, Minjust-registered and officially published replacement. Fresh secondary
+    materials continue to describe 169583 as a project. Project requirements remain outside the active baseline.
+  fsb378_latest_finding: >-
+    The current Russian Gazette archive index continues to surface Order 378 with Minjust registration No. 33620,
+    effective date 28.09.2014 and explicit scope for operators using SKZI in ISPDN. Exact archive bytes remain pending
+    because the acquisition environment cannot currently resolve rg.ru.
+
+counter_basis: >-
+  Authoritative Stream-2 counters remain 55 identified / 55 metadata-verified / 24 immutable / 31 pending /
+  8 unresolved exact routes / 0 confirmed conflicts. No exact new primary payload passed the immutable proof gate in
+  this status-review pass, so no production counter is increased or reduced.
+
+applicability_guard: >-
+  Keep PP1119/FSTEC21 ISPDN baseline distinct from attestation, licensing, certification, SKZI lifecycle,
+  KII/NCTKI and GosSOPKA branches. Neighboring requirements require an explicit applicability edge before reuse;
+  FSB378 applies only when SKZI use is established and GosSOPKA/NCTKI is PDN-relevant only on the proved incident edge.
+
+proof_rule: >-
+  Exact official payload bytes, observed MIME/signature, exact byte length, computed SHA-256, immutable artifact and
+  manifest are required before immutable promotion. No mirror substitution and no inferred fingerprint.
