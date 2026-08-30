@@ -1,0 +1,94 @@
+schema_version: "1.0"
+id: PDN-STREAM1-2026-08-30T0155Z
+kind: pdn-core-stream-1-acquisition-checkpoint
+status: ACTIVE_RETRY
+jurisdiction: RU
+domain: personal_data
+observed_at: "2026-08-30T01:55:18Z"
+
+scope:
+  include: "General 152-FZ / Roskomnadzor PDN core and direct active dependencies"
+  exclude: "Sector overlays unless required as a direct dependency"
+  sector_overlays_touched: false
+
+priority_state:
+  - source_id: SEC-SRC-RU-152FZ-2026-07-26
+    document: "Federal Law No. 152-FZ, current edition from 26.07.2026"
+    revision_state: VERSION_IDENTITY_CROSS_VERIFIED
+    raw_capture: PENDING
+    proof_gate: "Accept only official byte-exact current consolidated text proving 152-FZ identity and the 26.07.2026 revision via No. 265-FZ or the complete Article 12 delta fingerprint."
+  - source_id: SEC-SRC-RU-PP687-2008
+    document: "Government Resolution No. 687 of 15.09.2008"
+    revision_state: "Current edition by Government Resolution No. 12 of 18.01.2025; effective 26.01.2025; valid through 01.09.2030"
+    raw_capture: PENDING
+    proof_gate: "Accept only official byte-exact current text with PP687 identity and the PP12 validity-through-01.09.2030 fingerprint."
+  - source_id: SEC-SRC-RU-PP211-2012
+    raw_capture: IMMUTABLE_CAPTURED
+  - source_id: SEC-SRC-RU-RKN18-2021
+    raw_capture: IMMUTABLE_CAPTURED
+  - source_id: SEC-SRC-RU-RKN128-2022
+    raw_capture: IMMUTABLE_CAPTURED
+    replacement_watch: "No enacted replacement official-publication identity proven in this checkpoint; draft evidence is not promoted."
+  - source_id: SEC-SRC-RU-RKN178-2022
+    raw_capture: IMMUTABLE_CAPTURED
+  - source_id: SEC-SRC-RU-RKN179-2022
+    raw_capture: IMMUTABLE_CAPTURED
+  - source_id: SEC-SRC-RU-RKN180-2022
+    raw_capture: IMMUTABLE_CAPTURED
+  - source_id: SEC-SRC-RU-RKN140-2025
+    raw_capture: IMMUTABLE_CAPTURED
+  - source_id: SEC-SRC-RU-PP1154-2025
+    raw_capture: IMMUTABLE_CAPTURED
+
+freshness_checks:
+  checked_at: "2026-08-30"
+  current_152fz: "Current-law index still identifies 152-FZ as edited 26.07.2026; no newer proven edition was found in this checkpoint."
+  pp687: "Current-law index still identifies edition 18.01.2025 and validity through 01.09.2030."
+  rkn128: "Fresh monitoring did not produce an enacted replacement official-publication identity; retain No. 128 under the existing primary-enactment gate."
+  semantic_promotion: false
+
+acquisition_retry:
+  github_workflow: "PDN Core Immutable Acquisition"
+  workflow_run_id: 33280749350
+  rerun_job_id: 99191598830
+  checkpoint_state: IN_PROGRESS_PP687_GUARDED_TRANSPORT
+  completed_before_checkpoint:
+    - reuse_immutable_artifacts_and_easy_publication_deltas
+    - sync_fast_immutable_delta_to_source_records_and_master_inventory
+    - restore_shared_master_counters
+    - fast_commit_gate
+  pending_after_checkpoint:
+    - guarded_pp687_transport_completion
+    - guarded_current_152fz_curl_transport
+    - current_152fz_urllib_fallback
+    - pravo_www_transport_alias
+    - dedicated_route_telemetry_sync
+    - final_manifest_and_inventory_sync
+  accepted_new_manifest_at_checkpoint: false
+  proof_floor_held: true
+  semantic_promotion: false
+
+proven_counter_snapshot:
+  source: "PDN_MASTER_SOURCE_INVENTORY.yaml"
+  identified: 40
+  raw_downloaded_exact: 38
+  immutable_sha256_verified: 38
+  atomized_existing_proposed: 4
+  atomized_verified: 0
+  pending_raw_capture: 2
+  raw_capture_coverage_ratio: 0.9500
+  pending_priority:
+    - SEC-SRC-RU-152FZ-2026-07-26
+    - SEC-SRC-RU-PP687-2008
+
+reuse_telemetry_last_completed:
+  targets_total: 39
+  reused_immutable: 38
+  reuse_ratio: 0.9743589744
+  new_immutable_captured: 0
+  note: "These are the last completed proven acquisition counters before the guarded rerun finishes; they are not advanced speculatively."
+
+next_gate:
+  - "Accept PP687 only if official bytes pass identity + current-revision proof and a manifest records retrieved_at, MIME, byte length and SHA-256."
+  - "Accept current 152-FZ only if official bytes pass identity + 26.07.2026 revision proof and a manifest records retrieved_at, MIME, byte length and SHA-256."
+  - "Do not change immutable/atomized/semantic counters until accepted evidence exists."
