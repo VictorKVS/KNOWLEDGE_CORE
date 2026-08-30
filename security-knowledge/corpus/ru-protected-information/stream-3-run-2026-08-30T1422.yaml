@@ -1,0 +1,122 @@
+schema_version: "1.0"
+stream: 3
+run_at: "2026-08-30T14:22:35+03:00"
+objective: "continue sector/special-regime primary-source discovery, exact capture, deduplication, relationship linking and master reconciliation"
+
+selected_sources:
+  - id: SEC-SRC-RU-PP-825-2021
+    act: "Постановление Правительства Российской Федерации от 31.05.2021 № 825"
+    action: NEW_CANONICAL_SOURCE_NODE
+    sector_overlap:
+      - education
+      - children
+      - public_sector
+      - personal_data
+      - identity_registry
+      - archives_retention
+
+repository_dedupe:
+  pp_825_2021:
+    canonical_source_already_existed: false
+    parent_273_fz_already_existed: true
+    result: NEW_CANONICAL_SOURCE_WITH_EDGES_TO_EXISTING_NODES
+    found_counter_increment: 1
+
+primary_proof:
+  pp_825_2021:
+    official_publication_id: "0001202105310021"
+    official_publication_date: "2021-05-31"
+    official_url: "https://publication.pravo.gov.ru/document/0001202105310021"
+    current_edition_date: "2026-08-01"
+    validity_limit_crosscheck: "2027-08-01"
+    latest_material_amendment:
+      act: "Постановление Правительства РФ от 01.08.2026 № 960"
+      official_publication_id: "0001202608030041"
+      official_publication_date: "2026-08-03"
+      effective_date: "2026-08-11"
+      status_as_of_run: EFFECTIVE
+
+normative_findings:
+  - "PP 825 implements the federal education credentials/training register and directly requires confidentiality/security of personal data plus compliance with information and personal-data legislation."
+  - "Appendix 1 contains person-level identity and education data including name, date of birth, sex, SNILS for Russian citizens where available, citizenship and additional education/lifecycle attributes; some certificate scenarios include identity-document details."
+  - "PP 1423/2025 added school-language-testing results for foreign citizens/stateless persons, including child/legal-representative identity fields, and established a special three-year retention period for those results."
+  - "Point 12 separates system retention: 50 years for the main body of FIS records, 5 years for specified language/history/law certificates, and 3 years for school-language-testing results; expiry causes removal from the FIS. None is a general PDN or education-document retention rule."
+  - "PP 960/2026, effective 2026-08-11, added joint Russian-foreign education organizations and introduced protected packet transport, electronic-signature/authority verification, unchanged packet delivery and integrity requirements."
+
+relationships:
+  added:
+    - "PP 825/2021 -> 273-ФЗ"
+    - "PP 825/2021 -> 152-ФЗ"
+    - "PP 825/2021 -> 149-ФЗ"
+    - "PP 825/2021 -> 63-ФЗ"
+    - "PP 825/2021 -> 125-ФЗ / archives boundary"
+    - "PP 825/2021 -> children / school testing record context"
+    - "PP 825/2021 -> public-sector identity/interagency flows"
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+
+version_chain:
+  state: CURRENT_EDITION_2026_08_01_CONFIRMED_PRIMARY_LOCATOR_CHAIN_PARTIAL
+  consolidated_amendment_crosscheck_count: 14
+  latest_primary_amendment_locator_verified: "0001202608030041"
+  later_amendment_located_in_this_sweep: false
+  full_primary_locator_chain_claimed_complete: false
+
+acquisition:
+  exact_binary_attempted: true
+  attempted_at: "2026-08-30T14:22:35+03:00"
+  targets:
+    - "https://publication.pravo.gov.ru/document/0001202105310021"
+    - "https://publication.pravo.gov.ru/document/0001202608030041"
+  result: TRANSIENT_FAILURE
+  detail: "curl exit 6 / Could not resolve host: publication.pravo.gov.ru"
+  exact_bytes_obtained: false
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+  immutable_promotions: 0
+
+counters:
+  before:
+    found: 69
+    downloaded: 9
+    immutable: 9
+    pending: 58
+    reused: 3
+    primary_publication_verified: 39
+    sectors_registered: 32
+  after:
+    found: 70
+    downloaded: 9
+    immutable: 9
+    pending: 59
+    reused: 3
+    primary_publication_verified: 40
+    sectors_registered: 32
+
+files_written_or_updated:
+  - "security-corpora/RU/protected-information/source/SEC-SRC-RU-PP-825-2021.yaml"
+  - "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-PP-825-2021-capture-pending.json"
+  - "security-knowledge/corpus/ru-protected-information/master-inventory-delta-2026-08-30T1422.yaml"
+  - "security-knowledge/corpus/ru-personal-data/master-source-inventory-delta-stream3-2026-08-30T1422.yaml"
+  - "security-knowledge/corpus/ru-protected-information/stream-3-run-2026-08-30T1422.yaml"
+
+quality_gates:
+  primary_act_as_proof: true
+  taxonomy_as_evidence: false
+  applicability_invented: false
+  fabricated_binary_metadata: false
+  downloaded_increment_without_bytes: false
+  immutable_increment_without_hash: false
+  dedupe_inflated_found_counter: false
+  general_pdn_retention_inferred: false
+  protected_secret_classification_inferred: false
+  child_context_misclassified_as_special_category_pdn: false
+  operational_submission_sla_misclassified_as_pdn_sla: false
+
+next_actions:
+  - "Retry exact official bytes for PP 825/2021 and latest PP 960/2026; create immutable artifacts only after actual MIME, byte length and SHA-256 are computed."
+  - "Continue education/children discovery into other federal education information systems and child-specific flows, deduplicating against 273-ФЗ, 120-ФЗ, 168-ФЗ, PP 411 and PP 825."
+  - "Continue public-sector identity/registry and retention discovery without generalizing register-specific periods."
