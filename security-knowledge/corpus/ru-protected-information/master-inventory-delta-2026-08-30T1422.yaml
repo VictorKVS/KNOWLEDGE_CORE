@@ -1,0 +1,112 @@
+schema_version: "1.0"
+stream: 3
+checked_at: "2026-08-30T14:22:35+03:00"
+mode: APPEND_ONLY_RU_PROTECTED_INFORMATION_RECONCILIATION
+previous_stream3_delta: "master-inventory-delta-2026-08-30T0815.yaml"
+focus: "education/children/public-sector FIS FRDO + PDN/identity/retention/security overlays"
+
+counters_before:
+  found: 69
+  downloaded: 9
+  immutable: 9
+  pending: 58
+  reused: 3
+  primary_publication_verified: 39
+  sectors_registered: 32
+
+counters_after:
+  found: 70
+  downloaded: 9
+  immutable: 9
+  pending: 59
+  reused: 3
+  primary_publication_verified: 40
+  sectors_registered: 32
+
+sources_added:
+  - source_id: SEC-SRC-RU-PP-825-2021
+    title: "Постановление Правительства РФ от 31.05.2021 № 825 — ФИС ФРДО"
+    sector: education + children + public_sector + personal_data + identity_registry + archives_retention
+    regime: federal_education_credentials_register_fis_frdo
+    dedupe_result: NEW_CANONICAL_SOURCE_NODE
+    parent_source: SEC-SRC-RU-FZ-273-2012
+    exact_capture: PENDING_TRANSIENT_BINARY_FETCH_FAILURE
+    applicability_status: RECORD_TYPE_ROLE_PURPOSE_AND_LOCATOR_MATCH_REQUIRED
+    executable_effect: NONE
+
+primary_evidence:
+  pp_825_2021:
+    official_publication_id: "0001202105310021"
+    official_publication_date: "2021-05-31"
+    official_url: "https://publication.pravo.gov.ru/document/0001202105310021"
+    current_edition_date: "2026-08-01"
+    latest_material_amendment:
+      act: "Постановление Правительства РФ от 01.08.2026 № 960"
+      official_publication_id: "0001202608030041"
+      official_publication_date: "2026-08-03"
+      effective_date: "2026-08-11"
+      effect: "joint Russian-foreign education organizations, protected data packages, e-signature verification, authority verification, integrity/immutability controls"
+
+key_findings:
+  - source_id: SEC-SRC-RU-PP-825-2021
+    locator: "пункты 2, 7, 9"
+    finding: "ФИС ФРДО прямо регулируется с требованиями конфиденциальности/безопасности ПДн; оператор обеспечивает безопасное хранение/использование, а обработка, доступ и защита выполняются с соблюдением законодательства об информации и ПДн."
+    guard: "SYSTEM_PDN_SECURITY_DUTY != NEW_SECRET_CATEGORY_OR_GENERAL_EDUCATION_PROCESSING_BASIS"
+  - source_id: SEC-SRC-RU-PP-825-2021
+    locator: "приложение № 1"
+    finding: "Person-level dataset включает ФИО, дату рождения, пол, СНИЛС для граждан РФ при наличии, гражданство, отдельные реквизиты удостоверяющих документов, образовательную программу/квалификацию и иные сведения образовательного lifecycle."
+    guard: "EDUCATION_RECORD_DATASET != SPECIAL_CATEGORY_PDN_OR_CHILD_DATA_AUTOMATICALLY"
+  - source_id: SEC-SRC-RU-PP-825-2021
+    locator: "приложение № 2 / ПП РФ № 1423/2025"
+    finding: "Для школьного тестирования иностранных граждан и лиц без гражданства реестр содержит результаты/баллы и идентификационные данные ребенка и законного представителя."
+    guard: "CHILD_MIGRATION_CONTEXT != SPECIAL_CATEGORY_OR_PROTECTED_SECRET_AUTOMATICALLY"
+  - source_id: SEC-SRC-RU-PP-825-2021
+    locator: "пункт 12"
+    finding: "Специальные сроки ФИС: 50 лет для основной массы сведений, 5 лет для определенных языковых сертификатов, 3 года для результатов школьного языкового тестирования; по истечении срока сведения исключаются из системы."
+    guard: "50_5_3_YEAR_FIS_RETENTION != GENERAL_PDN_OR_EDUCATION_DOCUMENT_RETENTION"
+  - source_id: SEC-SRC-RU-PP-825-2021
+    locator: "пункты 8, 10 и изменения № 960/2026"
+    finding: "Доступ/предоставление ограничены установленными ролями и целями; внесение защищается электронной подписью, а новый совместный образовательный канал требует проверки полномочий, неизменности и целостности пакетов."
+    guard: "REGISTER_ACCESS_AND_E_SIGNATURE_CONTROLS != PDN_CONSENT_OR_UNLIMITED_SECONDARY_USE"
+
+relationships_added:
+  - "PP 825/2021 -> 273-ФЗ: direct implementing regulation for federal education information register"
+  - "PP 825/2021 -> 152-ФЗ: direct textual PDN protection overlap"
+  - "PP 825/2021 -> 149-ФЗ: direct information/protection overlap"
+  - "PP 825/2021 -> 63-ФЗ: electronic-signature access/submission control"
+  - "PP 825/2021 -> 125-ФЗ: archive-fed source records and retention boundary; record-series/lifecycle proof required"
+  - "PP 825/2021 -> children: school testing dataset; child status must be proven per record/context"
+  - "PP 825/2021 -> public-sector identity/interagency flows: purpose and recipient role must be proven"
+
+version_chain:
+  source_pp_825_2021: CURRENT_EDITION_2026_08_01_CONFIRMED_HISTORICAL_PRIMARY_LOCATORS_PARTIAL
+  latest_amendment_primary_locator_verified: "PP 960/2026 / 0001202608030041"
+  later_amendment_located_in_2026_08_30_sweep: false
+  complete_primary_locator_chain_claimed: false
+
+acquisition_state:
+  exact_binary_attempted: true
+  exact_binary_obtained: false
+  attempted_at: "2026-08-30T14:22:35+03:00"
+  reason: TRANSIENT_BINARY_DOWNLOAD_DNS_FAILURE
+  affected_host: "publication.pravo.gov.ru"
+  official_targets:
+    - "https://publication.pravo.gov.ru/document/0001202105310021"
+    - "https://publication.pravo.gov.ru/document/0001202608030041"
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+
+quality_gates:
+  taxonomy_as_evidence: false
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+  fabricated_binary_metadata: false
+  downloaded_increment_without_bytes: false
+  immutable_increment_without_hash: false
+  primary_publication_counter_increment_new_sources_only: true
+  dedupe_inflated_found_counter: false
+  general_pdn_retention_inferred: false
+  protected_secret_classification_inferred: false
