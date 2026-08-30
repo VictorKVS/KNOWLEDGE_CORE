@@ -1,0 +1,105 @@
+schema_version: "1.0"
+stream: 3
+checked_at: "2026-08-30T23:15:23+03:00"
+mode: APPEND_ONLY_RU_PROTECTED_INFORMATION_RECONCILIATION
+previous_stream3_delta: "master-inventory-delta-2026-08-30T2017.yaml"
+focus: "transport / EGIS OTB / ACBPDP passenger-and-crew PDN / retention / telecom-finance overlap"
+
+counters_before:
+  found: 72
+  downloaded: 9
+  immutable: 9
+  pending: 61
+  reused: 3
+  primary_publication_verified: 41
+  sectors_registered: 32
+
+counters_after:
+  found: 72
+  downloaded: 9
+  immutable: 9
+  pending: 61
+  reused: 4
+  primary_publication_verified: 41
+  sectors_registered: 32
+
+sources_added: []
+sources_reused:
+  - source_id: SEC-SRC-RU-MINTRANS-ORDER-162-2024
+    title: "Приказ Минтранса России от 02.05.2024 № 162 — АЦБПДП пассажиров и экипажей"
+    dedupe_result: EXISTING_CANONICAL_NODE_REUSED_AND_RECONCILED
+    official_publication_id: "0001202405310018"
+    official_publication_date: "2024-05-31"
+    minjust_registration_number: "78358"
+    effective_window: "2024-09-01/2030-09-01"
+    current_revision_crosscheck: "2024-05-02"
+    exact_capture: PENDING_TRANSIENT_BINARY_FETCH_FAILURE
+    found_counter_increment: 0
+    reused_counter_increment: 1
+
+key_findings:
+  - source_id: SEC-SRC-RU-MINTRANS-ORDER-162-2024
+    locator: "Порядок, пункт 13"
+    finding: "Персональные данные в АЦБПДП хранятся оператором ЕГИС ОТБ 7 лет со дня получения оператором."
+    guard: "SEVEN_YEAR_ACBPDP_RETENTION_NOT_GENERAL_TRANSPORT_OR_CARRIER_PDN_RETENTION"
+  - source_id: SEC-SRC-RU-MINTRANS-ORDER-162-2024
+    locator: "Порядок, пункты 42, 46, 50, 56"
+    finding: "Для соответствующих видов перевозок при фактической фиксации передаются телефон, e-mail, логины и хеши паролей, IP-адрес и порт, а также сведения об электронном средстве платежа и последние четыре цифры счета/вклада."
+    guard: "CONTACT_NETWORK_OR_PAYMENT_METADATA_NOT_TELECOM_OR_BANK_SECRECY_AUTOMATICALLY"
+  - source_id: SEC-SRC-RU-MINTRANS-ORDER-162-2024
+    locator: "Порядок, пункт 18 подпункт 7"
+    finding: "Для защищенного информационного взаимодействия предусмотрены СКЗИ и обеспечение безопасности передаваемых ПДн от угроз по статье 19 152-ФЗ либо использование СМЭВ."
+    guard: "SECURITY_CHANNEL_REQUIREMENT_NOT_NEW_SECRET_CATEGORY"
+  - source_id: SEC-SRC-RU-MINTRANS-ORDER-162-2024
+    locator: "Порядок, пункты 27-30"
+    finding: "15/30-минутные сроки передачи операций и 24-часовой срок по экипажу являются технологическими сроками обмена в АЦБПДП."
+    guard: "OPERATIONAL_TRANSFER_SLA_NOT_PDN_SUBJECT_RESPONSE_OR_BREACH_NOTIFICATION_DEADLINE"
+
+relationships_reconciled:
+  - "Mintrans 162/2024 -> 16-ФЗ: direct subordinate implementation of article 11 ACBPDP regime"
+  - "Mintrans 162/2024 -> PP 1251/2023: direct EGIS OTB system-regulation relationship"
+  - "Mintrans 162/2024 -> 152-ФЗ: direct security/international-transfer textual references, scenario-specific"
+  - "Mintrans 162/2024 -> telecom secrecy: candidate only; field and telecom-relationship proof required"
+  - "Mintrans 162/2024 -> banking secrecy: candidate only; payment metadata alone does not classify the dataset"
+
+version_chain:
+  state: CURRENT_ORIGINAL_EDITION_CROSSCHECKED_AS_OF_2026_08_30
+  effective_from: "2024-09-01"
+  valid_until: "2030-09-01"
+  later_amendment_located_in_this_sweep: false
+  superseded_predecessors:
+    - "Приказ Минтранса России от 19.07.2012 № 243"
+    - "Приказ Минтранса России от 01.07.2013 № 228"
+    - "Приказ Минтранса России от 05.09.2014 № 242"
+  full_primary_binary_chain_claimed: false
+
+acquisition_state:
+  exact_binary_attempted: true
+  exact_binary_obtained: false
+  primary_publication_url: "https://publication.pravo.gov.ru/document/0001202405310018"
+  official_agency_copy_url: "https://rostransnadzor.gov.ru/storage/documents/%D0%9F%D1%80%D0%B8%D0%BA%D0%B0%D0%B7%20%D0%9C%D0%B8%D0%BD%D1%82%D1%80%D0%B0%D0%BD%D1%81%D0%B0%20%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D0%B8%20%D0%BE%D1%82%2002.05.2024%20N%20162.pdf"
+  latest_attempt: "2026-08-30T23:15:23+03:00 official agency PDF byte fetch: transient download failure"
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+  pending_counter_increment: 0
+
+candidate_discovery_not_promoted:
+  - candidate: "Федеральный закон от 12.06.2002 № 67-ФЗ об избирательных правах и референдуме"
+    reason: "strong public-sector PDN/register/list overlap discovered; official Presidential legal-bank source located, but this pass did not close current amendment evidence and exact artifact capture to the stream proof floor"
+    action: KEEP_FOR_PRIMARY_CURRENT_VERSION_CHAIN_PASS
+
+quality_gates:
+  taxonomy_as_evidence: false
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+  fabricated_binary_metadata: false
+  downloaded_increment_without_bytes: false
+  immutable_increment_without_hash: false
+  dedupe_inflated_found_counter: false
+  duplicate_pending_increment: false
+  telecom_secrecy_inferred_from_phone_or_ip: false
+  bank_secrecy_inferred_from_payment_metadata: false
+  general_pdn_retention_inferred: false
