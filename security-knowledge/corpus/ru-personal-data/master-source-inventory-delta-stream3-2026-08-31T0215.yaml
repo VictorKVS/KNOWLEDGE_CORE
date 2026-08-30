@@ -1,0 +1,122 @@
+schema_version: "1.0"
+stream: 3
+checked_at: "2026-08-31T02:15:00+03:00"
+mode: APPEND_ONLY_PDN_SECTOR_OVERLAY_RECONCILIATION
+source_id: SEC-SRC-RU-FZ-67-2002
+source_title: "Федеральный закон от 12.06.2002 № 67-ФЗ — регистрация избирателей, списки избирателей и ГАС «Выборы»"
+source_action: NEW_CANONICAL_SOURCE_NODE
+
+pdn_overlap:
+  status: DIRECT_EXPLICIT_PERSONAL_DATA_AND_OPERATIONAL_OVERLAP
+  direct_anchors:
+    - "Статья 16 пункт 5 прямо перечисляет персональные данные, передаваемые для регистрации (учета) избирателей."
+    - "Статья 16 пункты 6-10 задает источники/маршруты обновления регистра и использование ГАС «Выборы»."
+    - "Статья 16 пункт 12 прямо использует термин «персональные данные» и устанавливает секторные права доступа, уточнения и трассировки использования/предоставления."
+    - "Статья 17 регулирует составление списков, person-level состав полей, электронный lifecycle, исправление/исключение и использование данных после выборов для уточнения регистра."
+  lawful_basis_statement: "67-ФЗ задает конкретный избирательный нормативный контур регистрации, списков и комиссий; он не является универсальным основанием для обработки этих же ПДн вне целей и ролей избирательного законодательства."
+
+person_level_layers:
+  voter_register_identity:
+    locator: "статья 16 пункт 5"
+    examples:
+      - "фамилия, имя, отчество"
+      - "дата и место рождения"
+      - "пол, гражданство"
+      - "адрес места жительства/для предусмотренных законом случаев места пребывания"
+      - "вид документа, удостоверяющего личность, серия и номер"
+      - "орган/код органа, выдавшего документ, дата выдачи"
+    guard: "STATUTORY_VOTER_REGISTER_DATASET_AND_SOURCE_ROUTE_MATCH_REQUIRED"
+  status_and_source_updates:
+    locators: "статья 16 пункты 6-9"
+    examples:
+      - "сведения о государственной регистрации смерти и исправлениях записей о смерти"
+      - "сведения воинского учета"
+      - "сведения УИС о гражданах, содержащихся в местах лишения свободы по приговору суда"
+      - "решения суда о недееспособности/восстановлении дееспособности"
+    guards:
+      - "STATUS_SOURCE_DATA_NOT_SPECIAL_CATEGORY_PDN_AUTOMATICALLY"
+      - "STATUTORY_ROUTE_NOT_GENERAL_INTERAGENCY_DISCLOSURE"
+  voter_list_fields:
+    locator: "статья 17 пункт 11"
+    examples:
+      - "ФИО"
+      - "год рождения; для 18-летних также день и месяц"
+      - "адрес места жительства"
+      - "подпись за полученный бюллетень"
+      - "серия и номер паспорта или документа, заменяющего паспорт"
+    guard: "VOTER_LIST_NOT_PUBLIC_DIRECTORY_OR_GENERAL_IDENTITY_REGISTER"
+
+subject_rights_and_lifecycle:
+  - locator: "статья 16 пункт 12"
+    finding: "Избиратель/участник референдума вправе получить документированную информацию о себе, уточнить ее и узнать о фактах использования/предоставления."
+    guard: "ELECTORAL_SECTOR_RIGHTS_COMPLEMENT_NOT_REPLACE_152_FZ_RIGHTS"
+  - locator: "статья 17 пункт 15.2"
+    finding: "Электронный список может использоваться по установленным ЦИК правилам; после голосования создается юридически равнозначная копия и хранится по правилам избирательной документации."
+    guard: "ELECTORAL_ELECTRONIC_COPY_LIFECYCLE_NOT_GENERAL_PDN_LIFECYCLE"
+  - locator: "статья 17 пункт 16"
+    finding: "Исправление/исключение проводится по формализованной процедуре; дата и причина исключения отражаются в списке и базе ГАС «Выборы»."
+    guard: "ELECTORAL_CORRECTION_RULE_NOT_GENERAL_ERASURE_ON_REQUEST"
+  - locator: "статья 17 пункт 19"
+    finding: "После официального опубликования результатов сведения списка могут использоваться для уточнения регистра избирателей."
+    guard: "POST_ELECTION_REUSE_LIMITED_TO_STATUTORY_REGISTER_CLARIFICATION"
+
+retention_nodes:
+  - locator: "статья 70 пункт 10"
+    rule: "списки избирателей, подписные листы и бюллетени — установленный законом срок, но не менее 1 года со дня опубликования итогов голосования и результатов выборов/референдума"
+    extension: "при судебном споре или уголовном деле — до вступления решения суда в законную силу или прекращения дела"
+    guard: "ONE_YEAR_IS_STATUTORY_MINIMUM_NOT_UNIVERSAL_DELETION_DATE_OR_GENERAL_PDN_RETENTION"
+  - locator: "статья 70 пункт 11"
+    rule: "детальный порядок хранения, передачи в архив и уничтожения утверждается ЦИК/избирательными комиссиями субъектов по согласованию с архивными органами"
+    guard: "EXACT_RECORD_SERIES_PERIOD_REQUIRES_ELECTION_SPECIFIC_PRIMARY_ORDER"
+  - locator: "регистр избирателей / ГАС «Выборы»"
+    rule: "единый срок хранения регистра избирателей из минимального срока статьи 70 для списков не выводится"
+    guard: "VOTER_LIST_RETENTION_NOT_VOTER_REGISTER_RETENTION"
+
+cross_regime_edges:
+  - target: "152-ФЗ"
+    status: DIRECT
+    basis: "explicit personal-data terminology, access/correction and person-level processing"
+  - target: "149-ФЗ"
+    status: DIRECT_SYSTEM_OVERLAP
+    basis: "state information-system processing and protection context"
+  - target: "Федеральный закон от 10.01.2003 № 20-ФЗ о ГАС «Выборы»"
+    status: DIRECT_COMPANION_REGIME_CANDIDATE
+    basis: "special GAS Vybory system law requires separate primary source registration"
+  - target: "143-ФЗ"
+    status: DIRECT_DATA_FEED
+    basis: "article 16 civil-status death information route"
+  - target: "SEC-SRC-RU-FZ-125-2004"
+    status: CONDITIONAL_RECORD_SERIES_MATCH
+    basis: "election-document archival transfer/destruction lifecycle"
+
+version_and_effective_date:
+  current_revision: "2026-07-26"
+  checked_as_of: "2026-08-31"
+  latest_amendment: "Федеральный закон от 26.07.2026 № 261-ФЗ"
+  latest_amendment_affects_core_pdn_anchors: false
+  relevant_recent_amendment: "Федеральный закон от 02.05.2026 № 130-ФЗ"
+  relevant_recent_amendment_effect: "including current article 17 data-flow wording and related 2026 election-law changes"
+  later_amendment_located_in_this_sweep: false
+  full_primary_chain_claimed_complete: false
+
+capture:
+  exact_capture_state: PENDING_EXACT_CAPTURE
+  official_original_source: "https://www.kremlin.ru/acts/bank/18173/print"
+  latest_amendment_official_publication_medium: "https://rg.ru/documents/2026/08/03/fz261-dok.html"
+  amendment_130_official_publication_id: "0001202605020015"
+  exact_binary_attempt: "2026-08-31T02:15:00+03:00 / transient DNS resolution failure on www.kremlin.ru"
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+
+quality_gates:
+  applicability_promotions: 0
+  general_lawful_basis_inferred: false
+  general_pdn_retention_inferred: false
+  voter_status_misclassified_as_special_category: false
+  passport_data_misclassified_as_separate_secret: false
+  post_election_reuse_generalized: false
+  fabricated_binary_metadata: false
+  duplicate_source_created: false
