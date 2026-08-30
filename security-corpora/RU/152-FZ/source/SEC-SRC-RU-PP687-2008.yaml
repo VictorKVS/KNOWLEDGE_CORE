@@ -57,9 +57,9 @@ capture:
   sha256: ""
   fingerprint_status: PENDING_RAW_CAPTURE
   last_attempt:
-    observed_at: "2026-08-30T12:15:16.116949Z"
-    run_started_at: "2026-08-30T11:55:16.978282Z"
-    run_finished_at: "2026-08-30T11:55:17.030628Z"
+    observed_at: "2026-08-30T17:00:51.441238Z"
+    run_started_at: "2026-08-30T16:41:24.508718Z"
+    run_finished_at: "2026-08-30T16:41:24.563779Z"
     route: registered_official_multi_route
     result: ALL_REGISTERED_ROUTES_FAILED
     failure_classes:
@@ -69,29 +69,29 @@ capture:
       - ALL_REGISTERED_ROUTES_FAILED
     detail: >-
       Latest proven GitHub acquisition telemetry on 30.08.2026 retried all pre-registered PP687 official routes.
-      HTTPS pravo.gov.ru and Government routes timed out; an available IPS response failed the required
-      PP687/current-revision markers and another rendering returned HTTP 500. No failed response was promoted and
-      no byte/hash evidence was fabricated.
+      HTTPS pravo.gov.ru and Government routes timed out or reset; available IPS responses failed the required
+      PP687/current-revision markers or returned HTTP 500. No failed response was promoted and no byte/hash evidence
+      was fabricated.
     telemetry_source: "security-corpora/RU/152-FZ/PDN_ACQUISITION_RUN.json#dedicated_route_attempt_telemetry.pp687"
     proof_floor_held: true
     semantic_promotion: false
   runtime_probe:
-    observed_at: "2026-08-30T08:07:39Z"
+    observed_at: "2026-08-30T17:12:03Z"
     routes_probed:
       - "https://government.ru/docs/all/65436/"
-      - "http://pravo.gov.ru/proxy/ips/?docbody=&link_id=0&nd=102124251&intelsearch=&firstDoc=1"
-    result: TEMPORARY_TRANSPORT_TIMEOUT_IN_RUNTIME
-    transport_detail: "Fresh fetch on 30.08.2026 timed out on both registered official Government and pravo.gov.ru current-text routes; no response bytes were accepted."
+      - "https://pravo.gov.ru/proxy/ips/?docbody=&nd=102124251"
+    result: TEMPORARY_DNS_RESOLUTION_FAILURE_IN_RUNTIME
+    transport_detail: "Fresh byte-exact probe returned curl exit 6 for government.ru and pravo.gov.ru; no response bytes were accepted."
     independent_freshness_result: CURRENT_REVISION_RECONFIRMED_VIA_OFFICIAL_GOVERNMENT_INDEX
     proof_effect: METADATA_FRESHNESS_ONLY
     retry_policy: KEEP_GUARDED_RETRY_ENABLED
     note: >-
-      This fresh transport probe does not provide immutable byte evidence. Independent official Government indexing on
+      This transport probe does not provide immutable byte evidence. Independent official Government indexing on
       30.08.2026 reconfirmed the PP12 revision and validity-through-01.09.2030 fingerprint, but no MIME, byte length,
-      SHA-256 or immutable artifact is inferred from indexed text. A new GitHub guarded acquisition is requested from current main.
+      SHA-256 or immutable artifact is inferred from indexed text.
   acquisition_request:
     status: RETRY_REQUIRED_GUARDED
-    requested_at: "2026-08-30T13:59:43Z"
+    requested_at: "2026-08-30T17:12:03Z"
     route: official_canonical_snapshot_with_registered_ips_and_print_fallback
     reason: >-
       Immutable promotion requires returned official bytes, retrieved_at, MIME, exact byte length, SHA-256,
