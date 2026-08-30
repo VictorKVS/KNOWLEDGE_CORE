@@ -1,4 +1,4 @@
-schema_version: "1.0"
+schema_version: "1.1"
 id: SEC-SRC-RU-FSTEC205-2025
 kind: security-regulatory-source
 status: METADATA_VERIFIED
@@ -17,24 +17,40 @@ document:
   checked_at: "2026-08-30"
   temporal_status: CURRENT_AMENDING_ACT_EFFECT_CONFIRMED
   status_note: >-
-    Факт принятия приказа № 205, его регистрацию Минюстом России 10.09.2025 № 83505 и содержание
+    Факт принятия приказа №205, его регистрацию Минюстом России 10.09.2025 №83505 и содержание
     изменения подтверждает официальное информационное сообщение ФСТЭК России от 16.10.2025
-    № 240/24/5531. Повторная проверка 30.08.2026 не выявила точного официального primary
-    publication/file route самого приказа №205, поэтому дата официального опубликования и точная дата
-    вступления в силу не выводятся предположительно.
+    №240/24/5531. При дополнительной проверке 30.08.2026 просмотрен официальный каталог опубликованных
+    правовых актов ФСТЭК на publication.pravo.gov.ru: в доступном индексированном перечне присутствуют соседние
+    акты 2025 года, включая №230 с публикацией 19.09.2025 и №282 с публикацией 04.09.2025, однако №205
+    в перечне не surfaced. Это отрицательное поисковое evidence сужает поиск маршрута, но не доказывает само по себе,
+    что приказ никогда официально не публиковался или что публичный primary payload отсутствует. Точный официальный
+    primary publication/file route самого приказа №205 по-прежнему не установлен; дата официального опубликования
+    и точная дата вступления в силу не выводятся предположительно.
 canonical_source:
   publisher: "ФСТЭК России / официальный правовой источник подлежит установлению"
   landing_page: null
   url: null
   status_evidence_url: "https://fstec.ru/files/1407/-----16--2025--N-240-24-5531/2848/-----16--2025--N-240-24-5531.pdf"
+  official_publication_catalog_url: "https://publication.pravo.gov.ru/documents/block/foiv041"
   exact_document_route_status: UNRESOLVED_PRIMARY_PUBLICATION_ROUTE
   exact_file_route_status: UNRESOLVED_PRIMARY_PUBLICATION_ROUTE
   acquisition_priority: HIGH_VERSION_CHAIN_PRIMARY_BYTES
+  route_discovery_evidence:
+    checked_at: "2026-08-30"
+    result: OFFICIAL_FSTEC_PUBLICATION_CATALOG_CHECKED_ORDER205_NOT_SURFACED_IN_INDEXED_LIST
+    evidence_scope: ROUTE_DISCOVERY_NEGATIVE_EVIDENCE_NOT_PROOF_OF_NONPUBLICATION
+    neighboring_records_seen:
+      - "FSTEC Order 230/2025 — official publication 19.09.2025"
+      - "FSTEC Order 282/2025 — official publication 04.09.2025"
+    note: >-
+      The official FSTEC publication block was checked around the temporal window in which an act registered
+      on 10.09.2025 would normally be expected to surface. Order 205 was not found in the indexed list.
+      Keep route unresolved and do not synthesize a publication number or infer a legal-publication date.
   freshness_check:
     checked_at: "2026-08-30"
-    result: EXISTENCE_REGISTRATION_AND_EFFECT_RECONFIRMED_PRIMARY_ROUTE_STILL_UNRESOLVED
+    result: EXISTENCE_REGISTRATION_AND_EFFECT_RECONFIRMED_PRIMARY_ROUTE_STILL_UNRESOLVED_CATALOG_NEGATIVE_EVIDENCE_ADDED
     note: >-
-      Exact-title and registration-number searches against the official publication domain did not surface a
+      Exact-title and registration-number searches plus the official FSTEC published-act catalog did not surface a
       primary publication record for Order 205 in this pass. The official FSTEC notice remains status evidence only.
 capture:
   fingerprint_status: PENDING
@@ -60,20 +76,24 @@ applicability_guard:
   direct_scope: VERSION_CHAIN_AND_CERTIFICATION_PRODUCT_TRUST_CONTEXT_ONLY
   generic_private_ispdn: NOT_A_STANDALONE_PDN_DUTY
   no_requirement_propagation: >-
-    Приказ № 205 учитывается как изменение продуктовых требований доверия. Не переносить его положения
+    Приказ №205 учитывается как изменение продуктовых требований доверия. Не переносить его положения
     в общий перечень организационных и технических мер ИСПДн без доказанной связи с применимым средством
     защиты, сертификацией или иным нормативным требованием к уровню доверия.
 provenance:
   official_fstec_notice_identified: true
   minjust_registration_from_official_fstec_notice: true
   amendment_effect_from_official_fstec_notice: true
+  official_publication_catalog_checked: true
+  order205_not_surfaced_in_current_official_catalog_index: true
+  negative_catalog_result_is_not_nonpublication_proof: true
   exact_primary_route_verified: false
   exact_official_bytes_captured: false
   review_required: true
 agent_rule: >-
   Treat Order 205 as a verified version-chain dependency of Order 76, but keep its primary payload pending.
-  Never substitute the 240/24/5531 notice bytes for Order 205. Require an exact official primary route and payload
-  before immutable promotion, and retain certification/product scope guards.
+  Never substitute the 240/24/5531 notice bytes for Order 205. Treat absence from the current official publication
+  catalog index as route-discovery evidence only, not as proof of nonpublication. Require an exact official primary
+  route and payload before immutable promotion, and retain certification/product scope guards.
 inventory_registration:
   role: fstec76_version_chain_amending_act_2025
   applicability: VERSION_CHAIN_AND_CERTIFICATION_PRODUCT_TRUST_CONTEXT_ONLY
