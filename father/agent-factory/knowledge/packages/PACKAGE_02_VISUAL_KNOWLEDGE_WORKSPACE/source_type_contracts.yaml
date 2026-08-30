@@ -1,0 +1,110 @@
+schema_version: '1.0'
+method_id: FATHER-SOURCE-CONTRACTS-001
+status: ACTIVE
+universal_fields:
+  - source_id
+  - source_kind
+  - title
+  - issuer_or_author
+  - number
+  - date_signed
+  - date_published
+  - effective_from
+  - effective_to
+  - revision_id
+  - source_url
+  - sha256
+  - legal_status
+  - currentness_status
+  - applicability_scope
+  - source_trust_tier
+  - processing_run_id
+  - trace_id
+source_types:
+  LAW_NPA:
+    units: [article, part, clause, subclause, atomic_norm]
+    extract:
+      - definitions
+      - actors
+      - objects
+      - conditions
+      - obligations
+      - prohibitions
+      - rights
+      - deadlines
+      - exceptions
+      - consequences
+      - cross_references
+      - amendments
+      - effective_intervals
+    promotion_requires: [official_identity, exact_locator, currentness, applicability_review]
+  AGENCY_ORDER:
+    units: [order, section, clause, annex, form, measure]
+    extract:
+      - agency
+      - authority_basis
+      - registration_metadata
+      - scope
+      - regulated_subjects
+      - requirements
+      - procedures
+      - controls
+      - reporting_evidence
+      - annexes
+    relations: [IMPLEMENTS, DETAILS, BASED_ON, ISSUED_UNDER_AUTHORITY_OF, REFERENCES, AMENDS, SUPERSEDES, APPLIES_TO]
+  STANDARD:
+    units: [scope, normative_reference, term, clause, requirement, recommendation, process, verification]
+    extract:
+      - scope
+      - normative_references
+      - definitions
+      - normative_requirements
+      - recommendations
+      - processes
+      - roles
+      - artifacts
+      - quality_attributes
+      - verification_methods
+      - testable_controls
+    applicability_rule: 'technical requirement and legal binding status are separate dimensions'
+    relations: [ADOPTS, IDENTICAL_TO, MODIFIED_FROM, REFERENCES, REPLACES, IMPLEMENTS_REQUIREMENT, VERIFIES, TESTS, DEFINES_ARTIFACT, DEFINES_PROCESS]
+  BOOK:
+    units: [book, chapter, section, claim]
+    extract:
+      - concept
+      - definition
+      - principle
+      - pattern
+      - anti_pattern
+      - decision_rule
+      - trade_off
+      - checklist
+      - metric
+      - failure_mode
+      - test
+      - example
+    promotion_requires: [edition_identity, exact_locator, evidence_preserved, review]
+  INTERNAL_EXPERIENCE:
+    units: [experiment, run, decision, outcome, lesson]
+    extract: [baseline, hypothesis, implementation, test, metric, outcome, limitation, lesson]
+crosswalk:
+  exact_relations_first: true
+  semantic_relations_candidate_only: true
+  contradiction_requires:
+    - overlapping_subject_or_object
+    - compatible_applicability
+    - incompatible_requirement_or_constraint
+    - exact_source_locators
+  gap_rules:
+    - legal_requirement_without_control
+    - control_without_rationale
+    - architecture_element_without_requirement
+    - security_requirement_without_evidence
+    - standard_verification_without_test
+    - book_pattern_used_without_tradeoff_record
+dimensions:
+  authority: [LEGAL, OFFICIAL_STANDARD, REGULATOR_METHOD, PROFESSIONAL, INTERNAL_EXPERIENCE]
+  currentness: [CURRENT, SUPERSEDED, DRAFT, UNKNOWN]
+  applicability: [APPLICABLE, NOT_APPLICABLE, CONDITIONAL, NEEDS_REVIEW]
+  evidence_quality: [EXACT, INDIRECT, INFERRED, UNKNOWN]
+core_chain: [LAW, ORDER, STANDARD, REQUIREMENT, CONTROL, ARCHITECTURE_ELEMENT, API, CODE, TEST, TRACE, EVIDENCE, PRODUCT]
