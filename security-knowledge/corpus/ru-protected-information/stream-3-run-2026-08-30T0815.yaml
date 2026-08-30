@@ -1,0 +1,122 @@
+schema_version: "1.0"
+stream: 3
+run_at: "2026-08-30T08:15:14+03:00"
+objective: "continue sector/special-regime primary-source discovery, exact capture, deduplication, relationship linking and master reconciliation"
+
+selected_sources:
+  - id: SEC-SRC-RU-PP-411-2025
+    act: "Постановление Правительства Российской Федерации от 01.04.2025 № 411"
+    action: NEW_CANONICAL_SOURCE_NODE
+    sector_overlap:
+      - children
+      - education
+      - public_sector
+      - personal_data
+      - health_context
+      - identity_registry
+
+repository_dedupe:
+  pp_411_2025:
+    canonical_source_already_existed: false
+    parent_120_fz_already_existed: true
+    education_273_fz_already_existed: true
+    population_register_168_fz_already_existed: true
+    result: NEW_CANONICAL_SOURCE_WITH_EDGES_TO_EXISTING_NODES
+    found_counter_increment: 1
+
+primary_proof:
+  pp_411_2025:
+    official_publication_id: "0001202504020037"
+    official_publication_date: "2025-04-02"
+    official_url: "https://publication.pravo.gov.ru/document/0001202504020037"
+    effective_date: "2025-04-10"
+    current_edition_date: "2025-11-27"
+    amendment:
+      - "ПП РФ от 27.11.2025 № 1908 / publication 0001202511280044 / effective 2026-01-01 / updates supplier scope including FSB investigative detention centers"
+
+normative_findings:
+  - "PP 411 implements the juvenile-prevention federal GIS created by 120-ФЗ Chapter II.1 and makes PDN/information-security obligations explicit for the operator and suppliers."
+  - "Point 9 directly invokes state, commercial and other legally protected secrets, including adoption secrecy and medical secrecy; this is a regime reference, not automatic classification of every record."
+  - "The appendix contains detailed child/legal-representative identity and contact data, including document details, address, SNILS, phone/e-mail and the federal population-register record number, together with prevention/social/education context."
+  - "Point 25 establishes a GIS-specific minimum five-year retention rule for most system information subject to its exceptions and longer statutory periods; it is not a general PDN retention rule."
+  - "Point 26 requires daily backup to a reserve material medium and at least ten-year backup retention unless law requires longer; backup retention is not the same as live-system or general PDN retention."
+  - "Points 28-30 and 37-54 establish identity/access-management lifecycle requirements; their operational deadlines are not PDN data-subject response SLAs."
+  - "The GIS may query the federal population register through the statutory intersystem route to verify accuracy, completeness and currentness; this does not authorize unlimited secondary use."
+
+relationships:
+  added:
+    - "PP 411/2025 -> 120-ФЗ"
+    - "PP 411/2025 -> 152-ФЗ"
+    - "PP 411/2025 -> 149-ФЗ"
+    - "PP 411/2025 -> 273-ФЗ"
+    - "PP 411/2025 -> 168-ФЗ"
+    - "PP 411/2025 -> СК РФ art.139/adoption secrecy"
+    - "PP 411/2025 -> 323-ФЗ/medical secrecy"
+    - "PP 411/2025 -> archives/retention candidate where a longer record-series period is independently proven"
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+
+version_chain:
+  state: CURRENT_EDITION_2025_11_27_LOCATED_HISTORICAL_CHAIN_PARTIAL
+  later_amendment_located_in_this_sweep: false
+  full_historical_chain_claimed_complete: false
+
+acquisition:
+  exact_binary_attempted: true
+  attempted_at: "2026-08-30T08:15:14+03:00"
+  targets:
+    - "https://publication.pravo.gov.ru/document/0001202504020037"
+    - "https://publication.pravo.gov.ru/document/0001202511280044"
+  result: TRANSIENT_FAILURE
+  detail: "curl exit 6 / Could not resolve host: publication.pravo.gov.ru"
+  exact_bytes_obtained: false
+  portal_display_metadata_used_as_exact_bytes: false
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+  immutable_promotions: 0
+
+counters:
+  before:
+    found: 68
+    downloaded: 9
+    immutable: 9
+    pending: 57
+    reused: 3
+    primary_publication_verified: 38
+    sectors_registered: 32
+  after:
+    found: 69
+    downloaded: 9
+    immutable: 9
+    pending: 58
+    reused: 3
+    primary_publication_verified: 39
+    sectors_registered: 32
+
+files_written_or_updated:
+  - "security-corpora/RU/protected-information/source/SEC-SRC-RU-PP-411-2025.yaml"
+  - "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-PP-411-2025-capture-pending.json"
+  - "security-knowledge/corpus/ru-protected-information/master-inventory-delta-2026-08-30T0815.yaml"
+  - "security-knowledge/corpus/ru-personal-data/master-source-inventory-delta-stream3-2026-08-30T0815.yaml"
+  - "security-knowledge/corpus/ru-protected-information/stream-3-run-2026-08-30T0815.yaml"
+
+quality_gates:
+  primary_act_as_proof: true
+  taxonomy_as_evidence: false
+  applicability_invented: false
+  fabricated_binary_metadata: false
+  downloaded_increment_without_bytes: false
+  immutable_increment_without_hash: false
+  dedupe_inflated_found_counter: false
+  general_pdn_retention_inferred: false
+  protected_secret_classification_inferred: false
+  backup_retention_misclassified_as_live_retention: false
+  operational_sla_misclassified_as_pdn_sla: false
+
+next_actions:
+  - "Retry exact official bytes for PP 411/2025 and PP 1908/2025; create immutable artifacts only after actual byte length, MIME and SHA-256 are computed."
+  - "Continue education/children discovery into education-sector federal information systems and child-specific information flows, deduplicating against 120-ФЗ, 273-ФЗ and 168-ФЗ."
+  - "Continue public-sector identity/registry and retention discovery without generalizing system-specific retention periods."
