@@ -1,0 +1,66 @@
+schema_version: "1.0"
+id: SEC-PDN-SECURITY-STACK-INVENTORY-DELTA-STREAM2-2026-08-30T2311Z
+applies_to: PDN_SECURITY_STACK_SOURCE_INVENTORY.yaml
+stream: RU_PDN_TECHNICAL_CRYPTO
+created_at: "2026-08-30T23:11:08Z"
+merge_policy: >-
+  ADDITIVE_STREAM2_STATUS_DELTA. Preserve all existing registrations, version edges and applicability guards.
+  Counters change only when a guarded primary acquisition or newly verified source/route changes canonical state.
+
+source_status_updates:
+  - id: SEC-SRC-RU-PP1119-2012
+    checked_at: "2026-08-31"
+    status: CURRENT_PRIMARY_BYTES_PENDING
+    latest_transport_at: "2026-08-30T23:11:08Z"
+    latest_transport: ACQUISITION_ENV_DNS_RESOLUTION_FAILURE_GOVERNMENT_RU
+    primary_payload: PENDING
+    applicability: ISPDN_SCOPE
+  - id: SEC-SRC-RU-FSB378-2014
+    checked_at: "2026-08-31"
+    status: CURRENT_UNAMENDED_PRIMARY_BYTES_PENDING
+    latest_transport_at: "2026-08-30T23:11:08Z"
+    latest_transport: ACQUISITION_ENV_DNS_RESOLUTION_FAILURE_RG_RU
+    current_archive_index_scope_reconfirmed: true
+    primary_payload: PENDING
+    applicability: ISPDN_WHEN_SKZI_USED
+  - id: SEC-SRC-RU-FSTEC21-2013
+    checked_at: "2026-08-31"
+    status: CURRENT_REVISION_2020_05_14
+    replacement_project: "169583"
+    proposed_effective_from: "2026-09-01"
+    replacement_gate: PRIMARY_ENACTMENT_NOT_PROVEN_IN_FRESH_PRE_EFFECTIVE_DATE_REVIEW
+    raw_capture: IMMUTABLE_CAPTURED
+    applicability: ISPDN_SCOPE_NON_CRYPTO_TECHNICAL_CONTROLS
+    project_requirements_promoted: false
+
+counter_patch:
+  authoritative_at_record_time:
+    identified: 55
+    metadata_verified: 55
+    immutable_sha256_verified: 24
+    pending_raw_capture: 31
+    exact_official_route_unresolved: 8
+    confirmed_conflicts: 0
+  delta:
+    identified: 0
+    metadata_verified: 0
+    immutable_sha256_verified: 0
+    pending_raw_capture: 0
+    exact_official_route_unresolved: 0
+    confirmed_conflicts: 0
+  basis: >-
+    PP1119 and FSB378 exact-primary retries remain blocked by transient DNS resolution in the current execution
+    environment. Fresh pre-01.09.2026 FSTEC21 review found no primary enactment chain for the replacement project.
+    No new payload passed the immutable proof gate, so counters remain unchanged.
+
+latest_stream2_run: "security-stack/runs/STREAM2_RUN_2026-08-30T2311Z.yaml"
+
+applicability_guard: >-
+  Keep generic PP1119/FSTEC21 ISPDN duties separate from certification/product-trust, attestation, licensed activity,
+  KII/NCTKI/GosSOPKA and broad SKZI lifecycle branches. FSB378 applies only when SKZI use is established;
+  GosSOPKA/NCTKI enters the PDN branch only through an independently proved incident-reporting edge.
+
+proof_rule: >-
+  Exact official payload bytes, observed MIME/signature, exact byte length, computed SHA-256, immutable artifact and
+  manifest are mandatory before immutable promotion. Search snippets, secondary mirrors and negative route evidence
+  do not authorize primary promotion.
