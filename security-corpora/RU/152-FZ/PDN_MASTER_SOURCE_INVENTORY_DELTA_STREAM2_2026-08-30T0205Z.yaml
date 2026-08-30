@@ -1,0 +1,46 @@
+schema_version: "1.0"
+id: SEC-PDN-MASTER-SOURCE-INVENTORY-DELTA-STREAM2-2026-08-30T0205Z
+applies_to: PDN_MASTER_SOURCE_INVENTORY.yaml
+stream: RU_PDN_TECHNICAL_CRYPTO
+created_at: "2026-08-30T02:05:23Z"
+merge_policy: >-
+  ADDITIVE_SECURITY_STACK_STATUS_OVERLAY. Update only Stream-2 status/acquisition pointers and preserve
+  all non-Stream-2 master sources and parallel-stream data. Canonical counters change only after guarded reconciliation.
+
+security_stack_patch:
+  checked_at: "2026-08-30"
+  identified: 55
+  metadata_verified: 55
+  immutable_sha256_verified: 24
+  pending_raw_capture: 31
+  exact_official_route_unresolved: 8
+  confirmed_conflicts: 0
+  latest_acquisition_finished_at: "2026-08-29T23:37:35.241184Z"
+  latest_status_review_at: "2026-08-30T02:05:23Z"
+  latest_stream2_run: "security-stack/runs/STREAM2_RUN_2026-08-30T0205Z.yaml"
+  acquisition_state: COMPLETED_NO_NEW_IMMUTABLE
+  baseline_status:
+    pp1119: CURRENT_PRIMARY_BYTES_PENDING_LATEST_HTTPS_TIMEOUT_HTTP_404
+    fstec21: CURRENT_REVISION_2020_05_14_REPLACEMENT_PRIMARY_GATE_NOT_PASSED
+    fstec_threat_method_2021: CURRENT_IMMUTABLE_CAPTURED
+    fsb378: CURRENT_WHEN_SKZI_USED_PRIMARY_BYTES_PENDING_LATEST_RG_HTTP_401
+    fsb66: CURRENT_AS_AMENDED_SKZI_LIFECYCLE_PRIMARY_BYTES_PENDING
+    fstec205: CURRENT_VERSION_CHAIN_ACT_PRIMARY_ROUTE_UNRESOLVED
+  fstec21_latest_finding: >-
+    On 30.08.2026 no primary evidence of a final issued, Minjust-registered and officially published replacement
+    passed the enactment gate. A secondary 25.08.2026 article using categorical cancellation language was recorded
+    as a conflict signal only because its own text points to the 24.07.2026 project 169583 rather than a final act.
+    Project requirements remain outside the active PDN baseline.
+
+counter_basis: >-
+  Last authoritative Stream-2 counters remain 55 identified / 55 metadata-verified / 24 immutable /
+  31 pending / 8 unresolved exact routes / 0 confirmed conflicts. The latest guarded acquisition completed with
+  zero new immutable payloads; transport/status synchronization therefore does not alter production counters.
+
+applicability_guard: >-
+  Keep PP1119/FSTEC21 ISPDN baseline distinct from attestation, licensing, certification, SKZI lifecycle,
+  KII/NCTKI and GosSOPKA branches. Neighboring requirements require an explicit applicability edge before reuse.
+
+proof_rule: >-
+  Exact official payload bytes, observed MIME/signature, exact byte length, computed SHA-256,
+  immutable artifact and manifest are required before immutable promotion. No mirror substitution.
