@@ -1,0 +1,102 @@
+schema_version: "1.0"
+stream: 3
+checked_at: "2026-08-30T08:15:14+03:00"
+mode: APPEND_ONLY_PDN_SECTOR_OVERLAY_RECONCILIATION
+source_id: SEC-SRC-RU-PP-411-2025
+source_title: "Постановление Правительства РФ от 01.04.2025 № 411 — ГИС профилактики безнадзорности и правонарушений несовершеннолетних"
+parent_source_id: SEC-SRC-RU-FZ-120-1999
+
+pdn_overlap:
+  status: DIRECT_TEXTUAL_AND_OPERATIONAL_OVERLAP
+  direct_anchors:
+    - "пункт 5: федеральный оператор обеспечивает исполнение законодательства в области персональных данных"
+    - "пункт 9: информация системы защищается в соответствии с законодательством в области персональных данных"
+    - "пункты 11-12 и приложение: определен подробный состав person-level сведений о несовершеннолетних и законных представителях"
+    - "пункты 28-30, 37, 40-54: доступ, идентификация, аутентификация, авторизация, ролевое управление, средства доступа и блокирование"
+    - "пункты 25-27: специальные правила хранения, резервного копирования и целостности"
+  lawful_basis_statement: "Само ПП № 411 не превращается в универсальное основание любой обработки ПДн поставщика; применимость определяется ролью участника, конкретной записью, полномочием по 120-ФЗ/иным первичным актам и установленным потоком данных."
+
+person_level_examples:
+  - "ФИО несовершеннолетнего и прежняя фамилия при рождении"
+  - "пол, дата и место рождения, гражданство"
+  - "реквизиты паспорта/иного документа и свидетельства о рождении"
+  - "адрес места жительства/пребывания/фактического проживания"
+  - "СНИЛС"
+  - "контактный телефон и e-mail"
+  - "номер записи единого федерального регистра сведений о населении"
+  - "ФИО и иные предусмотренные Положением сведения о родителях/законных представителях"
+  - "сведения профилактического, социального, образовательного и в предусмотренных записях медицинского контекста"
+
+retention_nodes:
+  - locator: "пункт 25"
+    rule: "не менее 5 лет со дня представления поставщиком для основной массы сведений системы с оговорками Положения и более длительными сроками, если они установлены законодательством"
+    guard: "FIVE_YEAR_GIS_RETENTION_NOT_GENERAL_PDN_RETENTION"
+  - locator: "пункт 26"
+    rule: "ежедневное копирование на резервный материальный носитель; резервная информация хранится не менее 10 лет, если законодательством не установлен более длительный срок"
+    guard: "TEN_YEAR_BACKUP_RETENTION_NOT_GENERAL_PDN_OR_ACTIVE_RECORD_RETENTION"
+
+protected_information_boundaries:
+  - regime: "врачебная тайна"
+    evidence: "пункт 9 прямо включает врачебную тайну в перечень охраняемых режимов"
+    classification_guard: "Конкретная запись относится к врачебной тайне только при доказанном медицинском происхождении/содержании и применимом режиме 323-ФЗ; наличие health-context в системе недостаточно."
+  - regime: "тайна усыновления"
+    evidence: "пункт 9 прямо включает тайну усыновления в перечень охраняемых режимов"
+    classification_guard: "Ссылка на режим не означает, что каждая запись ребенка является тайной усыновления; требуется record-level факт усыновления и применимость соответствующей нормы."
+  - regime: "государственная, коммерческая и иная охраняемая законом тайна"
+    evidence: "пункт 9 содержит общий прямой режимный reference"
+    classification_guard: "REFERENCE_NOT_AUTOMATIC_CLASSIFICATION"
+
+operational_sla_guards:
+  - locator: "пункт 6 подпункт д"
+    observed_rule: "незамедлительное уведомление федерального оператора о сбоях/нарушениях безопасности информации"
+    guard: "NOT_ROSKOMNADZOR_PDN_BREACH_NOTIFICATION_SLA"
+  - locator: "пункт 30"
+    observed_rule: "3 рабочих дня на автоматизированное предоставление системного доступа после заявки пользователя"
+    guard: "NOT_DATA_SUBJECT_REQUEST_SLA"
+  - locator: "пункты 50-54"
+    observed_rule: "сроки перерегистрации/уведомления/блокирования средств доступа"
+    guard: "ACCESS_LIFECYCLE_SLA_NOT_PDN_RETENTION_OR_SUBJECT_RIGHTS_SLA"
+
+cross_regime_edges:
+  - target: "152-ФЗ"
+    status: DIRECT
+    basis: "explicit PDN protection clauses"
+  - target: "SEC-SRC-RU-FZ-120-1999"
+    status: DIRECT_PARENT
+    basis: "implementing regulation under articles 25.2-25.3"
+  - target: "SEC-SRC-RU-FZ-168-2020"
+    status: DIRECT_SYSTEM_FLOW
+    basis: "population-register verification of accuracy/completeness/currentness"
+  - target: "SEC-SRC-RU-FZ-273-2012"
+    status: SCENARIO_MATCH_REQUIRED
+    basis: "education bodies and organizations participate as suppliers in statutory prevention workflows"
+  - target: "SEC-SRC-RU-FZ-323"
+    status: RECORD_LEVEL_MEDICAL_PROVENANCE_REQUIRED
+    basis: "direct medical-secrecy reference plus medical-organization data flows"
+  - target: "SEC-SRC-RU-SK-1995-A139"
+    status: RECORD_LEVEL_ADOPTION_FACT_REQUIRED
+    basis: "direct adoption-secrecy reference"
+  - target: "archives/retention"
+    status: DOCUMENT_SERIES_AND_LIFECYCLE_MATCH_REQUIRED
+    basis: "PP 411 expressly preserves longer periods established by legislation"
+
+version_and_capture:
+  current_edition_date: "2025-11-27"
+  amendment: "ПП РФ от 27.11.2025 № 1908 / official publication 0001202511280044 / effective 2026-01-01"
+  version_chain_state: VERSION_CHAIN_PARTIAL
+  exact_capture_state: PENDING_EXACT_CAPTURE
+  exact_binary_attempted_at: "2026-08-30T08:15:14+03:00"
+  exact_binary_result: "curl exit 6 / DNS resolution failed for publication.pravo.gov.ru"
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+
+quality_gates:
+  applicability_promotions: 0
+  general_pdn_retention_inferred: false
+  special_category_pdn_inferred_from_child_or_health_context: false
+  medical_secrecy_inferred_without_provenance: false
+  adoption_secrecy_inferred_without_record_fact: false
+  fabricated_binary_metadata: false
