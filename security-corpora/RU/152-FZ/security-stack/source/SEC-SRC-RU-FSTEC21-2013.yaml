@@ -1,4 +1,4 @@
-schema_version: "1.2"
+schema_version: "1.3"
 id: SEC-SRC-RU-FSTEC21-2013
 kind: security-regulatory-source
 status: METADATA_VERIFIED
@@ -12,23 +12,25 @@ document:
   ministry_registration_number: "28375"
   current_revision_date: "2020-05-14"
   current_revision_note: >-
-    Действующая проверенная базовая редакция по состоянию на 29.08.2026 остается редакцией от 14.05.2020;
-    amendment chain содержит приказы ФСТЭК России № 49/2017 и № 68/2020. Проект замены, подготовленный
-    24.07.2026 (идентификатор проекта 169583), предлагает отменить приказ № 21, пункт 1 приложения к № 49/2017
-    и приказ № 68/2020 с 01.09.2026, однако свежая проверка 29.08.2026 не выявила первичного доказательства
+    Действующая проверенная базовая редакция по состоянию на 30.08.2026 остается редакцией от 14.05.2020;
+    amendment chain содержит приказы ФСТЭК России №49/2017 и №68/2020. Проект замены, подготовленный
+    24.07.2026 (идентификатор проекта 169583), предлагает отменить приказ №21, пункт 1 приложения к №49/2017
+    и приказ №68/2020 с 01.09.2026, однако свежая проверка 30.08.2026 не выявила первичного доказательства
     издания, государственной регистрации в Минюсте и официального опубликования заменяющего приказа.
-  checked_at: "2026-08-29"
+    Противоречивые вторичные формулировки об «отмене №21» зарегистрированы только как monitoring signal:
+    материал не проходит primary-enactment gate, если внутри он ссылается лишь на проект 169583.
+  checked_at: "2026-08-30"
   replacement_watch:
     project_id: "169583"
     prepared_date: "2026-07-24"
     status: DRAFT_NOT_ENACTED_IN_VERIFIED_EVIDENCE
     public_discussion_ended: "2026-08-08"
     proposed_effective_from: "2026-09-01"
-    checked_at: "2026-08-29"
+    checked_at: "2026-08-30"
     proposed_effect_only: true
     watch_record: "../watch/PDN-WATCH-FSTEC21-REPLACEMENT-2026-001.yaml"
     proof_rule: >-
-      Не применять требования проекта и не закрывать version-chain приказа № 21 до появления первичного
+      Не применять требования проекта и не закрывать version-chain приказа №21 до появления первичного
       доказательства издания, регистрации и официального опубликования окончательного акта.
 canonical_source:
   publisher: "ФСТЭК России"
@@ -38,12 +40,13 @@ canonical_source:
   fallback_scope: CURRENT_REVISION_OFFICIAL_GOVERNMENT_MIRROR
   expected_mime: "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
   freshness_check:
-    checked_at: "2026-08-29"
-    result: CURRENT_REVISION_2020_05_14_ACTIVE_REPLACEMENT_PROJECT_169583_WATCH_ONLY
+    checked_at: "2026-08-30"
+    result: CURRENT_REVISION_2020_05_14_ACTIVE_REPLACEMENT_PROJECT_169583_PRIMARY_GATE_NOT_PASSED
     note: >-
-      Свежая проверка 29.08.2026 по индексируемым публикациям продолжает идентифицировать замену как проект,
-      а приказ № 21 — как применяемый baseline. Отсутствие найденной официальной публикации не превращается
-      в утверждение о невозможности ее последующего появления; watch должен перепроверяться.
+      Проверка 30.08.2026 не выявила первичного enactment evidence финальной замены. Вторичные материалы
+      с категоричными заголовками об отмене используются только как conflict/monitoring evidence, если их
+      собственный текст ссылается на проект. Отсутствие найденной официальной публикации не доказывает
+      невозможность ее последующего появления; watch должен продолжаться.
 capture:
   raw_artifact_ref: "security-corpora/RU/152-FZ/security-stack/raw/SEC-SRC-RU-FSTEC21-2013/official-snapshot-6522074c76beea01.docx"
   manifest_ref: "security-corpora/RU/152-FZ/security-stack/manifests/SEC-SRC-RU-FSTEC21-2013.json"
@@ -69,11 +72,11 @@ relations:
 provenance:
   official_identity_verified: true
   official_current_revision_mirror_registered: true
-  current_status_rechecked_at: "2026-08-29"
+  current_status_rechecked_at: "2026-08-30"
   replacement_project_watch_registered: true
   replacement_project_evidence_class: CURRENT_SECONDARY_MONITORING_WITH_PRIMARY_ENACTMENT_GATE
   review_required: true
 agent_rule: >-
   Не исполнять сообщаемый проект замены как действующее право. Базовым обязательным техническим документом
-  остается приказ № 21 в редакции от 14.05.2020, пока не доказан изданный, зарегистрированный и официально
+  остается приказ №21 в редакции от 14.05.2020, пока не доказан изданный, зарегистрированный и официально
   опубликованный заменяющий акт. Проект 169583 использовать только как watch/future-change evidence.
