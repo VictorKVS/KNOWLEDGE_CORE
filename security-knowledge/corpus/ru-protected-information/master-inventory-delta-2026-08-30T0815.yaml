@@ -1,0 +1,118 @@
+schema_version: "1.0"
+stream: 3
+checked_at: "2026-08-30T08:15:14+03:00"
+mode: APPEND_ONLY_RU_PROTECTED_INFORMATION_RECONCILIATION
+previous_stream3_delta: "master-inventory-delta-2026-08-30T0517.yaml"
+focus: "children/education/public-sector juvenile-prevention GIS implementing regulation + PDN/protected-secret/retention overlays"
+
+counters_before:
+  found: 68
+  downloaded: 9
+  immutable: 9
+  pending: 57
+  reused: 3
+  primary_publication_verified: 38
+  sectors_registered: 32
+
+counters_after:
+  found: 69
+  downloaded: 9
+  immutable: 9
+  pending: 58
+  reused: 3
+  primary_publication_verified: 39
+  sectors_registered: 32
+
+sources_added:
+  - source_id: SEC-SRC-RU-PP-411-2025
+    title: "Постановление Правительства РФ от 01.04.2025 № 411 — государственная информационная система профилактики безнадзорности и правонарушений несовершеннолетних"
+    sector: children + education + public_sector + personal_data + health_context + identity_registry
+    regime: juvenile_prevention_federal_gis_implementation
+    dedupe_result: NEW_CANONICAL_SOURCE_NODE
+    parent_source: SEC-SRC-RU-FZ-120-1999
+    exact_capture: PENDING_TRANSIENT_BINARY_FETCH_FAILURE
+    applicability_status: SYSTEM_ROLE_RECORD_PROVENANCE_AND_LOCATOR_MATCH_REQUIRED
+    executable_effect: NONE
+
+primary_evidence:
+  pp_411_2025:
+    official_publication_id: "0001202504020037"
+    official_publication_date: "2025-04-02"
+    official_url: "https://publication.pravo.gov.ru/document/0001202504020037"
+    effective_date: "2025-04-10"
+    current_edition_date: "2025-11-27"
+    material_amendment:
+      act: "Постановление Правительства РФ от 27.11.2025 № 1908"
+      official_publication_id: "0001202511280044"
+      official_publication_date: "2025-11-28"
+      effective_date: "2026-01-01"
+      effect: "актуализировало состав поставщиков/участников в связи со следственными изоляторами органов ФСБ, включая позиции приложения к Положению № 411"
+
+key_findings:
+  - source_id: SEC-SRC-RU-PP-411-2025
+    locator: "пункты 5, 6, 9"
+    finding: "Положение прямо закрепляет обязанности по соблюдению законодательства о ПДн и защите информации; информация системы защищается также по режимам государственной, коммерческой и иной охраняемой законом тайны, включая тайну усыновления и врачебную тайну."
+    guard: "PROTECTED_SECRET_REFERENCE != AUTOMATIC_MULTI_CLASSIFICATION_OF_EVERY_RECORD"
+  - source_id: SEC-SRC-RU-PP-411-2025
+    locator: "пункты 11-12 и приложение"
+    finding: "В системе обрабатывается детализированный person-level набор сведений о несовершеннолетних/представителях, включая идентификаторы, документы, адрес, СНИЛС, телефон, e-mail и номер записи федерального регистра сведений о населении."
+    guard: "CHILD_PERSON_LEVEL_DATASET != SPECIAL_CATEGORY_PDN_OR_MEDICAL_SECRET_AUTOMATICALLY"
+  - source_id: SEC-SRC-RU-PP-411-2025
+    locator: "пункт 25"
+    finding: "Для основной массы сведений системы установлен специальный минимум хранения 5 лет со дня представления поставщиком с предусмотренными нормативными оговорками."
+    guard: "FIVE_YEAR_GIS_RETENTION != GENERAL_PDN_OR_DOCUMENT_RETENTION"
+  - source_id: SEC-SRC-RU-PP-411-2025
+    locator: "пункт 26"
+    finding: "Система требует ежедневного копирования на резервный материальный носитель и хранения резервной информации не менее 10 лет, если закон не требует более длительного срока."
+    guard: "TEN_YEAR_BACKUP_RETENTION != GENERAL_LIVE_DATA_OR_PDN_RETENTION"
+  - source_id: SEC-SRC-RU-PP-411-2025
+    locator: "пункты 28-30, 37, 40-54"
+    finding: "Установлены идентификация/аутентификация/авторизация, ролевое назначение уполномоченных лиц, сертифицированные средства доступа, защита от НСД, регистрация, перерегистрация и блокирование доступа."
+    guard: "SYSTEM_USER_OR_SUPPLIER_STATUS != UNLIMITED_ACCESS"
+  - source_id: SEC-SRC-RU-PP-411-2025
+    locator: "пункты 32-36"
+    finding: "Система взаимодействует с иными ГИС через СМЭВ и может запрашивать ЕФИР населения для проверки достоверности, полноты и актуальности данных."
+    guard: "SMEV_AND_EFIR_FLOW != UNLIMITED_SECONDARY_USE"
+
+relationships_added:
+  - "PP 411/2025 -> 120-ФЗ: direct implementing regulation for Chapter II.1 / articles 25.2-25.3"
+  - "PP 411/2025 -> 152-ФЗ: direct personal-data protection reference"
+  - "PP 411/2025 -> 149-ФЗ: direct information/information-protection regime overlap"
+  - "PP 411/2025 -> 273-ФЗ: education organizations appear as suppliers/users only within statutory prevention workflows"
+  - "PP 411/2025 -> 168-ФЗ: direct population-register validation flow"
+  - "PP 411/2025 -> СК РФ article 139 node: direct adoption-secrecy reference; record-level classification required"
+  - "PP 411/2025 -> 323-ФЗ: direct medical-secrecy reference; record-level medical provenance required"
+  - "PP 411/2025 -> archives/retention: longer document-retention rules may supersede the 5/10-year system minima only after record-series/lifecycle proof"
+
+version_chain:
+  source_pp_411_2025: CURRENT_EDITION_2025_11_27_LOCATED_HISTORICAL_CHAIN_PARTIAL
+  later_amendment_located_in_2026_08_30_sweep: false
+  complete_historical_chain_claimed: false
+
+acquisition_state:
+  exact_binary_attempted: true
+  exact_binary_obtained: false
+  attempted_at: "2026-08-30T08:15:14+03:00"
+  reason: TRANSIENT_BINARY_DOWNLOAD_DNS_FAILURE
+  affected_host: "publication.pravo.gov.ru"
+  official_targets:
+    - "https://publication.pravo.gov.ru/document/0001202504020037"
+    - "https://publication.pravo.gov.ru/document/0001202511280044"
+  portal_display_pdf_sizes_used_as_exact_bytes: false
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+
+quality_gates:
+  taxonomy_as_evidence: false
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+  fabricated_binary_metadata: false
+  downloaded_increment_without_bytes: false
+  immutable_increment_without_hash: false
+  primary_publication_counter_increment_new_sources_only: true
+  dedupe_inflated_found_counter: false
+  general_pdn_retention_inferred: false
+  protected_secret_classification_inferred: false
