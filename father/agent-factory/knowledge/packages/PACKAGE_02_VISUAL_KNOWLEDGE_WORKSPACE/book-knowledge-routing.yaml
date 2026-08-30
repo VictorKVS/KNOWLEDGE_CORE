@@ -1,0 +1,145 @@
+schema_version: '1.0'
+policy_id: FATHER-BOOK-KNOWLEDGE-ROUTING-001
+canonical_truth_rule: one_node_many_views
+
+book_tiers:
+  GOLD:
+    description: canonical high-value source that may influence project rules after review
+  SILVER:
+    description: strong supporting source used for comparison and refinement
+  CANDIDATE:
+    description: source awaiting quality/applicability review
+
+book_states:
+  - REGISTERED
+  - PROFILED
+  - EXTRACTED
+  - TRANSLATED
+  - KNOWLEDGE_CANDIDATES
+  - EVIDENCE_LINKED
+  - CROSS_SOURCE_CHECKED
+  - REVIEWED
+  - KB_READY
+  - ROUTED
+  - USED_IN_DEVELOPMENT
+  - OUTCOME_CAPTURED
+  - BLOCKED
+
+knowledge_types:
+  - CONCEPT
+  - DEFINITION
+  - CLAIM
+  - PRINCIPLE
+  - PATTERN
+  - ANTI_PATTERN
+  - DECISION_RULE
+  - TRADE_OFF
+  - CHECKLIST
+  - METRIC
+  - FAILURE_MODE
+  - TEST
+  - EXAMPLE
+  - REQUIREMENT
+  - LESSON
+
+relations:
+  - DEFINES
+  - SUPPORTS
+  - CONTRADICTS
+  - REFINES
+  - DEPENDS_ON
+  - PART_OF
+  - APPLIES_TO
+  - CAUSES
+  - MITIGATES
+  - IMPLEMENTS
+  - DERIVED_FROM
+  - EVIDENCE_FOR
+  - SAME_AS
+
+domains:
+  PRODUCT_DISCOVERY: [PRODUCT, ANALYST, MANAGER]
+  REQUIREMENTS_ANALYSIS: [ANALYST, PRODUCT, ARCHITECT]
+  DOMAIN_MODEL_DDD: [ANALYST, ARCHITECT, SOFTWARE_ENGINEER]
+  UX_INFORMATION_ARCHITECTURE: [PRODUCT, ANALYST, SOFTWARE_ENGINEER]
+  GRAPH_VISUALIZATION: [ANALYST, ARCHITECT, SOFTWARE_ENGINEER]
+  SOFTWARE_ARCHITECTURE: [ARCHITECT, SOFTWARE_ENGINEER, SECURITY, SRE_DEVOPS]
+  C4_ARCHITECTURE_AS_CODE: [ARCHITECT, SOFTWARE_ENGINEER]
+  API_INTEGRATION: [ARCHITECT, SOFTWARE_ENGINEER, SECURITY, SRE_DEVOPS]
+  DATA_ARCHITECTURE: [ARCHITECT, SOFTWARE_ENGINEER, AI_ML_ENGINEER]
+  KNOWLEDGE_GRAPHS: [ARCHITECT, AI_ML_ENGINEER, CHIEF_ANALYST]
+  MICROSERVICES_DISTRIBUTED: [ARCHITECT, SOFTWARE_ENGINEER, SRE_DEVOPS, SECURITY]
+  SOFTWARE_ENGINEERING: [SOFTWARE_ENGINEER, ARCHITECT]
+  AI_LLM_RAG: [AI_ML_ENGINEER, ARCHITECT, CHIEF_ANALYST]
+  OBSERVABILITY_RELIABILITY: [SRE_DEVOPS, ARCHITECT, SOFTWARE_ENGINEER]
+  SECURITY_DEVSECOPS: [SECURITY, ARCHITECT, SOFTWARE_ENGINEER, SRE_DEVOPS]
+  TEAM_EVOLUTION: [MANAGER, ARCHITECT, PRODUCT]
+  FINOPS: [MANAGER, ARCHITECT, SRE_DEVOPS, PRODUCT]
+  CLOUD_PLATFORM: [ARCHITECT, SRE_DEVOPS, SECURITY]
+
+roles:
+  - PRODUCT
+  - ANALYST
+  - ARCHITECT
+  - SOFTWARE_ENGINEER
+  - AI_ML_ENGINEER
+  - SECURITY
+  - SRE_DEVOPS
+  - LAWYER
+  - MANAGER
+  - CHIEF_ANALYST
+
+lifecycle_stages:
+  - DISCOVERY
+  - REQUIREMENTS
+  - DOMAIN
+  - UX
+  - HLD
+  - LLD
+  - API_CONTRACTS
+  - IMPLEMENTATION
+  - VERIFICATION
+  - RELEASE
+  - OPERATIONS
+  - EVOLUTION
+
+maturity:
+  - CANDIDATE
+  - BOOK_SUPPORTED
+  - MULTI_SOURCE_SUPPORTED
+  - STANDARD_OR_OFFICIAL_SUPPORTED
+  - EXPERIMENTALLY_VERIFIED
+  - PRODUCTION_VERIFIED
+
+promotion:
+  required:
+    - stable_knowledge_id
+    - evidence_link
+    - exact_source_locator
+    - source_sha256
+    - review_verdict
+    - trace_id
+  blocked_when:
+    - evidence_missing
+    - source_unresolved
+    - translation_qa_failed
+    - review_rejected
+    - unsupported_canonical_statement
+
+locality:
+  full_source_book: LOCAL_ONLY_UNLESS_RIGHTS_ALLOW
+  full_translation: LOCAL_ONLY_UNLESS_RIGHTS_ALLOW
+  public_repository:
+    - code
+    - schemas
+    - metadata
+    - hashes
+    - safe_fixtures
+    - knowledge_records
+    - evidence_locators
+
+routing_rule:
+  copy_canonical_knowledge: false
+  create_role_projection: true
+  create_project_projection: true
+  preserve_cross_source_disagreement: true
