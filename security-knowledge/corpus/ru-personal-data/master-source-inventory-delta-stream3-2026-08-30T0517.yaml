@@ -1,0 +1,86 @@
+schema_version: "1.0"
+stream: 3
+checked_at: "2026-08-30T05:17:03+03:00"
+focus: "public-sector population-register PDN + child-prevention confidentiality/GIS PDN overlay"
+
+reused_relationship_nodes:
+  - source_id: SEC-SRC-RU-FZ-168-2020
+    relationship_to_pdn: DIRECT_REGISTER_PDN_SECURITY_AND_SPECIAL_RETENTION
+    dedupe_action: REUSE_AND_UPGRADE_CANONICAL_NODE
+    evidence:
+      relevant_locators:
+        - "статья 3 пункт 1"
+        - "статья 8 части 11 и 13"
+        - "статья 9 части 1 и 5"
+        - "статья 11 части 5 и 10"
+      finding: "168-ФЗ устанавливает специальные правила безопасности ПДн, постоянного хранения записей федерального регистра, доступа и защиты сведений downstream recipients. Постоянное хранение относится к записям конкретного федерального регистра, а не образует общий срок хранения ПДн."
+    guards:
+      - "PERMANENT_EFIR_RECORD_RETENTION != GENERAL_PDN_RETENTION"
+      - "EFIR_RECORD != STATE_SECRET_AUTOMATICALLY"
+      - "AUTHORIZED_REGISTER_FLOW != UNLIMITED_SECONDARY_USE"
+      - "CHILD_OR_FAMILY_STATUS_ACCESS_RULE != GENERAL_CHILD_CONSENT_RULE"
+    applicability_promoted: false
+
+new_relationship_nodes:
+  - source_id: SEC-SRC-RU-FZ-120-1999
+    relationship_to_pdn: DIRECT_CHILD_PDN_CONFIDENTIALITY_AND_FEDERAL_GIS_PROTECTION
+    evidence:
+      relevant_locators:
+        - "статья 2"
+        - "статья 9 пункты 2-3"
+        - "статья 14"
+        - "статья 25.2 части 1-4"
+        - "статья 25.3"
+      finding: "120-ФЗ требует конфиденциальности информации в профилактической работе и для специальной федеральной GIS прямо закрепляет конфиденциальность ПДн, их защиту и соблюдение требований к личной, семейной, коммерческой и иной охраняемой законом тайне."
+    guards:
+      - "ARTICLE_9_CONFIDENTIALITY != INDEPENDENT_SECRET_CATEGORY"
+      - "ARTICLE_7_PREVENTIVE_WORK_DURATION != PDN_RETENTION_PERIOD"
+      - "CHILD_GIS_RECORD != SPECIAL_CATEGORY_PDN_AUTOMATICALLY"
+      - "CHILD_GIS_RECORD != MEDICAL_SECRET_WITHOUT_MEDICAL_PROVENANCE"
+      - "PROTECTED_SECRET_REFERENCE != AUTOMATIC_MULTI_CLASSIFICATION"
+      - "MANDATORY_INTERAGENCY_FLOW != UNLIMITED_SECONDARY_USE"
+      - "EDUCATION_PARTICIPATION != GENERAL_EDUCATION_PDN_APPLICABILITY"
+    applicability_promoted: false
+
+retention_nodes:
+  - source_id: SEC-SRC-RU-FZ-168-2020
+    locator: "статья 8 часть 11"
+    retention_type: FEDERAL_POPULATION_REGISTER_RECORD_RETENTION
+    value: "permanent storage of register records and other information contained in the register under the law; statutory exceptions only"
+    guard: "REGISTER_SPECIFIC_RETENTION_ONLY_NOT_GENERAL_PDN_RETENTION"
+
+workflow_duration_nodes:
+  - source_id: SEC-SRC-RU-FZ-120-1999
+    locator: "статья 7"
+    type: INDIVIDUAL_PREVENTIVE_WORK_DURATION
+    value: "defined by statutory/factual cessation events including removal of grounds or age limits"
+    guard: "WORKFLOW_DURATION_NOT_RETENTION_PERIOD"
+
+protected_information_overlap:
+  - source_id: SEC-SRC-RU-FZ-120-1999
+    target: "личная/семейная/коммерческая/иная охраняемая законом тайна"
+    finding: "Статья 25.2 содержит прямую ссылку на соблюдение соответствующего законодательства, но конкретная классификация каждого record/data element требует собственного нормативного основания."
+    guard: "REFERENCE_TO_SECRET_REGIMES_DOES_NOT_CLASSIFY_EVERY_RECORD"
+  - source_id: SEC-SRC-RU-FZ-120-1999
+    target: "323-ФЗ / врачебная тайна"
+    finding: "В GIS могут присутствовать health- и drug-related сведения, однако режим врачебной тайны требует доказанного медицинского происхождения сведений."
+    guard: "HEALTH_RELATED_CHILD_DATA_NOT_MEDICAL_SECRET_WITHOUT_PROVEN_MEDICAL_PROVENANCE"
+
+pdn_master_effect:
+  applicability_promotions: 0
+  new_direct_pdn_sources: 1
+  reused_direct_pdn_sources: 1
+  new_general_pdn_retention_periods: 0
+  new_special_register_retention_nodes: 1
+  legal_conflicts_declared: 0
+  immutable_promotions: 0
+
+acquisition:
+  exact_binary_obtained: false
+  retry_class: TRANSIENT
+  reason: "DNS failures for publication.pravo.gov.ru and www.kremlin.ru in exact-byte runtime"
+  fabricated_binary_metadata: false
+
+next_review:
+  - "Retry exact official capture of 168-ФЗ, 120-ФЗ, 322-ФЗ and 311-ФЗ; promote only after actual bytes plus retrieved_at, MIME, byte length and SHA-256 are stored."
+  - "Continue education/children and public-sector special-regime discovery, deduplicating against 120-ФЗ and 168-ФЗ rather than creating sector copies."
