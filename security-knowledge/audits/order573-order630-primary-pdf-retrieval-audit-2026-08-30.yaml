@@ -1,0 +1,557 @@
+{
+  "schema_version": "1.0",
+  "audit_id": "RU-MINKOMSVYAZ-573-ORDER630-PRIMARY-PDF-RETRIEVAL-20260830",
+  "checked_at": "2026-08-30",
+  "status": "FAIL_CLOSED_OFFICIAL_ROUTES_DISCOVERED_PRIMARY_BYTES_NOT_RECEIVED",
+  "scope": "Воспроизводимый аудит обнаружения и получения первичного PDF приказа Минцифры № 630 для постраничной сверки приложения № 9.",
+  "legal_identity": {
+    "act": "Приказ Минцифры России от 12.07.2023 № 630",
+    "amends": "Приказ Минкомсвязи России от 29.10.2018 № 573",
+    "signed_on": "2023-07-12",
+    "registered_on": "2023-09-05",
+    "minjust_registration_number": "75102",
+    "effective_from": "2024-03-01",
+    "validity_until_exclusive": "2030-03-01"
+  },
+  "official_discovery": {
+    "publication_pravo": {
+      "document_url": "https://publication.pravo.gov.ru/document/0001202309050014",
+      "pdf_url": "https://publication.pravo.gov.ru/file/pdf?eoNumber=0001202309050014",
+      "eo_number": "0001202309050014",
+      "route_status": "VERIFIED_ROUTE_DISCOVERED",
+      "content_bytes_status": "PENDING"
+    },
+    "mincifry": {
+      "document_url": "https://digital.gov.ru/documents/prikaz-minczifry-%E2%84%96-630-o-vnesenii-izmenenij-v-prikaz-minkomsvyazi-rossii-ot-29-oktyabrya-2018-g-%E2%84%96-573-ob-utverzhdenii-trebovanij-k-tehnicheskim-i-programmnym-sredstvam-informa",
+      "card_status": "VERIFIED_SEARCH_INDEX_DISCOVERY",
+      "graphical_version_metadata": {
+        "format": "PDF",
+        "reported_size": "6 MB"
+      },
+      "content_bytes_status": "PENDING"
+    }
+  },
+  "retrieval_attempts": [
+    {
+      "id": "RTE-01",
+      "target": "PUBLICATION_PRAVO_PDF",
+      "channel": "WEB_OPEN",
+      "outcome": "TIMEOUT",
+      "http_status": null,
+      "bytes_received": 0,
+      "content_type": null,
+      "sha256": null
+    },
+    {
+      "id": "RTE-02",
+      "target": "PUBLICATION_PRAVO_PDF",
+      "channel": "CLOUD_BROWSER",
+      "outcome": "HTTP_502_CONNECTION_REFUSED",
+      "http_status": 502,
+      "bytes_received": null,
+      "content_type": "text/html",
+      "sha256": null
+    },
+    {
+      "id": "RTE-03",
+      "target": "PUBLICATION_PRAVO_PDF",
+      "channel": "CURL",
+      "outcome": "HTTP_502_NON_PDF",
+      "http_status": 502,
+      "bytes_received": 150,
+      "content_type": "text/html",
+      "sha256": "81074a9c8dfb24290e8fc4af14d20f67f5304618d27ac713628b1126e41dbd8e"
+    },
+    {
+      "id": "RTE-04",
+      "target": "MINCIFRY_DOCUMENT_CARD",
+      "channel": "WEB_OPEN",
+      "outcome": "TIMEOUT",
+      "http_status": null,
+      "bytes_received": 0,
+      "content_type": null,
+      "sha256": null
+    },
+    {
+      "id": "RTE-05",
+      "target": "MINCIFRY_DOCUMENT_CARD",
+      "channel": "CLOUD_BROWSER",
+      "outcome": "HTTP_502_CONNECTION_REFUSED",
+      "http_status": 502,
+      "bytes_received": null,
+      "content_type": "text/html",
+      "sha256": null
+    },
+    {
+      "id": "RTE-06",
+      "target": "MINCIFRY_DOCUMENT_CARD",
+      "channel": "CURL",
+      "outcome": "HTTP_502_NON_PDF",
+      "http_status": 502,
+      "bytes_received": 150,
+      "content_type": "text/html",
+      "sha256": "81074a9c8dfb24290e8fc4af14d20f67f5304618d27ac713628b1126e41dbd8e"
+    }
+  ],
+  "transport_receipt": {
+    "body": "502 Bad Gateway: [Errno 111] Connection refused",
+    "body_size_bytes": 150,
+    "content_type": "text/html",
+    "sha256": "81074a9c8dfb24290e8fc4af14d20f67f5304618d27ac713628b1126e41dbd8e",
+    "classification": "TRANSPORT_FAILURE_RECEIPT_NOT_NORMATIVE_ARTIFACT"
+  },
+  "artifact_acceptance": {
+    "required_magic_prefix": "%PDF-",
+    "minimum_bytes": 1,
+    "require_sha256": true,
+    "require_page_count": true,
+    "require_page_render": true,
+    "require_seven_finding_page_anchors": true,
+    "accepted_primary_artifacts": 0
+  },
+  "carryover_findings": {
+    "critical": 0,
+    "high": 0,
+    "medium": 7,
+    "pending": 7,
+    "adjudicated_this_run": 0,
+    "automatic_repairs": 0
+  },
+  "claim_boundaries": [
+    "Official routes are discovered, but primary bytes were not received.",
+    "The identical 150-byte 502 body is transport evidence only.",
+    "Search snippets and first-party card metadata do not replace immutable bytes.",
+    "The seven cross-module findings remain Medium/PENDING without normalization.",
+    "No PDF, page-check, canonical hash, ASN.1 compiler, Appendix 9 red-team or global PASS is claimed."
+  ],
+  "blocked_claims": [
+    "PRIMARY_PDF_BYTES_RECEIVED",
+    "PRIMARY_PDF_SHA256_VERIFIED",
+    "PRIMARY_PDF_PAGE_COUNT_VERIFIED",
+    "SEVEN_FINDINGS_PAGE_ADJUDICATED",
+    "ASN1_COMPILER_PASS",
+    "APPENDIX9_RED_TEAM_PASS",
+    "GLOBAL_SCOPE_PASS"
+  ],
+  "next_gate": [
+    "RECOVER_OR_USE_AUTHORIZED_OFFICIAL_DOWNLOAD_ROUTE",
+    "CAPTURE_IMMUTABLE_PDF_BYTES_WITH_SHA256_AND_SIZE",
+    "RENDER_AND_PAGE_ANCHOR_SEVEN_FINDINGS",
+    "ADJUDICATE_LITERAL_BINDINGS",
+    "RUN_ASN1_COMPILER"
+  ],
+  "atomic_rules": [
+    {
+      "id": "MK573PDF-R001",
+      "rule": "IDENTIFY_ORDER630_AS_MINCIFRY_ORDER"
+    },
+    {
+      "id": "MK573PDF-R002",
+      "rule": "PRESERVE_ORDER_NUMBER_630"
+    },
+    {
+      "id": "MK573PDF-R003",
+      "rule": "PRESERVE_SIGNING_DATE_2023_07_12"
+    },
+    {
+      "id": "MK573PDF-R004",
+      "rule": "PRESERVE_REGISTRATION_DATE_2023_09_05"
+    },
+    {
+      "id": "MK573PDF-R005",
+      "rule": "PRESERVE_MINJUST_REGISTRATION_75102"
+    },
+    {
+      "id": "MK573PDF-R006",
+      "rule": "PRESERVE_EFFECTIVE_DATE_2024_03_01"
+    },
+    {
+      "id": "MK573PDF-R007",
+      "rule": "PRESERVE_VALIDITY_END_EXCLUSIVE_2030_03_01"
+    },
+    {
+      "id": "MK573PDF-R008",
+      "rule": "BIND_ORDER630_TO_ORDER573_AMENDMENT"
+    },
+    {
+      "id": "MK573PDF-R009",
+      "rule": "DISCOVER_PUBLICATION_PRAVO_EONUMBER"
+    },
+    {
+      "id": "MK573PDF-R010",
+      "rule": "PRESERVE_EONUMBER_0001202309050014"
+    },
+    {
+      "id": "MK573PDF-R011",
+      "rule": "DISCOVER_OFFICIAL_FILE_PDF_ROUTE"
+    },
+    {
+      "id": "MK573PDF-R012",
+      "rule": "PRESERVE_OFFICIAL_FILE_PDF_URL"
+    },
+    {
+      "id": "MK573PDF-R013",
+      "rule": "DISCOVER_MINCIFRY_DOCUMENT_CARD"
+    },
+    {
+      "id": "MK573PDF-R014",
+      "rule": "PRESERVE_MINCIFRY_CARD_URL"
+    },
+    {
+      "id": "MK573PDF-R015",
+      "rule": "PRESERVE_MINCIFRY_GRAPHICAL_VERSION_PDF_METADATA"
+    },
+    {
+      "id": "MK573PDF-R016",
+      "rule": "PRESERVE_MINCIFRY_GRAPHICAL_VERSION_SIZE_6_MB"
+    },
+    {
+      "id": "MK573PDF-R017",
+      "rule": "DO_NOT_EQUATE_SEARCH_INDEX_WITH_FILE_BYTES"
+    },
+    {
+      "id": "MK573PDF-R018",
+      "rule": "DO_NOT_EQUATE_CARD_METADATA_WITH_FILE_BYTES"
+    },
+    {
+      "id": "MK573PDF-R019",
+      "rule": "RECORD_WEB_OPEN_PUBLICATION_TIMEOUT"
+    },
+    {
+      "id": "MK573PDF-R020",
+      "rule": "RECORD_BROWSER_PUBLICATION_502"
+    },
+    {
+      "id": "MK573PDF-R021",
+      "rule": "RECORD_CURL_PUBLICATION_502"
+    },
+    {
+      "id": "MK573PDF-R022",
+      "rule": "RECORD_WEB_OPEN_MINCIFRY_TIMEOUT"
+    },
+    {
+      "id": "MK573PDF-R023",
+      "rule": "RECORD_BROWSER_MINCIFRY_502"
+    },
+    {
+      "id": "MK573PDF-R024",
+      "rule": "RECORD_CURL_MINCIFRY_502"
+    },
+    {
+      "id": "MK573PDF-R025",
+      "rule": "PRESERVE_502_BODY_SIZE_150_BYTES"
+    },
+    {
+      "id": "MK573PDF-R026",
+      "rule": "PRESERVE_502_CONTENT_TYPE_TEXT_HTML"
+    },
+    {
+      "id": "MK573PDF-R027",
+      "rule": "PRESERVE_502_BODY_SHA256"
+    },
+    {
+      "id": "MK573PDF-R028",
+      "rule": "REJECT_502_BODY_AS_PDF"
+    },
+    {
+      "id": "MK573PDF-R029",
+      "rule": "REQUIRE_PDF_MAGIC_PERCENT_PDF"
+    },
+    {
+      "id": "MK573PDF-R030",
+      "rule": "REQUIRE_NONZERO_PRIMARY_ARTIFACT_SIZE"
+    },
+    {
+      "id": "MK573PDF-R031",
+      "rule": "REQUIRE_PRIMARY_ARTIFACT_SHA256"
+    },
+    {
+      "id": "MK573PDF-R032",
+      "rule": "REQUIRE_PRIMARY_ARTIFACT_PAGE_COUNT"
+    },
+    {
+      "id": "MK573PDF-R033",
+      "rule": "REQUIRE_PRIMARY_ARTIFACT_PAGE_RENDER"
+    },
+    {
+      "id": "MK573PDF-R034",
+      "rule": "REQUIRE_SEVEN_FINDING_PAGE_ANCHORS"
+    },
+    {
+      "id": "MK573PDF-R035",
+      "rule": "KEEP_PRIMARY_BYTES_PENDING"
+    },
+    {
+      "id": "MK573PDF-R036",
+      "rule": "KEEP_PAGE_CHECK_PENDING"
+    },
+    {
+      "id": "MK573PDF-R037",
+      "rule": "KEEP_CANONICAL_SHA256_PENDING"
+    },
+    {
+      "id": "MK573PDF-R038",
+      "rule": "KEEP_ASN1_COMPILER_PASS_PENDING"
+    },
+    {
+      "id": "MK573PDF-R039",
+      "rule": "KEEP_XMOD_FINDINGS_PENDING"
+    },
+    {
+      "id": "MK573PDF-R040",
+      "rule": "PRESERVE_SEVEN_MEDIUM_FINDINGS"
+    },
+    {
+      "id": "MK573PDF-R041",
+      "rule": "PRESERVE_ZERO_CRITICAL_FINDINGS"
+    },
+    {
+      "id": "MK573PDF-R042",
+      "rule": "PRESERVE_ZERO_HIGH_FINDINGS"
+    },
+    {
+      "id": "MK573PDF-R043",
+      "rule": "DO_NOT_CLOSE_FINDING_FROM_SEARCH_SNIPPET"
+    },
+    {
+      "id": "MK573PDF-R044",
+      "rule": "DO_NOT_CLOSE_FINDING_FROM_CONSOLIDATED_HTML_ALONE"
+    },
+    {
+      "id": "MK573PDF-R045",
+      "rule": "DO_NOT_CLOSE_FINDING_FROM_502_RECEIPT"
+    },
+    {
+      "id": "MK573PDF-R046",
+      "rule": "SEPARATE_TRANSPORT_RECEIPT_FROM_NORMATIVE_ARTIFACT"
+    },
+    {
+      "id": "MK573PDF-R047",
+      "rule": "SEPARATE_ROUTE_DISCOVERY_FROM_CONTENT_VERIFICATION"
+    },
+    {
+      "id": "MK573PDF-R048",
+      "rule": "SEPARATE_FIRST_PARTY_CARD_FROM_OFFICIAL_PUBLICATION_BYTES"
+    },
+    {
+      "id": "MK573PDF-R049",
+      "rule": "KEEP_WEB_SEARCH_AS_DISCOVERY_EVIDENCE_ONLY"
+    },
+    {
+      "id": "MK573PDF-R050",
+      "rule": "KEEP_BROWSER_FAILURE_AS_TRANSPORT_EVIDENCE_ONLY"
+    },
+    {
+      "id": "MK573PDF-R051",
+      "rule": "KEEP_CURL_FAILURE_AS_TRANSPORT_EVIDENCE_ONLY"
+    },
+    {
+      "id": "MK573PDF-R052",
+      "rule": "DO_NOT_STORE_502_BODY_AS_PRIMARY_PDF"
+    },
+    {
+      "id": "MK573PDF-R053",
+      "rule": "DO_NOT_NAME_502_BODY_PDF_IN_REPOSITORY"
+    },
+    {
+      "id": "MK573PDF-R054",
+      "rule": "DO_NOT_INFER_DOCUMENT_ABSENCE"
+    },
+    {
+      "id": "MK573PDF-R055",
+      "rule": "DO_NOT_INFER_DOCUMENT_REPEAL"
+    },
+    {
+      "id": "MK573PDF-R056",
+      "rule": "DO_NOT_INFER_PORTAL_PERMANENT_UNAVAILABILITY"
+    },
+    {
+      "id": "MK573PDF-R057",
+      "rule": "DO_NOT_INVENT_MISSING_SOURCE_TEXT"
+    },
+    {
+      "id": "MK573PDF-R058",
+      "rule": "DO_NOT_NORMALIZE_SEVEN_LITERAL_BINDINGS"
+    },
+    {
+      "id": "MK573PDF-R059",
+      "rule": "REQUIRE_AUTHORIZED_OR_RECOVERED_OFFICIAL_ROUTE"
+    },
+    {
+      "id": "MK573PDF-R060",
+      "rule": "REQUIRE_IMMUTABLE_BYTE_CAPTURE"
+    },
+    {
+      "id": "MK573PDF-R061",
+      "rule": "REQUIRE_HASH_AND_SIZE_RECEIPT"
+    },
+    {
+      "id": "MK573PDF-R062",
+      "rule": "REQUIRE_PAGE_LEVEL_ADJUDICATION"
+    },
+    {
+      "id": "MK573PDF-R063",
+      "rule": "REQUIRE_COMPILER_AFTER_ADJUDICATION"
+    },
+    {
+      "id": "MK573PDF-R064",
+      "rule": "KEEP_GLOBAL_STATUS_FAIL_SCOPE_INCOMPLETE"
+    }
+  ],
+  "evidence_model": [
+    {
+      "id": "E573PDF-01",
+      "proves": [
+        "MK573PDF-R001",
+        "MK573PDF-R002",
+        "MK573PDF-R003",
+        "MK573PDF-R004"
+      ]
+    },
+    {
+      "id": "E573PDF-02",
+      "proves": [
+        "MK573PDF-R005",
+        "MK573PDF-R006",
+        "MK573PDF-R007",
+        "MK573PDF-R008"
+      ]
+    },
+    {
+      "id": "E573PDF-03",
+      "proves": [
+        "MK573PDF-R009",
+        "MK573PDF-R010",
+        "MK573PDF-R011",
+        "MK573PDF-R012"
+      ]
+    },
+    {
+      "id": "E573PDF-04",
+      "proves": [
+        "MK573PDF-R013",
+        "MK573PDF-R014",
+        "MK573PDF-R015",
+        "MK573PDF-R016"
+      ]
+    },
+    {
+      "id": "E573PDF-05",
+      "proves": [
+        "MK573PDF-R017",
+        "MK573PDF-R018",
+        "MK573PDF-R019",
+        "MK573PDF-R020"
+      ]
+    },
+    {
+      "id": "E573PDF-06",
+      "proves": [
+        "MK573PDF-R021",
+        "MK573PDF-R022",
+        "MK573PDF-R023",
+        "MK573PDF-R024"
+      ]
+    },
+    {
+      "id": "E573PDF-07",
+      "proves": [
+        "MK573PDF-R025",
+        "MK573PDF-R026",
+        "MK573PDF-R027",
+        "MK573PDF-R028"
+      ]
+    },
+    {
+      "id": "E573PDF-08",
+      "proves": [
+        "MK573PDF-R029",
+        "MK573PDF-R030",
+        "MK573PDF-R031",
+        "MK573PDF-R032"
+      ]
+    },
+    {
+      "id": "E573PDF-09",
+      "proves": [
+        "MK573PDF-R033",
+        "MK573PDF-R034",
+        "MK573PDF-R035",
+        "MK573PDF-R036"
+      ]
+    },
+    {
+      "id": "E573PDF-10",
+      "proves": [
+        "MK573PDF-R037",
+        "MK573PDF-R038",
+        "MK573PDF-R039",
+        "MK573PDF-R040"
+      ]
+    },
+    {
+      "id": "E573PDF-11",
+      "proves": [
+        "MK573PDF-R041",
+        "MK573PDF-R042",
+        "MK573PDF-R043"
+      ]
+    },
+    {
+      "id": "E573PDF-12",
+      "proves": [
+        "MK573PDF-R044",
+        "MK573PDF-R045",
+        "MK573PDF-R046"
+      ]
+    },
+    {
+      "id": "E573PDF-13",
+      "proves": [
+        "MK573PDF-R047",
+        "MK573PDF-R048",
+        "MK573PDF-R049"
+      ]
+    },
+    {
+      "id": "E573PDF-14",
+      "proves": [
+        "MK573PDF-R050",
+        "MK573PDF-R051",
+        "MK573PDF-R052"
+      ]
+    },
+    {
+      "id": "E573PDF-15",
+      "proves": [
+        "MK573PDF-R053",
+        "MK573PDF-R054",
+        "MK573PDF-R055"
+      ]
+    },
+    {
+      "id": "E573PDF-16",
+      "proves": [
+        "MK573PDF-R056",
+        "MK573PDF-R057",
+        "MK573PDF-R058"
+      ]
+    },
+    {
+      "id": "E573PDF-17",
+      "proves": [
+        "MK573PDF-R059",
+        "MK573PDF-R060",
+        "MK573PDF-R061"
+      ]
+    },
+    {
+      "id": "E573PDF-18",
+      "proves": [
+        "MK573PDF-R062",
+        "MK573PDF-R063",
+        "MK573PDF-R064"
+      ]
+    }
+  ]
+}
