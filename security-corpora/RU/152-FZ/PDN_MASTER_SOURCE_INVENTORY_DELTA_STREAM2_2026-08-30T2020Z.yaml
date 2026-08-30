@@ -1,0 +1,49 @@
+schema_version: "1.0"
+id: SEC-PDN-MASTER-SOURCE-INVENTORY-DELTA-STREAM2-2026-08-30T2020Z
+applies_to: PDN_MASTER_SOURCE_INVENTORY.yaml
+stream: RU_PDN_TECHNICAL_CRYPTO
+created_at: "2026-08-30T20:20:21Z"
+merge_policy: >-
+  ADDITIVE_SECURITY_STACK_STATUS_OVERLAY. Update only Stream-2 status/acquisition pointers and preserve all
+  non-Stream-2 master sources and parallel-stream data. Canonical counters change only after guarded reconciliation.
+
+security_stack_patch:
+  checked_at: "2026-08-30"
+  identified: 55
+  metadata_verified: 55
+  immutable_sha256_verified: 24
+  pending_raw_capture: 31
+  exact_official_route_unresolved: 8
+  confirmed_conflicts: 0
+  latest_status_review_at: "2026-08-30T20:20:21Z"
+  latest_stream2_run: "security-stack/runs/STREAM2_RUN_2026-08-30T2020Z.yaml"
+  acquisition_state: TARGETED_RETRY_NO_NEW_IMMUTABLE
+  baseline_status:
+    pp1119: CURRENT_PRIMARY_BYTES_PENDING_LATEST_ENV_DNS_FAILURE
+    fstec21: CURRENT_REVISION_2020_05_14_REPLACEMENT_PRIMARY_GATE_NOT_PASSED
+    fstec_threat_method_2021: CURRENT_IMMUTABLE_CAPTURED
+    fsb378: CURRENT_WHEN_SKZI_USED_PRIMARY_BYTES_PENDING_LATEST_ENV_DNS_FAILURE
+    fsb66: CURRENT_AS_AMENDED_SKZI_LIFECYCLE_PRIMARY_BYTES_PENDING
+    fstec205: CURRENT_VERSION_CHAIN_ACT_PRIMARY_ROUTE_UNRESOLVED_OFFICIAL_CATALOG_NEGATIVE_EVIDENCE_ADDED
+  fstec205_latest_finding: >-
+    On 30.08.2026 the official FSTEC published-act catalog at publication.pravo.gov.ru was checked. It exposes
+    neighboring 2025 FSTEC acts around the relevant period but Order 205 was not surfaced in the indexed list.
+    This is route-discovery negative evidence only, not proof of nonpublication or authority to infer a publication ID.
+  fstec21_latest_finding: >-
+    Fresh searches on 30.08.2026 did not surface primary evidence of a final issued, Minjust-registered and officially
+    published replacement. Recent secondary material continues to describe 169583 as a project; the stated 01.09.2026
+    date is not imported into the active baseline without the primary enactment chain.
+
+counter_basis: >-
+  Authoritative Stream-2 counters remain 55 identified / 55 metadata-verified / 24 immutable / 31 pending /
+  8 unresolved exact routes / 0 confirmed conflicts. Targeted PP1119 and FSB378 retries were blocked before HTTP by
+  transient DNS resolution in the acquisition environment, and FSTEC205 route discovery did not establish an exact
+  primary payload route. Therefore no production counter is increased or reduced.
+
+applicability_guard: >-
+  Keep PP1119/FSTEC21 ISPDN baseline distinct from attestation, licensing, certification, SKZI lifecycle,
+  KII/NCTKI and GosSOPKA branches. Neighboring requirements require an explicit applicability edge before reuse.
+
+proof_rule: >-
+  Exact official payload bytes, observed MIME/signature, exact byte length, computed SHA-256, immutable artifact and
+  manifest are required before immutable promotion. No mirror substitution and no inferred fingerprint.
