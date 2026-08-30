@@ -1,0 +1,121 @@
+schema_version: "1.0"
+stream: 3
+checked_at: "2026-08-30T17:27:47+03:00"
+mode: APPEND_ONLY_RU_PROTECTED_INFORMATION_RECONCILIATION
+previous_stream3_delta: "master-inventory-delta-2026-08-30T1422.yaml"
+focus: "education/children/public-sector FGIS Moya Shkola + PDN/identity/security overlays"
+
+counters_before:
+  found: 70
+  downloaded: 9
+  immutable: 9
+  pending: 59
+  reused: 3
+  primary_publication_verified: 40
+  sectors_registered: 32
+
+counters_after:
+  found: 71
+  downloaded: 9
+  immutable: 9
+  pending: 60
+  reused: 3
+  primary_publication_verified: 41
+  sectors_registered: 32
+
+sources_added:
+  - source_id: SEC-SRC-RU-PP-1241-2022
+    title: "Постановление Правительства РФ от 13.07.2022 № 1241 — ФГИС «Моя школа»"
+    sector: education + children + public_sector + personal_data + identity_registry + information_security
+    regime: federal_state_information_system_moya_shkola
+    dedupe_result: NEW_CANONICAL_SOURCE_NODE
+    parent_source: SEC-SRC-RU-FZ-273-2012
+    related_existing_source: SEC-SRC-RU-PP-825-2021
+    exact_capture: PENDING_TRANSIENT_BINARY_FETCH_FAILURE
+    applicability_status: ROLE_RECORD_TYPE_PURPOSE_ROUTE_AND_EFFECTIVE_DATE_MATCH_REQUIRED
+    executable_effect: NONE
+
+primary_evidence:
+  pp_1241_2022:
+    official_publication_id: "0001202207150030"
+    official_publication_date: "2022-07-15"
+    official_url: "https://publication.pravo.gov.ru/document/0001202207150030"
+    current_edition_date: "2026-08-01"
+    latest_material_amendment:
+      act: "Постановление Правительства РФ от 01.08.2026 № 962"
+      official_publication_id: "0001202608070032"
+      official_publication_date: "2026-08-07"
+      general_effective_date: "2026-08-17"
+      partial_future_effective_date: "2026-09-01"
+      state_as_of_2026_08_30: PARTIALLY_EFFECTIVE_WITH_FUTURE_COMPONENTS
+
+key_findings:
+  - source_id: SEC-SRC-RU-PP-1241-2022
+    locator: "Положение о ФГИС «Моя школа» / требования защиты"
+    finding: "Система предусматривает разграничение доступа, конфиденциальность, целостность и доступность информации и прямой информационно-защитный/PDN режим."
+    guard: "SYSTEM_SECURITY_DUTY != NEW_SECRET_CATEGORY_OR_GENERAL_PROCESSING_BASIS"
+  - source_id: SEC-SRC-RU-PP-1241-2022
+    locator: "ПП РФ № 962/2026, приложение № 2"
+    finding: "Действующий с 17.08.2026 перечень общего образования включает идентификаторы ЕСИА/региональных систем, СНИЛС и хэш-идентификаторы, ФИО, дату рождения, пол, контакты, сведения об обучении, оценивании, посещаемости, домашних заданиях, достижениях и отдельных статусах, а также данные законных представителей и работников."
+    guard: "CHILD_EDUCATION_DATASET != SPECIAL_CATEGORY_OR_PROTECTED_SECRET_AUTOMATICALLY"
+  - source_id: SEC-SRC-RU-PP-1241-2022
+    locator: "ПП РФ № 962/2026, ЕСИА/согласия"
+    finding: "В установленных маршрутах предусмотрены получение определенных идентификационных/контактных сведений через ЕСИА с согласием пользователя и согласие законного представителя для регистрации пользователя образовательного сервиса младше 14 лет в ЕСИА."
+    guard: "ESIA_ROUTE_SPECIFIC_CONSENT != BLANKET_CONSENT_FOR_ALL_EDUCATION_PDN"
+  - source_id: SEC-SRC-RU-PP-1241-2022
+    locator: "ПП РФ № 962/2026, пункт о вступлении в силу"
+    finding: "Большинство изменений действует с 17.08.2026; положения по приложениям № 1 (дошкольное образование) и № 4 (дополнительное образование) и прямо отсроченная часть подпункта «к» вступают в силу 01.09.2026."
+    guard: "FUTURE_2026_09_01_RULES != CURRENT_ON_2026_08_30"
+  - source_id: SEC-SRC-RU-PP-1241-2022
+    locator: "retention sweep"
+    finding: "Доказанный общий срок хранения сведений ФГИС «Моя школа» в проверенных материалах этого прохода не установлен."
+    guard: "NO_LOCATED_SOURCE_PERIOD != NO_RETENTION_DUTY_AND_FIS_FRDO_RETENTION_NOT_TRANSFERABLE"
+
+relationships_added:
+  - "PP 1241/2022 -> 273-ФЗ: direct implementing regulation for federal education information system"
+  - "PP 1241/2022 -> 152-ФЗ: direct personal-data processing/protection overlap"
+  - "PP 1241/2022 -> 149-ФЗ: information and information-protection overlap"
+  - "PP 1241/2022 -> PP 825/2021: education information-system overlap, separate registers and data lifecycles"
+  - "PP 1241/2022 -> ESIA/SMEV: public-sector identity and intersystem route, purpose/role proof required"
+  - "PP 1241/2022 -> children: direct participant context, no special-category inference"
+  - "PP 1241/2022 -> telecom: contact-field candidate only; phone number does not establish telecom secrecy"
+
+version_chain:
+  source_pp_1241_2022: CURRENT_EDITION_2026_08_01_CONFIRMED_HISTORICAL_PRIMARY_LOCATORS_PARTIAL
+  consolidated_amendments_crosschecked: 3
+  latest_material_amendment: "PP 962/2026"
+  latest_amendment_publication_locator: "0001202608070032"
+  staged_effective_dates_preserved: true
+  later_draft_located: true
+  later_draft_status: DRAFT_NOT_OPERATIVE
+  complete_primary_locator_chain_claimed: false
+
+acquisition_state:
+  exact_binary_attempted: true
+  exact_binary_obtained: false
+  official_targets:
+    - "https://publication.pravo.gov.ru/document/0001202207150030"
+    - "https://publication.pravo.gov.ru/document/0001202608070032"
+  attempts:
+    - "2026-08-30T17:24:32+03:00 canonical publication: curl exit 6 / DNS resolution failed"
+    - "2026-08-30T17:27:13+03:00 latest amendment: curl exit 6 / DNS resolution failed"
+  reason: TRANSIENT_BINARY_DOWNLOAD_DNS_FAILURE
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+
+quality_gates:
+  taxonomy_as_evidence: false
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+  fabricated_binary_metadata: false
+  downloaded_increment_without_bytes: false
+  immutable_increment_without_hash: false
+  primary_publication_counter_increment_new_sources_only: true
+  dedupe_inflated_found_counter: false
+  future_rule_promoted_early: false
+  draft_treated_as_law: false
+  general_pdn_retention_inferred: false
+  protected_secret_classification_inferred: false
