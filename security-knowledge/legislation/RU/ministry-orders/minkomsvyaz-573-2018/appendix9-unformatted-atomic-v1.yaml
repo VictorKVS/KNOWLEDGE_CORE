@@ -1,0 +1,846 @@
+{
+  "schema_version": "1.0",
+  "id": "RU-MINKOMSVYAZ-573-2018-APPENDIX9-UNFORMATTED-ATOMIC-V1",
+  "title": "Приказ Минкомсвязи № 573: Unformatted",
+  "checked_at": "2026-08-30",
+  "status": "VERIFIED_CURRENT_CONSOLIDATED_PUBLIC_TEXT_UNFORMATTED_FOUR_ROUTES_REQUEST_RESPONSE_REPORT_TYPES_RANGES_RENDERED_ANOMALIES_FAIL_CLOSED",
+  "scope": "Атомизация Unformatted.asn: request/response/report/ack, команды передачи, типы raw-данных и блочная отчётность.",
+  "sources": {
+    "act": "Приказ Минкомсвязи России от 29.10.2018 № 573",
+    "current_revision_date": "2025-12-18",
+    "current_consolidated_open_text": "https://legalacts.ru/doc/prikaz-minkomsvjazi-rossii-ot-29102018-n-573-ob-utverzhdenii/",
+    "order630_official_publication": "https://publication.pravo.gov.ru/document/0001202309050014",
+    "order630_exact_delta": "https://www.garant.ru/products/ipo/prime/doc/407511660/"
+  },
+  "temporal_model": {
+    "effective_from": "2024-03-01",
+    "validity_until_exclusive": "2030-03-01",
+    "status": "CURRENT_AS_OF_2026_08_30"
+  },
+  "module": {
+    "name": "Unformatted",
+    "tagging": "IMPLICIT TAGS",
+    "exports": [
+      "unformattedMessage"
+    ],
+    "imports": {
+      "Classification": [
+        "TAGGED",
+        "sorm-message-unformatted"
+      ],
+      "Dictionaries": [
+        "TelcoList"
+      ],
+      "Reports": [
+        "Acknowledgement"
+      ],
+      "ReportsConnections": [
+        "CallsRecords"
+      ],
+      "Sorm": [
+        "DateAndTime",
+        "MessageID"
+      ]
+    },
+    "unused_visible_imports": [
+      "CallsRecords"
+    ]
+  },
+  "unformatted_message": {
+    "form": "TAGGED",
+    "oid": "sorm-message-unformatted",
+    "data_form": "CHOICE",
+    "variants": [
+      {
+        "name": "request",
+        "tag": 0,
+        "type": "RawRequest"
+      },
+      {
+        "name": "response",
+        "tag": 1,
+        "type": "RawResponse"
+      },
+      {
+        "name": "report",
+        "tag": 2,
+        "type": "RawReport"
+      },
+      {
+        "name": "report-ack",
+        "tag": 3,
+        "type": "RawAcknowledgement"
+      }
+    ]
+  },
+  "raw_request": {
+    "form": "SEQUENCE",
+    "fields": [
+      {
+        "name": "telcos",
+        "type": "TelcoList",
+        "requiredness": "REQUIRED"
+      },
+      {
+        "name": "raw-task",
+        "type": "RawRequestTask",
+        "requiredness": "REQUIRED"
+      }
+    ]
+  },
+  "raw_request_task": {
+    "form": "CHOICE",
+    "variants": [
+      {
+        "name": "data-types-request",
+        "tag": 0,
+        "type": "DataTypesRequest"
+      },
+      {
+        "name": "data-start-request",
+        "tag": 1,
+        "type": "DataStartRequest"
+      },
+      {
+        "name": "data-stop-request",
+        "tag": 2,
+        "type": "DataStopRequest"
+      },
+      {
+        "name": "data-stop-typed-request",
+        "tag": 3,
+        "type": "DataStopTypedRequest"
+      }
+    ]
+  },
+  "aliases": {
+    "DataStopTypedRequest": "RawDataType",
+    "DataTypesRequest": "RawDataType"
+  },
+  "raw_data_type": {
+    "form": "ENUMERATED",
+    "closed_visible_set": true,
+    "values": [
+      {
+        "name": "raw-cdr",
+        "value": 1,
+        "published_purpose": "raw CDR files from switching equipment"
+      },
+      {
+        "name": "raw-ipdr",
+        "value": 2,
+        "published_purpose": "raw IPDR files"
+      },
+      {
+        "name": "raw-location",
+        "value": 10,
+        "published_purpose": "mobile-network location files"
+      },
+      {
+        "name": "raw-passive",
+        "value": 11,
+        "published_purpose": "statistical files from TS ORM 86"
+      }
+    ]
+  },
+  "published_independence_comments": [
+    "A command to start transmission of any data type is sent independently of transmission of other types received from ISBD.",
+    "Report blocks of different data types are transmitted independently."
+  ],
+  "data_start_request": {
+    "form": "SEQUENCE",
+    "fields": [
+      {
+        "name": "time-from",
+        "type": "DateAndTime",
+        "requiredness": "REQUIRED"
+      },
+      {
+        "name": "time-to",
+        "type": "DateAndTime",
+        "requiredness": "REQUIRED"
+      },
+      {
+        "name": "raw-type",
+        "type": "RawDataType",
+        "requiredness": "REQUIRED"
+      }
+    ]
+  },
+  "data_stop_request": {
+    "form": "NULL"
+  },
+  "raw_response": {
+    "form": "CHOICE",
+    "variants": [
+      {
+        "name": "data-types-response",
+        "tag": 0,
+        "type": "DataTypesResponse"
+      },
+      {
+        "name": "data-start-response",
+        "tag": 1,
+        "type": "DataStartResponse"
+      },
+      {
+        "name": "data-stop-response",
+        "tag": 2,
+        "type": "DataStopResponse"
+      },
+      {
+        "name": "data-stop-typed-response",
+        "tag": 3,
+        "type": "DataStopTypedResponse"
+      }
+    ],
+    "visible_closure_after_last_variant": "PENDING_PRIMARY_PDF"
+  },
+  "response_types": {
+    "DataStopTypedResponse": {
+      "form": "BOOLEAN"
+    },
+    "DataTypesResponse": {
+      "form": "SEQUENCE",
+      "fields": [
+        {
+          "name": "successful",
+          "type": "BOOLEAN",
+          "requiredness": "REQUIRED"
+        },
+        {
+          "name": "selected-type",
+          "type": "RawDataType",
+          "requiredness": "REQUIRED"
+        },
+        {
+          "name": "time-from",
+          "type": "DateAndTime",
+          "requiredness": "REQUIRED"
+        },
+        {
+          "name": "time-to",
+          "type": "DateAndTime",
+          "requiredness": "REQUIRED"
+        }
+      ]
+    },
+    "DataStartResponse": {
+      "form": "BOOLEAN"
+    },
+    "DataStopResponse": {
+      "form": "BOOLEAN"
+    }
+  },
+  "raw_report": {
+    "rendered_declaration": "RawReport SEQUENCE ::= {",
+    "resolved_declaration": "PENDING_PRIMARY_PDF",
+    "fields": [
+      {
+        "name": "request-id",
+        "type": "MessageID",
+        "requiredness": "REQUIRED"
+      },
+      {
+        "name": "stream-id",
+        "type": "UTF8String",
+        "size": {
+          "min": 1,
+          "max": 256
+        },
+        "published_purpose": "file name",
+        "requiredness": "REQUIRED"
+      },
+      {
+        "name": "total-blocks-number",
+        "type": "INTEGER",
+        "range": {
+          "min": 0,
+          "max": 999999999999
+        },
+        "requiredness": "REQUIRED"
+      },
+      {
+        "name": "block-number",
+        "type": "INTEGER",
+        "range": {
+          "min": 1,
+          "max": 1000000000000
+        },
+        "requiredness": "REQUIRED"
+      },
+      {
+        "name": "report-block",
+        "type": "RawDataBlock",
+        "requiredness": "REQUIRED"
+      }
+    ]
+  },
+  "raw_data_block": {
+    "form": "CHOICE",
+    "variants": [
+      {
+        "name": "raw-cdr",
+        "tag": 1,
+        "type": "RawBytesBlock"
+      },
+      {
+        "name": "raw-ipdr",
+        "tag": 2,
+        "type": "RawBytesBlock"
+      },
+      {
+        "name": "raw-location",
+        "tag": 10,
+        "type": "RawBytesBlock"
+      },
+      {
+        "name": "raw-passive",
+        "tag": 11,
+        "type": "RawBytesBlock"
+      }
+    ]
+  },
+  "raw_bytes_block": {
+    "form": "SEQUENCE OF",
+    "element_type": "RawBytes",
+    "cardinality": "NOT_SPECIFIED"
+  },
+  "raw_bytes": {
+    "form": "OCTET STRING",
+    "size": {
+      "min": 1,
+      "max": 4096
+    }
+  },
+  "raw_acknowledgement": {
+    "reference_name": "RawAcknowledgement",
+    "rendered_definition_name": "Raw Acknowledgement",
+    "target_type": "Acknowledgement",
+    "resolution": "PENDING_PRIMARY_PDF"
+  },
+  "rendered_anomalies": [
+    {
+      "token": "RawResponse missing visible closing brace",
+      "kind": "MISSING_VISIBLE_CHOICE_CLOSURE",
+      "resolution": "PENDING_PRIMARY_PDF"
+    },
+    {
+      "token": "RawReport SEQUENCE ::= {",
+      "kind": "DECLARATION_TOKEN_ORDER",
+      "resolution": "PENDING_PRIMARY_PDF"
+    },
+    {
+      "token": "RawAcknowledgement / Raw Acknowledgement",
+      "kind": "SPLIT_IDENTIFIER_MISMATCH",
+      "resolution": "PENDING_PRIMARY_PDF"
+    }
+  ],
+  "summary": {
+    "exports": 1,
+    "imported_symbols": 7,
+    "top_level_variants": 4,
+    "request_variants": 4,
+    "response_variants": 4,
+    "raw_data_types": 4,
+    "raw_report_fields": 5,
+    "raw_data_block_variants": 4,
+    "rendered_anomalies": 3,
+    "unused_visible_imports": 1
+  },
+  "semantic_guards": [
+    "NO_NUMERIC_OID_ARCS_INFERRED",
+    "NO_ASN1_TOKEN_REPAIR_CLAIMED",
+    "NO_TIME_RANGE_ORDER_INFERRED",
+    "NO_BLOCK_COUNT_RELATION_INFERRED",
+    "NO_SEQUENCE_CARDINALITY_INFERRED",
+    "NO_FILENAME_GRAMMAR_INFERRED",
+    "NO_INTEGRITY_COMPRESSION_OR_CODEC_INFERRED",
+    "NO_RETRY_TIMEOUT_STATE_MACHINE_INFERRED"
+  ],
+  "atomic_rules": [
+    {
+      "id": "MK573UNF-R001",
+      "rule": "APPLY_ORDER630_UNFORMATTED_FROM_2024_03_01"
+    },
+    {
+      "id": "MK573UNF-R002",
+      "rule": "STOP_CURRENT_ROUTE_AT_2030_03_01"
+    },
+    {
+      "id": "MK573UNF-R003",
+      "rule": "PRESERVE_MODULE_IMPLICIT_TAGS"
+    },
+    {
+      "id": "MK573UNF-R004",
+      "rule": "PRESERVE_SINGLE_UNFORMATTEDMESSAGE_EXPORT"
+    },
+    {
+      "id": "MK573UNF-R005",
+      "rule": "PRESERVE_SEVEN_IMPORTED_SYMBOLS"
+    },
+    {
+      "id": "MK573UNF-R006",
+      "rule": "PRESERVE_UNUSED_VISIBLE_CALLSRECORDS_IMPORT"
+    },
+    {
+      "id": "MK573UNF-R007",
+      "rule": "PRESERVE_UNFORMATTEDMESSAGE_TAGGED_FORM"
+    },
+    {
+      "id": "MK573UNF-R008",
+      "rule": "PRESERVE_SYMBOLIC_SORM_MESSAGE_UNFORMATTED_OID"
+    },
+    {
+      "id": "MK573UNF-R009",
+      "rule": "DO_NOT_INFER_NUMERIC_OID_ARCS"
+    },
+    {
+      "id": "MK573UNF-R010",
+      "rule": "PRESERVE_TOP_LEVEL_DATA_CHOICE"
+    },
+    {
+      "id": "MK573UNF-R011",
+      "rule": "PRESERVE_FOUR_TOP_LEVEL_VARIANTS"
+    },
+    {
+      "id": "MK573UNF-R012",
+      "rule": "PRESERVE_TOP_LEVEL_TAGS_ZERO_THROUGH_THREE"
+    },
+    {
+      "id": "MK573UNF-R013",
+      "rule": "PRESERVE_RAWREQUEST_SEQUENCE"
+    },
+    {
+      "id": "MK573UNF-R014",
+      "rule": "PRESERVE_RAWREQUEST_TWO_REQUIRED_FIELDS"
+    },
+    {
+      "id": "MK573UNF-R015",
+      "rule": "PRESERVE_TELCOS_TELCOLIST_TYPE"
+    },
+    {
+      "id": "MK573UNF-R016",
+      "rule": "PRESERVE_RAW_TASK_RAWREQUESTTASK_TYPE"
+    },
+    {
+      "id": "MK573UNF-R017",
+      "rule": "PRESERVE_RAWREQUESTTASK_CHOICE"
+    },
+    {
+      "id": "MK573UNF-R018",
+      "rule": "PRESERVE_FOUR_REQUEST_VARIANTS"
+    },
+    {
+      "id": "MK573UNF-R019",
+      "rule": "PRESERVE_REQUEST_TAGS_ZERO_THROUGH_THREE"
+    },
+    {
+      "id": "MK573UNF-R020",
+      "rule": "PRESERVE_DATASTOP_TYPED_ALIAS_RAWDATATYPE"
+    },
+    {
+      "id": "MK573UNF-R021",
+      "rule": "PRESERVE_DATATYPES_REQUEST_ALIAS_RAWDATATYPE"
+    },
+    {
+      "id": "MK573UNF-R022",
+      "rule": "PRESERVE_RAWDATATYPE_ENUMERATED"
+    },
+    {
+      "id": "MK573UNF-R023",
+      "rule": "PRESERVE_EXACTLY_FOUR_RAW_DATA_TYPES"
+    },
+    {
+      "id": "MK573UNF-R024",
+      "rule": "PRESERVE_RAW_CDR_VALUE_ONE"
+    },
+    {
+      "id": "MK573UNF-R025",
+      "rule": "PRESERVE_RAW_IPDR_VALUE_TWO"
+    },
+    {
+      "id": "MK573UNF-R026",
+      "rule": "PRESERVE_RAW_LOCATION_VALUE_TEN"
+    },
+    {
+      "id": "MK573UNF-R027",
+      "rule": "PRESERVE_RAW_PASSIVE_VALUE_ELEVEN"
+    },
+    {
+      "id": "MK573UNF-R028",
+      "rule": "PRESERVE_INDEPENDENT_START_BY_DATA_TYPE_COMMENT"
+    },
+    {
+      "id": "MK573UNF-R029",
+      "rule": "PRESERVE_DATASTARTREQUEST_THREE_REQUIRED_FIELDS"
+    },
+    {
+      "id": "MK573UNF-R030",
+      "rule": "PRESERVE_DATEANDTIME_TYPES"
+    },
+    {
+      "id": "MK573UNF-R031",
+      "rule": "PRESERVE_RAW_TYPE_RAWDATATYPE"
+    },
+    {
+      "id": "MK573UNF-R032",
+      "rule": "PRESERVE_DATASTOPREQUEST_NULL"
+    },
+    {
+      "id": "MK573UNF-R033",
+      "rule": "PRESERVE_RAWRESPONSE_CHOICE"
+    },
+    {
+      "id": "MK573UNF-R034",
+      "rule": "PRESERVE_FOUR_RESPONSE_VARIANTS"
+    },
+    {
+      "id": "MK573UNF-R035",
+      "rule": "PRESERVE_RESPONSE_TAGS_ZERO_THROUGH_THREE"
+    },
+    {
+      "id": "MK573UNF-R036",
+      "rule": "KEEP_RAWRESPONSE_MISSING_VISIBLE_CLOSURE_PENDING_PRIMARY_PDF"
+    },
+    {
+      "id": "MK573UNF-R037",
+      "rule": "PRESERVE_THREE_BOOLEAN_COMMAND_RESPONSES"
+    },
+    {
+      "id": "MK573UNF-R038",
+      "rule": "PRESERVE_DATATYPESRESPONSE_FOUR_REQUIRED_FIELDS"
+    },
+    {
+      "id": "MK573UNF-R039",
+      "rule": "PRESERVE_RAWREPORT_FIVE_VISIBLE_FIELDS"
+    },
+    {
+      "id": "MK573UNF-R040",
+      "rule": "KEEP_RAWREPORT_SEQUENCE_ORDER_ANOMALY_PENDING_PRIMARY_PDF"
+    },
+    {
+      "id": "MK573UNF-R041",
+      "rule": "PRESERVE_STREAM_ID_UTF8_SIZE_ONE_TO_256"
+    },
+    {
+      "id": "MK573UNF-R042",
+      "rule": "PRESERVE_TOTAL_BLOCKS_RANGE_ZERO_TO_999999999999"
+    },
+    {
+      "id": "MK573UNF-R043",
+      "rule": "PRESERVE_BLOCK_NUMBER_RANGE_ONE_TO_1000000000000"
+    },
+    {
+      "id": "MK573UNF-R044",
+      "rule": "PRESERVE_REPORT_BLOCK_RAWDATABLOCK_TYPE"
+    },
+    {
+      "id": "MK573UNF-R045",
+      "rule": "PRESERVE_INDEPENDENT_REPORT_TYPE_TRANSMISSION_COMMENT"
+    },
+    {
+      "id": "MK573UNF-R046",
+      "rule": "PRESERVE_RAWDATABLOCK_FOUR_VARIANTS"
+    },
+    {
+      "id": "MK573UNF-R047",
+      "rule": "PRESERVE_RAWDATABLOCK_SPARSE_TAGS_ONE_TWO_TEN_ELEVEN"
+    },
+    {
+      "id": "MK573UNF-R048",
+      "rule": "PRESERVE_RAWBYTESBLOCK_SEQUENCE_OF"
+    },
+    {
+      "id": "MK573UNF-R049",
+      "rule": "PRESERVE_RAWBYTES_OCTET_STRING_SIZE_ONE_TO_4096"
+    },
+    {
+      "id": "MK573UNF-R050",
+      "rule": "KEEP_SEQUENCE_CARDINALITY_UNSPECIFIED"
+    },
+    {
+      "id": "MK573UNF-R051",
+      "rule": "PRESERVE_RAW_ACK_REFERENCE_NAME"
+    },
+    {
+      "id": "MK573UNF-R052",
+      "rule": "KEEP_RAW_ACK_SPLIT_DEFINITION_PENDING_PRIMARY_PDF"
+    },
+    {
+      "id": "MK573UNF-R053",
+      "rule": "DO_NOT_INFER_TIME_FROM_LE_TIME_TO"
+    },
+    {
+      "id": "MK573UNF-R054",
+      "rule": "DO_NOT_INFER_BLOCK_NUMBER_LE_TOTAL_BLOCKS"
+    },
+    {
+      "id": "MK573UNF-R055",
+      "rule": "DO_NOT_INFER_STREAM_FILENAME_GRAMMAR"
+    },
+    {
+      "id": "MK573UNF-R056",
+      "rule": "DO_NOT_INFER_INTEGRITY_CHECKSUM_OR_SIGNATURE"
+    },
+    {
+      "id": "MK573UNF-R057",
+      "rule": "DO_NOT_INFER_COMPRESSION_CODEC_OR_CONTENT_FORMAT"
+    },
+    {
+      "id": "MK573UNF-R058",
+      "rule": "DO_NOT_INFER_RETRY_TIMEOUT_OR_STATE_MACHINE"
+    },
+    {
+      "id": "MK573UNF-R059",
+      "rule": "DO_NOT_INFER_REQUEST_REPORT_CORRELATION_BEYOND_VISIBLE_FIELD"
+    },
+    {
+      "id": "MK573UNF-R060",
+      "rule": "DO_NOT_INFER_DELIVERY_ORDER_OR_DEDUPLICATION"
+    },
+    {
+      "id": "MK573UNF-R061",
+      "rule": "KEEP_THREE_RENDERED_ANOMALIES_FAIL_CLOSED"
+    },
+    {
+      "id": "MK573UNF-R062",
+      "rule": "KEEP_CONSOLIDATED_HTML_AS_SECONDARY_EVIDENCE"
+    },
+    {
+      "id": "MK573UNF-R063",
+      "rule": "KEEP_PRIMARY_BYTES_PDF_AND_EXPERT_REVIEW_PENDING"
+    },
+    {
+      "id": "MK573UNF-R064",
+      "rule": "KEEP_REMAINING_ORDER573_MODULES_PENDING"
+    }
+  ],
+  "evidence_model": [
+    {
+      "id": "E573UNF-01",
+      "proves": [
+        "MK573UNF-R001",
+        "MK573UNF-R002",
+        "MK573UNF-R003",
+        "MK573UNF-R004"
+      ],
+      "artifacts": [
+        "UNFORMATTED_GATE"
+      ]
+    },
+    {
+      "id": "E573UNF-02",
+      "proves": [
+        "MK573UNF-R005",
+        "MK573UNF-R006",
+        "MK573UNF-R007",
+        "MK573UNF-R008"
+      ],
+      "artifacts": [
+        "UNFORMATTED_GATE"
+      ]
+    },
+    {
+      "id": "E573UNF-03",
+      "proves": [
+        "MK573UNF-R009",
+        "MK573UNF-R010",
+        "MK573UNF-R011",
+        "MK573UNF-R012"
+      ],
+      "artifacts": [
+        "UNFORMATTED_GATE"
+      ]
+    },
+    {
+      "id": "E573UNF-04",
+      "proves": [
+        "MK573UNF-R013",
+        "MK573UNF-R014",
+        "MK573UNF-R015",
+        "MK573UNF-R016"
+      ],
+      "artifacts": [
+        "UNFORMATTED_GATE"
+      ]
+    },
+    {
+      "id": "E573UNF-05",
+      "proves": [
+        "MK573UNF-R017",
+        "MK573UNF-R018",
+        "MK573UNF-R019",
+        "MK573UNF-R020"
+      ],
+      "artifacts": [
+        "UNFORMATTED_GATE"
+      ]
+    },
+    {
+      "id": "E573UNF-06",
+      "proves": [
+        "MK573UNF-R021",
+        "MK573UNF-R022",
+        "MK573UNF-R023",
+        "MK573UNF-R024"
+      ],
+      "artifacts": [
+        "UNFORMATTED_GATE"
+      ]
+    },
+    {
+      "id": "E573UNF-07",
+      "proves": [
+        "MK573UNF-R025",
+        "MK573UNF-R026",
+        "MK573UNF-R027",
+        "MK573UNF-R028"
+      ],
+      "artifacts": [
+        "UNFORMATTED_GATE"
+      ]
+    },
+    {
+      "id": "E573UNF-08",
+      "proves": [
+        "MK573UNF-R029",
+        "MK573UNF-R030",
+        "MK573UNF-R031",
+        "MK573UNF-R032"
+      ],
+      "artifacts": [
+        "UNFORMATTED_GATE"
+      ]
+    },
+    {
+      "id": "E573UNF-09",
+      "proves": [
+        "MK573UNF-R033",
+        "MK573UNF-R034",
+        "MK573UNF-R035",
+        "MK573UNF-R036"
+      ],
+      "artifacts": [
+        "UNFORMATTED_GATE"
+      ]
+    },
+    {
+      "id": "E573UNF-10",
+      "proves": [
+        "MK573UNF-R037",
+        "MK573UNF-R038",
+        "MK573UNF-R039",
+        "MK573UNF-R040"
+      ],
+      "artifacts": [
+        "UNFORMATTED_GATE"
+      ]
+    },
+    {
+      "id": "E573UNF-11",
+      "proves": [
+        "MK573UNF-R041",
+        "MK573UNF-R042",
+        "MK573UNF-R043"
+      ],
+      "artifacts": [
+        "UNFORMATTED_GATE"
+      ]
+    },
+    {
+      "id": "E573UNF-12",
+      "proves": [
+        "MK573UNF-R044",
+        "MK573UNF-R045",
+        "MK573UNF-R046"
+      ],
+      "artifacts": [
+        "UNFORMATTED_GATE"
+      ]
+    },
+    {
+      "id": "E573UNF-13",
+      "proves": [
+        "MK573UNF-R047",
+        "MK573UNF-R048",
+        "MK573UNF-R049"
+      ],
+      "artifacts": [
+        "UNFORMATTED_GATE"
+      ]
+    },
+    {
+      "id": "E573UNF-14",
+      "proves": [
+        "MK573UNF-R050",
+        "MK573UNF-R051",
+        "MK573UNF-R052"
+      ],
+      "artifacts": [
+        "UNFORMATTED_GATE"
+      ]
+    },
+    {
+      "id": "E573UNF-15",
+      "proves": [
+        "MK573UNF-R053",
+        "MK573UNF-R054",
+        "MK573UNF-R055"
+      ],
+      "artifacts": [
+        "UNFORMATTED_GATE"
+      ]
+    },
+    {
+      "id": "E573UNF-16",
+      "proves": [
+        "MK573UNF-R056",
+        "MK573UNF-R057",
+        "MK573UNF-R058"
+      ],
+      "artifacts": [
+        "UNFORMATTED_GATE"
+      ]
+    },
+    {
+      "id": "E573UNF-17",
+      "proves": [
+        "MK573UNF-R059",
+        "MK573UNF-R060",
+        "MK573UNF-R061"
+      ],
+      "artifacts": [
+        "UNFORMATTED_GATE"
+      ]
+    },
+    {
+      "id": "E573UNF-18",
+      "proves": [
+        "MK573UNF-R062",
+        "MK573UNF-R063",
+        "MK573UNF-R064"
+      ],
+      "artifacts": [
+        "UNFORMATTED_GATE"
+      ]
+    }
+  ],
+  "verification_boundary": {
+    "rules": 64,
+    "evidence_nodes": 18,
+    "regression_cases": 64,
+    "top_level_variants": 4,
+    "request_variants": 4,
+    "response_variants": 4,
+    "raw_data_types": 4,
+    "raw_report_fields": 5,
+    "raw_data_block_variants": 4,
+    "rendered_anomalies": 3,
+    "critical_gap_created": false,
+    "high_gap_created": false,
+    "primary_pdf": "PENDING",
+    "current_consolidated_official_immutable_bytes": "PENDING_INTERNAL_ERROR",
+    "independent_expert_review": "PENDING"
+  }
+}
