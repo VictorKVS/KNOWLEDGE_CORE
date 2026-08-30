@@ -1,0 +1,100 @@
+schema_version: "1.0"
+id: STREAM2-RUN-2026-08-30T2311Z
+stream: 2
+kind: security-stack-pre-september-enactment-watch-and-primary-route-retry
+created_at: "2026-08-30T23:11:08Z"
+status: FRESH_STATUS_REVIEW_COMMITTED
+scope:
+  primary_domain: "152-FZ technical and cryptographic security stack"
+  focus:
+    - PP RF No. 1119 exact Government DOC artifact
+    - FSB Order No. 378 official publication artifact for ISPDN when SKZI is used
+    - FSTEC Order No. 21 replacement enactment gate immediately before proposed 01.09.2026 date
+    - FSTEC methodical sources and exact-route recovery
+    - preserve bounded applicability for licensing, certification, SKZI lifecycle and incident-adjacent regimes
+
+fresh_status_review:
+  checked_at: "2026-08-31"
+  pp1119:
+    semantic_status: UNCHANGED
+    exact_primary_payload: PENDING
+    registered_primary_route: "https://government.ru/media/2012/11/3/53354/file/1119_pril.doc"
+    transport_result_this_run: ACQUISITION_ENV_DNS_RESOLUTION_FAILURE_GOVERNMENT_RU
+    fingerprint_status: PENDING
+    proof_gate: OLE_CFB_SIGNATURE_PLUS_EXACT_LENGTH_SHA256_REQUIRED
+    rule: >-
+      Do not substitute a secondary legal-database export or mirror for the registered Government DOC.
+      Transport failure is not evidence that the act is unavailable or repealed.
+  fsb378:
+    semantic_status: UNCHANGED
+    exact_primary_payload: PENDING
+    registered_primary_route: "https://rg.ru/documents/2014/09/17/zashita-dok.html"
+    transport_result_this_run: ACQUISITION_ENV_DNS_RESOLUTION_FAILURE_RG_RU
+    current_archive_index_observation: >-
+      The current Russian Gazette archive search still surfaces Order No. 378 with Minjust registration
+      No. 33620, effective date 28.09.2014, and explicit scope for operators using SKZI in ISPDN.
+    applicability: ISPDN_WHEN_SKZI_USED
+    fingerprint_status: PENDING
+    rule: >-
+      Do not propagate PKZ-2005, FAPSI handling or licensing obligations unless a separate applicability edge
+      is proved for the concrete SKZI use/lifecycle case.
+  fstec21:
+    active_revision_date: "2020-05-14"
+    replacement_project: "169583"
+    proposed_effective_from: "2026-09-01"
+    result: PRIMARY_ENACTMENT_GATE_NOT_PASSED_IN_FRESH_2026_08_31_REVIEW
+    evidence_observation: >-
+      Fresh searches immediately before the proposed date still surfaced recent materials describing 169583
+      as a project; no primary final replacing order, Minjust registration and official publication were found.
+    rule: KEEP_FSTEC21_ACTIVE_UNTIL_FINAL_ORDER_MINJUST_AND_OFFICIAL_PUBLICATION_ARE_PROVEN
+    project_requirements_promoted_to_active_baseline: false
+
+transport_observation:
+  observed_at: "2026-08-30T23:11:08Z"
+  environment:
+    government_ru: DNS_RESOLUTION_FAILURE
+    rg_ru: DNS_RESOLUTION_FAILURE
+  new_primary_bytes_captured: 0
+  note: >-
+    The current execution environment could not resolve government.ru or rg.ru. This is treated as transient
+    transport evidence only; MIME, byte length and SHA-256 remain unset for PP1119 and FSB378.
+
+authoritative_counter_state:
+  identified: 55
+  metadata_verified: 55
+  immutable_sha256_verified: 24
+  pending_raw_capture: 31
+  exact_official_route_unresolved: 8
+  confirmed_conflicts: 0
+  delta_this_run:
+    identified: 0
+    metadata_verified: 0
+    immutable_sha256_verified: 0
+    pending_raw_capture: 0
+    exact_official_route_unresolved: 0
+    confirmed_conflicts: 0
+
+immutable_evidence_preserved:
+  fstec21: IMMUTABLE_CAPTURED
+  fstec_threat_method_2021: IMMUTABLE_CAPTURED
+  note: >-
+    Existing immutable artifacts and manifests remain authoritative; no existing fingerprint was changed.
+
+applicability_guard: >-
+  Do not propagate attestation, licensing, certification, KII/NCTKI/GosSOPKA or broad SKZI lifecycle duties into
+  the generic PP1119/FSTEC21 private-ISPDN baseline without an explicit evidence-backed applicability edge.
+  FSB378 applies only where SKZI use is established. GosSOPKA/NCTKI material remains PDN-relevant only where
+  the legal incident-reporting edge is independently established.
+
+proof_floor: >-
+  IMMUTABLE_CAPTURED requires exact official bytes, observed MIME/signature, exact byte length, computed SHA-256,
+  immutable artifact and manifest. Secondary mirrors, search snippets, negative route searches and regulator
+  notices cannot substitute for the primary payload.
+
+next_priority:
+  - "retry PP1119 exact Government DOC when government.ru transport resolves"
+  - "retry FSB378 exact official publication bytes when rg.ru transport resolves"
+  - "capture FSB66/173 and FAPSI152 exact official payloads"
+  - "continue exact-route discovery for FSTEC205/2025 without presuming publication status"
+  - "recover exact attachments for pending FSTEC methodical sources"
+  - "continue primary-enactment watch for FSTEC21 replacement project 169583 through and after 01.09.2026"
