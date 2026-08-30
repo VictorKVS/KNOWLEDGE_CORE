@@ -1,0 +1,109 @@
+schema_version: "1.0"
+stream: 3
+checked_at: "2026-08-31T02:15:00+03:00"
+mode: APPEND_ONLY_RU_PROTECTED_INFORMATION_RECONCILIATION
+previous_stream3_delta: "master-inventory-delta-2026-08-30T2315.yaml"
+focus: "public sector / elections / voter register / GAS Vybory / identity data / electoral retention"
+
+counters_before:
+  found: 72
+  downloaded: 9
+  immutable: 9
+  pending: 61
+  reused: 4
+  primary_publication_verified: 41
+  sectors_registered: 32
+
+counters_after:
+  found: 73
+  downloaded: 9
+  immutable: 9
+  pending: 62
+  reused: 4
+  primary_publication_verified: 42
+  sectors_registered: 32
+
+sources_added:
+  - source_id: SEC-SRC-RU-FZ-67-2002
+    title: "Федеральный закон от 12.06.2002 № 67-ФЗ — избирательные права, регистрация избирателей и списки избирателей"
+    canonical_path: "security-corpora/RU/protected-information/source/SEC-SRC-RU-FZ-67-2002.yaml"
+    current_edition: "2026-07-26"
+    official_original_source: "https://www.kremlin.ru/acts/bank/18173/print"
+    current_consolidated_crosscheck: "https://www.consultant.ru/document/cons_doc_LAW_37119/"
+    latest_amendment: "Федеральный закон от 26.07.2026 № 261-ФЗ"
+    latest_amendment_official_publication_medium: "https://rg.ru/documents/2026/08/03/fz261-dok.html"
+    exact_capture: PENDING_TRANSIENT_DNS_FAILURE
+    found_counter_increment: 1
+    pending_counter_increment: 1
+    primary_publication_verified_increment: 1
+
+key_findings:
+  - source_id: SEC-SRC-RU-FZ-67-2002
+    locator: "статья 16 пункт 5"
+    finding: "Для регистрации избирателей предусмотрена передача определенного законом набора ПДн: ФИО, дата/место рождения, пол, гражданство, адрес, реквизиты документа, удостоверяющего личность, и сведения о его выдаче."
+    guard: "ELECTORAL_REGISTER_DATASET_NOT_GENERAL_INTERAGENCY_DATASET"
+  - source_id: SEC-SRC-RU-FZ-67-2002
+    locator: "статья 16 пункты 6-10"
+    finding: "Регистр избирателей обновляется по установленным маршрутам из ЕГР ЗАГС, воинского учета, УИС и судебных решений; учет и численность формируются с использованием ГАС «Выборы»."
+    guard: "STATUTORY_SOURCE_ROUTE_REQUIRED_NO_UNLIMITED_SECONDARY_USE"
+  - source_id: SEC-SRC-RU-FZ-67-2002
+    locator: "статья 16 пункт 12"
+    finding: "Избиратель имеет право доступа и уточнения документированной информации (персональных данных) о себе и право знать, кто, кем, кому и для каких целей ее использовал или предоставлял."
+    guard: "SECTOR_ACCESS_RIGHTS_DO_NOT_REPLACE_ALL_152_FZ_SUBJECT_RIGHTS"
+  - source_id: SEC-SRC-RU-FZ-67-2002
+    locator: "статья 17 пункт 11"
+    finding: "Список избирателей содержит ФИО, сведения о рождении, адрес места жительства и поля для серии/номера паспорта или заменяющего его документа при выдаче бюллетеня."
+    guard: "VOTER_LIST_NOT_PUBLIC_DIRECTORY_OR_GENERIC_IDENTITY_DATASET"
+  - source_id: SEC-SRC-RU-FZ-67-2002
+    locator: "статья 17 пункты 15.2, 16, 19"
+    finding: "Электронный список имеет специальный lifecycle; исправления и исключения отражаются также в ГАС «Выборы», а после публикации результатов данные списка могут использоваться для уточнения регистра избирателей."
+    guard: "POST_ELECTION_REUSE_STATUTORILY_SCOPED_NOT_OPEN_SECONDARY_USE"
+  - source_id: SEC-SRC-RU-FZ-67-2002
+    locator: "статья 70 пункты 10-11"
+    finding: "Для списков избирателей, бюллетеней и подписных листов установлен минимальный срок хранения не менее одного года после публикации итогов/результатов; конкретные сроки могут быть больше, а при судебных/уголовных производствах продлеваются."
+    guard: "ONE_YEAR_MINIMUM_ELECTORAL_DOCUMENT_RETENTION_NOT_GENERAL_PDN_RETENTION"
+
+relationships_reconciled:
+  - "67-ФЗ -> 152-ФЗ: explicit personal-data/access/correction overlap, sector-specific"
+  - "67-ФЗ -> 20-ФЗ о ГАС «Выборы»: direct special information-system relationship; separate primary source remains a candidate"
+  - "67-ФЗ -> 143-ФЗ: direct civil-status death-data feed into voter-registration lifecycle"
+  - "67-ФЗ -> 125-ФЗ/архивные правила: election-document retention and archival transfer require record-series/election-specific order matching"
+  - "67-ФЗ -> identity/residence-registration regimes: direct source-data overlap, only through statutory route"
+
+version_chain:
+  state: CURRENT_EDITION_2026_07_26_CONFIRMED_AS_OF_2026_08_31_VERSION_CHAIN_PARTIAL
+  latest_overall_amendment_crosschecked: "Федеральный закон от 26.07.2026 № 261-ФЗ"
+  relevant_2026_amendment_crosschecked: "Федеральный закон от 02.05.2026 № 130-ФЗ / official publication id 0001202605020015"
+  later_amendment_after_2026_07_26_located_in_this_sweep: false
+  full_historical_primary_locator_chain_claimed: false
+
+acquisition_state:
+  exact_binary_attempted: true
+  exact_binary_obtained: false
+  targets:
+    - "https://www.kremlin.ru/acts/bank/18173/print"
+    - "https://rg.ru/documents/2026/08/03/fz261-dok.html"
+  latest_attempt: "2026-08-31T02:15:00+03:00: curl exit 6 / DNS resolution failure on first official target"
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+  pending_counter_increment: 1
+
+candidate_discovery_not_promoted:
+  - candidate: "Федеральный закон от 10.01.2003 № 20-ФЗ о ГАС «Выборы»"
+    reason: "direct special-system companion to 67-ФЗ; requires separate dedupe/current-version/primary-file pass"
+    action: QUEUE_NEXT_PUBLIC_SECTOR_SPECIAL_INFORMATION_SYSTEM_PASS
+
+quality_gates:
+  taxonomy_as_evidence: false
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+  fabricated_binary_metadata: false
+  downloaded_increment_without_bytes: false
+  immutable_increment_without_hash: false
+  dedupe_inflated_found_counter: false
+  protected_secret_inferred_from_voter_status: false
+  passport_data_treated_as_separate_secret: false
+  general_pdn_retention_inferred: false
