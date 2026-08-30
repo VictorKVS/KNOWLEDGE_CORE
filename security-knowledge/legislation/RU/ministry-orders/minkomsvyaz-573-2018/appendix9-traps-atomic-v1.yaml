@@ -1,0 +1,644 @@
+{
+  "schema_version": "1.0",
+  "id": "RU-MINKOMSVYAZ-573-2018-APPENDIX9-TRAPS-ATOMIC-V1",
+  "title": "Приказ Минкомсвязи № 573: Traps",
+  "checked_at": "2026-08-30",
+  "status": "VERIFIED_CURRENT_CONSOLIDATED_PUBLIC_TEXT_TRAP_MESSAGE_TWO_VARIANTS_FIELDS_SIX_TYPES_CORRELATION_COMMENT_RENDERED_ANOMALIES_FAIL_CLOSED",
+  "scope": "Атомизация Traps.asn: trap/ack, поля Trap, закрытый TrapType и опубликованное правило корреляции.",
+  "sources": {
+    "act": "Приказ Минкомсвязи России от 29.10.2018 № 573",
+    "current_revision_date": "2025-12-18",
+    "current_consolidated_open_text": "https://legalacts.ru/doc/prikaz-minkomsvjazi-rossii-ot-29102018-n-573-ob-utverzhdenii/",
+    "order630_official_publication": "https://publication.pravo.gov.ru/document/0001202309050014",
+    "order630_exact_delta": "https://www.garant.ru/products/ipo/prime/doc/407511660/"
+  },
+  "temporal_model": {
+    "effective_from": "2024-03-01",
+    "validity_until_exclusive": "2030-03-01",
+    "status": "CURRENT_AS_OF_2026_08_30"
+  },
+  "module": {
+    "name": "Traps",
+    "tagging": "IMPLICIT TAGS",
+    "exports": [
+      "trapMessage"
+    ],
+    "imports": {
+      "Classification": [
+        "TAGGED",
+        "sorm-message-trap"
+      ],
+      "Sorm": [
+        "MessageID"
+      ]
+    }
+  },
+  "trap_message": {
+    "form": "TAGGED",
+    "oid": "sorm-message-trap",
+    "data_form": "CHOICE",
+    "variants": [
+      {
+        "name": "trap",
+        "tag": 0,
+        "type": "Trap",
+        "requiredness": "CHOICE_ALTERNATIVE"
+      },
+      {
+        "name": "trap-ack",
+        "tag": 1,
+        "rendered_type": "Trap Ack",
+        "canonical_target": "TrapAck",
+        "type_resolution": "PENDING_PRIMARY_PDF",
+        "requiredness": "CHOICE_ALTERNATIVE"
+      }
+    ]
+  },
+  "trap": {
+    "form": "SEQUENCE",
+    "fields": [
+      {
+        "name": "trap-type",
+        "type": "TrapType",
+        "requiredness": "REQUIRED"
+      },
+      {
+        "name": "trap-message",
+        "type": "UTF8String",
+        "size": {
+          "min": 1,
+          "max": 256
+        },
+        "requiredness": "OPTIONAL"
+      },
+      {
+        "name": "reference-message",
+        "rendered_type": "MessageIDOPTIONAL",
+        "resolved_type": "PENDING_PRIMARY_PDF",
+        "requiredness": "PENDING_PRIMARY_PDF",
+        "published_purpose": "message number to which this trap relates"
+      }
+    ]
+  },
+  "trap_type": {
+    "form": "ENUMERATED",
+    "closed_visible_set": true,
+    "values": [
+      {
+        "name": "heartbeat",
+        "value": 0,
+        "published_purpose": "test packet"
+      },
+      {
+        "name": "restart-software",
+        "value": 1,
+        "published_purpose": "software restart"
+      },
+      {
+        "name": "unauthorized-access",
+        "value": 2,
+        "published_purpose": "unauthorized access attempt"
+      },
+      {
+        "name": "critical-error",
+        "value": 3,
+        "published_purpose": "software error; data lost; further operation impossible"
+      },
+      {
+        "name": "major-error",
+        "value": 4,
+        "published_purpose": "software error; data lost; further operation possible"
+      },
+      {
+        "name": "minor-error",
+        "value": 5,
+        "published_purpose": "software error; data not lost; further operation possible"
+      }
+    ]
+  },
+  "trap_ack": {
+    "form": "NULL",
+    "published_correlation_comment": "TrapAck message number must correspond to the Trap message number",
+    "implementation_semantics": "NOT_SPECIFIED"
+  },
+  "rendered_anomalies": [
+    {
+      "token": "Trap Ack",
+      "kind": "SPLIT_TYPE_TOKEN",
+      "resolution": "PENDING_PRIMARY_PDF"
+    },
+    {
+      "token": "MessageIDOPTIONAL",
+      "kind": "FUSED_TYPE_OPTIONAL_TOKEN",
+      "resolution": "PENDING_PRIMARY_PDF"
+    }
+  ],
+  "summary": {
+    "exports": 1,
+    "imported_symbols": 3,
+    "message_variants": 2,
+    "trap_fields": 3,
+    "enum_values": 6,
+    "enum_range": {
+      "min": 0,
+      "max": 5
+    },
+    "rendered_anomalies": 2,
+    "explicit_correlation_comments": 1
+  },
+  "semantic_guards": [
+    "NO_NUMERIC_OID_ARCS_INFERRED",
+    "NO_RENDERED_TOKEN_REPAIR_CLAIMED",
+    "NO_REFERENCE_OPTIONALITY_INFERRED",
+    "NO_CORRELATION_IMPLEMENTATION_INFERRED",
+    "NO_MESSAGE_ID_UNIQUENESS_OR_REPLAY_RULE_INFERRED",
+    "NO_ACK_TIMEOUT_RETRY_STATUS_OR_PAYLOAD_INFERRED",
+    "NO_HEARTBEAT_INTERVAL_INFERRED",
+    "NO_SEVERITY_ORDERING_INFERRED",
+    "NO_RESTART_AUTHORIZATION_INFERRED",
+    "NO_ERROR_RECOVERY_ACTION_INFERRED",
+    "NO_STATE_MACHINE_OR_TRANSPORT_RULE_INFERRED"
+  ],
+  "atomic_rules": [
+    {
+      "id": "MK573TRP-R001",
+      "rule": "APPLY_ORDER630_TRAPS_FROM_2024_03_01"
+    },
+    {
+      "id": "MK573TRP-R002",
+      "rule": "STOP_CURRENT_ROUTE_AT_2030_03_01"
+    },
+    {
+      "id": "MK573TRP-R003",
+      "rule": "PRESERVE_MODULE_IMPLICIT_TAGS"
+    },
+    {
+      "id": "MK573TRP-R004",
+      "rule": "PRESERVE_TRAPS_MODULE_NAME"
+    },
+    {
+      "id": "MK573TRP-R005",
+      "rule": "PRESERVE_SINGLE_TRAPMESSAGE_EXPORT"
+    },
+    {
+      "id": "MK573TRP-R006",
+      "rule": "PRESERVE_TAGGED_IMPORT"
+    },
+    {
+      "id": "MK573TRP-R007",
+      "rule": "PRESERVE_SORM_MESSAGE_TRAP_IMPORT"
+    },
+    {
+      "id": "MK573TRP-R008",
+      "rule": "PRESERVE_MESSAGEID_IMPORT"
+    },
+    {
+      "id": "MK573TRP-R009",
+      "rule": "PRESERVE_CLASSIFICATION_IMPORT_SOURCE"
+    },
+    {
+      "id": "MK573TRP-R010",
+      "rule": "PRESERVE_SORM_IMPORT_SOURCE"
+    },
+    {
+      "id": "MK573TRP-R011",
+      "rule": "PRESERVE_TRAPMESSAGE_TAGGED_FORM"
+    },
+    {
+      "id": "MK573TRP-R012",
+      "rule": "PRESERVE_SYMBOLIC_SORM_MESSAGE_TRAP_OID"
+    },
+    {
+      "id": "MK573TRP-R013",
+      "rule": "DO_NOT_INFER_NUMERIC_OID_ARCS"
+    },
+    {
+      "id": "MK573TRP-R014",
+      "rule": "PRESERVE_DATA_CHOICE_FORM"
+    },
+    {
+      "id": "MK573TRP-R015",
+      "rule": "PRESERVE_EXACTLY_TWO_MESSAGE_VARIANTS"
+    },
+    {
+      "id": "MK573TRP-R016",
+      "rule": "PRESERVE_TRAP_BRANCH_TAG_ZERO"
+    },
+    {
+      "id": "MK573TRP-R017",
+      "rule": "PRESERVE_TRAP_BRANCH_TYPE_TRAP"
+    },
+    {
+      "id": "MK573TRP-R018",
+      "rule": "PRESERVE_TRAP_ACK_BRANCH_TAG_ONE"
+    },
+    {
+      "id": "MK573TRP-R019",
+      "rule": "PRESERVE_RENDERED_TRAP_ACK_SPLIT_TOKEN"
+    },
+    {
+      "id": "MK573TRP-R020",
+      "rule": "KEEP_TRAP_ACK_TYPE_RESOLUTION_PENDING_PRIMARY_PDF"
+    },
+    {
+      "id": "MK573TRP-R021",
+      "rule": "PRESERVE_TRAP_SEQUENCE_FORM"
+    },
+    {
+      "id": "MK573TRP-R022",
+      "rule": "PRESERVE_EXACTLY_THREE_VISIBLE_TRAP_FIELDS"
+    },
+    {
+      "id": "MK573TRP-R023",
+      "rule": "REQUIRE_TRAP_TYPE_FIELD"
+    },
+    {
+      "id": "MK573TRP-R024",
+      "rule": "PRESERVE_TRAP_TYPE_TYPE"
+    },
+    {
+      "id": "MK573TRP-R025",
+      "rule": "PRESERVE_TRAP_MESSAGE_OPTIONAL"
+    },
+    {
+      "id": "MK573TRP-R026",
+      "rule": "PRESERVE_TRAP_MESSAGE_UTF8STRING"
+    },
+    {
+      "id": "MK573TRP-R027",
+      "rule": "PRESERVE_TRAP_MESSAGE_SIZE_MIN_ONE"
+    },
+    {
+      "id": "MK573TRP-R028",
+      "rule": "PRESERVE_TRAP_MESSAGE_SIZE_MAX_256"
+    },
+    {
+      "id": "MK573TRP-R029",
+      "rule": "PRESERVE_REFERENCE_MESSAGE_LITERAL_FIELD"
+    },
+    {
+      "id": "MK573TRP-R030",
+      "rule": "PRESERVE_RENDERED_MESSAGEIDOPTIONAL_FUSED_TOKEN"
+    },
+    {
+      "id": "MK573TRP-R031",
+      "rule": "KEEP_REFERENCE_TYPE_AND_OPTIONALITY_PENDING_PRIMARY_PDF"
+    },
+    {
+      "id": "MK573TRP-R032",
+      "rule": "PRESERVE_REFERENCE_MESSAGE_PUBLISHED_PURPOSE"
+    },
+    {
+      "id": "MK573TRP-R033",
+      "rule": "PRESERVE_TRAPTYPE_ENUMERATED_FORM"
+    },
+    {
+      "id": "MK573TRP-R034",
+      "rule": "PRESERVE_EXACTLY_SIX_TRAP_TYPES"
+    },
+    {
+      "id": "MK573TRP-R035",
+      "rule": "PRESERVE_HEARTBEAT_VALUE_ZERO"
+    },
+    {
+      "id": "MK573TRP-R036",
+      "rule": "PRESERVE_RESTART_SOFTWARE_VALUE_ONE"
+    },
+    {
+      "id": "MK573TRP-R037",
+      "rule": "PRESERVE_UNAUTHORIZED_ACCESS_VALUE_TWO"
+    },
+    {
+      "id": "MK573TRP-R038",
+      "rule": "PRESERVE_CRITICAL_ERROR_VALUE_THREE"
+    },
+    {
+      "id": "MK573TRP-R039",
+      "rule": "PRESERVE_MAJOR_ERROR_VALUE_FOUR"
+    },
+    {
+      "id": "MK573TRP-R040",
+      "rule": "PRESERVE_MINOR_ERROR_VALUE_FIVE"
+    },
+    {
+      "id": "MK573TRP-R041",
+      "rule": "PRESERVE_PUBLISHED_TRAP_TYPE_PURPOSES"
+    },
+    {
+      "id": "MK573TRP-R042",
+      "rule": "PRESERVE_TRAPACK_NULL_FORM"
+    },
+    {
+      "id": "MK573TRP-R043",
+      "rule": "PRESERVE_PUBLISHED_MESSAGE_NUMBER_CORRELATION_COMMENT"
+    },
+    {
+      "id": "MK573TRP-R044",
+      "rule": "DO_NOT_INFER_CORRELATION_IMPLEMENTATION"
+    },
+    {
+      "id": "MK573TRP-R045",
+      "rule": "DO_NOT_INFER_MESSAGEID_UNIQUENESS"
+    },
+    {
+      "id": "MK573TRP-R046",
+      "rule": "DO_NOT_INFER_REPLAY_PROTECTION"
+    },
+    {
+      "id": "MK573TRP-R047",
+      "rule": "DO_NOT_INFER_ACK_TIMEOUT"
+    },
+    {
+      "id": "MK573TRP-R048",
+      "rule": "DO_NOT_INFER_ACK_RETRY"
+    },
+    {
+      "id": "MK573TRP-R049",
+      "rule": "DO_NOT_INFER_ACK_STATUS_OR_PAYLOAD"
+    },
+    {
+      "id": "MK573TRP-R050",
+      "rule": "DO_NOT_INFER_HEARTBEAT_INTERVAL"
+    },
+    {
+      "id": "MK573TRP-R051",
+      "rule": "DO_NOT_INFER_SEVERITY_ORDERING"
+    },
+    {
+      "id": "MK573TRP-R052",
+      "rule": "DO_NOT_INFER_RESTART_AUTHORIZATION"
+    },
+    {
+      "id": "MK573TRP-R053",
+      "rule": "DO_NOT_INFER_ERROR_RECOVERY_ACTION"
+    },
+    {
+      "id": "MK573TRP-R054",
+      "rule": "DO_NOT_INFER_REFERENCE_REQUIREMENT_BY_TRAP_TYPE"
+    },
+    {
+      "id": "MK573TRP-R055",
+      "rule": "DO_NOT_INFER_LOCALIZATION_OR_ENCODING_PROFILE"
+    },
+    {
+      "id": "MK573TRP-R056",
+      "rule": "DO_NOT_INFER_TRANSPORT_CHANNEL"
+    },
+    {
+      "id": "MK573TRP-R057",
+      "rule": "DO_NOT_INFER_STATE_MACHINE"
+    },
+    {
+      "id": "MK573TRP-R058",
+      "rule": "DO_NOT_INFER_RATE_LIMIT"
+    },
+    {
+      "id": "MK573TRP-R059",
+      "rule": "KEEP_TWO_RENDERED_ANOMALIES_FAIL_CLOSED"
+    },
+    {
+      "id": "MK573TRP-R060",
+      "rule": "KEEP_CONSOLIDATED_HTML_AS_SECONDARY_EVIDENCE"
+    },
+    {
+      "id": "MK573TRP-R061",
+      "rule": "KEEP_CURRENT_REVISION_DATE_2025_12_18"
+    },
+    {
+      "id": "MK573TRP-R062",
+      "rule": "KEEP_CURRENT_OFFICIAL_IMMUTABLE_PRIMARY_BYTES_PENDING"
+    },
+    {
+      "id": "MK573TRP-R063",
+      "rule": "KEEP_PRIMARY_PDF_AND_EXPERT_REVIEW_PENDING"
+    },
+    {
+      "id": "MK573TRP-R064",
+      "rule": "KEEP_REMAINING_ORDER573_MODULES_PENDING"
+    }
+  ],
+  "evidence_model": [
+    {
+      "id": "E573TRP-01",
+      "proves": [
+        "MK573TRP-R001",
+        "MK573TRP-R002",
+        "MK573TRP-R003",
+        "MK573TRP-R004"
+      ],
+      "artifacts": [
+        "TRAPS_GATE"
+      ]
+    },
+    {
+      "id": "E573TRP-02",
+      "proves": [
+        "MK573TRP-R005",
+        "MK573TRP-R006",
+        "MK573TRP-R007",
+        "MK573TRP-R008"
+      ],
+      "artifacts": [
+        "TRAPS_GATE"
+      ]
+    },
+    {
+      "id": "E573TRP-03",
+      "proves": [
+        "MK573TRP-R009",
+        "MK573TRP-R010",
+        "MK573TRP-R011",
+        "MK573TRP-R012"
+      ],
+      "artifacts": [
+        "TRAPS_GATE"
+      ]
+    },
+    {
+      "id": "E573TRP-04",
+      "proves": [
+        "MK573TRP-R013",
+        "MK573TRP-R014",
+        "MK573TRP-R015",
+        "MK573TRP-R016"
+      ],
+      "artifacts": [
+        "TRAPS_GATE"
+      ]
+    },
+    {
+      "id": "E573TRP-05",
+      "proves": [
+        "MK573TRP-R017",
+        "MK573TRP-R018",
+        "MK573TRP-R019",
+        "MK573TRP-R020"
+      ],
+      "artifacts": [
+        "TRAPS_GATE"
+      ]
+    },
+    {
+      "id": "E573TRP-06",
+      "proves": [
+        "MK573TRP-R021",
+        "MK573TRP-R022",
+        "MK573TRP-R023",
+        "MK573TRP-R024"
+      ],
+      "artifacts": [
+        "TRAPS_GATE"
+      ]
+    },
+    {
+      "id": "E573TRP-07",
+      "proves": [
+        "MK573TRP-R025",
+        "MK573TRP-R026",
+        "MK573TRP-R027",
+        "MK573TRP-R028"
+      ],
+      "artifacts": [
+        "TRAPS_GATE"
+      ]
+    },
+    {
+      "id": "E573TRP-08",
+      "proves": [
+        "MK573TRP-R029",
+        "MK573TRP-R030",
+        "MK573TRP-R031",
+        "MK573TRP-R032"
+      ],
+      "artifacts": [
+        "TRAPS_GATE"
+      ]
+    },
+    {
+      "id": "E573TRP-09",
+      "proves": [
+        "MK573TRP-R033",
+        "MK573TRP-R034",
+        "MK573TRP-R035",
+        "MK573TRP-R036"
+      ],
+      "artifacts": [
+        "TRAPS_GATE"
+      ]
+    },
+    {
+      "id": "E573TRP-10",
+      "proves": [
+        "MK573TRP-R037",
+        "MK573TRP-R038",
+        "MK573TRP-R039",
+        "MK573TRP-R040"
+      ],
+      "artifacts": [
+        "TRAPS_GATE"
+      ]
+    },
+    {
+      "id": "E573TRP-11",
+      "proves": [
+        "MK573TRP-R041",
+        "MK573TRP-R042",
+        "MK573TRP-R043"
+      ],
+      "artifacts": [
+        "TRAPS_GATE"
+      ]
+    },
+    {
+      "id": "E573TRP-12",
+      "proves": [
+        "MK573TRP-R044",
+        "MK573TRP-R045",
+        "MK573TRP-R046"
+      ],
+      "artifacts": [
+        "TRAPS_GATE"
+      ]
+    },
+    {
+      "id": "E573TRP-13",
+      "proves": [
+        "MK573TRP-R047",
+        "MK573TRP-R048",
+        "MK573TRP-R049"
+      ],
+      "artifacts": [
+        "TRAPS_GATE"
+      ]
+    },
+    {
+      "id": "E573TRP-14",
+      "proves": [
+        "MK573TRP-R050",
+        "MK573TRP-R051",
+        "MK573TRP-R052"
+      ],
+      "artifacts": [
+        "TRAPS_GATE"
+      ]
+    },
+    {
+      "id": "E573TRP-15",
+      "proves": [
+        "MK573TRP-R053",
+        "MK573TRP-R054",
+        "MK573TRP-R055"
+      ],
+      "artifacts": [
+        "TRAPS_GATE"
+      ]
+    },
+    {
+      "id": "E573TRP-16",
+      "proves": [
+        "MK573TRP-R056",
+        "MK573TRP-R057",
+        "MK573TRP-R058"
+      ],
+      "artifacts": [
+        "TRAPS_GATE"
+      ]
+    },
+    {
+      "id": "E573TRP-17",
+      "proves": [
+        "MK573TRP-R059",
+        "MK573TRP-R060",
+        "MK573TRP-R061"
+      ],
+      "artifacts": [
+        "TRAPS_GATE"
+      ]
+    },
+    {
+      "id": "E573TRP-18",
+      "proves": [
+        "MK573TRP-R062",
+        "MK573TRP-R063",
+        "MK573TRP-R064"
+      ],
+      "artifacts": [
+        "TRAPS_GATE"
+      ]
+    }
+  ],
+  "verification_boundary": {
+    "rules": 64,
+    "evidence_nodes": 18,
+    "regression_cases": 64,
+    "message_variants": 2,
+    "trap_fields": 3,
+    "enum_values": 6,
+    "rendered_anomalies": 2,
+    "critical_gap_created": false,
+    "high_gap_created": false,
+    "primary_pdf": "PENDING",
+    "current_consolidated_official_immutable_bytes": "PENDING_INTERNAL_ERROR",
+    "independent_expert_review": "PENDING"
+  }
+}
