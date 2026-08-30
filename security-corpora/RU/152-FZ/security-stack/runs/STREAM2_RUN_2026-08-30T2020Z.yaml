@@ -1,0 +1,99 @@
+schema_version: "1.0"
+id: STREAM2-RUN-2026-08-30T2020Z
+stream: 2
+kind: security-stack-targeted-primary-byte-retry-and-route-audit
+created_at: "2026-08-30T20:20:21Z"
+status: TARGETED_RETRY_AND_ROUTE_EVIDENCE_COMMITTED
+scope:
+  primary_domain: "152-FZ technical and cryptographic security stack"
+  focus:
+    - PP RF No. 1119 exact Government DOC artifact
+    - FSB Order No. 378 exact official publication artifact for ISPDN when SKZI is used
+    - FSTEC Order No. 205/2025 exact primary publication/file route
+    - FSTEC Order No. 21 replacement enactment gate
+    - preserve bounded applicability for certification, licensing, SKZI lifecycle and incident-adjacent regimes
+
+targeted_primary_retries:
+  started_at: "2026-08-30T20:18:42.964382Z"
+  pp1119:
+    routes_attempted:
+      - "https://government.ru/media/2012/11/3/53354/file/1119_pril.doc"
+      - "http://government.ru/media/2012/11/3/53354/file/1119_pril.doc"
+    result: ACQUISITION_ENV_DNS_RESOLUTION_FAILURE_GOVERNMENT_RU
+    exact_payload_accepted: false
+    fingerprint_status: PENDING
+    proof_gate: OLE_CFB_SIGNATURE_PLUS_EXACT_LENGTH_SHA256_REQUIRED
+  fsb378:
+    routes_attempted:
+      - "https://rg.ru/documents/2014/09/17/zashita-dok.html"
+    result: ACQUISITION_ENV_DNS_RESOLUTION_FAILURE_RG_RU
+    exact_payload_accepted: false
+    fingerprint_status: PENDING
+    applicability: ISPDN_WHEN_SKZI_USED
+  accepted_new_immutable: 0
+  note: >-
+    The acquisition environment failed DNS resolution before HTTP for government.ru and rg.ru. This is a transient
+    transport observation only. No mirror was promoted, and MIME, byte length and SHA-256 remain unset.
+
+route_discovery_updates:
+  fstec205:
+    checked_at: "2026-08-30"
+    official_publication_catalog: "https://publication.pravo.gov.ru/documents/block/foiv041"
+    official_notice: "https://fstec.ru/files/1407/-----16--2025--N-240-24-5531/2848/-----16--2025--N-240-24-5531.pdf"
+    result: OFFICIAL_FSTEC_PUBLICATION_CATALOG_CHECKED_ORDER205_NOT_SURFACED_IN_INDEXED_LIST
+    exact_primary_route: UNRESOLVED
+    evidence_scope: ROUTE_DISCOVERY_NEGATIVE_EVIDENCE_NOT_PROOF_OF_NONPUBLICATION
+    neighboring_catalog_records:
+      - "Order 230/2025 — published 19.09.2025"
+      - "Order 282/2025 — published 04.09.2025"
+    rule: >-
+      Do not infer a publication number/date or substitute information notice 240/24/5531 for Order 205 bytes.
+  fstec21:
+    checked_at: "2026-08-30"
+    active_revision_date: "2020-05-14"
+    replacement_project: "169583"
+    result: PRIMARY_ENACTMENT_GATE_NOT_PASSED_IN_THIS_REVIEW
+    rule: KEEP_FSTEC21_ACTIVE_UNTIL_FINAL_ORDER_MINJUST_AND_OFFICIAL_PUBLICATION_ARE_PROVEN
+    note: >-
+      Fresh searches did not surface an official final replacement act. Recent secondary material continues to
+      describe 169583 as a project whose stated 01.09.2026 date depends on issuance/registration. Project content
+      remains outside the active baseline.
+
+authoritative_counter_state:
+  identified: 55
+  metadata_verified: 55
+  immutable_sha256_verified: 24
+  pending_raw_capture: 31
+  exact_official_route_unresolved: 8
+  confirmed_conflicts: 0
+  delta_this_run:
+    identified: 0
+    metadata_verified: 0
+    immutable_sha256_verified: 0
+    pending_raw_capture: 0
+    exact_official_route_unresolved: 0
+    confirmed_conflicts: 0
+
+immutable_evidence_preserved:
+  fstec21: IMMUTABLE_CAPTURED
+  fstec_threat_method_2021: IMMUTABLE_CAPTURED
+  note: >-
+    Existing immutable artifacts and manifests remain authoritative. No existing fingerprint was changed by this run.
+
+applicability_guard: >-
+  Do not propagate attestation, licensing, certification, KII/NCTKI/GosSOPKA or broad SKZI lifecycle duties into
+  the generic PP1119/FSTEC21 private-ISPDN baseline without an explicit evidence-backed applicability edge.
+  FSB378 applies only where SKZI use is established. Order 205 remains product-trust/version-chain context only.
+
+proof_floor: >-
+  IMMUTABLE_CAPTURED requires exact official bytes, observed MIME/signature, exact byte length, computed SHA-256,
+  immutable artifact and manifest. Negative route searches, secondary mirrors and regulator status notices may
+  support route/status reasoning only and cannot substitute for the primary payload.
+
+next_priority:
+  - "retry PP1119 exact Government DOC when government.ru transport resolves"
+  - "retry FSB378 exact official publication bytes when rg.ru transport resolves"
+  - "capture FSB66/173 and FAPSI152 exact official payloads"
+  - "continue exact-route discovery for FSTEC205/2025, including non-public/special-document possibility without presuming it"
+  - "recover exact attachments for remaining FSTEC methodical sources"
+  - "continue primary-enactment watch for FSTEC21 replacement project 169583"
