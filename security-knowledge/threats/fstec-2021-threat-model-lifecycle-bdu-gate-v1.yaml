@@ -1,0 +1,76 @@
+{
+  "id":"RU-FSTEC-2021-THREAT-MODEL-LIFECYCLE-BDU-GATE-V1",
+  "as_of":"2026-08-31",
+  "status":"VERIFIED_OFFICIAL_IDENTITY_CURRENT_LIST_PUBLIC_TEXT_CLAUSES_1_2_1_4_1_8_2_2_2_3_2_10_TO_2_15_BDU_LIFECYCLE_GATE_PRIMARY_BYTES_PENDING",
+  "title":"Методика ФСТЭК России от 05.02.2021 — область, процесс, модель угроз и BDU-trigger lifecycle",
+  "source":{
+    "issuer":"ФСТЭК России","document_type":"методический документ","approval_date":"2021-02-05","title":"Методика оценки угроз безопасности информации",
+    "official_page":"https://fstec.ru/dokumenty/vse-dokumenty/spetsialnye-normativnye-dokumenty/metodicheskij-dokument-ot-5-fevralya-2021-g",
+    "official_current_list":"https://fstec.ru/dokumenty/vse-dokumenty/perechni/perechen-normativnykh-pravovykh-aktov-metodicheskikh-dokumentov-i-natsionalnykh-standartov-ot-10-dekabrya-2024-g",
+    "official_2022_information_message":"https://fstec.ru/dokumenty/vse-dokumenty/informatsionnye-i-analiticheskie-materialy/informatsionnoe-soobshchenie-fstek-rossii-ot-4-maya-2022-g-n-240-22-2432",
+    "bdu":"https://bdu.fstec.ru/","public_text":"https://normativ.kontur.ru/document?documentId=451500&moduleId=1"
+  },
+  "applicability":{
+    "covered_system_classes":["государственные и муниципальные информационные системы","информационные системы персональных данных","значимые объекты критической информационной инфраструктуры","информационные системы управления производством организаций ОПК","АСУ производственными и технологическими процессами на критически важных, потенциально опасных и иных повышенно опасных объектах"],
+    "other_cases":"Применение определяется решением обладателя информации или оператора.",
+    "excluded_topics":["угрозы нарушения безопасности криптографических средств защиты информации","угрозы, связанные с техническими каналами утечки информации"],
+    "legacy_rule":"Модели, утвержденные до Методики, продолжают действовать и изменяются по ней при развитии или модернизации систем и сетей.",
+    "superseded_methods":["Методика определения актуальных угроз безопасности ПДн 2008 года","Методика определения актуальных угроз безопасности информации в КСИИ 2007 года"]
+  },
+  "assessment_tasks":[
+    "determine_negative_consequences","inventory_systems_networks_and_impact_objects","determine_threat_sources_and_assess_adversary_capabilities","assess_threat_realization_methods","assess_realization_possibility_and_threat_relevance","assess_threat_realization_scenarios"
+  ],
+  "input_classes":[
+    {"id":"I1","value":"BDU general threat list, FSTEC threat models and sector/corporate threat models","boundary":"candidate inputs, not automatically relevant threats"},
+    {"id":"I2","value":"attack-vector descriptions from CAPEC, ATT&CK, OWASP, STIX, WASC and other published sources","boundary":"external catalog entry is not system-specific proof"},
+    {"id":"I3","value":"system and network technical, design and operational documentation","boundary":"actual operation must be checked during exploitation"},
+    {"id":"I4","value":"contracts and conditions for data-centre or cloud infrastructure","boundary":"provider responsibility and evidence must be explicit"},
+    {"id":"I5","value":"applicable Russian legal acts describing purpose, functions, information and legal regime","boundary":"applicability must be established separately"},
+    {"id":"I6","value":"process maps and documents describing main or critical processes","boundary":"generic process assumptions are insufficient"},
+    {"id":"I7","value":"holder or operator risk and damage assessment results","boundary":"absence permits expert or business-unit inputs, not an invented zero"},
+    {"id":"I8","value":"additional domain-specific documents and information","boundary":"source and relevance remain traceable"}
+  ],
+  "assessment_stages":[
+    {"order":1,"id":"NEGATIVE_CONSEQUENCES","result":"concrete consequences linked to protected information or main/critical processes"},
+    {"order":2,"id":"IMPACT_OBJECTS","result":"information resources, components and interfaces forming the assessment boundary"},
+    {"order":3,"id":"REALIZATION_AND_RELEVANCE","result":"possible threats, realization methods, adversaries and scenarios supporting relevance conclusions"}
+  ],
+  "model_scope_options":[
+    {"id":"SINGLE_SYSTEM_OR_NETWORK","condition":"holder or operator decision","must_include":"infrastructure threats and threats associated with adjacent-system interfaces"},
+    {"id":"INTERACTING_SYSTEMS_AND_NETWORKS","condition":"holder or operator decision","must_include":"systems, interactions and shared assessment boundary"},
+    {"id":"MULTIPLE_SIMILAR_CREATED_SYSTEMS","condition":"systems and networks are similar and belong to the holder or operator","must_include":"documented sameness basis and applicability boundary"}
+  ],
+  "cloud_fail_closed_rule":{"trigger":"provider has not assessed threats or has not supplied assessment results","assumption":"hosting data-centre or cloud infrastructure is exposed to threats and compromised by an adversary with the maximum capability level","not_a_substitute_for":"provider interaction and evidence"},
+  "lifecycle":{
+    "obligation":"Maintain the threat model current while systems and networks operate.","electronic_maintenance_allowed":true,"fixed_calendar_period_prescribed":false,
+    "change_triggers":[
+      {"id":"T1","event":"change in Russian legal requirements or FSTEC methodological documents governing threat assessment"},
+      {"id":"T2","event":"change in architecture, operating conditions, processing mode or information legal regime affecting threats"},
+      {"id":"T3","event":"new threat or scenario identified through protection-level control, vulnerability analysis, penetration testing, audit or other evidence"},
+      {"id":"T4","event":"BDU receives information about new threats or their realization scenarios, tactics or techniques"}
+    ]
+  },
+  "bdu_gate":{
+    "roles":["general threat list as an assessment input","new threat/scenario/tactic/technique as a model-change trigger"],
+    "promotion_test":["candidate maps to actual negative consequence","candidate maps to an impact object and interface","relevant threat source or adversary capability exists","realization method is feasible in the architecture and operating conditions","at least one applicable scenario supports the relevance conclusion when required"],
+    "decision_states":["CANDIDATE","MAPPED","RELEVANCE_PENDING","RELEVANT","NOT_RELEVANT_WITH_RATIONALE","REASSESSMENT_REQUIRED"],
+    "forbidden_promotions":["BDU_ENTRY_TO_RELEVANT_WITHOUT_ASSESSMENT","BDU_ABSENCE_TO_NOT_RELEVANT","CATALOG_UPDATE_TO_AUTOMATIC_MODEL_REWRITE","VULNERABILITY_ENTRY_TO_EXPLOITABILITY_WITHOUT_CONTEXT"]
+  },
+  "revision_boundary":{"message_2022_05_04":"reported development of a new BDU section and planned new edition","current_effect":"not treated as proof that a replacement edition entered into force","current_identity_basis":"2021 Method appears in FSTEC official list dated 2024-12-10 and remains on the official document page"},
+  "evidence_artifacts":["applicability decision","system/network scope statement","architecture and interface inventory","protected information and legal-regime inventory","critical-process map","negative-consequence register","impact-object register","external and internal interface register","threat-source and adversary-capability assessment","realization-method assessment","scenario record","relevance decision and rationale","BDU snapshot reference and acquisition time","external catalog references","cloud/provider responsibility evidence","model approval record","change-event log","reassessment and model-version history"],
+  "boundaries":{"no_bdu_auto_relevance":true,"no_bdu_absence_as_safety":true,"no_catalog_auto_rewrite":true,"no_fixed_annual_period_invented":true,"no_probability_formula_invented":true,"no_default_risk_scale_invented":true,"no_crypto_scope_extension":true,"no_technical_leakage_channel_scope_extension":true,"no_planned_revision_promoted_to_effective":true,"no_cloud_provider_assurance_assumed":true,"public_text_is_secondary_access_route":true,"immutable_official_normative_bytes_pending":true,"independent_expert_review_pending":true},
+  "counts":{"covered_system_classes":5,"excluded_topics":2,"superseded_methods":2,"assessment_tasks":6,"input_classes":8,"assessment_stages":3,"model_scope_options":3,"change_triggers":4,"bdu_roles":2,"promotion_tests":5,"decision_states":6,"forbidden_promotions":4,"evidence_artifacts":18,"evidence_nodes":18,"control_rules":64,"regression_cases":64},
+  "control_rules":[
+    {"id":"FTM-R001","rule":"PIN_FSTEC_2021_IDENTITY"},{"id":"FTM-R002","rule":"RETAIN_OFFICIAL_CURRENT_LIST_ROUTE"},{"id":"FTM-R003","rule":"KEEP_PRIMARY_BYTES_PENDING"},{"id":"FTM-R004","rule":"KEEP_PUBLIC_TEXT_SECONDARY"},{"id":"FTM-R005","rule":"KEEP_EXPERT_REVIEW_PENDING"},{"id":"FTM-R006","rule":"DO_NOT_PROMOTE_PLANNED_REVISION"},{"id":"FTM-R007","rule":"REQUIRE_SEPARATE_APPLICABILITY"},{"id":"FTM-R008","rule":"PRESERVE_FIVE_COVERED_CLASSES"},
+    {"id":"FTM-R009","rule":"OTHER_CASES_REQUIRE_HOLDER_OPERATOR_DECISION"},{"id":"FTM-R010","rule":"EXCLUDE_CRYPTO_SECURITY_THREATS"},{"id":"FTM-R011","rule":"EXCLUDE_TECHNICAL_LEAKAGE_CHANNELS"},{"id":"FTM-R012","rule":"PRESERVE_LEGACY_MODEL_CONTINUITY"},{"id":"FTM-R013","rule":"REPLACE_2008_PDN_METHOD_USE"},{"id":"FTM-R014","rule":"REPLACE_2007_KSII_METHOD_USE"},{"id":"FTM-R015","rule":"REQUIRE_SIX_ASSESSMENT_TASKS"},{"id":"FTM-R016","rule":"LINK_TASKS_TO_MODEL_OUTPUT"},
+    {"id":"FTM-R017","rule":"BDU_IS_INPUT_NOT_FINAL_SET"},{"id":"FTM-R018","rule":"EXTERNAL_ATTACK_CATALOGS_ARE_INPUTS"},{"id":"FTM-R019","rule":"REQUIRE_SYSTEM_DOCUMENTATION"},{"id":"FTM-R020","rule":"REQUIRE_CLOUD_CONTRACT_INPUTS"},{"id":"FTM-R021","rule":"REQUIRE_LEGAL_ACT_INPUTS"},{"id":"FTM-R022","rule":"REQUIRE_CRITICAL_PROCESS_INPUTS"},{"id":"FTM-R023","rule":"REQUIRE_RISK_DAMAGE_INPUTS"},{"id":"FTM-R024","rule":"ALLOW_TRACEABLE_DOMAIN_INPUTS"},
+    {"id":"FTM-R025","rule":"STAGE_ONE_NEGATIVE_CONSEQUENCES"},{"id":"FTM-R026","rule":"STAGE_TWO_IMPACT_OBJECTS"},{"id":"FTM-R027","rule":"STAGE_THREE_REALIZATION_RELEVANCE"},{"id":"FTM-R028","rule":"PRESERVE_THREE_STAGE_ORDER"},{"id":"FTM-R029","rule":"SINGLE_SCOPE_INCLUDES_INFRASTRUCTURE"},{"id":"FTM-R030","rule":"SINGLE_SCOPE_INCLUDES_ADJACENT_INTERFACES"},{"id":"FTM-R031","rule":"ALLOW_INTERACTING_SYSTEM_SCOPE"},{"id":"FTM-R032","rule":"SIMILAR_SYSTEM_SCOPE_REQUIRES_SAMENESS_BASIS"},
+    {"id":"FTM-R033","rule":"MODEL_RESULT_DESCRIBES_SYSTEMS_AND_RELEVANT_THREATS"},{"id":"FTM-R034","rule":"MODEL_STRUCTURE_REFERENCE_IS_RECOMMENDED"},{"id":"FTM-R035","rule":"CREATION_USES_EXPECTED_ARCHITECTURE"},{"id":"FTM-R036","rule":"OPERATION_USES_REAL_ARCHITECTURE"},{"id":"FTM-R037","rule":"OPERATION_USES_INVENTORY_AND_SECURITY_TESTS"},{"id":"FTM-R038","rule":"CREATION_RESULTS_SUPPORT_CONTROL_SELECTION"},{"id":"FTM-R039","rule":"OPERATION_RESULTS_SUPPORT_EFFECTIVENESS_ASSESSMENT"},{"id":"FTM-R040","rule":"AUTOMATION_DOES_NOT_REPLACE_EXPERT_DECISION"},
+    {"id":"FTM-R041","rule":"CLOUD_PROVIDER_INTERACTION_REQUIRED"},{"id":"FTM-R042","rule":"CLOUD_MISSING_ASSESSMENT_FAILS_CLOSED"},{"id":"FTM-R043","rule":"CLOUD_MAX_CAPABILITY_ASSUMPTION_PRESERVED"},{"id":"FTM-R044","rule":"CLOUD_ASSUMPTION_NOT_PROVIDER_EVIDENCE"},{"id":"FTM-R045","rule":"MAINTAIN_MODEL_CURRENT"},{"id":"FTM-R046","rule":"ALLOW_ELECTRONIC_MAINTENANCE"},{"id":"FTM-R047","rule":"DO_NOT_INVENT_CALENDAR_PERIOD"},{"id":"FTM-R048","rule":"TRIGGER_ON_LEGAL_METHOD_CHANGE"},
+    {"id":"FTM-R049","rule":"TRIGGER_ON_ARCHITECTURE_OPERATING_LEGAL_REGIME_CHANGE"},{"id":"FTM-R050","rule":"TRIGGER_ON_NEW_THREAT_OR_SCENARIO_EVIDENCE"},{"id":"FTM-R051","rule":"TRIGGER_ON_NEW_BDU_THREAT_OR_SCENARIO"},{"id":"FTM-R052","rule":"LOG_CHANGE_EVENT_AND_REASSESSMENT"},{"id":"FTM-R053","rule":"BDU_ENTRY_STARTS_CANDIDATE_STATE"},{"id":"FTM-R054","rule":"REQUIRE_CONSEQUENCE_MAPPING"},{"id":"FTM-R055","rule":"REQUIRE_OBJECT_INTERFACE_MAPPING"},{"id":"FTM-R056","rule":"REQUIRE_SOURCE_CAPABILITY_MAPPING"},
+    {"id":"FTM-R057","rule":"REQUIRE_REALIZATION_FEASIBILITY"},{"id":"FTM-R058","rule":"REQUIRE_SCENARIO_SUPPORT_WHEN_APPLICABLE"},{"id":"FTM-R059","rule":"BDU_ABSENCE_NOT_SAFETY_PROOF"},{"id":"FTM-R060","rule":"BDU_UPDATE_NOT_AUTO_REWRITE"},{"id":"FTM-R061","rule":"VULNERABILITY_NOT_AUTO_EXPLOITABLE"},{"id":"FTM-R062","rule":"NO_PROBABILITY_OR_RISK_SCALE_DEFAULT"},{"id":"FTM-R063","rule":"REQUIRE_EIGHTEEN_EVIDENCE_ARTIFACTS"},{"id":"FTM-R064","rule":"PASS_ONLY_CURRENT_LIFECYCLE_BDU_GATE_SCOPE"}
+  ],
+  "evidence_nodes":[
+    {"id":"E01","claim":"OFFICIAL_DOCUMENT_IDENTITY","source":"official_page"},{"id":"E02","claim":"CURRENT_LIST_PRESENCE","source":"official_current_list"},{"id":"E03","claim":"APPLICABILITY_SCOPE","locator":"1.2"},{"id":"E04","claim":"EXCLUDED_TOPICS","locator":"1.4"},{"id":"E05","claim":"LEGACY_AND_SUPERSESSION","locator":"1.8"},{"id":"E06","claim":"SIX_ASSESSMENT_TASKS","locator":"2.2"},{"id":"E07","claim":"BDU_AND_OTHER_INPUTS","locator":"2.3"},{"id":"E08","claim":"CREATION_OPERATION_CONTEXT","locator":"2.4-2.6"},{"id":"E09","claim":"RESPONSIBLE_PARTICIPANTS","locator":"2.7"},{"id":"E10","claim":"EXPERT_METHOD_AND_AUTOMATION","locator":"2.8-2.9"},{"id":"E11","claim":"CLOUD_SCOPE_AND_FAIL_CLOSED_RULE","locator":"2.10-2.11"},{"id":"E12","claim":"MODEL_RESULT","locator":"2.12"},{"id":"E13","claim":"MODEL_SCOPE_OPTIONS","locator":"2.13"},{"id":"E14","claim":"CURRENT_STATE_OBLIGATION","locator":"2.14"},{"id":"E15","claim":"FOUR_CHANGE_TRIGGERS","locator":"2.14"},{"id":"E16","claim":"THREE_ASSESSMENT_STAGES","locator":"2.15"},{"id":"E17","claim":"BDU_LIVE_ROUTE","source":"bdu"},{"id":"E18","claim":"PLANNED_REVISION_BOUNDARY","source":"official_2022_information_message"}
+  ]
+}
