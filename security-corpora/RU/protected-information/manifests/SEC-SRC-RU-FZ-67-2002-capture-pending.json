@@ -1,0 +1,69 @@
+{
+  "schema_version": "1.0",
+  "source_id": "SEC-SRC-RU-FZ-67-2002",
+  "state": "PENDING_EXACT_CAPTURE",
+  "run_at": "2026-08-31T02:15:00+03:00",
+  "canonical_source_path": "security-corpora/RU/protected-information/source/SEC-SRC-RU-FZ-67-2002.yaml",
+  "targets": [
+    {
+      "role": "official_original_act_presidential_legal_bank",
+      "url": "https://www.kremlin.ru/acts/bank/18173/print",
+      "expected_content_class": "official HTML legal-bank representation",
+      "attempted": true,
+      "result": "TRANSIENT_DNS_DOWNLOAD_FAILURE",
+      "error": "curl exit 6 / Could not resolve host: www.kremlin.ru",
+      "retrieved_at": null,
+      "mime": null,
+      "byte_length": null,
+      "sha256": null,
+      "immutable_artifact": null
+    },
+    {
+      "role": "official_latest_amendment_newspaper_publication",
+      "act": "Federal Law 261-FZ of 26.07.2026",
+      "url": "https://rg.ru/documents/2026/08/03/fz261-dok.html",
+      "expected_content_class": "official publication medium HTML",
+      "attempted": true,
+      "result": "NOT_REACHED_AFTER_FIRST_TARGET_DNS_FAILURE_IN_SAME_CAPTURE_COMMAND",
+      "retrieved_at": null,
+      "mime": null,
+      "byte_length": null,
+      "sha256": null,
+      "immutable_artifact": null
+    },
+    {
+      "role": "official_2026_amendment_publication",
+      "act": "Federal Law 130-FZ of 02.05.2026",
+      "official_publication_id": "0001202605020015",
+      "url": "https://publication.pravo.gov.ru/document/0001202605020015",
+      "attempted": false,
+      "result": "LOCATOR_VERIFIED_CAPTURE_QUEUED",
+      "retrieved_at": null,
+      "mime": null,
+      "byte_length": null,
+      "sha256": null,
+      "immutable_artifact": null
+    }
+  ],
+  "verification": {
+    "original_official_act_locator_verified": true,
+    "current_consolidated_edition_date_verified": "2026-07-26",
+    "latest_amendment_official_publication_medium_verified": true,
+    "latest_amendment_official_portal_locator_verified": false,
+    "full_historical_primary_locator_chain_complete": false,
+    "exact_bytes_obtained": false,
+    "binary_metadata_fabricated": false,
+    "immutable_promoted": false
+  },
+  "retry": {
+    "class": "TRANSIENT",
+    "priority": "HIGH",
+    "actions": [
+      "retry official Presidential legal-bank bytes",
+      "retry/find direct official publication PDF/HTML for 261-FZ",
+      "capture publication.pravo.gov.ru artifact for 130-FZ",
+      "compute MIME, byte length and SHA-256 only after exact bytes are obtained",
+      "store artifact under immutable content-addressed path and update this manifest"
+    ]
+  }
+}
