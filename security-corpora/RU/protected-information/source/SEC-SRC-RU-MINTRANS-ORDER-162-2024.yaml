@@ -16,7 +16,7 @@ document:
   official_publication_date: "2024-05-31"
   effective_from: "2024-09-01"
   valid_until: "2030-09-01"
-  checked_at: "2026-08-26"
+  checked_at: "2026-08-30"
 
 canonical_sources:
   primary_publication:
@@ -36,6 +36,14 @@ canonical_sources:
     origin_verified: true
     evidence_state: CURRENT_AUTHORITY_CONTEXT_VERIFIED
 
+repository_dedupe:
+  canonical_id_probe: "SEC-SRC-RU-MINTRANS-ORDER-162-2024"
+  canonical_path_probe: "security-corpora/RU/protected-information/source/SEC-SRC-RU-MINTRANS-ORDER-162-2024.yaml"
+  prior_node_found: true
+  action: REUSE_AND_RECONCILE_EXISTING_CANONICAL_NODE
+  found_counter_increment: false
+  reused_counter_increment: true
+
 protected_information:
   sector: transport
   regime: egis_otb_acbpd_passenger_crew_personal_data
@@ -43,7 +51,7 @@ protected_information:
   protected_locators:
     - locator: "Порядок, пункты 1-4"
       concept: ACBPD_SCOPE_AND_DATA_SUPPLIERS
-      finding: "АЦБПДП входят в ЕГИС ОТБ; оператор формирует/ведет базы и предоставляет содержащиеся персональные данные. Источники включают перевозчиков, субъекты транспортной инфраструктуры, органы власти, иностранных участников и уполномоченных билетных агентов."
+      finding: "АЦБПДП входят в ЕГИС ОТБ; оператор формирует/ведет базы и предоставляет содержащиеся персональные данные. Источники включают перевозчиков, субъектов транспортной инфраструктуры, органы власти, иностранных участников и уполномоченных билетных агентов."
     - locator: "Порядок, пункты 7-11"
       concept: BASE_PASSENGER_AND_CREW_FIELDS
       finding: "Базовый набор включает ФИО, дату рождения, вид/номер удостоверяющего документа, пункт отправления/назначения и вид маршрута, дату поездки, пол, гражданство; для экипажа дополнительно должность/категорию."
@@ -62,9 +70,14 @@ protected_information:
     - locator: "Порядок, пункты 20-23"
       concept: CONTROLLED_ACCESS_ATTESTATION_AND_INFORMATION_PROTECTION
       finding: "Предоставление данных потребителям идет через информационное взаимодействие/АРМ/ПО; для соответствующих средств предусмотрена аттестация в области ИБ; защита информации в АЦБПДП осуществляется по законодательству РФ."
-    - locator: "Порядок, пункты 46 и 50"
-      concept: EXTENDED_AIR_RAIL_DIGITAL_TRANSACTION_FIELDS
-      finding: "При фактической фиксации поставщиком для отдельных воздушных/железнодорожных операций передаются телефон, e-mail, данные учетной записи (логины и хеши паролей), IP-адрес и порт, а также сведения об электронном средстве платежа, включая наименование финансовой организации/поставщика и последние четыре цифры счета/вклада."
+    - locator: "Порядок, пункты 27-30"
+      concept: OPERATIONAL_TRANSFER_TIMING
+      finding: "Установлены технологические сроки передачи сведений: в общем случае 15 минут для воздушных/железнодорожных операций, 30 минут для автомобильных/морских/внутренних водных, а сведения об экипаже передаются не позднее чем за 24 часа до отправления с актуализацией при изменениях."
+      guard: "Эти сроки являются SLA информационного обмена в АЦБПДП, а не сроками ответа субъекту ПДн или уведомления об инциденте."
+    - locator: "Порядок, пункты 42, 46, 50 и 56"
+      concept: EXTENDED_MULTI_MODAL_DIGITAL_TRANSACTION_FIELDS
+      finding: "Для воздушных, автомобильных, железнодорожных, морских и внутренних водных перевозок при фактической фиксации поставщиком передаются телефон, e-mail, данные учетной записи (логины и хеши паролей), IP-адрес и порт, а также сведения об электронном средстве платежа, включая наименование финансовой организации/поставщика и последние четыре цифры счета/вклада."
+      guard: "Наличие этих полей не создает автоматически режим тайны связи, банковской тайны или отдельной категории защищаемой информации для всего массива."
   retention_boundary:
     rule: "7-летний срок относится к персональным данным в АЦБПДП у оператора ЕГИС ОТБ по пункту 13."
     guard: "Не переносить этот срок автоматически на исходные билетные/CRM/перевозочные системы поставщиков или на другие цели обработки ПДн."
@@ -77,6 +90,10 @@ relationship_candidates:
     locator: "статья 11 часть 6"
     type: DIRECT_SUBORDINATE_IMPLEMENTATION
     state: STATUTORY_IMPLEMENTATION_RELATION
+  - target: "SEC-SRC-RU-PP-1251-2023"
+    locator: "пункт 1 Порядка / ЕГИС ОТБ"
+    type: EGIS_OTB_SYSTEM_REGULATION_OVERLAP
+    state: DIRECT_SYSTEM_RELATION
   - target: "152-ФЗ"
     locator: "пункт 18 подпункт 7 / статья 19 152-ФЗ"
     type: DIRECT_STATUTORY_PDN_SECURITY_CONTEXT
@@ -94,15 +111,20 @@ relationship_candidates:
     type: INFORMATION_SYSTEM_ATTESTATION_REFERENCE
     state: DIRECT_NORMATIVE_REFERENCE
   - target: "финансовые специальные режимы"
-    locator: "пункты 46/50"
+    locator: "пункты 42/46/50/56"
     type: PAYMENT_METADATA_FIELD_OVERLAP
     state: CANDIDATE_CROSS_REGIME_REVIEW_REQUIRED
     guard: "Наличие названия банка/поставщика и последних четырех цифр счета не делает весь массив АЦБПДП банковской тайной автоматически."
+  - target: "тайна связи"
+    locator: "пункты 42/46/50/56"
+    type: CONTACT_AND_NETWORK_METADATA_OVERLAP
+    state: CANDIDATE_CROSS_REGIME_REVIEW_REQUIRED
+    guard: "Телефон, e-mail, IP и порт не квалифицируются как тайна связи автоматически без доказанного состава сведений и правоотношения по 126-ФЗ."
 
 version_chain:
   state: CURRENT_ORIGINAL_EDITION_CROSSCHECKED
   current_revision_crosscheck: "2024-05-02"
-  no_later_amendment_identified_as_of: "2026-08-26"
+  no_later_amendment_identified_as_of: "2026-08-30"
   effective_window: "2024-09-01/2030-09-01"
   superseded_predecessors:
     - "Приказ Минтранса России от 19.07.2012 № 243"
@@ -111,7 +133,7 @@ version_chain:
   guard: "Отсутствие выявленной поздней редакции подтверждено current crosscheck; exact publication binary still pending."
 
 capture:
-  exact_capture_attempted_at: "2026-08-26T14:21:31+03:00"
+  exact_capture_attempted_at: "2026-08-30T23:15:23+03:00"
   attempted_urls:
     - "https://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202405310018"
     - "https://rostransnadzor.gov.ru/storage/documents/%D0%9F%D1%80%D0%B8%D0%BA%D0%B0%D0%B7%20%D0%9C%D0%B8%D0%BD%D1%82%D1%80%D0%B0%D0%BD%D1%81%D0%B0%20%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D0%B8%20%D0%BE%D1%82%2002.05.2024%20N%20162.pdf"
@@ -126,8 +148,11 @@ capture:
   fingerprint_status: PENDING_EXACT_PRIMARY_BYTES
 
 proof_floor:
+  - "Taxonomy/discovery seed is not legal proof."
   - "Official portal displayed PDF size is not byte_length and is not used as a fingerprint."
   - "The Ространснадзор PDF is an official-agency hosted copy but not asserted byte-identical to the primary publication PDF."
   - "7-year ACBPDP retention != universal transport-sector PDN retention."
   - "Direct 152-ФЗ references are locator/scenario-specific; they do not auto-promote unrelated processing."
+  - "Phone/e-mail/IP/payment metadata do not automatically become telecom or banking secrecy."
+  - "Operational transfer timing != PDN subject-response or breach-notification deadline."
   - "No MIME, byte length, retrieved_at or SHA-256 is synthesized without exact bytes."
