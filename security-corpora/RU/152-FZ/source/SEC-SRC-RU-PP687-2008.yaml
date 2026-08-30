@@ -76,28 +76,28 @@ capture:
     proof_floor_held: true
     semantic_promotion: false
   runtime_probe:
-    observed_at: "2026-08-29T17:12:15Z"
+    observed_at: "2026-08-30T08:07:39Z"
     routes_probed:
       - "https://government.ru/docs/all/65436/"
       - "http://pravo.gov.ru/proxy/ips/?docbody=&link_id=0&nd=102124251&intelsearch=&firstDoc=1"
-    result: TEMPORARY_DNS_RESOLUTION_FAILURE_IN_RUNTIME
-    transport_detail: "curl exit 6: Could not resolve host for government.ru and pravo.gov.ru in the execution runtime"
-    independent_freshness_result: OFFICIAL_PAGE_CURRENT_TEXT_CONFIRMED_VIA_WEB_INDEX
+    result: TEMPORARY_TRANSPORT_TIMEOUT_IN_RUNTIME
+    transport_detail: "Fresh fetch on 30.08.2026 timed out on both registered official Government and pravo.gov.ru current-text routes; no response bytes were accepted."
+    independent_freshness_result: PREVIOUS_OFFICIAL_CURRENT_REVISION_PROOF_RETAINED
     proof_effect: NONE
     retry_policy: KEEP_GUARDED_RETRY_ENABLED
     note: >-
-      The official PP12 amendment publication identity remains confirmed and the current PP687 revision fingerprint
-      remains independently visible, while this execution environment cannot resolve the official hosts for raw-byte
-      capture. This is a transport/runtime blocker only and must not be converted into immutable evidence.
+      This fresh transport probe does not weaken or extend the previously established revision proof. It records only
+      that the official current-text hosts were unreachable by the present fetch path. No MIME, byte length, SHA-256
+      or immutable artifact is inferred from a timeout. A new GitHub guarded acquisition is requested from current main.
   acquisition_request:
     status: RETRY_REQUIRED_GUARDED
-    requested_at: "2026-08-29T17:33:33.484860Z"
+    requested_at: "2026-08-30T08:07:39Z"
     route: official_canonical_snapshot_with_registered_ips_and_print_fallback
     reason: >-
       Immutable promotion requires returned official bytes, retrieved_at, MIME, exact byte length, SHA-256,
       PP687 identity markers, the PP12 current-revision fingerprint (valid through 01.09.2030), and an accepted
       manifest. The print route is transport-only and cannot weaken current-version proof.
-  note: "Official current text and corrected canonical Government route /docs/all/65436/ are reconfirmed; byte-exact current-revision artifact remains pending."
+  note: "Official current text and corrected canonical Government route /docs/all/65436/ remain registered; byte-exact current-revision artifact remains pending."
 
 relations:
   - type: IMPLEMENTS
