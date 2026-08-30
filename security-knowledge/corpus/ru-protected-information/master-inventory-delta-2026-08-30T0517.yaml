@@ -1,0 +1,131 @@
+schema_version: "1.0"
+stream: 3
+checked_at: "2026-08-30T05:17:03+03:00"
+mode: APPEND_ONLY_RU_PROTECTED_INFORMATION_RECONCILIATION
+previous_stream3_delta: "master-inventory-delta-2026-08-30T0229.yaml"
+focus: "public-sector identity registry + children/education prevention GIS + protected-information overlays"
+
+counters_before:
+  found: 67
+  downloaded: 9
+  immutable: 9
+  pending: 56
+  reused: 2
+  primary_publication_verified: 37
+  sectors_registered: 32
+
+counters_after:
+  found: 68
+  downloaded: 9
+  immutable: 9
+  pending: 57
+  reused: 3
+  primary_publication_verified: 38
+  sectors_registered: 32
+
+sources_reused_upgraded:
+  - source_id: SEC-SRC-RU-FZ-168-2020
+    title: "Федеральный закон от 08.06.2020 № 168-ФЗ — единый федеральный информационный регистр сведений о населении"
+    prior_state: METADATA_VERIFIED_SOURCE_PENDING
+    new_state: PRIMARY_PUBLICATION_VERIFIED
+    dedupe_result: REUSE_AND_UPGRADE_CANONICAL_NODE
+    found_counter_increment: 0
+    pending_counter_increment: 0
+    primary_publication_counter_increment: 0
+    reused_counter_increment: 1
+    exact_capture: PENDING_TRANSIENT_BINARY_FETCH_FAILURE
+    executable_effect: NONE
+
+sources_added:
+  - source_id: SEC-SRC-RU-FZ-120-1999
+    title: "Федеральный закон от 24.06.1999 № 120-ФЗ — профилактика безнадзорности и правонарушений несовершеннолетних"
+    sector: children + education + public_sector + personal_data
+    regime: juvenile_prevention_confidentiality_and_federal_gis
+    dedupe_result: NEW_CANONICAL_SOURCE_NODE
+    exact_capture: PENDING_TRANSIENT_BINARY_FETCH_FAILURE
+    applicability_status: SCENARIO_AND_LOCATOR_MATCH_REQUIRED
+    executable_effect: NONE
+
+primary_evidence:
+  reused_168_fz:
+    original_publication_id: "0001202006080019"
+    original_publication_date: "2020-06-08"
+    current_edition_date: "2025-11-28"
+    amendment_events:
+      - "512-ФЗ от 28.12.2024, publication 0001202412280014"
+      - "442-ФЗ от 28.11.2025, publication 0001202511280105, relevant provisions effective 2026-05-28"
+  new_120_fz:
+    official_law_bank_url: "https://www.kremlin.ru/acts/bank/14023/print"
+    original_publication: "Собрание законодательства Российской Федерации, 1999, № 26, ст. 3177"
+    current_edition_date: "2026-08-04"
+    material_amendment_events:
+      - "322-ФЗ от 08.08.2024, publication 0001202408080132 — introduced Chapter II.1 and juvenile-prevention federal GIS"
+      - "311-ФЗ от 04.08.2026, publication 0001202608040038 — latest located source-level amendment"
+
+key_findings:
+  - source_id: SEC-SRC-RU-FZ-168-2020
+    locator: "статья 8 часть 11"
+    finding: "Записи федерального регистра и иные содержащиеся в нем по закону сведения подлежат постоянному хранению; это специальный register-retention rule."
+    guard: "PERMANENT_EFIR_RECORD_RETENTION != GENERAL_PDN_RETENTION"
+  - source_id: SEC-SRC-RU-FZ-168-2020
+    locator: "статьи 3, 8, 9, 11"
+    finding: "Закон устанавливает прямой PDN/information-security layer, ограниченный режим доступа и защиту downstream recipients; ссылки на государственную и иную охраняемую законом тайну не классифицируют весь регистр как тайну."
+    guard: "REGISTER_CONTENT != STATE_OR_OTHER_SECRET_AUTOMATICALLY"
+  - source_id: SEC-SRC-RU-FZ-120-1999
+    locator: "статья 9 пункты 2-3"
+    finding: "Специальные межведомственные информационные сообщения по несовершеннолетним должны храниться и использоваться с обеспечением конфиденциальности."
+    guard: "MANDATORY_INTERAGENCY_FLOW != UNLIMITED_SECONDARY_USE"
+  - source_id: SEC-SRC-RU-FZ-120-1999
+    locator: "статья 25.2 часть 2"
+    finding: "Федеральная GIS профилактики строится на конфиденциальности ПДн, их защите и соблюдении законодательства о личной, семейной, коммерческой и иной охраняемой законом тайне."
+    guard: "PROTECTED_SECRET_REFERENCE != AUTOMATIC_MULTI_CLASSIFICATION_OF_EVERY_RECORD"
+  - source_id: SEC-SRC-RU-FZ-120-1999
+    locator: "статья 25.2 части 3-4"
+    finding: "GIS содержит детальные идентификационные и социально-чувствительные сведения о несовершеннолетних и законных представителях."
+    guard: "HIGH_SENSITIVITY_CHILD_RECORD != SPECIAL_CATEGORY_PDN_OR_MEDICAL_SECRET_AUTOMATICALLY"
+  - source_id: SEC-SRC-RU-FZ-120-1999
+    locator: "статья 7"
+    finding: "Срок индивидуальной профилактической работы является operational/workflow duration, а не сроком хранения ПДн или документов."
+    guard: "PREVENTIVE_WORK_DURATION != PDN_RETENTION_PERIOD"
+
+relationships_added_or_upgraded:
+  - "168-ФЗ -> 152-ФЗ: direct PDN security overlap; canonical node reused rather than duplicated"
+  - "168-ФЗ -> 149-ФЗ: state information-system and information-protection overlap"
+  - "168-ФЗ -> 218-ФЗ: identity flow after 442-ФЗ, effective 2026-05-28"
+  - "168-ФЗ -> education/FRDO: education credential data source flow; no education-secrecy inference"
+  - "168-ФЗ -> children/family-status: minor and parental-rights access/status overlap"
+  - "120-ФЗ -> 152-ФЗ: direct child-PDN confidentiality/protection overlap"
+  - "120-ФЗ -> 273-ФЗ: education bodies/organizations participate in statutory prevention workflows"
+  - "120-ФЗ -> 323-ФЗ/vрачебная тайна: candidate only where medical provenance is independently proven"
+  - "120-ФЗ -> personal/family/commercial/other legally protected secrets: direct textual reference with record-level classification required"
+
+version_chain:
+  source_168_fz: CURRENT_EDITION_2025_11_28_LOCATED_HISTORICAL_CHAIN_PARTIAL
+  source_120_fz: CURRENT_EDITION_2026_08_04_LOCATED_HISTORICAL_CHAIN_PARTIAL
+  complete_historical_chain_claimed: false
+
+acquisition_state:
+  exact_binary_attempted: true
+  exact_binary_obtained: false
+  attempted_at: "2026-08-30T05:17:03+03:00"
+  reason: TRANSIENT_BINARY_DOWNLOAD_DNS_FAILURE
+  affected_hosts:
+    - "publication.pravo.gov.ru"
+    - "www.kremlin.ru"
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+
+quality_gates:
+  taxonomy_as_evidence: false
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+  fabricated_binary_metadata: false
+  downloaded_increment_without_bytes: false
+  immutable_increment_without_hash: false
+  primary_publication_counter_increment_new_sources_only: true
+  dedupe_inflated_found_counter: false
+  general_pdn_retention_inferred: false
+  protected_secret_classification_inferred: false
