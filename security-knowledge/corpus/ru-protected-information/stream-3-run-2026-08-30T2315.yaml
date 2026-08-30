@@ -1,0 +1,130 @@
+schema_version: "1.0"
+stream: 3
+run_at: "2026-08-30T23:15:23+03:00"
+objective: "continue sector/special-regime primary-source discovery, exact capture, deduplication, relationship linking and master reconciliation"
+
+selected_sources:
+  - id: SEC-SRC-RU-MINTRANS-ORDER-162-2024
+    act: "Приказ Минтранса России от 02.05.2024 № 162"
+    action: REUSE_RECONCILE_EXISTING_CANONICAL_SOURCE
+    sector_overlap:
+      - transport
+      - personal_data
+      - information_security
+      - telecom_candidate
+      - finance_candidate
+      - retention
+
+repository_dedupe:
+  mintrans_162_2024:
+    canonical_source_already_existed: true
+    canonical_path: "security-corpora/RU/protected-information/source/SEC-SRC-RU-MINTRANS-ORDER-162-2024.yaml"
+    result: EXISTING_NODE_REUSED_NO_DUPLICATE_CREATED
+    found_counter_increment: 0
+    reused_counter_increment: 1
+
+primary_proof:
+  mintrans_162_2024:
+    official_publication_id: "0001202405310018"
+    official_publication_date: "2024-05-31"
+    minjust_registration_date: "2024-05-30"
+    minjust_registration_number: "78358"
+    official_publication_url: "https://publication.pravo.gov.ru/document/0001202405310018"
+    official_agency_pdf_copy: "https://rostransnadzor.gov.ru/storage/documents/%D0%9F%D1%80%D0%B8%D0%BA%D0%B0%D0%B7%20%D0%9C%D0%B8%D0%BD%D1%82%D1%80%D0%B0%D0%BD%D1%81%D0%B0%20%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D0%B8%20%D0%BE%D1%82%2002.05.2024%20N%20162.pdf"
+    effective_from: "2024-09-01"
+    valid_until: "2030-09-01"
+    current_revision_crosscheck: "2024-05-02"
+
+normative_findings:
+  - "The ACBPDP passenger/crew databases are part of EGIS OTB and are fed by defined transport-sector and public-authority participants rather than by an unconstrained transport data pool."
+  - "Point 13 sets a 7-year retention period for personal data in ACBPDP from receipt by the EGIS OTB operator; this was kept strictly scoped to that operator/system lifecycle."
+  - "Points 42/46/50/56 add, when actually captured by the supplier system, telephone, e-mail, account login/password-hash data, IP/port and payment-provider/account-tail metadata across air, road, rail, sea/inland-water modes."
+  - "Telecom and bank-secrecy edges remain conditional: the presence of a phone/e-mail/IP or payment/account-tail field does not itself prove the statutory secret regime."
+  - "Point 18 contains the direct PDN security route to article 19 of 152-FZ and protected information exchange using cryptographic means or SMEV."
+  - "Operational transfer deadlines were separated from PDN subject-response and incident-notification deadlines."
+
+relationships:
+  reconciled:
+    - "Mintrans 162/2024 -> 16-FZ / direct subordinate implementation"
+    - "Mintrans 162/2024 -> PP 1251/2023 / EGIS OTB system relationship"
+    - "Mintrans 162/2024 -> 152-FZ / direct scenario-specific security and transfer references"
+    - "Mintrans 162/2024 -> 126-FZ telecom secrecy / conditional field-and-relationship edge"
+    - "Mintrans 162/2024 -> banking secrecy / conditional payment-metadata edge"
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+
+version_chain:
+  state: CURRENT_ORIGINAL_EDITION_CROSSCHECKED_AS_OF_2026_08_30
+  current_revision: "2024-05-02"
+  later_amendment_located_in_current_sweep: false
+  effective_window: "2024-09-01/2030-09-01"
+  superseded_predecessors:
+    - "Mintrans order 243/2012"
+    - "Mintrans order 228/2013"
+    - "Mintrans order 242/2014"
+  complete_primary_binary_chain_claimed: false
+
+acquisition:
+  exact_binary_attempted: true
+  latest_attempt: "2026-08-30T23:15:23+03:00"
+  target: "official Rostransnadzor-hosted PDF copy"
+  result: TRANSIENT_BINARY_DOWNLOAD_FAILURE
+  exact_bytes_obtained: false
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+  immutable_promotions: 0
+
+candidate_discovery:
+  - candidate: "Federal Law 67-FZ of 12.06.2002 on electoral rights and referenda"
+    sector_overlap: "public_sector + voter_register + personal_data + identity + election_finance"
+    official_presidential_legal_bank_source_located: true
+    current_consolidated_revision_seen: "2026-07-26"
+    latest_amendment_candidate: "Federal Law 261-FZ of 26.07.2026"
+    promotion: NOT_PROMOTED_THIS_RUN
+    reason: "current primary amendment chain and exact artifact capture not yet closed to the stream proof floor"
+
+counters:
+  before:
+    found: 72
+    downloaded: 9
+    immutable: 9
+    pending: 61
+    reused: 3
+    primary_publication_verified: 41
+    sectors_registered: 32
+  after:
+    found: 72
+    downloaded: 9
+    immutable: 9
+    pending: 61
+    reused: 4
+    primary_publication_verified: 41
+    sectors_registered: 32
+
+files_written_or_updated:
+  - "security-corpora/RU/protected-information/source/SEC-SRC-RU-MINTRANS-ORDER-162-2024.yaml"
+  - "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-MINTRANS-ORDER-162-2024-capture-pending.json"
+  - "security-knowledge/corpus/ru-protected-information/master-inventory-delta-2026-08-30T2315.yaml"
+  - "security-knowledge/corpus/ru-personal-data/master-source-inventory-delta-stream3-2026-08-30T2315.yaml"
+  - "security-knowledge/corpus/ru-protected-information/stream-3-run-2026-08-30T2315.yaml"
+
+quality_gates:
+  primary_publication_metadata_verified: true
+  taxonomy_as_evidence: false
+  applicability_invented: false
+  fabricated_binary_metadata: false
+  downloaded_increment_without_bytes: false
+  immutable_increment_without_hash: false
+  dedupe_inflated_found_counter: false
+  duplicate_pending_increment: false
+  telecom_secrecy_inferred_from_metadata: false
+  bank_secrecy_inferred_from_metadata: false
+  general_pdn_retention_inferred: false
+
+next_actions:
+  - "Retry exact primary publication bytes and official agency PDF bytes; compute actual MIME, byte length and SHA-256 only after exact capture."
+  - "Close the primary current-version chain for 67-FZ electoral/voter-register data before master promotion."
+  - "Continue transport/public-sector discovery while deduplicating against 16-FZ, PP 1251/2023, 152-FZ and existing telecom/finance nodes."
