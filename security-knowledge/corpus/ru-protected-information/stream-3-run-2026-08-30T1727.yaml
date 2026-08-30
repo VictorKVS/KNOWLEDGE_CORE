@@ -1,0 +1,134 @@
+schema_version: "1.0"
+stream: 3
+run_at: "2026-08-30T17:27:47+03:00"
+objective: "continue sector/special-regime primary-source discovery, exact capture, deduplication, relationship linking and master reconciliation"
+
+selected_sources:
+  - id: SEC-SRC-RU-PP-1241-2022
+    act: "Постановление Правительства Российской Федерации от 13.07.2022 № 1241"
+    action: NEW_CANONICAL_SOURCE_NODE
+    sector_overlap:
+      - education
+      - children
+      - public_sector
+      - personal_data
+      - identity_registry
+      - information_security
+
+repository_dedupe:
+  pp_1241_2022:
+    canonical_source_already_existed: false
+    parent_273_fz_already_existed: true
+    related_pp_825_fis_frdo_already_existed: true
+    result: NEW_CANONICAL_SOURCE_WITH_EDGES_TO_EXISTING_NODES
+    found_counter_increment: 1
+
+primary_proof:
+  pp_1241_2022:
+    official_publication_id: "0001202207150030"
+    official_publication_date: "2022-07-15"
+    official_url: "https://publication.pravo.gov.ru/document/0001202207150030"
+    current_edition_date: "2026-08-01"
+    latest_material_amendment:
+      act: "Постановление Правительства РФ от 01.08.2026 № 962"
+      publication_locator: "0001202608070032"
+      official_publication_date_crosscheck: "2026-08-07"
+      general_effective_date: "2026-08-17"
+      partial_future_effective_date: "2026-09-01"
+      status_as_of_run: PARTIALLY_EFFECTIVE_WITH_FUTURE_COMPONENTS
+
+normative_findings:
+  - "PP 1241 establishes FGIS Moya Shkola and a direct PDN/information-security layer for educational information-system processing and intersystem exchange."
+  - "PP 962/2026 introduced explicit PDN lists by education level. As of 2026-08-30, Appendix 2 (general education) and Appendix 3 (secondary vocational education) are effective; Appendix 1 (preschool) and Appendix 4 (additional education) remain FUTURE_NOT_CURRENT until 2026-09-01."
+  - "The active general-education list includes ESIA/regional-system identifiers, SNILS/hash identifiers, name, birth date, sex, contacts, education/assessment/attendance/homework/achievement data and defined data on legal representatives and staff."
+  - "Route-specific ESIA consent mechanisms exist, including parent/legal-representative consent for registration of an educational-service user under 14; these are not treated as blanket consent for all education PDN processing."
+  - "No source-specific general Moya Shkola retention period was established in this sweep; PP 825 FIS FRDO retention periods are not transferred to PP 1241."
+  - "A later 2026-08-10 draft was located but remains DRAFT_NOT_OPERATIVE and is not promoted into the current legal layer."
+
+relationships:
+  added:
+    - "PP 1241/2022 -> 273-ФЗ"
+    - "PP 1241/2022 -> 152-ФЗ"
+    - "PP 1241/2022 -> 149-ФЗ"
+    - "PP 1241/2022 -> PP 825/2021 / separate education information-system overlap"
+    - "PP 1241/2022 -> ESIA/SMEV / route-specific identity and intersystem exchange"
+    - "PP 1241/2022 -> children / direct education participant context"
+    - "PP 1241/2022 -> telecom / candidate contact-field overlap only"
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+
+version_chain:
+  state: CURRENT_EDITION_2026_08_01_CONFIRMED_WITH_STAGED_EFFECTIVE_DATE_PRIMARY_LOCATOR_CHAIN_PARTIAL
+  consolidated_amendment_crosscheck_count: 3
+  latest_material_amendment: "PP 962/2026"
+  latest_amendment_publication_locator: "0001202608070032"
+  general_effective_date: "2026-08-17"
+  deferred_effective_date: "2026-09-01"
+  future_components_not_promoted: true
+  later_draft_located: true
+  later_draft_promoted: false
+  full_primary_locator_chain_claimed_complete: false
+
+acquisition:
+  exact_binary_attempted: true
+  targets:
+    - url: "https://publication.pravo.gov.ru/document/0001202207150030"
+      attempted_at: "2026-08-30T17:24:32+03:00"
+      result: "curl exit 6 / Could not resolve host: publication.pravo.gov.ru"
+    - url: "https://publication.pravo.gov.ru/document/0001202608070032"
+      attempted_at: "2026-08-30T17:27:13+03:00"
+      result: "curl exit 6 / Could not resolve host: publication.pravo.gov.ru"
+  result: TRANSIENT_FAILURE
+  exact_bytes_obtained: false
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+  immutable_promotions: 0
+
+counters:
+  before:
+    found: 70
+    downloaded: 9
+    immutable: 9
+    pending: 59
+    reused: 3
+    primary_publication_verified: 40
+    sectors_registered: 32
+  after:
+    found: 71
+    downloaded: 9
+    immutable: 9
+    pending: 60
+    reused: 3
+    primary_publication_verified: 41
+    sectors_registered: 32
+
+files_written_or_updated:
+  - "security-corpora/RU/protected-information/source/SEC-SRC-RU-PP-1241-2022.yaml"
+  - "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-PP-1241-2022-capture-pending.json"
+  - "security-knowledge/corpus/ru-protected-information/master-inventory-delta-2026-08-30T1727.yaml"
+  - "security-knowledge/corpus/ru-personal-data/master-source-inventory-delta-stream3-2026-08-30T1727.yaml"
+  - "security-knowledge/corpus/ru-protected-information/stream-3-run-2026-08-30T1727.yaml"
+
+quality_gates:
+  primary_act_as_proof: true
+  taxonomy_as_evidence: false
+  applicability_invented: false
+  fabricated_binary_metadata: false
+  downloaded_increment_without_bytes: false
+  immutable_increment_without_hash: false
+  dedupe_inflated_found_counter: false
+  future_rule_promoted_early: false
+  draft_treated_as_law: false
+  general_pdn_retention_inferred: false
+  protected_secret_classification_inferred: false
+  telecom_secrecy_inferred_from_contact_field: false
+  special_category_pdn_inferred_from_child_or_social_context: false
+
+next_actions:
+  - "Retry exact official bytes for PP 1241/2022 and PP 962/2026; create immutable artifacts only after actual MIME, exact byte length and SHA-256 are computed."
+  - "On or after 2026-09-01, re-check actual entry into force of the deferred PP 962 preschool/additional-education layers before promoting them to current."
+  - "Continue education/children discovery into other federal/state information systems and special child-data flows, deduplicating against 273-ФЗ, 120-ФЗ, PP 411, PP 825 and PP 1241."
+  - "Continue public-sector identity/registry and sector-retention discovery without importing retention periods between separate systems."
