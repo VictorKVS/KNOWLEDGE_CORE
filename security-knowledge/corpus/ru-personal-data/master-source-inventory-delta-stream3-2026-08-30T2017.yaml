@@ -1,0 +1,121 @@
+schema_version: "1.0"
+stream: 3
+checked_at: "2026-08-30T20:17:41+03:00"
+mode: APPEND_ONLY_PDN_SECTOR_OVERLAY_RECONCILIATION
+source_id: SEC-SRC-RU-PP-2386-2023
+source_title: "Постановление Правительства РФ от 29.12.2023 № 2386 — ГИС «Единая централизованная цифровая платформа в социальной сфере»"
+
+pdn_overlap:
+  status: DIRECT_TEXTUAL_AND_OPERATIONAL_OVERLAP
+  direct_anchors:
+    - "Положение прямо связывает функционирование платформы с законодательством об информации и персональных данных."
+    - "Платформа обрабатывает person-level сведения для социальной защиты, пенсионного обеспечения, медико-социальной экспертизы, инвалидности/реабилитации и индивидуального персонифицированного учета."
+    - "Раздел защиты устанавливает организационные и технические меры против НСД/воздействия, восстановление и контроль уровня защищенности."
+    - "Пункт 113 связывает обработку и хранение с 152-ФЗ и законодательством о банках при целевой направленности на обеспечение прав граждан в социальной сфере."
+  lawful_basis_statement: "ПП № 2386 регулирует конкретную государственную платформу и предусмотренные законом процессы; оно не является универсальным основанием для любой иной обработки ПДн участниками вне доказанной роли, цели, полномочия, набора данных и маршрута."
+
+person_level_layers:
+  identity:
+    examples:
+      - "ФИО, дата рождения, СНИЛС и иные установленные идентификаторы"
+      - "сведения о законных представителях"
+      - "маршруты через государственные реестры, ЕСИА и межведомственное взаимодействие"
+    guard: "IDENTITY_DATA_ROUTE_NOT_UNLIMITED_SECONDARY_USE"
+  disability_and_health:
+    examples:
+      - "сведения об инвалидности и сроках ее установления"
+      - "сведения о реабилитации/абилитации"
+      - "отдельные сведения о медицинской помощи и санаторно-курортном лечении через предусмотренные государственные медицинские информационные маршруты"
+    guards:
+      - "HEALTH_FIELD_REQUIRES_ACTUAL_FIELD_MATCH_FOR_SPECIAL_CATEGORY_CLASSIFICATION"
+      - "MEDICAL_SECRECY_REQUIRES_MEDICAL_SOURCE_OR_STATUTORY_CONTENT_MATCH"
+  children_and_education:
+    examples:
+      - "сведения о детях-инвалидах и законных представителях"
+      - "сведения об отдельных категориях обучающихся для социальных процессов"
+    guard: "CHILD_EDUCATION_OR_SOCIAL_STATUS_NOT_SPECIAL_CATEGORY_PDN_AUTOMATICALLY"
+  financial:
+    examples:
+      - "банковские реквизиты в предусмотренных заявительных/выплатных сценариях"
+      - "сведения о назначении, выплате либо невыплате мер социальной защиты"
+    guard: "PAYMENT_OR_BANK_ACCOUNT_FIELD_NOT_BANK_SECRECY_AUTOMATICALLY"
+
+purpose_and_access_boundary:
+  findings:
+    - "Внешний доступ к сведениям требует нормативного правового обоснования полномочий/функций/обязательств и конкретного перечня требуемых сведений."
+    - "Для органов/организаций, не являющихся пользователями платформы, предусмотрено информационное соглашение с оператором."
+    - "Использование данных должно сохранять установленную социальную цель, а не превращаться в неограниченное вторичное использование."
+  guards:
+    - "AUTHORITY_PURPOSE_ROLE_AND_DATASET_MATCH_REQUIRED"
+    - "INTERAGENCY_ACCESS_NOT_BLANKET_ACCESS"
+    - "PLATFORM_DATA_NOT_GENERAL_PURPOSE_DATA_LAKE"
+
+information_security_overlap:
+  - finding: "Предусмотрены предотвращение и выявление НСД/несанкционированной передачи, защита от воздействия, выявление изменений/уничтожения/блокирования, восстановление и постоянный контроль защищенности."
+    guard: "SECURITY_CONTROL_REQUIREMENT_NOT_NEW_SECRET_REGIME"
+  - finding: "Права доступа и пользовательские роли должны соответствовать полномочиям участников информационного взаимодействия."
+    guard: "ROLE_ASSIGNMENT_REQUIRES_ACTUAL_AUTHORITY_MATCH"
+
+retention_nodes:
+  - locator: "ПП № 2386 / current sweep"
+    rule: "единый числовой срок хранения всех сведений платформы в проверенном материале не установлен"
+    guard: "NO_GLOBAL_PERIOD_LOCATED_NOT_PROOF_OF_NO_RETENTION_DUTY"
+  - locator: "ПП № 2191/2025 / социальный контракт"
+    rule: "для отдельных электронных дел и документов по социальному контракту хранение осуществляется по архивному законодательству с использованием платформы либо соответствующей информационной системы"
+    guard: "CASE_FILE_ARCHIVAL_RETENTION_NOT_GENERAL_PDN_RETENTION"
+  - locator: "архивный cross-reference"
+    rule: "конкретный срок должен определяться по доказанной серии документов, lifecycle и применимому первичному архивному акту/перечню"
+    guard: "DO_NOT_IMPORT_RETENTION_FROM_UNRELATED_RECORD_SERIES"
+
+cross_regime_edges:
+  - target: "152-ФЗ"
+    status: DIRECT
+    basis: "explicit personal-data processing/protection layer"
+  - target: "149-ФЗ"
+    status: DIRECT_INFORMATION_SECURITY_OVERLAP
+    basis: "state information-system and protection requirements"
+  - target: "SEC-SRC-RU-FZ-323-2011"
+    status: CONDITIONAL_MEDICAL_SECRECY_EDGE
+    basis: "medical/health data routes require source/content proof"
+  - target: "banking_secrecy"
+    status: CONDITIONAL
+    basis: "banking-law reference and payment/account data do not classify every platform record as bank secrecy"
+  - target: "SEC-SRC-RU-FZ-125-2004"
+    status: RECORD_SERIES_SPECIFIC
+    basis: "archival lifecycle for particular social-contract case files"
+  - target: "SEC-SRC-RU-PP-411-2025"
+    status: SEPARATE_CHILD_PUBLIC_SECTOR_GIS_OVERLAP
+    basis: "child/person-level context but distinct systems, purposes and retention"
+  - target: "SEC-SRC-RU-FZ-168-2020"
+    status: ROUTE_SPECIFIC_IDENTITY_OVERLAP
+    basis: "identity/population-registry fields and interagency routes"
+
+version_and_effective_date:
+  current_edition_date: "2025-09-12"
+  latest_material_amendment: "Постановление Правительства РФ от 12.09.2025 № 1408"
+  point_82_suspension_until: "2026-07-31"
+  point_82_state_as_of_2026_08_30: ACTIVE_AFTER_EXPIRY_OF_TEMPORARY_SUSPENSION
+  version_chain_state: CURRENT_EDITION_CONFIRMED_PRIMARY_LOCATOR_CHAIN_PARTIAL
+  predecessor_pp_1342_status: REPEALED_NOT_CURRENT
+
+capture:
+  exact_capture_state: PENDING_EXACT_CAPTURE
+  official_government_file_url: "https://static.government.ru/media/files/EHa7w8qxPbSpF9QFi2vwxapnH3HyDEE1.pdf"
+  exact_binary_attempt: "2026-08-30T20:17:41+03:00 transient download failure"
+  official_publication_locator_state: PENDING
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+
+quality_gates:
+  applicability_promotions: 0
+  general_lawful_basis_inferred: false
+  special_category_pdn_inferred_from_context: false
+  medical_secrecy_inferred_without_source_match: false
+  bank_secrecy_inferred_from_account_field: false
+  general_pdn_retention_inferred: false
+  predecessor_treated_as_current: false
+  expired_suspension_treated_as_current: false
+  fabricated_binary_metadata: false
