@@ -1,0 +1,616 @@
+{
+  "schema_version": "1.0",
+  "audit_id": "RU-MINKOMSVYAZ-573-APPENDIX9-CROSS-MODULE-RED-TEAM-20260830",
+  "checked_at": "2026-08-30",
+  "status": "FAIL_CLOSED_SEVEN_MEDIUM_LITERAL_BINDING_FINDINGS_AND_PRIMARY_PDF_PENDING",
+  "scope": "Межмодульный red-team-аудит импортов, экспортов, аномалий отображения и прямых взаимных зависимостей 57 атомарных пакетов приложения № 9.",
+  "sources": {
+    "current_consolidated_open_text": "https://legalacts.ru/doc/prikaz-minkomsvjazi-rossii-ot-29102018-n-573-ob-utverzhdenii/",
+    "current_revision_date": "2025-12-18",
+    "validity_until_exclusive": "2030-03-01",
+    "order630_official_publication": "https://publication.pravo.gov.ru/document/0001202309050014",
+    "order630_exact_delta": "https://www.garant.ru/products/ipo/prime/doc/407511660/",
+    "primary_pdf": "PENDING",
+    "official_immutable_bytes": "PENDING_INTERNAL_ERROR_2026_08_30"
+  },
+  "source_snapshot": {
+    "branch": "agent/rkn140-anonymization-run121",
+    "commit": "7882c1b711c9cf063f1361ee158b51cd27073137",
+    "tree": "478cdd8d331d1a3e9102b46514901168b90ddac4"
+  },
+  "method": [
+    "Build a literal consumer/provider graph from the published atomic packages.",
+    "Preserve case, whitespace, fused tokens and visible import/export omissions exactly.",
+    "Treat split atomic packages as views of 31 source modules, not as additional ASN.1 modules.",
+    "Classify unresolved literal bindings as Medium/PENDING unless a proven security consequence raises severity.",
+    "Do not normalize source tokens or claim ASN.1 compiler success without primary-PDF adjudication."
+  ],
+  "corpus": {
+    "visible_numbered_headings": 31,
+    "mapped_headings": 31,
+    "unmapped_headings": 0,
+    "atomic_packages": 57,
+    "expected_package_paths_verified": 57
+  },
+  "serialization": {
+    "native_yaml_packages": 10,
+    "json_compatible_yaml_packages": 47,
+    "total_packages": 57,
+    "full_corpus_parser_requirement": "YAML"
+  },
+  "rendered_anomaly_occurrence_guards": {
+    "structured_top_level_occurrences": 39,
+    "legacy_inline_package_occurrences": 22,
+    "total_package_local_occurrences": 61,
+    "unique_normative_defects": "NOT_CLAIMED",
+    "automatic_normalizations": 0
+  },
+  "findings": [
+    {
+      "id": "XMOD-001",
+      "consumer": "ReportsAbonents",
+      "symbol": "NetworkIdentifiers",
+      "literal": "Networkidentifiers",
+      "candidate_provider": "NetworkIdentifiers",
+      "issue": "MODULE_NAME_CASE_MISMATCH",
+      "severity": "MEDIUM",
+      "disposition": "PENDING_PRIMARY_PDF",
+      "status": "FAIL_CLOSED"
+    },
+    {
+      "id": "XMOD-002",
+      "consumer": "ReportsConnections",
+      "symbol": "DataVoipNumber",
+      "literal": "Data VoipNumber",
+      "candidate_provider": "NetworkIdentifiers",
+      "issue": "TOKEN_SPACE_MISMATCH",
+      "severity": "MEDIUM",
+      "disposition": "PENDING_PRIMARY_PDF",
+      "status": "FAIL_CLOSED"
+    },
+    {
+      "id": "XMOD-003",
+      "consumer": "ReportsNonFormalized",
+      "symbol": "StandardInterval",
+      "literal": "FROMReports Presense",
+      "candidate_provider": "ReportsPresense",
+      "issue": "FUSED_FROM_MODULE_TOKENS",
+      "severity": "MEDIUM",
+      "disposition": "PENDING_PRIMARY_PDF",
+      "status": "FAIL_CLOSED"
+    },
+    {
+      "id": "XMOD-004",
+      "consumer": "Sessions",
+      "symbol": "ObjectDescriptor",
+      "literal": "ObjectDescriptor",
+      "candidate_provider": null,
+      "issue": "USED_WITHOUT_VISIBLE_IMPORT",
+      "severity": "MEDIUM",
+      "disposition": "PENDING_PRIMARY_PDF",
+      "status": "FAIL_CLOSED"
+    },
+    {
+      "id": "XMOD-005",
+      "consumer": "ReportsPresense",
+      "symbol": "ObjectDescriptor",
+      "literal": "ObjectDescriptor",
+      "candidate_provider": null,
+      "issue": "USED_WITHOUT_VISIBLE_IMPORT",
+      "severity": "MEDIUM",
+      "disposition": "PENDING_PRIMARY_PDF",
+      "status": "FAIL_CLOSED"
+    },
+    {
+      "id": "XMOD-006",
+      "consumer": "RequestedConnections",
+      "symbol": "requestedDataNetworkIdentifier",
+      "literal": "requestedDataNetworkIdentifier",
+      "candidate_provider": "RequestedIdentifiers",
+      "issue": "USED_BUT_OMITTED_FROM_VISIBLE_IMPORT_LIST",
+      "severity": "MEDIUM",
+      "disposition": "PENDING_PRIMARY_PDF",
+      "status": "FAIL_CLOSED"
+    },
+    {
+      "id": "XMOD-007",
+      "consumer": "RequestedIdentifiers",
+      "symbol": "requestedVoipIdentifier",
+      "literal": "requestedVoipIdentifier",
+      "candidate_provider": "RequestedIdentifiers",
+      "issue": "LOCALLY_DEFINED_NOT_EXPORTED_EXTERNAL_USAGE_UNPROVEN",
+      "severity": "MEDIUM",
+      "disposition": "PENDING_PRIMARY_PDF_AND_USAGE_REVIEW",
+      "status": "FAIL_CLOSED"
+    }
+  ],
+  "finding_summary": {
+    "critical": 0,
+    "high": 0,
+    "medium": 7,
+    "pending": 7,
+    "automatic_repairs": 0
+  },
+  "direct_mutual_import_pairs": [
+    {
+      "a": "Sorm",
+      "b": "Reports",
+      "status": "COMPILE_ORDER_RISK_NOT_PROVEN_INVALID"
+    },
+    {
+      "a": "Sorm",
+      "b": "Tasks",
+      "status": "COMPILE_ORDER_RISK_NOT_PROVEN_INVALID"
+    },
+    {
+      "a": "Sorm",
+      "b": "Traps",
+      "status": "COMPILE_ORDER_RISK_NOT_PROVEN_INVALID"
+    },
+    {
+      "a": "Sorm",
+      "b": "Unformatted",
+      "status": "COMPILE_ORDER_RISK_NOT_PROVEN_INVALID"
+    },
+    {
+      "a": "Tasks",
+      "b": "TasksAbonents",
+      "status": "COMPILE_ORDER_RISK_NOT_PROVEN_INVALID"
+    },
+    {
+      "a": "Tasks",
+      "b": "TasksConnections",
+      "status": "COMPILE_ORDER_RISK_NOT_PROVEN_INVALID"
+    },
+    {
+      "a": "Tasks",
+      "b": "TasksNonFormalized",
+      "status": "COMPILE_ORDER_RISK_NOT_PROVEN_INVALID"
+    },
+    {
+      "a": "Tasks",
+      "b": "TasksPayments",
+      "status": "COMPILE_ORDER_RISK_NOT_PROVEN_INVALID"
+    },
+    {
+      "a": "Tasks",
+      "b": "TasksContentTask",
+      "status": "COMPILE_ORDER_RISK_NOT_PROVEN_INVALID"
+    }
+  ],
+  "direct_mutual_import_pair_count": 9,
+  "mutual_import_claim_boundary": "COMPILE_ORDER_RISK_ONLY_NOT_PROVEN_ASN1_INVALIDITY",
+  "blocked_claims": [
+    "NO_ASN1_COMPILE_PASS",
+    "NO_PRIMARY_SOURCE_BYTE_PASS",
+    "NO_COMPLETE_IMPORT_EXPORT_GRAPH_PASS",
+    "NO_APPENDIX9_RED_TEAM_PASS",
+    "NO_GLOBAL_SCOPE_PASS"
+  ],
+  "positive_controls": [
+    "PASS_31_OF_31_VISIBLE_HEADINGS_MAPPED",
+    "PASS_57_OF_57_EXPECTED_PACKAGE_PATHS",
+    "PASS_ALL_SEVEN_FINDINGS_FAIL_CLOSED",
+    "PASS_ZERO_AUTOMATIC_REPAIRS"
+  ],
+  "next_gate": [
+    "ACQUIRE_AND_PAGE_CHECK_PRIMARY_APPENDIX9_PDF",
+    "ADJUDICATE_SEVEN_LITERAL_BINDING_FINDINGS",
+    "RUN_ASN1_COMPILER_ON_ADJUDICATED_CORPUS",
+    "COMPLETE_INDEPENDENT_EXPERT_REVIEW"
+  ],
+  "atomic_rules": [
+    {
+      "id": "MK573XMOD-R001",
+      "rule": "APPLY_ORDER630_APPENDIX9_FROM_2024_03_01"
+    },
+    {
+      "id": "MK573XMOD-R002",
+      "rule": "STOP_CURRENT_ROUTE_AT_2030_03_01"
+    },
+    {
+      "id": "MK573XMOD-R003",
+      "rule": "PIN_AUDIT_TO_COMMIT_7882C1B"
+    },
+    {
+      "id": "MK573XMOD-R004",
+      "rule": "PIN_AUDIT_TO_TREE_478CDD8"
+    },
+    {
+      "id": "MK573XMOD-R005",
+      "rule": "REQUIRE_31_VISIBLE_MODULE_HEADINGS"
+    },
+    {
+      "id": "MK573XMOD-R006",
+      "rule": "REQUIRE_31_MAPPED_MODULE_HEADINGS"
+    },
+    {
+      "id": "MK573XMOD-R007",
+      "rule": "REQUIRE_ZERO_UNMAPPED_HEADINGS"
+    },
+    {
+      "id": "MK573XMOD-R008",
+      "rule": "REQUIRE_57_ATOMIC_PACKAGES"
+    },
+    {
+      "id": "MK573XMOD-R009",
+      "rule": "VERIFY_ALL_57_EXPECTED_PATHS"
+    },
+    {
+      "id": "MK573XMOD-R010",
+      "rule": "DISTINGUISH_MODULES_FROM_SPLIT_PACKAGES"
+    },
+    {
+      "id": "MK573XMOD-R011",
+      "rule": "COUNT_10_NATIVE_YAML_PACKAGES"
+    },
+    {
+      "id": "MK573XMOD-R012",
+      "rule": "COUNT_47_JSON_COMPATIBLE_PACKAGES"
+    },
+    {
+      "id": "MK573XMOD-R013",
+      "rule": "COUNT_57_TOTAL_SERIALIZED_PACKAGES"
+    },
+    {
+      "id": "MK573XMOD-R014",
+      "rule": "USE_YAML_PARSER_FOR_FULL_CORPUS"
+    },
+    {
+      "id": "MK573XMOD-R015",
+      "rule": "DO_NOT_TREAT_NATIVE_YAML_AS_PARSE_FAILURE"
+    },
+    {
+      "id": "MK573XMOD-R016",
+      "rule": "COUNT_39_STRUCTURED_RENDERED_ANOMALIES"
+    },
+    {
+      "id": "MK573XMOD-R017",
+      "rule": "COUNT_22_LEGACY_INLINE_ANOMALY_GUARDS"
+    },
+    {
+      "id": "MK573XMOD-R018",
+      "rule": "COUNT_61_PACKAGE_LOCAL_ANOMALY_OCCURRENCES"
+    },
+    {
+      "id": "MK573XMOD-R019",
+      "rule": "DO_NOT_PROMOTE_OCCURRENCES_TO_UNIQUE_NORMATIVE_DEFECTS"
+    },
+    {
+      "id": "MK573XMOD-R020",
+      "rule": "REQUIRE_ZERO_AUTOMATIC_NORMALIZATIONS"
+    },
+    {
+      "id": "MK573XMOD-R021",
+      "rule": "PRESERVE_NETWORKIDENTIFIERS_CASE_MISMATCH"
+    },
+    {
+      "id": "MK573XMOD-R022",
+      "rule": "PRESERVE_DATA_VOIP_NUMBER_TOKEN_SPACE"
+    },
+    {
+      "id": "MK573XMOD-R023",
+      "rule": "PRESERVE_FROMREPORTS_PRESENSE_FUSION"
+    },
+    {
+      "id": "MK573XMOD-R024",
+      "rule": "PRESERVE_SESSIONS_OBJECTDESCRIPTOR_MISSING_IMPORT"
+    },
+    {
+      "id": "MK573XMOD-R025",
+      "rule": "PRESERVE_REPORTSPRESENSE_OBJECTDESCRIPTOR_MISSING_IMPORT"
+    },
+    {
+      "id": "MK573XMOD-R026",
+      "rule": "PRESERVE_REQUESTEDCONNECTIONS_DATA_NETWORK_IMPORT_OMISSION"
+    },
+    {
+      "id": "MK573XMOD-R027",
+      "rule": "PRESERVE_REQUESTEDIDENTIFIERS_VOIP_EXPORT_OMISSION"
+    },
+    {
+      "id": "MK573XMOD-R028",
+      "rule": "DO_NOT_INFER_EXTERNAL_VOIP_IDENTIFIER_USAGE"
+    },
+    {
+      "id": "MK573XMOD-R029",
+      "rule": "CLASSIFY_XMOD_001_MEDIUM"
+    },
+    {
+      "id": "MK573XMOD-R030",
+      "rule": "CLASSIFY_XMOD_002_MEDIUM"
+    },
+    {
+      "id": "MK573XMOD-R031",
+      "rule": "CLASSIFY_XMOD_003_MEDIUM"
+    },
+    {
+      "id": "MK573XMOD-R032",
+      "rule": "CLASSIFY_XMOD_004_MEDIUM"
+    },
+    {
+      "id": "MK573XMOD-R033",
+      "rule": "CLASSIFY_XMOD_005_MEDIUM"
+    },
+    {
+      "id": "MK573XMOD-R034",
+      "rule": "CLASSIFY_XMOD_006_MEDIUM"
+    },
+    {
+      "id": "MK573XMOD-R035",
+      "rule": "CLASSIFY_XMOD_007_MEDIUM"
+    },
+    {
+      "id": "MK573XMOD-R036",
+      "rule": "KEEP_ALL_SEVEN_FINDINGS_PENDING_PRIMARY_PDF"
+    },
+    {
+      "id": "MK573XMOD-R037",
+      "rule": "REQUIRE_ZERO_CRITICAL_FINDINGS"
+    },
+    {
+      "id": "MK573XMOD-R038",
+      "rule": "REQUIRE_ZERO_HIGH_FINDINGS"
+    },
+    {
+      "id": "MK573XMOD-R039",
+      "rule": "REQUIRE_SEVEN_MEDIUM_FINDINGS"
+    },
+    {
+      "id": "MK573XMOD-R040",
+      "rule": "REQUIRE_SEVEN_PENDING_FINDINGS"
+    },
+    {
+      "id": "MK573XMOD-R041",
+      "rule": "REQUIRE_ZERO_AUTO_REPAIRS"
+    },
+    {
+      "id": "MK573XMOD-R042",
+      "rule": "RECORD_NINE_DIRECT_MUTUAL_IMPORT_PAIRS"
+    },
+    {
+      "id": "MK573XMOD-R043",
+      "rule": "DO_NOT_CALL_MUTUAL_IMPORT_PROVEN_INVALID"
+    },
+    {
+      "id": "MK573XMOD-R044",
+      "rule": "DO_NOT_CLAIM_ASN1_COMPILE_PASS"
+    },
+    {
+      "id": "MK573XMOD-R045",
+      "rule": "DO_NOT_CLAIM_PRIMARY_SOURCE_BYTE_PASS"
+    },
+    {
+      "id": "MK573XMOD-R046",
+      "rule": "DO_NOT_CLAIM_COMPLETE_IMPORT_EXPORT_GRAPH_PASS"
+    },
+    {
+      "id": "MK573XMOD-R047",
+      "rule": "DO_NOT_CLAIM_APPENDIX9_RED_TEAM_PASS"
+    },
+    {
+      "id": "MK573XMOD-R048",
+      "rule": "DO_NOT_CLAIM_GLOBAL_SCOPE_PASS"
+    },
+    {
+      "id": "MK573XMOD-R049",
+      "rule": "KEEP_CONSOLIDATED_TEXT_AS_SECONDARY_WORKING_SOURCE"
+    },
+    {
+      "id": "MK573XMOD-R050",
+      "rule": "KEEP_ORDER630_DELTA_AS_AUTHORITY_FOR_REPLACEMENT"
+    },
+    {
+      "id": "MK573XMOD-R051",
+      "rule": "KEEP_OFFICIAL_PUBLICATION_ROUTE_PENDING_ON_INTERNAL_ERROR"
+    },
+    {
+      "id": "MK573XMOD-R052",
+      "rule": "SEPARATE_STRUCTURAL_COVERAGE_FROM_SEMANTIC_CLOSURE"
+    },
+    {
+      "id": "MK573XMOD-R053",
+      "rule": "SEPARATE_RENDERING_ANOMALY_FROM_NORMATIVE_RULE"
+    },
+    {
+      "id": "MK573XMOD-R054",
+      "rule": "FAIL_CLOSED_ON_CASE_SENSITIVE_MODULE_BINDING"
+    },
+    {
+      "id": "MK573XMOD-R055",
+      "rule": "FAIL_CLOSED_ON_WHITESPACE_SENSITIVE_SYMBOL_BINDING"
+    },
+    {
+      "id": "MK573XMOD-R056",
+      "rule": "FAIL_CLOSED_ON_MISSING_VISIBLE_IMPORT"
+    },
+    {
+      "id": "MK573XMOD-R057",
+      "rule": "FAIL_CLOSED_ON_MISSING_VISIBLE_EXPORT"
+    },
+    {
+      "id": "MK573XMOD-R058",
+      "rule": "REQUIRE_PRIMARY_PDF_ADJUDICATION"
+    },
+    {
+      "id": "MK573XMOD-R059",
+      "rule": "REQUIRE_ASN1_COMPILER_AFTER_ADJUDICATION"
+    },
+    {
+      "id": "MK573XMOD-R060",
+      "rule": "REQUIRE_INDEPENDENT_EXPERT_REVIEW"
+    },
+    {
+      "id": "MK573XMOD-R061",
+      "rule": "KEEP_GLOBAL_STATUS_FAIL_SCOPE_INCOMPLETE"
+    },
+    {
+      "id": "MK573XMOD-R062",
+      "rule": "DO_NOT_RAISE_READINESS_FOR_UNVERIFIED_BYTES"
+    },
+    {
+      "id": "MK573XMOD-R063",
+      "rule": "PRESERVE_ZERO_CRITICAL_HIGH_GAP_CLAIM_BOUNDARY"
+    },
+    {
+      "id": "MK573XMOD-R064",
+      "rule": "RECORD_LOCAL_GATE_ONLY_NO_REMOTE_CI_PASS"
+    }
+  ],
+  "evidence_model": [
+    {
+      "id": "E573XMOD-01",
+      "proves": [
+        "MK573XMOD-R001",
+        "MK573XMOD-R002",
+        "MK573XMOD-R003",
+        "MK573XMOD-R004"
+      ]
+    },
+    {
+      "id": "E573XMOD-02",
+      "proves": [
+        "MK573XMOD-R005",
+        "MK573XMOD-R006",
+        "MK573XMOD-R007",
+        "MK573XMOD-R008"
+      ]
+    },
+    {
+      "id": "E573XMOD-03",
+      "proves": [
+        "MK573XMOD-R009",
+        "MK573XMOD-R010",
+        "MK573XMOD-R011",
+        "MK573XMOD-R012"
+      ]
+    },
+    {
+      "id": "E573XMOD-04",
+      "proves": [
+        "MK573XMOD-R013",
+        "MK573XMOD-R014",
+        "MK573XMOD-R015",
+        "MK573XMOD-R016"
+      ]
+    },
+    {
+      "id": "E573XMOD-05",
+      "proves": [
+        "MK573XMOD-R017",
+        "MK573XMOD-R018",
+        "MK573XMOD-R019",
+        "MK573XMOD-R020"
+      ]
+    },
+    {
+      "id": "E573XMOD-06",
+      "proves": [
+        "MK573XMOD-R021",
+        "MK573XMOD-R022",
+        "MK573XMOD-R023",
+        "MK573XMOD-R024"
+      ]
+    },
+    {
+      "id": "E573XMOD-07",
+      "proves": [
+        "MK573XMOD-R025",
+        "MK573XMOD-R026",
+        "MK573XMOD-R027",
+        "MK573XMOD-R028"
+      ]
+    },
+    {
+      "id": "E573XMOD-08",
+      "proves": [
+        "MK573XMOD-R029",
+        "MK573XMOD-R030",
+        "MK573XMOD-R031",
+        "MK573XMOD-R032"
+      ]
+    },
+    {
+      "id": "E573XMOD-09",
+      "proves": [
+        "MK573XMOD-R033",
+        "MK573XMOD-R034",
+        "MK573XMOD-R035",
+        "MK573XMOD-R036"
+      ]
+    },
+    {
+      "id": "E573XMOD-10",
+      "proves": [
+        "MK573XMOD-R037",
+        "MK573XMOD-R038",
+        "MK573XMOD-R039",
+        "MK573XMOD-R040"
+      ]
+    },
+    {
+      "id": "E573XMOD-11",
+      "proves": [
+        "MK573XMOD-R041",
+        "MK573XMOD-R042",
+        "MK573XMOD-R043"
+      ]
+    },
+    {
+      "id": "E573XMOD-12",
+      "proves": [
+        "MK573XMOD-R044",
+        "MK573XMOD-R045",
+        "MK573XMOD-R046"
+      ]
+    },
+    {
+      "id": "E573XMOD-13",
+      "proves": [
+        "MK573XMOD-R047",
+        "MK573XMOD-R048",
+        "MK573XMOD-R049"
+      ]
+    },
+    {
+      "id": "E573XMOD-14",
+      "proves": [
+        "MK573XMOD-R050",
+        "MK573XMOD-R051",
+        "MK573XMOD-R052"
+      ]
+    },
+    {
+      "id": "E573XMOD-15",
+      "proves": [
+        "MK573XMOD-R053",
+        "MK573XMOD-R054",
+        "MK573XMOD-R055"
+      ]
+    },
+    {
+      "id": "E573XMOD-16",
+      "proves": [
+        "MK573XMOD-R056",
+        "MK573XMOD-R057",
+        "MK573XMOD-R058"
+      ]
+    },
+    {
+      "id": "E573XMOD-17",
+      "proves": [
+        "MK573XMOD-R059",
+        "MK573XMOD-R060",
+        "MK573XMOD-R061"
+      ]
+    },
+    {
+      "id": "E573XMOD-18",
+      "proves": [
+        "MK573XMOD-R062",
+        "MK573XMOD-R063",
+        "MK573XMOD-R064"
+      ]
+    }
+  ]
+}
