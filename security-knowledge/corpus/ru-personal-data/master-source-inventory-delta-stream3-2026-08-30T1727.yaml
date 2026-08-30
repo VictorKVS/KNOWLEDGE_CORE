@@ -1,0 +1,123 @@
+schema_version: "1.0"
+stream: 3
+checked_at: "2026-08-30T17:27:47+03:00"
+mode: APPEND_ONLY_PDN_SECTOR_OVERLAY_RECONCILIATION
+source_id: SEC-SRC-RU-PP-1241-2022
+source_title: "Постановление Правительства РФ от 13.07.2022 № 1241 — ФГИС «Моя школа»"
+parent_source_id: SEC-SRC-RU-FZ-273-2012
+
+pdn_overlap:
+  status: DIRECT_TEXTUAL_AND_OPERATIONAL_OVERLAP
+  direct_anchors:
+    - "Положение о ФГИС: разграничение доступа, конфиденциальность, целостность, доступность и требования защиты информации"
+    - "пункт 5(4) после ПП № 1545/2023: при взаимодействии с информационно-коммуникационной образовательной платформой защита информации и ПДн обеспечивается по законодательству РФ"
+    - "ПП № 962/2026: установлены отдельные перечни персональных данных участников образовательных отношений по уровням образования"
+    - "ПП № 962/2026: предусмотрены ЕСИА-маршруты идентификации/получения установленных сведений и согласие законного представителя для регистрации пользователя младше 14 лет в ЕСИА"
+  lawful_basis_statement: "ПП № 1241 регулирует конкретную ФГИС и установленные информационные потоки; оно не является универсальным основанием для любой обработки ПДн образовательной организацией вне доказанного сценария, роли и цели."
+
+active_person_level_examples_as_of_2026_08_30:
+  general_education_appendix_2:
+    effective_from: "2026-08-17"
+    examples:
+      - "идентификатор учетной записи ЕСИА и идентификатор региональной ГИС"
+      - "СНИЛС при наличии и хэш-идентификаторы, полученные из предусмотренных государственных систем"
+      - "ФИО, дата рождения, пол"
+      - "адрес электронной почты и мобильный номер при наличии"
+      - "сведения об образовательной организации, программе, уровне/периоде/форме обучения, классе/группе"
+      - "сведения о текущем контроле, отметках, промежуточной/итоговой аттестации, достижениях, посещаемости и домашних заданиях"
+      - "отдельные сведения о статусах/участии в предусмотренных образовательных и детско-молодежных процессах"
+      - "данные родителей/законных представителей, включая идентификаторы, ФИО, дату рождения, контакты и подтверждение полномочий"
+      - "данные работников, включая предусмотренные идентификационные, кадровые и квалификационные сведения"
+  secondary_vocational_appendix_3:
+    effective_from: "2026-08-17"
+    status: ACTIVE_SEPARATE_PDN_LIST
+    guard: "ROLE_AND_RECORD_TYPE_MATCH_REQUIRED"
+
+future_person_level_layers:
+  - appendix: 1
+    scope: preschool_education
+    effective_from: "2026-09-01"
+    status_as_of_2026_08_30: FUTURE_NOT_CURRENT
+  - appendix: 4
+    scope: additional_education
+    effective_from: "2026-09-01"
+    status_as_of_2026_08_30: FUTURE_NOT_CURRENT
+
+children_boundary:
+  status: DIRECT_CONTEXT_WITH_CLASSIFICATION_GUARDS
+  evidence: "Система прямо обрабатывает сведения обучающихся, в том числе детей, и законных представителей; отдельный маршрут ЕСИА предусматривает согласие законного представителя для регистрации пользователя образовательного сервиса младше 14 лет."
+  classification_guards:
+    - "CHILD_CONTEXT_NOT_SPECIAL_CATEGORY_PDN_AUTOMATICALLY"
+    - "PRIVILEGED_CATEGORY_STATUS_NOT_SPECIAL_CATEGORY_PDN_AUTOMATICALLY"
+    - "CHILD_YOUTH_MOVEMENT_PARTICIPATION_NOT_POLITICAL_OR_IDEOLOGICAL_AFFILIATION_BY_DEFINITION"
+
+identity_and_access:
+  - finding: "Используются ЕСИА, региональные ГИС, хэш-идентификаторы и предусмотренные межсистемные маршруты для идентификации и обмена."
+    guard: "IDENTITY_ROUTE_NOT_UNLIMITED_SECONDARY_USE"
+  - finding: "Получение через ЕСИА отдельных идентификационных и контактных сведений в предусмотренном информационно-коммуникационном контуре связано с согласием пользователя."
+    guard: "ESIA_ROUTE_CONSENT_NOT_BLANKET_PDN_CONSENT"
+  - finding: "Для пользователя младше 14 лет предусмотрен маршрут согласия родителя/законного представителя на регистрацию в ЕСИА."
+    guard: "ESIA_REGISTRATION_CONSENT_NOT_GENERAL_EDUCATION_PROCESSING_BASIS"
+
+information_security_overlap:
+  - finding: "ФГИС должна обеспечивать разграничение прав, конфиденциальность, целостность и доступность информации."
+    guard: "SECURITY_CONTROL_DUTY_NOT_NEW_SECRET_REGIME"
+  - finding: "Изменения № 962 добавляют защитные и аттестационные функции для региональных ГИС образования в установленном контуре."
+    guard: "CONTROL_OVERLAY_REQUIRES_SYSTEM_SCOPE_AND_AGREEMENT_MATCH"
+
+retention_nodes:
+  - locator: "retention sweep PP 1241/current PP 962 materials"
+    rule: "источник-специфичный общий срок хранения сведений ФГИС «Моя школа» в этом проходе не установлен"
+    guard: "NO_LOCATED_SOURCE_PERIOD_NOT_PROOF_OF_NO_RETENTION_DUTY"
+  - locator: "cross-system boundary"
+    rule: "сроки хранения ФИС ФРДО по ПП № 825 не переносятся на ФГИС «Моя школа»"
+    guard: "FIS_FRDO_RETENTION_NOT_TRANSFERABLE_TO_MOYA_SHKOLA"
+
+cross_regime_edges:
+  - target: "152-ФЗ"
+    status: DIRECT
+    basis: "explicit PDN processing/protection layer in education information-system workflows"
+  - target: "SEC-SRC-RU-FZ-273-2012"
+    status: DIRECT_PARENT
+    basis: "education-information-system statutory context"
+  - target: "149-ФЗ"
+    status: DIRECT_INFORMATION_SECURITY_OVERLAP
+    basis: "system security and protected intersystem exchange"
+  - target: "SEC-SRC-RU-PP-825-2021"
+    status: SEPARATE_SYSTEM_OVERLAP
+    basis: "education registries share sector/identity context but have separate data models and retention rules"
+  - target: "ЕСИА/СМЭВ"
+    status: ROUTE_SPECIFIC
+    basis: "identity, consent and intersystem exchange workflows"
+  - target: "telecom"
+    status: CANDIDATE_ONLY
+    basis: "mobile number/contact fields exist; this does not establish telecom secrecy for the educational record"
+
+version_and_effective_date:
+  current_edition_date: "2026-08-01"
+  latest_material_amendment: "ПП РФ от 01.08.2026 № 962 / publication locator 0001202608070032 / published 2026-08-07"
+  general_effective_date: "2026-08-17"
+  future_effective_date_for_appendices_1_and_4_and_explicit_deferred_parts: "2026-09-01"
+  version_chain_state: VERSION_CHAIN_PARTIAL_CURRENT_EDITION_CONFIRMED_WITH_STAGED_EFFECTIVE_DATE
+  later_draft_status: DRAFT_NOT_OPERATIVE
+
+capture:
+  exact_capture_state: PENDING_EXACT_CAPTURE
+  exact_binary_attempts:
+    - "2026-08-30T17:24:32+03:00 canonical PP 1241 publication: curl exit 6 / DNS resolution failed"
+    - "2026-08-30T17:27:13+03:00 PP 962 publication: curl exit 6 / DNS resolution failed"
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+
+quality_gates:
+  applicability_promotions: 0
+  future_rule_promoted_early: false
+  draft_treated_as_law: false
+  special_category_pdn_inferred_from_child_or_social_context: false
+  protected_secret_category_inferred: false
+  telecom_secrecy_inferred_from_phone_field: false
+  general_pdn_retention_inferred: false
+  fabricated_binary_metadata: false
