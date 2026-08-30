@@ -1,0 +1,97 @@
+schema_version: "1.0"
+stream: 3
+checked_at: "2026-08-30T23:15:23+03:00"
+mode: APPEND_ONLY_PDN_SECTOR_OVERLAY_RECONCILIATION
+source_id: SEC-SRC-RU-MINTRANS-ORDER-162-2024
+source_title: "Приказ Минтранса России от 02.05.2024 № 162 — АЦБПДП пассажиров и экипажей"
+source_action: REUSED_EXISTING_CANONICAL_NODE
+
+pdn_overlap:
+  status: DIRECT_TEXTUAL_AND_OPERATIONAL_OVERLAP
+  direct_anchors:
+    - "АЦБПДП входят в ЕГИС ОТБ и формируются из person-level сведений пассажиров и персонала (экипажа)."
+    - "Пункт 13 устанавливает 7-летнее хранение ПДн оператором ЕГИС ОТБ в АЦБПДП со дня получения."
+    - "Пункт 15 прямо увязывает отдельный международный маршрут передачи с 152-ФЗ и 16-ФЗ."
+    - "Пункт 18 связывает защищенную передачу с мерами безопасности по статье 19 152-ФЗ/СКЗИ либо СМЭВ."
+  lawful_basis_statement: "Приказ № 162 регулирует конкретный контур транспортной безопасности и роли участников АЦБПДП; он не является универсальным основанием для любой обработки ПДн транспортной организацией."
+
+person_level_layers:
+  base_identity_and_trip:
+    examples:
+      - "ФИО, дата рождения, вид и номер удостоверяющего документа"
+      - "пункт отправления/назначения, вид маршрута, дата поездки"
+      - "пол, гражданство; для экипажа — должность/категория"
+    guard: "TRANSPORT_ROLE_AND_OPERATION_MATCH_REQUIRED"
+  digital_transaction_metadata:
+    locators: "пункты 42, 46, 50, 56"
+    examples:
+      - "номер телефона и e-mail"
+      - "логин и хеш пароля при фактической фиксации"
+      - "IP-адрес и порт"
+      - "наименование банка/финансовой организации/поставщика банковских услуг и последние четыре цифры счета/вклада"
+    guards:
+      - "PHONE_EMAIL_IP_NOT_TELECOM_SECRECY_AUTOMATICALLY"
+      - "PAYMENT_METADATA_NOT_BANK_SECRECY_AUTOMATICALLY"
+      - "PASSWORD_HASH_FIELD_NOT_NEW_STATUTORY_SECRET_CATEGORY"
+
+retention_nodes:
+  - locator: "Порядок, пункт 13"
+    rule: "7 лет со дня получения оператором ЕГИС ОТБ персональных данных в АЦБПДП"
+    guard: "ACBPDP_OPERATOR_RETENTION_NOT_CARRIER_SOURCE_SYSTEM_OR_GENERAL_PDN_RETENTION"
+  - locator: "исходные системы поставщиков"
+    rule: "срок хранения исходной билетной/CRM/перевозочной системы этим правилом автоматически не установлен"
+    guard: "SEPARATE_PURPOSE_RECORD_SERIES_AND_LAWFUL_BASIS_REVIEW_REQUIRED"
+
+purpose_access_and_security:
+  - finding: "Получатели/потребители сведений определены нормативным контуром ЕГИС ОТБ; наличие ведомства в перечне не означает неограниченное вторичное использование."
+    guard: "RECIPIENT_PURPOSE_AUTHORITY_AND_DATASET_MATCH_REQUIRED"
+  - finding: "Для передачи предусмотрены защищенные каналы, СКЗИ и меры безопасности по угрозам, определяемым в соответствии со статьей 19 152-ФЗ, либо СМЭВ."
+    guard: "SECURITY_REQUIREMENT_NOT_NEW_CLASSIFICATION"
+  - finding: "Технологические сроки передачи 15/30 минут и 24 часа для экипажа относятся к информационному обмену."
+    guard: "TRANSFER_SLA_NOT_DATA_SUBJECT_OR_INCIDENT_NOTIFICATION_SLA"
+
+cross_regime_edges:
+  - target: "SEC-SRC-RU-FZ-16-2007"
+    status: DIRECT
+    basis: "article 11 statutory ACBPDP regime"
+  - target: "SEC-SRC-RU-PP-1251-2023"
+    status: DIRECT_SYSTEM_RELATION
+    basis: "EGIS OTB system context"
+  - target: "152-ФЗ"
+    status: DIRECT_SCENARIO_SPECIFIC
+    basis: "security and transfer references"
+  - target: "126-ФЗ / тайна связи"
+    status: CONDITIONAL
+    basis: "contact/network metadata alone does not prove telecom-secrecy scope"
+  - target: "banking secrecy"
+    status: CONDITIONAL
+    basis: "payment metadata alone does not prove bank-secrecy scope"
+
+version_and_effective_date:
+  current_revision: "2024-05-02"
+  checked_as_of: "2026-08-30"
+  effective_from: "2024-09-01"
+  valid_until: "2030-09-01"
+  later_amendment_located_in_this_sweep: false
+  predecessor_orders_243_228_242: SUPERSEDED_FROM_2024_09_01
+
+capture:
+  exact_capture_state: PENDING_EXACT_CAPTURE
+  primary_publication_id: "0001202405310018"
+  primary_publication_url: "https://publication.pravo.gov.ru/document/0001202405310018"
+  exact_binary_attempt: "2026-08-30T23:15:23+03:00 transient binary download failure"
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+
+quality_gates:
+  applicability_promotions: 0
+  general_lawful_basis_inferred: false
+  general_pdn_retention_inferred: false
+  telecom_secrecy_inferred_from_contact_network_metadata: false
+  bank_secrecy_inferred_from_payment_metadata: false
+  operational_sla_misclassified_as_subject_or_incident_deadline: false
+  fabricated_binary_metadata: false
+  duplicate_source_created: false
