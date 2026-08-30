@@ -1,0 +1,137 @@
+schema_version: "1.0"
+stream: 3
+run_at: "2026-08-30T05:17:03+03:00"
+objective: "continue sector/special-regime primary-source discovery, exact capture, deduplication, relationship linking and master reconciliation"
+
+selected_sources:
+  - id: SEC-SRC-RU-FZ-168-2020
+    act: "Федеральный закон от 08.06.2020 № 168-ФЗ"
+    action: REUSE_AND_UPGRADE_CANONICAL_NODE
+    sector_overlap:
+      - public_sector
+      - identity_registry
+      - personal_data
+      - credit_history_identity
+      - education_credentials
+  - id: SEC-SRC-RU-FZ-120-1999
+    act: "Федеральный закон от 24.06.1999 № 120-ФЗ"
+    action: NEW_CANONICAL_SOURCE_NODE
+    sector_overlap:
+      - children
+      - education
+      - public_sector
+      - personal_data
+      - health_context
+
+repository_dedupe:
+  168_fz:
+    canonical_source_already_existed: true
+    prior_state: METADATA_VERIFIED_SOURCE_PENDING
+    result: REUSED_AND_UPGRADED_WITH_LOCATORS_VERSION_CHAIN_AND_GUARDS
+    found_counter_increment: 0
+  120_fz:
+    canonical_path_probe_result: NOT_FOUND_BEFORE_REGISTRATION
+    result: NEW_CANONICAL_SOURCE_NODE
+    found_counter_increment: 1
+
+primary_proof:
+  168_fz:
+    primary_publication_id: "0001202006080019"
+    current_edition_date: "2025-11-28"
+    material_amendments:
+      - "512-ФЗ / 0001202412280014"
+      - "442-ФЗ / 0001202511280105 / effective relevant provisions 2026-05-28"
+  120_fz:
+    primary_act_official_bank: "https://www.kremlin.ru/acts/bank/14023/print"
+    original_publication: "СЗ РФ, 1999, № 26, ст. 3177"
+    current_edition_date: "2026-08-04"
+    material_amendments:
+      - "322-ФЗ / 0001202408080132 / introduced Chapter II.1 juvenile-prevention federal GIS"
+      - "311-ФЗ / 0001202608040038 / latest located source-level amendment"
+
+normative_findings:
+  - "168-ФЗ Article 8(11) requires permanent storage of records/information of the specific federal population register; this is not a general PDN retention period."
+  - "168-ФЗ Articles 3, 8, 9 and 11 provide direct PDN/information-security, access and downstream-protection rules; references to protected secrets do not classify all register data as a secret."
+  - "120-ФЗ Article 9 requires statutory prevention information to be stored and used with confidentiality."
+  - "120-ФЗ Article 25.2 makes PDN confidentiality/protection and compliance with personal, family, commercial and other legally protected secrets explicit design principles of the juvenile-prevention federal GIS."
+  - "120-ФЗ Article 25.2 describes person-level child/legal-representative identity and social-risk data; high sensitivity does not by itself prove special-category PDN or medical secrecy."
+  - "120-ФЗ Article 7 is a workflow-duration rule for individual preventive work, not a PDN/document-retention period."
+
+relationships:
+  added_or_upgraded:
+    - "168-ФЗ -> 152-ФЗ"
+    - "168-ФЗ -> 149-ФЗ"
+    - "168-ФЗ -> 218-ФЗ"
+    - "168-ФЗ -> education/FRDO"
+    - "168-ФЗ -> children/family-status"
+    - "120-ФЗ -> 152-ФЗ"
+    - "120-ФЗ -> 273-ФЗ"
+    - "120-ФЗ -> 323-ФЗ/medical secrecy candidate only with proven medical provenance"
+    - "120-ФЗ -> personal/family/commercial/other legally protected secrets"
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+
+acquisition:
+  exact_binary_attempted: true
+  attempted_at: "2026-08-30T05:17:03+03:00"
+  targets:
+    - "https://publication.pravo.gov.ru/Document/View/0001202006080019"
+    - "https://publication.pravo.gov.ru/Document/View/0001202412280014"
+    - "https://publication.pravo.gov.ru/Document/View/0001202511280105"
+    - "https://www.kremlin.ru/acts/bank/14023/print"
+    - "https://www.kremlin.ru/acts/bank/50972/print"
+    - "https://publication.pravo.gov.ru/document/0001202408080132"
+    - "https://publication.pravo.gov.ru/document/0001202608040038"
+  result: TRANSIENT_FAILURE
+  detail: "curl exit 6 / DNS resolution failed for publication.pravo.gov.ru and www.kremlin.ru"
+  exact_bytes_obtained: false
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+  immutable_promotions: 0
+
+counters:
+  before:
+    found: 67
+    downloaded: 9
+    immutable: 9
+    pending: 56
+    reused: 2
+    primary_publication_verified: 37
+    sectors_registered: 32
+  after:
+    found: 68
+    downloaded: 9
+    immutable: 9
+    pending: 57
+    reused: 3
+    primary_publication_verified: 38
+    sectors_registered: 32
+
+files_written_or_updated:
+  - "security-corpora/RU/protected-information/source/SEC-SRC-RU-FZ-168-2020.yaml"
+  - "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-168-2020-capture-pending.json"
+  - "security-corpora/RU/protected-information/source/SEC-SRC-RU-FZ-120-1999.yaml"
+  - "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-120-1999-capture-pending.json"
+  - "security-knowledge/corpus/ru-protected-information/master-inventory-delta-2026-08-30T0517.yaml"
+  - "security-knowledge/corpus/ru-personal-data/master-source-inventory-delta-stream3-2026-08-30T0517.yaml"
+  - "security-knowledge/corpus/ru-protected-information/stream-3-run-2026-08-30T0517.yaml"
+
+quality_gates:
+  primary_act_as_proof: true
+  taxonomy_as_evidence: false
+  applicability_invented: false
+  fabricated_binary_metadata: false
+  downloaded_increment_without_bytes: false
+  immutable_increment_without_hash: false
+  dedupe_inflated_found_counter: false
+  general_pdn_retention_inferred: false
+  secret_classification_inferred: false
+  workflow_duration_misclassified_as_retention: false
+
+next_actions:
+  - "Retry exact official bytes for 168-ФЗ, 120-ФЗ, 322-ФЗ and 311-ФЗ and create immutable artifacts only after actual byte length/SHA-256 are computed."
+  - "Continue children/education discovery into the implementing regulation for the juvenile-prevention GIS and education-sector record/identity flows, deduplicated against 120-ФЗ, 273-ФЗ and existing child/PDN sources."
+  - "Continue public-sector identity/registry discovery without turning registry-specific permanent storage into a general PDN retention rule."
