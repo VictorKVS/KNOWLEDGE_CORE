@@ -1,0 +1,108 @@
+schema_version: "1.0"
+stream: 3
+checked_at: "2026-08-30T14:22:35+03:00"
+mode: APPEND_ONLY_PDN_SECTOR_OVERLAY_RECONCILIATION
+source_id: SEC-SRC-RU-PP-825-2021
+source_title: "Постановление Правительства РФ от 31.05.2021 № 825 — ФИС ФРДО"
+parent_source_id: SEC-SRC-RU-FZ-273-2012
+
+pdn_overlap:
+  status: DIRECT_TEXTUAL_AND_OPERATIONAL_OVERLAP
+  direct_anchors:
+    - "пункт 2: межсистемное ведение ФИС с обеспечением конфиденциальности и безопасности содержащихся персональных данных"
+    - "пункт 7 подпункт в: безопасное хранение и использование, автоматизированный сбор, хранение, обработка, обобщение и анализ сведений"
+    - "пункт 9: прямое соблюдение законодательства в области персональных данных при обработке, хранении, использовании, доступе и защите"
+    - "приложение № 1: установлен состав person-level образовательных и идентификационных сведений"
+    - "приложение № 2: установлен состав person-level сведений о школьном языковом тестировании иностранных граждан/лиц без гражданства, включая сведения о законном представителе"
+    - "пункт 12: специальные системные сроки хранения 50/5/3 года с исключением сведений после истечения срока"
+  lawful_basis_statement: "ПП № 825 регулирует конкретный федеральный реестр и обязательные потоки в него; оно не является универсальным основанием обработки любых ПДн образовательной организацией вне доказанного нормативного сценария ФИС ФРДО."
+
+person_level_examples:
+  - "ФИО владельца документа об образовании/сертификата"
+  - "дата рождения"
+  - "пол"
+  - "СНИЛС гражданина РФ при наличии"
+  - "гражданство"
+  - "в отдельных сертификатных сценариях серия и номер документа, удостоверяющего личность"
+  - "образовательная программа, профессия/специальность/квалификация, срок и годы обучения"
+  - "данные целевого обучения и организации-работодателя в предусмотренных случаях"
+  - "для школьного языкового тестирования иностранного гражданина/лица без гражданства: результат, баллы, данные ребенка и законного представителя, СНИЛС ребенка при наличии, гражданство и реквизиты удостоверяющих документов"
+
+retention_nodes:
+  - locator: "пункт 12"
+    rule: "основная масса сведений ФИС хранится 50 лет"
+    guard: "FIFTY_YEAR_FIS_FRDO_RETENTION_NOT_GENERAL_PDN_OR_EDUCATION_DOCUMENT_RETENTION"
+  - locator: "пункт 12"
+    rule: "сведения о соответствующих сертификатах о владении русским языком, знании истории России и основ законодательства РФ хранятся 5 лет"
+    guard: "FIVE_YEAR_CERTIFICATE_RETENTION_NOT_GENERAL_PDN_RETENTION"
+  - locator: "пункт 12, абзац введен ПП РФ № 1423/2025"
+    rule: "сведения о результатах школьного языкового тестирования иностранных граждан/лиц без гражданства хранятся 3 года"
+    guard: "THREE_YEAR_TESTING_RETENTION_NOT_GENERAL_CHILD_DATA_RETENTION"
+  - locator: "пункт 12"
+    rule: "после истечения нормативного срока сведения исключаются из ФИС оператором"
+    guard: "SYSTEM_DELETION_TRIGGER_NOT_AUTOMATIC_DESTRUCTION_OF_SOURCE_OR_ARCHIVAL_DOCUMENTS"
+
+children_boundary:
+  status: CONTEXT_SPECIFIC
+  evidence: "Приложение № 2 относится к тестированию, достаточному для освоения программ начального, основного и среднего общего образования, и предусматривает данные тестируемого лица и законного представителя."
+  classification_guard: "CHILD_CONTEXT_NOT_SPECIAL_CATEGORY_PDN_AUTOMATICALLY"
+
+identity_and_access:
+  - locator: "пункт 8"
+    finding: "Предоставление сведений физлицам, иным лицам и отдельным государственным получателям разделено по ролям и целям."
+    guard: "REGISTER_ACCESS_ROUTE_NOT_UNLIMITED_DISCLOSURE"
+  - locator: "пункт 10"
+    finding: "Внесение сведений осуществляется с использованием усиленной квалифицированной электронной подписи для предусмотренных участников."
+    guard: "E_SIGNATURE_NOT_PDN_CONSENT"
+  - locator: "ПП РФ № 960/2026"
+    finding: "Для совместных российско-иностранных образовательных организаций введен отдельный пакетный канал с усиленной неквалифицированной электронной подписью, проверкой полномочий, неизменностью и целостностью пакета."
+    guard: "AUTHENTICATION_AND_INTEGRITY_CONTROLS_NOT_GENERAL_PROCESSING_BASIS"
+
+operational_sla_guards:
+  - observed_rule: "для отдельных образовательных документов действуют специальные сроки внесения в ФИС; ПП № 960/2026 для совместных организаций предусматривает 5 рабочих дней или 60 календарных дней в зависимости от программы"
+    guard: "SUBMISSION_SLA_NOT_DATA_SUBJECT_REQUEST_OR_BREACH_NOTIFICATION_SLA"
+  - observed_rule: "по ПП № 1423/2025 сведения о результатах тестирования вносятся в течение 3 рабочих дней"
+    guard: "TEST_RESULT_SUBMISSION_SLA_NOT_PDN_RETENTION_OR_SUBJECT_RIGHTS_SLA"
+  - observed_rule: "ПП № 960/2026 предусматривает однодневную проверку подписи/полномочий информационным центром"
+    guard: "SIGNATURE_VERIFICATION_SLA_NOT_PDN_SLA"
+
+cross_regime_edges:
+  - target: "152-ФЗ"
+    status: DIRECT
+    basis: "explicit PDN protection clause in point 9 and confidentiality/security layer in point 2"
+  - target: "SEC-SRC-RU-FZ-273-2012"
+    status: DIRECT_PARENT
+    basis: "PP 825 adopted pursuant to article 98 and implements the federal education information register"
+  - target: "149-ФЗ"
+    status: DIRECT_TEXTUAL_OVERLAP
+    basis: "information and information-protection requirements"
+  - target: "63-ФЗ"
+    status: DIRECT_CONTROL_OVERLAP
+    basis: "electronic signature for register submission/access workflows"
+  - target: "SEC-SRC-RU-FZ-125-2004"
+    status: RECORD_SERIES_AND_LIFECYCLE_MATCH_REQUIRED
+    basis: "source information can be reconstructed from state/municipal archives, while FIS retention does not replace archival retention law"
+  - target: "children"
+    status: RECORD_CONTEXT_REQUIRED
+    basis: "school-language-testing records can concern minors and legal representatives"
+
+version_and_capture:
+  current_edition_date: "2026-08-01"
+  latest_material_amendment: "ПП РФ от 01.08.2026 № 960 / official publication 0001202608030041 / published 2026-08-03 / effective 2026-08-11"
+  version_chain_state: VERSION_CHAIN_PARTIAL_CURRENT_EDITION_CONFIRMED
+  exact_capture_state: PENDING_EXACT_CAPTURE
+  exact_binary_attempted_at: "2026-08-30T14:22:35+03:00"
+  exact_binary_result: "curl exit 6 / DNS resolution failed for publication.pravo.gov.ru"
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+
+quality_gates:
+  applicability_promotions: 0
+  general_pdn_retention_inferred: false
+  special_category_pdn_inferred_from_child_or_education_context: false
+  protected_secret_category_inferred: false
+  source_document_retention_equated_to_fis_retention: false
+  fabricated_binary_metadata: false
