@@ -1,0 +1,130 @@
+schema_version: "1.0"
+stream: 3
+run_at: "2026-08-30T20:17:41+03:00"
+objective: "continue sector/special-regime primary-source discovery, exact capture, deduplication, relationship linking and master reconciliation"
+
+selected_sources:
+  - id: SEC-SRC-RU-PP-2386-2023
+    act: "Постановление Правительства Российской Федерации от 29.12.2023 № 2386"
+    action: NEW_CANONICAL_SOURCE_NODE
+    sector_overlap:
+      - public_sector
+      - personal_data
+      - social_protection
+      - children
+      - health
+      - disability
+      - financial
+      - identity_registry
+      - information_security
+      - archives_retention
+
+repository_dedupe:
+  pp_2386_2023:
+    canonical_source_already_existed: false
+    predecessor_pp_1342_2021_current: false
+    predecessor_pp_181_2017_current: false
+    result: NEW_CURRENT_CANONICAL_SOURCE_WITH_HISTORICAL_PREDECESSOR_EDGES
+    found_counter_increment: 1
+
+primary_proof:
+  pp_2386_2023:
+    official_government_file_url: "https://static.government.ru/media/files/EHa7w8qxPbSpF9QFi2vwxapnH3HyDEE1.pdf"
+    official_current_legal_listing: "https://sfr.gov.ru/order/egisso/~10289"
+    official_publication_locator: PENDING
+    current_edition_date: "2025-09-12"
+    latest_material_amendment: "Постановление Правительства РФ от 12.09.2025 № 1408"
+    point_82_suspension_until: "2026-07-31"
+    point_82_state_as_of_run: ACTIVE_AFTER_EXPIRY_OF_TEMPORARY_SUSPENSION
+
+normative_findings:
+  - "PP 2386 is the current regulatory node for the unified centralized digital platform in the social sphere; PP 1342/2021 and the older PP 181/2017 are predecessor regimes and are not kept as parallel current nodes."
+  - "The platform has a direct PDN/information-security layer and supports social protection, pension, medical-social examination, disability/child-disability, rehabilitation and personified-accounting workflows."
+  - "The source contains broad person-level identity, social, child, disability, medical/health, educational and payment/account information, but no protected-secret or special-category classification is inferred solely from context or field sensitivity."
+  - "Access outside the normal user population requires normative authority/function/obligation justification, a required data set and the prescribed information-interaction route; this is modeled as purpose/authority/data-minimization boundary, not blanket secondary use."
+  - "The security layer includes organizational and technical protection measures, unauthorized-access/impact prevention and detection, restoration and security-level control."
+  - "Banking-law references and payment/account data create a guarded financial overlap but do not classify every platform record as bank secrecy."
+  - "No single global numeric retention period for all platform data was established in this sweep; specific social-contract electronic case files have an archival-law storage route under PP 2191/2025 and must be resolved by record series/lifecycle."
+
+relationships:
+  added:
+    - "PP 2386/2023 -> 152-ФЗ"
+    - "PP 2386/2023 -> 149-ФЗ"
+    - "PP 2386/2023 -> 323-ФЗ / medical secrecy conditional edge"
+    - "PP 2386/2023 -> banking secrecy / source and relationship match required"
+    - "PP 2386/2023 -> 125-ФЗ / record-series-specific archival lifecycle"
+    - "PP 2386/2023 -> 168-ФЗ / identity-population-register route overlap"
+    - "PP 2386/2023 -> PP 411/2025 / separate child/public-sector GIS overlap"
+    - "PP 2386/2023 -> PP 1342/2021 / supersedes predecessor regime"
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+
+version_chain:
+  state: CURRENT_EDITION_2025_09_12_CONFIRMED_AS_OF_2026_08_30_PRIMARY_LOCATOR_CHAIN_PARTIAL
+  consolidated_amendments_crosschecked: 2
+  amendments:
+    - "PP 1705/2024"
+    - "PP 1408/2025"
+  point_82_temporary_suspension_expired: true
+  later_amendment_after_2025_09_12_located_in_this_sweep: false
+  full_primary_locator_chain_claimed_complete: false
+
+acquisition:
+  exact_binary_attempted: true
+  target: "https://static.government.ru/media/files/EHa7w8qxPbSpF9QFi2vwxapnH3HyDEE1.pdf"
+  attempt: "2026-08-30T20:17:41+03:00 official Government PDF byte fetch"
+  result: TRANSIENT_FAILURE
+  exact_bytes_obtained: false
+  official_publication_locator_verified: false
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+  immutable_promotions: 0
+
+counters:
+  before:
+    found: 71
+    downloaded: 9
+    immutable: 9
+    pending: 60
+    reused: 3
+    primary_publication_verified: 41
+    sectors_registered: 32
+  after:
+    found: 72
+    downloaded: 9
+    immutable: 9
+    pending: 61
+    reused: 3
+    primary_publication_verified: 41
+    sectors_registered: 32
+
+files_written_or_updated:
+  - "security-corpora/RU/protected-information/source/SEC-SRC-RU-PP-2386-2023.yaml"
+  - "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-PP-2386-2023-capture-pending.json"
+  - "security-knowledge/corpus/ru-protected-information/master-inventory-delta-2026-08-30T2017.yaml"
+  - "security-knowledge/corpus/ru-personal-data/master-source-inventory-delta-stream3-2026-08-30T2017.yaml"
+  - "security-knowledge/corpus/ru-protected-information/stream-3-run-2026-08-30T2017.yaml"
+
+quality_gates:
+  primary_official_file_locator_verified: true
+  primary_publication_locator_verified: false
+  taxonomy_as_evidence: false
+  applicability_invented: false
+  fabricated_binary_metadata: false
+  downloaded_increment_without_bytes: false
+  immutable_increment_without_hash: false
+  primary_publication_counter_increment_without_locator: false
+  dedupe_inflated_found_counter: false
+  predecessor_treated_as_current: false
+  expired_suspension_treated_as_current: false
+  general_pdn_retention_inferred: false
+  protected_secret_classification_inferred: false
+
+next_actions:
+  - "Retry exact official Government bytes for PP 2386/2023 and compute actual MIME, exact byte length and SHA-256 before immutable promotion."
+  - "Resolve and verify the official publication.pravo.gov.ru locator for PP 2386/2023 before incrementing primary_publication_verified."
+  - "Continue into social-protection/children/health/finance special flows implemented under the platform, deduplicating against existing sector nodes."
+  - "Resolve record-series-specific archival retention for social-contract case files using current primary archival acts rather than inferring a platform-wide PDN period."
