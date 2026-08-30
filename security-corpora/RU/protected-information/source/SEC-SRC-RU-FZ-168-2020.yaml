@@ -1,95 +1,161 @@
-schema_version: "1.0"
+schema_version: "1.1"
 id: SEC-SRC-RU-FZ-168-2020
-kind: security-regulatory-source
-status: METADATA_VERIFIED_SOURCE_PENDING
-
-title: "Федеральный закон от 08.06.2020 № 168-ФЗ «О едином федеральном информационном регистре, содержащем сведения о населении Российской Федерации»"
+kind: PRIMARY_NORMATIVE_SOURCE
+status: PRIMARY_PUBLICATION_VERIFIED
 jurisdiction: RU
-issuer: "Российская Федерация"
+authorities:
+  - "Российская Федерация"
+  - "Федеральная налоговая служба (уполномоченный орган федерального регистра)"
+sector:
+  - public_sector
+  - identity_registry
+  - personal_data
+regime: federal_population_register_information_protection_and_retention
+
 document:
-  type: federal_law
+  type: "федеральный закон"
+  date: "2020-06-08"
   number: "168-ФЗ"
-  adopted_date: "2020-06-08"
-  official_publication_id: "0001202006080019"
-  official_publication_date: "2020-06-08"
-  checked_at: "2026-08-21"
+  title: "О едином федеральном информационном регистре, содержащем сведения о населении Российской Федерации"
+  current_edition_date_verified: "2025-11-28"
+  current_as_of: "2026-08-30"
 
 canonical_source:
-  publisher: "Официальное опубликование правовых актов"
-  url: "https://publication.pravo.gov.ru/Document/View/0001202006080019"
-  origin_verified: true
-  official_file_endpoint_candidate: "https://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202006080019"
-  file_endpoint_status: NOT_RETRIEVED_IN_THIS_RUN
+  official_publication_id: "0001202006080019"
+  official_publication_date: "2020-06-08"
+  source_url: "https://publication.pravo.gov.ru/Document/View/0001202006080019"
+  proof_state: PRIMARY_PUBLICATION_VERIFIED
 
-protected_information:
-  sector: public_sector
-  regime: federal_population_registry
-  discovery_basis: >-
-    Primary publication proves a special federal-law regime for the unified federal information register containing
-    information about the population. This registration does not infer which organizations, processing scenarios or
-    data fields are subject to the regime without locator-level review of the current text.
-  pdn_relation:
-    state: CANDIDATE_PENDING_PRIMARY_LOCATOR_REVIEW
-    type: STATE_POPULATION_REGISTER_CONTEXT
-    supporting_context:
-      source: "152-ФЗ"
-      locator: "статья 8 часть 4"
-      authority_url: "https://www.kremlin.ru/acts/bank/24154/print"
-      proposition: "152-ФЗ provides that a state population register may be created by federal law."
-    guard: "168-ФЗ inclusion in the sector library is not an automatic applicability decision for any organization."
+repository_dedupe:
+  prior_node_found: true
+  prior_state: METADATA_VERIFIED_SOURCE_PENDING
+  action: REUSE_AND_UPGRADE_CANONICAL_NODE
+  duplicate_node_created: false
 
 version_chain:
   state: VERSION_CHAIN_PARTIAL
-  primary_events_verified:
-    - act: "512-ФЗ от 28.12.2024"
+  current_as_of: "2026-08-30"
+  current_edition_date: "2025-11-28"
+  material_events:
+    - act: "Федеральный закон от 28.12.2024 № 512-ФЗ"
       official_publication_id: "0001202412280014"
       official_publication_date: "2024-12-28"
       official_url: "https://publication.pravo.gov.ru/Document/View/0001202412280014"
       proof_status: PRIMARY_AMENDMENT_EVENT_VERIFIED
-      anchor_effect: "Official title states that 512-ФЗ amends 168-ФЗ; locator-level effects require text compilation."
-    - act: "442-ФЗ от 28.11.2025"
+      effect: "изменил, в частности, состав сведений статьи 7, порядок изменения записи статьи 8 и связанные информационные потоки; отдельные положения вступили в силу 01.07.2025"
+      status_as_of_2026_08_30: EFFECTIVE
+    - act: "Федеральный закон от 28.11.2025 № 442-ФЗ"
       official_publication_id: "0001202511280105"
       official_publication_date: "2025-11-28"
       official_url: "https://publication.pravo.gov.ru/Document/View/0001202511280105"
       proof_status: PRIMARY_AMENDMENT_EVENT_VERIFIED
-      anchor_effect: "Official title expressly amends Articles 4 and 11 of 168-ФЗ and Article 13 of 218-ФЗ."
-  pending: >-
-    Complete the primary amendment sweep through 2026-08-21 and compile the current locator-level text before
-    executable requirements or applicability edges are promoted.
+      effect: "изменил статьи 4 и 11 168-ФЗ и статью 13 218-ФЗ для использования номера записи федерального регистра при идентификации субъектов кредитных историй"
+      effective_date: "2026-05-28"
+      status_as_of_2026_08_30: EFFECTIVE
+  transition_period:
+    ended: "2025-12-31"
+    status_as_of_2026_08_30: EXPIRED
+  amendment_sweep:
+    checked_at: "2026-08-30"
+    latest_current_edition_located: "2025-11-28"
+    later_amending_act_located: false
+  full_historical_chain_claimed_complete: false
 
-capture:
-  state: SOURCE_PENDING_PRIMARY_EXACT_CAPTURE
-  raw_artifact_ref: null
-  manifest_ref: null
+normative_scope:
+  applies_to: "формирование, ведение, хранение, получение, использование, предоставление и защиту сведений федерального регистра сведений о населении"
+  register_is_state_information_system: true
+  explicit_personal_data_security_layer: true
+  explicit_information_security_layer: true
+  general_pdn_lawful_basis_inferred: false
+  independent_sector_secret_created: false
+
+normative_anchors:
+  - locator: "статья 1"
+    finding: "Закон прямо регулирует сбор, обработку, хранение, получение, использование и защиту сведений регистра."
+    guard: "REGISTER_SCOPE_ONLY_NOT_GENERAL_PUBLIC_SECTOR_PDN_RULE"
+  - locator: "статья 3 пункт 1"
+    finding: "Принцип функционирования регистра включает применение организационных и технических мер по обеспечению безопасности содержащихся в нем персональных данных."
+    guard: "DIRECT_PDN_SECURITY_REFERENCE_NOT_AUTOMATIC_APPLICABILITY_TO_OTHER_GIS"
+  - locator: "статья 7"
+    finding: "Регистр содержит идентификационные и статусные сведения о физическом лице и идентификаторы; 512-ФЗ добавил, в частности, сведения о родительских правах, опекунах/попечителях, ограничении дееспособности и эмансипации."
+    guard: "SENSITIVE_IDENTITY_OR_FAMILY_STATUS_NOT_SPECIAL_CATEGORY_PDN_AUTOMATICALLY"
+  - locator: "статья 8 часть 2"
+    finding: "Использование сведений, составляющих государственную тайну, по общему правилу не допускается, кроме специально предусмотренных законом случаев обособленного учета."
+    guard: "REGISTER_CONTENT_NOT_STATE_SECRET_AUTOMATICALLY"
+  - locator: "статья 8 часть 11"
+    finding: "Записи регистра и иные содержащиеся в нем в соответствии с законом сведения подлежат постоянному хранению; их изъятие, кроме предусмотренных законом случаев, и уничтожение не допускаются."
+    guard: "PERMANENT_EFIR_RECORD_RETENTION_NOT_GENERAL_PDN_RETENTION"
+  - locator: "статья 8 часть 13"
+    finding: "Уполномоченный орган обязан защищать запись регистра от несанкционированного доступа, случайного или несанкционированного изменения, уничтожения или утраты."
+    guard: "EFIR_OPERATOR_SECURITY_DUTY_NOT_GENERAL_SECURITY_STANDARD_FOR_ALL_GIS"
+  - locator: "статья 9 части 1 и 5"
+    finding: "Формирование и ведение регистра выполняются в государственной информационной системе по законодательству об информации и персональных данных; оператор обеспечивает защиту с учетом законодательства о ПДн, информации, государственной и иной охраняемой законом тайне."
+    guard: "REFERENCE_TO_PROTECTED_SECRETS_NOT_CLASSIFICATION_OF_ALL_REGISTER_DATA_AS_SECRET"
+  - locator: "статья 10 часть 5"
+    finding: "В регистр поступают сведения о документах об образовании/квалификации и обучении из федерального реестра документов об образовании, а также связанные сведения."
+    guard: "EDUCATION_DATA_FLOW_NOT_EDUCATION_SECRECY_REGIME"
+  - locator: "статья 11 часть 5"
+    finding: "Доступ физлица к сведениям о себе осуществляется после идентификации/аутентификации; сведения о несовершеннолетнем не предоставляются родителю, лишенному родительских прав."
+    guard: "CHILD_ACCESS_RESTRICTION_NOT_GENERAL_CHILD_PDN_CONSENT_RULE"
+  - locator: "статья 11 часть 10"
+    finding: "Получающие сведения органы, организации и лица обязаны защищать их по законодательству о персональных данных и об информации при обработке в своих информационных системах."
+    guard: "DOWNSTREAM_SECURITY_DUTY_DOES_NOT_CREATE_UNLIMITED_REUSE_AUTHORITY"
+
+relationships:
+  - target: "152-ФЗ"
+    type: DIRECT_PERSONAL_DATA_SECURITY_REFERENCE
+    status: DIRECT_NORMATIVE_OVERLAP
+  - target: "149-ФЗ"
+    type: DIRECT_INFORMATION_SECURITY_REFERENCE
+    status: DIRECT_NORMATIVE_OVERLAP
+  - target: "218-ФЗ"
+    type: POPULATION_REGISTER_TO_CREDIT_HISTORY_IDENTITY_FLOW
+    status: DIRECT_AFTER_442FZ_EFFECTIVE_2026_05_28
+  - target: "education/FRDO"
+    type: EDUCATION_CREDENTIAL_DATA_SOURCE_FLOW
+    status: DIRECT_DATA_FLOW_SECTOR_OVERLAP
+  - target: "children/family-status"
+    type: MINOR_AND_PARENTAL_RIGHTS_ACCESS_AND_STATUS_OVERLAP
+    status: DIRECT_REGISTER_CONTENT_AND_ACCESS_RULE_WITHOUT_NEW_SECRECY_REGIME
+  - target: "ESIA"
+    type: IDENTITY_AND_AUTHENTICATION_FLOW
+    status: DIRECT_REGISTER_IDENTIFIER_AND_ACCESS_CONTEXT
+
+proof_guards:
+  - "TAXONOMY_SEED_NOT_LEGAL_PROOF"
+  - "EFIR_RECORD_NOT_STATE_SECRET_AUTOMATICALLY"
+  - "EFIR_RECORD_NOT_OTHER_PROTECTED_SECRET_AUTOMATICALLY"
+  - "PERMANENT_EFIR_RETENTION_NOT_GENERAL_PDN_RETENTION"
+  - "SENSITIVE_FAMILY_OR_CAPACITY_STATUS_NOT_SPECIAL_CATEGORY_PDN_AUTOMATICALLY"
+  - "CHILD_ACCESS_RULE_NOT_UNIVERSAL_CHILD_CONSENT_RULE"
+  - "AUTHORIZED_INTERAGENCY_DATA_FLOW_NOT_UNLIMITED_SECONDARY_USE"
+  - "EDUCATION_CREDENTIAL_DATA_FLOW_NOT_EDUCATION_SECRECY_REGIME"
+  - "APPLICABILITY_TO_OTHER_INFORMATION_SYSTEMS_REQUIRES_INDEPENDENT_PROOF"
+
+acquisition:
+  exact_binary_attempted: true
+  attempted_at: "2026-08-30T05:17:03+03:00"
+  attempted_urls:
+    - "https://publication.pravo.gov.ru/Document/View/0001202006080019"
+    - "https://publication.pravo.gov.ru/document/0001202412280014"
+    - "https://publication.pravo.gov.ru/document/0001202511280105"
+  transport_result: "binary runtime could not resolve publication.pravo.gov.ru; DNS failure occurred before exact official bytes or a portal PDF link could be obtained"
+  retry_class: TRANSIENT
+  direct_official_pdf_url_confirmed_this_run: false
+  manifest_ref: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-168-2020-capture-pending.json"
   retrieved_at: null
   mime: null
   byte_length: null
   sha256: null
-  attempt_at: "2026-08-21T02:22:09+03:00"
-  attempt_result: OFFICIAL_BINARY_NOT_RETRIEVABLE_IN_EXECUTION_ENVIRONMENT
-  proof_floor: >-
-    Search/render metadata is not a byte-exact artifact. MIME, byte length and SHA-256 remain null until the exact
-    official file is retrieved and fingerprinted.
+  immutable_artifact: null
+  state: PENDING_EXACT_CAPTURE
 
-conflict_check:
-  status: NO_CONFLICT_ASSERTED
-  relation_candidates:
-    - target: "152-ФЗ"
-      type: STATE_POPULATION_REGISTER_CONTEXT
-      status: CANDIDATE_PENDING_PRIMARY_LOCATOR_REVIEW
-    - target: "218-ФЗ"
-      type: SHARED_AMENDMENT_EVENT_442_FZ_2025
-      status: VERSION_GRAPH_EDGE_ONLY
-  review_required: true
-
-provenance:
-  checked_at: "2026-08-21"
-  primary_identity_evidence: "official publication 0001202006080019"
-  primary_amendment_evidence:
-    - "official publication 0001202412280014"
-    - "official publication 0001202511280105"
-  review_required: true
-
-agent_rule: >-
-  Treat 168-ФЗ as a distinct public-sector population-register regime. Do not infer applicability, permitted disclosure,
-  retention or access rights from the title or from 152-ФЗ Article 8(4); require current primary locators and scenario proof.
+quality_gates:
+  taxonomy_used_as_evidence: false
+  primary_act_used_as_proof: true
+  applicability_invented: false
+  fabricated_binary_metadata: false
+  exact_bytes_required_before_immutable: true
+  version_chain_claimed_complete: false
+  general_pdn_retention_inferred: false
+  protected_secret_classification_inferred: false
