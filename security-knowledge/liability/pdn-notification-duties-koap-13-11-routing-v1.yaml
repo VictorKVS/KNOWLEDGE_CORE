@@ -1,0 +1,503 @@
+{
+  "id": "RU-PDN-NOTIFICATION-DUTIES-KOAP-13.11-ROUTING-V1",
+  "as_of": "2026-08-31",
+  "status": "VERIFIED_CONSOLIDATED_TEXT_OFFICIAL_AMENDING_ACT_IDENTITY",
+  "title": "152-ФЗ: обязанности уведомления и их разграничение с частями 10 и 11 статьи 13.11 КоАП РФ",
+  "sources": [
+    {
+      "act": "Федеральный закон от 27.07.2006 № 152-ФЗ",
+      "revision": "26.07.2026",
+      "provision": "статья 22, части 1, 2 и 7",
+      "url": "https://www.consultant.ru/document/cons_doc_LAW_61801/d996966e22e1320c9de1ab82d9f6be12c3d9d765/"
+    },
+    {
+      "act": "Федеральный закон от 27.07.2006 № 152-ФЗ",
+      "revision": "26.07.2026",
+      "provision": "статья 21, часть 3.1",
+      "url": "https://www.consultant.ru/document/cons_doc_LAW_61801/d3fe43a7c415353b17faab255bc0de92bea127da/"
+    },
+    {
+      "act": "КоАП РФ",
+      "revision": "26.07.2026",
+      "provision": "статья 13.11, части 10 и 11",
+      "url": "https://www.consultant.ru/document/cons_doc_LAW_34661/1f421640c6775ff67079ebde06a7d2f6d17b96db/"
+    },
+    {
+      "act": "Федеральный закон от 14.07.2022 № 266-ФЗ",
+      "provision": "статья 6",
+      "official_publication": "https://publication.pravo.gov.ru/Document/View/0001202207140080",
+      "general_effective_from": "2022-09-01"
+    },
+    {
+      "act": "Федеральный закон от 30.11.2024 № 420-ФЗ",
+      "official_publication": "https://publication.pravo.gov.ru/document/0001202411300011",
+      "parts_10_11_effective_from": "2025-05-30"
+    }
+  ],
+  "duty_routes": [
+    {
+      "id": "INTENT_TO_PROCESS",
+      "legal_basis": "152-ФЗ статья 22 часть 1",
+      "trigger": "намерение оператора начать обработку персональных данных",
+      "deadline": "до начала обработки персональных данных",
+      "recipient": "уполномоченный орган по защите прав субъектов персональных данных",
+      "exceptions": [
+        "персональные данные включены в государственные информационные системы персональных данных, созданные в целях защиты безопасности государства и общественного порядка",
+        "оператор осуществляет обработку персональных данных исключительно без использования средств автоматизации",
+        "персональные данные обрабатываются в предусмотренных законодательством о транспортной безопасности случаях и целях части 2 статьи 22"
+      ],
+      "koap_candidate": "статья 13.11 часть 10",
+      "qualification_boundary": "отсутствие или просрочка уведомления образует только кандидатный маршрут; применимая редакция, статус оператора, отсутствие исключения, событие и вина доказываются отдельно"
+    },
+    {
+      "id": "INCIDENT_INITIAL_24H",
+      "legal_basis": "152-ФЗ статья 21 часть 3.1 пункт 1",
+      "trigger_elements": [
+        "установлен факт передачи, предоставления, распространения или доступа",
+        "передача, предоставление, распространение или доступ были неправомерными или случайными",
+        "событие повлекло нарушение прав субъектов персональных данных"
+      ],
+      "clock_start": "момент выявления инцидента оператором, уполномоченным органом или иным заинтересованным лицом",
+      "deadline_hours": 24,
+      "required_payload": [
+        "сведения о произошедшем инциденте",
+        "предполагаемые причины нарушения прав субъектов",
+        "предполагаемый вред правам субъектов",
+        "меры по устранению последствий",
+        "сведения об уполномоченном оператором лице для взаимодействия с органом"
+      ],
+      "koap_candidate": "статья 13.11 часть 11",
+      "qualification_boundary": "техническое событие или alert без установленных элементов не подменяет триггер части 3.1"
+    },
+    {
+      "id": "INCIDENT_INVESTIGATION_72H",
+      "legal_basis": "152-ФЗ статья 21 часть 3.1 пункт 2",
+      "clock_start": "тот же момент выявления инцидента, что и для 24-часового уведомления",
+      "deadline_hours": 72,
+      "required_payload": [
+        "результаты внутреннего расследования",
+        "сведения о лицах, действия которых стали причиной инцидента, при наличии"
+      ],
+      "koap_candidate": "статья 13.11 часть 11",
+      "qualification_boundary": "72-часовое сообщение является отдельной обязанностью и не продлевает срок первого уведомления; отсутствие установленных виновных лиц не разрешает выдумывать их"
+    }
+  ],
+  "article_22_maintenance_clocks": [
+    {
+      "event": "изменение сведений ранее поданного уведомления",
+      "deadline": "не позднее 15-го числа месяца, следующего за месяцем изменения",
+      "basis": "статья 22 часть 7"
+    },
+    {
+      "event": "прекращение обработки персональных данных",
+      "deadline": "в течение 10 рабочих дней с даты прекращения",
+      "basis": "статья 22 часть 7"
+    }
+  ],
+  "decision_sequence": [
+    "зафиксировать дату события и применимую редакцию",
+    "идентифицировать оператора и фактическое действие или бездействие",
+    "выбрать предварительный или инцидентный маршрут без их слияния",
+    "для статьи 22 проверить все три действующих исключения",
+    "для статьи 21.3.1 доказать каждый элемент триггера",
+    "зафиксировать источник и точное время выявления",
+    "раздельно проверить 24-часовой и 72-часовой пакеты",
+    "сопоставить фактически отправленный payload и подтверждение доставки",
+    "только затем открыть кандидатную часть 10 или 11 статьи 13.11",
+    "отдельно проверить субъект, вину, процедуру и доказательства",
+    "не смешивать нарушение обязанности с составом утечки частей 12-18",
+    "сохранить UNKNOWN или EVIDENCE_PENDING при недостаточности данных"
+  ],
+  "boundaries": {
+    "no_merging_intent_and_incident_notifications": true,
+    "no_72h_extension_of_24h_notice": true,
+    "no_incident_trigger_without_rights_violation": true,
+    "no_alert_equals_established_incident": true,
+    "no_exception_without_fact_and_version_evidence": true,
+    "no_culprit_invention_when_absent": true,
+    "no_delivery_receipt_equals_complete_payload": true,
+    "no_automatic_liability_from_missed_operational_sla": true,
+    "no_automatic_parts_12_18_from_notification_breach": true,
+    "no_double_counting_single_omission": true,
+    "no_future_or_expired_revision_mixing": true,
+    "no_legal_advice_or_case_outcome_prediction": true
+  },
+  "red_team_attacks": [
+    "merge the initial processing notice and incident notice",
+    "start the incident clock at a convenient internal escalation time",
+    "treat any security alert as an established article 21.3.1 incident",
+    "omit the data-subject-rights violation element",
+    "treat 72 hours as an extension of the first 24-hour deadline",
+    "require a named culprit even when none is established",
+    "treat a delivery receipt as proof of complete statutory payload",
+    "claim an article 22 exception without facts and applicable-version analysis",
+    "infer administrative guilt from an internal SLA breach",
+    "double-count one omission as several offences without procedural basis",
+    "apply a later or expired revision to the event",
+    "equate notification breach with disclosure offence or criminal qualification"
+  ],
+  "evidence_artifacts": [
+    "event timestamp and applicable-version record",
+    "operator identity and status",
+    "processing-start record",
+    "article 22 exception assessment",
+    "initial processing notification payload",
+    "initial processing notification delivery receipt",
+    "incident detection timestamp",
+    "detection source record",
+    "transfer/provision/dissemination/access evidence",
+    "unlawful-or-accidental character assessment",
+    "data-subject-rights violation assessment",
+    "24-hour notification payload",
+    "24-hour delivery receipt",
+    "72-hour investigation result",
+    "72-hour delivery receipt",
+    "responsible-person evidence or recorded absence",
+    "administrative-elements and criminal-screening record",
+    "procedural decision and jurisdiction record"
+  ],
+  "counts": {
+    "duty_routes": 3,
+    "article_22_exceptions": 3,
+    "incident_trigger_elements": 3,
+    "article_22_maintenance_clocks": 2,
+    "decision_steps": 12,
+    "red_team_attacks": 12,
+    "evidence_artifacts": 18,
+    "evidence_nodes": 18,
+    "control_rules": 64,
+    "regression_cases": 64
+  },
+  "control_rules": [
+    {
+      "id": "PDN-N-R001",
+      "rule": "FAIL_CLOSED_DUTY_OFFENCE_SANCTION_ROUTING"
+    },
+    {
+      "id": "PDN-N-R002",
+      "rule": "FAIL_CLOSED_DUTY_OFFENCE_SANCTION_ROUTING"
+    },
+    {
+      "id": "PDN-N-R003",
+      "rule": "FAIL_CLOSED_DUTY_OFFENCE_SANCTION_ROUTING"
+    },
+    {
+      "id": "PDN-N-R004",
+      "rule": "FAIL_CLOSED_DUTY_OFFENCE_SANCTION_ROUTING"
+    },
+    {
+      "id": "PDN-N-R005",
+      "rule": "FAIL_CLOSED_DUTY_OFFENCE_SANCTION_ROUTING"
+    },
+    {
+      "id": "PDN-N-R006",
+      "rule": "FAIL_CLOSED_DUTY_OFFENCE_SANCTION_ROUTING"
+    },
+    {
+      "id": "PDN-N-R007",
+      "rule": "FAIL_CLOSED_DUTY_OFFENCE_SANCTION_ROUTING"
+    },
+    {
+      "id": "PDN-N-R008",
+      "rule": "FAIL_CLOSED_DUTY_OFFENCE_SANCTION_ROUTING"
+    },
+    {
+      "id": "PDN-N-R009",
+      "rule": "FAIL_CLOSED_DUTY_OFFENCE_SANCTION_ROUTING"
+    },
+    {
+      "id": "PDN-N-R010",
+      "rule": "FAIL_CLOSED_DUTY_OFFENCE_SANCTION_ROUTING"
+    },
+    {
+      "id": "PDN-N-R011",
+      "rule": "FAIL_CLOSED_DUTY_OFFENCE_SANCTION_ROUTING"
+    },
+    {
+      "id": "PDN-N-R012",
+      "rule": "FAIL_CLOSED_DUTY_OFFENCE_SANCTION_ROUTING"
+    },
+    {
+      "id": "PDN-N-R013",
+      "rule": "FAIL_CLOSED_DUTY_OFFENCE_SANCTION_ROUTING"
+    },
+    {
+      "id": "PDN-N-R014",
+      "rule": "FAIL_CLOSED_DUTY_OFFENCE_SANCTION_ROUTING"
+    },
+    {
+      "id": "PDN-N-R015",
+      "rule": "FAIL_CLOSED_DUTY_OFFENCE_SANCTION_ROUTING"
+    },
+    {
+      "id": "PDN-N-R016",
+      "rule": "FAIL_CLOSED_DUTY_OFFENCE_SANCTION_ROUTING"
+    },
+    {
+      "id": "PDN-N-R017",
+      "rule": "FAIL_CLOSED_DUTY_OFFENCE_SANCTION_ROUTING"
+    },
+    {
+      "id": "PDN-N-R018",
+      "rule": "FAIL_CLOSED_DUTY_OFFENCE_SANCTION_ROUTING"
+    },
+    {
+      "id": "PDN-N-R019",
+      "rule": "FAIL_CLOSED_DUTY_OFFENCE_SANCTION_ROUTING"
+    },
+    {
+      "id": "PDN-N-R020",
+      "rule": "FAIL_CLOSED_DUTY_OFFENCE_SANCTION_ROUTING"
+    },
+    {
+      "id": "PDN-N-R021",
+      "rule": "FAIL_CLOSED_DUTY_OFFENCE_SANCTION_ROUTING"
+    },
+    {
+      "id": "PDN-N-R022",
+      "rule": "FAIL_CLOSED_DUTY_OFFENCE_SANCTION_ROUTING"
+    },
+    {
+      "id": "PDN-N-R023",
+      "rule": "FAIL_CLOSED_DUTY_OFFENCE_SANCTION_ROUTING"
+    },
+    {
+      "id": "PDN-N-R024",
+      "rule": "FAIL_CLOSED_DUTY_OFFENCE_SANCTION_ROUTING"
+    },
+    {
+      "id": "PDN-N-R025",
+      "rule": "FAIL_CLOSED_DUTY_OFFENCE_SANCTION_ROUTING"
+    },
+    {
+      "id": "PDN-N-R026",
+      "rule": "FAIL_CLOSED_DUTY_OFFENCE_SANCTION_ROUTING"
+    },
+    {
+      "id": "PDN-N-R027",
+      "rule": "FAIL_CLOSED_DUTY_OFFENCE_SANCTION_ROUTING"
+    },
+    {
+      "id": "PDN-N-R028",
+      "rule": "FAIL_CLOSED_DUTY_OFFENCE_SANCTION_ROUTING"
+    },
+    {
+      "id": "PDN-N-R029",
+      "rule": "FAIL_CLOSED_DUTY_OFFENCE_SANCTION_ROUTING"
+    },
+    {
+      "id": "PDN-N-R030",
+      "rule": "FAIL_CLOSED_DUTY_OFFENCE_SANCTION_ROUTING"
+    },
+    {
+      "id": "PDN-N-R031",
+      "rule": "FAIL_CLOSED_DUTY_OFFENCE_SANCTION_ROUTING"
+    },
+    {
+      "id": "PDN-N-R032",
+      "rule": "FAIL_CLOSED_DUTY_OFFENCE_SANCTION_ROUTING"
+    },
+    {
+      "id": "PDN-N-R033",
+      "rule": "FAIL_CLOSED_DUTY_OFFENCE_SANCTION_ROUTING"
+    },
+    {
+      "id": "PDN-N-R034",
+      "rule": "FAIL_CLOSED_DUTY_OFFENCE_SANCTION_ROUTING"
+    },
+    {
+      "id": "PDN-N-R035",
+      "rule": "FAIL_CLOSED_DUTY_OFFENCE_SANCTION_ROUTING"
+    },
+    {
+      "id": "PDN-N-R036",
+      "rule": "FAIL_CLOSED_DUTY_OFFENCE_SANCTION_ROUTING"
+    },
+    {
+      "id": "PDN-N-R037",
+      "rule": "FAIL_CLOSED_DUTY_OFFENCE_SANCTION_ROUTING"
+    },
+    {
+      "id": "PDN-N-R038",
+      "rule": "FAIL_CLOSED_DUTY_OFFENCE_SANCTION_ROUTING"
+    },
+    {
+      "id": "PDN-N-R039",
+      "rule": "FAIL_CLOSED_DUTY_OFFENCE_SANCTION_ROUTING"
+    },
+    {
+      "id": "PDN-N-R040",
+      "rule": "FAIL_CLOSED_DUTY_OFFENCE_SANCTION_ROUTING"
+    },
+    {
+      "id": "PDN-N-R041",
+      "rule": "FAIL_CLOSED_DUTY_OFFENCE_SANCTION_ROUTING"
+    },
+    {
+      "id": "PDN-N-R042",
+      "rule": "FAIL_CLOSED_DUTY_OFFENCE_SANCTION_ROUTING"
+    },
+    {
+      "id": "PDN-N-R043",
+      "rule": "FAIL_CLOSED_DUTY_OFFENCE_SANCTION_ROUTING"
+    },
+    {
+      "id": "PDN-N-R044",
+      "rule": "FAIL_CLOSED_DUTY_OFFENCE_SANCTION_ROUTING"
+    },
+    {
+      "id": "PDN-N-R045",
+      "rule": "FAIL_CLOSED_DUTY_OFFENCE_SANCTION_ROUTING"
+    },
+    {
+      "id": "PDN-N-R046",
+      "rule": "FAIL_CLOSED_DUTY_OFFENCE_SANCTION_ROUTING"
+    },
+    {
+      "id": "PDN-N-R047",
+      "rule": "FAIL_CLOSED_DUTY_OFFENCE_SANCTION_ROUTING"
+    },
+    {
+      "id": "PDN-N-R048",
+      "rule": "FAIL_CLOSED_DUTY_OFFENCE_SANCTION_ROUTING"
+    },
+    {
+      "id": "PDN-N-R049",
+      "rule": "FAIL_CLOSED_DUTY_OFFENCE_SANCTION_ROUTING"
+    },
+    {
+      "id": "PDN-N-R050",
+      "rule": "FAIL_CLOSED_DUTY_OFFENCE_SANCTION_ROUTING"
+    },
+    {
+      "id": "PDN-N-R051",
+      "rule": "FAIL_CLOSED_DUTY_OFFENCE_SANCTION_ROUTING"
+    },
+    {
+      "id": "PDN-N-R052",
+      "rule": "FAIL_CLOSED_DUTY_OFFENCE_SANCTION_ROUTING"
+    },
+    {
+      "id": "PDN-N-R053",
+      "rule": "FAIL_CLOSED_DUTY_OFFENCE_SANCTION_ROUTING"
+    },
+    {
+      "id": "PDN-N-R054",
+      "rule": "FAIL_CLOSED_DUTY_OFFENCE_SANCTION_ROUTING"
+    },
+    {
+      "id": "PDN-N-R055",
+      "rule": "FAIL_CLOSED_DUTY_OFFENCE_SANCTION_ROUTING"
+    },
+    {
+      "id": "PDN-N-R056",
+      "rule": "FAIL_CLOSED_DUTY_OFFENCE_SANCTION_ROUTING"
+    },
+    {
+      "id": "PDN-N-R057",
+      "rule": "FAIL_CLOSED_DUTY_OFFENCE_SANCTION_ROUTING"
+    },
+    {
+      "id": "PDN-N-R058",
+      "rule": "FAIL_CLOSED_DUTY_OFFENCE_SANCTION_ROUTING"
+    },
+    {
+      "id": "PDN-N-R059",
+      "rule": "FAIL_CLOSED_DUTY_OFFENCE_SANCTION_ROUTING"
+    },
+    {
+      "id": "PDN-N-R060",
+      "rule": "FAIL_CLOSED_DUTY_OFFENCE_SANCTION_ROUTING"
+    },
+    {
+      "id": "PDN-N-R061",
+      "rule": "FAIL_CLOSED_DUTY_OFFENCE_SANCTION_ROUTING"
+    },
+    {
+      "id": "PDN-N-R062",
+      "rule": "FAIL_CLOSED_DUTY_OFFENCE_SANCTION_ROUTING"
+    },
+    {
+      "id": "PDN-N-R063",
+      "rule": "FAIL_CLOSED_DUTY_OFFENCE_SANCTION_ROUTING"
+    },
+    {
+      "id": "PDN-N-R064",
+      "rule": "FAIL_CLOSED_DUTY_OFFENCE_SANCTION_ROUTING"
+    }
+  ],
+  "evidence_nodes": [
+    {
+      "id": "E01",
+      "claim": "applicable version"
+    },
+    {
+      "id": "E02",
+      "claim": "operator identity"
+    },
+    {
+      "id": "E03",
+      "claim": "processing start"
+    },
+    {
+      "id": "E04",
+      "claim": "article 22 exception"
+    },
+    {
+      "id": "E05",
+      "claim": "intent notification payload"
+    },
+    {
+      "id": "E06",
+      "claim": "intent notification receipt"
+    },
+    {
+      "id": "E07",
+      "claim": "incident detection time"
+    },
+    {
+      "id": "E08",
+      "claim": "detection source"
+    },
+    {
+      "id": "E09",
+      "claim": "transfer or access fact"
+    },
+    {
+      "id": "E10",
+      "claim": "unlawful or accidental character"
+    },
+    {
+      "id": "E11",
+      "claim": "rights violation"
+    },
+    {
+      "id": "E12",
+      "claim": "24-hour payload"
+    },
+    {
+      "id": "E13",
+      "claim": "24-hour receipt"
+    },
+    {
+      "id": "E14",
+      "claim": "72-hour investigation"
+    },
+    {
+      "id": "E15",
+      "claim": "72-hour receipt"
+    },
+    {
+      "id": "E16",
+      "claim": "responsible persons if any"
+    },
+    {
+      "id": "E17",
+      "claim": "qualification screening"
+    },
+    {
+      "id": "E18",
+      "claim": "procedural decision"
+    }
+  ]
+}
