@@ -1,0 +1,116 @@
+{
+  "id":"RU-FSTEC-2021-APPENDIX8-ADVERSARY-CAPABILITY-LEVELS-V1",
+  "as_of":"2026-08-31",
+  "status":"VERIFIED_PUBLIC_TEXT_APPENDIX_8_TABLE_8_1_PRIMARY_BYTES_PENDING",
+  "title":"Методика ФСТЭК России от 05.02.2021 — приложение 8, уровни возможностей нарушителей Н1–Н4",
+  "source":{
+    "issuer":"ФСТЭК России","approval_date":"2021-02-05","document":"Методика оценки угроз безопасности информации",
+    "official_page":"https://fstec.ru/dokumenty/vse-dokumenty/spetsialnye-normativnye-dokumenty/metodicheskij-dokument-ot-5-fevralya-2021-g",
+    "official_current_list":"https://fstec.ru/dokumenty/vse-dokumenty/perechni/perechen-normativnykh-pravovykh-aktov-metodicheskikh-dokumentov-i-natsionalnykh-standartov-ot-10-dekabrya-2024-g",
+    "public_text":"https://normativ.kontur.ru/document?documentId=451500&moduleId=1","locator":"приложение 8, таблица 8.1; связь с 5.1.5"
+  },
+  "dimension_basis":["competence","resources and equipment","motivation"],
+  "levels":[
+    {
+      "id":"N1","label":"basic","inherits":null,
+      "characteristics":[
+        {"id":"N1-C01","claim":"uses known vulnerabilities, scripts and tools"},
+        {"id":"N1-C02","claim":"uses publicly distributed tools developed by others with minimal knowledge of operation, delivery, malware execution and exploits"},
+        {"id":"N1-C03","claim":"has basic computer knowledge and user-level skills"},
+        {"id":"N1-C04","claim":"can use physical impact against processing/storage equipment, communication lines or supporting systems when physical access exists"},
+        {"id":"N1-C05","claim":"summary boundary: known threats, known documented vulnerabilities and publicly available tools"}
+      ],
+      "table_type_rows":["individual hacker","software, hardware/software or supporting-system supplier","person supporting systems, networks or supporting systems","authorized user","former employee or user"]
+    },
+    {
+      "id":"N2","label":"enhanced basic","inherits":"N1",
+      "characteristics":[
+        {"id":"N2-C01","claim":"includes all N1 capabilities"},
+        {"id":"N2-C02","claim":"understands and can modify publicly distributed third-party tools to improve effectiveness"},
+        {"id":"N2-C03","claim":"possesses and uses frameworks, toolsets and vulnerability-exploitation tools"},
+        {"id":"N2-C04","claim":"can independently plan and execute threat-realization scenarios"},
+        {"id":"N2-C05","claim":"has practical knowledge of systems, networks, operating systems and software/hardware protection mechanisms"},
+        {"id":"N2-C06","claim":"summary boundary: may target unknown or undocumented vulnerabilities using specially created publicly distributed tools"},
+        {"id":"N2-C07","claim":"does not have the capability to realize threats against physically isolated system/network segments"}
+      ],
+      "table_type_rows":["criminal group acting under a common plan","competing organization","communications or computing service provider","installation, configuration, testing or commissioning contractor","system or security administrator"]
+    },
+    {
+      "id":"N3","label":"medium","inherits":"N2",
+      "characteristics":[
+        {"id":"N3-C01","claim":"includes all N2 capabilities"},
+        {"id":"N3-C02","claim":"can acquire vulnerability information from specialized paid resources"},
+        {"id":"N3-C03","claim":"can acquire costly threat-realization tools from specialized paid resources"},
+        {"id":"N3-C04","claim":"can independently develop and use attack or threat-realization tools"},
+        {"id":"N3-C05","claim":"can obtain software, firmware, telecommunications or other hardware/software for analysis"},
+        {"id":"N3-C06","claim":"has knowledge and practical skills for source-code analysis to identify vulnerabilities"},
+        {"id":"N3-C07","claim":"has advanced systems, networks and operating-system knowledge and deep understanding of protection mechanisms"},
+        {"id":"N3-C08","claim":"can realize threats as part of a group"},
+        {"id":"N3-C09","claim":"summary boundary: can target self-identified unknown vulnerabilities using self-developed tools"},
+        {"id":"N3-C10","claim":"does not have the capability to realize threats against physically isolated system/network segments"}
+      ],
+      "table_type_rows":["terrorist or extremist group","software or hardware/software developer"]
+    },
+    {
+      "id":"N4","label":"high","inherits":"N3",
+      "characteristics":[
+        {"id":"N4-C01","claim":"includes all N3 capabilities"},
+        {"id":"N4-C02","claim":"can obtain relevant source code to identify zero-day vulnerabilities"},
+        {"id":"N4-C03","claim":"can introduce software or hardware/software implants or vulnerabilities at supply stages"},
+        {"id":"N4-C04","claim":"can create threat methods and means with specialized scientific organizations and use specially developed covert-penetration means"},
+        {"id":"N4-C05","claim":"can involve specialists with N2, N3 or N4 capabilities"},
+        {"id":"N4-C06","claim":"can create and use special technical means involving physical fields or phenomena"},
+        {"id":"N4-C07","claim":"can realize threats over a long period without being noticed by operators"},
+        {"id":"N4-C08","claim":"has exceptional knowledge and practical skills plus awareness of concrete protection mechanisms in the target"},
+        {"id":"N4-C09","claim":"summary boundary: practically unlimited capability, including undeclared capabilities and embedded software or hardware/software implants"}
+      ],
+      "table_type_rows":["foreign intelligence service"]
+    }
+  ],
+  "inheritance_edges":[{"from":"N1","to":"N2"},{"from":"N2","to":"N3"},{"from":"N3","to":"N4"}],
+  "assignment_gate":{
+    "required_inputs":["candidate violator and system-specific goal","evidence for competence","evidence for resources/equipment","evidence for motivation","actual access conditions and interfaces","scenario and realization-method requirements"],
+    "characteristic_states":["EVIDENCED","NOT_EVIDENCED","UNKNOWN","NOT_APPLICABLE_WITH_RATIONALE"],
+    "decision_states":["CANDIDATE","EVIDENCE_PENDING","LEVEL_ASSIGNED_WITH_RATIONALE","MULTIPLE_LEVELS_RELEVANT","COLLUSION_REASSESSMENT","REASSESSMENT_REQUIRED"],
+    "decision_rule":"Record the chosen level and rationale against the three dimensions and relevant table characteristics; do not compute an invented score or require an invented numeric threshold.",
+    "multiple_levels":"Section 5.1.5 permits different capability levels to be relevant for one system or network.",
+    "collusion":"When a collusion assumption is accepted, goals and capability levels are combined and the resulting capability must be reassessed and documented."
+  },
+  "interpretation_boundaries":{
+    "table_type_rows_are_not_sufficient_evidence":"The violator-type column is preserved literally but does not replace the system-specific assessment required by 5.1.4-5.1.6.",
+    "inheritance_is_not_auto_assignment":"An inheritance edge describes capability inclusion after a level is supported; it does not promote a candidate automatically.",
+    "isolated_segment_claim_is_literal":"The N2 and N3 limitation is retained as displayed; no unstated technical exception is invented.",
+    "practically_unlimited_is_not_absolute":"The N4 summary is retained as the Method's category description and is not treated as proof of every imaginable capability in every context.",
+    "unknown_is_not_no":"Missing evidence remains UNKNOWN and does not become NOT_EVIDENCED or a lower level by default."
+  },
+  "red_team_attacks":[
+    {"id":"RT01","attack":"assign N-level solely from violator name","blocked":true},
+    {"id":"RT02","attack":"convert the table type column into an exhaustive taxonomy","blocked":true},
+    {"id":"RT03","attack":"use an invented numeric score or weight","blocked":true},
+    {"id":"RT04","attack":"invent a minimum percentage of matched characteristics","blocked":true},
+    {"id":"RT05","attack":"treat UNKNOWN as absence of capability","blocked":true},
+    {"id":"RT06","attack":"promote N1 to N2 because a public tool exists","blocked":true},
+    {"id":"RT07","attack":"promote N2 to N3 because a group has multiple members","blocked":true},
+    {"id":"RT08","attack":"promote N3 to N4 from presumed state affiliation without evidence","blocked":true},
+    {"id":"RT09","attack":"read N4 practically unlimited as literally omnipotent","blocked":true},
+    {"id":"RT10","attack":"ignore the N2/N3 physically isolated segment limitation","blocked":true},
+    {"id":"RT11","attack":"combine colluding parties without documenting the assumption and evidence","blocked":true},
+    {"id":"RT12","attack":"reuse a capability assessment after architecture/access conditions changed","blocked":true}
+  ],
+  "evidence_artifacts":["document identity record","appendix 8 locator record","candidate violator record","system-specific goal record","negative-consequence link","competence evidence","resource/equipment evidence","motivation evidence","physical-access evidence","logical-access and interface evidence","tool provenance and availability evidence","scenario-planning evidence","vulnerability-research evidence","software or firmware analysis evidence","group or specialist-support evidence","collusion assumption and combined-capability record","level decision and rationale","reassessment/version history"],
+  "boundaries":{"no_type_only_assignment":true,"no_exhaustive_type_taxonomy":true,"no_numeric_score_invented":true,"no_weight_invented":true,"no_threshold_invented":true,"no_unknown_to_absent_promotion":true,"no_public_tool_auto_promotion":true,"no_group_size_auto_promotion":true,"no_affiliation_auto_n4":true,"no_literal_omnipotence_claim":true,"no_isolation_limit_suppression":true,"no_undocumented_collusion_combination":true,"no_stale_assessment_reuse":true,"public_text_is_secondary_access_route":true,"immutable_official_normative_bytes_pending":true,"independent_expert_review_pending":true},
+  "counts":{"levels":4,"dimension_basis":3,"characteristics":31,"characteristics_by_level":{"N1":5,"N2":7,"N3":10,"N4":9},"inheritance_edges":3,"table_type_rows":13,"required_inputs":6,"characteristic_states":4,"decision_states":6,"red_team_attacks":12,"red_team_attacks_blocked":12,"evidence_artifacts":18,"evidence_nodes":18,"control_rules":64,"regression_cases":64},
+  "control_rules":[
+    {"id":"FCA-R001","rule":"PIN_FSTEC_2021_IDENTITY"},{"id":"FCA-R002","rule":"PIN_APPENDIX_EIGHT_TABLE_8_1"},{"id":"FCA-R003","rule":"KEEP_OFFICIAL_ROUTE"},{"id":"FCA-R004","rule":"KEEP_PRIMARY_BYTES_PENDING"},{"id":"FCA-R005","rule":"KEEP_PUBLIC_TEXT_SECONDARY"},{"id":"FCA-R006","rule":"KEEP_EXPERT_REVIEW_PENDING"},{"id":"FCA-R007","rule":"PRESERVE_THREE_DIMENSION_BASIS"},{"id":"FCA-R008","rule":"PRESERVE_FOUR_LEVELS"},
+    {"id":"FCA-R009","rule":"PRESERVE_N1_LABEL"},{"id":"FCA-R010","rule":"PRESERVE_N2_LABEL"},{"id":"FCA-R011","rule":"PRESERVE_N3_LABEL"},{"id":"FCA-R012","rule":"PRESERVE_N4_LABEL"},{"id":"FCA-R013","rule":"PRESERVE_N1_FIVE_CHARACTERISTICS"},{"id":"FCA-R014","rule":"PRESERVE_N2_SEVEN_CHARACTERISTICS"},{"id":"FCA-R015","rule":"PRESERVE_N3_TEN_CHARACTERISTICS"},{"id":"FCA-R016","rule":"PRESERVE_N4_NINE_CHARACTERISTICS"},
+    {"id":"FCA-R017","rule":"N2_INHERITS_N1"},{"id":"FCA-R018","rule":"N3_INHERITS_N2"},{"id":"FCA-R019","rule":"N4_INHERITS_N3"},{"id":"FCA-R020","rule":"INHERITANCE_NOT_AUTO_ASSIGNMENT"},{"id":"FCA-R021","rule":"PRESERVE_N1_KNOWN_VULNERABILITY_BOUNDARY"},{"id":"FCA-R022","rule":"PRESERVE_N1_PUBLIC_TOOL_BOUNDARY"},{"id":"FCA-R023","rule":"PRESERVE_N1_PHYSICAL_ACCESS_CONDITION"},{"id":"FCA-R024","rule":"PRESERVE_N2_TOOL_MODIFICATION_CAPABILITY"},
+    {"id":"FCA-R025","rule":"PRESERVE_N2_FRAMEWORK_CAPABILITY"},{"id":"FCA-R026","rule":"PRESERVE_N2_SCENARIO_PLANNING"},{"id":"FCA-R027","rule":"PRESERVE_N2_ISOLATION_LIMIT"},{"id":"FCA-R028","rule":"PRESERVE_N3_PAID_VULNERABILITY_ACCESS"},{"id":"FCA-R029","rule":"PRESERVE_N3_COSTLY_TOOL_ACCESS"},{"id":"FCA-R030","rule":"PRESERVE_N3_SELF_DEVELOPED_TOOLS"},{"id":"FCA-R031","rule":"PRESERVE_N3_CODE_ANALYSIS"},{"id":"FCA-R032","rule":"PRESERVE_N3_GROUP_CAPABILITY"},
+    {"id":"FCA-R033","rule":"PRESERVE_N3_ISOLATION_LIMIT"},{"id":"FCA-R034","rule":"PRESERVE_N4_SOURCE_ACCESS_ZERO_DAY"},{"id":"FCA-R035","rule":"PRESERVE_N4_SUPPLY_IMPLANT_CAPABILITY"},{"id":"FCA-R036","rule":"PRESERVE_N4_SCIENTIFIC_SUPPORT"},{"id":"FCA-R037","rule":"PRESERVE_N4_SPECIAL_PHYSICAL_MEANS"},{"id":"FCA-R038","rule":"PRESERVE_N4_LONG_TERM_STEALTH"},{"id":"FCA-R039","rule":"PRESERVE_N4_TARGET_AWARENESS"},{"id":"FCA-R040","rule":"N4_PRACTICALLY_UNLIMITED_NOT_LITERAL_OMNIPOTENCE"},
+    {"id":"FCA-R041","rule":"PRESERVE_THIRTEEN_TABLE_TYPE_ROWS"},{"id":"FCA-R042","rule":"TYPE_ROW_NOT_SUFFICIENT_EVIDENCE"},{"id":"FCA-R043","rule":"REQUIRE_SYSTEM_SPECIFIC_GOAL"},{"id":"FCA-R044","rule":"REQUIRE_COMPETENCE_EVIDENCE"},{"id":"FCA-R045","rule":"REQUIRE_RESOURCE_EVIDENCE"},{"id":"FCA-R046","rule":"REQUIRE_MOTIVATION_EVIDENCE"},{"id":"FCA-R047","rule":"REQUIRE_ACCESS_INTERFACE_EVIDENCE"},{"id":"FCA-R048","rule":"REQUIRE_SCENARIO_METHOD_CONTEXT"},
+    {"id":"FCA-R049","rule":"USE_FOUR_CHARACTERISTIC_STATES"},{"id":"FCA-R050","rule":"UNKNOWN_NOT_ABSENT"},{"id":"FCA-R051","rule":"NOT_APPLICABLE_REQUIRES_RATIONALE"},{"id":"FCA-R052","rule":"USE_SIX_DECISION_STATES"},{"id":"FCA-R053","rule":"LEVEL_DECISION_REQUIRES_RATIONALE"},{"id":"FCA-R054","rule":"ALLOW_MULTIPLE_RELEVANT_LEVELS"},{"id":"FCA-R055","rule":"COLLUSION_REQUIRES_REASSESSMENT"},{"id":"FCA-R056","rule":"COMBINE_GOALS_AND_CAPABILITIES_ONLY_WITH_DOCUMENTED_ASSUMPTION"},
+    {"id":"FCA-R057","rule":"DO_NOT_INVENT_SCORE"},{"id":"FCA-R058","rule":"DO_NOT_INVENT_WEIGHT"},{"id":"FCA-R059","rule":"DO_NOT_INVENT_THRESHOLD"},{"id":"FCA-R060","rule":"TRIGGER_REASSESSMENT_ON_CONTEXT_CHANGE"},{"id":"FCA-R061","rule":"BLOCK_ALL_TWELVE_RED_TEAM_ATTACKS"},{"id":"FCA-R062","rule":"REQUIRE_EIGHTEEN_EVIDENCE_ARTIFACTS"},{"id":"FCA-R063","rule":"PRESERVE_THIRTY_ONE_CHARACTERISTICS"},{"id":"FCA-R064","rule":"PASS_ONLY_APPENDIX_EIGHT_SCOPE"}
+  ],
+  "evidence_nodes":[
+    {"id":"E01","claim":"OFFICIAL_DOCUMENT_IDENTITY","source":"official_page"},{"id":"E02","claim":"CURRENT_LIST_ROUTE","source":"official_current_list"},{"id":"E03","claim":"THREE_DIMENSION_BASIS","locator":"5.1.5"},{"id":"E04","claim":"FOUR_LEVELS","locator":"5.1.5"},{"id":"E05","claim":"APPENDIX_EIGHT_TABLE_SCHEMA","locator":"table 8.1 header"},{"id":"E06","claim":"N1_CHARACTERISTICS","locator":"table 8.1 N1"},{"id":"E07","claim":"N1_TYPE_ROWS","locator":"table 8.1 N1"},{"id":"E08","claim":"N2_INHERITANCE","locator":"table 8.1 N2"},{"id":"E09","claim":"N2_CHARACTERISTICS","locator":"table 8.1 N2"},{"id":"E10","claim":"N2_TYPE_ROWS","locator":"table 8.1 N2"},{"id":"E11","claim":"N3_INHERITANCE","locator":"table 8.1 N3"},{"id":"E12","claim":"N3_CHARACTERISTICS","locator":"table 8.1 N3"},{"id":"E13","claim":"N3_TYPE_ROWS","locator":"table 8.1 N3"},{"id":"E14","claim":"N4_INHERITANCE","locator":"table 8.1 N4"},{"id":"E15","claim":"N4_CHARACTERISTICS","locator":"table 8.1 N4"},{"id":"E16","claim":"N4_TYPE_ROWS","locator":"table 8.1 N4"},{"id":"E17","claim":"MULTIPLE_LEVELS_PER_SYSTEM","locator":"5.1.5"},{"id":"E18","claim":"COLLUSION_COMBINATION_RULE","locator":"appendix 6 note after table 6.1"}
+  ]
+}
