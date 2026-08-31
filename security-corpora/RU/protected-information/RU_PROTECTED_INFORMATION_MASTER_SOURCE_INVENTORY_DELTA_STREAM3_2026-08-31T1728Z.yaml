@@ -1,0 +1,65 @@
+schema_version: "1.0"
+id: RU-PROTECTED-INFORMATION-MASTER-DELTA-STREAM3-2026-08-31T1728Z
+kind: master_inventory_delta
+stream: 3
+checked_at: "2026-08-31T20:28:41+03:00"
+
+source_delta:
+  - id: SEC-SRC-RU-PP-408-2024
+    action: ADD_PRIMARY_PUBLICATION_VERIFIED_EXACT_CAPTURE_PENDING
+    canonical_record: "source/SEC-SRC-RU-PP-408-2024.yaml"
+    capture_manifest: "manifests/SEC-SRC-RU-PP-408-2024-capture-pending.json"
+    sectors:
+      - biometrics
+      - personal_data
+      - identity_authentication
+      - public_digital_infrastructure
+    proof_state: PRIMARY_PUBLICATION_METADATA_VERIFIED_CURRENT_ORIGINAL_EDITION_CROSSCHECKED_EXACT_BYTES_PENDING
+    primary_publication_verified: true
+    official_publication_id: "0001202404050032"
+    downloaded_exact: false
+    immutable: false
+
+counter_delta_this_pass:
+  found: 1
+  downloaded: 0
+  immutable: 0
+  pending: 1
+  reused: 0
+  primary_publication_verified: 1
+
+capture_ledger_reconciliation:
+  authoritative_file: "SECTOR_ACQUISITION_RUN.json"
+  identity_scope: "existing exact-acquisition target set keyed by document.official_publication_id"
+  current_targets_with_official_publication_id: 22
+  current_raw_downloaded_exact: 22
+  current_immutable_sha256_verified: 22
+  current_pending_inside_that_capture_scope: 0
+  changed_this_pass: false
+  note: >-
+    SEC-SRC-RU-PP-408-2024 is registered in the discovery/master overlay with official publication identity
+    0001202404050032, but exact acquisition failed transiently and the existing narrow acquisition run file was not
+    rewritten or inflated. Discovery pending and the 22/22/22/0 acquisition-run counters are different scopes.
+
+relationships_added:
+  - "SEC-SRC-RU-FZ-572-2022 -> direct subordinate biometric-type scope"
+  - "152-ФЗ article 11 -> guarded biometric-PDN overlap"
+
+scope_findings:
+  - "PP 408 lists face image obtained with photo/video devices and voice recording obtained with sound-recording devices for the scope of 572-FZ."
+  - "The act is effective from 2024-09-01 and scheduled to operate until 2027-09-01."
+  - "No universal numeric personal-data retention period is established by this act."
+
+guards:
+  - "PP408_572_SCOPE_IS_NOT_EXHAUSTIVE_152FZ_ART11_BIOMETRIC_UNIVERSE"
+  - "REGULATORY_EXPIRY_IS_NOT_PDN_RETENTION"
+  - "NO_AUTOMATIC_SECTOR_APPLICABILITY_PROMOTION"
+  - "NO_MIME_BYTE_LENGTH_SHA256_WITHOUT_EXACT_BYTES"
+
+quality_gates:
+  taxonomy_seed_used_as_proof: false
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+  fabricated_binary_metadata: false
+  universal_retention_inferred: false
+  exact_capture_required_before_immutable: true
