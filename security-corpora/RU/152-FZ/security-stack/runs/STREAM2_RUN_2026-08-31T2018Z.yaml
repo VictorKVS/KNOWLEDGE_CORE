@@ -1,0 +1,81 @@
+schema_version: "1.0"
+id: STREAM2-RUN-2026-08-31T2018Z
+kind: pdn-security-stack-regulatory-acquisition-check
+status: PARTIAL_TRANSPORT_BLOCKED
+checked_at: "2026-08-31T20:18:03Z"
+jurisdiction: RU
+domain: personal_data_security
+
+scope:
+  - SEC-SRC-RU-PP1119-2012
+  - SEC-SRC-RU-FSTEC21-2013
+  - SEC-SRC-RU-FSB378-2014
+  - SEC-SRC-RU-FSB66-2005
+  - SEC-SRC-RU-FSB173-2010
+  - SEC-SRC-RU-FAPSI152-2001
+  - SEC-SRC-RU-FSTEC205-2025
+  - fstec_methodological_attachments
+
+fresh_checks:
+  fstec21_replacement:
+    project_id: "169583"
+    result: PRIMARY_ENACTMENT_GATE_NOT_PASSED
+    checked_at: "2026-08-31T20:18:03Z"
+    active_baseline: "SEC-SRC-RU-FSTEC21-2013 revision 2020-05-14"
+    note: >-
+      Targeted same-day checks immediately before the project's proposed 01.09.2026 effective date did not
+      surface a final order identity, Minjust registration and official publication. Current indexed materials
+      still identify 169583 as a project. Do not activate draft requirements from the proposed date alone.
+    monitoring_evidence:
+      - "https://cisoclub.ru/prikaz-fstek-21/"
+      - "https://kodeks.ru/news/read/mery-po-zashhite-ispdn"
+  pp1119_primary_bytes:
+    source_url: "https://government.ru/media/2012/11/3/53354/file/1119_pril.doc"
+    result: ACQUISITION_ENV_DNS_RESOLUTION_FAILURE
+    attempted_at: "2026-08-31T20:18:03Z"
+    immutable_promoted: false
+    rule: "Do not substitute a secondary legal-database copy for the registered Government DOC target."
+  fsb378_primary_bytes:
+    source_url: "https://rg.ru/documents/2014/09/17/zashita-dok.html"
+    result: OFFICIAL_RG_ARCHIVE_HTTP_401
+    attempted_at: "2026-08-31T20:18:03Z"
+    immutable_promoted: false
+    applicability: ISPDN_WHEN_SKZI_USED
+  adjacent_regime_guard:
+    result: PRESERVED
+    rule: >-
+      Licensing, certification, attestation, KII and GosSOPKA/NKTsKI requirements stay outside the general
+      ISPDN baseline unless a separate applicability edge is evidenced; GosSOPKA/NKTsKI is routed into this
+      stream only for a proven personal-data computer-incident connection.
+
+accepted_repository_baseline:
+  acquisition_run_finished_at: "2026-08-31T11:34:04.352134Z"
+  sources_registered: 55
+  targets_total: 47
+  immutable_total: 24
+  pending_after_run: 31
+  unresolved_exact_routes: 8
+  new_immutable_in_this_manual_check: 0
+  conflicts_confirmed: 0
+
+proof_floor:
+  required_for_immutable:
+    - official_source_url
+    - retrieved_at
+    - verified_mime_or_signature
+    - exact_byte_length
+    - sha256
+    - immutable_artifact
+    - manifest
+  fail_closed: true
+
+next_byte_targets:
+  - SEC-SRC-RU-PP1119-2012
+  - SEC-SRC-RU-FSB378-2014
+  - SEC-SRC-RU-FSB66-2005
+  - SEC-SRC-RU-FSB173-2010
+  - SEC-SRC-RU-FAPSI152-2001
+  - SEC-SRC-RU-FSTEC205-2025
+  - remaining_exact_fstec_methodological_attachments
+
+trigger_intent: PUSH_FAST_BOUNDED_ACQUISITION
