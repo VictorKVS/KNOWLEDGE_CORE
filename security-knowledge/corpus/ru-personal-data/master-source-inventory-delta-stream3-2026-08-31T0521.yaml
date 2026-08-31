@@ -1,0 +1,127 @@
+schema_version: "1.0"
+stream: 3
+checked_at: "2026-08-31T05:21:37+03:00"
+mode: APPEND_ONLY_PDN_SECTOR_OVERLAY_RECONCILIATION
+source_id: SEC-SRC-RU-FZ-20-2003
+source_title: "Федеральный закон от 10.01.2003 № 20-ФЗ — ГАС «Выборы»: ПДн, конфиденциальность, доступ и безопасность"
+source_action: NEW_CANONICAL_SOURCE_NODE
+
+pdn_overlap:
+  status: DIRECT_EXPLICIT_PERSONAL_DATA_AND_INFORMATION_SECURITY_OVERLAP
+  direct_anchors:
+    - "Статья 16 прямо включает персональные данные в состав информационных ресурсов ГАС «Выборы»."
+    - "Статья 17 пункт 2 требует конфиденциального формирования, хранения и использования ресурсов, содержащих ПДн."
+    - "Статья 18 определяет категории лиц, имеющих доступ к ПДн, и право гражданина запрашивать собственные ПДн."
+    - "Статья 21 устанавливает комплекс организационных и технических мер защиты информации."
+    - "Статья 24 связывает доступ к ПДн с ответственностью за нарушение режима защиты, обработки и использования."
+  lawful_basis_statement: "20-ФЗ задает специальный системный и избирательный режим ГАС «Выборы»; он не является универсальным основанием обработки тех же ПДн за пределами установленных законом/НПА ЦИК задач и ролей."
+
+person_level_layers:
+  gas_resource_person_categories:
+    locator: "статья 16 пункт 1"
+    categories:
+      - "избиратели"
+      - "участники референдума"
+      - "выдвинутые и зарегистрированные кандидаты"
+      - "избранные кандидаты"
+      - "доверенные лица"
+      - "уполномоченные представители"
+      - "члены избирательных комиссий и комиссий референдума"
+    field_rule: "конкретные перечни персональных данных устанавливаются федеральными законами"
+    guard: "PERSON_CATEGORY_LIST_NOT_UNLIMITED_FIELD_AUTHORIZATION"
+  confidentiality_and_storage:
+    locator: "статья 17 пункт 2"
+    rule: "ПДн-ресурсы являются федеральными информационными ресурсами и формируются, хранятся и используются в условиях конфиденциальности"
+    guards:
+      - "CONFIDENTIALITY_NOT_NEW_SECRET_CATEGORY"
+      - "SYSTEM_STORAGE_RULE_NOT_GENERAL_PDN_RETENTION_PERIOD"
+  access_control:
+    locator: "статья 18 пункт 1"
+    rule: "доступ только для установленных ролей при необходимости исполнения обязанностей, самого гражданина в отношении собственных ПДн и должностных лиц при прямом федеральном основании"
+    guard: "ROLE_ACCESS_NOT_OPEN_SECONDARY_USE"
+
+security_nodes:
+  - locator: "статья 21 пункт 1"
+    rule: "организационные и технические меры защиты плюс контроль за использованием ГАС"
+  - locator: "статья 21 пункт 2"
+    controls:
+      - "сертификация ГАС и средств защиты"
+      - "сертифицированные специальные программные/технические средства и средства связи"
+      - "исключение несанкционированного доступа"
+      - "обеспечение подлинности и целостности информации"
+      - "защита информации при передаче по сетям связи"
+      - "проверка готовности ГАС перед выборами/референдумом"
+      - "утвержденная эксплуатационная документация"
+      - "сохранность и работоспособность комплексов средств автоматизации"
+      - "подготовка работников"
+      - "ответственность за нарушения правил использования и эксплуатации"
+    guard: "SECTOR_SYSTEM_SECURITY_BASELINE_NOT_AUTOMATIC_152_FZ_UNIVERSAL_CONTROL_SET"
+  - locator: "статья 24 пункт 2"
+    rule: "лица с доступом к ресурсам, включая ПДн, отвечают за нарушение режима защиты, обработки и порядка использования"
+    guard: "LIABILITY_RULE_NOT_PROCESSING_PURPOSE"
+
+secondary_use_and_networks:
+  - locator: "статья 20"
+    finding: "неизбирательные задачи требуют федерального закона/НПА ЦИК и соблюдения условий достоверности, целостности и приоритета избирательных функций"
+    guard: "NON_ELECTION_REPURPOSING_REQUIRES_SEPARATE_LEGAL_ROUTE"
+  - locator: "статья 22"
+    finding: "обмен может использовать сети связи общего пользования, ведомственные и иные сети"
+    guard: "NETWORK_USE_NOT_AUTOMATIC_TELECOM_SECRET_FOR_ALL_GAS_DATA"
+
+retention_nodes:
+  - locator: "статья 17"
+    rule: "закон регулирует хранение информационных ресурсов через системный/уровневый порядок, но не устанавливает один числовой срок хранения всех ПДн ГАС"
+    guard: "NO_NUMERIC_GENERAL_RETENTION_INFERRED"
+  - locator: "связь с 67-ФЗ статьей 70"
+    rule: "минимальный срок для отдельных избирательных документов из 67-ФЗ не переносится на весь массив ГАС «Выборы»"
+    guard: "VOTER_LIST_RETENTION_NOT_GAS_RESOURCE_RETENTION"
+
+cross_regime_edges:
+  - target: "SEC-SRC-RU-FZ-67-2002"
+    status: DIRECT
+    basis: "67-ФЗ определяет регистрационные/списочные данные и использование ГАС; 20-ФЗ задает режим самой системы"
+  - target: "152-ФЗ"
+    status: DIRECT
+    basis: "explicit PDN resources, confidentiality, access, processing/security"
+  - target: "149-ФЗ"
+    status: DIRECT_SYSTEM_OVERLAP
+    basis: "state information resources and information protection"
+  - target: "126-ФЗ"
+    status: CONDITIONAL_NETWORK_OVERLAP
+    basis: "article 22 communications networks; telecom secrecy requires separate qualifying facts"
+  - target: "63-ФЗ"
+    status: CONDITIONAL_DOCUMENT_WORKFLOW_OVERLAP
+    basis: "electronic-signature legal basis and CEC workflow act matching required"
+  - target: "SEC-SRC-RU-FZ-125-2004"
+    status: CONDITIONAL_RECORD_SERIES_MATCH
+    basis: "archive/storage lifecycle must be proven by specific CEC/electoral record-series rule"
+
+version_and_effective_date:
+  current_revision: "2025-05-23"
+  checked_as_of: "2026-08-31"
+  latest_amendment: "Федеральный закон от 23.05.2025 № 115-ФЗ"
+  latest_amendment_affects_access_roles: true
+  later_amendment_located_in_this_sweep: false
+  full_primary_locator_chain_claimed_complete: false
+
+capture:
+  exact_capture_state: PENDING_EXACT_CAPTURE
+  official_sector_copy_target: "https://tik2.spbik.spb.ru/tik/2/%D0%9E%20%D0%93%D0%BE%D1%81%D1%83%D0%B4%D0%B0%D1%80%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D0%BE%D0%B9%20%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D0%B9%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%B5.pdf"
+  latest_amendment_official_publication_medium: "https://rg.ru/documents/2025/05/29/fz115-dok.html"
+  exact_binary_attempt: "2026-08-31T05:21:37+03:00 / transient DNS resolution failure for official targets"
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+
+quality_gates:
+  applicability_promotions: 0
+  general_lawful_basis_inferred: false
+  general_pdn_retention_inferred: false
+  confidentiality_misclassified_as_new_secret: false
+  voter_status_misclassified_as_special_category: false
+  telecom_secret_generalized_from_network_use: false
+  non_election_use_generalized: false
+  fabricated_binary_metadata: false
+  duplicate_source_created: false
