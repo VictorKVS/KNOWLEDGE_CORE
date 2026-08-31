@@ -1,0 +1,64 @@
+schema_version: "1.0"
+id: PDN-MASTER-SOURCE-INVENTORY-DELTA-STREAM3-2026-08-31T1728Z
+kind: pdn_master_inventory_sector_overlay_delta
+stream: 3
+checked_at: "2026-08-31T20:28:41+03:00"
+
+source_overlay:
+  id: SEC-SRC-RU-PP-408-2024
+  document: "Постановление Правительства РФ от 01.04.2024 № 408 о видах биометрических персональных данных, на которые распространяется действие 572-ФЗ"
+  role: biometric_pdn_572_scope_definition_with_152fZ_article11_overlap_guard
+  canonical_record: "../protected-information/source/SEC-SRC-RU-PP-408-2024.yaml"
+  metadata_status: PRIMARY_PUBLICATION_VERIFIED_CURRENT_ORIGINAL_EDITION_CROSSCHECKED
+  official_publication_id: "0001202404050032"
+  raw_capture: PENDING
+  verified_for_exact_extraction: false
+  applicability: DIRECT_572_SCOPE_ONLY_152FZ_ART11_REQUIRES_SEPARATE_RULE_MATCH
+
+pdn_anchors:
+  - locator: "пункт 1"
+    rule: "изображение лица человека, полученное с помощью фото-, видео-устройств"
+    scope: "вид биометрических персональных данных для действия 572-ФЗ"
+  - locator: "пункт 1"
+    rule: "запись голоса человека, полученная с помощью звукозаписывающих устройств"
+    scope: "вид биометрических персональных данных для действия 572-ФЗ"
+  - locator: "пункт 2"
+    rule: "действует с 01.09.2024 до 01.09.2027"
+    scope: "срок действия нормативного акта, не retention ПДн"
+
+relations:
+  - target: "SEC-SRC-RU-FZ-572-2022"
+    type: DIRECT_SUBORDINATE_SCOPE_DEFINITION
+  - target: "152-ФЗ статья 11"
+    type: GUARDED_BIOMETRIC_PDN_OVERLAP
+    guard: >-
+      Два вида из ПП № 408 относятся к специальной сфере 572-ФЗ. Их нельзя использовать как исчерпывающий перечень
+      всех биометрических персональных данных по статье 11 152-ФЗ; для иных характеристик и сценариев квалификация
+      зависит от первичного правового основания, цели и способа обработки.
+
+retention_guard: >-
+  ПП № 408 не устанавливает универсального числового срока хранения биометрических персональных данных.
+  Дата 01.09.2027 является датой прекращения действия постановления, а не retention-rule для персональных данных.
+
+counter_delta_this_pass:
+  sector_overlay_found: 1
+  primary_publication_verified: 1
+  downloaded: 0
+  immutable: 0
+  pending_primary_exact_capture: 1
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+
+master_counter_policy:
+  core_pdn_production_counters_changed: false
+  reason: >-
+    PDN_MASTER_SOURCE_INVENTORY production counters track the direct PDN root/dependency corpus. PP № 408 is registered
+    as a sector/special-regime overlay with a direct relation to existing 572-ФЗ. It must not inflate core exact/immutable
+    counters before successful official byte capture and explicit merge policy.
+
+proof_guards:
+  - "TAXONOMY_SEED_NOT_LEGAL_PROOF"
+  - "PP408_572_SCOPE_NOT_EXHAUSTIVE_ART11_DEFINITION"
+  - "REGULATORY_EXPIRY_NOT_RETENTION"
+  - "NO_APPLICABILITY_PROMOTION_WITHOUT_PRIMARY_RULE_MATCH"
+  - "NO_FABRICATED_MIME_BYTE_LENGTH_OR_SHA256"
