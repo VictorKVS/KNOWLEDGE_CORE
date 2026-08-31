@@ -1,0 +1,60 @@
+schema_version: "1.0"
+stream: 3
+run_at: "2026-08-31T08:28:46+03:00"
+master: RU_PERSONAL_DATA
+operation: APPEND_ONLY_OVERLAY
+
+source:
+  id: SEC-SRC-RU-CEC-49-463-4-2003
+  act: "Постановление ЦИК России от 03.11.2003 № 49/463-4"
+  overlay_role: SECTOR_SPECIFIC_PDN_ACCESS_AND_CONFIDENTIALITY_RULE
+  current_edition_date_crosschecked: "2025-07-30"
+  latest_primary_amendment_verified: "Постановление ЦИК России от 30.07.2025 № 206/1591-8"
+  exact_full_act_capture: PENDING
+
+pdn_findings:
+  - "Act defines a concrete restricted-access PDN set in GAS Vybory, including identity, birth, address and identity-document data, while leaving additional fields to federal-law authority."
+  - "Access is role/list/matrix controlled and technically administered; role membership does not create a new collection purpose or lawful basis."
+  - "Disclosure to public officials is tied to a written request citing a specific federal-law authority, data subject, requested volume and official purpose."
+  - "User confidentiality and anti-leak duties are explicit but do not create a new standalone statutory secret category."
+  - "20/30-day official-request routing periods are operational access SLAs, not PDN-subject response periods and not retention."
+  - "No universal numeric retention period for all GAS Vybory PDN was located in this act."
+
+protected_information_overlap:
+  - "passwords and cryptographic keys"
+  - "security perimeters and access-control tables"
+  - "information on functioning and security procedures of protection means"
+  guard: "CEC classification as other confidential information is preserved as source wording and is not generalized into a new federal secret category."
+
+relationships:
+  - target: SEC-SRC-RU-FZ-20-2003
+    type: DIRECT_IMPLEMENTING_RULE
+  - target: SEC-SRC-RU-FZ-67-2002
+    type: ELECTORAL_REGISTER_CONTEXT
+  - target: 152-ФЗ
+    type: DIRECT_PDN_OVERLAP
+  - target: 149-ФЗ
+    type: INFORMATION_PROTECTION_OVERLAP
+
+retention_guards:
+  - "NO_GENERAL_PDN_RETENTION_IN_49_463_4"
+  - "67_FZ_VOTER_DOCUMENT_RETENTION_NOT_GENERALIZED_TO_ALL_GAS_RESOURCES"
+  - "ARCHIVAL_AND_BACKUP_LIFECYCLE_REQUIRES_SEPARATE_PRIMARY_RULE"
+
+applicability_promotions: 0
+legal_conflicts_declared: 0
+
+acquisition:
+  official_latest_amendment_pdf_url: "https://www.rcoit.ru/upload/iblock/d38/2ig80ppsnuwv2xjmpfw4y8wivxf0jk5g/vestnik_7_2025.pdf"
+  exact_bytes_obtained: false
+  downloaded_counter_increment: 0
+  immutable_counter_increment: 0
+  pending_counter_increment: 1
+
+quality_gates:
+  taxonomy_as_evidence: false
+  generic_pdn_basis_inferred: false
+  generic_interagency_access_inferred: false
+  new_secret_category_inferred: false
+  generic_retention_inferred: false
+  fabricated_binary_metadata: false
