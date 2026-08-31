@@ -1,0 +1,95 @@
+schema_version: "1.0"
+id: RU-PROTECTED-INFORMATION-MASTER-DELTA-STREAM3-2026-08-31T2025Z
+kind: master_inventory_delta
+stream: 3
+checked_at: "2026-08-31T23:25:50+03:00"
+
+source_delta:
+  - id: SEC-SRC-RU-MINTSIFRY-ORDER-453-2023
+    action: ADD_PRIMARY_PUBLICATION_VERIFIED_CURRENT_EDITION_CROSSCHECKED_EXACT_CAPTURE_PENDING
+    canonical_record: "source/SEC-SRC-RU-MINTSIFRY-ORDER-453-2023.yaml"
+    capture_manifest: "manifests/SEC-SRC-RU-MINTSIFRY-ORDER-453-2023-capture-pending.json"
+    sectors:
+      - biometrics
+      - personal_data
+      - identity_authentication
+      - public_digital_infrastructure
+      - finance_overlap
+    proof_state: PRIMARY_PUBLICATION_LOCATOR_VERIFIED_CURRENT_EDITION_2025_06_19_CROSSCHECKED_EXACT_BYTES_PENDING
+    primary_publication_verified: true
+    official_publication_id: "0001202305310045"
+    downloaded_exact: false
+    immutable: false
+    dedupe_result: NEW_CANONICAL_NODE
+
+counter_delta_this_pass:
+  found: 1
+  downloaded: 0
+  immutable: 0
+  pending: 1
+  reused: 0
+  primary_publication_verified: 1
+
+capture_ledger_reconciliation:
+  authoritative_file: "SECTOR_ACQUISITION_RUN.json"
+  identity_scope: "existing exact-acquisition target set keyed by document.official_publication_id"
+  current_targets_with_official_publication_id: 22
+  current_raw_downloaded_exact: 22
+  current_immutable_sha256_verified: 22
+  current_pending_inside_that_capture_scope: 0
+  changed_this_pass: false
+  note: >-
+    Order 453 is registered in the discovery/master overlay with official publication identity 0001202305310045.
+    Exact capture failed transiently, so the existing narrow acquisition-run ledger is not rewritten or inflated.
+    The discovery pending counter and the 22/22/22/0 acquisition-run counters are intentionally different scopes.
+
+version_chain:
+  current_revision: "2025-06-19"
+  current_revision_effective_from: "2025-09-28"
+  amendment_events:
+    - act: "Приказ Минцифры России от 29.11.2023 № 1024"
+      official_publication_id: "0001202401120014"
+      minjust: "12.01.2024 № 76840"
+      exact_capture: PENDING_TRANSIENT_DNS
+    - act: "Приказ Минцифры России от 19.06.2025 № 553"
+      official_publication_id: "0001202509170002"
+      minjust: "17.09.2025 № 83555"
+      effective_from: "2025-09-28"
+      exact_capture: PENDING_TRANSIENT_DNS
+  current_2026_control_crosscheck: "Минцифры Order 371 of 27.04.2026 includes Order 453 in mandatory-requirements list"
+  draft_2026_promoted: false
+
+relationships_added:
+  - "SEC-SRC-RU-FZ-572-2022 -> direct implementing biometric-processing act"
+  - "SEC-SRC-RU-PP-408-2024 -> defined biometric-type scope overlap under 572-FZ"
+  - "152-ФЗ article 11 -> guarded biometric-PDN overlap"
+  - "152-ФЗ article 19 -> direct security-measures reference"
+  - "Bank of Russia / financial sector -> actor overlap only; no banking-secrecy promotion"
+
+scope_findings:
+  - "Appendix 1 clause 20 establishes not-less-than-50-year EBS storage, with a not-less-than-5-year exception for the specified placement route."
+  - "Appendix 1 clause 21 requires separate storage for a specified placement route."
+  - "Appendix 3 clause 3 prohibits storing authentication biometrics in specified accredited systems except complaint/dispute handling, and caps that exception at 10 days."
+  - "Security requirements expressly route to Article 19 of 152-FZ and cryptographic controls under 572-FZ."
+
+retention_guards:
+  - "50Y_EBS_GENERAL_NOT_UNIVERSAL_BIOMETRIC_RETENTION"
+  - "5Y_EBS_SPECIAL_ROUTE_NOT_UNIVERSAL_BIOMETRIC_RETENTION"
+  - "10D_AUTHENTICATION_DISPUTE_COPY_NOT_EBS_MASTER_RETENTION"
+  - "ORDER_EXPIRY_2029_NOT_RETENTION"
+  - "PARTIAL_SUNSET_2027_NOT_RETENTION"
+
+guards:
+  - "BANK_ACTOR_OVERLAP_NOT_BANKING_SECRECY"
+  - "VOICE_BIOMETRIC_NOT_TELECOM_SECRECY_BY_ITSELF"
+  - "NO_AUTOMATIC_SECTOR_APPLICABILITY_PROMOTION"
+  - "NO_MIME_BYTE_LENGTH_SHA256_WITHOUT_EXACT_BYTES"
+
+quality_gates:
+  taxonomy_seed_used_as_proof: false
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+  fabricated_binary_metadata: false
+  universal_retention_inferred: false
+  duplicate_source_created: false
+  exact_capture_required_before_immutable: true
