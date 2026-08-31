@@ -1,0 +1,76 @@
+schema_version: "1.0"
+stream: 3
+run_at: "2026-08-31T11:18:56+03:00"
+master: RU_PROTECTED_INFORMATION
+operation: APPEND_ONLY_RECONCILIATION
+
+source_delta:
+  - id: SEC-SRC-RU-CEC-218-1684-8-2026
+    action: ADD_CANONICAL_SOURCE
+    regimes:
+      - personal_data
+      - elections
+      - identity_registry
+      - interagency_data_exchange
+      - information_security
+      - archives_retention
+    sectors:
+      - public_sector
+    evidence_state: ORIGINAL_PRIMARY_OFFICIAL_CEC_PUBLICATION_VERIFIED_EXACT_BYTES_PENDING
+    downloaded: false
+    immutable: false
+    pending_exact_capture: true
+
+relationships_added:
+  - "SEC-SRC-RU-CEC-218-1684-8-2026 -> SEC-SRC-RU-FZ-67-2002 / direct electoral-registration basis"
+  - "SEC-SRC-RU-CEC-218-1684-8-2026 -> SEC-SRC-RU-FZ-20-2003 / GAS Vybory system law"
+  - "SEC-SRC-RU-CEC-218-1684-8-2026 -> SEC-SRC-RU-CEC-49-463-4-2003 / confidentiality and access rule"
+  - "SEC-SRC-RU-CEC-218-1684-8-2026 -> SEC-SRC-RU-FZ-168-2020 / ERN identity-source overlap"
+  - "SEC-SRC-RU-CEC-218-1684-8-2026 -> 143-ФЗ / EGR ZAGS source overlap"
+  - "SEC-SRC-RU-CEC-218-1684-8-2026 -> 152-ФЗ / direct PDN overlap"
+  - "SEC-SRC-RU-CEC-218-1684-8-2026 -> SEC-SRC-RU-FZ-125-2004 / conditional archival/record-series overlap"
+  - "SEC-SRC-RU-CEC-218-1684-8-2026 -> ЦИК № 218/1683-8 / direct parent registration-system candidate"
+
+applicability_promotions: 0
+legal_conflicts_declared: 0
+
+counter_reconciliation:
+  before:
+    found: 75
+    downloaded: 9
+    immutable: 9
+    pending: 64
+    reused: 4
+    primary_publication_verified: 43
+    sectors_registered: 32
+  delta:
+    found: 1
+    downloaded: 0
+    immutable: 0
+    pending: 1
+    reused: 0
+    primary_publication_verified: 1
+    sectors_registered: 0
+  after:
+    found: 76
+    downloaded: 9
+    immutable: 9
+    pending: 65
+    reused: 4
+    primary_publication_verified: 44
+    sectors_registered: 32
+
+counter_guard_notes:
+  - "Primary publication is incremented because the original 2026 act is directly exposed by the official CEC document index and official Vestnik issue, not merely by a secondary consolidator."
+  - "Downloaded and immutable remain unchanged because exact binary bytes were not obtained."
+  - "Public-sector/elections/identity sectors already exist; no new sector counter is created."
+
+quality_gates:
+  duplicate_created: false
+  taxonomy_used_as_proof: false
+  applicability_invented: false
+  special_category_invented: false
+  binary_metadata_fabricated: false
+  downloaded_increment_without_bytes: false
+  immutable_increment_without_sha256: false
+  general_retention_inferred: false

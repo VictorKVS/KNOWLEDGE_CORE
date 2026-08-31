@@ -1,0 +1,144 @@
+schema_version: "1.0"
+stream: 3
+run_at: "2026-08-31T11:18:56+03:00"
+objective: "continue sector/special-regime primary-source discovery, exact capture, deduplication, relationship linking and master reconciliation"
+
+selected_sources:
+  - id: SEC-SRC-RU-CEC-218-1684-8-2026
+    act: "Постановление ЦИК России от 25.02.2026 № 218/1684-8 о Регламенте использования подсистемы «Регистр участников избирательного процесса» ГАС «Выборы»"
+    action: NEW_CANONICAL_SOURCE_REGISTERED
+    sector_overlap:
+      - public_sector
+      - personal_data
+      - elections
+      - identity_registry
+      - interagency_data_exchange
+      - information_security
+      - archives_retention
+
+repository_dedupe:
+  canonical_id_probe: "SEC-SRC-RU-CEC-218-1684-8-2026"
+  title_number_probe: "218/1684-8"
+  prior_canonical_node_found: false
+  prior_relationship_reference_found: true
+  relationship_sources:
+    - SEC-SRC-RU-FZ-20-2003
+    - SEC-SRC-RU-CEC-49-463-4-2003
+  result: NEW_CANONICAL_NODE_CREATED
+  found_counter_increment: 1
+  reused_counter_increment: 0
+
+primary_proof:
+  official_document_url: "https://www.cikrf.ru/vestnik/documents/decree_of_cec/58179.html"
+  official_archive_url: "https://www.cikrf.ru/vestnik/archive/58281/"
+  official_publication: "Вестник ЦИК России, 2026, № 2"
+  official_pdf_url: "https://www.cikrf.ru/upload/iblock/000/vest_02_26.pdf"
+  primary_original_publication_verified: true
+  primary_publication_counter_increment: 1
+
+normative_findings:
+  - "The act directly operationalizes a GAS Vybory personal-data identity register with explicit links to 67-FZ, 20-FZ, 152-FZ, 168-FZ and CEC 49/463-4."
+  - "Defined data sources include МВД passport/registration data, ERN population-register data and EGR ZAGS death data, including SMEV-mediated routes."
+  - "Local-administration transfers are logged with media/source/period/subject-count/date metadata."
+  - "Operational events include death, incapacity/restored capacity, military service, imprisonment and passport events, without automatic promotion to special-category PDN."
+  - "The subsystem verifies PDN of multiple electoral actors and donors; donation or election context is not treated as automatic political-belief data."
+  - "Weekly duplicate-record control is explicitly part of data quality."
+  - "Archive/reserve-copy storage and destruction of machine-readable media are delegated to separate federal and CEC retention rules."
+
+retention:
+  universal_numeric_retention_period_in_218_1684_8: NOT_LOCATED
+  external_rule_anchor: "пункт 1.12"
+  guards:
+    - "NO_GENERAL_PDN_RETENTION_INFERRED"
+    - "67_FZ_VOTER_LIST_RETENTION_NOT_IMPORTED_TO_ALL_REGISTER_RESOURCES"
+    - "ARCHIVAL_BACKUP_AND_MEDIA_DESTRUCTION_REQUIRE_SEPARATE_PRIMARY_RULE"
+
+relationships:
+  reconciled:
+    - "218/1684-8 -> 67-FZ / direct registration and electoral PDN route"
+    - "218/1684-8 -> 20-FZ / GAS Vybory system law"
+    - "218/1684-8 -> CEC 49/463-4 / access and confidentiality"
+    - "218/1684-8 -> 168-FZ / ERN data source"
+    - "218/1684-8 -> 143-FZ / EGR ZAGS data source"
+    - "218/1684-8 -> 152-FZ / direct PDN overlap"
+    - "218/1684-8 -> 125-FZ / conditional archival lifecycle"
+    - "218/1684-8 -> CEC 218/1683-8 / direct parent rule, candidate for next proof-floor pass"
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+
+version_chain:
+  state: CURRENT_ORIGINAL_EDITION_2026_02_25_CONFIRMED_AS_OF_2026_08_31_NO_LATER_AMENDMENT_LOCATED_IN_SWEEP
+  supersedes:
+    - "26.03.2014 № 223/1437-6"
+  later_amendment_after_2026_02_25_located_in_this_sweep: false
+  complete_future_amendment_absence_claimed: false
+
+acquisition:
+  exact_binary_attempted: true
+  attempted_at: "2026-08-31T11:18:56+03:00"
+  target: "https://www.cikrf.ru/upload/iblock/000/vest_02_26.pdf"
+  attempts:
+    - method: container.download
+      result: DOWNLOAD_FAILED
+    - method: python_requests
+      result: DNS_RESOLUTION_FAILURE
+  exact_bytes_obtained: false
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+  immutable_promotions: 0
+  retry_class: TRANSIENT
+
+counters:
+  before:
+    found: 75
+    downloaded: 9
+    immutable: 9
+    pending: 64
+    reused: 4
+    primary_publication_verified: 43
+    sectors_registered: 32
+  after:
+    found: 76
+    downloaded: 9
+    immutable: 9
+    pending: 65
+    reused: 4
+    primary_publication_verified: 44
+    sectors_registered: 32
+
+files_written_or_updated:
+  - "security-corpora/RU/protected-information/source/SEC-SRC-RU-CEC-218-1684-8-2026.yaml"
+  - "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-CEC-218-1684-8-2026-capture-pending.json"
+  - "security-knowledge/corpus/ru-protected-information/master-inventory-delta-2026-08-31T1118.yaml"
+  - "security-knowledge/corpus/ru-personal-data/master-source-inventory-delta-stream3-2026-08-31T1118.yaml"
+  - "security-knowledge/corpus/ru-protected-information/stream-3-run-2026-08-31T1118.yaml"
+
+quality_gates:
+  taxonomy_as_evidence: false
+  original_primary_publication_verified: true
+  exact_bytes_captured: false
+  primary_publication_counter_overstated: false
+  applicability_invented: false
+  special_category_invented: false
+  secret_category_invented: false
+  fabricated_binary_metadata: false
+  downloaded_increment_without_bytes: false
+  immutable_increment_without_hash: false
+  general_pdn_retention_inferred: false
+  duplicate_source_created: false
+
+next_candidates_discovered_not_promoted:
+  - act: "Постановление ЦИК России от 25.02.2026 № 218/1683-8 о Положении о Государственной системе регистрации (учета) избирателей, участников референдума"
+    why: "direct parent rule for the register; should be captured and linked as a separate primary node"
+  - act: "Постановление ЦИК России от 11.02.2026 № 217/1679-8 о вопросах организации делопроизводства в избирательных комиссиях"
+    why: "records-management, closed-contour PDN and archival/retention crossover; exact primary capture required before promotion"
+  - act: "Федеральный закон от 20.08.2004 № 113-ФЗ о присяжных заседателях"
+    why: "218/1684-8 expressly uses the register to form juror lists; separate PDN/public-sector regime should be proof-floor checked"
+
+next_actions:
+  - "Retry exact official CEC Vestnik №2/2026 bytes; compute MIME, byte length and SHA-256 only after successful capture and then store immutable artifact."
+  - "Run proof-floor pass on 218/1683-8 and 217/1679-8 with repository dedupe."
+  - "Continue communications, biometrics, advertising/marketing, healthcare, finance and archival-retention discovery without sector duplication."
