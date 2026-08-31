@@ -1,0 +1,118 @@
+schema_version: 1
+run_id: RU_PD_STREAM2_2026_09_01T0207_0300
+stream_id: RU_PD_STREAM_2_TECHNICAL_CRYPTO
+started_at: "2026-09-01T02:07:58+03:00"
+result: PARTIAL_PROGRESS_STATUS_RECONCILED_NO_NEW_IMMUTABLE
+
+objective: >-
+  Continue primary-source acquisition and version-chain validation for PP 1119, FSTEC Order 21,
+  FSTEC Threat Method 2021 and FSB Order 378, while preserving explicit applicability gates for
+  crypto, public-sector, licensing/certification and GosSOPKA/NKTsKI branches.
+
+meaningful_findings:
+  - finding_id: PP1119_CURRENT_EDITION_OFFICIAL_RECHECK
+    result: VERIFIED_PAGE_STATUS
+    source_id: RU_GOV_PP_1119_2012
+    official_source_url: "https://government.ru/docs/6339/"
+    fact: "Government portal continues to present PP 1119 and explicitly labels the linked document as the current edition."
+    immutable_promoted: false
+
+  - finding_id: FSTEC21_REPLACEMENT_DATE_REACHED_WITHOUT_PRIMARY_ENACTMENT_PROOF
+    result: URGENT_FAIL_CLOSED_WATCH
+    source_id: RU_FSTEC_ORDER_21_2013
+    active_baseline: "Order 21/2013 as amended by Orders 49/2017 and 68/2020"
+    project:
+      project_id: "169583"
+      url: "https://regulation.gov.ru/projects/169583/"
+      public_discussion_end: 2026-08-08
+      proposed_effective_date: 2026-09-01
+    evidence_assessment: >-
+      Fresh legal/industry sources still identify 169583 as a project; the official-publication searches
+      available to this run did not expose a signed, registered and officially published replacing act.
+    decision: >-
+      Do not mark Order 21 repealed solely because the proposed draft date has arrived. Keep the existing
+      baseline provisionally and perform a high-priority primary publication recheck on the next pass.
+
+  - finding_id: FSTEC_THREAT_METHOD_2021_SCOPE_AND_ENDPOINT_RECHECK
+    result: PRIMARY_ENDPOINT_RECONFIRMED_DOWNLOAD_TIMEOUT
+    source_id: RU_FSTEC_THREAT_METHOD_2021
+    official_file_url: "https://fstec.ru/component/attachments/download/2919"
+    pdn_scope: "The methodology applies to threat assessment for ISPDn among its defined system classes."
+    acquisition_result: TIMEOUT_NO_EXACT_BYTES
+
+  - finding_id: FSB378_CURRENT_DIRECT_PDN_SKZI_BRANCH_RECHECK
+    result: RETAINED
+    source_id: RU_FSB_ORDER_378_2014
+    justice_registration_number: "33620"
+    publication_reference: "Russian Gazette, 2014-09-17, No. 211"
+    source_url: "https://rg.ru/documents/2014/09/17/zashita-dok.html"
+    applicability_gate: SKZI_USED_IN_ISPDN
+    decision: "Retain as the direct PDn cryptographic branch; do not replace it with FSB 117/2025."
+
+  - finding_id: FSTEC_2026_METHODS_WATCH
+    result: REGISTERED_AS_CONTEXT_GATED_WATCH_ONLY
+    candidates:
+      - id: RU_FSTEC_IS_PROTECTION_MEASURES_METHOD_2026
+        approved_date: 2026-04-12
+        title: "Состав и содержание мероприятий и мер по защите информации, содержащейся в информационных системах"
+      - id: RU_FSTEC_MATURITY_METHOD_2026
+        approved_date: 2026-08-07
+        title: "Методика оценки уровня зрелости деятельности в области технической защиты информации в информационных системах и обеспечения безопасности значимых объектов критической информационной инфраструктуры Российской Федерации"
+    guard: "No automatic promotion into ordinary PDn executable requirements without primary applicability reconciliation."
+
+  - finding_id: NKTSKI_2026_NO_NEW_GENERAL_PDN_EDGE
+    result: NOT_PROMOTED
+    candidate: RU_NKTSKI_ORDER_2_2026
+    signed_date: 2026-07-14
+    reason: >-
+      Current evidence places the order in the CII/GosSOPKA interaction contour. The existing FSB Order
+      77/2023 branch is already the explicit PDn incident bridge; no new general-PDn edge was proved.
+
+acquisition_attempts:
+  - source_id: RU_GOV_PP_1119_2012
+    route: "https://government.ru/docs/6339/"
+    exact_bytes_obtained: false
+    immutable_promoted: false
+    blocker: OFFICIAL_LINKED_DOC_BYTES_NOT_EXPOSED_TO_RUNTIME
+  - source_id: RU_FSTEC_THREAT_METHOD_2021
+    route: "https://fstec.ru/component/attachments/download/2919"
+    exact_bytes_obtained: false
+    immutable_promoted: false
+    blocker: OFFICIAL_ATTACHMENT_TIMEOUT
+  - source_id: RU_FSB_ORDER_378_2014
+    route: "https://rg.ru/documents/2014/09/17/zashita-dok.html"
+    exact_bytes_obtained: false
+    immutable_promoted: false
+    blocker: EXACT_AUTHORITATIVE_BINARY_NOT_RESOLVED
+
+telemetry_delta:
+  status_rechecks: 4
+  watch_candidates_registered: 3
+  exact_artifact_endpoint_attempts: 3
+  exact_artifact_successes: 0
+  immutable_artifacts_added: 0
+  bytes_downloaded: 0
+  hashes_recorded: 0
+  new_universal_pdn_duties: 0
+  adjacent_regime_promotions: 0
+  confirmed_legal_contradictions: 0
+  urgent_status_watch_added: 1
+
+counter_policy: >-
+  This run does not add canonical source identities and therefore does not increment identified or
+  metadata-verified source totals. Add one urgent status-watch item for project 169583. Immutable,
+  bytes and hashes remain unchanged. Reconciliation should merge this overlay with the latest aggregate.
+
+artifacts_written:
+  - "technical-security-delta-2026-09-01T0207+0300.yaml"
+  - "master-source-inventory-delta-stream2-2026-09-01T0207+0300.yaml"
+  - "manifests/stream-2/2026-09-01T0207+0300.yaml"
+  - "runs/stream-2/2026-09-01T0207+0300.yaml"
+
+next_priority:
+  - RU_FSTEC_ORDER_21_2013_project_169583_primary_enactment_watch_URGENT
+  - RU_GOV_PP_1119_2012_exact_current_official_DOC_bytes
+  - RU_FSTEC_THREAT_METHOD_2021_exact_official_attachment_2919
+  - RU_FSB_ORDER_378_2014_exact_authoritative_artifact
+  - RU_FSB_ORDER_66_2005_exact_artifact_and_Order_173_delta
+  - RU_FAPSI_ORDER_152_2001_exact_artifact
