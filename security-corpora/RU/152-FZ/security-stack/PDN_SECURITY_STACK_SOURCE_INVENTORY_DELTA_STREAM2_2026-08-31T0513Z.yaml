@@ -1,0 +1,103 @@
+schema_version: "1.0"
+id: SEC-PDN-SECURITY-STACK-INVENTORY-DELTA-STREAM2-2026-08-31T0513Z
+applies_to: PDN_SECURITY_STACK_SOURCE_INVENTORY.yaml
+stream: RU_PDN_TECHNICAL_CRYPTO
+created_at: "2026-08-31T05:13:05Z"
+merge_policy: >-
+  ADDITIVE_STREAM2_RECONCILIATION_DELTA. Preserve all existing source registrations, applicability guards
+  and parallel-stream data. Add only version edges independently proven by current immutable source cards,
+  plus current Stream-2 transport/status pointers.
+
+version_edge_additions:
+  - from: SEC-SRC-RU-FSTEC77-2021
+    type: AMENDED_BY
+    to: SEC-SRC-RU-FSTEC60-2026
+    effective_from: "2026-09-01"
+    provenance: OFFICIAL_PUBLICATION_AND_MINJUST_REGISTRATION
+    proof_source: "source/SEC-SRC-RU-FSTEC60-2026.yaml"
+    applicability: BOUNDED_ATTESTATION_SCOPE_NOT_GENERIC_PRIVATE_ISPDN
+  - from: SEC-SRC-RU-FSTEC164-2025
+    type: AMENDED_BY
+    to: SEC-SRC-RU-FSTEC487-2025
+    provenance: OFFICIAL_PUBLICATION
+    proof_source: "source/SEC-SRC-RU-FSTEC487-2025.yaml"
+    applicability: LICENSED_SZI_DEVELOPMENT_PRODUCTION_ACTIVITY_ONLY
+
+source_status_updates:
+  - id: SEC-SRC-RU-PP1119-2012
+    checked_at: "2026-08-31"
+    status: CURRENT_PRIMARY_BYTES_PENDING
+    latest_transport_at: "2026-08-31T05:13:05.886950Z"
+    latest_transport: ACQUISITION_ENV_DNS_RESOLUTION_FAILURE_GOVERNMENT_RU
+    primary_payload: PENDING
+    applicability: ISPDN_SCOPE
+  - id: SEC-SRC-RU-FSB378-2014
+    checked_at: "2026-08-31"
+    status: CURRENT_UNAMENDED_PRIMARY_BYTES_PENDING
+    latest_transport_at: "2026-08-31T05:13:05.886950Z"
+    latest_transport: ACQUISITION_ENV_DNS_RESOLUTION_FAILURE_RG_RU
+    primary_payload: PENDING
+    applicability: ISPDN_WHEN_SKZI_USED
+  - id: SEC-SRC-RU-FSB66-2005
+    checked_at: "2026-08-31"
+    status: CURRENT_AS_AMENDED_PRIMARY_BYTES_PENDING
+    latest_transport_at: "2026-08-31T05:13:05.886950Z"
+    latest_transport: ACQUISITION_ENV_DNS_RESOLUTION_FAILURE_PRAVO_GOV_RU
+    primary_payload: PENDING
+    applicability: SKZI_LIFECYCLE_WHEN_APPLICABLE
+  - id: SEC-SRC-RU-FSB173-2010
+    checked_at: "2026-08-31"
+    status: VERSION_CHAIN_PRIMARY_BYTES_PENDING
+    latest_transport_at: "2026-08-31T05:13:05.886950Z"
+    latest_transport: ACQUISITION_ENV_DNS_RESOLUTION_FAILURE_PRAVO_GOV_RU
+    primary_payload: PENDING
+    pdn_skzi_locator: "Appendix point 1 -> PKZ-2005 point 50"
+  - id: SEC-SRC-RU-FAPSI152-2001
+    checked_at: "2026-08-31"
+    status: CURRENT_PRIMARY_BYTES_PENDING
+    latest_transport_at: "2026-08-31T05:13:05.886950Z"
+    latest_transport: ACQUISITION_ENV_DNS_RESOLUTION_FAILURE_PRAVO_GOV_RU
+    primary_payload: PENDING
+    applicability: SKZI_HANDLING_WHEN_APPLICABLE
+  - id: SEC-SRC-RU-FSTEC21-2013
+    checked_at: "2026-08-31"
+    status: CURRENT_REVISION_2020_05_14
+    replacement_project: "169583"
+    replacement_gate: PRIMARY_ENACTMENT_NOT_PROVEN
+    project_requirements_promoted: false
+
+counter_patch:
+  authoritative_document_counters:
+    identified: 55
+    metadata_verified: 55
+    immutable_sha256_verified: 24
+    pending_raw_capture: 31
+    exact_official_route_unresolved: 8
+    confirmed_conflicts: 0
+  graph_counters:
+    version_edges_verified_before: 9
+    version_edges_verified_after: 11
+    delta: 2
+  document_counter_delta:
+    identified: 0
+    metadata_verified: 0
+    immutable_sha256_verified: 0
+    pending_raw_capture: 0
+    exact_official_route_unresolved: 0
+    confirmed_conflicts: 0
+  basis: >-
+    Two amendment relations were already independently proven by immutable source cards but were absent from the
+    master version-edge list. The reconciliation changes only graph completeness. No new official payload passed
+    the immutable capture gate, so document acquisition counters remain unchanged.
+
+latest_stream2_run: "security-stack/runs/STREAM2_RUN_2026-08-31T0513Z.yaml"
+
+applicability_guard: >-
+  FSTEC60/2026 is an amendment to the attestation procedure and must not become a generic private-ISPDN duty.
+  FSTEC487/2025 is retained here only as the version-chain amendment for licensed SZI development/production
+  control procedure FSTEC164/2025. Neither edge expands the generic PP1119/FSTEC21 baseline.
+
+proof_rule: >-
+  Exact official bytes, observed MIME/signature, exact byte length, computed SHA-256, immutable artifact and
+  manifest are mandatory before immutable promotion. Transient DNS failure does not alter legal status and
+  does not permit secondary-mirror substitution.
