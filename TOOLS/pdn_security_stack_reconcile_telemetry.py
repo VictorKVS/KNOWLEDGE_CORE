@@ -16,6 +16,8 @@ INVENTORY_FILE = STACK / "PDN_SECURITY_STACK_SOURCE_INVENTORY.yaml"
 STATUS_RE = re.compile(r"(?m)^status:\s*([^\s#]+)\s*$")
 PUB_RE = re.compile(r"(?m)^  official_publication_id:\s*[\"']?[0-9]{16}[\"']?\s*$")
 URL_RE = re.compile(r"(?m)^  url:\s*[\"'][^\"']+[\"']\s*$")
+AMENDED_BY_RE = re.compile(r"(?m)^  - type:\s*AMENDED_BY\s*$")
+APPLICABILITY_GUARD_RE = re.compile(r"(?m)^applicability_guard:\s*(?:>|>-|\|)?\s*$")
 
 
 def replace_scalar(text: str, key: str, value: object) -> str:
@@ -31,6 +33,8 @@ def main() -> int:
     verified = 0
     publication_targets = 0
     canonical_targets = 0
+    version_edges_verified = 0
+    applicability_guards = 0
     for path in SOURCE_DIR.glob("*.yaml"):
         source = path.read_text(encoding="utf-8")
         status = STATUS_RE.search(source)
@@ -41,6 +45,9 @@ def main() -> int:
             publication_targets += 1
         elif URL_RE.search(source):
             canonical_targets += 1
+        version_edges_verified += len(AMENDED_BY_RE.findall(source))
+        if APPLICABILITY_GUARD_RE.search(source):
+            applicability_guards += 1
 
     text = STATUS_FILE.read_text(encoding="utf-8")
     static_values = {
@@ -52,6 +59,8 @@ def main() -> int:
         "raw_downloaded_exact": int(run["immutable_total"]),
         "immutable_sha256_verified": int(run["immutable_total"]),
         "pending_raw_capture": int(run["pending_after_run"]),
+        "version_edges_verified": version_edges_verified,
+        "applicability_guards": applicability_guards,
     }
     for key, value in static_values.items():
         text = replace_scalar(text, key, value)
@@ -76,6 +85,8 @@ def main() -> int:
         "official_publication_id_targets": publication_targets,
         "official_canonical_targets": canonical_targets,
         "exact_official_route_unresolved": len(run.get("unrouted_source_ids", [])),
+        "version_edges_verified": version_edges_verified,
+        "applicability_guards": applicability_guards,
     }
     for key, value in inventory_values.items():
         inventory = replace_scalar(inventory, key, value)
