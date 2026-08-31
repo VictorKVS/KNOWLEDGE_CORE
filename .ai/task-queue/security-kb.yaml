@@ -1,0 +1,160 @@
+schema_version: "1.0"
+id: SECURITY-KB-CODEX-QUEUE
+as_of: 2026-09-01
+status: ACTIVE
+queue_policy:
+  ordering: priority_then_dependency
+  claim_one_task_per_lane: true
+  fail_closed: true
+  do_not_mark_done_with_unreported_evidence_gap: true
+  shared_inventory_updates_owned_by: reconciler
+
+priority_tasks:
+  - task_id: SKB-PDN-TIME-001
+    priority: P0
+    lane: source_scout
+    title: Recheck FSTEC Order 21 replacement status on 2026-09-01
+    context: >-
+      The replacement project previously tracked as 169583 had a planned transition date of 2026-09-01,
+      but the last verified state before that date did not establish the complete enactment chain.
+    acceptance:
+      - verify final signed act from a primary official source or keep replacement unconfirmed
+      - verify Minjust registration when required
+      - verify official publication
+      - record effective date from primary evidence
+      - update version-chain only if evidence gate passes
+      - do_not_switch_baseline_due_to_target_date_alone
+
+  - task_id: SKB-PDN-TIME-002
+    priority: P0
+    lane: source_scout
+    title: Re-evaluate FSTEC Order 60/2026 status transition
+    acceptance:
+      - reverify primary act identity and effective-date evidence
+      - update current/future-effective status as of 2026-09-01
+      - preserve scope as attestation/version-chain context unless broader applicability is independently proven
+      - reconcile Order 77 -> AMENDED_BY -> Order 60 edge
+
+  - task_id: SKB-PDN-TIME-003
+    priority: P0
+    lane: source_scout
+    title: Re-evaluate FSTEC 137/2026 status transition
+    acceptance:
+      - reverify primary effective-date evidence as of 2026-09-01
+      - keep the separate later-effective provision/date separate if still supported
+      - preserve public/GIS scope guard
+      - do_not_apply_to_arbitrary_private_ISPDN
+
+  - task_id: SKB-PDN-BYTES-1119
+    priority: P1
+    lane: byte_acquirer
+    title: Capture exact official PP RF 1119 payload
+    acceptance:
+      - exact official route
+      - exact bytes
+      - UTC retrieved_at
+      - MIME and file signature
+      - byte_length
+      - sha256
+      - immutable artifact and manifest
+    on_failure: retain_pending_and_record_transport_evidence
+
+  - task_id: SKB-PDN-BYTES-FSB378
+    priority: P1
+    lane: byte_acquirer
+    title: Capture exact official FSB Order 378 payload
+    acceptance:
+      - exact official primary route
+      - exact bytes and immutable manifest gate
+      - preserve applicability ISPDN_WHEN_SKZI_USED
+    prohibitions:
+      - no_commercial_mirror_as_primary
+
+  - task_id: SKB-PDN-BYTES-FSB66-173
+    priority: P1
+    lane: byte_acquirer
+    title: Capture primary FSB Orders 66 and 173 payloads
+    acceptance:
+      - exact primary payload for each act
+      - immutable evidence fields for each act
+      - verify amendment edge
+      - keep crypto lifecycle applicability bounded
+
+  - task_id: SKB-PDN-BYTES-FAPSI152
+    priority: P1
+    lane: byte_acquirer
+    title: Capture exact primary FAPSI Instruction 152 payload
+    acceptance:
+      - exact primary payload and immutable manifest
+      - version/status evidence
+      - bounded crypto applicability
+
+  - task_id: SKB-PDN-ROUTE-FSTEC205
+    priority: P1
+    lane: source_scout
+    title: Resolve exact primary route for FSTEC Order 205/2025
+    acceptance:
+      - exact official act/publication route or explicit unresolved result
+      - verify identity/registration/publication metadata from primary evidence
+      - do_not_substitute_status_message_for_act_bytes
+      - preserve certification/product-trust context guard
+
+  - task_id: SKB-PDN-FSTEC-METHODS
+    priority: P2
+    lane: byte_acquirer
+    title: Capture remaining relevant official FSTEC methodology attachments
+    acceptance:
+      - process only registered relevant candidates
+      - immutable capture gate per source
+      - preserve methodology-specific scope and recommendation/mandatory distinction
+      - record transport failures without synthetic metadata
+
+  - task_id: SKB-TAXONOMY-BACKFILL
+    priority: P2
+    lane: taxonomy_classifier
+    title: Backfill InfoSec taxonomy over all existing Security Knowledge source cards
+    taxonomy_seed: https://habr.com/ru/articles/432466/
+    acceptance:
+      - retain one canonical source identity per document
+      - assign primary and zero_or_more secondary categories
+      - assign CORE_CONDITIONAL_REFERENCE_ONLY roles
+      - taxonomy_membership_never_implies_legal_applicability
+      - unresolved materials go to temporary quarantine with review reason
+
+  - task_id: SKB-ANNOTATIONS-BACKFILL
+    priority: P3
+    lane: annotation_builder
+    title: Seed expandable explanations for taxonomy sections and classified documents
+    acceptance:
+      - concise paraphrase rather than long third-party copying
+      - provenance to taxonomy seed or primary source as appropriate
+      - mark imported guide-derived text SOURCE_PARAPHRASE_DRAFT
+      - add why_it_matters and related_categories
+      - produce glossary candidates without promoting them to authoritative definitions
+
+  - task_id: SKB-MASTER-RECONCILE
+    priority: P0_AFTER_CHANGES
+    lane: reconciler
+    title: Reconcile PDN master inventory and Stream 2 counters
+    dependencies:
+      - any_source_state_change
+      - any_new_immutable_capture
+      - any_version_edge_change
+      - any_applicability_change
+    acceptance:
+      - derive counters from canonical state
+      - distinguish authoritative counts from estimates
+      - list unresolved exact routes
+      - no_manual_counter_inflation
+
+  - task_id: SKB-QA-FINAL
+    priority: P0_AFTER_RECONCILE
+    lane: qa_guard
+    title: Independent Security KB evidence and applicability review
+    acceptance:
+      - verify changed hashes/sizes/manifests where present
+      - verify primary-vs-secondary provenance
+      - check version-chain transitions
+      - check applicability leakage across PDN KII GosSOPKA licensing certification SKZI scopes
+      - check protected paths and canonical IDs
+      - report blockers before merge
