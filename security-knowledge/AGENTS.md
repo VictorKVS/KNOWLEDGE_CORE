@@ -2,6 +2,12 @@
 
 These rules apply to everything under `security-knowledge/` and extend the repository root `AGENTS.md`.
 
+## Workforce orchestration
+
+For Security Knowledge production work, read `.ai/codex-local-workforce.yaml` and `.ai/task-queue/security-kb.yaml` before planning. For complex tasks, delegate independent bounded work to the project custom agents in `.codex/agents/`.
+
+Prefer parallel subagents for read-heavy research, status checks, classification, annotation and independent review. Keep write ownership bounded: parallel agents must not edit the same shared inventory. Integrate accepted evidence before running `reconciler`, and run `qa_guard` after reconciliation. The main agent remains responsible for the final auditable decision; subagent consensus is not proof.
+
 ## Canonical acquisition gate — fail closed
 
 A primary document may become an immutable captured source only after all required evidence is available and internally consistent:
