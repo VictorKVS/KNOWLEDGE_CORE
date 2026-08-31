@@ -1,0 +1,72 @@
+schema_version: "1.0"
+stream: 3
+run_at: "2026-08-31T08:28:46+03:00"
+master: RU_PROTECTED_INFORMATION
+operation: APPEND_ONLY_RECONCILIATION
+
+source_delta:
+  - id: SEC-SRC-RU-CEC-49-463-4-2003
+    action: ADD_CANONICAL_SOURCE
+    regimes:
+      - personal_data
+      - elections
+      - identity_registry
+      - confidential_information
+      - information_security
+      - access_control
+    sectors:
+      - public_sector
+    evidence_state: CURRENT_PRIMARY_AMENDMENT_VERIFIED_BASE_ACT_OFFICIAL_PUBLICATION_METADATA_CROSSCHECKED_EXACT_BYTES_PENDING
+    downloaded: false
+    immutable: false
+    pending_exact_capture: true
+
+relationships_added:
+  - "SEC-SRC-RU-CEC-49-463-4-2003 -> SEC-SRC-RU-FZ-20-2003 / implementing access and confidentiality act"
+  - "SEC-SRC-RU-CEC-49-463-4-2003 -> SEC-SRC-RU-FZ-67-2002 / electoral-register and PDN context"
+  - "SEC-SRC-RU-CEC-49-463-4-2003 -> 152-ФЗ / direct personal-data overlap"
+  - "SEC-SRC-RU-CEC-49-463-4-2003 -> 149-ФЗ / information-protection/access overlap"
+  - "SEC-SRC-RU-CEC-49-463-4-2003 -> SEC-SRC-RU-FZ-125-2004 / conditional archival/record-series overlap"
+
+applicability_promotions: 0
+legal_conflicts_declared: 0
+
+counter_reconciliation:
+  before:
+    found: 74
+    downloaded: 9
+    immutable: 9
+    pending: 63
+    reused: 4
+    primary_publication_verified: 43
+    sectors_registered: 32
+  delta:
+    found: 1
+    downloaded: 0
+    immutable: 0
+    pending: 1
+    reused: 0
+    primary_publication_verified: 0
+    sectors_registered: 0
+  after:
+    found: 75
+    downloaded: 9
+    immutable: 9
+    pending: 64
+    reused: 4
+    primary_publication_verified: 43
+    sectors_registered: 32
+
+counter_guard_notes:
+  - "The official 2025 CEC Vestnik publication verifies the current amendment edge 206/1591-8 -> 49/463-4, but the original 2003 primary publication file was not directly captured in this run; therefore primary_publication_verified is not incremented."
+  - "Parsed PDF availability is not counted as downloaded or immutable without exact artifact bytes."
+  - "No new sector is created: elections/public_sector already exist in the master taxonomy."
+
+quality_gates:
+  duplicate_created: false
+  taxonomy_used_as_proof: false
+  applicability_invented: false
+  binary_metadata_fabricated: false
+  downloaded_increment_without_bytes: false
+  immutable_increment_without_sha256: false
+  base_primary_publication_counter_overstated: false
