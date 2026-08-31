@@ -1,0 +1,88 @@
+schema_version: "1.0"
+id: SEC-SRC-RU-PP-408-2024
+kind: security-regulatory-source
+status: PRIMARY_PUBLICATION_METADATA_VERIFIED_CURRENT_ORIGINAL_EDITION_CROSSCHECKED_EXACT_ARTIFACT_PENDING
+
+title: "Постановление Правительства РФ от 01.04.2024 № 408 — виды биометрических персональных данных в сфере 572-ФЗ"
+jurisdiction: RU
+issuer: "Правительство Российской Федерации"
+document:
+  type: government_decree
+  number: "408"
+  adopted_date: "2024-04-01"
+  full_title: "О видах биометрических персональных данных, на которые распространяется действие Федерального закона «Об осуществлении идентификации и (или) аутентификации физических лиц с использованием биометрических персональных данных, о внесении изменений в отдельные законодательные акты Российской Федерации и признании утратившими силу отдельных положений законодательных актов Российской Федерации»"
+  official_publication_id: "0001202404050032"
+  official_publication_date: "2024-04-05"
+  effective_from: "2024-09-01"
+  scheduled_expiry: "2027-09-01"
+  checked_at: "2026-08-31"
+
+canonical_sources:
+  primary_publication:
+    publisher: "Официальное опубликование правовых актов"
+    url: "https://publication.pravo.gov.ru/document/0001202404050032"
+    origin_verified: true
+    proof_scope: "Официальные реквизиты исходного постановления и publication ID подтверждены; exact PDF bytes в этом проходе не получены."
+  current_text_crosscheck:
+    revision_date: "2024-04-01"
+    state: CURRENT_ORIGINAL_EDITION_CROSSCHECKED
+    effective_from: "2024-09-01"
+    scheduled_expiry: "2027-09-01"
+    later_amendment_located_as_of_checked_at: false
+    guard: "Отсутствие найденной более поздней редакции в текущем sweep не является доказательством невозможности будущего изменения до 01.09.2027."
+
+protected_information:
+  sector: biometrics
+  regime: "572-FZ biometric identification/authentication scope"
+  legal_basis: "572-ФЗ статья 26"
+  protected_locators:
+    - locator: "пункт 1"
+      concept: FACE_IMAGE_572_SCOPE
+      finding: "К видам биометрических персональных данных, на которые распространяется действие 572-ФЗ, отнесено изображение лица человека, полученное с помощью фото-, видео-устройств."
+    - locator: "пункт 1"
+      concept: VOICE_RECORDING_572_SCOPE
+      finding: "К видам биометрических персональных данных, на которые распространяется действие 572-ФЗ, отнесена запись голоса человека, полученная с помощью звукозаписывающих устройств."
+    - locator: "пункт 2"
+      concept: REGULATORY_VALIDITY_WINDOW
+      finding: "Постановление вступило в силу 01.09.2024 и действует до 01.09.2027."
+  applicability_status: DIRECT_572_SCOPE_RULE_WITH_152_ART11_OVERLAP_GUARD
+  applicability_guard: "Перечень в ПП № 408 ограничен сферой действия 572-ФЗ и не является исчерпывающим универсальным перечнем всех биометрических персональных данных по статье 11 152-ФЗ."
+
+relationship_candidates:
+  - target: "SEC-SRC-RU-FZ-572-2022"
+    type: DIRECT_SUBORDINATE_BIOMETRIC_TYPE_SCOPE
+    state: STATUTORY_IMPLEMENTATION_RELATION
+  - target: "152-ФЗ статья 11"
+    type: BIOMETRIC_PDN_OVERLAP
+    state: GUARDED_CROSS_REGIME_RELATION
+    guard: "Не переносить два вида из ПП № 408 как исчерпывающую дефиницию биометрических ПДн для всех случаев статьи 11 152-ФЗ; квалификацию иных биометрических характеристик проверять по цели и способу обработки и по применимому первичному акту."
+
+version_chain:
+  state: CURRENT_ORIGINAL_EDITION_CROSSCHECKED_NO_LATER_CHANGE_LOCATED_AS_OF_2026-08-31
+  original_publication_id: "0001202404050032"
+  latest_crosschecked_revision: "2024-04-01"
+  events: []
+
+retention:
+  numeric_retention_located: false
+  guard: "Дата прекращения действия постановления 01.09.2027 является сроком действия нормативного акта, а не сроком хранения биометрических персональных данных. Универсальный числовой срок хранения ПДн из ПП № 408 не выводится."
+
+capture:
+  exact_capture_attempted_at: "2026-08-31T20:28:41+03:00"
+  source_url: "https://publication.pravo.gov.ru/document/0001202404050032"
+  preferred_pdf_url: "https://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202404050032"
+  result: "TRANSIENT_DNS_RESOLUTION_FAILURE_CURL_EXIT_6"
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  raw_artifact_ref: null
+  manifest_ref: "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-PP-408-2024-capture-pending.json"
+  fingerprint_status: PENDING_EXACT_PRIMARY_BYTES
+
+proof_floor:
+  - "Primary act controls; taxonomy is discovery seed only."
+  - "PP 408 scope under 572-FZ != exhaustive universe of biometric PDN under Article 11 of 152-FZ."
+  - "Scheduled expiry of the regulation != PDN retention."
+  - "No MIME, byte length, SHA-256 or immutable artifact is populated without exact bytes."
+  - "No sector applicability is promoted beyond the proven biometric regime."
