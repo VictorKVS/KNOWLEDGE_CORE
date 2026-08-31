@@ -1,0 +1,174 @@
+schema_version: "1.0"
+id: SEC-SRC-RU-MINTSIFRY-ORDER-453-2023
+kind: security-regulatory-source
+status: PRIMARY_PUBLICATION_LOCATOR_VERIFIED_CURRENT_EDITION_2025_06_19_CROSSCHECKED_EXACT_ARTIFACT_PENDING
+title: "Приказ Минцифры России от 12.05.2023 № 453 о порядке обработки биометрических персональных данных и векторов ЕБС"
+jurisdiction: RU
+issuer: "Министерство цифрового развития, связи и массовых коммуникаций Российской Федерации"
+
+document:
+  type: "приказ федерального органа исполнительной власти"
+  number: "453"
+  adopted_date: "2023-05-12"
+  full_title: >-
+    О порядке обработки биометрических персональных данных и векторов единой биометрической системы
+    в единой биометрической системе и в информационных системах аккредитованных государственных органов,
+    Центрального банка Российской Федерации в случае прохождения им аккредитации, организаций,
+    осуществляющих аутентификацию на основе биометрических персональных данных физических лиц
+  minjust_registration_date: "2023-05-30"
+  minjust_registration_number: "73620"
+  official_publication_id: "0001202305310045"
+  official_publication_date: "2023-05-31"
+  current_revision_date: "2025-06-19"
+  current_revision_effective_from: "2025-09-28"
+  scheduled_expiry: "2029-06-01"
+  partial_sunset: "2027-01-01 for specifically enumerated provisions in clause 3 of the order"
+  checked_at: "2026-08-31"
+
+canonical_sources:
+  primary_publication:
+    publisher: "Официальный интернет-портал правовой информации"
+    url: "https://publication.pravo.gov.ru/document/0001202305310045"
+    file_url: "https://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202305310045"
+    origin_verified: true
+    proof_scope: "official identity/publication locator for original act; exact bytes pending"
+  current_validity_control_crosscheck:
+    act: "Приказ Минцифры России от 27.04.2026 № 371"
+    finding: >-
+      The 2026 mandatory-requirements control list includes Order 453, Minjust registration 73620,
+      and links the official publication locator 0001202305310045.
+    checked_at: "2026-08-31"
+  current_text_crosscheck:
+    revision_date: "2025-06-19"
+    state: "Действует"
+    edition_effective_from: "2025-09-28"
+    scheduled_expiry: "2029-06-01"
+    later_enacted_amendment_after_2025_06_19_located_in_this_sweep: false
+    note: "A 2026 amendment project is not treated as an enacted amendment."
+
+protected_information:
+  sectors:
+    - biometrics
+    - personal_data
+    - identity_authentication
+    - public_digital_infrastructure
+    - finance_overlap
+  regimes:
+    - biometric_personal_data
+    - unified_biometric_system
+    - authentication_biometric_vectors
+  legal_basis:
+    - "572-ФЗ, статья 6 часть 2 пункт 1"
+    - "152-ФЗ, статья 19"
+  protected_locators:
+    - locator: "Приложение № 1, пункт 20"
+      rule: >-
+        Биометрические персональные данные, размещенные в ЕБС, хранятся не менее 50 лет со дня размещения;
+        исключение для данных, размещенных по подпункту 3 пункта 1 Порядка размещения и обновления — не менее 5 лет.
+      security: "security measures under Article 19 of 152-FZ plus cryptographic protection against 572-FZ threat model"
+    - locator: "Приложение № 1, пункт 21"
+      rule: >-
+        Биометрические персональные данные, размещенные по специальному маршруту подпункта 4 пункта 1,
+        хранятся отдельно от данных, размещенных иными способами.
+    - locator: "Приложение № 3, пункт 3"
+      rule: >-
+        В информационных системах аккредитованных государственных органов, Банка России при аккредитации
+        и организаций аутентификации хранение использованных для аутентификации биометрических данных запрещено,
+        кроме рассмотрения обращений/оспаривания; такое исключительное хранение допускается не более 10 суток
+        с момента предоставления данных для аутентификации.
+    - locator: "Приложение № 3, пункт 4"
+      rule: "requires organizational and technical personal-data security measures established under Article 19 of 152-FZ"
+  applicability_status: "DIRECT_FOR_572_FZ_EBS_AND_SPECIFIED_ACCREDITED_AUTHENTICATION_SYSTEMS_ONLY"
+  guards:
+    - "50_YEAR_AND_5_YEAR_RULES_ARE_ROUTE_SPECIFIC_EBS_RETENTION_NOT_UNIVERSAL_BIOMETRIC_PDN_RETENTION"
+    - "10_DAY_RULE_IS_AUTHENTICATION_COPY_EXCEPTION_NOT_EBS_MASTER_RECORD_RETENTION"
+    - "ORDER_EXPIRY_2029_AND_PARTIAL_SUNSET_2027_ARE_NOT_PDN_RETENTION"
+    - "BANK_OR_CBR_PARTICIPATION_DOES_NOT_BY_ITSELF_CREATE_BANKING_SECRECY_CLASSIFICATION"
+    - "VOICE_BIOMETRIC_PROCESSING_DOES_NOT_BY_ITSELF_CREATE_TELECOMMUNICATIONS_SECRECY_CLASSIFICATION"
+    - "NO_APPLICABILITY_PROMOTION_FROM_TAXONOMY_OR_SECTOR_CONTEXT"
+
+relationship_candidates:
+  - target: "SEC-SRC-RU-FZ-572-2022"
+    type: DIRECT_IMPLEMENTING_ACT
+  - target: "SEC-SRC-RU-PP-408-2024"
+    type: BIOMETRIC_TYPE_SCOPE_OVERLAP
+    guard: "PP 408 defines face image and voice recording for the scope of 572-FZ; it is not the entire Article 11 152-FZ universe."
+  - target: "152-ФЗ статья 11"
+    type: BIOMETRIC_PDN_OVERLAP
+  - target: "152-ФЗ статья 19"
+    type: DIRECT_SECURITY_REQUIREMENT_REFERENCE
+  - target: "financial_sector / Bank of Russia"
+    type: ACTOR_OVERLAP_ONLY
+    guard: "no banking-secrecy applicability inferred without a separate primary rule and data-object match"
+
+version_chain:
+  state: CURRENT_EDITION_2025_06_19_CONFIRMED_CHAIN_PARTIAL_PRIMARY_BYTES_PENDING
+  original_publication_id: "0001202305310045"
+  latest_crosschecked_revision: "2025-06-19"
+  events:
+    - date: "2023-05-12"
+      act: "Приказ Минцифры России № 453"
+      publication_id: "0001202305310045"
+      publication_date: "2023-05-31"
+      minjust_registration: "30.05.2023 № 73620"
+      effect: ORIGINAL
+    - date: "2023-11-29"
+      act: "Приказ Минцифры России № 1024"
+      publication_id: "0001202401120014"
+      publication_date: "2024-01-12"
+      minjust_registration: "12.01.2024 № 76840"
+      effective_from: "2024-01-23"
+      effect: AMENDS_ORDER_453_AND_FORMS_OF_CONFORMITY_CONFIRMATION
+    - date: "2025-06-19"
+      act: "Приказ Минцифры России № 553"
+      publication_id: "0001202509170002"
+      publication_date: "2025-09-17"
+      minjust_registration: "17.09.2025 № 83555"
+      effective_from: "2025-09-28"
+      effect: AMENDS_APPENDICES_1_2_5
+  excluded_from_chain:
+    - "2026 draft amendment located during discovery: project only, not promoted as law or current-version event"
+
+retention:
+  universal_biometric_pdn_retention: false
+  rules:
+    - scope: "EBS placement general route"
+      locator: "Приложение № 1, пункт 20"
+      period: "not less than 50 years from placement"
+    - scope: "EBS data placed via subparagraph 3 of paragraph 1 of placement/update procedure"
+      locator: "Приложение № 1, пункт 20"
+      period: "not less than 5 years from placement"
+    - scope: "authentication data in specified accredited systems, only for complaint/dispute exception"
+      locator: "Приложение № 3, пункт 3"
+      period: "not more than 10 days from provision for authentication"
+  guard: >-
+    These periods belong to distinct storage objects/routes. They must not be collapsed into a single biometric-PDN
+    retention period or transferred to unrelated biometric processing systems.
+
+capture:
+  attempted_at: "2026-08-31T23:25:50+03:00"
+  source_url: "https://publication.pravo.gov.ru/document/0001202305310045"
+  preferred_pdf_url: "https://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202305310045"
+  amendment_pdf_attempts:
+    - publication_id: "0001202401120014"
+      result: TRANSIENT_DNS_RESOLUTION_FAILURE
+    - publication_id: "0001202509170002"
+      result: TRANSIENT_DNS_RESOLUTION_FAILURE
+  result: TRANSIENT_DNS_RESOLUTION_FAILURE
+  error_class: NameResolutionError
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  raw_artifact_ref: null
+  manifest_ref: "../manifests/SEC-SRC-RU-MINTSIFRY-ORDER-453-2023-capture-pending.json"
+  fingerprint_status: PENDING_EXACT_OFFICIAL_BYTES
+
+proof_floor:
+  - "taxonomy seed is discovery-only and not legal proof"
+  - "original official-publication identity is resolved through the official portal locator and 2026 MinTsifry control list"
+  - "current edition is crosschecked as 19.06.2025; no later enacted amendment found in this sweep"
+  - "version events 1024/2023 and 553/2025 are recorded separately"
+  - "no MIME, byte length or SHA-256 is populated without exact official bytes"
+  - "no immutable promotion before successful exact capture"
+  - "no sector-secret applicability is inferred merely from actor or technical context"
