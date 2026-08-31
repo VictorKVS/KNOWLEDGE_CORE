@@ -1,0 +1,135 @@
+{
+  "id":"RU-FSTEC-2021-ADVERSARY-METHOD-SCENARIO-RELEVANCE-V1",
+  "as_of":"2026-08-31",
+  "status":"VERIFIED_PUBLIC_TEXT_CLAUSES_5_1_TO_5_3_OFFICIAL_IDENTITY_ROUTE_PRIMARY_BYTES_PENDING",
+  "title":"Методика ФСТЭК России от 05.02.2021 — нарушители, способы реализации и сценарный gate актуальности",
+  "source":{
+    "issuer":"ФСТЭК России",
+    "document_type":"методический документ",
+    "approval_date":"2021-02-05",
+    "official_page":"https://fstec.ru/dokumenty/vse-dokumenty/spetsialnye-normativnye-dokumenty/metodicheskij-dokument-ot-5-fevralya-2021-g",
+    "official_current_list":"https://fstec.ru/dokumenty/vse-dokumenty/perechni/perechen-normativnykh-pravovykh-aktov-metodicheskikh-dokumentov-i-natsionalnykh-standartov-ot-10-dekabrya-2024-g",
+    "bdu":"https://bdu.fstec.ru/",
+    "public_text":"https://normativ.kontur.ru/document?documentId=451500&moduleId=1",
+    "locators":["5.1.1-5.1.9","5.2.1-5.2.6","5.3.1-5.3.6","приложения 6-11 (references only)"]
+  },
+  "anthropogenic_source":{
+    "definition":"A person or group able to realize a threat through unauthorized access to or impact on system/network information resources or components.",
+    "selection_basis":"system-specific source data, possible goals, negative consequences and risk/damage",
+    "violator_types":[
+      {"id":"V01","type":"foreign intelligence services"},
+      {"id":"V02","type":"terrorist or extremist groups"},
+      {"id":"V03","type":"criminal groups"},
+      {"id":"V04","type":"individual hackers"},
+      {"id":"V05","type":"competing organizations"},
+      {"id":"V06","type":"software or hardware/software developers"},
+      {"id":"V07","type":"software, hardware/software or supporting-system suppliers"},
+      {"id":"V08","type":"communications or computing service providers"},
+      {"id":"V09","type":"installation, configuration, testing or commissioning contractors"},
+      {"id":"V10","type":"persons supporting systems, networks or supporting systems"},
+      {"id":"V11","type":"authorized system or network users"},
+      {"id":"V12","type":"system administrators or security administrators"},
+      {"id":"V13","type":"former employees or users"}
+    ],
+    "catalog_boundary":"The list may be extended for the activity domain; several types may be relevant to one system or network.",
+    "relevance_gate":["possible goal is evidenced","goal can lead to a defined negative consequence","corresponding risk or damage type is linked"],
+    "capability_dimensions":["competence","resources and equipment","motivation"],
+    "capability_levels":[
+      {"id":"N1","label":"basic"},{"id":"N2","label":"enhanced basic"},{"id":"N3","label":"medium"},{"id":"N4","label":"high"}
+    ],
+    "capability_boundary":"No violator type determines a capability level by itself; multiple capability levels may be relevant and collusion is assessed through combined evidenced capabilities.",
+    "access_categories":[
+      {"id":"EXTERNAL","criterion":"no right to enter the controlled area and/or no authorization authority for protected resources or components"},
+      {"id":"INTERNAL","criterion":"right to enter the controlled area and/or automated-access authority for resources or components","rights":["unprivileged","privileged"]}
+    ],
+    "intent_rules":[
+      {"category":"EXTERNAL","modes":["intentional"]},
+      {"category":"INTERNAL","modes":["intentional","unintentional"]}
+    ]
+  },
+  "technogenic_source_boundary":{
+    "conditional_scope":"May additionally be considered when reliability or resilience requirements apply, by holder/operator decision.",
+    "factors":["software, hardware or communications quality/reliability deficiencies","supporting-system deficiencies","unavailability of third-party services"],
+    "probability_basis":["historical occurrence statistics","expert assessment if statistics are absent"],
+    "outside_method_scope":"Identification of technogenic sources is governed by competent-authority rules and national standards; this Method does not define that identification process."
+  },
+  "realization_assessment":{
+    "methods":[
+      {"id":"M01","method":"exploit code, architecture, configuration, organizational or multifactor vulnerabilities"},
+      {"id":"M02","method":"introduce malicious software"},
+      {"id":"M03","method":"use undeclared software or hardware/software capabilities"},
+      {"id":"M04","method":"install software or hardware/software implants"},
+      {"id":"M05","method":"form or use timing or storage covert channels for confidential data"},
+      {"id":"M06","method":"intercept or measure emanations, interference or other fields to access confidential data in authentication hardware"},
+      {"id":"M07","method":"use invasive access to confidential data in authentication hardware"},
+      {"id":"M08","method":"compromise supply or installation, configuration, testing, commissioning, administration or service"},
+      {"id":"M09","method":"erroneous actions during creation or operation, including installation or configuration"}
+    ],
+    "catalog_boundary":"Methods may be extended for the architecture and operating conditions; one threat may have several realization methods.",
+    "actuality_gate":["mapped impact object","adversary capability permits the method","conditions exist or can be created for use against the object","usable interface is evidenced where required"],
+    "interface_types":[
+      {"id":"IF01","type":"external network interfaces"},
+      {"id":"IF02","type":"internal network interfaces connected, including through intermediates, to externally connected components"},
+      {"id":"IF03","type":"user interfaces"},
+      {"id":"IF04","type":"removable-media or peripheral interfaces"},
+      {"id":"IF05","type":"installation, configuration, testing, commissioning, administration, management or service interfaces"},
+      {"id":"IF06","type":"access to supplied components or components maintained or repaired by external organizations"}
+    ],
+    "interface_rules":["identify logical and physical interfaces","consider hardware, system, application and telecommunications levels","interface presence is not proof that a specific adversary can use it","creation uses planned architecture","operation additionally uses automated inventory results"]
+  },
+  "scenario_relevance_gate":{
+    "possible_threat_tuple":["violator or other threat source","impact object","realization method","negative consequence"],
+    "scenario_definition":"A sequence of possible tactics and corresponding techniques usable by an actual adversary with the relevant capability level, considering interface availability and the mapped realization method and impact object.",
+    "appendix_11_boundary":"The appendix provides main/typical tactics and techniques for scenario construction; it is not treated as an exhaustive universal attack catalogue.",
+    "creation_stage":{
+      "minimum":"At least one scenario for each realization method of each possible threat, for every actual adversary and applicable capability level.",
+      "relevance_decision":"At least one supported scenario makes the threat relevant for the system/network and supports control selection.",
+      "not_claimed":"One scenario is not asserted to be a complete operational scenario set."
+    },
+    "operation_stage":{
+      "requirement":"Determine multiple possible scenarios for every possible threat and each actual adversary/capability combination to assess effectiveness of implemented controls.",
+      "evidence_inputs":["automated inventory","vulnerability analysis","authorized penetration testing when applicable"],
+      "steps":[
+        {"order":1,"id":"ANALYZE_INPUTS","result":"system/network documentation, threat model, controls and planned automated tools reviewed"},
+        {"order":2,"id":"INVENTORY","result":"impact objects and interfaces inventoried"},
+        {"order":3,"id":"EXTERNAL_INTERFACES","result":"potentially usable external interfaces identified"},
+        {"order":4,"id":"INTERNAL_INTERFACES","result":"potentially usable internal interfaces identified"},
+        {"order":5,"id":"VULNERABILITIES","result":"relevant object/component vulnerabilities identified"},
+        {"order":6,"id":"PENETRATION_TESTING","result":"authorized testing supports exploitability or identifies additional scenarios"},
+        {"order":7,"id":"TACTIC_TECHNIQUE_SEQUENCE","result":"possible sequence found using capability and technical evidence"},
+        {"order":8,"id":"COMPOSE_SCENARIOS","result":"scenarios bound to impact objects, impact types and realization methods"}
+      ]
+    },
+    "decision_states":["POSSIBLE_THREAT","SCENARIO_PENDING","SCENARIO_SUPPORTED","RELEVANT","NOT_RELEVANT_WITH_RATIONALE","REASSESSMENT_REQUIRED"]
+  },
+  "red_team_attacks":[
+    {"id":"RT01","attack":"BDU entry is promoted directly to a relevant threat","blocked":true},
+    {"id":"RT02","attack":"listed violator type is marked relevant without goal/consequence linkage","blocked":true},
+    {"id":"RT03","attack":"capability N1-N4 is inferred only from violator type","blocked":true},
+    {"id":"RT04","attack":"external/internal category is assigned from a job title rather than actual rights/access","blocked":true},
+    {"id":"RT05","attack":"all insiders are assumed intentional","blocked":true},
+    {"id":"RT06","attack":"technogenic source identification is claimed to be fully defined by this Method","blocked":true},
+    {"id":"RT07","attack":"realization method is called actual without capability and enabling conditions","blocked":true},
+    {"id":"RT08","attack":"interface existence is treated as proof of exploitability","blocked":true},
+    {"id":"RT09","attack":"appendix tactics/techniques are treated as exhaustive","blocked":true},
+    {"id":"RT10","attack":"one creation-stage scenario is reused as a complete operational set","blocked":true},
+    {"id":"RT11","attack":"a penetration-test finding is generalized beyond its authorized scope and context","blocked":true},
+    {"id":"RT12","attack":"threat is marked relevant without a supported realization scenario","blocked":true}
+  ],
+  "evidence_artifacts":["source-data register","BDU snapshot reference and acquisition time","violator-type assessment","violator-goal record","negative-consequence mapping","risk/damage mapping","capability-dimension assessment","capability-level rationale","access-rights and controlled-zone evidence","intent-mode rationale","technogenic-scope decision","realization-method assessment","impact-object mapping","logical and physical interface inventory","creation-stage scenario record","operation-stage scenario set","vulnerability-analysis or authorized penetration-test record","threat relevance decision and rationale"],
+  "boundaries":{"no_bdu_auto_relevance":true,"no_violator_type_auto_relevance":true,"no_default_capability_level":true,"no_job_title_access_category":true,"no_intent_inference":true,"no_technogenic_auto_inclusion":true,"no_realization_method_auto_actuality":true,"no_interface_auto_exploitability":true,"no_appendix_catalog_exhaustiveness":true,"no_scenario_sequence_invented":true,"no_creation_operation_conflation":true,"no_unauthorized_pentest_authorization":true,"no_probability_formula_invented":true,"no_universal_adversary_profile":true,"public_text_is_secondary_access_route":true,"immutable_official_normative_bytes_pending":true,"independent_expert_review_pending":true},
+  "counts":{"violator_types":13,"capability_dimensions":3,"capability_levels":4,"access_categories":2,"intent_modes":3,"technogenic_factors":3,"realization_methods":9,"interface_types":6,"possible_threat_tuple_elements":4,"operation_scenario_steps":8,"decision_states":6,"red_team_attacks":12,"red_team_attacks_blocked":12,"evidence_artifacts":18,"evidence_nodes":18,"control_rules":64,"regression_cases":64},
+  "control_rules":[
+    {"id":"FTS-R001","rule":"PIN_FSTEC_2021_IDENTITY"},{"id":"FTS-R002","rule":"RETAIN_OFFICIAL_CURRENT_LIST_ROUTE"},{"id":"FTS-R003","rule":"KEEP_PRIMARY_BYTES_PENDING"},{"id":"FTS-R004","rule":"KEEP_PUBLIC_TEXT_SECONDARY"},{"id":"FTS-R005","rule":"KEEP_EXPERT_REVIEW_PENDING"},{"id":"FTS-R006","rule":"BDU_IS_INPUT_NOT_DECISION"},{"id":"FTS-R007","rule":"DEFINE_ANTHROPOGENIC_SOURCE"},{"id":"FTS-R008","rule":"PRESERVE_THIRTEEN_MAIN_VIOLATOR_TYPES"},
+    {"id":"FTS-R009","rule":"ALLOW_TRACEABLE_DOMAIN_VIOLATOR_EXTENSION"},{"id":"FTS-R010","rule":"ALLOW_MULTIPLE_RELEVANT_VIOLATOR_TYPES"},{"id":"FTS-R011","rule":"REQUIRE_VIOLATOR_GOAL"},{"id":"FTS-R012","rule":"LINK_GOAL_TO_NEGATIVE_CONSEQUENCE"},{"id":"FTS-R013","rule":"LINK_CONSEQUENCE_TO_RISK_DAMAGE"},{"id":"FTS-R014","rule":"PRESERVE_THREE_CAPABILITY_DIMENSIONS"},{"id":"FTS-R015","rule":"PRESERVE_N1_TO_N4_LEVELS"},{"id":"FTS-R016","rule":"DO_NOT_INFER_LEVEL_FROM_TYPE"},
+    {"id":"FTS-R017","rule":"ALLOW_MULTIPLE_CAPABILITY_LEVELS"},{"id":"FTS-R018","rule":"ASSESS_COLLUDED_COMBINED_CAPABILITY"},{"id":"FTS-R019","rule":"PRESERVE_EXTERNAL_CATEGORY_CRITERION"},{"id":"FTS-R020","rule":"PRESERVE_INTERNAL_CATEGORY_CRITERION"},{"id":"FTS-R021","rule":"BASE_CATEGORY_ON_ACTUAL_RIGHTS_ACCESS"},{"id":"FTS-R022","rule":"DISTINGUISH_PRIVILEGED_AND_UNPRIVILEGED_INTERNAL"},{"id":"FTS-R023","rule":"EXTERNAL_INTENTIONAL_MODE"},{"id":"FTS-R024","rule":"INTERNAL_INTENTIONAL_OR_UNINTENTIONAL"},
+    {"id":"FTS-R025","rule":"TECHNOGENIC_SCOPE_REQUIRES_DECISION"},{"id":"FTS-R026","rule":"PRESERVE_THREE_TECHNOGENIC_FACTORS"},{"id":"FTS-R027","rule":"USE_STATISTICS_WHEN_AVAILABLE"},{"id":"FTS-R028","rule":"ALLOW_EXPERT_ASSESSMENT_IF_NO_STATISTICS"},{"id":"FTS-R029","rule":"KEEP_TECHNOGENIC_IDENTIFICATION_OUTSIDE_METHOD_SCOPE"},{"id":"FTS-R030","rule":"PRESERVE_NINE_MAIN_REALIZATION_METHODS"},{"id":"FTS-R031","rule":"ALLOW_TRACEABLE_METHOD_EXTENSION"},{"id":"FTS-R032","rule":"ALLOW_MULTIPLE_METHODS_PER_THREAT"},
+    {"id":"FTS-R033","rule":"MAP_METHOD_TO_IMPACT_OBJECT"},{"id":"FTS-R034","rule":"REQUIRE_CAPABILITY_FOR_METHOD"},{"id":"FTS-R035","rule":"REQUIRE_ENABLING_CONDITIONS"},{"id":"FTS-R036","rule":"REQUIRE_USABLE_INTERFACE_WHEN_APPLICABLE"},{"id":"FTS-R037","rule":"PRESERVE_SIX_INTERFACE_TYPES"},{"id":"FTS-R038","rule":"INVENTORY_LOGICAL_INTERFACES"},{"id":"FTS-R039","rule":"INVENTORY_PHYSICAL_INTERFACES"},{"id":"FTS-R040","rule":"CHECK_FOUR_TECHNICAL_LEVELS"},
+    {"id":"FTS-R041","rule":"INTERFACE_PRESENCE_NOT_EXPLOITABILITY"},{"id":"FTS-R042","rule":"CREATION_USES_PLANNED_ARCHITECTURE"},{"id":"FTS-R043","rule":"OPERATION_USES_AUTOMATED_INVENTORY"},{"id":"FTS-R044","rule":"PRESERVE_FOUR_ELEMENT_THREAT_TUPLE"},{"id":"FTS-R045","rule":"REQUIRE_SOURCE_ELEMENT"},{"id":"FTS-R046","rule":"REQUIRE_IMPACT_OBJECT_ELEMENT"},{"id":"FTS-R047","rule":"REQUIRE_REALIZATION_METHOD_ELEMENT"},{"id":"FTS-R048","rule":"REQUIRE_NEGATIVE_CONSEQUENCE_ELEMENT"},
+    {"id":"FTS-R049","rule":"RELEVANCE_REQUIRES_SCENARIO"},{"id":"FTS-R050","rule":"SCENARIO_BINDS_METHOD_OBJECT_AND_IMPACT"},{"id":"FTS-R051","rule":"SCENARIO_USES_CAPABILITY_COMPATIBLE_SEQUENCE"},{"id":"FTS-R052","rule":"SCENARIO_CHECKS_INTERFACE_AVAILABILITY"},{"id":"FTS-R053","rule":"APPENDIX_ELEVEN_NOT_EXHAUSTIVE"},{"id":"FTS-R054","rule":"CREATION_REQUIRES_AT_LEAST_ONE_SCENARIO_PER_METHOD"},{"id":"FTS-R055","rule":"CREATION_SCENARIO_PER_ADVERSARY_CAPABILITY"},{"id":"FTS-R056","rule":"ONE_SUPPORTED_SCENARIO_MAKES_THREAT_RELEVANT"},
+    {"id":"FTS-R057","rule":"ONE_CREATION_SCENARIO_NOT_COMPLETE_OPERATION_SET"},{"id":"FTS-R058","rule":"OPERATION_REQUIRES_MULTIPLE_POSSIBLE_SCENARIOS"},{"id":"FTS-R059","rule":"OPERATION_USES_INVENTORY_VULNERABILITY_TEST_EVIDENCE"},{"id":"FTS-R060","rule":"PRESERVE_EIGHT_OPERATION_STEPS"},{"id":"FTS-R061","rule":"PENTEST_MUST_BE_AUTHORIZED_AND_CONTEXT_BOUND"},{"id":"FTS-R062","rule":"BLOCK_ALL_TWELVE_RED_TEAM_ATTACKS"},{"id":"FTS-R063","rule":"REQUIRE_EIGHTEEN_EVIDENCE_ARTIFACTS"},{"id":"FTS-R064","rule":"PASS_ONLY_ADVERSARY_METHOD_SCENARIO_SCOPE"}
+  ],
+  "evidence_nodes":[
+    {"id":"E01","claim":"OFFICIAL_DOCUMENT_IDENTITY","source":"official_page"},{"id":"E02","claim":"CURRENT_LIST_ROUTE","source":"official_current_list"},{"id":"E03","claim":"ANTHROPOGENIC_SOURCE_AND_INPUTS","locator":"5.1.1-5.1.2"},{"id":"E04","claim":"THIRTEEN_VIOLATOR_TYPES","locator":"5.1.3"},{"id":"E05","claim":"VIOLATOR_RELEVANCE_GATE","locator":"5.1.4"},{"id":"E06","claim":"CAPABILITY_DIMENSIONS_AND_LEVELS","locator":"5.1.5"},{"id":"E07","claim":"ACCESS_CATEGORIES","locator":"5.1.6"},{"id":"E08","claim":"INTENT_MODES","locator":"5.1.7"},{"id":"E09","claim":"TECHNOGENIC_BOUNDARY","locator":"5.1.8"},{"id":"E10","claim":"SOURCE_ASSESSMENT_OUTPUT","locator":"5.1.9"},{"id":"E11","claim":"REALIZATION_INPUTS_AND_NINE_METHODS","locator":"5.2.1-5.2.3"},{"id":"E12","claim":"ACTUALITY_GATE","locator":"5.2.3"},{"id":"E13","claim":"SIX_INTERFACE_TYPES","locator":"5.2.4"},{"id":"E14","claim":"CREATION_OPERATION_INTERFACE_EVIDENCE","locator":"5.2.5-5.2.6"},{"id":"E15","claim":"FOUR_ELEMENT_THREAT_TUPLE","locator":"5.3.1-5.3.3"},{"id":"E16","claim":"SCENARIO_DEFINITION","locator":"5.3.4"},{"id":"E17","claim":"CREATION_AND_OPERATION_SCENARIO_RULES","locator":"5.3.5"},{"id":"E18","claim":"EIGHT_OPERATION_SCENARIO_STEPS","locator":"5.3.6"}
+  ]
+}
