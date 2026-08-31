@@ -1,0 +1,59 @@
+schema_version: "1.0"
+id: RU-PROTECTED-INFORMATION-MASTER-DELTA-STREAM3-2026-08-31T1424Z
+kind: master_inventory_delta
+stream: 3
+checked_at: "2026-08-31T17:24:50+03:00"
+
+source_delta:
+  - id: SEC-SRC-RU-CEC-217-1679-8-2026
+    action: ADD_DISCOVERED_PENDING_PRIMARY_PROOF
+    canonical_record: "source/SEC-SRC-RU-CEC-217-1679-8-2026.yaml"
+    capture_manifest: "manifests/SEC-SRC-RU-CEC-217-1679-8-2026-capture-pending.json"
+    sectors:
+      - public_sector
+      - elections
+      - personal_data
+      - records_management
+      - archives_retention
+      - confidential_information
+    proof_state: PRIMARY_OFFICIAL_LOCATOR_NOT_RESOLVED_EXACT_BYTES_PENDING
+    primary_publication_verified: false
+    downloaded_exact: false
+    immutable: false
+
+counter_delta_this_pass:
+  found: 1
+  downloaded: 0
+  immutable: 0
+  pending: 1
+  reused: 0
+  primary_publication_verified: 0
+
+capture_ledger_reconciliation:
+  authoritative_file: "SECTOR_ACQUISITION_RUN.json"
+  identity_scope: "document.official_publication_id only"
+  current_targets_with_official_publication_id: 22
+  current_raw_downloaded_exact: 22
+  current_immutable_sha256_verified: 22
+  current_pending_inside_that_capture_scope: 0
+  note: >-
+    SEC-SRC-RU-CEC-217-1679-8-2026 is not added to the publication-ID acquisition run until an exact official
+    publication locator/identity is resolved. Therefore the capture-run counters remain 22/22/22/0 while the
+    discovery master delta records one new pending source. These are different scopes and must not be merged.
+
+relationships_added:
+  - "152-ФЗ -> direct PDN overlap"
+  - "67-ФЗ -> election records legal context"
+  - "20-ФЗ -> GAS Vybory records context"
+  - "125-ФЗ -> archives/retention"
+  - "CEC 49/463-4 -> confidentiality/access overlap"
+  - "CEC 218/1683-8 -> successor dependency reconciliation"
+  - "CEC 218/1684-8 -> successor dependency reconciliation"
+
+quality_gates:
+  taxonomy_seed_used_as_proof: false
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+  fabricated_binary_metadata: false
+  universal_retention_inferred: false
+  exact_capture_required_before_immutable: true
