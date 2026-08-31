@@ -59,10 +59,10 @@ canonical_source:
       current_revision_proof_required: "explicit 265-ФЗ citation OR complete Article 12 part 2 wording fingerprint introduced on 26.07.2026"
       evidence_note: >-
         The Government portal hosts the 152-FZ document page, but route identity alone does not prove the
-        26.07.2026 consolidation. This route remains transport-only and may be accepted only when live returned
-        bytes pass the 152-FZ/personal-data identity gate and independently prove the pinned current revision.
-        Current-revision proof may be the explicit 265-FZ amendment citation or the complete revision-specific
-        Article 12 part 2 delta fingerprint. No semantic or extraction status is promoted from route registration.
+        26.07.2026 consolidation. A search-indexed copy available on 31.08.2026 was crawled before the July 2026
+        amendment and ends its visible amendment chain at 28.02.2025 No. 23-FZ; that indexed copy is therefore
+        historical evidence only. The live Government route remains guarded rather than rejected because live bytes
+        could not be retrieved in this pass. Acceptance still requires returned bytes proving the pinned current revision.
   evidence_note: >-
     Current-law indexes rechecked on 31.08.2026 identify Federal Law No. 152-FZ as revised on 26.07.2026 and
     include Federal Law No. 265-FZ in the amendment chain. The current Article 12 part 2 wording contains a
@@ -101,6 +101,15 @@ version_evidence:
       Official IPS search/index content for this exact route exposes a 152-FZ consolidation whose amendment chain
       ends at 24.06.2025 No. 156-FZ and whose Article 12 part 2 is pre-265-FZ. Treat this route as stale negative
       provenance for the current 26.07.2026 root; it cannot satisfy the immutable current-revision gate.
+  - publisher: "Правительство России"
+    kind: indexed_official_page_staleness_warning
+    checked_at: "2026-08-31"
+    route: "https://government.ru/docs/all/98196/"
+    supports: >-
+      The search-indexed Government copy exposed on 31.08.2026 was crawled before the 26.07.2026 amendment and its
+      displayed amendment chain ends at 28.02.2025 No. 23-FZ. It is retained only as proof that indexed/cached text
+      cannot satisfy current-revision capture. The live route remains eligible only if fresh returned bytes pass the
+      existing 265-FZ or Article-12 2026 delta gate.
 
 capture:
   raw_artifact_ref: ""
@@ -110,9 +119,9 @@ capture:
   fingerprint_status: PENDING_CURRENT_CONSOLIDATED_RAW_CAPTURE
   semantic_status: UNCHANGED
   last_attempt:
-    observed_at: "2026-08-30T17:35:13.955194Z"
-    run_started_at: "2026-08-30T17:13:36.869998Z"
-    run_finished_at: "2026-08-30T17:13:36.924673Z"
+    observed_at: "2026-08-31T08:31:22.850168Z"
+    run_started_at: "2026-08-31T08:11:30.142177Z"
+    run_finished_at: "2026-08-31T08:31:30Z"
     route: registered_official_multi_route
     result: ALL_REGISTERED_ROUTES_FAILED
     failure_classes:
@@ -120,32 +129,32 @@ capture:
       - CURRENT_REVISION_MARKER_MISS
       - ALL_REGISTERED_ROUTES_FAILED
     detail: >-
-      Latest accepted GitHub acquisition telemetry observed on 30.08.2026 shows HTTPS pravo.gov.ru,
-      ips.pravo.gov.ru and Government transports timing out, while available official responses failed the required
-      152-FZ/personal-data/current-revision markers or the IPS print route returned HTTP 500. No failed response was
-      promoted and no byte/hash evidence was fabricated.
+      Latest proven GitHub acquisition run #196 on 31.08.2026 retried the canonical IPS route, the already-rejected
+      stale API route, print rendering, Government route, urllib canonical fallback and www.pravo.gov.ru alias.
+      HTTPS transports timed out or returned HTTP 500; responses that arrived did not prove the mandatory 26.07.2026
+      revision. No response was promoted and no MIME, byte length, SHA-256 or immutable artifact was fabricated.
     telemetry_source: "security-corpora/RU/152-FZ/PDN_ACQUISITION_RUN.json#dedicated_route_attempt_telemetry.current_root_curl"
+    workflow_run_url: "https://github.com/VictorKVS/KNOWLEDGE_CORE/actions/runs/33371717169"
     proof_floor_held: true
     semantic_promotion: false
   runtime_probe:
-    observed_at: "2026-08-31T02:05:35Z"
+    observed_at: "2026-08-31T10:55:34Z"
     routes_probed:
-      - "https://ips.pravo.gov.ru/api/ips/legislation/document?baseid=None&hash=98490812b3409e2a8d78a11ca9010f434ea3d9250a11dbbdb78690cd5551bdd6"
-      - "https://pravo.gov.ru/proxy/ips/?docbody=&nd=102108261"
+      - "http://pravo.gov.ru/proxy/ips/?docbody=&link_id=0&nd=102108261&intelsearch=&firstDoc=1"
       - "https://government.ru/docs/all/98196/"
     result: TEMPORARY_DNS_RESOLUTION_FAILURE_IN_RUNTIME
-    transport_detail: "Fresh byte-exact probe on 31.08.2026 returned curl exit 6 / HTTP 000 / zero response bytes for pravo.gov.ru, ips.pravo.gov.ru and government.ru; no response bytes were accepted."
+    transport_detail: "Fresh byte-exact curl probe on 31.08.2026 returned curl exit 6 for pravo.gov.ru and government.ru; no response bytes were accepted."
     proof_effect: NONE
     retry_policy: KEEP_GUARDED_RETRY_ENABLED
   acquisition_request:
     status: RETRY_REQUIRED_GUARDED
-    requested_at: "2026-08-31T02:05:35Z"
-    route: official_registered_multi_route_snapshot_including_ips_api_and_print_rendering
+    requested_at: "2026-08-31T10:55:34Z"
+    route: official_registered_multi_route_snapshot_with_current_revision_content_gate
     reason: >-
       Require exact returned bytes, retrieved_at, MIME, byte length, SHA-256, 152-FZ/personal-data identity
       validation, current-edition proof by explicit 265-FZ citation or full Article 12 2026 delta fingerprint,
-      accepted manifest, and locator review before immutable or extraction promotion. The API/print routes are
-      transport candidates only and cannot weaken proof.
+      accepted manifest, and locator review before immutable or extraction promotion. Indexed/cached copies and
+      rejected stale routes cannot weaken proof.
   note: >-
     The current revision identity is cross-verified, but a byte-exact official consolidated snapshot of the
     26.07.2026 text has not yet passed guarded capture. Do not promote to METADATA_VERIFIED_FOR_EXTRACTION.
