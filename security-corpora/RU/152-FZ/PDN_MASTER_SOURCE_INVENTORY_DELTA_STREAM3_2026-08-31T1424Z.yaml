@@ -1,0 +1,54 @@
+schema_version: "1.0"
+id: PDN-MASTER-SOURCE-INVENTORY-DELTA-STREAM3-2026-08-31T1424Z
+kind: pdn_master_inventory_sector_overlay_delta
+stream: 3
+checked_at: "2026-08-31T17:24:50+03:00"
+
+source_overlay:
+  id: SEC-SRC-RU-CEC-217-1679-8-2026
+  document: "Постановление ЦИК России от 11.02.2026 № 217/1679-8 «О вопросах организации делопроизводства в избирательных комиссиях»"
+  role: sector_records_management_confidentiality_archival_retention_overlap
+  canonical_record: "../protected-information/source/SEC-SRC-RU-CEC-217-1679-8-2026.yaml"
+  metadata_status: CURRENT_TEXT_CROSSCHECKED_PRIMARY_PUBLICATION_LOCATOR_PENDING
+  raw_capture: PENDING
+  verified_for_extraction: false
+  applicability: SECTOR_CONTEXT_ONLY_PENDING_PRIMARY_PROOF
+
+pdn_anchors:
+  - "special handling of documents containing personal data"
+  - "restricted/confidential records-management controls"
+  - "record-series retention via nomenclature/applicable archival list or other normative act"
+  - "archival appraisal, transfer and destruction workflow after retention expiry"
+
+retention_guard: >-
+  No universal numeric PDN retention period is imported from this act. Permanent, long-term (>10 years) and temporary
+  (<=10 years) are records-management classes; the concrete term comes from the nomenclature and applicable archival
+  list or another normative act. Voter-list retention under 67-FZ is not generalized to all election-commission records.
+
+dependency_reconciliation:
+  status: OPEN_REFERENCE_DRIFT_REVIEW
+  note: >-
+    The 11.02.2026 instruction references the then-current voter-registration/GAS regulatory stack. CEC resolutions
+    218/1683-8 and 218/1684-8 of 25.02.2026 subsequently replaced the relevant special rules. Treat this as reference
+    chain drift requiring successor routing, not as an automatic legal conflict or proof that superseded acts remain active.
+
+counter_delta_this_pass:
+  sector_overlay_found: 1
+  downloaded: 0
+  immutable: 0
+  pending_primary_exact_capture: 1
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+
+master_counter_policy:
+  core_pdn_production_counters_changed: false
+  reason: >-
+    PDN_MASTER_SOURCE_INVENTORY production_counters track the direct PDN root/dependency corpus. This sector act is
+    registered as an overlay delta and must not inflate direct-corpus identified/immutable counters before primary proof
+    and an explicit merge decision.
+
+proof_guards:
+  - "TAXONOMY_SEED_NOT_LEGAL_PROOF"
+  - "SECONDARY_TEXT_NOT_PRIMARY_PROOF"
+  - "NO_APPLICABILITY_PROMOTION_WITHOUT_PRIMARY_RULE_MATCH"
+  - "NO_FABRICATED_MIME_BYTE_LENGTH_OR_SHA256"
