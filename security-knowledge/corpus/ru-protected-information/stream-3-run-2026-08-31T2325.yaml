@@ -1,0 +1,148 @@
+schema_version: "1.0"
+stream: 3
+run_at: "2026-08-31T23:25:50+03:00"
+objective: "continue sector/special-regime primary-source discovery, exact capture, deduplication, relationship linking and master reconciliation"
+
+selected_sources:
+  - id: SEC-SRC-RU-MINTSIFRY-ORDER-453-2023
+    act: "Приказ Минцифры России от 12.05.2023 № 453 о порядке обработки биометрических ПДн и векторов ЕБС"
+    action: NEW_CANONICAL_SOURCE_REGISTERED
+    sector_overlap:
+      - biometrics
+      - personal_data
+      - identity_authentication
+      - public_digital_infrastructure
+      - finance_overlap
+
+repository_dedupe:
+  canonical_path: "security-corpora/RU/protected-information/source/SEC-SRC-RU-MINTSIFRY-ORDER-453-2023.yaml"
+  direct_path_probe_before_write: NOT_FOUND_404
+  existing_related_nodes:
+    - SEC-SRC-RU-FZ-572-2022
+    - SEC-SRC-RU-PP-408-2024
+  result: NEW_CANONICAL_NODE_CREATED
+  found_counter_increment: 1
+  reused_counter_increment: 0
+
+primary_proof:
+  original_official_publication_id: "0001202305310045"
+  original_official_publication_date: "2023-05-31"
+  original_official_url: "https://publication.pravo.gov.ru/document/0001202305310045"
+  minjust: "30.05.2023 № 73620"
+  current_2026_control_crosscheck: "Приказ Минцифры России от 27.04.2026 № 371 lists Order 453 and its official publication locator"
+  primary_original_publication_verified: true
+  primary_publication_counter_increment: 1
+  exact_binary_proof: PENDING
+
+version_chain:
+  state: CURRENT_EDITION_2025_06_19_CROSSCHECKED
+  current_revision_effective_from: "2025-09-28"
+  amendments:
+    - act: "Приказ Минцифры России от 29.11.2023 № 1024"
+      publication_id: "0001202401120014"
+      minjust: "12.01.2024 № 76840"
+      effective_from: "2024-01-23"
+    - act: "Приказ Минцифры России от 19.06.2025 № 553"
+      publication_id: "0001202509170002"
+      minjust: "17.09.2025 № 83555"
+      effective_from: "2025-09-28"
+  later_enacted_amendment_located_in_this_sweep: false
+  2026_project_promoted: false
+  scheduled_expiry: "2029-06-01"
+  specific_provision_sunset: "2027-01-01"
+
+normative_findings:
+  - "Appendix 1 clause 20: EBS biometric data general storage is at least 50 years from placement."
+  - "Appendix 1 clause 20: specified placement-route exception is at least 5 years from placement."
+  - "Appendix 1 clause 21: specified-route biometrics are stored separately from other placement routes."
+  - "Appendix 3 clause 3: storing authentication biometrics in specified accredited systems is prohibited except complaint/dispute handling, capped at 10 days from provision for authentication."
+  - "Security measures expressly reference Article 19 of 152-FZ and cryptographic protection under the 572-FZ threat model."
+
+retention:
+  universal_biometric_pdn_retention: false
+  rules:
+    - scope: EBS_GENERAL
+      period: ">= 50 years"
+    - scope: EBS_SPECIFIED_PLACEMENT_ROUTE
+      period: ">= 5 years"
+    - scope: AUTHENTICATION_COMPLAINT_DISPUTE_EXCEPTION_IN_SPECIFIED_ACCREDITED_IS
+      period: "<= 10 days"
+  guards:
+    - "ROUTE_SPECIFIC_PERIODS_MUST_NOT_BE_COLLAPSED"
+    - "ORDER_EXPIRY_IS_NOT_RETENTION"
+    - "PARTIAL_SUNSET_IS_NOT_RETENTION"
+
+relationships:
+  reconciled:
+    - "Order 453 -> 572-FZ / direct implementing act"
+    - "Order 453 -> PP 408/2024 / biometric-type scope overlap"
+    - "Order 453 -> 152-FZ Article 11 / biometric PDN overlap"
+    - "Order 453 -> 152-FZ Article 19 / security measures"
+    - "Order 453 -> Bank of Russia / actor overlap only"
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+
+acquisition:
+  exact_binary_attempted: true
+  attempted_at: "2026-08-31T23:25:50+03:00"
+  targets:
+    - publication_id: "0001202305310045"
+      act: "Order 453"
+      result: DNS_RESOLUTION_FAILURE
+    - publication_id: "0001202401120014"
+      act: "Order 1024 amendment"
+      result: DNS_RESOLUTION_FAILURE
+    - publication_id: "0001202509170002"
+      act: "Order 553 amendment"
+      result: DNS_RESOLUTION_FAILURE
+  error_class: NameResolutionError
+  exact_bytes_obtained: false
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+  immutable_promotions: 0
+  retry_class: TRANSIENT
+
+counter_delta_this_pass:
+  found: 1
+  downloaded: 0
+  immutable: 0
+  pending: 1
+  reused: 0
+  primary_publication_verified: 1
+
+capture_ledger_reconciliation:
+  authoritative_file: "security-corpora/RU/protected-information/SECTOR_ACQUISITION_RUN.json"
+  targets_with_official_publication_id: 22
+  raw_downloaded_exact: 22
+  immutable_sha256_verified: 22
+  pending_inside_that_capture_scope: 0
+  changed_this_pass: false
+  note: "The narrow exact-acquisition ledger and discovery/capture backlog have different scopes and are not merged mechanically."
+
+files_written:
+  - "security-corpora/RU/protected-information/source/SEC-SRC-RU-MINTSIFRY-ORDER-453-2023.yaml"
+  - "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-MINTSIFRY-ORDER-453-2023-capture-pending.json"
+  - "security-corpora/RU/protected-information/RU_PROTECTED_INFORMATION_MASTER_SOURCE_INVENTORY_DELTA_STREAM3_2026-08-31T2025Z.yaml"
+  - "security-corpora/RU/152-FZ/PDN_MASTER_SOURCE_INVENTORY_DELTA_STREAM3_2026-08-31T2025Z.yaml"
+  - "security-knowledge/corpus/ru-protected-information/stream-3-run-2026-08-31T2325.yaml"
+
+quality_gates:
+  taxonomy_as_evidence: false
+  primary_publication_identity_verified: true
+  current_version_crosschecked: true
+  exact_bytes_captured: false
+  applicability_invented: false
+  protected_secret_category_invented: false
+  fabricated_binary_metadata: false
+  downloaded_increment_without_bytes: false
+  immutable_increment_without_hash: false
+  universal_retention_inferred: false
+  duplicate_source_created: false
+
+next_actions:
+  - "Retry exact official bytes for 453/1024/553; compute MIME, byte length and SHA-256 only after successful capture, then store immutable artifacts/manifests."
+  - "Continue biometric stack discovery against other active 572-FZ subordinate acts without duplicating existing 572-FZ and PP 408 nodes."
+  - "Resume finance, communications, advertising/marketing, healthcare and archival-retention special-regime discovery after biometric proof-floor expansion."
