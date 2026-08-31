@@ -1,0 +1,142 @@
+schema_version: "1.0"
+stream: 3
+run_at: "2026-08-31T05:21:37+03:00"
+objective: "continue sector/special-regime primary-source discovery, exact capture, deduplication, relationship linking and master reconciliation"
+
+selected_sources:
+  - id: SEC-SRC-RU-FZ-20-2003
+    act: "Федеральный закон от 10.01.2003 № 20-ФЗ «О Государственной автоматизированной системе Российской Федерации «Выборы»»"
+    action: NEW_CANONICAL_SOURCE_REGISTERED
+    sector_overlap:
+      - public_sector
+      - personal_data
+      - elections
+      - identity_registry
+      - information_security
+      - communications
+
+repository_dedupe:
+  fz_20_2003:
+    canonical_id_probe: "SEC-SRC-RU-FZ-20-2003"
+    canonical_path_probe: "security-corpora/RU/protected-information/source/SEC-SRC-RU-FZ-20-2003.yaml"
+    prior_node_found: false
+    prior_relationship_reference_found: true
+    relationship_source: SEC-SRC-RU-FZ-67-2002
+    result: NEW_CANONICAL_NODE_CREATED
+    found_counter_increment: 1
+    reused_counter_increment: 0
+
+primary_proof:
+  fz_20_2003:
+    original_official_publications:
+      - "Российская газета, № 5, 15.01.2003"
+      - "Парламентская газета, № 7, 15.01.2003"
+      - "Собрание законодательства РФ, № 2, 13.01.2003, ст. 172"
+    current_consolidated_edition_crosscheck: "2025-05-23"
+    latest_amendment: "Федеральный закон от 23.05.2025 № 115-ФЗ"
+    latest_amendment_official_newspaper: "https://rg.ru/documents/2025/05/29/fz115-dok.html"
+    latest_amendment_official_portal_locator_candidate: "https://publication.pravo.gov.ru/document/0001202505230024"
+    latest_amendment_portal_direct_fetch: TIMEOUT_NOT_USED_AS_SOLE_PROOF
+
+normative_findings:
+  - "Article 16 explicitly places personal data for voters, referendum participants, candidates, trusted/authorized representatives and commission members inside GAS Vybory information resources; specific field lists are controlled by federal laws."
+  - "Article 17(2) makes PDN-containing GAS resources federal information resources and requires confidential formation, storage and use."
+  - "Article 18 restricts PDN-resource access by role/need, gives citizens access to their own personal data and requires federal-law authority for public officials."
+  - "Article 20 allows non-election use only through federal laws/CEC normative acts and preserves accuracy, integrity and election-function priority."
+  - "Article 21 creates an explicit security-control layer including certification, anti-unauthorized-access controls, authenticity/integrity, transmission protection, readiness checks, approved operations documentation, asset/workability preservation and trained personnel."
+  - "Article 22 permits regulated use of public/departmental/other communications networks without converting every data element into telecom secrecy."
+  - "Article 24 establishes liability for violations of protection, processing and use, including personal-data resources."
+
+retention:
+  universal_numeric_gas_resource_retention_in_20_fz: NOT_LOCATED
+  related_67_fz_voter_document_floor: "not generalized to all GAS Vybory resources"
+  next_required_primary_layer: "CEC normative acts governing formation, transfer, copying, storage, access and election-document archival lifecycle"
+  guards:
+    - "VOTER_LIST_RETENTION_NOT_GENERAL_GAS_RESOURCE_RETENTION"
+    - "NO_GENERAL_PDN_RETENTION_INFERRED"
+
+relationships:
+  reconciled:
+    - "20-FZ -> 67-FZ / direct GAS Vybory and voter-register companion relationship"
+    - "20-FZ -> 152-FZ / direct personal-data, confidentiality, access and protection overlap"
+    - "20-FZ -> 149-FZ / state information-system and information-security overlap"
+    - "20-FZ -> 126-FZ / communications-network overlap, without automatic telecom-secrecy promotion"
+    - "20-FZ -> 63-FZ / electronic-signature/document-workflow relationship requiring specific CEC act matching"
+    - "20-FZ -> 125-FZ / archival/storage applicability conditional on record-series and election-specific rule"
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+
+version_chain:
+  state: CURRENT_EDITION_2025_05_23_CONFIRMED_AS_OF_2026_08_31_VERSION_CHAIN_PARTIAL_PRIMARY_LOCATORS
+  modifying_acts_crosschecked:
+    - "25.12.2008 № 292-ФЗ"
+    - "08.05.2010 № 83-ФЗ"
+    - "11.07.2011 № 200-ФЗ"
+    - "28.12.2013 № 396-ФЗ"
+    - "12.03.2014 № 33-ФЗ"
+    - "29.05.2019 № 104-ФЗ"
+    - "14.03.2022 № 60-ФЗ"
+    - "10.07.2023 № 287-ФЗ"
+    - "23.05.2025 № 115-ФЗ"
+  later_amendment_after_2025_05_23_located_in_this_sweep: false
+  full_historical_primary_locator_chain_claimed: false
+
+acquisition:
+  exact_binary_attempted: true
+  latest_attempt: "2026-08-31T05:21:37+03:00"
+  targets:
+    - "https://tik2.spbik.spb.ru/tik/2/%D0%9E%20%D0%93%D0%BE%D1%81%D1%83%D0%B4%D0%B0%D1%80%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D0%BE%D0%B9%20%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D0%B9%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%B5.pdf"
+    - "https://rg.ru/documents/2025/05/29/fz115-dok.html"
+  result: TRANSIENT_DNS_DOWNLOAD_FAILURE
+  error: "Temporary failure in name resolution for both official exact-byte targets"
+  exact_bytes_obtained: false
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+  immutable_promotions: 0
+
+counters:
+  before:
+    found: 73
+    downloaded: 9
+    immutable: 9
+    pending: 62
+    reused: 4
+    primary_publication_verified: 42
+    sectors_registered: 32
+  after:
+    found: 74
+    downloaded: 9
+    immutable: 9
+    pending: 63
+    reused: 4
+    primary_publication_verified: 43
+    sectors_registered: 32
+
+files_written_or_updated:
+  - "security-corpora/RU/protected-information/source/SEC-SRC-RU-FZ-20-2003.yaml"
+  - "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-20-2003-capture-pending.json"
+  - "security-knowledge/corpus/ru-protected-information/master-inventory-delta-2026-08-31T0521.yaml"
+  - "security-knowledge/corpus/ru-personal-data/master-source-inventory-delta-stream3-2026-08-31T0521.yaml"
+  - "security-knowledge/corpus/ru-protected-information/stream-3-run-2026-08-31T0521.yaml"
+
+quality_gates:
+  primary_original_publication_metadata_verified: true
+  current_edition_verified: true
+  latest_amendment_official_publication_medium_verified: true
+  taxonomy_as_evidence: false
+  applicability_invented: false
+  fabricated_binary_metadata: false
+  downloaded_increment_without_bytes: false
+  immutable_increment_without_hash: false
+  duplicate_source_created: false
+  confidentiality_treated_as_new_secret_category: false
+  telecom_secret_inferred_from_network_use: false
+  general_pdn_retention_inferred: false
+
+next_actions:
+  - "Retry exact official bytes for the election-commission-hosted 20-FZ copy and official 115-FZ publication; calculate MIME, byte length and SHA-256 only after successful capture."
+  - "Discover and register current CEC primary acts governing GAS Vybory information-resource storage/access and election-document archival lifecycle."
+  - "Continue sector discovery across communications, advertising/marketing, biometrics and other RU Protected Information regimes with cross-sector dedupe."
