@@ -57,7 +57,7 @@ capture:
   sha256: ""
   fingerprint_status: PENDING_RAW_CAPTURE
   last_attempt:
-    observed_at: "2026-08-31T15:06:28.037658Z"
+    observed_at: "2026-08-31T21:09:48.973703Z"
     route: registered_official_multi_route
     result: ALL_REGISTERED_ROUTES_FAILED
     failure_classes:
@@ -67,30 +67,29 @@ capture:
       - ALL_REGISTERED_ROUTES_FAILED
     detail: >-
       Latest proven dedicated-route telemetry synchronized by GitHub Actions on 31.08.2026 retried the registered
-      PP687 official routes. The acquisition evidence remains transport/identity/current-revision gated and produced
-      no accepted current-revision bytes. No failed response was promoted and no byte length, MIME, SHA-256 or
-      immutable artifact was inferred.
+      PP687 official routes. The canonical Government/IPS transports produced timeouts, HTTP 500 responses or
+      responses without the required PP687 identity/current-revision fingerprint, so no current-revision bytes were
+      accepted. No failed response was promoted and no byte length, MIME, SHA-256 or immutable artifact was inferred.
     telemetry_source: "security-corpora/RU/152-FZ/PDN_ACQUISITION_RUN.json#dedicated_route_attempt_telemetry.pp687"
-    telemetry_commit: "a19861ba1c14eb09724db986fbc49ba45c5a71e4"
+    telemetry_commit: "ea0e37cf57e662b539ea55e5ab4c436386bc2149"
     proof_floor_held: true
     semantic_promotion: false
   runtime_probe:
-    observed_at: "2026-08-31T10:55:34Z"
+    observed_at: "2026-08-31T23:06:13Z"
     routes_probed:
       - "https://government.ru/docs/all/65436/"
       - "http://pravo.gov.ru/proxy/ips/?docbody=&link_id=0&nd=102124251&intelsearch=&firstDoc=1"
     result: TEMPORARY_DNS_RESOLUTION_FAILURE_IN_RUNTIME
-    transport_detail: "Fresh byte-exact curl probe on 31.08.2026 returned curl exit 6 for government.ru and pravo.gov.ru; no response bytes were accepted."
-    independent_freshness_result: CURRENT_REVISION_RECONFIRMED_FROM_OFFICIAL_GOVERNMENT_INDEXED_TEXT
-    proof_effect: METADATA_FRESHNESS_ONLY
+    transport_detail: "Fresh byte-exact curl probe returned curl exit 6 / HTTP 000 / 0 bytes for government.ru and pravo.gov.ru; no response bytes were accepted."
+    independent_freshness_result: CURRENT_REVISION_LAST_CONFIRMED_2026-08-31
+    proof_effect: NONE
     retry_policy: KEEP_GUARDED_RETRY_ENABLED
     note: >-
-      Fresh indexed official Government text still exposes the PP12 revision and validity-through-01.09.2030
-      fingerprint. That confirms metadata freshness only. The live byte transport was unavailable in this runtime,
-      therefore no MIME, byte length, SHA-256, raw artifact or manifest is inferred from indexed text.
+      The runtime transport failure is not version evidence. The last accepted freshness evidence remains the official
+      Government indexed text checked on 31.08.2026. No MIME, byte length, SHA-256, raw artifact or manifest is inferred.
   acquisition_request:
     status: RETRY_REQUIRED_GUARDED
-    requested_at: "2026-08-31T17:05:52Z"
+    requested_at: "2026-08-31T23:06:13Z"
     route: official_canonical_snapshot_with_registered_ips_print_and_www_fallback
     reason: >-
       Immutable promotion requires returned official bytes, retrieved_at, MIME, exact byte length, SHA-256,
@@ -111,7 +110,7 @@ relations:
     note: "PP RF No. 12 sets the validity of PP RF No. 687 through 01.09.2030."
 
 provenance:
-  checked_at: "2026-08-31"
+  checked_at: "2026-09-01"
   review_required: true
 
 agent_rule: >-
