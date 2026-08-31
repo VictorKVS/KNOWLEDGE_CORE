@@ -1,0 +1,138 @@
+schema_version: "1.0"
+stream: 3
+run_at: "2026-08-31T08:28:46+03:00"
+objective: "continue sector/special-regime primary-source discovery, exact capture, deduplication, relationship linking and master reconciliation"
+
+selected_sources:
+  - id: SEC-SRC-RU-CEC-49-463-4-2003
+    act: "Постановление ЦИК России от 03.11.2003 № 49/463-4 «О Перечне персональных данных и иной конфиденциальной информации, обрабатываемой в комплексах средств автоматизации Государственной автоматизированной системы Российской Федерации «Выборы», и организации доступа к этим сведениям»"
+    action: NEW_CANONICAL_SOURCE_REGISTERED
+    sector_overlap:
+      - public_sector
+      - personal_data
+      - elections
+      - identity_registry
+      - information_security
+      - access_control
+
+repository_dedupe:
+  canonical_id_probe: "SEC-SRC-RU-CEC-49-463-4-2003"
+  title_number_probe: "49/463-4"
+  prior_canonical_node_found: false
+  prior_relationship_reference_found: true
+  relationship_source: SEC-SRC-RU-FZ-20-2003
+  result: NEW_CANONICAL_NODE_CREATED
+  found_counter_increment: 1
+  reused_counter_increment: 0
+
+primary_proof:
+  original_official_publication_metadata: "Вестник Центральной избирательной комиссии Российской Федерации, 2003, № 21"
+  current_edition_crosscheck: "2025-07-30"
+  latest_amendment:
+    act: "Постановление ЦИК России от 30.07.2025 № 206/1591-8"
+    official_source: "Вестник Центральной избирательной комиссии Российской Федерации № 7 (484) 2025, pages 201-202"
+    official_pdf_url: "https://www.rcoit.ru/upload/iblock/d38/2ig80ppsnuwv2xjmpfw4y8wivxf0jk5g/vestnik_7_2025.pdf"
+    official_pdf_web_content_type: application/pdf
+    official_pdf_web_page_count: 208
+    direct_effect: "amends the access instruction approved by 49/463-4 and explicitly references the prior 19.11.2008 № 138/1018-5 amendment"
+  primary_publication_counter_increment: 0
+  primary_counter_guard: "Official current amendment edge is primary and verified, but the original 2003 primary publication file was not directly captured/verified in this run; base primary-publication counter remains conservative."
+
+normative_findings:
+  - "Appendix 1 enumerates restricted-access personal data, including identity, birth, address and identity-document data, with further fields constrained by federal-law authority."
+  - "Appendix 1 also treats passwords/cryptographic keys, security perimeters, access-control tables and protection-system functioning/security information as other confidential information."
+  - "Appendix 2 uses approved user lists, access matrices and administrator-configured personal identifiers as the access-control model."
+  - "Authorized users may disclose confidential information only to persons entitled under the instruction and federal election law."
+  - "Public-official requests for PDN access require a written request citing federal-law authority, data subject, requested volume and official purpose."
+  - "User duties include non-disclosure to unauthorized persons and prevention of leakage."
+  - "20/30-day periods in the official-access request route are operational request SLAs, not retention and not PDN-subject response periods."
+
+retention:
+  universal_numeric_retention_period_in_49_463_4: NOT_LOCATED
+  guards:
+    - "NO_GENERAL_PDN_RETENTION_INFERRED"
+    - "67_FZ_ELECTION_DOCUMENT_RETENTION_NOT_IMPORTED_TO_ALL_GAS_RESOURCES"
+    - "ARCHIVAL_AND_BACKUP_LIFECYCLE_REQUIRE_SEPARATE_PRIMARY_CEC_OR_ARCHIVAL_RULE"
+
+relationships:
+  reconciled:
+    - "49/463-4 -> 20-FZ / direct implementing access and confidentiality relationship"
+    - "49/463-4 -> 67-FZ / electoral-register and PDN relationship"
+    - "49/463-4 -> 152-FZ / direct PDN overlap"
+    - "49/463-4 -> 149-FZ / information-protection and access overlap"
+    - "49/463-4 -> 125-FZ / conditional archival relationship requiring record-series proof"
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+
+version_chain:
+  state: CURRENT_EDITION_2025_07_30_CONFIRMED_AS_OF_2026_08_31_VERSION_CHAIN_PARTIAL_PRIMARY_LOCATORS
+  modifying_acts_crosschecked:
+    - "19.11.2008 № 138/1018-5"
+    - "30.07.2025 № 206/1591-8"
+  later_amendment_after_2025_07_30_located_in_this_sweep: false
+  complete_historical_primary_locator_chain_claimed: false
+
+acquisition:
+  exact_binary_attempted: true
+  attempted_at: "2026-08-31T08:28:46+03:00"
+  target: "https://www.rcoit.ru/upload/iblock/d38/2ig80ppsnuwv2xjmpfw4y8wivxf0jk5g/vestnik_7_2025.pdf"
+  result: TRANSIENT_DOWNLOAD_FAILURE
+  web_parser_observation: "official PDF accessible as application/pdf, 208 pages; amendment text at PDF pages 201-202"
+  screenshot_validation_attempted: true
+  screenshot_result: "CACHE_MISS"
+  exact_bytes_obtained: false
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+  immutable_promotions: 0
+
+counters:
+  before:
+    found: 74
+    downloaded: 9
+    immutable: 9
+    pending: 63
+    reused: 4
+    primary_publication_verified: 43
+    sectors_registered: 32
+  after:
+    found: 75
+    downloaded: 9
+    immutable: 9
+    pending: 64
+    reused: 4
+    primary_publication_verified: 43
+    sectors_registered: 32
+
+files_written_or_updated:
+  - "security-corpora/RU/protected-information/source/SEC-SRC-RU-CEC-49-463-4-2003.yaml"
+  - "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-CEC-49-463-4-2003-capture-pending.json"
+  - "security-knowledge/corpus/ru-protected-information/master-inventory-delta-2026-08-31T0828.yaml"
+  - "security-knowledge/corpus/ru-personal-data/master-source-inventory-delta-stream3-2026-08-31T0828.yaml"
+  - "security-knowledge/corpus/ru-protected-information/stream-3-run-2026-08-31T0828.yaml"
+
+quality_gates:
+  taxonomy_as_evidence: false
+  current_primary_amendment_verified: true
+  base_original_primary_file_directly_captured: false
+  primary_publication_counter_overstated: false
+  applicability_invented: false
+  secret_category_invented: false
+  fabricated_binary_metadata: false
+  downloaded_increment_without_bytes: false
+  immutable_increment_without_hash: false
+  general_pdn_retention_inferred: false
+  duplicate_source_created: false
+
+next_candidates_discovered_not_promoted:
+  - act: "Постановление ЦИК России от 11.02.2026 № 217/1679-8 «О вопросах организации делопроизводства в избирательных комиссиях»"
+    why: "fresh election-records/closed-contour PDN/archives crossover; primary official file still required before promotion"
+  - act: "Постановление ЦИК России от 25.02.2026 № 218/1684-8 о Регламенте использования подсистемы «Регистр участников избирательного процесса» ГАС «Выборы»"
+    why: "fresh identity-registry flow involving МВД, ЕРН, ЕГР ЗАГС, СМЭВ, archival/reserve copies and media destruction; primary official file still required before promotion"
+
+next_actions:
+  - "Retry exact official bytes for the current CEC Vestnik amendment and locate/capture the original 2003 official issue or another exact official full-act file; compute MIME, byte length and SHA-256 only after successful capture."
+  - "Run proof-floor discovery on CEC 217/1679-8 and 218/1684-8 before any master promotion."
+  - "Continue priority discovery across communications, biometrics, advertising/marketing, healthcare, finance and sector retention with cross-sector deduplication."
