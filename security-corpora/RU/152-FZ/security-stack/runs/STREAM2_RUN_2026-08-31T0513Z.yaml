@@ -1,0 +1,122 @@
+schema_version: "1.0"
+id: STREAM2-RUN-2026-08-31T0513Z
+stream: 2
+kind: security-stack-primary-route-retry-and-version-chain-reconciliation
+created_at: "2026-08-31T05:13:05Z"
+status: FRESH_REVIEW_AND_RECONCILIATION_COMMITTED
+scope:
+  primary_domain: "152-FZ technical and cryptographic security stack"
+  focus:
+    - PP RF No. 1119 exact Government DOC artifact
+    - FSB Order No. 378 official publication artifact when SKZI is used in ISPDN
+    - FSB Orders No. 66/2005 and No. 173/2010 plus FAPSI No. 152/2001 exact official text routes
+    - FSTEC Order No. 21 replacement enactment gate
+    - FSTEC methodical-source route recovery
+    - version-chain reconciliation without neighboring-regime propagation
+
+fresh_status_review:
+  checked_at: "2026-08-31"
+  fstec21:
+    active_revision_date: "2020-05-14"
+    replacement_project: "169583"
+    proposed_effective_from: "2026-09-01"
+    result: PRIMARY_ENACTMENT_GATE_NOT_PASSED
+    observation: >-
+      Fresh 31.08.2026 searches still surface current materials describing 169583 as a project.
+      No primary final replacing order together with Minjust registration and official publication was found.
+      The project is therefore not promoted into the active PDN baseline.
+  fstec_threat_method_2021:
+    status: CURRENT_IMMUTABLE_CAPTURED
+    applicability: ISPDN_AND_OTHER_ENUMERATED_SYSTEMS
+    note: "Existing immutable artifact and manifest remain authoritative; no fingerprint changed in this run."
+  pp1119:
+    semantic_status: UNCHANGED
+    registered_primary_route: "https://government.ru/media/2012/11/3/53354/file/1119_pril.doc"
+    exact_primary_payload: PENDING
+    transport_result_this_run: ACQUISITION_ENV_DNS_RESOLUTION_FAILURE_GOVERNMENT_RU
+    fingerprint_status: PENDING
+  fsb378:
+    semantic_status: UNCHANGED
+    registered_primary_route: "https://rg.ru/documents/2014/09/17/zashita-dok.html"
+    exact_primary_payload: PENDING
+    transport_result_this_run: ACQUISITION_ENV_DNS_RESOLUTION_FAILURE_RG_RU
+    applicability: ISPDN_WHEN_SKZI_USED
+    fingerprint_status: PENDING
+  fsb66:
+    registered_primary_route: "https://pravo.gov.ru/proxy/ips/?docbody=&nd=102097894"
+    exact_primary_payload: PENDING
+    transport_result_this_run: ACQUISITION_ENV_DNS_RESOLUTION_FAILURE_PRAVO_GOV_RU
+    applicability: SKZI_LIFECYCLE_WHEN_APPLICABLE
+  fsb173:
+    registered_primary_route: "https://pravo.gov.ru/proxy/ips/?backlink=1&docbody=&nd=102139358&prevDoc=102155746"
+    exact_primary_payload: PENDING
+    transport_result_this_run: ACQUISITION_ENV_DNS_RESOLUTION_FAILURE_PRAVO_GOV_RU
+    pdn_skzi_locator: "Appendix point 1 -> PKZ-2005 point 50"
+  fapsi152:
+    registered_primary_route: "https://pravo.gov.ru/proxy/ips/?docbody=&nd=102095483"
+    exact_primary_payload: PENDING
+    transport_result_this_run: ACQUISITION_ENV_DNS_RESOLUTION_FAILURE_PRAVO_GOV_RU
+    applicability: SKZI_HANDLING_WHEN_APPLICABLE
+  fstec_maturity_method_2026:
+    registered_landing_page: "https://fstec.ru/dokumenty/vse-dokumenty/spetsialnye-normativnye-dokumenty/metodicheskij-dokument-ot-7-avgusta-2026-g"
+    attachment_payload: PENDING
+    transport_result_this_run: ACQUISITION_ENV_DNS_RESOLUTION_FAILURE_FSTEC_RU
+    applicability: ISPDN_MATURITY_ASSESSMENT_RECOMMENDATIONS_NOT_NEW_MANDATORY_MINIMA
+
+transport_observation:
+  observed_at: "2026-08-31T05:13:05.886950Z"
+  new_primary_bytes_captured: 0
+  environment:
+    government_ru: DNS_RESOLUTION_FAILURE
+    rg_ru: DNS_RESOLUTION_FAILURE
+    pravo_gov_ru: DNS_RESOLUTION_FAILURE
+    fstec_ru: DNS_RESOLUTION_FAILURE
+  rule: >-
+    These are transient transport observations only. They do not change legal status and do not authorize
+    mirror substitution or inferred MIME, byte length or SHA-256.
+
+version_chain_reconciliation:
+  finding: TWO_VERIFIED_EDGES_PRESENT_IN_SOURCE_CARDS_BUT_MISSING_FROM_MASTER_EDGE_LIST
+  add_edges:
+    - from: SEC-SRC-RU-FSTEC77-2021
+      type: AMENDED_BY
+      to: SEC-SRC-RU-FSTEC60-2026
+      effective_from: "2026-09-01"
+      provenance: OFFICIAL_PUBLICATION_AND_MINJUST_REGISTRATION
+      applicability: BOUNDED_ATTESTATION_SCOPE_NOT_GENERIC_PRIVATE_ISPDN
+    - from: SEC-SRC-RU-FSTEC164-2025
+      type: AMENDED_BY
+      to: SEC-SRC-RU-FSTEC487-2025
+      provenance: OFFICIAL_PUBLICATION
+      applicability: LICENSED_SZI_DEVELOPMENT_PRODUCTION_ACTIVITY_ONLY
+  verified_version_edges_before: 9
+  verified_version_edges_after_reconciliation: 11
+  document_counter_effect: NONE
+
+counter_state:
+  identified: 55
+  metadata_verified: 55
+  immutable_sha256_verified: 24
+  pending_raw_capture: 31
+  exact_official_route_unresolved: 8
+  confirmed_conflicts: 0
+  new_immutable_this_run: 0
+
+applicability_guard: >-
+  PP1119/FSTEC21 generic ISPDN duties remain separate from attestation, certification, licensed TZI/SZI activity,
+  broad SKZI lifecycle, KII/NCTKI and GosSOPKA branches. FSB378 is used only when SKZI use is established.
+  FSB66/173 and FAPSI152 require a proved SKZI lifecycle/handling edge. GosSOPKA/NCTKI material enters the PDN
+  branch only where an independently proved PDN computer-incident reporting edge exists.
+
+proof_floor: >-
+  IMMUTABLE_CAPTURED requires exact official payload bytes, observed MIME/signature, exact byte length,
+  computed SHA-256, immutable artifact and manifest. Search results, secondary mirrors, regulator notices
+  and route-negative evidence cannot satisfy this gate.
+
+next_priority:
+  - "retry PP1119 exact Government DOC"
+  - "retry FSB378 official publication bytes"
+  - "retry FSB66/173 and FAPSI152 official primary text bytes"
+  - "continue FSTEC205 exact-primary-route discovery"
+  - "recover pending FSTEC methodical attachments"
+  - "continue FSTEC21 replacement primary-enactment watch through 01.09.2026"
