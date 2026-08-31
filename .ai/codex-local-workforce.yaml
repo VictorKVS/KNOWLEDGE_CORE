@@ -1,0 +1,154 @@
+schema_version: "1.0"
+id: CODEX-LOCAL-WORKFORCE-SECURITY-KB
+status: ACTIVE
+purpose: >-
+  Run a local Codex workforce against KNOWLEDGE_CORE as parallel, evidence-bounded lanes
+  while preserving one auditable canonical Security Knowledge state.
+
+inherits:
+  - .ai/agent-collaboration-policy.yaml
+  - .ai/evidence-policy.yaml
+  - REPOSITORY_STRUCTURE_PROTECTION.yaml
+  - AGENTS.md
+  - security-knowledge/AGENTS.md
+
+control_plane:
+  canonical_repository: VictorKVS/KNOWLEDGE_CORE
+  canonical_branch: main
+  work_branch_prefix: codex/
+  protected_tree: security-knowledge
+  large_blob_env: KNOWLEDGE_CORE_BLOB_ROOT
+  content_address_algorithm: sha256
+  git_role: metadata_manifests_graph_code_audit
+  blob_store_role: large_immutable_originals
+
+execution:
+  strategy: parallel_independent_worktrees
+  recommended_active_lanes: 5
+  max_active_lanes_without_orchestrator_review: 6
+  one_claimed_task_per_lane: true
+  one_branch_per_lane: true
+  direct_main_writes: false
+  merge_requires:
+    - relevant_validators_green_or_failure_explained
+    - no_unrelated_diff
+    - evidence_gap_reported
+    - applicability_review_for_regulatory_changes
+    - inventory_reconciled_when_source_state_changes
+  concurrency_rules:
+    - do_not_edit_same_inventory_file_from_multiple_lanes
+    - source_card_and_binary_capture_may_be_parallel_only_if_final_reconciler_owns_merge
+    - reconciler_runs_after_source_lanes_rebase_or_merge
+    - qa_guard_does_not_silently_fix_legal_interpretation
+
+lanes:
+  - id: source_scout
+    lead_role: analyst_research_agent
+    mission: verify official identity, exact primary routes, status, publication/registration evidence and version-chain
+    outputs:
+      - source_card_delta
+      - primary_route_evidence
+      - version_edges
+      - evidence_gaps
+    prohibitions:
+      - no_secondary_copy_as_primary_immutable
+      - no_status_promotion_without_primary_evidence
+
+  - id: byte_acquirer
+    lead_role: security_agent
+    mission: capture exact official bytes and create deterministic immutable evidence
+    required_capture_fields:
+      - source_url
+      - retrieved_at_utc
+      - mime
+      - file_signature
+      - byte_length
+      - sha256
+      - artifact_ref
+      - manifest_ref
+    fail_closed: true
+    prohibitions:
+      - no_fabricated_capture_fields
+      - no_hash_from_unverified_or_partial_payload
+
+  - id: legal_applicability
+    lead_role: security_agent
+    mission: prove or reject applicability edges and prevent neighboring-regime leakage
+    outputs:
+      - applicability_guard
+      - rationale
+      - evidence_refs
+      - unresolved_questions
+    review_required_for:
+      - PDN_to_KII
+      - PDN_to_GosSOPKA
+      - PDN_to_licensing
+      - PDN_to_certification
+      - PDN_to_SKZI_lifecycle
+      - private_ISPDN_to_public_system_requirements
+
+  - id: taxonomy_classifier
+    lead_role: analyst_research_agent
+    mission: classify existing and incoming materials using the InfoSec taxonomy layer without changing legal applicability
+    taxonomy_seed: https://habr.com/ru/articles/432466/
+    roles_allowed: [CORE, CONDITIONAL, REFERENCE_ONLY]
+    outputs:
+      - primary_category
+      - secondary_categories
+      - taxonomy_roles
+      - classification_confidence
+      - provenance
+
+  - id: annotation_builder
+    lead_role: analyst_research_agent
+    mission: build concise expandable section/document explanations and glossary candidates
+    source_text_policy: paraphrase_only_for_third_party_guides
+    draft_marker: SOURCE_PARAPHRASE_DRAFT
+    outputs:
+      - section_summary
+      - document_summary
+      - why_it_matters
+      - related_categories
+      - glossary_candidates
+      - provenance
+
+  - id: reconciler
+    lead_role: programming_agent
+    mission: deterministically reconcile source cards, manifests, graph edges, master inventories and counters
+    owns_shared_inventory_writes: true
+    outputs:
+      - authoritative_counts
+      - reconciliation_report
+      - changed_ids
+      - unresolved_routes
+    prohibitions:
+      - no_manual_counter_inflation
+      - no_legal_status_invention
+
+  - id: qa_guard
+    lead_role: security_agent
+    mission: independently check provenance, immutable evidence, hash/size consistency, broken refs, version-chain and applicability leakage
+    outputs:
+      - qa_findings
+      - blockers
+      - regression_evidence
+    severity_high:
+      - invented_primary_evidence
+      - hash_or_size_mismatch
+      - draft_promoted_to_current
+      - cross_regime_requirement_leakage
+      - canonical_identity_duplication
+      - protected_path_reorganization
+
+handoff_contract:
+  each_lane_must_report:
+    - task_id
+    - branch_or_worktree
+    - changed_paths
+    - evidence_refs
+    - facts_confirmed
+    - facts_still_unknown
+    - tests_or_validators
+    - downstream_reconciliation_needed
+  final_integration_owner: reconciler
+  independent_final_review: qa_guard
