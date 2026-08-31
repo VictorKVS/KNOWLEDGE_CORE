@@ -17,7 +17,10 @@ STATUS_RE = re.compile(r"(?m)^status:\s*([^\s#]+)\s*$")
 PUB_RE = re.compile(r"(?m)^  official_publication_id:\s*[\"']?[0-9]{16}[\"']?\s*$")
 URL_RE = re.compile(r"(?m)^  url:\s*[\"'][^\"']+[\"']\s*$")
 AMENDED_BY_RE = re.compile(r"(?m)^  - type:\s*AMENDED_BY\s*$")
-APPLICABILITY_GUARD_RE = re.compile(r"(?m)^applicability_guard:\s*(?:>|>-|\|)?\s*$")
+# Source cards use both `applicability_guard:` and `applicability:` for explicit
+# fail-closed scope boundaries. Count either root-level form, but never nested
+# inventory-registration metadata.
+APPLICABILITY_GUARD_RE = re.compile(r"(?m)^(?:applicability_guard|applicability):\s*(?:>|>-|\|)?\s*$")
 
 
 def replace_scalar(text: str, key: str, value: object) -> str:
