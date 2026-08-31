@@ -1,0 +1,94 @@
+schema_version: "1.0"
+id: PDN-MASTER-SOURCE-INVENTORY-DELTA-STREAM3-2026-08-31T2025Z
+kind: pdn_master_inventory_sector_overlay_delta
+stream: 3
+checked_at: "2026-08-31T23:25:50+03:00"
+
+source_overlay:
+  id: SEC-SRC-RU-MINTSIFRY-ORDER-453-2023
+  document: "Приказ Минцифры России от 12.05.2023 № 453 о порядке обработки биометрических ПДн и векторов ЕБС"
+  role: biometric_pdn_processing_storage_security_and_authentication_copy_lifecycle
+  canonical_record: "../protected-information/source/SEC-SRC-RU-MINTSIFRY-ORDER-453-2023.yaml"
+  metadata_status: PRIMARY_PUBLICATION_VERIFIED_CURRENT_EDITION_2025_06_19_CROSSCHECKED
+  official_publication_id: "0001202305310045"
+  raw_capture: PENDING
+  verified_for_exact_extraction: false
+  applicability: DIRECT_572_FZ_EBS_AND_SPECIFIED_ACCREDITED_AUTHENTICATION_SYSTEMS
+
+pdn_anchors:
+  - locator: "Приложение № 1, пункт 20"
+    rule: "хранение размещенных в ЕБС биометрических ПДн не менее 50 лет со дня размещения"
+    scope: "general EBS placement route under Order 453"
+  - locator: "Приложение № 1, пункт 20"
+    rule: "для биометрических ПДн, размещенных по подпункту 3 пункта 1 Порядка размещения и обновления, не менее 5 лет"
+    scope: "specific EBS placement route only"
+  - locator: "Приложение № 1, пункт 21"
+    rule: "отдельное хранение биометрических ПДн специального маршрута подпункта 4 пункта 1"
+    scope: "segregated EBS storage requirement"
+  - locator: "Приложение № 3, пункт 3"
+    rule: >-
+      хранение биометрических ПДн, используемых для аутентификации в указанных аккредитованных системах, запрещено;
+      исключение для обращений/оспаривания ограничено сроком не более 10 суток с момента предоставления для аутентификации
+    scope: "authentication copy lifecycle, not EBS master storage"
+  - locator: "Приложение № 3, пункт 4"
+    rule: "организационные и технические меры защиты ПДн по статье 19 152-ФЗ"
+    scope: "specified accredited authentication systems"
+
+relations:
+  - target: "SEC-SRC-RU-FZ-572-2022"
+    type: DIRECT_IMPLEMENTING_ACT
+  - target: "SEC-SRC-RU-PP-408-2024"
+    type: DIRECT_BIOMETRIC_TYPE_SCOPE_OVERLAP
+  - target: "152-ФЗ статья 11"
+    type: BIOMETRIC_PDN_OVERLAP
+  - target: "152-ФЗ статья 19"
+    type: DIRECT_SECURITY_REQUIREMENT_REFERENCE
+  - target: "financial-sector actors including Bank of Russia"
+    type: ACTOR_OVERLAP_ONLY
+    guard: "banking secrecy requires a separate primary legal rule and protected-data-object match"
+
+retention_model:
+  universal_period: false
+  route_specific_rules:
+    - "EBS general: >= 50 years from placement"
+    - "specified EBS route: >= 5 years from placement"
+    - "authentication complaint/dispute exception in specified accredited IS: <= 10 days from provision for authentication"
+  guards:
+    - "DO_NOT_COLLAPSE_50Y_5Y_10D_INTO_ONE_RETENTION_RULE"
+    - "DO_NOT_APPLY_EBS_PERIODS_TO_UNRELATED_BIOMETRIC_SYSTEMS"
+    - "DO_NOT_APPLY_10D_AUTH_COPY_RULE_TO_EBS_MASTER_RECORD"
+    - "REGULATORY_EXPIRY_2029_IS_NOT_PDN_RETENTION"
+    - "SPECIFIC_PROVISION_SUNSET_2027_IS_NOT_PDN_RETENTION"
+
+version_state:
+  current_revision_date: "2025-06-19"
+  current_revision_effective_from: "2025-09-28"
+  amendment_chain:
+    - "29.11.2023 № 1024 / publication 0001202401120014 / Minjust 76840"
+    - "19.06.2025 № 553 / publication 0001202509170002 / Minjust 83555"
+  current_2026_control_list_confirms_order_453: true
+  later_enacted_amendment_located_this_sweep: false
+  draft_2026_treated_as_law: false
+
+counter_delta_this_pass:
+  sector_overlay_found: 1
+  primary_publication_verified: 1
+  downloaded: 0
+  immutable: 0
+  pending_primary_exact_capture: 1
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+
+master_counter_policy:
+  core_pdn_production_counters_changed: false
+  reason: >-
+    This is a sector/special-regime overlay tied to existing 572-FZ and 152-FZ anchors. It must not inflate the direct
+    PDN core exact/immutable counters before successful official exact-byte capture and explicit merge policy.
+
+proof_guards:
+  - "TAXONOMY_SEED_NOT_LEGAL_PROOF"
+  - "ROUTE_SPECIFIC_RETENTION_NOT_UNIVERSAL_RETENTION"
+  - "BANK_ACTOR_NOT_BANKING_SECRECY"
+  - "VOICE_BIOMETRIC_NOT_TELECOM_SECRECY"
+  - "NO_APPLICABILITY_PROMOTION_WITHOUT_PRIMARY_RULE_MATCH"
+  - "NO_FABRICATED_MIME_BYTE_LENGTH_OR_SHA256"
