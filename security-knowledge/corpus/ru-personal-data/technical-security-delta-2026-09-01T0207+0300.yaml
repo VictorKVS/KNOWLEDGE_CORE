@@ -1,0 +1,153 @@
+schema_version: 1
+pack_id: RU_PD_TECHNICAL_SECURITY_DELTA_2026_09_01T0207_0300
+applies_to: technical-security-source-pack.yaml
+retrieved_at: "2026-09-01T02:07:58+03:00"
+stream_id: RU_PD_STREAM_2_TECHNICAL_CRYPTO
+scope: >-
+  Incremental fail-closed status and acquisition pass for the Russian personal-data technical and
+  cryptographic contour. The run prioritizes PP 1119, FSTEC Order 21, the FSTEC 2021 threat
+  methodology and FSB Order 378, while keeping public-system, licensing, certification, KII and
+  GosSOPKA/NKTsKI requirements outside ordinary PDn logic unless an explicit applicability edge is proved.
+
+integrity_policy:
+  - "SOURCE_ACQUIRED/IMMUTABLE requires exact acquired bytes plus retrieved_at, MIME, byte_length and SHA-256 computed from those bytes."
+  - "Search-result text, portal PDF-size metadata, a rendered page or a secondary copy is not an immutable primary artifact."
+  - "When the official endpoint does not return exact bytes, artifact fields remain null and the source remains PENDING_IMMUTABLE."
+  - "A proposed effective date does not turn a draft into an enacted source; signature/registration/publication evidence is required."
+
+status_rechecks:
+  RU_GOV_PP_1119_2012:
+    result: CURRENT_EDITION_OFFICIAL_GOVERNMENT_PAGE_REVERIFIED_2026_09_01
+    official_source_url: "https://government.ru/docs/6339/"
+    official_page_evidence: >-
+      The Government portal continues to expose PP 1119 and labels the linked document as the
+      current edition. No repeal or replacement evidence was found in this pass.
+    applicability: CORE_ISPDN
+    artifact:
+      status: PENDING_IMMUTABLE
+      retrieved_at: null
+      mime: null
+      byte_length: null
+      sha256: null
+      blocker: "The available runtime verified the official page but did not return the exact linked DOC bytes."
+
+  RU_FSTEC_ORDER_21_2013:
+    result: PRIMARY_REPLACEMENT_ENACTMENT_NOT_PROVEN_AS_OF_2026_09_01T0207_0300
+    retained_baseline: "Order 21/2013 as amended by Orders 49/2017 and 68/2020"
+    verified_amendment_publications:
+      - source_id: RU_FSTEC_ORDER_49_2017
+        publication_number: "0001201704260010"
+        publication_date: 2017-04-26
+        official_url: "https://publication.pravo.gov.ru/document/0001201704260010"
+      - source_id: RU_FSTEC_ORDER_68_2020
+        publication_number: "0001202007100002"
+        publication_date: 2020-07-10
+        official_url: "https://publication.pravo.gov.ru/document/0001202007100002"
+    replacement_project:
+      project_id: "169583"
+      project_url: "https://regulation.gov.ru/projects/169583/"
+      public_discussion_end: 2026-08-08
+      proposed_effective_date: 2026-09-01
+      status: PRIMARY_ENACTMENT_NOT_PROVEN_FAIL_CLOSED_WATCH
+      note: >-
+        Fresh sources still describe 169583 as a project and the official-publication searches available
+        in this run did not yield a signed/registered/published replacing act. Because the proposed date
+        is today, this is an urgent watch item; do not infer repeal merely from the date in the draft.
+    decision: KEEP_ORDER_21_BASELINE_PROVISIONALLY_UNTIL_PRIMARY_REPLACEMENT_EVIDENCE
+    artifact:
+      status: PENDING_IMMUTABLE
+      retrieved_at: null
+      mime: null
+      byte_length: null
+      sha256: null
+
+  RU_FSTEC_THREAT_METHOD_2021:
+    result: PRIMARY_IDENTITY_AND_PDN_SCOPE_REVERIFIED_EXACT_BYTES_FAILED
+    approved_date: 2021-02-05
+    official_page_url: "https://fstec.ru/tekhnicheskaya-zashchita-informatsii/dokumenty/114-spetsialnye-normativnye-dokumenty/2170-metodicheskij-dokument-utverzhden-fstek-rossii-5-fevralya-2021-g"
+    official_file_url: "https://fstec.ru/component/attachments/download/2919"
+    applicability: THREAT_ASSESSMENT_INCLUDES_ISPDN
+    version_note: >-
+      The 2021 methodology remains the registered threat-assessment anchor in this pack. It explicitly
+      superseded the FSTEC 2008 PDn threat methodology for threat assessment; no later primary repeal
+      was established in this run.
+    artifact:
+      status: PENDING_IMMUTABLE
+      retrieved_at: null
+      mime: null
+      byte_length: null
+      sha256: null
+      blocker: "Direct official attachment retrieval timed out in the available runtime."
+
+  RU_FSB_ORDER_378_2014:
+    result: DIRECT_PDN_SKZI_BASELINE_REVERIFIED_2026_09_01
+    justice_registration_number: "33620"
+    official_publication_reference:
+      provider: Rossiyskaya_Gazeta
+      issue_date: 2014-09-17
+      issue_number: "211"
+      url: "https://rg.ru/documents/2014/09/17/zashita-dok.html"
+    current_status_evidence: >-
+      Current 2026 materials continue to reference Order 378 for ISPDn using SKZI; no repeal or
+      replacement evidence was established in this pass.
+    applicability: CONDITIONAL_SKZI_IN_ISPDN
+    applicability_gate: SKZI_USED_IN_ISPDN
+    artifact:
+      status: PENDING_IMMUTABLE
+      retrieved_at: null
+      mime: null
+      byte_length: null
+      sha256: null
+      blocker: "Exact authoritative binary/publication artifact was not returned by the available runtime."
+
+adjacent_source_watch:
+  RU_FSTEC_IS_PROTECTION_MEASURES_METHOD_2026:
+    title: "Состав и содержание мероприятий и мер по защите информации, содержащейся в информационных системах"
+    approved_date: 2026-04-12
+    information_message: "ФСТЭК России от 14.04.2026 № 240/22/2457"
+    status: WATCH_CANDIDATE_NOT_PROMOTED_TO_UNIVERSAL_PDN
+    reason: >-
+      The document is relevant to the newer FSTEC protection architecture and is referenced in current
+      technical-security materials, but this run did not obtain primary bytes plus a primary applicability
+      edge sufficient to replace the existing PDn-specific baseline.
+
+  RU_FSTEC_MATURITY_METHOD_2026:
+    title: "Методика оценки уровня зрелости деятельности в области технической защиты информации в информационных системах и обеспечения безопасности значимых объектов критической информационной инфраструктуры Российской Федерации"
+    approved_date: 2026-08-07
+    status: WATCH_CANDIDATE_CONTEXT_GATED
+    reason: >-
+      Register for follow-up because it is a current FSTEC method, but do not import its duties into the
+      ordinary PDn executable set until the applicable normative edge is proven from primary sources.
+
+  RU_NKTSKI_ORDER_2_2026:
+    signed_date: 2026-07-14
+    status: NOT_PROMOTED_TO_ORDINARY_PDN
+    reason: >-
+      Current reporting describes this order as governing GosSOPKA interaction for CII subjects, GosSOPKA
+      centers and organizations already bound through FZ-187 article 9 part 4. The existing FSB Order 77/2023
+      remains the direct PDn-specific incident bridge; no new general PDn applicability edge was proved here.
+
+acquisition_result:
+  exact_artifact_endpoint_attempts: 3
+  exact_artifact_successes: 0
+  immutable_artifacts_added: 0
+  bytes_downloaded: 0
+  sha256_recorded: 0
+  official_status_pages_reverified: 4
+  primary_replacement_enactments_found: 0
+  pending_artifact_manifest: "manifests/stream-2/2026-09-01T0207+0300.yaml"
+
+applicability_result:
+  new_executable_universal_pdn_duties: 0
+  adjacent_sources_promoted_to_pdn_core: 0
+  direct_pdn_crypto_baseline_retained: true
+  direct_pdn_gossopka_bridge_retained: RU_FSB_ORDER_77_2023
+  confirmed_legal_contradictions: 0
+
+next_priority:
+  - RU_FSTEC_ORDER_21_2013_project_169583_primary_enactment_watch_URGENT
+  - RU_GOV_PP_1119_2012_exact_current_official_DOC_bytes
+  - RU_FSTEC_THREAT_METHOD_2021_exact_official_attachment_2919
+  - RU_FSB_ORDER_378_2014_exact_authoritative_artifact
+  - RU_FSB_ORDER_66_2005_exact_artifact_and_Order_173_delta
+  - RU_FAPSI_ORDER_152_2001_exact_artifact
