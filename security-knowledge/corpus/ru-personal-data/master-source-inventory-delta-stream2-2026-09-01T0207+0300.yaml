@@ -1,0 +1,107 @@
+schema_version: 1
+delta_id: RU_PD_MASTER_SOURCE_INVENTORY_STREAM2_DELTA_2026_09_01T0207_0300
+applies_to: master-source-inventory.yaml
+created_at: "2026-09-01T02:07:58+03:00"
+stream_id: RU_PD_STREAM_2_TECHNICAL_CRYPTO
+merge_policy: >-
+  CONCURRENCY_SAFE_OVERLAY. Merge by source_id and stream_progress keys. Do not replace unrelated
+  stream-1/stream-3 fields. Exact-byte evidence controls SOURCE_ACQUIRED/IMMUTABLE. Status changes
+  around FSTEC project 169583 are fail-closed until primary enactment evidence is available.
+
+source_patches:
+  RU_GOV_PP_1119_2012:
+    registration_status: CURRENT_EDITION_OFFICIAL_GOVERNMENT_PAGE_REVERIFIED_2026_09_01
+    official_source_url: "https://government.ru/docs/6339/"
+    applicability: CORE_ISPDN
+    immutable_status: SOURCE_PENDING
+    artifact_manifest: "manifests/stream-2/2026-09-01T0207+0300.yaml"
+    status_note: "Government portal still labels the linked PP 1119 document as the current edition."
+
+  RU_FSTEC_ORDER_21_2013:
+    registration_status: PRIMARY_REPLACEMENT_ENACTMENT_NOT_PROVEN_2026_09_01T0207_0300
+    version_chain_status: "2013 base -> Order 49/2017 -> Order 68/2020; project 169583 remains fail-closed watch pending primary enactment proof"
+    current_status: PROVISIONAL_CURRENT_BASELINE_PENDING_URGENT_PRIMARY_RECHECK
+    immutable_status: SOURCE_PENDING
+    replacement_project:
+      project_id: "169583"
+      project_url: "https://regulation.gov.ru/projects/169583/"
+      public_discussion_end: 2026-08-08
+      proposed_effective_date: 2026-09-01
+      status: DRAFT_OR_UNPROVEN_ENACTMENT_DO_NOT_PROMOTE
+    counter_note: >-
+      The proposed effective date has arrived, but no signed/registered/officially published replacement
+      was established from primary evidence in this run. Recheck is urgent before changing executable guidance.
+
+  RU_FSTEC_THREAT_METHOD_2021:
+    registration_status: PRIMARY_IDENTITY_AND_ISPDN_SCOPE_REVERIFIED
+    official_source_url: "https://fstec.ru/component/attachments/download/2919"
+    immutable_status: SOURCE_PENDING_TIMEOUT
+    applicability: THREAT_ASSESSMENT_INCLUDES_ISPDN
+    artifact_manifest: "manifests/stream-2/2026-09-01T0207+0300.yaml"
+
+  RU_FSB_ORDER_378_2014:
+    registration_status: DIRECT_PDN_SKZI_BASELINE_REVERIFIED_2026_09_01
+    applicability_gate: SKZI_USED_IN_ISPDN
+    current_status: CURRENT_NO_REPEAL_EVIDENCE_FOUND
+    publication_reference: "https://rg.ru/documents/2014/09/17/zashita-dok.html"
+    justice_registration_number: "33620"
+    immutable_status: SOURCE_PENDING
+    artifact_manifest: "manifests/stream-2/2026-09-01T0207+0300.yaml"
+    adjacency_note: "Do not conflate with FSB Order 117/2025 public-sector crypto requirements."
+
+watch_candidates:
+  RU_FSTEC_IS_PROTECTION_MEASURES_METHOD_2026:
+    approved_date: 2026-04-12
+    status: CONTEXT_GATED_NOT_PROMOTED
+    reason: "Primary bytes/applicability edge into ordinary PDn executable logic not yet captured."
+  RU_FSTEC_MATURITY_METHOD_2026:
+    approved_date: 2026-08-07
+    status: CONTEXT_GATED_NOT_PROMOTED
+    reason: "Keep as current FSTEC-method watch node until primary applicability is reconciled."
+  RU_NKTSKI_ORDER_2_2026:
+    signed_date: 2026-07-14
+    status: NOT_PROMOTED_TO_ORDINARY_PDN
+    reason: "No new direct ordinary-PDn applicability edge; FSB Order 77/2023 remains the specific PDn incident bridge."
+
+stream_progress_patch:
+  stream_2_technical_crypto:
+    status: ACTIVE
+    source_pack_delta: "technical-security-delta-2026-09-01T0207+0300.yaml"
+    artifact_manifest: "manifests/stream-2/2026-09-01T0207+0300.yaml"
+    status_rechecks_this_run: 4
+    watch_candidates_registered_this_run: 3
+    new_executable_sources_this_run: 0
+    exact_artifact_endpoint_attempts_this_run: 3
+    exact_artifact_successes_this_run: 0
+    immutable_artifacts_added_this_run: 0
+    bytes_downloaded_this_run: 0
+    hashes_recorded_this_run: 0
+    new_universal_pdn_duties: 0
+    adjacent_regime_promotions: 0
+    confirmed_legal_contradictions_this_run: 0
+    urgent_watch_items: 1
+    counter_reconciliation_required: true
+    counter_delta_expected:
+      identified: 0
+      metadata_verified: 0
+      immutable_sha256_verified: 0
+      pending_raw_capture: 0
+      exact_official_route_unresolved: 0
+      urgent_status_watch: 1
+    counter_note: >-
+      This pass changes status confidence and adds a due-date watch, not the number of canonical sources.
+      Do not increment immutable/byte/hash totals. Apply urgent_status_watch +1 for FSTEC project 169583.
+    run_record: "runs/stream-2/2026-09-01T0207+0300.yaml"
+
+next_priority_patch:
+  - RU_FSTEC_ORDER_21_2013_project_169583_primary_enactment_watch_URGENT
+  - RU_GOV_PP_1119_2012_exact_current_official_DOC_bytes
+  - RU_FSTEC_THREAT_METHOD_2021_exact_official_attachment_2919
+  - RU_FSB_ORDER_378_2014_exact_authoritative_artifact
+  - RU_FSB_ORDER_66_2005_exact_artifact_and_Order_173_delta
+  - RU_FAPSI_ORDER_152_2001_exact_artifact
+
+quality_note: >-
+  The run deliberately did not treat 1 September 2026 as an automatic repeal date for FSTEC Order 21.
+  No primary enactment evidence means no version-chain promotion. No neighboring GIS/KII/licensing/
+  certification/GosSOPKA duty was imported into ordinary PDn merely because the subject matter overlaps.
