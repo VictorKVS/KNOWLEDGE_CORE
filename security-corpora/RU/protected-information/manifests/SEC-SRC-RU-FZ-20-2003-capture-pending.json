@@ -1,0 +1,71 @@
+{
+  "schema_version": "1.0",
+  "source_id": "SEC-SRC-RU-FZ-20-2003",
+  "state": "PENDING_EXACT_CAPTURE",
+  "run_at": "2026-08-31T05:21:37+03:00",
+  "canonical_source_path": "security-corpora/RU/protected-information/source/SEC-SRC-RU-FZ-20-2003.yaml",
+  "targets": [
+    {
+      "role": "official_sector_copy_of_base_law",
+      "url": "https://tik2.spbik.spb.ru/tik/2/%D0%9E%20%D0%93%D0%BE%D1%81%D1%83%D0%B4%D0%B0%D1%80%D1%81%D1%82%D0%B2%D0%B5%D0%BD%D0%BD%D0%BE%D0%B9%20%D0%B0%D0%B2%D1%82%D0%BE%D0%BC%D0%B0%D1%82%D0%B8%D0%B7%D0%B8%D1%80%D0%BE%D0%B2%D0%B0%D0%BD%D0%BD%D0%BE%D0%B9%20%D1%81%D0%B8%D1%81%D1%82%D0%B5%D0%BC%D0%B5.pdf",
+      "authority": "territorial election commission / official election-system site",
+      "expected_content_class": "PDF copy of Federal Law 20-FZ",
+      "current_consolidated_revision_proof": false,
+      "attempted": true,
+      "result": "TRANSIENT_DNS_DOWNLOAD_FAILURE",
+      "error": "Temporary failure in name resolution",
+      "retrieved_at": null,
+      "mime": null,
+      "byte_length": null,
+      "sha256": null,
+      "immutable_artifact": null
+    },
+    {
+      "role": "official_latest_amendment_publication_medium",
+      "act": "Federal Law 115-FZ of 23.05.2025",
+      "url": "https://rg.ru/documents/2025/05/29/fz115-dok.html",
+      "expected_content_class": "official publication medium HTML",
+      "attempted": true,
+      "result": "TRANSIENT_DNS_DOWNLOAD_FAILURE",
+      "error": "Temporary failure in name resolution",
+      "retrieved_at": null,
+      "mime": null,
+      "byte_length": null,
+      "sha256": null,
+      "immutable_artifact": null
+    },
+    {
+      "role": "official_latest_amendment_portal_locator_candidate",
+      "act": "Federal Law 115-FZ of 23.05.2025",
+      "url": "https://publication.pravo.gov.ru/document/0001202505230024",
+      "attempted": false,
+      "result": "LOCATOR_SECONDARY_CORROBORATED_DIRECT_PORTAL_FETCH_TIMED_OUT",
+      "retrieved_at": null,
+      "mime": null,
+      "byte_length": null,
+      "sha256": null,
+      "immutable_artifact": null
+    }
+  ],
+  "verification": {
+    "original_official_publication_metadata_verified": true,
+    "current_consolidated_edition_date_verified": "2025-05-23",
+    "latest_amendment_official_publication_medium_verified": true,
+    "latest_amendment_official_portal_locator_directly_verified": false,
+    "full_historical_primary_locator_chain_complete": false,
+    "exact_bytes_obtained": false,
+    "binary_metadata_fabricated": false,
+    "immutable_promoted": false
+  },
+  "retry": {
+    "class": "TRANSIENT",
+    "priority": "HIGH",
+    "actions": [
+      "retry official election-commission PDF bytes",
+      "retry official publication-medium bytes for 115-FZ",
+      "directly verify and capture the official pravo.gov.ru publication locator",
+      "compute MIME, byte length and SHA-256 only after exact bytes are obtained",
+      "store exact artifact under immutable content-addressed path and update this manifest"
+    ]
+  }
+}
