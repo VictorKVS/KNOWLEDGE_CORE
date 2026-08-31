@@ -31,16 +31,16 @@ canonical_source:
   alternate_official_routes:
     - publisher: "Официальный интернет-портал правовой информации / ИПС Право — legislation API"
       url: "https://ips.pravo.gov.ru/api/ips/legislation/document?baseid=None&hash=98490812b3409e2a8d78a11ca9010f434ea3d9250a11dbbdb78690cd5551bdd6"
-      route_status: OFFICIAL_IPS_API_ROUTE_REGISTERED_GUARDED
+      route_status: OFFICIAL_ROUTE_REJECTED_STALE_FOR_CURRENT_REVISION
       registered_at: "2026-08-28"
       route_checked_at: "2026-08-31"
       current_revision_proof_required: "explicit 265-ФЗ citation OR complete Article 12 part 2 wording fingerprint introduced on 26.07.2026"
       evidence_note: >-
-        This official ips.pravo.gov.ru document route was already preserved in the historical 152-FZ source card and
-        is still cited by external materials published after the 26.07.2026 amendment as the official 152-FZ reference.
-        That observation proves only that the route remains a plausible official transport identity, not that any
-        returned bytes are the current revision. The acquisition content gate must independently prove 152-FZ,
-        personal-data identity and the pinned 26.07.2026 revision before a manifest can be accepted.
+        Fresh official IPS index verification on 31.08.2026 shows this exact hash route serving a 152-FZ text whose
+        amendment list ends with Federal Law No. 156-FZ dated 24.06.2025 and whose Article 12 part 2 still contains
+        the pre-26.07.2026 wording. It therefore cannot prove the pinned 26.07.2026 current revision and must not be
+        accepted for the current immutable root even if transport succeeds. The route is retained only as negative
+        provenance evidence; the acquisition content/current-revision gate remains authoritative.
     - publisher: "Официальный интернет-портал правовой информации / ИПС Право — print rendering"
       url: "http://pravo.gov.ru/proxy/ips/?docview&page=1&print=1&nd=102108261"
       route_status: OFFICIAL_IPS_PRINT_ROUTE_REGISTERED_GUARDED
@@ -93,13 +93,14 @@ version_evidence:
     supports: >-
       Article 12 part 2 current wording introduced by No. 265-FZ provides an independent content fingerprint for
       a consolidated text even when the publisher omits an explicit amending-law citation.
-  - publisher: "Current external references to official IPS"
-    kind: transport_route_discovery_cross_check
+  - publisher: "Официальный интернет-портал правовой информации / ИПС Право"
+    kind: rejected_stale_transport_route_evidence
     checked_at: "2026-08-31"
+    route: "https://ips.pravo.gov.ru/api/ips/legislation/document?baseid=None&hash=98490812b3409e2a8d78a11ca9010f434ea3d9250a11dbbdb78690cd5551bdd6"
     supports: >-
-      The same ips.pravo.gov.ru legislation API hash route is cited as the official 152-FZ reference by material
-      published after 26.07.2026. This is sufficient to retry it as a guarded official transport candidate only;
-      it is not sufficient for current-version or immutable promotion without the existing content/version gate.
+      Official IPS search/index content for this exact route exposes a 152-FZ consolidation whose amendment chain
+      ends at 24.06.2025 No. 156-FZ and whose Article 12 part 2 is pre-265-FZ. Treat this route as stale negative
+      provenance for the current 26.07.2026 root; it cannot satisfy the immutable current-revision gate.
 
 capture:
   raw_artifact_ref: ""
