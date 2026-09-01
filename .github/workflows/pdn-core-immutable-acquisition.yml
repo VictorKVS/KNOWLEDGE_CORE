@@ -22,8 +22,10 @@ permissions:
   contents: write
 
 concurrency:
+  # Stream 1 and Stream 2 both write the shared PDN master inventory.
+  # Queue writers instead of cancelling or racing a run that already holds the lock.
   group: pdn-core-immutable-acquisition
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   acquire:
