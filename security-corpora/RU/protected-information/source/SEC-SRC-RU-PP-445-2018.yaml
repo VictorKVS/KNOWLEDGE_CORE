@@ -1,0 +1,200 @@
+schema_version: "1.0"
+id: SEC-SRC-RU-PP-445-2018
+kind: security-regulatory-source
+status: PRIMARY_PUBLICATION_LOCATOR_VERIFIED_CURRENT_EDITION_2026_08_24_EFFECTIVE_2026_09_01_CROSSCHECKED_EXACT_ARTIFACT_PENDING
+title: "Постановление Правительства РФ от 12.04.2018 № 445 об утверждении Правил хранения операторами связи сообщений пользователей услугами связи"
+jurisdiction: RU
+issuer: "Правительство Российской Федерации"
+
+document:
+  type: "постановление Правительства Российской Федерации"
+  number: "445"
+  adopted_date: "2018-04-12"
+  full_title: >-
+    Об утверждении Правил хранения операторами связи текстовых сообщений пользователей услугами связи,
+    голосовой информации, изображений, звуков, видео- и иных сообщений пользователей услугами связи
+  official_publication_id: "0001201804190032"
+  official_publication_date: "2018-04-19"
+  current_revision_date: "2026-08-24"
+  current_revision_effective_from: "2026-09-01"
+  checked_at: "2026-09-01"
+
+canonical_sources:
+  primary_publication:
+    publisher: "Официальный интернет-портал правовой информации"
+    url: "https://publication.pravo.gov.ru/document/0001201804190032"
+    file_url: "https://publication.pravo.gov.ru/File/Pdf?eoNumber=0001201804190032"
+    origin_verified: true
+    proof_scope: "official identity/publication locator for the original act; exact official bytes pending"
+  current_mandatory_requirements_crosscheck:
+    authority: "Федеральная служба по надзору в сфере связи, информационных технологий и массовых коммуникаций"
+    instrument: "Перечень нормативных правовых актов, содержащих обязательные требования для федерального государственного контроля (надзора) в области связи, утвержден 03.06.2026"
+    finding: "The list includes Government Resolution 445 and the official publication locator 0001201804190032."
+    checked_at: "2026-09-01"
+  current_text_crosscheck:
+    revision_date: "2026-08-24"
+    effective_from: "2026-09-01"
+    latest_amendment: "Постановление Правительства РФ от 24.08.2026 № 1066"
+    latest_amendment_official_publication_id: "0001202608250032"
+    latest_amendment_official_publication_date: "2026-08-25"
+    state: CURRENT_EFFECTIVE_EDITION_CROSSCHECKED
+    exact_latest_amendment_bytes: PENDING
+
+protected_information:
+  sectors:
+    - communications
+    - personal_data_overlap
+    - operational_search_infrastructure
+    - retention
+  regimes:
+    - communications_content_retention
+    - communications_secrecy_overlap
+    - communications_storage_security
+  legal_basis:
+    - "126-ФЗ, статья 64 часть 1"
+    - "126-ФЗ, статья 63"
+  protected_locators:
+    - locator: "пункт 2"
+      rule: >-
+        Communications operators store user text messages, voice information, images, sounds, video and other
+        communications messages in the Russian Federation in operator-owned technical information storage facilities;
+        specifically listed mandatory public TV/radio and registered audiovisual-service traffic is stored at zero volume.
+      semantic_guard: "Zero-volume exceptions are exclusions from this storage rule, not universal deletion mandates."
+    - locator: "пункт 5"
+      rule: >-
+        Operators providing the enumerated telephone, mobile, satellite, personal-radio-call and data-transmission
+        services store voice information and text messages in full for 6 months from the end of receipt,
+        transmission, delivery and/or processing.
+      semantic_guard: "The 6-month content-storage rule is service/object scoped and is not a universal PDN retention period."
+    - locator: "пункт 6"
+      rule: >-
+        Telematic and/or data-transmission operators size technical storage capacity against the volume of messages
+        sent and received during the 30 days preceding commissioning; capacity then increases annually by 15 percent
+        for 5 years from commissioning.
+      semantic_guard: "30 days is a capacity-sizing baseline and 15%-for-5-years is capacity growth; neither is a message-retention period."
+    - locator: "пункт 7"
+      rule: "The operator protects technical storage facilities and stored information against unauthorized access in accordance with MinTsifry requirements."
+    - locator: "пункт 8"
+      rule: >-
+        Communications messages are deleted automatically according to software algorithms and storage-equipment
+        requirements based on a maximum permissible storage period of 6 months from the end of receipt,
+        transmission, delivery and/or processing.
+      semantic_guard: "Do not transfer this content-deletion rule to the separate 126-FZ Article 64 communications-facts/metadata retention rule."
+  applicability_status: "DIRECT_ONLY_FOR_COMMUNICATIONS_OPERATORS_SERVICES_AND_STORAGE_OBJECTS_DEFINED_BY_PP_445_AND_126_FZ"
+  guards:
+    - "COMMUNICATIONS_CONTENT_RETENTION_IS_NOT_UNIVERSAL_PDN_RETENTION"
+    - "MESSAGE_OR_VOICE_OR_IMAGE_OBJECT_IS_NOT_AUTOMATICALLY_PERSONAL_DATA_WITHOUT_IDENTIFIABILITY_AND_PROCESSING_CONTEXT"
+    - "COMMUNICATIONS_SECRECY_CLASSIFICATION_DERIVES_FROM_126_FZ_ARTICLE_63_AND_OTHER_PRIMARY_LAW_NOT_MERELY_FROM_FIELD_TYPE"
+    - "PP_445_STORAGE_OBLIGATION_DOES_NOT_CREATE_UNRESTRICTED_DISCLOSURE_AUTHORITY"
+    - "30_DAY_CAPACITY_BASELINE_IS_NOT_RETENTION"
+    - "15_PERCENT_ANNUAL_CAPACITY_GROWTH_FOR_5_YEARS_IS_NOT_RETENTION"
+    - "6_MONTH_CONTENT_RETENTION_MUST_NOT_REPLACE_126_FZ_ARTICLE_64_SEPARATE_3_YEAR_COMMUNICATIONS_FACTS_RETENTION"
+    - "ZERO_VOLUME_EXCLUSIONS_ARE_NOT_GENERAL_DELETION_RULES"
+    - "NO_APPLICABILITY_PROMOTION_FROM_TAXONOMY_OR_SECTOR_CONTEXT"
+
+relationship_candidates:
+  - target: "SEC-SRC-RU-FZ-126"
+    type: DIRECT_IMPLEMENTING_ACT_ARTICLE_64_CONTENT_STORAGE
+    state: RECONCILED
+    guard: "FZ-126 Article 64 separates communications facts/metadata retention from message-content storage; do not collapse the two objects."
+  - target: "SEC-SRC-RU-FZ-126"
+    type: COMMUNICATIONS_SECRECY_OVERLAP_ARTICLE_63
+    state: RECONCILED
+  - target: "152-ФЗ"
+    type: PERSONAL_DATA_OVERLAP_CONDITIONAL
+    state: APPLICABILITY_REVIEW_REQUIRED
+    guard: >-
+      A PDN edge requires an identifiable data subject, specific processing operation, purpose/legal basis and actor role;
+      PP 445 does not make every stored communications object personal data by itself.
+
+version_chain:
+  state: CURRENT_EDITION_2026_08_24_EFFECTIVE_2026_09_01_VERSION_CHAIN_PARTIAL_PRIMARY_BYTES_PENDING
+  original_publication_id: "0001201804190032"
+  latest_crosschecked_revision: "2026-08-24"
+  events:
+    - date: "2018-04-12"
+      act: "Постановление Правительства РФ № 445"
+      publication_id: "0001201804190032"
+      publication_date: "2018-04-19"
+      effect: ORIGINAL
+    - date: "2018-11-20"
+      act: "Постановление Правительства РФ № 1391"
+      publication_id: "0001201811230008"
+      effect: "ministerial naming/competence wording update relevant to points 4 and 7"
+    - date: "2019-05-28"
+      act: "Постановление Правительства РФ № 673"
+      publication_id: null
+      publication_date: "2019-05-30"
+      effect: "introduced point 4(1) on Russian-production confirmation for storage equipment; exact official publication identity pending"
+    - date: "2021-06-16"
+      act: "Постановление Правительства РФ № 914"
+      publication_id: null
+      effect: "temporary suspension of the annual capacity-growth rule; later repealed by PP 498/2022"
+    - date: "2022-03-28"
+      act: "Постановление Правительства РФ № 498"
+      publication_id: "0001202203300002"
+      publication_date: "2022-03-30"
+      effect: "added zero-volume exclusions and changed/superseded the temporary capacity-growth suspension regime"
+    - date: "2026-08-24"
+      act: "Постановление Правительства РФ № 1066"
+      publication_id: "0001202608250032"
+      publication_date: "2026-08-25"
+      effective_from: "2026-09-01"
+      effect: >-
+        Updated the service-class wording in points 5 and 6 by removing the former voice-purpose exclusions from
+        data-transmission service wording; the numeric 6-month content-storage rule was not changed.
+  pending: >-
+    Resolve exact primary locator/bytes for every historical version event before VERSION_CHAIN_VERIFIED promotion;
+    the current legal meaning is crosschecked, but the complete immutable version chain is not yet closed.
+
+retention:
+  universal_personal_data_retention: false
+  rules:
+    - scope: "voice information and text messages for service classes enumerated in point 5"
+      locator: "пункт 5"
+      period: "6 months from end of receipt/transmission/delivery/processing"
+    - scope: "automatic deletion of communications messages in technical storage"
+      locator: "пункт 8"
+      period: "maximum permissible storage period of 6 months from end of receipt/transmission/delivery/processing"
+  non_retention_numeric_values:
+    - value: "30 days"
+      locator: "пункт 6"
+      meaning: "capacity-sizing baseline before commissioning"
+    - value: "15 percent annually for 5 years"
+      locator: "пункт 6"
+      meaning: "storage-capacity growth schedule"
+  guards:
+    - "DO_NOT_COLLAPSE_CONTENT_STORAGE_WITH_3_YEAR_FZ126_COMMUNICATIONS_FACTS_RETENTION"
+    - "DO_NOT_TREAT_30_DAY_CAPACITY_BASELINE_AS_RETENTION"
+    - "DO_NOT_TREAT_5_YEAR_CAPACITY_GROWTH_WINDOW_AS_RETENTION"
+
+capture:
+  attempted_at: "2026-09-01T05:18:21+03:00"
+  source_url: "https://publication.pravo.gov.ru/document/0001201804190032"
+  preferred_pdf_url: "https://publication.pravo.gov.ru/File/Pdf?eoNumber=0001201804190032"
+  latest_amendment_source_url: "https://publication.pravo.gov.ru/document/0001202608250032"
+  latest_amendment_pdf_url: "https://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202608250032"
+  attempts:
+    - publication_id: "0001201804190032"
+      result: TRANSIENT_DNS_RESOLUTION_FAILURE
+      error_class: NameResolutionError
+    - publication_id: "0001202608250032"
+      result: TRANSIENT_DNS_RESOLUTION_FAILURE
+      error_class: NameResolutionError
+  exact_bytes_obtained: false
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  raw_artifact_ref: null
+  manifest_ref: "../manifests/SEC-SRC-RU-PP-445-2018-capture-pending.json"
+  fingerprint_status: PENDING_EXACT_OFFICIAL_BYTES
+
+proof_floor:
+  - "taxonomy seed is discovery-only and not legal proof"
+  - "original official-publication identity is verified through the regulator mandatory-requirements list and official portal locator"
+  - "current edition is crosschecked as revision 24.08.2026 effective 01.09.2026"
+  - "latest amendment 1066/2026 is recorded as an explicit version event with official-publication locator"
+  - "no MIME, byte length or SHA-256 is populated without exact official bytes"
+  - "no immutable promotion before successful exact capture"
+  - "no PDN or communications-secrecy applicability is inferred solely from the message type or sector context"
