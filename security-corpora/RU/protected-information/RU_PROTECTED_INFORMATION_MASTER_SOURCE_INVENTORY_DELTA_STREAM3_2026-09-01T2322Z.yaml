@@ -1,0 +1,123 @@
+schema_version: "1.0"
+id: RU-PROTECTED-INFORMATION-MASTER-DELTA-STREAM3-2026-09-01T2322Z
+kind: master_inventory_delta
+stream: 3
+checked_at: "2026-09-02T02:22:27+03:00"
+
+source_delta:
+  - id: SEC-SRC-RU-MINZDRAV-ORDER-274N-2025
+    action: ADD_NEW_CANONICAL_CURRENT_SOURCE_EXACT_CAPTURE_PENDING
+    canonical_record: "source/SEC-SRC-RU-MINZDRAV-ORDER-274N-2025.yaml"
+    capture_manifest: "manifests/SEC-SRC-RU-MINZDRAV-ORDER-274N-2025-capture-pending.json"
+    sectors:
+      - healthcare
+      - medical_secrecy
+      - health_data
+      - personal_data_overlap
+      - children
+      - retention_interface
+    primary_official_source: "https://publication.pravo.gov.ru/document/0001202505300033"
+    primary_publication_id: "0001202505300033"
+    primary_publication_verified: true
+    current_state: CURRENT_FROM_2025_09_01
+    downloaded_exact: false
+    immutable: false
+    dedupe_result: NEW_CANONICAL_NODE
+
+  - id: SEC-SRC-RU-MINZDRAV-ORDER-209N-2026
+    action: REUSE_EXISTING_NODE_ACTIVATE_CURRENT_FROM_2026_09_01
+    canonical_record: "source/SEC-SRC-RU-MINZDRAV-ORDER-209N-2026.yaml"
+    capture_manifest: "manifests/SEC-SRC-RU-MINZDRAV-ORDER-209N-2026-capture-pending.json"
+    primary_official_source: "https://publication.pravo.gov.ru/document/0001202604230013"
+    primary_publication_id_crosscheck: "0001202604230013"
+    current_state: CURRENT_FROM_2026_09_01
+    official_sector_currentness_corroborated: true
+    exact_capture_still_pending: true
+    dedupe_result: REUSED_EXISTING_CANONICAL_NODE
+
+  - id: SEC-SRC-RU-FZ-323-2011
+    action: DEPRECATE_DUPLICATE_ALIAS_RECONCILE_TO_EXISTING_CANONICAL
+    alias_record: "source/SEC-SRC-RU-FZ-323-2011.yaml"
+    canonical_id: SEC-SRC-RU-FZ-323
+    canonical_record: "source/SEC-SRC-RU-FZ-323.yaml"
+    duplicate_publication_id: "0001201111220007"
+    canonical_publication_id: "0001201111220007"
+    identity_match: true
+    prior_duplicate_pending_manifest: "manifests/SEC-SRC-RU-FZ-323-2011-capture-pending.json"
+    canonical_manifest: "manifests/SEC-SRC-RU-FZ-323.json"
+    canonical_immutable_artifact: "raw/SEC-SRC-RU-FZ-323/0001201111220007.zip"
+    canonical_mime: "application/zip"
+    canonical_byte_length: 7257635
+    canonical_sha256: "aa54cb7c53980e765efbe0d4196e82d9f758d5596a3394b9283f4e9e250eaabc"
+    dedupe_result: DUPLICATE_NEUTRALIZED_REUSE_CANONICAL_IMMUTABLE
+
+counter_delta_this_pass:
+  found_new_canonical: 1
+  downloaded_new: 0
+  immutable_new: 0
+  pending_new: 1
+  pending_closed_by_dedupe: 1
+  reused_existing_sources_or_artifacts: 2
+  current_state_activations: 1
+  primary_publication_verified_new: 1
+
+counter_correction:
+  reason: "The prior Stream-3 323-FZ pass created SEC-SRC-RU-FZ-323-2011 despite an existing canonical SEC-SRC-RU-FZ-323 with the same official publication ID and immutable artifact."
+  reverse_prior_duplicate_found: 1
+  reverse_prior_duplicate_pending: 1
+  add_new_downloaded_for_323: 0
+  add_new_immutable_for_323: 0
+  reused_existing_323_immutable: 1
+  guard: "Historical delta files remain append-only; this correction delta is the authoritative reconciliation and the duplicate path is now an alias."
+
+capture_ledger_reconciliation:
+  authoritative_file: "SECTOR_ACQUISITION_RUN.json"
+  identity_scope: "document.official_publication_id only"
+  current_targets_with_official_publication_id: 22
+  current_raw_downloaded_exact: 22
+  current_immutable_sha256_verified: 22
+  current_pending_inside_that_capture_scope: 0
+  current_bytes_downloaded: 114212750
+  changed_this_pass: false
+  note: >-
+    209n and 274n remain in discovery/exact-capture backlog outside the existing narrow 22-target acquisition ledger.
+    Reconciliation of duplicate 323-FZ reuses a capture already counted inside that ledger and must not inflate downloaded/immutable totals.
+
+version_and_retention_findings:
+  - "№ 209н is now CURRENT from 01.09.2026 and replaces № 947н."
+  - "№ 209н point 21 ties electronic medical document retention to at least the term of the corresponding paper medical document; this is object-relative, not one numeric period."
+  - "№ 209н point 22 requires all corrected versions/signatures to persist throughout the electronic medical document's retention term."
+  - "№ 274н is CURRENT from 01.09.2025 and governs forms 025/у, 025-1/у, 070/у, 072/у, 076/у and 079/у."
+  - "Forms 076/у and 079/у establish a child-health-document overlap, but not universal education-sector applicability."
+  - "No universal medical-record retention period is inferred from № 274н."
+
+relationships_added_or_refined:
+  - "SEC-SRC-RU-MINZDRAV-ORDER-274N-2025 -> SEC-SRC-RU-FZ-323 / statutory medical-document-form authority and medical-secrecy interface"
+  - "SEC-SRC-RU-MINZDRAV-ORDER-274N-2025 -> 152-FZ / person-level medical document PDN overlap; applicability review required"
+  - "SEC-SRC-RU-MINZDRAV-ORDER-274N-2025 -> SEC-SRC-RU-MINZDRAV-ORDER-209N-2026 / form-content to electronic-workflow/storage interface"
+  - "SEC-SRC-RU-MINZDRAV-ORDER-274N-2025 -> 125-FZ / object-specific archive-retention interface only"
+  - "SEC-SRC-RU-MINZDRAV-ORDER-209N-2026 -> 326-FZ / scoped OMS access/control context"
+  - "SEC-SRC-RU-FZ-323-2011 -> SEC-SRC-RU-FZ-323 / canonical alias after dedupe reconciliation"
+
+acquisition_attempts:
+  - source_id: SEC-SRC-RU-MINZDRAV-ORDER-209N-2026
+    url: "https://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202604230013"
+    attempted_at: "2026-09-02T02:22:27+03:00"
+    result: TRANSIENT_DNS_NAME_RESOLUTION_FAILURE
+    curl_exit_code: 6
+    exact_bytes_obtained: false
+  - source_id: SEC-SRC-RU-MINZDRAV-ORDER-274N-2025
+    url: "https://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202505300033"
+    attempted_at: "2026-09-02T02:22:27+03:00"
+    result: TRANSIENT_DNS_NAME_RESOLUTION_FAILURE
+    curl_exit_code: 6
+    exact_bytes_obtained: false
+
+quality_gates:
+  taxonomy_seed_used_as_proof: false
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+  fabricated_binary_metadata: false
+  universal_retention_inferred: false
+  duplicate_source_left_active: false
+  exact_capture_required_before_new_immutable: true
