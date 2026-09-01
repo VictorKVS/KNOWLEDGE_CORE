@@ -1,0 +1,161 @@
+schema_version: "1.0"
+id: SEC-SRC-RU-CBR-808-P-2022
+kind: security-regulatory-source
+status: PRIMARY_OFFICIAL_ACT_VERIFIED_CURRENT_ORIGINAL_EDITION_CROSSCHECKED_EXACT_ARTIFACT_PENDING
+title: "Положение Банка России от 17.10.2022 № 808-П о требованиях к защите информации на финансовом рынке, в БКИ и кредитных рейтинговых агентствах"
+jurisdiction: RU
+issuer: "Банк России"
+
+document:
+  type: "Положение Банка России"
+  number: "808-П"
+  adopted_date: "2022-10-17"
+  minjust_registration_date: "2022-12-07"
+  minjust_registration_number: "71409"
+  official_online_publication_date: "2022-12-21"
+  official_print_publication: "Вестник Банка России № 62 (2394), 22.12.2022"
+  current_revision_date: "2022-10-17"
+  checked_at: "2026-09-01"
+
+canonical_sources:
+  primary_official_listing:
+    publisher: "Банк России"
+    url: "https://www.cbr.ru/finm_infrastructure/audit_fm/acts/"
+    origin_verified: true
+  primary_official_publication:
+    publisher: "Вестник Банка России"
+    url: "https://cbr.ru/Queries/XsltBlock/File/105012/-1/2394"
+    publication_date: "2022-12-22"
+    web_observation_content_type: "application/pdf"
+    web_observation_page_count: 53
+    proof_scope: "official publication identity and normative text verified in the Bank of Russia official publication; exact file bytes pending"
+
+protected_information:
+  sectors:
+    - finance
+    - credit_histories
+    - financial_market_security
+    - personal_data_overlap
+    - information_security
+    - retention
+    - incident_management
+    - credit_rating_agency_overlap
+  regimes:
+    - bki_protected_information_security
+    - bki_access_logging
+    - bki_incident_registration
+    - bki_retention_and_integrity
+    - credit_rating_agency_protected_information
+  protected_locators:
+    - locator: "пункт 2.1"
+      rule: "БКИ защищают информацию статьи 4 218-ФЗ в автоматизированных системах при обработке, хранении и передаче сертифицированными средствами защиты; если защищаемая информация содержит персональные данные, применяются меры безопасности по статье 19 152-ФЗ."
+      semantic_guard: "The Article 19 bridge is conditional on the protected information actually containing personal data; do not classify every Article 4 item as PDN without object/subject analysis."
+    - locator: "пункт 2.7"
+      rule: "БКИ регистрируют результаты идентификации, аутентификации и авторизации, приема/передачи электронных сообщений, доступа работников и действий субъектов взаимодействия с защищаемой информацией."
+    - locator: "пункты 2.8-2.9"
+      rule: "БКИ регистрируют инциденты защиты информации, организуют реагирование и предусмотренное Положением информирование Банка России."
+    - locator: "пункт 2.10"
+      rule: "БКИ хранят защищаемую информацию, данные регистрации пункта 2.7 и сведения об инцидентах; целостность и доступность обеспечиваются пять лет от формирования/поступления, если специальным законодательством о БКИ не установлен иной срок."
+    - locator: "пункты 3.1-3.2"
+      rule: "Для кредитного рейтингового агентства установлен отдельный режим сохранности и защиты информации, включая информацию ограниченного доступа по 149-ФЗ и/или договору."
+    - locator: "пункт 4.1"
+      rule: "Если используемые БКИ объекты информационной инфраструктуры являются объектами КИИ, дополнительно применяются требования по 187-ФЗ."
+  guards:
+    - "ART19_152_FZ_BRIDGE_ONLY_WHERE_PROTECTED_INFORMATION_CONTAINS_PDN"
+    - "ARTICLE4_218_FZ_INFORMATION_NOT_AUTOMATICALLY_ALL_PDN"
+    - "BKI_SYSTEM_NOT_AUTOMATICALLY_CII"
+    - "CREDIT_RATING_AGENCY_SCOPE_NOT_BKI_SCOPE"
+    - "NO_APPLICABILITY_PROMOTION_FROM_SECTOR_LABEL"
+
+retention:
+  universal_personal_data_retention: false
+  rules:
+    - locator: "пункт 2.10"
+      scope: "BKI protected information + access-registration data under 2.7 + information-security incident data"
+      period: "5 years from formation by / receipt in the BKI, unless Russian legislation regulating BKI establishes another period"
+      semantic_guard: "This five-year rule is not a universal PDN retention period and does not erase more specific object-specific periods in 218-FZ."
+    - locator: "пункт 3.2"
+      scope: "credit rating agency protected information"
+      period: "archive-law periods, but at least 5 years; electronic backups at least once every 7 days"
+      semantic_guard: "This is a separate credit-rating-agency lifecycle, not BKI credit-history retention."
+  reconciliation_with_218_fz:
+    - "For credit-history records and other objects for which 218-FZ establishes another period, apply the specific statutory object lifecycle rather than replacing it with an undifferentiated five-year rule."
+  guards:
+    - "FIVE_YEAR_808_P_RULE_NOT_UNIVERSAL_PDN_RETENTION"
+    - "FIVE_YEAR_808_P_RULE_DOES_NOT_OVERRIDE_SPECIFIC_218_FZ_OBJECT_RETENTION"
+    - "RATING_AGENCY_MINIMUM_FIVE_YEARS_NOT_BKI_RULE"
+    - "SEVEN_DAY_BACKUP_INTERVAL_NOT_RETENTION_PERIOD"
+
+relationship_candidates:
+  - target: "SEC-SRC-RU-FZ-218-2004"
+    type: SUBORDINATE_SECURITY_IMPLEMENTATION
+    state: DIRECT
+    guard: "808-P implements the Article 7(2) BKI information-protection layer; it does not replace 218-FZ access and retention object rules."
+  - target: "152-ФЗ"
+    type: EXPLICIT_CONDITIONAL_PDN_SECURITY_BRIDGE
+    state: DIRECT_WHEN_PDN_PRESENT
+    guard: "Point 2.1 expressly invokes Article 19 only where protected information contains personal data."
+  - target: "149-ФЗ"
+    type: INFORMATION_PROTECTION_AND_LIMITED_ACCESS_OVERLAP
+    state: DIRECT_FOR_RATING_AGENCY_SCOPE
+  - target: "187-ФЗ"
+    type: CII_OVERLAP_CONDITIONAL
+    state: OBJECT_STATUS_REQUIRED
+  - target: "222-ФЗ"
+    type: CREDIT_RATING_AGENCY_OVERLAP
+    state: DIRECT_FOR_CHAPTER_3
+
+version_chain:
+  state: CURRENT_ORIGINAL_EDITION_2022_10_17_CBR_CURRENT_LISTING_NO_LATER_AMENDMENT_FOUND_EXACT_PRIMARY_BYTES_PENDING
+  key_events:
+    - date: "2022-10-17"
+      event: ADOPTED
+    - date: "2022-12-07"
+      event: MINJUST_REGISTERED
+      registration_number: "71409"
+    - date: "2022-12-21"
+      event: OFFICIAL_ONLINE_PUBLICATION
+    - date: "2022-12-22"
+      event: VESTNIK_PUBLICATION
+      issue: "№ 62 (2394)"
+    - date: "2023-04-01"
+      event: GENERAL_EFFECTIVE_DATE
+    - date: "2024-04-01"
+      event: POINT_2_4_EFFECTIVE_DATE
+  amendment_search:
+    official_cbr_current_listing_checked: true
+    later_amendment_found_in_current_sweep: false
+    guard: "No later amendment was found in the current official-source sweep; this is not a claim about future changes or unindexed acts."
+
+capture:
+  attempted_at: "2026-09-01T17:29:08+03:00"
+  preferred_current_official_url: "https://cbr.ru/Queries/XsltBlock/File/105012/-1/2394"
+  attempts:
+    - url: "https://www.cbr.ru/Queries/XsltBlock/File/105012/-1/2394"
+      result: TRANSIENT_DNS_RESOLUTION_FAILURE
+      curl_exit_code: 6
+    - url: "https://cbr.ru/Queries/XsltBlock/File/105012/-1/2394"
+      result: TRANSIENT_DNS_RESOLUTION_FAILURE
+      curl_exit_code: 6
+  exact_bytes_obtained: false
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  raw_artifact_ref: null
+  manifest_ref: "../manifests/SEC-SRC-RU-CBR-808-P-2022-capture-pending.json"
+  fingerprint_status: PENDING_EXACT_OFFICIAL_BYTES
+  web_observation:
+    content_type: "application/pdf"
+    page_count: 53
+    guard: "Web rendering metadata is not used as exact-artifact MIME/byte/hash proof."
+
+proof_floor:
+  - "taxonomy seed is discovery-only and is not legal proof"
+  - "primary identity and text are verified through official Bank of Russia sources"
+  - "current Bank of Russia listing still includes 808-P; no later amendment was found in this sweep"
+  - "point 2.1 provides an explicit conditional bridge to Article 19 of 152-FZ"
+  - "point 2.10 contains a scoped five-year rule with an explicit other-period clause"
+  - "no exact MIME, byte length or SHA-256 is populated without exact official bytes"
+  - "no immutable promotion before successful exact capture"
+  - "no applicability or secrecy category is inferred solely from taxonomy/sector labels"
