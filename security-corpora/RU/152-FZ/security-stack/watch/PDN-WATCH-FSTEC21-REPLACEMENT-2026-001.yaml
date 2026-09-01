@@ -1,14 +1,15 @@
-schema_version: "1.4"
+schema_version: "1.5"
 id: PDN-WATCH-FSTEC21-REPLACEMENT-2026-001
 kind: regulatory-watch
 status: DRAFT_NOT_ENACTED_IN_VERIFIED_EVIDENCE
 jurisdiction: RU
 domain: personal_data_security
 checked_at: "2026-09-01"
-last_checked_at: "2026-09-01T08:16:20Z"
+last_checked_at: "2026-09-01T11:21:35Z"
 subject: "Проект замены приказа ФСТЭК России № 21"
 project:
   identifier: "169583"
+  full_identifier: "01/02/07-26/00169583"
   prepared_date: "2026-07-24"
   developer: "ФСТЭК России"
   public_discussion_ended: "2026-08-08"
@@ -23,45 +24,48 @@ current_routing:
   reason: >-
     Повторная проверка 01.09.2026 после наступления предложенной проектом даты не установила первичного
     доказательства издания окончательного заменяющего приказа, его государственной регистрации в Минюсте России
-    и официального опубликования. При этом официальный индекс ФСТЭК по-прежнему публикует действующую карточку
-    приказа №21 от 18.02.2013, а индексируемые материалы по проекту 169583 продолжают описывать его как проект.
-    Наличие карточки №21 само по себе не доказывает отсутствие будущего replacement event, но в сочетании с
-    отсутствием verified final-order identity не позволяет переключить baseline. До прохождения primary-enactment
-    gate активным остается приказ №21 в редакции от 14.05.2020 с version-chain №49/2017 -> №68/2020.
+    и официального опубликования. Официальная карточка приказа №21 продолжает индексироваться ФСТЭК. Актуальный
+    проектный трекинг по 01/02/07-26/00169583 по-прежнему описывает объект как проект со статусом завершенного
+    обсуждения, тогда как отдельные вторичные публикации формулируют замену как наступившую с 01.09.2026. Этот
+    вторичный конфликт формулировок является сигналом для срочной первичной проверки, но не юридическим основанием
+    для смены baseline. До прохождения primary-enactment gate активным остается приказ №21 в редакции от 14.05.2020
+    с version-chain №49/2017 -> №68/2020.
 evidence:
   - url: "https://fstec.ru/dokumenty/vse-dokumenty/prikazy/prikaz-fstek-rossii-ot-18-fevralya-2013-g-n-21"
     class: PRIMARY_REGULATOR_CURRENT_ORDER_CARD
     observed_at: "2026-09-01"
-    note: "Официальная карточка приказа №21 продолжает индексироваться ФСТЭК; используется как current-node evidence, но не как самостоятельное доказательство отсутствия будущей отмены."
-  - url: "https://regulation.gov.ru/projects/169583/"
+    note: "Официальная карточка приказа №21 продолжает индексироваться ФСТЭК; current-node evidence, не самостоятельное доказательство отсутствия будущей отмены."
+  - url: "https://regulation.gov.ru/projects#npa=169583"
     class: PRIMARY_PROJECT_ROUTE
     observed_at: "2026-09-01"
-    note: "Маршрут проекта сохраняется как future-change evidence; сам проект не является доказательством принятого акта."
+    note: "Канонический маршрут проекта; сам проект не доказывает принятие финального НПА."
+  - url: "https://officialdata.ru/bill/npa/127283/"
+    class: SECONDARY_PROJECT_REGISTRY_MIRROR
+    observed_at: "2026-09-01"
+    note: >-
+      Актуальный трекинг отражает ID 01/02/07-26/00169583 как «Проект ведомственного акта», статус «Обсуждение
+      завершено», публикация 24.07.2026, завершение обсуждения 08.08.2026 и ссылается на regulation.gov.ru.
+      Используется только как discovery/monitoring signal, не как enactment evidence.
   - url: "https://cisoclub.ru/prikaz-fstek-21/"
     class: CURRENT_PROJECT_MONITORING_ONLY
     observed_at: "2026-09-01"
-    note: >-
-      Индексируемый материал августа 2026 продолжает идентифицировать 169583 как проект ФСТЭК и описывает
-      предлагаемую отмену №21. Используется только для monitoring/discovery, не как первичное enactment evidence.
+    note: "Материал августа 2026 идентифицирует 169583 как проект ФСТЭК и предлагаемую отмену №21; secondary monitoring only."
   - url: "https://www.credos.ru/news/fstek-proekt-prikaza-pdn-2026/"
     class: CURRENT_PROJECT_MONITORING_ONLY
     observed_at: "2026-09-01"
-    note: >-
-      Свежий индексируемый материал прямо указывает, что документ находится на стадии проекта и что новые
-      требования применимы только после подписания и государственной регистрации. Используется только как
-      secondary monitoring signal.
+    note: "Материал прямо ставит вступление в силу в зависимость от подписания; secondary monitoring only."
   - url: "https://www.buro152.ru/knowledge/blog/novyj-prikaz-fstek-2026-otmena-21/"
     class: SECONDARY_CONFLICT_SIGNAL_ONLY
     observed_at: "2026-09-01"
     note: >-
-      Публикация формулирует отмену №21 как наступающее/свершившееся изменение, но не приводит проверяемую
-      идентичность финального акта, Минюст и official-publication identity; не проходит primary-enactment gate.
+      Публикация формулирует отмену №21 с 01.09.2026 как наступающее изменение, но не предоставляет проверяемую
+      идентичность финального акта, регистрацию Минюста и official-publication identity; primary gate не пройден.
   - url: "https://publication.pravo.gov.ru/"
     class: PRIMARY_PUBLICATION_SEARCH_ROUTE
     observed_at: "2026-09-01"
     note: >-
-      Выполнен поиск первичной официальной публикации заменяющего приказа. В проверенном результате не установлены
-      номер и дата финального приказа, регистрация Минюста и official-publication identity, достаточные для замены active node.
+      В проверенном результате не установлены номер/дата финального заменяющего приказа, регистрация Минюста и
+      official-publication identity, достаточные для замены active node.
 proof_gate:
   primary_enactment_required: true
   required_before_activation:
@@ -69,6 +73,8 @@ proof_gate:
     - minjust_registration_if_required
     - official_publication_identity_or_official_regulator_publication
   semantic_promotion: false
+  secondary_claim_conflict_signal: true
+  confirmed_primary_conflict: false
   rule: >-
     Не переносить требования проекта в действующий PDN baseline и не помечать приказ №21 как утратившим силу
     до прохождения primary-enactment gate. Вторичные формулировки «отменяет» или «вступает с 1 сентября» не
