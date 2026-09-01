@@ -1,0 +1,687 @@
+{
+  "id": "RU-PDN-SKZI-HEALTHCARE-DEPLOYMENT-SYNTHETIC-CASE-V1",
+  "as_of": "2026-09-01",
+  "status": "VERIFIED_SYNTHETIC_CASE_LOGIC_NO_REAL_SYSTEM_ASSERTION",
+  "title": "Синтетический медицинский кейс: ИСПДн, СКЗИ, сертификат, лицензия и эксплуатация",
+  "sources": [
+    {
+      "provision": "Федеральный закон №152-ФЗ, статья 19",
+      "revision": "проверено 01.09.2026",
+      "url": "https://www.consultant.ru/document/cons_doc_LAW_61801/ca9e5658710519f09ab2fdb8196fcb3eb024a051/"
+    },
+    {
+      "provision": "ПП РФ от 01.11.2012 №1119",
+      "revision": "проверено 01.09.2026",
+      "url": "https://www.consultant.ru/document/cons_doc_LAW_137356/8c86cf6357879e861790a8a7ca8bea4227d56c72/"
+    },
+    {
+      "provision": "Приказ ФСБ России от 10.07.2014 №378",
+      "revision": "действует с 28.09.2014",
+      "url": "https://normativ.kontur.ru/document?documentId=240493&moduleId=1"
+    },
+    {
+      "provision": "Приказ ФСТЭК России от 18.02.2013 №21",
+      "revision": "ред. от 14.05.2020",
+      "url": "https://www.consultant.ru/document/cons_doc_LAW_146520/"
+    },
+    {
+      "provision": "ПП РФ от 16.04.2012 №313",
+      "revision": "ред. от 28.08.2023",
+      "url": "https://www.consultant.ru/document/cons_doc_LAW_128739/5b53393f08d12d297d683284d87338c801ed859b/"
+    },
+    {
+      "provision": "Федеральный закон №99-ФЗ, статья 21",
+      "revision": "ред. от 04.08.2026; изменения действуют с 15.08.2026",
+      "url": "https://www.consultant.ru/document/cons_doc_LAW_113658/6afadb3989019c6aae7f724d1a8b7cacd60b570e/"
+    },
+    {
+      "provision": "ЦЛСЗ ФСБ России: сведения по сертификации",
+      "revision": "official discovery route checked 01.09.2026; bytes pending",
+      "url": "https://clsz.fsb.ru/clsz/certification.htm"
+    }
+  ],
+  "scope_boundary": "This is an anonymized synthetic regression case. Names, system, level, threat type, products, contracts and licence facts are not observations about a real healthcare organisation.",
+  "case_profile": {
+    "case_kind": "SYNTHETIC_ANONYMIZED_REGRESSION_FIXTURE_NOT_A_REAL_ORGANIZATION",
+    "sector": "healthcare",
+    "operator": "OPERATOR_HOSPITAL_GROUP_SYNTHETIC",
+    "system": "ISPDN_MEDICAL_EXCHANGE_SYNTHETIC",
+    "processing": "medical records exchanged between operator sites and a regional service",
+    "provided_protection_level": 2,
+    "provided_actual_threat_type": 2,
+    "crypto_use": "protected remote communication channels implemented with SKZI",
+    "required_minimum_class_from_fixture_inputs": "KV_OR_HIGHER",
+    "candidate_pp_313_works": [
+      12,
+      13,
+      27
+    ],
+    "boundary": "Protection level, threat type, topology and works are fixture inputs. The model does not infer them for a real healthcare system."
+  },
+  "decision_checkpoints": [
+    {
+      "id": "CP01",
+      "check": "ISPDn scope and operator identity",
+      "positive_evidence": "approved system boundary and processing inventory",
+      "negative_or_missing": "SCOPE_PENDING"
+    },
+    {
+      "id": "CP02",
+      "check": "protection level and source facts",
+      "positive_evidence": "approved PP 1119 determination",
+      "negative_or_missing": "LEVEL_EVIDENCE_PENDING"
+    },
+    {
+      "id": "CP03",
+      "check": "actual threat type and threat model",
+      "positive_evidence": "current approved model with source evidence",
+      "negative_or_missing": "THREAT_EVIDENCE_PENDING"
+    },
+    {
+      "id": "CP04",
+      "check": "actual cryptographic use and role",
+      "positive_evidence": "architecture, configuration and crypto inventory",
+      "negative_or_missing": "CRYPTO_DISCOVERY_PENDING"
+    },
+    {
+      "id": "CP05",
+      "check": "class and exact certified product scope",
+      "positive_evidence": "KV-or-higher native class and exact version/configuration certificate evidence",
+      "negative_or_missing": "PRODUCT_OR_CLASS_PENDING"
+    },
+    {
+      "id": "CP06",
+      "check": "actual PP 313 work and performer",
+      "positive_evidence": "work evidence separating installation, protected-system installation and channel service",
+      "negative_or_missing": "ACTIVITY_CLASSIFICATION_PENDING"
+    },
+    {
+      "id": "CP07",
+      "check": "performer licence at the relevant date",
+      "positive_evidence": "signed extract or immutable record with exact work, identity, place and interval",
+      "negative_or_missing": "LICENCE_SCOPE_OR_TIME_PENDING"
+    },
+    {
+      "id": "CP08",
+      "check": "Order 378 operation",
+      "positive_evidence": "keys, media, access, premises, journals and periodic controls",
+      "negative_or_missing": "OPERATIONAL_EVIDENCE_PENDING"
+    }
+  ],
+  "scenario_fixtures": [
+    {
+      "id": "HC-S01",
+      "facts": {
+        "crypto_policy": false,
+        "crypto_inventory": "UNKNOWN",
+        "network_observation": "UNKNOWN"
+      },
+      "expect": "CRYPTO_DISCOVERY_PENDING",
+      "reason": "absence of a policy is not evidence that SKZI is absent"
+    },
+    {
+      "id": "HC-S02",
+      "facts": {
+        "skzi_detected": true,
+        "order_378_documents": false
+      },
+      "expect": "IMPLEMENTATION_EVIDENCE_PENDING",
+      "reason": "actual SKZI use activates the Order 378 evidence route regardless of policy completeness"
+    },
+    {
+      "id": "HC-S03",
+      "facts": {
+        "protection_level": 2,
+        "actual_threat_type": 2,
+        "skzi_class": "KS1"
+      },
+      "expect": "CLASS_INSUFFICIENT_FOR_FIXTURE",
+      "reason": "the fixture requires KV or higher for UZ2 and threat type 2"
+    },
+    {
+      "id": "HC-S04",
+      "facts": {
+        "protection_level": 2,
+        "actual_threat_type": 2,
+        "skzi_class": "KV",
+        "product_scope": "EXACT",
+        "contractor_licence": "ACTIVE_BUT_WORKS_UNKNOWN"
+      },
+      "expect": "LICENCE_SCOPE_PENDING",
+      "reason": "active status without exact PP 313 work does not prove the contractor's authority"
+    },
+    {
+      "id": "HC-S05",
+      "facts": {
+        "protection_level": 2,
+        "actual_threat_type": 2,
+        "skzi_class": "KV",
+        "product_scope": "EXACT_VALID",
+        "actual_work": 13,
+        "contractor_licence_work": 13,
+        "licence_interval": "COVERS_EVENT",
+        "order_378_evidence": "COMPLETE_SYNTHETIC"
+      },
+      "expect": "VERIFIED_SYNTHETIC_FIXTURE_ONLY",
+      "reason": "all modeled gates are complete; no real-world assertion follows"
+    },
+    {
+      "id": "HC-S06",
+      "facts": {
+        "current_product_status": "ACTIVE",
+        "current_licence_status": "ACTIVE",
+        "incident_date": "EARLIER_DATE",
+        "historical_events": "MISSING"
+      },
+      "expect": "HISTORICAL_EVIDENCE_PENDING",
+      "reason": "current status cannot be projected backwards"
+    },
+    {
+      "id": "HC-S07",
+      "facts": {
+        "encrypted_media": true,
+        "media_register": false
+      },
+      "expect": "MEDIA_ACCOUNTING_NONCONFORMITY_SYNTHETIC",
+      "reason": "encryption does not remove item-by-item accounting"
+    },
+    {
+      "id": "HC-S08",
+      "facts": {
+        "contractor_work": 20,
+        "beneficiary": "CUSTOMER",
+        "own_needs_exception": true
+      },
+      "expect": "EXCEPTION_REJECTED_SYNTHETIC",
+      "reason": "customer service cannot inherit the contractor's own-needs maintenance exception without qualifying facts"
+    }
+  ],
+  "allowed_outputs": [
+    "VERIFIED_SYNTHETIC_FIXTURE_ONLY",
+    "NOT_APPLICABLE_WITH_EVIDENCE",
+    "CLASS_INSUFFICIENT_FOR_FIXTURE",
+    "SCOPE_OR_ACTIVITY_NONCONFORMITY_SYNTHETIC",
+    "EVIDENCE_PENDING",
+    "CONFLICT_REVIEW"
+  ],
+  "stages": [
+    "load the explicitly synthetic system and processing profile",
+    "validate protection-level evidence rather than sector inference",
+    "validate threat type and attacker-capability assumptions",
+    "discover actual SKZI use and choose the Order 378 route",
+    "match minimum class and exact certified product scope",
+    "classify actual PP 313 work, performer, beneficiary and exception",
+    "match licence work, place and historical interval",
+    "verify operational evidence and issue a fixture-only result with reasons"
+  ],
+  "red_team_attacks": [
+    {
+      "id": "RT01",
+      "attack": "treat the healthcare sector as automatic proof of UZ2",
+      "blocked_by": "the level is a fixture input and real systems require PP 1119 source facts",
+      "blocked": true
+    },
+    {
+      "id": "RT02",
+      "attack": "infer threat type 2 from the use of remote channels",
+      "blocked_by": "the threat type requires an approved threat model",
+      "blocked": true
+    },
+    {
+      "id": "RT03",
+      "attack": "assume that a VPN product name proves SKZI use and certificate scope",
+      "blocked_by": "exact product, version, configuration, class and evidence are required",
+      "blocked": true
+    },
+    {
+      "id": "RT04",
+      "attack": "accept KS1 for the UZ2/type-2 fixture because it is certified",
+      "blocked_by": "Order 378 mapping requires KV or higher for these supplied inputs",
+      "blocked": true
+    },
+    {
+      "id": "RT05",
+      "attack": "infer PP 313 work 12, 13 or 27 solely from a procurement title",
+      "blocked_by": "actual performed actions and contract evidence control classification",
+      "blocked": true
+    },
+    {
+      "id": "RT06",
+      "attack": "accept an active contractor licence without exact works",
+      "blocked_by": "the licence scope must contain the work actually performed",
+      "blocked": true
+    },
+    {
+      "id": "RT07",
+      "attack": "treat the product certificate as proof of contractor licensing",
+      "blocked_by": "product and actor evidence routes remain separate",
+      "blocked": true
+    },
+    {
+      "id": "RT08",
+      "attack": "treat the contractor licence as proof of product certification",
+      "blocked_by": "actor and product evidence routes remain separate",
+      "blocked": true
+    },
+    {
+      "id": "RT09",
+      "attack": "project current certificate and licence states to the incident date",
+      "blocked_by": "historical events and valid-time intervals are required",
+      "blocked": true
+    },
+    {
+      "id": "RT10",
+      "attack": "skip removable-media accounting because media is encrypted",
+      "blocked_by": "Order 378 item-by-item accounting remains required",
+      "blocked": true
+    },
+    {
+      "id": "RT11",
+      "attack": "apply the own-needs exception to third-party customer service",
+      "blocked_by": "performer, beneficiary and actual work must satisfy the exception",
+      "blocked": true
+    },
+    {
+      "id": "RT12",
+      "attack": "publish the synthetic VERIFIED result as a conclusion about a real hospital",
+      "blocked_by": "fixture identity and synthetic-only result prevent real-world attribution",
+      "blocked": true
+    }
+  ],
+  "evidence_artifacts": [
+    "approved ISPDn boundary and healthcare processing inventory",
+    "operator identity, processing purposes and system-owner decision records",
+    "PP 1119 protection-level determination and source facts",
+    "current threat model, actual threat type and approval evidence",
+    "architecture and inventory proving whether and where SKZI is used",
+    "approved attacker-capability assumptions supporting class selection",
+    "exact SKZI product name, version, configuration and platform",
+    "FSB certificate or conformity record with class, scope and valid-time",
+    "contract, statement of work and acceptance evidence for each cryptographic activity",
+    "PP 313 work classification with alternatives and rejected mappings",
+    "performer and beneficiary identities plus own-needs analysis",
+    "FSB licence signed extract or immutable record with exact work and place",
+    "licence and certificate historical events covering deployment and incident dates",
+    "SKZI operational documentation and deployment configuration evidence",
+    "key, authentication and password information lifecycle evidence",
+    "removable-media register, custody and encrypted-media evidence",
+    "access lists, premises controls, journals and applicable periodic checks",
+    "final machine decision with fixture-only marker, reasons, pending data and conflicts"
+  ],
+  "evidence_nodes": [
+    {
+      "id": "EV-01",
+      "claim": "approved ISPDn boundary and healthcare processing inventory",
+      "state": "EVIDENCE_REQUIRED"
+    },
+    {
+      "id": "EV-02",
+      "claim": "operator identity, processing purposes and system-owner decision records",
+      "state": "EVIDENCE_REQUIRED"
+    },
+    {
+      "id": "EV-03",
+      "claim": "PP 1119 protection-level determination and source facts",
+      "state": "EVIDENCE_REQUIRED"
+    },
+    {
+      "id": "EV-04",
+      "claim": "current threat model, actual threat type and approval evidence",
+      "state": "EVIDENCE_REQUIRED"
+    },
+    {
+      "id": "EV-05",
+      "claim": "architecture and inventory proving whether and where SKZI is used",
+      "state": "EVIDENCE_REQUIRED"
+    },
+    {
+      "id": "EV-06",
+      "claim": "approved attacker-capability assumptions supporting class selection",
+      "state": "EVIDENCE_REQUIRED"
+    },
+    {
+      "id": "EV-07",
+      "claim": "exact SKZI product name, version, configuration and platform",
+      "state": "EVIDENCE_REQUIRED"
+    },
+    {
+      "id": "EV-08",
+      "claim": "FSB certificate or conformity record with class, scope and valid-time",
+      "state": "EVIDENCE_REQUIRED"
+    },
+    {
+      "id": "EV-09",
+      "claim": "contract, statement of work and acceptance evidence for each cryptographic activity",
+      "state": "EVIDENCE_REQUIRED"
+    },
+    {
+      "id": "EV-10",
+      "claim": "PP 313 work classification with alternatives and rejected mappings",
+      "state": "EVIDENCE_REQUIRED"
+    },
+    {
+      "id": "EV-11",
+      "claim": "performer and beneficiary identities plus own-needs analysis",
+      "state": "EVIDENCE_REQUIRED"
+    },
+    {
+      "id": "EV-12",
+      "claim": "FSB licence signed extract or immutable record with exact work and place",
+      "state": "EVIDENCE_REQUIRED"
+    },
+    {
+      "id": "EV-13",
+      "claim": "licence and certificate historical events covering deployment and incident dates",
+      "state": "EVIDENCE_REQUIRED"
+    },
+    {
+      "id": "EV-14",
+      "claim": "SKZI operational documentation and deployment configuration evidence",
+      "state": "EVIDENCE_REQUIRED"
+    },
+    {
+      "id": "EV-15",
+      "claim": "key, authentication and password information lifecycle evidence",
+      "state": "EVIDENCE_REQUIRED"
+    },
+    {
+      "id": "EV-16",
+      "claim": "removable-media register, custody and encrypted-media evidence",
+      "state": "EVIDENCE_REQUIRED"
+    },
+    {
+      "id": "EV-17",
+      "claim": "access lists, premises controls, journals and applicable periodic checks",
+      "state": "EVIDENCE_REQUIRED"
+    },
+    {
+      "id": "EV-18",
+      "claim": "final machine decision with fixture-only marker, reasons, pending data and conflicts",
+      "state": "EVIDENCE_REQUIRED"
+    }
+  ],
+  "boundaries": {
+    "no_sector_as_level": true,
+    "no_topology_as_threat_type": true,
+    "no_product_name_as_certificate": true,
+    "no_certified_ks1_override": true,
+    "no_procurement_title_as_work": true,
+    "no_active_licence_without_exact_work": true,
+    "no_certificate_as_licence": true,
+    "no_licence_as_certificate": true,
+    "no_current_as_historical_status": true,
+    "no_encrypted_media_accounting_exemption": true,
+    "no_own_needs_for_customer_service": true,
+    "no_synthetic_result_as_real_fact": true
+  },
+  "control_rules": [
+    {
+      "id": "HCF-R001",
+      "rule": "FAIL_CLOSED_PDN_SKZI_HEALTHCARE_SYNTHETIC_CASE"
+    },
+    {
+      "id": "HCF-R002",
+      "rule": "FAIL_CLOSED_PDN_SKZI_HEALTHCARE_SYNTHETIC_CASE"
+    },
+    {
+      "id": "HCF-R003",
+      "rule": "FAIL_CLOSED_PDN_SKZI_HEALTHCARE_SYNTHETIC_CASE"
+    },
+    {
+      "id": "HCF-R004",
+      "rule": "FAIL_CLOSED_PDN_SKZI_HEALTHCARE_SYNTHETIC_CASE"
+    },
+    {
+      "id": "HCF-R005",
+      "rule": "FAIL_CLOSED_PDN_SKZI_HEALTHCARE_SYNTHETIC_CASE"
+    },
+    {
+      "id": "HCF-R006",
+      "rule": "FAIL_CLOSED_PDN_SKZI_HEALTHCARE_SYNTHETIC_CASE"
+    },
+    {
+      "id": "HCF-R007",
+      "rule": "FAIL_CLOSED_PDN_SKZI_HEALTHCARE_SYNTHETIC_CASE"
+    },
+    {
+      "id": "HCF-R008",
+      "rule": "FAIL_CLOSED_PDN_SKZI_HEALTHCARE_SYNTHETIC_CASE"
+    },
+    {
+      "id": "HCF-R009",
+      "rule": "FAIL_CLOSED_PDN_SKZI_HEALTHCARE_SYNTHETIC_CASE"
+    },
+    {
+      "id": "HCF-R010",
+      "rule": "FAIL_CLOSED_PDN_SKZI_HEALTHCARE_SYNTHETIC_CASE"
+    },
+    {
+      "id": "HCF-R011",
+      "rule": "FAIL_CLOSED_PDN_SKZI_HEALTHCARE_SYNTHETIC_CASE"
+    },
+    {
+      "id": "HCF-R012",
+      "rule": "FAIL_CLOSED_PDN_SKZI_HEALTHCARE_SYNTHETIC_CASE"
+    },
+    {
+      "id": "HCF-R013",
+      "rule": "FAIL_CLOSED_PDN_SKZI_HEALTHCARE_SYNTHETIC_CASE"
+    },
+    {
+      "id": "HCF-R014",
+      "rule": "FAIL_CLOSED_PDN_SKZI_HEALTHCARE_SYNTHETIC_CASE"
+    },
+    {
+      "id": "HCF-R015",
+      "rule": "FAIL_CLOSED_PDN_SKZI_HEALTHCARE_SYNTHETIC_CASE"
+    },
+    {
+      "id": "HCF-R016",
+      "rule": "FAIL_CLOSED_PDN_SKZI_HEALTHCARE_SYNTHETIC_CASE"
+    },
+    {
+      "id": "HCF-R017",
+      "rule": "FAIL_CLOSED_PDN_SKZI_HEALTHCARE_SYNTHETIC_CASE"
+    },
+    {
+      "id": "HCF-R018",
+      "rule": "FAIL_CLOSED_PDN_SKZI_HEALTHCARE_SYNTHETIC_CASE"
+    },
+    {
+      "id": "HCF-R019",
+      "rule": "FAIL_CLOSED_PDN_SKZI_HEALTHCARE_SYNTHETIC_CASE"
+    },
+    {
+      "id": "HCF-R020",
+      "rule": "FAIL_CLOSED_PDN_SKZI_HEALTHCARE_SYNTHETIC_CASE"
+    },
+    {
+      "id": "HCF-R021",
+      "rule": "FAIL_CLOSED_PDN_SKZI_HEALTHCARE_SYNTHETIC_CASE"
+    },
+    {
+      "id": "HCF-R022",
+      "rule": "FAIL_CLOSED_PDN_SKZI_HEALTHCARE_SYNTHETIC_CASE"
+    },
+    {
+      "id": "HCF-R023",
+      "rule": "FAIL_CLOSED_PDN_SKZI_HEALTHCARE_SYNTHETIC_CASE"
+    },
+    {
+      "id": "HCF-R024",
+      "rule": "FAIL_CLOSED_PDN_SKZI_HEALTHCARE_SYNTHETIC_CASE"
+    },
+    {
+      "id": "HCF-R025",
+      "rule": "FAIL_CLOSED_PDN_SKZI_HEALTHCARE_SYNTHETIC_CASE"
+    },
+    {
+      "id": "HCF-R026",
+      "rule": "FAIL_CLOSED_PDN_SKZI_HEALTHCARE_SYNTHETIC_CASE"
+    },
+    {
+      "id": "HCF-R027",
+      "rule": "FAIL_CLOSED_PDN_SKZI_HEALTHCARE_SYNTHETIC_CASE"
+    },
+    {
+      "id": "HCF-R028",
+      "rule": "FAIL_CLOSED_PDN_SKZI_HEALTHCARE_SYNTHETIC_CASE"
+    },
+    {
+      "id": "HCF-R029",
+      "rule": "FAIL_CLOSED_PDN_SKZI_HEALTHCARE_SYNTHETIC_CASE"
+    },
+    {
+      "id": "HCF-R030",
+      "rule": "FAIL_CLOSED_PDN_SKZI_HEALTHCARE_SYNTHETIC_CASE"
+    },
+    {
+      "id": "HCF-R031",
+      "rule": "FAIL_CLOSED_PDN_SKZI_HEALTHCARE_SYNTHETIC_CASE"
+    },
+    {
+      "id": "HCF-R032",
+      "rule": "FAIL_CLOSED_PDN_SKZI_HEALTHCARE_SYNTHETIC_CASE"
+    },
+    {
+      "id": "HCF-R033",
+      "rule": "FAIL_CLOSED_PDN_SKZI_HEALTHCARE_SYNTHETIC_CASE"
+    },
+    {
+      "id": "HCF-R034",
+      "rule": "FAIL_CLOSED_PDN_SKZI_HEALTHCARE_SYNTHETIC_CASE"
+    },
+    {
+      "id": "HCF-R035",
+      "rule": "FAIL_CLOSED_PDN_SKZI_HEALTHCARE_SYNTHETIC_CASE"
+    },
+    {
+      "id": "HCF-R036",
+      "rule": "FAIL_CLOSED_PDN_SKZI_HEALTHCARE_SYNTHETIC_CASE"
+    },
+    {
+      "id": "HCF-R037",
+      "rule": "FAIL_CLOSED_PDN_SKZI_HEALTHCARE_SYNTHETIC_CASE"
+    },
+    {
+      "id": "HCF-R038",
+      "rule": "FAIL_CLOSED_PDN_SKZI_HEALTHCARE_SYNTHETIC_CASE"
+    },
+    {
+      "id": "HCF-R039",
+      "rule": "FAIL_CLOSED_PDN_SKZI_HEALTHCARE_SYNTHETIC_CASE"
+    },
+    {
+      "id": "HCF-R040",
+      "rule": "FAIL_CLOSED_PDN_SKZI_HEALTHCARE_SYNTHETIC_CASE"
+    },
+    {
+      "id": "HCF-R041",
+      "rule": "FAIL_CLOSED_PDN_SKZI_HEALTHCARE_SYNTHETIC_CASE"
+    },
+    {
+      "id": "HCF-R042",
+      "rule": "FAIL_CLOSED_PDN_SKZI_HEALTHCARE_SYNTHETIC_CASE"
+    },
+    {
+      "id": "HCF-R043",
+      "rule": "FAIL_CLOSED_PDN_SKZI_HEALTHCARE_SYNTHETIC_CASE"
+    },
+    {
+      "id": "HCF-R044",
+      "rule": "FAIL_CLOSED_PDN_SKZI_HEALTHCARE_SYNTHETIC_CASE"
+    },
+    {
+      "id": "HCF-R045",
+      "rule": "FAIL_CLOSED_PDN_SKZI_HEALTHCARE_SYNTHETIC_CASE"
+    },
+    {
+      "id": "HCF-R046",
+      "rule": "FAIL_CLOSED_PDN_SKZI_HEALTHCARE_SYNTHETIC_CASE"
+    },
+    {
+      "id": "HCF-R047",
+      "rule": "FAIL_CLOSED_PDN_SKZI_HEALTHCARE_SYNTHETIC_CASE"
+    },
+    {
+      "id": "HCF-R048",
+      "rule": "FAIL_CLOSED_PDN_SKZI_HEALTHCARE_SYNTHETIC_CASE"
+    },
+    {
+      "id": "HCF-R049",
+      "rule": "FAIL_CLOSED_PDN_SKZI_HEALTHCARE_SYNTHETIC_CASE"
+    },
+    {
+      "id": "HCF-R050",
+      "rule": "FAIL_CLOSED_PDN_SKZI_HEALTHCARE_SYNTHETIC_CASE"
+    },
+    {
+      "id": "HCF-R051",
+      "rule": "FAIL_CLOSED_PDN_SKZI_HEALTHCARE_SYNTHETIC_CASE"
+    },
+    {
+      "id": "HCF-R052",
+      "rule": "FAIL_CLOSED_PDN_SKZI_HEALTHCARE_SYNTHETIC_CASE"
+    },
+    {
+      "id": "HCF-R053",
+      "rule": "FAIL_CLOSED_PDN_SKZI_HEALTHCARE_SYNTHETIC_CASE"
+    },
+    {
+      "id": "HCF-R054",
+      "rule": "FAIL_CLOSED_PDN_SKZI_HEALTHCARE_SYNTHETIC_CASE"
+    },
+    {
+      "id": "HCF-R055",
+      "rule": "FAIL_CLOSED_PDN_SKZI_HEALTHCARE_SYNTHETIC_CASE"
+    },
+    {
+      "id": "HCF-R056",
+      "rule": "FAIL_CLOSED_PDN_SKZI_HEALTHCARE_SYNTHETIC_CASE"
+    },
+    {
+      "id": "HCF-R057",
+      "rule": "FAIL_CLOSED_PDN_SKZI_HEALTHCARE_SYNTHETIC_CASE"
+    },
+    {
+      "id": "HCF-R058",
+      "rule": "FAIL_CLOSED_PDN_SKZI_HEALTHCARE_SYNTHETIC_CASE"
+    },
+    {
+      "id": "HCF-R059",
+      "rule": "FAIL_CLOSED_PDN_SKZI_HEALTHCARE_SYNTHETIC_CASE"
+    },
+    {
+      "id": "HCF-R060",
+      "rule": "FAIL_CLOSED_PDN_SKZI_HEALTHCARE_SYNTHETIC_CASE"
+    },
+    {
+      "id": "HCF-R061",
+      "rule": "FAIL_CLOSED_PDN_SKZI_HEALTHCARE_SYNTHETIC_CASE"
+    },
+    {
+      "id": "HCF-R062",
+      "rule": "FAIL_CLOSED_PDN_SKZI_HEALTHCARE_SYNTHETIC_CASE"
+    },
+    {
+      "id": "HCF-R063",
+      "rule": "FAIL_CLOSED_PDN_SKZI_HEALTHCARE_SYNTHETIC_CASE"
+    },
+    {
+      "id": "HCF-R064",
+      "rule": "FAIL_CLOSED_PDN_SKZI_HEALTHCARE_SYNTHETIC_CASE"
+    }
+  ],
+  "counts": {
+    "sources": 7,
+    "decision_checkpoints": 8,
+    "scenario_fixtures": 8,
+    "allowed_outputs": 6,
+    "stages": 8,
+    "red_team_attacks": 12,
+    "evidence_artifacts": 18,
+    "evidence_nodes": 18,
+    "control_rules": 64,
+    "regression_cases": 64
+  }
+}
