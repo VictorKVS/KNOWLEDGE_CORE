@@ -1,9 +1,9 @@
 {
   "id": "RU-KII-FINANCE-PP92-CLAUSE-ROUTING-V1",
   "as_of": "2026-09-01",
-  "status": "PARTIAL_VERIFIED_POINTS_1_55_FORMULA_GLYPHS_PENDING",
+  "status": "PARTIAL_VERIFIED_POINTS_1_55_FORMULAS_TRANSCRIBED_PRESERVED_PDF_PRIMARY_HASH_PENDING",
   "title": "ПП №92: clause-level маршрут категорирования КИИ банковской и финансовой сферы",
-  "scope": "Non-verbatim fail-closed model. Exact operators of image-rendered formulas are not reconstructed from variable descriptions.",
+  "scope": "Non-verbatim fail-closed model. Formula glyphs are visually transcribed from the preserved 17-page PDF linked to the official publication; immutable official PDF bytes and hash remain pending.",
   "sources": [
     {
       "id": "PP92_OFFICIAL",
@@ -249,12 +249,12 @@
     {
       "id": "P41",
       "section": "III",
-      "normalized_rule": "position 9 percentage formula with Pavg, Smax, U and D; exact image operators pending"
+      "normalized_rule": "P9 = (Pavg/(365*24) * Cmax/D + 0.2*U/D) * 100"
     },
     {
       "id": "P42",
       "section": "III",
-      "normalized_rule": "Pavg formula uses up to three years; shorter available periods are progressively completed to three years"
+      "normalized_rule": "Pavg = (sum from printed lower index i through n of Si)/n; the PDF prints lower index i without '=1'; shorter available periods are progressively completed to three years"
     },
     {
       "id": "P43",
@@ -279,42 +279,42 @@
     {
       "id": "P47",
       "section": "III",
-      "normalized_rule": "position 10 formula uses annual or forecast money-transfer operation count Qo; exact image operator pending"
+      "normalized_rule": "K10 = Qo/365 for annual or forecast money-transfer operation count"
     },
     {
       "id": "P48",
       "section": "III",
-      "normalized_rule": "position 10.1 formula uses twelve-month cleared obligations Ao; exact image operator pending"
+      "normalized_rule": "K10^1 = Ao/365 for twelve-month cleared obligations"
     },
     {
       "id": "P49",
       "section": "III",
-      "normalized_rule": "position 10.2 formula uses securities count Qo at central depository; exact image operator pending"
+      "normalized_rule": "K10^2 = Qo/365 for securities count at the central depository"
     },
     {
       "id": "P50",
       "section": "III",
-      "normalized_rule": "position 10.3 formula uses NPF pension savings and reserves; exact image operators pending"
+      "normalized_rule": "K10^3 = PA_npf + PR_npf"
     },
     {
       "id": "P51",
       "section": "III",
-      "normalized_rule": "position 10.4 formula uses insurer asset volume Va; exact image operator pending"
+      "normalized_rule": "K10^4 = Va"
     },
     {
       "id": "P52",
       "section": "III",
-      "normalized_rule": "position 10.5 formula uses contracts with credit institutions Qc; exact image operator pending"
+      "normalized_rule": "K10^5 = Qc"
     },
     {
       "id": "P53",
       "section": "III",
-      "normalized_rule": "position 10.6 formula uses annual microloan volume VL; exact image operator pending"
+      "normalized_rule": "K10^6 = VL"
     },
     {
       "id": "P54",
       "section": "III",
-      "normalized_rule": "position 10.7 formula uses credit histories stored Qch; exact image operator pending"
+      "normalized_rule": "K10^7 = Qch"
     },
     {
       "id": "P55",
@@ -488,7 +488,7 @@
     "guard": "recipient depends on subject class, not the system's product name"
   },
   "formula_status": {
-    "state": "PENDING_PRIMARY_PDF_FORMULA_TRANSCRIPTION",
+    "state": "VERIFIED_VISUAL_TRANSCRIPTION_PRESERVED_PDF_PRIMARY_HASH_PENDING",
     "formula_points": [
       41,
       42,
@@ -501,18 +501,19 @@
       53,
       54
     ],
-    "verified_variable_families": [
-      "Pavg Smax U D",
-      "Qo money-transfer operations",
-      "Ao cleared obligations",
-      "Qo securities",
-      "NPF savings and reserves",
-      "insurer assets",
-      "contracts with credit institutions",
-      "microloan volume",
-      "credit-history count"
+    "transcriptions": [
+      {"point": 41, "pdf_page": 12, "formula": "P9 = (Pavg/(365*24) * Cmax/D + 0.2*U/D) * 100"},
+      {"point": 42, "pdf_page": 13, "formula": "Pavg = (SUM_i^n Si)/n", "lower_index_guard": "printed i; do not add =1"},
+      {"point": 47, "pdf_page": 15, "formula": "K10 = Qo/365"},
+      {"point": 48, "pdf_page": 15, "formula": "K10^1 = Ao/365"},
+      {"point": 49, "pdf_page": 15, "formula": "K10^2 = Qo/365"},
+      {"point": 50, "pdf_page": 16, "formula": "K10^3 = PA_npf + PR_npf"},
+      {"point": 51, "pdf_page": 16, "formula": "K10^4 = Va"},
+      {"point": 52, "pdf_page": 16, "formula": "K10^5 = Qc"},
+      {"point": 53, "pdf_page": 16, "formula": "K10^6 = VL"},
+      {"point": 54, "pdf_page": 16, "formula": "K10^7 = Qch"}
     ],
-    "guard": "variable names do not establish operators, denominators, absolute values, normalization or units conversion"
+    "guard": "preserved-PDF visual transcription does not establish immutable official bytes or hash; no unprinted lower summation bound or division-by-zero behavior is invented"
   },
   "decision_gates": [
     {
@@ -594,8 +595,8 @@
     },
     {
       "id": "S8",
-      "input": "formula image operators unavailable",
-      "expected": "PENDING_EXACT_FORMULA_NO_RECONSTRUCTION"
+      "input": "preserved PDF formula transcription supplied but immutable official PDF hash unavailable",
+      "expected": "USE_TRANSCRIBED_FORMULAS_KEEP_PRIMARY_HASH_PENDING"
     }
   ],
   "red_team_attacks": [
@@ -651,7 +652,7 @@
     },
     {
       "id": "RT-11",
-      "attack": "FORMULA_RECONSTRUCTED_FROM_VARIABLE_NAMES",
+      "attack": "FORMULA_OPERATOR_OR_DENOMINATOR_CHANGED_FROM_VISUAL_TRANSCRIPTION",
       "blocked": true
     },
     {
@@ -748,7 +749,7 @@
     },
     {
       "id": "EV-18",
-      "name": "formula images minutes and reviewer sign-off",
+      "name": "preserved-PDF formula transcription minutes, page map and reviewer sign-off",
       "required": true
     }
   ],
@@ -1148,7 +1149,7 @@
     "dependent_system_routes_are_limited": true,
     "short_history_is_not_zero_filled": true,
     "internal_document_is_not_unreviewed_truth": true,
-    "formula_variables_are_not_formula": true,
+    "formula_visual_transcription_is_not_immutable_primary_pdf": true,
     "recommendation_is_not_binding_threshold": true,
     "no_category_requires_all_applicable_indicators": true
   },

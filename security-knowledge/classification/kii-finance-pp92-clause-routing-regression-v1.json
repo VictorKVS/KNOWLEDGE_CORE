@@ -32,8 +32,30 @@
     },
     {
       "scenario_id": "S8",
-      "expected": "PENDING_EXACT_FORMULA_NO_RECONSTRUCTION"
+      "expected": "USE_TRANSCRIBED_FORMULAS_KEEP_PRIMARY_HASH_PENDING"
     }
+  ],
+  "formula_expectations": [
+    {"point": 41, "formula": "P9 = (Pavg/(365*24) * Cmax/D + 0.2*U/D) * 100"},
+    {"point": 42, "formula": "Pavg = (SUM_i^n Si)/n"},
+    {"point": 47, "formula": "K10 = Qo/365"},
+    {"point": 48, "formula": "K10^1 = Ao/365"},
+    {"point": 49, "formula": "K10^2 = Qo/365"},
+    {"point": 50, "formula": "K10^3 = PA_npf + PR_npf"},
+    {"point": 51, "formula": "K10^4 = Va"},
+    {"point": 52, "formula": "K10^5 = Qc"},
+    {"point": 53, "formula": "K10^6 = VL"},
+    {"point": 54, "formula": "K10^7 = Qch"}
+  ],
+  "formula_negative_guards": [
+    "do not remove 365*24 from point 41",
+    "do not replace Cmax/D with D/Cmax",
+    "do not omit 0.2 multiplier or outer *100",
+    "do not add an unprinted =1 lower bound to point 42",
+    "do not remove /365 from points 47-49",
+    "do not replace plus with multiplication in point 50",
+    "do not invent division-by-zero behavior",
+    "do not treat preserved PDF as immutable official bytes"
   ],
   "cases": [
     {
