@@ -1,0 +1,147 @@
+schema_version: "1.0"
+stream: 3
+run_at: "2026-09-01T17:29:08+03:00"
+objective: "continue sector/special-regime primary-source discovery, exact capture, deduplication, relationship linking and master reconciliation"
+
+selected_sources:
+  - id: SEC-SRC-RU-CBR-808-P-2022
+    act: "Положение Банка России от 17.10.2022 № 808-П"
+    action: NEW_CANONICAL_SOURCE_REGISTERED
+    sector_overlap:
+      - finance
+      - credit_histories
+      - financial_market_security
+      - personal_data_overlap
+      - information_security
+      - retention
+      - incident_management
+      - credit_rating_agency_overlap
+
+repository_dedupe:
+  canonical_path: "security-corpora/RU/protected-information/source/SEC-SRC-RU-CBR-808-P-2022.yaml"
+  direct_path_probe_before_write: NOT_FOUND_404
+  code_search_for_number_before_write: NO_RESULTS
+  result: NEW_CANONICAL_NODE_CREATED
+  found_counter_increment: 1
+  reused_counter_increment: 0
+
+primary_proof:
+  official_current_listing: "https://www.cbr.ru/finm_infrastructure/audit_fm/acts/"
+  official_publication: "https://cbr.ru/Queries/XsltBlock/File/105012/-1/2394"
+  publication: "Вестник Банка России № 62 (2394), 22.12.2022"
+  minjust_registration: "07.12.2022 № 71409"
+  official_online_publication_date: "2022-12-21"
+  primary_original_act_verified: true
+  primary_publication_counter_increment: 1
+  exact_binary_proof: PENDING
+
+version_chain:
+  state: CURRENT_ORIGINAL_EDITION_2022_10_17_CBR_CURRENT_LISTING_NO_LATER_AMENDMENT_FOUND_EXACT_PRIMARY_BYTES_PENDING
+  current_revision: "2022-10-17"
+  official_cbr_listing_checked_at: "2026-09-01"
+  later_amendment_found_in_current_sweep: false
+  general_effective_from: "2023-04-01"
+  point_2_4_effective_from: "2024-04-01"
+  caution: "No later amendment found in the current official-source sweep is not a claim about future changes or unindexed acts."
+
+normative_findings:
+  - "Point 2.1: BKI protect Article 4 218-FZ information during processing, storage and transfer in automated systems using certified protection means."
+  - "Point 2.1 expressly requires Article 19 152-FZ personal-data security measures if the protected information contains personal data."
+  - "Point 2.7 requires access-related logging for identification/authentication/authorization, message exchange, employee access and subject actions."
+  - "Points 2.8-2.9 require registration and response/reporting for information-protection incidents."
+  - "Point 4.1 adds 187-FZ requirements only where the BKI infrastructure object is actually a CII object."
+
+retention:
+  universal_pdn_retention: false
+  sector_rules:
+    - scope: "BKI protected information + point 2.7 access-registration data + information-security incident information"
+      locator: "point 2.10"
+      period: "5 years from formation/receipt unless Russian legislation regulating BKI establishes another period"
+    - scope: "credit rating agency protected information"
+      locator: "point 3.2"
+      period: "archive-law periods but at least 5 years; electronic backup at least every 7 days"
+  guards:
+    - "FIVE_YEAR_808_P_RULE_NOT_UNIVERSAL_PDN_RETENTION"
+    - "FIVE_YEAR_808_P_RULE_DOES_NOT_OVERRIDE_SPECIFIC_218_FZ_OBJECT_RETENTION"
+    - "RATING_AGENCY_MINIMUM_FIVE_YEARS_NOT_BKI_RULE"
+    - "SEVEN_DAY_BACKUP_INTERVAL_NOT_RETENTION_PERIOD"
+
+relationships:
+  reconciled:
+    - "808-P -> SEC-SRC-RU-FZ-218-2004 / subordinate BKI security implementation"
+    - "808-P -> 152-FZ Article 19 / explicit conditional security bridge where protected information contains PDN"
+    - "808-P -> 149-FZ / limited-access protection overlap in credit-rating-agency scope"
+    - "808-P -> 187-FZ / conditional CII overlay only for legally qualified CII objects"
+    - "808-P -> 222-FZ / credit-rating-agency protection regime"
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+
+acquisition:
+  exact_binary_attempted: true
+  attempted_at: "2026-09-01T17:29:08+03:00"
+  targets:
+    - target: "Bank of Russia official Vestnik PDF via www host"
+      url: "https://www.cbr.ru/Queries/XsltBlock/File/105012/-1/2394"
+      result: DNS_RESOLUTION_FAILURE
+      curl_exit_code: 6
+    - target: "Bank of Russia official Vestnik PDF via bare host"
+      url: "https://cbr.ru/Queries/XsltBlock/File/105012/-1/2394"
+      result: DNS_RESOLUTION_FAILURE
+      curl_exit_code: 6
+  error_class: NameResolutionError
+  exact_bytes_obtained: false
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+  immutable_promotions: 0
+  retry_class: TRANSIENT
+  web_observation:
+    content_type: "application/pdf"
+    page_count: 53
+    note: "Web rendering is primary-text proof but is not used for exact-byte artifact hashing metadata."
+
+counter_delta_this_pass:
+  found: 1
+  downloaded: 0
+  immutable: 0
+  pending: 1
+  reused: 0
+  primary_publication_verified: 1
+
+capture_ledger_reconciliation:
+  authoritative_file: "security-corpora/RU/protected-information/SECTOR_ACQUISITION_RUN.json"
+  targets_with_official_publication_id: 22
+  raw_downloaded_exact: 22
+  immutable_sha256_verified: 22
+  pending_inside_that_capture_scope: 0
+  bytes_downloaded: 114212750
+  changed_this_pass: false
+  note: "Discovery/capture backlog and the narrow exact-acquisition ledger remain intentionally separate scopes."
+
+files_written:
+  - "security-corpora/RU/protected-information/source/SEC-SRC-RU-CBR-808-P-2022.yaml"
+  - "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-CBR-808-P-2022-capture-pending.json"
+  - "security-corpora/RU/protected-information/RU_PROTECTED_INFORMATION_MASTER_SOURCE_INVENTORY_DELTA_STREAM3_2026-09-01T1429Z.yaml"
+  - "security-corpora/RU/152-FZ/PDN_MASTER_SOURCE_INVENTORY_DELTA_STREAM3_2026-09-01T1429Z.yaml"
+  - "security-knowledge/corpus/ru-protected-information/stream-3-run-2026-09-01T1729.yaml"
+
+quality_gates:
+  taxonomy_as_evidence: false
+  primary_official_act_identity_verified: true
+  current_version_crosschecked: true
+  exact_bytes_captured: false
+  applicability_invented: false
+  secrecy_category_invented: false
+  fabricated_binary_metadata: false
+  downloaded_increment_without_bytes: false
+  immutable_increment_without_hash: false
+  universal_retention_inferred: false
+  duplicate_source_created: false
+
+next_actions:
+  - "Retry exact official-byte capture of the Bank of Russia Vestnik PDF; populate MIME, byte length and SHA-256 only after successful exact capture."
+  - "Reconcile 808-P against the existing 218-FZ node at the requirement/object level, preserving 218-FZ object-specific retention periods."
+  - "Continue Bank of Russia subordinate BKI/access/security acts and then finance/banking/insurance special regimes."
+  - "Resume healthcare, communications, education/children, advertising/marketing and archive-retention proof-floor expansion after the finance cluster pass."
