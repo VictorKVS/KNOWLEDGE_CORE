@@ -22,6 +22,27 @@ A primary document may become an immutable captured source only after all requir
 
 If any required element is missing, keep the source `PENDING`/`UNKNOWN` as appropriate. Never synthesize missing values. Never substitute a commercial/secondary mirror for the missing primary immutable payload.
 
+## Source identity versus file representations
+
+Deduplicate at two different levels and never confuse them:
+
+- `source_identity` means the logical legal/methodological document (for example one Constitution, one federal law, one order, one edition/version of an act);
+- `representation` means one physical rendition of that same source identity (for example PDF, ODT, DOCX, RTF, HTML snapshot, scan, XML, signed container, or a third-party reference copy).
+
+Rules:
+- one logical source identity may and often should retain multiple useful representations;
+- PDF and ODT of the same act are not duplicate source identities and must not cause the second format to be discarded merely because the title/document identity matches;
+- each physical representation gets its own `representation_id`, format/MIME, source route or local provenance, `retrieved_at`, byte length and SHA-256;
+- byte-identical files are physical duplicates and may be stored once by content hash while preserving all observed filenames/locations as provenance aliases;
+- byte-different representations of the same logical act must be retained separately when they have evidentiary, extraction, layout, signature, OCR or archival value;
+- official and third-party copies are never merged semantically: they may point to the same `source_identity`, but each keeps its own provenance and authority class;
+- a third-party PDF/ODT can be retained as `third_party_reference_copy` while the official immutable representation remains `PENDING`;
+- source counters count logical documents unless a metric explicitly says `representation_count`; do not inflate document counts by counting formats;
+- representation counters may separately report PDF/ODT/etc. coverage and exact-byte duplicates removed.
+
+Preferred conceptual structure:
+`source_identity -> version/edition -> representations[] -> physical_artifact_sha256`.
+
 ## Status and version chain
 
 For normative and methodological sources, record separately:
@@ -67,7 +88,7 @@ Descriptions imported from the guide must be concise paraphrases, preserve prove
 ## Intake pipeline
 
 Use this conceptual order:
-`material -> identity -> taxonomy -> provenance -> status/version -> applicability -> official bytes -> immutable manifest -> extraction -> norms/concepts/definitions -> graph links -> inventory reconciliation -> QA`.
+`material -> identity -> version/edition -> representation -> taxonomy -> provenance -> status/version -> applicability -> official bytes -> immutable manifest -> extraction -> norms/concepts/definitions -> graph links -> inventory reconciliation -> QA`.
 
 ## Stream 2 — PDN technical and cryptographic contour
 
