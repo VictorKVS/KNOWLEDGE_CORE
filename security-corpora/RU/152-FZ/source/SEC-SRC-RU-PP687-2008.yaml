@@ -58,7 +58,7 @@ capture:
   sha256: ""
   fingerprint_status: PENDING_RAW_CAPTURE
   last_attempt:
-    observed_at: "2026-09-01T00:57:09.404246Z"
+    observed_at: "2026-09-01T11:26:52Z"
     route: registered_official_multi_route
     result: ALL_REGISTERED_ROUTES_FAILED
     failure_classes:
@@ -67,12 +67,17 @@ capture:
       - CURRENT_REVISION_MARKER_MISS
       - ALL_REGISTERED_ROUTES_FAILED
     detail: >-
-      Latest proven dedicated-route telemetry synchronized by GitHub Actions on 01.09.2026 retried the registered
-      PP687 official routes. The canonical Government/IPS transports produced timeouts, HTTP 500 responses or
-      responses without the required PP687 identity/current-revision fingerprint, so no current-revision bytes were
-      accepted. No failed response was promoted and no byte length, MIME, SHA-256 or immutable artifact was inferred.
-    telemetry_source: "security-corpora/RU/152-FZ/PDN_ACQUISITION_RUN.json#dedicated_route_attempt_telemetry.pp687"
-    telemetry_commit: "34dcde98a1472017b1fffb5da2fe242b3eaf76a9"
+      GitHub Actions PDN Core run 207 attempt 2 retried all registered PP687 official transports on 01.09.2026.
+      The Government/pravo.gov.ru routes timed out, some IPS responses returned HTTP 500, and other responses lacked
+      the mandatory PP687 identity plus PP12 current-revision fingerprint. The www.pravo.gov.ru alias also timed out.
+      No response bytes were accepted, so MIME, exact byte length, SHA-256, raw artifact and manifest remain absent.
+    telemetry_source: "https://github.com/VictorKVS/KNOWLEDGE_CORE/actions/runs/33488169789"
+    telemetry_run: 33488169789
+    telemetry_attempt: 2
+    persistence_note: >-
+      The acquisition evidence commit generated inside the workflow could not be pushed because main advanced in
+      parallel and the rebase conflicted in the shared PDN acquisition/master files. This source record persists the
+      observed transport outcome without weakening the immutable proof gate.
     proof_floor_held: true
     semantic_promotion: false
   runtime_probe:
@@ -90,7 +95,7 @@ capture:
       Government indexed text rechecked on 01.09.2026. No MIME, byte length, SHA-256, raw artifact or manifest is inferred.
   acquisition_request:
     status: RETRY_REQUIRED_GUARDED
-    requested_at: "2026-09-01T04:57:01Z"
+    requested_at: "2026-09-01T11:26:52Z"
     route: official_canonical_snapshot_with_registered_ips_print_and_www_fallback
     reason: >-
       Immutable promotion requires returned official bytes, retrieved_at, MIME, exact byte length, SHA-256,
