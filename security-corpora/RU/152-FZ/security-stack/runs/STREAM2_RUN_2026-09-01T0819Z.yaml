@@ -1,0 +1,143 @@
+schema_version: "1.0"
+id: STREAM2-RUN-2026-09-01T0819Z
+kind: security-stack-stream-run
+stream: RU_PDN_TECHNICAL_CRYPTO
+started_at: "2026-09-01T08:10:54Z"
+completed_at: "2026-09-01T08:19:30Z"
+status: PASS_WITH_PRIMARY_BYTE_TRANSPORT_BLOCKED
+scope:
+  - SEC-SRC-RU-PP1119-2012
+  - SEC-SRC-RU-FSTEC21-2013
+  - SEC-SRC-RU-FSTEC-THREAT-METHOD-2021
+  - SEC-SRC-RU-FSTEC-MATURITY-METHOD-2026
+  - SEC-SRC-RU-FSB378-2014
+  - SEC-SRC-RU-FSB66-2005
+  - SEC-SRC-RU-FSB173-2010
+  - SEC-SRC-RU-FAPSI152-2001
+  - SEC-SRC-RU-FSB8C-THREAT-RECS-2015
+  - SEC-SRC-RU-FSB-PDN-NORMATIVE-STATUS-NOTICE-2016
+
+findings:
+  pp1119:
+    status: CURRENT_OFFICIAL_GOVERNMENT_PAGE_CONFIRMED_PRIMARY_DOC_BYTES_PENDING
+    finding: >-
+      Fresh official Government search result on 01.09.2026 explicitly labels Resolution No. 1119
+      as the current edition and advertises a DOC. Exact Government DOC retry failed before HTTP due
+      DNS resolution in the acquisition environment; no MIME/length/SHA-256 was inferred.
+  fstec21:
+    status: CURRENT_REVISION_2020_05_14_REPLACEMENT_PRIMARY_GATE_NOT_PASSED
+    finding: >-
+      FSTEC's official Order No. 21 card remains indexed on 01.09.2026. No primary final replacement
+      order identity, Minjust registration (where required), and official-publication identity was established.
+      Project 169583 remains a future-change watch only; active baseline remains No. 21 with amendments No.49/2017
+      and No.68/2020 under the fail-closed enactment gate.
+  fstec_threat_method_2021:
+    status: CURRENT_IMMUTABLE_CAPTURED_EXISTING
+    finding: >-
+      Existing accepted official PDF fingerprint remains unchanged. Fresh direct route retry failed at DNS before HTTP;
+      no replacement artifact was created.
+  fstec_maturity_method_2026:
+    status: CURRENT_DIRECT_ISPDN_METHOD_PRIMARY_PDF_BYTES_PENDING
+    finding: >-
+      Source remains direct ISPDN methodological context. Fresh exact-PDF retry failed at DNS; recommended maturity
+      targets remain recommendations unless a separate binding basis is proven.
+  fsb378:
+    status: CURRENT_WHEN_SKZI_USED_PRIMARY_BYTES_PENDING
+    finding: >-
+      Fresh official FSB PDN-methodological page again lists Order No. 378 in the PDN crypto set and its title/scope
+      expressly depends on use of SKZI in ISPDN. No applicability expansion was made. RG primary-publication bytes remain pending.
+  fsb66_173:
+    status: VERSION_CHAIN_REVERIFIED_PRIMARY_BYTES_PENDING
+    finding: >-
+      Fresh official FSB NPA index evidence identifies Order No. 66, Minjust registration No.6382, effective date 30.03.2005,
+      and amendment by Order No.173. The same official index provides No.173 registration No.17350 and effective date 25.06.2010.
+      PDN/SKZI routing remains bounded to the proven PKZ-2005 point-50 amendment edge; unrelated No.173 items are excluded.
+  fapsi152:
+    status: SKZI_HANDLING_CONTEXT_PRIMARY_BYTES_PENDING_STATUS_REVIEW
+    finding: >-
+      Freshly re-resolved official FSB 2016 page still lists FAPSI Instruction No.152 in the PDN crypto methodological set.
+      This is primary historical set evidence, not by itself a 2026 no-repeal certificate; current-status claim remains review_required.
+  fsb8c_threat_recs_2015:
+    status: EXISTING_IMMUTABLE_REVERIFIED_BOUNDED_CONTEXT
+    finding: >-
+      Existing official PDF immutable is preserved (399341 bytes, SHA-256 a7256c...). Fresh FSB 2016 set page and FSB science
+      index continue to identify the recommendations, but page persistence is not treated as proof of absence of later repeal.
+      Applicability remains bounded to PDN threat-modeling where the SKZI/crypto branch is relevant.
+  fsb_status_notice_2016:
+    status: OFFICIAL_NOTICE_REVERIFIED
+    finding: >-
+      Official FSB notice was re-resolved on 01.09.2026. It is used only as historical status/version-chain evidence for the
+      set listed on 21.06.2016; each listed document still requires its own current-status verification for 2026.
+
+primary_evidence_routes_checked:
+  - "https://government.ru/docs/6339/"
+  - "https://fstec.ru/dokumenty/vse-dokumenty/prikazy/prikaz-fstek-rossii-ot-18-fevralya-2013-g-n-21"
+  - "https://www.fsb.ru/fsb/science/single.htm!id=10437725@fsbResearchart.html"
+  - "https://www.fsb.ru/fsb/npd/more.htm!id=10436382@fsbNpa&_print=true.html"
+  - "https://www.fsb.ru/fsb/science.htm!_print=true.html"
+
+acquisition:
+  manifest_ref: "../manifests/STREAM2_ACQUISITION_MANIFEST_2026-09-01T0819Z.yaml"
+  primary_transport_attempts: 10
+  primary_transport_successes: 0
+  new_immutable_artifacts: 0
+  new_sha256_fingerprints: 0
+  existing_immutable_references_rechecked: 3
+  dominant_failure: DNS_RESOLUTION_FAILURE_IN_BYTE_ACQUISITION_ENV
+
+existing_immutable_preserved:
+  - source_id: SEC-SRC-RU-FSTEC21-2013
+    byte_length: 72618
+    sha256: "6522074c76beea01b6c4e3ab33bae368d9a72ce7c49f1372e87cc0ea6f2bcd42"
+  - source_id: SEC-SRC-RU-FSTEC-THREAT-METHOD-2021
+    byte_length: 2744210
+    sha256: "dfb473137de462f8c10fbbdccbea62bd136925e803e1c58aa6d4e790325c49b1"
+  - source_id: SEC-SRC-RU-FSB8C-THREAT-RECS-2015
+    byte_length: 399341
+    sha256: "a7256cecc1bfa3d9fb68eacc80de4f9329eed071dd8f7d27afc8aa878321f4df"
+
+applicability_guards:
+  - "PP1119/FSTEC21: generic ISPDN baseline only within their legal scope."
+  - "FSB378: only when SKZI use in ISPDN is established."
+  - "FSB66/173 and FAPSI152: only through proved SKZI lifecycle/handling edges."
+  - "FSB8C recommendations: bounded PDN threat-modeling context; do not merge with FSTEC 2021 crypto-excluded threat methodology."
+  - "Licensing/certification requirements are not universal PDN operator duties without a licensed-activity/conformity edge."
+  - "NCTKI/GosSOPKA enters PDN only through an independently proved PDN computer-incident edge."
+
+counter_state_authoritative_before_reconcile:
+  identified: 55
+  metadata_verified: 55
+  immutable_sha256_verified: 24
+  pending_raw_capture: 31
+  exact_official_route_unresolved: 8
+  confirmed_conflicts: 0
+  version_edges_verified: 11
+
+counter_delta_this_run:
+  identified: 0
+  metadata_verified: 0
+  immutable_sha256_verified: 0
+  pending_raw_capture: 0
+  exact_official_route_unresolved: 0
+  confirmed_conflicts: 0
+  version_edges_verified: 0
+  primary_transport_attempts: 10
+  primary_transport_successes: 0
+  status_or_version_rechecks: 8
+  existing_immutable_rechecks: 3
+
+repository_state:
+  working_pr: 50
+  head_branch: "automation/pdn-stream2-20260901-0506-r3"
+  note: >-
+    The Stream-2 branch is currently diverged from main because main advanced with independent library/governance and
+    other-stream commits. No protected-path migration was performed in this run. Rebase/merge-from-main is required
+    before final integration; this run does not force-update shared main counters.
+
+next_priority:
+  - "Resolve/retry exact official PP1119 DOC bytes."
+  - "Continue primary enactment watch for FSTEC21 replacement project 169583; switch only on proved final act chain."
+  - "Retry FSB378 primary publication bytes."
+  - "Retry pravo.gov.ru exact bytes for FSB66, FSB173 and FAPSI152."
+  - "Retry official FSTEC maturity methodology PDF and remaining relevant FSTEC method attachments."
+  - "Rebase Stream-2 PR onto current main before final reconciliation."
