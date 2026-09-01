@@ -1,4 +1,4 @@
-schema_version: "1.3"
+schema_version: "1.4"
 id: SEC-SRC-RU-FSTEC21-2013
 kind: security-regulatory-source
 status: METADATA_VERIFIED
@@ -12,21 +12,22 @@ document:
   ministry_registration_number: "28375"
   current_revision_date: "2020-05-14"
   current_revision_note: >-
-    Действующая проверенная базовая редакция по состоянию на 31.08.2026 остается редакцией от 14.05.2020;
+    Действующая проверенная базовая редакция по состоянию на 01.09.2026 остается редакцией от 14.05.2020;
     amendment chain содержит приказы ФСТЭК России №49/2017 и №68/2020. Проект замены, подготовленный
     24.07.2026 (идентификатор проекта 169583), предлагает отменить приказ №21, пункт 1 приложения к №49/2017
-    и приказ №68/2020 с 01.09.2026, однако свежая проверка непосредственно перед заявленной датой 31.08.2026
-    не выявила первичного доказательства издания, государственной регистрации в Минюсте и официального
-    опубликования заменяющего приказа. Свежие вторичные материалы по-прежнему описывают 169583 как проект.
-    Такие формулировки зарегистрированы только как monitoring signal и не проходят primary-enactment gate.
-  checked_at: "2026-08-31"
+    и приказ №68/2020 с 01.09.2026. Повторная проверка 01.09.2026, уже после наступления предложенной даты,
+    не выявила первичного доказательства издания финального заменяющего приказа, государственной регистрации
+    в Минюсте и официального опубликования. Свежие индексируемые материалы продолжают описывать 169583 как проект,
+    а вторичные заявления о вступлении новых требований в силу не приводят полный primary enactment identity.
+    Поэтому proposed effective date не используется как самостоятельное доказательство утраты силы приказа №21.
+  checked_at: "2026-09-01"
   replacement_watch:
     project_id: "169583"
     prepared_date: "2026-07-24"
     status: DRAFT_NOT_ENACTED_IN_VERIFIED_EVIDENCE
     public_discussion_ended: "2026-08-08"
     proposed_effective_from: "2026-09-01"
-    checked_at: "2026-08-31"
+    checked_at: "2026-09-01"
     proposed_effect_only: true
     watch_record: "../watch/PDN-WATCH-FSTEC21-REPLACEMENT-2026-001.yaml"
     proof_rule: >-
@@ -40,13 +41,12 @@ canonical_source:
   fallback_scope: CURRENT_REVISION_OFFICIAL_GOVERNMENT_MIRROR
   expected_mime: "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
   freshness_check:
-    checked_at: "2026-08-31"
-    result: CURRENT_REVISION_2020_05_14_ACTIVE_REPLACEMENT_PROJECT_169583_PRIMARY_GATE_NOT_PASSED
+    checked_at: "2026-09-01"
+    result: CURRENT_REVISION_2020_05_14_ACTIVE_REPLACEMENT_PROJECT_169583_PRIMARY_GATE_NOT_PASSED_AFTER_PROPOSED_DATE
     note: >-
-      Проверка 31.08.2026 непосредственно перед предложенной проектом датой 01.09.2026 не выявила первичного
-      enactment evidence финальной замены. Свежие вторичные материалы продолжают называть 169583 проектом.
-      Отсутствие найденной официальной публикации не доказывает невозможность ее последующего появления;
-      watch должен продолжаться и после 01.09.2026 до прохождения полного proof gate.
+      На 01.09.2026 primary enactment evidence финальной замены не установлено. Проект 169583 остается watch-node;
+      отсутствие найденной официальной публикации не доказывает невозможность ее последующего появления, поэтому
+      мониторинг продолжается до прохождения полного proof gate.
 capture:
   raw_artifact_ref: "security-corpora/RU/152-FZ/security-stack/raw/SEC-SRC-RU-FSTEC21-2013/official-snapshot-6522074c76beea01.docx"
   manifest_ref: "security-corpora/RU/152-FZ/security-stack/manifests/SEC-SRC-RU-FSTEC21-2013.json"
@@ -60,7 +60,6 @@ capture:
   fingerprint_status: IMMUTABLE_CAPTURED
   semantic_status: UNCHANGED
   note: "Exact resolved byte URL is preserved in the immutable manifest; extraction/semantic status is not promoted."
-
 relations:
   - type: DETAILS
     target: SEC-SRC-RU-PP1119-2012
@@ -72,7 +71,7 @@ relations:
 provenance:
   official_identity_verified: true
   official_current_revision_mirror_registered: true
-  current_status_rechecked_at: "2026-08-31"
+  current_status_rechecked_at: "2026-09-01"
   replacement_project_watch_registered: true
   replacement_project_evidence_class: CURRENT_SECONDARY_MONITORING_WITH_PRIMARY_ENACTMENT_GATE
   review_required: true
