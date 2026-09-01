@@ -1,0 +1,102 @@
+schema_version: "1.0"
+id: RU-PROTECTED-INFORMATION-MASTER-DELTA-STREAM3-2026-09-01T1429Z
+kind: master_inventory_delta
+stream: 3
+checked_at: "2026-09-01T17:29:08+03:00"
+
+source_delta:
+  - id: SEC-SRC-RU-CBR-808-P-2022
+    action: ADD_PRIMARY_OFFICIAL_ACT_VERIFIED_CURRENT_ORIGINAL_EDITION_CROSSCHECKED_EXACT_CAPTURE_PENDING
+    canonical_record: "source/SEC-SRC-RU-CBR-808-P-2022.yaml"
+    capture_manifest: "manifests/SEC-SRC-RU-CBR-808-P-2022-capture-pending.json"
+    sectors:
+      - finance
+      - credit_histories
+      - financial_market_security
+      - personal_data_overlap
+      - information_security
+      - retention
+      - incident_management
+      - credit_rating_agency_overlap
+    proof_state: PRIMARY_OFFICIAL_ACT_VERIFIED_CURRENT_ORIGINAL_EDITION_CROSSCHECKED_EXACT_BYTES_PENDING
+    primary_publication_verified: true
+    primary_official_source: "https://cbr.ru/Queries/XsltBlock/File/105012/-1/2394"
+    downloaded_exact: false
+    immutable: false
+    dedupe_result: NEW_CANONICAL_NODE
+
+counter_delta_this_pass:
+  found: 1
+  downloaded: 0
+  immutable: 0
+  pending: 1
+  reused: 0
+  primary_publication_verified: 1
+
+capture_ledger_reconciliation:
+  authoritative_file: "SECTOR_ACQUISITION_RUN.json"
+  identity_scope: "existing exact-acquisition target set keyed by document.official_publication_id"
+  current_targets_with_official_publication_id: 22
+  current_raw_downloaded_exact: 22
+  current_immutable_sha256_verified: 22
+  current_pending_inside_that_capture_scope: 0
+  current_bytes_downloaded: 114212750
+  changed_this_pass: false
+  note: >-
+    CBR 808-P is registered in discovery/master scope using the Bank of Russia official legal listing and official Vestnik publication.
+    Exact capture of the official PDF failed transiently at DNS resolution. The narrow acquisition-run ledger is not rewritten or inflated;
+    discovery backlog counters and the 22/22/22/0 exact-acquisition counters remain separate scopes.
+
+version_chain:
+  current_revision: "2022-10-17"
+  official_listing_checked: "2026-09-01"
+  later_amendment_found_in_current_sweep: false
+  general_effective_from: "2023-04-01"
+  point_2_4_effective_from: "2024-04-01"
+  state: CURRENT_ORIGINAL_EDITION_CROSSCHECKED_NO_LATER_AMENDMENT_FOUND_EXACT_PRIMARY_BYTES_PENDING
+
+relationships_added:
+  - "SEC-SRC-RU-CBR-808-P-2022 -> SEC-SRC-RU-FZ-218-2004 / subordinate BKI information-security implementation"
+  - "SEC-SRC-RU-CBR-808-P-2022 -> 152-FZ Article 19 / explicit conditional security bridge where protected information contains PDN"
+  - "SEC-SRC-RU-CBR-808-P-2022 -> 149-FZ / limited-access and information-protection overlap for credit-rating-agency scope"
+  - "SEC-SRC-RU-CBR-808-P-2022 -> 187-FZ / conditional CII overlay only for objects that are actually CII objects"
+  - "SEC-SRC-RU-CBR-808-P-2022 -> 222-FZ / credit-rating-agency information protection"
+
+scope_findings:
+  - "Point 2.1: BKI protect Article 4 218-FZ information in automated systems during processing, storage and transmission with certified protection means."
+  - "Point 2.1: when that protected information contains personal data, BKI apply Article 19 152-FZ personal-data security measures."
+  - "Point 2.7: access-related identification/authentication/authorization, messages, employee access and subject actions must be registered."
+  - "Points 2.8-2.9: protection incidents are registered and handled, with scoped Bank of Russia reporting."
+  - "Point 4.1: 187-FZ requirements apply only when BKI infrastructure objects are actually CII objects."
+
+retention_findings:
+  - "Point 2.10: BKI protected information, point 2.7 registration data and protection-incident information are stored and kept integral/available for 5 years from formation/receipt, unless BKI legislation establishes another period."
+  - "Point 3.2: credit-rating-agency protected information follows archive-law periods but not less than 5 years; electronic backups are created at least once every 7 days."
+
+retention_guards:
+  - "FIVE_YEAR_808_P_RULE_NOT_UNIVERSAL_PDN_RETENTION"
+  - "FIVE_YEAR_808_P_RULE_DOES_NOT_OVERRIDE_SPECIFIC_218_FZ_OBJECT_RETENTION"
+  - "RATING_AGENCY_MINIMUM_FIVE_YEARS_NOT_BKI_RULE"
+  - "SEVEN_DAY_BACKUP_INTERVAL_NOT_RETENTION_PERIOD"
+
+guards:
+  - "ARTICLE19_152_BRIDGE_REQUIRES_PROTECTED_INFORMATION_TO_CONTAIN_PDN"
+  - "ARTICLE4_218_FZ_INFORMATION_NOT_AUTOMATICALLY_ALL_PDN"
+  - "BKI_INFRASTRUCTURE_NOT_AUTOMATICALLY_CII"
+  - "NO_AUTOMATIC_APPLICABILITY_PROMOTION"
+  - "NO_MIME_BYTE_LENGTH_SHA256_WITHOUT_EXACT_BYTES"
+
+master_base_update_policy:
+  base_inventory_rewritten_this_pass: false
+  reason: >-
+    Stream 3 appends timestamped master deltas while exact capture remains open. This delta is the authoritative inventory update for this pass;
+    later controlled compaction must retain provenance.
+
+quality_gates:
+  taxonomy_seed_used_as_proof: false
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+  fabricated_binary_metadata: false
+  universal_retention_inferred: false
+  duplicate_source_created: false
+  exact_capture_required_before_immutable: true
