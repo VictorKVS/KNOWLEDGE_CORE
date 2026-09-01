@@ -1,0 +1,180 @@
+schema_version: "1.0"
+stream: 3
+run_at: "2026-09-02T02:22:27+03:00"
+objective: "continue sector/special-regime primary-source discovery, currentness/version reconciliation, exact capture, deduplication, relationship linking and PDN/RU Protected Information inventory updates"
+
+selected_sources:
+  - id: SEC-SRC-RU-MINZDRAV-ORDER-274N-2025
+    act: "Приказ Минздрава России от 13.05.2025 № 274н"
+    action: NEW_CANONICAL_SOURCE_REGISTERED
+    sector_overlap:
+      - healthcare
+      - medical_secrecy
+      - health_data
+      - personal_data_overlap
+      - children
+      - retention_interface
+  - id: SEC-SRC-RU-MINZDRAV-ORDER-209N-2026
+    act: "Приказ Минздрава России от 25.03.2026 № 209н"
+    action: EXISTING_FUTURE_NODE_ACTIVATED_AS_CURRENT
+    effective_from: "2026-09-01"
+  - id: SEC-SRC-RU-FZ-323-2011
+    act: "Федеральный закон от 21.11.2011 № 323-ФЗ"
+    action: DUPLICATE_NODE_DEPRECATED_TO_ALIAS
+    canonical_id: SEC-SRC-RU-FZ-323
+
+repository_dedupe:
+  order_274n:
+    canonical_path_probe: NOT_FOUND_404
+    code_search_number: NO_RESULTS
+    code_search_publication_id: NO_RESULTS
+    result: NEW_CANONICAL_NODE_CREATED
+  order_209n:
+    canonical_path: "security-corpora/RU/protected-information/source/SEC-SRC-RU-MINZDRAV-ORDER-209N-2026.yaml"
+    result: EXISTING_NODE_REUSED_AND_CURRENT_STATE_UPDATED
+  fz_323:
+    duplicate_id: SEC-SRC-RU-FZ-323-2011
+    existing_canonical_id: SEC-SRC-RU-FZ-323
+    official_publication_id_both: "0001201111220007"
+    existing_immutable_artifact: "security-corpora/RU/protected-information/raw/SEC-SRC-RU-FZ-323/0001201111220007.zip"
+    existing_mime: "application/zip"
+    existing_byte_length: 7257635
+    existing_sha256: "aa54cb7c53980e765efbe0d4196e82d9f758d5596a3394b9283f4e9e250eaabc"
+    result: DUPLICATE_NEUTRALIZED_ALIAS_REUSES_CANONICAL_IMMUTABLE
+
+primary_proof:
+  order_274n:
+    official_document_url: "https://publication.pravo.gov.ru/document/0001202505300033"
+    official_publication_id: "0001202505300033"
+    publication_date: "2025-05-30"
+    minjust_registration_number: "82433"
+    current_from: "2025-09-01"
+    valid_until: "2031-09-01"
+    primary_publication_identity_verified: true
+    exact_binary_proof: PENDING
+  order_209n:
+    official_document_url: "https://publication.pravo.gov.ru/document/0001202604230013"
+    publication_id_crosscheck: "0001202604230013"
+    minjust_registration_number: "86160"
+    official_minzdrav_currentness_source: "https://futuredoc.minzdrav.gov.ru/news/izmeneniya-v-medicinskom-zakonodatelstve-s-1-sentyabrya-2026-goda"
+    current_from: "2026-09-01"
+    valid_until: "2032-09-01"
+    predecessor: "Приказ Минздрава России от 07.09.2020 № 947н"
+    predecessor_state: REPEALED_FROM_2026_09_01
+    exact_binary_proof: PENDING
+  fz_323:
+    canonical_publication_id: "0001201111220007"
+    canonical_original_immutable_already_exists: true
+    current_semantics_guard: "Original 2011 immutable baseline is not a substitute for full locator-specific current Article 13 amendment proof."
+
+normative_findings:
+  - "№ 209н is current from 01.09.2026; the previous № 947н is repealed from that date."
+  - "№ 209н covers formation, signing, storage, EGISZ registration and lawful access to electronic medical documents across the defined actor set."
+  - "№ 209н point 21 requires EMD storage for not less than the retention term of the corresponding paper medical document."
+  - "№ 209н point 22 requires all corrected versions and their signatures to be stored throughout the EMD retention term."
+  - "№ 274н is current and governs ambulatory forms 025/у, 025-1/у, 070/у, 072/у, 076/у and 079/у."
+  - "Forms 076/у and 079/у create a scoped child-health-data overlap; 079/у contains person-level child identifiers and health-status context."
+  - "№ 274н replaces the relevant 834н form regime from 01.09.2025; electronic application of the new forms is separately staged from 01.09.2027."
+
+retention:
+  universal_pdn_retention: false
+  universal_medical_record_retention: false
+  findings:
+    - "№ 209н establishes an object-linked retention bridge to the corresponding paper medical document, not a universal numeric period."
+    - "№ 274н does not supply a universal numeric term promoted in this pass."
+    - "The 01.09.2027 electronic-form transition and the acts' sunset dates are not retention periods."
+  guards:
+    - "OBJECT_SPECIFIC_PRIMARY_RETENTION_PROOF_REQUIRED"
+    - "ACT_VALIDITY_DATE_NOT_DATA_RETENTION"
+    - "ELECTRONIC_TRANSITION_DATE_NOT_DATA_RETENTION"
+    - "VERSION_RETENTION_FOLLOWS_DOCUMENT_TERM"
+
+relationships:
+  reconciled:
+    - "274n -> 323-FZ / statutory medical-document authority and conditional Article 13 medical-secrecy interface"
+    - "274n -> 152-FZ / person-level medical document PDN overlap with applicability review"
+    - "274n -> 209n / paper-form content to EMD workflow/storage interface"
+    - "274n -> children / forms 076u and 079u only; no universal education promotion"
+    - "274n -> 125-FZ / object-specific archival-retention interface"
+    - "209n -> 152-FZ / current electronic medical document processing/access/storage context"
+    - "209n -> 326-FZ / scoped OMS document access/control context"
+    - "323-FZ duplicate alias -> existing canonical SEC-SRC-RU-FZ-323"
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+
+acquisition:
+  exact_binary_attempted: true
+  attempted_at: "2026-09-02T02:22:27+03:00"
+  targets:
+    - source_id: SEC-SRC-RU-MINZDRAV-ORDER-209N-2026
+      url: "https://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202604230013"
+      result: DNS_RESOLUTION_FAILURE
+      curl_exit_code: 6
+    - source_id: SEC-SRC-RU-MINZDRAV-ORDER-274N-2025
+      url: "https://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202505300033"
+      result: DNS_RESOLUTION_FAILURE
+      curl_exit_code: 6
+  exact_bytes_obtained: 0
+  retrieved_at_populated: false
+  mime_populated: false
+  byte_length_populated: false
+  sha256_populated: false
+  immutable_promotions: 0
+  retry_class: TRANSIENT
+
+counter_delta_this_pass:
+  found_new_canonical: 1
+  downloaded_new: 0
+  immutable_new: 0
+  pending_new: 1
+  pending_closed_by_dedupe: 1
+  reused_existing_sources_or_artifacts: 2
+  current_state_activations: 1
+  primary_publication_verified_new: 1
+
+capture_ledger_reconciliation:
+  authoritative_file: "security-corpora/RU/protected-information/SECTOR_ACQUISITION_RUN.json"
+  targets_with_official_publication_id: 22
+  raw_downloaded_exact: 22
+  immutable_sha256_verified: 22
+  pending_inside_that_capture_scope: 0
+  bytes_downloaded: 114212750
+  changed_this_pass: false
+  note: "The narrow exact-acquisition ledger is not inflated by discovery backlog or by reuse of the already-counted 323-FZ immutable artifact."
+
+counter_correction:
+  duplicate_source: SEC-SRC-RU-FZ-323-2011
+  reverse_prior_found: 1
+  reverse_prior_pending: 1
+  canonical_reused: SEC-SRC-RU-FZ-323
+  historical_delta_preserved: true
+  active_aggregate_rule: "Do not count the alias independently after this reconciliation."
+
+files_written_or_updated:
+  - "security-corpora/RU/protected-information/source/SEC-SRC-RU-MINZDRAV-ORDER-209N-2026.yaml"
+  - "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-MINZDRAV-ORDER-209N-2026-capture-pending.json"
+  - "security-corpora/RU/protected-information/source/SEC-SRC-RU-FZ-323-2011.yaml"
+  - "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-323-2011-capture-pending.json"
+  - "security-corpora/RU/protected-information/source/SEC-SRC-RU-MINZDRAV-ORDER-274N-2025.yaml"
+  - "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-MINZDRAV-ORDER-274N-2025-capture-pending.json"
+  - "security-corpora/RU/protected-information/RU_PROTECTED_INFORMATION_MASTER_SOURCE_INVENTORY_DELTA_STREAM3_2026-09-01T2322Z.yaml"
+  - "security-corpora/RU/152-FZ/PDN_MASTER_SOURCE_INVENTORY_DELTA_STREAM3_2026-09-01T2322Z.yaml"
+  - "security-knowledge/corpus/ru-protected-information/stream-3-run-2026-09-02T0222.yaml"
+
+quality_gates:
+  taxonomy_as_evidence: false
+  primary_official_publication_identity_verified_for_new_source: true
+  current_state_209n_reconciled_after_effective_date: true
+  exact_bytes_captured_new: false
+  applicability_invented: false
+  secrecy_category_invented: false
+  fabricated_binary_metadata: false
+  downloaded_increment_without_bytes: false
+  immutable_increment_without_hash: false
+  universal_retention_inferred: false
+  duplicate_source_left_active: false
+
+next_actions:
+  - "Retry exact official-byte capture for 209n and 274n; fill retrieved_at/MIME/byte_length/SHA-256 and immutable paths only after successful exact capture."
+  - "Resolve object-specific retention sources for forms 025/u, 025-1/u, 070/u, 072/u, 076/u and 079/u instead of importing one generic healthcare term."
+  - "Continue healthcare special regimes introduced from 01.09.2026, then return to finance/banking/insurance, communications, education/children, biometrics, transport and advertising/marketing discovery."
