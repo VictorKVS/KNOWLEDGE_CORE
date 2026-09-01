@@ -1,0 +1,110 @@
+schema_version: "1.0"
+id: RU-PROTECTED-INFORMATION-MASTER-DELTA-STREAM3-2026-09-01T0218Z
+kind: master_inventory_delta
+stream: 3
+checked_at: "2026-09-01T05:18:21+03:00"
+
+source_delta:
+  - id: SEC-SRC-RU-PP-445-2018
+    action: ADD_PRIMARY_PUBLICATION_VERIFIED_CURRENT_EDITION_CROSSCHECKED_EXACT_CAPTURE_PENDING
+    canonical_record: "source/SEC-SRC-RU-PP-445-2018.yaml"
+    capture_manifest: "manifests/SEC-SRC-RU-PP-445-2018-capture-pending.json"
+    sectors:
+      - communications
+      - personal_data_overlap
+      - operational_search_infrastructure
+      - retention
+    proof_state: PRIMARY_PUBLICATION_LOCATOR_VERIFIED_CURRENT_EDITION_2026_08_24_EFFECTIVE_2026_09_01_CROSSCHECKED_EXACT_BYTES_PENDING
+    primary_publication_verified: true
+    official_publication_id: "0001201804190032"
+    downloaded_exact: false
+    immutable: false
+    dedupe_result: NEW_CANONICAL_NODE
+
+counter_delta_this_pass:
+  found: 1
+  downloaded: 0
+  immutable: 0
+  pending: 1
+  reused: 0
+  primary_publication_verified: 1
+
+capture_ledger_reconciliation:
+  authoritative_file: "SECTOR_ACQUISITION_RUN.json"
+  identity_scope: "existing exact-acquisition target set keyed by document.official_publication_id"
+  current_targets_with_official_publication_id: 22
+  current_raw_downloaded_exact: 22
+  current_immutable_sha256_verified: 22
+  current_pending_inside_that_capture_scope: 0
+  changed_this_pass: false
+  note: >-
+    PP 445 is registered in the discovery/master overlay with official publication identity 0001201804190032.
+    Exact capture of both the original act and current amendment 1066/2026 failed transiently at DNS resolution,
+    so the narrow acquisition-run ledger is not rewritten or inflated. Discovery backlog counters and the
+    22/22/22/0 exact-acquisition counters remain intentionally separate scopes.
+
+version_chain:
+  current_revision: "2026-08-24"
+  current_revision_effective_from: "2026-09-01"
+  amendment_events:
+    - act: "Постановление Правительства РФ от 20.11.2018 № 1391"
+      official_publication_id: "0001201811230008"
+      effect: "ministerial naming/competence wording"
+    - act: "Постановление Правительства РФ от 28.05.2019 № 673"
+      official_publication_id: null
+      effect: "introduced point 4(1) equipment-origin requirement; primary locator exact closure pending"
+    - act: "Постановление Правительства РФ от 16.06.2021 № 914"
+      official_publication_id: null
+      effect: "temporary suspension of annual storage-capacity growth; later repealed"
+    - act: "Постановление Правительства РФ от 28.03.2022 № 498"
+      official_publication_id: "0001202203300002"
+      effect: "zero-volume exclusions and suspension/repeal changes"
+    - act: "Постановление Правительства РФ от 24.08.2026 № 1066"
+      official_publication_id: "0001202608250032"
+      official_publication_date: "2026-08-25"
+      effective_from: "2026-09-01"
+      effect: "current service-class wording update in points 5 and 6"
+  state: CURRENT_EDITION_CROSSCHECKED_VERSION_CHAIN_PARTIAL_PRIMARY_BYTES_PENDING
+
+relationships_added:
+  - "SEC-SRC-RU-FZ-126 article 64 -> PP 445 direct implementing content-storage act"
+  - "SEC-SRC-RU-FZ-126 article 63 -> communications-secrecy overlap"
+  - "152-ФЗ -> conditional PDN overlap only when identifiable subject/processing/legal basis are proven"
+
+scope_findings:
+  - "Point 5: enumerated communications service classes store voice information and text messages in full for 6 months from the end of receipt/transmission/delivery/processing."
+  - "Point 8: automatic deletion is based on a maximum permissible 6-month message-storage period."
+  - "Point 6: 30 days is a storage-capacity sizing baseline before commissioning, not a message-retention period."
+  - "Point 6: annual 15% capacity increase for 5 years is a capacity-growth schedule, not retention."
+  - "Point 7 requires protection of storage facilities and stored information from unauthorized access."
+  - "Point 2 contains zero-volume storage exclusions for specified public TV/radio and registered audiovisual-service traffic."
+
+retention_guards:
+  - "6_MONTH_COMMUNICATIONS_CONTENT_RULE_NOT_UNIVERSAL_PDN_RETENTION"
+  - "30_DAY_CAPACITY_BASELINE_NOT_RETENTION"
+  - "15_PERCENT_FOR_5_YEARS_CAPACITY_GROWTH_NOT_RETENTION"
+  - "DO_NOT_REPLACE_3_YEAR_FZ126_COMMUNICATIONS_FACTS_RETENTION_WITH_PP445_CONTENT_RULE"
+  - "ZERO_VOLUME_EXCLUSION_NOT_GENERAL_DELETION_RULE"
+
+guards:
+  - "MESSAGE_TYPE_NOT_AUTOMATIC_PDN_CLASSIFICATION"
+  - "PP445_STORAGE_NOT_UNRESTRICTED_DISCLOSURE_AUTHORITY"
+  - "COMMUNICATIONS_SECRECY_CLASSIFICATION_REQUIRES_PRIMARY_RULE_OBJECT_MATCH"
+  - "NO_AUTOMATIC_SECTOR_APPLICABILITY_PROMOTION"
+  - "NO_MIME_BYTE_LENGTH_SHA256_WITHOUT_EXACT_BYTES"
+
+master_base_update_policy:
+  base_inventory_rewritten_this_pass: false
+  reason: >-
+    The repository's current Stream 3 workflow appends timestamped master deltas while exact-capture and
+    version-chain reconciliation remain open. This delta is the authoritative update for this pass; a later
+    controlled merge may compact deltas into the base inventory without losing provenance.
+
+quality_gates:
+  taxonomy_seed_used_as_proof: false
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+  fabricated_binary_metadata: false
+  universal_retention_inferred: false
+  duplicate_source_created: false
+  exact_capture_required_before_immutable: true
