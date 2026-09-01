@@ -1,4 +1,4 @@
-schema_version: "1.0"
+schema_version: "1.1"
 id: SEC-SRC-RU-FSTEC60-2026
 kind: security-regulatory-source
 status: METADATA_VERIFIED
@@ -18,12 +18,14 @@ document:
   official_publication_id: "0001202606250029"
   official_publication_date: "2026-06-25"
   effective_from: "2026-09-01"
-  checked_at: "2026-08-29"
-  temporal_status: PUBLISHED_REGISTERED_FUTURE_EFFECTIVE_2026_09_01
+  checked_at: "2026-09-01"
+  temporal_status: EFFECTIVE_FROM_2026_09_01
   version_chain_note: >-
-    Приказ № 60 опубликован и зарегистрирован, но по состоянию на 29.08.2026 еще не вступил в силу.
-    Он изменяет приказ № 77 с 01.09.2026. Будущая редакция хранится как version-chain evidence и
-    не применяется к решениям с датой до 01.09.2026.
+    Приказ № 60 зарегистрирован, официально опубликован и с 01.09.2026 действует как изменение
+    приказа ФСТЭК № 77. Будущий version-chain переведен в текущий только после наступления ранее
+    доказанной даты вступления в силу. Это не расширяет область приказа № 77: для частной ИСПДн
+    аттестационный контур применяется лишь при самостоятельном доказанном основании, а специальные
+    требования к тестированию на проникновение не становятся универсальной обязанностью любой ИСПДн.
 canonical_source:
   publisher: "Официальный интернет-портал правовой информации"
   landing_page: "https://publication.pravo.gov.ru/document/0001202606250029"
@@ -33,10 +35,10 @@ canonical_source:
   expected_mime: "application/pdf"
   exact_document_route_status: OFFICIAL_PUBLICATION_ID_VERIFIED
   exact_file_route_status: OFFICIAL_BYTES_CAPTURED
-  acquisition_priority: HIGH_FUTURE_ATTESTATION_VERSION_CHAIN
+  acquisition_priority: RESOLVED_IMMUTABLE_CAPTURE
   freshness_check:
-    checked_at: "2026-08-29"
-    result: REGISTERED_PUBLISHED_FUTURE_EFFECTIVE_FROM_2026_09_01_IMMUTABLE_CAPTURED
+    checked_at: "2026-09-01"
+    result: EFFECTIVE_FROM_2026_09_01_IMMUTABLE_CAPTURED
 capture:
   raw_artifact_ref: "security-corpora/RU/152-FZ/security-stack/raw/SEC-SRC-RU-FSTEC60-2026/0001202606250029-6e593135c8a5eaf5.pdf"
   manifest_ref: "security-corpora/RU/152-FZ/security-stack/manifests/SEC-SRC-RU-FSTEC60-2026.json"
@@ -48,8 +50,7 @@ capture:
   sha256: "6e593135c8a5eaf574bc4751b0782f840eb905e5341ed23270485deccef6d74a"
   fingerprint_status: IMMUTABLE_CAPTURED
   semantic_status: UNCHANGED
-  note: "Exact bytes from the registered official route captured; extraction/semantic status is not promoted."
-
+  note: "Existing exact official bytes remain valid; this pass changes temporal state only."
 relations:
   - type: AMENDS
     target: SEC-SRC-RU-FSTEC77-2021
@@ -60,32 +61,33 @@ relations:
     scope: ATTESTATION_TESTING_AND_PERIODIC_PROTECTION_CONTROL
     normative_relation: false
 applicability_guard:
-  active_before_2026_09_01: false
+  active_from_2026_09_01: true
   generic_private_ispdn: NOT_UNIVERSALLY_APPLICABLE
   private_ispdn_attestation_scope: >-
-    После вступления № 60 в силу частная ИСПДн остается в контуре приказа № 77 только когда ее
-    владелец установил аттестацию как форму оценки соответствия либо есть иное доказанное основание.
+    С 01.09.2026 частная ИСПДн остается в контуре приказа № 77 только когда ее владелец установил
+    аттестацию как форму оценки соответствия либо есть иное доказанное основание.
   mandatory_pentest_scope: >-
     Новая обязательность тестирования на проникновение по пункту 16.1 относится к перечисленным
     государственным и иным публичным системам 1 и 2 классов защищенности при предусмотренных
     условиях подключения к Интернету и/или взаимодействия с иными системами, с учетом установленных
     исключений. Она не переносится автоматически на любую частную ИСПДн.
   no_requirement_propagation: >-
-    До 01.09.2026 не применять будущие изменения. После 01.09.2026 не превращать требования
-    публичного/аттестационного контура в универсальный baseline ПП № 1119 / приказа № 21 без
-    отдельного applicability-edge.
+    С 01.09.2026 учитывать изменения № 60 только внутри доказанного аттестационного/public scope и
+    не превращать их в универсальный baseline ПП № 1119 / приказа № 21 без отдельного applicability-edge.
 provenance:
   official_publication_id_verified: true
   official_publication_date_verified: true
   minjust_registration_verified: true
   effective_date_verified: true
+  effective_state_transition_checked_at: "2026-09-01"
   amendment_target_verified: true
   exact_official_bytes_captured: true
   review_required: true
 agent_rule: >-
-  Store Order 60 as a future-effective amendment until 01.09.2026. On and after that date, route it
-  through Order 77 attestation applicability and keep the bounded mandatory-pentest scope distinct
-  from generic private ISPDN duties. Require exact official bytes and manifest before immutable promotion.
+  From 01.09.2026 treat Order 60 as an effective amendment to Order 77. Route every derived duty through
+  Order 77 attestation applicability and keep the bounded mandatory-pentest scope distinct from generic
+  private ISPDN duties. Reuse the existing immutable publication artifact; do not claim a new download
+  during this status-only transition.
 inventory_registration:
-  role: fstec77_future_effective_amendment_and_pentest_attestation_context
-  applicability: FUTURE_VERSION_CHAIN_AND_BOUNDED_ATTESTATION_SCOPE_FROM_2026_09_01
+  role: fstec77_current_amendment_and_pentest_attestation_context
+  applicability: CURRENT_VERSION_CHAIN_AND_BOUNDED_ATTESTATION_SCOPE_FROM_2026_09_01
