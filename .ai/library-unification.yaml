@@ -1,0 +1,208 @@
+schema_version: "1.0"
+id: KNOWLEDGE-UNIFIED-LIBRARY-0001
+as_of: 2026-09-01
+status: ACTIVE
+purpose: >-
+  Federate all local and repository knowledge libraries into one canonical logical catalog without
+  destructively moving source libraries, losing provenance, collapsing distinct versions, or
+  discarding useful PDF/ODT/etc. representations.
+
+operating_mode:
+  strategy: federate_then_reconcile
+  destructive_merge: false
+  original_sources_read_only: true
+  preserve_original_paths: true
+  content_addressed_artifact_store: true
+  artifact_hash: SHA-256
+  canonical_security_root: security-knowledge
+  canonical_nonsecurity_root: professional-knowledge
+  large_blob_root_env: KNOWLEDGE_CORE_BLOB_ROOT
+
+library_discovery:
+  required_inputs:
+    - repository_collections
+    - known_local_library_roots
+    - staged_import_outputs
+    - user_download_staging
+    - existing_inventory_files
+  known_candidate_roots:
+    - path: "G:\\1\\KNOWLEDGE_CORE_IMPORT_20260827-162116"
+      role: LOCAL_REGULATORY_IMPORT
+      policy: READ_ONLY_SOURCE
+    - path: "G:\\1\\FATHER_LIBRARY_STAGE6_LEGAL"
+      role: FATHER_LEGAL_STAGE
+      policy: READ_ONLY_SOURCE
+    - path: "G:\\1\\FATHER_LIBRARY_STAGE7"
+      role: FATHER_ENRICHED_STAGE
+      policy: READ_ONLY_SOURCE
+    - path: "%USERPROFILE%\\Downloads"
+      role: USER_DOWNLOAD_STAGING
+      policy: READ_ONLY_SOURCE
+    - path: "G:\\KNOWLEDGE_CORE_BLOBS"
+      role: CONTENT_ADDRESSED_BLOB_STORE
+      policy: MANAGED_ARTIFACT_STORE
+  additional_roots:
+    discovery: >-
+      Include additional user library roots on available drives and any existing inventory manifests,
+      but do not recursively ingest arbitrary system/program directories. Record every discovered root
+      before processing files from it.
+
+logical_model:
+  hierarchy:
+    - library_collection
+    - document_identity
+    - version_or_edition
+    - representation
+    - physical_artifact
+    - location_alias
+  document_identity_rule: >-
+    One logical work/act/standard/book/document identity is counted once even if it appears in many
+    libraries or formats.
+  version_rule: >-
+    Different legal revisions, editions, releases, amendments or materially distinct document states
+    must not be collapsed merely because title/number match.
+  representation_rule: >-
+    Byte-distinct PDF, ODT, DOCX, RTF, HTML, XML, scans, signed containers and other useful forms of
+    the same version are retained as separate representations with independent metadata and hashes.
+  exact_duplicate_rule: >-
+    Byte-identical files with the same SHA-256 may share one physical artifact while all observed
+    filenames, source-library memberships and paths are retained as provenance/location aliases.
+
+required_record_fields:
+  library_collection:
+    - collection_id
+    - root_or_repository_path
+    - collection_role
+    - source_type
+    - authority_or_trust_class
+    - access_policy
+    - discovered_at
+  document_identity:
+    - document_id
+    - title
+    - document_type
+    - issuer_or_author_when_known
+    - jurisdiction_or_domain
+    - canonical_domain
+    - classification_state
+  version_or_edition:
+    - version_id
+    - document_id
+    - edition_or_revision_label
+    - dates_when_proven
+    - legal_or_publication_status_when_applicable
+  representation:
+    - representation_id
+    - version_id
+    - format
+    - mime
+    - authority_class
+    - byte_length
+    - sha256
+    - provenance
+    - verification_status
+  location_alias:
+    - sha256
+    - collection_id
+    - observed_path
+    - observed_filename
+    - observed_at
+
+routing:
+  security_and_regulatory_material:
+    canonical_logical_owner: security-knowledge
+    preserve_existing_security_knowledge_paths: true
+  software_engineering_and_other_professional_material:
+    canonical_logical_owner: professional-knowledge
+    preserve_domain_specific_paths: true
+  father_library_outputs:
+    role: staging_or_derived_collection
+    rule: >-
+      FATHER stage outputs are not a second canonical truth. Map their records and artifacts to canonical
+      document identities and keep stage provenance.
+  security_corpora_and_legacy_roots:
+    rule: >-
+      Treat as existing collections/candidate evidence. Do not mass-move protected or referenced paths.
+      Build identity and alias mappings first; migrate only through explicit repository migration rules.
+
+rights_and_publication:
+  public_git:
+    full_text_allowed_when_lawful_and_policy_allows: true
+    standards_and_books_default: METADATA_HASH_PROVENANCE_ONLY
+    restricted_or_copyright_sensitive_material: NO_FULLTEXT_PUBLICATION_WITHOUT_RIGHTS
+  local_blob_store:
+    may_hold_large_or_nonpublic_artifacts: true
+    require_provenance_and_hash: true
+
+processing_pipeline:
+  - discover_collections
+  - inventory_files_without_modifying_sources
+  - calculate_sha256_and_file_metadata
+  - exact_byte_deduplication
+  - identify_document_identity
+  - identify_version_or_edition
+  - register_all_byte_distinct_representations
+  - classify_domain_and_taxonomy
+  - attach_authority_and_provenance
+  - link_existing_repo_records
+  - quarantine_conflicts_and_unknowns
+  - reconcile_canonical_catalog
+  - derive_metrics_from_canonical_state
+  - independent_qa
+
+conflict_policy:
+  same_hash_different_names: one_artifact_many_aliases
+  same_identity_different_format: retain_all_representations
+  same_identity_different_hash_same_claimed_version: REVIEW_CONTENT_DIFFERENCE
+  same_title_number_different_revision: retain_distinct_versions
+  official_vs_third_party: retain_both_with_separate_authority
+  unresolved_identity: QUARANTINE_NO_DESTRUCTIVE_DEDUP
+
+prohibitions:
+  - do_not_delete_or_move_original_library_files
+  - do_not_merge_by_filename_only
+  - do_not_merge_by_title_only
+  - do_not_discard_odt_because_pdf_exists
+  - do_not_discard_pdf_because_odt_exists
+  - do_not_publish_full_books_or_restricted_standards_to_public_git_without_rights
+  - do_not_rewrite_historical_snapshots
+  - do_not_move_protected_repository_surfaces_as_generic_cleanup
+  - do_not_invent_hashes_sizes_dates_status_or_provenance
+  - do_not_hand_inflate_counters
+
+metrics:
+  authoritative_after_reconciliation_only: true
+  required:
+    - collection_count
+    - observed_file_count
+    - unique_physical_artifact_count
+    - exact_duplicate_file_count
+    - logical_document_count
+    - version_or_edition_count
+    - representation_count
+    - representation_count_by_format
+    - representation_count_by_authority
+    - unresolved_identity_count
+    - unresolved_version_conflict_count
+    - canonical_linked_count
+  production_statistics:
+    only_when_measured: true
+    include_when_available:
+      - throughput_per_pass
+      - cumulative_throughput
+      - speed_vs_single_stream_baseline
+      - rework_share
+      - remaining_volume
+      - eta
+
+acceptance_gates:
+  - every_source_library_registered
+  - every_processed_file_has_location_provenance
+  - every_retained_artifact_has_sha256
+  - exact_duplicates_preserve_all_aliases
+  - pdf_and_odt_are_retained_when_byte_distinct
+  - versions_are_not_collapsed_without_evidence
+  - canonical_document_counts_are_separate_from_representation_counts
+  - protected_repository_paths_remain_structurally_intact
+  - public_git_rights_policy_is_respected
+  - unresolved_conflicts_are_explicit
