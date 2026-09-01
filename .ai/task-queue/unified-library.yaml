@@ -1,0 +1,135 @@
+schema_version: "1.0"
+id: UNIFIED-LIBRARY-CODEX-QUEUE
+as_of: 2026-09-01
+status: ACTIVE
+queue_policy:
+  ordering: priority_then_dependency
+  fail_closed: true
+  one_write_owner_per_shared_catalog: true
+  no_destructive_source_changes: true
+  authoritative_metrics_after_reconciliation_only: true
+
+priority_tasks:
+  - task_id: LIB-UNIFY-DISCOVER-001
+    priority: P0
+    lane: source_scout
+    title: Register every library/collection before consolidation
+    acceptance:
+      - read .ai/library-unification.yaml
+      - enumerate repository and known local library roots that are actually accessible
+      - record collection role, path, trust/authority class and access policy
+      - do not recursively ingest unrelated system/program directories
+      - do not claim inaccessible roots were inspected
+
+  - task_id: LIB-UNIFY-INVENTORY-002
+    priority: P0
+    lane: byte_acquirer
+    title: Build non-destructive file inventory with hashes
+    dependencies:
+      - LIB-UNIFY-DISCOVER-001
+    acceptance:
+      - inventory files without moving/deleting originals
+      - calculate exact byte length and SHA-256 for accessible candidate artifacts
+      - identify MIME/format and file signature where relevant
+      - preserve collection/path/filename as provenance aliases
+      - separate unreadable/failed files from verified artifacts
+
+  - task_id: LIB-UNIFY-IDENTITY-003
+    priority: P0
+    lane: legal_applicability
+    title: Resolve logical identity and versions for normative/legal material
+    dependencies:
+      - LIB-UNIFY-INVENTORY-002
+    acceptance:
+      - one logical act/document identity across all collections
+      - preserve distinct revisions/editions/version states
+      - retain official and third-party representations separately
+      - do not infer current legal status from filenames or dates alone
+      - unresolved identity/version conflicts remain explicit
+
+  - task_id: LIB-UNIFY-CLASSIFY-004
+    priority: P1
+    lane: taxonomy_classifier
+    title: Route unified identities into canonical domains and taxonomies
+    dependencies:
+      - LIB-UNIFY-INVENTORY-002
+    acceptance:
+      - security/regulatory identities link to security-knowledge canonical ownership
+      - other professional knowledge links to professional-knowledge domain ownership
+      - preserve multi-label taxonomy memberships
+      - FATHER stages remain provenance/staging collections rather than second canonical truth
+      - legacy roots are linked before any migration decision
+
+  - task_id: LIB-UNIFY-REPRESENTATIONS-005
+    priority: P0
+    lane: byte_acquirer
+    title: Preserve all byte-distinct representations per version
+    dependencies:
+      - LIB-UNIFY-INVENTORY-002
+    acceptance:
+      - PDF and ODT of the same version are both retained when byte-distinct
+      - DOCX RTF HTML XML scan signed-container and other useful forms remain distinct representations
+      - byte-identical SHA-256 payloads share one physical artifact but preserve every alias
+      - same identity with different hash and same claimed version triggers review rather than silent collapse
+
+  - task_id: LIB-UNIFY-RIGHTS-006
+    priority: P0
+    lane: qa_guard
+    title: Enforce storage/publication rights boundaries
+    dependencies:
+      - LIB-UNIFY-INVENTORY-002
+    acceptance:
+      - full standards/books are not published to public Git by default
+      - public repository keeps metadata/hash/provenance where full text is restricted or copyright-sensitive
+      - local blob store may retain permitted local artifacts with provenance
+      - no source is upgraded in authority merely because it is locally available
+
+  - task_id: LIB-UNIFY-RECONCILE-007
+    priority: P0_AFTER_LANES
+    lane: reconciler
+    title: Build the unified canonical logical catalog
+    dependencies:
+      - LIB-UNIFY-IDENTITY-003
+      - LIB-UNIFY-CLASSIFY-004
+      - LIB-UNIFY-REPRESENTATIONS-005
+      - LIB-UNIFY-RIGHTS-006
+    acceptance:
+      - reconcile one logical document identity across all collections
+      - retain all version/edition and representation links
+      - retain every physical location alias
+      - derive counters from canonical state
+      - document_count is separate from representation_count
+      - no protected repository surface is moved by this task
+
+  - task_id: LIB-UNIFY-QA-008
+    priority: P0_AFTER_RECONCILE
+    lane: qa_guard
+    title: Independent unified-library audit
+    dependencies:
+      - LIB-UNIFY-RECONCILE-007
+    acceptance:
+      - sample and verify hashes and alias mappings
+      - verify PDF/ODT preservation
+      - verify version conflicts were not silently collapsed
+      - verify security-knowledge and professional-knowledge ownership boundaries
+      - verify source libraries remain intact
+      - verify metrics are reproducible from catalog state
+      - report blockers and unresolved identities
+
+completion_report:
+  required_fields:
+    - collections_registered
+    - observed_files
+    - unique_physical_artifacts
+    - exact_duplicates
+    - logical_documents
+    - versions_or_editions
+    - representations
+    - representations_by_format
+    - canonical_links
+    - unresolved_identities
+    - unresolved_version_conflicts
+    - failed_or_unreadable_files
+    - protected_path_changes
+    - rights_policy_exceptions
+    - validators_run
