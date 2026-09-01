@@ -24,10 +24,11 @@ permissions:
   contents: write
 
 concurrency:
-  # Do not let a quick source-card push cancel a long scheduled maintenance run.
-  # Same-event duplicates still supersede one another safely.
-  group: pdn-security-stack-immutable-acquisition-${{ github.event_name }}
-  cancel-in-progress: true
+  # Stream 1 and Stream 2 both write PDN_MASTER_SOURCE_INVENTORY.yaml.
+  # Share Stream-1's repository-wide writer lock so Stream 2 queues behind an
+  # active core acquisition instead of racing its final generated-file commit.
+  group: pdn-core-immutable-acquisition
+  cancel-in-progress: false
 
 jobs:
   acquire:
