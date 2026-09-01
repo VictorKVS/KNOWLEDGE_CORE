@@ -1,0 +1,108 @@
+schema_version: "1.0"
+id: RU-PROTECTED-INFORMATION-MASTER-DELTA-STREAM3-2026-09-01T1717Z
+kind: master_inventory_delta
+stream: 3
+checked_at: "2026-09-01T20:17:51+03:00"
+
+source_delta:
+  - id: SEC-SRC-RU-FZ-323-2011
+    action: ADD_PRIMARY_OFFICIAL_PUBLICATION_ID_VERIFIED_CURRENT_REVISION_CROSSCHECKED_EXACT_CAPTURE_PENDING
+    canonical_record: "source/SEC-SRC-RU-FZ-323-2011.yaml"
+    capture_manifest: "manifests/SEC-SRC-RU-FZ-323-2011-capture-pending.json"
+    sectors:
+      - healthcare
+      - medical_secrecy
+      - health_data
+      - personal_data_overlap
+      - health_information_systems
+      - children_overlap
+      - education_overlap
+      - government_disclosure_exceptions
+      - retention
+    proof_state: PRIMARY_OFFICIAL_PUBLICATION_ID_VERIFIED_CURRENT_REVISION_CROSSCHECKED_EXACT_BYTES_PENDING
+    primary_publication_verified: true
+    primary_official_source: "https://publication.pravo.gov.ru/Document/View/0001201111220007"
+    primary_publication_id: "0001201111220007"
+    downloaded_exact: false
+    immutable: false
+    dedupe_result: NEW_CANONICAL_NODE
+
+counter_delta_this_pass:
+  found: 1
+  downloaded: 0
+  immutable: 0
+  pending: 1
+  reused: 0
+  primary_publication_verified: 1
+
+capture_ledger_reconciliation:
+  authoritative_file: "SECTOR_ACQUISITION_RUN.json"
+  identity_scope: "existing exact-acquisition target set keyed by document.official_publication_id"
+  current_targets_with_official_publication_id: 22
+  current_raw_downloaded_exact: 22
+  current_immutable_sha256_verified: 22
+  current_pending_inside_that_capture_scope: 0
+  current_bytes_downloaded: 114212750
+  changed_this_pass: false
+  note: >-
+    323-FZ is registered in discovery/master scope with official publication identity and current-version cross-checking.
+    Exact official bytes were not obtained because the official publication host failed DNS resolution in the runtime.
+    The discovery backlog delta and the narrow 22/22/22/0 exact-acquisition ledger remain separate scopes.
+
+version_chain:
+  original_publication_id: "0001201111220007"
+  original_publication_date: "2011-11-22"
+  current_revision: "2026-04-25"
+  latest_current_amendment_found: "114-ФЗ от 25.04.2026"
+  latest_current_amendment_publication_id: "0001202604250013"
+  latest_current_amendment_effective_from: "2026-07-25"
+  latest_current_amendment_scope: "Article 16 only"
+  later_current_amendment_found_in_sweep: false
+  historical_chain_complete: false
+  state: CURRENT_REVISION_CROSSCHECKED_PRIMARY_ORIGINAL_AND_LATEST_CURRENT_AMENDMENT_IDENTIFIED_FULL_HISTORICAL_CHAIN_NOT_CLOSED_EXACT_BYTES_PENDING
+
+relationships_added:
+  - "SEC-SRC-RU-FZ-323-2011 -> 152-FZ / explicit PDN overlap in Article 13(4)(8) and Article 92(4)"
+  - "SEC-SRC-RU-FZ-323-2011 -> 326-FZ / scoped compulsory-medical-insurance disclosure and information-flow overlap"
+  - "SEC-SRC-RU-FZ-323-2011 -> 125-FZ / object-specific archival-retention interface; no period imported without a primary act"
+  - "SEC-SRC-RU-FZ-323-2011 -> 273-FZ / conditional education/minor overlap only where the statutory context matches"
+  - "SEC-SRC-RU-FZ-323-2011 -> 149-FZ / general information-system protection overlay without replacing medical secrecy"
+
+scope_findings:
+  - "Article 13(1): fact of seeking medical care, health state, diagnosis and other examination/treatment information are medical secrecy."
+  - "Article 13(2): nondisclosure continues after death subject only to the statute's scoped exceptions."
+  - "Article 13(3)-(4): consent-based and consent-free disclosure routes are separately bounded and cannot be generalized."
+  - "Article 13(4)(8): medical-organization information exchange for care expressly requires observance of personal-data legislation."
+  - "Article 92(1),(4): health-sector personalized accounting processes PDN and requires confidentiality/security under PDN legislation."
+
+retention_findings:
+  - "No single numeric retention period for all medical secrecy, all health PDN, or all medical records was identified in 323-FZ."
+  - "Medical-document and archive periods must be resolved from object-specific primary normative acts."
+
+retention_guards:
+  - "NO_GENERAL_RETENTION_PERIOD_INFERRED_FROM_323_FZ"
+  - "ARCHIVE_RETENTION_REQUIRES_OBJECT_SPECIFIC_PRIMARY_ACT"
+  - "MEDICAL_SECRECY_CONTINUING_AFTER_DEATH_IS_NOT_A_NUMERIC_RETENTION_RULE"
+
+scope_guards:
+  - "MEDICAL_SECRECY_NOT_IDENTICAL_TO_ALL_HEALTH_PDN"
+  - "HEALTH_PDN_NOT_AUTOMATICALLY_MEDICAL_SECRECY_UNLESS_ARTICLE13_SCOPE_MATCHES"
+  - "ARTICLE13_PART4_EXCEPTION_NOT_GENERAL_DISCLOSURE_LICENSE"
+  - "POST_MORTEM_MEDICAL_SECRECY_NOT_ERASED_BY_DEATH"
+  - "NO_AUTOMATIC_APPLICABILITY_PROMOTION"
+  - "NO_MIME_BYTE_LENGTH_SHA256_WITHOUT_EXACT_BYTES"
+
+master_base_update_policy:
+  base_inventory_rewritten_this_pass: false
+  reason: >-
+    Stream 3 appends timestamped master deltas while exact capture is open. This delta is the authoritative inventory update for this pass;
+    later controlled compaction must preserve source and capture provenance.
+
+quality_gates:
+  taxonomy_seed_used_as_proof: false
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+  fabricated_binary_metadata: false
+  universal_retention_inferred: false
+  duplicate_source_created: false
+  exact_capture_required_before_immutable: true
