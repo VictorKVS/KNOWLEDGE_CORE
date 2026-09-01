@@ -1,0 +1,496 @@
+{
+  "model_id": "RU-GOST-ISO-27000-FAMILY-CURRENT-EDITION-CROSSWALK-V1",
+  "as_of": "2026-09-01",
+  "expected_counts": {
+    "current_standards": 6,
+    "superseded_blocklist": 2,
+    "crosswalk_edges": 8,
+    "edition_gates": 8,
+    "scenarios": 8,
+    "red_team_attacks": 12,
+    "evidence_nodes": 18,
+    "control_rules": 64
+  },
+  "scenario_expectations": [
+    {
+      "scenario_id": "S01",
+      "expect": "REPLACED_EDITION_REJECTED"
+    },
+    {
+      "scenario_id": "S02",
+      "expect": "REPLACED_EDITION_REJECTED"
+    },
+    {
+      "scenario_id": "S03",
+      "expect": "CURRENT_WITH_EDITION_BRIDGE_REQUIRED"
+    },
+    {
+      "scenario_id": "S04",
+      "expect": "SILENT_INTERNATIONAL_UPGRADE_REJECTED"
+    },
+    {
+      "scenario_id": "S05",
+      "expect": "RISK_APPLICABILITY_REQUIRED"
+    },
+    {
+      "scenario_id": "S06",
+      "expect": "IMPLEMENTATION_EVIDENCE_PENDING"
+    },
+    {
+      "scenario_id": "S07",
+      "expect": "PROVIDER_CUSTOMER_ROLE_PENDING"
+    },
+    {
+      "scenario_id": "S08",
+      "expect": "VERSION_PROFILE_VERIFIED_WITH_27005_LEGACY_SOURCE_NOTE"
+    }
+  ],
+  "adversarial_cases": [
+    {
+      "attack_id": "RT01",
+      "input": "same 2021 suffix means every standard is based on an ISO 2021 edition",
+      "expect": "BLOCKED"
+    },
+    {
+      "attack_id": "RT02",
+      "input": "ISO/IEC 27002:2022 silently replaces ГОСТ Р ИСО/МЭК 27002-2021",
+      "expect": "BLOCKED"
+    },
+    {
+      "attack_id": "RT03",
+      "input": "ГОСТ Р ИСО/МЭК 27000-2012 remains current because a PDF is downloadable",
+      "expect": "BLOCKED"
+    },
+    {
+      "attack_id": "RT04",
+      "input": "ГОСТ Р ИСО/МЭК 27002-2012 remains current because a contract cites it",
+      "expect": "BLOCKED"
+    },
+    {
+      "attack_id": "RT05",
+      "input": "active 27005-2010 contains ISO/IEC 27005:2022 content",
+      "expect": "BLOCKED"
+    },
+    {
+      "attack_id": "RT06",
+      "input": "27000 vocabulary is a certifiable ISMS requirements standard",
+      "expect": "BLOCKED"
+    },
+    {
+      "attack_id": "RT07",
+      "input": "27002 guidance replaces 27001 conformity requirements",
+      "expect": "BLOCKED"
+    },
+    {
+      "attack_id": "RT08",
+      "input": "27004 metrics template proves actual measurement and effectiveness",
+      "expect": "BLOCKED"
+    },
+    {
+      "attack_id": "RT09",
+      "input": "27017 applies only to cloud providers and never to customers",
+      "expect": "BLOCKED"
+    },
+    {
+      "attack_id": "RT10",
+      "input": "27017 makes cloud use or every listed cloud control mandatory",
+      "expect": "BLOCKED"
+    },
+    {
+      "attack_id": "RT11",
+      "input": "current registry status proves historical status at every earlier date",
+      "expect": "BLOCKED"
+    },
+    {
+      "attack_id": "RT12",
+      "input": "a search snippet or file name overrides the Rosstandart registry card",
+      "expect": "BLOCKED"
+    }
+  ],
+  "cases": [
+    {
+      "case_id": "C-R01-01",
+      "rule_id": "R01-01",
+      "input": "exact evidence",
+      "expect": "PASS"
+    },
+    {
+      "case_id": "C-R01-02",
+      "rule_id": "R01-02",
+      "input": "missing, obsolete or silently upgraded evidence",
+      "expect": "PENDING_REJECTED_OR_CONFLICT_WITH_REASON"
+    },
+    {
+      "case_id": "C-R01-03",
+      "rule_id": "R01-03",
+      "input": "exact evidence",
+      "expect": "PASS"
+    },
+    {
+      "case_id": "C-R01-04",
+      "rule_id": "R01-04",
+      "input": "missing, obsolete or silently upgraded evidence",
+      "expect": "PENDING_REJECTED_OR_CONFLICT_WITH_REASON"
+    },
+    {
+      "case_id": "C-R01-05",
+      "rule_id": "R01-05",
+      "input": "exact evidence",
+      "expect": "PASS"
+    },
+    {
+      "case_id": "C-R01-06",
+      "rule_id": "R01-06",
+      "input": "missing, obsolete or silently upgraded evidence",
+      "expect": "PENDING_REJECTED_OR_CONFLICT_WITH_REASON"
+    },
+    {
+      "case_id": "C-R01-07",
+      "rule_id": "R01-07",
+      "input": "exact evidence",
+      "expect": "PASS"
+    },
+    {
+      "case_id": "C-R01-08",
+      "rule_id": "R01-08",
+      "input": "missing, obsolete or silently upgraded evidence",
+      "expect": "PENDING_REJECTED_OR_CONFLICT_WITH_REASON"
+    },
+    {
+      "case_id": "C-R02-01",
+      "rule_id": "R02-01",
+      "input": "exact evidence",
+      "expect": "PASS"
+    },
+    {
+      "case_id": "C-R02-02",
+      "rule_id": "R02-02",
+      "input": "missing, obsolete or silently upgraded evidence",
+      "expect": "PENDING_REJECTED_OR_CONFLICT_WITH_REASON"
+    },
+    {
+      "case_id": "C-R02-03",
+      "rule_id": "R02-03",
+      "input": "exact evidence",
+      "expect": "PASS"
+    },
+    {
+      "case_id": "C-R02-04",
+      "rule_id": "R02-04",
+      "input": "missing, obsolete or silently upgraded evidence",
+      "expect": "PENDING_REJECTED_OR_CONFLICT_WITH_REASON"
+    },
+    {
+      "case_id": "C-R02-05",
+      "rule_id": "R02-05",
+      "input": "exact evidence",
+      "expect": "PASS"
+    },
+    {
+      "case_id": "C-R02-06",
+      "rule_id": "R02-06",
+      "input": "missing, obsolete or silently upgraded evidence",
+      "expect": "PENDING_REJECTED_OR_CONFLICT_WITH_REASON"
+    },
+    {
+      "case_id": "C-R02-07",
+      "rule_id": "R02-07",
+      "input": "exact evidence",
+      "expect": "PASS"
+    },
+    {
+      "case_id": "C-R02-08",
+      "rule_id": "R02-08",
+      "input": "missing, obsolete or silently upgraded evidence",
+      "expect": "PENDING_REJECTED_OR_CONFLICT_WITH_REASON"
+    },
+    {
+      "case_id": "C-R03-01",
+      "rule_id": "R03-01",
+      "input": "exact evidence",
+      "expect": "PASS"
+    },
+    {
+      "case_id": "C-R03-02",
+      "rule_id": "R03-02",
+      "input": "missing, obsolete or silently upgraded evidence",
+      "expect": "PENDING_REJECTED_OR_CONFLICT_WITH_REASON"
+    },
+    {
+      "case_id": "C-R03-03",
+      "rule_id": "R03-03",
+      "input": "exact evidence",
+      "expect": "PASS"
+    },
+    {
+      "case_id": "C-R03-04",
+      "rule_id": "R03-04",
+      "input": "missing, obsolete or silently upgraded evidence",
+      "expect": "PENDING_REJECTED_OR_CONFLICT_WITH_REASON"
+    },
+    {
+      "case_id": "C-R03-05",
+      "rule_id": "R03-05",
+      "input": "exact evidence",
+      "expect": "PASS"
+    },
+    {
+      "case_id": "C-R03-06",
+      "rule_id": "R03-06",
+      "input": "missing, obsolete or silently upgraded evidence",
+      "expect": "PENDING_REJECTED_OR_CONFLICT_WITH_REASON"
+    },
+    {
+      "case_id": "C-R03-07",
+      "rule_id": "R03-07",
+      "input": "exact evidence",
+      "expect": "PASS"
+    },
+    {
+      "case_id": "C-R03-08",
+      "rule_id": "R03-08",
+      "input": "missing, obsolete or silently upgraded evidence",
+      "expect": "PENDING_REJECTED_OR_CONFLICT_WITH_REASON"
+    },
+    {
+      "case_id": "C-R04-01",
+      "rule_id": "R04-01",
+      "input": "exact evidence",
+      "expect": "PASS"
+    },
+    {
+      "case_id": "C-R04-02",
+      "rule_id": "R04-02",
+      "input": "missing, obsolete or silently upgraded evidence",
+      "expect": "PENDING_REJECTED_OR_CONFLICT_WITH_REASON"
+    },
+    {
+      "case_id": "C-R04-03",
+      "rule_id": "R04-03",
+      "input": "exact evidence",
+      "expect": "PASS"
+    },
+    {
+      "case_id": "C-R04-04",
+      "rule_id": "R04-04",
+      "input": "missing, obsolete or silently upgraded evidence",
+      "expect": "PENDING_REJECTED_OR_CONFLICT_WITH_REASON"
+    },
+    {
+      "case_id": "C-R04-05",
+      "rule_id": "R04-05",
+      "input": "exact evidence",
+      "expect": "PASS"
+    },
+    {
+      "case_id": "C-R04-06",
+      "rule_id": "R04-06",
+      "input": "missing, obsolete or silently upgraded evidence",
+      "expect": "PENDING_REJECTED_OR_CONFLICT_WITH_REASON"
+    },
+    {
+      "case_id": "C-R04-07",
+      "rule_id": "R04-07",
+      "input": "exact evidence",
+      "expect": "PASS"
+    },
+    {
+      "case_id": "C-R04-08",
+      "rule_id": "R04-08",
+      "input": "missing, obsolete or silently upgraded evidence",
+      "expect": "PENDING_REJECTED_OR_CONFLICT_WITH_REASON"
+    },
+    {
+      "case_id": "C-R05-01",
+      "rule_id": "R05-01",
+      "input": "exact evidence",
+      "expect": "PASS"
+    },
+    {
+      "case_id": "C-R05-02",
+      "rule_id": "R05-02",
+      "input": "missing, obsolete or silently upgraded evidence",
+      "expect": "PENDING_REJECTED_OR_CONFLICT_WITH_REASON"
+    },
+    {
+      "case_id": "C-R05-03",
+      "rule_id": "R05-03",
+      "input": "exact evidence",
+      "expect": "PASS"
+    },
+    {
+      "case_id": "C-R05-04",
+      "rule_id": "R05-04",
+      "input": "missing, obsolete or silently upgraded evidence",
+      "expect": "PENDING_REJECTED_OR_CONFLICT_WITH_REASON"
+    },
+    {
+      "case_id": "C-R05-05",
+      "rule_id": "R05-05",
+      "input": "exact evidence",
+      "expect": "PASS"
+    },
+    {
+      "case_id": "C-R05-06",
+      "rule_id": "R05-06",
+      "input": "missing, obsolete or silently upgraded evidence",
+      "expect": "PENDING_REJECTED_OR_CONFLICT_WITH_REASON"
+    },
+    {
+      "case_id": "C-R05-07",
+      "rule_id": "R05-07",
+      "input": "exact evidence",
+      "expect": "PASS"
+    },
+    {
+      "case_id": "C-R05-08",
+      "rule_id": "R05-08",
+      "input": "missing, obsolete or silently upgraded evidence",
+      "expect": "PENDING_REJECTED_OR_CONFLICT_WITH_REASON"
+    },
+    {
+      "case_id": "C-R06-01",
+      "rule_id": "R06-01",
+      "input": "exact evidence",
+      "expect": "PASS"
+    },
+    {
+      "case_id": "C-R06-02",
+      "rule_id": "R06-02",
+      "input": "missing, obsolete or silently upgraded evidence",
+      "expect": "PENDING_REJECTED_OR_CONFLICT_WITH_REASON"
+    },
+    {
+      "case_id": "C-R06-03",
+      "rule_id": "R06-03",
+      "input": "exact evidence",
+      "expect": "PASS"
+    },
+    {
+      "case_id": "C-R06-04",
+      "rule_id": "R06-04",
+      "input": "missing, obsolete or silently upgraded evidence",
+      "expect": "PENDING_REJECTED_OR_CONFLICT_WITH_REASON"
+    },
+    {
+      "case_id": "C-R06-05",
+      "rule_id": "R06-05",
+      "input": "exact evidence",
+      "expect": "PASS"
+    },
+    {
+      "case_id": "C-R06-06",
+      "rule_id": "R06-06",
+      "input": "missing, obsolete or silently upgraded evidence",
+      "expect": "PENDING_REJECTED_OR_CONFLICT_WITH_REASON"
+    },
+    {
+      "case_id": "C-R06-07",
+      "rule_id": "R06-07",
+      "input": "exact evidence",
+      "expect": "PASS"
+    },
+    {
+      "case_id": "C-R06-08",
+      "rule_id": "R06-08",
+      "input": "missing, obsolete or silently upgraded evidence",
+      "expect": "PENDING_REJECTED_OR_CONFLICT_WITH_REASON"
+    },
+    {
+      "case_id": "C-R07-01",
+      "rule_id": "R07-01",
+      "input": "exact evidence",
+      "expect": "PASS"
+    },
+    {
+      "case_id": "C-R07-02",
+      "rule_id": "R07-02",
+      "input": "missing, obsolete or silently upgraded evidence",
+      "expect": "PENDING_REJECTED_OR_CONFLICT_WITH_REASON"
+    },
+    {
+      "case_id": "C-R07-03",
+      "rule_id": "R07-03",
+      "input": "exact evidence",
+      "expect": "PASS"
+    },
+    {
+      "case_id": "C-R07-04",
+      "rule_id": "R07-04",
+      "input": "missing, obsolete or silently upgraded evidence",
+      "expect": "PENDING_REJECTED_OR_CONFLICT_WITH_REASON"
+    },
+    {
+      "case_id": "C-R07-05",
+      "rule_id": "R07-05",
+      "input": "exact evidence",
+      "expect": "PASS"
+    },
+    {
+      "case_id": "C-R07-06",
+      "rule_id": "R07-06",
+      "input": "missing, obsolete or silently upgraded evidence",
+      "expect": "PENDING_REJECTED_OR_CONFLICT_WITH_REASON"
+    },
+    {
+      "case_id": "C-R07-07",
+      "rule_id": "R07-07",
+      "input": "exact evidence",
+      "expect": "PASS"
+    },
+    {
+      "case_id": "C-R07-08",
+      "rule_id": "R07-08",
+      "input": "missing, obsolete or silently upgraded evidence",
+      "expect": "PENDING_REJECTED_OR_CONFLICT_WITH_REASON"
+    },
+    {
+      "case_id": "C-R08-01",
+      "rule_id": "R08-01",
+      "input": "exact evidence",
+      "expect": "PASS"
+    },
+    {
+      "case_id": "C-R08-02",
+      "rule_id": "R08-02",
+      "input": "missing, obsolete or silently upgraded evidence",
+      "expect": "PENDING_REJECTED_OR_CONFLICT_WITH_REASON"
+    },
+    {
+      "case_id": "C-R08-03",
+      "rule_id": "R08-03",
+      "input": "exact evidence",
+      "expect": "PASS"
+    },
+    {
+      "case_id": "C-R08-04",
+      "rule_id": "R08-04",
+      "input": "missing, obsolete or silently upgraded evidence",
+      "expect": "PENDING_REJECTED_OR_CONFLICT_WITH_REASON"
+    },
+    {
+      "case_id": "C-R08-05",
+      "rule_id": "R08-05",
+      "input": "exact evidence",
+      "expect": "PASS"
+    },
+    {
+      "case_id": "C-R08-06",
+      "rule_id": "R08-06",
+      "input": "missing, obsolete or silently upgraded evidence",
+      "expect": "PENDING_REJECTED_OR_CONFLICT_WITH_REASON"
+    },
+    {
+      "case_id": "C-R08-07",
+      "rule_id": "R08-07",
+      "input": "exact evidence",
+      "expect": "PASS"
+    },
+    {
+      "case_id": "C-R08-08",
+      "rule_id": "R08-08",
+      "input": "missing, obsolete or silently upgraded evidence",
+      "expect": "PENDING_REJECTED_OR_CONFLICT_WITH_REASON"
+    }
+  ]
+}
