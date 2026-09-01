@@ -1,0 +1,50 @@
+{
+  "model_id": "RU-KII-REAL-ESTATE-PP303-CLAUSE-ROUTING-V1",
+  "as_of": "2026-09-01",
+  "scenario_expectations": [
+    {"scenario_id":"S1","expected":"APPLY_PP127_AND_PP303"},
+    {"scenario_id":"S2","expected":"OUTSIDE_PROVED_PP303_SCOPE"},
+    {"scenario_id":"S3","expected":"PENDING_OBJECT_SCOPE"},
+    {"scenario_id":"S4","expected":"BLOCK_INCOMPLETE_POINT11_APPLICATION"},
+    {"scenario_id":"S5","expected":"INDICATOR_3_SECOND_CATEGORY_ROUTE"},
+    {"scenario_id":"S6","expected":"PENDING_INDICATOR_4_INPUTS"},
+    {"scenario_id":"S7","expected":"NO_CATEGORY_ROUTE_AVAILABLE"},
+    {"scenario_id":"S8","expected":"USE_VERIFIED_TRANSCRIPTION_KEEP_OFFICIAL_PRIMARY_HASH_PENDING"}
+  ],
+  "indicator_expectations": [
+    {"indicator":"1","pp127_position":"5(a)"},
+    {"indicator":"2","pp127_position":"5(b)","mandatory_post_rule":"THIS_VALUE_IS_ACCEPTED_EQUAL_TO_INDICATOR_1"},
+    {"indicator":"3","pp127_position":"6","special_result":"SECOND_CATEGORY_WHEN_POINT12_CONDITION_PROVED"},
+    {"indicator":"4","pp127_position":"9"}
+  ],
+  "formula_expectations": [
+    {"id":"F1","must_contain":["Тпу − Тпростоя","/ Тпу","× 100%"]},
+    {"id":"F2","must_contain":["ΔДБ / Бср","× 100%"]},
+    {"id":"F3","must_contain":["ГУ / 365 суток","× Т"]}
+  ],
+  "negative_guards": [
+    "do not widen PP303 beyond Rosreestr and Roskadastr",
+    "do not infer the exact object from a generic real-estate label",
+    "do not omit lawful-control evidence",
+    "do not alter any printed operator or denominator",
+    "do not omit the indicator-2 equality rule",
+    "do not relabel restoration time as an SLA",
+    "do not use point 12 without causal function-disruption evidence",
+    "do not use non-averaged figures where a three-year average is required",
+    "do not decide NO_CATEGORY before all applicable indicators",
+    "do not promote the preserved hash to official-primary status"
+  ],
+  "case_matrix": {
+    "gate_ids": ["G1","G2","G3","G4","G5","G6","G7","G8"],
+    "case_kinds": ["positive","missing_source","wrong_date","wrong_subject","wrong_object","wrong_operator","missing_decision_trace","pending_state_overclaim"],
+    "expanded_case_count": 64,
+    "expected_positive": "PASS",
+    "expected_negative": "BLOCKED_OR_PENDING"
+  },
+  "adversarial_cases": [
+    {"attack_id":"RT1","expected":"BLOCKED"},{"attack_id":"RT2","expected":"BLOCKED"},{"attack_id":"RT3","expected":"BLOCKED"},{"attack_id":"RT4","expected":"BLOCKED"},
+    {"attack_id":"RT5","expected":"BLOCKED"},{"attack_id":"RT6","expected":"BLOCKED"},{"attack_id":"RT7","expected":"BLOCKED"},{"attack_id":"RT8","expected":"BLOCKED"},
+    {"attack_id":"RT9","expected":"BLOCKED"},{"attack_id":"RT10","expected":"BLOCKED"},{"attack_id":"RT11","expected":"BLOCKED"},{"attack_id":"RT12","expected":"BLOCKED"}
+  ],
+  "expected_counts": {"clauses":14,"indicator_routes":4,"formulas":3,"decision_gates":8,"scenarios":8,"red_team_attacks":12,"evidence_nodes":18,"control_rules":64}
+}

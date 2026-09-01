@@ -1,0 +1,120 @@
+{
+  "id": "RU-KII-REAL-ESTATE-PP303-CLAUSE-ROUTING-V1",
+  "as_of": "2026-09-01",
+  "status": "PARTIAL_VERIFIED_POINTS_1_14_THREE_FORMULAS_TRANSCRIBED_PRESERVED_PDF_HASH_VERIFIED_OFFICIAL_PRIMARY_HASH_PENDING",
+  "title": "ПП №303: clause-level маршрут категорирования КИИ в сфере регистрации прав на недвижимость",
+  "scope": "Non-verbatim fail-closed model; preserved PDF was visually verified and hashed separately from immutable official bytes.",
+  "sources": [
+    {"id":"PP303_OFFICIAL","role":"PRIMARY_PUBLICATION_IDENTITY","title":"Постановление Правительства РФ от 23.03.2026 №303","url":"https://publication.pravo.gov.ru/document/0001202603240036"},
+    {"id":"PP303_CURRENT_CARD","role":"CURRENT_STATUS_CROSS_CHECK","url":"https://www.consultant.ru/document/cons_doc_LAW_529733/"},
+    {"id":"PP303_PRESERVED_PDF","role":"VISUAL_TRANSCRIPTION_AND_PRESERVED_COPY_HASH","url":"https://hub.zlonov.ru/laws/pdfs/%D0%9F%D0%9F-303-%D0%BE%D1%82-23.03.2026.pdf"},
+    {"id":"PP127","role":"COMMON_RULES_AND_THRESHOLDS","current_edition":"2025-11-07","url":"https://fstec.ru/dokumenty/vse-dokumenty/postanovleniya/postanovlenie-pravitelstva-rossijskoj-federatsii-ot-8-fevralya-2018-g-n-127"},
+    {"id":"DECREE763","role":"DEFAULT_EFFECTIVE_DATE_RULE","url":"https://www.consultant.ru/document/cons_doc_LAW_10176/"}
+  ],
+  "temporal": {
+    "adopted": "2026-03-23",
+    "published": "2026-03-24",
+    "effective_from": "2026-04-01",
+    "effective_date_basis": "seven days after official publication under Presidential Decree 763; PP303 contains no special effective-date clause",
+    "state_on_as_of_date": "CURRENT"
+  },
+  "preserved_pdf": {
+    "sha256": "e93e8a0cba5bc7817c53b2f6a233ed2283e1cf9e1ee2a01e30281a4dced91079",
+    "bytes": 1351967,
+    "pages": 6,
+    "state": "VERIFIED_PRESERVED_COPY_NOT_OFFICIAL_PRIMARY_HASH"
+  },
+  "clauses": [
+    {"id":"P1","section":"I","normalized_rule":"defines sector categorization, significance matching and sector-specific calculation scope"},
+    {"id":"P2","section":"I","normalized_rule":"requires cumulative application of FZ187 article 7, PP127 rules and indicators, and PP303"},
+    {"id":"P3","section":"I","normalized_rule":"subjects are Rosreestr and the public-law company Roskadastr"},
+    {"id":"P4","section":"I","normalized_rule":"objects are the federal state information system for maintaining EGRN and the technical and software means ensuring its operation"},
+    {"id":"P5","section":"I","normalized_rule":"each subject categorizes objects it lawfully controls by ownership, lease or another lawful basis"},
+    {"id":"P6","section":"II","normalized_rule":"routes PP127 positions 5(a), 5(b), 6 and 9 to indicators 1 through 4 respectively"},
+    {"id":"P7","section":"II","normalized_rule":"consequences are assessed with the sector sign: EGRN operation for registration, cadastral accounting, register maintenance and provision of EGRN information"},
+    {"id":"P8","section":"II","normalized_rule":"subject calculates applicable indicators and assigns a category using PP127, PP303 and applicable typical-sector-object lists"},
+    {"id":"P9","section":"II","normalized_rule":"no category is assigned only when the object meets none of the applicable PP127 indicator values"},
+    {"id":"P10","section":"III","normalized_rule":"indicator 1 is the maximum permissible service-access outage measured by time to restore normal object operation and information access after a computer incident, in hours"},
+    {"id":"P11","section":"III","normalized_rule":"indicator 2 uses the printed Tpu and Tprostoya formula and its value is accepted equal to indicator 1"},
+    {"id":"P12","section":"III","normalized_rule":"for indicator 3, second significance category applies when object disruption can cause the subject's assigned public function or power to cease or be disrupted"},
+    {"id":"P13","section":"III","normalized_rule":"indicator 4 concerns federal-budget damage from reduced payments for public services; the amount is determined by expert analysis of maximum possible economic damage"},
+    {"id":"P14","section":"III","normalized_rule":"indicator 4 and reduced-budget-receipts amount use the two printed formulas and their defined three-year averages and maximum disruption time"}
+  ],
+  "subject_scope": {
+    "included": ["Federal Service for State Registration, Cadastre and Cartography (Rosreestr)", "public-law company Roskadastr"],
+    "lawful_control_bases": ["ownership", "lease", "other lawful basis"],
+    "guard": "DO_NOT_EXTEND_PP303_TO_EVERY_REGISTRAR_CONTRACTOR_OR_REAL_ESTATE_ORGANIZATION"
+  },
+  "object_scope": {
+    "included": ["federal state information system for maintaining the Unified State Register of Real Estate", "technical means ensuring that system's operation", "software means ensuring that system's operation"],
+    "guard": "A_REAL_ESTATE_FUNCTION_OR_SOFTWARE_LABEL_ALONE_DOES_NOT_PROVE_PP303_OBJECT_SCOPE"
+  },
+  "pp127_indicator_routes": [
+    {"indicator":"1","pp127_position":"5(a)","basis":"maximum permissible loss of access to a public service, measured through restoration procedures after a computer incident","unit":"hours"},
+    {"indicator":"2","pp127_position":"5(b)","basis":"printed ratio using statutory service-delivery time and restoration-related outage; PP303 then accepts this value equal to indicator 1","unit":"percent, with equality rule preserved"},
+    {"indicator":"3","pp127_position":"6","basis":"cessation or disruption of the subject's assigned function or power","special_result":"SECOND_CATEGORY_WHEN_POINT12_CONDITION_PROVED"},
+    {"indicator":"4","pp127_position":"9","basis":"federal-budget damage from reduced receipts for the subject's public services","unit":"percent of averaged projected annual federal-budget revenue over the planned three-year period"}
+  ],
+  "formulas": [
+    {"id":"F1","point":11,"printed":"Показатель 2 = ((Тпу − Тпростоя) / Тпу) × 100%","variables":{"Тпу":"statutory service-delivery time in hours","Тпростоя":"time during which the service cannot be delivered because normal object operation and information access are being restored after a computer incident, in hours"},"mandatory_post_rule":"THIS_VALUE_IS_ACCEPTED_EQUAL_TO_INDICATOR_1"},
+    {"id":"F2","point":14,"printed":"Показатель 4 = (ΔДБ / Бср) × 100%","variables":{"ΔДБ":"reduced federal-budget receipts if the object ceases or is disrupted, rubles","Бср":"total projected annual federal-budget revenue averaged over the planned three-year period, rubles"}},
+    {"id":"F3","point":14,"printed":"ΔДБ = (ГУ / 365 суток) × Т","variables":{"ГУ":"projected annual receipts from the subject's public services associated with the object, averaged over the planned three-year period, rubles","Т":"maximum permissible object cessation or disruption time, days"}}
+  ],
+  "decision_gates": [
+    {"id":"G1","name":"decision-date-and-version","fail":"PENDING_TEMPORAL_SCOPE"},
+    {"id":"G2","name":"exact-subject-and-lawful-control","fail":"OUTSIDE_PROVED_PP303_SCOPE"},
+    {"id":"G3","name":"exact-egrn-system-or-enabling-means-object","fail":"PENDING_OBJECT_SCOPE"},
+    {"id":"G4","name":"sector-function-and-consequence-route","fail":"PENDING_SECTOR_CONSEQUENCE_MODEL"},
+    {"id":"G5","name":"indicator-applicability-and-input-evidence","fail":"PENDING_INDICATOR_INPUTS"},
+    {"id":"G6","name":"literal-formula-and-equality-rule","fail":"PENDING_FORMULA_APPLICATION"},
+    {"id":"G7","name":"pp127-threshold-and-category-or-no-category-decision","fail":"PENDING_CATEGORY_DECISION"},
+    {"id":"G8","name":"source-bytes-and-transcription-boundary","fail":"PENDING_OFFICIAL_PRIMARY_HASH"}
+  ],
+  "scenarios": [
+    {"id":"S1","input":"current date, Rosreestr or Roskadastr, lawful control and exact EGRN object","expected":"APPLY_PP127_AND_PP303"},
+    {"id":"S2","input":"regional registrar, contractor or real-estate company without exact point-3 subject status","expected":"OUTSIDE_PROVED_PP303_SCOPE"},
+    {"id":"S3","input":"generic real-estate software not proved to be EGRN system or its enabling means","expected":"PENDING_OBJECT_SCOPE"},
+    {"id":"S4","input":"indicator 2 calculated but equality to indicator 1 omitted","expected":"BLOCK_INCOMPLETE_POINT11_APPLICATION"},
+    {"id":"S5","input":"point-12 function disruption and its causal link are proved","expected":"INDICATOR_3_SECOND_CATEGORY_ROUTE"},
+    {"id":"S6","input":"indicator 4 claimed without public-service receipts, three-year averages or maximum disruption time","expected":"PENDING_INDICATOR_4_INPUTS"},
+    {"id":"S7","input":"all four applicable PP127 indicators evaluated and none meets a threshold","expected":"NO_CATEGORY_ROUTE_AVAILABLE"},
+    {"id":"S8","input":"preserved PDF verified and hashed but official PDF transport timed out","expected":"USE_VERIFIED_TRANSCRIPTION_KEEP_OFFICIAL_PRIMARY_HASH_PENDING"}
+  ],
+  "red_team_attacks": [
+    {"id":"RT1","attack":"extend PP303 to every organization involved with real estate","blocked":true},
+    {"id":"RT2","attack":"treat a contractor as Rosreestr or Roskadastr","blocked":true},
+    {"id":"RT3","attack":"treat any real-estate software as the EGRN KII object","blocked":true},
+    {"id":"RT4","attack":"ignore lawful-control evidence","blocked":true},
+    {"id":"RT5","attack":"apply an indicator outside positions 5(a), 5(b), 6 and 9 as if PP303 expressly routed it","blocked":true},
+    {"id":"RT6","attack":"reverse or alter the Tpu-minus-Tprostoya operator","blocked":true},
+    {"id":"RT7","attack":"omit point 11 equality of indicator 2 and indicator 1","blocked":true},
+    {"id":"RT8","attack":"treat restoration time as an incident-response SLA or statutory service deadline","blocked":true},
+    {"id":"RT9","attack":"assign second category under point 12 without causal function-disruption evidence","blocked":true},
+    {"id":"RT10","attack":"use one-year figures where point 14 requires planned three-year averages","blocked":true},
+    {"id":"RT11","attack":"derive NO_CATEGORY before evaluating every applicable indicator","blocked":true},
+    {"id":"RT12","attack":"treat preserved-copy hash as immutable official primary bytes","blocked":true}
+  ],
+  "evidence_nodes": [
+    "E1_OFFICIAL_PUBLICATION_IDENTITY","E2_CURRENT_CARD","E3_PRESERVED_PDF_HASH","E4_EFFECTIVE_DATE_RULE","E5_EXACT_SUBJECT_STATUS","E6_LAWFUL_CONTROL","E7_EXACT_EGRN_OBJECT_SCOPE","E8_SECTOR_FUNCTION","E9_COMPUTER_INCIDENT_AND_RESTORATION_TIME","E10_STATUTORY_SERVICE_DELIVERY_TIME","E11_POINT11_EQUALITY_RULE","E12_PUBLIC_FUNCTION_OR_POWER","E13_CAUSAL_FUNCTION_DISRUPTION","E14_PUBLIC_SERVICE_RECEIPTS","E15_THREE_YEAR_AVERAGES","E16_MAXIMUM_DISRUPTION_TIME","E17_PP127_THRESHOLD_AND_DECISION","E18_FSTEC_SUBMISSION_EVIDENCE"
+  ],
+  "control_rule_matrix": {
+    "gates": ["G1","G2","G3","G4","G5","G6","G7","G8"],
+    "checks_per_gate": ["source_identity","temporal_scope","subject_scope","object_scope","input_provenance","operator_integrity","decision_trace","pending_state_preservation"],
+    "expanded_rule_count": 64,
+    "rule_id_pattern": "RE-{gate_number_2d}-{check_number_2d}",
+    "rule": "required evidence and exact PP303 route must be present; otherwise preserve the gate's fail-closed state"
+  },
+  "boundaries": {
+    "subject_not_universally_extended":true,
+    "object_not_inferred_from_sector_label":true,
+    "lawful_control_required":true,
+    "four_routes_not_all_pp127_indicators":true,
+    "indicator2_equality_preserved":true,
+    "restoration_metric_not_sla":true,
+    "second_category_requires_point12_causality":true,
+    "three_year_averages_preserved":true,
+    "no_category_after_all_applicable_indicators_only":true,
+    "preserved_hash_not_primary_hash":true
+  },
+  "counts": {"clauses":14,"indicator_routes":4,"formulas":3,"decision_gates":8,"scenarios":8,"red_team_attacks":12,"evidence_nodes":18,"control_rules":64}
+}
