@@ -1,0 +1,147 @@
+schema_version: "1.0"
+stream: 3
+run_at: "2026-09-01T05:18:21+03:00"
+objective: "continue sector/special-regime primary-source discovery, exact capture, deduplication, relationship linking and master reconciliation"
+
+selected_sources:
+  - id: SEC-SRC-RU-PP-445-2018
+    act: "Постановление Правительства РФ от 12.04.2018 № 445 о хранении операторами связи сообщений пользователей услугами связи"
+    action: NEW_CANONICAL_SOURCE_REGISTERED
+    sector_overlap:
+      - communications
+      - personal_data_overlap
+      - operational_search_infrastructure
+      - retention
+
+repository_dedupe:
+  canonical_path: "security-corpora/RU/protected-information/source/SEC-SRC-RU-PP-445-2018.yaml"
+  direct_path_probe_before_write: NOT_FOUND_404
+  existing_related_nodes:
+    - SEC-SRC-RU-FZ-126
+  result: NEW_CANONICAL_NODE_CREATED
+  found_counter_increment: 1
+  reused_counter_increment: 0
+
+primary_proof:
+  original_official_publication_id: "0001201804190032"
+  original_official_publication_date: "2018-04-19"
+  original_official_url: "https://publication.pravo.gov.ru/document/0001201804190032"
+  current_regulator_crosscheck: "Roskomnadzor mandatory-requirements list approved 03.06.2026 includes PP 445 and official publication locator"
+  current_revision_crosscheck: "2026-08-24 edition effective 2026-09-01"
+  primary_original_publication_verified: true
+  primary_publication_counter_increment: 1
+  exact_binary_proof: PENDING
+
+version_chain:
+  state: CURRENT_EDITION_2026_08_24_EFFECTIVE_2026_09_01_VERSION_CHAIN_PARTIAL
+  current_revision_effective_from: "2026-09-01"
+  events:
+    - act: "Постановление Правительства РФ от 20.11.2018 № 1391"
+      publication_id: "0001201811230008"
+    - act: "Постановление Правительства РФ от 28.05.2019 № 673"
+      publication_id: null
+      exact_primary_locator_closure: PENDING
+    - act: "Постановление Правительства РФ от 16.06.2021 № 914"
+      publication_id: null
+      state: HISTORICAL_TEMPORARY_SUSPENSION_LATER_REPEALED
+    - act: "Постановление Правительства РФ от 28.03.2022 № 498"
+      publication_id: "0001202203300002"
+    - act: "Постановление Правительства РФ от 24.08.2026 № 1066"
+      publication_id: "0001202608250032"
+      publication_date: "2026-08-25"
+      effective_from: "2026-09-01"
+      effect: "updates service-class wording in points 5 and 6; six-month numeric content-retention rule unchanged"
+
+normative_findings:
+  - "Point 5: enumerated communications operators/services store voice information and text messages in full for 6 months from end of receipt/transmission/delivery/processing."
+  - "Point 8: automatic deletion operates from the maximum permissible 6-month message-storage period."
+  - "Point 6: 30 days is a storage-capacity sizing baseline, not message retention."
+  - "Point 6: +15% annually for 5 years is capacity growth, not retention."
+  - "Point 7: storage facilities and stored information require protection against unauthorized access."
+  - "Point 2: specified public TV/radio and registered audiovisual-service traffic is stored at zero volume."
+
+retention:
+  universal_pdn_retention: false
+  communications_content_rules:
+    - scope: "point 5 enumerated service classes / voice information and text messages"
+      period: "6 months"
+    - scope: "point 8 automatic deletion of communications messages"
+      period: "maximum permissible 6 months"
+  non_retention_numeric_values:
+    - "30 days = point 6 capacity-sizing baseline"
+    - "15% annually for 5 years = point 6 capacity-growth schedule"
+  guards:
+    - "PP445_CONTENT_RETENTION_NOT_UNIVERSAL_PDN_RETENTION"
+    - "DO_NOT_COLLAPSE_WITH_FZ126_ART64_3_YEAR_COMMUNICATIONS_FACTS_RETENTION"
+    - "MESSAGE_TYPE_NOT_AUTOMATIC_PDN"
+    - "COMMUNICATIONS_SECRECY_REQUIRES_PRIMARY_RULE_OBJECT_MATCH"
+
+relationships:
+  reconciled:
+    - "PP 445 -> 126-FZ Article 64 / direct implementing content-storage act"
+    - "PP 445 -> 126-FZ Article 63 / communications-secrecy overlap"
+    - "PP 445 -> 152-FZ / conditional PDN overlap only"
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+
+acquisition:
+  exact_binary_attempted: true
+  attempted_at: "2026-09-01T05:18:21+03:00"
+  targets:
+    - publication_id: "0001201804190032"
+      act: "PP 445 original"
+      result: DNS_RESOLUTION_FAILURE
+    - publication_id: "0001202608250032"
+      act: "PP 1066 current amendment"
+      result: DNS_RESOLUTION_FAILURE
+  error_class: NameResolutionError
+  exact_bytes_obtained: false
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+  immutable_promotions: 0
+  retry_class: TRANSIENT
+
+counter_delta_this_pass:
+  found: 1
+  downloaded: 0
+  immutable: 0
+  pending: 1
+  reused: 0
+  primary_publication_verified: 1
+
+capture_ledger_reconciliation:
+  authoritative_file: "security-corpora/RU/protected-information/SECTOR_ACQUISITION_RUN.json"
+  targets_with_official_publication_id: 22
+  raw_downloaded_exact: 22
+  immutable_sha256_verified: 22
+  pending_inside_that_capture_scope: 0
+  changed_this_pass: false
+  note: "Discovery/capture backlog and the narrow exact-acquisition ledger are intentionally separate scopes."
+
+files_written:
+  - "security-corpora/RU/protected-information/source/SEC-SRC-RU-PP-445-2018.yaml"
+  - "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-PP-445-2018-capture-pending.json"
+  - "security-corpora/RU/protected-information/RU_PROTECTED_INFORMATION_MASTER_SOURCE_INVENTORY_DELTA_STREAM3_2026-09-01T0218Z.yaml"
+  - "security-corpora/RU/152-FZ/PDN_MASTER_SOURCE_INVENTORY_DELTA_STREAM3_2026-09-01T0218Z.yaml"
+  - "security-knowledge/corpus/ru-protected-information/stream-3-run-2026-09-01T0518.yaml"
+
+quality_gates:
+  taxonomy_as_evidence: false
+  primary_publication_identity_verified: true
+  current_version_crosschecked: true
+  exact_bytes_captured: false
+  applicability_invented: false
+  protected_secret_category_invented: false
+  fabricated_binary_metadata: false
+  downloaded_increment_without_bytes: false
+  immutable_increment_without_hash: false
+  universal_retention_inferred: false
+  duplicate_source_created: false
+
+next_actions:
+  - "Retry exact official bytes for PP 445 and current amendment 1066/2026; compute MIME, byte length and SHA-256 only after successful capture."
+  - "Complete exact primary version-locator closure for PP 673/2019 and historical PP 914/2021 before VERSION_CHAIN_VERIFIED promotion."
+  - "Continue communications-sector subordinate-act discovery, then resume finance, healthcare, education/children, advertising/marketing and archive-retention proof-floor expansion."
