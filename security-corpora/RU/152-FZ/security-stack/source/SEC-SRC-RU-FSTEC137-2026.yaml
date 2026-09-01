@@ -1,4 +1,4 @@
-schema_version: "1.1"
+schema_version: "1.2"
 id: SEC-SRC-RU-FSTEC137-2026
 kind: security-regulatory-source
 status: METADATA_VERIFIED
@@ -21,12 +21,14 @@ document:
   deferred_effective_provision:
     locator: "пункт 7 приложения"
     effective_from: "2027-03-01"
-  checked_at: "2026-08-25"
-  temporal_status: ADOPTED_REGISTERED_PUBLISHED_NOT_YET_EFFECTIVE
+  checked_at: "2026-09-01"
+  temporal_status: EFFECTIVE_WITH_DEFERRED_PROVISION_2027_03_01
   version_chain_note: >-
-    Приказ № 137 является опубликованным и зарегистрированным изменяющим актом к приказу ФСТЭК № 117.
-    На дату проверки 25.08.2026 основная часть еще не вступила в силу: применять изменения как действующую
-    редакцию до 01.09.2026 нельзя; пункт 7 приложения отложен до 01.03.2027.
+    Приказ № 137 зарегистрирован Минюстом, официально опубликован и с 01.09.2026 применяется как
+    действующее изменение к приказу ФСТЭК № 117. При этом пункт 7 приложения остается отдельной
+    будущей частью version-chain и не применяется до 01.03.2027. Переход состояния выполнен по
+    ранее доказанной цепочке издания, регистрации, официального опубликования и установленной дате
+    вступления в силу; повторная загрузка уже сохраненного immutable PDF для этой смены статуса не требуется.
 canonical_source:
   publisher: "Официальный интернет-портал правовой информации"
   landing_page: "https://publication.pravo.gov.ru/document/0001202608110006"
@@ -35,8 +37,8 @@ canonical_source:
   exact_file_route_status: VERIFIED_CAPTURED
   acquisition_priority: RESOLVED_IMMUTABLE_CAPTURE
   freshness_check:
-    checked_at: "2026-08-25"
-    result: FUTURE_EFFECTIVE_STATUS_RECONFIRMED
+    checked_at: "2026-09-01"
+    result: EFFECTIVE_FROM_2026_09_01_WITH_POINT7_DEFERRED_TO_2027_03_01
 capture:
   raw_artifact_ref: "security-corpora/RU/152-FZ/security-stack/raw/SEC-SRC-RU-FSTEC137-2026/0001202608110006-eea32d569889ed57.pdf"
   manifest_ref: "security-corpora/RU/152-FZ/security-stack/manifests/SEC-SRC-RU-FSTEC137-2026.json"
@@ -48,7 +50,7 @@ capture:
   sha256: "eea32d569889ed57e9b7081b3a69fd31e44d0422d23349fefa3521427401c61a"
   fingerprint_status: IMMUTABLE_CAPTURED
   semantic_status: UNCHANGED
-  note: "Exact bytes from the registered official route captured; extraction/semantic status is not promoted."
+  note: "Existing exact official bytes remain valid; this pass changes temporal state only."
 relations:
   - type: AMENDS
     target: SEC-SRC-RU-FSTEC117-2025
@@ -62,6 +64,7 @@ applicability_guard:
     Reuse only where an ISPDn is simultaneously within the systems covered by Order 117 (for example, a relevant
     state/public information system). The existence of a private ISPDn alone does not make Order 117 or Order 137 applicable.
   generic_private_ispdn: NOT_APPLICABLE_FROM_ISPDN_STATUS_ALONE
+  deferred_point7_rule: "Do not apply Appendix point 7 before 2027-03-01."
   no_requirement_propagation: >-
     Do not copy public-sector controls, reporting periods, maturity requirements or authentication requirements into a
     generic private-sector PDN baseline without an independent applicability edge.
@@ -69,16 +72,17 @@ provenance:
   official_route_registered_from_publication_identifier: true
   official_publication_id_verified: true
   minjust_registration_cross_verified: true
-  future_effective_date_cross_verified: true
+  effective_date_verified: true
+  effective_state_transition_checked_at: "2026-09-01"
   exact_official_bytes_captured: true
   exact_official_artifact_pending: false
   manifest_proof_consistent: true
   review_required: true
 agent_rule: >-
-  Treat Order 137 as a proven future-effective version-chain dependency of Order 117, not as a current generic PDN rule.
-  Before 01.09.2026 retain Order 117 without these amendments as the acting baseline; after that date re-run the temporal
-  status gate. Preserve the 01.03.2027 deferred date for point 7 separately. The immutable artifact is already captured;
-  do not regress it to PENDING or claim a new download during status-only refreshes.
+  From 01.09.2026 treat Order 137 as an effective amendment to Order 117 only inside the state/enumerated-public-system
+  applicability scope. Preserve Appendix point 7 as future-effective until 01.03.2027. Do not propagate Order 117/137
+  requirements into a generic private ISPDN merely because personal data are processed. Reuse the existing immutable
+  publication artifact; do not claim a new download during this status-only transition.
 inventory_registration:
-  role: fstec117_future_version_chain_dependency
+  role: fstec117_current_amendment_with_deferred_2027_provision
   applicability: STATE_AND_ENUMERATED_PUBLIC_SYSTEMS_ONLY
