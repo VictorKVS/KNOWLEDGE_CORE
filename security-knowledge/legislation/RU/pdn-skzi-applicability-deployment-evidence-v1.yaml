@@ -1,0 +1,712 @@
+{
+  "id": "RU-PDN-SKZI-APPLICABILITY-DEPLOYMENT-EVIDENCE-V1",
+  "as_of": "2026-09-01",
+  "status": "VERIFIED_NORMATIVE_APPLICABILITY_AND_DEPLOYMENT_EVIDENCE_MODEL",
+  "title": "Применимость СКЗИ в ИСПДн и доказательная связь продукта, лицензии и эксплуатации",
+  "sources": [
+    {
+      "provision": "Федеральный закон №152-ФЗ, статья 18.1",
+      "revision": "актуальный текст проверен 01.09.2026",
+      "url": "https://www.consultant.ru/document/cons_doc_LAW_61801/eeeebe22bf738fd65bb66b95cc278911ae2525ee/",
+      "use": "operator accountability and necessary-and-sufficient measures"
+    },
+    {
+      "provision": "Федеральный закон №152-ФЗ, статья 19",
+      "revision": "включая изменения №233-ФЗ; проверено 01.09.2026",
+      "url": "https://www.consultant.ru/document/cons_doc_LAW_61801/ca9e5658710519f09ab2fdb8196fcb3eb024a051/",
+      "use": "security measures, conformity-assessed protection means and effectiveness assessment"
+    },
+    {
+      "provision": "Постановление Правительства РФ от 01.11.2012 №1119",
+      "revision": "действующий текст проверен 01.09.2026",
+      "url": "https://www.consultant.ru/document/cons_doc_LAW_137356/8c86cf6357879e861790a8a7ca8bea4227d56c72/",
+      "use": "protection levels and conditional use of conformity-assessed protection means when needed to neutralize actual threats"
+    },
+    {
+      "provision": "Приказ ФСБ России от 10.07.2014 №378",
+      "revision": "ред. от 10.07.2014; действует с 28.09.2014",
+      "url": "https://normativ.kontur.ru/document?documentId=240493&moduleId=1",
+      "use": "measures for ISPDn where cryptographic protection means are used"
+    },
+    {
+      "provision": "Приказ ФСТЭК России от 18.02.2013 №21",
+      "revision": "ред. от 14.05.2020",
+      "url": "https://www.consultant.ru/document/cons_doc_LAW_146520/",
+      "use": "non-cryptographic organisational and technical PDn protection-measure route"
+    },
+    {
+      "provision": "Постановление Правительства РФ от 16.04.2012 №313",
+      "revision": "ред. от 28.08.2023",
+      "url": "https://www.consultant.ru/document/cons_doc_LAW_128739/1aad6fe079cd2555c9c329d872dfca33764f738f/",
+      "use": "separate licensed-activity route for cryptographic works and services"
+    },
+    {
+      "provision": "ЦЛСЗ ФСБ России: сведения по сертификации",
+      "revision": "official route checked 01.09.2026; direct transport timed out",
+      "url": "https://clsz.fsb.ru/clsz/certification.htm",
+      "use": "separate evidence route for FSB-certified protection means"
+    }
+  ],
+  "scope_boundary": "The model determines evidence gates when SKZI is selected or found in an ISPDn. It does not impose encryption on every ISPDn, approve a concrete product, or conclude that a licence is required or not required without the actual activity and actor.",
+  "regime_separation": {
+    "operator_obligation": "152-FZ, PP 1119 and applicable FSTEC/FSB measures",
+    "skzi_measures": "Order 378 when SKZI is used to protect PDn in an ISPDn",
+    "product_conformity": "exact FSB product-certification or conformity evidence",
+    "licensed_activity": "PP 313 exact works performed by an identified actor",
+    "operational_compliance": "keys, media, premises, access, journals, checks and product documentation",
+    "boundary": "Each route requires its own evidence."
+  },
+  "applicability_gates": [
+    {
+      "id": "AG01",
+      "question": "Is the system an ISPDn and are the relevant personal-data processing operations in scope?",
+      "fail_state": "NOT_THIS_MODEL_OR_SCOPE_REVIEW"
+    },
+    {
+      "id": "AG02",
+      "question": "What protection level and actual threat types are supported by the current system and threat-model evidence?",
+      "fail_state": "EVIDENCE_PENDING"
+    },
+    {
+      "id": "AG03",
+      "question": "Is cryptographic protection selected and actually used to protect PDn in this system?",
+      "fail_state": "NO_ORDER_378_APPLICABILITY_ASSERTED"
+    },
+    {
+      "id": "AG04",
+      "question": "Is the selected protection means necessary for neutralizing documented actual threats or required by another applicable rule?",
+      "fail_state": "DESIGN_JUSTIFICATION_PENDING"
+    },
+    {
+      "id": "AG05",
+      "question": "Does the exact SKZI product, version, configuration and certificate scope match the deployment?",
+      "fail_state": "PRODUCT_EVIDENCE_PENDING"
+    },
+    {
+      "id": "AG06",
+      "question": "Which person performs each installation, maintenance, transfer, key or cryptographic service and for whose benefit?",
+      "fail_state": "ACTIVITY_AND_ACTOR_PENDING"
+    },
+    {
+      "id": "AG07",
+      "question": "Where a PP 313 licensed work is performed, does the actor's FSB licence contain the exact work and relevant scope?",
+      "fail_state": "LICENCE_SCOPE_PENDING"
+    },
+    {
+      "id": "AG08",
+      "question": "Are Order 378 measures, operational documents, keys, media, access, journals and control evidence implemented?",
+      "fail_state": "IMPLEMENTATION_EVIDENCE_PENDING"
+    }
+  ],
+  "order_378_class_mapping": [
+    {
+      "protection_level": 4,
+      "actual_threat_type": "MODEL_AND_CAPABILITY_ASSUMPTIONS_REQUIRED",
+      "minimum_skzi_class": "KS1_OR_HIGHER",
+      "source_clause": "Order 378 points 9-15",
+      "boundary": "not a universal encryption mandate"
+    },
+    {
+      "protection_level": 3,
+      "actual_threat_type": 2,
+      "minimum_skzi_class": "KV_OR_HIGHER",
+      "source_clause": "Order 378 point 18"
+    },
+    {
+      "protection_level": 3,
+      "actual_threat_type": 3,
+      "minimum_skzi_class": "KS1_OR_HIGHER",
+      "source_clause": "Order 378 point 18"
+    },
+    {
+      "protection_level": 2,
+      "actual_threat_type": 1,
+      "minimum_skzi_class": "KA",
+      "source_clause": "Order 378 point 21"
+    },
+    {
+      "protection_level": 2,
+      "actual_threat_type": 2,
+      "minimum_skzi_class": "KV_OR_HIGHER",
+      "source_clause": "Order 378 point 21"
+    },
+    {
+      "protection_level": 2,
+      "actual_threat_type": 3,
+      "minimum_skzi_class": "KS1_OR_HIGHER",
+      "source_clause": "Order 378 point 21"
+    },
+    {
+      "protection_level": 1,
+      "actual_threat_type": 1,
+      "minimum_skzi_class": "KA",
+      "source_clause": "Order 378 point 26"
+    },
+    {
+      "protection_level": 1,
+      "actual_threat_type": 2,
+      "minimum_skzi_class": "KV_OR_HIGHER",
+      "source_clause": "Order 378 point 26"
+    }
+  ],
+  "order_378_level_measures": {
+    "UZ4": [
+      "controlled access to premises containing SKZI or key, authentication and password information",
+      "removable-media storage rule and item-by-item media accounting",
+      "approved and current list of persons whose PDn access is needed for duties",
+      "attack-capability assumptions approved by the operator head",
+      "SKZI operation under product documentation and applicable rules"
+    ],
+    "UZ3": [
+      "all applicable UZ4 measures",
+      "appoint a sufficiently skilled official responsible for PDn security in the information system"
+    ],
+    "UZ2": [
+      "all applicable UZ3 measures",
+      "approve and maintain list of persons admitted to electronic message-journal content",
+      "automatically register PDn requests and provision events",
+      "exclude journal access by other persons",
+      "check journal-control mechanisms at least once every six months"
+    ],
+    "UZ1": [
+      "all applicable UZ2 measures",
+      "automatically register changes to employee PDn-access powers in the security journal",
+      "ensure journal powers correspond to job duties",
+      "control security-journal maintenance at least once every month",
+      "analyse whether a separate responsible unit is appropriate and create one or assign its functions",
+      "additional physical-protection measures for specified room windows and doors"
+    ]
+  },
+  "deployment_joins": {
+    "system": [
+      "system identifier",
+      "ISPDn boundary",
+      "operator",
+      "processing purposes",
+      "PDn categories and subjects",
+      "protection level",
+      "threat-model version and actual threat types"
+    ],
+    "product": [
+      "SKZI product name",
+      "version",
+      "configuration",
+      "platform",
+      "certificate or conformity record",
+      "valid-time and certified scope",
+      "operational documentation"
+    ],
+    "activity": [
+      "actual work or service",
+      "PP 313 work identifier if applicable",
+      "performer",
+      "beneficiary",
+      "contract role",
+      "place",
+      "own-needs facts"
+    ],
+    "licence": [
+      "licensing authority",
+      "registration number",
+      "licensee identity",
+      "exact licensed works",
+      "places",
+      "status",
+      "effective interval",
+      "signed extract or immutable record"
+    ],
+    "operation": [
+      "key lifecycle",
+      "media register",
+      "access lists",
+      "premises controls",
+      "event journals",
+      "periodic checks",
+      "incidents",
+      "changes and recertification triggers"
+    ],
+    "boundary": "No VERIFIED deployment result is issued from a product name, licence existence, protection level or policy statement alone."
+  },
+  "stages": [
+    "establish ISPDn scope, operator, processing and protection level",
+    "verify the threat model and actual threat types",
+    "discover actual cryptographic use and document the necessity decision",
+    "select and verify the SKZI class from threat type and attacker-capability assumptions",
+    "match exact certified product, version, configuration, platform and valid-time",
+    "classify actual PP 313 works, performers, beneficiaries, places and exceptions",
+    "match any required FSB licence scope and historical interval",
+    "verify Order 378 operational measures and issue VERIFIED, NOT_APPLICABLE, PENDING or CONFLICT with reasons"
+  ],
+  "red_team_attacks": [
+    {
+      "id": "RT01",
+      "attack": "declare encryption or SKZI mandatory for every ISPDn",
+      "blocked_by": "Order 378 applicability requires actual SKZI use; PP 1119 ties evaluated protection means to documented threat-neutralization necessity",
+      "blocked": true
+    },
+    {
+      "id": "RT02",
+      "attack": "declare Order 378 irrelevant merely because no formal crypto policy was found",
+      "blocked_by": "actual architecture, traffic, storage, keys and product inventory must be checked",
+      "blocked": true
+    },
+    {
+      "id": "RT03",
+      "attack": "select a SKZI class from protection level alone",
+      "blocked_by": "actual threat type and approved attack-capability assumptions are required",
+      "blocked": true
+    },
+    {
+      "id": "RT04",
+      "attack": "treat KS1, KV or KA as interchangeable product marketing labels",
+      "blocked_by": "authority-native class and certificate scope must be verified",
+      "blocked": true
+    },
+    {
+      "id": "RT05",
+      "attack": "treat any FSB-certified product as suitable for any version, platform and threat model",
+      "blocked_by": "exact product identity, configuration, class and certificate valid-time must match",
+      "blocked": true
+    },
+    {
+      "id": "RT06",
+      "attack": "treat possession or routine use of SKZI as proof that the operator needs every PP 313 licensed work",
+      "blocked_by": "actual activity, performer, beneficiary and exceptions are analyzed separately",
+      "blocked": true
+    },
+    {
+      "id": "RT07",
+      "attack": "treat a contractor's FSB licence as covering installation, maintenance, transfer and keys automatically",
+      "blocked_by": "exact PP 313 work identifiers and licence scope must intersect the contract",
+      "blocked": true
+    },
+    {
+      "id": "RT08",
+      "attack": "apply the own-needs maintenance exception to a contractor serving customers",
+      "blocked_by": "beneficiary and contractual facts must satisfy the exception",
+      "blocked": true
+    },
+    {
+      "id": "RT09",
+      "attack": "treat an encrypted removable medium as exempt from accounting",
+      "blocked_by": "Order 378 still requires item-by-item media accounting",
+      "blocked": true
+    },
+    {
+      "id": "RT10",
+      "attack": "convert the six-month or monthly control interval into a universal control frequency for all measures",
+      "blocked_by": "each frequency remains attached to its specified journal-control measure and level",
+      "blocked": true
+    },
+    {
+      "id": "RT11",
+      "attack": "treat a certificate and licence as evidence that keys, access lists and journals are properly operated",
+      "blocked_by": "deployment and operational evidence remain independent",
+      "blocked": true
+    },
+    {
+      "id": "RT12",
+      "attack": "declare compliance when threat, product, licence or historical evidence is missing",
+      "blocked_by": "missing evidence stays EVIDENCE_PENDING and cannot become NOT_APPLICABLE",
+      "blocked": true
+    }
+  ],
+  "evidence_artifacts": [
+    "ISPDn identity, boundary, operator and current architecture",
+    "processing operations, PDn categories, subject categories and processing purposes",
+    "documented protection level with PP 1119 input facts",
+    "current threat model, actual threat types and source evidence",
+    "approved assumptions about attacker capabilities relevant to the SKZI class",
+    "decision and rationale for using or not using cryptographic protection",
+    "complete cryptographic asset inventory including hidden transport and storage encryption",
+    "exact SKZI product, version, configuration, platform and deployment role",
+    "FSB product-certificate or conformity evidence with validity and scope",
+    "SKZI operational documentation and evidence of compliance with it",
+    "premises, controlled-zone and physical-access evidence",
+    "key, authentication, password and removable-media inventories and custody evidence",
+    "approved and current PDn and journal access lists",
+    "event and security journals plus integrity, retention and access-control evidence",
+    "six-month and monthly checks attached to the applicable Order 378 measures",
+    "actual PP 313 work, performer, beneficiary, contract, place and exception evidence",
+    "FSB licence record or signed extract matched to exact work and historical interval",
+    "final applicability, class, deployment and operational decision with pending/conflict reasons"
+  ],
+  "evidence_nodes": [
+    {
+      "id": "EV-01",
+      "claim": "ISPDn identity, boundary, operator and current architecture",
+      "state": "EVIDENCE_REQUIRED"
+    },
+    {
+      "id": "EV-02",
+      "claim": "processing operations, PDn categories, subject categories and processing purposes",
+      "state": "EVIDENCE_REQUIRED"
+    },
+    {
+      "id": "EV-03",
+      "claim": "documented protection level with PP 1119 input facts",
+      "state": "EVIDENCE_REQUIRED"
+    },
+    {
+      "id": "EV-04",
+      "claim": "current threat model, actual threat types and source evidence",
+      "state": "EVIDENCE_REQUIRED"
+    },
+    {
+      "id": "EV-05",
+      "claim": "approved assumptions about attacker capabilities relevant to the SKZI class",
+      "state": "EVIDENCE_REQUIRED"
+    },
+    {
+      "id": "EV-06",
+      "claim": "decision and rationale for using or not using cryptographic protection",
+      "state": "EVIDENCE_REQUIRED"
+    },
+    {
+      "id": "EV-07",
+      "claim": "complete cryptographic asset inventory including hidden transport and storage encryption",
+      "state": "EVIDENCE_REQUIRED"
+    },
+    {
+      "id": "EV-08",
+      "claim": "exact SKZI product, version, configuration, platform and deployment role",
+      "state": "EVIDENCE_REQUIRED"
+    },
+    {
+      "id": "EV-09",
+      "claim": "FSB product-certificate or conformity evidence with validity and scope",
+      "state": "EVIDENCE_REQUIRED"
+    },
+    {
+      "id": "EV-10",
+      "claim": "SKZI operational documentation and evidence of compliance with it",
+      "state": "EVIDENCE_REQUIRED"
+    },
+    {
+      "id": "EV-11",
+      "claim": "premises, controlled-zone and physical-access evidence",
+      "state": "EVIDENCE_REQUIRED"
+    },
+    {
+      "id": "EV-12",
+      "claim": "key, authentication, password and removable-media inventories and custody evidence",
+      "state": "EVIDENCE_REQUIRED"
+    },
+    {
+      "id": "EV-13",
+      "claim": "approved and current PDn and journal access lists",
+      "state": "EVIDENCE_REQUIRED"
+    },
+    {
+      "id": "EV-14",
+      "claim": "event and security journals plus integrity, retention and access-control evidence",
+      "state": "EVIDENCE_REQUIRED"
+    },
+    {
+      "id": "EV-15",
+      "claim": "six-month and monthly checks attached to the applicable Order 378 measures",
+      "state": "EVIDENCE_REQUIRED"
+    },
+    {
+      "id": "EV-16",
+      "claim": "actual PP 313 work, performer, beneficiary, contract, place and exception evidence",
+      "state": "EVIDENCE_REQUIRED"
+    },
+    {
+      "id": "EV-17",
+      "claim": "FSB licence record or signed extract matched to exact work and historical interval",
+      "state": "EVIDENCE_REQUIRED"
+    },
+    {
+      "id": "EV-18",
+      "claim": "final applicability, class, deployment and operational decision with pending/conflict reasons",
+      "state": "EVIDENCE_REQUIRED"
+    }
+  ],
+  "boundaries": {
+    "no_universal_skzi_mandate": true,
+    "no_policy_absence_as_no_crypto": true,
+    "no_level_only_class_selection": true,
+    "no_marketing_class_substitution": true,
+    "no_family_name_product_match": true,
+    "no_use_as_all_licensed_works": true,
+    "no_licence_as_all_work_scope": true,
+    "no_own_needs_exception_without_facts": true,
+    "no_encrypted_media_accounting_exemption": true,
+    "no_frequency_generalization": true,
+    "no_certificate_or_licence_as_operational_compliance": true,
+    "no_missing_evidence_as_not_applicable": true
+  },
+  "control_rules": [
+    {
+      "id": "PSK-R001",
+      "rule": "FAIL_CLOSED_PDN_SKZI_APPLICABILITY_DEPLOYMENT_EVIDENCE"
+    },
+    {
+      "id": "PSK-R002",
+      "rule": "FAIL_CLOSED_PDN_SKZI_APPLICABILITY_DEPLOYMENT_EVIDENCE"
+    },
+    {
+      "id": "PSK-R003",
+      "rule": "FAIL_CLOSED_PDN_SKZI_APPLICABILITY_DEPLOYMENT_EVIDENCE"
+    },
+    {
+      "id": "PSK-R004",
+      "rule": "FAIL_CLOSED_PDN_SKZI_APPLICABILITY_DEPLOYMENT_EVIDENCE"
+    },
+    {
+      "id": "PSK-R005",
+      "rule": "FAIL_CLOSED_PDN_SKZI_APPLICABILITY_DEPLOYMENT_EVIDENCE"
+    },
+    {
+      "id": "PSK-R006",
+      "rule": "FAIL_CLOSED_PDN_SKZI_APPLICABILITY_DEPLOYMENT_EVIDENCE"
+    },
+    {
+      "id": "PSK-R007",
+      "rule": "FAIL_CLOSED_PDN_SKZI_APPLICABILITY_DEPLOYMENT_EVIDENCE"
+    },
+    {
+      "id": "PSK-R008",
+      "rule": "FAIL_CLOSED_PDN_SKZI_APPLICABILITY_DEPLOYMENT_EVIDENCE"
+    },
+    {
+      "id": "PSK-R009",
+      "rule": "FAIL_CLOSED_PDN_SKZI_APPLICABILITY_DEPLOYMENT_EVIDENCE"
+    },
+    {
+      "id": "PSK-R010",
+      "rule": "FAIL_CLOSED_PDN_SKZI_APPLICABILITY_DEPLOYMENT_EVIDENCE"
+    },
+    {
+      "id": "PSK-R011",
+      "rule": "FAIL_CLOSED_PDN_SKZI_APPLICABILITY_DEPLOYMENT_EVIDENCE"
+    },
+    {
+      "id": "PSK-R012",
+      "rule": "FAIL_CLOSED_PDN_SKZI_APPLICABILITY_DEPLOYMENT_EVIDENCE"
+    },
+    {
+      "id": "PSK-R013",
+      "rule": "FAIL_CLOSED_PDN_SKZI_APPLICABILITY_DEPLOYMENT_EVIDENCE"
+    },
+    {
+      "id": "PSK-R014",
+      "rule": "FAIL_CLOSED_PDN_SKZI_APPLICABILITY_DEPLOYMENT_EVIDENCE"
+    },
+    {
+      "id": "PSK-R015",
+      "rule": "FAIL_CLOSED_PDN_SKZI_APPLICABILITY_DEPLOYMENT_EVIDENCE"
+    },
+    {
+      "id": "PSK-R016",
+      "rule": "FAIL_CLOSED_PDN_SKZI_APPLICABILITY_DEPLOYMENT_EVIDENCE"
+    },
+    {
+      "id": "PSK-R017",
+      "rule": "FAIL_CLOSED_PDN_SKZI_APPLICABILITY_DEPLOYMENT_EVIDENCE"
+    },
+    {
+      "id": "PSK-R018",
+      "rule": "FAIL_CLOSED_PDN_SKZI_APPLICABILITY_DEPLOYMENT_EVIDENCE"
+    },
+    {
+      "id": "PSK-R019",
+      "rule": "FAIL_CLOSED_PDN_SKZI_APPLICABILITY_DEPLOYMENT_EVIDENCE"
+    },
+    {
+      "id": "PSK-R020",
+      "rule": "FAIL_CLOSED_PDN_SKZI_APPLICABILITY_DEPLOYMENT_EVIDENCE"
+    },
+    {
+      "id": "PSK-R021",
+      "rule": "FAIL_CLOSED_PDN_SKZI_APPLICABILITY_DEPLOYMENT_EVIDENCE"
+    },
+    {
+      "id": "PSK-R022",
+      "rule": "FAIL_CLOSED_PDN_SKZI_APPLICABILITY_DEPLOYMENT_EVIDENCE"
+    },
+    {
+      "id": "PSK-R023",
+      "rule": "FAIL_CLOSED_PDN_SKZI_APPLICABILITY_DEPLOYMENT_EVIDENCE"
+    },
+    {
+      "id": "PSK-R024",
+      "rule": "FAIL_CLOSED_PDN_SKZI_APPLICABILITY_DEPLOYMENT_EVIDENCE"
+    },
+    {
+      "id": "PSK-R025",
+      "rule": "FAIL_CLOSED_PDN_SKZI_APPLICABILITY_DEPLOYMENT_EVIDENCE"
+    },
+    {
+      "id": "PSK-R026",
+      "rule": "FAIL_CLOSED_PDN_SKZI_APPLICABILITY_DEPLOYMENT_EVIDENCE"
+    },
+    {
+      "id": "PSK-R027",
+      "rule": "FAIL_CLOSED_PDN_SKZI_APPLICABILITY_DEPLOYMENT_EVIDENCE"
+    },
+    {
+      "id": "PSK-R028",
+      "rule": "FAIL_CLOSED_PDN_SKZI_APPLICABILITY_DEPLOYMENT_EVIDENCE"
+    },
+    {
+      "id": "PSK-R029",
+      "rule": "FAIL_CLOSED_PDN_SKZI_APPLICABILITY_DEPLOYMENT_EVIDENCE"
+    },
+    {
+      "id": "PSK-R030",
+      "rule": "FAIL_CLOSED_PDN_SKZI_APPLICABILITY_DEPLOYMENT_EVIDENCE"
+    },
+    {
+      "id": "PSK-R031",
+      "rule": "FAIL_CLOSED_PDN_SKZI_APPLICABILITY_DEPLOYMENT_EVIDENCE"
+    },
+    {
+      "id": "PSK-R032",
+      "rule": "FAIL_CLOSED_PDN_SKZI_APPLICABILITY_DEPLOYMENT_EVIDENCE"
+    },
+    {
+      "id": "PSK-R033",
+      "rule": "FAIL_CLOSED_PDN_SKZI_APPLICABILITY_DEPLOYMENT_EVIDENCE"
+    },
+    {
+      "id": "PSK-R034",
+      "rule": "FAIL_CLOSED_PDN_SKZI_APPLICABILITY_DEPLOYMENT_EVIDENCE"
+    },
+    {
+      "id": "PSK-R035",
+      "rule": "FAIL_CLOSED_PDN_SKZI_APPLICABILITY_DEPLOYMENT_EVIDENCE"
+    },
+    {
+      "id": "PSK-R036",
+      "rule": "FAIL_CLOSED_PDN_SKZI_APPLICABILITY_DEPLOYMENT_EVIDENCE"
+    },
+    {
+      "id": "PSK-R037",
+      "rule": "FAIL_CLOSED_PDN_SKZI_APPLICABILITY_DEPLOYMENT_EVIDENCE"
+    },
+    {
+      "id": "PSK-R038",
+      "rule": "FAIL_CLOSED_PDN_SKZI_APPLICABILITY_DEPLOYMENT_EVIDENCE"
+    },
+    {
+      "id": "PSK-R039",
+      "rule": "FAIL_CLOSED_PDN_SKZI_APPLICABILITY_DEPLOYMENT_EVIDENCE"
+    },
+    {
+      "id": "PSK-R040",
+      "rule": "FAIL_CLOSED_PDN_SKZI_APPLICABILITY_DEPLOYMENT_EVIDENCE"
+    },
+    {
+      "id": "PSK-R041",
+      "rule": "FAIL_CLOSED_PDN_SKZI_APPLICABILITY_DEPLOYMENT_EVIDENCE"
+    },
+    {
+      "id": "PSK-R042",
+      "rule": "FAIL_CLOSED_PDN_SKZI_APPLICABILITY_DEPLOYMENT_EVIDENCE"
+    },
+    {
+      "id": "PSK-R043",
+      "rule": "FAIL_CLOSED_PDN_SKZI_APPLICABILITY_DEPLOYMENT_EVIDENCE"
+    },
+    {
+      "id": "PSK-R044",
+      "rule": "FAIL_CLOSED_PDN_SKZI_APPLICABILITY_DEPLOYMENT_EVIDENCE"
+    },
+    {
+      "id": "PSK-R045",
+      "rule": "FAIL_CLOSED_PDN_SKZI_APPLICABILITY_DEPLOYMENT_EVIDENCE"
+    },
+    {
+      "id": "PSK-R046",
+      "rule": "FAIL_CLOSED_PDN_SKZI_APPLICABILITY_DEPLOYMENT_EVIDENCE"
+    },
+    {
+      "id": "PSK-R047",
+      "rule": "FAIL_CLOSED_PDN_SKZI_APPLICABILITY_DEPLOYMENT_EVIDENCE"
+    },
+    {
+      "id": "PSK-R048",
+      "rule": "FAIL_CLOSED_PDN_SKZI_APPLICABILITY_DEPLOYMENT_EVIDENCE"
+    },
+    {
+      "id": "PSK-R049",
+      "rule": "FAIL_CLOSED_PDN_SKZI_APPLICABILITY_DEPLOYMENT_EVIDENCE"
+    },
+    {
+      "id": "PSK-R050",
+      "rule": "FAIL_CLOSED_PDN_SKZI_APPLICABILITY_DEPLOYMENT_EVIDENCE"
+    },
+    {
+      "id": "PSK-R051",
+      "rule": "FAIL_CLOSED_PDN_SKZI_APPLICABILITY_DEPLOYMENT_EVIDENCE"
+    },
+    {
+      "id": "PSK-R052",
+      "rule": "FAIL_CLOSED_PDN_SKZI_APPLICABILITY_DEPLOYMENT_EVIDENCE"
+    },
+    {
+      "id": "PSK-R053",
+      "rule": "FAIL_CLOSED_PDN_SKZI_APPLICABILITY_DEPLOYMENT_EVIDENCE"
+    },
+    {
+      "id": "PSK-R054",
+      "rule": "FAIL_CLOSED_PDN_SKZI_APPLICABILITY_DEPLOYMENT_EVIDENCE"
+    },
+    {
+      "id": "PSK-R055",
+      "rule": "FAIL_CLOSED_PDN_SKZI_APPLICABILITY_DEPLOYMENT_EVIDENCE"
+    },
+    {
+      "id": "PSK-R056",
+      "rule": "FAIL_CLOSED_PDN_SKZI_APPLICABILITY_DEPLOYMENT_EVIDENCE"
+    },
+    {
+      "id": "PSK-R057",
+      "rule": "FAIL_CLOSED_PDN_SKZI_APPLICABILITY_DEPLOYMENT_EVIDENCE"
+    },
+    {
+      "id": "PSK-R058",
+      "rule": "FAIL_CLOSED_PDN_SKZI_APPLICABILITY_DEPLOYMENT_EVIDENCE"
+    },
+    {
+      "id": "PSK-R059",
+      "rule": "FAIL_CLOSED_PDN_SKZI_APPLICABILITY_DEPLOYMENT_EVIDENCE"
+    },
+    {
+      "id": "PSK-R060",
+      "rule": "FAIL_CLOSED_PDN_SKZI_APPLICABILITY_DEPLOYMENT_EVIDENCE"
+    },
+    {
+      "id": "PSK-R061",
+      "rule": "FAIL_CLOSED_PDN_SKZI_APPLICABILITY_DEPLOYMENT_EVIDENCE"
+    },
+    {
+      "id": "PSK-R062",
+      "rule": "FAIL_CLOSED_PDN_SKZI_APPLICABILITY_DEPLOYMENT_EVIDENCE"
+    },
+    {
+      "id": "PSK-R063",
+      "rule": "FAIL_CLOSED_PDN_SKZI_APPLICABILITY_DEPLOYMENT_EVIDENCE"
+    },
+    {
+      "id": "PSK-R064",
+      "rule": "FAIL_CLOSED_PDN_SKZI_APPLICABILITY_DEPLOYMENT_EVIDENCE"
+    }
+  ],
+  "counts": {
+    "sources": 7,
+    "regime_routes": 5,
+    "applicability_gates": 8,
+    "class_mapping_rows": 8,
+    "protection_levels": 4,
+    "deployment_join_groups": 5,
+    "stages": 8,
+    "red_team_attacks": 12,
+    "evidence_artifacts": 18,
+    "evidence_nodes": 18,
+    "control_rules": 64,
+    "regression_cases": 64
+  }
+}
