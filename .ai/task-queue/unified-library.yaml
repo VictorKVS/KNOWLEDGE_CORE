@@ -72,6 +72,24 @@ priority_tasks:
       - byte-identical SHA-256 payloads share one physical artifact but preserve every alias
       - same identity with different hash and same claimed version triggers review rather than silent collapse
 
+  - task_id: LIB-UNIFY-LIFECYCLE-005B
+    priority: P0
+    lane: legal_applicability
+    title: Build evidence-backed lifecycle flags and change chains
+    dependencies:
+      - LIB-UNIFY-IDENTITY-003
+      - LIB-UNIFY-REPRESENTATIONS-005
+    acceptance:
+      - read .ai/document-lifecycle-state.yaml
+      - assign lifecycle_state separately from version_state and change_flags
+      - build explicit amendment repeal replacement suspension extension and correction relations
+      - preserve whole-document versus partial/provision scope
+      - prove transition effective dates from sufficient evidence or keep UNKNOWN/REVIEW_REQUIRED
+      - future amendment/replacement must not replace current baseline before proven effective date
+      - do not infer repeal solely from successor/replacement language
+      - retain historical and superseded versions
+      - record status_checked_at and evidence_refs for every authoritative current-state claim
+
   - task_id: LIB-UNIFY-RIGHTS-006
     priority: P0
     lane: qa_guard
@@ -92,13 +110,16 @@ priority_tasks:
       - LIB-UNIFY-IDENTITY-003
       - LIB-UNIFY-CLASSIFY-004
       - LIB-UNIFY-REPRESENTATIONS-005
+      - LIB-UNIFY-LIFECYCLE-005B
       - LIB-UNIFY-RIGHTS-006
     acceptance:
       - reconcile one logical document identity across all collections
       - retain all version/edition and representation links
       - retain every physical location alias
+      - retain lifecycle state change flags and transition edges with evidence
       - derive counters from canonical state
       - document_count is separate from representation_count
+      - lifecycle counters are derived from reconciled state, not hand-edited
       - no protected repository surface is moved by this task
 
   - task_id: LIB-UNIFY-QA-008
@@ -111,10 +132,13 @@ priority_tasks:
       - sample and verify hashes and alias mappings
       - verify PDF/ODT preservation
       - verify version conflicts were not silently collapsed
+      - verify lifecycle flags against transition evidence
+      - verify partial repeal/replacement did not incorrectly mark whole document repealed
+      - verify future changes did not prematurely switch current baseline
       - verify security-knowledge and professional-knowledge ownership boundaries
       - verify source libraries remain intact
       - verify metrics are reproducible from catalog state
-      - report blockers and unresolved identities
+      - report blockers and unresolved identities/statuses
 
 completion_report:
   required_fields:
@@ -127,6 +151,14 @@ completion_report:
     - representations
     - representations_by_format
     - canonical_links
+    - lifecycle_state_counts
+    - documents_with_amendments
+    - documents_with_pending_changes
+    - repealed_documents
+    - partially_repealed_documents
+    - replacement_relations
+    - unresolved_statuses
+    - status_review_required
     - unresolved_identities
     - unresolved_version_conflicts
     - failed_or_unreadable_files
