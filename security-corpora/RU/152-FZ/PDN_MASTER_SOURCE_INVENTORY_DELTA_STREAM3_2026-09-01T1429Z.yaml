@@ -1,0 +1,82 @@
+schema_version: "1.0"
+id: PDN-MASTER-SOURCE-INVENTORY-DELTA-STREAM3-2026-09-01T1429Z
+kind: pdn_master_inventory_sector_overlay_delta
+stream: 3
+checked_at: "2026-09-01T17:29:08+03:00"
+
+source_overlay:
+  id: SEC-SRC-RU-CBR-808-P-2022
+  document: "Положение Банка России от 17.10.2022 № 808-П"
+  role: bki_information_security_access_logging_incident_and_retention_overlay
+  canonical_record: "../protected-information/source/SEC-SRC-RU-CBR-808-P-2022.yaml"
+  metadata_status: PRIMARY_OFFICIAL_ACT_VERIFIED_CURRENT_ORIGINAL_EDITION_CROSSCHECKED
+  primary_official_source: "https://cbr.ru/Queries/XsltBlock/File/105012/-1/2394"
+  raw_capture: PENDING
+  verified_for_exact_extraction: false
+  applicability: CONDITIONAL_PDN_SECURITY_OVERLAP_ONLY
+
+pdn_overlap_anchors:
+  - locator: "пункт 2.1"
+    rule: "If BKI protected Article 4 218-FZ information contains personal data, the BKI must apply personal-data security measures under Article 19 of 152-FZ."
+    pdn_guard: "This is an explicit conditional bridge; do not promote all Article 4 218-FZ information to PDN because credit histories also exist for legal entities and object context matters."
+  - locator: "пункт 2.7"
+    rule: "BKI register authentication/authorization, message exchange, employee access and subject actions related to protected information."
+    pdn_guard: "Access logs may contain identifiers and other PDN in concrete systems, but log content must be inspected before PDN classification."
+  - locator: "пункты 2.8-2.9"
+    rule: "BKI register information-security incidents and perform scoped reporting/response."
+    pdn_guard: "Incident data can overlap PDN/breach evidence depending on contents; do not assume every incident record contains PDN."
+  - locator: "пункт 2.10"
+    rule: "Protected information, point 2.7 registration data and incident information have a five-year integrity/availability period unless BKI legislation sets another period."
+    pdn_guard: "This is a sector information-security lifecycle rule, not a universal personal-data retention period."
+
+relations:
+  - target: "152-ФЗ статья 19"
+    type: EXPLICIT_CONDITIONAL_SECURITY_BRIDGE
+    guard: "apply where protected information actually contains personal data"
+  - target: "SEC-SRC-RU-FZ-218-2004"
+    type: BKI_SPECIAL_REGIME_PARENT
+    guard: "218-FZ specific object retention/access rules remain controlling where they establish another period or route"
+  - target: "187-ФЗ"
+    type: CONDITIONAL_CII_OVERLAP
+    guard: "only for BKI infrastructure objects that are legally CII objects"
+
+retention_model:
+  universal_pdn_period: false
+  sector_rules:
+    - "Point 2.10: five years for BKI protected information + access-registration data + information-security incident data, unless BKI legislation sets another period"
+    - "Point 3.2: separate credit-rating-agency protected-information archive minimum of five years; not a BKI/PDN universal period"
+  reconciliation:
+    - "Do not replace the existing 218-FZ seven-year-per-record and separate archive lifecycle with an undifferentiated five-year 808-P period."
+  guards:
+    - "FIVE_YEAR_808_P_NOT_UNIVERSAL_PDN_RETENTION"
+    - "SPECIFIC_218_FZ_OBJECT_PERIODS_PRESERVED"
+    - "RATING_AGENCY_RETENTION_NOT_BKI_RETENTION"
+
+version_state:
+  current_revision_date: "2022-10-17"
+  official_cbr_current_listing_checked_at: "2026-09-01"
+  later_amendment_found_in_current_sweep: false
+  general_effective_from: "2023-04-01"
+  point_2_4_effective_from: "2024-04-01"
+  version_chain_state: CURRENT_ORIGINAL_EDITION_CROSSCHECKED_EXACT_PRIMARY_BYTES_PENDING
+
+counter_delta_this_pass:
+  sector_overlay_found: 1
+  primary_publication_verified: 1
+  downloaded: 0
+  immutable: 0
+  pending_primary_exact_capture: 1
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+
+master_counter_policy:
+  core_pdn_production_counters_changed: false
+  reason: >-
+    808-P is a finance/BKI special-regime overlay. It must not inflate direct PDN core exact/immutable counters before exact official-byte capture and an explicit applicability/merge gate.
+
+proof_guards:
+  - "TAXONOMY_SEED_NOT_LEGAL_PROOF"
+  - "EXPLICIT_ARTICLE19_BRIDGE_STILL_REQUIRES_PDN_CONTENT"
+  - "ACCESS_LOGS_NOT_AUTOMATICALLY_PDN_WITHOUT_FIELD_CONTEXT"
+  - "NO_APPLICABILITY_PROMOTION_WITHOUT_OBJECT_MATCH"
+  - "NO_FABRICATED_MIME_BYTE_LENGTH_OR_SHA256"
