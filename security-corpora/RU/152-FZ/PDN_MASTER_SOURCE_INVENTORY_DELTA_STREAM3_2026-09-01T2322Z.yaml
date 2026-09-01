@@ -1,0 +1,102 @@
+schema_version: "1.0"
+id: PDN-MASTER-SOURCE-INVENTORY-DELTA-STREAM3-2026-09-01T2322Z
+kind: pdn_master_inventory_sector_overlay_delta
+stream: 3
+checked_at: "2026-09-02T02:22:27+03:00"
+
+source_overlays:
+  - id: SEC-SRC-RU-MINZDRAV-ORDER-274N-2025
+    document: "Приказ Минздрава России от 13.05.2025 № 274н"
+    role: ambulatory_medical_forms_person_level_health_and_child_data_overlay
+    canonical_record: "../protected-information/source/SEC-SRC-RU-MINZDRAV-ORDER-274N-2025.yaml"
+    metadata_status: PRIMARY_OFFICIAL_PUBLICATION_VERIFIED_CURRENT_TEXT_CROSSCHECKED
+    primary_official_source: "https://publication.pravo.gov.ru/document/0001202505300033"
+    primary_publication_id: "0001202505300033"
+    raw_capture: PENDING
+    verified_for_exact_extraction: false
+    applicability: CURRENT_SPECIAL_HEALTHCARE_REGIME_WITH_SCOPED_PDN_OVERLAP
+    pdn_anchors:
+      - locator: "forms 025/у and 025-1/у"
+        rule: "Person-level ambulatory medical documentation is a direct personal-data processing context."
+        guard: "The form order does not by itself prove the complete 152-FZ obligation set for every actor/system/operation."
+      - locator: "forms 076/у and 079/у"
+        rule: "The order governs medical documentation concerning children; form 079/у contains child identifiers and health-status context."
+        guard: "Child-health data overlap does not automatically create education-sector applicability or a disclosure right for every child organization."
+    medical_secrecy_guard: "Whether a concrete field/document is medical secrecy must be matched to the scope of Article 13 of 323-FZ; PDN and medical secrecy are overlapping but non-identical regimes."
+
+  - id: SEC-SRC-RU-MINZDRAV-ORDER-209N-2026
+    document: "Приказ Минздрава России от 25.03.2026 № 209н"
+    role: current_electronic_medical_document_lifecycle_access_storage_overlay
+    canonical_record: "../protected-information/source/SEC-SRC-RU-MINZDRAV-ORDER-209N-2026.yaml"
+    metadata_status: CURRENT_FROM_2026_09_01_OFFICIAL_PUBLICATION_LOCATOR_CROSSCHECKED
+    raw_capture: PENDING
+    verified_for_exact_extraction: false
+    applicability: CURRENT_SPECIAL_HEALTHCARE_INFORMATION_SYSTEM_REGIME_WITH_SCOPED_PDN_OVERLAP
+    pdn_anchors:
+      - locator: "procedure points 1-4"
+        rule: "The workflow covers person-level electronic medical documentation, systems/operators, access governance, formation, signing, storage, EGISZ registration and lawful access."
+        guard: "Actor/system/operation/purpose/legal-basis matching remains required."
+      - locator: "procedure point 21"
+        rule: "Electronic medical documents are stored no less than the retention term of the corresponding paper medical documents."
+        guard: "This is an object-linked retention bridge, not a universal numeric PDN retention period."
+      - locator: "procedure point 22"
+        rule: "All corrected versions and their signatures are retained throughout the electronic medical document retention period."
+        guard: "Version preservation follows the document term and is not a separate numeric retention period."
+
+canonical_reconciliation:
+  duplicate_overlay_id: SEC-SRC-RU-FZ-323-2011
+  canonical_source_id: SEC-SRC-RU-FZ-323
+  action: REDIRECT_DUPLICATE_OVERLAY_TO_CANONICAL
+  reason: "Both records use official publication identity 0001201111220007; SEC-SRC-RU-FZ-323 already has the immutable official baseline."
+  counter_effect:
+    reverse_prior_duplicate_sector_overlay_found: 1
+    reverse_prior_duplicate_pending_primary_exact_capture: 1
+    new_downloaded: 0
+    new_immutable: 0
+    reused_existing_canonical: 1
+  guard: "The prior timestamped overlay remains historical provenance but must not be aggregated as an independent source after this correction delta."
+
+retention_model:
+  universal_pdn_period: false
+  universal_medical_record_period: false
+  rules:
+    - "№ 209н links EMD retention to the corresponding paper medical document term."
+    - "№ 274н defines concrete form classes but no universal numeric retention term is promoted from it in this pass."
+  guards:
+    - "OBJECT_SPECIFIC_PRIMARY_RETENTION_PROOF_REQUIRED"
+    - "ACT_VALIDITY_DATE_NOT_DATA_RETENTION"
+    - "ELECTRONIC_TRANSITION_DATE_NOT_DATA_RETENTION"
+    - "MEDICAL_SECRECY_CONTINUITY_NOT_NUMERIC_RETENTION"
+
+relationships:
+  - "274n -> 152-FZ / person-level ambulatory medical document overlap"
+  - "274n -> 323-FZ Article 13 / conditional medical-secrecy dual regime"
+  - "274n -> children / forms 076u and 079u only; no universal education promotion"
+  - "274n -> 209n / paper-form content to electronic-document workflow and retention bridge"
+  - "209n -> 152-FZ / electronic medical document processing/access/storage context"
+  - "209n -> 326-FZ / scoped OMS access/control context"
+
+counter_delta_this_pass:
+  sector_overlay_found_new_canonical: 1
+  primary_publication_verified_new: 1
+  downloaded_new: 0
+  immutable_new: 0
+  pending_new: 1
+  pending_closed_by_dedupe: 1
+  reused_existing: 2
+  current_state_activations: 1
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+
+master_counter_policy:
+  core_pdn_production_counters_changed: false
+  reason: >-
+    274n and 209n are healthcare special-regime overlays. They do not inflate direct PDN core exact/immutable counters before successful exact official-byte capture and controlled merge. The 323-FZ duplicate correction also reuses an existing canonical artifact rather than adding a new one.
+
+proof_guards:
+  - "TAXONOMY_SEED_NOT_LEGAL_PROOF"
+  - "MEDICAL_SECRECY_AND_PDN_MODELED_SEPARATELY"
+  - "NO_APPLICABILITY_PROMOTION_WITHOUT_OBJECT_ACTOR_ROUTE_MATCH"
+  - "NO_UNIVERSAL_RETENTION_INFERRED"
+  - "NO_FABRICATED_MIME_BYTE_LENGTH_OR_SHA256"
+  - "DUPLICATE_OFFICIAL_PUBLICATION_ID_NOT_COUNTED_TWICE"
