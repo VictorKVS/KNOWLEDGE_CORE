@@ -1,0 +1,155 @@
+schema_version: "1.0"
+id: SEC-SRC-RU-MINZDRAV-ORDER-274N-2025
+kind: security-regulatory-source
+status: PRIMARY_OFFICIAL_PUBLICATION_VERIFIED_CURRENT_TEXT_CROSSCHECKED_EXACT_BINARY_PENDING
+
+title: "Приказ Министерства здравоохранения Российской Федерации от 13.05.2025 № 274н «Об утверждении унифицированных форм медицинской документации, используемых в медицинских организациях, оказывающих медицинскую помощь в амбулаторных условиях, и порядков их ведения»"
+jurisdiction: RU
+issuer: "Министерство здравоохранения Российской Федерации"
+
+document:
+  type: "приказ федерального органа исполнительной власти"
+  number: "274н"
+  adopted_date: "2025-05-13"
+  minjust_registration_date: "2025-05-30"
+  minjust_registration_number: "82433"
+  official_publication_date: "2025-05-30"
+  official_publication_id: "0001202505300033"
+  effective_from: "2025-09-01"
+  valid_until: "2031-09-01"
+  checked_at: "2026-09-02"
+  current_state: CURRENT
+
+canonical_source:
+  publisher: "Официальное опубликование правовых актов"
+  document_url: "https://publication.pravo.gov.ru/document/0001202505300033"
+  exact_file_url: "https://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202505300033"
+  publication_id: "0001202505300033"
+  primary_publication_metadata_verified: true
+  proof_scope: "Official publication identity/date/registration verified; exact official bytes pending."
+
+statutory_basis:
+  - target: "SEC-SRC-RU-FZ-323"
+    locator: "статья 14 часть 2 пункт 11"
+    relation: AUTHORIZES_UNIFIED_MEDICAL_DOCUMENT_FORMS
+    status: CURRENT_TEXT_CROSSCHECKED
+
+protected_information:
+  sectors:
+    - healthcare
+    - medical_secrecy
+    - health_data
+    - personal_data_overlap
+    - children
+    - electronic_medical_documentation_overlap
+    - retention_interface
+  regime: ambulatory_medical_documentation
+  document_classes:
+    - code: "025/у"
+      name: "Медицинская карта пациента, получающего медицинскую помощь в амбулаторных условиях"
+      subject_scope: patient
+    - code: "025-1/у"
+      name: "Талон пациента, получающего медицинскую помощь в амбулаторных условиях"
+      subject_scope: patient
+    - code: "070/у"
+      name: "Справка для получения путевки на санаторно-курортное лечение"
+      subject_scope: patient
+    - code: "072/у"
+      name: "Санаторно-курортная карта"
+      subject_scope: patient
+    - code: "076/у"
+      name: "Санаторно-курортная карта для детей"
+      subject_scope: child
+    - code: "079/у"
+      name: "Медицинская справка о состоянии здоровья ребенка, направляемого в организацию отдыха детей и их оздоровления"
+      subject_scope: child
+  proven_text_examples:
+    - locator: "форма 079/у"
+      finding: "Текущая опубликованная текстовая копия формы содержит идентифицирующие сведения ребенка, включая ФИО, дату рождения, пол, гражданство и данные о регистрации по месту жительства, а сам документ подтверждает состояние здоровья/наличие показаний и отсутствие противопоказаний для направления в организацию отдыха и оздоровления."
+      proof_state: CURRENT_TEXT_CROSSCHECK_EXACT_PRIMARY_BINARY_PENDING
+  guards:
+    - "MEDICAL_FORM_CONTAINS_PDN_CONTEXT_BUT_NOT_EVERY_FIELD_IS_AUTOMATICALLY_MEDICAL_SECRECY"
+    - "CHILD_FORM_CONTEXT_DOES_NOT_CREATE_UNIVERSAL_EDUCATION_SECTOR_APPLICABILITY"
+    - "FORM_SCOPE_DOES_NOT_GENERALIZE_DISCLOSURE_PERMISSION"
+    - "NO_APPLICABILITY_PROMOTION_FROM_SECTOR_LABEL"
+
+pdn_relationship:
+  state: DIRECT_PERSON_LEVEL_MEDICAL_DOCUMENT_OVERLAP_APPLICABILITY_REVIEW_REQUIRED
+  target: "152-ФЗ"
+  findings:
+    - "The prescribed forms are person-level medical documents and include identifiers and health-related information; concrete 152-FZ obligations still depend on actor, operation, purpose, legal basis, system and disclosure route."
+    - "Forms 076/у and 079/у create a direct child-data overlap, but do not by themselves prove applicability of every education/children rule to every recipient."
+  guards:
+    - "PDN_OVERLAP != UNIVERSAL_152_FZ_REQUIREMENT_SET"
+    - "MEDICAL_SECRECY_SCOPE_MUST_BE_MATCHED_TO_323_FZ_ARTICLE_13"
+    - "MINOR_DATA != AUTOMATIC_SPECIAL_CATEGORY_BEYOND_PROVEN_HEALTH_CONTEXT"
+
+relationships:
+  - target: "SEC-SRC-RU-FZ-323"
+    type: HEALTHCARE_MEDICAL_DOCUMENTATION_AND_MEDICAL_SECRECY_INTERFACE
+    state: DIRECT_STATUTORY_CONTEXT
+  - target: "SEC-SRC-RU-MINZDRAV-ORDER-209N-2026"
+    type: ELECTRONIC_MEDICAL_DOCUMENT_WORKFLOW_INTERFACE
+    state: CURRENT_SCOPED
+    note: "№ 209н point 10 expressly references form 025/у under № 274н; electronic workflow and storage rules do not replace the form-specific content requirements."
+  - target: "152-ФЗ"
+    type: PERSONAL_DATA_OVERLAP
+    state: APPLICABILITY_REVIEW_REQUIRED
+  - target: "125-ФЗ"
+    type: ARCHIVAL_RETENTION_INTERFACE
+    state: OBJECT_SPECIFIC_PROOF_REQUIRED
+  - target: "children_special_regimes"
+    type: CHILD_HEALTH_DOCUMENT_OVERLAP
+    state: FORMS_076U_AND_079U_ONLY
+
+retention:
+  universal_numeric_period: false
+  finding: "No single numeric retention period for all forms governed by № 274н is promoted from this act in this pass. Retention must be resolved per concrete medical-document class through the applicable primary retention rule."
+  electronic_transition:
+    effective_for_electronic_forms_from: "2027-09-01"
+    guard: "The 2027 electronic-form transition date is not a retention period."
+  interface_to_209n:
+    rule: "For electronic medical documents, № 209н requires storage for not less than the term of the corresponding paper medical document; therefore numeric retention remains object-specific."
+  guards:
+    - "ACT_VALID_UNTIL_2031_09_01_IS_NOT_DATA_RETENTION"
+    - "ELECTRONIC_TRANSITION_DATE_IS_NOT_DATA_RETENTION"
+    - "NO_UNIVERSAL_MEDICAL_RECORD_RETENTION_INFERRED"
+    - "OBJECT_SPECIFIC_PRIMARY_RETENTION_PROOF_REQUIRED"
+
+version_chain:
+  state: CURRENT_ORIGINAL_2025_ORDER_NO_LATER_AMENDMENT_FOUND_IN_CURRENT_SWEEP_FULL_CHAIN_NOT_DECLARED_CLOSED
+  events:
+    - act: "Приказ Минздрава России от 15.12.2014 № 834н"
+      relation: PREDECESSOR_FOR_REPLACED_FORMS
+      state: REPEALED_FROM_2025_09_01
+    - act: "Приказ Минздрава России от 13.05.2025 № 274н"
+      publication_id: "0001202505300033"
+      effective_from: "2025-09-01"
+      valid_until: "2031-09-01"
+      state: CURRENT
+  later_amendment_found_in_current_sweep: false
+  historical_chain_complete: false
+  guard: "No later amendment found in this sweep is not proof that no later or unindexed change exists."
+
+capture:
+  attempted_at: "2026-09-02T02:22:27+03:00"
+  official_file_url: "https://publication.pravo.gov.ru/File/Pdf?eoNumber=0001202505300033"
+  exact_bytes_obtained: false
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+  result: TRANSIENT_DNS_NAME_RESOLUTION_FAILURE
+  curl_exit_code: 6
+  error: "Could not resolve host: publication.pravo.gov.ru"
+  manifest_ref: "../manifests/SEC-SRC-RU-MINZDRAV-ORDER-274N-2025-capture-pending.json"
+
+proof_floor:
+  - "taxonomy seed is discovery-only and is not legal proof"
+  - "official publication identity and registration are verified from the primary legal-publication portal"
+  - "current applicability date is crosschecked; no future rule is promoted prematurely"
+  - "person-level medical and child-health overlaps are modeled without inventing universal sector applicability"
+  - "no universal retention term is inferred"
+  - "MIME, byte length and SHA-256 remain null until exact official bytes are captured"
+  - "immutable promotion requires successful exact capture and hash"
