@@ -1,0 +1,69 @@
+schema_version: "1.0"
+id: SEC-PDN-MASTER-SOURCE-INVENTORY-DELTA-STREAM2-2026-09-01T0206Z
+applies_to: PDN_MASTER_SOURCE_INVENTORY.yaml
+stream: RU_PDN_TECHNICAL_CRYPTO
+created_at: "2026-09-01T02:06:16Z"
+merge_policy: >-
+  ADDITIVE_SECURITY_STACK_STATUS_OVERLAY. Update only Stream-2 status, graph reconciliation and acquisition pointers;
+  preserve all non-Stream-2 master sources and parallel-stream data.
+
+security_stack_patch:
+  checked_at: "2026-09-01"
+  identified: 55
+  metadata_verified: 55
+  immutable_sha256_verified: 24
+  pending_raw_capture: 31
+  exact_official_route_unresolved: 8
+  confirmed_conflicts: 0
+  version_edges_verified: 11
+  version_edges_delta: 0
+  latest_status_review_at: "2026-09-01T02:06:16Z"
+  latest_stream2_run: "security-stack/runs/STREAM2_RUN_2026-09-01T0206Z.yaml"
+  acquisition_state: SEP1_STATUS_GATE_RECHECK_NO_NEW_BYTES
+  baseline_status:
+    pp1119: CURRENT_PRIMARY_BYTES_PENDING_HTTP_TIMEOUT
+    fstec21: CURRENT_REVISION_2020_05_14_REPLACEMENT_PRIMARY_GATE_NOT_PASSED_AFTER_PROPOSED_DATE
+    fstec_threat_method_2021: CURRENT_IMMUTABLE_CAPTURED_REUSED_DIRECT_FSTEC_ROUTE_TIMEOUT
+    fsb378: CURRENT_WHEN_SKZI_USED_PRIMARY_BYTES_PENDING_HTTP_401
+    fsb66: CURRENT_AS_AMENDED_SKZI_LIFECYCLE_PRIMARY_BYTES_PENDING
+    fsb173: VERSION_CHAIN_POINT1_ONLY_PRIMARY_BYTES_PENDING
+    fapsi152: CURRENT_SKZI_HANDLING_PRIMARY_BYTES_PENDING
+    gosssopka_pdn_edge: EXISTING_FSB77_2023_ONLY_WHERE_PDN_COMPUTER_INCIDENT_SCOPE_PROVEN
+  fstec21_latest_finding: >-
+    The proposed 01.09.2026 date in project 169583 has arrived, but the Stream-2 check did not establish the
+    primary enactment chain required to replace FSTEC Order No. 21: final order identity, Minjust registration
+    where required, and official publication. Order No. 21 therefore remains active in the fail-closed baseline
+    at the 14.05.2020 revision until that gate is passed.
+  transport_latest_finding: >-
+    PP1119 Government DOC retry timed out, the FSTEC 2021 methodology issuer attachment retry timed out, and the
+    FSB378 official RG archive route returned HTTP 401. No new official payload was accepted and no MIME, byte length
+    or SHA-256 was inferred. Existing immutable FSTEC21 and 2021 Methodology artifacts were reused without fingerprint change.
+
+counter_basis: >-
+  Document counters remain 55 identified / 55 metadata-verified / 24 immutable / 31 pending / 8 unresolved exact routes /
+  0 confirmed conflicts / 11 verified version edges. This pass changes status-watch freshness and acquisition evidence only;
+  it adds 0 documents and 0 immutable artifacts.
+
+stream_counter_delta:
+  identified: 0
+  metadata_verified: 0
+  immutable_sha256_verified: 0
+  pending_raw_capture: 0
+  exact_official_route_unresolved: 0
+  confirmed_conflicts: 0
+  version_edges_verified: 0
+  status_watch_updates: 1
+  primary_transport_attempts: 3
+  primary_transport_successes: 0
+  immutable_reuse_confirmed: 2
+  semantic_promotions: 0
+
+applicability_guard: >-
+  Keep PP1119/FSTEC21 generic ISPDN duties distinct from attestation, licensing, certification, broad SKZI lifecycle,
+  KII/NCTKI and GosSOPKA branches. FSB378 applies only when SKZI use is established. FSB66/173 and FAPSI152 require
+  a proved lifecycle/handling edge. GosSOPKA/NCTKI is PDN-relevant only through an independently proved PDN incident edge.
+
+proof_rule: >-
+  Exact official payload bytes, observed MIME/signature, exact byte length, computed SHA-256, immutable artifact and
+  manifest are required before immutable promotion. No mirror substitution, no inferred fingerprint and no promotion
+  of draft replacement requirements solely because their proposed effective date has arrived.
