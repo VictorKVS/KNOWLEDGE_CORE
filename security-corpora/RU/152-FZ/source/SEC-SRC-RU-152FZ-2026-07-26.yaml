@@ -33,19 +33,18 @@ canonical_source:
       url: "https://ips.pravo.gov.ru/api/ips/legislation/document?baseid=None&hash=98490812b3409e2a8d78a11ca9010f434ea3d9250a11dbbdb78690cd5551bdd6"
       route_status: OFFICIAL_ROUTE_REJECTED_STALE_FOR_CURRENT_REVISION
       registered_at: "2026-08-28"
-      route_checked_at: "2026-08-31"
+      route_checked_at: "2026-09-01"
       current_revision_proof_required: "explicit 265-ФЗ citation OR complete Article 12 part 2 wording fingerprint introduced on 26.07.2026"
       evidence_note: >-
-        Fresh official IPS index verification on 31.08.2026 shows this exact hash route serving a 152-FZ text whose
-        amendment list ends with Federal Law No. 156-FZ dated 24.06.2025 and whose Article 12 part 2 still contains
-        the pre-26.07.2026 wording. It therefore cannot prove the pinned 26.07.2026 current revision and must not be
-        accepted for the current immutable root even if transport succeeds. The route is retained only as negative
-        provenance evidence; the acquisition content/current-revision gate remains authoritative.
+        Fresh official IPS verification on 01.09.2026 still exposes this exact hash route with an amendment chain
+        ending at Federal Law No. 156-FZ dated 24.06.2025. It therefore cannot prove the pinned 26.07.2026 revision
+        and must not be accepted for the current immutable root even if transport succeeds. The route is retained
+        only as negative provenance evidence; the acquisition content/current-revision gate remains authoritative.
     - publisher: "Официальный интернет-портал правовой информации / ИПС Право — print rendering"
       url: "http://pravo.gov.ru/proxy/ips/?docview&page=1&print=1&nd=102108261"
       route_status: OFFICIAL_IPS_PRINT_ROUTE_REGISTERED_GUARDED
       registered_at: "2026-08-25"
-      route_checked_at: "2026-08-31"
+      route_checked_at: "2026-09-01"
       current_revision_proof_required: "explicit 265-ФЗ citation OR complete Article 12 part 2 wording fingerprint introduced on 26.07.2026"
       evidence_note: >-
         The official IPS uses docview/print renderings for human-readable document views. No rdk value is pinned:
@@ -95,12 +94,12 @@ version_evidence:
       a consolidated text even when the publisher omits an explicit amending-law citation.
   - publisher: "Официальный интернет-портал правовой информации / ИПС Право"
     kind: rejected_stale_transport_route_evidence
-    checked_at: "2026-08-31"
+    checked_at: "2026-09-01"
     route: "https://ips.pravo.gov.ru/api/ips/legislation/document?baseid=None&hash=98490812b3409e2a8d78a11ca9010f434ea3d9250a11dbbdb78690cd5551bdd6"
     supports: >-
       Official IPS search/index content for this exact route exposes a 152-FZ consolidation whose amendment chain
-      ends at 24.06.2025 No. 156-FZ and whose Article 12 part 2 is pre-265-FZ. Treat this route as stale negative
-      provenance for the current 26.07.2026 root; it cannot satisfy the immutable current-revision gate.
+      ends at 24.06.2025 No. 156-FZ. Treat this route as stale negative provenance for the current 26.07.2026 root;
+      it cannot satisfy the immutable current-revision gate.
   - publisher: "Правительство России"
     kind: indexed_official_page_staleness_warning
     checked_at: "2026-08-31"
@@ -119,21 +118,27 @@ capture:
   fingerprint_status: PENDING_CURRENT_CONSOLIDATED_RAW_CAPTURE
   semantic_status: UNCHANGED
   last_attempt:
-    observed_at: "2026-08-31T21:09:48.973703Z"
+    observed_at: "2026-09-01T11:26:52Z"
     route: registered_official_multi_route
     result: ALL_REGISTERED_ROUTES_FAILED
     failure_classes:
       - TRANSPORT_TIMEOUT
+      - IDENTITY_MARKER_MISS
       - CURRENT_REVISION_MARKER_MISS
       - ALL_REGISTERED_ROUTES_FAILED
     detail: >-
-      Latest proven dedicated-route telemetry synchronized on 31.08.2026 retried the registered current-152-FZ
-      transports. The canonical IPS route, guarded print/Government fallbacks and other registered transports produced
-      timeouts, HTTP 500 responses or content without sufficient current-revision markers; no accepted byte-exact
-      snapshot proved the 26.07.2026 revision. The rejected stale API route remains negative provenance only. No MIME,
-      byte length, SHA-256 or immutable artifact was inferred.
-    telemetry_source: "security-corpora/RU/152-FZ/PDN_ACQUISITION_RUN.json#dedicated_route_attempt_telemetry.current_root_curl"
-    telemetry_commit: "ea0e37cf57e662b539ea55e5ab4c436386bc2149"
+      GitHub Actions PDN Core run 207 attempt 2 retried the canonical IPS, guarded print/Government routes,
+      urllib fallback and www.pravo.gov.ru alias on 01.09.2026. The transports produced timeouts, HTTP 500 responses,
+      or content without sufficient 152-FZ identity/current-revision evidence. The urllib route was explicitly rejected
+      because it lacked the pinned No. 265-FZ citation or complete Article-12 2026 delta fingerprint. No byte-exact
+      current snapshot was accepted; MIME, exact byte length, SHA-256, raw artifact and manifest remain absent.
+    telemetry_source: "https://github.com/VictorKVS/KNOWLEDGE_CORE/actions/runs/33488169789"
+    telemetry_run: 33488169789
+    telemetry_attempt: 2
+    persistence_note: >-
+      The acquisition evidence commit generated inside the workflow could not be pushed because main advanced in
+      parallel and the rebase conflicted in the shared PDN acquisition/master files. This source record persists the
+      observed transport outcome without promoting the source or accepting stale bytes.
     proof_floor_held: true
     semantic_promotion: false
   runtime_probe:
@@ -147,7 +152,7 @@ capture:
     retry_policy: KEEP_GUARDED_RETRY_ENABLED
   acquisition_request:
     status: RETRY_REQUIRED_GUARDED
-    requested_at: "2026-08-31T23:06:13Z"
+    requested_at: "2026-09-01T11:26:52Z"
     route: official_registered_multi_route_snapshot_with_current_revision_content_gate
     reason: >-
       Require exact returned bytes, retrieved_at, MIME, byte length, SHA-256, 152-FZ/personal-data identity
