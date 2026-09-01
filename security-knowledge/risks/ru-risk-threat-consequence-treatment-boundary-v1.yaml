@@ -1,0 +1,729 @@
+{
+  "id": "RU-RISK-THREAT-CONSEQUENCE-TREATMENT-BOUNDARY-V1",
+  "as_of": "2026-09-01",
+  "status": "VERIFIED_CROSS_MODEL_PROCESS_AND_DECISION_BOUNDARY_FAIL_CLOSED_PRIMARY_IDENTITIES_CURRENT_BODY_BYTES_PARTIAL",
+  "title": "Сквозная граница: угроза, последствие, риск, обработка и принятие остаточного риска",
+  "scope": {
+    "purpose": "Не допустить подмены этапов менеджмента риска данными модели угроз, цветом матрицы или фактом внедрения меры",
+    "normative_force": "GUIDANCE_UNLESS_SEPARATE_BINDING_BASIS_IS_PROVED",
+    "applies_to": [
+      "information_security_risk_workflows",
+      "FSTEC_2021_threat_model_inputs",
+      "risk_registers",
+      "treatment_and_acceptance_records"
+    ]
+  },
+  "sources": [
+    {
+      "id": "GOST_R_ISO_IEC_27005_2010",
+      "role": "PROCESS_BACKBONE",
+      "status": "Действует",
+      "official_registry": "https://protect.gost.ru/gost/details/55a38620-3e28-465f-a4d2-4cdb65663ba3",
+      "verified_as_of": "2026-09-01"
+    },
+    {
+      "id": "GOST_R_58771_2019",
+      "role": "ASSESSMENT_TECHNIQUE_SELECTION_AND_LIMITATIONS",
+      "status": "Действует",
+      "official_registry": "https://protect.gost.ru/gost/details/f35f83b7-a9fd-453b-b1bd-e05035a5009c",
+      "verified_as_of": "2026-09-01"
+    },
+    {
+      "id": "FSTEC_THREAT_MODEL_2021",
+      "role": "CONSEQUENCE_OBJECT_ADVERSARY_SCENARIO_INPUTS",
+      "official_page": "https://fstec.ru/dokumenty/vse-dokumenty/spetsialnye-normativnye-dokumenty/metodicheskij-dokument-ot-5-fevralya-2021-g",
+      "verification": "IDENTITY_AND_CURRENT_LISTING_PREVIOUSLY_VERIFIED_OFFICIAL_TRANSPORT_TIMEOUT_2026_09_01"
+    }
+  ],
+  "process_stages": [
+    {
+      "order": 1,
+      "id": "CONTEXT",
+      "required_output": "scope boundaries criteria roles and records"
+    },
+    {
+      "order": 2,
+      "id": "IDENTIFICATION",
+      "required_output": "assets threats controls vulnerabilities scenarios and consequences"
+    },
+    {
+      "order": 3,
+      "id": "ANALYSIS",
+      "required_output": "scenario consequence likelihood uncertainty and risk estimate"
+    },
+    {
+      "order": 4,
+      "id": "EVALUATION",
+      "required_output": "comparison with criteria and prioritized decision input"
+    },
+    {
+      "order": 5,
+      "id": "TREATMENT",
+      "required_output": "selected option plan controls and residual-risk reassessment"
+    },
+    {
+      "order": 6,
+      "id": "ACCEPTANCE",
+      "required_output": "authorized recorded decision rationale scope and date"
+    },
+    {
+      "order": 7,
+      "id": "MONITOR_REVIEW",
+      "required_output": "changed factors updated risk state and process improvement"
+    }
+  ],
+  "semantic_boundaries": [
+    {
+      "left": "THREAT",
+      "right": "RISK",
+      "rule": "A threat is an input; it is not an assessed risk or acceptance decision"
+    },
+    {
+      "left": "VULNERABILITY",
+      "right": "INCIDENT_SCENARIO",
+      "rule": "A vulnerability alone does not prove a scenario or consequence"
+    },
+    {
+      "left": "CONSEQUENCE",
+      "right": "RISK_LEVEL",
+      "rule": "A consequence is evaluated with the selected method and other inputs"
+    },
+    {
+      "left": "FSTEC_OBJECT_OR_INTERFACE",
+      "right": "RISK",
+      "rule": "Identification of an object or interface does not create a risk automatically"
+    },
+    {
+      "left": "MATRIX_CELL",
+      "right": "RISK_ACCEPTANCE",
+      "rule": "A matrix output is decision support, not formal acceptance"
+    },
+    {
+      "left": "CONTROL_INSTALLED",
+      "right": "CONTROL_EFFECTIVE",
+      "rule": "Implementation evidence and effectiveness evidence are distinct"
+    },
+    {
+      "left": "TREATMENT_COMPLETE",
+      "right": "RESIDUAL_RISK_ACCEPTED",
+      "rule": "Residual risk must be reassessed and separately accepted"
+    },
+    {
+      "left": "STANDARD_GUIDANCE",
+      "right": "BINDING_DUTY",
+      "rule": "Binding force requires a separate incorporation or applicability basis"
+    }
+  ],
+  "fstec_crosswalk": [
+    {
+      "from": "consequences U1-U3 and affected processes or information",
+      "to": "IDENTIFICATION.consequences",
+      "equivalence": false
+    },
+    {
+      "from": "objects and interfaces",
+      "to": "IDENTIFICATION.assets_and_scenario_context",
+      "equivalence": false
+    },
+    {
+      "from": "adversary types and potential",
+      "to": "ANALYSIS.method_supported_inputs",
+      "equivalence": false
+    },
+    {
+      "from": "threat scenarios and methods",
+      "to": "IDENTIFICATION.scenarios",
+      "equivalence": false
+    },
+    {
+      "from": "relevance conclusion",
+      "to": "EVALUATION.input_only",
+      "equivalence": false
+    }
+  ],
+  "treatment_options": [
+    "REDUCE",
+    "RETAIN",
+    "AVOID",
+    "TRANSFER"
+  ],
+  "decision_gates": [
+    {
+      "id": "G1",
+      "question": "Are scope criteria and authority documented?",
+      "fail": "BLOCK"
+    },
+    {
+      "id": "G2",
+      "question": "Are threat vulnerability scenario and consequence separate and linked?",
+      "fail": "REVIEW"
+    },
+    {
+      "id": "G3",
+      "question": "Is the estimation method and uncertainty documented?",
+      "fail": "REVIEW"
+    },
+    {
+      "id": "G4",
+      "question": "Was the result compared with versioned criteria?",
+      "fail": "BLOCK"
+    },
+    {
+      "id": "G5",
+      "question": "Is the treatment option and plan explicit?",
+      "fail": "BLOCK"
+    },
+    {
+      "id": "G6",
+      "question": "Was residual risk reassessed after controls?",
+      "fail": "BLOCK"
+    },
+    {
+      "id": "G7",
+      "question": "Is acceptance authorized recorded scoped and dated?",
+      "fail": "BLOCK"
+    },
+    {
+      "id": "G8",
+      "question": "Are monitoring triggers and historical states preserved?",
+      "fail": "REVIEW"
+    }
+  ],
+  "scenarios": [
+    {
+      "id": "S1",
+      "input": "BDU identifier only",
+      "result": "NOT_A_RISK_ROUTE_TO_IDENTIFICATION"
+    },
+    {
+      "id": "S2",
+      "input": "red matrix cell only",
+      "result": "NO_ACCEPTANCE_DECISION"
+    },
+    {
+      "id": "S3",
+      "input": "control installed no effectiveness evidence",
+      "result": "RESIDUAL_RISK_PENDING"
+    },
+    {
+      "id": "S4",
+      "input": "formal acceptance before residual reassessment",
+      "result": "BLOCK"
+    },
+    {
+      "id": "S5",
+      "input": "FSTEC relevant threat",
+      "result": "INPUT_TO_RISK_WORKFLOW_NOT_ACCEPTANCE"
+    },
+    {
+      "id": "S6",
+      "input": "mixed scales no mapping",
+      "result": "BLOCK_AGGREGATION"
+    },
+    {
+      "id": "S7",
+      "input": "current card offered as historical state",
+      "result": "BLOCK_TEMPORAL_REWRITE"
+    },
+    {
+      "id": "S8",
+      "input": "complete traceable authorized record",
+      "result": "ALLOW_DECISION_ROUTE"
+    }
+  ],
+  "red_team_attacks": [
+    "PROMOTE_BDU_ROW_TO_ACCEPTED_RISK",
+    "PROMOTE_THREAT_TO_RISK_LEVEL",
+    "PROMOTE_CONSEQUENCE_TO_COMPLETE_RISK",
+    "PROMOTE_MATRIX_COLOR_TO_ACCEPTANCE",
+    "PROMOTE_CONTROL_INSTALLATION_TO_EFFECTIVENESS",
+    "PROMOTE_TREATMENT_APPROVAL_TO_ACCEPTANCE",
+    "ZERO_RESIDUAL_RISK_AFTER_CONTROL",
+    "SILENT_MIXED_SCALE_NORMALIZATION",
+    "OVERWRITE_HISTORICAL_STATE",
+    "INVENT_REVIEW_INTERVAL",
+    "PROMOTE_STANDARD_TO_UNIVERSAL_DUTY",
+    "SUBSTITUTE_NEW_ISO_EDITION_FOR_CURRENT_GOST"
+  ],
+  "evidence_artifacts": [
+    "scope-and-boundary record",
+    "criteria version record",
+    "asset-process mapping",
+    "threat-source snapshot reference",
+    "vulnerability-context record",
+    "scenario statement",
+    "consequence record",
+    "likelihood rationale",
+    "risk-level calculation or qualitative rationale",
+    "uncertainty record",
+    "evaluation result",
+    "treatment option decision",
+    "treatment action plan",
+    "control implementation evidence",
+    "control effectiveness evidence",
+    "residual-risk reassessment",
+    "formal acceptance record",
+    "monitoring and reassessment record"
+  ],
+  "evidence_nodes": [
+    {
+      "id": "E-01",
+      "name": "scope-and-boundary record",
+      "status": "REQUIRED_FOR_APPLICABLE_ROUTE"
+    },
+    {
+      "id": "E-02",
+      "name": "criteria version record",
+      "status": "REQUIRED_FOR_APPLICABLE_ROUTE"
+    },
+    {
+      "id": "E-03",
+      "name": "asset-process mapping",
+      "status": "REQUIRED_FOR_APPLICABLE_ROUTE"
+    },
+    {
+      "id": "E-04",
+      "name": "threat-source snapshot reference",
+      "status": "REQUIRED_FOR_APPLICABLE_ROUTE"
+    },
+    {
+      "id": "E-05",
+      "name": "vulnerability-context record",
+      "status": "REQUIRED_FOR_APPLICABLE_ROUTE"
+    },
+    {
+      "id": "E-06",
+      "name": "scenario statement",
+      "status": "REQUIRED_FOR_APPLICABLE_ROUTE"
+    },
+    {
+      "id": "E-07",
+      "name": "consequence record",
+      "status": "REQUIRED_FOR_APPLICABLE_ROUTE"
+    },
+    {
+      "id": "E-08",
+      "name": "likelihood rationale",
+      "status": "REQUIRED_FOR_APPLICABLE_ROUTE"
+    },
+    {
+      "id": "E-09",
+      "name": "risk-level calculation or qualitative rationale",
+      "status": "REQUIRED_FOR_APPLICABLE_ROUTE"
+    },
+    {
+      "id": "E-10",
+      "name": "uncertainty record",
+      "status": "REQUIRED_FOR_APPLICABLE_ROUTE"
+    },
+    {
+      "id": "E-11",
+      "name": "evaluation result",
+      "status": "REQUIRED_FOR_APPLICABLE_ROUTE"
+    },
+    {
+      "id": "E-12",
+      "name": "treatment option decision",
+      "status": "REQUIRED_FOR_APPLICABLE_ROUTE"
+    },
+    {
+      "id": "E-13",
+      "name": "treatment action plan",
+      "status": "REQUIRED_FOR_APPLICABLE_ROUTE"
+    },
+    {
+      "id": "E-14",
+      "name": "control implementation evidence",
+      "status": "REQUIRED_FOR_APPLICABLE_ROUTE"
+    },
+    {
+      "id": "E-15",
+      "name": "control effectiveness evidence",
+      "status": "REQUIRED_FOR_APPLICABLE_ROUTE"
+    },
+    {
+      "id": "E-16",
+      "name": "residual-risk reassessment",
+      "status": "REQUIRED_FOR_APPLICABLE_ROUTE"
+    },
+    {
+      "id": "E-17",
+      "name": "formal acceptance record",
+      "status": "REQUIRED_FOR_APPLICABLE_ROUTE"
+    },
+    {
+      "id": "E-18",
+      "name": "monitoring and reassessment record",
+      "status": "REQUIRED_FOR_APPLICABLE_ROUTE"
+    }
+  ],
+  "boundaries": {
+    "threat_is_not_risk": true,
+    "vulnerability_is_not_scenario": true,
+    "consequence_is_not_risk_level": true,
+    "fstec_input_is_not_acceptance": true,
+    "matrix_output_is_not_acceptance": true,
+    "installed_is_not_effective": true,
+    "treatment_is_not_acceptance": true,
+    "residual_risk_requires_reassessment": true,
+    "acceptance_requires_authority_and_record": true,
+    "historical_state_is_immutable_observation": true,
+    "no_universal_formula": true,
+    "no_universal_scale": true,
+    "no_universal_threshold": true,
+    "no_universal_review_interval": true,
+    "no_iso_2022_substitution": true,
+    "legal_mandatoriness_requires_separate_basis": true,
+    "immutable_official_body_bytes_pending": true,
+    "independent_expert_review_pending": true
+  },
+  "counts": {
+    "sources": 3,
+    "process_stages": 7,
+    "semantic_boundaries": 8,
+    "fstec_crosswalk_routes": 5,
+    "treatment_options": 4,
+    "decision_gates": 8,
+    "scenarios": 8,
+    "red_team_attacks": 12,
+    "evidence_artifacts": 18,
+    "evidence_nodes": 18,
+    "control_rules": 64,
+    "regression_cases": 64,
+    "default_formulas": 0,
+    "default_scales": 0,
+    "default_thresholds": 0
+  },
+  "control_rules": [
+    {
+      "id": "RRB-001",
+      "assertion": "Separate a threat record from a risk decision record",
+      "fail_closed": true
+    },
+    {
+      "id": "RRB-002",
+      "assertion": "Separate a vulnerability record from an incident scenario",
+      "fail_closed": true
+    },
+    {
+      "id": "RRB-003",
+      "assertion": "Separate a consequence from the assessed risk level",
+      "fail_closed": true
+    },
+    {
+      "id": "RRB-004",
+      "assertion": "Link each risk to an in-scope asset or process",
+      "fail_closed": true
+    },
+    {
+      "id": "RRB-005",
+      "assertion": "Link each risk to at least one plausible scenario",
+      "fail_closed": true
+    },
+    {
+      "id": "RRB-006",
+      "assertion": "Preserve source and as-of metadata for imported threat facts",
+      "fail_closed": true
+    },
+    {
+      "id": "RRB-007",
+      "assertion": "Do not infer zero risk from absent evidence",
+      "fail_closed": true
+    },
+    {
+      "id": "RRB-008",
+      "assertion": "Do not convert a BDU identifier into a ready risk statement",
+      "fail_closed": true
+    },
+    {
+      "id": "RRB-009",
+      "assertion": "Identify existing and planned controls separately",
+      "fail_closed": true
+    },
+    {
+      "id": "RRB-010",
+      "assertion": "Identify vulnerabilities in the context of assets threats and controls",
+      "fail_closed": true
+    },
+    {
+      "id": "RRB-011",
+      "assertion": "Record consequences before estimating the risk level",
+      "fail_closed": true
+    },
+    {
+      "id": "RRB-012",
+      "assertion": "Record likelihood only for a defined scenario",
+      "fail_closed": true
+    },
+    {
+      "id": "RRB-013",
+      "assertion": "Keep qualitative quantitative and combined methods explicit",
+      "fail_closed": true
+    },
+    {
+      "id": "RRB-014",
+      "assertion": "Do not invent a universal likelihood scale",
+      "fail_closed": true
+    },
+    {
+      "id": "RRB-015",
+      "assertion": "Do not invent a universal consequence scale",
+      "fail_closed": true
+    },
+    {
+      "id": "RRB-016",
+      "assertion": "Do not invent a universal multiplication formula",
+      "fail_closed": true
+    },
+    {
+      "id": "RRB-017",
+      "assertion": "Compare assessed risk with documented evaluation criteria",
+      "fail_closed": true
+    },
+    {
+      "id": "RRB-018",
+      "assertion": "Do not use matrix color as an acceptance decision",
+      "fail_closed": true
+    },
+    {
+      "id": "RRB-019",
+      "assertion": "Do not use rank ordering as proof of legal materiality",
+      "fail_closed": true
+    },
+    {
+      "id": "RRB-020",
+      "assertion": "Document the scope and boundary used for evaluation",
+      "fail_closed": true
+    },
+    {
+      "id": "RRB-021",
+      "assertion": "Record uncertainty and data limitations",
+      "fail_closed": true
+    },
+    {
+      "id": "RRB-022",
+      "assertion": "Do not aggregate ratings without an approved method",
+      "fail_closed": true
+    },
+    {
+      "id": "RRB-023",
+      "assertion": "Route incomparable scales to review instead of normalizing silently",
+      "fail_closed": true
+    },
+    {
+      "id": "RRB-024",
+      "assertion": "Preserve the evaluation date and version of criteria",
+      "fail_closed": true
+    },
+    {
+      "id": "RRB-025",
+      "assertion": "Select one or more explicit treatment options",
+      "fail_closed": true
+    },
+    {
+      "id": "RRB-026",
+      "assertion": "Record responsible owner and decision authority separately",
+      "fail_closed": true
+    },
+    {
+      "id": "RRB-027",
+      "assertion": "Record treatment actions and target evidence",
+      "fail_closed": true
+    },
+    {
+      "id": "RRB-028",
+      "assertion": "Reassess residual risk after treatment",
+      "fail_closed": true
+    },
+    {
+      "id": "RRB-029",
+      "assertion": "Do not set residual risk to zero merely because a control is installed",
+      "fail_closed": true
+    },
+    {
+      "id": "RRB-030",
+      "assertion": "Do not treat risk transfer as transfer of responsibility for damage",
+      "fail_closed": true
+    },
+    {
+      "id": "RRB-031",
+      "assertion": "Do not treat retention as undocumented inaction",
+      "fail_closed": true
+    },
+    {
+      "id": "RRB-032",
+      "assertion": "Do not treat avoidance as a control implementation",
+      "fail_closed": true
+    },
+    {
+      "id": "RRB-033",
+      "assertion": "Require formal acceptance evidence for accepted residual risk",
+      "fail_closed": true
+    },
+    {
+      "id": "RRB-034",
+      "assertion": "Bind acceptance to the assessed scope and criteria version",
+      "fail_closed": true
+    },
+    {
+      "id": "RRB-035",
+      "assertion": "Record acceptance rationale and decision date",
+      "fail_closed": true
+    },
+    {
+      "id": "RRB-036",
+      "assertion": "Do not auto-accept risk below a colored-cell threshold",
+      "fail_closed": true
+    },
+    {
+      "id": "RRB-037",
+      "assertion": "Escalate risks outside delegated authority",
+      "fail_closed": true
+    },
+    {
+      "id": "RRB-038",
+      "assertion": "Do not treat expired acceptance as current",
+      "fail_closed": true
+    },
+    {
+      "id": "RRB-039",
+      "assertion": "Do not treat treatment approval as residual-risk acceptance",
+      "fail_closed": true
+    },
+    {
+      "id": "RRB-040",
+      "assertion": "Do not infer acceptance from silence or missing action",
+      "fail_closed": true
+    },
+    {
+      "id": "RRB-041",
+      "assertion": "Monitor changes to threats vulnerabilities assets and controls",
+      "fail_closed": true
+    },
+    {
+      "id": "RRB-042",
+      "assertion": "Trigger reassessment after material contextual change",
+      "fail_closed": true
+    },
+    {
+      "id": "RRB-043",
+      "assertion": "Preserve previous and current risk states as separate observations",
+      "fail_closed": true
+    },
+    {
+      "id": "RRB-044",
+      "assertion": "Do not overwrite historical risk with a current card",
+      "fail_closed": true
+    },
+    {
+      "id": "RRB-045",
+      "assertion": "Record control verification evidence before claiming effectiveness",
+      "fail_closed": true
+    },
+    {
+      "id": "RRB-046",
+      "assertion": "Do not invent a universal numeric review interval",
+      "fail_closed": true
+    },
+    {
+      "id": "RRB-047",
+      "assertion": "Route stale or incomplete inputs to review",
+      "fail_closed": true
+    },
+    {
+      "id": "RRB-048",
+      "assertion": "Keep monitoring and process-improvement outputs distinct",
+      "fail_closed": true
+    },
+    {
+      "id": "RRB-049",
+      "assertion": "Map FSTEC consequence inputs to risk identification without claiming equivalence",
+      "fail_closed": true
+    },
+    {
+      "id": "RRB-050",
+      "assertion": "Map FSTEC objects and interfaces to scenario context without declaring risk automatically",
+      "fail_closed": true
+    },
+    {
+      "id": "RRB-051",
+      "assertion": "Use adversary potential only as an input supported by the selected method",
+      "fail_closed": true
+    },
+    {
+      "id": "RRB-052",
+      "assertion": "Do not treat a FSTEC threat-model conclusion as risk acceptance",
+      "fail_closed": true
+    },
+    {
+      "id": "RRB-053",
+      "assertion": "Do not treat a risk standard as a universal statutory duty",
+      "fail_closed": true
+    },
+    {
+      "id": "RRB-054",
+      "assertion": "Resolve binding force through a separate legal applicability route",
+      "fail_closed": true
+    },
+    {
+      "id": "RRB-055",
+      "assertion": "Preserve the edition identity of each referenced standard",
+      "fail_closed": true
+    },
+    {
+      "id": "RRB-056",
+      "assertion": "Do not substitute ISO IEC 27005 2022 for GOST R ISO IEC 27005 2010",
+      "fail_closed": true
+    },
+    {
+      "id": "RRB-057",
+      "assertion": "Require evidence identifiers for every gate outcome",
+      "fail_closed": true
+    },
+    {
+      "id": "RRB-058",
+      "assertion": "Require traceability from decision to source and model version",
+      "fail_closed": true
+    },
+    {
+      "id": "RRB-059",
+      "assertion": "Fail closed on missing criteria owner or authorization",
+      "fail_closed": true
+    },
+    {
+      "id": "RRB-060",
+      "assertion": "Fail closed on formula division by zero unless a source defines handling",
+      "fail_closed": true
+    },
+    {
+      "id": "RRB-061",
+      "assertion": "Fail closed on conflicting risk-state timestamps",
+      "fail_closed": true
+    },
+    {
+      "id": "RRB-062",
+      "assertion": "Fail closed on mixed-scale aggregation without approved mapping",
+      "fail_closed": true
+    },
+    {
+      "id": "RRB-063",
+      "assertion": "Fail closed when residual risk is accepted before reassessment",
+      "fail_closed": true
+    },
+    {
+      "id": "RRB-064",
+      "assertion": "Keep independent expert review and immutable official bytes pending",
+      "fail_closed": true
+    }
+  ],
+  "verification_boundary": {
+    "official_standard_status_and_identity": "VERIFIED_AS_OF_2026_09_01",
+    "process_crosswalk": "VERIFIED_EXISTING_ATOMIZED_MODELS",
+    "copyrighted_bodies_reproduced": false,
+    "immutable_official_normative_bytes": "PENDING",
+    "independent_expert_review": "PENDING",
+    "critical_gap_created": 0,
+    "high_gap_created": 0,
+    "medium_findings_carried": 9
+  }
+}
