@@ -1,0 +1,66 @@
+schema_version: "1.0"
+id: SEC-PDN-SECURITY-STACK-INVENTORY-DELTA-STREAM2-2026-09-01T0206Z
+applies_to: PDN_SECURITY_STACK_SOURCE_INVENTORY.yaml
+stream: RU_PDN_TECHNICAL_CRYPTO
+created_at: "2026-09-01T02:06:16Z"
+merge_policy: ADDITIVE_STATUS_AND_ACQUISITION_OVERLAY
+
+counter_state:
+  identified: 55
+  metadata_verified: 55
+  immutable_sha256_verified: 24
+  pending_raw_capture: 31
+  exact_official_route_unresolved: 8
+  confirmed_conflicts: 0
+  verified_version_edges: 11
+
+source_status_patch:
+  SEC-SRC-RU-PP1119-2012:
+    status: CURRENT_PRIMARY_BYTES_PENDING
+    transport_observation: HTTP_TIMEOUT_GOVERNMENT_RU_EXACT_DOC_NOT_CAPTURED
+    semantic_promotion: false
+  SEC-SRC-RU-FSTEC21-2013:
+    status: CURRENT_REVISION_2020_05_14_ACTIVE
+    immutable_capture: REUSED_UNCHANGED
+    replacement_watch: PRIMARY_ENACTMENT_GATE_NOT_PASSED_AFTER_PROPOSED_2026_09_01_DATE
+    semantic_promotion: false
+  SEC-SRC-RU-FSTEC-THREAT-METHOD-2021:
+    status: CURRENT_IMMUTABLE_CAPTURED
+    immutable_capture: REUSED_UNCHANGED
+    issuer_attachment_retry: HTTP_TIMEOUT_NO_NEW_BYTES
+    applicability: ISPDN_AND_OTHER_ENUMERATED_SYSTEMS_EXCLUDING_SKZI_THREAT_ASSESSMENT
+  SEC-SRC-RU-FSB378-2014:
+    status: CURRENT_WHEN_SKZI_USED_PRIMARY_BYTES_PENDING
+    transport_observation: HTTP_401_UNAUTHORIZED_RG_RU_EXACT_PRIMARY_BYTES_NOT_CAPTURED
+    semantic_promotion: false
+  SEC-SRC-RU-FSB66-2005:
+    status: CURRENT_AS_AMENDED_PRIMARY_BYTES_PENDING
+    applicability: SKZI_LIFECYCLE_WHEN_APPLICABLE
+  SEC-SRC-RU-FSB173-2010:
+    status: VERSION_CHAIN_POINT1_ONLY_PRIMARY_BYTES_PENDING
+    applicability: PKZ_2005_POINT_50_VERSION_CHAIN_ONLY
+  SEC-SRC-RU-FAPSI152-2001:
+    status: CURRENT_SKZI_HANDLING_PRIMARY_BYTES_PENDING
+    applicability: SKZI_HANDLING_WHEN_APPLICABLE
+  SEC-SRC-RU-FSB77-2023:
+    status: IMMUTABLE_CAPTURED_EXISTING
+    applicability: PDN_COMPUTER_INCIDENT_SCOPE_ONLY
+    note: "Do not broaden into generic GosSOPKA/KII duties without a proved PDN incident edge."
+
+immutable_reuse:
+  - source_id: SEC-SRC-RU-FSTEC21-2013
+    retrieved_at: "2026-08-22T20:36:03.931115Z"
+    mime: "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    byte_length: 72618
+    sha256: "6522074c76beea01b6c4e3ab33bae368d9a72ce7c49f1372e87cc0ea6f2bcd42"
+  - source_id: SEC-SRC-RU-FSTEC-THREAT-METHOD-2021
+    retrieved_at: "2026-08-22T20:35:41.037933Z"
+    mime: "application/pdf"
+    byte_length: 2744210
+    sha256: "dfb473137de462f8c10fbbdccbea62bd136925e803e1c58aa6d4e790325c49b1"
+
+run_ref: "runs/STREAM2_RUN_2026-09-01T0206Z.yaml"
+proof_rule: >-
+  No source may become IMMUTABLE_CAPTURED without exact official payload bytes, observed MIME/signature,
+  byte length, SHA-256, immutable artifact and manifest. Proposed dates and secondary reporting cannot satisfy
+  enactment or immutable-capture gates.
