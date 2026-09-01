@@ -1,0 +1,95 @@
+{
+  "id":"RU-KOAP-CONTINUING-OFFENSE-AUTHORITATIVE-PRACTICE-ROUTING-V1",
+  "title":"КоАП РФ: оконченное и длящееся правонарушение по авторитетной судебной практике",
+  "as_of":"2026-09-02",
+  "status":"VERIFIED_SELECTED_AUTHORITATIVE_PRACTICE_PDN_SPECIFIC_EXHAUSTIVENESS_NOT_ASSERTED",
+  "scope":"Fail-closed classification and limitation router for administrative offences, including personal-data cases; selected decisions illustrate reasoning but do not replace offence-specific analysis.",
+  "sources":[
+    {"id":"KOAP_4_5","authority":"КоАП РФ, статья 4.5","revision":"current at 2026-09-02","url":"https://www.consultant.ru/document/cons_doc_LAW_34661/66a4b2666eea5f75cd1e947452b66bf52bf024d8/","future_change":"2026-10-01_REGISTERED_NOT_APPLIED"},
+    {"id":"PPVS_5_P14","authority":"Постановление Пленума Верховного Суда РФ от 24.03.2005 № 5, пункт 14","revision":"09.12.2025","url":"https://www.consultant.ru/document/cons_doc_LAW_52681/","official_page":"https://vsrf.ru/files/10904/"},
+    {"id":"VS_117_AD23_1_K4","authority":"Постановление Верховного Суда РФ от 20.07.2023 № 117-АД23-1-К4","url":"https://vsrf.ru/lk/practice/stor_pdf/2270950","role":"fact-specific negative/remand example: lower courts had not properly fixed subject and deadline facts"},
+    {"id":"VS_66_AD26_2_K8","authority":"Постановление Верховного Суда РФ от 03.02.2026 № 66-АД26-2-К8","url":"https://vsrf.ru/lk/practice/stor_pdf/2518908","role":"fact-specific positive example: persistent fire-safety violations and failure to take possible measures"},
+    {"id":"PPVS_45_P17","authority":"Постановление Пленума Верховного Суда РФ от 23.12.2021 № 45, пункт 17","url":"https://www.vsrf.ru/files/30626/","role":"fixed wage-payment deadline example expressly classified as non-continuing"},
+    {"id":"KOAP_1_5","authority":"КоАП РФ, статья 1.5","url":"https://www.consultant.ru/document/cons_doc_LAW_34661/917690edc6b927fdbdf64b50ca374a016b4c8fc8/","role":"presumption of innocence and interpretation of irremovable doubt"},
+    {"id":"KOAP_24_1","authority":"КоАП РФ, статья 24.1","url":"https://www.consultant.ru/document/cons_doc_LAW_34661/b1d6eff31466ec48d38c367b5c8ee090322217dc/","role":"complete, objective and timely fact finding"},
+    {"id":"KOAP_26_1","authority":"КоАП РФ, статья 26.1","url":"https://www.consultant.ru/document/cons_doc_LAW_34661/9d037347baaede635c50d7dcffad234036d661c7/","role":"circumstances subject to proof"}
+  ],
+  "authoritative_rules":[
+    {"id":"A01","authority":"KOAP_4_5","rule":"the limitation period is selected from the current statutory class before calculating an anchor"},
+    {"id":"A02","authority":"PPVS_5_P14","rule":"a continuing offence is an act or omission expressed in prolonged uninterrupted failure or improper performance of a duty imposed by law"},
+    {"id":"A03","authority":"PPVS_5_P14","rule":"the duty may also arise from another normative act or a non-normative act such as a prosecutor submission or supervisory order"},
+    {"id":"A04","authority":"PPVS_5_P14","rule":"failure to perform such a duty by a fixed deadline means the offence is not continuing"},
+    {"id":"A05","authority":"PPVS_5_P14","rule":"for deadline-bound omission the clock runs from expiry of the prescribed period under the stated calculation rule"},
+    {"id":"A06","authority":"PPVS_5_P14","rule":"discovery of a continuing offence is the date an official authorized to draw the protocol identified the fact"},
+    {"id":"A07","authority":"PPVS_5_P14","rule":"the limitation period has no interruption route under KoAP"},
+    {"id":"A08","authority":"PPVS_5_P14","rule":"the residence-transfer suspension is the express statutory route and must be documented exactly"},
+    {"id":"A09","authority":"VS_117_AD23_1_K4","rule":"a court must establish the exact duty, its deadline, the responsible subject and the proved conduct; an arbitrary event date is insufficient"},
+    {"id":"A10","authority":"VS_66_AD26_2_K8","rule":"persistent violation of an ongoing safety duty may be continuing on proved facts, but that outcome is tied to the offence and evidence examined"},
+    {"id":"A11","authority":"PPVS_45_P17","rule":"missing each fixed wage-payment deadline is non-continuing and starts its own statutory calculation"},
+    {"id":"A12","authority":"KOAP_1_5","rule":"the prosecuted person does not bear the burden of proving innocence and irremovable doubt is resolved in that person's favor"}
+  ],
+  "classification_routes":[
+    {"id":"C01","route":"FIXED_DEADLINE_OMISSION","result":"COMPLETED_NOT_CONTINUING","required":["DUTY","FIXED_DEADLINE","NONPERFORMANCE"],"anchor":"day following the last day provided for performance under PPVS 5 paragraph 14"},
+    {"id":"C02","route":"ONGOING_DUTY_CONTINUOUS_BREACH","result":"POTENTIALLY_CONTINUING","required":["ONGOING_DUTY","UNINTERRUPTED_BREACH","ACTOR","FAULT","OFFENCE_ELEMENTS"],"anchor":"authorized-official discovery only after all gates are proved"},
+    {"id":"C03","route":"ONE_TIME_ACTION","result":"COMPLETED","required":["ACTION_TIMESTAMP","OFFENCE_ELEMENTS"],"anchor":"commission route"},
+    {"id":"C04","route":"REPEATED_EPISODES","result":"SEPARATE_OR_AGGREGATED_ONLY_BY_EXPRESS_RULE","required":["EPISODE_TIMELINE","OBJECTIVE_SIDE_ANALYSIS"],"boundary":"repetition does not itself create one continuing offence"},
+    {"id":"C05","route":"NON_NORMATIVE_ORDER_FIXED_DEADLINE","result":"COMPLETED_NOT_CONTINUING","required":["VALID_ORDER","ADDRESSEE","DEADLINE","NONPERFORMANCE"],"anchor":"fixed-deadline route"},
+    {"id":"C06","route":"ONGOING_UNSAFE_OR_UNLAWFUL_STATE","result":"PENDING_UNTIL_DUTY_AND_CONTINUITY_PROVED","required":["STATE_EVIDENCE","ONGOING_DUTY","ABILITY_TO_COMPLY","CONTINUOUS_BREACH"],"boundary":"a condition label alone proves neither offence nor continuity"},
+    {"id":"C07","route":"LATE_NOTIFICATION_OR_REPORT","result":"PRESUMPTIVELY_FIXED_DEADLINE_ROUTE","required":["REPORTING_DUTY","EXACT_DEADLINE","SUBMISSION_TIMESTAMP"],"boundary":"must still be tested against the exact offence wording and current law"},
+    {"id":"C08","route":"ONGOING_PROCESSING_OR_PUBLICATION","result":"NO_AUTOMATIC_CONTINUING_CLASSIFICATION","required":["EACH_ACT_OR_STATE","LEGAL_BASIS","DUTY","TIME_RANGE","OFFENCE_PART"],"boundary":"ongoing business activity does not decide KoAP classification"},
+    {"id":"C09","route":"POST_DISCOVERY_REMEDIATION_FAILURE","result":"SEPARATE_DUTY_ANALYSIS","required":["ORIGINAL_OFFENCE","REMEDIATION_DUTY","DEADLINE_OR_ONGOING_NATURE"],"boundary":"later non-remediation does not retroactively convert the original completed offence"},
+    {"id":"C10","route":"UNKNOWN_DUTY_OR_DEADLINE","result":"PENDING_NO_CLOCK_CALCULATION","required":["LEGAL_RESEARCH","FACT_COMPLETION"],"boundary":"do not choose discovery merely because commission date is inconvenient or unknown"}
+  ],
+  "selected_case_nodes":[
+    {"id":"P01","case":"117-АД23-1-К4","holding_use":"negative/remand example","facts":"budget-estimate documentation; responsible-subject and exact deadline treatment were not adequately evaluated","outcome":"lower judicial acts cancelled and matter remanded","non_transfer":"does not classify article 13.11 or every missing document"},
+    {"id":"P02","case":"66-АД26-2-К8","holding_use":"positive fact-bound example","facts":"persistent fire-safety violations and failure to take possible measures","outcome":"acts left unchanged; continuing classification accepted","non_transfer":"does not make every security weakness or unremediated finding continuing"},
+    {"id":"P03","case":"PPVS 45 paragraph 17","holding_use":"fixed-deadline example","facts":"late wage payment","outcome":"expressly non-continuing; each due date matters","non_transfer":"used for the deadline principle, not as a PDn offence holding"},
+    {"id":"P04","case":"PPVS 5 paragraph 14","holding_use":"binding general interpretive route","facts":"general KoAP limitation classification","outcome":"continuous-duty and fixed-deadline branches separated","non_transfer":"exact offence elements and current statutory period remain separately required"}
+  ],
+  "pdn_application_guards":[
+    {"id":"PAG01","rule":"select the exact article 13.11 part or other KoAP provision before classifying time"},
+    {"id":"PAG02","rule":"a 152-FZ duty with an exact deadline is not converted to continuing merely because compliance remains absent"},
+    {"id":"PAG03","rule":"an ongoing processing operation is not automatically one continuing administrative offence"},
+    {"id":"PAG04","rule":"SOC, DLP, internal audit, subject complaint and Roskomnadzor discovery timestamps are different evidence events"},
+    {"id":"PAG05","rule":"only discovery by an official authorized to draw the relevant protocol satisfies the PPVS 5 discovery node"},
+    {"id":"PAG06","rule":"notification, remediation and security-control duties are analyzed separately; one missed duty does not define all others"},
+    {"id":"PAG07","rule":"case law from another offence illustrates a test but never proves the PDn classification"},
+    {"id":"PAG08","rule":"PDn-specific authoritative-practice exhaustiveness is not asserted"}
+  ],
+  "decision_gates":[
+    {"order":1,"gate":"freeze the offence provision, duty source and article 4.5 text applicable to the alleged act"},
+    {"order":2,"gate":"identify the exact duty, addressee, action or omission and all offence elements"},
+    {"order":3,"gate":"determine whether the duty is continuous or had a fixed performance deadline"},
+    {"order":4,"gate":"build commission, deadline, breach-period, internal-detection, authorized-discovery and protocol timestamps"},
+    {"order":5,"gate":"prove uninterrupted breach and continuing ability/duty before selecting the continuing route"},
+    {"order":6,"gate":"identify the official's protocol competence before using that person's detection date"},
+    {"order":7,"gate":"calculate the statutory period and documented suspension without interruption or evidence-reset inventions"},
+    {"order":8,"gate":"preserve contrary facts, uncertainty and the non-transfer limits of selected cases"}
+  ],
+  "scenarios":[
+    {"id":"S1","input":"152-FZ notice was due on a fixed date and filed late","result":"FIXED_DEADLINE_ANALYSIS_NOT_AUTOMATIC_CONTINUING"},
+    {"id":"S2","input":"internal SOC detected a potential breach today","result":"NOT_PPVS_DISCOVERY_UNLESS_THE_PERSON_IS_AUTHORIZED_TO_DRAW_RELEVANT_PROTOCOL"},
+    {"id":"S3","input":"a control weakness remained for months","result":"PENDING_DUTY_OFFENCE_AND_UNINTERRUPTED_BREACH_PROOF"},
+    {"id":"S4","input":"the same bad configuration appeared in repeated scans","result":"REPETITION_IS_NOT_AUTOMATICALLY_ONE_CONTINUING_OFFENCE"},
+    {"id":"S5","input":"supervisory order with fixed deadline was not performed","result":"FIXED_DEADLINE_COMPLETED_ROUTE_UNDER_PPVS_5"},
+    {"id":"S6","input":"continuous statutory safety duty remained breached and ability to comply was proved","result":"POTENTIALLY_CONTINUING_FACT_BOUND_ROUTE"},
+    {"id":"S7","input":"original completed violation was not remediated after discovery","result":"ANALYZE_ORIGINAL_AND_REMEDIATION_DUTIES_SEPARATELY"},
+    {"id":"S8","input":"act date is unknown but audit date is known","result":"PENDING_DO_NOT_SUBSTITUTE_AUDIT_DATE_AS_DISCOVERY_OR_COMMISSION"}
+  ],
+  "red_team_attacks":["ANY_OMISSION_IS_CONTINUING","ANY_LONG_STATE_IS_CONTINUING","FIXED_DEADLINE_BREACH_STARTS_AT_DISCOVERY","INTERNAL_AUDIT_EQUALS_AUTHORIZED_DISCOVERY","SOC_ALERT_EQUALS_AUTHORIZED_DISCOVERY","REPEATED_EVENTS_EQUAL_ONE_CONTINUING_OFFENCE","LATER_REMEDIATION_FAILURE_REWRITES_ORIGINAL_OFFENCE","OTHER_SECTOR_CASE_AUTOMATICALLY_BINDS_PDN_FACTS","UNKNOWN_COMMISSION_DATE_JUSTIFIES_DISCOVERY_DATE","NEW_EVIDENCE_INTERRUPTS_OR_RESETS_LIMITATION","HEARING_OR_REVIEW_TOLLS_LIMITATION_WITHOUT_AUTHORITY","PERSON_PROSECUTED_MUST_PROVE_NON_CONTINUITY"],
+  "evidence_artifacts":["applicable-version snapshot","exact offence part","duty source","duty wording","duty addressee","fixed deadline evidence","commission timestamp","breach period","uninterrupted-breach evidence","ability-to-comply evidence","internal detection timestamp","authorized official identity","protocol competence proof","authorized discovery timestamp","protocol timestamp","episode map","suspension evidence","limitation and contrary-facts memorandum"],
+  "evidence_nodes":["E01","E02","E03","E04","E05","E06","E07","E08","E09","E10","E11","E12","E13","E14","E15","E16","E17","E18"],
+  "control_rules":[
+    {"id":"R01","assertion":"freeze applicable offence version"},{"id":"R02","assertion":"freeze applicable article 4.5 version"},{"id":"R03","assertion":"register 2026-10-01 change without early application"},{"id":"R04","assertion":"select exact offence part"},{"id":"R05","assertion":"identify exact duty source"},{"id":"R06","assertion":"identify duty addressee"},{"id":"R07","assertion":"prove action or omission"},{"id":"R08","assertion":"prove every offence element"},
+    {"id":"R09","assertion":"separate continuous duty from fixed deadline"},{"id":"R10","assertion":"fixed deadline breach is non-continuing under PPVS 5"},{"id":"R11","assertion":"continuous route requires prolonged breach"},{"id":"R12","assertion":"continuous route requires uninterrupted breach"},{"id":"R13","assertion":"ongoing state label is insufficient"},{"id":"R14","assertion":"omission label is insufficient"},{"id":"R15","assertion":"repetition is insufficient"},{"id":"R16","assertion":"unknown commission date is insufficient"},
+    {"id":"R17","assertion":"fixed deadline route uses performance-period expiry"},{"id":"R18","assertion":"one-time action uses commission route"},{"id":"R19","assertion":"map each repeated episode"},{"id":"R20","assertion":"do not merge episodes without authority"},{"id":"R21","assertion":"separate original and remediation duties"},{"id":"R22","assertion":"do not retroactively reclassify original offence"},{"id":"R23","assertion":"record contrary facts"},{"id":"R24","assertion":"uncertainty yields pending"},
+    {"id":"R25","assertion":"identify authorized protocol official"},{"id":"R26","assertion":"prove protocol competence for selected offence"},{"id":"R27","assertion":"internal detection is a separate timestamp"},{"id":"R28","assertion":"SOC alert is a separate timestamp"},{"id":"R29","assertion":"DLP alert is a separate timestamp"},{"id":"R30","assertion":"subject complaint is a separate timestamp"},{"id":"R31","assertion":"authorized discovery requires official fact identification"},{"id":"R32","assertion":"do not backdate discovery without evidence"},
+    {"id":"R33","assertion":"apply current statutory period class"},{"id":"R34","assertion":"record start-date calculation rule"},{"id":"R35","assertion":"record residence-transfer suspension exactly"},{"id":"R36","assertion":"no interruption route under PPVS 5"},{"id":"R37","assertion":"new evidence does not reset limitation"},{"id":"R38","assertion":"hearing extension does not extend limitation"},{"id":"R39","assertion":"review does not create unprovided tolling"},{"id":"R40","assertion":"expiry excludes production under article 24.5 route"},
+    {"id":"R41","assertion":"use 117-AD23-1-K4 as fact-bound negative example"},{"id":"R42","assertion":"do not transfer its budget offence outcome to PDn"},{"id":"R43","assertion":"use 66-AD26-2-K8 as fact-bound positive example"},{"id":"R44","assertion":"do not transfer its fire-safety outcome to PDn"},{"id":"R45","assertion":"use PPVS 45 paragraph 17 only for fixed-deadline principle"},{"id":"R46","assertion":"PPVS 5 paragraph 14 supplies general classification test"},{"id":"R47","assertion":"case facts do not replace statutory elements"},{"id":"R48","assertion":"selected practice is not exhaustive"},
+    {"id":"R49","assertion":"PDn notice deadline receives fixed-deadline test"},{"id":"R50","assertion":"ongoing processing is not automatically continuing"},{"id":"R51","assertion":"security weakness is not automatically continuing"},{"id":"R52","assertion":"notification and remediation duties remain separate"},{"id":"R53","assertion":"article 13.11 parts remain separate"},{"id":"R54","assertion":"152-FZ breach does not alone prove KoAP offence"},{"id":"R55","assertion":"prove legal entity or official actor separately"},{"id":"R56","assertion":"preserve presumption of innocence"},
+    {"id":"R57","assertion":"prosecuted person need not prove innocence"},{"id":"R58","assertion":"irremovable doubt favors prosecuted person"},{"id":"R59","assertion":"preserve complete fact finding"},{"id":"R60","assertion":"preserve evidence admissibility and sufficiency"},{"id":"R61","assertion":"preserve source revision and retrieval date"},{"id":"R62","assertion":"primary current consolidated bytes remain pending"},{"id":"R63","assertion":"PDn-specific practice exhaustiveness remains pending"},{"id":"R64","assertion":"model does not predict case outcome"}
+  ],
+  "boundaries":{"no_any_omission_equals_continuing":true,"no_any_long_state_equals_continuing":true,"no_fixed_deadline_starts_at_discovery":true,"no_internal_detection_equals_authorized_discovery":true,"no_repetition_equals_one_continuing_offence":true,"no_retroactive_remediation_reclassification":true,"no_cross_offence_case_transfer":true,"no_unknown_date_substitution":true,"no_evidence_reset":true,"no_unprovided_tolling":true,"no_burden_shift":true,"no_case_outcome_prediction":true},
+  "counts":{"sources":8,"authoritative_rules":12,"classification_routes":10,"selected_case_nodes":4,"pdn_application_guards":8,"decision_gates":8,"scenarios":8,"red_team_attacks":12,"evidence_artifacts":18,"evidence_nodes":18,"control_rules":64,"regression_cases":64},
+  "pending":{"immutable_current_consolidated_ppvs_bytes":"PENDING","pdn_specific_authoritative_practice_exhaustiveness":"NOT_ASSERTED","independent_expert_review":"PENDING","future_article_4_5_reverification":"DUE_2026_10_01"}
+}
