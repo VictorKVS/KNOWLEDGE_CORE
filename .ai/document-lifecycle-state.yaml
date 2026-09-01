@@ -1,0 +1,225 @@
+schema_version: "1.0"
+id: DOCUMENT-LIFECYCLE-STATE-0001
+as_of: 2026-09-01
+status: ACTIVE
+purpose: >-
+  Define evidence-backed lifecycle states and change relations for normative, regulatory,
+  methodological, standards and other versioned documents after library inventory/identity resolution.
+  Keep current state, version state and change relations separate so amendment, repeal and replacement
+  are not conflated.
+
+principles:
+  fail_closed: true
+  status_requires_evidence: true
+  target_date_is_not_effective_date: true
+  filename_is_not_status_evidence: true
+  title_is_not_status_evidence: true
+  third_party_summary_is_not_primary_transition_evidence: true
+  preserve_history: true
+  do_not_delete_superseded_versions: true
+  status_checked_at_required_for_current_claims: true
+
+state_dimensions:
+  lifecycle_state:
+    description: Current legal/operational state of the document or version at status_checked_at.
+    allowed:
+      UNKNOWN:
+        meaning: State cannot be established from sufficient evidence.
+      DRAFT:
+        meaning: Project/draft; not an adopted effective act.
+      ADOPTED_NOT_PUBLISHED:
+        meaning: Adoption is evidenced but required official publication is not yet evidenced.
+      PUBLISHED_NOT_EFFECTIVE:
+        meaning: Officially published but effective date has not yet arrived or activation is otherwise pending.
+      FUTURE_EFFECTIVE:
+        meaning: Validly adopted/published with a proven future effective date.
+      EFFECTIVE:
+        meaning: In force/current at status_checked_at.
+      PARTIALLY_EFFECTIVE:
+        meaning: Only part remains in force or different provisions have different lifecycle states.
+      SUSPENDED:
+        meaning: Operation is suspended in whole based on proven authority/evidence.
+      PARTIALLY_SUSPENDED:
+        meaning: Operation is suspended only for identified provisions/scope.
+      EXPIRED:
+        meaning: Fixed validity period ended without needing a repeal act, when proven.
+      REPEALED:
+        meaning: Lost force/was repealed as a whole based on proven transition evidence.
+      PARTIALLY_REPEALED:
+        meaning: Identified provisions lost force while other parts remain.
+      INVALIDATED:
+        meaning: Invalidated by competent authority/court where that status is legally supported.
+      WITHDRAWN:
+        meaning: Withdrawn before or outside ordinary entry-into-force lifecycle where applicable.
+
+  version_state:
+    description: Position of a specific edition/revision within the document identity chain.
+    allowed:
+      UNKNOWN_VERSION:
+        meaning: Version position is unresolved.
+      ORIGINAL_VERSION:
+        meaning: Initial evidenced version/edition.
+      CURRENT_VERSION:
+        meaning: Latest effective consolidated or source-backed version at status_checked_at.
+      HISTORICAL_VERSION:
+        meaning: Previously effective version retained for history/replay.
+      FUTURE_VERSION:
+        meaning: Version/amendment package is proven but not yet effective.
+      SUPERSEDED_VERSION:
+        meaning: Replaced by a later version within the same logical document identity.
+
+  change_flags:
+    description: Non-exclusive flags describing known changes without replacing lifecycle_state.
+    allowed:
+      HAS_AMENDMENTS: One or more proven amendments affect the document/version.
+      AMENDMENT_PENDING: A proven future amendment exists but is not yet effective.
+      HAS_PARTIAL_REPEAL: Some provisions are repealed while others remain.
+      HAS_SUSPENSION: Whole or partial suspension exists in the lifecycle chain.
+      HAS_REPLACEMENT: A replacing document/version is proven.
+      REPLACEMENT_PENDING: A proven replacement exists but has not yet become effective.
+      HAS_SUCCESSOR: A successor act/document is linked, without assuming full legal replacement.
+      HAS_CORRECTION: Official correction/errata is linked.
+      HAS_EXTENSION: Validity/effective period was extended.
+      STATUS_REVIEW_REQUIRED: Evidence is conflicting, stale or incomplete.
+
+relation_types:
+  - AMENDS
+  - AMENDED_BY
+  - PARTIALLY_AMENDS
+  - PARTIALLY_AMENDED_BY
+  - REPEALS
+  - REPEALED_BY
+  - PARTIALLY_REPEALS
+  - PARTIALLY_REPEALED_BY
+  - REPLACES
+  - REPLACED_BY
+  - PARTIALLY_REPLACES
+  - PARTIALLY_REPLACED_BY
+  - SUPERSEDES_VERSION
+  - SUPERSEDED_BY_VERSION
+  - SUSPENDS
+  - SUSPENDED_BY
+  - PARTIALLY_SUSPENDS
+  - PARTIALLY_SUSPENDED_BY
+  - RESTORES_EFFECT
+  - EFFECT_RESTORED_BY
+  - EXTENDS_VALIDITY
+  - VALIDITY_EXTENDED_BY
+  - CORRECTS
+  - CORRECTED_BY
+  - SUCCESSOR_OF
+  - HAS_SUCCESSOR
+
+required_status_fields:
+  - document_id
+  - version_id
+  - lifecycle_state
+  - version_state
+  - change_flags
+  - status_checked_at
+  - evidence_status
+  - evidence_refs
+
+recommended_dates:
+  - adopted_date
+  - signed_date
+  - official_publication_date
+  - registration_date
+  - effective_from
+  - effective_to
+  - repeal_or_expiry_date
+  - future_change_effective_from
+
+transition_record:
+  required:
+    - transition_id
+    - relation_type
+    - source_document_or_version_id
+    - target_document_or_version_id
+    - scope
+    - transition_effective_from
+    - evidence_refs
+    - evidence_status
+    - checked_at
+  scope_allowed:
+    - WHOLE_DOCUMENT
+    - PARTIAL_DOCUMENT
+    - SPECIFIC_PROVISIONS
+    - UNKNOWN_SCOPE
+  optional:
+    - affected_provision_ids
+    - official_publication_ref
+    - registration_ref
+    - notes
+
+status_derivation_rules:
+  - rule: >-
+      HAS_AMENDMENTS does not mean the document is repealed or replaced; it remains EFFECTIVE when
+      current force is independently proven.
+  - rule: >-
+      REPLACED_BY is a relation. Set lifecycle_state=REPEALED only when loss-of-force evidence is proven;
+      do not infer repeal solely from a successor/replacement title.
+  - rule: >-
+      A future replacement/amendment sets REPLACEMENT_PENDING or AMENDMENT_PENDING and FUTURE_VERSION
+      where appropriate, but does not change the current effective baseline before the proven date.
+  - rule: >-
+      Partial repeal/replacement must identify scope/provisions when possible and must not mark the whole
+      document REPEALED unless whole-document loss of force is proven.
+  - rule: >-
+      Consolidated commercial/reference texts may help discover a transition but primary official evidence
+      is required for authoritative status promotion when applicable.
+  - rule: >-
+      If evidence conflicts, preserve all evidence, set STATUS_REVIEW_REQUIRED and prefer UNKNOWN over an
+      unsupported definitive state.
+
+ui_flags:
+  description: Human-readable display layer derived from canonical lifecycle data; not authoritative by itself.
+  mappings:
+    EFFECTIVE: "🟢 ДЕЙСТВУЕТ"
+    FUTURE_EFFECTIVE: "🔵 ВСТУПИТ В СИЛУ"
+    PUBLISHED_NOT_EFFECTIVE: "🔵 ОПУБЛИКОВАН / НЕ ДЕЙСТВУЕТ"
+    PARTIALLY_EFFECTIVE: "🟠 ДЕЙСТВУЕТ ЧАСТИЧНО"
+    SUSPENDED: "⚫ ПРИОСТАНОВЛЕН"
+    PARTIALLY_SUSPENDED: "⚫ ЧАСТИЧНО ПРИОСТАНОВЛЕН"
+    REPEALED: "🔴 УТРАТИЛ СИЛУ"
+    PARTIALLY_REPEALED: "🟠 ЧАСТИЧНО УТРАТИЛ СИЛУ"
+    EXPIRED: "🔴 СРОК ДЕЙСТВИЯ ИСТЁК"
+    DRAFT: "⚪ ПРОЕКТ"
+    UNKNOWN: "⚪ СТАТУС НЕ ПОДТВЕРЖДЁН"
+  supplemental:
+    HAS_AMENDMENTS: "🟡 ИЗМЕНЯЛСЯ"
+    AMENDMENT_PENDING: "🔵 ЕСТЬ БУДУЩЕЕ ИЗМЕНЕНИЕ"
+    HAS_REPLACEMENT: "🟣 ЕСТЬ ЗАМЕНЯЮЩИЙ ДОКУМЕНТ"
+    REPLACEMENT_PENDING: "🔵 ЗАМЕНА ЕЩЁ НЕ ВСТУПИЛА В СИЛУ"
+    STATUS_REVIEW_REQUIRED: "⚠ ТРЕБУЕТ ПРОВЕРКИ"
+
+watch_policy:
+  current_documents:
+    watch_for:
+      - new_amendment
+      - repeal
+      - replacement
+      - suspension
+      - extension
+      - official_correction
+    action: >-
+      Create a transition candidate first; update authoritative state only after the evidence gate passes.
+  future_changes:
+    action: >-
+      Recheck at/after proven effective date and never auto-promote merely because wall-clock date arrived
+      if the enactment/publication chain remains incomplete.
+
+metrics:
+  required:
+    - lifecycle_state_counts
+    - current_version_count
+    - historical_version_count
+    - future_version_count
+    - documents_with_amendments_count
+    - documents_with_pending_changes_count
+    - repealed_count
+    - partially_repealed_count
+    - replaced_relation_count
+    - unresolved_status_count
+    - status_review_required_count
+  authoritative_only_after_reconciliation: true
