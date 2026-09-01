@@ -1,9 +1,9 @@
 {
   "id": "RU-KII-COMMUNICATIONS-PP402-CLAUSE-ROUTING-V1",
   "as_of": "2026-09-01",
-  "status": "PARTIAL_VERIFIED_POINTS_1_19_FORMULA_GLYPHS_PENDING",
+  "status": "PARTIAL_VERIFIED_POINTS_1_19_FORMULAS_TRANSCRIBED_PRESERVED_PDF_PRIMARY_HASH_PENDING",
   "title": "ПП №402: clause-level маршрут категорирования КИИ в сфере связи",
-  "scope": "Non-verbatim fail-closed model. Exact image formulas are not reconstructed without primary bytes.",
+  "scope": "Non-verbatim fail-closed model. Formula glyphs were visually transcribed from a preserved PDF linked to the official publication; immutable official PDF bytes remain pending.",
   "sources": [
     {
       "id": "PP402_OFFICIAL",
@@ -16,6 +16,12 @@
       "title": "Текст ПП №402 и отраслевых особенностей",
       "role": "AUTHORITATIVE_PUBLIC_TEXT_ROUTE",
       "url": "https://www.garant.ru/products/ipo/prime/doc/413956145/"
+    },
+    {
+      "id": "PP402_PRESERVED_PDF",
+      "title": "Сохранённая PDF-копия ПП №402, связанная с официальной публикацией",
+      "role": "FORMULA_IMAGE_TRANSCRIPTION_CROSS_CHECK_NOT_OFFICIAL_HASH",
+      "url": "https://hub.zlonov.ru/laws/pdfs/%D0%9F%D0%9F-402-%D0%BE%D1%82-13.04.2026.pdf"
     },
     {
       "id": "PP402_CURRENT_CARD",
@@ -125,7 +131,7 @@
     {
       "id": "P16",
       "section": "III",
-      "normalized_rule": "position 8 percentage formula; exact glyph transcription pending, verified variables are assessed-period income and five-year average annual income"
+      "normalized_rule": "position 8 percentage: absolute deviation of assessed-period income from five-year average annual income, divided by that five-year average annual income, multiplied by 100"
     },
     {
       "id": "P17",
@@ -135,7 +141,7 @@
     {
       "id": "P18",
       "section": "III",
-      "normalized_rule": "position 9 percentage formula; exact glyph transcription pending, verified variables are reduced budget payments and three-year planned average federal-budget income"
+      "normalized_rule": "position 9 percentage: reduced payments to the budget system divided by planned three-year average annual federal-budget income, multiplied by 100"
     },
     {
       "id": "P19",
@@ -176,20 +182,26 @@
   ],
   "formula_status": {
     "point16_position8": {
-      "state": "PENDING_PRIMARY_PDF_FORMULA_TRANSCRIPTION",
+      "state": "VERIFIED_VISUAL_TRANSCRIPTION_PRESERVED_PDF_PRIMARY_HASH_PENDING",
+      "normalized_formula": "P8 = abs((D_actual - D_average) / D_average) * 100",
+      "denominator_guard": "D_average must be non-zero; PP402 does not supply a divide-by-zero substitution",
       "verified_variables": [
         "assessed-period income including taxes/excises/mandatory payments",
         "five-year average annual income"
       ]
     },
     "point18_position9": {
-      "state": "PENDING_PRIMARY_PDF_FORMULA_TRANSCRIPTION",
+      "state": "VERIFIED_VISUAL_TRANSCRIPTION_PRESERVED_PDF_PRIMARY_HASH_PENDING",
+      "normalized_formula": "P9 = delta_budget_payments / B_average * 100",
+      "denominator_guard": "B_average must be non-zero; PP402 does not supply a divide-by-zero substitution",
       "verified_variables": [
         "reduced payments to budget system",
         "planned three-year average annual federal-budget income"
       ]
     },
-    "guard": "variable names do not authorize reconstructing operators, denominator, normalization or sign"
+    "transcription_basis": "visual inspection of pages 8 and 10 of the preserved ten-page PDF linked from the PP402 source page",
+    "official_pdf_transport": "PENDING_TIMEOUT_NO_IMMUTABLE_PRIMARY_HASH",
+    "guard": "do not remove the absolute-value bars from P8, swap denominators, infer divide-by-zero handling or treat the preserved-copy URL as an official immutable hash"
   },
   "point17_recovery_fallback": {
     "documents_available": "USE_DOCUMENTED_TIME",
@@ -235,8 +247,8 @@
     },
     {
       "id": "G8",
-      "name": "formula-bytes-act-and-review-evidence",
-      "fail": "PENDING_PRIMARY_FORMULA_OR_DECISION_EVIDENCE"
+      "name": "formula-transcription-official-hash-act-and-review-evidence",
+      "fail": "PENDING_OFFICIAL_PDF_HASH_OR_DECISION_EVIDENCE"
     }
   ],
   "scenarios": [
@@ -277,8 +289,8 @@
     },
     {
       "id": "S8",
-      "input": "formula image unavailable",
-      "expected": "PENDING_EXACT_FORMULA_NO_RECONSTRUCTION"
+      "input": "official PDF transport times out but linked preserved PDF exposes formula images",
+      "expected": "USE_EXACT_VISUAL_TRANSCRIPTION_KEEP_OFFICIAL_HASH_PENDING"
     }
   ],
   "red_team_attacks": [
@@ -334,7 +346,7 @@
     },
     {
       "id": "RT-11",
-      "attack": "FORMULA_RECONSTRUCTED_FROM_VARIABLE_NAMES",
+      "attack": "REMOVE_P8_ABSOLUTE_VALUE_OR_SWAP_FORMULA_DENOMINATOR",
       "blocked": true
     },
     {
@@ -431,7 +443,7 @@
     },
     {
       "id": "EV-18",
-      "name": "calculation worksheets primary formula bytes minutes and reviewer sign-off",
+      "name": "calculation worksheets formula-image copy official PDF hash minutes and reviewer sign-off",
       "required": true
     }
   ],
