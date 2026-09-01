@@ -1,0 +1,97 @@
+schema_version: "1.0"
+id: PDN-MASTER-SOURCE-INVENTORY-DELTA-STREAM3-2026-09-01T1717Z
+kind: pdn_master_inventory_sector_overlay_delta
+stream: 3
+checked_at: "2026-09-01T20:17:51+03:00"
+
+source_overlay:
+  id: SEC-SRC-RU-FZ-323-2011
+  document: "Федеральный закон от 21.11.2011 № 323-ФЗ «Об основах охраны здоровья граждан в Российской Федерации»"
+  role: healthcare_medical_secrecy_health_pdn_and_information_exchange_overlay
+  canonical_record: "../protected-information/source/SEC-SRC-RU-FZ-323-2011.yaml"
+  metadata_status: PRIMARY_OFFICIAL_PUBLICATION_ID_VERIFIED_CURRENT_REVISION_CROSSCHECKED
+  primary_official_source: "https://publication.pravo.gov.ru/Document/View/0001201111220007"
+  primary_publication_id: "0001201111220007"
+  raw_capture: PENDING
+  verified_for_exact_extraction: false
+  applicability: DIRECT_HEALTHCARE_SPECIAL_REGIME_WITH_SCOPED_PDN_OVERLAP
+
+pdn_overlap_anchors:
+  - locator: "статья 13 часть 1"
+    rule: "Medical secrecy includes seeking medical care, health state, diagnosis and other information obtained during examination and treatment."
+    pdn_guard: "Medical secrecy is a special protected-information regime. Whether a concrete item is also PDN is evaluated under 152-FZ and the identified-subject context; the two categories must not be collapsed."
+  - locator: "статья 13 часть 4 пункт 8"
+    rule: "Medical organizations may exchange information for medical care, including information in medical information systems, with requirements of Russian personal-data legislation taken into account."
+    pdn_guard: "This is an explicit PDN-law bridge for the scoped care exchange, not a general authorization for secondary use or disclosure."
+  - locator: "статья 92 часть 1"
+    rule: "Personalized healthcare accounting includes processing personal data of statutorily defined healthcare participants and patients/examinees."
+    pdn_guard: "Only the categories and processing actually covered by the statutory accounting context are promoted into this overlay."
+  - locator: "статья 92 часть 4"
+    rule: "Confidentiality and security of personal data in personalized healthcare accounting are ensured in compliance with Russian personal-data legislation."
+    pdn_guard: "This is a direct PDN security/confidentiality bridge; it does not itself define one universal control set or retention term."
+
+medical_secrecy_model:
+  post_mortem_continuity: true
+  consent_and_exception_split: true
+  exception_guard: "Article 13(4) statutory consent-free disclosures are route-specific and must not be generalized."
+  relations_to_pdn:
+    - "medical secrecy can contain personal data but is not synonymous with all health PDN"
+    - "health PDN can exist outside Article 13 medical-secrecy scope"
+    - "death does not erase the Article 13 confidentiality regime"
+
+relations:
+  - target: "152-ФЗ"
+    type: EXPLICIT_PDN_LEGISLATION_BRIDGE
+    anchors:
+      - "статья 13 часть 4 пункт 8"
+      - "статья 92 часть 4"
+  - target: "326-ФЗ"
+    type: CONDITIONAL_OMI_INFORMATION_FLOW_OVERLAP
+    guard: "OMI routes do not convert all medical secrecy into insurance information."
+  - target: "125-ФЗ"
+    type: DOCUMENT_SPECIFIC_RETENTION_INTERFACE
+    guard: "No archival term is imported until a primary act establishes the term for a concrete medical-document class."
+
+retention_model:
+  universal_pdn_period: false
+  universal_medical_record_period: false
+  sector_rules:
+    - "323-FZ itself does not supply one numeric retention period for all medical secrecy, all healthcare PDN, or all medical records."
+    - "Object-specific medical-document and archive acts must be registered separately before assigning retention."
+  guards:
+    - "NO_GENERAL_RETENTION_PERIOD_INFERRED_FROM_323_FZ"
+    - "POST_MORTEM_CONFIDENTIALITY_NOT_NUMERIC_RETENTION"
+    - "ARCHIVE_RULE_REQUIRES_OBJECT_MATCH"
+
+version_state:
+  current_revision_date: "2026-04-25"
+  latest_current_amendment: "114-ФЗ от 25.04.2026"
+  latest_current_amendment_publication_id: "0001202604250013"
+  latest_current_amendment_effective_from: "2026-07-25"
+  latest_current_amendment_scope: "Article 16 only"
+  later_current_amendment_found_in_sweep: false
+  full_historical_chain_closed: false
+  version_chain_state: CURRENT_REVISION_CROSSCHECKED_EXACT_PRIMARY_BYTES_PENDING
+
+counter_delta_this_pass:
+  sector_overlay_found: 1
+  primary_publication_verified: 1
+  downloaded: 0
+  immutable: 0
+  pending_primary_exact_capture: 1
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+
+master_counter_policy:
+  core_pdn_production_counters_changed: false
+  reason: >-
+    323-FZ is a healthcare special-regime overlay with explicit PDN bridges. It must not inflate direct PDN core exact/immutable counters
+    before exact official-byte capture and the controlled merge gate.
+
+proof_guards:
+  - "TAXONOMY_SEED_NOT_LEGAL_PROOF"
+  - "MEDICAL_SECRECY_AND_PDN_MODELED_SEPARATELY"
+  - "ARTICLE13_PART4_EXCEPTION_NOT_GENERAL_DISCLOSURE_LICENSE"
+  - "NO_APPLICABILITY_PROMOTION_WITHOUT_OBJECT_AND_ROUTE_MATCH"
+  - "NO_UNIVERSAL_RETENTION_INFERRED"
+  - "NO_FABRICATED_MIME_BYTE_LENGTH_OR_SHA256"
