@@ -1,0 +1,173 @@
+schema_version: "1.0"
+id: SEC-SRC-RU-FZ-323-2011
+kind: security-regulatory-source
+status: PRIMARY_OFFICIAL_PUBLICATION_ID_VERIFIED_CURRENT_REVISION_CROSSCHECKED_EXACT_ARTIFACT_PENDING
+title: "Федеральный закон от 21.11.2011 № 323-ФЗ «Об основах охраны здоровья граждан в Российской Федерации»"
+jurisdiction: RU
+issuer: "Российская Федерация"
+
+document:
+  type: "Федеральный закон"
+  number: "323-ФЗ"
+  adopted_date: "2011-11-21"
+  official_online_publication_date: "2011-11-22"
+  official_publication_id: "0001201111220007"
+  current_revision_date: "2026-04-25"
+  current_revision_effective_from: "2026-07-25"
+  checked_at: "2026-09-01"
+
+canonical_sources:
+  primary_official_publication:
+    publisher: "Официальный интернет-портал правовой информации"
+    url: "https://publication.pravo.gov.ru/document/0001201111220007"
+    publication_id: "0001201111220007"
+    identity_corrobated_by_official_sector_source: true
+    identity_corrobating_source: "Росздравнадзор"
+    proof_scope: "primary publication identity verified; exact bytes pending"
+  official_sector_reference:
+    publisher: "Минздрав России"
+    url: "https://minzdrav.gov.ru/documents/7025"
+    proof_scope: "official ministry reference and text cross-check; attached PDF is a historical consolidated copy and is not treated as the current 2026 artifact"
+  latest_amendment_primary:
+    act: "Федеральный закон от 25.04.2026 № 114-ФЗ"
+    publisher: "Официальный интернет-портал правовой информации"
+    url: "https://publication.pravo.gov.ru/document/0001202604250013"
+    publication_id: "0001202604250013"
+    publication_date: "2026-04-25"
+    effective_from: "2026-07-25"
+    scope_observed: "amends Article 16 of 323-FZ; no change to the Article 13 medical-secrecy anchors used by this source card"
+
+protected_information:
+  sectors:
+    - healthcare
+    - medical_secrecy
+    - health_data
+    - personal_data_overlap
+    - health_information_systems
+    - children_overlap
+    - education_overlap
+    - government_disclosure_exceptions
+    - retention
+  regimes:
+    - medical_secrecy
+    - post_mortem_medical_secrecy
+    - health_sector_personal_data
+    - medical_information_exchange
+    - statutory_medical_secrecy_disclosure_exceptions
+  protected_locators:
+    - locator: "статья 13 часть 1"
+      rule: "Сведения о факте обращения гражданина за медицинской помощью, состоянии здоровья и диагнозе, а также иные сведения, полученные при медицинском обследовании и лечении, составляют врачебную тайну."
+    - locator: "статья 13 часть 2"
+      rule: "Разглашение сведений, составляющих врачебную тайну, не допускается, в том числе после смерти человека, кроме случаев, предусмотренных частями 3, 3.1 и 4 статьи 13."
+    - locator: "статья 13 части 3 и 3.1"
+      rule: "Передача сведений и посмертное раскрытие имеют специальные основания и условия; письменное согласие или предусмотренный законом запрос не заменяются общей презумпцией разрешения."
+    - locator: "статья 13 часть 4"
+      rule: "Закон содержит закрытые по предмету случаи предоставления сведений без согласия гражданина или его законного представителя; каждый маршрут требует отдельного совпадения с нормативным основанием."
+    - locator: "статья 13 часть 4 пункт 8"
+      rule: "Обмен информацией между медицинскими организациями, в том числе размещенной в медицинских информационных системах, для оказания медицинской помощи осуществляется с учетом требований законодательства Российской Федерации о персональных данных."
+    - locator: "статья 92 части 1 и 4"
+      rule: "Персонифицированный учет в сфере здравоохранения включает обработку персональных данных определенных законом категорий лиц; конфиденциальность и безопасность этих данных обеспечиваются с соблюдением законодательства о персональных данных."
+  guards:
+    - "MEDICAL_SECRECY_NOT_IDENTICAL_TO_ALL_HEALTH_PDN"
+    - "HEALTH_PDN_NOT_AUTOMATICALLY_MEDICAL_SECRECY_UNLESS_ARTICLE13_SCOPE_MATCHES"
+    - "ARTICLE13_PART4_EXCEPTION_NOT_GENERAL_DISCLOSURE_LICENSE"
+    - "POST_MORTEM_MEDICAL_SECRECY_NOT_ERASED_BY_DEATH"
+    - "CHILD_OR_PARENT_DISCLOSURE_ONLY_WITHIN_STATUTORY_SCOPE"
+    - "MEDICAL_CONSENT_NOT_AUTOMATICALLY_GENERIC_PDN_CONSENT"
+    - "NO_APPLICABILITY_PROMOTION_FROM_SECTOR_LABEL"
+
+retention:
+  universal_personal_data_retention: false
+  universal_medical_record_retention: false
+  findings:
+    - "323-FZ establishes the medical-secrecy and health-sector PDN framework but no single numeric retention period for all medical secrecy, all health PDN, or all medical records was identified in this source."
+    - "Document-specific medical-record and archival retention periods must be resolved through their own primary normative acts and object classes."
+  guards:
+    - "NO_GENERAL_RETENTION_PERIOD_INFERRED_FROM_323_FZ"
+    - "ARCHIVE_RETENTION_REQUIRES_OBJECT_SPECIFIC_PRIMARY_ACT"
+    - "LEGAL_ACT_EFFECTIVE_DATE_NOT_DATA_RETENTION"
+
+relationship_candidates:
+  - target: "152-ФЗ"
+    type: EXPLICIT_PDN_OVERLAP
+    state: DIRECT
+    anchors:
+      - "статья 13 часть 4 пункт 8"
+      - "статья 92 часть 4"
+    guard: "PDN rules apply to concrete personal-data processing; medical secrecy remains a distinct special confidentiality regime."
+  - target: "326-ФЗ"
+    type: COMPULSORY_MEDICAL_INSURANCE_OVERLAP
+    state: SCOPED
+    guard: "Article 13 disclosure and insurance information routes do not make all medical secrecy insurance information or vice versa."
+  - target: "125-ФЗ"
+    type: ARCHIVAL_RETENTION_INTERFACE
+    state: OBJECT_SPECIFIC_PROOF_REQUIRED
+    guard: "No archive period is imported into the 323-FZ node without a primary act establishing the period for the concrete medical document class."
+  - target: "273-ФЗ"
+    type: EDUCATION_AND_MINOR_OVERLAP
+    state: CONDITIONAL
+    guard: "Student/minor contexts in statutory disclosure or medical-training provisions do not create universal education-sector applicability."
+  - target: "149-ФЗ"
+    type: INFORMATION_SYSTEM_PROTECTION_OVERLAP
+    state: GENERAL_FRAMEWORK
+    guard: "Information-system regulation does not replace the special Article 13 secrecy regime."
+
+version_chain:
+  state: CURRENT_REVISION_2026_04_25_CROSSCHECKED_PRIMARY_ORIGINAL_AND_LATEST_AMENDMENT_IDENTIFIED_FULL_HISTORICAL_CHAIN_NOT_CLOSED_EXACT_BYTES_PENDING
+  key_events:
+    - date: "2011-11-21"
+      event: ADOPTED
+    - date: "2011-11-22"
+      event: OFFICIAL_PUBLICATION
+      publication_id: "0001201111220007"
+    - date: "2026-04-25"
+      event: LATEST_CURRENT_AMENDMENT_FOUND_IN_SWEEP
+      act: "114-ФЗ"
+      publication_id: "0001202604250013"
+      effect: "Article 16 amendment; Article 13 anchors unchanged"
+    - date: "2026-07-25"
+      event: LATEST_CURRENT_AMENDMENT_EFFECTIVE
+  amendment_search:
+    current_revision_crosschecked: "2026-04-25"
+    later_current_amendment_found_in_sweep: false
+    future_change_known: true
+    future_effective_from: "2027-01-01"
+    future_change_guard: "Future amendments are recorded only as future version-chain events and are not applied to the 2026-09-01 current-law analysis."
+    historical_chain_complete: false
+    guard: "No later current amendment found in this sweep is not a claim that every historical amendment locator has been captured."
+
+capture:
+  attempted_at: "2026-09-01T20:17:51+03:00"
+  preferred_original_official_url: "https://publication.pravo.gov.ru/document/0001201111220007"
+  preferred_latest_amendment_official_url: "https://publication.pravo.gov.ru/document/0001202604250013"
+  attempts:
+    - url: "https://publication.pravo.gov.ru/Document/View/0001201111220007"
+      route: "web primary-publication open"
+      result: FETCH_TIMEOUT
+    - url: "https://static-0.minzdrav.gov.ru/system/attachments/attaches/000/064/911/original/Федеральный_закон_от_21.11.2011_N_323-ФЗ.pdf"
+      route: "container exact-byte acquisition of official-hosted ministry copy"
+      result: TRANSIENT_DNS_RESOLUTION_FAILURE
+      note: "The official-hosted ministry PDF is a historical consolidated copy (revision 24.07.2023), so even a successful byte capture would not be promoted as the current 2026 consolidated artifact."
+  exact_bytes_obtained: false
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  raw_artifact_ref: null
+  manifest_ref: "../manifests/SEC-SRC-RU-FZ-323-2011-capture-pending.json"
+  fingerprint_status: PENDING_EXACT_OFFICIAL_BYTES
+  web_observation:
+    official_ministry_attachment_content_type: "application/pdf"
+    official_ministry_attachment_page_count: 149
+    historical_revision_date: "2023-07-24"
+    guard: "Web-rendering metadata and stale official-hosted copies are not used as exact current-artifact MIME/byte/hash proof."
+
+proof_floor:
+  - "taxonomy seed is discovery-only and is not legal proof"
+  - "original primary publication identity is verified through an official-sector listing pointing to the official legal publication ID"
+  - "current revision date is crosschecked and the latest current amendment found is tied to its official publication ID"
+  - "medical secrecy and PDN are modeled as overlapping but non-identical legal regimes"
+  - "Article 13 disclosure exceptions are not generalized beyond their statutory conditions"
+  - "no universal medical/PDN retention is invented from 323-FZ"
+  - "no exact MIME, byte length or SHA-256 is populated without exact official bytes"
+  - "no immutable promotion before successful exact capture"
