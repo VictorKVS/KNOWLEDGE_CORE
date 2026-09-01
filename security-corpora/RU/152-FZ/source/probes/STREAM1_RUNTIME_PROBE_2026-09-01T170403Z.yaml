@@ -1,0 +1,66 @@
+schema_version: "1.0"
+id: PDN-STREAM1-RUNTIME-PROBE-2026-09-01T170403Z
+kind: acquisition-transport-probe-evidence
+stream: 1
+jurisdiction: RU
+domain: personal_data
+observed_at: "2026-09-01T17:04:03Z"
+
+scope:
+  - SEC-SRC-RU-152FZ-2026-07-26
+  - SEC-SRC-RU-PP687-2008
+
+routes:
+  - source_id: SEC-SRC-RU-PP687-2008
+    url: "https://government.ru/docs/all/65436/"
+    curl_exit: 6
+    http_status: "000"
+    byte_length: 0
+    result: DNS_RESOLUTION_FAILURE
+  - source_id: SEC-SRC-RU-PP687-2008
+    url: "https://pravo.gov.ru/proxy/ips/?docbody=&link_id=0&nd=102124251&intelsearch=&firstDoc=1"
+    curl_exit: 6
+    http_status: "000"
+    byte_length: 0
+    result: DNS_RESOLUTION_FAILURE
+  - source_id: SEC-SRC-RU-152FZ-2026-07-26
+    url: "https://government.ru/docs/all/98196/"
+    curl_exit: 6
+    http_status: "000"
+    byte_length: 0
+    result: DNS_RESOLUTION_FAILURE
+  - source_id: SEC-SRC-RU-152FZ-2026-07-26
+    url: "https://pravo.gov.ru/proxy/ips/?docbody=&link_id=0&nd=102108261&intelsearch=&firstDoc=1"
+    curl_exit: 6
+    http_status: "000"
+    byte_length: 0
+    result: DNS_RESOLUTION_FAILURE
+
+capture:
+  accepted_bytes: false
+  mime: null
+  sha256: null
+  immutable_artifact_created: false
+  manifest_created: false
+  proof_effect: NONE
+  semantic_promotion: false
+
+version_evidence:
+  pp687:
+    current_revision_note: "Редакция через Постановление Правительства РФ от 18.01.2025 № 12"
+    current_revision_effective_from: "2025-01-26"
+    validity_fingerprint: "действует до 1 сентября 2030 г."
+    official_amendment_publication_id: "0001202501180009"
+    checked_at: "2026-09-01"
+  current_152fz:
+    pinned_revision_effective_from: "2026-07-26"
+    triggering_amendment: "Федеральный закон от 26.07.2026 № 265-ФЗ"
+    official_amendment_publication_id: "0001202607260024"
+    current_consolidated_snapshot: PENDING_BYTE_EXACT_CAPTURE
+
+proof_rule: >-
+  DNS or transport failure is negative acquisition evidence only. It does not prove document
+  content, MIME, byte length or SHA-256 and must never promote a source. Exact official bytes
+  plus the registered current-revision fingerprint remain mandatory before immutable acceptance.
+
+retry_policy: KEEP_GUARDED_RETRY_ENABLED
