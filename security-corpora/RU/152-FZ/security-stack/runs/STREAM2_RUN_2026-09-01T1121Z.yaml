@@ -1,0 +1,150 @@
+schema_version: "1.0"
+id: STREAM2-RUN-2026-09-01T1121Z
+kind: security-stack-stream-run
+stream: RU_PDN_TECHNICAL_CRYPTO
+started_at: "2026-09-01T11:14:39Z"
+completed_at: "2026-09-01T11:21:35Z"
+status: PASS_WITH_TRANSIENT_ACQUISITION_FAILURES
+
+scope:
+  - PP_RF_1119
+  - FSTEC_ORDER_21_AND_VERSION_CHAIN
+  - FSTEC_THREAT_METHOD_2021
+  - FSTEC_RELEVANT_METHODICAL_DOCUMENTS
+  - FSB_ORDER_378
+  - FSB_ORDER_66_AND_173_VERSION_CHAIN
+  - FAPSI_ORDER_152
+  - FSB_8_CENTER_PDN_RECOMMENDATIONS
+  - LICENSING_CERTIFICATION_GUARDS
+  - NCTKI_GOSSOPKA_PDN_INCIDENT_GUARD
+
+status_findings:
+  pp1119:
+    state: CURRENT_PRIMARY_BYTES_PENDING
+    evidence_url: "https://government.ru/docs/6339/"
+    finding: >-
+      The official Government landing remains indexed on 2026-09-01 and explicitly describes Resolution No. 1119
+      as the current edition and exposes a DOC route. Exact DOC bytes were not captured in this run because the
+      acquisition runtime could not resolve government.ru.
+
+  fstec21:
+    state: CURRENT_REVISION_2020_05_14_REPLACEMENT_PRIMARY_GATE_NOT_PASSED
+    official_card: "https://fstec.ru/dokumenty/vse-dokumenty/prikazy/prikaz-fstek-rossii-ot-18-fevralya-2013-g-n-21"
+    project_id: "01/02/07-26/00169583"
+    project_route: "https://regulation.gov.ru/projects#npa=169583"
+    finding: >-
+      The official FSTEC Order No. 21 card remains indexed. Fresh project-tracking material still identifies 169583
+      as a draft/project whose public discussion ended 2026-08-08. Current secondary publications conflict in wording:
+      some state that replacement occurs on 2026-09-01 while others explicitly condition that result on signing.
+      No verified primary final-order number/date, Minjust registration where required, and official-publication identity
+      was established in this run. Under the fail-closed enactment gate, Order No. 21 revision 2020-05-14 remains the
+      active PDN baseline and draft requirements are not promoted.
+    conflict_class: SECONDARY_CLAIM_CONFLICT_REQUIRES_PRIMARY_PROOF
+    confirmed_primary_conflict: false
+
+  fstec_threat_method_2021:
+    state: CURRENT_EXISTING_IMMUTABLE_PRESERVED
+    applicability: ISPDN_AND_OTHER_ENUMERATED_SYSTEMS
+    scope_guard: >-
+      Preserve the method's own scope and do not treat it as an SKZI technical-channel methodology where the document
+      excludes or separately routes those threat classes.
+
+  fstec_maturity_method_2026:
+    state: CURRENT_METHODICAL_CONTEXT_PRIMARY_BYTES_PENDING
+    applicability: ISPDN_MATURITY_ASSESSMENT_WITH_RECOMMENDATIONS_NOT_AUTOMATIC_MANDATORY_MINIMA
+    rule: Do not convert recommended maturity targets into mandatory operator minima absent a separate binding basis.
+
+  fsb378:
+    state: CURRENT_WHEN_SKZI_USED_PRIMARY_BYTES_PENDING
+    applicability: ISPDN_WHEN_SKZI_USED
+    rule: Never import into an ISPDN branch unless actual SKZI use is established.
+
+  fsb66_173:
+    state: VERSION_CHAIN_PRESERVED_PRIMARY_BYTES_PENDING
+    known_chain: "FSB66/2005 -> amended by FSB173/2010"
+    pdn_edge: PKZ_2005_POINT_50_ONLY_WHERE_RELEVANT
+    rule: >-
+      Preserve unrelated FSB173 administrative/licensing amendments outside the generic PDN branch. Do not infer a
+      universal operator licensing duty from PKZ lifecycle regulation.
+
+  fapsi152:
+    state: SKZI_HANDLING_CONTEXT_PRIMARY_BYTES_PENDING
+    applicability: SKZI_HANDLING_WHEN_APPLICABLE
+
+  fsb8c_recommendations_2015:
+    state: EXISTING_IMMUTABLE_PRESERVED
+    applicability: ISPDN_THREAT_MODELING_WHEN_SKZI_RELEVANT
+
+  licensing_certification:
+    state: GUARDED_NEIGHBORING_REGIMES
+    rule: >-
+      PP313/FSB licensing, PP79/FSTEC TZI licensing and FSTEC certification materials enter the PDN graph only through
+      a separately proved licensed-activity, certification/conformity or product-trust edge. They are not universal
+      duties of every personal-data operator.
+
+  nctki_gossopka:
+    state: GUARDED_PDNI_INCIDENT_EDGE_ONLY
+    rule: >-
+      Import NCTKI/GosSOPKA obligations into the PDN branch only where a separately proved computer-incident scope
+      involving PDN exists. KII membership or broad incident regulation is not inferred from PDN processing alone.
+
+acquisition:
+  manifest: "security-stack/manifests/STREAM2_ACQUISITION_MANIFEST_2026-09-01T1121Z.yaml"
+  attempted_official_routes: 9
+  successes: 0
+  failure_class: TRANSIENT_DNS_RESOLUTION_FAILURE
+  new_immutable_artifacts: 0
+  new_sha256: 0
+  existing_immutable_rechecked: 3
+  no_mirror_substitution: true
+  no_inferred_mime_length_hash: true
+
+existing_immutable_preserved:
+  - source_id: SEC-SRC-RU-FSTEC21-2013
+    byte_length: 72618
+    sha256: "6522074c76beea01b6c4e3ab33bae368d9a72ce7c49f1372e87cc0ea6f2bcd42"
+  - source_id: SEC-SRC-RU-FSTEC-THREAT-METHOD-2021
+    byte_length: 2744210
+    sha256: "dfb473137de462f8c10fbbdccbea62bd136925e803e1c58aa6d4e790325c49b1"
+  - source_id: SEC-SRC-RU-FSB8C-THREAT-RECS-2015
+    byte_length: 399341
+    sha256: "a7256cecc1bfa3d9fb68eacc80de4f9329eed071dd8f7d27afc8aa878321f4df"
+
+counter_state_before_reconciliation:
+  identified: 55
+  metadata_verified: 55
+  immutable_sha256_verified: 24
+  pending_raw_capture: 31
+  exact_official_route_unresolved: 8
+  confirmed_conflicts: 0
+  version_edges_verified: 11
+
+run_delta:
+  identified: 0
+  metadata_verified: 0
+  immutable_sha256_verified: 0
+  pending_raw_capture: 0
+  exact_official_route_unresolved: 0
+  confirmed_conflicts: 0
+  version_edges_verified: 0
+  primary_transport_attempts: 9
+  primary_transport_successes: 0
+  new_immutable: 0
+  new_sha256: 0
+  status_or_version_rechecks: 6
+  existing_immutable_rechecks: 3
+  secondary_claim_conflict_signals: 1
+  semantic_promotions: 0
+
+integration_policy:
+  shared_master_write_owner: reconciler
+  action: ADD_DELTA_ONLY_THEN_RECONCILE
+  reason: Preserve parallel-stream changes and derive authoritative counters from canonical state.
+
+next_priority:
+  - capture_exact_government_DOC_for_PP1119
+  - capture_primary_FSB378_payload
+  - capture_primary_FSB66_FSB173_FAPSI152_payloads
+  - capture_FSTEC_maturity_2026_PDF
+  - capture_remaining_relevant_FSTEC_methodical_attachments
+  - resolve_FSTEC21_replacement_only_on_primary_enactment_evidence
