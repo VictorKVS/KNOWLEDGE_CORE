@@ -1,0 +1,155 @@
+schema_version: "1.0"
+stream: 3
+run_at: "2026-09-01T20:17:51+03:00"
+objective: "continue sector/special-regime primary-source discovery, exact capture, deduplication, relationship linking and master reconciliation"
+
+selected_sources:
+  - id: SEC-SRC-RU-FZ-323-2011
+    act: "Федеральный закон от 21.11.2011 № 323-ФЗ «Об основах охраны здоровья граждан в Российской Федерации»"
+    action: NEW_CANONICAL_SOURCE_REGISTERED
+    sector_overlap:
+      - healthcare
+      - medical_secrecy
+      - health_data
+      - personal_data_overlap
+      - health_information_systems
+      - children_overlap
+      - education_overlap
+      - government_disclosure_exceptions
+      - retention
+
+repository_dedupe:
+  canonical_path: "security-corpora/RU/protected-information/source/SEC-SRC-RU-FZ-323-2011.yaml"
+  direct_path_probe_before_write: NOT_FOUND_404
+  code_search_for_number_before_write: NO_RESULTS
+  result: NEW_CANONICAL_NODE_CREATED
+  found_counter_increment: 1
+  reused_counter_increment: 0
+
+primary_proof:
+  official_publication: "https://publication.pravo.gov.ru/Document/View/0001201111220007"
+  publication_id: "0001201111220007"
+  publication_date: "2011-11-22"
+  official_sector_corroboration: "Росздравнадзор official NPA listing points to the same official publication locator"
+  official_ministry_reference: "https://minzdrav.gov.ru/documents/7025"
+  latest_current_amendment: "Федеральный закон от 25.04.2026 № 114-ФЗ"
+  latest_current_amendment_publication_id: "0001202604250013"
+  latest_current_amendment_publication_date: "2026-04-25"
+  latest_current_amendment_effective_from: "2026-07-25"
+  latest_current_amendment_scope: "Article 16 only"
+  primary_original_publication_identity_verified: true
+  current_revision_crosschecked: "2026-04-25"
+  primary_publication_counter_increment: 1
+  exact_binary_proof: PENDING
+
+version_chain:
+  state: CURRENT_REVISION_2026_04_25_CROSSCHECKED_PRIMARY_ORIGINAL_AND_LATEST_CURRENT_AMENDMENT_IDENTIFIED_FULL_HISTORICAL_CHAIN_NOT_CLOSED_EXACT_BYTES_PENDING
+  current_revision: "2026-04-25"
+  latest_current_amendment_effective_from: "2026-07-25"
+  later_current_amendment_found_in_sweep: false
+  full_historical_amendment_chain_closed: false
+  future_change_known: true
+  future_change_effective_from: "2027-01-01"
+  caution: "Future-version events are not applied to the current 2026-09-01 regime, and no-later-amendment-found is not a claim that every historical locator has been captured."
+
+normative_findings:
+  - "Article 13(1): fact of seeking medical care, health state, diagnosis and other examination/treatment information are medical secrecy."
+  - "Article 13(2): nondisclosure continues after death except for the statute's scoped routes."
+  - "Article 13(3),(3.1),(4): consent-based, post-mortem and consent-free disclosure routes are separate and condition-bound."
+  - "Article 13(4)(8): medical-organization information exchange for care expressly requires observance of personal-data legislation."
+  - "Article 92(1): personalized healthcare accounting includes processing statutorily defined personal-data categories."
+  - "Article 92(4): confidentiality and security of those personal data must comply with personal-data legislation."
+
+retention:
+  universal_pdn_retention: false
+  universal_medical_record_retention: false
+  findings:
+    - "No one numeric retention period for all medical secrecy, all health PDN or all medical records was identified in 323-FZ."
+    - "Document-specific medical-record and archival periods require their own primary normative acts and object matching."
+  guards:
+    - "NO_GENERAL_RETENTION_PERIOD_INFERRED_FROM_323_FZ"
+    - "POST_MORTEM_MEDICAL_SECRECY_IS_NOT_A_NUMERIC_RETENTION_RULE"
+    - "ARCHIVE_RETENTION_REQUIRES_OBJECT_SPECIFIC_PRIMARY_ACT"
+
+relationships:
+  reconciled:
+    - "323-FZ -> 152-FZ / explicit PDN bridge in Article 13(4)(8) and Article 92(4)"
+    - "323-FZ -> 326-FZ / scoped compulsory-medical-insurance information-flow overlap"
+    - "323-FZ -> 125-FZ / object-specific archival-retention interface only"
+    - "323-FZ -> 273-FZ / conditional education/minor overlap where statutory context matches"
+    - "323-FZ -> 149-FZ / general information-system protection overlap without replacing medical secrecy"
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+
+acquisition:
+  exact_binary_attempted: true
+  attempted_at: "2026-09-01T20:17:51+03:00"
+  targets:
+    - target: "original official publication page"
+      url: "https://publication.pravo.gov.ru/Document/View/0001201111220007"
+      result: DNS_RESOLUTION_FAILURE
+      curl_exit_code: 6
+    - target: "original official publication page via web"
+      url: "https://publication.pravo.gov.ru/Document/View/0001201111220007"
+      result: FETCH_TIMEOUT
+    - target: "Ministry of Health official-hosted PDF copy"
+      url: "https://static-0.minzdrav.gov.ru/system/attachments/attaches/000/064/911/original/Федеральный_закон_от_21.11.2011_N_323-ФЗ.pdf"
+      result: DNS_RESOLUTION_FAILURE
+      note: "The Ministry-hosted PDF is historical revision 24.07.2023 and therefore is not a current 2026 artifact candidate for immutable promotion."
+  error_class: NameResolutionError
+  exact_bytes_obtained: false
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+  immutable_promotions: 0
+  retry_class: TRANSIENT
+  web_observation:
+    minzdrav_attachment_content_type: "application/pdf"
+    minzdrav_attachment_page_count: 149
+    minzdrav_attachment_revision: "2023-07-24"
+    note: "Web rendering metadata and stale official-hosted copies are not used as exact current-artifact hashing metadata."
+
+counter_delta_this_pass:
+  found: 1
+  downloaded: 0
+  immutable: 0
+  pending: 1
+  reused: 0
+  primary_publication_verified: 1
+
+capture_ledger_reconciliation:
+  authoritative_file: "security-corpora/RU/protected-information/SECTOR_ACQUISITION_RUN.json"
+  targets_with_official_publication_id: 22
+  raw_downloaded_exact: 22
+  immutable_sha256_verified: 22
+  pending_inside_that_capture_scope: 0
+  bytes_downloaded: 114212750
+  changed_this_pass: false
+  note: "Discovery/capture backlog and the narrow exact-acquisition ledger remain intentionally separate scopes."
+
+files_written:
+  - "security-corpora/RU/protected-information/source/SEC-SRC-RU-FZ-323-2011.yaml"
+  - "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-323-2011-capture-pending.json"
+  - "security-corpora/RU/protected-information/RU_PROTECTED_INFORMATION_MASTER_SOURCE_INVENTORY_DELTA_STREAM3_2026-09-01T1717Z.yaml"
+  - "security-corpora/RU/152-FZ/PDN_MASTER_SOURCE_INVENTORY_DELTA_STREAM3_2026-09-01T1717Z.yaml"
+  - "security-knowledge/corpus/ru-protected-information/stream-3-run-2026-09-01T2017.yaml"
+
+quality_gates:
+  taxonomy_as_evidence: false
+  primary_official_publication_identity_verified: true
+  current_version_crosschecked: true
+  exact_bytes_captured: false
+  applicability_invented: false
+  secrecy_category_invented: false
+  fabricated_binary_metadata: false
+  downloaded_increment_without_bytes: false
+  immutable_increment_without_hash: false
+  universal_retention_inferred: false
+  duplicate_source_created: false
+
+next_actions:
+  - "Retry exact official-byte capture of the original 323-FZ publication and current amendment publications; populate MIME, byte length and SHA-256 only after successful byte capture."
+  - "Discover and register primary object-specific medical-record retention/archival acts without importing a universal term into 323-FZ."
+  - "Continue healthcare special regimes, then return to finance/banking/insurance, communications, children/education, biometrics, transport and advertising/marketing discovery."
