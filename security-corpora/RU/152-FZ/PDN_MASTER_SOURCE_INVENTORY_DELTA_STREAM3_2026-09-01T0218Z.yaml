@@ -1,0 +1,88 @@
+schema_version: "1.0"
+id: PDN-MASTER-SOURCE-INVENTORY-DELTA-STREAM3-2026-09-01T0218Z
+kind: pdn_master_inventory_sector_overlay_delta
+stream: 3
+checked_at: "2026-09-01T05:18:21+03:00"
+
+source_overlay:
+  id: SEC-SRC-RU-PP-445-2018
+  document: "Постановление Правительства РФ от 12.04.2018 № 445 о хранении операторами связи сообщений пользователей услугами связи"
+  role: communications_content_storage_security_and_deletion_lifecycle
+  canonical_record: "../protected-information/source/SEC-SRC-RU-PP-445-2018.yaml"
+  metadata_status: PRIMARY_PUBLICATION_VERIFIED_CURRENT_EDITION_2026_08_24_EFFECTIVE_2026_09_01_CROSSCHECKED
+  official_publication_id: "0001201804190032"
+  raw_capture: PENDING
+  verified_for_exact_extraction: false
+  applicability: CONDITIONAL_PDN_OVERLAP_ONLY
+
+pdn_overlap_anchors:
+  - locator: "пункт 2"
+    rule: "storage in the Russian Federation of communications content objects in operator technical storage facilities"
+    pdn_guard: >-
+      A stored message, voice record, image, sound or video is not automatically personal data solely because of its type;
+      a PDN relationship requires identifiability of a natural person and a concrete processing context under 152-FZ.
+  - locator: "пункт 5"
+    rule: "6-month full storage of voice information and text messages for the enumerated communications service classes"
+    pdn_guard: "This is a sector communications-content retention rule, not a universal personal-data retention period."
+  - locator: "пункт 7"
+    rule: "protection of storage facilities and stored information against unauthorized access"
+    pdn_guard: "Security overlap with 152-FZ is conditional on the stored object being personal data in the specific processing context."
+  - locator: "пункт 8"
+    rule: "automatic deletion based on the maximum permissible 6-month communications-message storage period"
+    pdn_guard: "Do not convert the sector content-deletion rule into a general Article 5/21 152-FZ destruction deadline."
+
+relations:
+  - target: "SEC-SRC-RU-FZ-126"
+    type: DIRECT_IMPLEMENTING_ACT_ARTICLE_64_CONTENT_STORAGE
+  - target: "SEC-SRC-RU-FZ-126 article 63"
+    type: COMMUNICATIONS_SECRECY_OVERLAP
+  - target: "152-ФЗ"
+    type: CONDITIONAL_PDN_OVERLAP
+    guard: "identifiable subject + processing operation + purpose/legal basis + actor role must be proven before applicability promotion"
+
+retention_model:
+  universal_pdn_period: false
+  sector_content_rules:
+    - "point 5: 6 months for voice information and text messages within enumerated service classes"
+    - "point 8: automatic deletion based on maximum 6-month communications-message storage period"
+  non_retention_values:
+    - "point 6: 30 days = technical storage-capacity sizing baseline"
+    - "point 6: +15% annually for 5 years = capacity-growth schedule"
+  guards:
+    - "DO_NOT_COLLAPSE_PP445_CONTENT_STORAGE_WITH_FZ126_3_YEAR_COMMUNICATIONS_FACTS_RETENTION"
+    - "DO_NOT_TREAT_30_DAY_CAPACITY_BASELINE_AS_PDN_RETENTION"
+    - "DO_NOT_TREAT_5_YEAR_CAPACITY_GROWTH_WINDOW_AS_PDN_RETENTION"
+    - "ZERO_VOLUME_TRAFFIC_EXCLUSIONS_ARE_NOT_GENERAL_PDN_DELETION_RULES"
+
+version_state:
+  current_revision_date: "2026-08-24"
+  current_revision_effective_from: "2026-09-01"
+  latest_amendment:
+    act: "Постановление Правительства РФ от 24.08.2026 № 1066"
+    official_publication_id: "0001202608250032"
+    publication_date: "2026-08-25"
+    effect: "service-class wording update in points 5 and 6; six-month numeric content-storage rule unchanged"
+  version_chain_state: PARTIAL_PRIMARY_BYTES_PENDING
+
+counter_delta_this_pass:
+  sector_overlay_found: 1
+  primary_publication_verified: 1
+  downloaded: 0
+  immutable: 0
+  pending_primary_exact_capture: 1
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+
+master_counter_policy:
+  core_pdn_production_counters_changed: false
+  reason: >-
+    PP 445 is a communications-sector special-regime overlay. It must not inflate direct PDN core exact/immutable
+    counters before exact official-byte capture and an explicit applicability/merge gate.
+
+proof_guards:
+  - "TAXONOMY_SEED_NOT_LEGAL_PROOF"
+  - "COMMUNICATIONS_CONTENT_RETENTION_NOT_UNIVERSAL_PDN_RETENTION"
+  - "MESSAGE_TYPE_NOT_AUTOMATIC_PDN"
+  - "COMMUNICATIONS_SECRECY_NOT_INFERRED_FROM_FIELD_TYPE_ALONE"
+  - "NO_APPLICABILITY_PROMOTION_WITHOUT_PRIMARY_RULE_AND_OBJECT_MATCH"
+  - "NO_FABRICATED_MIME_BYTE_LENGTH_OR_SHA256"
