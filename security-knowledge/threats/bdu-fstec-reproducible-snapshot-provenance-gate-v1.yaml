@@ -1,0 +1,96 @@
+{
+  "id":"RU-BDU-FSTEC-REPRODUCIBLE-SNAPSHOT-PROVENANCE-GATE-V1",
+  "as_of":"2026-09-01",
+  "status":"VERIFIED_LIVE_CATALOG_DISCOVERY_AND_ACQUISITION_PROTOCOL_CURRENT_COMPLETE_EXPORT_BYTES_PENDING_CERTIFICATE_CHAIN_FAILURE",
+  "title":"БДУ ФСТЭК — воспроизводимый снимок, полнота, происхождение и временная применимость",
+  "source":{
+    "authority":"ФСТЭК России / ГНИИИ ПТЗИ",
+    "catalog_root":"https://bdu.fstec.ru/",
+    "threat_catalog":"https://bdu.fstec.ru/threat",
+    "vulnerability_catalog":"https://bdu.fstec.ru/vul",
+    "threat_export_candidate":"https://bdu.fstec.ru/files/documents/thrlist.xlsx",
+    "vulnerability_export_candidate":"https://bdu.fstec.ru/files/documents/vullist.xlsx",
+    "methodology_binding":"https://normativ.kontur.ru/document?documentId=451500&moduleId=1",
+    "role_boundary":"БДУ является исходным каталогом кандидатов и триггером пересмотра модели угроз; запись каталога не становится актуальной угрозой без оценки по Методике."
+  },
+  "observation_2026_09_01":{
+    "search_index_discovery":"CURRENT_PUBLIC_INDEX_DISCOVERED_ROOT_PAGED_LIST_AND_INDIVIDUAL_UBI_CARDS",
+    "discovered_examples":["https://bdu.fstec.ru/threat/ubi.065","https://bdu.fstec.ru/threat/ubi.089","https://bdu.fstec.ru/threat/ubi.227","https://bdu.fstec.ru/threat?page=2"],
+    "catalog_root_transport":"HTTP_502_CERTIFICATE_VERIFY_FAILED_UNABLE_TO_GET_LOCAL_ISSUER_CERTIFICATE",
+    "threat_export_transport":"HTTP_502_CERTIFICATE_VERIFY_FAILED_UNABLE_TO_GET_LOCAL_ISSUER_CERTIFICATE",
+    "immutable_complete_threat_export":"PENDING",
+    "immutable_complete_vulnerability_export":"PENDING",
+    "scope_conclusion":"Поисковая обнаружимость карточек подтверждает публичный маршрут, но не полноту, актуальность всех строк и не хеш снимка."
+  },
+  "dataset_separation":[
+    {"id":"THREATS","identifier_family":"УБИ.NNN","purpose":"общий перечень угроз и их характеристик","must_not_be_treated_as":"реестр уязвимостей"},
+    {"id":"VULNERABILITIES","identifier_family":"BDU:YYYY-NNNNN","purpose":"сведения об уязвимостях","must_not_be_treated_as":"готовый перечень актуальных угроз конкретной системы"}
+  ],
+  "acquisition_states":[
+    {"order":1,"id":"DISCOVERED","criterion":"официальный маршрут и назначение набора установлены"},
+    {"order":2,"id":"FETCH_ATTEMPTED","criterion":"зафиксированы время, URL, результат TLS/HTTP и перенаправления"},
+    {"order":3,"id":"BYTES_ACQUIRED","criterion":"получены необработанные байты без отключения проверки TLS"},
+    {"order":4,"id":"FORMAT_VALIDATED","criterion":"сигнатура, контейнер, листы и тип содержимого согласованы"},
+    {"order":5,"id":"SEMANTIC_VALIDATED","criterion":"заголовки, идентификаторы, даты, дубликаты и ошибки разбора проверены"},
+    {"order":6,"id":"SNAPSHOT_VERIFIED","criterion":"полнота обоснована, SHA-256 и manifest сохранены, повторная загрузка воспроизводима"}
+  ],
+  "manifest_fields":[
+    "dataset_id","source_url","retrieved_at_utc","http_status","redirect_chain","tls_verification","content_type","content_length","filename","sha256","raw_archive_path","parser_name_and_version","container_signature","sheet_names","header_fingerprint","row_count","identifier_min_max","identifier_gaps","duplicate_identifiers","date_range","formula_cell_count","external_link_count","parse_error_count","completeness_verdict"
+  ],
+  "format_safety_gates":[
+    {"id":"F1","test":"XLSX имеет ZIP/OOXML-сигнатуру, а не HTML-страницу ошибки"},
+    {"id":"F2","test":"размер и число распакованных файлов проверены против zip-bomb"},
+    {"id":"F3","test":"формулы, макросы, DDE и внешние ссылки не выполняются"},
+    {"id":"F4","test":"неожиданные листы и скрытые листы перечислены"},
+    {"id":"F5","test":"оригинальные байты архивируются до нормализации"},
+    {"id":"F6","test":"нормализованный CSV/JSON связан с SHA-256 оригинала"}
+  ],
+  "semantic_gates":[
+    {"id":"S1","test":"семейство идентификаторов соответствует набору"},
+    {"id":"S2","test":"идентификаторы уникальны либо дубликаты объяснены"},
+    {"id":"S3","test":"заголовки и их порядок зафиксированы fingerprint, а не предположены"},
+    {"id":"S4","test":"даты включения и изменения разбираются без подстановки отсутствующих значений"},
+    {"id":"S5","test":"пустые свойства не превращаются в отрицательные утверждения"},
+    {"id":"S6","test":"изменения текста и классификаторов сохраняются на уровне полей"},
+    {"id":"S7","test":"удаление записи определяется только сравнением двух полных проверенных снимков"},
+    {"id":"S8","test":"карточка или страница пагинации не считается полным экспортом"}
+  ],
+  "completeness_gate":{
+    "required":["successful verified-TLS retrieval","raw-byte SHA-256","valid OOXML container","all sheets inventoried","header fingerprint","row count","identifier uniqueness and gap report","zero unexplained parse errors","cross-check with visible catalog or second acquisition","documented completeness verdict"],
+    "states":["PENDING_TRANSPORT","PARTIAL_DISCOVERY_ONLY","BYTES_UNVERIFIED","STRUCTURE_VERIFIED_COMPLETENESS_PENDING","COMPLETE_SNAPSHOT_VERIFIED"],
+    "current_state":"PARTIAL_DISCOVERY_ONLY",
+    "forbidden_shortcuts":["SEARCH_INDEX_EQUALS_COMPLETE_CATALOG","ONE_CARD_EQUALS_SNAPSHOT","LAST_VISIBLE_PAGE_EQUALS_COMPLETE_WITHOUT_PAGE_COUNT_PROOF","HTTP_200_HTML_EQUALS_XLSX","TLS_VERIFICATION_DISABLED_FOR_PRODUCTION_EVIDENCE","MIRROR_EQUALS_OFFICIAL_BYTES","CURRENT_CARD_PROVES_HISTORICAL_VALUE"]
+  },
+  "temporal_lifecycle":{
+    "snapshot_key":["dataset_id","retrieved_at_utc","sha256"],
+    "record_key":"official identifier",
+    "field_level_delta_types":["ADDED","CHANGED","REMOVED_FROM_VERIFIED_SNAPSHOT","UNCHANGED"],
+    "historical_rule":"Текущее состояние карточки нельзя переносить на прошлую дату; используется ближайший доказанный снимок и журнал изменений.",
+    "reassessment_trigger":"Новая либо измененная запись БДУ направляется в очередь повторной оценки применимости, но не переписывает модель угроз автоматически."
+  },
+  "decision_gates":[
+    {"id":"G1","test":"источник является официальным маршрутом БДУ"},{"id":"G2","test":"TLS и HTTP-результат записаны без сокрытия ошибки"},{"id":"G3","test":"оригинальные байты и SHA-256 доступны"},{"id":"G4","test":"формат безопасно проверен до разбора"},{"id":"G5","test":"семантика и идентификаторы проверены"},{"id":"G6","test":"полнота доказана отдельно от доступности отдельных карточек"},{"id":"G7","test":"временная привязка и field-level delta сохранены"},{"id":"G8","test":"кандидат БДУ проходит отдельную оценку актуальности"}
+  ],
+  "scenarios":[
+    {"id":"SC1","input":"официальный endpoint возвращает 502 certificate verify failed","result":"PENDING_TRANSPORT; не отключать TLS"},{"id":"SC2","input":"поиск видит отдельные карточки УБИ","result":"PARTIAL_DISCOVERY_ONLY"},{"id":"SC3","input":"ответ имеет HTTP 200, но начинается как HTML","result":"REJECT_AS_EXPORT"},{"id":"SC4","input":"XLSX получен без SHA-256 и времени","result":"BYTES_UNVERIFIED"},{"id":"SC5","input":"парсер пропустил строки","result":"COMPLETENESS_PENDING"},{"id":"SC6","input":"новая УБИ появилась в полном снимке","result":"REASSESSMENT_REQUIRED"},{"id":"SC7","input":"запись отсутствует в одной неполной выборке","result":"NO_REMOVAL_CLAIM"},{"id":"SC8","input":"зеркало содержит файл с тем же именем","result":"SECONDARY_COPY_ONLY_NOT_OFFICIAL_BYTES"}
+  ],
+  "red_team_attacks":[
+    {"id":"RT1","attack":"SEARCH_INDEX_AS_COMPLETE_EXPORT","blocked_by":"G6"},{"id":"RT2","attack":"SINGLE_UBI_CARD_AS_DATABASE_SNAPSHOT","blocked_by":"G6"},{"id":"RT3","attack":"DISABLE_TLS_TO_OBTAIN_AUDIT_EVIDENCE","blocked_by":"G2"},{"id":"RT4","attack":"HTML_ERROR_SAVED_AS_XLSX","blocked_by":"G4"},{"id":"RT5","attack":"MIRROR_BYTES_PROMOTED_TO_OFFICIAL","blocked_by":"G1"},{"id":"RT6","attack":"THREAT_AND_VULNERABILITY_DATASETS_MERGED","blocked_by":"G5"},{"id":"RT7","attack":"MISSING_CELL_INTERPRETED_AS_FALSE","blocked_by":"G5"},{"id":"RT8","attack":"PARTIAL_PARSE_DECLARED_COMPLETE","blocked_by":"G6"},{"id":"RT9","attack":"CURRENT_CARD_BACKDATED_TO_HISTORY","blocked_by":"G7"},{"id":"RT10","attack":"CATALOG_DELTA_AUTO_REWRITES_MODEL","blocked_by":"G8"},{"id":"RT11","attack":"BDU_ENTRY_AUTO_PROMOTED_TO_RELEVANT","blocked_by":"G8"},{"id":"RT12","attack":"FORMULA_OR_EXTERNAL_LINK_EXECUTED_DURING_PARSE","blocked_by":"G4"}
+  ],
+  "evidence_artifacts":["official-route record","retrieval attempt log","TLS verification result","HTTP and redirect record","raw response quarantine","original-byte archive","SHA-256 manifest","content-type and signature report","OOXML inventory","sheet inventory","header fingerprint","row-count report","identifier uniqueness and gap report","date-range report","formula/macro/external-link safety report","parse-error report","completeness decision","field-level delta and reassessment log"],
+  "boundaries":{"no_search_index_as_snapshot":true,"no_single_card_as_snapshot":true,"no_tls_disable_for_verified_evidence":true,"no_html_as_xlsx":true,"no_mirror_as_official_bytes":true,"no_threat_vulnerability_dataset_merge":true,"no_blank_as_false":true,"no_partial_parse_as_complete":true,"no_current_state_backdating":true,"no_catalog_auto_rewrite":true,"no_bdu_auto_relevance":true,"no_active_content_execution":true,"immutable_complete_threat_export_pending":true,"immutable_complete_vulnerability_export_pending":true},
+  "counts":{"datasets":2,"acquisition_states":6,"manifest_fields":24,"format_safety_gates":6,"semantic_gates":8,"completeness_required_checks":10,"completeness_states":5,"forbidden_shortcuts":7,"field_level_delta_types":4,"decision_gates":8,"scenarios":8,"red_team_attacks":12,"red_team_attacks_blocked":12,"evidence_artifacts":18,"evidence_nodes":18,"control_rules":64,"regression_cases":64},
+  "control_rules":[
+    {"id":"BDU-R001","rule":"PIN_OFFICIAL_BDU_ROOT"},{"id":"BDU-R002","rule":"SEPARATE_THREAT_AND_VULNERABILITY_DATASETS"},{"id":"BDU-R003","rule":"RECORD_EXPORT_CANDIDATE_ROUTES"},{"id":"BDU-R004","rule":"KEEP_CURRENT_EXPORT_BYTES_PENDING"},{"id":"BDU-R005","rule":"RECORD_SEARCH_INDEX_DISCOVERY_ONLY"},{"id":"BDU-R006","rule":"RECORD_CERTIFICATE_CHAIN_FAILURE"},{"id":"BDU-R007","rule":"DO_NOT_DISABLE_TLS_FOR_VERIFIED_EVIDENCE"},{"id":"BDU-R008","rule":"BDU_IS_CANDIDATE_INPUT"},
+    {"id":"BDU-R009","rule":"PRESERVE_SIX_ACQUISITION_STATES"},{"id":"BDU-R010","rule":"DISCOVERY_NOT_ACQUISITION"},{"id":"BDU-R011","rule":"FETCH_ATTEMPT_LOG_REQUIRED"},{"id":"BDU-R012","rule":"BYTES_REQUIRED_FOR_HASH"},{"id":"BDU-R013","rule":"FORMAT_VALIDATION_REQUIRED"},{"id":"BDU-R014","rule":"SEMANTIC_VALIDATION_REQUIRED"},{"id":"BDU-R015","rule":"COMPLETENESS_DECISION_REQUIRED"},{"id":"BDU-R016","rule":"NO_STATE_SKIPPING"},
+    {"id":"BDU-R017","rule":"REQUIRE_24_MANIFEST_FIELDS"},{"id":"BDU-R018","rule":"RECORD_UTC_RETRIEVAL_TIME"},{"id":"BDU-R019","rule":"RECORD_HTTP_TLS_REDIRECTS"},{"id":"BDU-R020","rule":"RECORD_CONTENT_TYPE_AND_LENGTH"},{"id":"BDU-R021","rule":"RECORD_RAW_SHA256"},{"id":"BDU-R022","rule":"RECORD_PARSER_VERSION"},{"id":"BDU-R023","rule":"RECORD_SHEETS_AND_HEADERS"},{"id":"BDU-R024","rule":"RECORD_ROWS_IDS_DATES_ERRORS"},
+    {"id":"BDU-R025","rule":"VERIFY_OOXML_SIGNATURE"},{"id":"BDU-R026","rule":"REJECT_HTML_ERROR_AS_EXPORT"},{"id":"BDU-R027","rule":"CHECK_ZIP_BOMB_LIMITS"},{"id":"BDU-R028","rule":"DO_NOT_EXECUTE_FORMULAS"},{"id":"BDU-R029","rule":"DO_NOT_EXECUTE_MACROS_DDE"},{"id":"BDU-R030","rule":"DO_NOT_FOLLOW_EXTERNAL_LINKS"},{"id":"BDU-R031","rule":"INVENTORY_HIDDEN_AND_UNEXPECTED_SHEETS"},{"id":"BDU-R032","rule":"ARCHIVE_RAW_BEFORE_NORMALIZATION"},
+    {"id":"BDU-R033","rule":"BIND_NORMALIZED_OUTPUT_TO_RAW_HASH"},{"id":"BDU-R034","rule":"VERIFY_IDENTIFIER_FAMILY"},{"id":"BDU-R035","rule":"VERIFY_IDENTIFIER_UNIQUENESS"},{"id":"BDU-R036","rule":"REPORT_IDENTIFIER_GAPS_WITHOUT_ASSUMING_DELETION"},{"id":"BDU-R037","rule":"FINGERPRINT_ACTUAL_HEADERS"},{"id":"BDU-R038","rule":"PARSE_DATES_WITHOUT_INVENTION"},{"id":"BDU-R039","rule":"BLANK_NOT_FALSE"},{"id":"BDU-R040","rule":"PRESERVE_FIELD_LEVEL_DELTAS"},
+    {"id":"BDU-R041","rule":"REMOVAL_REQUIRES_TWO_COMPLETE_SNAPSHOTS"},{"id":"BDU-R042","rule":"PAGE_NOT_COMPLETE_EXPORT"},{"id":"BDU-R043","rule":"CARD_NOT_COMPLETE_EXPORT"},{"id":"BDU-R044","rule":"SEARCH_INDEX_NOT_COMPLETE_EXPORT"},{"id":"BDU-R045","rule":"MIRROR_NOT_OFFICIAL_BYTES"},{"id":"BDU-R046","rule":"REQUIRE_TEN_COMPLETENESS_CHECKS"},{"id":"BDU-R047","rule":"ZERO_UNEXPLAINED_PARSE_ERRORS"},{"id":"BDU-R048","rule":"CROSS_CHECK_COMPLETE_SNAPSHOT"},
+    {"id":"BDU-R049","rule":"PRESERVE_FIVE_COMPLETENESS_STATES"},{"id":"BDU-R050","rule":"CURRENT_STATE_IS_PARTIAL_DISCOVERY_ONLY"},{"id":"BDU-R051","rule":"SNAPSHOT_KEY_INCLUDES_TIME_AND_HASH"},{"id":"BDU-R052","rule":"RECORD_KEY_IS_OFFICIAL_IDENTIFIER"},{"id":"BDU-R053","rule":"CURRENT_CARD_NOT_HISTORICAL_PROOF"},{"id":"BDU-R054","rule":"DELTA_ADDED_TRIGGERS_REASSESSMENT"},{"id":"BDU-R055","rule":"DELTA_CHANGED_TRIGGERS_REASSESSMENT"},{"id":"BDU-R056","rule":"CATALOG_DELTA_NOT_AUTO_MODEL_REWRITE"},
+    {"id":"BDU-R057","rule":"BDU_ENTRY_NOT_AUTO_RELEVANT"},{"id":"BDU-R058","rule":"BDU_ABSENCE_NOT_SAFETY_PROOF"},{"id":"BDU-R059","rule":"REQUIRE_EIGHT_DECISION_GATES"},{"id":"BDU-R060","rule":"REQUIRE_EIGHT_SCENARIOS"},{"id":"BDU-R061","rule":"BLOCK_TWELVE_RED_TEAM_ATTACKS"},{"id":"BDU-R062","rule":"REQUIRE_EIGHTEEN_EVIDENCE_ARTIFACTS"},{"id":"BDU-R063","rule":"REQUIRE_EIGHTEEN_EVIDENCE_NODES"},{"id":"BDU-R064","rule":"PASS_ONLY_SNAPSHOT_PROVENANCE_SCOPE"}
+  ],
+  "evidence_nodes":[
+    {"id":"E01","claim":"OFFICIAL_BDU_ROOT_AND_DATASET_ROUTES","source":"catalog_root"},{"id":"E02","claim":"METHOD_BINDS_BDU_AS_INPUT_AND_TRIGGER","source":"methodology_binding"},{"id":"E03","claim":"CURRENT_PUBLIC_INDEX_DISCOVERY","locator":"search index 2026-09-01"},{"id":"E04","claim":"ROOT_CERTIFICATE_CHAIN_FAILURE","locator":"browser observation 2026-09-01"},{"id":"E05","claim":"THREAT_EXPORT_CERTIFICATE_CHAIN_FAILURE","locator":"browser observation 2026-09-01"},{"id":"E06","claim":"THREAT_VULNERABILITY_DATASET_SEPARATION","source":"official catalog routes"},{"id":"E07","claim":"SIX_ACQUISITION_STATES","source":"control design"},{"id":"E08","claim":"TWENTY_FOUR_MANIFEST_FIELDS","source":"control design"},{"id":"E09","claim":"OOXML_SIGNATURE_AND_HTML_REJECTION","source":"format gate"},{"id":"E10","claim":"ACTIVE_CONTENT_NON_EXECUTION","source":"format gate"},{"id":"E11","claim":"RAW_BEFORE_NORMALIZATION","source":"provenance gate"},{"id":"E12","claim":"IDENTIFIER_HEADER_DATE_VALIDATION","source":"semantic gate"},{"id":"E13","claim":"CARD_PAGE_INDEX_NOT_COMPLETE","source":"completeness gate"},{"id":"E14","claim":"TEN_COMPLETENESS_CHECKS","source":"completeness gate"},{"id":"E15","claim":"CURRENT_PARTIAL_DISCOVERY_ONLY_STATE","source":"observation conclusion"},{"id":"E16","claim":"FIELD_LEVEL_TEMPORAL_DELTAS","source":"temporal lifecycle"},{"id":"E17","claim":"REMOVAL_REQUIRES_TWO_COMPLETE_SNAPSHOTS","source":"semantic gate"},{"id":"E18","claim":"BDU_DELTA_REASSESSMENT_NOT_AUTO_REWRITE","source":"Method clauses 2.14 and BDU gate"}
+  ]
+}
