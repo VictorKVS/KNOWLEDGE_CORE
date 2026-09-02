@@ -1,0 +1,96 @@
+schema_version: "1.0"
+id: SEC-PDN-SECURITY-STACK-DELTA-STREAM2-2026-09-02T1413Z
+kind: security-regulatory-source-inventory-delta
+stream: 2
+created_at: "2026-09-02T14:13:00Z"
+base_inventory: "PDN_SECURITY_STACK_SOURCE_INVENTORY.yaml"
+run_ref: "runs/STREAM2_RUN_2026-09-02T1413Z.yaml"
+manifest_ref: "manifests/STREAM2_ACQUISITION_MANIFEST_2026-09-02T1413Z.yaml"
+status_evidence_ref: "evidence/STREAM2_STATUS_EVIDENCE_OFFICIAL_INDEX_REFRESH_2026-09-02T1413Z.yaml"
+
+counter_before:
+  identified: 56
+  metadata_verified: 56
+  immutable_sha256_verified: 24
+  pending_raw_capture: 32
+  exact_official_route_unresolved: 9
+  version_edges_verified: 12
+  applicability_guards: 31
+  confirmed_conflicts: 0
+
+status_delta:
+  - source_id: SEC-SRC-RU-PP1119-2012
+    result: CURRENT_PRIMARY_BYTES_PENDING
+    status_evidence: GOVERNMENT_PAGE_EXPLICIT_CURRENT_EDITION
+    byte_attempt: DNS_RESOLUTION_FAILURE_BEFORE_HTTP
+    version_chain_change: false
+
+  - source_id: SEC-SRC-RU-FSTEC21-2013
+    result: CURRENT_REVISION_2020_05_14_REPLACEMENT_PRIMARY_GATE_NOT_PASSED
+    watch_project: "01/02/07-26/00169583"
+    version_chain_change: false
+    note: "No final primary enactment/registration/publication identity established in this refresh."
+
+  - source_id: SEC-SRC-RU-FSTEC-THREAT-METHOD-2021
+    result: CURRENT_EXISTING_IMMUTABLE_REUSED
+    version_chain_change: false
+
+  - source_id: SEC-SRC-RU-FSTEC-MATURITY-METHOD-2026
+    result: CURRENT_METHOD_PRIMARY_BYTES_PENDING
+    byte_attempt: DNS_RESOLUTION_FAILURE_BEFORE_HTTP
+    version_chain_change: false
+    applicability: ISPDN_MATURITY_ASSESSMENT_RECOMMENDATIONS_NOT_AUTOMATIC_MINIMA
+
+  - source_id: SEC-SRC-RU-FSTEC-SZI-EQUIPMENT-LIST-2026
+    result: METADATA_VERIFIED_ATTACHMENT_STILL_UNRESOLVED
+    byte_attempt: DNS_RESOLUTION_FAILURE_BEFORE_HTTP
+    version_chain_change: false
+    applicability: LICENSED_SZI_DEVELOPMENT_PRODUCTION_ACTIVITY_ONLY
+
+  - source_id: SEC-SRC-RU-FSB378-2014
+    result: SKZI_CONDITIONAL_BASELINE_PRIMARY_BYTES_PENDING_STATUS_REVIEW_REQUIRED
+    byte_attempt: DNS_RESOLUTION_FAILURE_BEFORE_HTTP
+    version_chain_change: false
+    applicability: ISPDN_WHEN_SKZI_USED
+
+  - source_id: SEC-SRC-RU-FSB-SKZI-FORM-NOTICE-2017
+    result: OFFICIAL_GUIDANCE_STILL_INDEXED_PRIMARY_BYTES_PENDING
+    byte_attempt: DNS_RESOLUTION_FAILURE_BEFORE_HTTP
+    version_chain_change: false
+    applicability: ISPDN_WHEN_SKZI_USED_AND_SPECIFIC_FORMULAR_REQUIREMENT_APPLIES
+
+run_delta:
+  official_route_attempts: 5
+  successful_payloads: 0
+  status_or_chain_rechecks: 6
+  existing_immutable_reused: 2
+  new_source_identities: 0
+  metadata_verified_new: 0
+  new_immutable_captured: 0
+  new_sha256: 0
+  pending_raw_new: 0
+  exact_official_route_unresolved_new: 0
+  applicability_guards_new: 0
+  new_version_edges: 0
+  semantic_promotions_to_generic_pdn_baseline: 0
+
+counter_after_delta:
+  identified: 56
+  metadata_verified: 56
+  immutable_sha256_verified: 24
+  pending_raw_capture: 32
+  exact_official_route_unresolved: 9
+  version_edges_verified: 12
+  applicability_guards: 31
+  confirmed_conflicts: 0
+
+applicability_guard: >-
+  Generic PDN remains PP1119 plus applicable FSTEC21 technical measures. FSB378 is linked only when SKZI use
+  is established. FSB66/173, FAPSI152 and formular-specific operational guidance require a proved SKZI lifecycle,
+  handling or product-documentation edge. FSTEC licensing catalogs remain licensed-activity-only. NCTKI/GosSOPKA
+  remains incident/direct-trigger bounded. No adjacent public-sector, KII, licensing or certification duty is promoted.
+
+reconciliation_instruction: >-
+  Advance only the latest Stream-2 run, manifest, evidence and freshness pointers. Aggregate security-stack counters
+  remain unchanged because this pass produced status rechecks and transport evidence but no new source identity,
+  immutable artifact, version edge or applicability guard.
