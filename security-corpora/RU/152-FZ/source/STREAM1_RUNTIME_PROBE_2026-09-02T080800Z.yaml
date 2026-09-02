@@ -1,0 +1,100 @@
+schema_version: "1.0"
+id: STREAM1-RUNTIME-PROBE-2026-09-02T080800Z
+kind: pdn-core-acquisition-probe-evidence
+stream: 1
+observed_at: "2026-09-02T08:08:00Z"
+status: NEGATIVE_TRANSPORT_EVIDENCE_ONLY
+proof_effect: NONE
+semantic_promotion: false
+immutable_promotion: false
+scope: pdn_core_pending_roots
+
+proof_rule: >-
+  This record preserves fresh transport and version-monitoring evidence only. A source is not promoted to
+  immutable or extraction-ready status unless official returned bytes are accepted with source URL,
+  retrieved_at, MIME, exact byte length, SHA-256, identity/current-revision proof and an immutable manifest.
+
+pending_roots:
+  - source_id: SEC-SRC-RU-152FZ-2026-07-26
+    document: "Федеральный закон от 27.07.2006 № 152-ФЗ, текущая редакция с 26.07.2026"
+    registered_routes_probed:
+      - "http://pravo.gov.ru/proxy/ips/?docbody=&link_id=0&nd=102108261&intelsearch=&firstDoc=1"
+      - "https://government.ru/docs/all/98196/"
+    live_transport:
+      method: curl
+      connect_timeout_seconds: 6
+      max_time_seconds: 12
+      result: DNS_RESOLUTION_FAILURE
+      curl_exit: 6
+      http_status: "000"
+      accepted_bytes: false
+      byte_length: 0
+      mime: null
+      sha256: null
+      retrieved_at: null
+    freshness_check:
+      checked_at: "2026-09-02"
+      result: CURRENT_REVISION_IDENTITY_RECONFIRMED_SECONDARY_INDEX_ONLY
+      evidence: >-
+        Fresh current-law index results retrieved on 02.09.2026 continue to identify 152-FZ as revised on
+        26.07.2026 and identify Federal Law No. 265-FZ of 26.07.2026 as the amendment to Article 12.
+        This freshness check is not a substitute for an official byte-exact consolidated snapshot.
+      supporting_primary_chain_source_id: SEC-SRC-RU-FZ265-2026
+      supporting_primary_publication_id: "0001202607260024"
+    decision: KEEP_PENDING_CURRENT_CONSOLIDATED_RAW_CAPTURE
+
+  - source_id: SEC-SRC-RU-PP687-2008
+    document: "Постановление Правительства РФ от 15.09.2008 № 687"
+    registered_routes_probed:
+      - "https://government.ru/docs/all/65436/"
+      - "http://pravo.gov.ru/proxy/ips/?docbody=&link_id=0&nd=102124251&intelsearch=&firstDoc=1"
+    live_transport:
+      method: curl
+      connect_timeout_seconds: 6
+      max_time_seconds: 12
+      result: DNS_RESOLUTION_FAILURE
+      curl_exit: 6
+      http_status: "000"
+      accepted_bytes: false
+      byte_length: 0
+      mime: null
+      sha256: null
+      retrieved_at: null
+    freshness_check:
+      checked_at: "2026-09-02"
+      result: CURRENT_REVISION_CONFIRMED_BY_OFFICIAL_GOVERNMENT_INDEXED_TEXT
+      source_url: "https://government.ru/docs/all/65436/"
+      revision: "Постановление Правительства РФ от 18.01.2025 № 12"
+      required_fingerprint: "пункт 3 действует до 1 сентября 2030 г."
+      evidence: >-
+        Fresh search retrieval on 02.09.2026 of the official Government document page still exposes the
+        18.01.2025 No. 12 revision and the clause-3 validity-through-01.09.2030 fingerprint. The live route
+        itself failed DNS resolution in the byte-exact runtime, so no MIME, exact byte length or SHA-256 is inferred.
+    decision: KEEP_PENDING_RAW_CAPTURE
+
+replacement_watch:
+  - source_id: SEC-SRC-RU-RKN128-2022
+    checked_at: "2026-09-02"
+    project_id: "01/02/07-26/00169785"
+    result: DRAFT_REPORTED_NOT_PRIMARY
+    evidence: >-
+      Fresh monitoring still exposes the Roskomnadzor replacement text prepared 31.07.2026 as a project;
+      the available project dossier states that the project is not signed. No enacted replacement identity
+      was established in this pass. Keep Order No. 128 active until primary enactment/publication evidence exists.
+    semantic_promotion: false
+
+master_counter_snapshot:
+  source: "security-corpora/RU/152-FZ/PDN_MASTER_SOURCE_INVENTORY.yaml"
+  checked_at: "2026-09-02"
+  identified: 40
+  raw_downloaded_exact: 38
+  immutable_sha256_verified: 38
+  atomized_existing_proposed: 4
+  atomized_verified: 0
+  pending_raw_capture: 2
+  raw_capture_coverage_ratio: 0.95
+  counter_effect: UNCHANGED_NO_NEW_ACCEPTED_BYTES
+
+notes:
+  - "Priority immutable sources PP211, RKN18, RKN128, RKN178, RKN179, RKN180, RKN140 and PP1154 remain reuse-first; no duplicate download was created."
+  - "Industry overlays were not touched."
