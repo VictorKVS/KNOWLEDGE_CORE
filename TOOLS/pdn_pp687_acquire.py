@@ -30,7 +30,7 @@ SOURCE_RECORD = CORPUS / "source" / f"{SOURCE_ID}.yaml"
 RAW_DIR = CORPUS / "raw" / SOURCE_ID
 MANIFEST_DIR = CORPUS / "manifests"
 RUN_FILE = CORPUS / "PDN_ACQUISITION_RUN.json"
-UA = "KNOWLEDGE_CORE-pdn-pp687-curl/1.6 (+https://github.com/VictorKVS/KNOWLEDGE_CORE)"
+UA = "KNOWLEDGE_CORE-pdn-pp687-curl/1.7 (+https://github.com/VictorKVS/KNOWLEDGE_CORE)"
 CURRENT_REVISION_SOURCE = "PP RF No. 12 of 18.01.2025"
 CURRENT_REVISION_EFFECTIVE_FROM = "2025-01-26"
 CURRENT_VALID_UNTIL = "2030-09-01"
@@ -106,12 +106,19 @@ def identity_ok(data: bytes) -> tuple[bool, list[str]]:
 
 
 def curl_capture(url: str, network_args: tuple[str, ...]) -> tuple[bytes, str, str]:
+    """Fetch one registered PP687 route with a bounded transport budget.
+
+    The job already retries the source through multiple official routes and network
+    profiles and is scheduled repeatedly. Keeping each individual request short prevents
+    the workflow guard from terminating the helper before it can emit structured failure
+    evidence. This affects transport timing only and does not weaken the PP687 identity,
+    PP12 revision fingerprint, immutable-byte or SHA-256 gates.
+    """
     with tempfile.TemporaryDirectory(prefix="pdn-pp687-") as td:
         body = Path(td) / "body.bin"
         cmd = [
             "curl", "--silent", "--show-error", "--location", "--fail-with-body",
-            "--retry", "2", "--retry-delay", "2", "--retry-all-errors",
-            "--connect-timeout", "20", "--max-time", "120",
+            "--connect-timeout", "6", "--max-time", "12",
             *network_args,
             "--header", f"User-Agent: {UA}",
             "--header", "Accept: text/html,application/xhtml+xml,*/*;q=0.8",
@@ -120,7 +127,7 @@ def curl_capture(url: str, network_args: tuple[str, ...]) -> tuple[bytes, str, s
             "--write-out", "%{url_effective}\n%{content_type}\n",
             url,
         ]
-        proc = subprocess.run(cmd, capture_output=True, text=True, timeout=150)
+        proc = subprocess.run(cmd, capture_output=True, text=True, timeout=18)
         if proc.returncode != 0:
             raise RuntimeError(f"curl exit={proc.returncode}: {(proc.stderr or '').strip()}")
         data = body.read_bytes() if body.exists() else b""
