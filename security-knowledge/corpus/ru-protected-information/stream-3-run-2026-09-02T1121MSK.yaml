@@ -1,0 +1,141 @@
+schema_version: "1.0"
+stream: 3
+run_at: "2026-09-02T11:21:44+03:00"
+objective: "continue primary-source discovery/currentness/version-chain/capture/deduplication for RU protected-information sector regimes overlapping 152-FZ"
+
+selected_work:
+  - id: SEC-SRC-RU-PP-1233-1994
+    action: NEW_CANONICAL_REGISTERED
+    sectors: [public_sector, archives, restricted_information, service_information_limited_distribution, information_security, personal_data_overlap]
+  - id: SEC-SRC-RU-ROSARCHIVE-ORDER-38-2025
+    action: EXISTING_CANONICAL_DIRECT_DEPENDENCY_RECONCILED
+    sectors: [archives, restricted_information, service_information_limited_distribution]
+  - id: SEC-SRC-RU-FZ-125-2004
+    action: EXISTING_CANONICAL_REUSED_FOR_ARCHIVAL_LIFECYCLE_CONTEXT
+    sectors: [archives, retention]
+
+repository_dedupe:
+  pp_1233_canonical_path_probe: NOT_FOUND_404
+  pp_1233_repository_search_probe: NO_EXISTING_CANONICAL_FOUND
+  result: NEW_CANONICAL_NODE_CREATED
+  duplicate_created: false
+
+primary_proof:
+  pp_1233:
+    original_official_print_citation: "Собрание законодательства Российской Федерации, 2005, № 30, ст. 3165"
+    current_revision: "04.03.2026"
+    latest_amendment: "Постановление Правительства РФ от 04.03.2026 № 226"
+    latest_amendment_publication_id: "0001202603050018"
+    latest_amendment_publication_url: "https://publication.pravo.gov.ru/document/0001202603050018"
+    latest_amendment_effective_date: "2026-03-13"
+    archival_amendment: "Постановление Правительства РФ от 09.10.2024 № 1350"
+    archival_amendment_publication_id: "0001202410090012"
+    archival_amendment_official_rosarchive_confirmation: "https://archives.gov.ru/press/17-10-2024.shtml"
+    state: CURRENT_PRIMARY_VERSION_CHAIN_VERIFIED_EXACT_BYTES_PENDING
+
+version_chain:
+  current_amenders_crosschecked:
+    - "20.07.2012 № 740"
+    - "20.02.2016 № 123"
+    - "18.03.2016 № 214"
+    - "06.08.2020 № 1186"
+    - "09.10.2024 № 1350"
+    - "04.03.2026 № 226"
+  latest_primary_publication_verified: true
+  2024_archival_primary_publication_verified: true
+  historical_chain_declared_complete: false
+  repeal_found_in_current_sweep: false
+  later_amendment_found_in_current_sweep: false
+
+normative_findings:
+  - "PP RF 1233 remains current in revision dated 04.03.2026; PP RF 226/2026 took effect 13.03.2026."
+  - "DLU under this regime is non-secret restricted information; state-secret documents are outside this Pоложение."
+  - "The 2024 amendment added an archival DLU layer for specified non-secret Archive Fund information, which is why Rosarchive Order 38/2025 directly depends on PP 1233."
+  - "The 2026 amendment explicitly covers electronic DLU documents and requires secure electronic processing/storage/exchange using systems meeting applicable information-security requirements and Article 16(5) of 149-FZ."
+  - "PP 226 modernized marking, copying, forwarding, destruction and demarking rules and added a recommendation that a broader set of public/publicly significant organizations follow the Pоложение."
+  - "The recommendation is not promoted to an unconditional mandatory rule for each legal entity."
+  - "Point 2.6 requires lawful disposal workflow before secure destruction and then requires destruction that prevents content recovery; it does not establish a numeric retention period."
+  - "DLU status, PDN status, state-secret status, archive access restriction and retention period are modeled as separate legal dimensions."
+
+proof_guards:
+  taxonomy_as_evidence: false
+  dlu_equals_pdn: false
+  dlu_equals_state_secret: false
+  recommendation_equals_mandatory_scope: false
+  secure_destruction_method_equals_retention: false
+  secure_destruction_method_equals_pdn_deletion_trigger: false
+  universal_pdn_retention_inferred: false
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+
+relationships:
+  - from: SEC-SRC-RU-PP-1233-1994
+    to: SEC-SRC-RU-ROSARCHIVE-ORDER-38-2025
+    type: DIRECT_DLU_HANDLING_FRAMEWORK_REFERENCE
+    state: VERIFIED
+  - from: SEC-SRC-RU-PP-1233-1994
+    to: SEC-SRC-RU-FZ-125-2004
+    type: ARCHIVAL_LIFECYCLE_CONTEXT
+    state: VERIFIED_RELATIONSHIP
+  - from: SEC-SRC-RU-PP-1233-1994
+    to: "149-FZ Article 16(5)"
+    type: DIRECT_INFORMATION_SECURITY_REFERENCE
+    state: VERIFIED_STATUTORY_REFERENCE
+  - from: SEC-SRC-RU-PP-1233-1994
+    to: "152-FZ"
+    type: CONDITIONAL_PDN_DOCUMENT_OVERLAP
+    state: APPLICABILITY_REVIEW_REQUIRED
+
+acquisition:
+  exact_binary_attempted: true
+  attempts:
+    - object: "PP RF 226/2026 official PDF"
+      target: "https://publication.pravo.gov.ru/file/pdf?eoNumber=0001202603050018"
+      result: DOWNLOAD_FAILED
+      error_class: TRANSIENT_DNS_OR_TRANSPORT_FAILURE
+      exact_bytes_obtained: false
+    - object: "PP RF 1350/2024 official PDF"
+      target: "https://publication.pravo.gov.ru/file/pdf?eoNumber=0001202410090012"
+      result: DOWNLOAD_FAILED
+      error_class: TRANSIENT_DNS_OR_TRANSPORT_FAILURE
+      exact_bytes_obtained: false
+  retry_class: TRANSIENT
+  exact_bytes_obtained_new: 0
+  retrieved_at_populated_new: 0
+  mime_populated_new: 0
+  byte_length_populated_new: 0
+  sha256_populated_new: 0
+  immutable_promotions: 0
+
+counter_delta_this_pass:
+  found_new_canonical: 1
+  downloaded_new: 0
+  immutable_new: 0
+  pending_new: 1
+  reused_existing_canonical_sources: 2
+  reconciliation_records_added: 1
+  primary_official_source_verified_new: 1
+  primary_publication_id_verified_new_chain_component: 1
+
+capture_ledger_reconciliation:
+  authoritative_file: "security-corpora/RU/protected-information/SECTOR_ACQUISITION_RUN.json"
+  targets_with_official_publication_id: 22
+  raw_downloaded_exact: 22
+  immutable_sha256_verified: 22
+  pending_inside_that_capture_scope: 0
+  bytes_downloaded: 114212750
+  changed_this_pass: false
+  note: "PP 1233 remains outside the controlled exact-capture ledger until exact bytes are obtained and merged under the ledger identity rules."
+
+files_written:
+  - "security-corpora/RU/protected-information/source/SEC-SRC-RU-PP-1233-1994.yaml"
+  - "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-PP-1233-1994-capture-pending.json"
+  - "security-corpora/RU/protected-information/reconciliation/SEC-SRC-RU-ROSARCHIVE-ORDER-38-2025-PP1233-2026-09-02T1121MSK.yaml"
+  - "security-corpora/RU/protected-information/RU_PROTECTED_INFORMATION_MASTER_SOURCE_INVENTORY_DELTA_STREAM3_2026-09-02T1121MSK.yaml"
+  - "security-corpora/RU/152-FZ/PDN_MASTER_SOURCE_INVENTORY_DELTA_STREAM3_2026-09-02T1121MSK.yaml"
+  - "security-knowledge/corpus/ru-protected-information/stream-3-run-2026-09-02T1121MSK.yaml"
+
+next_actions:
+  - "retry exact official PDF capture for publication IDs 0001202603050018 and 0001202410090012"
+  - "after exact bytes are obtained, compute MIME, byte_length and SHA-256 and store immutable artifacts before any exact-capture promotion"
+  - "continue special-regime discovery in finance/insurance, education/children, communications, biometrics, transport and marketing while preserving source-level dedupe"
