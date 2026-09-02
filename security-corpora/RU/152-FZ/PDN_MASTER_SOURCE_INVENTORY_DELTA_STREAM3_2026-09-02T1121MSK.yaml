@@ -1,0 +1,81 @@
+schema_version: "1.0"
+id: PDN-MASTER-SOURCE-INVENTORY-DELTA-STREAM3-2026-09-02T1121MSK
+kind: pdn_master_inventory_sector_overlay_delta
+stream: 3
+checked_at: "2026-09-02T11:21:44+03:00"
+
+source_overlays:
+  - id: SEC-SRC-RU-PP-1233-1994
+    document: "Постановление Правительства Российской Федерации от 03.11.1994 № 1233 (ред. от 04.03.2026)"
+    role: service_information_limited_distribution_document_handling_overlay
+    canonical_record: "../protected-information/source/SEC-SRC-RU-PP-1233-1994.yaml"
+    capture_manifest: "../protected-information/manifests/SEC-SRC-RU-PP-1233-1994-capture-pending.json"
+    metadata_status: CURRENT_PRIMARY_VERSION_CHAIN_VERIFIED_EXACT_BYTES_PENDING
+    raw_capture: PENDING
+    verified_for_exact_extraction: false
+    pdn_anchors:
+      - locator: "пункт 1.2"
+        rule: "ДСП является самостоятельным режимом несекретной информации ограниченного распространения; документ может содержать ПДн, но это требует отдельной квалификации по 152-ФЗ."
+        guard: "DLU_STATUS != PDN_STATUS."
+      - locator: "пункт 2.3"
+        rule: "Для электронных ДСП-документов установлены требования к защищенной обработке, хранению и обмену через решения, отвечающие требованиям ИБ и части 5 статьи 16 149-ФЗ."
+        guard: "Это не заменяет требования статьи 19 152-ФЗ и применимых подзаконных актов, если документ содержит ПДн."
+      - locator: "пункт 2.6"
+        rule: "После законного document/archival disposal lifecycle уничтожение должно исключать восстановление содержания; для электронных носителей предусмотрено физическое уничтожение либо безопасное удаление остаточной информации."
+        guard: "SECURE_DESTRUCTION_METHOD != PDN_RETENTION_PERIOD_OR_DELETION_TRIGGER."
+      - locator: "пункты 2.7-2.11"
+        rule: "Передача, копирование, печать, направление, инвентаризация, расследование утраты и снятие пометки регулируются как операции с ДСП-документом."
+        guard: "Разрешение по режиму ДСП не является само по себе правовым основанием обработки или раскрытия ПДн."
+
+scope_model:
+  mandatory_scope: "Actor/object scope ПП № 1233 проверяется отдельно по самому Положению."
+  2026_recommendation_scope: "Расширенному кругу государственных, муниципальных, публично значимых и иных юридических лиц рекомендовано руководствоваться Положением."
+  guard: "Рекомендацию не повышать до безусловной обязанности конкретного оператора ПДн без отдельного правового основания."
+
+retention_and_access_model:
+  universal_pdn_period: false
+  dlu_is_pdn_category: false
+  dlu_marking_is_pdn_legal_basis: false
+  secure_destruction_method_is_deletion_trigger: false
+  archival_access_restriction_is_retention_period: false
+  sector_special_retention_requires_object_specific_proof: true
+
+relationships:
+  - "PP 1233 -> 152-FZ / conditional document-level overlap when the concrete DLU document contains PDN"
+  - "PP 1233 point 2.3 -> 149-FZ Article 16(5) / electronic information-security overlay"
+  - "PP 1233 -> Rosarchive Order 38/2025 / general DLU handling framework for the special archival workflow"
+  - "PP 1233 point 2.6 -> archival/document disposal procedure / secure destruction after lawful retention lifecycle"
+
+counter_delta_this_pass:
+  sector_overlay_found_new_canonical: 1
+  downloaded_new: 0
+  immutable_new: 0
+  pending_new: 1
+  reused_existing_canonical_sources: 2
+  primary_official_source_verified_new: 1
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+
+master_counter_policy:
+  core_pdn_production_counters_changed: false
+  reason: >-
+    PP RF 1233 is a protected-information sector overlay. Exact official bytes remain pending and applicability is actor/document/scenario bound, so direct PDN core exact/immutable counters are not inflated.
+
+capture:
+  new_source_status: PENDING_TRANSIENT_NETWORK_FAILURE
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+  fabricated_binary_metadata: false
+
+proof_guards:
+  - "TAXONOMY_SEED_NOT_LEGAL_PROOF"
+  - "DLU_NOT_PDN_CATEGORY"
+  - "DLU_MARKING_NOT_PDN_PROCESSING_BASIS"
+  - "DLU_PERMISSION_NOT_PDN_DISCLOSURE_BASIS"
+  - "RECOMMENDATION_NOT_AUTOMATIC_MANDATORY_SCOPE"
+  - "SECURE_DESTRUCTION_METHOD_NOT_RETENTION_OR_DELETION_TRIGGER"
+  - "NO_UNIVERSAL_PDN_RETENTION_INFERRED"
+  - "NO_FABRICATED_MIME_BYTE_LENGTH_OR_SHA256"
