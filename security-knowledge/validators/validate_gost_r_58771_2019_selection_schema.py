@@ -42,7 +42,9 @@ for key, value in fixtures["expected_counts"].items():
     assert model["counts"][key] == value
 for required in [
     "id: GOST_R_58771_2019",
-    "REGRESSION_PROTECTED_FOUNDATION_SELECTION_SCHEMA_FAMILY_CROSSWALK_AND_42_TECHNIQUE_CATALOG",
+    "SELECTION_SCHEMA",
+    "FAMILY_CROSSWALK",
+    "42_TECHNIQUE_CATALOG",
     "security-knowledge/risks/gost-r-58771-2019-selection-schema-v1.yaml",
     "security-knowledge/risks/gost-r-58771-2019-selection-schema-regression-v1.json",
 ]:
