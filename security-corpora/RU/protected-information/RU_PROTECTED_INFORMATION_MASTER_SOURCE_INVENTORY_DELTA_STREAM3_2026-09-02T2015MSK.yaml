@@ -1,0 +1,127 @@
+schema_version: "1.0"
+id: RU-PROTECTED-INFORMATION-MASTER-DELTA-STREAM3-2026-09-02T2015MSK
+kind: master_inventory_delta
+stream: 3
+checked_at: "2026-09-02T20:15:38+03:00"
+
+source_delta:
+  - id: SEC-SRC-RU-FZ-79-2004
+    action: ADD_NEW_CANONICAL_CURRENT_PRIMARY_LATEST_AMENDMENT_VERIFIED_EXACT_CAPTURE_PENDING
+    canonical_record: "source/SEC-SRC-RU-FZ-79-2004.yaml"
+    capture_manifest: "manifests/SEC-SRC-RU-FZ-79-2004-capture-pending.json"
+    sectors:
+      - public_sector
+      - state_civil_service
+      - hr_records
+      - personal_data
+      - restricted_information
+      - biometric_and_genomic_registration_overlap
+      - archives
+    original_electronic_publication_id: null
+    original_official_print_citation: "Собрание законодательства Российской Федерации, 2004, № 31, ст. 3215"
+    current_revision: "08.03.2026"
+    latest_amendment: "Федеральный закон от 08.03.2026 № 52-ФЗ"
+    latest_amendment_publication_id: "0001202603080008"
+    latest_amendment_effective_date: "2026-06-07"
+    primary_currentness_verified: true
+    downloaded_exact: false
+    immutable: false
+    dedupe_result: NEW_CANONICAL_NODE
+
+counter_delta_this_pass:
+  found_new_canonical: 1
+  downloaded_new: 0
+  immutable_new: 0
+  pending_new: 1
+  reused_existing_canonical_sources: 3
+  relationships_verified: 3
+  currentness_refresh_new_source: 1
+  primary_official_source_verified_new: 1
+  primary_publication_id_verified_new_chain_components: 2
+  new_discovery_seeds: 2
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+
+capture_ledger_reconciliation:
+  authoritative_file: "SECTOR_ACQUISITION_RUN.json"
+  identity_scope: "document.official_publication_id only in the controlled acquisition run"
+  current_targets_with_official_publication_id: 22
+  current_raw_downloaded_exact: 22
+  current_immutable_sha256_verified: 22
+  current_pending_inside_that_capture_scope: 0
+  current_bytes_downloaded: 114212750
+  changed_this_pass: false
+  reason: >-
+    Federal Law 79-FZ is a newly registered canonical source whose original 2004 act has no electronic publication ID in this pass. The latest amendment publication ID 0001202603080008 and previous amendment publication ID 0001202512280017 are verified, but exact official bytes were not obtained because the file runtime could not resolve the official hosts. The controlled 22-target exact acquisition ledger is therefore not inflated.
+
+public_sector_pdn_findings:
+  - "Article 42 is a direct special personal-data regime for state civil servants and their personal files; it does not govern every public-sector employee or every government-held personal-data system."
+  - "Article 42 part 1 links civil-service HR processing to Russian personal-data legislation and imposes specific restrictions on sources, sensitive/private-life data, automated decisions, protection and third-party transfer."
+  - "Article 42 parts 3-4 define the personal-file object and delegate the implementing personal-data/personal-file regulation to the President; Decree 609 is the existing canonical implementation node."
+  - "Article 43 part 2 adds a registry/GIS protection requirement for information from the personal file, but does not itself define a retention duration."
+
+biometric_genomic_overlap_findings:
+  - "The current amendment 52-FZ, effective 07.06.2026, changes Article 15 part 5 so civil servants are subject to state fingerprint and state genomic registration only in cases and according to procedures established by federal laws."
+  - "This creates discovery edges to Federal Law 128-FZ on state fingerprint registration and Federal Law 242-FZ on state genomic registration; neither edge is promoted to universal applicability until those primary acts and triggering conditions are separately verified."
+  - "Fingerprint registration is not automatically treated as the Unified Biometric System regime, and genomic registration is not automatically classified as biometric personal data under 152-FZ without separate legal proof."
+
+retention_findings:
+  - "No universal numeric retention period for all civil-servant personal data was derived from 79-FZ Articles 42-43."
+  - "The previously registered 10-year post-dismissal HR custody stage belongs to Decree 609 point 23 and remains a specific personal-file lifecycle rule, followed by archive transfer rather than deletion."
+
+relationships_added_or_revalidated:
+  - "SEC-SRC-RU-FZ-79-2004 -> SEC-SRC-RU-152FZ-2026-07-26 / direct special civil-service PDN overlay"
+  - "SEC-SRC-RU-FZ-79-2004 -> SEC-SRC-RU-PRESIDENT-DECREE-609-2005 / Article 42 part 4 direct presidential implementation; prior discovery gap resolved"
+  - "SEC-SRC-RU-FZ-79-2004 -> SEC-SRC-RU-FZ-125-2004 / archive context only through object-specific personal-file lifecycle"
+  - "SEC-SRC-RU-FZ-79-2004 -> Federal Law 128-FZ / Article 15 part 5 triggering-regime discovery seed; primary canonical pass still required"
+  - "SEC-SRC-RU-FZ-79-2004 -> Federal Law 242-FZ / Article 15 part 5 triggering-regime discovery seed; primary canonical pass still required"
+
+acquisition_attempts:
+  - source_id: SEC-SRC-RU-FZ-79-2004
+    object: "Federal Law 52-FZ/2026 official PDF"
+    url: "https://publication.pravo.gov.ru/file/pdf?eoNumber=0001202603080008"
+    attempted_at: "2026-09-02T20:15:38+03:00"
+    method: "curl/container"
+    result: DOWNLOAD_FAILED
+    retry_class: TRANSIENT
+    error_class: TRANSIENT_DNS_RESOLUTION_FAILURE
+    curl_exit_code: 6
+    exact_bytes_obtained: false
+  - source_id: SEC-SRC-RU-FZ-79-2004
+    object: "79-FZ original official Kremlin representation"
+    url: "https://www.kremlin.ru/acts/bank/21210/print"
+    attempted_at: "2026-09-02T20:15:38+03:00"
+    method: "curl/container"
+    result: DOWNLOAD_FAILED
+    retry_class: TRANSIENT
+    error_class: TRANSIENT_DNS_RESOLUTION_FAILURE
+    curl_exit_code: 6
+    exact_bytes_obtained: false
+  - source_id: SEC-SRC-RU-FZ-79-2004
+    object: "Federal Law 505-FZ/2025 official PDF"
+    url: "https://publication.pravo.gov.ru/file/pdf?eoNumber=0001202512280017"
+    attempted_at: "2026-09-02T20:15:38+03:00"
+    method: "curl/container"
+    result: DOWNLOAD_FAILED
+    retry_class: TRANSIENT
+    error_class: TRANSIENT_DNS_RESOLUTION_FAILURE
+    curl_exit_code: 6
+    exact_bytes_obtained: false
+
+proof_guards:
+  taxonomy_as_evidence: false
+  special_civil_service_scope_equals_all_public_sector: false
+  article15_part5_equals_universal_registration: false
+  fingerprint_registration_equals_ebs_regime: false
+  genomic_registration_equals_biometric_pdn_without_separate_proof: false
+  article43_security_equals_retention_period: false
+  applicability_promotions: 0
+  fabricated_binary_metadata: false
+
+improvement_notes:
+  - priority: P0
+    what: "Exact official bytes remain blocked by DNS in the file runtime."
+    how: "Retry publication.pravo.gov.ru IDs 0001202603080008 and 0001202512280017 plus the Kremlin original; on success compute MIME/byte length/SHA-256, place in immutable blob storage, and reconcile manifests/counters without changing legal applicability."
+  - priority: P1
+    what: "Article 15 part 5 now points to two separate registration regimes that are not yet canonical in this sector library."
+    how: "Run primary-source passes for 128-FZ and 242-FZ, identify exact triggering categories/procedures, and only then create PDN/biometric/genomic applicability edges."
