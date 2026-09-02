@@ -1,0 +1,85 @@
+schema_version: "1.0"
+id: PDN-MASTER-SOURCE-INVENTORY-DELTA-STREAM2-2026-09-02T1716Z
+kind: pdn-master-source-inventory-delta
+stream: 2
+created_at: "2026-09-02T17:16:00Z"
+base_inventory: "PDN_MASTER_SOURCE_INVENTORY.yaml"
+security_stack_inventory: "security-stack/PDN_SECURITY_STACK_SOURCE_INVENTORY.yaml"
+latest_stream2_run: "security-stack/runs/STREAM2_RUN_2026-09-02T1716Z.yaml"
+latest_acquisition_manifest: "security-stack/manifests/STREAM2_ACQUISITION_MANIFEST_2026-09-02T1716Z.yaml"
+latest_status_evidence: "security-stack/evidence/STREAM2_STATUS_EVIDENCE_FSTEC_SCOPE_CLARIFICATIONS_2026-09-02T1716Z.yaml"
+
+security_stack_counter_before:
+  identified: 56
+  metadata_verified: 56
+  immutable_sha256_verified: 24
+  pending_raw_capture: 32
+  exact_official_route_unresolved: 9
+  verified_version_edges: 12
+  applicability_guards: 31
+  confirmed_conflicts: 0
+
+stream2_run_delta:
+  official_route_attempts: 9
+  successful_payloads: 0
+  new_source_identities: 2
+  metadata_verified_new: 2
+  new_immutable_artifacts: 0
+  new_sha256: 0
+  pending_raw_new: 2
+  exact_official_route_unresolved_new: 0
+  new_version_edges: 0
+  applicability_guards_new: 2
+  existing_immutable_reused: 2
+  semantic_promotions_to_generic_pdn_baseline: 0
+
+security_stack_counter_after_delta:
+  identified: 58
+  metadata_verified: 58
+  immutable_sha256_verified: 24
+  pending_raw_capture: 34
+  exact_official_route_unresolved: 9
+  verified_version_edges: 12
+  applicability_guards: 33
+  confirmed_conflicts: 0
+
+new_security_stack_sources:
+  - source_id: SEC-SRC-RU-FSTEC-INFO-240-22-2637-2013
+    role: fstec_order21_scope_and_effectiveness_assessment_clarification
+    source_record: "security-stack/source/SEC-SRC-RU-FSTEC-INFO-240-22-2637-2013.yaml"
+    applicability: ISPDN_ORDER21_INTERPRETIVE_AND_GIS_SCOPE_BOUNDARY
+    primary_capture: PENDING
+    generic_pdn_effect: BOUNDARY_EVIDENCE_NO_NEW_REQUIREMENT
+  - source_id: SEC-SRC-RU-FSTEC-INFO-240-24-1382-2017
+    role: fstec_order21_firewall_certification_transition_context
+    source_record: "security-stack/source/SEC-SRC-RU-FSTEC-INFO-240-24-1382-2017.yaml"
+    applicability: ISPDN_FIREWALL_CERTIFICATION_CONTEXT_ONLY_WHEN_FIREWALL_MEASURE_APPLIES
+    primary_capture: PENDING
+    generic_pdn_effect: CONDITIONAL_CONTEXT_NO_UNIVERSAL_FIREWALL_DUTY
+
+freshness_update:
+  latest_status_review_at: "2026-09-02T17:16:00Z"
+  latest_transport_observed_to: "2026-09-02T17:17:43.552774Z"
+  pp1119: CURRENT_PRIMARY_BYTES_PENDING
+  fstec21: CURRENT_REVISION_2020_05_14_REPLACEMENT_PRIMARY_ENACTMENT_GATE_NOT_PASSED
+  fstec21_replacement_project: "01/02/07-26/00169583"
+  fstec_threat_method_2021: CURRENT_EXISTING_IMMUTABLE_REUSED
+  fstec_maturity_method_2026: CURRENT_METHOD_EXACT_PDF_BYTES_PENDING
+  fstec_info_240_22_2637_2013: NEW_METADATA_VERIFIED_SCOPE_BOUNDARY_SOURCE_BYTES_PENDING
+  fstec_info_240_24_1382_2017: NEW_METADATA_VERIFIED_FIREWALL_CERTIFICATION_CONTEXT_BYTES_PENDING
+  fsb378: SKZI_CONDITIONAL_BASELINE_PRIMARY_BYTES_PENDING_STATUS_REVIEW_REQUIRED
+  fsb66_173_chain: RETAINED_NO_NEW_TRANSITION
+  fapsi152: SKZI_HANDLING_PRIMARY_BYTES_PENDING
+  nctki_gossopka: INCIDENT_BOUNDED_NO_GENERIC_PDN_PROMOTION
+
+master_applicability_rule: >-
+  Generic PDN remains PP RF No.1119 plus applicable FSTEC Order No.21 technical measures. The 2013 FSTEC
+  clarification strengthens the evidence boundary for state/municipal information-system overlays; it does not
+  import Order No.17, GIS attestation, STR-K or RD AS into every private ISPDn. The 2017 firewall message is
+  conditional on a firewall-related measure or conformity edge. FSB378 remains conditional on SKZI use.
+  Licensing, certification, KII and NCTKI/GosSOPKA are not imported without independently proven applicability.
+
+reconciliation_instruction: >-
+  Register the two new security-stack sources and advance only the security-stack counters and latest Stream-2
+  pointers shown above. Do not change generic PDN-core production counters from these contextual registrations.
+  Keep Order No.21 active until final primary replacement enactment/registration/publication evidence is proven.

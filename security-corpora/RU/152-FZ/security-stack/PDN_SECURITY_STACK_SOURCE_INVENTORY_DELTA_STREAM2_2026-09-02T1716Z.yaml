@@ -1,0 +1,100 @@
+schema_version: "1.0"
+id: SEC-PDN-SECURITY-STACK-DELTA-STREAM2-2026-09-02T1716Z
+kind: security-regulatory-source-inventory-delta
+stream: 2
+created_at: "2026-09-02T17:16:00Z"
+base_inventory: "PDN_SECURITY_STACK_SOURCE_INVENTORY.yaml"
+run_ref: "runs/STREAM2_RUN_2026-09-02T1716Z.yaml"
+manifest_ref: "manifests/STREAM2_ACQUISITION_MANIFEST_2026-09-02T1716Z.yaml"
+status_evidence_ref: "evidence/STREAM2_STATUS_EVIDENCE_FSTEC_SCOPE_CLARIFICATIONS_2026-09-02T1716Z.yaml"
+
+counter_before:
+  identified: 56
+  metadata_verified: 56
+  immutable_sha256_verified: 24
+  pending_raw_capture: 32
+  exact_official_route_unresolved: 9
+  version_edges_verified: 12
+  applicability_guards: 31
+  confirmed_conflicts: 0
+
+source_additions:
+  - source_id: SEC-SRC-RU-FSTEC-INFO-240-22-2637-2013
+    source_record: "source/SEC-SRC-RU-FSTEC-INFO-240-22-2637-2013.yaml"
+    role: fstec_order21_scope_and_effectiveness_assessment_clarification
+    metadata_status: METADATA_VERIFIED
+    raw_capture: PENDING
+    exact_official_route_status: RESOLVED_BYTES_PENDING
+    applicability: ISPDN_ORDER21_INTERPRETIVE_AND_GIS_SCOPE_BOUNDARY
+    version_edge: false
+
+  - source_id: SEC-SRC-RU-FSTEC-INFO-240-24-1382-2017
+    source_record: "source/SEC-SRC-RU-FSTEC-INFO-240-24-1382-2017.yaml"
+    role: fstec_order21_firewall_certification_transition_context
+    metadata_status: METADATA_VERIFIED
+    raw_capture: PENDING
+    exact_official_route_status: RESOLVED_BYTES_PENDING
+    applicability: ISPDN_FIREWALL_CERTIFICATION_CONTEXT_ONLY_WHEN_FIREWALL_MEASURE_APPLIES
+    version_edge: false
+
+status_delta:
+  - source_id: SEC-SRC-RU-PP1119-2012
+    result: CURRENT_PRIMARY_BYTES_PENDING
+    byte_attempt: DNS_RESOLUTION_FAILURE_BEFORE_HTTP
+    version_chain_change: false
+  - source_id: SEC-SRC-RU-FSTEC21-2013
+    result: CURRENT_REVISION_2020_05_14_REPLACEMENT_PRIMARY_GATE_NOT_PASSED
+    version_chain_change: false
+    watch_project: "01/02/07-26/00169583"
+  - source_id: SEC-SRC-RU-FSTEC-THREAT-METHOD-2021
+    result: CURRENT_EXISTING_IMMUTABLE_REUSED
+    byte_attempt: DNS_RESOLUTION_FAILURE_BEFORE_HTTP
+    version_chain_change: false
+  - source_id: SEC-SRC-RU-FSTEC-MATURITY-METHOD-2026
+    result: CURRENT_METHOD_PRIMARY_BYTES_PENDING
+    byte_attempt: DNS_RESOLUTION_FAILURE_BEFORE_HTTP
+    version_chain_change: false
+  - source_id: SEC-SRC-RU-FSB378-2014
+    result: SKZI_CONDITIONAL_BASELINE_PRIMARY_BYTES_PENDING_STATUS_REVIEW_REQUIRED
+    byte_attempt: DNS_RESOLUTION_FAILURE_BEFORE_HTTP
+    version_chain_change: false
+  - source_group: FSB66_FSB173_FAPSI152
+    result: PRIMARY_BYTES_RETRY_FAILED_EXISTING_GUARDS_RETAINED
+    version_chain_change: false
+
+run_delta:
+  official_route_attempts: 9
+  successful_payloads: 0
+  new_source_identities: 2
+  metadata_verified_new: 2
+  new_immutable_captured: 0
+  new_sha256: 0
+  pending_raw_new: 2
+  exact_official_route_unresolved_new: 0
+  applicability_guards_new: 2
+  existing_immutable_reused: 2
+  new_version_edges: 0
+  semantic_promotions_to_generic_pdn_baseline: 0
+
+counter_after_delta:
+  identified: 58
+  metadata_verified: 58
+  immutable_sha256_verified: 24
+  pending_raw_capture: 34
+  exact_official_route_unresolved: 9
+  version_edges_verified: 12
+  applicability_guards: 33
+  confirmed_conflicts: 0
+
+applicability_guard: >-
+  The new 2013 FSTEC information message is used to strengthen the boundary between generic Order No.21 ISPDn
+  requirements and the state/municipal information-system overlay. The 2017 firewall message is used only where
+  a firewall measure or certification/conformity edge is established. Neither information message creates a
+  version edge. FSB378 remains conditional on established SKZI use; FSB66/173 and FAPSI152 remain conditional
+  lifecycle/handling context; NCTKI/GosSOPKA remains incident/direct-trigger bounded.
+
+reconciliation_instruction: >-
+  Add both new source identities to the canonical security-stack inventory and advance security-stack counters
+  to counter_after_delta. Their official routes are resolved, therefore pending_raw_capture increases by two but
+  exact_official_route_unresolved does not. Do not add version edges or generic PDN obligations from these
+  interpretive/certification-context sources.
