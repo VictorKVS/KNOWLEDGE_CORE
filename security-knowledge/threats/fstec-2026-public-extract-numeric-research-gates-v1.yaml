@@ -1,0 +1,141 @@
+{
+  "id": "RU-FSTEC-2026-PUBLIC-EXTRACT-NUMERIC-RESEARCH-GATES-V1",
+  "as_of": "2026-09-02",
+  "title": "FSTEC 2026 public extract: numeric research-quality gates, reuse boundaries and evidence routing",
+  "status": "PARTIAL_VERIFIED_SECONDARY_EXTRACT_OCR_AND_IMAGE_CROSSCHECK_OFFICIAL_FULL_BYTES_PENDING",
+  "scope": "Bounded reconstruction of exact numeric gates in clauses 2.7, 3.1, 4.2, 4.3.1-4.3.3 and 5.2-5.5 from the 60-page public extract; no claim of a complete six-level matrix or official-byte equivalence.",
+  "sources": [
+    {
+      "id": "S1",
+      "authority": "FSTEC_RUSSIA",
+      "document": "Methodology for identifying vulnerabilities and undeclared capabilities in software",
+      "approved": "2026-05-12",
+      "official_page": "https://fstec.ru/dokumenty/vse-dokumenty/spetsialnye-normativnye-dokumenty/metodicheskij-dokument-ot-12-maya-2026-g",
+      "official_pdf": "https://fstec.ru/files/1502/---12--2026-/3055/---12--2026-.pdf",
+      "state": "PRIMARY_IDENTITY_INDEXED_PDF_HTTP_502"
+    },
+    {
+      "id": "S2",
+      "authority": "PUBLIC_MIRROR_ZLONOV_HUB",
+      "document_marking": "EXTRACT",
+      "mirror_pdf": "https://hub.zlonov.ru/laws/pdfs/%D0%9C%D0%B5%D1%82%D0%BE%D0%B4%D0%B8%D0%BA%D0%B0-%D0%A4%D0%A1%D0%A2%D0%AD%D0%9A-%D0%A0%D0%BE%D1%81%D1%81%D0%B8%D0%B8-%D0%BE%D1%82-12.05.2026.pdf",
+      "sha256": "4801f59209772d0e428af25c47aa2e0936726f84a49ed1d1084f99c566b2a9c8",
+      "size_bytes": 601884,
+      "pages": 60,
+      "state": "SECONDARY_EXTRACT_BYTES_ACQUIRED_OFFICIAL_EQUIVALENCE_NOT_PROVEN"
+    }
+  ],
+  "extraction_provenance": {
+    "render": "Poppler pdftoppm, JPEG, 200 dpi, 60 pages",
+    "ocr": "Tesseract 5 with tessdata_fast rus.traineddata",
+    "ocr_model_sha256": "e16e5e036cce1d9ec2b00063cf8b54472625b9e14d893a169e2b0dedeb4df225",
+    "ocr_output_lines": 2651,
+    "ocr_output_bytes": 188526,
+    "image_crosschecked_pages": [23, 27, 28, 30, 31, 32, 38],
+    "authority_boundary": "OCR supports discovery and comparison only. Exact gates below were checked against rendered page images, but remain secondary until official bytes are acquired and compared."
+  },
+  "extract_boundary": {
+    "title_page_marking": "Выписка",
+    "declared_control_levels": 6,
+    "lowest_control_level": 6,
+    "highest_control_level": 1,
+    "observed_matrix_levels_in_public_extract": [6, 5, 4],
+    "missing_matrix_levels": [3, 2, 1],
+    "rule": "Do not infer requirements for control levels 1-3 from the public extract or extrapolate the level-4 enhancements upward."
+  },
+  "numeric_routes": [
+    {"id": "N01", "clause": "2.7", "facts": "A vulnerability or undeclared capability is remediated during research", "route": "REPEAT_RESEARCH_FOR_INTERFACES_COMPONENTS_MODULES_AND_CODE_DIRECTLY_OR_INDIRECTLY_AFFECTED", "operator": "AFFECTED_SCOPE_NOT_FULL_PRODUCT_AUTOMATICALLY"},
+    {"id": "N02", "clause": "3.1 enhancement 1", "facts": "Modified interpreted, byte or machine code exceeds 10000 instructions", "route": "FURTHER_RESEARCH_IMPOSSIBLE", "operator": "> 10000"},
+    {"id": "N03", "clause": "4.2", "facts": "Code not covered by required static analysis does not exceed 10000 source lines", "route": "MANUAL_CODE_EXPERT_REVIEW_MAY_SUBSTITUTE_FOR_STATIC_ANALYSIS", "operator": "<= 10000"},
+    {"id": "N04", "clause": "4.2", "facts": "Static-analysis review sample", "route": "AT_LEAST_20_CRITICAL_WARNINGS_PER_HIGH_LEVEL_LANGUAGE", "operator": ">= 20"},
+    {"id": "N05", "clause": "4.2", "facts": "Static-analysis review sample", "route": "WARNINGS_FROM_AT_LEAST_5_ANALYZED_MODULES", "operator": ">= 5"},
+    {"id": "N06", "clause": "4.2", "facts": "Static-analysis review sample", "route": "AT_LEAST_10_WARNINGS_FROM_EACH_USED_STATIC_ANALYZER", "operator": ">= 10"},
+    {"id": "N07", "clause": "4.2", "facts": "Incorrect developer labels do not exceed 10 percent", "route": "CONTINUE_AFTER_DEVELOPER_REMEDIATION", "operator": "<= 10%"},
+    {"id": "N08", "clause": "4.2", "facts": "Incorrect developer labels exceed 10 percent", "route": "LAB_PERFORMS_STATIC_ANALYSIS_OR_DECLARE_FURTHER_RESEARCH_IMPOSSIBLE", "operator": "> 10%"},
+    {"id": "N09", "clause": "4.2", "facts": "Independent laboratory static-analysis check", "route": "AT_LEAST_5_MODULES_AND_AT_LEAST_10_WARNINGS_PER_HIGH_LEVEL_LANGUAGE", "operator": ">= 5 modules; >= 10 warnings/language"},
+    {"id": "N10", "clause": "4.3.1", "facts": "Dynamic-analysis-obstructing mechanisms and protected code exceed 10000 source lines", "route": "FURTHER_RESEARCH_IMPOSSIBLE", "operator": "> 10000"},
+    {"id": "N11", "clause": "4.3.2", "facts": "Modules not tested as required do not exceed 5", "route": "LAB_TESTS_MODULES_OR_DECLARE_FURTHER_RESEARCH_IMPOSSIBLE", "operator": "<= 5"},
+    {"id": "N12", "clause": "4.3.2", "facts": "Modules not tested as required exceed 5", "route": "FURTHER_RESEARCH_IMPOSSIBLE", "operator": "> 5"},
+    {"id": "N13", "clause": "4.3.2", "facts": "Module-test review sample", "route": "AT_LEAST_50_FAILURE_OR_REQUIREMENT_VIOLATION_TESTS_FROM_AT_LEAST_5_MODULES_PLUS_ALL_UNFIXED_SECURITY_REGRESSIONS", "operator": ">= 50; >= 5 modules"},
+    {"id": "N14", "clause": "4.3.2", "facts": "Incorrectly labelled module-test results", "route": "CONTINUE_AFTER_REMEDIATION_IF_NOT_OVER_10_PERCENT_ELSE_FURTHER_RESEARCH_IMPOSSIBLE", "operator": "<= 10% versus > 10%"},
+    {"id": "N15", "clause": "4.3.2 enhancement 4", "facts": "Control-level enhancement applies", "route": "TEST_COVERAGE_FOR_EACH_TESTED_MODULE_AT_LEAST_25_PERCENT", "operator": ">= 25%", "applicability": "PUBLIC_EXTRACT_TABLE_SHOWS_ENHANCEMENT_FOR_LEVEL_4_NOT_UNIVERSAL"},
+    {"id": "N16", "clause": "4.3.3", "facts": "Required fuzz targets not fuzzed do not exceed 3", "route": "LAB_FUZZES_TARGETS_OR_DECLARE_FURTHER_RESEARCH_IMPOSSIBLE", "operator": "<= 3"},
+    {"id": "N17", "clause": "4.3.3", "facts": "Required fuzz targets not fuzzed exceed 3", "route": "FURTHER_RESEARCH_IMPOSSIBLE", "operator": "> 3"},
+    {"id": "N18", "clause": "4.3.3", "facts": "Incorrectly labelled reproducible fuzz crashes or hangs", "route": "CONTINUE_AFTER_REMEDIATION_IF_NOT_OVER_10_PERCENT_ELSE_FURTHER_RESEARCH_IMPOSSIBLE", "operator": "<= 10% versus > 10%"},
+    {"id": "N19", "clause": "4.3.3", "facts": "Independent laboratory fuzz contribution", "route": "CREATE_AND_FUZZ_AT_LEAST_2_NEW_TARGETS_OR_SIGNIFICANTLY_IMPROVE_AT_LEAST_3_EXISTING_FUZZ_TEST_SETS", "operator": ">= 2 new OR >= 3 improved"},
+    {"id": "N20", "clause": "4.3.3 enhancement 2", "facts": "Fuzzer path or coverage growth condition", "route": "AT_LEAST_DOUBLE_UNIQUE_PATHS_VERSUS_INPUT_SAMPLES_OR_DOUBLE_COVERAGE_VERSUS_SEED_CORPUS", "operator": ">= 2x"},
+    {"id": "N21", "clause": "4.3.3 enhancement 2", "facts": "Coverage reaches at least 90 percent of source lines or 80 percent of basic blocks", "route": "LAB_MAY_IGNORE_FURTHER_COVERAGE_GROWTH_FOR_COMPLETION_DECISION", "operator": ">= 90% lines OR >= 80% blocks"},
+    {"id": "N22", "clause": "4.3.3 enhancement 5", "facts": "Each fuzz target receives unique mutated inputs", "route": "CONTINUE_UNTIL_AT_LEAST_2_HOURS_WITH_NO_NEW_PATH_OR_COVERAGE_GROWTH", "operator": ">= 2 hours"}
+  ],
+  "evidence_routes": [
+    {"clause": "5.2", "rule": "The protocol includes general provisions, object and purpose, means and conditions, technical results, research results, identified security deficiencies and conclusions."},
+    {"clause": "5.3", "rule": "Configurations, tool-run logs, result-work logs, labels, screenshots and method-specific technical results are retained."},
+    {"clause": "5.3", "rule": "Each labelled warning has an individually sufficient explanation; generic labels or generic group labelling for non-identical causes are not accepted."},
+    {"clause": "5.5", "rule": "Deficiencies, developer remediation, laboratory verdicts and recommendations are recorded; vulnerability information for the evaluated object and components is sent by the developer to the FSTEC BDU."}
+  ],
+  "decision_gates": [
+    {"id": "G1", "test": "Confirm the byte object is the public extract and preserve its hash."},
+    {"id": "G2", "test": "Resolve clause, activity type and applicable control-level enhancement before applying a number."},
+    {"id": "G3", "test": "Apply less-than, not-more-than, exceeds and at-least operators exactly."},
+    {"id": "G4", "test": "Do not convert an option for the laboratory into an automatic entitlement or universal duty."},
+    {"id": "G5", "test": "Keep static-analysis, module-test and fuzz-test samples separate."},
+    {"id": "G6", "test": "Keep a coverage threshold separate from completion and quality evidence."},
+    {"id": "G7", "test": "Require remediation plus scoped repeat research before closure."},
+    {"id": "G8", "test": "Fail closed for control levels 1-3 and any clause absent from the extract until official full bytes are available."}
+  ],
+  "red_team_attacks": [
+    {"id": "RT1", "attack": "EXTRACT_AS_COMPLETE_SIX_LEVEL_METHOD", "expected": "BLOCK"},
+    {"id": "RT2", "attack": "LEVEL4_ENHANCEMENT_AS_UNIVERSAL_ALL_LEVELS", "expected": "BLOCK"},
+    {"id": "RT3", "attack": "10000_INSTRUCTIONS_AS_10000_SOURCE_LINES", "expected": "BLOCK"},
+    {"id": "RT4", "attack": "TEN_PERCENT_EQUAL_AS_FAILURE_ROUTE", "expected": "BLOCK"},
+    {"id": "RT5", "attack": "FIVE_MODULES_EQUAL_AS_AUTOMATIC_IMPOSSIBILITY", "expected": "BLOCK"},
+    {"id": "RT6", "attack": "THREE_FUZZ_TARGETS_EQUAL_AS_AUTOMATIC_IMPOSSIBILITY", "expected": "BLOCK"},
+    {"id": "RT7", "attack": "TWENTY_FIVE_PERCENT_COVERAGE_AS_SECURITY_PROOF", "expected": "BLOCK"},
+    {"id": "RT8", "attack": "NINETY_OR_EIGHTY_PERCENT_AS_AUTOMATIC_FUZZ_COMPLETION", "expected": "BLOCK"},
+    {"id": "RT9", "attack": "TWO_HOURS_WITH_NON_UNIQUE_INPUTS_AS_STOP_CONDITION", "expected": "BLOCK"},
+    {"id": "RT10", "attack": "GENERIC_NOT_EXPLOITABLE_COMMENT_AS_SUFFICIENT_EVIDENCE", "expected": "BLOCK"},
+    {"id": "RT11", "attack": "PATCH_APPLIED_AS_CLOSED_WITHOUT_REPEAT_RESEARCH", "expected": "BLOCK"},
+    {"id": "RT12", "attack": "OCR_OUTPUT_AS_OFFICIAL_TEXT", "expected": "BLOCK"}
+  ],
+  "pending": [
+    "Official immutable full methodology bytes and SHA-256.",
+    "Official or authoritative matrices for control levels 1-3.",
+    "Full page-by-page comparison against the public extract.",
+    "Verified complete BDU exports and submission schema.",
+    "Independent technical and legal review."
+  ],
+  "boundaries": {
+    "extract_not_complete_method": true,
+    "official_byte_equivalence_not_claimed": true,
+    "ocr_not_authority": true,
+    "key_pages_image_crosschecked": true,
+    "operators_preserved": true,
+    "instructions_not_lines": true,
+    "sample_types_not_interchangeable": true,
+    "coverage_not_security_proof": true,
+    "remediation_not_closure": true,
+    "generic_labels_not_sufficient_evidence": true
+  },
+  "counts": {"numeric_routes": 22, "evidence_routes": 4, "decision_gates": 8, "red_team_attacks": 12, "evidence_nodes": 18, "control_rules": 64, "regression_cases": 64},
+  "control_rules": [
+    "F26N-R001", "F26N-R002", "F26N-R003", "F26N-R004", "F26N-R005", "F26N-R006", "F26N-R007", "F26N-R008",
+    "F26N-R009", "F26N-R010", "F26N-R011", "F26N-R012", "F26N-R013", "F26N-R014", "F26N-R015", "F26N-R016",
+    "F26N-R017", "F26N-R018", "F26N-R019", "F26N-R020", "F26N-R021", "F26N-R022", "F26N-R023", "F26N-R024",
+    "F26N-R025", "F26N-R026", "F26N-R027", "F26N-R028", "F26N-R029", "F26N-R030", "F26N-R031", "F26N-R032",
+    "F26N-R033", "F26N-R034", "F26N-R035", "F26N-R036", "F26N-R037", "F26N-R038", "F26N-R039", "F26N-R040",
+    "F26N-R041", "F26N-R042", "F26N-R043", "F26N-R044", "F26N-R045", "F26N-R046", "F26N-R047", "F26N-R048",
+    "F26N-R049", "F26N-R050", "F26N-R051", "F26N-R052", "F26N-R053", "F26N-R054", "F26N-R055", "F26N-R056",
+    "F26N-R057", "F26N-R058", "F26N-R059", "F26N-R060", "F26N-R061", "F26N-R062", "F26N-R063", "F26N-R064"
+  ],
+  "evidence_nodes": [
+    {"id": "E01", "claim": "OFFICIAL_IDENTITY"}, {"id": "E02", "claim": "OFFICIAL_PDF_502"},
+    {"id": "E03", "claim": "EXTRACT_SHA256"}, {"id": "E04", "claim": "EXTRACT_MARKING"},
+    {"id": "E05", "claim": "OCR_MODEL_SHA256"}, {"id": "E06", "claim": "OCR_RENDER_PIPELINE"},
+    {"id": "E07", "claim": "STATIC_PAGE_23_IMAGE"}, {"id": "E08", "claim": "MODULE_TEST_PAGE_27_IMAGE"},
+    {"id": "E09", "claim": "MODULE_TEST_PAGE_28_IMAGE"}, {"id": "E10", "claim": "FUZZ_PAGE_30_IMAGE"},
+    {"id": "E11", "claim": "FUZZ_PAGE_31_IMAGE"}, {"id": "E12", "claim": "FUZZ_PAGE_32_IMAGE"},
+    {"id": "E13", "claim": "EVIDENCE_PAGE_38_IMAGE"}, {"id": "E14", "claim": "OPERATOR_BOUNDARIES"},
+    {"id": "E15", "claim": "CONTROL_LEVEL_EXTRACT_BOUNDARY"}, {"id": "E16", "claim": "REPEAT_RESEARCH_ROUTE"},
+    {"id": "E17", "claim": "BDU_DISPATCH_ROUTE"}, {"id": "E18", "claim": "PRIMARY_PROMOTION_GATE"}
+  ]
+}
