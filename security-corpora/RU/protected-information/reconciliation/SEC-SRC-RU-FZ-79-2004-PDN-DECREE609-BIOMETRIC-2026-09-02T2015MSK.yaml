@@ -1,0 +1,74 @@
+schema_version: "1.0"
+id: RECONCILIATION-SEC-SRC-RU-FZ-79-2004-PDN-DECREE609-BIOMETRIC-2026-09-02T2015MSK
+kind: cross_regime_reconciliation
+stream: 3
+checked_at: "2026-09-02T20:15:38+03:00"
+
+source:
+  id: SEC-SRC-RU-FZ-79-2004
+  canonical_record: "../source/SEC-SRC-RU-FZ-79-2004.yaml"
+  current_revision_date: "2026-03-08"
+  latest_amendment_publication_id: "0001202603080008"
+
+reconciled_edges:
+  - target: "security-corpora/RU/152-FZ/source/SEC-SRC-RU-152FZ-2026-07-26.yaml"
+    relation: SPECIAL_STATE_CIVIL_SERVICE_PDN_STATUTORY_OVERLAY
+    applicability: "Article 42 applies to state civil servants and their HR/personal-file processing within the statutory civil-service scope."
+    guard: "Do not infer that every public-sector employee or every government PDN dataset is governed by Article 42."
+  - target: "SEC-SRC-RU-PRESIDENT-DECREE-609-2005"
+    relation: DIRECT_IMPLEMENTING_ACT_OF_ARTICLE42_PART4
+    applicability: "Article 42 part 4 requires a Presidential regulation for civil-servant personal data and personal files; Decree 609 is that already registered canonical node."
+    previous_state: PRIMARY_CANONICAL_DISCOVERY_REQUIRED_NEXT
+    new_state: VERIFIED_EXISTING_CANONICAL_REUSE_PARENT_CHILD_LINK_RESOLVED
+    guard: "The implementing decree remains bounded by its own current version and actor/object scope; 79-FZ does not revive provisions repealed from Decree 609."
+  - target: "SEC-SRC-RU-FZ-125-2004"
+    relation: CONDITIONAL_ARCHIVE_LIFECYCLE_CONTEXT
+    applicability: "Archive rules become relevant to personal files only through the proven object-specific lifecycle; Article 42 itself provides no universal numeric archival duration."
+    guard: "Do not derive deletion or total retention from a registry/storage rule."
+  - target: "Федеральный закон от 25.07.1998 № 128-ФЗ «О государственной дактилоскопической регистрации в Российской Федерации»"
+    relation: ARTICLE15_PART5_TRIGGERING_REGIME_DISCOVERY_SEED
+    applicability: "Potentially relevant only to categories/cases actually established by the triggering federal law."
+    state: PRIMARY_CANONICAL_DISCOVERY_REQUIRED_NEXT
+    guard: "No assumption that all civil servants undergo the same fingerprint procedure or that the EBS regime applies."
+  - target: "Федеральный закон от 03.12.2008 № 242-ФЗ «О государственной геномной регистрации в Российской Федерации»"
+    relation: ARTICLE15_PART5_TRIGGERING_REGIME_DISCOVERY_SEED
+    applicability: "Potentially relevant only to categories/cases actually established by the triggering federal law."
+    state: PRIMARY_CANONICAL_DISCOVERY_REQUIRED_NEXT
+    guard: "No automatic classification of genomic registration as biometric PDN under 152-FZ without separate primary-law analysis."
+
+currentness_reconciliation:
+  displayed_current_revision: "2026-03-08"
+  latest_amendment: "Federal Law 52-FZ/2026"
+  latest_amendment_effective_date: "2026-06-07"
+  changed_locator: "Article 15 part 5"
+  article42_latest_amendment_effect: NONE_IDENTIFIED
+  previous_relevant_amendment:
+    act: "Federal Law 505-FZ/2025"
+    publication_id: "0001202512280017"
+    target_scope: "anti-corruption/personnel provisions; no current-pass basis to treat Article 42 as changed by this act"
+  guard: "Currentness of Article 42 is crosschecked against the 08.03.2026 consolidated text; exact official bytes remain pending and historical byte-chain completeness is not claimed."
+
+pdn_reconciliation:
+  article42_is_special_pdn_rule: true
+  replaces_152fz: false
+  personal_file_is_special_object: true
+  universal_retention_period_in_article42: false
+  article43_registry_security_is_retention_period: false
+  decree609_parent_gap_resolved: true
+
+biometric_genomic_reconciliation:
+  article15_part5_current_text_effective: "2026-06-07"
+  universal_fingerprint_registration_inferred: false
+  universal_genomic_registration_inferred: false
+  fingerprint_equals_ebs_inferred: false
+  genomic_equals_152fz_biometric_inferred: false
+  required_next_primary_sources:
+    - "Federal Law 128-FZ"
+    - "Federal Law 242-FZ"
+
+result:
+  duplicate_created: false
+  prior_parent_discovery_gap_resolved: true
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+  new_primary_discovery_seeds: 2
