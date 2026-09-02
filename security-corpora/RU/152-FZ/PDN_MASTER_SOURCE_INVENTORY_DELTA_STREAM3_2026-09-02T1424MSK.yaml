@@ -1,0 +1,100 @@
+schema_version: "1.0"
+id: PDN-MASTER-SOURCE-INVENTORY-DELTA-STREAM3-2026-09-02T1424MSK
+kind: pdn_master_inventory_sector_overlay_delta
+stream: 3
+checked_at: "2026-09-02T14:24:40+03:00"
+
+source_overlays:
+  - id: SEC-SRC-RU-PRESIDENT-DECREE-609-2005
+    document: "Указ Президента Российской Федерации от 30.05.2005 № 609 (ред. от 31.12.2025; изменения № 1009 действуют с 01.01.2026)"
+    role: state_civil_service_personal_data_and_personal_file_overlay
+    canonical_record: "../protected-information/source/SEC-SRC-RU-PRESIDENT-DECREE-609-2005.yaml"
+    capture_manifest: "../protected-information/manifests/SEC-SRC-RU-PRESIDENT-DECREE-609-2005-capture-pending.json"
+    metadata_status: CURRENT_PRIMARY_LATEST_AMENDMENT_VERIFIED_EXACT_BYTES_PENDING
+    raw_capture: PENDING
+    verified_for_exact_extraction: false
+    pdn_anchors:
+      - locator: "пункты 1-2"
+        rule: "Специальный режим охватывает персональные данные государственного гражданского служащего и ведение его личного дела в actor/object scope гражданской службы."
+        guard: "SPECIAL_CIVIL_SERVICE_SCOPE != ALL_PUBLIC_SECTOR_PDN."
+      - locator: "пункты 3-5"
+        rule: "Представитель нанимателя и кадровая служба обязаны обеспечивать защиту, целевую обработку и установленные ограничения получения/использования/передачи данных гражданского служащего."
+        guard: "Специальные правила кадровой обработки не заменяют общий 152-ФЗ и не образуют универсального основания для межведомственной передачи ПДн."
+      - locator: "пункт 11"
+        rule: "Персональные данные и иные сведения в личных делах гражданских служащих относятся к конфиденциальной информации с прямо установленными законом исключениями; гостайна возникает только по отдельному правовому основанию."
+        guard: "PERSONAL_FILE_CONFIDENTIALITY != AUTOMATIC_STATE_SECRET."
+      - locator: "пункты 18-20"
+        rule: "Электронные учетные данные и личные дела подлежат защите от несанкционированного доступа/копирования; кадровая служба обеспечивает сохранность и конфиденциальность."
+        guard: "SECURITY_REQUIREMENT != RETENTION_PERIOD."
+      - locator: "пункт 23"
+        rule: "После увольнения личное дело хранится кадровой службой 10 лет со дня увольнения, затем передается в архив; для содержащих гостайну дел действует отдельный специальный режим."
+        guard: "TEN_YEAR_HR_CUSTODY != UNIVERSAL_PDN_RETENTION; ARCHIVE_TRANSFER != DELETION."
+
+currentness_guard:
+  current_revision_date: "2025-12-31"
+  latest_amendment: "Указ Президента Российской Федерации от 31.12.2025 № 1009"
+  latest_amendment_publication_id: "0001202601010001"
+  effective_date: "2026-01-01"
+  repealed_currently_not_applicable:
+    - "пункт 12"
+    - "пункт 13"
+    - "пункт 14"
+    - "пункт 15"
+  guard: "Не формировать требования из пунктов 12-15 после 01.01.2026; использовать текущую редакцию."
+
+scope_model:
+  mandatory_scope: "Государственные гражданские служащие Российской Федерации, их персональные данные и личные дела в рамках Положения № 609."
+  excluded_automatic_scope:
+    - "все работники бюджетных учреждений"
+    - "все государственные служащие иных видов без отдельной правовой привязки"
+    - "все ПДн, обрабатываемые государственными органами"
+  guard: "Sector tag public_sector is discovery/navigation metadata, not an applicability decision."
+
+retention_and_access_model:
+  universal_pdn_period: false
+  personal_file_post_dismissal_hr_custody_years: 10
+  retention_start_event: "dismissal_from_state_civil_service"
+  next_lifecycle_stage: "transfer_to_archive"
+  archive_transfer_is_deletion: false
+  state_secret_file_branch_requires_separate_regime: true
+  sector_special_retention_requires_object_specific_proof: true
+
+relationships:
+  - "Decree 609 -> SEC-SRC-RU-152FZ-2026-07-26 / special civil-service PDN overlay on general PDN law"
+  - "Decree 609 -> Federal Law 79-FZ Article 42 / direct statutory parent; new canonical primary-source discovery remains pending"
+  - "Decree 609 point 23 -> SEC-SRC-RU-FZ-125-2004 / archive lifecycle context after HR custody"
+
+counter_delta_this_pass:
+  sector_overlay_found_new_canonical: 1
+  downloaded_new: 0
+  immutable_new: 0
+  pending_new: 1
+  reused_existing_canonical_sources: 2
+  primary_official_source_verified_new: 1
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+
+master_counter_policy:
+  core_pdn_production_counters_changed: false
+  reason: >-
+    Decree 609 is a protected-information sector overlay. Exact official bytes remain pending, and its applicability is bounded to state civil servants/personal files. Direct PDN core exact/immutable counters are not inflated.
+
+capture:
+  new_source_status: PENDING_TRANSIENT_NETWORK_FAILURE
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+  fabricated_binary_metadata: false
+
+proof_guards:
+  - "TAXONOMY_SEED_NOT_LEGAL_PROOF"
+  - "SPECIAL_CIVIL_SERVICE_SCOPE_NOT_ALL_PUBLIC_SECTOR"
+  - "CONFIDENTIALITY_NOT_STATE_SECRET"
+  - "CONFIDENTIALITY_NOT_PROCESSING_OR_DISCLOSURE_BASIS"
+  - "TEN_YEAR_PERSONAL_FILE_RULE_NOT_UNIVERSAL_PDN_RETENTION"
+  - "ARCHIVE_TRANSFER_NOT_DELETION"
+  - "REPEALED_POINTS_12_15_NOT_CURRENT_OBLIGATIONS"
+  - "NO_AUTOMATIC_APPLICABILITY_PROMOTION"
+  - "NO_FABRICATED_MIME_BYTE_LENGTH_OR_SHA256"
