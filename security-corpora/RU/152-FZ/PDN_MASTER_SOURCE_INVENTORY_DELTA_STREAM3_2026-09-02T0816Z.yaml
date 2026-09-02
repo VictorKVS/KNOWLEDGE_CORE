@@ -1,0 +1,116 @@
+schema_version: "1.0"
+id: PDN-MASTER-SOURCE-INVENTORY-DELTA-STREAM3-2026-09-02T0816Z
+kind: pdn_master_inventory_sector_overlay_delta
+stream: 3
+checked_at: "2026-09-02T08:16:50+03:00"
+
+source_overlays:
+  - id: SEC-SRC-RU-ROSARCHIVE-ORDER-38-2025
+    document: "Приказ Росархива от 20.03.2025 № 38 (ред. приказа Росархива от 25.06.2025 № 77)"
+    role: archival_dlu_access_restriction_overlay
+    canonical_record: "../protected-information/source/SEC-SRC-RU-ROSARCHIVE-ORDER-38-2025.yaml"
+    metadata_status: CURRENT_PRIMARY_OFFICIAL_SOURCE_VERIFIED_EXACT_BYTES_PENDING
+    official_publication_id: "0001202504300012"
+    raw_capture: PENDING
+    verified_for_exact_extraction: false
+    pdn_anchors:
+      - locator: "пункты 1-6"
+        rule: "Специальный архивный режим ДСП строится вокруг утверждаемого Росархивом непубличного Перечня; сам статус ДСП не является категорией ПДн."
+        guard: "Не выводить состав Перечня из пользовательской таксономии или неофициальных материалов."
+      - locator: "пункты 7-26"
+        rule: "Ограничение/снятие ограничения доступа к конкретному архивному документу требует установленного процедурного решения и изменения учетных документов архива."
+        guard: "Чувствительное содержание документа не создает автоматически статус ДСП и не устанавливает PDN retention."
+      - locator: "пункты 27-28"
+        rule: "Процедурные приказы/протоколы имеют режим ДСП, переписка ведется по правилам ПП РФ № 1233."
+        guard: "DLU handling and PDN processing obligations are modeled as separate dimensions."
+
+  - id: SEC-SRC-RU-ROSARCHIVE-ORDER-77-2023
+    document: "Приказ Росархива от 31.07.2023 № 77"
+    role: archival_document_lifecycle_and_secure_destruction_overlay
+    canonical_record: "../protected-information/source/SEC-SRC-RU-ROSARCHIVE-ORDER-77-2023.yaml"
+    metadata_status: CURRENTNESS_REVALIDATED_PRIMARY_PUBLICATION_VERIFIED_EXACT_BYTES_PENDING
+    raw_capture: PENDING
+    pdn_anchors:
+      - locator: "пункт 31"
+        rule: "После законного выделения документов к уничтожению документы с ПДн, ДСП или информацией ограниченного доступа уничтожаются способом, исключающим восстановление содержания; подтверждение утилизации прикладывается к акту."
+        guard: "Это требование к способу и доказательству уничтожения, не самостоятельный срок/триггер удаления ПДн."
+      - locator: "пункт 33"
+        rule: "Снижение нормативно установленных сроков хранения документов запрещено."
+        guard: "Нельзя автоматически сокращать установленный специальным актом срок документа только по общей логике минимизации ПДн."
+
+  - id: SEC-SRC-RU-FZ-125-2004
+    document: "Федеральный закон от 22.10.2004 № 125-ФЗ"
+    role: statutory_archival_scope_boundary
+    canonical_record: "../protected-information/source/SEC-SRC-RU-FZ-125-2004.yaml"
+    metadata_status: CURRENTNESS_REVALIDATED_EXISTING_CANONICAL
+    pdn_anchors:
+      - locator: "152-ФЗ статья 1 часть 2 пункт 2 + 125-ФЗ"
+        rule: "Из сферы 152-ФЗ исключены именно отношения по организации хранения, комплектования, учета и использования содержащих ПДн архивных документов, осуществляемые в соответствии с законодательством об архивном деле."
+        guard: "Не превращать любое длительное хранение или любую старую БД в архивную деятельность."
+      - locator: "125-ФЗ статья 25 часть 3"
+        rule: "75 лет — ограничение доступа к определенным архивным документам с личной/семейной тайной, частной жизнью или сведениями об угрозе безопасности гражданина."
+        guard: "75-летнее ограничение доступа не является универсальным сроком хранения ПДн."
+
+  - id: SEC-SRC-RU-FZ-38-2006-A18
+    document: "Федеральный закон от 13.03.2006 № 38-ФЗ «О рекламе»"
+    role: marketing_contact_and_internet_ad_data_overlay
+    canonical_record: "../protected-information/source/SEC-SRC-RU-FZ-38-2006-A18.yaml"
+    reconciliation_record: "../protected-information/reconciliation/SEC-SRC-RU-FZ-38-2006-A18-2026-09-02T0816Z.yaml"
+    metadata_status: CURRENT_REVISION_2026_08_04_REVALIDATED
+    pdn_anchors:
+      - locator: "статья 18"
+        rule: "Предварительное согласие для рекламы по сетям электросвязи остается самостоятельным рекламным требованием."
+        guard: "ADVERTISING_CONSENT != CONSENT_TO_PDN_PROCESSING."
+      - locator: "статья 18.1 часть 13"
+        rule: "Уполномоченный орган хранит установленный массив сведений об интернет-рекламе не менее трех лет с момента получения."
+        guard: "Трехлетний рекламный regulatory-retention не является общим сроком хранения контактных или иных ПДн."
+
+retention_and_access_model:
+  universal_pdn_period: false
+  archive_access_restriction_is_retention_period: false
+  dlu_is_pdn_category: false
+  secure_destruction_method_is_deletion_trigger: false
+  sector_special_retention_can_override_general_assumptions: true
+
+relationships:
+  - "125-FZ + 152-FZ Article 1(2)(2) -> activity/stage-specific archival boundary"
+  - "Rosarchive 77 point 31 -> PDN/restricted-document secure destruction after lawful retention lifecycle"
+  - "Rosarchive 38 -> archival DLU access restriction; PDN overlap only if concrete document/data/operation proves it"
+  - "38-FZ Article 18 -> advertising consent separated from 152-FZ consent/legal basis"
+  - "38-FZ Article 18.1(13) -> regulator-side advertising-data retention separated from general PDN retention"
+
+counter_delta_this_pass:
+  sector_overlay_found_new_canonical: 1
+  downloaded_new: 0
+  immutable_new: 0
+  pending_new: 1
+  reused_existing_canonical_sources: 3
+  currentness_refresh_existing: 3
+  primary_official_source_verified_new: 1
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+
+master_counter_policy:
+  core_pdn_production_counters_changed: false
+  reason: >-
+    The new Rosarchive Order 38 node is a sector/special access-regime overlay. Exact official bytes are pending and applicability remains scenario-bound, so direct PDN core exact/immutable counters are not inflated.
+
+capture:
+  new_source_status: PENDING_TRANSIENT_NETWORK_FAILURE
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+  fabricated_binary_metadata: false
+
+proof_guards:
+  - "TAXONOMY_SEED_NOT_LEGAL_PROOF"
+  - "NONPUBLIC_DLU_LIST_NOT_RECONSTRUCTED"
+  - "DLU_NOT_PDN_CATEGORY"
+  - "ARCHIVAL_ACCESS_RESTRICTION_NOT_RETENTION"
+  - "SECURE_DESTRUCTION_METHOD_NOT_DELETION_TRIGGER"
+  - "ARCHIVE_SCOPE_EXCLUSION_REQUIRES_ACTIVITY_AND_LEGAL_REGIME_MATCH"
+  - "ADVERTISING_CONSENT_NOT_PDN_CONSENT"
+  - "NO_UNIVERSAL_PDN_RETENTION_INFERRED"
+  - "NO_FABRICATED_MIME_BYTE_LENGTH_OR_SHA256"
