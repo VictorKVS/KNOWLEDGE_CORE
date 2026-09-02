@@ -1,0 +1,151 @@
+schema_version: "1.0"
+manifest_id: STREAM2-ACQUISITION-2026-09-02T0507Z
+generated_at: "2026-09-02T05:07:18Z"
+repository: VictorKVS/KNOWLEDGE_CORE
+stream: 2
+purpose: >-
+  Exact-byte acquisition pass for primary technical and cryptographic 152-FZ security sources.
+  Preserve fail-closed evidence boundaries: only successful official payload capture may populate
+  retrieved_at, MIME, byte length, SHA-256 and immutable artifact fields.
+retrieval_environment:
+  dns_status: DEGRADED
+  note: >-
+    All nine official-host requests in this pass failed before HTTP because the acquisition runtime
+    could not resolve the target host. This is a transport observation only and is not legal-status evidence.
+policy:
+  official_primary_bytes_required_for_new_immutable: true
+  immutable_requires_http_success_and_payload_validation: true
+  sha256_requires_payload_bytes: true
+  failed_transport_leaves_payload_metadata_null: true
+  no_third_party_payload_substitution: true
+attempts:
+  - source_id: SEC-SRC-RU-PP1119-2012
+    source_url: "https://government.ru/media/2012/11/3/53354/file/1119_pril.doc"
+    attempted_at: "2026-09-02T05:07:17.722786Z"
+    transport_result: DNS_RESOLUTION_FAILED
+    curl_exit_code: 6
+    http_status: "000"
+    retrieved_at: null
+    mime: null
+    byte_length: null
+    sha256: null
+    immutable_artifact: null
+    promotion: PENDING_PRIMARY_BYTES
+  - source_id: SEC-SRC-RU-FSTEC-THREAT-METHOD-2021
+    source_url: "https://fstec.ru/component/attachments/download/2919"
+    attempted_at: "2026-09-02T05:07:17.743995Z"
+    transport_result: DNS_RESOLUTION_FAILED
+    curl_exit_code: 6
+    http_status: "000"
+    retrieved_at: null
+    mime: null
+    byte_length: null
+    sha256: null
+    immutable_artifact: null
+    promotion: EXISTING_IMMUTABLE_REUSED_NO_NEW_CAPTURE
+  - source_id: SEC-SRC-RU-FSTEC-MATURITY-METHOD-2026
+    source_url: "https://fstec.ru/files/1523/---7--2026-/3102/---7--2026-.pdf"
+    attempted_at: "2026-09-02T05:07:17.750681Z"
+    transport_result: DNS_RESOLUTION_FAILED
+    curl_exit_code: 6
+    http_status: "000"
+    retrieved_at: null
+    mime: null
+    byte_length: null
+    sha256: null
+    immutable_artifact: null
+    promotion: PENDING_PRIMARY_BYTES
+    route_note: EXACT_RESOLVED_OFFICIAL_PDF
+    route_improvement: >-
+      This pass used the exact resolved official FSTEC PDF route. The preceding 02:11Z pass attempted
+      only the landing-page route, so route precision improved even though byte transport still failed.
+  - source_id: SEC-SRC-RU-FSB378-2014
+    source_url: "https://rg.ru/documents/2014/09/17/zashita-dok.html"
+    attempted_at: "2026-09-02T05:07:17.757512Z"
+    transport_result: DNS_RESOLUTION_FAILED
+    curl_exit_code: 6
+    http_status: "000"
+    retrieved_at: null
+    mime: null
+    byte_length: null
+    sha256: null
+    immutable_artifact: null
+    promotion: PENDING_PRIMARY_BYTES_STATUS_REVIEW_REQUIRED
+  - source_id: SEC-SRC-RU-FSB66-2005
+    source_url: "https://pravo.gov.ru/proxy/ips/?docbody=&nd=102097894"
+    attempted_at: "2026-09-02T05:07:17.764818Z"
+    transport_result: DNS_RESOLUTION_FAILED
+    curl_exit_code: 6
+    http_status: "000"
+    retrieved_at: null
+    mime: null
+    byte_length: null
+    sha256: null
+    immutable_artifact: null
+    promotion: PENDING_PRIMARY_BYTES
+  - source_id: SEC-SRC-RU-FSB173-2010
+    source_url: "https://pravo.gov.ru/proxy/ips/?backlink=1&docbody=&nd=102139358&prevDoc=102155746"
+    attempted_at: "2026-09-02T05:07:17.771815Z"
+    transport_result: DNS_RESOLUTION_FAILED
+    curl_exit_code: 6
+    http_status: "000"
+    retrieved_at: null
+    mime: null
+    byte_length: null
+    sha256: null
+    immutable_artifact: null
+    promotion: PENDING_PRIMARY_BYTES
+  - source_id: SEC-SRC-RU-FAPSI152-2001
+    source_url: "https://pravo.gov.ru/proxy/ips/?docbody=&nd=102095483"
+    attempted_at: "2026-09-02T05:07:17.779080Z"
+    transport_result: DNS_RESOLUTION_FAILED
+    curl_exit_code: 6
+    http_status: "000"
+    retrieved_at: null
+    mime: null
+    byte_length: null
+    sha256: null
+    immutable_artifact: null
+    promotion: PENDING_PRIMARY_BYTES
+  - source_id: SEC-SRC-RU-PP313-2012
+    source_url: "https://pravo.gov.ru/proxy/ips/?docbody=&nd=102155729"
+    attempted_at: "2026-09-02T05:07:17.786371Z"
+    transport_result: DNS_RESOLUTION_FAILED
+    curl_exit_code: 6
+    http_status: "000"
+    retrieved_at: null
+    mime: null
+    byte_length: null
+    sha256: null
+    immutable_artifact: null
+    promotion: PENDING_CONTEXTUAL_PRIMARY_BYTES
+  - source_id: SEC-SRC-RU-PP79-2012
+    source_url: "https://pravo.gov.ru/proxy/ips/?docbody=&nd=102153815"
+    attempted_at: "2026-09-02T05:07:17.794083Z"
+    transport_result: DNS_RESOLUTION_FAILED
+    curl_exit_code: 6
+    http_status: "000"
+    retrieved_at: null
+    mime: null
+    byte_length: null
+    sha256: null
+    immutable_artifact: null
+    promotion: PENDING_CONTEXTUAL_PRIMARY_BYTES
+existing_immutable_reuse:
+  - source_id: SEC-SRC-RU-FSTEC21-2013
+    byte_length: 72618
+    sha256: "6522074c76beea01b6c4e3ab33bae368d9a72ce7c49f1372e87cc0ea6f2bcd42"
+    artifact_ref: "security-corpora/RU/152-FZ/security-stack/raw/SEC-SRC-RU-FSTEC21-2013/official-snapshot-6522074c76beea01.docx"
+  - source_id: SEC-SRC-RU-FSTEC-THREAT-METHOD-2021
+    byte_length: 2744210
+    sha256: "dfb473137de462f8c10fbbdccbea62bd136925e803e1c58aa6d4e790325c49b1"
+    note: "Previously captured and verified immutable official PDF retained; this failed retry does not replace it."
+summary:
+  retrieval_attempts: 9
+  successful_retrievals: 0
+  new_immutable_artifacts: 0
+  new_sha256: 0
+  existing_immutable_rechecks: 2
+  exact_route_resolution_improvements: 1
+  semantic_promotions: 0
+  applicability_guard_changes: 0
