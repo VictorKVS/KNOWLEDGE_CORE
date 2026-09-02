@@ -1,0 +1,65 @@
+schema_version: "1.0"
+id: STREAM2-ACQUISITION-MANIFEST-2026-09-02T1116Z
+stream: 2
+created_at: "2026-09-02T11:16:00Z"
+kind: exact-primary-route-acquisition-manifest
+proof_floor: >-
+  IMMUTABLE_CAPTURED requires exact official bytes, observed MIME/signature, byte length,
+  computed SHA-256, immutable artifact and manifest linkage. Failed transport leaves fingerprint
+  fields null and never authorizes substitution of a non-primary mirror.
+
+attempts:
+  - source_id: SEC-SRC-RU-PP1119-2012
+    source_url: "https://government.ru/media/2012/11/3/53354/file/1119_pril.doc"
+    attempted_at: "2026-09-02T11:15:30Z"
+    transport_result: TRANSPORT_TIMEOUT
+    http_status: null
+    bytes_received: 0
+    immutable_promotion: false
+    retrieved_at: null
+    mime: null
+    byte_length: null
+    sha256: null
+    immutable_artifact: null
+    note: >-
+      Exact Government DOC route was retried. No accepted payload was obtained in this pass;
+      no MIME, length or hash is synthesized.
+
+  - source_id: SEC-SRC-RU-FSTEC-SZI-EQUIPMENT-LIST-2026
+    source_url: "https://fstec.ru/dokumenty/vse-dokumenty/perechni/perechen-kontrolno-izmeritelnogo-i-ispytatelnogo-oborudovaniya-programmnykh-programmno-tekhnicheskikh-sredstv-ot-11-avgusta-2026-g"
+    attempted_at: "2026-09-02T11:16:00Z"
+    transport_result: DNS_RESOLUTION_FAILURE
+    http_status: "000"
+    bytes_received: 0
+    immutable_promotion: false
+    retrieved_at: null
+    mime: null
+    byte_length: null
+    sha256: null
+    immutable_artifact: null
+    note: >-
+      Official FSTEC landing route is identified, but the acquisition runtime failed before HTTP
+      with temporary name-resolution failure. Direct public attachment remains unresolved.
+
+existing_immutable_reused:
+  - source_id: SEC-SRC-RU-FSTEC21-2013
+    mime: "application/vnd.openxmlformats-officedocument.wordprocessingml.document"
+    byte_length: 72618
+    sha256: "6522074c76beea01b6c4e3ab33bae368d9a72ce7c49f1372e87cc0ea6f2bcd42"
+    artifact_ref: "../raw/SEC-SRC-RU-FSTEC21-2013/official-snapshot-6522074c76beea01.docx"
+    note: "Existing accepted immutable is preserved; this pass did not alter its bytes."
+  - source_id: SEC-SRC-RU-FSTEC-THREAT-METHOD-2021
+    mime: "application/pdf"
+    byte_length: 2744210
+    sha256: "dfb473137de462f8c10fbbdccbea62bd136925e803e1c58aa6d4e790325c49b1"
+    note: "Existing accepted immutable is preserved; this pass did not alter its bytes."
+
+transport_summary:
+  exact_primary_route_attempts: 2
+  exact_primary_route_successes: 0
+  new_immutable_artifacts: 0
+  new_sha256: 0
+  existing_immutable_reused: 2
+  failure_classes:
+    - TRANSPORT_TIMEOUT
+    - DNS_RESOLUTION_FAILURE
