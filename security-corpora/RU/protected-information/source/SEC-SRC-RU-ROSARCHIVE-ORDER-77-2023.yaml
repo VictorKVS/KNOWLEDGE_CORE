@@ -1,11 +1,11 @@
-schema_version: "1.0"
+schema_version: "1.1"
 id: SEC-SRC-RU-ROSARCHIVE-ORDER-77-2023
 kind: security-regulatory-source
-status: METADATA_VERIFIED
+status: CURRENT_PRIMARY_PUBLICATION_VERIFIED_CURRENTNESS_REVALIDATED_SEMANTICS_CROSSCHECKED_EXACT_ARTIFACT_PENDING
 
-title: "Приказ Росархива от 31.07.2023 № 77 об архивном хранении, комплектовании, учете и использовании документов в органах и организациях"
+title: "Приказ Росархива от 31.07.2023 № 77 «Об утверждении Правил организации хранения, комплектования, учета и использования документов Архивного фонда Российской Федерации и других архивных документов в государственных органах, органах местного самоуправления и организациях»"
 jurisdiction: RU
-issuer: "Росархив"
+issuer: "Федеральное архивное агентство (Росархив)"
 document:
   type: regulator_order
   number: "77"
@@ -14,23 +14,138 @@ document:
   registration_number: "75119"
   official_publication_id: "0001202309060005"
   official_publication_date: "2023-09-06"
-  checked_at: "2026-08-20"
-canonical_source:
-  publisher: "Официальное опубликование правовых актов"
-  url: "https://publication.pravo.gov.ru/Document/View/0001202309060005"
-  origin_verified: true
-protected_information:
-  sector: archives
-  regime: organization_archive_retention_rules
+  effective_date: "2023-09-17"
+  checked_at: "2026-09-02"
+
+canonical_sources:
+  primary_publication:
+    publisher: "Официальный интернет-портал правовой информации"
+    url: "https://publication.pravo.gov.ru/document/0001202309060005"
+    origin_verified: true
+    exact_bytes_state: PENDING_TRANSIENT_NETWORK_FAILURE
+  official_rosarchive_rules_index:
+    publisher: "Федеральное архивное агентство"
+    url: "https://archives.gov.ru/documents/rules.shtml"
+    origin_verified: true
+    proof_scope: "Официальный индекс Росархива продолжает перечислять Правила № 77 как действующий базовый нормативный акт."
+  official_effective_date_notice:
+    publisher: "Федеральное архивное агентство"
+    url: "https://archives.gov.ru/press/06-09-2023.shtml"
+    origin_verified: true
+    proof_scope: "Регистрация № 75119, официальное опубликование и вступление в силу 17.09.2023."
+
 version_chain:
-  state: VERSION_CHAIN_PARTIAL
-  pending: "Проверить полную цепочку изменений и текущую редакцию."
+  state: ORIGINAL_EDITION_CURRENTNESS_REVALIDATED_NO_LATER_AMENDMENT_FOUND_EXACT_BINARY_PENDING
+  original:
+    act: "Приказ Росархива от 31.07.2023 № 77"
+    registration_number: "75119"
+    publication_number: "0001202309060005"
+    publication_date: "2023-09-06"
+    effective_date: "2023-09-17"
+  currentness_evidence:
+    - "Официальный раздел Росархива «Правила, инструкции» продолжает указывать Правила № 77."
+    - "Официальное письмо Росархива о планировании на 2026 год прямо предусматривает продолжение внедрения Правил 2023 года, утвержденных приказом № 77."
+  later_amendment_found_in_current_sweep: false
+  repeal_found_in_current_sweep: false
+  historical_chain_declared_complete: false
+  guard: "Не найденное изменение не приравнивается к доказанному отсутствию любого неиндексированного изменения; exact-current executable proof остается gated."
+
+protected_information:
+  sectors:
+    - archives
+    - retention
+    - public_sector
+    - personal_data_overlap
+    - restricted_information
+    - service_information_limited_distribution
+  regimes:
+    - records_management_to_archive_lifecycle
+    - archival_retention
+    - secure_document_destruction
+    - electronic_archive_lifecycle
+  scope:
+    actors:
+      - "государственные органы"
+      - "органы местного самоуправления"
+      - "организации"
+    object_classes:
+      - "документы Архивного фонда Российской Федерации"
+      - "документы постоянного хранения"
+      - "документы временного хранения свыше 10 лет"
+      - "документы по личному составу"
+      - "иные архивные документы в установленном Правилами scope"
+  protected_locators:
+    - locator: "пункт 31"
+      concept: SECURE_DESTRUCTION_AFTER_ARCHIVAL_DISPOSAL_DECISION
+      findings:
+        - "Уничтожение/передача на уничтожение производится после установленной процедуры выделения документов, не подлежащих хранению, и утверждения соответствующего акта."
+        - "Документы, содержащие персональные данные, имеющие пометку «Для служебного пользования», а также содержащие информацию ограниченного доступа, уничтожаются внутри государственного органа, органа местного самоуправления или организации механическим измельчением либо иным способом, исключающим восстановление содержания."
+        - "Документ, подтверждающий факт утилизации, прикладывается к акту о выделении к уничтожению."
+      guards:
+        - "Пункт 31 задает способ/доказательство уничтожения после законного окончания документного lifecycle, а не самостоятельный срок удаления ПДн."
+        - "Наличие ПДн не означает, что документ можно уничтожить раньше нормативного срока хранения."
+    - locator: "пункт 32"
+      concept: RETENTION_PERIOD_CHANGE_GOVERNANCE
+      finding: "Изменение нормативных сроков хранения проводится через предусмотренные Правилами экспертные и нормативные процедуры; локальное усмотрение не подменяет изменение перечня."
+    - locator: "пункт 33"
+      concept: NO_SHORTENING_OF_NORMATIVE_RETENTION
+      finding: "Снижение нормативно установленных сроков хранения документов запрещается."
+      guard: "Запрет сокращения не означает бессрочное хранение после истечения применимого срока и прохождения законной процедуры уничтожения."
+    - locator: "пункт 34"
+      concept: ARCHIVE_ACQUISITION_SCOPE
+      finding: "Архив органа/организации комплектуется документами Архивного фонда РФ и документами временных сроков хранения свыше 10 лет, включая документы по личному составу, в установленном Правилами порядке."
+
+pdn_boundary:
+  relationship_to_152fz: ARCHIVAL_DOCUMENT_LIFECYCLE_OVERLAP
+  findings:
+    - "Правила содержат прямой технический guard для уничтожения документов с ПДн, но не устанавливают универсальный срок хранения ПДн."
+    - "Архивная стадия и отношения, подпадающие под законодательство об архивном деле, должны отделяться от предархивной обработки ПДн и иных операций."
+  guards:
+    - "RETENTION_PERIOD != PDN_PROCESSING_LEGAL_BASIS"
+    - "SECURE_DESTRUCTION_METHOD != DELETION_TRIGGER"
+    - "ARCHIVE_STATUS != AUTOMATIC_152FZ_EXCLUSION_WITHOUT_ACTIVITY_MATCH"
+
+relationships:
+  - target: "SEC-SRC-RU-FZ-125-2004"
+    type: DIRECT_SUBORDINATE_ARCHIVAL_RULES
+    state: VERIFIED_RELATIONSHIP
+  - target: "152-ФЗ"
+    type: ARCHIVAL_PDN_LIFECYCLE_BOUNDARY
+    state: APPLICABILITY_REVIEW_REQUIRED
+  - target: "SEC-SRC-RU-MINZDRAV-ORDER-408-2023"
+    type: SECTOR_RETENTION_LIST_TO_ARCHIVE_PROCEDURE
+    state: OBJECT_AND_ACTOR_SCOPE_MATCH_REQUIRED
+    guard: "Минздравовский объектный срок и Росархивовская процедура уничтожения/архивирования не сливаются в одно универсальное правило."
+  - target: "SEC-SRC-RU-ROSARCHIVE-ORDER-38-2025"
+    type: ARCHIVAL_DLU_ACCESS_RESTRICTION_OVERLAP
+    state: DISTINCT_REGIME_LINKED
+    guard: "№ 77 регулирует общий архивный lifecycle; № 38 регулирует специальное отнесение/снятие ДСП-доступа к архивным документам."
+
 capture:
-  raw_artifact_ref: ""
-  manifest_ref: ""
+  exact_binary_attempted: true
+  attempted_at: "2026-09-02T08:16:50+03:00"
+  attempted_url: "https://publication.pravo.gov.ru/document/0001202309060005"
+  method: container.download
+  result: DOWNLOAD_FAILED
+  retry_class: TRANSIENT
+  exact_bytes_obtained: false
+  retrieved_at: null
   mime: null
   byte_length: null
-  sha256: ""
-  fingerprint_status: PENDING_RAW_CAPTURE
-provenance: {checked_at: "2026-08-20", review_required: true}
-agent_rule: "Original-publication capture is baseline evidence only; current executable semantics require verified version-chain review."
+  sha256: null
+  immutable_artifact: null
+  state: PENDING_EXACT_CAPTURE
+
+provenance:
+  checked_at: "2026-09-02T08:16:50+03:00"
+  deduplication: "Existing canonical source reused and enriched; no duplicate source node created."
+  taxonomy_seed_used_as_proof: false
+  primary_publication_identity_verified: true
+  official_currentness_revalidated: true
+  exact_capture_required_before_immutable: true
+  fabricated_binary_metadata: false
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+
+agent_rule: >-
+  Treat Order 77 as lifecycle/procedure for records and archives. Do not infer a universal PDN retention period from archival terms. Never shorten a normative document term merely because a PDN purpose ended without checking the governing special retention rule and archival stage. Apply point 31 only after lawful disposal selection/approval; its nonrecoverability requirement is not itself a deletion trigger.
