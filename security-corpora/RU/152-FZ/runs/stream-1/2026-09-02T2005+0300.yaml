@@ -1,0 +1,100 @@
+schema_version: "1.0"
+record_type: STREAM1_PDN_CORE_RUN
+stream: 1
+observed_at: "2026-09-02T17:05:02Z"
+scope: "152-FZ common core / Roskomnadzor; no sector overlays"
+
+completed_work:
+  - item: "Latest proven PDN Core guarded acquisition review"
+    result: "SUCCESS_PROCESS_NO_NEW_IMMUTABLE"
+    workflow_run: 33655782504
+    workflow_run_number: 224
+    evidence_commit: "c5151a0aa2e27d550506ed705e606aeed117f2a2"
+    evidence_commit_at: "2026-09-02T16:37:16Z"
+    targets_total: 39
+    reused_immutable: 38
+    new_immutable_captured: 0
+    dedicated_observed_at: "2026-09-02T16:37:15.836562Z"
+    proof_floor_held: true
+    pending_priority:
+      - SEC-SRC-RU-152FZ-2026-07-26
+      - SEC-SRC-RU-PP687-2008
+    note: >-
+      Guarded official routes were retried. Current 152-FZ still failed with transport timeout/current-revision
+      marker misses and PP687 still failed with transport timeout plus identity/current-revision marker misses.
+      A PP687 route received only a partial response before timeout; it was not accepted. No rejected/partial bytes
+      were assigned MIME, byte length, SHA-256, immutable artifact or manifest and no semantic status was promoted.
+
+  - item: "PP687 current-revision freshness recheck"
+    result: "CURRENT_REVISION_CONFIRMED_NO_RAW_CAPTURE"
+    checked_at: "2026-09-02T17:05:02Z"
+    source_id: SEC-SRC-RU-PP687-2008
+    official_source: "https://government.ru/docs/all/65436/"
+    current_revision: "Постановление Правительства РФ от 18.01.2025 № 12"
+    revision_fingerprint: "пункт 3 действует до 1 сентября 2030 г."
+    evidence_class: "official indexed Government text / freshness and revision evidence only"
+    byte_exact_runtime_probe:
+      result: "DNS_RESOLUTION_FAILURE"
+      curl_exit: 6
+      accepted_bytes: false
+    proof_effect: NONE
+    note: >-
+      The official Government indexed text still shows PP RF No. 687 in the No. 12 of 18.01.2025 revision and
+      the clause-3 validity period through 01.09.2030. The byte-exact runtime could not resolve government.ru,
+      therefore this recheck cannot supply retrieved_at/MIME/byte length/SHA-256 or an immutable manifest.
+
+  - item: "Current 152-FZ revision freshness recheck"
+    result: "CURRENT_REVISION_IDENTITY_RECONFIRMED_NO_RAW_CAPTURE"
+    checked_at: "2026-09-02T17:05:02Z"
+    source_id: SEC-SRC-RU-152FZ-2026-07-26
+    current_revision: "26.07.2026"
+    triggering_amendment: "Федеральный закон от 26.07.2026 № 265-ФЗ"
+    official_amendment_publication_id: "0001202607260024"
+    current_revision_delta:
+      - "Article 12 part 2"
+      - "Article 12 part 5 point 2"
+      - "Article 12 part 10"
+      - "Article 12 part 11"
+    evidence_class: "current legal-index cross-check plus already immutable official amendment chain"
+    byte_exact_runtime_probe:
+      result: "OFFICIAL_HOST_DNS_RESOLUTION_FAILURE"
+      accepted_bytes: false
+    proof_effect: NONE
+    note: >-
+      Current legal indexes rechecked on 02.09.2026 still identify 152-FZ as revised on 26.07.2026 and identify
+      No. 265-FZ as the Article-12 amendment. The repository already holds the immutable official No. 265-FZ PDF,
+      but the current consolidated 152-FZ snapshot remains pending because exact official consolidated bytes have
+      not passed the current-revision content gate.
+
+priority_status:
+  SEC-SRC-RU-152FZ-2026-07-26: PENDING_CURRENT_CONSOLIDATED_RAW_CAPTURE
+  SEC-SRC-RU-PP687-2008: PENDING_RAW_CAPTURE
+  SEC-SRC-RU-PP211-2012: IMMUTABLE_CAPTURED
+  SEC-SRC-RU-RKN18-2021: IMMUTABLE_CAPTURED
+  SEC-SRC-RU-RKN128-2022: IMMUTABLE_CAPTURED_REPLACEMENT_DRAFT_WATCH
+  SEC-SRC-RU-RKN178-2022: IMMUTABLE_CAPTURED
+  SEC-SRC-RU-RKN179-2022: IMMUTABLE_CAPTURED
+  SEC-SRC-RU-RKN180-2022: IMMUTABLE_CAPTURED
+  SEC-SRC-RU-RKN140-2025: IMMUTABLE_CAPTURED
+  SEC-SRC-RU-PP1154-2025: IMMUTABLE_CAPTURED
+
+production_counters:
+  identified: 40
+  raw_downloaded_exact: 38
+  immutable_sha256_verified: 38
+  atomized_existing_proposed: 4
+  atomized_verified: 0
+  pending_raw_capture: 2
+  raw_capture_coverage_ratio: 0.9500
+
+changes_this_run:
+  freshness_checks: 2
+  new_sources_registered: 0
+  new_immutable_captured: 0
+  semantic_promotions: 0
+  sector_overlays_touched: 0
+
+proof_rule: >-
+  Freshness/version evidence does not promote a source. Promotion requires accepted official returned bytes,
+  source URL, retrieved_at, MIME, exact byte length, SHA-256, immutable artifact and manifest, plus the applicable
+  source/version locator review gate. Partial responses and indexed/cached text cannot satisfy byte-exact capture.
