@@ -96,22 +96,16 @@ jobs:
             fi
           fi
 
-      - name: Try PP687 through guarded curl transport
-        id: pp687
-        shell: bash
-        run: |
-          set +e
-          python TOOLS/pdn_pp687_acquire.py 2>&1 | tee /tmp/pdn-pp687-result.log
-          rc=${PIPESTATUS[0]}
-          echo "pp687_exit_code=$rc" >> "$GITHUB_OUTPUT"
-          exit 0
-
+      # The current 152-FZ root is the highest-priority unresolved source. Run it before
+      # PP687 so a slow Government/IPS transport cannot consume the whole job budget and
+      # starve the current-law root. GNU timeout only bounds transport time; all existing
+      # identity/current-revision proof gates remain unchanged inside the acquisition tools.
       - name: Try current 152-FZ through guarded curl transport
         id: current_root_curl
         shell: bash
         run: |
           set +e
-          python TOOLS/pdn_current_root_curl_acquire.py 2>&1 | tee /tmp/pdn-current-root-curl-result.log
+          timeout --signal=TERM --kill-after=10s 240s python TOOLS/pdn_current_root_curl_acquire.py 2>&1 | tee /tmp/pdn-current-root-curl-result.log
           rc=${PIPESTATUS[0]}
           echo "current_root_curl_exit_code=$rc" >> "$GITHUB_OUTPUT"
           exit 0
@@ -122,9 +116,19 @@ jobs:
         shell: bash
         run: |
           set +e
-          python TOOLS/pdn_current_root_acquire.py 2>&1 | tee /tmp/pdn-current-root-urllib-result.log
+          timeout --signal=TERM --kill-after=10s 180s python TOOLS/pdn_current_root_acquire.py 2>&1 | tee /tmp/pdn-current-root-urllib-result.log
           rc=${PIPESTATUS[0]}
           echo "current_root_exit_code=$rc" >> "$GITHUB_OUTPUT"
+          exit 0
+
+      - name: Try PP687 through guarded curl transport
+        id: pp687
+        shell: bash
+        run: |
+          set +e
+          timeout --signal=TERM --kill-after=10s 240s python TOOLS/pdn_pp687_acquire.py 2>&1 | tee /tmp/pdn-pp687-result.log
+          rc=${PIPESTATUS[0]}
+          echo "pp687_exit_code=$rc" >> "$GITHUB_OUTPUT"
           exit 0
 
       - name: Try www.pravo.gov.ru transport alias for remaining official IPS gaps
@@ -132,7 +136,7 @@ jobs:
         shell: bash
         run: |
           set +e
-          python TOOLS/pdn_pravo_www_alias_acquire.py 2>&1 | tee /tmp/pdn-pravo-www-alias-result.log
+          timeout --signal=TERM --kill-after=10s 180s python TOOLS/pdn_pravo_www_alias_acquire.py 2>&1 | tee /tmp/pdn-pravo-www-alias-result.log
           rc=${PIPESTATUS[0]}
           echo "pravo_www_alias_exit_code=$rc" >> "$GITHUB_OUTPUT"
           exit 0
