@@ -1,0 +1,104 @@
+schema_version: "1.0"
+id: PDN-MASTER-SOURCE-INVENTORY-DELTA-STREAM3-2026-09-02T0523Z
+kind: pdn_master_inventory_sector_overlay_delta
+stream: 3
+checked_at: "2026-09-02T05:23:34+03:00"
+
+source_overlays:
+  - id: SEC-SRC-RU-MINZDRAV-ORDER-408-2023
+    document: "Приказ Минздрава России от 03.08.2023 № 408"
+    role: healthcare_object_specific_document_retention_overlay
+    canonical_record: "../protected-information/source/SEC-SRC-RU-MINZDRAV-ORDER-408-2023.yaml"
+    metadata_status: PRIMARY_OFFICIAL_MINISTRY_SOURCE_VERIFIED_CURRENT_TEXT_CROSSCHECKED
+    primary_official_source: "https://minzdrav.gov.ru/documents/9741-prikaz-ministerstva-zdravoohraneniya-rossiyskoy-federatsii-ot-3-avgusta-2023-g-408-ob-utverzhdenii-perechnya-dokumentov-obrazuyuschihsya-v-deyatelnosti-ministerstva-zdravoohraneniya-rossiyskoy-federatsii-i-podvedomstvennyh-emu-organizatsiy-s-ukazaniem-srokov-hraneniya"
+    raw_capture: PENDING
+    verified_for_exact_extraction: false
+    applicability: CURRENT_SPECIAL_HEALTHCARE_RETENTION_REGIME_WITH_LIMITED_MANDATORY_ACTOR_SCOPE
+    mandatory_actor_scope:
+      - "Минздрав России"
+      - "организации, находящиеся в ведении Минздрава России"
+    outside_scope_guard: "Mandatory application to regional/private medical organizations is not inferred solely from the Ministry list."
+    pdn_anchors:
+      - locator: "general provisions"
+        rule: "Retention terms cover documents in the mandatory actor scope, including documents containing restricted-access/restricted-distribution information."
+        guard: "This retention list does not itself create a universal legal basis to process or disclose personal data."
+      - locator: "3.2"
+        rule: "Ambulatory medical-card retention has an object-specific pre-archive and archive calculation sequence, including five years after the year of the last recorded visit before archival transfer."
+        guard: "This lifecycle must be matched to the concrete medical-document class and actor scope."
+      - locator: "3.3 and named List articles"
+        rule: "Specific patient medical-document classes can have paper/MIS terms of 25/50 years, while other named forms have 1-year or 3-year terms."
+        guard: "No universal health-data or PDN retention period is inferred."
+
+retention_model:
+  universal_pdn_period: false
+  universal_health_data_period: false
+  universal_medical_record_period: false
+  object_rules:
+    - current_form_code: "025/у"
+      current_title: "Медицинская карта пациента, получающего медицинскую помощь в амбулаторных условиях"
+      term: "25 years on paper; 50 years in the medical organization's MIS where the List note applies"
+      applicability_guard: "Match current title/class and proven mandatory actor scope."
+    - current_form_code: "025-1/у"
+      current_title: "Талон пациента, получающего медицинскую помощь в амбулаторных условиях"
+      term: "1 year"
+      applicability_guard: "Do not match by form code alone; historical 025-1/u is also used for another document class in the List."
+    - current_form_code: "070/у"
+      current_title: "Справка для получения путевки на санаторно-курортное лечение"
+      term: "3 years"
+      applicability_guard: "Object/title and actor-scope match required."
+    - current_form_code: "072/у"
+      current_title: "Санаторно-курортная карта"
+      term: "3 years"
+      applicability_guard: "Object/title and actor-scope match required."
+    - current_form_code: "076/у"
+      current_title: "Санаторно-курортная карта для детей"
+      term: "3 years"
+      applicability_guard: "Child-health context does not imply universal education-sector applicability."
+    - current_form_code: "079/у"
+      current_title: "Медицинская справка о состоянии здоровья ребенка, направляемого в организацию отдыха детей и их оздоровления"
+      term: "3 years"
+      applicability_guard: "Child-health context does not itself create a disclosure right or universal education-sector applicability."
+
+relationships:
+  - "408 -> 152-FZ / object-specific document retention overlap; operator/operation/purpose/legal-basis matching still required"
+  - "408 -> 323-FZ Article 13 / medical-secrecy interface remains separate from PDN retention"
+  - "408 -> 274n / current medical form titles and codes require controlled matching against the retention List"
+  - "408 -> 209n point 21 / EMD retention follows at least the corresponding paper-document term, subject to proven scope"
+  - "408 -> 125-FZ / archive-list statutory basis"
+  - "408 -> children / forms 076u and 079u only plus other specifically proven child records; no universal education promotion"
+
+counter_delta_this_pass:
+  sector_overlay_found_new_canonical: 1
+  primary_official_source_verified_new: 1
+  downloaded_new: 0
+  immutable_new: 0
+  pending_new: 1
+  reused_existing_canonical_sources_for_relationships: 3
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+
+master_counter_policy:
+  core_pdn_production_counters_changed: false
+  reason: >-
+    Order 408 is a healthcare sector retention overlay with limited mandatory actor scope.
+    It does not inflate direct PDN core exact/immutable counters before exact official-byte capture and controlled merge.
+
+capture:
+  status: PENDING_TRANSIENT_DNS_NAME_RESOLUTION_FAILURE
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+  fabricated_binary_metadata: false
+
+proof_guards:
+  - "TAXONOMY_SEED_NOT_LEGAL_PROOF"
+  - "PRIMARY_OFFICIAL_MINISTRY_SOURCE_USED"
+  - "MANDATORY_ACTOR_SCOPE_NOT_GENERALIZED"
+  - "MEDICAL_SECRECY_AND_PDN_MODELED_SEPARATELY"
+  - "RETENTION_DUTY_NOT_PROCESSING_OR_DISCLOSURE_PERMISSION"
+  - "NO_UNIVERSAL_PDN_RETENTION_INFERRED"
+  - "NO_UNIVERSAL_MEDICAL_RECORD_RETENTION_INFERRED"
+  - "CURRENT_FORM_MATCH_REQUIRES_TITLE_CLASS_NOT_CODE_ONLY"
+  - "NO_FABRICATED_MIME_BYTE_LENGTH_OR_SHA256"
