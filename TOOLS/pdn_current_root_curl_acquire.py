@@ -31,7 +31,7 @@ from pdn_current_root_acquire import (
     current_root_identity_ok,
 )
 
-UA = "KNOWLEDGE_CORE-pdn-current-root-curl/1.4 (+https://github.com/VictorKVS/KNOWLEDGE_CORE)"
+UA = "KNOWLEDGE_CORE-pdn-current-root-curl/1.5 (+https://github.com/VictorKVS/KNOWLEDGE_CORE)"
 RAW_DIR = CORPUS / "raw" / SOURCE_ID
 REGISTERED_URL_RE = re.compile(r'(?m)^\s+url:\s*["\']([^"\']+)["\']\s*$')
 NETWORK_PROFILES = (
@@ -41,12 +41,19 @@ NETWORK_PROFILES = (
 
 
 def curl_capture(url: str, network_args: tuple[str, ...]) -> tuple[bytes, str, str]:
+    """Fetch one proof-bound route with a short transport budget.
+
+    The acquisition is scheduled repeatedly and already fans out across registered routes
+    and network profiles. Keeping each transport attempt short ensures the helper reaches
+    its final structured PENDING/accepted result instead of being killed by the workflow
+    guard before provenance can be persisted. This changes transport timing only; all
+    identity, revision, exact-byte and SHA-256 gates below remain unchanged.
+    """
     with tempfile.TemporaryDirectory(prefix="pdn-current-root-") as td:
         body = Path(td) / "body.bin"
         cmd = [
             "curl", "--silent", "--show-error", "--location", "--fail-with-body",
-            "--retry", "2", "--retry-delay", "2", "--retry-all-errors",
-            "--connect-timeout", "20", "--max-time", "120",
+            "--connect-timeout", "6", "--max-time", "12",
             *network_args,
             "--header", f"User-Agent: {UA}",
             "--header", "Accept: text/html,application/xhtml+xml,application/pdf,*/*;q=0.8",
@@ -55,7 +62,7 @@ def curl_capture(url: str, network_args: tuple[str, ...]) -> tuple[bytes, str, s
             "--write-out", "%{url_effective}\n%{content_type}\n",
             url,
         ]
-        proc = subprocess.run(cmd, capture_output=True, text=True, timeout=150)
+        proc = subprocess.run(cmd, capture_output=True, text=True, timeout=18)
         if proc.returncode != 0:
             raise RuntimeError(f"curl exit={proc.returncode}: {(proc.stderr or '').strip()}")
         data = body.read_bytes() if body.exists() else b""
