@@ -1,0 +1,97 @@
+schema_version: "1.0"
+id: RU-PROTECTED-INFORMATION-MASTER-DELTA-STREAM3-2026-09-02T0523Z
+kind: master_inventory_delta
+stream: 3
+checked_at: "2026-09-02T05:23:34+03:00"
+
+source_delta:
+  - id: SEC-SRC-RU-MINZDRAV-ORDER-408-2023
+    action: ADD_NEW_CANONICAL_CURRENT_PRIMARY_MINISTRY_SOURCE_EXACT_CAPTURE_PENDING
+    canonical_record: "source/SEC-SRC-RU-MINZDRAV-ORDER-408-2023.yaml"
+    capture_manifest: "manifests/SEC-SRC-RU-MINZDRAV-ORDER-408-2023-capture-pending.json"
+    sectors:
+      - healthcare
+      - medical_secrecy
+      - health_data
+      - personal_data_overlap
+      - children
+      - archives
+      - retention
+      - electronic_medical_documentation_overlap
+    primary_official_source: "https://minzdrav.gov.ru/documents/9741-prikaz-ministerstva-zdravoohraneniya-rossiyskoy-federatsii-ot-3-avgusta-2023-g-408-ob-utverzhdenii-perechnya-dokumentov-obrazuyuschihsya-v-deyatelnosti-ministerstva-zdravoohraneniya-rossiyskoy-federatsii-i-podvedomstvennyh-emu-organizatsiy-s-ukazaniem-srokov-hraneniya"
+    official_file_url: "https://static-0.minzdrav.gov.ru/system/attachments/attaches/000/064/314/original/%D0%9F%D1%80%D0%B8%D0%BA%D0%B0%D0%B7_%E2%84%96408.pdf?1691667230="
+    primary_source_identity_verified: true
+    official_publication_id: null
+    current_state: CURRENT_OFFICIAL_MINISTRY_SOURCE_PRESENT_NO_REPEAL_FOUND_IN_CURRENT_SWEEP
+    downloaded_exact: false
+    immutable: false
+    dedupe_result: NEW_CANONICAL_NODE
+
+counter_delta_this_pass:
+  found_new_canonical: 1
+  downloaded_new: 0
+  immutable_new: 0
+  pending_new: 1
+  reused_existing_canonical_sources_for_relationships: 3
+  primary_official_source_verified_new: 1
+  primary_publication_id_verified_new: 0
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+
+capture_ledger_reconciliation:
+  authoritative_file: "SECTOR_ACQUISITION_RUN.json"
+  identity_scope: "document.official_publication_id only"
+  current_targets_with_official_publication_id: 22
+  current_raw_downloaded_exact: 22
+  current_immutable_sha256_verified: 22
+  current_pending_inside_that_capture_scope: 0
+  current_bytes_downloaded: 114212750
+  changed_this_pass: false
+  reason: >-
+    Minzdrav Order 408 is proven from the Ministry's own primary document page and official attached PDF,
+    but this source currently has no publication.pravo official_publication_id in the source card and exact bytes are pending.
+    It therefore remains outside the narrow 22-target publication-ID acquisition ledger until controlled merge policy is applied.
+
+retention_findings:
+  - "Order 408 is mandatory within its proven scope: Minzdrav Russia and organizations subordinate to Minzdrav; mandatory application outside that scope is not inferred."
+  - "The List states that its retention terms also cover documents containing restricted-access/restricted-distribution information within the proven scope."
+  - "For patient medical documentation identified by the List, the paper/MIS distinction can be 25 years / 50 years, but this is not a universal term for every medical document."
+  - "Current title-matched form 025/u maps to 25 years on paper and 50 years in the medical organization's MIS where the List note applies."
+  - "Current title-matched form 025-1/u maps to 1 year; matching by code alone is prohibited because the same historical code occurs for another document class."
+  - "Current title-matched forms 070/u, 072/u, 076/u and 079/u map to 3-year object-specific terms in the current rendered List."
+  - "The ambulatory medical-card lifecycle includes a pre-archive five-year holding rule after the year of the patient's last reflected visit, then the archival term is calculated from 1 January following transfer to archive."
+  - "These periods are document-retention duties, not a duration of medical secrecy and not a universal personal-data retention term."
+
+relationships_added:
+  - "SEC-SRC-RU-MINZDRAV-ORDER-408-2023 -> 125-FZ / archival statutory basis"
+  - "SEC-SRC-RU-MINZDRAV-ORDER-408-2023 -> SEC-SRC-RU-FZ-323 / healthcare medical-documentation and conditional medical-secrecy interface"
+  - "SEC-SRC-RU-MINZDRAV-ORDER-408-2023 -> SEC-SRC-RU-MINZDRAV-ORDER-274N-2025 / current ambulatory form class to retention-list controlled match"
+  - "SEC-SRC-RU-MINZDRAV-ORDER-408-2023 -> SEC-SRC-RU-MINZDRAV-ORDER-209N-2026 / paper retention to EMD retention bridge"
+  - "SEC-SRC-RU-MINZDRAV-ORDER-408-2023 -> 152-FZ / scoped PDN retention overlap; applicability review required"
+  - "SEC-SRC-RU-MINZDRAV-ORDER-408-2023 -> children / concrete child-health record overlap only"
+
+acquisition_attempts:
+  - source_id: SEC-SRC-RU-MINZDRAV-ORDER-408-2023
+    url: "https://static-0.minzdrav.gov.ru/system/attachments/attaches/000/064/314/original/%D0%9F%D1%80%D0%B8%D0%BA%D0%B0%D0%B7_%E2%84%96408.pdf?1691667230="
+    attempted_at: "2026-09-02T05:23:34+03:00"
+    method: container.download
+    result: DOWNLOAD_FAILED
+    exact_bytes_obtained: false
+  - source_id: SEC-SRC-RU-MINZDRAV-ORDER-408-2023
+    attempted_at: "2026-09-02T05:23:34+03:00"
+    method: python_requests_get
+    result: TRANSIENT_DNS_NAME_RESOLUTION_FAILURE
+    exact_bytes_obtained: false
+
+quality_gates:
+  taxonomy_seed_used_as_proof: false
+  primary_official_ministry_source_verified: true
+  exact_capture_required_before_immutable: true
+  fabricated_binary_metadata: false
+  advertised_size_used_as_exact_byte_length: false
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+  universal_pdn_retention_inferred: false
+  universal_medical_record_retention_inferred: false
+  mandatory_scope_outside_minzdrav_subordinates_inferred: false
+  code_only_form_matching_allowed: false
