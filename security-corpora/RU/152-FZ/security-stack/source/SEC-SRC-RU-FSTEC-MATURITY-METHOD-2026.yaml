@@ -1,4 +1,4 @@
-schema_version: "1.0"
+schema_version: "1.1"
 id: SEC-SRC-RU-FSTEC-MATURITY-METHOD-2026
 kind: security-methodical-source
 status: METADATA_VERIFIED
@@ -10,15 +10,18 @@ document:
   number: "б/н"
   adopted_date: "2026-08-07"
   current_revision_date: "2026-08-07"
-  checked_at: "2026-08-26"
+  checked_at: "2026-09-02"
   status_note: >-
-    Актуальная методика ФСТЭК России, прямо включающая операторов ИСПДн в область применения оценки зрелости
-    деятельности по обеспечению безопасности персональных данных. Методика различает текущий и целевой уровни
-    зрелости и содержит рекомендуемые целевые уровни для ИСПДн разных уровней защищенности.
+    Методика ФСТЭК России от 07.08.2026 зарегистрирована как текущий PDN-релевантный методический источник,
+    прямо включающий операторов ИСПДн в область применения оценки зрелости деятельности по обеспечению
+    безопасности персональных данных. Методика различает текущий и целевой уровни зрелости и содержит
+    рекомендуемые целевые уровни для ИСПДн разных уровней защищенности. Проверка 02.09.2026 не установила
+    отдельной заменяющей редакции. Exact-byte retry 02.09.2026 в 05:07:17Z выполнен уже по точному
+    разрешенному официальному PDF-маршруту ФСТЭК, но не дошел до HTTP из-за DNS-resolution failure среды.
   version_chain_note: >-
-    Методика использует действующие требования ФСТЭК по соответствующим режимам, включая приказ ФСТЭК России
-    № 21 для ИСПДн; значения целевых уровней из пункта 11 сформулированы как рекомендации и не должны
-    превращаться в обязательные минимумы без отдельного нормативного основания.
+    Верифицирована редакция от 07.08.2026. Методика использует действующие требования ФСТЭК по соответствующим
+    режимам, включая приказ ФСТЭК России №21 для ИСПДн; значения целевых уровней из пункта 11 сформулированы
+    как рекомендации и не превращаются в обязательные минимумы без отдельного нормативного основания.
 canonical_source:
   publisher: "ФСТЭК России"
   landing_page: "https://fstec.ru/dokumenty/vse-dokumenty/spetsialnye-normativnye-dokumenty/metodicheskij-dokument-ot-7-avgusta-2026-g"
@@ -27,23 +30,32 @@ canonical_source:
   exact_file_route_status: RESOLVED_OFFICIAL_PDF_ROUTE_BYTES_PENDING
   acquisition_priority: HIGH_PDN_DIRECT_SCOPE
   freshness_check:
-    checked_at: "2026-08-26"
-    result: CURRENT_APPROVED_METHOD_RECONFIRMED_EXACT_OFFICIAL_PDF_ROUTE_RESOLVED
-    current_text_evidence: >-
-      Current legal-text publications dated August 2026 reproduce the approved 07.08.2026 method, including the
-      explicit ISPDN-operator clause and point 11 recommendation language.
-    issuer_transport_result: OFFICIAL_PDF_ROUTE_RESOLVED_BUT_EXACT_BYTES_NOT_CAPTURED_IN_BOUNDED_RUN
+    checked_at: "2026-09-02"
+    result: CURRENT_APPROVED_METHOD_EXACT_OFFICIAL_PDF_RETRY_ENV_DNS_BLOCKED
+    issuer_transport_result: OFFICIAL_EXACT_PDF_ROUTE_DNS_RESOLUTION_FAILED_BEFORE_HTTP
 capture:
   fingerprint_status: PENDING
   semantic_status: CURRENT_METHOD_RECONFIRMED
   source_url: "https://fstec.ru/files/1523/---7--2026-/3102/---7--2026-.pdf"
+  last_primary_transport_attempt_at: "2026-09-02T05:07:17.750681Z"
+  last_primary_transport_result: ACQUISITION_ENV_DNS_RESOLUTION_FAILURE_FSTEC_RU_EXACT_PDF_NOT_CAPTURED
+  route_history:
+    - checked_at: "2026-08-26"
+      route: "https://fstec.ru/files/1523/---7--2026-/3102/---7--2026-.pdf"
+      result: EXACT_OFFICIAL_PDF_ROUTE_RESOLVED_BYTES_PENDING
+    - checked_at: "2026-09-02T02:11Z"
+      route_kind: LANDING_PAGE_RETRY
+      result: DNS_RESOLUTION_FAILED
+    - checked_at: "2026-09-02T05:07:17.750681Z"
+      route_kind: EXACT_RESOLVED_OFFICIAL_PDF
+      result: DNS_RESOLUTION_FAILED_BEFORE_HTTP
   retrieved_at: null
   mime: null
   byte_length: null
   sha256: null
   note: >-
-    Exact official FSTEC PDF route was resolved on 26.08.2026, but the issuer transport did not yield the PDF bytes
-    in this bounded run. MIME, byte length and SHA-256 remain unset; secondary legal-text publications remain
+    The exact official FSTEC PDF route is now the acquisition target and was directly retried in this pass.
+    Because no payload bytes were received, MIME, byte length and SHA-256 remain unset; secondary copies are
     corroboration only and are not promoted to immutable primary evidence.
 relations:
   - type: REFERENCES_ISPDN_TECHNICAL_MEASURES
@@ -74,7 +86,7 @@ provenance:
   point_11_recommendation_language_verified: true
   exact_official_file_route_verified: true
   exact_official_bytes_captured: false
-  route_verified_at: "2026-08-26"
+  route_verified_at: "2026-09-02"
   review_required: true
 agent_rule: >-
   Use this method as current PDN-relevant maturity-assessment guidance, keeping its recommended target levels distinct
