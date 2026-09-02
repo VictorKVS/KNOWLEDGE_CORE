@@ -1,0 +1,58 @@
+schema_version: "1.0"
+id: RECONCILIATION-SEC-SRC-RU-PRESIDENT-DECREE-609-2005-PDN-ARCHIVE-2026-09-02T1424MSK
+kind: cross_regime_reconciliation
+stream: 3
+checked_at: "2026-09-02T14:24:40+03:00"
+
+source:
+  id: SEC-SRC-RU-PRESIDENT-DECREE-609-2005
+  canonical_record: "../source/SEC-SRC-RU-PRESIDENT-DECREE-609-2005.yaml"
+  current_revision_date: "2025-12-31"
+  latest_amendment_publication_id: "0001202601010001"
+
+reconciled_edges:
+  - target: "security-corpora/RU/152-FZ/source/SEC-SRC-RU-152FZ-2026-07-26.yaml"
+    relation: SPECIAL_STATE_CIVIL_SERVICE_PDN_OVERLAY
+    applicability: "Only for state civil servants and the personal-file/HR processing scope established by Decree 609."
+    guard: "Do not infer that every public-sector employee or every government PDN dataset is governed by Decree 609."
+  - target: "SEC-SRC-RU-FZ-125-2004"
+    relation: ARCHIVE_LIFECYCLE_AFTER_TEN_YEAR_HR_CUSTODY
+    applicability: "Point 23 transfers the personal file to an archive after the 10-year HR-service custody stage; downstream archival retention/access must be proven by the applicable archival act and document class."
+    guard: "10 years + archive is not modeled as a fixed total retention period and archive transfer is not deletion."
+  - target: "Федеральный закон от 27.07.2004 № 79-ФЗ, статья 42"
+    relation: DIRECT_STATUTORY_PARENT
+    applicability: "Decree 609 expressly operates in connection with Article 42 of Federal Law 79-FZ."
+    state: PRIMARY_CANONICAL_DISCOVERY_REQUIRED_NEXT
+    guard: "No new obligations are inferred from the citation until the current primary 79-FZ source is separately registered/verified."
+  - target: "Закон Российской Федерации № 5485-1 «О государственной тайне»"
+    relation: CONDITIONAL_SECRET_FILE_BRANCH
+    applicability: "Only where the concrete personal file contains information lawfully classified as state secret."
+    guard: "Confidential personal-file status under point 11 does not itself create state-secret status."
+
+retention_reconciliation:
+  object: "personal file of a dismissed state civil servant"
+  rule_source_locator: "Decree 609 point 23"
+  hr_custody_period: "10 years from dismissal"
+  next_stage: "transfer to archive"
+  total_lifecycle_duration: UNKNOWN_OBJECT_SPECIFIC
+  deletion_trigger: NOT_ESTABLISHED_BY_POINT_23
+  guards:
+    - "TEN_YEAR_CUSTODY_NOT_TOTAL_RETENTION"
+    - "ARCHIVE_TRANSFER_NOT_DELETION"
+    - "NO_UNIVERSAL_RETENTION_FOR_COPIES_EXTRACTS_OR_DERIVED_SYSTEMS"
+
+currentness_reconciliation:
+  effective_transition: "2026-01-01"
+  repealed_by_decree_1009:
+    - "point 12"
+    - "point 13"
+    - "point 14"
+    - "point 15"
+    - "point 19 subpoints г-д-е"
+  guard: "Requirements formerly derived from these repealed provisions must not be carried forward as current after 01.01.2026."
+
+result:
+  duplicate_created: false
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+  new_primary_parent_discovery_seed: "Federal Law 79-FZ Article 42"
