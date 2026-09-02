@@ -1,0 +1,88 @@
+schema_version: "1.0"
+id: SEC-PDN-SECURITY-STACK-DELTA-STREAM2-2026-09-02T1116Z
+kind: security-regulatory-source-inventory-delta
+stream: 2
+created_at: "2026-09-02T11:16:00Z"
+base_inventory: "PDN_SECURITY_STACK_SOURCE_INVENTORY.yaml"
+run_ref: "runs/STREAM2_RUN_2026-09-02T1116Z.yaml"
+manifest_ref: "manifests/STREAM2_ACQUISITION_MANIFEST_2026-09-02T1116Z.yaml"
+
+counter_before:
+  identified: 55
+  metadata_verified: 55
+  immutable_sha256_verified: 24
+  pending_raw_capture: 31
+  exact_official_route_unresolved: 8
+  version_edges_verified: 12
+  applicability_guards: 30
+  confirmed_conflicts: 0
+
+source_additions:
+  - source_id: SEC-SRC-RU-FSTEC-SZI-EQUIPMENT-LIST-2026
+    source_record: "source/SEC-SRC-RU-FSTEC-SZI-EQUIPMENT-LIST-2026.yaml"
+    role: fstec_szi_development_production_equipment_catalog_2026
+    metadata_status: METADATA_VERIFIED
+    raw_capture: PENDING
+    applicability: LICENSED_SZI_DEVELOPMENT_PRODUCTION_ACTIVITY_ONLY
+    official_landing: "https://fstec.ru/dokumenty/vse-dokumenty/perechni/perechen-kontrolno-izmeritelnogo-i-ispytatelnogo-oborudovaniya-programmnykh-programmno-tekhnicheskikh-sredstv-ot-11-avgusta-2026-g"
+    exact_file_route_status: UNRESOLVED_PUBLIC_DIRECT_ATTACHMENT
+    adopted_date: "2026-08-11"
+    transition_metadata:
+      applicants_from: "2026-12-01"
+      existing_licensees_conform_by: "2027-03-01"
+      proof_class: CROSS_VERIFIED_PENDING_PRIMARY_BYTES
+
+status_delta:
+  - source_id: SEC-SRC-RU-PP1119-2012
+    result: CURRENT_PRIMARY_BYTES_PENDING
+    byte_attempt: TRANSPORT_TIMEOUT
+    version_chain_change: false
+  - source_id: SEC-SRC-RU-FSTEC21-2013
+    result: CURRENT_REVISION_2020_05_14_REPLACEMENT_PRIMARY_GATE_NOT_PASSED
+    version_chain_change: false
+    watch_project: "01/02/07-26/00169583"
+  - source_id: SEC-SRC-RU-FSTEC-SZI-EQUIPMENT-LIST-2026
+    result: NEW_METADATA_VERIFIED_SOURCE_PRIMARY_BYTES_PENDING
+    version_chain_change: false
+    byte_attempt: DNS_RESOLUTION_FAILURE
+  - source_id: PP_RF_171_2012_EXTERNAL_CONTEXT
+    result: CURRENT_ACT_RETAINED_2026_AMENDMENT_PROJECT_NOT_PROMOTED
+    version_chain_change: false
+    inventory_promotion: false
+
+run_delta:
+  exact_primary_route_attempts: 2
+  exact_primary_route_successes: 0
+  new_source_identities: 1
+  metadata_verified_new: 1
+  new_immutable_captured: 0
+  new_sha256: 0
+  pending_raw_new: 1
+  exact_official_route_unresolved_new: 1
+  applicability_guards_new: 1
+  status_or_chain_rechecks: 3
+  existing_immutable_reused: 2
+  new_version_edges: 0
+  semantic_promotions_to_generic_pdn_baseline: 0
+
+counter_after_delta:
+  identified: 56
+  metadata_verified: 56
+  immutable_sha256_verified: 24
+  pending_raw_capture: 32
+  exact_official_route_unresolved: 9
+  version_edges_verified: 12
+  applicability_guards: 31
+  confirmed_conflicts: 0
+
+applicability_guard: >-
+  The 11.08.2026 FSTEC equipment/software catalog is an adjacent licensing source for development and
+  production of confidential-information protection means under PP RF No.171. It must not be imported
+  into the generic 152-FZ/PP1119/FSTEC21 baseline merely because an organization operates an ISPDn or
+  uses security software. An independently proved licensed-activity edge is mandatory. Existing SKZI,
+  certification, KII, NCTKI and GosSOPKA guards remain unchanged.
+
+reconciliation_instruction: >-
+  Add SEC-SRC-RU-FSTEC-SZI-EQUIPMENT-LIST-2026 to the canonical security-stack inventory on reconciliation,
+  advance the security-stack aggregate counters to the counter_after_delta values, and update latest run/
+  manifest pointers. Do not modify generic PDN requirements or version edges from this catalog registration.
