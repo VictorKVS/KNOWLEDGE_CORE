@@ -38,7 +38,8 @@ for key in ["default_formulas","default_scales","default_weights","default_thres
     assert model["counts"][key] == 0
 for required in [
     "id: GOST_R_58771_2019",
-    "REGRESSION_PROTECTED_FOUNDATION_FAMILY_CROSSWALK_AND_42_TECHNIQUE_CATALOG",
+    "FAMILY_CROSSWALK",
+    "42_TECHNIQUE_CATALOG",
     "security-knowledge/risks/gost-r-58771-2019-individual-technique-catalog-v1.yaml",
     "security-knowledge/risks/gost-r-58771-2019-individual-technique-catalog-regression-v1.json",
 ]:
