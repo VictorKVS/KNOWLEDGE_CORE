@@ -47,7 +47,7 @@ assert all(x["cell_values"] == "PENDING_PRIMARY_BYTES" for x in model["classific
 for required in [
     "id: GOST_R_58771_2019",
     "status_observed: Действует",
-    "REGRESSION_PROTECTED_FOUNDATION_AND_TECHNIQUE_FAMILY_CROSSWALK",
+    "FAMILY_CROSSWALK",
     "security-knowledge/risks/gost-r-58771-2019-technique-family-crosswalk-v1.yaml",
     "security-knowledge/risks/gost-r-58771-2019-technique-family-crosswalk-regression-v1.json",
 ]:
