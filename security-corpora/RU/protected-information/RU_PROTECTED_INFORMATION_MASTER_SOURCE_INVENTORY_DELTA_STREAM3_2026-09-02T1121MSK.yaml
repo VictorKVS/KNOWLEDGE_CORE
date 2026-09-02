@@ -1,0 +1,102 @@
+schema_version: "1.0"
+id: RU-PROTECTED-INFORMATION-MASTER-DELTA-STREAM3-2026-09-02T1121MSK
+kind: master_inventory_delta
+stream: 3
+checked_at: "2026-09-02T11:21:44+03:00"
+
+source_delta:
+  - id: SEC-SRC-RU-PP-1233-1994
+    action: ADD_NEW_CANONICAL_CURRENT_PRIMARY_VERSION_CHAIN_VERIFIED_EXACT_CAPTURE_PENDING
+    canonical_record: "source/SEC-SRC-RU-PP-1233-1994.yaml"
+    capture_manifest: "manifests/SEC-SRC-RU-PP-1233-1994-capture-pending.json"
+    reconciliation_record: "reconciliation/SEC-SRC-RU-ROSARCHIVE-ORDER-38-2025-PP1233-2026-09-02T1121MSK.yaml"
+    sectors:
+      - public_sector
+      - archives
+      - restricted_information
+      - service_information_limited_distribution
+      - information_security
+      - personal_data_overlap
+    original_electronic_publication_id: null
+    original_official_print_citation: "Собрание законодательства Российской Федерации, 2005, № 30, ст. 3165"
+    current_revision: "04.03.2026"
+    latest_amendment: "Постановление Правительства РФ от 04.03.2026 № 226"
+    latest_amendment_publication_id: "0001202603050018"
+    archival_amendment: "Постановление Правительства РФ от 09.10.2024 № 1350"
+    archival_amendment_publication_id: "0001202410090012"
+    primary_currentness_verified: true
+    downloaded_exact: false
+    immutable: false
+    dedupe_result: NEW_CANONICAL_NODE
+
+counter_delta_this_pass:
+  found_new_canonical: 1
+  downloaded_new: 0
+  immutable_new: 0
+  pending_new: 1
+  reused_existing_canonical_sources: 2
+  relationships_verified: 4
+  reconciliation_records_added: 1
+  currentness_refresh_new_source: 1
+  primary_official_source_verified_new: 1
+  primary_publication_id_verified_new_chain_component: 1
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+
+capture_ledger_reconciliation:
+  authoritative_file: "SECTOR_ACQUISITION_RUN.json"
+  identity_scope: "document.official_publication_id only in the controlled acquisition run"
+  current_targets_with_official_publication_id: 22
+  current_raw_downloaded_exact: 22
+  current_immutable_sha256_verified: 22
+  current_pending_inside_that_capture_scope: 0
+  current_bytes_downloaded: 114212750
+  changed_this_pass: false
+  reason: >-
+    PP RF 1233 is a newly registered canonical source, but the original act has no verified electronic publication ID in this pass and exact bytes for the two verified electronic amendment publications were not obtained. The controlled 22-target exact acquisition ledger is therefore not silently inflated.
+
+dlu_regime_findings:
+  - "PP RF 1233 is current in revision dated 04.03.2026; the latest amendment is PP RF 226/2026, effective 13.03.2026."
+  - "The regime concerns non-secret service information of limited distribution. It is explicitly separated from state-secret documents."
+  - "The 2024 amendment 1350 added a special archival layer for non-secret Archive Fund information whose dissemination may create a potential threat to Russian Federation interests."
+  - "The 2026 amendment 226 explicitly brought electronic DLU documents into the handling model, added information-security requirements for electronic processing/storage/exchange, and modernized copying, forwarding, destruction and demarking rules."
+  - "The recommendation added by PP 226 for a wider public/publicly significant actor set is stored as a recommendation and is not promoted to a universal mandatory duty."
+
+retention_and_destruction_findings:
+  - "PP 1233 does not set one numeric retention period for DLU documents."
+  - "Point 2.6 ties destruction to the lawful records/archival lifecycle and then requires a method that prevents recovery."
+  - "For electronic documents, destruction of the medium or residual-data removal must make reading/recovery impossible."
+  - "Secure destruction method is not a retention period and is not an independent trigger for deletion of personal data."
+
+relationships_added_or_revalidated:
+  - "SEC-SRC-RU-PP-1233-1994 -> SEC-SRC-RU-ROSARCHIVE-ORDER-38-2025 / direct DLU handling framework reference"
+  - "SEC-SRC-RU-PP-1233-1994 -> SEC-SRC-RU-FZ-125-2004 / archival lifecycle and access context"
+  - "SEC-SRC-RU-PP-1233-1994 -> 149-FZ Article 16(5) / direct electronic information-security reference"
+  - "SEC-SRC-RU-PP-1233-1994 -> 152-FZ / conditional document-level PDN overlap"
+
+acquisition_attempts:
+  - source_id: SEC-SRC-RU-PP-1233-1994
+    object: "PP RF 226/2026 official PDF"
+    url: "https://publication.pravo.gov.ru/file/pdf?eoNumber=0001202603050018"
+    attempted_at: "2026-09-02T11:21:44+03:00"
+    method: container.download
+    result: DOWNLOAD_FAILED
+    retry_class: TRANSIENT
+    exact_bytes_obtained: false
+  - source_id: SEC-SRC-RU-PP-1233-1994
+    object: "PP RF 1350/2024 official PDF"
+    url: "https://publication.pravo.gov.ru/file/pdf?eoNumber=0001202410090012"
+    attempted_at: "2026-09-02T11:21:44+03:00"
+    method: container.download
+    result: DOWNLOAD_FAILED
+    retry_class: TRANSIENT
+    exact_bytes_obtained: false
+
+proof_guards:
+  taxonomy_as_evidence: false
+  dlu_equals_pdn: false
+  dlu_equals_state_secret: false
+  recommendation_equals_mandatory_scope: false
+  secure_destruction_method_equals_retention: false
+  universal_pdn_retention_inferred: false
+  fabricated_binary_metadata: false
