@@ -1,0 +1,102 @@
+schema_version: "1.0"
+id: PDN-MASTER-SOURCE-INVENTORY-DELTA-STREAM3-2026-09-02T2015MSK
+kind: pdn_master_inventory_sector_overlay_delta
+stream: 3
+checked_at: "2026-09-02T20:15:38+03:00"
+
+source_overlays:
+  - id: SEC-SRC-RU-FZ-79-2004
+    document: "Федеральный закон от 27.07.2004 № 79-ФЗ (текущая редакция от 08.03.2026; последнее изменение № 52-ФЗ действует с 07.06.2026)"
+    role: state_civil_service_pdn_statutory_parent_and_registry_overlay
+    canonical_record: "../protected-information/source/SEC-SRC-RU-FZ-79-2004.yaml"
+    capture_manifest: "../protected-information/manifests/SEC-SRC-RU-FZ-79-2004-capture-pending.json"
+    metadata_status: CURRENT_PRIMARY_IDENTITY_AND_LATEST_AMENDMENT_VERIFIED_EXACT_BYTES_PENDING
+    raw_capture: PENDING
+    verified_for_exact_extraction: false
+    pdn_anchors:
+      - locator: "статья 42 часть 1"
+        rule: "Кадровая служба государственного органа обрабатывает персональные данные гражданского служащего в специальном actor/object scope с соблюдением законодательства о персональных данных и специальных ограничений 79-ФЗ."
+        guard: "SPECIAL_CIVIL_SERVICE_SCOPE != ALL_PUBLIC_SECTOR_PDN."
+      - locator: "статья 42 часть 1 пункты 2-6"
+        rule: "Установлены специальные ограничения на получение данных у третьих лиц, отдельные сведения о частной жизни/убеждениях, исключительно автоматизированные решения, защиту и передачу третьим лицам."
+        guard: "SPECIAL_CONSENT_OR_EXCEPTION_RULES != GENERAL_INTERAGENCY_DISCLOSURE_BASIS."
+      - locator: "статья 42 части 3-4"
+        rule: "Закон определяет личное дело как специальный кадровый объект и прямо поручает Президенту утвердить положение о персональных данных гражданского служащего и ведении его личного дела; canonical implementation — Указ № 609."
+        guard: "PERSONAL_FILE_OBJECT != ALL_GOVERNMENT_RECORDS_ABOUT_PERSON."
+      - locator: "статья 43 часть 2"
+        rule: "Сведения из личного дела включаются в реестр гражданских служащих и хранятся в предусмотренных законом государственных информационных системах с защитой от несанкционированного доступа и копирования."
+        guard: "SECURITY_AND_STORAGE_REQUIREMENT != NUMERIC_RETENTION_PERIOD."
+      - locator: "статья 15 часть 5 в редакции № 52-ФЗ"
+        rule: "С 07.06.2026 обязательная государственная дактилоскопическая и геномная регистрация гражданских служащих возникает только в случаях и порядке, определенных отдельными федеральными законами."
+        guard: "NO_AUTOMATIC_EBS_OR_BIOMETRIC_PDN_CLASSIFICATION; TRIGGERING_FEDERAL_LAW_REQUIRED."
+
+currentness_guard:
+  current_revision_date: "2026-03-08"
+  latest_amendment: "Федеральный закон от 08.03.2026 № 52-ФЗ"
+  latest_amendment_publication_id: "0001202603080008"
+  effective_date: "2026-06-07"
+  latest_amendment_target_in_79fz: "статья 15 часть 5"
+  article42_changed_by_latest_amendment: false
+  guard: "Не переносить изменение статьи 15 части 5 на содержание статьи 42; PDN-якорь статьи 42 подтверждается текущим консолидированным текстом, exact bytes текущей цепочки еще pending."
+
+scope_model:
+  mandatory_scope: "Государственная гражданская служба Российской Федерации; гражданские служащие, их кадровые персональные данные, личные дела и предусмотренные законом реестры."
+  excluded_automatic_scope:
+    - "все работники государственных и муниципальных организаций"
+    - "все государственные служащие иных видов службы без отдельной правовой привязки"
+    - "все ПДн в государственных информационных системах"
+    - "все гражданские служащие как автоматически подлежащие любой конкретной дактилоскопической/геномной процедуре без проверки отдельного федерального закона"
+  guard: "Sector tags are discovery/navigation metadata, not an applicability decision."
+
+retention_and_access_model:
+  universal_pdn_period: false
+  article42_numeric_retention_period: null
+  article43_numeric_retention_period: null
+  personal_file_post_dismissal_rule_source: "SEC-SRC-RU-PRESIDENT-DECREE-609-2005 point 23"
+  personal_file_post_dismissal_hr_custody_years: 10
+  next_lifecycle_stage: "transfer_to_archive"
+  archive_transfer_is_deletion: false
+  sector_special_retention_requires_object_specific_proof: true
+
+relationships:
+  - "SEC-SRC-RU-FZ-79-2004 -> SEC-SRC-RU-152FZ-2026-07-26 / statutory special civil-service PDN overlay"
+  - "SEC-SRC-RU-FZ-79-2004 Article 42 part 4 -> SEC-SRC-RU-PRESIDENT-DECREE-609-2005 / direct implementing act; prior discovery gap resolved"
+  - "SEC-SRC-RU-FZ-79-2004 Article 15 part 5 -> Federal Law 128-FZ / fingerprint registration discovery seed, primary canonical pass pending"
+  - "SEC-SRC-RU-FZ-79-2004 Article 15 part 5 -> Federal Law 242-FZ / genomic registration discovery seed, primary canonical pass pending"
+
+counter_delta_this_pass:
+  sector_overlay_found_new_canonical: 1
+  downloaded_new: 0
+  immutable_new: 0
+  pending_new: 1
+  reused_existing_canonical_sources: 3
+  primary_official_source_verified_new: 1
+  primary_publication_id_verified_new_chain_components: 2
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+
+master_counter_policy:
+  core_pdn_production_counters_changed: false
+  reason: >-
+    79-FZ is a sector-specific statutory overlay. Exact official bytes remain pending and the applicability boundary is limited to state civil service. Direct PDN-core exact/immutable counters are not inflated.
+
+capture:
+  new_source_status: PENDING_TRANSIENT_NETWORK_FAILURE
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+  fabricated_binary_metadata: false
+
+proof_guards:
+  - "TAXONOMY_SEED_NOT_LEGAL_PROOF"
+  - "PRIMARY_CURRENT_ACT_AND_AMENDMENT_CHAIN_REQUIRED"
+  - "SPECIAL_CIVIL_SERVICE_SCOPE_NOT_ALL_PUBLIC_SECTOR"
+  - "SPECIAL_RULES_DO_NOT_REPLACE_152FZ"
+  - "ARTICLE43_SECURITY_NOT_RETENTION"
+  - "ARTICLE15_REGISTRATION_REQUIRES_TRIGGERING_FEDERAL_LAW"
+  - "FINGERPRINT_REGISTRATION_NOT_AUTOMATIC_EBS"
+  - "GENOMIC_REGISTRATION_NOT_AUTOMATIC_BIOMETRIC_PDN_WITHOUT_SEPARATE_PROOF"
+  - "NO_AUTOMATIC_APPLICABILITY_PROMOTION"
+  - "NO_FABRICATED_MIME_BYTE_LENGTH_OR_SHA256"
