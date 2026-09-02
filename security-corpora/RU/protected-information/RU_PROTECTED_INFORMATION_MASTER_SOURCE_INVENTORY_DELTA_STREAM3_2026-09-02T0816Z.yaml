@@ -1,0 +1,145 @@
+schema_version: "1.0"
+id: RU-PROTECTED-INFORMATION-MASTER-DELTA-STREAM3-2026-09-02T0816Z
+kind: master_inventory_delta
+stream: 3
+checked_at: "2026-09-02T08:16:50+03:00"
+
+source_delta:
+  - id: SEC-SRC-RU-ROSARCHIVE-ORDER-38-2025
+    action: ADD_NEW_CANONICAL_CURRENT_PRIMARY_SOURCE_EXACT_CAPTURE_PENDING
+    canonical_record: "source/SEC-SRC-RU-ROSARCHIVE-ORDER-38-2025.yaml"
+    capture_manifest: "manifests/SEC-SRC-RU-ROSARCHIVE-ORDER-38-2025-capture-pending.json"
+    sectors:
+      - archives
+      - public_sector
+      - restricted_information
+      - service_information_limited_distribution
+      - personal_data_overlap
+    official_publication_id: "0001202504300012"
+    official_current_text: "https://archives.gov.ru/documents/other/2025-poryadok-archive-doc-dsp.shtml"
+    current_revision: "Приказ Росархива от 25.06.2025 № 77"
+    primary_source_identity_verified: true
+    downloaded_exact: false
+    immutable: false
+    dedupe_result: NEW_CANONICAL_NODE
+
+  - id: SEC-SRC-RU-ROSARCHIVE-ORDER-77-2023
+    action: REUSE_AND_ENRICH_EXISTING_CANONICAL_CURRENTNESS_AND_LIFECYCLE_PROOF
+    canonical_record: "source/SEC-SRC-RU-ROSARCHIVE-ORDER-77-2023.yaml"
+    capture_manifest: "manifests/SEC-SRC-RU-ROSARCHIVE-ORDER-77-2023-capture-pending.json"
+    official_publication_id: "0001202309060005"
+    currentness_revalidated: true
+    semantic_locators_added: ["пункт 31", "пункт 32", "пункт 33", "пункт 34"]
+    downloaded_exact: false
+    immutable: false
+    dedupe_result: EXISTING_CANONICAL_REUSED
+
+  - id: SEC-SRC-RU-FZ-125-2004
+    action: REUSE_EXISTING_CANONICAL_CURRENTNESS_REVALIDATED
+    canonical_record: "source/SEC-SRC-RU-FZ-125-2004.yaml"
+    current_revision: "13.12.2024 № 469-ФЗ"
+    latest_amendment_publication_id: "0001202412130022"
+    later_amendment_found_in_current_2025_2026_sweep: false
+    exact_capture_state: PENDING_EXISTING
+    dedupe_result: EXISTING_CANONICAL_REUSED
+
+  - id: SEC-SRC-RU-FZ-38-2006-A18
+    action: REUSE_EXISTING_CANONICAL_CURRENTNESS_RECONCILIATION
+    canonical_record: "source/SEC-SRC-RU-FZ-38-2006-A18.yaml"
+    reconciliation_record: "reconciliation/SEC-SRC-RU-FZ-38-2006-A18-2026-09-02T0816Z.yaml"
+    current_revision: "04.08.2026"
+    latest_source_level_amender: "283-ФЗ от 04.08.2026"
+    latest_source_level_amender_publication_id: "0001202608040008"
+    latest_source_level_amender_effective_date: "2026-09-01"
+    selected_locator_change_from_283_fz_found: false
+    article_18_1_part_13_current_retention: "не менее 3 лет со дня получения уполномоченным органом"
+    exact_capture_state: PENDING_EXISTING
+    dedupe_result: EXISTING_CANONICAL_REUSED
+
+counter_delta_this_pass:
+  found_new_canonical: 1
+  downloaded_new: 0
+  immutable_new: 0
+  pending_new: 1
+  reused_existing_canonical_sources: 3
+  currentness_refresh_existing: 3
+  existing_pending_manifest_created: 1
+  primary_official_source_verified_new: 1
+  primary_publication_id_verified_new: 1
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+
+capture_ledger_reconciliation:
+  authoritative_file: "SECTOR_ACQUISITION_RUN.json"
+  identity_scope: "document.official_publication_id only in the controlled acquisition run"
+  current_targets_with_official_publication_id: 22
+  current_raw_downloaded_exact: 22
+  current_immutable_sha256_verified: 22
+  current_pending_inside_that_capture_scope: 0
+  current_bytes_downloaded: 114212750
+  changed_this_pass: false
+  reason: >-
+    Rosarchive Order 38 has a verified official publication ID but exact transport bytes were not obtained in this pass.
+    It remains in the Stream-3 discovery/capture backlog until a controlled acquisition merge is performed; the existing 22-target exact ledger is not silently inflated.
+
+archive_regime_findings:
+  - "Order 38/2025 creates a special procedure for classifying/declassifying Archive Fund documents held in state and municipal archives as containing non-secret service information of limited distribution; it is not a universal secrecy classifier."
+  - "The restricted List used by Order 38 is itself DLU and is not publicly reconstructed; official Rosarchive statements are used only within their published scope."
+  - "A concrete access restriction under Order 38 depends on the Rosarchive commission/decision workflow and accounting update; sensitive-looking content alone is not promoted to DLU."
+  - "Order 77/2023 point 31 requires nonrecoverable destruction of documents containing PDN, marked DLU, or containing restricted-access information after the lawful disposal procedure; this is not a deletion trigger."
+  - "Order 77 point 33 prohibits reducing normatively established document retention periods."
+  - "125-FZ remains the cross-sector archive framework; Article 25 access restrictions and Article 22.1 personnel-document terms are separate from universal PDN retention."
+
+advertising_regime_findings:
+  - "38-FZ current consolidation is revalidated to 04.08.2026; source-level amender 283-FZ took effect 01.09.2026."
+  - "No change from 283-FZ to selected Articles 12, 18 or 18.1 was identified in this sweep; Article 18.1(13) still requires regulator-side storage of the statutory internet-ad data for at least three years from receipt."
+  - "Advertising consent remains distinct from personal-data processing consent; advertising retention remains object/actor specific."
+
+relationships_added_or_revalidated:
+  - "SEC-SRC-RU-ROSARCHIVE-ORDER-38-2025 -> SEC-SRC-RU-FZ-125-2004 / archival access framework"
+  - "SEC-SRC-RU-ROSARCHIVE-ORDER-38-2025 -> 152-FZ / conditional archival-PDN boundary"
+  - "SEC-SRC-RU-ROSARCHIVE-ORDER-38-2025 -> PP RF 1233/1994 / direct DLU-handling reference; canonical-source discovery pending"
+  - "SEC-SRC-RU-ROSARCHIVE-ORDER-38-2025 -> State Secrets Law / non-secret DLU versus state-secret boundary"
+  - "SEC-SRC-RU-ROSARCHIVE-ORDER-77-2023 -> SEC-SRC-RU-ROSARCHIVE-ORDER-38-2025 / general archive lifecycle versus special DLU access regime"
+  - "SEC-SRC-RU-ROSARCHIVE-ORDER-77-2023 -> SEC-SRC-RU-MINZDRAV-ORDER-408-2023 / sector retention list to lawful disposal/archive procedure"
+  - "SEC-SRC-RU-FZ-38-2006-A18 -> 152-FZ / marketing-contact and ad-data overlap remains conditional"
+
+acquisition_attempts:
+  - source_id: SEC-SRC-RU-ROSARCHIVE-ORDER-38-2025
+    url: "https://publication.pravo.gov.ru/document/0001202504300012"
+    attempted_at: "2026-09-02T08:16:50+03:00"
+    method: container.download
+    result: DOWNLOAD_FAILED
+    exact_bytes_obtained: false
+  - source_id: SEC-SRC-RU-ROSARCHIVE-ORDER-38-2025-AMENDMENT-77-2025
+    url: "https://archives.gov.ru/documents/prik77_2025.shtml"
+    attempted_at: "2026-09-02T08:16:50+03:00"
+    method: container.download
+    result: DOWNLOAD_FAILED
+    exact_bytes_obtained: false
+  - source_id: SEC-SRC-RU-ROSARCHIVE-ORDER-77-2023
+    url: "https://publication.pravo.gov.ru/document/0001202309060005"
+    attempted_at: "2026-09-02T08:16:50+03:00"
+    method: container.download
+    result: DOWNLOAD_FAILED
+    exact_bytes_obtained: false
+  - source_id: SEC-SRC-RU-FZ-125-2004
+    attempted_at: "2026-09-02T08:16:50+03:00"
+    method: container.download
+    targets: ["https://government.ru/docs/all/97733/", "https://publication.pravo.gov.ru/document/0001202412130022"]
+    result: DOWNLOAD_FAILED
+    exact_bytes_obtained: false
+
+quality_gates:
+  taxonomy_seed_used_as_proof: false
+  primary_normative_act_required: true
+  nonpublic_restricted_list_reconstructed: false
+  exact_capture_required_before_immutable: true
+  fabricated_binary_metadata: false
+  downloaded_increment_without_bytes: false
+  immutable_increment_without_hash: false
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+  universal_pdn_retention_inferred: false
+  archive_access_restriction_confused_with_retention: false
+  dlu_confused_with_state_secret: false
