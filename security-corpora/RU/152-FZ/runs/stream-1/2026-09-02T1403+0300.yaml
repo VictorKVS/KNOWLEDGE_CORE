@@ -1,0 +1,76 @@
+schema_version: "1.0"
+record_type: STREAM1_PDN_CORE_RUN
+stream: 1
+observed_at: "2026-09-02T11:03:00Z"
+scope: "152-FZ common core / Roskomnadzor; no sector overlays"
+
+completed_work:
+  - item: "PDN Core Immutable Acquisition #219 completion review"
+    result: "SUCCESS_PROCESS_NO_NEW_IMMUTABLE"
+    workflow_run_url: "https://github.com/VictorKVS/KNOWLEDGE_CORE/actions/runs/33607160563"
+    evidence_commit: "453b645"
+    targets_total: 39
+    reused_immutable: 38
+    new_immutable_captured: 0
+    proof_floor_held: true
+    pending_priority:
+      - SEC-SRC-RU-152FZ-2026-07-26
+      - SEC-SRC-RU-PP687-2008
+    note: >-
+      Current 152-FZ and PP687 dedicated official routes completed without accepted bytes. Transport timeouts,
+      identity/current-revision marker misses and rejected insufficient responses were persisted as negative
+      provenance evidence; no MIME, byte length, SHA-256 or manifest was invented for rejected responses.
+
+  - item: SEC-SRC-RU-PP1154-2025
+    result: "FRESHNESS_RECHECKED_RELATION_REBASED"
+    source_commit: "cb43940fbc63e2e2a5256238f6457ad0dd6710ea"
+    official_publication_id: "0001202508050011"
+    official_source_url: "https://publication.pravo.gov.ru/document/0001202508050011"
+    current_law_index_url: "https://www.consultant.ru/document/cons_doc_LAW_511607/"
+    current_law_check: >-
+      On 02.09.2026 the current-law index still presents PP RF No. 1154 of 01.08.2025 without a later revision
+      marker and confirms effectiveness from 01.09.2025. This is freshness evidence only; the immutable source
+      remains the previously captured official publication PDF.
+    immutable_artifact_ref: "security-corpora/RU/152-FZ/raw/SEC-SRC-RU-PP1154-2025/0001202508050011-72aeb792f7126bfc.pdf"
+    manifest_ref: "security-corpora/RU/152-FZ/manifests/SEC-SRC-RU-PP1154-2025.json"
+    retrieved_at: "2026-08-22T06:59:45.547309Z"
+    mime: "application/pdf"
+    byte_length: 2682316
+    sha256: "72aeb792f7126bfc5da4c84171ce8ec0aa66730e3b5ced6025ce116b3e3b025b"
+    graph_correction:
+      from: SEC-SRC-RU-152FZ-2025-09-01
+      to: SEC-SRC-RU-152FZ-2026-07-26
+      semantic_change_inferred: false
+
+priority_status:
+  SEC-SRC-RU-152FZ-2026-07-26: PENDING_CURRENT_CONSOLIDATED_RAW_CAPTURE
+  SEC-SRC-RU-PP687-2008: PENDING_RAW_CAPTURE
+  SEC-SRC-RU-PP211-2012: IMMUTABLE_CAPTURED
+  SEC-SRC-RU-RKN18-2021: IMMUTABLE_CAPTURED
+  SEC-SRC-RU-RKN128-2022: IMMUTABLE_CAPTURED_REPLACEMENT_DRAFT_WATCH
+  SEC-SRC-RU-RKN178-2022: IMMUTABLE_CAPTURED
+  SEC-SRC-RU-RKN179-2022: IMMUTABLE_CAPTURED
+  SEC-SRC-RU-RKN180-2022: IMMUTABLE_CAPTURED
+  SEC-SRC-RU-RKN140-2025: IMMUTABLE_CAPTURED
+  SEC-SRC-RU-PP1154-2025: IMMUTABLE_CAPTURED
+
+production_counters:
+  identified: 40
+  raw_downloaded_exact: 38
+  immutable_sha256_verified: 38
+  atomized_existing_proposed: 4
+  atomized_verified: 0
+  pending_raw_capture: 2
+  raw_capture_coverage_ratio: 0.9500
+
+changes_this_run:
+  freshness_checks: 1
+  source_relation_rebases: 1
+  new_sources_registered: 0
+  new_immutable_captured: 0
+  semantic_promotions: 0
+  sector_overlays_touched: 0
+
+proof_rule: >-
+  Never promote a source because a legal index or search result says it is current. Promotion requires accepted
+  official bytes, exact MIME/byte length/SHA-256, immutable artifact and manifest, plus the applicable review gate.
