@@ -1,0 +1,146 @@
+schema_version: "1.0"
+id: STREAM2-RUN-2026-09-02T1716Z
+kind: pdn-security-stack-stream-run
+stream: 2
+created_at: "2026-09-02T17:16:00Z"
+completed_at: "2026-09-02T17:17:43.552774Z"
+status: PASS_WITH_NEW_METHODICAL_SOURCE_REGISTRATION_AND_TRANSIENT_ACQUISITION_BLOCKER
+scope:
+  - PP_RF_1119
+  - FSTEC_ORDER_21
+  - FSTEC_THREAT_METHOD_2021
+  - FSTEC_RELEVANT_METHODICAL_DOCUMENTS_AND_CATALOGS
+  - FSB_ORDER_378
+  - SKZI_LIFECYCLE_AND_HANDLING
+  - LICENSING_AND_CERTIFICATION_WHEN_APPLICABLE
+  - NCTKI_GOSSOPKA_ONLY_FOR_PROVED_PDN_INCIDENT_EDGE
+
+new_sources:
+  - source_id: SEC-SRC-RU-FSTEC-INFO-240-22-2637-2013
+    result: METADATA_VERIFIED_PRIMARY_BYTES_PENDING
+    role: fstec_order21_scope_and_effectiveness_assessment_clarification
+    applicability: ISPDN_ORDER21_INTERPRETIVE_AND_GIS_SCOPE_BOUNDARY
+    significance: >-
+      Adds explicit evidence for separating generic ISPDn requirements from the state-information-system overlay,
+      while retaining the PP RF No.1119 protection-level requirements where the message says they remain applicable.
+  - source_id: SEC-SRC-RU-FSTEC-INFO-240-24-1382-2017
+    result: METADATA_VERIFIED_PRIMARY_BYTES_PENDING
+    role: fstec_order21_firewall_certification_transition_context
+    applicability: ISPDN_FIREWALL_CERTIFICATION_CONTEXT_ONLY_WHEN_FIREWALL_MEASURE_APPLIES
+    significance: >-
+      Adds bounded firewall certification/application transition context without turning a firewall or certification
+      requirement into a universal requirement for every ISPDn.
+
+status_review:
+  pp1119:
+    result: CURRENT_PRIMARY_BYTES_PENDING
+    official_page: "https://government.ru/docs/6339/"
+    official_doc_route: "https://government.ru/media/2012/11/3/53354/file/1119_pril.doc"
+    byte_attempt_result: DNS_RESOLUTION_FAILURE_BEFORE_HTTP
+
+  fstec21:
+    result: CURRENT_REVISION_2020_05_14_REPLACEMENT_PRIMARY_ENACTMENT_GATE_NOT_PASSED
+    active_chain:
+      - SEC-SRC-RU-FSTEC21-2013
+      - SEC-SRC-RU-FSTEC49-2017
+      - SEC-SRC-RU-FSTEC68-2020
+    project_watch: "01/02/07-26/00169583"
+    note: >-
+      Current project monitoring still identifies the proposed replacement as a draft with discussion completed.
+      No final primary order identity, registration identity where required, and official-publication identity was
+      established in this run. The proposed effective date is not used as enactment proof.
+
+  fstec_threat_method_2021:
+    result: CURRENT_EXISTING_IMMUTABLE_REUSED
+    canonical_route: "https://fstec.ru/component/attachments/download/2919"
+    retry_result: DNS_RESOLUTION_FAILURE_BEFORE_HTTP
+
+  fstec_maturity_method_2026:
+    result: CURRENT_METHOD_EXACT_PRIMARY_BYTES_PENDING
+    exact_pdf: "https://fstec.ru/files/1523/---7--2026-/3102/---7--2026-.pdf"
+    byte_attempt_result: DNS_RESOLUTION_FAILURE_BEFORE_HTTP
+    applicability_rule: RECOMMENDED_TARGET_LEVELS_NOT_AUTOMATIC_MANDATORY_MINIMA
+
+  crypto_contour:
+    fsb378: SKZI_CONDITIONAL_BASELINE_PRIMARY_BYTES_PENDING_STATUS_REVIEW_REQUIRED
+    fsb378_retry: DNS_RESOLUTION_FAILURE_BEFORE_HTTP
+    fsb66_173: VERIFIED_VERSION_EDGE_RETAINED_PRIMARY_BYTES_RETRY_FAILED
+    fapsi152: SKZI_HANDLING_PRIMARY_BYTES_RETRY_FAILED
+    scope_rule: >-
+      FSB378 remains conditional on established SKZI use. FSB66/173 and FAPSI152 remain conditional lifecycle
+      and handling context. No crypto-activity licensing duty is inferred solely from operation of an ISPDn.
+
+  incident_contour:
+    result: NO_GENERIC_GOSSOPKA_PROMOTION
+    rule: >-
+      NCTKI/GosSOPKA remains outside the generic PDN baseline unless an independent legal or factual PDN
+      computer-incident trigger or other direct legal trigger is proven.
+
+acquisition:
+  manifest_ref: "../manifests/STREAM2_ACQUISITION_MANIFEST_2026-09-02T1716Z.yaml"
+  official_route_attempts: 9
+  successful_payloads: 0
+  new_immutable_artifacts: 0
+  new_sha256: 0
+  existing_immutable_reused: 2
+  failure_classes:
+    - DNS_RESOLUTION_FAILURE_BEFORE_HTTP
+
+status_evidence:
+  - "../evidence/STREAM2_STATUS_EVIDENCE_FSTEC_SCOPE_CLARIFICATIONS_2026-09-02T1716Z.yaml"
+  - "../evidence/STREAM2_STATUS_EVIDENCE_CBR_7219U_2026-09-02.yaml"
+
+counter_before:
+  identified: 56
+  metadata_verified: 56
+  immutable_sha256_verified: 24
+  pending_raw_capture: 32
+  exact_official_route_unresolved: 9
+  verified_version_edges: 12
+  applicability_guards: 31
+  confirmed_conflicts: 0
+
+run_delta:
+  new_source_identities: 2
+  metadata_verified_new: 2
+  pending_raw_new: 2
+  exact_official_route_unresolved_new: 0
+  applicability_guards_new: 2
+  official_route_attempts: 9
+  successful_payloads: 0
+  existing_immutable_reused: 2
+  new_version_edges: 0
+  new_immutable_artifacts: 0
+  new_sha256: 0
+  semantic_promotions_to_generic_pdn_baseline: 0
+
+counter_after_delta:
+  identified: 58
+  metadata_verified: 58
+  immutable_sha256_verified: 24
+  pending_raw_capture: 34
+  exact_official_route_unresolved: 9
+  verified_version_edges: 12
+  applicability_guards: 33
+  confirmed_conflicts: 0
+
+improvement_notes:
+  - priority: P0
+    what: "Close PP RF No.1119 byte-level gap."
+    how: "Retry the exact Government DOC after transport recovery and validate OLE/CFB signature before immutable promotion."
+  - priority: P0
+    what: "Prevent scope contamination between generic ISPDn and state-system requirements."
+    how: "Use FSTEC 240/22/2637 as an explicit scope-boundary evidence node and require a state/municipal-system edge before importing the adjacent overlay."
+  - priority: P0
+    what: "Prevent false replacement of FSTEC Order No.21."
+    how: "Require final order identity plus registration/publication proof before switching the active node."
+  - priority: P1
+    what: "Keep firewall certification context conditional."
+    how: "Require a selected firewall measure, threat-model or conformity-assessment edge before reusing 240/24/1382 guidance."
+
+next_priority:
+  - "Capture exact official bytes for the two newly registered FSTEC information messages."
+  - "Capture exact Government DOC bytes for PP RF No.1119."
+  - "Continue primary-enactment watch for the final successor, if any, to FSTEC Order No.21."
+  - "Capture primary bytes for FSB378, then FSB66/173 and FAPSI152 under SKZI applicability guards."
+  - "Capture the exact official FSTEC maturity-method PDF and continue bounded FSTEC method/catalog discovery."
