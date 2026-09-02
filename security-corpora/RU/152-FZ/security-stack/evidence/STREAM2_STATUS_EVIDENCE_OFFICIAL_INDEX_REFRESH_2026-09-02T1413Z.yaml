@@ -1,0 +1,57 @@
+schema_version: "1.0"
+evidence_id: STREAM2-EVIDENCE-OFFICIAL-INDEX-REFRESH-2026-09-02T1413Z
+kind: current_status_official_index_evidence
+observed_at: "2026-09-02T14:13:00Z"
+
+findings:
+  - target: SEC-SRC-RU-PP1119-2012
+    issuer: "Правительство Российской Федерации"
+    official_url: "https://government.ru/docs/6339/"
+    signal: CURRENT_EDITION_EXPLICITLY_LABELLED
+    finding: >-
+      The current Government document page continues to label Resolution No.1119 as
+      "Постановление от 1 ноября 2012 года №1119 в действующей редакции" and exposes a DOC link.
+      This corroborates current status but does not satisfy the byte-level immutable gate for the DOC.
+    applicability_effect: NONE_GENERIC_BASELINE_ALREADY_ESTABLISHED
+
+  - target: SEC-SRC-RU-FSB-SKZI-FORM-NOTICE-2017
+    issuer: "ФСБ России"
+    official_url: "https://www.fsb.ru/fsb/science/single.htm!id=10437494@fsbResearchart.html"
+    official_index_url: "https://www.fsb.ru/fsb/science.htm!_print=true.html"
+    signal: OFFICIAL_FSB_GUIDANCE_STILL_INDEXED
+    finding: >-
+      Current official FSB indexing still exposes the 15.06.2017 guidance on compliance with
+      requirements of the formular for a specific SKZI. The guidance is retained only as operational
+      context for a PDN operator that actually uses SKZI and where the specific formular requirement applies.
+    applicability_effect: NO_UNIVERSAL_SKZI_OR_LICENSING_DUTY
+
+  - target: SEC-SRC-RU-FSB378-2014
+    issuer: "ФСБ России"
+    official_context_url: "https://www.fsb.ru/fsb/science/single.htm!id=10437725@fsbResearchart.html"
+    signal: PRIMARY_CONTEXT_AND_2026_CROSS_REFERENCE_RETAINED
+    finding: >-
+      No new primary amendment, repeal or replacement transition was established in this bounded refresh.
+      The existing 2026 primary Bank of Russia cross-reference to FSB Order No.378 remains corroboration of
+      operational use in its own regulated scope, not a substitute for the exact original publication artifact.
+    applicability_effect: ISPDN_WHEN_SKZI_USED_ONLY
+
+  - target: SEC-SRC-RU-FSTEC21-2013
+    issuer: "ФСТЭК России"
+    watch_project: "01/02/07-26/00169583"
+    signal: FINAL_ENACTMENT_CHAIN_NOT_ESTABLISHED
+    finding: >-
+      Fresh public monitoring still describes 169583 as the project replacing Order No.21 and includes
+      formulations conditional on signing. No primary final-order identity, state-registration identity where
+      required, and official-publication identity were established in this refresh. The proposed 01.09.2026
+      date therefore does not independently switch the baseline.
+    applicability_effect: KEEP_ORDER21_REV_2020_05_14_FAIL_CLOSED
+
+proof_limits:
+  - "Indexed issuer pages/status text are status evidence, not byte-for-byte immutable artifacts."
+  - "Absence of a discovered amendment/repeal in a bounded search is not proof that none exists."
+  - "No adjacent licensing, public-sector, KII, NCTKI or GosSOPKA obligation is promoted into generic PDN."
+  - "Exact source bytes remain required for MIME, byte length, SHA-256 and immutable promotion."
+
+acquisition_link:
+  manifest: "../manifests/STREAM2_ACQUISITION_MANIFEST_2026-09-02T1413Z.yaml"
+  result: OFFICIAL_INDEX_STATUS_RECHECKED_EXACT_BYTES_STILL_BLOCKED_BY_DNS
