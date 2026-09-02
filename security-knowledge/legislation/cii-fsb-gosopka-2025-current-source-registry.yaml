@@ -1,4 +1,8 @@
 schema_version: "1.4"
+family_id: CII_FSB_GOSOPKA_2025_CURRENT
+priority: P0
+family_status: REGISTERED
+status_policy: Registration and clause extraction do not prove universal applicability; temporal and role routing remain mandatory.
 id: cii-fsb-gosopka-2025-current-source-registry
 checked_at: "2026-08-14"
 status: VERIFIED_TRANSITION_METADATA_SUBSTANTIAL_CLAUSE_EXTRACTION
@@ -9,7 +13,9 @@ purpose: >-
   and predecessor relations are asserted only where authoritative text is consistent.
 
 sources:
-  - source_id: FSB_539_2025
+  - id: FSB_539_2025
+    source_id: FSB_539_2025
+    ingestion_status: SOURCE_REGISTERED_AUTHORITATIVE_TEXT_AND_CLAUSE_EXTRACTION
     act_type: ORDER_FSB_RUSSIA
     act_date: "2025-12-23"
     number: "539"
@@ -38,7 +44,9 @@ sources:
     clause_extraction: SUBSTANTIAL
     clause_evidence_file: security-knowledge/legislation/fsb-539-2025-attack-information-receipt-authoritative-slice.yaml
 
-  - source_id: FSB_546_2025
+  - id: FSB_546_2025
+    source_id: FSB_546_2025
+    ingestion_status: SOURCE_REGISTERED_AUTHORITATIVE_TEXT_AND_CLAUSE_EXTRACTION
     act_type: ORDER_FSB_RUSSIA
     act_date: "2025-12-25"
     number: "546"
@@ -63,7 +71,9 @@ sources:
     verification_status: VERIFIED_OFFICIAL_PUBLICATION_AND_AUTHORITATIVE_TEXT
     clause_extraction: SUBSTANTIAL
 
-  - source_id: FSB_547_2025
+  - id: FSB_547_2025
+    source_id: FSB_547_2025
+    ingestion_status: SOURCE_REGISTERED_AUTHORITATIVE_TEXT_AND_CLAUSE_EXTRACTION
     act_type: ORDER_FSB_RUSSIA
     act_date: "2025-12-25"
     number: "547"
@@ -91,7 +101,9 @@ sources:
     clause_extraction: SUBSTANTIAL
     clause_evidence_file: security-knowledge/legislation/fsb-547-2025-incident-reporting-response-authoritative-slice.yaml
 
-  - source_id: FSB_548_2025
+  - id: FSB_548_2025
+    source_id: FSB_548_2025
+    ingestion_status: SOURCE_REGISTERED_AUTHORITATIVE_TEXT_AND_CLAUSE_EXTRACTION
     act_type: ORDER_FSB_RUSSIA
     act_date: "2025-12-25"
     number: "548"
@@ -117,7 +129,9 @@ sources:
     clause_extraction: SUBSTANTIAL
     clause_evidence_file: security-knowledge/legislation/fsb-548-2025-gosopka-continuous-interaction-authoritative-slice.yaml
 
-  - source_id: FSB_553_2025
+  - id: FSB_553_2025
+    source_id: FSB_553_2025
+    ingestion_status: SOURCE_REGISTERED_AUTHORITATIVE_TEXT_AND_CLAUSE_EXTRACTION
     act_type: ORDER_FSB_RUSSIA
     act_date: "2025-12-26"
     number: "553"
@@ -144,7 +158,9 @@ sources:
     clause_extraction: SUBSTANTIAL
     clause_evidence_file: security-knowledge/legislation/fsb-553-2025-gosopka-installation-operation-authoritative-slice.yaml
 
-  - source_id: FSB_554_2025
+  - id: FSB_554_2025
+    source_id: FSB_554_2025
+    ingestion_status: SOURCE_REGISTERED_AUTHORITATIVE_TEXT_AND_CLAUSE_EXTRACTION
     act_type: ORDER_FSB_RUSSIA
     act_date: "2025-12-26"
     number: "554"
@@ -199,6 +215,12 @@ applicability_guardrails:
   - >-
     Events before an order's effective date must be routed to the legal stack effective at the event time;
     the 2025/2026 orders are not retroactive merely because they are current now.
+
+red_team_blocks:
+  - Do not infer universal applicability from source registration.
+  - Do not copy deadlines from superseded FSB orders.
+  - Do not treat publication metadata as clause-level technical configuration.
+  - Do not apply the 2025/2026 stack retroactively.
 
 red_team:
   verdict: PARTIAL_PASS_CURRENT_STACK_SUBSTANTIAL_CLAUSE_COVERAGE
