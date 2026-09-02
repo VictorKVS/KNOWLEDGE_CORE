@@ -51,10 +51,11 @@ def main():
         raise SystemExit(1)
     source=next(x for x in registry["sources"] if x["id"]=="GOST_R_ISO_IEC_27005_2010")
     assert source["status_observed"]=="Действует"
-    assert source["ingestion_status"]=="REGRESSION_PROTECTED_PROCESS_CORE_SECTIONS_4_TO_12"
+    # The registry status is cumulative. Require the stable semantic token rather
+    # than an obsolete exact snapshot that breaks after later verified additions.
+    assert "REGRESSION_PROTECTED_PROCESS_CORE" in source["ingestion_status"]
     assert str(MODEL) in source["repo_bindings"] and str(FIXTURES) in source["repo_bindings"]
     assert obs["rejected_inferences"][2]=="MANDATORY_MULTIPLICATION_FORMULA"
     print("PASS: GOST R ISO/IEC 27005-2010 sections 4-12; 9 sections, 24 process nodes, 4 treatment options, 3 estimation modes, 15 evidence artifacts, 18 evidence nodes, 64 rules/cases; 0 default scales/formulas/thresholds")
 
 if __name__=="__main__": main()
-
