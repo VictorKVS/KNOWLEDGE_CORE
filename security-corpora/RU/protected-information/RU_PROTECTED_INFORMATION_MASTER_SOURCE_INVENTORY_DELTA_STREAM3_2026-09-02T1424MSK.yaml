@@ -1,0 +1,104 @@
+schema_version: "1.0"
+id: RU-PROTECTED-INFORMATION-MASTER-DELTA-STREAM3-2026-09-02T1424MSK
+kind: master_inventory_delta
+stream: 3
+checked_at: "2026-09-02T14:24:40+03:00"
+
+source_delta:
+  - id: SEC-SRC-RU-PRESIDENT-DECREE-609-2005
+    action: ADD_NEW_CANONICAL_CURRENT_PRIMARY_LATEST_AMENDMENT_VERIFIED_EXACT_CAPTURE_PENDING
+    canonical_record: "source/SEC-SRC-RU-PRESIDENT-DECREE-609-2005.yaml"
+    capture_manifest: "manifests/SEC-SRC-RU-PRESIDENT-DECREE-609-2005-capture-pending.json"
+    sectors:
+      - public_sector
+      - state_civil_service
+      - hr_records
+      - personal_data
+      - restricted_information
+      - archives
+      - retention
+    original_electronic_publication_id: null
+    original_official_print_citation: "Собрание законодательства Российской Федерации, 2005, № 23, ст. 2242"
+    current_revision: "31.12.2025"
+    latest_amendment: "Указ Президента Российской Федерации от 31.12.2025 № 1009"
+    latest_amendment_publication_id: "0001202601010001"
+    latest_amendment_effective_date: "2026-01-01"
+    primary_currentness_verified: true
+    downloaded_exact: false
+    immutable: false
+    dedupe_result: NEW_CANONICAL_NODE
+
+counter_delta_this_pass:
+  found_new_canonical: 1
+  downloaded_new: 0
+  immutable_new: 0
+  pending_new: 1
+  reused_existing_canonical_sources: 2
+  relationships_verified: 3
+  currentness_refresh_new_source: 1
+  primary_official_source_verified_new: 1
+  primary_publication_id_verified_new_chain_component: 1
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+
+capture_ledger_reconciliation:
+  authoritative_file: "SECTOR_ACQUISITION_RUN.json"
+  identity_scope: "document.official_publication_id only in the controlled acquisition run"
+  current_targets_with_official_publication_id: 22
+  current_raw_downloaded_exact: 22
+  current_immutable_sha256_verified: 22
+  current_pending_inside_that_capture_scope: 0
+  current_bytes_downloaded: 114212750
+  changed_this_pass: false
+  reason: >-
+    Decree 609 is a newly registered canonical source whose original 2005 act has no electronic publication ID in this pass. The latest amendment publication ID 0001202601010001 is verified, but exact official bytes were not obtained because of transient DNS failure. The controlled 22-target exact acquisition ledger is therefore not silently inflated.
+
+public_sector_pdn_findings:
+  - "Decree 609 establishes a special personal-data and personal-file regime for Russian Federation state civil servants; it is not a general rule for all public-sector employees or all government-held personal data."
+  - "Points 1-5 define the special actor/object scope, protection responsibility, purposes and handling constraints for civil-servant personal data."
+  - "Point 11 classifies personal data and other information in civil-servant personal files as confidential information, except information lawfully publishable; state-secret status requires a separate statutory/regulatory basis."
+  - "Points 18-20 establish personnel-record protection, confidentiality and responsibility controls for the personal-file lifecycle."
+  - "The current revision must reflect Decree 1009/2025: points 12-15 ceased to have effect on 01.01.2026 and must not be modeled as current duties."
+
+retention_findings:
+  - "Point 23 requires the HR service to retain the personal file of a dismissed civil servant for 10 years from dismissal, except the special transfer case in point 22, and then transfer the file to an archive."
+  - "The 10-year period is a custodial stage for the personal-file object, not a universal retention period for every PDN copy, extract, registry or derivative dataset."
+  - "Archive transfer is not deletion and does not terminate the information lifecycle."
+  - "Personal files containing state-secret information follow the separate state-secret legal regime."
+
+relationships_added_or_revalidated:
+  - "SEC-SRC-RU-PRESIDENT-DECREE-609-2005 -> SEC-SRC-RU-152FZ-2026-07-26 / special civil-service PDN overlay on the general PDN regime"
+  - "SEC-SRC-RU-PRESIDENT-DECREE-609-2005 -> SEC-SRC-RU-FZ-125-2004 / archive-transfer lifecycle context after the 10-year HR custody stage"
+  - "SEC-SRC-RU-PRESIDENT-DECREE-609-2005 -> Federal Law 79-FZ Article 42 / direct statutory parent; primary source still requires separate canonical discovery"
+
+acquisition_attempts:
+  - source_id: SEC-SRC-RU-PRESIDENT-DECREE-609-2005
+    object: "Presidential Decree 1009/2025 official PDF"
+    url: "https://publication.pravo.gov.ru/file/pdf?eoNumber=0001202601010001"
+    attempted_at: "2026-09-02T14:24:40+03:00"
+    method: "curl/container"
+    result: DOWNLOAD_FAILED
+    retry_class: TRANSIENT
+    error_class: TRANSIENT_DNS_RESOLUTION_FAILURE
+    curl_exit_code: 6
+    exact_bytes_obtained: false
+  - source_id: SEC-SRC-RU-PRESIDENT-DECREE-609-2005
+    object: "Decree 609/2005 official MCHS RTF representation"
+    url: "https://static.mchs.gov.ru/upload/site1/document_file/DKHILyjxGm.rtf"
+    attempted_at: "2026-09-02T14:24:40+03:00"
+    method: "curl/container"
+    result: DOWNLOAD_FAILED
+    retry_class: TRANSIENT
+    error_class: TRANSIENT_DNS_RESOLUTION_FAILURE
+    curl_exit_code: 6
+    exact_bytes_obtained: false
+
+proof_guards:
+  taxonomy_as_evidence: false
+  special_civil_service_scope_equals_all_public_sector: false
+  confidentiality_equals_state_secret: false
+  ten_year_hr_custody_equals_total_pdn_retention: false
+  archive_transfer_equals_deletion: false
+  repealed_points_12_15_modeled_as_current: false
+  applicability_promotions: 0
+  fabricated_binary_metadata: false
