@@ -1,0 +1,79 @@
+schema_version: "1.0"
+id: SEC-SRC-RU-FSTEC-INFO-240-24-1382-2017
+kind: security-methodical-source
+status: METADATA_VERIFIED
+jurisdiction: RU
+domain: personal_data_security
+issuer: "ФСТЭК России"
+title: "Информационное сообщение ФСТЭК России от 24 марта 2017 г. N 240/24/1382"
+document:
+  type: information_message
+  number: "240/24/1382"
+  adopted_date: "2017-03-24"
+  checked_at: "2026-09-02"
+  temporal_status: HISTORICAL_CERTIFICATION_TRANSITION_CONTEXT
+  version_chain_note: >-
+    Информационное сообщение является разъяснительным/переходным материалом о применении сертифицированных
+    межсетевых экранов. Оно не изменяет приказ N 21 самостоятельно и не образует version edge; последующие
+    формальные изменения приказа N 21 учитываются отдельными нормативными источниками.
+canonical_source:
+  publisher: "ФСТЭК России"
+  url: "https://fstec.ru/dokumenty/vse-dokumenty/informatsionnye-i-analiticheskie-materialy/informatsionnoe-soobshchenie-fstek-rossii-ot-24-marta-2017-g-n-240-24-1382"
+  route_kind: OFFICIAL_FSTEC_HTML
+  exact_route_status: RESOLVED_OFFICIAL_PAGE_BYTES_PENDING
+  corroboration:
+    - "https://fstec21.blogspot.com/2017/03/information-message-of-fstec-of-russia.html"
+capture:
+  fingerprint_status: PENDING
+  attempted_at: "2026-09-02T17:16:15.734352Z"
+  transport_result: DNS_RESOLUTION_FAILURE_BEFORE_HTTP
+  retrieved_at: null
+  mime: null
+  byte_length: null
+  sha256: null
+  immutable_artifact: null
+  note: >-
+    Exact current official FSTEC page was attempted. Name resolution failed before HTTP, so no payload-derived
+    MIME, byte length or SHA-256 is recorded. Secondary reproductions are corroboration only.
+findings:
+  - type: CERTIFICATION_TRANSITION_CONTEXT
+    statement: >-
+      The message addresses continued use and replacement of firewalls certified under the earlier firewall
+      guidance during transition to the FSTEC firewall requirements approved by Order No.9/2016.
+  - type: PDN_LINK
+    statement: >-
+      The message directly references Order No.21 as one of the regimes in which firewall measures may be selected,
+      making it relevant to the ISPDn security stack only when the firewall measure or corresponding conformity
+      requirement is actually applicable.
+  - type: VERSION_CHAIN_LIMIT
+    statement: >-
+      Statements that amendments were being prepared are not treated as enacted amendments. Actual Order No.21
+      version changes remain represented by their own final normative acts.
+relations:
+  - type: REFERENCES
+    target: SEC-SRC-RU-FSTEC21-2013
+  - type: CERTIFICATION_CONTEXT
+    target: FSTEC_FIREWALL_REQUIREMENTS_ORDER9_2016_EXTERNAL_CONTEXT
+applicability_guard:
+  direct_scope: ISPDN_FIREWALL_CERTIFICATION_CONTEXT_ONLY_WHEN_FIREWALL_MEASURE_APPLIES
+  generic_private_ispdn: >-
+    Do not infer a universal obligation to deploy a firewall merely from this message. Reuse only when the
+    selected Order No.21 measure, threat model, architecture or conformity-assessment requirement establishes
+    a firewall-related applicability edge.
+  neighboring_systems: >-
+    References to other information-system classes in the message do not import GIS, ASUTP or other neighboring
+    regime requirements into a generic private ISPDn.
+  version_effect: NO_VERSION_EDGE
+provenance:
+  official_identity_verified: true
+  current_official_route_identified: true
+  exact_official_bytes_captured: false
+  text_cross_verified: true
+  review_required: true
+agent_rule: >-
+  Treat this source as historical FSTEC firewall certification/application transition guidance with a bounded
+  Order No.21 link. It is not a universal firewall mandate and not an amendment artifact. Immutable promotion
+  requires exact official bytes, observed MIME, byte length and SHA-256.
+inventory_registration:
+  role: fstec_order21_firewall_certification_transition_context
+  applicability: ISPDN_FIREWALL_CERTIFICATION_CONTEXT_ONLY_WHEN_FIREWALL_MEASURE_APPLIES
