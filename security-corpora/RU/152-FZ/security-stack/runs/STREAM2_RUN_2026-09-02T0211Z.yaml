@@ -1,0 +1,99 @@
+schema_version: "1.0"
+id: STREAM2-RUN-2026-09-02T0211Z
+kind: pdn-security-stack-stream-run
+stream: 2
+created_at: "2026-09-02T02:11:10Z"
+status: COMPLETED_FAIL_CLOSED
+scope:
+  - PP_RF_1119
+  - FSTEC_ORDER_21
+  - FSTEC_THREAT_METHOD_2021
+  - FSTEC_RELEVANT_METHODICAL_DOCUMENTS
+  - FSB_ORDER_378
+  - SKZI_LIFECYCLE_AND_HANDLING
+  - LICENSING_AND_CERTIFICATION_WHEN_APPLICABLE
+  - NCTKI_GOSSOPKA_ONLY_FOR_PROVED_PDN_INCIDENT_EDGE
+
+status_review:
+  pp1119:
+    result: CURRENT_PRIMARY_BYTES_PENDING
+    evidence_url: "https://government.ru/docs/6339/"
+    evidence_note: >-
+      Current Government search/index result continues to identify Resolution No.1119 and marks it as
+      "в действующей редакции" while advertising the Government DOC. No distinct amending edition was
+      established in this bounded pass.
+  fstec21:
+    result: CURRENT_REVISION_2020_05_14_REPLACEMENT_PRIMARY_ENACTMENT_GATE_NOT_PASSED
+    active_chain:
+      - SEC-SRC-RU-FSTEC21-2013
+      - SEC-SRC-RU-FSTEC49-2017
+      - SEC-SRC-RU-FSTEC68-2020
+    project_watch: "01/02/07-26/00169583"
+    project_status_signal: DRAFT_DISCUSSION_COMPLETED
+    project_evidence_url: "https://regulation.gov.ru/projects#npa=169583"
+    monitoring_mirror_url: "https://officialdata.ru/bill/npa/127283/"
+    note: >-
+      On 2026-09-02 fresh indexed monitoring still describes 169583 as a departmental draft with discussion
+      completed 2026-08-08. No primary final order number/date, registration and official-publication identity
+      was established; the proposed 2026-09-01 date alone does not close the current version chain.
+  fstec_threat_method_2021:
+    result: CURRENT_EXISTING_IMMUTABLE_REUSED
+    canonical_route: "https://fstec.ru/component/attachments/download/2919"
+  fstec_maturity_method_2026:
+    result: METHODICAL_DOCUMENT_OFFICIAL_LANDING_REGISTERED_PRIMARY_BYTES_PENDING
+    official_landing: "https://fstec.ru/dokumenty/vse-dokumenty/spetsialnye-normativnye-dokumenty/metodicheskij-dokument-ot-7-avgusta-2026-g"
+    scope_guard: >-
+      Directly relevant to systems whose protection requirements are established by FSTEC, including the
+      ISPDn context referenced by the methodology; recommended maturity targets are not promoted into a new
+      universal mandatory minimum absent a binding applicability basis.
+  fsb378:
+    result: SKZI_CONDITIONAL_BASELINE_PRIMARY_BYTES_PENDING_STATUS_REVIEW_REQUIRED
+    registration_number: "33620"
+    scope_guard: ISPDN_WHEN_SKZI_USED
+  fsb66_173:
+    result: VERSION_EDGE_RETAINED_NO_NEW_TRANSITION
+    verified_edge: "FSB66-2005 AMENDED_BY FSB173-2010"
+    official_fsb_index_evidence: "https://www.fsb.ru/fsb/npd/more.htm!id=10436382@fsbNpa&_print=true.html"
+  fapsi152:
+    result: SKZI_HANDLING_PRIMARY_BYTES_PENDING
+    scope_guard: ONLY_WHEN_SKZI_HANDLING_REQUIREMENTS_ARE_APPLICABLE
+  incident_contour:
+    result: NO_GENERIC_GOSSOPKA_PROMOTION
+    rule: >-
+      NCTKI/GosSOPKA materials remain outside the generic PDN baseline and are linked only where an independent
+      legal or factual PDN computer-incident trigger is proved. Existing FSB77-2023 incident edge remains bounded.
+
+acquisition:
+  manifest_ref: "../manifests/STREAM2_ACQUISITION_MANIFEST_2026-09-02T0211Z.yaml"
+  exact_primary_route_attempts: 9
+  successes: 0
+  new_immutable_artifacts: 0
+  new_sha256: 0
+  transport_failure_class: DNS_RESOLUTION_FAILURE
+  immutable_reused: 2
+
+counter_snapshot:
+  identified: 55
+  metadata_verified: 55
+  immutable_sha256_verified: 24
+  pending_raw_capture: 31
+  exact_official_route_unresolved: 8
+  verified_version_edges: 12
+  applicability_guards: 30
+  confirmed_conflicts: 0
+
+run_delta:
+  status_or_chain_rechecks: 8
+  exact_primary_route_attempts: 9
+  exact_primary_route_successes: 0
+  existing_immutable_reused: 2
+  new_source_identities: 0
+  new_version_edges: 0
+  semantic_promotions_to_generic_pdn_baseline: 0
+
+next_priority:
+  - "Capture exact Government DOC bytes for PP1119 and verify OLE/CFB signature."
+  - "Continue primary-enactment watch for the final FSTEC replacement of Order No.21."
+  - "Capture exact official bytes for FSB378, then FSB66/173 and FAPSI152."
+  - "Resolve exact official PDF/attachment bytes for FSTEC maturity methodology 2026."
+  - "Continue relevant FSTEC method/catalog acquisition without importing public-sector/KII/licensing requirements into generic PDN."
