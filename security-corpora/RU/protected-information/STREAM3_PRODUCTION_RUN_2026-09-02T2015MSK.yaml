@@ -1,0 +1,86 @@
+schema_version: "1.0"
+id: STREAM3-PRODUCTION-RUN-2026-09-02T2015MSK
+kind: production_run_log
+stream: 3
+checked_at: "2026-09-02T20:15:38+03:00"
+status: PASS_WITH_EXACT_CAPTURE_PENDING
+
+objective: >-
+  Continue discovery of primary current sectoral/special-regime acts intersecting 152-FZ and protected information, with currentness/version-chain checks, cross-sector deduplication, guarded applicability, exact official-file capture where transport permits, and PDN/RU Protected Information inventory reconciliation.
+
+focus_this_pass:
+  sector: public_sector
+  regime: state_civil_service_personal_data
+  discovery_seed_resolved: "Federal Law 79-FZ Article 42, previously referenced by Decree 609"
+  new_source_id: SEC-SRC-RU-FZ-79-2004
+
+work_performed:
+  - "Deduplication: canonical path security-corpora/RU/protected-information/source/SEC-SRC-RU-FZ-79-2004.yaml returned not found before creation; repository search for the exact civil-service law title returned no canonical hit."
+  - "Primary identity verified against the official President of Russia resource for Federal Law 79-FZ."
+  - "Current consolidated revision crosschecked as 08.03.2026."
+  - "Latest amendment verified as Federal Law 52-FZ/2026, official publication ID 0001202603080008; effective 07.06.2026."
+  - "Previous current-chain amendment 505-FZ/2025 recorded with official publication ID 0001202512280017."
+  - "Article 42 mapped to the 152-FZ special-sector PDN overlay and existing Decree 609 canonical implementation node."
+  - "Article 43 part 2 modeled as registry/GIS protection, not as a numeric retention rule."
+  - "Article 15 part 5 change from 52-FZ identified as a guarded bridge to fingerprint/genomic registration; 128-FZ and 242-FZ retained as discovery seeds pending separate primary-law passes."
+  - "Exact-file acquisition attempted for official 52-FZ PDF, original Kremlin representation, 505-FZ PDF and an auxiliary agency consolidated PDF; all failed due transient DNS resolution in the file runtime."
+  - "No MIME, byte length, SHA-256, retrieved_at or immutable path was fabricated."
+
+artifacts_written:
+  - "security-corpora/RU/protected-information/source/SEC-SRC-RU-FZ-79-2004.yaml"
+  - "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-FZ-79-2004-capture-pending.json"
+  - "security-corpora/RU/protected-information/RU_PROTECTED_INFORMATION_MASTER_SOURCE_INVENTORY_DELTA_STREAM3_2026-09-02T2015MSK.yaml"
+  - "security-corpora/RU/152-FZ/PDN_MASTER_SOURCE_INVENTORY_DELTA_STREAM3_2026-09-02T2015MSK.yaml"
+  - "security-corpora/RU/protected-information/reconciliation/SEC-SRC-RU-FZ-79-2004-PDN-DECREE609-BIOMETRIC-2026-09-02T2015MSK.yaml"
+  - "security-corpora/RU/protected-information/STREAM3_PRODUCTION_RUN_2026-09-02T2015MSK.yaml"
+
+counter_delta_this_pass:
+  found_new_canonical: 1
+  downloaded_new: 0
+  immutable_new: 0
+  pending_new: 1
+  reused_existing_canonical_sources: 3
+  relationships_verified: 3
+  primary_official_source_verified_new: 1
+  primary_publication_id_verified_new_chain_components: 2
+  new_discovery_seeds: 2
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+
+controlled_exact_acquisition_ledger:
+  authoritative_file: "SECTOR_ACQUISITION_RUN.json"
+  targets_with_official_publication_id: 22
+  raw_downloaded_exact: 22
+  immutable_sha256_verified: 22
+  pending_inside_scope: 0
+  bytes_downloaded: 114212750
+  changed_this_pass: false
+  guard: "Discovery/capture backlog is not merged into the controlled exact-capture ledger until exact official bytes are acquired and reconciled."
+
+proof_and_applicability_guards:
+  taxonomy_used_only_as_discovery_seed: true
+  primary_act_required_for_normative_claim: true
+  special_civil_service_scope_not_all_public_sector: true
+  article42_does_not_replace_152fz: true
+  article43_security_not_retention: true
+  article15_registration_requires_separate_triggering_laws: true
+  no_automatic_ebs_promotion: true
+  no_automatic_genomic_to_biometric_pdn_promotion: true
+  fabricated_binary_metadata: false
+
+improvement_notes:
+  - priority: P0
+    what_should_improve: "Exact acquisition transport remains the principal blocker for new sector sources."
+    how_to_improve: "Retry official publication IDs through the dedicated acquisition route/blob workflow rather than deriving binary metadata from search/web representations. On success, hash exact bytes, store content-addressed immutable artifacts and reconcile manifests/counters."
+  - priority: P1
+    what_should_improve: "Biometric/genomic overlap is currently only a statutory bridge, not a completed applicability map."
+    how_to_improve: "Register and analyze primary current 128-FZ and 242-FZ separately, including their latest amendment chains and exact triggering categories; then link only proven cases back to 79-FZ Article 15 part 5 and 152-FZ."
+  - priority: P1
+    what_should_improve: "Historical version-chain completeness for 79-FZ is metadata-level, not byte-complete."
+    how_to_improve: "Backfill amendment publication IDs only when needed for current applicability/traceability; avoid spending Stream 3 on encyclopedic historical capture before current special regimes are covered."
+
+next_actions:
+  - "Retry exact capture: 0001202603080008 (52-FZ), 0001202512280017 (505-FZ), and original 79-FZ official representation."
+  - "Primary-source discovery pass: Federal Law 128-FZ on state fingerprint registration."
+  - "Primary-source discovery pass: Federal Law 242-FZ on state genomic registration."
+  - "After resolving those direct statutory triggers, return to uncovered priority sectors: insurance/financial secrecy, education/children, transport, communications and advertising/marketing."
