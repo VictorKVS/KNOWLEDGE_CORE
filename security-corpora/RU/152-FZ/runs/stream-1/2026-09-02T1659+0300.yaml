@@ -1,0 +1,85 @@
+schema_version: "1.0"
+record_type: STREAM1_PDN_CORE_RUN
+stream: 1
+observed_at: "2026-09-02T13:59:29Z"
+scope: "152-FZ common core / Roskomnadzor; no sector overlays"
+
+completed_work:
+  - item: "Latest proven guarded acquisition review"
+    result: "SUCCESS_PROCESS_NO_NEW_IMMUTABLE"
+    evidence_commit: "451d2d9090525734e1b7a4bb2d62053d8e82bc64"
+    targets_total: 39
+    reused_immutable: 38
+    new_immutable_captured: 0
+    dedicated_observed_at: "2026-09-02T11:11:37.371151Z"
+    proof_floor_held: true
+    pending_priority:
+      - SEC-SRC-RU-152FZ-2026-07-26
+      - SEC-SRC-RU-PP687-2008
+    note: >-
+      Current 152-FZ and PP687 dedicated routes still did not yield bytes satisfying identity and current-revision
+      gates. Timeouts, HTTP 500 and marker misses were retained as negative provenance; no rejected response was
+      assigned MIME, byte length, SHA-256, immutable artifact or manifest.
+
+  - item: "Priority Roskomnadzor freshness sweep"
+    result: "FIVE_SOURCE_CARDS_REFRESHED_NO_PROMOTION"
+    checked_at: "2026-09-02T13:59:29Z"
+    sources:
+      - source_id: SEC-SRC-RU-RKN18-2021
+        official_publication_id: "0001202104210039"
+        existing_immutable_sha256: "687ccbd20bd41150708731ce161ea523a7c69dd8a5acadbaabd6ee103661f621"
+        currentness_signal: "within primary-text validity window through 2027-09-01; current-law cross-check still exposes the order"
+      - source_id: SEC-SRC-RU-RKN178-2022
+        official_publication_id: "0001202211290004"
+        existing_immutable_sha256: "3118e196b082762b7acb6eaeab22ec630d6ec2a3c8ea87159ab974c9a19cad32"
+        currentness_signal: "within primary-text validity window through 2029-03-01; current-law cross-check still exposes the order"
+      - source_id: SEC-SRC-RU-RKN179-2022
+        official_publication_id: "0001202211290008"
+        existing_immutable_sha256: "749e351fab173e2edae1845551971ccb4478841be925ff1e9fe4d11d61be5994"
+        currentness_signal: "within primary-text validity window through 2029-03-01; current-law cross-check still exposes the order"
+      - source_id: SEC-SRC-RU-RKN180-2022
+        official_publication_id: "0001202212150022"
+        existing_immutable_sha256: "63d2ec53116b7ab0914481d3500255587dc128bd1395c20c85776411fedf5c67"
+        currentness_signal: "August/September 2026 legal-reference material still uses Order 180 notification forms"
+      - source_id: SEC-SRC-RU-RKN140-2025
+        official_publication_id: "0001202508010002"
+        existing_immutable_sha256: "19b9620946841f20790ec8cc2ed98d6f0382dd84c845fe9824ce037d2ca697f0"
+        currentness_signal: "current-law cross-check still identifies Order 140 as applicable from 2025-09-01"
+    transport_note: >-
+      Fresh direct requests to the canonical publication.pravo.gov.ru document pages timed out in this runtime.
+      Therefore this sweep is freshness evidence only and does not recapture or replace the already immutable PDFs.
+      No superseding primary act was established for these five sources in this pass.
+
+priority_status:
+  SEC-SRC-RU-152FZ-2026-07-26: PENDING_CURRENT_CONSOLIDATED_RAW_CAPTURE
+  SEC-SRC-RU-PP687-2008: PENDING_RAW_CAPTURE
+  SEC-SRC-RU-PP211-2012: IMMUTABLE_CAPTURED
+  SEC-SRC-RU-RKN18-2021: IMMUTABLE_CAPTURED
+  SEC-SRC-RU-RKN128-2022: IMMUTABLE_CAPTURED_REPLACEMENT_DRAFT_WATCH
+  SEC-SRC-RU-RKN178-2022: IMMUTABLE_CAPTURED
+  SEC-SRC-RU-RKN179-2022: IMMUTABLE_CAPTURED
+  SEC-SRC-RU-RKN180-2022: IMMUTABLE_CAPTURED
+  SEC-SRC-RU-RKN140-2025: IMMUTABLE_CAPTURED
+  SEC-SRC-RU-PP1154-2025: IMMUTABLE_CAPTURED
+
+production_counters:
+  identified: 40
+  raw_downloaded_exact: 38
+  immutable_sha256_verified: 38
+  atomized_existing_proposed: 4
+  atomized_verified: 0
+  pending_raw_capture: 2
+  raw_capture_coverage_ratio: 0.9500
+
+changes_this_run:
+  freshness_checks: 5
+  source_cards_refreshed: 5
+  new_sources_registered: 0
+  new_immutable_captured: 0
+  semantic_promotions: 0
+  sector_overlays_touched: 0
+
+proof_rule: >-
+  Freshness evidence must never promote a source by itself. Promotion requires accepted official returned bytes,
+  source URL, retrieved_at, MIME, exact byte length, SHA-256, immutable artifact and manifest, plus the applicable
+  source/version locator review gate.

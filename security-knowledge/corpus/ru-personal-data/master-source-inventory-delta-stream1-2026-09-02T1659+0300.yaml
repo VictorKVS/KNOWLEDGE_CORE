@@ -1,0 +1,76 @@
+schema_version: "1.0"
+delta_id: PDN-MASTER-DELTA-STREAM1-2026-09-02T1659+0300
+parent_inventory: "../../../security-corpora/RU/152-FZ/PDN_MASTER_SOURCE_INVENTORY.yaml"
+stream: 1
+scope: GENERAL_152FZ_ROSKOMNADZOR_CORE
+observed_at: "2026-09-02T16:59:29+03:00"
+
+counter_snapshot:
+  identified: 40
+  downloaded_exact: 38
+  immutable_sha256: 38
+  atomized_proposed: 4
+  atomized_verified: 0
+  pending_raw: 2
+  raw_coverage: 0.9500
+
+pending_raw_sources:
+  - SEC-SRC-RU-152FZ-2026-07-26
+  - SEC-SRC-RU-PP687-2008
+
+freshness_delta:
+  SEC-SRC-RU-RKN18-2021:
+    checked_at: "2026-09-02"
+    result: CURRENT_WITHIN_RECORDED_VALIDITY_WINDOW_NO_PROMOTION
+    immutable_preserved: true
+  SEC-SRC-RU-RKN178-2022:
+    checked_at: "2026-09-02"
+    result: CURRENT_WITHIN_RECORDED_VALIDITY_WINDOW_NO_PROMOTION
+    immutable_preserved: true
+  SEC-SRC-RU-RKN179-2022:
+    checked_at: "2026-09-02"
+    result: CURRENT_WITHIN_RECORDED_VALIDITY_WINDOW_NO_PROMOTION
+    immutable_preserved: true
+  SEC-SRC-RU-RKN180-2022:
+    checked_at: "2026-09-02"
+    result: CURRENT_USE_CROSSCHECK_NO_SUPERSEDING_PRIMARY_PROOF
+    immutable_preserved: true
+  SEC-SRC-RU-RKN140-2025:
+    checked_at: "2026-09-02"
+    result: CURRENT_USE_CROSSCHECK_NO_SUPERSEDING_PRIMARY_PROOF
+    immutable_preserved: true
+
+latest_guarded_acquisition:
+  evidence_commit: "451d2d9090525734e1b7a4bb2d62053d8e82bc64"
+  dedicated_observed_at: "2026-09-02T11:11:37.371151Z"
+  targets: 39
+  reused_immutable: 38
+  new_immutable: 0
+  pp687: PENDING
+  current_152fz: PENDING
+  semantic_promotions: 0
+  proof_floor_held: true
+
+acquisition_delta:
+  exact_bytes_accepted_at_delta_write: 0
+  immutable_new_at_delta_write: 0
+  semantic_promotions: 0
+  existing_immutable_preserved: 38
+  repeat_downloads_of_verified_corpus: 0
+  transport_note: >-
+    Fresh canonical publication.pravo.gov.ru page requests for the five Roskomnadzor freshness targets timed out
+    in this runtime. Existing primary immutable PDFs remain authoritative for byte-exact evidence; freshness cross-checks
+    do not replace them and do not weaken the acceptance gate for the two remaining raw gaps.
+
+quality_gates:
+  proof_floor_held: true
+  duplicate_source_registration_prevented: true
+  sector_overlays_touched: false
+
+traceability:
+  run_record: "../../../security-corpora/RU/152-FZ/runs/stream-1/2026-09-02T1659+0300.yaml"
+
+merge_rule: >-
+  Preserve the 38 immutable captures and the two pending Stream-1 raw gaps unless an accepted manifest supplies
+  official returned bytes, source URL, retrieved_at, MIME, exact byte length, SHA-256 and source-specific current-revision
+  proof. Freshness-only checks must not promote semantic or extraction status.
