@@ -1,0 +1,154 @@
+schema_version: "1.0"
+stream: 3
+run_at: "2026-09-02T08:16:50+03:00"
+objective: "continue primary-source discovery/currentness/version-chain/capture/deduplication for RU protected-information sector regimes overlapping 152-FZ"
+
+selected_work:
+  - id: SEC-SRC-RU-ROSARCHIVE-ORDER-38-2025
+    action: NEW_CANONICAL_REGISTERED
+    sectors: [archives, public_sector, restricted_information, service_information_limited_distribution, personal_data_overlap]
+  - id: SEC-SRC-RU-ROSARCHIVE-ORDER-77-2023
+    action: EXISTING_CANONICAL_ENRICHED_AND_CURRENTNESS_REVALIDATED
+    sectors: [archives, retention, restricted_information, personal_data_overlap]
+  - id: SEC-SRC-RU-FZ-125-2004
+    action: EXISTING_CANONICAL_REUSED_CURRENTNESS_REVALIDATED
+    sectors: [archives, retention, personal_data_overlap]
+  - id: SEC-SRC-RU-FZ-38-2006-A18
+    action: EXISTING_CANONICAL_REUSED_VERSION_RECONCILIATION_ADDED
+    sectors: [advertising_marketing, retention, telecom_overlap, personal_data_overlap]
+
+repository_dedupe:
+  rosarchive_38_path_probe: NOT_FOUND_404
+  rosarchive_38_result: NEW_CANONICAL_NODE_CREATED
+  rosarchive_77_path_probe: FOUND_EXISTING_CANONICAL
+  rosarchive_77_result: EXISTING_NODE_UPDATED_NO_DUPLICATE
+  fz_125_path_probe: FOUND_EXISTING_CANONICAL
+  fz_125_result: EXISTING_NODE_REUSED_NO_DUPLICATE
+  fz_38_path_probe: FOUND_EXISTING_CANONICAL
+  fz_38_result: EXISTING_NODE_REUSED_RECONCILIATION_FILE_CREATED
+
+primary_proof:
+  rosarchive_38:
+    official_publication_id: "0001202504300012"
+    official_publication_url: "https://publication.pravo.gov.ru/document/0001202504300012"
+    official_current_text_url: "https://archives.gov.ru/documents/other/2025-poryadok-archive-doc-dsp.shtml"
+    registration_number: "82018"
+    current_amendment: "Приказ Росархива от 25.06.2025 № 77; регистрация Минюста № 82962"
+    official_currentness_statement: "https://archives.gov.ru/press/01-10-2025-rosarchiv.shtml"
+    state: PRIMARY_IDENTITY_AND_CURRENT_AMENDED_TEXT_VERIFIED_EXACT_BYTES_PENDING
+  rosarchive_77_2023:
+    official_publication_id: "0001202309060005"
+    official_publication_url: "https://publication.pravo.gov.ru/document/0001202309060005"
+    registration_number: "75119"
+    effective_date: "2023-09-17"
+    currentness: "official Rosarchive rules index + 2026 planning material continue to reference Rules 2023"
+    state: CURRENTNESS_REVALIDATED_EXACT_BYTES_PENDING
+  fz_125:
+    official_current_text: "https://government.ru/docs/all/97733/"
+    current_revision: "13.12.2024 № 469-ФЗ"
+    latest_amendment_publication_id: "0001202412130022"
+    later_amendment_found_in_current_sweep: false
+    state: EXISTING_CANONICAL_REVALIDATED_EXACT_BYTES_PENDING
+  fz_38:
+    current_revision: "04.08.2026"
+    latest_source_level_amender: "283-ФЗ от 04.08.2026"
+    latest_source_level_amender_publication_id: "0001202608040008"
+    general_effective_date: "2026-09-01"
+    article_18_1_part_13_rule: "regulator stores statutory internet-ad data at least 3 years from receipt"
+    selected_locators_changed_by_283_fz_in_sweep: false
+    state: CURRENTNESS_RECONCILED_CANONICAL_EXACT_GATE_REMAINS_PENDING
+
+normative_findings:
+  - "Order 38/2025 is a special archival DLU access-classification procedure. It defines the relevant information as non-secret and requires a Rosarchive commission/decision workflow; sensitive appearance of a document alone is not proof of DLU status."
+  - "The restricted List referenced by Order 38 is itself DLU. It is not reconstructed from taxonomy or unofficial material."
+  - "Under Order 38, access restriction/removal becomes effective through Rosarchive decision plus change in archive accounting records; this is access lifecycle, not retention."
+  - "Order 77/2023 point 31 requires nonrecoverable destruction for documents containing PDN, marked DLU or containing restricted-access information only after the lawful disposal procedure."
+  - "Order 77 point 33 prohibits shortening normatively established document retention periods."
+  - "125-FZ remains the cross-sector archival framework and the 152-FZ archival boundary is activity/legal-regime specific, not a blanket exemption for old data."
+  - "38-FZ current consolidation is 04.08.2026; 283-FZ is effective from 01.09.2026 at source level, while Article 18.1(13)'s at-least-three-year regulator retention remains current in the selected advertising-data scope."
+
+proof_guards:
+  taxonomy_as_evidence: false
+  nonpublic_restricted_list_reconstructed: false
+  dlu_equals_pdn: false
+  dlu_equals_state_secret: false
+  archival_access_restriction_equals_retention: false
+  secure_destruction_method_equals_deletion_trigger: false
+  universal_pdn_retention_inferred: false
+  advertising_consent_equals_pdn_consent: false
+  applicability_promotions: 0
+  legal_conflicts_declared: 0
+
+acquisition:
+  exact_binary_attempted: true
+  attempts:
+    - source: SEC-SRC-RU-ROSARCHIVE-ORDER-38-2025
+      target: "https://publication.pravo.gov.ru/document/0001202504300012"
+      result: DOWNLOAD_FAILED
+      exact_bytes_obtained: false
+    - source: SEC-SRC-RU-ROSARCHIVE-ORDER-38-2025-AMENDMENT-77-2025
+      target: "https://archives.gov.ru/documents/prik77_2025.shtml"
+      result: DOWNLOAD_FAILED
+      exact_bytes_obtained: false
+    - source: SEC-SRC-RU-ROSARCHIVE-ORDER-77-2023
+      target: "https://publication.pravo.gov.ru/document/0001202309060005"
+      result: DOWNLOAD_FAILED
+      exact_bytes_obtained: false
+    - source: SEC-SRC-RU-FZ-125-2004
+      targets: ["https://government.ru/docs/all/97733/", "https://publication.pravo.gov.ru/document/0001202412130022"]
+      result: DOWNLOAD_FAILED
+      exact_bytes_obtained: false
+  retry_class: TRANSIENT
+  exact_bytes_obtained_new: 0
+  retrieved_at_populated_new: 0
+  mime_populated_new: 0
+  byte_length_populated_new: 0
+  sha256_populated_new: 0
+  immutable_promotions: 0
+
+counter_delta_this_pass:
+  found_new_canonical: 1
+  downloaded_new: 0
+  immutable_new: 0
+  pending_new: 1
+  reused_existing_canonical_sources: 3
+  currentness_refresh_existing: 3
+  existing_pending_manifest_created: 1
+  primary_official_source_verified_new: 1
+  primary_publication_id_verified_new: 1
+
+capture_ledger_reconciliation:
+  authoritative_file: "security-corpora/RU/protected-information/SECTOR_ACQUISITION_RUN.json"
+  targets_with_official_publication_id: 22
+  raw_downloaded_exact: 22
+  immutable_sha256_verified: 22
+  pending_inside_that_capture_scope: 0
+  bytes_downloaded: 114212750
+  changed_this_pass: false
+  note: "New discovered publication-ID source Order 38 remains outside the controlled 22-target acquisition ledger until exact capture and controlled merge; no silent counter inflation."
+
+files_written:
+  - "security-corpora/RU/protected-information/source/SEC-SRC-RU-ROSARCHIVE-ORDER-38-2025.yaml"
+  - "security-corpora/RU/protected-information/source/SEC-SRC-RU-ROSARCHIVE-ORDER-77-2023.yaml"
+  - "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-ROSARCHIVE-ORDER-38-2025-capture-pending.json"
+  - "security-corpora/RU/protected-information/manifests/SEC-SRC-RU-ROSARCHIVE-ORDER-77-2023-capture-pending.json"
+  - "security-corpora/RU/protected-information/reconciliation/SEC-SRC-RU-FZ-38-2006-A18-2026-09-02T0816Z.yaml"
+  - "security-corpora/RU/protected-information/RU_PROTECTED_INFORMATION_MASTER_SOURCE_INVENTORY_DELTA_STREAM3_2026-09-02T0816Z.yaml"
+  - "security-corpora/RU/152-FZ/PDN_MASTER_SOURCE_INVENTORY_DELTA_STREAM3_2026-09-02T0816Z.yaml"
+  - "security-knowledge/corpus/ru-protected-information/stream-3-run-2026-09-02T0816.yaml"
+
+commits_before_run_log:
+  rosarchive_38_source: "63e1ba3f70b5d0c1d3276157cec36bdc737f6803"
+  rosarchive_77_enrichment: "6679f19ddc8dcaaf6eec70dc9736805d0eebca73"
+  rosarchive_38_capture_manifest: "96556929374e7460bda9cba20161e045296c6998"
+  rosarchive_77_capture_manifest: "812d4a596abc29978a4725782d24fdc887e938e2"
+  fz_38_reconciliation: "999eb5c911aa3019f5c30e739be342037c8f7862"
+  ru_master_delta: "1b29fe061e7efc1acc392bc00e0a582701e404b2"
+  pdn_master_delta: "e56fff3f09b635b490e6689d6f2db5c5eda75b0c"
+
+next_actions:
+  - "Retry exact official-byte capture for Rosarchive 38/2025 and 77/2023; populate retrieved_at/MIME/byte_length/SHA-256 and immutable paths only after successful exact transport."
+  - "Discover/register the primary current PP RF 1233/1994 DLU handling dependency after full version-chain verification and repository dedupe."
+  - "Continue archive special regimes with Rosarchive 38/2025 amendment/publication exact locator closure and separate nonpublic-list provenance guard."
+  - "Continue advertising/marketing subregime acquisition for current 38-FZ version-chain artifacts without merging advertising consent with 152-FZ consent."
+  - "Return to finance/insurance, education/children, transport and biometrics while keeping archive/retention object-specific applicability gates."
