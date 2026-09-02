@@ -1,0 +1,94 @@
+{
+  "id": "RU-BDU-THIRD-PARTY-XLSX-SNAPSHOT-QUARANTINE-V1",
+  "as_of": "2026-09-02",
+  "title": "BDU FSTEC third-party XLSX snapshots: immutable Git provenance, structural validation and non-equivalence gates",
+  "status": "PARTIAL_VERIFIED_THIRD_PARTY_BYTES_STRUCTURE_AND_SEMANTICS_OFFICIAL_EQUIVALENCE_CURRENTNESS_AND_COMPLETENESS_PENDING",
+  "purpose": "Preserve reproducible observations from two immutable third-party Git blobs without promoting either file to an official or current BDU export.",
+  "official_routes": {
+    "catalog": "https://bdu.fstec.ru/",
+    "thrlist": "https://bdu.fstec.ru/files/documents/thrlist.xlsx",
+    "vullist": "https://bdu.fstec.ru/files/documents/vullist.xlsx",
+    "observation": "The threat export returned HTTP 502 on 2026-09-02; no TLS bypass was used. Current official bytes remain pending."
+  },
+  "snapshots": [
+    {
+      "dataset": "THRLIST",
+      "source_repository": "PrincessDao/ThreatPredictionSystemMIPT",
+      "source_commit": "c240a25c8b78d090e441731a033d1c19cad78481",
+      "source_commit_time_utc": "2026-04-20T01:20:38Z",
+      "source_path": "data/thrlist.xlsx",
+      "source_blob_sha1": "c648021315434253f7cd9ecd10ab97600a523ac5",
+      "source_url": "https://github.com/PrincessDao/ThreatPredictionSystemMIPT/blob/c240a25c8b78d090e441731a033d1c19cad78481/data/thrlist.xlsx",
+      "sha256": "f1ef988a4f566515eada4f598e42b31bd4e0ec571f03de209685563d9031f8e7",
+      "size_bytes": 94996,
+      "container": {"type": "OOXML_XLSX", "crc_errors": 0, "zip_entries": 13, "uncompressed_bytes": 693055, "compression_ratio": 7.43, "vba_project": false, "external_links": 0, "formulas": 0, "sheet_count": 1, "visible_sheets": ["Sheet"]},
+      "worksheet": {"dimension": "A1:L1000", "physical_rows_after_headers": 998, "effective_records": 227, "trailing_blank_rows": 771, "columns": 12, "header_row": 2, "header_sha256": "aacc57bdf2bc03b9b508f51c04fe12eb4c6dfade817574e8a8f136b0359f3a8c"},
+      "semantics": {"identifier_family": "numeric UBI identifier", "unique_identifiers": 227, "identifier_min": 1, "identifier_max": 227, "missing_identifiers_in_closed_range": 0, "inclusion_date_min": "2015-03-20", "inclusion_date_max": "2025-06-04", "last_change_date_min": "2019-02-08", "last_change_date_max": "2025-12-19", "statuses": {"Опубликована": 222, "Архивная": 5}},
+      "core_metadata": {"created": "2020-12-16T08:23:10Z", "modified_present": false},
+      "verdict": "STRUCTURE_AND_SEMANTICS_VERIFIED_THIRD_PARTY; ORIGIN_ACQUISITION_TIME_OFFICIAL_EQUIVALENCE_CURRENTNESS_AND_COMPLETENESS_NOT_PROVEN"
+    },
+    {
+      "dataset": "VULLIST",
+      "source_repository": "twentyoneh/CVSS_EPSS_OWASP",
+      "source_commit": "2c4eb7f5aa9cb5512e933cd15155eaeb0baf6a34",
+      "source_commit_time_utc": "2024-11-26T12:17:39Z",
+      "source_path": "input/vullist.xlsx",
+      "source_blob_sha1": "6c6969829ac4e05c2799d9492f083ceaa5568837",
+      "source_url": "https://github.com/twentyoneh/CVSS_EPSS_OWASP/blob/2c4eb7f5aa9cb5512e933cd15155eaeb0baf6a34/input/vullist.xlsx",
+      "sha256": "0e5450ae4585d5549f060fcd74950e96165ffbc369ab8219a4ae18025b09a56c",
+      "size_bytes": 16803224,
+      "container": {"type": "OOXML_XLSX", "crc_errors": 0, "zip_entries": 13, "uncompressed_bytes": 160669843, "compression_ratio": 9.563, "vba_project": false, "printer_settings_binary": true, "external_links": 0, "formulas": 0, "sheet_count": 1, "visible_sheets": ["Sheet"]},
+      "worksheet": {"dimension": "A1:AA62448", "effective_records": 62445, "columns": 27, "header_row": 3, "declared_headers": 25, "trailing_empty_columns": 2, "header_sha256": "2d3d657c0d21ed2ade446dea93b19bd14757f0520211a0eef693d379ac10ad2d"},
+      "semantics": {"identifier_family": "BDU:YYYY-NNNNN", "unique_identifiers": 62445, "duplicate_identifier_rows": 0, "invalid_identifier_rows": 0, "identifier_min": "BDU:2014-00001", "identifier_max_by_year_and_sequence": "BDU:2024-09015", "discovery_date_min": "1999-01-01", "discovery_date_max": "2024-11-04", "rows_with_CVE_identifier": 60854, "statuses": {"Подтверждена производителем": 60244, "Потенциальная уязвимость": 1814, "Подтверждена в ходе исследований": 387}},
+      "core_metadata": {"created": "2019-05-16T10:03:20+03:00", "modified": "2024-06-20T10:22:24+03:00", "last_modified_by": "Vitali Bakumenko", "conflict": "Core modified time precedes the maximum discovery date 2024-11-04 and is not accepted as snapshot time."},
+      "verdict": "STRUCTURE_AND_SEMANTICS_VERIFIED_THIRD_PARTY_HISTORICAL; ORIGIN_ACQUISITION_TIME_OFFICIAL_EQUIVALENCE_CURRENTNESS_AND_COMPLETENESS_NOT_PROVEN"
+    }
+  ],
+  "provenance_rules": [
+    {"id": "P1", "rule": "Git blob SHA-1 is recomputed from local bytes and must equal the immutable source-tree blob."},
+    {"id": "P2", "rule": "SHA-256 identifies the acquired third-party byte object but does not identify official BDU bytes."},
+    {"id": "P3", "rule": "Source commit time proves only that the blob was present in that repository by that time."},
+    {"id": "P4", "rule": "Workbook core metadata is descriptive and cannot establish acquisition, publication or currency."},
+    {"id": "P5", "rule": "A valid OOXML container and semantically plausible rows do not prove official origin or completeness."},
+    {"id": "P6", "rule": "The 2024 vullist is historical; the 2026 thrlist source commit still does not prove a current 2026-09-02 export."},
+    {"id": "P7", "rule": "No record-level delta, removal or current-count claim is made without two complete verified official snapshots."},
+    {"id": "P8", "rule": "Third-party rows are not promoted automatically to applicable threats, affected products or remediated vulnerabilities."}
+  ],
+  "decision_gates": [
+    {"id": "G1", "test": "Pin repository, commit, path, blob SHA-1 and SHA-256."},
+    {"id": "G2", "test": "Validate ZIP CRC, compression bounds, sheets, active-content indicators and external links."},
+    {"id": "G3", "test": "Fingerprint actual headers and distinguish physical rows from effective records."},
+    {"id": "G4", "test": "Validate identifier family, uniqueness, date parsing and explicit status values."},
+    {"id": "G5", "test": "Keep Git commit time, workbook metadata and maximum data date as separate clocks."},
+    {"id": "G6", "test": "Mark both byte objects THIRD_PARTY and preserve distinct THRLIST/VULLIST semantics."},
+    {"id": "G7", "test": "Block currentness, completeness and official-equivalence claims until official bytes are acquired."},
+    {"id": "G8", "test": "Use records only as quarantined historical observations, not operational truth."}
+  ],
+  "red_team_attacks": [
+    {"id": "RT1", "attack": "GITHUB_BLOB_AS_OFFICIAL_BDU_EXPORT", "expected": "BLOCK"},
+    {"id": "RT2", "attack": "SOURCE_COMMIT_TIME_AS_BDU_RETRIEVAL_TIME", "expected": "BLOCK"},
+    {"id": "RT3", "attack": "WORKBOOK_MODIFIED_TIME_AS_SNAPSHOT_TIME", "expected": "BLOCK"},
+    {"id": "RT4", "attack": "VALID_OOXML_AS_COMPLETE_DATABASE", "expected": "BLOCK"},
+    {"id": "RT5", "attack": "THRLIST_227_AS_CURRENT_OFFICIAL_COUNT", "expected": "BLOCK"},
+    {"id": "RT6", "attack": "VULLIST_62445_AS_CURRENT_2026_COUNT", "expected": "BLOCK"},
+    {"id": "RT7", "attack": "THRLIST_BLANK_TAIL_AS_DELETED_RECORDS", "expected": "BLOCK"},
+    {"id": "RT8", "attack": "VULLIST_EMPTY_COLUMNS_AS_MISSING_FALSE_VALUES", "expected": "BLOCK"},
+    {"id": "RT9", "attack": "PRINTER_SETTINGS_BIN_AS_VBA_MACRO", "expected": "BLOCK"},
+    {"id": "RT10", "attack": "BDU_RECORD_AS_AFFECTED_PRODUCT_PROOF", "expected": "BLOCK"},
+    {"id": "RT11", "attack": "THREAT_RECORD_AS_AUTOMATICALLY_RELEVANT_THREAT", "expected": "BLOCK"},
+    {"id": "RT12", "attack": "TWO_UNVERIFIED_SNAPSHOTS_AS_TEMPORAL_DELTA_BASELINE", "expected": "BLOCK"}
+  ],
+  "pending": [
+    "Current official thrlist.xlsx and vullist.xlsx bytes acquired through verified TLS.",
+    "Official SHA-256, retrieval clocks and redirect/content-type records.",
+    "Official sheet/header/row-count and identifier comparison.",
+    "A second complete verified official snapshot for field-level temporal deltas.",
+    "Independent source-provenance and completeness review."
+  ],
+  "boundaries": {"third_party_not_official": true, "git_time_not_retrieval_time": true, "core_metadata_not_snapshot_time": true, "valid_ooxml_not_complete": true, "historical_not_current": true, "blank_not_deleted": true, "empty_not_false": true, "printer_settings_not_macro": true, "threats_not_vulnerabilities": true, "record_not_applicability": true, "record_not_affected_product_proof": true, "no_delta_without_verified_pair": true},
+  "counts": {"datasets": 2, "snapshots": 2, "effective_records_total": 62672, "provenance_rules": 8, "decision_gates": 8, "red_team_attacks": 12, "evidence_nodes": 18, "control_rules": 64, "regression_cases": 64},
+  "control_rules": ["BDUQ-R001","BDUQ-R002","BDUQ-R003","BDUQ-R004","BDUQ-R005","BDUQ-R006","BDUQ-R007","BDUQ-R008","BDUQ-R009","BDUQ-R010","BDUQ-R011","BDUQ-R012","BDUQ-R013","BDUQ-R014","BDUQ-R015","BDUQ-R016","BDUQ-R017","BDUQ-R018","BDUQ-R019","BDUQ-R020","BDUQ-R021","BDUQ-R022","BDUQ-R023","BDUQ-R024","BDUQ-R025","BDUQ-R026","BDUQ-R027","BDUQ-R028","BDUQ-R029","BDUQ-R030","BDUQ-R031","BDUQ-R032","BDUQ-R033","BDUQ-R034","BDUQ-R035","BDUQ-R036","BDUQ-R037","BDUQ-R038","BDUQ-R039","BDUQ-R040","BDUQ-R041","BDUQ-R042","BDUQ-R043","BDUQ-R044","BDUQ-R045","BDUQ-R046","BDUQ-R047","BDUQ-R048","BDUQ-R049","BDUQ-R050","BDUQ-R051","BDUQ-R052","BDUQ-R053","BDUQ-R054","BDUQ-R055","BDUQ-R056","BDUQ-R057","BDUQ-R058","BDUQ-R059","BDUQ-R060","BDUQ-R061","BDUQ-R062","BDUQ-R063","BDUQ-R064"],
+  "evidence_nodes": [
+    {"id":"E01","claim":"OFFICIAL_BDU_ROUTES"},{"id":"E02","claim":"OFFICIAL_THRLIST_502_OBSERVATION"},{"id":"E03","claim":"THRLIST_IMMUTABLE_SOURCE_COMMIT"},{"id":"E04","claim":"THRLIST_GIT_BLOB_MATCH"},{"id":"E05","claim":"THRLIST_SHA256_AND_SIZE"},{"id":"E06","claim":"THRLIST_CONTAINER_SAFETY"},{"id":"E07","claim":"THRLIST_HEADER_FINGERPRINT"},{"id":"E08","claim":"THRLIST_EFFECTIVE_RECORDS_AND_DATES"},{"id":"E09","claim":"THRLIST_STATUS_COUNTS"},{"id":"E10","claim":"VULLIST_IMMUTABLE_SOURCE_COMMIT"},{"id":"E11","claim":"VULLIST_GIT_BLOB_MATCH"},{"id":"E12","claim":"VULLIST_SHA256_AND_SIZE"},{"id":"E13","claim":"VULLIST_CONTAINER_SAFETY"},{"id":"E14","claim":"VULLIST_HEADER_FINGERPRINT"},{"id":"E15","claim":"VULLIST_IDENTIFIER_AND_DATE_RANGES"},{"id":"E16","claim":"VULLIST_STATUS_COUNTS"},{"id":"E17","claim":"CORE_METADATA_CLOCK_CONFLICT"},{"id":"E18","claim":"OFFICIAL_PROMOTION_AND_DELTA_GATE"}
+  ]
+}
