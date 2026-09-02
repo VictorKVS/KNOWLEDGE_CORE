@@ -1,4 +1,4 @@
-schema_version: "1.6"
+schema_version: "1.7"
 id: SEC-SRC-RU-PP1119-2012
 kind: security-regulatory-source
 status: METADATA_VERIFIED
@@ -13,13 +13,15 @@ document:
   current_revision_date: "2012-11-01"
   checked_at: "2026-09-02"
   status_note: >-
-    Официальная страница Правительства РФ повторно проверена через актуальный индекс 02.09.2026 и прямо
-    маркирует постановление от 01.11.2012 №1119 как документ «в действующей редакции», одновременно предлагая DOC.
-    Текущий version-chain по-прежнему остается исходной редакцией от 01.11.2012; отдельная изменяющая редакция
-    в текущем ограниченном поиске не установлена. Exact-byte retry 02.09.2026 в 02:10:37Z не дошел до HTTP
-    из-за DNS-resolution failure acquisition-среды для government.ru. Это транспортное наблюдение не является
-    доказательством изменения статуса и не разрешает заменять официальный первичный артефакт зеркалом.
-  version_chain_note: "На проверке 02.09.2026 отдельные изменяющие редакции для данного постановления не установлены; не путать с иными постановлениями Правительства №1119 других лет."
+    Официальная страница Правительства РФ повторно проверена 02.09.2026 и продолжает маркировать постановление
+    №1119 как документ в действующей редакции с официальным DOC. В текущем bounded search отдельная изменяющая
+    редакция не установлена. Exact-byte retry 02.09.2026 в 05:07:17Z выполнен непосредственно по официальному
+    legacy DOC-маршруту, но не дошел до HTTP из-за DNS-resolution failure acquisition-среды. Это транспортное
+    наблюдение не меняет юридический статус и не разрешает подменять первичный артефакт зеркалом.
+  version_chain_note: >-
+    На проверке 02.09.2026 доказанных transition edges, изменяющих исходную редакцию постановления №1119,
+    в текущем проходе не добавлено. Отсутствие найденного изменения не является доказательством его невозможности;
+    version-chain остается под evidence-backed watch.
 canonical_source:
   publisher: "Правительство Российской Федерации"
   url: "https://government.ru/media/2012/11/3/53354/file/1119_pril.doc"
@@ -34,20 +36,20 @@ canonical_source:
   publication_archive_url: "https://rg.ru/documents/2012/11/07/pers-dannye-dok.html"
   publication_archive_publisher: "Российская газета — архив официальной публикации"
   route_note: >-
-    Официальная страница Правительства рекламирует DOC постановления. Восстановлен исторический прямой путь
-    government.ru /media/.../1119_pril.doc; до фактического получения OLE/CFB-байтов это только зарегистрированный
-    primary candidate route. HTTPS пробуется первым, legacy HTTP — только как тот же официальный-host fallback.
+    Канонический immutable target — официальный Government legacy DOC. HTTPS пробуется первым, legacy HTTP
+    допускается только как тот же official-host fallback. До получения OLE/CFB-байтов маршрут остается
+    зарегистрированным primary candidate, а не захваченным immutable artifact.
   freshness_check:
     checked_at: "2026-09-02"
-    result: CURRENT_EDITION_EXPLICITLY_MARKED_BY_GOVERNMENT_PRIMARY_DOC_RETRY_ENV_DNS_BLOCKED
+    result: CURRENT_EDITION_EXPLICITLY_MARKED_PRIMARY_DOC_RETRY_ENV_DNS_BLOCKED
     official_legal_text_route_registered: true
     official_binary_route_registered: true
 capture:
   fingerprint_status: PENDING
   semantic_status: UNCHANGED
-  last_primary_transport_attempt_at: "2026-09-02T02:10:37.114679Z"
+  last_primary_transport_attempt_at: "2026-09-02T05:07:17.722786Z"
   last_primary_transport_result: "ACQUISITION_ENV_DNS_RESOLUTION_FAILURE_GOVERNMENT_RU_EXACT_DOC_NOT_CAPTURED"
-  previous_primary_transport_attempt_at: "2026-09-01T08:13:18.049987Z"
+  previous_primary_transport_attempt_at: "2026-09-02T02:10:37.114679Z"
   previous_primary_transport_result: "ACQUISITION_ENV_DNS_RESOLUTION_FAILURE_GOVERNMENT_RU_EXACT_DOC_NOT_CAPTURED"
   retrieved_at: null
   mime: null
@@ -81,4 +83,8 @@ provenance:
   government_reference_mirror_found: true
   government_reference_mirror_primary_eligible: false
   review_required: true
-agent_rule: "Do not promote beyond metadata verification until exact official bytes and version/source locators are proven. The PP1119 immutable target is the registered Government legacy DOC and must pass OLE/CFB signature validation before acceptance. Treat conformity assessment in point 13(d) conditionally: only when such protection means are necessary to neutralize actual threats. FSB crypto measures require established SKZI use. Do not promote a government-hosted commercial legal-database copy to primary immutable evidence."
+agent_rule: >-
+  Do not promote beyond metadata verification until exact official bytes and version/source locators are proven.
+  The PP1119 immutable target is the registered Government legacy DOC and must pass OLE/CFB signature validation
+  before acceptance. Treat conformity assessment in point 13(d) conditionally. FSB crypto measures require
+  established SKZI use. Do not promote a government-hosted commercial legal-database copy to primary evidence.
