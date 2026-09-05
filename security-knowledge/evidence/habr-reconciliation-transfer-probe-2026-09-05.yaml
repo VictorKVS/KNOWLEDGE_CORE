@@ -1,0 +1,67 @@
+schema_version: "1.0"
+id: HABR-RECONCILIATION-TRANSFER-PROBE-2026-09-05
+observed_at: "2026-09-05"
+repository: VictorKVS/KNOWLEDGE_CORE
+branch: agent/rkn140-anonymization-run121
+inputs:
+  local_inventory: LOCAL_KB_FILES.csv
+  legacy_content_reconciliation: sources/ru/00_intake/_audit/content_reconciliation_latest.json
+  legacy_habr_reconciliation: sources/ru/00_intake/_audit/habr_reconciliation_latest.json
+probe:
+  legacy_target_signatures: 20
+  current_import_signatures_found: 19
+  current_import_signatures_not_found: 1
+  matching_rule: >-
+    Conservative normalized act-number/year/title-signature check against the current local import file inventory.
+    This is a transfer probe for the 20 legacy targets only; it is not the full 249-entry Habr coverage result.
+  special_representation:
+    identity: "Civil Code RF part one / 51-FZ"
+    status: PRESENT_COMBINED_REPRESENTATION
+    note: >-
+      The local import contains a combined Civil Code representation covering parts one through four rather than a
+      filename carrying a standalone 51-FZ token. It is counted as locally represented but still requires semantic
+      document-identity/version mapping before VERIFIED promotion.
+transfer_gap_candidate:
+  identity: "Government Decree No. 1722 of 2020-10-22"
+  current_import_inventory: NOT_FOUND_BY_NUMBER_OR_TITLE_SIGNATURE
+  legacy_downloads_candidate:
+    path: 'C:\Users\1\Downloads\остановление Правительства РФ от 22.10.2020 N 1722  .pdf'
+    legacy_best_id: "97"
+    score: 0.983
+    margin: 0.783
+    number_match: true
+    year_match: true
+    token_overlap: 0.033
+    accepted: false
+  status: LIKELY_DOWNLOADED_OUTSIDE_IMPORT_NOT_RECONCILED
+  interpretation: >-
+    The 2026-09-02 legacy scan proves that a file carrying the exact decree number/date was present in Downloads,
+    while the 2026-09-05 KNOWLEDGE_CORE_IMPORT inventory has no 1722 signature. This is evidence of a transfer or
+    identity-ledger gap, not evidence that the legal document does not exist.
+legacy_matcher_defect:
+  status: VERIFIED_FALSE_NEGATIVE_RISK
+  example:
+    identity: "Federal Law No. 162-FZ of 2015-06-29"
+    score: 1.2
+    year_match: true
+    token_overlap: 1.0
+    number_match: false
+    accepted: false
+  consequence: >-
+    Legacy accepted=false must not be promoted to MISSING. Act numbers must first be canonicalized across N/No/№,
+    spacing and hyphen variants, ФЗ suffix variants, slash-separated regulator numbers and I/1 variants.
+habr_scope_boundary:
+  article_url: "https://habr.com/ru/articles/432466/"
+  article_version: "2026-05-28"
+  user_scope: "article start through 'Банковская тайна' inclusive"
+  numbered_entries: 249
+  full_scope_fresh_coverage: PENDING
+next_gate:
+  - canonicalize act kind, number and date before fuzzy title matching
+  - import or register the PP-1722 representation with SHA-256 and provenance if the Downloads copy is still present
+  - run the same conservative identity probe across all 249 current user-scope Habr entries
+  - map local presence separately from Git knowledge-node presence and authoritative-current-version status
+impact:
+  readiness_change: 0
+  verified_pending_change: 0
+  global_gate: FAIL_SCOPE_INCOMPLETE
