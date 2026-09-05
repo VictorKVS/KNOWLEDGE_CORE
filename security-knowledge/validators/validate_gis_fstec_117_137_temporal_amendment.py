@@ -29,6 +29,15 @@ def version(as_of):
     return "GIS-V4-ORDER117-WITH-137-FULL"
 
 
+def current_date_status(as_of):
+    value = d(as_of)
+    if value < d("2026-09-01"):
+        return "ORDER117_ORIGINAL_CURRENT_ORDER137_REGISTERED_FUTURE"
+    if value < d("2027-03-01"):
+        return "ORDER117_WITH_137_GENERAL_CURRENT_ITEM7_FUTURE"
+    return "ORDER117_WITH_137_FULL_CURRENT"
+
+
 def evaluate(case):
     q = case["query"]
     as_of = case.get("as_of")
@@ -46,7 +55,7 @@ def evaluate(case):
     if q == "authentication_option": return "STRICT_OR_ENHANCED_MULTIFACTOR" if d(as_of) >= d("2026-09-01") else "ORIGINAL_STRICT_ROUTE"
     if q == "contractor_uzi_training": return "IN_SCOPE_OF_POINT58_TRAINING" if d(as_of) >= d("2026-09-01") else "AMENDMENT_NOT_YET_EFFECTIVE"
     fixed = {
-        "publication_id_137": "PENDING_DO_NOT_INVENT",
+        "publication_id_137": "VERIFIED_0001202608110006",
         "fstec117_vs_fsb117": "DISTINCT_PARALLEL_NONCRYPTO_AND_CRYPTO_ACTS",
         "gis_is_also_ispdn": "CUMULATIVE_APPLICABILITY_REVIEW_NO_SILENT_REPLACEMENT",
         "class_equivalence": "REJECT_K_CLASS_IS_NOT_PP1119_LEVEL",
@@ -61,7 +70,7 @@ def evaluate(case):
     if q in fixed: return fixed[q]
     if q == "legacy_attestation": return "NOT_AUTOMATICALLY_INVALIDATED" if d(case["issued"]) < d("2026-03-01") else "ROUTE_TO_CURRENT_ATTESTATION_RULES"
     if q == "apply_all_137": return "ALLOW_ALL_ITEMS" if d(as_of) >= d("2027-03-01") else "BLOCK_ITEM7_PREMATURE"
-    if q == "current_date_status": return "ORDER117_ORIGINAL_CURRENT_ORDER137_REGISTERED_FUTURE"
+    if q == "current_date_status": return current_date_status(as_of)
     raise AssertionError(f"Unhandled query {q}")
 
 
@@ -80,7 +89,13 @@ def main():
     assert len(model["version_router"]) == 4
     assert len(model["integration_boundaries"]) == 10
     assert len(model["evidence_model"]) == 10
-    assert model["sources"]["amending_order"]["official_publication_identity"] == "PENDING_LOCATE_DO_NOT_INVENT"
+    amending = model["sources"]["amending_order"]
+    assert amending["official_publication_identity"] == "VERIFIED"
+    assert amending["official_publication_number"] == "0001202608110006"
+    assert amending["official_publication_date"] == "2026-08-11"
+    assert amending["general_effective_from"] == "2026-09-01"
+    assert amending["amendment_item_7_effective_from"] == "2027-03-01"
+    assert amending["immutable_official_publication_bytes"] == "PENDING"
     assert current["source"]["future_amendment"]["number"] == "137"
     assert fstec["future_amendments"][0]["id"] == "FSTEK-137-2026"
     assert fsb["id"] == "FSB-117-2025" and fstec["id"] == "FSTEK-117-2025"
@@ -94,7 +109,7 @@ def main():
     if failures:
         for failure in failures: print("FAIL", failure)
         raise SystemExit(1)
-    print("PASS: 4 temporal versions; 18 amendment items; 10 boundaries; 10 evidence nodes; 48 cases")
+    print("PASS: publication 0001202608110006 verified; 4 temporal versions; 18 amendment items; 10 boundaries; 10 evidence nodes; 48 cases")
 
 
 if __name__ == "__main__":
