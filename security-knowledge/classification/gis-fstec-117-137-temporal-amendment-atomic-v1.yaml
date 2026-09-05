@@ -1,12 +1,13 @@
 schema_version: "1.0"
 id: RU-FSTEC117-137-GIS-TEMPORAL-AMENDMENT-ATOMIC-V1
 title: FSTEC Orders 117/2025 and 137/2026 GIS temporal amendment router
-checked_at: "2026-08-20"
+checked_at: "2026-09-05"
 scope: >-
   Current and future-effective non-cryptographic protection requirements for state information
   systems and the other public-sector information systems named in FSTEC Order No. 117. Order
-  No. 17 is preserved only for decisions before 1 March 2026. Order No. 137 is adopted and
-  registered but is not applied before its express effective dates.
+  No. 17 is preserved only for decisions before 1 March 2026. Order No. 137 general amendments
+  are current from 1 September 2026, while amendment item 7 remains future-effective until
+  1 March 2027.
 
 sources:
   base_order:
@@ -26,10 +27,15 @@ sources:
     signed_date: "2026-05-08"
     minjust_registration_number: "87797"
     minjust_registration_date: "2026-08-10"
+    official_publication_number: "0001202608110006"
+    official_publication_date: "2026-08-11"
+    official_publication_url: https://publication.pravo.gov.ru/document/0001202608110006
+    official_publication_identity: VERIFIED
     authoritative_text_url: https://www.consultant.ru/document/cons_doc_LAW_541612/
     general_effective_from: "2026-09-01"
     amendment_item_7_effective_from: "2027-03-01"
-    official_publication_identity: PENDING_LOCATE_DO_NOT_INVENT
+    current_effective_state_as_of_checked_at: GENERAL_ITEMS_1_TO_6_AND_8_TO_18_EFFECTIVE_ITEM_7_FUTURE
+    immutable_official_publication_bytes: PENDING
 
 version_router:
   - id: GIS-V1-ORDER17-HISTORICAL
@@ -56,8 +62,9 @@ temporal_events:
   - {event: ORDER_117_EFFECTIVE_AND_ORDER_17_REPEALED, date: "2026-03-01"}
   - {event: ORDER_137_SIGNED, date: "2026-05-08"}
   - {event: ORDER_137_MINJUST_REGISTERED, date: "2026-08-10"}
+  - {event: ORDER_137_OFFICIALLY_PUBLISHED, date: "2026-08-11", publication_number: "0001202608110006"}
   - {event: ORDER_137_GENERAL_AMENDMENTS_EFFECTIVE, date: "2026-09-01"}
-  - {event: ORDER_137_ITEM_7_POINT_32_EFFECTIVE, date: "2027-03-01"}
+  - {event: ORDER_137_ITEM_7_POINT32_EFFECTIVE, date: "2027-03-01"}
 
 amendment_rules:
   - {id: FSTEC137-A001, item: 1, target: point_8, effective_from: "2026-09-01", class: SUBSTANTIVE_SCOPE_WORDING, operation: ADD_INFRASTRUCTURE_TECHNICAL_SOFTWARE_AND_DATABASE_WORDING}
@@ -113,7 +120,7 @@ integration_boundaries:
   - id: GIS-B008
     rule: PRE_2026_03_01_ATTESTATIONS_ARE_NOT_AUTOMATICALLY_INVALIDATED_BY_ORDER_117
   - id: GIS-B009
-    rule: ORDER_137_OFFICIAL_PUBLICATION_IDENTIFIER_REMAINS_PENDING_AND_MUST_NOT_BE_GUESSED
+    rule: ORDER_137_OFFICIAL_PUBLICATION_IDENTITY_IS_VERIFIED_AS_0001202608110006_IMMUTABLE_BYTES_REMAIN_SEPARATE
   - id: GIS-B010
     rule: THE_POINT_31_UZI_LABEL_CHANGE_FROM_2026_09_01_MUST_NOT_BE_USED_TO_PREMATURELY_REWRITE_POINT_32_BEFORE_2027_03_01
 
@@ -121,7 +128,7 @@ evidence_model:
   - {id: EVIDENCE-GIS-117-OFFICIAL-PUBLICATION, proves: [ORDER_117_IDENTITY, ORDER_117_REGISTRATION, ORDER_117_PUBLICATION]}
   - {id: EVIDENCE-GIS-117-EFFECTIVE-REPEAL, proves: [ORDER_117_EFFECTIVE_DATE, ORDER_17_REPEAL]}
   - {id: EVIDENCE-GIS-117-LEGACY-ATTESTATION, proves: [PRE_EFFECTIVE_ATTESTATION_VALIDITY_RULE]}
-  - {id: EVIDENCE-GIS-137-REGISTRATION, proves: [ORDER_137_SIGNED_AND_REGISTERED]}
+  - {id: EVIDENCE-GIS-137-REGISTRATION-AND-PUBLICATION, proves: [ORDER_137_SIGNED_AND_REGISTERED, ORDER_137_OFFICIAL_PUBLICATION_IDENTITY]}
   - {id: EVIDENCE-GIS-137-GENERAL-EFFECTIVE-DATE, proves: [ITEMS_1_TO_6_AND_8_TO_18_EFFECTIVE_DATE]}
   - {id: EVIDENCE-GIS-137-ITEM7-EFFECTIVE-DATE, proves: [POINT_32_REPLACEMENT_EFFECTIVE_DATE]}
   - {id: EVIDENCE-GIS-137-AMENDMENT-DELTA, proves: [ALL_18_AMENDMENT_ITEMS]}
@@ -134,7 +141,7 @@ red_team:
   high_gap_created: false
   status: PASS_TEMPORAL_ROUTER_FAIL_GLOBAL_SCOPE_INCOMPLETE
   residuals:
-    - MEDIUM_ORDER137_OFFICIAL_PUBLICATION_IDENTITY_PENDING
+    - MEDIUM_ORDER137_OFFICIAL_IMMUTABLE_PUBLICATION_BYTES_PENDING
     - MEDIUM_FULL_ORDER117_CLAUSE_AND_MEASURE_ATOMIZATION_PENDING
     - MEDIUM_FSB117_2025_FULL_TEXT_AND_CRYPTO_OVERLAY_PENDING
     - MEDIUM_IMMUTABLE_CONSOLIDATED_BYTES_AND_EXPERT_REVIEW_PENDING
