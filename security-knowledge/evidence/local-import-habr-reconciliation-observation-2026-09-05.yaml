@@ -1,4 +1,4 @@
-schema_version: "1.0"
+schema_version: "1.1"
 id: LOCAL-IMPORT-HABR-RECONCILIATION-OBSERVATION-2026-09-05
 observed_at: "2026-09-05"
 local_collection:
@@ -41,10 +41,10 @@ local_habr_evidence:
   local_reconciliation_artifacts:
     - path: sources/ru/00_intake/_audit/habr_reconciliation_latest.json
       size_bytes: 544
-      status: LOCAL_PRESENT_CONTENT_NOT_CAPTURED_IN_THIS_OBSERVATION
+      status: CONTENT_CAPTURED_2026_09_05
     - path: sources/ru/00_intake/_audit/content_reconciliation_latest.json
       size_bytes: 595858
-      status: LOCAL_PRESENT_CONTENT_NOT_CAPTURED_IN_THIS_OBSERVATION
+      status: CONTENT_CAPTURED_2026_09_05
     - path: sources/ru/00_intake/_audit/content_reconciliation_latest.csv
       size_bytes: 271909
       status: LOCAL_PRESENT_CONTENT_NOT_CAPTURED_IN_THIS_OBSERVATION
@@ -52,6 +52,57 @@ local_habr_evidence:
   note: >-
     The local file inventory proves that Codex created Habr-specific sweep and reconciliation artifacts,
     but file-name evidence alone does not prove complete logical coverage of every item in Habr article 432466.
+captured_reconciliation_content:
+  habr_snapshot_2026_09_01:
+    generated_at: "2026-09-01"
+    source_manifest: sources/ru/00_intake/_download_manifest.csv
+    reconciled_manifest: sources/ru/00_intake/_audit/_download_manifest.reconciled.csv
+    section_headers: 68
+    actionable_rows_full_manifest: 791
+    downloaded_at_that_snapshot: 18
+    remaining_at_that_snapshot: 773
+    added_official_document: "CBR 6720-U"
+    stale_for_current_local_state: true
+    reason: >-
+      This is a 2026-09-01 snapshot. The current local inventory contains later reconciliation and standards
+      artifacts dated through 2026-09-04/05, so 18/791 must not be reported as current coverage.
+  content_snapshot_2026_09_02:
+    run_at: "2026-09-02T14:39:04.695092+00:00"
+    files_scanned: 1341
+    targets: 20
+    accepted_representations: 0
+    accepted_document_ids: []
+    status: RECONCILER_FALSE_NEGATIVE_RISK_VERIFIED
+    observed_candidate_statistics:
+      unique_best_ids: 20
+      score_max: 1.2
+      candidates_score_gte_0_8: 254
+      candidates_score_gte_1_0: 72
+      candidates_number_match_true: 1
+    demonstrated_false_negative:
+      identity: "Federal Law No. 162-FZ of 2015"
+      local_filename_example: "Федеральный закон от 29 июня 2015 г N 162 ФЗ О стандартизации в Российской Федер.pdf"
+      best_id: "114"
+      score: 1.2
+      margin: 0.6
+      token_overlap: 1.0
+      year_match: true
+      number_match: false
+      accepted: false
+      conclusion: >-
+        accepted_representations=0 is not absence evidence. The legacy matcher rejects strong title/year matches
+        when act-number normalization fails and therefore cannot be used as the current completeness gate.
+  user_habr_scope:
+    article_url: "https://habr.com/ru/articles/432466/"
+    article_version: "2026-05-28"
+    scope: "from article start through section 'Банковская тайна' inclusive"
+    section_count: 18
+    numbered_entries: 249
+    section_subtotals: [6, 13, 11, 13, 5, 7, 7, 22, 14, 6, 3, 5, 13, 78, 26, 18, 1, 1]
+    coverage_status: PENDING_FRESH_RECONCILIATION
+    counting_boundary: >-
+      249 is the count of numbered catalog entries in the stated current Habr scope, not a claim that 249 current
+      authoritative versions are present locally or in GitHub. Exact coverage requires a fresh identity ledger.
 github_observation:
   repository: VictorKVS/KNOWLEDGE_CORE
   branch: agent/rkn140-anonymization-run121
@@ -87,15 +138,18 @@ finding:
     - ALL_LOCAL_RAW_DOCUMENTS_SHOULD_BE_PUBLISHED_TO_PUBLIC_GIT
     - LOCAL_HABR_RECONCILIATION_IS_COMPLETE
     - LOCAL_DOCUMENT_REPRESENTATION_EQUALS_ONE_LOGICAL_DOCUMENT
+    - LEGACY_ACCEPTED_ZERO_MEANS_TARGETS_ARE_ABSENT
 rights_boundary: >-
   Raw books, standards, regulator copies, and other copyright-sensitive or large representations must not be
   bulk-published merely to make Git path coverage equal local path coverage. Git should remain the metadata/control
   plane where publication rights or repository-size policy require local content-addressed storage.
 next_gate:
-  - capture the content of local habr_reconciliation_latest.json and content_reconciliation_latest.json
-  - construct a row-level logical identity ledger for local document representations
+  - rebuild Habr reconciliation against the current 249-entry user scope rather than the stale 791-row full manifest snapshot
+  - fix or bypass act-number normalization before using legacy content_reconciliation acceptance as evidence
+  - construct a row-level logical identity ledger for current local document representations
   - map each Habr item to document_identity, version, representations, SHA-256, Git knowledge nodes and status
   - classify LOCAL_ONLY as EXPECTED_LOCAL_BLOB, MISSING_METADATA, MISSING_KNOWLEDGE_NODE, VERSION_CONFLICT or DUPLICATE
+  - independently reconcile the carried 293 VERIFIED / 31 PENDING source total
   - only then calculate Habr coverage and change VERIFIED/PENDING counters
 impact:
   readiness_change: 0
