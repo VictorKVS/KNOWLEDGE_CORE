@@ -1,4 +1,4 @@
-schema_version: "1.0"
+schema_version: "1.1"
 id: HABR-RECONCILIATION-TRANSFER-PROBE-2026-09-05
 observed_at: "2026-09-05"
 repository: VictorKVS/KNOWLEDGE_CORE
@@ -24,20 +24,24 @@ probe:
 transfer_gap_candidate:
   identity: "Government Decree No. 1722 of 2020-10-22"
   current_import_inventory: NOT_FOUND_BY_NUMBER_OR_TITLE_SIGNATURE
-  legacy_downloads_candidate:
-    path: 'C:\Users\1\Downloads\остановление Правительства РФ от 22.10.2020 N 1722  .pdf'
+  downloads_representation:
+    path: 'C:\\Users\\1\\Downloads\\остановление Правительства РФ от 22.10.2020 N 1722  .pdf'
+    sha256: "036D8694BEA1C0B3CCF91872DD107C07F5A0DC446021F0942BC3A830CD3C2FF7"
+    observed_by_user_on: "2026-09-05"
+    hash_algorithm: SHA256
+    presence_status: CONFIRMED_LOCAL_FILE
     legacy_best_id: "97"
-    score: 0.983
-    margin: 0.783
-    number_match: true
-    year_match: true
-    token_overlap: 0.033
-    accepted: false
-  status: LIKELY_DOWNLOADED_OUTSIDE_IMPORT_NOT_RECONCILED
+    legacy_score: 0.983
+    legacy_margin: 0.783
+    legacy_number_match: true
+    legacy_year_match: true
+    legacy_token_overlap: 0.033
+    legacy_accepted: false
+  status: CONFIRMED_DOWNLOADED_OUTSIDE_IMPORT_NOT_RECONCILED
   interpretation: >-
-    The 2026-09-02 legacy scan proves that a file carrying the exact decree number/date was present in Downloads,
-    while the 2026-09-05 KNOWLEDGE_CORE_IMPORT inventory has no 1722 signature. This is evidence of a transfer or
-    identity-ledger gap, not evidence that the legal document does not exist.
+    The file is confirmed present in Downloads on 2026-09-05 and its SHA-256 was measured. The current
+    KNOWLEDGE_CORE_IMPORT inventory still has no 1722 signature. This is therefore a confirmed transfer/identity-ledger
+    gap. It is not evidence that the legal act is missing, and it is not yet proof of authoritative/current legal bytes.
 legacy_matcher_defect:
   status: VERIFIED_FALSE_NEGATIVE_RISK
   example:
@@ -57,11 +61,14 @@ habr_scope_boundary:
   numbered_entries: 249
   full_scope_fresh_coverage: PENDING
 next_gate:
+  - copy the confirmed PP-1722 representation non-destructively into the controlled local intake while preserving Downloads as a location alias
+  - recompute the copied representation SHA-256 and require exact equality with 036D8694BEA1C0B3CCF91872DD107C07F5A0DC446021F0942BC3A830CD3C2FF7
   - canonicalize act kind, number and date before fuzzy title matching
-  - import or register the PP-1722 representation with SHA-256 and provenance if the Downloads copy is still present
   - run the same conservative identity probe across all 249 current user-scope Habr entries
   - map local presence separately from Git knowledge-node presence and authoritative-current-version status
 impact:
   readiness_change: 0
   verified_pending_change: 0
+  critical_gap_change: 0
+  high_gap_change: 0
   global_gate: FAIL_SCOPE_INCOMPLETE
