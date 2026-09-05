@@ -1,0 +1,105 @@
+schema_version: "1.0"
+id: LOCAL-IMPORT-HABR-RECONCILIATION-OBSERVATION-2026-09-05
+observed_at: "2026-09-05"
+local_collection:
+  path: 'G:\1\KNOWLEDGE_CORE_IMPORT_20260827-162116'
+  inventory_inputs:
+    - LOCAL_KB_FILES.csv
+    - LOCAL_KB_SHA256.csv
+    - LOCAL_KB_DOCUMENTS.csv
+    - LOCAL_KB_EXACT_DUPLICATES.csv
+  measured:
+    working_files: 3397
+    unique_sha256_artifacts: 3248
+    duplicate_sha256_groups: 138
+    files_in_duplicate_groups: 287
+    extra_exact_duplicate_copies: 149
+    document_representations: 842
+    unique_document_sha256_artifacts: 704
+    document_duplicate_groups: 127
+    extra_exact_document_copies: 138
+    sources_ru_files: 1725
+    security_knowledge_files: 839
+    security_corpora_files: 376
+  document_extensions:
+    pdf: 552
+    odt: 230
+    rtf: 40
+    docx: 3
+    doc: 1
+    xml: 15
+    html: 1
+  knowledge_and_pipeline_extensions:
+    yaml: 829
+    json: 719
+    jsonl: 178
+    markdown: 335
+    python: 138
+local_habr_evidence:
+  files_with_habr_in_path_or_name: 105
+  machine_readable_habr_ids_observed: [72, 81, 82, 405, 453, 456, 457, 458, 460, 559]
+  local_reconciliation_artifacts:
+    - path: sources/ru/00_intake/_audit/habr_reconciliation_latest.json
+      size_bytes: 544
+      status: LOCAL_PRESENT_CONTENT_NOT_CAPTURED_IN_THIS_OBSERVATION
+    - path: sources/ru/00_intake/_audit/content_reconciliation_latest.json
+      size_bytes: 595858
+      status: LOCAL_PRESENT_CONTENT_NOT_CAPTURED_IN_THIS_OBSERVATION
+    - path: sources/ru/00_intake/_audit/content_reconciliation_latest.csv
+      size_bytes: 271909
+      status: LOCAL_PRESENT_CONTENT_NOT_CAPTURED_IN_THIS_OBSERVATION
+  research_sweeps_present: true
+  note: >-
+    The local file inventory proves that Codex created Habr-specific sweep and reconciliation artifacts,
+    but file-name evidence alone does not prove complete logical coverage of every item in Habr article 432466.
+github_observation:
+  repository: VictorKVS/KNOWLEDGE_CORE
+  branch: agent/rkn140-anonymization-run121
+  head_before_observation: 6dc809639ec709ffc97f292484820205cae94a77
+  sources_root:
+    ru_directory_present: false
+    consequence: LOCAL_SOURCES_RU_NOT_PRESENT_AS_A_TREE_ON_CURRENT_PR_BRANCH
+  security_knowledge_corpus_root:
+    present_children:
+      - completeness-matrix.yaml
+      - full-dimension-coverage.yaml
+      - master-source-inventory.yaml
+      - paper-security-dimensions.yaml
+      - ru-personal-data
+      - snapshot-export-schema.yaml
+      - snapshots
+    local_only_children_observed_by_inventory:
+      - ru-local-regulatory-import
+      - ru-protected-information
+      - ru-standards
+  local_reconciliation_artifacts_on_current_pr_branch:
+    habr_reconciliation_latest_json: NOT_FOUND
+    content_reconciliation_latest_json: NOT_FOUND
+finding:
+  status: VERIFIED_RECONCILIATION_GAP
+  conclusion: >-
+    The local KNOWLEDGE_CORE_IMPORT collection is materially larger than the current PR tree.
+    It is therefore not valid to state that all locally collected Habr-listed documents and all Codex-derived
+    intake artifacts are already present in GitHub. Some normalized knowledge models are present, while a large
+    local source/intake layer and Habr reconciliation outputs remain outside the current PR tree.
+  not_proven:
+    - ALL_HABR_ITEMS_MISSING_FROM_LOGICAL_KNOWLEDGE
+    - ALL_LOCAL_RAW_DOCUMENTS_SHOULD_BE_PUBLISHED_TO_PUBLIC_GIT
+    - LOCAL_HABR_RECONCILIATION_IS_COMPLETE
+    - LOCAL_DOCUMENT_REPRESENTATION_EQUALS_ONE_LOGICAL_DOCUMENT
+rights_boundary: >-
+  Raw books, standards, regulator copies, and other copyright-sensitive or large representations must not be
+  bulk-published merely to make Git path coverage equal local path coverage. Git should remain the metadata/control
+  plane where publication rights or repository-size policy require local content-addressed storage.
+next_gate:
+  - capture the content of local habr_reconciliation_latest.json and content_reconciliation_latest.json
+  - construct a row-level logical identity ledger for local document representations
+  - map each Habr item to document_identity, version, representations, SHA-256, Git knowledge nodes and status
+  - classify LOCAL_ONLY as EXPECTED_LOCAL_BLOB, MISSING_METADATA, MISSING_KNOWLEDGE_NODE, VERSION_CONFLICT or DUPLICATE
+  - only then calculate Habr coverage and change VERIFIED/PENDING counters
+impact:
+  readiness_change: 0
+  verified_pending_change: 0
+  critical_gap_change: 0
+  high_gap_change: 0
+  global_gate: FAIL_SCOPE_INCOMPLETE
