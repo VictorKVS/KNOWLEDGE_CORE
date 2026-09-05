@@ -1,7 +1,7 @@
 schema_version: "1.0"
 id: GIS-FSTEC-117-TRANSITION-CLASSIFICATION-VERIFIED
-checked_at: "2026-08-20"
-status: VERIFIED_CURRENT_ORIGINAL_WITH_REGISTERED_FUTURE_AMENDMENT_ROUTER
+checked_at: "2026-09-05"
+status: VERIFIED_CURRENT_ORDER117_WITH_ORDER137_GENERAL_EFFECTIVE_ITEM7_FUTURE
 purpose: >-
   Replace obsolete reliance on FSTEC Order No. 17 for current GIS/non-crypto protection decisions
   and capture the current transition, governance and classification rules of FSTEC Order No. 117.
@@ -20,16 +20,22 @@ source:
     number: "137"
     signed_date: "2026-05-08"
     minjust_registration: "10.08.2026 № 87797"
+    official_publication_number: "0001202608110006"
+    official_publication_date: "2026-08-11"
+    official_publication_url: "https://publication.pravo.gov.ru/document/0001202608110006"
+    official_publication_identity: VERIFIED
+    immutable_official_publication_bytes: PENDING
     general_effective_from: "2026-09-01"
+    general_status_as_of_checked_at: EFFECTIVE
     item_7_effective_from: "2027-03-01"
+    item_7_status_as_of_checked_at: FUTURE_EFFECTIVE
     authoritative_text_url: "https://www.consultant.ru/document/cons_doc_LAW_541612/"
-    official_publication_identity: PENDING_LOCATE_DO_NOT_INVENT
   verification_note: >-
-    Official publication portal proves act identity, registration/publication metadata and existence.
-    Clause text below is verified against the current authoritative consolidated legal text in ConsultantPlus.
-    Order No. 137 is no longer a draft: it was signed on 8 May 2026 and registered by the Ministry
-    of Justice on 10 August 2026 as No. 87797. It is future-effective and is routed separately:
-    items 1-6 and 8-18 from 1 September 2026; item 7 from 1 March 2027.
+    Official publication metadata fixes Order No. 137 as publication No. 0001202608110006 of
+    11 August 2026. Clause text is checked against the authoritative consolidated legal text in
+    ConsultantPlus. As of 5 September 2026, items 1-6 and 8-18 are effective from 1 September
+    2026; item 7 remains future-effective until 1 March 2027. Immutable official publication
+    bytes remain a separate PENDING evidence requirement.
 
 records:
   - id: FSTEC117-TR-01
@@ -54,10 +60,10 @@ records:
     decision_effect: "Do not automatically invalidate pre-2026-03-01 attestations merely because Order 117 replaced Order 17."
 
   - id: FSTEC117-TR-04
-    status: VERIFIED_FUTURE_EFFECTIVE
+    status: VERIFIED_EFFECTIVE
     source_locator: "приказ ФСТЭК России № 137, п. 2"
-    rule: "Общие изменения приказа №137 вступают в силу 1 сентября 2026 года."
-    decision_effect: "Do not apply items 1-6 or 8-18 before 2026-09-01."
+    rule: "Общие изменения приказа №137 вступили в силу 1 сентября 2026 года."
+    decision_effect: "Apply items 1-6 and 8-18 on or after 2026-09-01; do not backdate them."
 
   - id: FSTEC117-TR-05
     status: VERIFIED_FUTURE_EFFECTIVE
@@ -177,9 +183,9 @@ records:
 red_team_guardrails:
   - "Order 17 is historical after 2026-03-01 and must not be cited as the current GIS baseline."
   - "A pre-2026-03-01 attestation is not invalid merely because Order 117 became effective."
-  - "Order 137 is adopted and registered but future-effective; do not treat it as current on 2026-08-20."
-  - "Do not apply Order 137 item 7 before 2027-03-01, even though the other amendment items start on 2026-09-01."
-  - "The Order 137 official-publication identifier was not located in the bounded search and must not be guessed."
+  - "Order 137 items 1-6 and 8-18 are current from 2026-09-01; do not continue to label the whole amendment future-effective after that date."
+  - "Do not apply Order 137 item 7 before 2027-03-01, even though the other amendment items started on 2026-09-01."
+  - "Order 137 official-publication identity is 0001202608110006; immutable official bytes remain a separate evidence requirement."
   - "Order 117 covers non-cryptographic protection within its scope; do not use it as a substitute for applicable cryptographic/FSB requirements."
   - "Classification requires actual information-significance and system-scale facts; the engine must not infer a class from organization type alone."
 
@@ -198,7 +204,12 @@ proof_sources:
       - governance clauses
       - monitoring deadlines
       - classification appendix
-  - type: AUTHORITATIVE_REGISTERED_FUTURE_AMENDMENT_TEXT
+  - type: PRIMARY_OFFICIAL_AMENDMENT_PUBLICATION_METADATA
+    url: "https://publication.pravo.gov.ru/document/0001202608110006"
+    proves:
+      - Order 137 official publication identity
+      - Order 137 official publication date
+  - type: AUTHORITATIVE_CURRENT_AMENDMENT_TEXT
     url: "https://www.consultant.ru/document/cons_doc_LAW_541612/"
     proves:
       - Order 137 identity and Minjust registration
