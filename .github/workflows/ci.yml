@@ -21,7 +21,51 @@ jobs:
       - name: Prepare reference implementation
         run: cp problems/search/implementations/python.py problems/search/PROB-SEARCH-001/tests/python/solution.py
       - name: Run Python tests
-        run: python -m pytest -q problems/search/PROB-SEARCH-001/tests/python
+        shell: bash
+        run: |
+          set -o pipefail
+          mkdir -p .test-results/python/junit .test-results/python/logs
+          python -m pytest -q \
+            --junitxml=.test-results/python/junit/pytest.xml \
+            problems/search/PROB-SEARCH-001/tests/python \
+            2>&1 | tee .test-results/python/logs/pytest.log
+      - name: Write Python test manifest
+        if: always()
+        shell: bash
+        env:
+          JOB_STATUS: ${{ job.status }}
+        run: |
+          python - <<'PY'
+          import json, os, platform, sys
+          from datetime import datetime, timezone
+          from pathlib import Path
+          p = Path('.test-results/python')
+          p.mkdir(parents=True, exist_ok=True)
+          manifest = {
+              'schema_version': '1.0',
+              'project': 'KNOWLEDGE_CORE',
+              'repository': os.environ.get('GITHUB_REPOSITORY'),
+              'commit_sha': os.environ.get('GITHUB_SHA'),
+              'ref': os.environ.get('GITHUB_REF'),
+              'workflow': os.environ.get('GITHUB_WORKFLOW'),
+              'run_id': os.environ.get('GITHUB_RUN_ID'),
+              'run_attempt': os.environ.get('GITHUB_RUN_ATTEMPT'),
+              'archived_at_utc': datetime.now(timezone.utc).isoformat(),
+              'status': os.environ.get('JOB_STATUS', 'unknown').upper(),
+              'runtime': {'python': sys.version, 'platform': platform.platform()},
+              'commands': ['python -m pytest -q --junitxml=.test-results/python/junit/pytest.xml problems/search/PROB-SEARCH-001/tests/python'],
+              'result_files': ['junit/pytest.xml', 'logs/pytest.log'],
+          }
+          (p / 'manifest.json').write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding='utf-8')
+          PY
+      - name: Archive Python test evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-evidence-knowledge-core-python-${{ github.run_id }}-${{ github.run_attempt }}-${{ github.sha }}
+          path: .test-results/python
+          if-no-files-found: warn
+          retention-days: 90
 
   go-tests:
     runs-on: ubuntu-latest
@@ -34,7 +78,52 @@ jobs:
         run: cp problems/search/implementations/go.go problems/search/PROB-SEARCH-001/tests/go/solution.go
       - name: Run Go tests
         working-directory: problems/search/PROB-SEARCH-001/tests/go
-        run: GO111MODULE=off go test -v
+        shell: bash
+        run: |
+          set -o pipefail
+          mkdir -p "$GITHUB_WORKSPACE/.test-results/go"
+          GO111MODULE=off go test -json 2>&1 | tee "$GITHUB_WORKSPACE/.test-results/go/go-test.json"
+      - name: Write Go test manifest
+        if: always()
+        shell: bash
+        env:
+          JOB_STATUS: ${{ job.status }}
+        run: |
+          python - <<'PY'
+          import json, os, platform, subprocess
+          from datetime import datetime, timezone
+          from pathlib import Path
+          p = Path('.test-results/go')
+          p.mkdir(parents=True, exist_ok=True)
+          try:
+              go_version = subprocess.check_output(['go', 'version'], text=True).strip()
+          except Exception:
+              go_version = 'unknown'
+          manifest = {
+              'schema_version': '1.0',
+              'project': 'KNOWLEDGE_CORE',
+              'repository': os.environ.get('GITHUB_REPOSITORY'),
+              'commit_sha': os.environ.get('GITHUB_SHA'),
+              'ref': os.environ.get('GITHUB_REF'),
+              'workflow': os.environ.get('GITHUB_WORKFLOW'),
+              'run_id': os.environ.get('GITHUB_RUN_ID'),
+              'run_attempt': os.environ.get('GITHUB_RUN_ATTEMPT'),
+              'archived_at_utc': datetime.now(timezone.utc).isoformat(),
+              'status': os.environ.get('JOB_STATUS', 'unknown').upper(),
+              'runtime': {'go': go_version, 'platform': platform.platform()},
+              'commands': ['GO111MODULE=off go test -json'],
+              'result_files': ['go-test.json'],
+          }
+          (p / 'manifest.json').write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding='utf-8')
+          PY
+      - name: Archive Go test evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-evidence-knowledge-core-go-${{ github.run_id }}-${{ github.run_attempt }}-${{ github.sha }}
+          path: .test-results/go
+          if-no-files-found: warn
+          retention-days: 90
 
   cpp-tests:
     runs-on: ubuntu-latest
@@ -43,4 +132,49 @@ jobs:
       - name: Build C++ test binary
         run: g++ -std=c++20 -O2 -Wall -Wextra -Wpedantic problems/search/implementations/cpp.cpp problems/search/PROB-SEARCH-001/tests/cpp/test_membership.cpp -o /tmp/prob-search-001-test
       - name: Run C++ tests
-        run: /tmp/prob-search-001-test
+        shell: bash
+        run: |
+          set -o pipefail
+          mkdir -p .test-results/cpp/logs
+          /tmp/prob-search-001-test 2>&1 | tee .test-results/cpp/logs/test-membership.log
+      - name: Write C++ test manifest
+        if: always()
+        shell: bash
+        env:
+          JOB_STATUS: ${{ job.status }}
+        run: |
+          python - <<'PY'
+          import json, os, platform, subprocess
+          from datetime import datetime, timezone
+          from pathlib import Path
+          p = Path('.test-results/cpp')
+          p.mkdir(parents=True, exist_ok=True)
+          try:
+              compiler = subprocess.check_output(['g++', '--version'], text=True).splitlines()[0]
+          except Exception:
+              compiler = 'unknown'
+          manifest = {
+              'schema_version': '1.0',
+              'project': 'KNOWLEDGE_CORE',
+              'repository': os.environ.get('GITHUB_REPOSITORY'),
+              'commit_sha': os.environ.get('GITHUB_SHA'),
+              'ref': os.environ.get('GITHUB_REF'),
+              'workflow': os.environ.get('GITHUB_WORKFLOW'),
+              'run_id': os.environ.get('GITHUB_RUN_ID'),
+              'run_attempt': os.environ.get('GITHUB_RUN_ATTEMPT'),
+              'archived_at_utc': datetime.now(timezone.utc).isoformat(),
+              'status': os.environ.get('JOB_STATUS', 'unknown').upper(),
+              'runtime': {'compiler': compiler, 'platform': platform.platform()},
+              'commands': ['/tmp/prob-search-001-test'],
+              'result_files': ['logs/test-membership.log'],
+          }
+          (p / 'manifest.json').write_text(json.dumps(manifest, ensure_ascii=False, indent=2), encoding='utf-8')
+          PY
+      - name: Archive C++ test evidence
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-evidence-knowledge-core-cpp-${{ github.run_id }}-${{ github.run_attempt }}-${{ github.sha }}
+          path: .test-results/cpp
+          if-no-files-found: warn
+          retention-days: 90
