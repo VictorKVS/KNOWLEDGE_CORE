@@ -37,6 +37,10 @@ Recommended artifact name:
 
 Recommended retention: 90 days unless project policy requires longer.
 
+If the evidence path is hidden (for example `.test-results/`), the uploader must explicitly include hidden files/directories. For GitHub Actions `actions/upload-artifact@v4`, use `include-hidden-files: true`.
+
+The evidence upload itself is a required gate. Use `if-no-files-found: error` (or platform equivalent) so a green test run with a missing archive cannot be reported as fully evidenced.
+
 ### Repository history layer
 
 Do not commit every raw CI log to Git. Commit durable summaries only when they are part of a release, audit, investigation, benchmark, acceptance gate, regression baseline, red-team pass, or other decision record.
@@ -63,7 +67,8 @@ Acceptable patterns include:
 1. run tests normally;
 2. write results/logs to a known directory;
 3. upload artifacts with `if: always()`;
-4. allow the job to remain failed when the test command failed.
+4. require a non-empty evidence artifact;
+5. allow the job to remain failed when the test command failed.
 
 Do not use `continue-on-error: true` merely to make archival possible unless a later explicit gate restores the correct failure status.
 
@@ -86,7 +91,7 @@ Suggested layout:
   reports/
 ```
 
-The directory is normally gitignored. CI uploads it as an artifact after every run.
+The directory is normally gitignored. CI uploads it as an artifact after every run. Because the name begins with a dot, artifact uploaders that exclude hidden paths by default must be configured explicitly to include it.
 
 ## Manifest minimum fields
 
