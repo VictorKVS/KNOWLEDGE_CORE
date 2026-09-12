@@ -1,0 +1,329 @@
+schema_version: 1
+model_id: FATHER-KNOWLEDGE-GROWTH-ANALYST-MATURITY-1
+status: PROPOSED
+role_id: KNOWLEDGE_GROWTH_ANALYST
+role_name: Senior Knowledge Growth Analyst / Agent Knowledge Engineer
+specialization_of: analyst_research_agent
+purpose: >-
+  Define an evidence-based growth path for the specialist who designs, grows, verifies and maintains
+  professional knowledge bases consumed by FATHER agents. Role maturity is earned by demonstrated
+  capability to move bounded knowledge slices through the common KB maturity gates, not by source count,
+  token volume, generated text volume or self-declared seniority.
+
+references:
+  kb_maturity_model: father/domain-knowledge/PROFESSIONAL_KB_MATURITY_MODEL.yaml
+  evidence_doctrine: father/domain-knowledge/PROFESSIONAL_EVIDENCE_DOCTRINE.md
+  review_protocol: father/domain-knowledge/PROFESSIONAL_KB_REVIEW_PROTOCOL.yaml
+  decision_contract: father/domain-knowledge/professional-decision-schema.yaml
+  knowledge_access_policy: .ai/agent-knowledge-access-policy.yaml
+  collaboration_policy: .ai/agent-collaboration-policy.yaml
+
+current_assessment:
+  state: UNASSESSED
+  rule: >-
+    Do not assign a maturity level to an agent or human specialist until the required evidence for that
+    level is reviewed. Existing repository activity may be used as evidence, but activity alone is not promotion.
+
+governing_invariants:
+  - model_output_is_candidate_material_not_authority
+  - facts_claims_interpretations_recommendations_and_decisions_remain_distinct
+  - provenance_and_applicability_are_preserved_end_to_end
+  - UNKNOWN_and_INSUFFICIENT_EVIDENCE_are_valid_outputs
+  - conflicts_are_preserved_until_resolved_or_escalated
+  - source_authority_does_not_remove_context_or_version_limits
+  - cross_domain_observation_is_a_proposal_until_domain_owner_review
+  - the_specialist_may_prepare_a_domain_for_promotion_but_may_not_self_issue_independent_final_review
+  - agent_consumption_quality_is_part_of_knowledge_quality
+  - retrieval_success_does_not_prove_professional_correctness
+  - professional_correctness_does_not_prove_retrieval_success
+  - every_material_promotion_requires_both_knowledge_quality_and_agent_use_quality
+
+capability_axes:
+  - source_discovery_and_authority_assessment
+  - provenance_rights_version_and_freshness_control
+  - document_decomposition_and_normalization
+  - atomic_claim_and_definition_extraction
+  - ontology_taxonomy_and_relation_design
+  - conflict_contradiction_and_supersession_handling
+  - applicability_scope_and_limitations
+  - evidence_state_and_promotion_governance
+  - requirement_constraint_and_decision_mapping
+  - alternatives_tradeoffs_and_decision_logic
+  - retrieval_index_chunk_and_metadata_design
+  - agent_query_routing_and_context_pack_design
+  - evaluation_ground_truth_and_failure_case_design
+  - freshness_monitoring_and_reassessment
+  - cross_domain_boundary_management
+  - automation_validation_and_observability
+  - independent_review_orchestration
+  - outcome_learning_and_kb_feedback_loop
+
+levels:
+  KGA0:
+    name: KNOWLEDGE_INTAKE_TRAINEE
+    maps_to_kb_gate: M0_SCOPE_DEFINED
+    mission: >-
+      Turn an unstructured knowledge request into a bounded domain intake plan without inventing authority.
+    can_independently:
+      - inventory_candidate_material
+      - identify_domain_owner_and_scope
+      - separate_known_unknown_assumed_and_requested_inputs
+      - create_source_candidate_list
+      - create_gap_and_question_log
+      - identify_rights_or_access_uncertainty
+      - propose_initial_concept_map
+    must_escalate:
+      - source_authority_disputes
+      - domain_scope_conflict
+      - legal_or_regulatory_interpretation
+      - promotion_to_verified_status
+    required_outputs:
+      - bounded_scope_statement
+      - non_scope_statement
+      - candidate_source_inventory
+      - initial_ontology_or_concept_map
+      - gaps_questions_and_assumptions
+      - proposed_source_taxonomy
+    promotion_evidence:
+      - one_reviewed_domain_intake
+      - no_silent_fact_invention
+      - correct_separation_of_source_claim_and_assumption
+    forbidden_behaviors:
+      - copying_model_output_into_canonical_truth
+      - treating_file_presence_as_source_quality
+      - using_search_rank_as_authority
+
+  KGA1:
+    name: SOURCE_CURATOR
+    maps_to_kb_gate: M1_SOURCES_ADMITTED
+    mission: >-
+      Build a governed source layer with identity, authority, version, freshness, provenance and limitations.
+    inherits: KGA0
+    can_independently:
+      - classify_source_type_and_authority
+      - register_canonical_source_identity
+      - record_version_date_status_and_freshness
+      - detect_duplicate_mirror_and_superseded_sources
+      - capture_source_limitations_and_applicability
+      - build_source_precedence_candidates
+      - create_retrieval_locators_without_copying_unnecessary_full_text
+    must_escalate:
+      - material_conflict_between_authoritative_sources
+      - unclear_licensing_or_distribution_rights
+      - cross_jurisdiction_status_conflict
+    required_outputs:
+      - source_registry
+      - provenance_records
+      - freshness_and_supersession_links
+      - rights_or_access_notes
+      - source_gap_report
+    promotion_evidence:
+      - reviewed_source_registry_for_a_bounded_scope
+      - sampled_source_identity_and_locator_checks
+      - demonstrated_rejection_of_weak_or_inapplicable_sources
+    forbidden_behaviors:
+      - admitting_a_source_as_verified_knowledge
+      - hiding_source_limitations
+      - silently_replacing_an_old_source_without_history
+
+  KGA2:
+    name: EVIDENCE_ENGINEER
+    maps_to_kb_gate: M2_ATOMIC_KNOWLEDGE
+    mission: >-
+      Convert admitted sources and measurements into atomic, traceable, challengeable knowledge objects.
+    inherits: KGA1
+    can_independently:
+      - decompose_documents_into_structured_units
+      - extract_definitions_claims_rules_metrics_patterns_and_exceptions
+      - attach_precise_provenance_or_measurement_context
+      - separate_fact_interpretation_recommendation_and_decision
+      - create_relation_edges_between_claims_sources_and_concepts
+      - detect_conflicting_or_duplicate_claims
+      - encode_context_limitations_and_verification_state
+      - design_chunk_and_metadata_shapes_for_agent_retrieval
+    must_escalate:
+      - unresolved_professional_interpretation
+      - material_contradiction_with_no_applicability_resolution
+      - domain_rule_creation_beyond_evidence
+    required_outputs:
+      - atomic_knowledge_objects
+      - provenance_links
+      - relation_graph
+      - conflict_records
+      - metric_definitions_where_applicable
+      - retrieval_ready_metadata
+    promotion_evidence:
+      - independent_sample_challenge_for_overgeneralization
+      - trace_back_from_agent_context_to_primary_evidence
+      - successful_conflict_preservation_case
+      - demonstrated_negative_case_where_candidate_is_not_promoted
+    forbidden_behaviors:
+      - broad_rule_from_single_context_without_applicability
+      - confidence_score_used_as_substitute_for_verification
+      - chunking_that_loses_source_identity_or_semantic_boundary
+
+  KGA3:
+    name: KNOWLEDGE_DECISION_MODELER
+    maps_to_kb_gate: M3_DECISION_LOGIC
+    mission: >-
+      Turn evidence into bounded applicability and decision logic without hiding constraints, alternatives or uncertainty.
+    inherits: KGA2
+    can_independently:
+      - map_requirements_constraints_and_quality_attributes
+      - build_applicability_logic
+      - generate_realistic_alternatives
+      - apply_hard_gate_elimination_before_scoring
+      - define_tradeoff_and_sensitivity_logic
+      - record_reversal_conditions_and_reassessment_triggers
+      - package_decision_context_for_agents
+      - design_query_routes_that_select_the_correct_domain_slice
+    must_escalate:
+      - D2_or_D3_material_decision_finalization
+      - unresolved_cross_domain_conflict
+      - decisions_requiring_independent_senior_review
+    required_outputs:
+      - bounded_decision_rules
+      - requirement_constraint_mapping
+      - alternatives_and_rejection_reasons
+      - uncertainty_and_sensitivity_record
+      - reassessment_triggers
+      - agent_context_contract
+    promotion_evidence:
+      - reviewed_material_decision_logic
+      - at_least_one_case_where_more_evidence_or_NO_GO_is_the_correct_result
+      - successful_cross_domain_boundary_handling
+      - skeptical_critic_challenge_without_hidden_counterevidence
+    forbidden_behaviors:
+      - solution_first_reasoning
+      - straw_man_alternatives
+      - scoring_before_hard_constraints
+      - recommendation_without_reversal_conditions
+
+  KGA4:
+    name: VERIFIED_KNOWLEDGE_PRACTICE_ENGINEER
+    maps_to_kb_gate: M4_VERIFIED_PRACTICE
+    mission: >-
+      Prove that the knowledge slice works in reproducible positive, negative, adversarial and agent-consumption cases.
+    inherits: KGA3
+    can_independently:
+      - design_reproducible_case_suites
+      - create_ground_truth_and_expected_evidence_paths
+      - test_retrieval_precision_context_fit_and_citation_traceability
+      - test_failure_modes_and_ambiguous_queries
+      - test_stale_conflicting_and_missing_evidence_behavior
+      - compare_agent_behavior_with_and_without_the_kb_slice
+      - capture_outcomes_and_feed_failures_back_to_the_kb
+      - define_operational_health_metrics_for_the_slice
+    must_escalate:
+      - final_expert_ready_promotion
+      - failed_independent_review
+      - unresolved_critical_failure_mode
+    required_outputs:
+      - reproducible_case_suite
+      - positive_negative_and_adversarial_cases
+      - retrieval_and_context_evaluation
+      - failure_mode_catalog
+      - outcome_capture
+      - regression_gate
+    promotion_evidence:
+      - reproducible_case_results
+      - preserved_failed_cases_and_dissent
+      - independent_case_review
+      - demonstrated_safe_behavior_under_missing_or_conflicting_evidence
+    forbidden_behaviors:
+      - reporting_only_success_cases
+      - using_retrieval_hit_rate_as_proof_of_correctness
+      - hiding_failed_or_adversarial_cases
+
+  KGA5:
+    name: SENIOR_KNOWLEDGE_GROWTH_ANALYST
+    maps_to_kb_gate: M5_BOUNDED_EXPERT_READY
+    mission: >-
+      Lead a bounded knowledge product from empty or unreliable input to independently reviewed,
+      agent-consumable expert-grade capability, while preserving domain ownership and evidence governance.
+    inherits: KGA4
+    can_lead:
+      - domain_bootstrap_from_zero
+      - source_and_evidence_strategy
+      - ontology_and_knowledge_product_architecture
+      - multi_stage_ingestion_and_promotion_pipeline
+      - agent_consumption_contract_and_routing_design
+      - evaluation_strategy_and_red_team_case_design
+      - freshness_reassessment_and_demotion_process
+      - cross_domain_review_orchestration
+      - knowledge_debt_backlog_and_prioritization
+      - junior_and_mid_level_analyst_review_and_coaching
+      - bounded_M0_to_M5_program_planning
+    cannot_self_certify:
+      - independent_senior_practitioner_review
+      - skeptical_red_team_review
+      - foreign_domain_authoritative_promotion
+      - unresolved_critical_gap_acceptance
+    required_outputs:
+      - bounded_scope_and_coverage_statement
+      - end_to_end_source_to_agent_traceability
+      - evidence_health_and_freshness_monitoring
+      - reproducible_decision_and_retrieval_cases
+      - documented_gap_and_dissent_register
+      - independent_review_packet
+      - knowledge_growth_roadmap
+      - operating_runbook
+    promotion_evidence:
+      - independently_reviewed_bounded_knowledge_slice_reaching_M5
+      - evidence_of_recovery_from_failed_or_wrong_candidate_knowledge
+      - evidence_of_cross_domain_governance_without_authority_leakage
+      - evidence_that_agent_outcomes_trigger_reassessment_and_kb_improvement
+      - reviewer_confirmation_that_the_specialist_can_explain_limits_not_only_answers
+    prohibited_claims:
+      - UNIVERSAL_EXPERT
+      - COMPLETE_KNOWLEDGE
+      - SELF_VERIFIED_SENIOR
+      - AGENT_ALWAYS_CORRECT
+
+promotion_rules:
+  - role_level_requires_reviewed_evidence_for_every_required_capability_of_that_level
+  - higher_level_activity_does_not_skip_missing_lower_level_gates
+  - one_successful_domain_slice_does_not_prove_universal_cross_domain_expertise
+  - promotion_is_scope_bounded_when_evidence_is_scope_bounded
+  - independent_review_is_required_for_KGA4_and_KGA5_material_capability_claims
+  - failed_cases_are_training_evidence_not_reason_to_hide_the_case
+  - demotion_or_reassessment_is_allowed_when_freshness_or_reproducibility_breaks
+
+assessment_dimensions:
+  evidence_discipline:
+    asks: Can the specialist prove where a claim came from and why it applies?
+  knowledge_modeling:
+    asks: Can the specialist create atomic, linked, bounded knowledge instead of summaries?
+  conflict_handling:
+    asks: Can the specialist preserve and resolve disagreement without averaging truth?
+  decision_readiness:
+    asks: Can the specialist turn evidence into bounded tradeoff logic with alternatives and reversal conditions?
+  agent_consumption:
+    asks: Can the specialist make knowledge retrievable, context-safe and traceable for agents?
+  evaluation:
+    asks: Can the specialist design positive, negative, adversarial and missing-evidence cases?
+  operations:
+    asks: Can the specialist monitor freshness, regressions, failures and outcome feedback over time?
+  governance:
+    asks: Can the specialist respect domain ownership, review independence and promotion gates?
+  teaching:
+    asks: Can the specialist explain the method, review others and improve the production system?
+
+senior_operating_loop:
+  - define_bounded_problem_and_consuming_agents
+  - map_domain_owner_and_authority_boundaries
+  - inventory_and_admit_sources
+  - decompose_and_extract_atomic_knowledge
+  - build_relations_conflicts_and_applicability
+  - create_decision_logic_and_context_contracts
+  - build_agent_retrieval_and_routing
+  - create_reproducible_positive_negative_adversarial_cases
+  - run_independent_review_and_red_team
+  - promote_only_the_proven_bounded_slice
+  - monitor_freshness_retrieval_and_outcomes
+  - demote_reopen_or_supersede_when_evidence_changes
+
+north_star: >-
+  A Senior Knowledge Growth Analyst is not the person who fills the most records. It is the person who can
+  repeatedly transform uncertain source material into a bounded, auditable, independently challenged knowledge
+  product that makes an agent more correct, more explainable and safer about what it does not know.
