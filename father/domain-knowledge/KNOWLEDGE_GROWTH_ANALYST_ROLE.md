@@ -10,6 +10,8 @@
 
 Формальная лестница роли: [`KNOWLEDGE_GROWTH_ANALYST_MATURITY_MODEL.yaml`](./KNOWLEDGE_GROWTH_ANALYST_MATURITY_MODEL.yaml).
 
+Обязательная методика понимания профессий: [`PROFESSION_MODELING_PLAYBOOK.md`](./PROFESSION_MODELING_PLAYBOOK.md).
+
 ## Лестница роста
 
 | Уровень | Роль | Что должен уметь доказуемо |
@@ -35,11 +37,50 @@ Senior не обязан знать все ответы. Он обязан ум�
 8. Проверить не только хорошие, но и плохие, неоднозначные, устаревшие и конфликтные случаи.
 9. Организовать независимый review, а не проверить самого себя.
 10. После ошибок агента изменить не только prompt, но и источник/структуру/связи/правило/маршрутизацию базы знаний.
+11. **Разобрать незнакомую профессию как систему**: mission, outcomes, objects, workflows, decision families, artifacts, standards, tools, evidence, failure modes, authority boundaries и competency ladder.
+12. Понять, где профессиональное правило формально задаётся источником, а где требуется professional judgment квалифицированного практика.
+13. Вывести из модели профессии структуру базы знаний, capability map, роли агентов, tools/permissions, RAG routes и eval cases.
+
+## Profession Modeling — обязательная компетенция Senior
+
+Senior Knowledge Growth Analyst **не имеет права строить профессиональную KB только из набора документов**. Сначала он обязан понять, как устроена профессия.
+
+Для нового домена он должен восстановить минимум:
+
+```text
+MISSION / VALUE
+    ↓
+OBJECTS / STAKEHOLDERS
+    ↓
+WORKFLOWS / LIFECYCLE
+    ↓
+DECISION FAMILIES
+    ↓
+INPUTS / ARTIFACTS / APPROVALS
+    ↓
+RULES / STANDARDS / PROFESSIONAL JUDGMENT
+    ↓
+TOOLS / METHODS
+    ↓
+QUALITY / FAILURE MODES
+    ↓
+BOUNDARIES WITH ADJACENT PROFESSIONS
+    ↓
+TRAINEE → JUNIOR → MIDDLE → SENIOR → EXPERT
+    ↓
+AGENT CAPABILITIES / KB / RAG / EVALS
+```
+
+При этом **понимать профессию ≠ присваивать себе доменную власть**. Senior может моделировать, исследовать, связывать evidence и готовить decision logic, но material professional truth и promotion там, где это требуется governance, подтверждаются domain owner / qualified practitioner.
+
+До завершения Profession Modeling Gate домен не должен называться полноценной профессиональной базой знаний. Допустимый статус: `PROFESSION_MODEL_INCOMPLETE`.
 
 ## Главный производственный конвейер
 
 ```text
 DOMAIN REQUEST
+  ↓
+PROFESSION MODEL / DOMAIN REVERSE ENGINEERING
   ↓
 SCOPE / OWNER / AGENT CONSUMERS
   ↓
@@ -82,6 +123,7 @@ REASSESS / DEMOTE / SUPERSEDE / IMPROVE
 
 ## Минимальный пакет Senior на каждый домен
 
+- `PROFESSION MODEL` — mission, workflows, decisions, artifacts, authority boundaries, competency ladder;
 - `DOMAIN.yaml` — scope, non-scope, ontology, evidence policy;
 - `SOURCE_POLICY.yaml` и `SOURCE_REGISTRY.yaml`;
 - atomic knowledge objects;
@@ -98,6 +140,13 @@ REASSESS / DEMOTE / SUPERSEDE / IMPROVE
 
 Перед продвижением знания Senior спрашивает:
 
+- Как устроена профессия, которую я сейчас моделирую?
+- Какую ценность она создаёт и для кого?
+- Какие решения являются центральными для этой профессии?
+- Какие реальные документы и артефакты проходят через руки специалиста?
+- Что в профессии является формальным правилом, а что professional judgment?
+- Где заканчиваются полномочия этой профессии?
+- Чем Senior этого домена отличается от Middle?
 - Кто владелец этой истины?
 - Какой источник сильнее и почему?
 - Какая версия и дата применимы?
@@ -115,7 +164,7 @@ REASSESS / DEMOTE / SUPERSEDE / IMPROVE
 
 ### Практический учебный маршрут
 
-1. **KGA0:** взять небольшой новый домен и построить intake + concept map + gap log.
+1. **KGA0:** взять небольшой новый домен и построить profession model + intake + concept map + gap log.
 2. **KGA1:** построить governed source registry и отбраковать слабые источники.
 3. **KGA2:** извлечь атомарные знания с provenance и конфликтами.
 4. **KGA3:** сделать одну ограниченную decision family с альтернативами и hard gates.
@@ -130,4 +179,4 @@ Senior также **не может сам себе выдать M5**: неза�
 
 ## North Star
 
-> Не максимальное количество документов, чанков или записей. Цель — повторяемо превращать неопределённый материал в ограниченную, аудируемую и проверенную базу знаний, которая делает агента точнее, объяснимее и безопаснее в том, чего он не знает.
+> Не максимальное количество документов, чанков или записей. Цель — повторяемо понимать новую профессию как рабочую систему и превращать её в ограниченную, аудируемую и проверенную базу знаний, которая делает агента точнее, объяснимее и безопаснее в том, чего он не знает.
