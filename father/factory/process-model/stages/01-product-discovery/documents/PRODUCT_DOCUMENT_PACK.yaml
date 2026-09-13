@@ -1,9 +1,10 @@
-schemaVersion: 1
+schemaVersion: 2
 packId: FATHER-STAGE01-PRODUCT-DOCUMENT-PACK-0001
 stage: PRODUCT_DISCOVERY
 status: PILOT_FILLED_OWNER_REVIEW
 pilot: FATHER-ANALYTICAL-DESIGN-PLATFORM
 normativeCrosswalk: PRODUCT_GOST_CROSSWALK.yaml
+clauseTraceabilitySchema: ../../../../CLAUSE_TRACEABILITY_SCHEMA.yaml
 gate: PRODUCT_READY
 gateDecision: CONDITIONAL_PASS
 
@@ -14,7 +15,7 @@ artifacts:
     ownerRole: business_owner
     reviewers: [product_manager]
     status: OWNER_CONFIRMED
-    standardRefs: [GOST-R-57193-2025, GOST-R-58609-2019, GOST-R-59793-2021]
+    clauseMappingIds: [PD-BN-57193-6412, PD-BN-57193-6413, PD-BN-59793-11]
     downstream: [SECURITY_INTAKE, SYSTEM_ENGINEERING, REQUIREMENTS_BASELINE]
   - order: 2
     artifactId: PRODUCT_VISION
@@ -22,7 +23,7 @@ artifacts:
     ownerRole: product_manager
     reviewers: [business_owner]
     status: OWNER_CONFIRMED
-    standardRefs: [GOST-R-57193-2025, GOST-R-58609-2019, GOST-R-59793-2021]
+    clauseMappingIds: [PD-PV-57193-6421, PD-PV-57193-6423, PD-PV-59793-23, PD-PV-34602-44]
     downstream: [SECURITY_INTAKE, SYSTEM_ENGINEERING]
   - order: 3
     artifactId: STAKEHOLDER_REGISTER
@@ -30,7 +31,7 @@ artifacts:
     ownerRole: project_manager
     reviewers: [product_manager]
     status: PARTIAL
-    standardRefs: [GOST-R-57193-2025, GOST-R-58609-2019]
+    clauseMappingIds: [PD-STK-57193-6421, PD-STK-57193-6423]
     downstream: [SECURITY_INTAKE, SYSTEM_ENGINEERING, GOVERNANCE]
   - order: 4
     artifactId: SCOPE_BASELINE
@@ -38,7 +39,7 @@ artifacts:
     ownerRole: product_manager
     reviewers: [business_owner, project_manager]
     status: OWNER_CONFIRMED_WITH_OPEN_BOUNDARIES
-    standardRefs: [GOST-R-57193-2025, GOST-R-58609-2019, GOST-R-59793-2021]
+    clauseMappingIds: [PD-SCOPE-57193-6413, PD-SCOPE-57193-6422, PD-SCOPE-59793-42]
     downstream: [SECURITY_INTAKE, SYSTEM_ENGINEERING, REQUIREMENTS_BASELINE]
   - order: 5
     artifactId: SUCCESS_METRICS
@@ -46,7 +47,7 @@ artifacts:
     ownerRole: product_manager
     reviewers: [business_owner]
     status: CANDIDATE_BASELINE_REQUIRED
-    standardRefs: [GOST-R-57193-2025, GOST-R-58609-2019]
+    clauseMappingIds: [PD-METRIC-57193-6423, PD-METRIC-34602-441]
     downstream: [REQUIREMENTS_BASELINE, VERIFICATION_VALIDATION]
   - order: 6
     artifactId: ASSUMPTION_LOG
@@ -54,7 +55,7 @@ artifacts:
     ownerRole: project_manager
     reviewers: [skeptical_reviewer]
     status: OPEN
-    standardRefs: [GOST-R-57193-2025, GOST-R-58609-2019]
+    clauseMappingIds: [PD-UNK-57193-6413, PD-UNK-59793-24]
     downstream: [ALL]
   - order: 7
     artifactId: PRODUCT_HANDOFF_TO_SECURITY
@@ -62,7 +63,7 @@ artifacts:
     ownerRole: product_manager
     reviewers: [security_engineer]
     status: READY_WITH_CONDITIONS
-    standardRefs: [GOST-R-57193-2025, GOST-R-59793-2021]
+    clauseMappingIds: [PD-HANDOFF-59793-13, PD-HANDOFF-59793-25]
     downstream: [SECURITY_INTAKE]
   - order: 8
     artifactId: PRODUCT_READY_DECISION
@@ -70,7 +71,8 @@ artifacts:
     ownerRole: product_manager
     reviewers: [business_owner, skeptical_reviewer]
     status: CONDITIONAL_PASS
-    standardRefs: [GOST-R-57193-2025, GOST-R-58609-2019]
+    normativeClassification: FATHER_INTERNAL_CONTROL
+    clauseMappingIds: [PD-GATE-57193-6423, PD-GATE-FATHER]
     downstream: [SECURITY_INTAKE]
 
 futureTechnicalAssignment:
@@ -82,11 +84,21 @@ futureTechnicalAssignment:
     - STAKEHOLDER_REGISTER
     - SCOPE_BASELINE
     - SUCCESS_METRICS
+  verifiedClauseInputs:
+    - '4.1'
+    - '4.3'
+    - '4.4'
+    - '4.4.1'
+    - '4.4.2'
+    - '4.5'
   rule: complete_TZ_is_not_a_Product_only_artifact
 
 analytics:
   requiredSignals:
     - artifact_status_distribution
+    - clause_mapping_coverage
+    - verified_clause_ratio
+    - section_verified_subclause_pending
     - material_claims_total
     - unsupported_material_claims
     - open_unknowns
