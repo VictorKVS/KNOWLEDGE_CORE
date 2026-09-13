@@ -1,19 +1,26 @@
 # Stage 01 — Product Document Pack
 
-Status: `CANDIDATE_PRODUCT_PACK / PILOT_FILLED`
+Status: `CANDIDATE_PRODUCT_PACK / PILOT_FILLED / CLAUSE_TRACEABILITY_ACTIVE`
 
 Purpose: the canonical information package produced by Product before Security Intake. These are **information artifacts**, not a requirement that every organization create separate Word files.
 
 ## Normative positioning
 
-FATHER uses the current standards as a baseline and keeps exact clause-level mapping separate until full-text ingestion/review:
+FATHER now maintains two normative layers for every artifact:
 
-- `ГОСТ Р 57193-2025` — system life-cycle process baseline;
-- `ГОСТ Р 58609-2019 / ISO/IEC/IEEE 15289:2017` — life-cycle information items; information items may be combined or split for project/organizational needs;
-- `ГОСТ Р 59793-2021` — creation stages for automated systems; Product Pack supplies the early information needed for formation of requirements and concept work;
-- `ГОСТ 34.602-2020` — technical assignment for an automated system; Product supplies upstream product/business inputs but **does not own the complete ТЗ**.
+1. standard/source level — which GOST/order/methodology governs the information;
+2. clause level — exact clause/subclause, applicability, responsible role, artifact field and validation method.
 
-No document below claims clause-level compliance until `source -> clause -> requirement -> artifact field` mapping is reviewed.
+Current Product clause mappings are stored in `PRODUCT_GOST_CROSSWALK.yaml` and follow the common `father/factory/CLAUSE_TRACEABILITY_SCHEMA.yaml` contract.
+
+Verified Product-stage clause families currently include:
+
+- `ГОСТ Р 57193-2025`: `6.4.1.2`, `6.4.1.3`, `6.4.2.1`, `6.4.2.2`, `6.4.2.3`;
+- `ГОСТ Р 59793-2021`: `4.1`, stages `1.1–1.3`, `2.1–2.5`, plus tailoring rule `4.2`;
+- `ГОСТ 34.602-2020`: `4.1`, `4.2`, `4.3`, `4.4`, `4.4.1`, `4.4.2`, `4.5` as downstream ТЗ bindings;
+- `ГОСТ Р 58609-2019 / ISO/IEC/IEEE 15289:2017`: information-item model confirmed at scope/section level; exact subclause binding remains `SECTION_VERIFIED_SUBCLAUSE_PENDING` until full-text ingestion.
+
+A clause is never invented. If the source text/number has not been verified, the mapping stays `CLAUSE_NOT_VERIFIED` or `SECTION_VERIFIED_SUBCLAUSE_PENDING`.
 
 ## Product-owned / Product-coordinated artifacts
 
@@ -27,6 +34,32 @@ No document below claims clause-level compliance until `source -> clause -> requ
 | 06 | `ASSUMPTION_UNKNOWN_LOG.md` | Project Manager | Skeptical Reviewer | all downstream roles |
 | 07 | `PRODUCT_HANDOFF_TO_SECURITY.md` | Product Manager | Security Engineer | Security Intake |
 | 08 | `PRODUCT_READY_DECISION.md` | Product Manager | Business Owner + Skeptical Reviewer | Gate engine |
+
+## Traceability model
+
+```text
+DOCUMENT
+  ↓
+SECTION / FIELD
+  ↓
+SOURCE (GOST / order / FATHER Constitution)
+  ↓
+CLAUSE / SUBCLAUSE
+  ↓
+REQUIREMENT SUMMARY
+  ↓
+APPLICABILITY CONDITION
+  ↓
+LIFECYCLE STAGE
+  ↓
+ACCOUNTABLE ROLE
+  ↓
+VALIDATION METHOD
+  ↓
+GATE / DOWNSTREAM CONSUMER
+```
+
+This is the format the future FATHER UI should render as a drill-down panel next to each document field.
 
 ## Product boundary
 
