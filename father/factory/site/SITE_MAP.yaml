@@ -1,4 +1,4 @@
-schemaVersion: 2
+schemaVersion: 3
 siteId: FATHER-ANALYTICAL-DESIGN-SITE-0001
 status: CANDIDATE_SITE_MAP
 pages:
@@ -23,6 +23,40 @@ pages:
     canonicalData:
       - father/factory/architecture/ARCHITECTURE_WORKBENCH_MODEL.yaml
       - father/factory/knowledge/BOOK_IDEA_INTAKE.yaml
+  - id: OSINT_LIVE_PROJECT
+    path: father/factory/site/osint-live-project.html
+    purpose: project-facing live reproduction of the real OSINT_deepseek project across OTUS lessons 01-09 and later 10-20
+    externalCanonicalProject:
+      repository: VictorKVS/OSINT_deepseek
+      branch: feature/otus-live-reproduction-01-20
+      path: docs/course_live_reproduction
+    courseMirror:
+      repository: VictorKVS/OTUS-
+      branch: feature/father-osint-live-reproduction-01-20
+      pattern: '<lesson-folder>/FATHER_OSINT_ANSWER.md'
+    views:
+      - lesson_status
+      - document_inventory
+      - lifecycle_truth
+      - unknowns
+      - improvement_backlog
+      - end_to_end_trace
+      - next_lessons
+  - id: DOCUMENT_AUTOMATION_WORKBENCH
+    path: father/factory/site/document-automation.html
+    purpose: future LLM-assisted staged document processing, review routing, human approvals and gate automation
+    canonicalData:
+      - father/factory/automation/DOCUMENT_AUTOMATION_PIPELINE.yaml
+      - father/factory/automation/DOCUMENT_APPROVAL_MATRIX.yaml
+    views:
+      - intake_queue
+      - llm_review_queue
+      - human_approval_queue
+      - blocked_documents
+      - gate_board
+      - trace_graph
+      - version_diff
+      - audit_history
 
 plannedDrilldowns:
   - id: ARTIFACT_DETAIL
@@ -40,6 +74,12 @@ plannedDrilldowns:
   - id: ESTIMATE_DETAIL
     routeIntent: '/estimate/{estimateId}'
     sections: [work_item, method, raw_inputs, assumptions, uncertainty_range, risk_refs, cost_impact, superseded_estimates]
+  - id: DOCUMENT_WORK_ITEM
+    routeIntent: '/document/{documentId}/version/{version}'
+    sections: [source_snapshot, extracted_claims, field_mapping, traceability, gaps, conflicts, llm_runs, owner_review, domain_review, independent_review, approval_history, gate_impact, downstream]
+  - id: APPROVAL_TASK
+    routeIntent: '/approval/{approvalId}'
+    sections: [document_version, assignee_role, decision_options, blocking_findings, evidence_refs, rationale, downstream_impact]
 
 navigationPrinciple: >-
-  The site is a projection over canonical registries. UI pages must never become an independent source of engineering truth.
+  The site is a projection over canonical registries and project sources. UI pages must never become an independent source of engineering truth.
