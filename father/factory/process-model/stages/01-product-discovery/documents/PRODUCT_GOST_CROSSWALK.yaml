@@ -1,0 +1,78 @@
+schemaVersion: 1
+crosswalkId: FATHER-PRODUCT-GOST-CROSSWALK-0001
+status: CANDIDATE_MAPPING
+stage: PRODUCT_DISCOVERY
+rule: >-
+  Mapping is at standard/purpose level. Exact clause-level compliance remains pending full-text ingestion and independent review.
+
+sources:
+  - id: GOST-R-57193-2025
+    role: CORE_LIFECYCLE
+    mappingIntent: [stakeholder_context, life_cycle_process_inputs, decision_authority, system_need_context]
+  - id: GOST-R-58609-2019
+    role: INFORMATION_ITEM_MODEL
+    mappingIntent: [information_item_definition, information_item_content, combine_or_split_artifacts]
+  - id: GOST-R-59793-2021
+    role: AS_CREATION_STAGES
+    mappingIntent: [formation_of_requirements_inputs, concept_inputs, stage_handoff]
+  - id: GOST-34-602-2020
+    role: DOWNSTREAM_TECHNICAL_ASSIGNMENT
+    mappingIntent: [product_inputs_for_future_TZ]
+
+artifactMappings:
+  BUSINESS_NEED:
+    primaryOwner: business_owner
+    standardRefs: [GOST-R-57193-2025, GOST-R-59793-2021, GOST-R-58609-2019]
+    normativeRole: early statement of need/problem/opportunity feeding requirements/concept work
+    downstream: [SECURITY_INTAKE, SYSTEM_ENGINEERING, REQUIREMENTS_BASELINE]
+  PRODUCT_VISION:
+    primaryOwner: product_manager
+    standardRefs: [GOST-R-57193-2025, GOST-R-59793-2021, GOST-R-58609-2019]
+    normativeRole: project-tailored information item describing intended outcome, product/system context and boundaries
+    downstream: [SECURITY_INTAKE, SYSTEM_ENGINEERING]
+  STAKEHOLDER_REGISTER:
+    primaryOwner: project_manager
+    standardRefs: [GOST-R-57193-2025, GOST-R-58609-2019]
+    normativeRole: identifies interested parties, information owners and decision authorities used by downstream lifecycle processes
+    downstream: [SECURITY_INTAKE, SYSTEM_ENGINEERING, GOVERNANCE]
+  SCOPE_BASELINE:
+    primaryOwner: product_manager
+    standardRefs: [GOST-R-57193-2025, GOST-R-59793-2021, GOST-R-58609-2019]
+    normativeRole: defines current project/product boundary and exclusions before engineering decomposition
+    downstream: [SECURITY_INTAKE, SYSTEM_ENGINEERING, REQUIREMENTS_BASELINE]
+  SUCCESS_METRICS:
+    primaryOwner: product_manager
+    standardRefs: [GOST-R-57193-2025, GOST-R-58609-2019]
+    normativeRole: project-tailored success/effectiveness criteria later transformed into measurable requirements and validation evidence
+    downstream: [REQUIREMENTS_BASELINE, VERIFICATION_VALIDATION]
+  ASSUMPTION_UNKNOWN_LOG:
+    primaryOwner: project_manager
+    standardRefs: [GOST-R-57193-2025, GOST-R-58609-2019]
+    normativeRole: explicit project information item preserving assumptions, unresolved issues and evidence gaps
+    downstream: [ALL]
+  PRODUCT_HANDOFF_TO_SECURITY:
+    primaryOwner: product_manager
+    standardRefs: [GOST-R-57193-2025, GOST-R-59793-2021]
+    normativeRole: controlled handoff from product context to first mandatory engineering discipline under FATHER Constitution
+    downstream: [SECURITY_INTAKE]
+  PRODUCT_READY_DECISION:
+    primaryOwner: product_manager
+    standardRefs: [GOST-R-57193-2025, GOST-R-58609-2019]
+    normativeRole: FATHER project-tailored gate evidence, not a claim of a standalone mandatory GOST document
+    downstream: [SECURITY_INTAKE]
+
+futureTZInputMapping:
+  rule: Product provides source information; complete TZ ownership belongs to later Requirements/System/Security collaboration.
+  inputs:
+    - BUSINESS_NEED
+    - PRODUCT_VISION
+    - STAKEHOLDER_REGISTER
+    - SCOPE_BASELINE
+    - SUCCESS_METRICS
+    - confirmed_constraints_from_later_stages
+
+openWork:
+  - ingest full text for each source
+  - map exact clauses and required content
+  - distinguish mandatory normative content from FATHER best-practice extensions
+  - verify mapping independently before VERIFIED status
