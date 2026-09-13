@@ -1,78 +1,355 @@
-schemaVersion: 1
+schemaVersion: 2
 crosswalkId: FATHER-PRODUCT-GOST-CROSSWALK-0001
-status: CANDIDATE_MAPPING
+status: CLAUSE_MAPPING_IN_PROGRESS
 stage: PRODUCT_DISCOVERY
+traceabilitySchema: ../../../../CLAUSE_TRACEABILITY_SCHEMA.yaml
 rule: >-
-  Mapping is at standard/purpose level. Exact clause-level compliance remains pending full-text ingestion and independent review.
+  Product artifacts are mapped to exact clauses only where clause text/number has been independently located.
+  Unverified clause references remain explicit. FATHER-specific gates/roles are internal controls, not represented
+  as mandatory GOST documents unless the source says so.
 
-sources:
-  - id: GOST-R-57193-2025
-    role: CORE_LIFECYCLE
-    mappingIntent: [stakeholder_context, life_cycle_process_inputs, decision_authority, system_need_context]
-  - id: GOST-R-58609-2019
-    role: INFORMATION_ITEM_MODEL
-    mappingIntent: [information_item_definition, information_item_content, combine_or_split_artifacts]
-  - id: GOST-R-59793-2021
-    role: AS_CREATION_STAGES
-    mappingIntent: [formation_of_requirements_inputs, concept_inputs, stage_handoff]
-  - id: GOST-34-602-2020
-    role: DOWNSTREAM_TECHNICAL_ASSIGNMENT
-    mappingIntent: [product_inputs_for_future_TZ]
+sourceVerification:
+  - sourceId: GOST-R-57193-2025
+    status: EFFECTIVE
+    verifiedClauses: ['6.4.1.2', '6.4.1.3', '6.4.2.1', '6.4.2.2', '6.4.2.3']
+    verificationState: CLAUSE_VERIFIED
+    checkedAt: '2026-09-13'
+  - sourceId: GOST-R-59793-2021
+    status: EFFECTIVE
+    verifiedClauses: ['4.1', 'Table-1/Stage-1.1', 'Table-1/Stage-1.2', 'Table-1/Stage-1.3', 'Table-1/Stage-2.1', 'Table-1/Stage-2.2', 'Table-1/Stage-2.3', 'Table-1/Stage-2.4', 'Table-1/Stage-2.5', '4.2']
+    verificationState: CLAUSE_VERIFIED
+    checkedAt: '2026-09-13'
+  - sourceId: GOST-34-602-2020
+    status: EFFECTIVE
+    verifiedClauses: ['4.1', '4.2', '4.3', '4.4', '4.4.1', '4.4.2', '4.5']
+    verificationState: CLAUSE_VERIFIED
+    checkedAt: '2026-09-13'
+  - sourceId: GOST-R-58609-2019
+    status: EFFECTIVE
+    verifiedClauses: ['scope statement', 'sections 7 and 10 mentioned by official registry']
+    verificationState: SECTION_VERIFIED_SUBCLAUSE_PENDING
+    checkedAt: '2026-09-13'
+    note: exact subclause-level mapping awaits full-text ingestion
 
 artifactMappings:
   BUSINESS_NEED:
     primaryOwner: business_owner
-    standardRefs: [GOST-R-57193-2025, GOST-R-59793-2021, GOST-R-58609-2019]
-    normativeRole: early statement of need/problem/opportunity feeding requirements/concept work
     downstream: [SECURITY_INTAKE, SYSTEM_ENGINEERING, REQUIREMENTS_BASELINE]
+    clauseMappings:
+      - mappingId: PD-BN-57193-6412
+        sourceId: GOST-R-57193-2025
+        clauseRef: '6.4.1.2'
+        verificationState: CLAUSE_VERIFIED
+        requirementSummary: business/mission analysis produces formulated problems/opportunities and the solution space/classes needed to address them
+        applicability: ALWAYS_FOR_SYSTEM_PRODUCT_DISCOVERY
+        lifecycleStage: PRODUCT_DISCOVERY
+        accountableRole: business_owner
+        artifactId: BUSINESS_NEED
+        artifactField: problem_opportunity_and_expected_effect
+        validationMethod: owner review plus trace to initiative evidence
+        downstream: [PRODUCT_VISION, SYSTEM_ENGINEERING, REQUIREMENTS_BASELINE]
+      - mappingId: PD-BN-57193-6413
+        sourceId: GOST-R-57193-2025
+        clauseRef: '6.4.1.3'
+        verificationState: CLAUSE_VERIFIED
+        requirementSummary: analyze business/mission problems, opportunities and solution domain with bidirectional traceability to needs and achievable effects
+        applicability: ALWAYS_FOR_SYSTEM_PRODUCT_DISCOVERY
+        lifecycleStage: PRODUCT_DISCOVERY
+        accountableRole: business_owner
+        artifactId: BUSINESS_NEED
+        artifactField: evidence_trace_and_problem_statement
+        validationMethod: evidence links and reviewer challenge
+        downstream: [PRODUCT_VISION, SCOPE_BASELINE]
+      - mappingId: PD-BN-59793-11
+        sourceId: GOST-R-59793-2021
+        clauseRef: '4.1 / Table 1 / Stage 1.1'
+        verificationState: CLAUSE_VERIFIED
+        requirementSummary: survey the object/context and justify the need to create the automated system
+        applicability: WHEN_PRODUCT_IS_AN_AUTOMATED_SYSTEM
+        lifecycleStage: PRODUCT_DISCOVERY
+        accountableRole: business_owner
+        artifactId: BUSINESS_NEED
+        artifactField: justification_for_creation
+        validationMethod: evidence of current problem/opportunity and owner confirmation
+        downstream: [REQUIREMENTS_BASELINE]
+
   PRODUCT_VISION:
     primaryOwner: product_manager
-    standardRefs: [GOST-R-57193-2025, GOST-R-59793-2021, GOST-R-58609-2019]
-    normativeRole: project-tailored information item describing intended outcome, product/system context and boundaries
     downstream: [SECURITY_INTAKE, SYSTEM_ENGINEERING]
+    clauseMappings:
+      - mappingId: PD-PV-57193-6421
+        sourceId: GOST-R-57193-2025
+        clauseRef: '6.4.2.1'
+        verificationState: CLAUSE_VERIFIED
+        requirementSummary: identify stakeholders and their needs so system requirements can satisfy them in the intended environment
+        applicability: ALWAYS_FOR_SYSTEM_PRODUCT_DISCOVERY
+        lifecycleStage: PRODUCT_DISCOVERY
+        accountableRole: product_manager
+        artifactId: PRODUCT_VISION
+        artifactField: intended_outcome_users_and_context
+        validationMethod: owner confirmation and stakeholder trace
+        downstream: [SYSTEM_ENGINEERING, REQUIREMENTS_BASELINE]
+      - mappingId: PD-PV-57193-6423
+        sourceId: GOST-R-57193-2025
+        clauseRef: '6.4.2.3'
+        verificationState: CLAUSE_VERIFIED
+        requirementSummary: define usage context, stakeholder needs, operating concepts/scenarios and constraints before transforming them into formal requirements
+        applicability: ALWAYS_FOR_SYSTEM_PRODUCT_DISCOVERY
+        lifecycleStage: PRODUCT_DISCOVERY
+        accountableRole: product_manager
+        artifactId: PRODUCT_VISION
+        artifactField: product_concept_and_operating_context
+        validationMethod: product review against business need and stakeholder set
+        downstream: [SYSTEM_ENGINEERING]
+      - mappingId: PD-PV-59793-23
+        sourceId: GOST-R-59793-2021
+        clauseRef: '4.1 / Table 1 / Stage 2.3'
+        verificationState: CLAUSE_VERIFIED
+        requirementSummary: develop concept alternatives and select a concept satisfying user requirements
+        applicability: WHEN_PRODUCT_IS_AN_AUTOMATED_SYSTEM
+        lifecycleStage: PRODUCT_DISCOVERY
+        accountableRole: product_manager
+        artifactId: PRODUCT_VISION
+        artifactField: concept_direction_without_premature_architecture
+        validationMethod: concept review; architecture choice remains downstream
+        downstream: [SYSTEM_ENGINEERING, ARCHITECTURE_OPTIONS]
+      - mappingId: PD-PV-34602-44
+        sourceId: GOST-34-602-2020
+        clauseRef: '4.4, 4.4.1, 4.4.2'
+        verificationState: CLAUSE_VERIFIED
+        requirementSummary: future TZ must state creation goals, measurable target indicators/criteria and system purpose
+        applicability: DOWNSTREAM_INPUT_TO_TZ_FOR_AUTOMATED_SYSTEM
+        lifecycleStage: PRODUCT_DISCOVERY
+        accountableRole: product_manager
+        artifactId: PRODUCT_VISION
+        artifactField: goal_and_purpose_inputs_for_TZ
+        validationMethod: trace Product Vision and Success Metrics into future TZ sections
+        downstream: [REQUIREMENTS_BASELINE]
+
   STAKEHOLDER_REGISTER:
     primaryOwner: project_manager
-    standardRefs: [GOST-R-57193-2025, GOST-R-58609-2019]
-    normativeRole: identifies interested parties, information owners and decision authorities used by downstream lifecycle processes
     downstream: [SECURITY_INTAKE, SYSTEM_ENGINEERING, GOVERNANCE]
+    clauseMappings:
+      - mappingId: PD-STK-57193-6421
+        sourceId: GOST-R-57193-2025
+        clauseRef: '6.4.2.1'
+        verificationState: CLAUSE_VERIFIED
+        requirementSummary: determine stakeholders related to the system throughout its life cycle before formalizing their needs
+        applicability: ALWAYS_FOR_SYSTEM_PRODUCT_DISCOVERY
+        lifecycleStage: PRODUCT_DISCOVERY
+        accountableRole: project_manager
+        artifactId: STAKEHOLDER_REGISTER
+        artifactField: stakeholder_identity_interest_authority
+        validationMethod: named stakeholder/owner review
+        downstream: [SECURITY_INTAKE, SYSTEM_ENGINEERING]
+      - mappingId: PD-STK-57193-6423
+        sourceId: GOST-R-57193-2025
+        clauseRef: '6.4.2.3'
+        verificationState: CLAUSE_VERIFIED
+        requirementSummary: identify stakeholders with legitimate system interest and obtain agreement that needs are correctly reflected
+        applicability: ALWAYS_FOR_SYSTEM_PRODUCT_DISCOVERY
+        lifecycleStage: PRODUCT_DISCOVERY
+        accountableRole: project_manager
+        artifactId: STAKEHOLDER_REGISTER
+        artifactField: decision_authority_and_confirmation_path
+        validationMethod: owner/authority confirmation
+        downstream: [PRODUCT_READY_DECISION]
+
   SCOPE_BASELINE:
     primaryOwner: product_manager
-    standardRefs: [GOST-R-57193-2025, GOST-R-59793-2021, GOST-R-58609-2019]
-    normativeRole: defines current project/product boundary and exclusions before engineering decomposition
     downstream: [SECURITY_INTAKE, SYSTEM_ENGINEERING, REQUIREMENTS_BASELINE]
+    clauseMappings:
+      - mappingId: PD-SCOPE-57193-6413
+        sourceId: GOST-R-57193-2025
+        clauseRef: '6.4.1.3'
+        verificationState: CLAUSE_VERIFIED
+        requirementSummary: characterize the domain of possible solutions and define concepts relevant to the life cycle
+        applicability: ALWAYS_FOR_SYSTEM_PRODUCT_DISCOVERY
+        lifecycleStage: PRODUCT_DISCOVERY
+        accountableRole: product_manager
+        artifactId: SCOPE_BASELINE
+        artifactField: in_scope_out_of_scope_solution_domain
+        validationMethod: business owner and project manager review
+        downstream: [SYSTEM_ENGINEERING]
+      - mappingId: PD-SCOPE-57193-6422
+        sourceId: GOST-R-57193-2025
+        clauseRef: '6.4.2.2'
+        verificationState: CLAUSE_VERIFIED
+        requirementSummary: stakeholder-needs process outputs include functional description, capability boundaries, interactions and constraints for system decisions
+        applicability: ALWAYS_FOR_SYSTEM_PRODUCT_DISCOVERY
+        lifecycleStage: PRODUCT_DISCOVERY
+        accountableRole: product_manager
+        artifactId: SCOPE_BASELINE
+        artifactField: product_boundary_and_constraints
+        validationMethod: trace to system boundary work in Stage 03
+        downstream: [SYSTEM_ENGINEERING]
+      - mappingId: PD-SCOPE-59793-42
+        sourceId: GOST-R-59793-2021
+        clauseRef: '4.2'
+        verificationState: CLAUSE_VERIFIED
+        requirementSummary: stages/steps may be tailored, combined, excluded or performed partly in parallel according to system/project specifics and the governing documents
+        applicability: WHEN_PRODUCT_IS_AN_AUTOMATED_SYSTEM
+        lifecycleStage: PRODUCT_DISCOVERY
+        accountableRole: project_manager
+        artifactId: SCOPE_BASELINE
+        artifactField: lifecycle_tailoring_constraints
+        validationMethod: tailoring decision recorded and visible
+        downstream: [ALL_STAGES]
+
   SUCCESS_METRICS:
     primaryOwner: product_manager
-    standardRefs: [GOST-R-57193-2025, GOST-R-58609-2019]
-    normativeRole: project-tailored success/effectiveness criteria later transformed into measurable requirements and validation evidence
     downstream: [REQUIREMENTS_BASELINE, VERIFICATION_VALIDATION]
+    clauseMappings:
+      - mappingId: PD-METRIC-57193-6423
+        sourceId: GOST-R-57193-2025
+        clauseRef: '6.4.2.3'
+        verificationState: CLAUSE_VERIFIED
+        requirementSummary: analyze needs/formalized requirements and determine critical performance indicators for evaluating solution effectiveness
+        applicability: ALWAYS_FOR_SYSTEM_PRODUCT_DISCOVERY
+        lifecycleStage: PRODUCT_DISCOVERY
+        accountableRole: product_manager
+        artifactId: SUCCESS_METRICS
+        artifactField: measurable_outcome_indicators
+        validationMethod: each metric later maps to requirement/acceptance evidence
+        downstream: [REQUIREMENTS_BASELINE, VERIFICATION_VALIDATION]
+      - mappingId: PD-METRIC-34602-441
+        sourceId: GOST-34-602-2020
+        clauseRef: '4.4.1'
+        verificationState: CLAUSE_VERIFIED
+        requirementSummary: future TZ creation goals state target indicator values and criteria for assessing goal achievement
+        applicability: DOWNSTREAM_INPUT_TO_TZ_FOR_AUTOMATED_SYSTEM
+        lifecycleStage: PRODUCT_DISCOVERY
+        accountableRole: product_manager
+        artifactId: SUCCESS_METRICS
+        artifactField: target_values_and_evaluation_criteria
+        validationMethod: future TZ/acceptance trace
+        downstream: [REQUIREMENTS_BASELINE, VERIFICATION_VALIDATION]
+
   ASSUMPTION_UNKNOWN_LOG:
     primaryOwner: project_manager
-    standardRefs: [GOST-R-57193-2025, GOST-R-58609-2019]
-    normativeRole: explicit project information item preserving assumptions, unresolved issues and evidence gaps
     downstream: [ALL]
+    clauseMappings:
+      - mappingId: PD-UNK-57193-6413
+        sourceId: GOST-R-57193-2025
+        clauseRef: '6.4.1.3'
+        verificationState: CLAUSE_VERIFIED
+        requirementSummary: business/mission analysis includes forecasting risks/system analysis and maintaining traceability/documentation of the process information objects
+        applicability: ALWAYS_FOR_SYSTEM_PRODUCT_DISCOVERY
+        lifecycleStage: PRODUCT_DISCOVERY
+        accountableRole: project_manager
+        artifactId: ASSUMPTION_LOG
+        artifactField: assumptions_unknowns_risks_evidence_gaps
+        validationMethod: skeptical review; no UNKNOWN promoted silently
+        downstream: [ALL]
+      - mappingId: PD-UNK-59793-24
+        sourceId: GOST-R-59793-2021
+        clauseRef: '4.1 / Table 1 / Stage 2.4'
+        verificationState: CLAUSE_VERIFIED
+        requirementSummary: concept-development stage includes project risk assessment
+        applicability: WHEN_PRODUCT_IS_AN_AUTOMATED_SYSTEM
+        lifecycleStage: PRODUCT_DISCOVERY
+        accountableRole: project_manager
+        artifactId: ASSUMPTION_LOG
+        artifactField: project_risk_and_uncertainty_inputs
+        validationMethod: risk/unknown entries reviewed before handoff
+        downstream: [SYSTEM_ENGINEERING, SECURITY_INTAKE]
+
   PRODUCT_HANDOFF_TO_SECURITY:
     primaryOwner: product_manager
-    standardRefs: [GOST-R-57193-2025, GOST-R-59793-2021]
-    normativeRole: controlled handoff from product context to first mandatory engineering discipline under FATHER Constitution
     downstream: [SECURITY_INTAKE]
+    clauseMappings:
+      - mappingId: PD-HANDOFF-59793-13
+        sourceId: GOST-R-59793-2021
+        clauseRef: '4.1 / Table 1 / Stage 1.3'
+        verificationState: CLAUSE_VERIFIED
+        requirementSummary: requirement-formation stage includes documenting the work performed
+        applicability: WHEN_PRODUCT_IS_AN_AUTOMATED_SYSTEM
+        lifecycleStage: PRODUCT_DISCOVERY
+        accountableRole: product_manager
+        artifactId: PRODUCT_HANDOFF_TO_SECURITY
+        artifactField: controlled_product_stage_output_package
+        validationMethod: completeness check against PRODUCT_DOCUMENT_PACK
+        downstream: [SECURITY_INTAKE]
+      - mappingId: PD-HANDOFF-59793-25
+        sourceId: GOST-R-59793-2021
+        clauseRef: '4.1 / Table 1 / Stage 2.5'
+        verificationState: CLAUSE_VERIFIED
+        requirementSummary: concept stage includes documenting results before downstream work
+        applicability: WHEN_PRODUCT_IS_AN_AUTOMATED_SYSTEM
+        lifecycleStage: PRODUCT_DISCOVERY
+        accountableRole: product_manager
+        artifactId: PRODUCT_HANDOFF_TO_SECURITY
+        artifactField: concept_context_handoff
+        validationMethod: reviewer acknowledgement and open-conditions list
+        downstream: [SECURITY_INTAKE]
+
   PRODUCT_READY_DECISION:
     primaryOwner: product_manager
-    standardRefs: [GOST-R-57193-2025, GOST-R-58609-2019]
-    normativeRole: FATHER project-tailored gate evidence, not a claim of a standalone mandatory GOST document
     downstream: [SECURITY_INTAKE]
+    normativeClassification: FATHER_INTERNAL_CONTROL
+    clauseMappings:
+      - mappingId: PD-GATE-57193-6423
+        sourceId: GOST-R-57193-2025
+        clauseRef: '6.4.2.3'
+        verificationState: CLAUSE_VERIFIED
+        requirementSummary: stakeholder-needs work includes analysis, agreement/confirmation and resolution of problems in formulated needs/requirements
+        applicability: ALWAYS_FOR_SYSTEM_PRODUCT_DISCOVERY
+        lifecycleStage: PRODUCT_DISCOVERY
+        accountableRole: product_manager
+        artifactId: PRODUCT_READY_DECISION
+        artifactField: evidence_backed_readiness_and_open_conditions
+        validationMethod: business owner plus skeptical review
+        downstream: [SECURITY_INTAKE]
+      - mappingId: PD-GATE-FATHER
+        sourceId: FATHER-CONSTITUTION-0001
+        clauseRef: 'FTH-001,FTH-002,FTH-008,FTH-009'
+        verificationState: CLAUSE_VERIFIED
+        requirementSummary: Product context must exist before engineering; Security enters immediately after Product; uncertainty and traceability remain visible
+        applicability: ALL_FATHER_PROJECTS
+        lifecycleStage: PRODUCT_DISCOVERY
+        accountableRole: product_manager
+        artifactId: PRODUCT_READY_DECISION
+        artifactField: gate_outcome
+        validationMethod: DMN gate decision
+        downstream: [SECURITY_INTAKE]
+
+informationItemModel:
+  sourceId: GOST-R-58609-2019
+  verificationState: SECTION_VERIFIED_SUBCLAUSE_PENDING
+  knownSupport:
+    - standard defines lifecycle information-item/documentation content model
+    - official registry states information items may be combined or divided for project/organizational needs
+    - official registry points to sections 7 and 10 for document types/content
+  fatherUse: >-
+    Product Pack artifacts are canonical information items. They need not be separate Word documents if the same
+    required information and traceability are preserved in another approved representation.
+  openWork:
+    - ingest full standard text
+    - bind exact section/subsection numbers for individual information-item types
 
 futureTZInputMapping:
-  rule: Product provides source information; complete TZ ownership belongs to later Requirements/System/Security collaboration.
-  inputs:
-    - BUSINESS_NEED
-    - PRODUCT_VISION
-    - STAKEHOLDER_REGISTER
-    - SCOPE_BASELINE
-    - SUCCESS_METRICS
-    - confirmed_constraints_from_later_stages
+  sourceId: GOST-34-602-2020
+  applicability: WHEN_A_FORMAL_TZ_FOR_AUTOMATED_SYSTEM_IS_REQUIRED
+  rule: Product provides source information; complete TZ is owned by later Requirements/System/Security collaboration.
+  clauseBindings:
+    - clauseRef: '4.1'
+      contribution: Product information feeds mandatory TZ sections rather than replacing the TZ
+    - clauseRef: '4.3'
+      contribution: stakeholder/authority/project identifiers and source documents support the future General Information section
+    - clauseRef: '4.4,4.4.1,4.4.2'
+      contribution: Product Vision and Success Metrics feed goals and purpose
+    - clauseRef: '4.5'
+      contribution: product/business context contributes to description of the automation object; detailed object/system characterization is refined downstream
+
+qualityRules:
+  - exact clause number must have verificationState
+  - FATHER internal extension must be labeled FATHER_INTERNAL_CONTROL
+  - clause paraphrase must not strengthen the source obligation
+  - project applicability must be evaluated before declaring compliance
+  - source version/status must be rechecked before material compliance or architecture decision
 
 openWork:
-  - ingest full text for each source
-  - map exact clauses and required content
-  - distinguish mandatory normative content from FATHER best-practice extensions
-  - verify mapping independently before VERIFIED status
+  - ingest full GOST-R-58609-2019 text and replace section-level placeholders with exact subclauses
+  - independently review all Product clause mappings
+  - add exact source snapshots/hashes to evidence registry
+  - propagate mappingIds into individual document sections/fields
