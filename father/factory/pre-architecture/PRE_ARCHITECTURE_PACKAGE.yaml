@@ -1,4 +1,4 @@
-schemaVersion: 1
+schemaVersion: 2
 packageId: FATHER-PRE-ARCHITECTURE-PACKAGE-0001
 status: CANDIDATE_MODEL
 purpose: >-
@@ -8,6 +8,7 @@ purpose: >-
 entryGate: PRODUCT_READY
 exitGate: ARCHITECTURE_OPTIONS_ALLOWED
 constitutionalRefs: [FTH-002, FTH-003, FTH-004, FTH-005, FTH-006, FTH-007, FTH-008, FTH-009, FTH-011]
+deliveryFeasibilityModel: father/factory/pre-architecture/DELIVERY_FEASIBILITY_MODEL.yaml
 
 roleContributions:
   business_owner:
@@ -33,19 +34,36 @@ roleContributions:
       - SCOPE_BASELINE
       - PRODUCT_READY_DECISION
     evidence: [owner_confirmed_product_decisions, research_refs, product_metrics_baseline]
-    handsTo: [security_engineer, business_analyst, system_engineer, requirements_engineer]
+    handsTo: [security_engineer, business_analyst, system_engineer, requirements_engineer, project_manager]
 
   project_manager:
-    receives: [product_scope, sponsor_context, organizational_constraints]
-    mustDetermine: [stakeholders, decision_path, schedule_constraints, dependencies, team_constraints, assumption_owners]
+    receives: [product_scope, sponsor_context, organizational_constraints, requirements_baseline_candidate, domain_estimates]
+    mustDetermine:
+      - stakeholders
+      - decision_path
+      - schedule_constraints
+      - dependencies
+      - team_constraints
+      - assumption_owners
+      - WBS_v0
+      - estimation_method
+      - uncertainty_range
+      - project_risks
+      - change_control_model
     produces:
       - STAKEHOLDER_REGISTER
       - DECISION_AUTHORITY_MAP
       - ASSUMPTION_LOG
       - PROJECT_CONSTRAINT_SNAPSHOT
       - DEPENDENCY_REGISTER
-    evidence: [named_owners, approved_project_constraints]
-    handsTo: [security_engineer, system_engineer, requirements_engineer, solution_architect]
+      - DELIVERY_WBS_V0
+      - ESTIMATION_REGISTER_V0
+      - ESTIMATION_ASSUMPTION_LOG
+      - PROJECT_RISK_REGISTER
+      - CHANGE_MANAGEMENT_MODEL
+      - DELIVERY_FEASIBILITY_DECISION
+    evidence: [named_owners, approved_project_constraints, estimation_basis, risk_review_records]
+    handsTo: [security_engineer, system_engineer, requirements_engineer, finance_procurement, solution_architect]
 
   business_analyst:
     receives: [BUSINESS_NEED, PRODUCT_VISION, stakeholder_inputs, current_business_materials]
@@ -55,9 +73,11 @@ roleContributions:
       - DOMAIN_GLOSSARY
       - BUSINESS_RULE_CATALOGUE
       - USER_AND_OPERATOR_JOURNEYS
+      - USE_CASE_CATALOGUE
       - BUSINESS_REQUIREMENTS
+      - DISCOVERY_QUESTION_REGISTER
     evidence: [stakeholder_interviews, process_owner_confirmation, source_documents]
-    handsTo: [system_engineer, requirements_engineer, security_engineer]
+    handsTo: [system_engineer, requirements_engineer, security_engineer, project_manager]
 
   security_engineer:
     receives: [PRODUCT_READY_PACKAGE, business_processes, initial_data_inventory]
@@ -103,7 +123,7 @@ roleContributions:
       - DATA_OWNER_MATRIX
       - DATA_HANDLING_CONSTRAINTS
     evidence: [data_owner_confirmation, source_system_metadata, legal_constraints]
-    handsTo: [security_engineer, system_engineer, requirements_engineer, data_engineer]
+    handsTo: [security_engineer, system_engineer, requirements_engineer, data_engineer, qa_verification]
 
   system_engineer:
     receives:
@@ -132,7 +152,7 @@ roleContributions:
       - SYSTEM_ASSUMPTION_LOG
       - SYSTEM_MODEL_READY_DECISION
     evidence: [source_system_docs, interviews, observations, reverse_engineering_when_authorized]
-    handsTo: [security_engineer, requirements_engineer, solution_architect]
+    handsTo: [security_engineer, requirements_engineer, solution_architect, project_manager]
     cannot: [select_solution_architecture_before_gates]
 
   integration_engineer:
@@ -143,11 +163,11 @@ roleContributions:
       - INTEGRATION_CONSTRAINTS
       - EXTERNAL_SYSTEM_DEPENDENCY_MAP
     evidence: [api_specs, interface_docs, traffic_or_config_evidence, owner_confirmation]
-    handsTo: [system_engineer, security_engineer, requirements_engineer, solution_architect]
+    handsTo: [system_engineer, security_engineer, requirements_engineer, solution_architect, project_manager]
 
   operations_platform:
-    receives: [product_outcomes, current_platform_materials, system_context, service_constraints]
-    mustDetermine: [sla_slo_intent, support_model, platform_limits, environments, observability_needs, capacity_evidence, incident_history]
+    receives: [product_outcomes, current_platform_materials, system_context, service_constraints, workload_assumptions]
+    mustDetermine: [sla_slo_intent, support_model, platform_limits, environments, observability_needs, capacity_evidence, incident_history, scenario_level_sizing]
     produces:
       - SLA_SLO_INPUTS
       - SUPPORT_MODEL
@@ -155,29 +175,49 @@ roleContributions:
       - CAPACITY_LOAD_PROFILE
       - INCIDENT_PROBLEM_HISTORY
       - OPERABILITY_REQUIREMENTS_INPUTS
-    evidence: [runtime_metrics, platform_policy, service_catalog, incident_records]
-    handsTo: [requirements_engineer, security_engineer, solution_architect]
+      - SIZING_MODEL_V0
+    evidence: [runtime_metrics, platform_policy, service_catalog, incident_records, sizing_assumptions]
+    handsTo: [requirements_engineer, security_engineer, project_manager, finance_procurement, solution_architect]
 
   finance_procurement:
-    receives: [product_scope, project_plan, vendor_or_platform_context]
-    mustDetermine: [budget_envelope, buy_build_constraints, licensing_constraints, procurement_lead_times, commercial_dependencies]
+    receives: [product_scope, project_plan, vendor_or_platform_context, estimation_register_v0, workload_assumptions]
+    mustDetermine:
+      - budget_envelope
+      - buy_build_constraints
+      - licensing_constraints
+      - procurement_lead_times
+      - commercial_dependencies
+      - TCO_scenarios
+      - unit_economics
     produces:
       - COST_BUDGET_CONSTRAINTS
       - COMMERCIAL_CONTRACT_CONSTRAINTS
       - PROCUREMENT_DEPENDENCY_REGISTER
-    evidence: [approved_budget, contract_or_procurement_materials]
+      - TCO_MODEL_V0
+      - UNIT_ECONOMICS_V0
+    evidence: [approved_budget, contract_or_procurement_materials, sourced_cost_assumptions]
     handsTo: [product_manager, project_manager, requirements_engineer, solution_architect]
     cannot: [invent_technical_requirements]
 
   qa_verification:
-    receives: [product_success_metrics, business_requirements, system_model, security_requirements_draft]
-    mustDetermine: [testability, acceptance_evidence_needed, unverifiable_requirements, verification_constraints]
+    receives: [product_success_metrics, business_requirements, system_model, security_requirements_draft, NFR_candidate_set, data_context]
+    mustDetermine:
+      - testability
+      - acceptance_evidence_needed
+      - unverifiable_requirements
+      - verification_constraints
+      - NFR_verification_methods
+      - golden_dataset_need_and_owner
+      - PoC_evidence_needed
     produces:
       - ACCEPTANCE_CRITERIA_INPUTS
       - VERIFICATION_CONSTRAINTS
       - TESTABILITY_GAPS
-    evidence: [review_of_candidate_requirements_and_success_metrics]
-    handsTo: [requirements_engineer, product_manager, security_engineer]
+      - NFR_VERIFICATION_MATRIX
+      - GOLDEN_DATASET_PLAN
+      - POC_GATE_CRITERIA
+    evidence: [review_of_candidate_requirements_and_success_metrics, test_data_evidence]
+    handsTo: [requirements_engineer, product_manager, security_engineer, project_manager]
 
   requirements_engineer:
     receives:
@@ -190,6 +230,7 @@ roleContributions:
       - OPERABILITY_REQUIREMENTS_INPUTS
       - COST_BUDGET_CONSTRAINTS
       - ACCEPTANCE_CRITERIA_INPUTS
+      - NFR_VERIFICATION_MATRIX
     mustDetermine:
       - stakeholder_requirements
       - system_requirements
@@ -203,12 +244,13 @@ roleContributions:
       - SYSTEM_REQUIREMENTS
       - SOFTWARE_REQUIREMENTS
       - NFR_CATALOGUE
+      - NFR_SPECIFICATION
       - SECURITY_REQUIREMENTS
       - ACCEPTANCE_CRITERIA
       - REQUIREMENTS_TRACEABILITY_MATRIX
       - REQUIREMENTS_BASELINE_READY_DECISION
-    evidence: [source_to_requirement_trace, owner_confirmation, review_records]
-    handsTo: [solution_architect]
+    evidence: [source_to_requirement_trace, owner_confirmation, review_records, verification_method_per_material_NFR]
+    handsTo: [project_manager, solution_architect]
 
   knowledge_growth_analyst:
     receives: [all_pre_architecture_sources_and_artifacts]
@@ -223,8 +265,8 @@ roleContributions:
     cannot: [self_verify_domain_truth]
 
   skeptical_reviewer:
-    receives: [material_pre_architecture_artifacts, evidence_register, open_unknowns]
-    mustDetermine: [hidden_assumptions, unresolved_conflicts, alternatives, failure_modes, unsupported_claims]
+    receives: [material_pre_architecture_artifacts, evidence_register, open_unknowns, estimation_basis, project_risk_register]
+    mustDetermine: [hidden_assumptions, unresolved_conflicts, alternatives, failure_modes, unsupported_claims, false_precision_in_estimates]
     produces:
       - PRE_ARCHITECTURE_INDEPENDENT_REVIEW
     evidence: [review_findings_with_exact_refs]
@@ -238,6 +280,7 @@ architectureEntryContract:
     SYSTEM_MODEL_READY: [PASS, CONDITIONAL_PASS_WITH_NONBLOCKING_CONDITIONS]
     THREAT_MODEL_V0_READY: [PASS, CONDITIONAL_PASS_WITH_NONBLOCKING_CONDITIONS]
     REQUIREMENTS_BASELINE_READY: [PASS]
+    DELIVERY_FEASIBILITY_READY: [PASS, CONDITIONAL_PASS_WITH_NONBLOCKING_CONDITIONS]
   mandatoryPackageFamilies:
     - product_context
     - business_process_and_domain
@@ -249,6 +292,7 @@ architectureEntryContract:
     - operability_and_platform
     - commercial_delivery_constraints
     - requirements_baseline
+    - delivery_feasibility_and_estimation
     - evidence_conflicts_unknowns
     - independent_review
   hardBlockers:
@@ -258,6 +302,10 @@ architectureEntryContract:
     - missing_system_model
     - missing_threat_model_v0
     - missing_requirements_baseline
+    - missing_delivery_feasibility_review
+    - material_NFR_is_unmeasurable_and_has_no_baseline_plan
+    - exact_delivery_commitment_has_no_estimation_basis
+    - fixed_price_scope_has_no_change_control
     - unresolved_material_conflict_hidden_from_architect
     - legal_or_security_unknown_silently_promoted_to_fact
     - architecture_producer_expected_to_self_approve
