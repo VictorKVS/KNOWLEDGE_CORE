@@ -1,0 +1,96 @@
+schemaVersion: 1
+packId: FATHER-STAGE01-PRODUCT-DOCUMENT-PACK-0001
+stage: PRODUCT_DISCOVERY
+status: PILOT_FILLED_OWNER_REVIEW
+pilot: FATHER-ANALYTICAL-DESIGN-PLATFORM
+normativeCrosswalk: PRODUCT_GOST_CROSSWALK.yaml
+gate: PRODUCT_READY
+gateDecision: CONDITIONAL_PASS
+
+artifacts:
+  - order: 1
+    artifactId: BUSINESS_NEED
+    file: 01_BUSINESS_NEED.md
+    ownerRole: business_owner
+    reviewers: [product_manager]
+    status: OWNER_CONFIRMED
+    standardRefs: [GOST-R-57193-2025, GOST-R-58609-2019, GOST-R-59793-2021]
+    downstream: [SECURITY_INTAKE, SYSTEM_ENGINEERING, REQUIREMENTS_BASELINE]
+  - order: 2
+    artifactId: PRODUCT_VISION
+    file: 02_PRODUCT_VISION.md
+    ownerRole: product_manager
+    reviewers: [business_owner]
+    status: OWNER_CONFIRMED
+    standardRefs: [GOST-R-57193-2025, GOST-R-58609-2019, GOST-R-59793-2021]
+    downstream: [SECURITY_INTAKE, SYSTEM_ENGINEERING]
+  - order: 3
+    artifactId: STAKEHOLDER_REGISTER
+    file: 03_STAKEHOLDER_REGISTER.md
+    ownerRole: project_manager
+    reviewers: [product_manager]
+    status: PARTIAL
+    standardRefs: [GOST-R-57193-2025, GOST-R-58609-2019]
+    downstream: [SECURITY_INTAKE, SYSTEM_ENGINEERING, GOVERNANCE]
+  - order: 4
+    artifactId: SCOPE_BASELINE
+    file: 04_SCOPE_BASELINE.md
+    ownerRole: product_manager
+    reviewers: [business_owner, project_manager]
+    status: OWNER_CONFIRMED_WITH_OPEN_BOUNDARIES
+    standardRefs: [GOST-R-57193-2025, GOST-R-58609-2019, GOST-R-59793-2021]
+    downstream: [SECURITY_INTAKE, SYSTEM_ENGINEERING, REQUIREMENTS_BASELINE]
+  - order: 5
+    artifactId: SUCCESS_METRICS
+    file: 05_SUCCESS_METRICS.md
+    ownerRole: product_manager
+    reviewers: [business_owner]
+    status: CANDIDATE_BASELINE_REQUIRED
+    standardRefs: [GOST-R-57193-2025, GOST-R-58609-2019]
+    downstream: [REQUIREMENTS_BASELINE, VERIFICATION_VALIDATION]
+  - order: 6
+    artifactId: ASSUMPTION_LOG
+    file: 06_ASSUMPTION_UNKNOWN_LOG.md
+    ownerRole: project_manager
+    reviewers: [skeptical_reviewer]
+    status: OPEN
+    standardRefs: [GOST-R-57193-2025, GOST-R-58609-2019]
+    downstream: [ALL]
+  - order: 7
+    artifactId: PRODUCT_HANDOFF_TO_SECURITY
+    file: 07_PRODUCT_HANDOFF_TO_SECURITY.md
+    ownerRole: product_manager
+    reviewers: [security_engineer]
+    status: READY_WITH_CONDITIONS
+    standardRefs: [GOST-R-57193-2025, GOST-R-59793-2021]
+    downstream: [SECURITY_INTAKE]
+  - order: 8
+    artifactId: PRODUCT_READY_DECISION
+    file: 08_PRODUCT_READY_DECISION.md
+    ownerRole: product_manager
+    reviewers: [business_owner, skeptical_reviewer]
+    status: CONDITIONAL_PASS
+    standardRefs: [GOST-R-57193-2025, GOST-R-58609-2019]
+    downstream: [SECURITY_INTAKE]
+
+futureTechnicalAssignment:
+  standardRef: GOST-34-602-2020
+  ownership: REQUIREMENTS_SYSTEM_SECURITY_COLLABORATION
+  productProvidesInputs:
+    - BUSINESS_NEED
+    - PRODUCT_VISION
+    - STAKEHOLDER_REGISTER
+    - SCOPE_BASELINE
+    - SUCCESS_METRICS
+  rule: complete_TZ_is_not_a_Product_only_artifact
+
+analytics:
+  requiredSignals:
+    - artifact_status_distribution
+    - material_claims_total
+    - unsupported_material_claims
+    - open_unknowns
+    - open_conflicts
+    - named_information_owners
+    - downstream_blockers
+    - gate_reasons
