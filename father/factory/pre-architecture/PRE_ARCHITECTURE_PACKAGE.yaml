@@ -1,0 +1,263 @@
+schemaVersion: 1
+packageId: FATHER-PRE-ARCHITECTURE-PACKAGE-0001
+status: CANDIDATE_MODEL
+purpose: >-
+  Define the complete evidence-backed information package that must exist before a Solution Architect may create
+  architecture options. The package aggregates outputs of all accountable pre-architecture roles without transferring
+  their authority to the architect.
+entryGate: PRODUCT_READY
+exitGate: ARCHITECTURE_OPTIONS_ALLOWED
+constitutionalRefs: [FTH-002, FTH-003, FTH-004, FTH-005, FTH-006, FTH-007, FTH-008, FTH-009, FTH-011]
+
+roleContributions:
+  business_owner:
+    receives: [initiative_request, sponsor_context]
+    mustDetermine: [business_problem_or_opportunity, expected_business_effect, decision_authority]
+    produces: [BUSINESS_NEED]
+    evidence: [owner_confirmation, business_evidence]
+    handsTo: [product_manager, security_engineer, system_engineer, requirements_engineer]
+
+  product_manager:
+    receives: [BUSINESS_NEED, market_or_user_evidence, sponsor_constraints]
+    mustDetermine: [product_vision, target_users, value_proposition, scope, success_metrics, product_priorities]
+    produces:
+      - PRODUCT_VISION
+      - TARGET_USER_SEGMENTS
+      - VALUE_PROPOSITION
+      - USER_JOURNEY
+      - PRODUCT_REQUIREMENTS_PRD
+      - MVP_SCOPE
+      - SUCCESS_METRICS
+      - PRODUCT_ROADMAP
+      - PRODUCT_BACKLOG
+      - SCOPE_BASELINE
+      - PRODUCT_READY_DECISION
+    evidence: [owner_confirmed_product_decisions, research_refs, product_metrics_baseline]
+    handsTo: [security_engineer, business_analyst, system_engineer, requirements_engineer]
+
+  project_manager:
+    receives: [product_scope, sponsor_context, organizational_constraints]
+    mustDetermine: [stakeholders, decision_path, schedule_constraints, dependencies, team_constraints, assumption_owners]
+    produces:
+      - STAKEHOLDER_REGISTER
+      - DECISION_AUTHORITY_MAP
+      - ASSUMPTION_LOG
+      - PROJECT_CONSTRAINT_SNAPSHOT
+      - DEPENDENCY_REGISTER
+    evidence: [named_owners, approved_project_constraints]
+    handsTo: [security_engineer, system_engineer, requirements_engineer, solution_architect]
+
+  business_analyst:
+    receives: [BUSINESS_NEED, PRODUCT_VISION, stakeholder_inputs, current_business_materials]
+    mustDetermine: [business_processes, actors, business_rules, exceptions, domain_terms, current_and_target_journeys]
+    produces:
+      - BUSINESS_PROCESS_MODEL
+      - DOMAIN_GLOSSARY
+      - BUSINESS_RULE_CATALOGUE
+      - USER_AND_OPERATOR_JOURNEYS
+      - BUSINESS_REQUIREMENTS
+    evidence: [stakeholder_interviews, process_owner_confirmation, source_documents]
+    handsTo: [system_engineer, requirements_engineer, security_engineer]
+
+  security_engineer:
+    receives: [PRODUCT_READY_PACKAGE, business_processes, initial_data_inventory]
+    mustDetermine:
+      - early_security_context
+      - trust_assumptions
+      - exposure
+      - initial_abuse_cases
+      - security_constraints
+      - threat_model_v0
+      - draft_security_requirements
+    produces:
+      - SECURITY_INTAKE
+      - INITIAL_ABUSE_CASES
+      - SECURITY_CONSTRAINTS
+      - SECURITY_QUESTIONS_LOG
+      - THREAT_MODEL_V0
+      - THREAT_SCENARIO_REGISTER
+      - TRUST_BOUNDARY_REGISTER
+      - SECURITY_REQUIREMENTS_DRAFT
+      - SECURITY_RISK_REGISTER
+    evidence: [security_sources, system_model_refs, owner_confirmed_security_context]
+    handsTo: [system_engineer, requirements_engineer, solution_architect]
+    cannot: [accept_residual_risk, invent_legal_applicability, override_product_scope]
+
+  legal_compliance:
+    receives: [product_scope, business_processes, data_inventory, jurisdiction_context, normative_source_registry]
+    mustDetermine: [legal_and_regulatory_applicability, mandatory_constraints, unresolved_legal_questions]
+    produces:
+      - REGULATORY_APPLICABILITY
+      - MANDATORY_REQUIREMENT_REGISTER
+      - LEGAL_COMPLIANCE_QUESTIONS
+    evidence: [current_legal_sources, applicability_rationale, legal_owner_review]
+    handsTo: [security_engineer, requirements_engineer, solution_architect]
+    cannot: [delegate_legal_conclusion_to_llm_or_architect]
+
+  data_owner:
+    receives: [business_processes, data_inventory, regulatory_applicability]
+    mustDetermine: [data_classes, sensitivity, allowed_processing, retention_intent, ownership, sharing_constraints]
+    produces:
+      - DATA_INVENTORY
+      - DATA_CLASSIFICATION
+      - DATA_OWNER_MATRIX
+      - DATA_HANDLING_CONSTRAINTS
+    evidence: [data_owner_confirmation, source_system_metadata, legal_constraints]
+    handsTo: [security_engineer, system_engineer, requirements_engineer, data_engineer]
+
+  system_engineer:
+    receives:
+      - PRODUCT_READY_PACKAGE
+      - BUSINESS_PROCESS_MODEL
+      - SECURITY_INTAKE
+      - DATA_CLASSIFICATION
+      - SECURITY_CONSTRAINTS
+    mustDetermine:
+      - system_context
+      - system_boundary
+      - logical_functions
+      - data_flows
+      - interfaces
+      - external_dependencies
+      - operational_modes
+      - system_assumptions
+    produces:
+      - SYSTEM_CONTEXT
+      - SYSTEM_BOUNDARY
+      - FUNCTION_MODEL
+      - DATA_FLOW_MODEL
+      - INTERFACE_INVENTORY
+      - EXTERNAL_DEPENDENCY_REGISTER
+      - OPERATIONAL_MODES
+      - SYSTEM_ASSUMPTION_LOG
+      - SYSTEM_MODEL_READY_DECISION
+    evidence: [source_system_docs, interviews, observations, reverse_engineering_when_authorized]
+    handsTo: [security_engineer, requirements_engineer, solution_architect]
+    cannot: [select_solution_architecture_before_gates]
+
+  integration_engineer:
+    receives: [SYSTEM_CONTEXT, SYSTEM_BOUNDARY, existing_interfaces, external_system_docs]
+    mustDetermine: [interface_owners, protocols, data_contracts, auth_mechanisms, sla_constraints, failure_dependencies]
+    produces:
+      - INTERFACE_INVENTORY
+      - INTEGRATION_CONSTRAINTS
+      - EXTERNAL_SYSTEM_DEPENDENCY_MAP
+    evidence: [api_specs, interface_docs, traffic_or_config_evidence, owner_confirmation]
+    handsTo: [system_engineer, security_engineer, requirements_engineer, solution_architect]
+
+  operations_platform:
+    receives: [product_outcomes, current_platform_materials, system_context, service_constraints]
+    mustDetermine: [sla_slo_intent, support_model, platform_limits, environments, observability_needs, capacity_evidence, incident_history]
+    produces:
+      - SLA_SLO_INPUTS
+      - SUPPORT_MODEL
+      - PLATFORM_ENVIRONMENT_CONSTRAINTS
+      - CAPACITY_LOAD_PROFILE
+      - INCIDENT_PROBLEM_HISTORY
+      - OPERABILITY_REQUIREMENTS_INPUTS
+    evidence: [runtime_metrics, platform_policy, service_catalog, incident_records]
+    handsTo: [requirements_engineer, security_engineer, solution_architect]
+
+  finance_procurement:
+    receives: [product_scope, project_plan, vendor_or_platform_context]
+    mustDetermine: [budget_envelope, buy_build_constraints, licensing_constraints, procurement_lead_times, commercial_dependencies]
+    produces:
+      - COST_BUDGET_CONSTRAINTS
+      - COMMERCIAL_CONTRACT_CONSTRAINTS
+      - PROCUREMENT_DEPENDENCY_REGISTER
+    evidence: [approved_budget, contract_or_procurement_materials]
+    handsTo: [product_manager, project_manager, requirements_engineer, solution_architect]
+    cannot: [invent_technical_requirements]
+
+  qa_verification:
+    receives: [product_success_metrics, business_requirements, system_model, security_requirements_draft]
+    mustDetermine: [testability, acceptance_evidence_needed, unverifiable_requirements, verification_constraints]
+    produces:
+      - ACCEPTANCE_CRITERIA_INPUTS
+      - VERIFICATION_CONSTRAINTS
+      - TESTABILITY_GAPS
+    evidence: [review_of_candidate_requirements_and_success_metrics]
+    handsTo: [requirements_engineer, product_manager, security_engineer]
+
+  requirements_engineer:
+    receives:
+      - BUSINESS_REQUIREMENTS
+      - PRODUCT_REQUIREMENTS_PRD
+      - SYSTEM_MODEL_READY_PACKAGE
+      - THREAT_MODEL_V0
+      - SECURITY_REQUIREMENTS_DRAFT
+      - DATA_HANDLING_CONSTRAINTS
+      - OPERABILITY_REQUIREMENTS_INPUTS
+      - COST_BUDGET_CONSTRAINTS
+      - ACCEPTANCE_CRITERIA_INPUTS
+    mustDetermine:
+      - stakeholder_requirements
+      - system_requirements
+      - software_requirements
+      - measurable_nfrs
+      - security_requirements_baseline
+      - acceptance_criteria
+      - bidirectional_traceability
+    produces:
+      - STAKEHOLDER_REQUIREMENTS
+      - SYSTEM_REQUIREMENTS
+      - SOFTWARE_REQUIREMENTS
+      - NFR_CATALOGUE
+      - SECURITY_REQUIREMENTS
+      - ACCEPTANCE_CRITERIA
+      - REQUIREMENTS_TRACEABILITY_MATRIX
+      - REQUIREMENTS_BASELINE_READY_DECISION
+    evidence: [source_to_requirement_trace, owner_confirmation, review_records]
+    handsTo: [solution_architect]
+
+  knowledge_growth_analyst:
+    receives: [all_pre_architecture_sources_and_artifacts]
+    mustDetermine: [provenance_quality, missing_knowledge, conflicts, source_freshness, profession_kb_gaps]
+    produces:
+      - EVIDENCE_REGISTER
+      - KNOWLEDGE_GAP_REGISTER
+      - CONFLICT_REGISTER
+      - SOURCE_FRESHNESS_REPORT
+    evidence: [source_metadata, traceability_graph]
+    handsTo: [all_roles, skeptical_reviewer, gate_engine]
+    cannot: [self_verify_domain_truth]
+
+  skeptical_reviewer:
+    receives: [material_pre_architecture_artifacts, evidence_register, open_unknowns]
+    mustDetermine: [hidden_assumptions, unresolved_conflicts, alternatives, failure_modes, unsupported_claims]
+    produces:
+      - PRE_ARCHITECTURE_INDEPENDENT_REVIEW
+    evidence: [review_findings_with_exact_refs]
+    handsTo: [gate_engine, accountable_owners]
+    cannot: [replace_domain_evidence_with_preference]
+
+architectureEntryContract:
+  requiredGateStates:
+    PRODUCT_READY: [PASS, CONDITIONAL_PASS_WITH_NONBLOCKING_CONDITIONS]
+    SECURITY_INTAKE_READY: [PASS, CONDITIONAL_PASS_WITH_NONBLOCKING_CONDITIONS]
+    SYSTEM_MODEL_READY: [PASS, CONDITIONAL_PASS_WITH_NONBLOCKING_CONDITIONS]
+    THREAT_MODEL_V0_READY: [PASS, CONDITIONAL_PASS_WITH_NONBLOCKING_CONDITIONS]
+    REQUIREMENTS_BASELINE_READY: [PASS]
+  mandatoryPackageFamilies:
+    - product_context
+    - business_process_and_domain
+    - security_context_and_threats
+    - regulatory_applicability
+    - data_context
+    - system_model
+    - interfaces_and_dependencies
+    - operability_and_platform
+    - commercial_delivery_constraints
+    - requirements_baseline
+    - evidence_conflicts_unknowns
+    - independent_review
+  hardBlockers:
+    - missing_business_problem_or_owner
+    - missing_scope_boundary
+    - missing_security_intake
+    - missing_system_model
+    - missing_threat_model_v0
+    - missing_requirements_baseline
+    - unresolved_material_conflict_hidden_from_architect
+    - legal_or_security_unknown_silently_promoted_to_fact
+    - architecture_producer_expected_to_self_approve
