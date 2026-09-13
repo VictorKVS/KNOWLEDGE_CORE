@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>FATHER — Delivery Feasibility</title>
+<style>
+:root{font-family:Inter,Segoe UI,Arial,sans-serif;color:#172033;background:#f5f7fb}*{box-sizing:border-box}body{margin:0}header{background:#101828;color:white;padding:28px 34px}.wrap{max-width:1500px;margin:auto;padding:24px}.section{background:white;border:1px solid #dde3ec;border-radius:14px;padding:20px;margin-bottom:22px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}.card{border:1px solid #d9e0ea;border-radius:12px;padding:14px}.card h3{margin:0 0 8px}.tag{display:inline-block;padding:3px 8px;border-radius:999px;background:#eef4ff;color:#3538cd;font-size:12px;margin:2px}.gate{background:#fff7ed;border-color:#fdba74}.ok{background:#ecfdf3;border-color:#6ce9a6}.muted{color:#667085}.trace{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:14px;white-space:pre-wrap}.row{display:flex;gap:10px;overflow:auto}.step{min-width:210px;border:1px solid #d0d5dd;border-radius:12px;padding:12px}.warn{border-left:4px solid #f79009}.source{border-left:4px solid #2e90fa}.small{font-size:12px}@media(max-width:700px){header{padding:22px}.wrap{padding:14px}}
+</style>
+</head>
+<body>
+<header><h1>FATHER — Delivery Feasibility Workbench</h1><p>Урок OTUS 2: от требований к измеримым NFR, плану, оценке, рискам, TCO и контролю изменений.</p></header>
+<div class="wrap">
+<section class="section"><h2>1. Зачем этот слой</h2><p>До архитектуры мы не требуем финальную смету. Мы требуем доказательство, что проект <b>можно осмысленно оценивать</b>: требования измеримы, работа декомпозирована, неопределённость видима, риски назначены владельцам, а изменения контролируются.</p><div class="trace">Requirements candidate
+   ↓
+Measurable NFR
+   ↓
+Verification intent
+   ↓
+WBS v0
+   ↓
+Estimate method + assumptions + range
+   ↓
+Project risks + risk buffer
+   ↓
+TCO / unit economics scenarios
+   ↓
+Change Management
+   ↓
+DELIVERY_FEASIBILITY_READY
+   ↓
+Architecture Options</div></section>
+
+<section class="section"><h2>2. NFR — не пожелание, а измеримое требование</h2><div class="grid">
+<div class="card"><h3>Metric</h3><p>Что именно измеряем: latency, throughput, quality, security, freshness, cost и т. п.</p></div>
+<div class="card"><h3>Target / Baseline state</h3><p>Число только если оно подтверждено. Иначе <code>TO_BE_BASELINED</code>.</p></div>
+<div class="card"><h3>Priority</h3><p>MoSCoW или иной явно выбранный механизм приоритизации.</p></div>
+<div class="card"><h3>Verification</h3><p>Load test, eval, red-team, monitoring, manual/auto verification — метод должен быть известен до архитектурного выбора.</p></div>
+</div><div class="card source"><b>Источник урока:</b> приложение A1 использует поля Category / Metric / Description / Target / MoSCoW / Verification Method. Учебные значения не становятся project defaults.</div></section>
+
+<section class="section"><h2>3. Discovery: вопросы, которые могут убить архитектуру</h2><div class="grid">
+<div class="card"><h3>Business & Value</h3><p>Проблема, пользователи, цена ошибки, наличие эталонного набора для проверки.</p></div>
+<div class="card"><h3>Data & Knowledge</h3><p>Форматы, объём/рост, структурированность, чувствительные данные.</p></div>
+<div class="card"><h3>Infrastructure & Security</h3><p>Cloud/on-prem ограничения, GPU, платформа, импортозамещение и обязательные ограничения.</p></div>
+<div class="card"><h3>Integration & UX</h3><p>Системы интеграции, память диалога, streaming, agentic actions.</p></div>
+<div class="card"><h3>Process & Acceptance</h3><p>Кто принимает работу, latency expectations, OpEx envelope, юридические ограничения.</p></div>
+</div></section>
+
+<section class="section"><h2>4. Оценка — показываем метод, а не магическое число</h2><div class="grid">
+<div class="card"><h3>Analogous</h3><p>Сравнить с похожими работами и явно записать сходства/различия.</p></div>
+<div class="card"><h3>Parametric</h3><p>Параметр × коэффициент; источник коэффициента и диапазон применимости обязательны.</p></div>
+<div class="card"><h3>PERT</h3><p>Optimistic / Most Likely / Pessimistic → ожидаемое значение и диапазон. O/M/P остаются оценочными допущениями.</p></div>
+<div class="card"><h3>Bottom-Up</h3><p>Декомпозиция до оцениваемых work items с последующим roll-up.</p></div>
+</div><div class="card warn"><b>Анти-ошибка:</b> точная дата или точная цена без метода, допущений и диапазона в FATHER считается ложной точностью.</div></section>
+
+<section class="section"><h2>5. WBS v0 — что именно предстоит сделать</h2><div class="row">
+<div class="step"><b>Discovery / Design</b><p class="small">интервью, данные, NFR, test/eval readiness</p></div>
+<div class="step"><b>PoC</b><p class="small">проверка ключевой гипотезы и decision gate</p></div>
+<div class="step"><b>MVP Engineering</b><p class="small">инфраструктура, data pipeline, backend, integrations</p></div>
+<div class="step"><b>Production Readiness</b><p class="small">load/security/monitoring/docs/support</p></div>
+</div><p class="muted">Названия фаз из урока — шаблон для GenAI, не обязательный жизненный цикл FATHER. Канонические стадии остаются в lifecycle registry.</p></section>
+
+<section class="section"><h2>6. Project Risk Register</h2><div class="grid">
+<div class="card"><h3>Risk</h3><p>Data / Model / Security / Legal / Scope / External dependency / Delivery.</p></div>
+<div class="card"><h3>Probability & Impact</h3><p>Числа допустимы как <b>оценка</b>, если есть основание. Иначе используем qualitative state.</p></div>
+<div class="card"><h3>Response</h3><p>Avoid / Mitigate / Transfer / Accept + конкретный mitigation plan.</p></div>
+<div class="card"><h3>Trigger</h3><p>Событие, после которого риск превращается в действие/эскалацию.</p></div>
+</div><p class="muted">Project Risk Register связан с Security Risk Register, но это разные артефакты.</p></section>
+
+<section class="section"><h2>7. Change Request</h2><div class="trace">Requested change
+   ↓
+Current vs desired baseline
+   ↓
+Requirements impact
+   ↓
+Architecture impact
+   ↓
+Security / Data / Operations impact
+   ↓
+Schedule + Budget + Risk impact
+   ↓
+APPROVE / REJECT / DEFER / NEED MORE EVIDENCE
+   ↓
+Versioned baseline update</div></section>
+
+<section class="section"><h2>8. TCO / Unit Economics v0</h2><div class="grid">
+<div class="card"><h3>Cloud SaaS</h3><p>CapEx, token/compute OpEx, support, licensing, uncertainty.</p></div>
+<div class="card"><h3>Self-hosted cloud</h3><p>GPU rental, DevOps/MLOps, storage, support.</p></div>
+<div class="card"><h3>On-prem</h3><p>hardware CapEx, energy, support, depreciation/procurement constraints.</p></div>
+<div class="card"><h3>Unit cost</h3><p>Cost per request/call/document/user — только на явно заданных объёмных допущениях.</p></div>
+</div></section>
+
+<section class="section gate"><h2>9. Gate: DELIVERY_FEASIBILITY_READY</h2><div class="grid"><div class="card ok"><h3>PASS</h3><p>Material NFR измеримы/имеют baseline plan; WBS v0 есть; метод оценки известен; риски, бюджетный диапазон, change model и verification intent существуют.</p></div><div class="card"><h3>CONDITIONAL_PASS</h3><p>Открытые вопросы не блокируют архитектурное сравнение и имеют владельца/условие закрытия.</p></div><div class="card"><h3>BLOCKED</h3><p>Нельзя оценить ключевой объём, скрыты зависимости, нет change control для FP или материал NFR невозможно проверить.</p></div><div class="card"><h3>INSUFFICIENT_EVIDENCE</h3><p>Недостаточно данных, чтобы честно определить реализуемость.</p></div></div></section>
+
+<section class="section"><h2>10. Что из OTUS не копируем как истину</h2><p>Учебные числа latency/RPS/VRAM, размеры Golden Dataset, стоимости, проценты overhead и конкретные технологии из приложений — <b>examples only</b>. В FATHER сохраняется структура метода, а проектные значения должны иметь собственные sources/owners/evidence.</p></section>
+
+<section class="section"><p class="small muted">Canonical data: father/factory/pre-architecture/DELIVERY_FEASIBILITY_MODEL.yaml · Source mapping: father/factory/pre-architecture/OTUS_LESSON_02_CROSSWALK.yaml</p></section>
+</div>
+</body></html>
