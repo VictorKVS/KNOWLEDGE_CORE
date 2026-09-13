@@ -1,0 +1,176 @@
+schemaVersion: 1
+packId: FATHER-BUSINESS-ANALYST-PACK-0001
+status: CANDIDATE_PACK
+role: business_analyst
+startsAfter: PRODUCT_READY
+mayRunInParallelWith: [SECURITY_INTAKE, early_system_discovery]
+finishesBefore: REQUIREMENTS_BASELINE_READY
+purpose: transform product intent and stakeholder knowledge into evidence-backed business/domain inputs for System, Security and Requirements
+
+artifacts:
+  - artifactId: BUSINESS_PROCESS_MODEL
+    owner: business_analyst
+    reviewers: [process_owner, product_manager]
+    purpose: describe AS-IS and candidate TO-BE business processes, actors, handoffs, exceptions and business outcomes
+    obtainBy:
+      - interview_process_owner
+      - observe_real_work_when_possible
+      - review_existing_BPMN_SOP_regulations_scripts
+      - workshop_happy_path_and_exceptions
+    requiredInformation:
+      - process_goal
+      - trigger
+      - actors
+      - steps
+      - decisions
+      - handoffs
+      - exceptions
+      - inputs_outputs
+      - systems_used
+      - pain_points
+      - process_owner
+    evidence:
+      - source_document_refs
+      - interview_refs
+      - process_owner_confirmation
+    downstream: [system_engineer, security_engineer, requirements_engineer]
+
+  - artifactId: DOMAIN_GLOSSARY
+    owner: business_analyst
+    reviewers: [domain_sme, product_manager]
+    purpose: prevent semantic mismatch by assigning explicit meaning and ownership to domain terms
+    obtainBy:
+      - extract_terms_from_product_and_business_materials
+      - interview_domain_smes
+      - compare_conflicting_definitions
+      - link_terms_to_authoritative_sources
+    requiredInformation:
+      - term
+      - definition
+      - synonyms
+      - forbidden_or_ambiguous_meanings
+      - information_owner
+      - source
+      - status
+    evidence: [source_refs, sme_confirmation, conflict_refs]
+    downstream: [system_engineer, requirements_engineer, solution_architect]
+
+  - artifactId: BUSINESS_RULE_CATALOGUE
+    owner: business_analyst
+    reviewers: [business_owner, domain_sme, legal_compliance_when_applicable]
+    purpose: capture business decisions/constraints separately from software implementation
+    obtainBy:
+      - inspect_policies_contracts_regulations_and_SOPs
+      - interview_rule_owners
+      - analyze_process_decision_points
+      - identify_exceptions_and_precedence
+    requiredInformation:
+      - rule_id
+      - statement
+      - owner
+      - source
+      - applicability_condition
+      - exception
+      - precedence
+      - verification_state
+    evidence: [policy_refs, contract_refs, owner_confirmation]
+    downstream: [requirements_engineer, security_engineer, solution_architect]
+
+  - artifactId: USER_AND_OPERATOR_JOURNEYS
+    owner: business_analyst
+    reviewers: [product_manager, representative_user_or_operator]
+    purpose: show end-to-end user/operator behavior including alternate and failure paths
+    obtainBy:
+      - observation
+      - interviews
+      - product_analytics
+      - call_or_support_logs
+      - journey_workshop
+    requiredInformation:
+      - persona_or_role
+      - goal
+      - entry_point
+      - steps
+      - decisions
+      - alternate_paths
+      - failure_paths
+      - handoff_to_human_or_other_role
+      - data_touched
+      - pain_points
+    evidence: [user_research_refs, analytics_refs, owner_confirmation]
+    downstream: [system_engineer, security_engineer, requirements_engineer, qa_verification]
+
+  - artifactId: USE_CASE_CATALOGUE
+    owner: business_analyst
+    reviewers: [product_manager, domain_sme]
+    purpose: structure business interactions before formal system/software requirements
+    obtainBy:
+      - derive_from_journeys_and_processes
+      - interview_actors
+      - enumerate_primary_alternate_exception_flows
+    requiredInformation:
+      - actor
+      - goal
+      - preconditions
+      - trigger
+      - main_flow
+      - alternate_flows
+      - exceptions
+      - postconditions
+      - business_rules
+      - data_inputs_outputs
+    evidence: [journey_refs, process_refs, stakeholder_confirmation]
+    downstream: [system_engineer, requirements_engineer, qa_verification]
+
+  - artifactId: BUSINESS_REQUIREMENTS
+    owner: business_analyst
+    reviewers: [business_owner, product_manager]
+    purpose: state measurable business outcomes/capabilities that the system must enable, without choosing architecture
+    obtainBy:
+      - derive_from_business_need_and_process_gaps
+      - validate_with_business_owner
+      - link_each_requirement_to_source_and_outcome
+      - remove_solution_language_unless_it_is_a_real_constraint
+    requiredInformation:
+      - requirement_id
+      - requirement_statement
+      - rationale
+      - source
+      - owner
+      - priority
+      - success_measure
+      - assumptions
+      - conflicts
+      - verification_state
+    evidence: [BUSINESS_NEED, process_refs, owner_confirmation]
+    downstream: [requirements_engineer, system_engineer, security_engineer]
+
+  - artifactId: BUSINESS_GAP_AND_QUESTION_REGISTER
+    owner: business_analyst
+    reviewers: [product_manager, project_manager]
+    purpose: preserve unresolved business/domain questions instead of inventing answers
+    obtainBy:
+      - compare_product_claims_to_process_evidence
+      - record_missing_owners_or_sources
+      - record_conflicting_business_rules
+    requiredInformation:
+      - question_or_gap
+      - owner
+      - due_or_trigger
+      - evidence_needed
+      - downstream_impact
+      - blocking_state
+    evidence: [gap_refs, conflict_refs]
+    downstream: [product_manager, requirements_engineer, system_engineer, security_engineer]
+
+gateContribution:
+  to: REQUIREMENTS_BASELINE_READY
+  mandatoryBeforeArchitecture:
+    - BUSINESS_PROCESS_MODEL
+    - DOMAIN_GLOSSARY
+    - BUSINESS_RULE_CATALOGUE
+    - BUSINESS_REQUIREMENTS
+  conditional:
+    - USER_AND_OPERATOR_JOURNEYS
+    - USE_CASE_CATALOGUE
+  rule: missing_business_evidence_is_visible_as_GAP_or_UNKNOWN_not_invented_by_architect
