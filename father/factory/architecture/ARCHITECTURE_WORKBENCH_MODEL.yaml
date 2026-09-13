@@ -1,0 +1,176 @@
+schemaVersion: 1
+modelId: FATHER-ARCHITECTURE-WORKBENCH-0001
+status: CANDIDATE_MODEL
+purpose: >-
+  Predefine the data model and UI contracts required for architecture work so the site does not need structural rework later.
+  Architecture option generation remains locked until the FATHER pre-architecture gates pass.
+entryGate: ARCHITECTURE_OPTIONS_ALLOWED
+sourceGrounding:
+  - source: 'Richards, Ford — Фундаментальный подход к программной архитектуре'
+    sourceType: USER_LIBRARY_BOOK
+    verifiedIdeas:
+      - identify_architecture_characteristics_from_domain_requirements_and_implicit_context
+      - keep_the_key_characteristic_set_small_and_material
+      - architecture_is_tradeoff_analysis_not_absolute_best_choice
+      - significant_decisions_require_ADR_and_rationale
+      - architecture_risks_require_explicit_review_and_tracking
+      - architecture_requires_continuous_analysis_over_time
+
+entities:
+  ARCHITECTURE_CHARACTERISTIC_CANDIDATE:
+    fields:
+      - id
+      - name
+      - sourceType
+      - sourceRef
+      - explicitOrImplicit
+      - stakeholderRefs
+      - businessDriverRefs
+      - requirementRefs
+      - scenarioRefs
+      - measurementIntent
+      - rationale
+      - evidenceState
+      - status
+    states: [CANDIDATE, CONFIRMED_DRIVER, REJECTED, DEFERRED]
+    rule: >-
+      Candidates may be created before the architecture gate by Product, Requirements, Security, Operations and the presales architect.
+      Final prioritization is performed during architecture work with stakeholders.
+
+  ARCHITECTURE_DRIVER_SET:
+    fields:
+      - selectedCharacteristicRefs
+      - businessDriverRefs
+      - constraintRefs
+      - riskRefs
+      - rationale
+      - reviewerRefs
+    rule: select the smallest materially sufficient set rather than maximizing the number of qualities
+
+  ARCHITECTURE_OPTION:
+    fields:
+      - optionId
+      - title
+      - description
+      - assumptions
+      - affectedRequirements
+      - addressedCharacteristics
+      - knownRisks
+      - unknowns
+      - costDeliveryImpact
+      - securityImpact
+      - operabilityImpact
+      - evidenceRefs
+      - status
+    states: [DRAFT, REVIEW, REJECTED, SHORTLISTED, SELECTED]
+
+  TRADEOFF_RECORD:
+    fields:
+      - tradeoffId
+      - optionRefs
+      - characteristicRefs
+      - benefit
+      - cost
+      - risk
+      - affectedStakeholders
+      - evidenceRefs
+      - rationale
+    rule: no option may be called best without an explicit context-dependent tradeoff rationale
+
+  ADR:
+    fields:
+      - adrId
+      - title
+      - status
+      - context
+      - decision
+      - consequences
+      - compliance
+      - notes
+      - alternatives
+      - sourceRefs
+      - reviewerRefs
+      - supersedes
+      - supersededBy
+    states: [PROPOSED, ACCEPTED, SUPERSEDED, REJECTED]
+    rules:
+      - significant_decision_requires_rationale
+      - accepted_decision_history_is_preserved
+      - changed_decision_supersedes_instead_of_silent_overwrite
+      - compliance_method_should_be_recorded_when_material
+
+  ARCHITECTURE_RISK:
+    fields:
+      - riskId
+      - optionRef
+      - characteristicRef
+      - scenarioRef
+      - statement
+      - impactEvidence
+      - likelihoodEvidence
+      - uncertainty
+      - mitigation
+      - owner
+      - reviewState
+      - evidenceRefs
+    rule: numeric likelihood is prohibited without evidence
+
+  RISK_STORM_REVIEW:
+    fields:
+      - reviewId
+      - scope
+      - participants
+      - identifiedRiskRefs
+      - disagreementRefs
+      - consensusRefs
+      - actions
+      - timestamp
+
+  ARCHITECTURE_HEALTH_REVIEW:
+    fields:
+      - reviewId
+      - architectureBaselineRef
+      - trigger
+      - changedBusinessContext
+      - changedTechnologyContext
+      - changedRiskContext
+      - violatedDecisions
+      - recommendations
+      - newADRRefs
+      - evidenceRefs
+    triggers:
+      - scheduled_review
+      - major_requirement_change
+      - security_incident
+      - significant_platform_change
+      - major_performance_or_reliability_issue
+      - material_business_change
+
+uiViews:
+  - architecture_driver_board
+  - quality_attribute_matrix
+  - option_comparison_board
+  - tradeoff_matrix
+  - adr_timeline
+  - architecture_risk_map
+  - architecture_health_timeline
+  - traceability_graph
+
+traceability:
+  requiredChain:
+    - business_driver
+    - requirement_or_constraint
+    - architecture_characteristic
+    - architecture_option
+    - tradeoff
+    - adr
+    - implementation_evidence
+    - verification_evidence
+    - operational_feedback
+
+boundaryRules:
+  - presales_architect_may_create_candidates_but_not_final_architecture
+  - architecture_option_generation_requires_entry_gate
+  - solution_architect_cannot_self_approve_material_decision
+  - unknowns_and_conflicts_remain_visible
+  - model_output_is_candidate_until_reviewed
