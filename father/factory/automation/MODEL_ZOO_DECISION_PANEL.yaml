@@ -1,0 +1,281 @@
+schemaVersion: 1
+panelId: FATHER-MODEL-ZOO-DECISION-PANEL-0001
+status: CANDIDATE_MODEL
+purpose: >-
+  Use a routed portfolio of models as an advisory decision council for material FATHER documents and engineering decisions.
+  The panel improves challenge diversity and evidence coverage, but never replaces the authorized human/domain decision owner.
+
+sourcePatterns:
+  - source: VictorKVS/OSINT_deepseek/config/model_stage_registry.yaml
+    reusedIdeas:
+      - champion_challenger
+      - independent_judge
+      - fail_closed_on_unsupported_claims
+      - model_outputs_require_evidence_and_review
+      - telemetry_for_model_quality_and_rework
+
+principles:
+  - do_not_run_full_zoo_for_trivial_work
+  - route_models_by_task_capability_and_decision_risk
+  - challengers_work_independently_on_first_pass
+  - preserve_dissent_instead_of_forcing_consensus
+  - evidence_strength_outranks_model_vote_count
+  - model_confidence_is_not_evidence
+  - judge_must_not_simply_repeat_champion
+  - material_decisions_require_resolvable_source_refs
+  - unknown_and_insufficient_evidence_are_valid_outcomes
+  - legal_applicability_residual_risk_and_final_business_authority_remain_human
+  - sensitive_or_unclassified_data_may_only_reach_models_allowed_by_data_policy
+  - every_panel_run_is_versioned_and_auditable
+
+panelProfiles:
+  ROUTINE_DOCUMENT_REVIEW:
+    useWhen:
+      - low_impact_document_normalization
+      - completeness_check
+      - formatting_or_schema_review
+    participants:
+      champion: 1
+      challengers: 0
+      independentJudge: 0
+      deterministicChecks: true
+    humanApproval: artifact_owner_when_required
+    goal: cheapest_sufficient_review
+
+  MATERIAL_ENGINEERING_DECISION:
+    useWhen:
+      - material_requirement_change
+      - nontrivial_NFR_or_estimation_decision
+      - interface_or_data_contract_change
+      - significant_dependency_selection
+      - candidate_ADR
+    participants:
+      champion: 1
+      challengers: 2
+      independentJudge: 1
+      evidenceVerifier: 1
+    firstPassMode: BLIND_INDEPENDENT
+    humanApproval: required
+
+  ARCHITECTURE_CTO_CHALLENGE:
+    useWhen:
+      - architecture_option_selection
+      - hosting_topology_decision
+      - major_ADR
+      - RAG_or_agent_architecture
+      - high_cost_or_hard_to_reverse_choice
+    participants:
+      champion: 1
+      challengers: 4
+      independentJudge: 1
+      evidenceVerifier: 1
+    challengerRoles:
+      - architecture_skeptic
+      - security_privacy
+      - operations_reliability
+      - cost_delivery
+    firstPassMode: BLIND_INDEPENDENT
+    secondPass: CROSS_EXAMINATION_ON_MATERIAL_DISAGREEMENT
+    humanApproval: business_or_system_decision_owner
+
+  HIGH_RISK_SECURITY_LEGAL:
+    useWhen:
+      - sensitive_data_external_processing
+      - regulatory_applicability_question
+      - high_or_critical_security_risk
+      - privileged_agent_tooling
+      - residual_risk_preparation
+    participants:
+      champion: 1
+      challengers: 3
+      independentJudge: 1
+      evidenceVerifier: 1
+    challengerRoles:
+      - security_red_team
+      - privacy_data_governance
+      - legal_applicability_assistant
+    firstPassMode: BLIND_INDEPENDENT
+    humanApproval: mandatory_domain_authority
+    finalModelDecisionAllowed: false
+
+roles:
+  CHAMPION:
+    mission: produce the strongest evidence-backed candidate answer or document version for the routed task
+    mustReturn:
+      - proposedDecision
+      - rationale
+      - evidenceRefs
+      - assumptions
+      - unknowns
+      - tradeoffs
+      - failureModes
+  CHALLENGER:
+    mission: independently search for unsupported assumptions, alternatives, counter-evidence and failure modes
+    mustReturn:
+      - challengedClaims
+      - alternativeOptions
+      - counterEvidenceRefs
+      - hiddenAssumptions
+      - unresolvedUnknowns
+      - severity
+    mustNotSeeBeforeFirstPass:
+      - otherChallengerOutputs
+    championVisibilityFirstPass: configurable_default_false
+  EVIDENCE_VERIFIER:
+    mission: check whether cited sources resolve and whether they actually support the material claims
+    deterministicPreferred: true
+    mustReturn:
+      - resolvableRefs
+      - unsupportedClaims
+      - staleEvidence
+      - sourceConflicts
+      - evidenceCoverage
+  INDEPENDENT_JUDGE:
+    mission: synthesize the decision packet without erasing dissent
+    independenceRules:
+      - prefer_different_model_family_or_provider_from_champion_for_material_decisions
+      - cannot_be_same_run_as_champion
+      - receives_original_task_and_all_blind_first_pass_outputs
+    mustReturn:
+      - consensusState
+      - strongestSupportedOption
+      - dissentRegister
+      - insufficientEvidenceItems
+      - additionalEvidenceRequired
+      - suggestedGateOutcome
+      - decisionConfidenceBand
+    cannot:
+      - fabricate_consensus
+      - close_material_disagreement_without_rationale
+      - issue_final_human_authority_decision
+
+consensusStates:
+  - CONSENSUS_WITH_STRONG_EVIDENCE
+  - CONSENSUS_WITH_CONDITIONS
+  - MAJORITY_WITH_MATERIAL_DISSENT
+  - MATERIAL_DISAGREEMENT
+  - INSUFFICIENT_EVIDENCE
+  - BLOCKED_BY_POLICY_OR_AUTHORITY
+
+confidenceBands:
+  - HIGH_EVIDENCE_SUPPORT
+  - MODERATE_EVIDENCE_SUPPORT
+  - LOW_EVIDENCE_SUPPORT
+  - NOT_ASSESSABLE
+
+selectionPolicy:
+  registryRequired: true
+  selectBy:
+    - taskCapability
+    - evidenceHandlingPolicy
+    - contextWindowNeed
+    - reasoningQualityTelemetry
+    - historicalHumanRejectRate
+    - reworkRate
+    - latencyBudget
+    - costBudget
+    - providerIndependenceNeed
+  avoid:
+    - selecting_models_only_by_brand_or_global_rank
+    - using_same_model_instance_for_champion_and_independent_judge
+    - using_external_provider_for_data_not_approved_for_external_processing
+  fallback:
+    ifIndependentModelUnavailable: continue_with_warning_and_force_human_independent_review
+
+materialityRouting:
+  inputs:
+    - reversibility
+    - securityImpact
+    - legalOrPrivacyImpact
+    - costImpact
+    - blastRadius
+    - crossComponentImpact
+    - externalDependencyImpact
+    - uncertainty
+  outputProfiles:
+    LOW: ROUTINE_DOCUMENT_REVIEW
+    MEDIUM: MATERIAL_ENGINEERING_DECISION
+    HIGH: ARCHITECTURE_CTO_CHALLENGE
+    CRITICAL_SECURITY_OR_LEGAL: HIGH_RISK_SECURITY_LEGAL
+
+runFlow:
+  - classify_materiality
+  - select_panel_profile
+  - freeze_input_snapshot
+  - route_champion
+  - route_blind_challengers
+  - run_evidence_verifier
+  - collect_outputs
+  - if_material_disagreement_then_cross_examination
+  - run_independent_judge
+  - create_decision_packet
+  - create_human_review_task
+  - human_decision
+  - persist_approval_and_dissent
+  - update_model_telemetry_from_human_review
+
+decisionPacket:
+  requiredFields:
+    - panelRunId
+    - taskId
+    - documentOrDecisionRef
+    - materiality
+    - profile
+    - inputSnapshotRefs
+    - championModelAndVersion
+    - challengerModelsAndVersions
+    - judgeModelAndVersion
+    - proposedOptions
+    - evidenceCoverage
+    - unsupportedClaims
+    - consensusState
+    - dissentRegister
+    - unknowns
+    - tradeoffs
+    - suggestedGateOutcome
+    - requiredHumanAuthority
+    - finalHumanDecision
+    - decisionRationale
+    - createdAt
+
+humanDecisionOptions:
+  - APPROVE
+  - APPROVE_WITH_CONDITIONS
+  - REQUEST_MORE_EVIDENCE
+  - REWORK
+  - REJECT
+  - DEFER
+
+hardBlocks:
+  - no_authorized_human_owner_for_material_decision
+  - evidence_verifier_finds_unresolved_material_source_failure
+  - sensitive_data_routed_to_unapproved_model_provider
+  - legal_or_residual_risk_finalized_by_models_only
+  - judge_output_hides_recorded_material_dissent
+  - champion_and_judge_are_not_independent_when_policy_requires_independence
+
+telemetry:
+  collectPerModel:
+    - modelId
+    - modelVersion
+    - role
+    - taskCapability
+    - duration
+    - tokenOrComputeCost
+    - evidenceCoverage
+    - unsupportedClaimCount
+    - humanAcceptedClaims
+    - humanRejectedClaims
+    - reworkRequired
+    - materialDissentFound
+  derived:
+    - humanAcceptanceRate
+    - challengerUsefulFindingRate
+    - falseChallengeRate
+    - judgeAgreementWithHumanRate
+    - costPerAcceptedDecision
+    - reworkRate
+
+optimizationRule: >-
+  Promote or demote models per capability using observed human review and evidence-quality telemetry.
+  The zoo is an adaptive portfolio, not a static list of favorite models.
