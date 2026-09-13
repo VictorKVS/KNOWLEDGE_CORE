@@ -1,0 +1,67 @@
+schemaVersion: 1
+decisionTableId: FATHER-DMN-PRODUCT-READY-0001
+gate: PRODUCT_READY
+stage: PRODUCT_DISCOVERY
+status: CANDIDATE_DECISION_TABLE
+policy:
+  principle: evidence_before_gate
+  unknownAllowed: true
+  silentAssumptionAllowed: false
+  filePresenceIsNotSufficient: true
+inputs:
+  - id: business_need_defined
+    sourceArtifact: BUSINESS_NEED
+    passWhen: problem_or_opportunity_and_owner_are_explicit
+  - id: product_vision_defined
+    sourceArtifact: PRODUCT_VISION
+    passWhen: intended_users_outcome_horizon_and_non_goals_are_explicit_or_marked_unknown
+  - id: decision_authority_known
+    sourceArtifact: STAKEHOLDER_REGISTER
+    passWhen: sponsor_or_business_owner_and_decision_rights_are_identified
+  - id: scope_bounded
+    sourceArtifact: SCOPE_BASELINE
+    passWhen: in_scope_and_out_of_scope_are_explicit_enough_for_security_intake
+  - id: success_measurable
+    sourceArtifact: SUCCESS_METRICS
+    passWhen: at_least_one_outcome_metric_has_measurement_logic_or_gap_is_explicitly_blocking
+  - id: assumptions_visible
+    sourceArtifact: ASSUMPTION_LOG
+    passWhen: material_assumptions_unknowns_and_conflicts_have_owner_and_downstream_impact
+  - id: provenance_present
+    sourceArtifact: INITIATIVE_EVIDENCE_REGISTER
+    passWhen: material_claims_have_source_or_are_explicitly_marked_UNSUPPORTED_CLAIM
+hardBlocks:
+  - no_business_owner_or_decision_authority
+  - scope_boundary_absent
+  - business_need_is_only_a_preselected_technology_without_validated_problem
+  - material_conflict_hidden_or_silently_resolved
+  - material_unknown_recast_as_fact
+rules:
+  - id: PR-01
+    when: all_inputs_pass_and_no_hard_block
+    decision: PASS
+    meaning: PRODUCT_READY; Security Intake may start.
+  - id: PR-02
+    when: no_hard_block_but_noncritical_gaps_remain
+    decision: CONDITIONAL_PASS
+    meaning: Security Intake may start; named gaps stay open with owners and deadlines/triggers.
+  - id: PR-03
+    when: any_hard_block
+    decision: BLOCKED
+    meaning: Product Discovery continues; downstream disciplines may research but must not treat product context as approved.
+  - id: PR-04
+    when: insufficient_evidence_to_evaluate_gate
+    decision: INSUFFICIENT_EVIDENCE
+    meaning: Gate status is unknown; missing evidence is not approval.
+outputs:
+  requiredFields:
+    - decision
+    - evaluatedAt
+    - evaluatedBy
+    - evidenceRefs
+    - blockingReasons
+    - openGaps
+    - conflicts
+    - assumptions
+    - conditions
+    - nextStage
