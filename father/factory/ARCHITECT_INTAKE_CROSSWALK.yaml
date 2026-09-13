@@ -1,0 +1,41 @@
+schemaVersion: 1
+crosswalkId: FATHER-ARCHITECT-INTAKE-CROSSWALK-0001
+source: professional-knowledge/software-engineering/practice/ARCHITECT_PROJECT_INTAKE_PLAYBOOK.md
+sourceStatus: CANDIDATE_PRACTICE
+rule: 'Architect intake inputs are mapped to canonical upstream artifacts; architecture does not become their authoritative owner.'
+items:
+  IN-01: {name: Product Vision, canonical: [PRODUCT_VISION], owner: product_manager}
+  IN-02: {name: Business Need / Problem Statement, canonical: [BUSINESS_NEED], owner: business_owner}
+  IN-03: {name: Business Case, canonical: [business_case], owner: business_owner}
+  IN-04: {name: Success Metrics / Outcomes, canonical: [SUCCESS_METRICS], owner: product_manager}
+  IN-05: {name: Stakeholder Register, canonical: [STAKEHOLDER_REGISTER], owner: project_manager}
+  IN-06: {name: Sponsor / Decision Authority, canonical: [decision_authority_record, STAKEHOLDER_REGISTER], owner: business_owner}
+  IN-07: {name: SME Map, canonical: [domain_sme_map, STAKEHOLDER_REGISTER], owner: project_manager}
+  IN-08: {name: End-user / Operator groups, canonical: [user_operator_groups, STAKEHOLDER_REGISTER], owner: product_manager}
+  IN-09: {name: Scope / Out of Scope, canonical: [SCOPE_BASELINE], owner: product_manager}
+  IN-10: {name: Business Requirements, canonical: [BUSINESS_REQUIREMENTS], owner: business_analyst}
+  IN-11: {name: Stakeholder Requirements, canonical: [STAKEHOLDER_REQUIREMENTS], owner: requirements_engineer}
+  IN-12: {name: Functional Requirements, canonical: [SYSTEM_REQUIREMENTS, SOFTWARE_REQUIREMENTS], owner: requirements_engineer}
+  IN-13: {name: NFR / Quality Attributes, canonical: [NFR_CATALOGUE, QUALITY_ATTRIBUTE_SCENARIOS], owner: requirements_engineer}
+  IN-14: {name: Acceptance Criteria, canonical: [ACCEPTANCE_CRITERIA], owner: product_manager}
+  IN-15: {name: Assumptions, canonical: [ASSUMPTION_LOG, SYSTEM_ASSUMPTION_LOG], owner: project_manager}
+  IN-16: {name: Constraints, canonical: [SECURITY_CONSTRAINTS, constraint_register], owner: requirements_engineer}
+  IN-17: {name: Business Processes / Journeys, canonical: [business_process_model, FUNCTION_MODEL], owner: business_analyst}
+  IN-18: {name: Domain Model / Glossary, canonical: [domain_model, glossary], owner: business_analyst}
+  IN-19: {name: AS-IS Architecture, canonical: [as_is_architecture, SYSTEM_CONTEXT], owner: system_engineer}
+  IN-20: {name: Integration Inventory, canonical: [INTERFACE_INVENTORY], owner: integration_engineer}
+  IN-21: {name: Data Inventory / Data Model, canonical: [data_inventory, DATA_CLASSIFICATION, DATA_MODEL], owner: data_owner}
+  IN-22: {name: Data Classification / Privacy rules, canonical: [DATA_CLASSIFICATION, REGULATORY_APPLICABILITY], owner: data_owner}
+  IN-23: {name: IAM / Identity model, canonical: [IAM_MODEL], owner: security_engineer}
+  IN-24: {name: Security / Compliance Requirements, canonical: [SECURITY_REQUIREMENTS, REGULATORY_APPLICABILITY], owner: security_engineer}
+  IN-25: {name: SLA / SLO / Support Model, canonical: [SLO_SLA, support_model], owner: service_owner}
+  IN-26: {name: Load / Capacity Profile, canonical: [load_capacity_profile, NFR_CATALOGUE], owner: operations_engineer}
+  IN-27: {name: Platform / Environment Constraints, canonical: [platform_constraints, DEPLOYMENT_DESIGN], owner: devops_engineer}
+  IN-28: {name: Incident / Problem History, canonical: [INCIDENT_RECORDS, PROBLEM_RECORDS], owner: operations_engineer}
+  IN-29: {name: Roadmap / Team / Schedule / Budget, canonical: [delivery_constraint_snapshot], owner: project_manager}
+  IN-30: {name: Commercial / Contract model, canonical: [commercial_contract_constraints], owner: business_owner}
+  IN-31: {name: Existing ADRs + PoC/Benchmarks + decision history, canonical: [ARCHITECTURE_DECISION_RECORDS, DECISION_EVIDENCE_REGISTER], owner: solution_architect}
+notes:
+  - 'Items without a first-class canonical artifact yet remain named backlog artifacts and must be added to FATHER_ARTIFACT_REGISTRY before VERIFIED promotion.'
+  - 'Security-related inputs move upstream: Security Intake precedes architecture rather than being discovered only by the architect.'
+  - 'An architect may reconstruct a missing input as DRAFT, but confirmation remains with the canonical owner.'
