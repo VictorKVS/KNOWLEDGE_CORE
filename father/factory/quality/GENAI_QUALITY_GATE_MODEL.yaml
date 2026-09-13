@@ -1,0 +1,197 @@
+schemaVersion: 1
+modelId: FATHER-GENAI-QUALITY-GATE-0001
+status: CANDIDATE_MODEL
+purpose: >-
+  Provide one reusable quality/evaluation contract for RAG, LLM, agent, Model Zoo and document-automation components.
+  Promotion is evidence-based: semantic quality, grounding, security, operational behavior and cost are evaluated separately.
+
+principles:
+  - fluent_output_is_not_quality_evidence
+  - generated_answer_is_not_source_evidence
+  - model_confidence_is_not_ground_truth
+  - one_metric_never_decides_material_promotion
+  - critical_security_or_evidence_failures_are_hard_blocks
+  - unknown_and_insufficient_evidence_are_valid_outputs
+  - compare_candidates_on_same_dataset_and_context
+  - retrieval_and_generation_changes_are_tested_separately_when_possible
+  - evaluation_dataset_metric_prompt_model_and_index_versions_are_immutable_refs
+  - human_calibration_is_required_for_material_llm_as_judge_use
+  - thresholds_require_owner_and_basis
+  - no_fake_percentages_or_unmeasured_winner_claims
+
+qualityLayers:
+  deterministic:
+    checks:
+      - schema_validity
+      - required_fields
+      - citation_ref_resolves
+      - evidence_ref_exists
+      - tool_allowlist
+      - budget_and_cycle_limits
+      - dataset_manifest_integrity
+  retrieval:
+    candidateMetrics:
+      - recall_at_k
+      - precision_at_k
+      - mrr
+      - ndcg
+      - expected_evidence_coverage
+  generation:
+    candidateMetrics:
+      - faithfulness
+      - groundedness
+      - answer_relevancy
+      - completeness
+      - unsupported_claim_rate
+      - citation_resolution_rate
+      - correct_unknown_rate
+  security:
+    hardCases:
+      - direct_prompt_injection
+      - indirect_prompt_injection
+      - retrieval_poisoning
+      - fabricated_citation
+      - tool_privilege_escape
+      - secret_exfiltration
+      - prohibited_external_processing
+      - cross_agent_privilege_escalation
+  operational:
+    metrics:
+      - p50_latency
+      - p95_latency
+      - p99_latency
+      - throughput
+      - queue_time
+      - timeout_rate
+      - retry_rate
+      - provider_rate_limits
+      - gpu_utilization_if_local
+      - vram_if_local
+      - cost_per_query
+      - cost_per_accepted_result
+      - variance_or_disagreement_rate
+
+evalDataset:
+  requiredCaseFields:
+    - caseId
+    - task
+    - inputSnapshotRefs
+    - expectedEvidenceRefs
+    - criticalExpectedPoints
+    - unacceptableClaims
+    - expectedUnknownPolicy
+    - tags
+    - owner
+    - reviewer
+    - version
+  partitions:
+    - CALIBRATION
+    - REGRESSION
+    - HOLDOUT
+    - SECURITY
+    - PRODUCTION_SHADOW
+  leakageControls:
+    - holdout_not_used_for_routine_tuning
+    - reference_answer_not_exposed_to_candidate
+    - no_future_data_in_point_in_time_case
+    - test_cases_not_silently_added_to_training_or_fewshot_data
+
+comparisonContract:
+  fixedAcrossCandidates:
+    - datasetVersion
+    - task
+    - evidenceContext
+    - outputSchema
+    - policyAndToolPermissions
+    - metricRubricVersions
+  separateExperiments:
+    - retrieval_change
+    - generation_model_change
+    - prompt_policy_change
+    - judge_change
+  decisionOrder:
+    - pass_hard_security_and_evidence_gates
+    - pass_minimum_quality
+    - pass_operational_nfr
+    - optimize_cost_latency_maintainability
+
+ciTiers:
+  TIER_0_FAST_DETERMINISTIC:
+    trigger: every_material_change
+  TIER_1_COMPACT_SEMANTIC_REGRESSION:
+    trigger: semantic_component_change
+  TIER_2_FULL_EVAL:
+    trigger: model_prompt_retrieval_promotion
+  TIER_3_SECURITY_ADVERSARIAL:
+    trigger: retrieval_agent_tool_provider_sensitive_data_change
+  TIER_4_LOAD_COST:
+    trigger: production_or_hosting_decision
+
+gateOutcomes:
+  - PASS
+  - CONDITIONAL_PASS
+  - BLOCKED
+  - INSUFFICIENT_EVIDENCE
+
+hardBlocks:
+  - fabricated_material_source_or_citation
+  - unsupported_high_impact_claim
+  - retrieved_content_changes_system_or_tool_policy
+  - prohibited_data_sent_to_external_provider
+  - unauthorized_tool_execution
+  - material_claim_without_resolvable_evidence
+  - critical_security_regression
+
+integrationPoints:
+  modelZoo:
+    source: father/factory/automation/MODEL_ZOO_DECISION_PANEL.yaml
+    use: >-
+      Evaluate champion, challenger and judge models per capability using human acceptance, evidence quality,
+      useful challenge rate, false challenge rate, rework and cost telemetry.
+  documentAutomation:
+    source: father/factory/automation/DOCUMENT_AUTOMATION_PIPELINE.yaml
+    use: evaluate extraction, mapping, conflict review and gate-assessor quality against reviewed examples
+  architectureWorkbench:
+    use: compare architecture-review model outputs and unsupported-claim detection against reviewed decision packets
+  osintRagAgents:
+    use: evaluate retrieval, generation, evidence traceability, security, latency and cost
+
+runRecord:
+  requiredFields:
+    - evalRunId
+    - componentOrRoute
+    - codeCommit
+    - datasetVersion
+    - modelProviderVersion
+    - promptPolicyVersion
+    - retrievalIndexVersion
+    - metricRubricVersions
+    - rawResultRefs
+    - summaryMetrics
+    - criticalCaseResults
+    - humanReviewRefs
+    - gateOutcome
+    - createdAt
+
+telemetryFeedback:
+  derivedMetrics:
+    - humanAcceptanceRate
+    - unsupportedClaimRate
+    - securityFailureRate
+    - usefulChallengerFindingRate
+    - falseChallengeRate
+    - judgeAgreementWithHumanRate
+    - reworkRate
+    - costPerAcceptedResult
+  use: route_or_promote_models_per_capability_after_evidence_review
+
+ownerRules:
+  datasetOwner: QA_EVALUATION_PLUS_DOMAIN_SME
+  qualityGateOwner: QA_VERIFICATION
+  securityGateAuthority: SECURITY
+  productUsefulnessAuthority: PRODUCT_OR_DOMAIN_OWNER
+  residualRiskAuthority: DESIGNATED_RISK_OWNER
+
+completionRule: >-
+  A component is not quality-ready because a tool produced a score. The dataset, metric/rubric, model/index/prompt versions,
+  critical-case evidence and authorized human decision must all be traceable.
