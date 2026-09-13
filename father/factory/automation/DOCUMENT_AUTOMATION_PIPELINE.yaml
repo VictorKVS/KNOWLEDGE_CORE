@@ -1,0 +1,329 @@
+schemaVersion: 1
+pipelineId: FATHER-DOCUMENT-AUTOMATION-0001
+status: CANDIDATE_MODEL
+purpose: >-
+  Define the future automated document-processing and approval workflow for FATHER. LLMs may ingest,
+  extract, normalize, compare, identify gaps/conflicts, draft changes and propose gate outcomes, but they
+  never silently replace accountable human/domain authority.
+
+corePrinciples:
+  - source_document_is_immutable_input_evidence
+  - extracted_claim_is_not_automatically_fact
+  - llm_output_is_candidate_until_reviewed
+  - unknown_is_valid_and_must_not_be_filled_by_guessing
+  - conflicts_are_preserved_until_authority_resolves_them
+  - approvals_are_role_bound_and_stage_specific
+  - no_document_moves_to_next_gate_without_required_approvals
+  - approval_history_is_append_only
+  - superseded_versions_remain_auditable
+  - evidence_and_clause_traceability_must_survive_every_transformation
+  - automation_may_route_work_but_may_not_accept_residual_risk_or_legal_applicability
+
+objectTypes:
+  DOCUMENT:
+    requiredFields:
+      - documentId
+      - artifactType
+      - projectId
+      - lifecycleStage
+      - version
+      - sourceRefs
+      - ownerRole
+      - state
+      - createdAt
+      - provenance
+  CLAIM:
+    requiredFields:
+      - claimId
+      - documentRef
+      - claimType
+      - statement
+      - sourceLocator
+      - evidenceState
+      - ownerRole
+      - status
+  REVIEW_TASK:
+    requiredFields:
+      - reviewTaskId
+      - documentRef
+      - reviewType
+      - assigneeRole
+      - blocking
+      - findings
+      - decision
+  APPROVAL_RECORD:
+    requiredFields:
+      - approvalId
+      - documentRef
+      - version
+      - actorId
+      - actorRole
+      - decision
+      - rationale
+      - evidenceRefs
+      - timestamp
+      - supersedesApprovalRef
+
+states:
+  - RECEIVED
+  - INGESTED
+  - PARSED
+  - EXTRACTED
+  - CLASSIFIED
+  - MAPPED_TO_ARTIFACT_SCHEMA
+  - TRACEABILITY_CHECKED
+  - COMPLETENESS_CHECKED
+  - CONFLICT_CHECKED
+  - CANDIDATE_DRAFT
+  - OWNER_REVIEW
+  - DOMAIN_REVIEW
+  - INDEPENDENT_REVIEW
+  - REWORK_REQUIRED
+  - APPROVED
+  - CONDITIONALLY_APPROVED
+  - BLOCKED
+  - REJECTED
+  - SUPERSEDED
+  - VERIFIED
+  - STALE
+
+claimTypes:
+  - FACT
+  - REQUIREMENT
+  - CONSTRAINT
+  - ASSUMPTION
+  - HYPOTHESIS
+  - DECISION
+  - RISK
+  - UNKNOWN
+  - CONFLICT
+  - RECOMMENDATION
+
+llmWorkers:
+  INTAKE_EXTRACTOR:
+    allowed:
+      - parse_sections
+      - extract_fields
+      - extract_claim_candidates
+      - preserve_source_locators
+    forbidden:
+      - approve_document
+      - invent_missing_values
+  SCHEMA_MAPPER:
+    allowed:
+      - map_content_to_artifact_fields
+      - identify_unmapped_content
+      - identify_missing_required_fields
+    forbidden:
+      - mark_missing_field_not_applicable_without_owner_evidence
+  TRACEABILITY_LINKER:
+    allowed:
+      - propose_source_to_claim_links
+      - propose_claim_to_requirement_links
+      - propose_requirement_to_downstream_links
+    forbidden:
+      - fabricate_source_or_clause_reference
+  COMPLETENESS_REVIEWER:
+    allowed:
+      - compare_against_artifact_contract
+      - create_gap_findings
+      - propose_questions
+    forbidden:
+      - close_gap_without_evidence
+  CONFLICT_REVIEWER:
+    allowed:
+      - identify_inconsistent_claims
+      - identify_definition_drift
+      - identify_version_conflicts
+      - preserve_both_sides
+    forbidden:
+      - choose_legal_or_business_winner
+  NORMATIVE_REVIEW_ASSISTANT:
+    allowed:
+      - propose_applicability_questions
+      - compare_project_facts_to_verified_applicability_conditions
+      - map_verified_clause_to_artifact_field
+    forbidden:
+      - issue_final_legal_applicability_decision
+      - invent_clause_numbers
+  SECURITY_REVIEW_ASSISTANT:
+    allowed:
+      - propose_abuse_cases
+      - map_threats_to_security_drivers
+      - identify_missing_security_evidence
+    forbidden:
+      - accept_residual_risk
+  ARCHITECTURE_REVIEW_ASSISTANT:
+    allowed:
+      - compare_options
+      - prepare_tradeoff_matrix
+      - detect_unsupported_architecture_claims
+      - draft_ADR
+    forbidden:
+      - self_approve_architecture
+  GATE_ASSESSOR:
+    allowed:
+      - calculate_candidate_gate_outcome_from_explicit_rules
+      - list_blockers_and_conditions
+    outputField: suggestedGateOutcome
+    forbidden:
+      - write_finalGateOutcome_without_authorized_approval
+
+processingFlow:
+  - step: INGEST
+    actor: INTAKE_EXTRACTOR
+    output: immutable_source_snapshot
+  - step: EXTRACT
+    actor: INTAKE_EXTRACTOR
+    output: claim_candidates
+  - step: MAP
+    actor: SCHEMA_MAPPER
+    output: artifact_field_mapping
+  - step: TRACE
+    actor: TRACEABILITY_LINKER
+    output: proposed_trace_links
+  - step: COMPLETENESS
+    actor: COMPLETENESS_REVIEWER
+    output: gap_register
+  - step: CONFLICTS
+    actor: CONFLICT_REVIEWER
+    output: conflict_register
+  - step: DOMAIN_CHECK
+    actor: stage_specific_assistants
+    output: review_findings
+  - step: DRAFT
+    actor: llm_or_human_producer
+    output: candidate_document_version
+  - step: OWNER_REVIEW
+    actor: accountable_owner
+    output: approval_or_rework
+  - step: INDEPENDENT_REVIEW
+    actor: reviewer_not_equal_to_producer_when_material
+    output: independent_findings
+  - step: GATE_ASSESSMENT
+    actor: GATE_ASSESSOR
+    output: suggested_gate_outcome
+  - step: FINAL_GATE
+    actor: authorized_gate_owner
+    output: final_gate_decision
+  - step: FORWARD
+    condition: all_required_approvals_present_and_no_blocking_findings
+    output: next_stage_work_items
+
+routingByStage:
+  PRODUCT_DISCOVERY:
+    producerRoles: [product_manager, business_analyst]
+    requiredApprovers: [business_owner, product_manager]
+    requiredReviewers: [skeptical_reviewer]
+    llmFocus: [problem_vs_solution_check, scope_gap_check, stakeholder_gap_check, unknown_detection]
+    exitGate: PRODUCT_READY
+  SECURITY_INTAKE:
+    producerRoles: [security_engineer]
+    requiredApprovers: [security_engineer]
+    conditionalAuthorities: [legal_compliance, data_owner]
+    requiredReviewers: [skeptical_reviewer]
+    llmFocus: [data_class_candidates, trust_boundaries, abuse_cases, applicability_questions]
+    exitGate: SECURITY_INTAKE_READY
+  SYSTEM_ENGINEERING:
+    producerRoles: [system_engineer, integration_engineer]
+    requiredApprovers: [system_engineer]
+    requiredReviewers: [security_engineer]
+    llmFocus: [boundary_consistency, interface_inventory, data_flow_gaps, hidden_dependencies]
+    exitGate: SYSTEM_MODEL_READY
+  THREAT_MODEL_V0:
+    producerRoles: [security_engineer]
+    requiredApprovers: [security_engineer]
+    requiredReviewers: [skeptical_reviewer, system_engineer]
+    llmFocus: [threat_scenario_generation, evidence_relevance, missing_entry_points, requirement_drivers]
+    exitGate: THREAT_MODEL_V0_READY
+  REQUIREMENTS_BASELINE:
+    producerRoles: [requirements_engineer]
+    requiredApprovers: [requirements_engineer]
+    conditionalAuthorities: [product_manager, security_engineer, data_owner, legal_compliance, operations_platform]
+    requiredReviewers: [qa_verification]
+    llmFocus: [duplicate_requirements, ambiguity, testability, orphan_requirements, traceability]
+    exitGate: REQUIREMENTS_BASELINE_READY
+  DELIVERY_FEASIBILITY:
+    producerRoles: [project_manager, finance_procurement]
+    requiredApprovers: [project_manager]
+    conditionalAuthorities: [finance_procurement, operations_platform]
+    requiredReviewers: [skeptical_reviewer]
+    llmFocus: [estimate_basis, assumption_visibility, risk_buffer_trace, TCO_input_gaps]
+    exitGate: DELIVERY_FEASIBILITY_READY
+  ARCHITECTURE_OPTIONS:
+    producerRoles: [solution_architect]
+    requiredApprovers: [solution_architect]
+    requiredReviewers: [security_engineer, skeptical_reviewer]
+    conditionalAuthorities: [product_manager, operations_platform, finance_procurement]
+    llmFocus: [driver_coverage, option_completeness, tradeoffs, unsupported_best_claims]
+    exitGate: ARCHITECTURE_OPTIONS_REVIEWED
+  ARCHITECTURE_DECISION:
+    producerRoles: [solution_architect]
+    requiredApprovers: [business_or_system_decision_owner]
+    requiredReviewers: [security_engineer, skeptical_reviewer]
+    llmFocus: [ADR_structure, alternatives, consequences, revisit_triggers, evidence_links]
+    exitGate: ARCHITECTURE_DECISION_ALLOWED
+  DETAILED_DESIGN:
+    producerRoles: [software_architect, api_designer, data_engineer, integration_engineer]
+    requiredApprovers: [software_architect]
+    requiredReviewers: [security_engineer, qa_verification]
+    llmFocus: [contract_consistency, interface_versioning, security_control_mapping, sequence_gaps]
+    exitGate: DETAILED_DESIGN_READY
+  IMPLEMENTATION:
+    producerRoles: [software_engineer, devsecops_engineer]
+    requiredApprovers: [code_reviewer]
+    requiredReviewers: [security_engineer]
+    llmFocus: [requirement_to_code_trace, dependency_change, secrets, SAST_SCA_findings]
+    exitGate: IMPLEMENTATION_VERIFIED
+  VERIFICATION_VALIDATION:
+    producerRoles: [qa_verification]
+    requiredApprovers: [qa_verification]
+    conditionalAuthorities: [product_manager, security_engineer]
+    llmFocus: [test_coverage, requirement_coverage, evidence_quality, unresolved_failures]
+    exitGate: VERIFICATION_COMPLETE
+  RELEASE_DEPLOYMENT:
+    producerRoles: [release_manager, operations_engineer]
+    requiredApprovers: [service_owner]
+    requiredReviewers: [security_engineer, qa_verification]
+    llmFocus: [release_evidence, rollback, config_diff, unresolved_risk]
+    exitGate: RELEASE_ALLOWED
+  OPERATION_MAINTENANCE:
+    producerRoles: [operations_engineer, incident_manager]
+    requiredApprovers: [service_owner]
+    requiredReviewers: [security_engineer]
+    llmFocus: [SLO_drift, incident_patterns, stale_decisions, architecture_revisit_triggers]
+    exitGate: OPERATION_CONTINUES_OR_REASSESS
+
+approvalDecisions:
+  - APPROVE
+  - APPROVE_WITH_CONDITIONS
+  - REWORK
+  - REJECT
+  - NOT_APPLICABLE_WITH_EVIDENCE
+  - NEED_MORE_EVIDENCE
+
+finalGateOutcomes:
+  - PASS
+  - CONDITIONAL_PASS
+  - BLOCKED
+  - INSUFFICIENT_EVIDENCE
+
+hardBlocks:
+  - missing_accountable_owner
+  - missing_required_approval
+  - unresolved_blocking_conflict
+  - unknown_silently_promoted_to_fact
+  - source_reference_not_resolvable
+  - material_claim_without_provenance
+  - legal_applicability_decided_only_by_llm
+  - residual_risk_accepted_only_by_llm_or_security_engineer_without_authority
+  - architecture_self_approved_without_required_independent_review
+  - numeric_target_or_estimate_without_basis_when_basis_is_required
+
+futureExecutionNotes:
+  - event_bus_or_work_queue_can_route_review_tasks
+  - project_document_store_should_keep_immutable_versions_and_diffs
+  - notification_layer_should_alert_assignees_on_blocking_review_tasks
+  - llm_jobs_should_be_reproducible_with_model_prompt_version_and_input_snapshot
+  - every_llm_run_should_emit_trace_id_model_id_prompt_version_input_refs_output_refs_duration_and_review_result
+  - no_background_autonomous_promotion_without_explicit_gate_policy
