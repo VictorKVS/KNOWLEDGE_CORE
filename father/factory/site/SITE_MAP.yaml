@@ -1,4 +1,4 @@
-schemaVersion: 3
+schemaVersion: 4
 siteId: FATHER-ANALYTICAL-DESIGN-SITE-0001
 status: CANDIDATE_SITE_MAP
 pages:
@@ -48,6 +48,7 @@ pages:
     canonicalData:
       - father/factory/automation/DOCUMENT_AUTOMATION_PIPELINE.yaml
       - father/factory/automation/DOCUMENT_APPROVAL_MATRIX.yaml
+      - father/factory/automation/MODEL_ZOO_DECISION_PANEL.yaml
     views:
       - intake_queue
       - llm_review_queue
@@ -57,6 +58,23 @@ pages:
       - trace_graph
       - version_diff
       - audit_history
+      - model_zoo_panel_summary
+  - id: MODEL_ZOO_DECISION_PANEL
+    path: father/factory/site/model-zoo-decision.html
+    purpose: adaptive champion-challenger-independent-judge council for material engineering decisions with preserved dissent and human final authority
+    canonicalData:
+      - father/factory/automation/MODEL_ZOO_DECISION_PANEL.yaml
+      - father/factory/automation/DOCUMENT_AUTOMATION_PIPELINE.yaml
+    views:
+      - materiality_router
+      - selected_panel_profile
+      - champion_output
+      - blind_challenger_outputs
+      - evidence_verification
+      - dissent_register
+      - judge_summary
+      - human_decision
+      - per_capability_model_telemetry
 
 plannedDrilldowns:
   - id: ARTIFACT_DETAIL
@@ -80,6 +98,9 @@ plannedDrilldowns:
   - id: APPROVAL_TASK
     routeIntent: '/approval/{approvalId}'
     sections: [document_version, assignee_role, decision_options, blocking_findings, evidence_refs, rationale, downstream_impact]
+  - id: MODEL_PANEL_RUN
+    routeIntent: '/decision-panel/{panelRunId}'
+    sections: [materiality, selected_models, frozen_input_snapshot, champion, blind_challengers, evidence_verifier, cross_examination, judge, dissent_register, suggested_gate, human_decision, telemetry]
 
 navigationPrinciple: >-
   The site is a projection over canonical registries and project sources. UI pages must never become an independent source of engineering truth.
