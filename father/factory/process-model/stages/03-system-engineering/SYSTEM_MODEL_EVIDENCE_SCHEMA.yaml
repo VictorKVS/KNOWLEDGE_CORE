@@ -1,0 +1,70 @@
+schemaVersion: 1
+schemaId: FATHER-STAGE-03-SYSTEM-MODEL-EVIDENCE-0001
+status: CANDIDATE_SCHEMA
+recordTypes:
+  - SYSTEM_ACTOR
+  - SYSTEM_BOUNDARY_CLAIM
+  - SYSTEM_FUNCTION
+  - INFORMATION_FLOW
+  - INTERFACE
+  - EXTERNAL_DEPENDENCY
+  - OPERATIONAL_MODE
+  - ASSUMPTION
+  - CONFLICT
+  - UNKNOWN
+claimTypes: [FACT, CLAIM, REQUIREMENT, CONSTRAINT, ASSUMPTION, HYPOTHESIS, UNKNOWN]
+verificationStates: [UNSUPPORTED, SOURCED, OWNER_CONFIRMED, CONFLICTED, STALE, REJECTED, NOT_APPLICABLE]
+requiredFields:
+  - evidenceId
+  - statement
+  - recordType
+  - claimType
+  - verificationState
+  - sourceType
+  - informationOwner
+  - affectedArtifacts
+  - downstreamImpact
+conditionalFields:
+  systemActor: [actorType, insideOutsideBoundary]
+  boundaryClaim: [boundaryElement, inOutStatus, rationale]
+  function: [functionId, productNeedRefs]
+  informationFlow: [sourceActorOrFunction, destinationActorOrFunction, informationClass, direction]
+  interface: [counterparty, purpose, informationClasses, status]
+  dependency: [providerOrOwner, purpose, failureImpact, trustImplication]
+  operationalMode: [modeName, trigger, expectedBehavior]
+  assumption: [validationOwner, validationTrigger]
+  conflict: [conflictRefs, conflictOwner]
+  unknown: [resolutionOwner, resolutionTrigger]
+analytics:
+  systemActorsIdentified:
+    type: count
+  externalActorsIdentified:
+    type: count
+  materialFunctionsTracedToProduct:
+    type: ratio
+    note: diagnostic_only
+  materialInformationClassesWithVisibleFlows:
+    type: ratio
+    note: diagnostic_only
+  externalInteractionsWithInterfaceRecord:
+    type: ratio
+    note: diagnostic_only
+  dependenciesWithOwnerOrProvider:
+    type: ratio
+    note: diagnostic_only
+  securityConstraintsMappedToSystemElements:
+    type: ratio
+    note: diagnostic_only
+  openBoundaryConflicts:
+    type: count
+  materialUnknowns:
+    type: count
+  gateBlockers:
+    type: count
+rules:
+  - logical_function_must_not_be_promoted_to_software_component_without_architecture_decision
+  - system_model_must_consume_security_constraints
+  - sensitive_information_flow_must_not_be_hidden
+  - external_interaction_must_be_interface_or_explicit_unknown
+  - technology_preference_must_not_become_system_requirement_without_owner_or_constraint
+  - analytics_are_diagnostic_and_do_not_replace_professional_gate_review
