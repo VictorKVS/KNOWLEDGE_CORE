@@ -1,0 +1,409 @@
+schemaVersion: 1
+pilotId: FATHER-ANALYTICAL-DESIGN-PLATFORM
+stage: THREAT_MODEL_V0
+status: OWNER_REVIEW
+entryDecision: CONDITIONAL_PASS
+entryRef: STAGE_03_SYSTEM_ENGINEERING.yaml
+threatModelV0ReadyDecision: CONDITIONAL_PASS
+threatModelV0ReadyReason: >-
+  Material protected interests, logical trust boundaries, early threat sources and ten pre-architecture threat scenarios
+  are explicit and traced to the current System Model/Security Intake. The model derives architecture-independent security
+  drivers and draft requirements without inventing implementation vulnerabilities or numeric likelihood. Deployment-, IAM-,
+  tenant- and provider-specific attack paths remain intentionally deferred to v1/v2 and must be refined after architecture/design evidence exists.
+
+methodology:
+  primarySourceRef: FSTEC-METHOD-THREATS-2021
+  sourceState: CANDIDATE_REGISTRY_REFERENCE
+  rule: source status and project applicability must be rechecked before a material compliance decision
+  v0Policy:
+    - no_invented_CVE_or_implementation_vulnerability
+    - no_numeric_likelihood_without_evidence
+    - scenario_must_trace_to_system_path_or_explicit_assumption
+    - residual_risk_not_accepted_by_security_engineer
+
+PROTECTED_INTEREST_REGISTER:
+  - id: PI-01
+    name: accountable_decision_integrity
+    securityProperties: [INTEGRITY, AUTHENTICITY, ACCOUNTABILITY]
+    owner: FATHER_owner
+  - id: PI-02
+    name: project_evidence_confidentiality_and_integrity
+    securityProperties: [CONFIDENTIALITY, INTEGRITY, TRACEABILITY]
+    owner: project_data_owner
+  - id: PI-03
+    name: normative_and_source_provenance_integrity
+    securityProperties: [INTEGRITY, AUTHENTICITY, FRESHNESS, TRACEABILITY]
+    owner: knowledge_source_governance
+  - id: PI-04
+    name: agent_and_role_authority_boundary
+    securityProperties: [AUTHORIZATION, ACCOUNTABILITY, INTEGRITY]
+    owner: FATHER_owner
+  - id: PI-05
+    name: credentials_and_secrets_confidentiality
+    securityProperties: [CONFIDENTIALITY]
+    owner: security_owner
+  - id: PI-06
+    name: project_or_tenant_isolation
+    securityProperties: [CONFIDENTIALITY, INTEGRITY, SEPARATION]
+    owner: project_data_owner
+  - id: PI-07
+    name: canonical_artifact_and_gate_state
+    securityProperties: [INTEGRITY, AVAILABILITY, RECOVERABILITY, TRACEABILITY]
+    owner: configuration_or_project_owner
+  - id: PI-08
+    name: analytical_service_availability_and_explainability
+    securityProperties: [AVAILABILITY, TRACEABILITY, EXPLAINABILITY]
+    owner: service_owner_candidate
+
+NEGATIVE_CONSEQUENCE_REGISTER:
+  - id: NC-01
+    protectedInterestRefs: [PI-01, PI-04, PI-07]
+    consequence: material engineering decision is approved, changed or represented as confirmed without accountable authority
+    impactState: MATERIAL
+  - id: NC-02
+    protectedInterestRefs: [PI-02, PI-05, PI-06]
+    consequence: sensitive project data, secret or cross-project context is disclosed to an unauthorized party/provider/project
+    impactState: MATERIAL
+  - id: NC-03
+    protectedInterestRefs: [PI-03, PI-07]
+    consequence: stale, forged or misattributed evidence drives an incorrect security/compliance/architecture decision
+    impactState: MATERIAL
+  - id: NC-04
+    protectedInterestRefs: [PI-07, PI-08]
+    consequence: canonical project knowledge or gate evidence becomes unavailable, corrupted or unrecoverable
+    impactState: MATERIAL
+  - id: NC-05
+    protectedInterestRefs: [PI-01, PI-03, PI-08]
+    consequence: candidate/hypothesis/model output is presented as verified truth and becomes a downstream design premise
+    impactState: MATERIAL
+
+THREAT_SOURCE_REGISTER:
+  - id: TS-01
+    sourceClass: UNTRUSTED_EXTERNAL_CONTENT_OR_ACTOR
+    assumedCapabilities: [submit_or_influence_project_content]
+    evidenceState: CANDIDATE
+  - id: TS-02
+    sourceClass: AUTHORIZED_USER_OR_INSIDER
+    assumedCapabilities: [access_per_role, submit_changes, possible_misuse_or_error]
+    evidenceState: CANDIDATE
+  - id: TS-03
+    sourceClass: COMPROMISED_OR_STALE_EXTERNAL_SOURCE
+    assumedCapabilities: [supply_incorrect_or_manipulated_content_or_metadata]
+    evidenceState: CANDIDATE
+  - id: TS-04
+    sourceClass: EXTERNAL_MODEL_OR_CONNECTED_PROVIDER_BOUNDARY
+    assumedCapabilities: [receive_data, return_content, become_unavailable_or_misconfigured]
+    evidenceState: CONDITIONALLY_RELEVANT
+  - id: TS-05
+    sourceClass: AGENT_OR_AUTOMATION_OPERATING_BEYOND_AUTHORITY
+    assumedCapabilities: [generate_candidate_output, invoke_permitted_workflow_actions]
+    evidenceState: OWNER_CONFIRMED_AS_DESIGN_CONCERN
+  - id: TS-06
+    sourceClass: COMPROMISED_SOFTWARE_OR_SUPPLY_DEPENDENCY
+    assumedCapabilities: [affect_runtime_or_processing_if_later_selected]
+    evidenceState: DEFER_DETAIL_TO_V1_V2
+
+TRUST_BOUNDARY_REGISTER:
+  - id: TB-01
+    name: project_or_user_content_to_FATHER
+    from: ACT-PROJECT-SOURCE
+    to: FN-01
+    reason: external/project content becomes system input
+  - id: TB-02
+    name: FATHER_to_external_model_provider
+    from: FN-05
+    to: ACT-MODEL
+    reason: project context may leave controlled processing boundary
+    status: CONDITIONAL
+  - id: TB-03
+    name: FATHER_to_connected_source_or_repository
+    from: FATHER
+    to: ACT-CONNECTOR
+    reason: external identity/content/action trust boundary
+    status: CONDITIONAL
+  - id: TB-04
+    name: candidate_analysis_to_confirmed_decision
+    from: FN-05
+    to: FN-06
+    reason: model/agent analysis must cross independent review/owner authority before canonical promotion
+  - id: TB-05
+    name: project_context_to_other_project_or_shared_runtime
+    from: project_A
+    to: shared_platform_or_project_B
+    reason: cross-project/tenant isolation boundary
+    status: CONDITIONAL_PENDING_TENANT_MODEL
+  - id: TB-06
+    name: secret_handling_to_ordinary_context
+    from: dedicated_secret_handling
+    to: prompt_evidence_artifact_context
+    reason: secrets must not cross into ordinary context
+    status: PROHIBITED_FLOW_BOUNDARY
+
+ENTRY_POINT_REGISTER:
+  - {id: EP-01, ref: IF-01, name: user_or_professional_interaction}
+  - {id: EP-02, ref: IF-02, name: project_document_repository_or_connector_input}
+  - {id: EP-03, ref: IF-03, name: normative_professional_source_input}
+  - {id: EP-04, ref: IF-04, name: external_model_provider_interface, status: CONDITIONAL}
+  - {id: EP-05, ref: IF-05, name: local_model_runtime_interface, status: CONDITIONAL}
+  - {id: EP-06, ref: IF-06, name: external_identity_interface, status: UNKNOWN_OPTION}
+  - {id: EP-07, ref: IF-07, name: version_or_artifact_repository_interface, status: CANDIDATE}
+
+THREAT_SCENARIO_REGISTER:
+  - scenarioId: TSN-001
+    title: untrusted_content_influences_professional_analysis
+    protectedInterestRefs: [PI-01, PI-03, PI-07]
+    negativeConsequenceRefs: [NC-01, NC-03, NC-05]
+    threatSourceRefs: [TS-01, TS-03]
+    entryPointRefs: [EP-02, EP-03]
+    trustBoundaryRefs: [TB-01, TB-04]
+    preconditions: [untrusted_or_manipulated_content_is_retrieved_or_presented_to_analysis]
+    scenarioPath: external content -> evidence/context ingestion -> professional analysis -> candidate output -> attempted influence on reviewed/canonical decision
+    evidenceState: OWNER_CONFIRMED_DESIGN_CONCERN
+    evidenceRefs: [AB-01, EV-SE-003]
+    uncertainty: exact parser/retrieval/model implementation unknown
+    relevanceState: RELEVANT_V0
+    securityDriverRefs: [SD-01, SD-02, SD-03]
+    requirementDraftRefs: [SRD-01, SRD-02, SRD-03]
+    downstreamRefinement: [architecture_content_isolation, retrieval_controls, prompt_context_boundaries]
+  - scenarioId: TSN-002
+    title: sensitive_project_data_disclosed_to_external_provider
+    protectedInterestRefs: [PI-02, PI-06]
+    negativeConsequenceRefs: [NC-02]
+    threatSourceRefs: [TS-04, TS-05]
+    entryPointRefs: [EP-04]
+    trustBoundaryRefs: [TB-02]
+    preconditions: [external_provider_enabled, project_context_selected_for_external_processing]
+    scenarioPath: classified project evidence -> analysis context -> external provider boundary -> unauthorized_or_not_permitted_disclosure
+    evidenceState: CANDIDATE
+    evidenceRefs: [AB-02, DF-05]
+    uncertainty: provider set, contracts, data policy and deployment not selected
+    relevanceState: CONDITIONALLY_RELEVANT
+    securityDriverRefs: [SD-04, SD-05]
+    requirementDraftRefs: [SRD-04, SRD-05]
+    downstreamRefinement: [provider_policy, data_egress_controls, deployment_option_review]
+  - scenarioId: TSN-003
+    title: provenance_or_source_status_tampering_drives_wrong_decision
+    protectedInterestRefs: [PI-03, PI-07]
+    negativeConsequenceRefs: [NC-03, NC-05]
+    threatSourceRefs: [TS-02, TS-03, TS-05]
+    entryPointRefs: [EP-03, EP-07]
+    trustBoundaryRefs: [TB-01, TB-04]
+    preconditions: [source_identity_version_or_status_can_be_changed_or_misrepresented]
+    scenarioPath: manipulated/stale source metadata -> admitted evidence -> analysis/gate -> incorrect material decision
+    evidenceState: OWNER_CONFIRMED_DESIGN_CONCERN
+    evidenceRefs: [AB-03, SC-07]
+    uncertainty: persistence/version-control implementation not selected
+    relevanceState: RELEVANT_V0
+    securityDriverRefs: [SD-06, SD-07]
+    requirementDraftRefs: [SRD-06, SRD-07]
+    downstreamRefinement: [immutable_or_verifiable_provenance, source_refresh_workflow]
+  - scenarioId: TSN-004
+    title: agent_or_automation_escalates_authority
+    protectedInterestRefs: [PI-01, PI-04, PI-07]
+    negativeConsequenceRefs: [NC-01, NC-05]
+    threatSourceRefs: [TS-05]
+    entryPointRefs: [EP-01, EP-04, EP-05]
+    trustBoundaryRefs: [TB-04]
+    preconditions: [automation_can_generate_or_attempt_material_state_change]
+    scenarioPath: agent/model output -> workflow action -> bypass_or_misapply review/owner boundary -> unauthorized promotion/approval/risk acceptance
+    evidenceState: OWNER_CONFIRMED
+    evidenceRefs: [AB-04, SC-01, FTH-006, FTH-007]
+    uncertainty: final action/tool permission model unknown
+    relevanceState: RELEVANT_V0
+    securityDriverRefs: [SD-08, SD-09]
+    requirementDraftRefs: [SRD-08, SRD-09]
+    downstreamRefinement: [iam_roles, policy_enforcement_points, tool_permissions]
+  - scenarioId: TSN-005
+    title: secret_enters_prompt_trace_or_artifact_store
+    protectedInterestRefs: [PI-05, PI-02]
+    negativeConsequenceRefs: [NC-02]
+    threatSourceRefs: [TS-01, TS-02, TS-05]
+    entryPointRefs: [EP-01, EP-02]
+    trustBoundaryRefs: [TB-06, TB-02]
+    preconditions: [secret_is_submitted_or_discovered_in_input]
+    scenarioPath: secret-bearing input -> ordinary evidence/context path -> persisted trace or model context -> unauthorized exposure
+    evidenceState: CANDIDATE
+    evidenceRefs: [AB-05, SC-03]
+    uncertainty: secret-storage/runtime design unknown
+    relevanceState: RELEVANT_V0
+    securityDriverRefs: [SD-10]
+    requirementDraftRefs: [SRD-10]
+    downstreamRefinement: [secret_detection, redaction, dedicated_secret_store]
+  - scenarioId: TSN-006
+    title: unauthorized_change_to_canonical_artifact_or_gate_state
+    protectedInterestRefs: [PI-01, PI-07]
+    negativeConsequenceRefs: [NC-01, NC-03, NC-04]
+    threatSourceRefs: [TS-02, TS-05, TS-06]
+    entryPointRefs: [EP-01, EP-07]
+    trustBoundaryRefs: [TB-04]
+    preconditions: [canonical_state_change_capability_exists]
+    scenarioPath: unauthorized_or_unreviewed change -> canonical artifact/gate state -> downstream consumers accept altered state
+    evidenceState: CANDIDATE
+    evidenceRefs: [AB-06, SC-06]
+    uncertainty: storage/change-control architecture unknown
+    relevanceState: RELEVANT_V0
+    securityDriverRefs: [SD-11, SD-12]
+    requirementDraftRefs: [SRD-11, SRD-12]
+    downstreamRefinement: [authz, versioning, audit, configuration_management]
+  - scenarioId: TSN-007
+    title: cross_project_context_leak
+    protectedInterestRefs: [PI-02, PI-06]
+    negativeConsequenceRefs: [NC-02]
+    threatSourceRefs: [TS-02, TS-05, TS-06]
+    entryPointRefs: [EP-01, EP-02, EP-04]
+    trustBoundaryRefs: [TB-05]
+    preconditions: [multi_project_or_shared_runtime_enabled]
+    scenarioPath: project A evidence/context -> shared retrieval/runtime/state -> project B request/output
+    evidenceState: CANDIDATE
+    evidenceRefs: [AB-07, SC-08]
+    uncertainty: tenant model not selected
+    relevanceState: CONDITIONALLY_RELEVANT
+    securityDriverRefs: [SD-13]
+    requirementDraftRefs: [SRD-13]
+    downstreamRefinement: [tenant_isolation_model, retrieval_partitioning, provider_context_isolation]
+  - scenarioId: TSN-008
+    title: loss_or_corruption_of_canonical_evidence_state
+    protectedInterestRefs: [PI-07, PI-08]
+    negativeConsequenceRefs: [NC-04, NC-03]
+    threatSourceRefs: [TS-02, TS-06]
+    entryPointRefs: [EP-07]
+    trustBoundaryRefs: []
+    preconditions: [canonical_state_has_persistence_dependency]
+    scenarioPath: failure/misuse/compromise -> canonical evidence/artifact history corrupted_or_unavailable -> gate/decision reconstruction fails
+    evidenceState: CANDIDATE
+    evidenceRefs: [DEP-05]
+    uncertainty: persistence architecture unknown
+    relevanceState: RELEVANT_V0
+    securityDriverRefs: [SD-14, SD-15]
+    requirementDraftRefs: [SRD-14, SRD-15]
+    downstreamRefinement: [backup_recovery, append_only_history_or_equivalent, integrity_checks]
+  - scenarioId: TSN-009
+    title: compromised_connector_or_source_supplies_malicious_or_wrong_context
+    protectedInterestRefs: [PI-02, PI-03, PI-07]
+    negativeConsequenceRefs: [NC-03, NC-05]
+    threatSourceRefs: [TS-03, TS-06]
+    entryPointRefs: [EP-02, EP-03]
+    trustBoundaryRefs: [TB-01, TB-03]
+    preconditions: [connected_source_or_repository_enabled]
+    scenarioPath: compromised/stale external source -> connector ingestion -> evidence/context -> analysis/gate decision
+    evidenceState: CANDIDATE
+    evidenceRefs: [DEP-01, DEP-02, AB-01]
+    uncertainty: connector set and authentication model unknown
+    relevanceState: CONDITIONALLY_RELEVANT
+    securityDriverRefs: [SD-02, SD-06, SD-16]
+    requirementDraftRefs: [SRD-02, SRD-06, SRD-16]
+    downstreamRefinement: [connector_authn_authz, source_freshness, content_validation]
+  - scenarioId: TSN-010
+    title: external_analysis_dependency_unavailable_or_returns_untrusted_output
+    protectedInterestRefs: [PI-01, PI-08]
+    negativeConsequenceRefs: [NC-04, NC-05]
+    threatSourceRefs: [TS-04, TS-05]
+    entryPointRefs: [EP-04, EP-05]
+    trustBoundaryRefs: [TB-02, TB-04]
+    preconditions: [model_provider_or_local_model_used]
+    scenarioPath: analysis dependency unavailable_or_returns_bad_output -> workflow pressures fallback or acceptance -> fabricated_or_unreviewed result could enter decision path
+    evidenceState: CANDIDATE
+    evidenceRefs: [OM-05, SC-01]
+    uncertainty: provider/fallback architecture unknown
+    relevanceState: CONDITIONALLY_RELEVANT
+    securityDriverRefs: [SD-09, SD-17]
+    requirementDraftRefs: [SRD-09, SRD-17]
+    downstreamRefinement: [failure_modes, explicit_unavailable_state, fallback_policy]
+
+SECURITY_DRIVER_REGISTER:
+  - {id: SD-01, statement: untrusted content must be distinguishable from trusted system/policy instructions}
+  - {id: SD-02, statement: source/content ingestion must preserve provenance and trust state}
+  - {id: SD-03, statement: candidate analysis must cross review/authority boundary before canonical promotion}
+  - {id: SD-04, statement: data egress to external providers must be policy-controlled by data/project classification}
+  - {id: SD-05, statement: provider/model identity and processing boundary must be traceable}
+  - {id: SD-06, statement: material source identity version and status must be verifiable}
+  - {id: SD-07, statement: stale/superseded source use must be visible and block unsupported current claims}
+  - {id: SD-08, statement: agent/tool permissions must enforce role and authority boundaries}
+  - {id: SD-09, statement: automation cannot self-approve material decisions or residual risk}
+  - {id: SD-10, statement: secrets require dedicated handling and exclusion/redaction from ordinary contexts}
+  - {id: SD-11, statement: canonical changes require authorization and traceable version history}
+  - {id: SD-12, statement: review state and gate state require tamper-evident auditability}
+  - {id: SD-13, statement: project/tenant evidence and retrieval context require isolation}
+  - {id: SD-14, statement: canonical evidence/artifact state requires recoverability}
+  - {id: SD-15, statement: canonical state integrity must be detectable and reconstructable}
+  - {id: SD-16, statement: connected sources require authenticated, bounded and freshness-aware trust handling}
+  - {id: SD-17, statement: unavailable/untrusted analysis dependency must produce explicit degraded state, not fabricated certainty}
+
+SECURITY_REQUIREMENTS_DRAFT:
+  status: CANDIDATE_FOR_REQUIREMENTS_BASELINE
+  requirements:
+    - {id: SRD-01, driverRefs: [SD-01], statement: system shall preserve a machine-detectable separation between system/policy instructions and untrusted project/source content}
+    - {id: SRD-02, driverRefs: [SD-02], statement: system shall record provenance and trust/evidence state for material ingested sources and content}
+    - {id: SRD-03, driverRefs: [SD-03], statement: system shall prevent candidate model/agent output from becoming owner-confirmed canonical state without required review/authority transition}
+    - {id: SRD-04, driverRefs: [SD-04], statement: system shall evaluate project/data policy before transmitting project content to an external processing provider}
+    - {id: SRD-05, driverRefs: [SD-05], statement: system shall trace provider/model identity for material analytical outputs}
+    - {id: SRD-06, driverRefs: [SD-06], statement: system shall preserve source identity version/status and evidence reference for material normative/source claims}
+    - {id: SRD-07, driverRefs: [SD-07], statement: system shall expose stale/superseded/unknown source status and shall not silently treat it as current}
+    - {id: SRD-08, driverRefs: [SD-08], statement: system shall enforce authorization boundaries for material artifact, gate, review and tool actions}
+    - {id: SRD-09, driverRefs: [SD-09], statement: system shall require independent/accountable approval where FATHER governance prohibits self-approval or automated risk acceptance}
+    - {id: SRD-10, driverRefs: [SD-10], statement: system shall provide a control path to prevent or remove credentials/secrets from ordinary prompt, trace, evidence and artifact contexts}
+    - {id: SRD-11, driverRefs: [SD-11], statement: system shall version and attribute material canonical changes to authenticated actor/process identity}
+    - {id: SRD-12, driverRefs: [SD-12], statement: system shall retain review/gate audit evidence sufficient to reconstruct material state transitions}
+    - {id: SRD-13, driverRefs: [SD-13], statement: system shall isolate project/tenant evidence, retrieval and canonical state according to the selected tenancy model}
+    - {id: SRD-14, driverRefs: [SD-14], statement: system shall support recovery of canonical evidence/artifact state to an approved recoverability objective defined later}
+    - {id: SRD-15, driverRefs: [SD-15], statement: system shall detect or surface integrity inconsistencies in canonical state/history}
+    - {id: SRD-16, driverRefs: [SD-16], statement: system shall identify connected-source identity/authorization/freshness state for material evidence ingestion}
+    - {id: SRD-17, driverRefs: [SD-17], statement: system shall represent unavailable or untrusted analytical dependency state explicitly and shall not fabricate substitute evidence}
+
+SECURITY_RISK_REGISTER:
+  status: PRELIMINARY_NO_RESIDUAL_ACCEPTANCE
+  policy: no numeric likelihood until architecture/deployment evidence supports it
+  entries:
+    - {riskId: RV0-01, scenarioRefs: [TSN-001, TSN-003, TSN-009], assessmentState: REQUIRES_ARCHITECTURE_REFINEMENT, owner: risk_owner_pending}
+    - {riskId: RV0-02, scenarioRefs: [TSN-002, TSN-007], assessmentState: REQUIRES_DEPLOYMENT_AND_DATA_POLICY, owner: risk_owner_pending}
+    - {riskId: RV0-03, scenarioRefs: [TSN-004, TSN-006], assessmentState: REQUIRES_IAM_AND_ACTION_MODEL, owner: risk_owner_pending}
+    - {riskId: RV0-04, scenarioRefs: [TSN-005], assessmentState: REQUIRES_SECRET_HANDLING_DESIGN, owner: risk_owner_pending}
+    - {riskId: RV0-05, scenarioRefs: [TSN-008, TSN-010], assessmentState: REQUIRES_RUNTIME_AND_RECOVERY_DESIGN, owner: risk_owner_pending}
+
+THREAT_MODEL_EVIDENCE_REGISTER:
+  status: ACTIVE
+  records:
+    - evidenceId: EV-TM-001
+      statement: project/source documents are an external input and may be untrusted/project-specific in sensitivity
+      recordType: TRUST_BOUNDARY
+      verificationState: SOURCED
+      sourceType: SYSTEM_ENGINEERING
+      informationOwner: system_engineer
+      affectedArtifacts: [TRUST_BOUNDARY_REGISTER, THREAT_SCENARIO_REGISTER]
+      downstreamImpact: [SECURITY_REQUIREMENTS_DRAFT]
+    - evidenceId: EV-TM-002
+      statement: agent/model output cannot silently replace owner authority or self-approve material decisions
+      recordType: SECURITY_DRIVER
+      verificationState: SOURCED
+      sourceType: FATHER_CONSTITUTION
+      informationOwner: FATHER_owner
+      affectedArtifacts: [THREAT_SCENARIO_REGISTER, SECURITY_REQUIREMENTS_DRAFT]
+      downstreamImpact: [REQUIREMENTS_BASELINE]
+    - evidenceId: EV-TM-003
+      statement: external model/provider use is conditional and final provider/deployment context is unknown
+      recordType: UNKNOWN
+      verificationState: OWNER_CONFIRMED
+      sourceType: SYSTEM_ENGINEERING
+      informationOwner: product_manager
+      affectedArtifacts: [THREAT_SCENARIO_REGISTER, SECURITY_RISK_REGISTER]
+      downstreamImpact: [ARCHITECTURE_OPTIONS, THREAT_MODEL_V1_V2]
+    - evidenceId: EV-TM-004
+      statement: project-specific regulatory applicability remains unresolved and requires authoritative review
+      recordType: UNKNOWN
+      verificationState: UNSUPPORTED
+      sourceType: SECURITY_INTAKE
+      informationOwner: legal_compliance
+      affectedArtifacts: [SECURITY_REQUIREMENTS_DRAFT]
+      downstreamImpact: [REQUIREMENTS_BASELINE]
+
+THREAT_MODEL_V0_READY_DECISION:
+  decision: CONDITIONAL_PASS
+  blockers: []
+  openConditions:
+    - Requirements Baseline must review and baseline/reject each SRD requirement with verification criteria
+    - architecture options must explicitly compare treatment of TSN-001 through TSN-010
+    - v1/v2 must refine provider, IAM, tenant, persistence, connector and supply-chain paths after design evidence exists
+    - risk owners must be assigned before residual risk can be accepted
+    - Legal/Compliance must resolve project-specific applicability before compliance claims
+  nextStage: REQUIREMENTS_BASELINE
+  ruleRef: father/factory/process-model/stages/04-threat-model-v0/THREAT_MODEL_V0_READY_DECISION_TABLE.yaml
