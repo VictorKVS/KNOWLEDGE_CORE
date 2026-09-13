@@ -1,0 +1,34 @@
+schemaVersion: 1
+schemaId: FATHER-THREAT-SCENARIO-V0-0001
+status: CANDIDATE_SCHEMA
+requiredFields:
+  - scenarioId
+  - title
+  - protectedInterestRefs
+  - negativeConsequenceRefs
+  - threatSourceRefs
+  - entryPointRefs
+  - trustBoundaryRefs
+  - preconditions
+  - scenarioPath
+  - evidenceState
+  - evidenceRefs
+  - uncertainty
+  - securityDriverRefs
+  - requirementDraftRefs
+  - downstreamRefinement
+allowedEvidenceStates: [SOURCED, OWNER_CONFIRMED, CANDIDATE, CONFLICTED, INSUFFICIENT_EVIDENCE]
+allowedRelevanceStates: [RELEVANT_V0, CONDITIONALLY_RELEVANT, DEFER_TO_V1_V2, REJECTED]
+optionalFields:
+  - regulatoryRefs
+  - existingInvariantRefs
+  - rejectedAlternativePaths
+  - reviewerObjections
+  - notes
+rules:
+  - scenario_path_must_use_known_or_explicitly_assumed_system_elements
+  - exploit_or_vulnerability_detail_must_not_be_invented
+  - unknown_likelihood_must_not_be_replaced_with_numeric_probability
+  - one_scenario_may_map_to_multiple_security_drivers
+  - requirement_draft_must_trace_back_to_scenario_or_existing_constraint
+  - rejected_scenario_should_keep_rationale_for_traceability
