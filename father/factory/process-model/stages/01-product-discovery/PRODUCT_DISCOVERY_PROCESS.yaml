@@ -1,0 +1,153 @@
+schemaVersion: 1
+processId: FATHER-L2-PRODUCT-DISCOVERY-0001
+stage: PRODUCT_DISCOVERY
+level: L2
+status: CANDIDATE_PROCESS
+inherits:
+  constitution: ../../../governance/FATHER_CONSTITUTION.md
+  lifecycle: ../../FATHER_LIFECYCLE_STAGES.yaml
+  artifacts: ../../FATHER_ARTIFACT_REGISTRY.yaml
+purpose: >-
+  Convert an initial idea/business need into a traceable, reviewable product context
+  sufficient to start Security Intake without inventing missing facts.
+entryCondition:
+  anyOf:
+    - sponsor_context_available
+    - business_need_claim_available
+    - project_initiation_request_available
+exitGate: PRODUCT_READY
+roles:
+  accountable: business_owner
+  responsible: product_manager
+  contributors:
+    - business_analyst
+    - project_manager
+    - knowledge_growth_analyst
+  reviewers:
+    - business_owner
+    - skeptical_reviewer
+activities:
+  - id: PD-01
+    name: Register initiative and provenance
+    owner: product_manager
+    inputs: [business_need, sponsor_context]
+    actions:
+      - identify source and owner of each incoming statement
+      - classify statements as FACT, CLAIM, REQUIREMENT, CONSTRAINT, ASSUMPTION, PREFERENCE, HYPOTHESIS or UNKNOWN
+      - record source/version/date where available
+    outputs: [INITIATIVE_EVIDENCE_REGISTER]
+    evidenceRequired: true
+
+  - id: PD-02
+    name: Define business need / problem
+    owner: business_owner
+    contributors: [product_manager, business_analyst]
+    inputs: [INITIATIVE_EVIDENCE_REGISTER]
+    actions:
+      - describe problem or opportunity without prematurely fixing a technical solution
+      - identify affected actors and observable current-state pain/opportunity
+      - record contradictory business claims instead of silently reconciling them
+    outputs: [BUSINESS_NEED]
+    review: business_owner
+
+  - id: PD-03
+    name: Define product vision and intended outcomes
+    owner: product_manager
+    inputs: [BUSINESS_NEED]
+    actions:
+      - define intended users/actors
+      - define desired outcome and horizon
+      - define explicit non-goals where known
+      - separate owner-confirmed decisions from hypotheses
+    outputs: [PRODUCT_VISION]
+    review: business_owner
+
+  - id: PD-04
+    name: Identify stakeholders and decision authority
+    owner: project_manager
+    inputs: [BUSINESS_NEED, PRODUCT_VISION]
+    actions:
+      - identify sponsor and business owner
+      - identify affected stakeholder groups
+      - identify information owners and decision rights
+      - identify who may accept scope, cost and risk changes
+    outputs: [STAKEHOLDER_REGISTER]
+    review: product_manager
+
+  - id: PD-05
+    name: Establish scope baseline
+    owner: product_manager
+    contributors: [business_analyst, project_manager]
+    inputs: [PRODUCT_VISION, STAKEHOLDER_REGISTER]
+    actions:
+      - define in-scope outcomes/capabilities
+      - define out-of-scope boundaries
+      - record temporal, organizational and system boundaries where known
+      - register unresolved boundary questions as UNKNOWN
+    outputs: [SCOPE_BASELINE]
+    review: [business_owner, project_manager]
+
+  - id: PD-06
+    name: Define success metrics
+    owner: product_manager
+    inputs: [BUSINESS_NEED, PRODUCT_VISION, SCOPE_BASELINE]
+    actions:
+      - define observable measures of intended outcome
+      - record baseline if evidenced
+      - record target, measurement method and owner where available
+      - reject vanity metrics that cannot support a decision
+    outputs: [SUCCESS_METRICS]
+    review: business_owner
+
+  - id: PD-07
+    name: Build assumption and unknown register
+    owner: project_manager
+    contributors: [product_manager, knowledge_growth_analyst]
+    inputs:
+      - INITIATIVE_EVIDENCE_REGISTER
+      - BUSINESS_NEED
+      - PRODUCT_VISION
+      - STAKEHOLDER_REGISTER
+      - SCOPE_BASELINE
+      - SUCCESS_METRICS
+    actions:
+      - collect explicit assumptions
+      - collect unresolved UNKNOWN and conflicts
+      - bind each assumption to owner and validation trigger
+      - mark downstream impact if assumption is false
+    outputs: [ASSUMPTION_LOG]
+    review: skeptical_reviewer
+
+  - id: PD-08
+    name: Product readiness review
+    owner: product_manager
+    reviewers: [business_owner, skeptical_reviewer]
+    inputs:
+      - BUSINESS_NEED
+      - PRODUCT_VISION
+      - SUCCESS_METRICS
+      - STAKEHOLDER_REGISTER
+      - SCOPE_BASELINE
+      - ASSUMPTION_LOG
+      - INITIATIVE_EVIDENCE_REGISTER
+    actions:
+      - evaluate PRODUCT_READY decision table
+      - preserve all blocking gaps and conflicts
+      - do not convert missing evidence into assumed approval
+    outputs: [PRODUCT_READY_DECISION]
+    decisionTable: PRODUCT_READY_DECISION_TABLE.yaml
+handoff:
+  consumerStage: SECURITY_INTAKE
+  mandatoryOutputs:
+    - BUSINESS_NEED
+    - PRODUCT_VISION
+    - SUCCESS_METRICS
+    - STAKEHOLDER_REGISTER
+    - SCOPE_BASELINE
+    - ASSUMPTION_LOG
+  supportingOutputs:
+    - INITIATIVE_EVIDENCE_REGISTER
+    - PRODUCT_READY_DECISION
+traceabilityRule: >-
+  Every material product claim must retain source, owner, status and downstream impact.
+  FACT, CLAIM, ASSUMPTION, HYPOTHESIS and UNKNOWN are never silently collapsed.
