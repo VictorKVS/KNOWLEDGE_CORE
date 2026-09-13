@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>FATHER — Pre-Architecture Factory</title>
+<style>
+:root{font-family:Inter,Segoe UI,Arial,sans-serif;color:#172033;background:#f5f7fb}*{box-sizing:border-box}body{margin:0}header{padding:28px 34px;background:#101828;color:white}header h1{margin:0 0 6px;font-size:30px}header p{margin:0;color:#cbd5e1}.wrap{max-width:1500px;margin:auto;padding:24px}.rail{display:flex;gap:10px;overflow:auto;padding:8px 0 22px}.step{min-width:170px;background:white;border:1px solid #d7deea;border-radius:12px;padding:14px}.step b{display:block}.step .state{font-size:12px;margin-top:8px}.ok{color:#067647}.next{color:#b54708}.section{background:white;border:1px solid #dde3ec;border-radius:14px;padding:20px;margin:0 0 22px}.section h2{margin:0 0 6px}.muted{color:#667085}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}.card{border:1px solid #d9e0ea;border-radius:12px;padding:14px;background:#fff}.card h3{margin:0 0 6px;font-size:17px}.tag{display:inline-block;padding:3px 8px;border-radius:999px;background:#eef4ff;color:#3538cd;font-size:12px;margin:2px 4px 2px 0}details{margin-top:10px;border-top:1px dashed #d0d5dd;padding-top:8px}summary{cursor:pointer;font-weight:600}.flow{display:flex;gap:10px;overflow:auto;align-items:stretch;padding:10px 0}.role{min-width:210px;border:1px solid #d0d5dd;border-radius:12px;padding:12px;background:#fcfcfd}.arrow{display:flex;align-items:center;font-size:24px;color:#98a2b3}.gate{background:#fff7ed;border-color:#fdba74}.arch{background:#ecfdf3;border-color:#6ce9a6}.kv{font-size:13px;line-height:1.45}.kv b{color:#344054}.doc{border-left:4px solid #7f56d9}.father{border-left:4px solid #2e90fa}.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:13px}.small{font-size:12px;color:#667085}@media(max-width:700px){header{padding:22px}.wrap{padding:14px}}
+</style>
+</head>
+<body>
+<header><h1>FATHER — фабрика проектирования до архитектуры</h1><p>Визуальный контур: кто что приносит, откуда это берётся, чем подтверждается и что получает архитектор.</p></header>
+<div class="wrap">
+<section class="section">
+<h2>Текущий конвейер</h2><p class="muted">Архитектура не начинается, пока обязательные входы не собраны и не прошли gate.</p>
+<div class="rail">
+<div class="step"><b>01 Product</b><span class="state ok">IMPLEMENTED</span></div>
+<div class="step"><b>02 Security Intake</b><span class="state ok">IMPLEMENTED</span></div>
+<div class="step"><b>03 System Engineering</b><span class="state ok">IMPLEMENTED</span></div>
+<div class="step"><b>04 Threat Model v0</b><span class="state ok">IMPLEMENTED</span></div>
+<div class="step"><b>05 Requirements</b><span class="state next">NEXT</span></div>
+<div class="step arch"><b>06 Architecture Options</b><span class="state">LOCKED UNTIL GATES</span></div>
+</div>
+</section>
+
+<section class="section">
+<h2>1. Что приносит Product</h2><p class="muted">Классический Product Core + контроль доказательности FATHER.</p>
+<div class="grid">
+<div class="card doc"><h3>Business Need</h3><span class="tag">Business Owner</span><details><summary>Как получить</summary><div class="kv"><b>Собрать:</b> проблему, текущие потери/ограничения, ожидаемый эффект.<br><b>Источники:</b> sponsor interview, бизнес-метрики, обращения, текущие процессы.<br><b>Проверка:</b> проблема не должна быть замаскирована под заранее выбранную технологию.</div></details></div>
+<div class="card doc"><h3>Product Vision</h3><span class="tag">Product Manager</span><details><summary>Как получить</summary><div class="kv"><b>Собрать:</b> для кого продукт, какой результат, контекст использования, основные границы.<br><b>Источники:</b> Business Need, user research, owner decisions.</div></details></div>
+<div class="card doc"><h3>Target Users / Segments</h3><span class="tag">Product Manager</span><details><summary>Как получить</summary><div class="kv"><b>Собрать:</b> пользователь, покупатель, оператор, администратор; реальные различия между сегментами.<br><b>Источники:</b> интервью, CRM/аналитика, наблюдение.</div></details></div>
+<div class="card doc"><h3>Value Proposition</h3><span class="tag">Product Manager</span><details><summary>Как получить</summary><div class="kv"><b>Собрать:</b> какую измеримую ценность получает пользователь и бизнес; чем это лучше текущего способа.</div></details></div>
+<div class="card doc"><h3>User Journey</h3><span class="tag">Product + BA</span><details><summary>Как получить</summary><div class="kv"><b>Собрать:</b> путь пользователя, точки входа, happy path, отказ/исключения, handoff человеку.</div></details></div>
+<div class="card doc"><h3>PRD / Product Requirements</h3><span class="tag">Product Manager</span><details><summary>Как получить</summary><div class="kv"><b>Собрать:</b> продуктовые способности и ограничения верхнего уровня без подмены архитектурой.</div></details></div>
+<div class="card doc"><h3>MVP Scope</h3><span class="tag">Product Manager</span><details><summary>Как получить</summary><div class="kv"><b>Собрать:</b> IN / OUT, что обязательно для первого usable результата, что сознательно отложено.</div></details></div>
+<div class="card doc"><h3>Success Metrics</h3><span class="tag">Product Manager</span><details><summary>Как получить</summary><div class="kv"><b>Собрать:</b> KPI/Outcome, baseline, target или честный TO_BE_BASELINED.</div></details></div>
+<div class="card doc"><h3>Roadmap</h3><span class="tag">Product + PM</span><details><summary>Как получить</summary><div class="kv"><b>Собрать:</b> последовательность результатов и зависимостей, а не только список фич.</div></details></div>
+<div class="card doc"><h3>Backlog / Epics</h3><span class="tag">Product</span><details><summary>Как получить</summary><div class="kv"><b>Собрать:</b> приоритеты и крупные способности; не использовать backlog как замену системным требованиям.</div></details></div>
+<div class="card father"><h3>Stakeholder / Decision Authority</h3><span class="tag">FATHER extension</span><details><summary>Как получить</summary><div class="kv"><b>Собрать:</b> кто владелец факта, кто согласует, кто может принять риск/изменение scope.</div></details></div>
+<div class="card father"><h3>Assumption / UNKNOWN Log</h3><span class="tag">FATHER extension</span><details><summary>Как получить</summary><div class="kv"><b>Собрать:</b> все предположения, UNKNOWN, validation trigger, owner, downstream impact.</div></details></div>
+<div class="card father"><h3>Evidence Register</h3><span class="tag">FATHER extension</span><details><summary>Как получить</summary><div class="kv"><b>Собрать:</b> claim → source → owner → version/date → state → conflict → downstream impact.</div></details></div>
+<div class="card father"><h3>Product Ready Decision</h3><span class="tag">FATHER gate</span><details><summary>Как получить</summary><div class="kv"><b>Результат:</b> PASS / CONDITIONAL_PASS / BLOCKED / INSUFFICIENT_EVIDENCE с причинами и ссылками.</div></details></div>
+</div>
+</section>
+
+<section class="section">
+<h2>2. Кто ещё обязан принести данные до архитектора</h2>
+<div class="flow">
+<div class="role"><b>Business Owner</b><p class="small">Business Need, authority, expected effect</p></div><div class="arrow">→</div>
+<div class="role"><b>Product</b><p class="small">Vision, users, value, journey, PRD, MVP, metrics, roadmap</p></div><div class="arrow">→</div>
+<div class="role"><b>PM + BA</b><p class="small">Stakeholders, process, rules, glossary, constraints, dependencies</p></div><div class="arrow">→</div>
+<div class="role"><b>Security + Legal + Data</b><p class="small">Applicability, classification, abuse cases, constraints</p></div><div class="arrow">→</div>
+<div class="role"><b>System + Integration</b><p class="small">Context, boundary, functions, DFD, interfaces, dependencies</p></div><div class="arrow">→</div>
+<div class="role"><b>Threat Model v0</b><p class="small">Scenarios, trust boundaries, drivers, draft security requirements</p></div><div class="arrow">→</div>
+<div class="role"><b>Ops + Platform</b><p class="small">SLO/SLA, support, environments, capacity, incident evidence</p></div><div class="arrow">→</div>
+<div class="role"><b>Finance + Procurement</b><p class="small">Budget, buy/build, licenses, contract constraints</p></div><div class="arrow">→</div>
+<div class="role"><b>QA</b><p class="small">Testability, acceptance evidence, verification constraints</p></div><div class="arrow">→</div>
+<div class="role gate"><b>Requirements Engineer</b><p class="small">Stakeholder/System/Software/NFR/Security requirements + Acceptance + RTM</p></div><div class="arrow">→</div>
+<div class="role arch"><b>Solution Architect</b><p class="small">Только теперь разрешены архитектурные варианты</p></div>
+</div>
+</section>
+
+<section class="section">
+<h2>3. Что лежит на столе архитектора</h2>
+<div class="grid">
+<div class="card"><h3>Product context</h3><p class="small">Need, Vision, users, value, journey, scope, metrics, roadmap.</p></div>
+<div class="card"><h3>Business/domain</h3><p class="small">Processes, rules, glossary, business requirements.</p></div>
+<div class="card"><h3>Security/legal/data</h3><p class="small">Applicability, classification, constraints, Threat Model v0.</p></div>
+<div class="card"><h3>System model</h3><p class="small">Context, boundary, functions, DFD, interfaces, external dependencies.</p></div>
+<div class="card"><h3>Operability</h3><p class="small">SLO/SLA, load, platform constraints, support and incident evidence.</p></div>
+<div class="card"><h3>Commercial/delivery</h3><p class="small">Budget, team, schedule, procurement, contract constraints.</p></div>
+<div class="card"><h3>Requirements baseline</h3><p class="small">System/software/NFR/security requirements, acceptance criteria, RTM.</p></div>
+<div class="card"><h3>Evidence quality</h3><p class="small">Facts, assumptions, UNKNOWN, conflicts, source freshness, independent review.</p></div>
+</div>
+</section>
+
+<section class="section"><div class="legend"><span>🟦 Classic Product</span><span>🟪 FATHER governance</span><span>🟧 Gate</span><span>🟩 Architecture entry</span></div><p class="small">Canonical data source: father/factory/pre-architecture/PRE_ARCHITECTURE_PACKAGE.yaml. This page is a visual projection and must not diverge from canonical registries.</p></section>
+</div>
+</body></html>
