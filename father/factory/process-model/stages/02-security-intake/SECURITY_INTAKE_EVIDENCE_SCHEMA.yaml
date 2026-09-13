@@ -1,0 +1,70 @@
+schemaVersion: 1
+schemaId: FATHER-STAGE-02-SECURITY-EVIDENCE-0001
+status: CANDIDATE_SCHEMA
+recordTypes:
+  - PRODUCT_SECURITY_CLAIM
+  - DATA_CLASSIFICATION_CLAIM
+  - ACTOR_IDENTITY_CLAIM
+  - EXPOSURE_CLAIM
+  - TRUST_ASSUMPTION
+  - REGULATORY_APPLICABILITY_CLAIM
+  - ABUSE_CASE
+  - SECURITY_CONSTRAINT
+  - CONFLICT
+  - UNKNOWN
+claimTypes: [FACT, CLAIM, REQUIREMENT, CONSTRAINT, ASSUMPTION, HYPOTHESIS, UNKNOWN]
+verificationStates: [UNSUPPORTED, SOURCED, OWNER_CONFIRMED, CONFLICTED, STALE, REJECTED, NOT_APPLICABLE]
+requiredFields:
+  - evidenceId
+  - statement
+  - recordType
+  - claimType
+  - verificationState
+  - sourceType
+  - informationOwner
+  - affectedArtifacts
+  - downstreamImpact
+conditionalFields:
+  sourced: [sourceRef, sourceVersionOrDate]
+  conflicted: [conflictRefs, conflictOwner]
+  unknown: [resolutionOwner, resolutionTrigger]
+  regulatory: [normativeSourceRefs, applicabilityStatus, authorityOwner]
+  dataClassification: [informationClass, sensitivityStatus, handlingImplication]
+  exposure: [actorOrBoundary, exposureStatus]
+analytics:
+  materialClaimsTotal:
+    type: count
+  sourcedOrOwnerConfirmedRatio:
+    numeratorStates: [SOURCED, OWNER_CONFIRMED]
+    denominator: materialClaimsTotal
+    note: diagnostic_only_not_gate_threshold
+  unsupportedMaterialClaims:
+    type: count
+    filter: verificationState == UNSUPPORTED
+  openConflicts:
+    type: count
+    filter: verificationState == CONFLICTED
+  materialUnknowns:
+    type: count
+    filter: claimType == UNKNOWN
+  informationClassesIdentified:
+    type: count_distinct
+    field: informationClass
+  materialClassesWithoutOwner:
+    type: count
+  applicabilityUnknowns:
+    type: count
+    filter: recordType == REGULATORY_APPLICABILITY_CLAIM && applicabilityStatus == UNKNOWN
+  initialAbuseCases:
+    type: count
+  securityConstraints:
+    type: count
+  gateBlockers:
+    type: count
+rules:
+  - model_confidence_is_not_verification_state
+  - unknown_must_not_be_coerced_to_not_applicable
+  - regulatory_applicability_requires_authoritative_owner
+  - sensitive_information_claim_without_owner_is_visible_gap
+  - every_material_security_constraint_must_trace_to_evidence_or_owner_decision
+  - analytics_are_diagnostic_and_do_not_replace_professional_gate_review
