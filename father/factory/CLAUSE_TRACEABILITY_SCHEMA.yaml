@@ -1,0 +1,64 @@
+schemaVersion: 1
+schemaId: FATHER-CLAUSE-TRACEABILITY-0001
+status: CANDIDATE_SCHEMA
+purpose: >-
+  Canonical machine-readable contract for tracing a lifecycle artifact or artifact field
+  to the exact source clause/subclause, applicability condition, responsible role,
+  lifecycle moment, verification state and downstream evidence.
+
+principles:
+  - no_clause_number_without_source_evidence
+  - source_status_must_be_current_for_material_decision
+  - distinguish_normative_requirement_from_father_extension
+  - artifact_presence_does_not_equal_compliance
+  - applicability_is_explicit_and_project_specific
+  - unknown_or_unverified_clause_is_visible
+
+verificationStates:
+  - CLAUSE_VERIFIED
+  - SECTION_VERIFIED_SUBCLAUSE_PENDING
+  - CLAUSE_NOT_VERIFIED
+  - SOURCE_STATUS_RECHECK_REQUIRED
+  - NOT_APPLICABLE
+  - SUPERSEDED
+
+mappingRecord:
+  requiredFields:
+    - mappingId
+    - sourceId
+    - clauseRef
+    - verificationState
+    - requirementSummary
+    - applicability
+    - lifecycleStage
+    - accountableRole
+    - artifactId
+    - artifactField
+    - validationMethod
+    - downstream
+  optionalFields:
+    - sourceTitle
+    - sourceStatus
+    - exactQuoteRef
+    - evidenceRefs
+    - reviewerRoles
+    - gateImpact
+    - notes
+    - supersededBy
+
+semanticRule: >-
+  requirementSummary is a short paraphrase of the source requirement. It must not invent
+  an obligation stronger than the source. FATHER-specific controls are recorded separately
+  as internal extensions and never presented as a clause of a GOST/order.
+
+lifecycleBinding:
+  model: 'source -> clause -> applicability -> requirement -> role -> input -> artifact field -> review -> gate -> downstream evidence'
+
+uiProjection:
+  cardFields: [sourceId, clauseRef, verificationState, applicability, accountableRole, gateImpact]
+  drilldownFields: [requirementSummary, artifactId, artifactField, validationMethod, evidenceRefs, downstream]
+  colors:
+    verified: green
+    partial: amber
+    unverified: gray
+    conflict: red
