@@ -1,0 +1,351 @@
+schemaVersion: 1
+pilotId: FATHER-ANALYTICAL-DESIGN-PLATFORM
+stage: SYSTEM_ENGINEERING
+status: OWNER_REVIEW
+entryDecision: CONDITIONAL_PASS
+entryRef: STAGE_02_SECURITY_INTAKE.yaml
+systemModelReadyDecision: CONDITIONAL_PASS
+systemModelReadyReason: >-
+  The logical system context, boundary, required functions, principal information flows, candidate interfaces,
+  external dependencies and operational modes are explicit enough for Threat Model v0. Technology architecture,
+  concrete deployment topology, final IAM/tenant model and exact provider integrations remain intentionally unresolved
+  and must not be treated as selected design facts.
+
+SYSTEM_CONTEXT:
+  status: CANDIDATE_WITH_OWNER_CONFIRMED_PURPOSE
+  systemOfInterest: FATHER Analytical Design Platform
+  purpose: >-
+    Provide an evidence-backed analytical engineering environment that guides projects through the FATHER lifecycle,
+    maps source evidence to canonical artifacts and decisions, visualizes process/gate state, supports professional
+    analysis and preserves accountable human authority.
+  externalActors:
+    - id: ACT-OWNER
+      name: FATHER_owner_or_project_decision_owner
+      role: supplies and confirms material product/decision authority
+    - id: ACT-PRO
+      name: professional_user_or_reviewer
+      role: creates, reviews or validates domain artifacts
+    - id: ACT-PROJECT-SOURCE
+      name: project_source
+      role: supplies documents, repositories, APIs or other evidence
+    - id: ACT-NORM-SOURCE
+      name: normative_or_professional_source
+      role: supplies standards, regulations, methods and admitted knowledge
+    - id: ACT-MODEL
+      name: model_or_agent_provider
+      role: optional analytical computation boundary
+    - id: ACT-CONNECTOR
+      name: connected_source_provider
+      role: optional external source or action boundary
+  environmentUnknowns:
+    - deployment_topology
+    - organization_and_tenant_structure
+    - final_provider_set
+    - final_storage_and_runtime_platform
+
+SYSTEM_BOUNDARY:
+  status: CANDIDATE
+  inScopeResponsibilities:
+    - receive and classify project/source evidence
+    - preserve provenance/version/owner/review state
+    - map evidence to canonical lifecycle artifacts
+    - maintain stage/gate state and explainability
+    - expose conflicts, gaps and UNKNOWNs
+    - orchestrate professional analysis under authority boundaries
+    - support independent review and owner confirmation
+    - visualize L0-L3 process/artifact/evidence relationships
+    - maintain trace from source to decision and downstream artifact
+  outsideBoundary:
+    - authoritative external laws/standards themselves
+    - external project repositories and document systems
+    - external LLM/model providers when used
+    - identity provider when external
+    - accountable human owner/risk acceptance authority
+    - external deployment infrastructure unless explicitly included later
+  boundaryRules:
+    - external_content_is_evidence_input_not_system_instruction
+    - external_provider_output_is_candidate_analysis_until_review
+    - owner_authority_remains_outside_automation_boundary
+
+FUNCTION_MODEL:
+  status: CANDIDATE
+  functions:
+    - id: FN-01
+      name: project_intake_and_evidence_mapping
+      tracesTo: [PRODUCT_VISION, SCOPE_BASELINE]
+      outputs: [evidence_records, source_refs, gap_state]
+    - id: FN-02
+      name: lifecycle_process_and_gate_management
+      tracesTo: [PRODUCT_VISION, FATHER_CONSTITUTION]
+      outputs: [stage_state, gate_decisions, blockers, conditions]
+    - id: FN-03
+      name: canonical_artifact_management
+      tracesTo: [PRODUCT_VISION, FATHER_ARTIFACT_REGISTRY]
+      outputs: [artifact_state, versions, ownership, downstream_links]
+    - id: FN-04
+      name: source_and_normative_governance
+      tracesTo: [PRODUCT_VISION, NORMATIVE_SOURCE_REGISTRY]
+      outputs: [source_status, applicability_state, provenance]
+    - id: FN-05
+      name: professional_analysis_and_decision_support
+      tracesTo: [PRODUCT_VISION]
+      outputs: [candidate_analysis, alternatives, gaps, hypotheses]
+    - id: FN-06
+      name: independent_review_and_authority_control
+      tracesTo: [FATHER_CONSTITUTION]
+      outputs: [review_state, objections, owner_confirmation]
+    - id: FN-07
+      name: visual_process_evidence_navigation
+      tracesTo: [PRODUCT_VISION, SUCCESS_METRICS]
+      outputs: [L0_L3_views, dashboards, trace_graph_views]
+    - id: FN-08
+      name: knowledge_and_agent_maturity_evaluation
+      tracesTo: [PRODUCT_VISION]
+      outputs: [eval_results, maturity_evidence, promotion_blockers]
+
+DATA_FLOW_MODEL:
+  status: CANDIDATE
+  flows:
+    - id: DF-01
+      from: ACT-PROJECT-SOURCE
+      to: FN-01
+      informationClasses: [project_artifacts_and_source_documents]
+      purpose: ingest_project_evidence
+      trustNote: untrusted_or_project_specific_content
+    - id: DF-02
+      from: ACT-NORM-SOURCE
+      to: FN-04
+      informationClasses: [normative_and_public_sources]
+      purpose: ingest_source_identity_version_status_and_content_refs
+      trustNote: source_status_requires_verification
+    - id: DF-03
+      from: FN-01
+      to: FN-03
+      informationClasses: [project_artifacts_and_source_documents, owner_confirmed_product_decisions]
+      purpose: map_evidence_to_canonical_artifacts
+    - id: DF-04
+      from: FN-03
+      to: FN-05
+      informationClasses: [project_artifacts_and_source_documents, agent_prompts_context_and_traces]
+      purpose: provide_bounded_analysis_context
+    - id: DF-05
+      from: FN-05
+      to: ACT-MODEL
+      informationClasses: [project_specific_subset]
+      purpose: optional_model_inference
+      status: CONDITIONAL
+      rule: only_when_provider_and_data_policy_allow
+    - id: DF-06
+      from: ACT-MODEL
+      to: FN-05
+      informationClasses: [candidate_model_output]
+      purpose: receive_candidate_analysis
+      status: CONDITIONAL
+    - id: DF-07
+      from: FN-05
+      to: FN-06
+      informationClasses: [candidate_analysis, evidence_refs]
+      purpose: independent_review
+    - id: DF-08
+      from: ACT-OWNER
+      to: FN-06
+      informationClasses: [owner_confirmed_product_decisions]
+      purpose: confirm_or_reject_material_decision
+    - id: DF-09
+      from: FN-06
+      to: FN-02
+      informationClasses: [review_state, confirmed_decision, unresolved_objection]
+      purpose: evaluate_gate
+    - id: DF-10
+      from: FN-02
+      to: FN-07
+      informationClasses: [stage_state, gate_decision, blockers, conditions]
+      purpose: visualize_readiness_and_trace
+    - id: DF-11
+      from: FN-03
+      to: FN-07
+      informationClasses: [artifact_state, evidence_links]
+      purpose: visualize_artifacts_and_evidence
+  prohibitedOrSpecialFlows:
+    - credentials_secrets_tokens must not flow through ordinary prompt/evidence/artifact paths
+
+INTERFACE_INVENTORY:
+  status: CANDIDATE
+  interfaces:
+    - id: IF-01
+      counterparty: accountable_users_and_professional_roles
+      purpose: project_input_review_decision_navigation
+      direction: BIDIRECTIONAL
+      status: REQUIRED_LOGICAL_INTERFACE
+    - id: IF-02
+      counterparty: project_document_or_repository_sources
+      purpose: evidence_ingestion_and_reference
+      direction: INBOUND_OR_BIDIRECTIONAL
+      status: REQUIRED_CAPABILITY_PROVIDER_SPECIFIC
+    - id: IF-03
+      counterparty: normative_and_professional_sources
+      purpose: source_status_and_evidence_ingestion
+      direction: INBOUND
+      status: REQUIRED_CAPABILITY_PROVIDER_SPECIFIC
+    - id: IF-04
+      counterparty: external_llm_model_provider
+      purpose: optional_bounded_analysis
+      direction: BIDIRECTIONAL
+      status: OPTIONAL_CONDITIONAL
+    - id: IF-05
+      counterparty: local_model_runtime
+      purpose: optional_bounded_analysis
+      direction: BIDIRECTIONAL
+      status: OPTIONAL_CONDITIONAL
+    - id: IF-06
+      counterparty: external_identity_provider
+      purpose: authentication_identity_assertion
+      direction: BIDIRECTIONAL
+      status: UNKNOWN_OPTION
+    - id: IF-07
+      counterparty: version_control_or_artifact_repository
+      purpose: persist_versions_and_change_history
+      direction: BIDIRECTIONAL
+      status: CANDIDATE_CAPABILITY_NOT_ARCHITECTURE_DECISION
+
+EXTERNAL_DEPENDENCY_REGISTER:
+  status: PARTIAL
+  dependencies:
+    - id: DEP-01
+      dependency: authoritative_source_availability
+      type: INFORMATION_DEPENDENCY
+      failureImpact: source_freshness_or_verification_may_be_delayed
+      trustImplication: cached_or_stale_source_must_not_be_silently_current
+    - id: DEP-02
+      dependency: project_source_access
+      type: INFORMATION_DEPENDENCY
+      failureImpact: incomplete_evidence_and_gap_state
+      trustImplication: source_permissions_and_identity_matter
+    - id: DEP-03
+      dependency: model_provider_if_selected
+      type: OPTIONAL_COMPUTE_DEPENDENCY
+      failureImpact: provider_specific_analysis_unavailable
+      trustImplication: disclosure_and_output_trust_boundary
+    - id: DEP-04
+      dependency: identity_provider_if_external
+      type: OPTIONAL_IDENTITY_DEPENDENCY
+      failureImpact: access_control_or_login_degradation
+      trustImplication: identity_assertion_boundary
+    - id: DEP-05
+      dependency: version_control_or_persistent_artifact_store
+      type: REQUIRED_CAPABILITY_UNKNOWN_IMPLEMENTATION
+      failureImpact: version_traceability_and_recovery_degraded
+      trustImplication: canonical_state_integrity
+  currentDevelopmentEvidence:
+    - GitHub is currently used for FATHER repository development and traceability
+  note: current development tooling is not automatically a production architecture requirement
+
+OPERATIONAL_MODES:
+  status: CANDIDATE
+  modes:
+    - id: OM-01
+      name: interactive_analysis
+      description: user and professional roles inspect evidence, artifacts, process and candidate analysis
+    - id: OM-02
+      name: review_and_approval
+      description: independent reviewer and accountable owner evaluate material outputs/gates
+    - id: OM-03
+      name: connected_source_analysis
+      description: permitted external sources/connectors supply evidence under source and data policy
+    - id: OM-04
+      name: local_or_restricted_analysis
+      description: project restricts processing to locally allowed sources/models/runtime
+      status: REQUIRED_CAPABILITY_CANDIDATE
+    - id: OM-05
+      name: degraded_external_provider_unavailable
+      description: preserve canonical project state and identify provider-dependent functions as unavailable rather than fabricate results
+    - id: OM-06
+      name: maintenance_and_knowledge_refresh
+      description: update source status, KB, schemas, process rules and evals under version/review controls
+
+SYSTEM_ASSUMPTION_LOG:
+  status: OPEN
+  assumptions:
+    - id: SA-01
+      statement: logical evidence/artifact/process models can remain technology-neutral through Threat Model v0 and Requirements Baseline
+      owner: system_engineer
+      validationTrigger: architecture-options stage can generate multiple materially different technical realizations from same system model
+      downstreamImpact: ARCHITECTURE_OPTIONS
+    - id: SA-02
+      statement: provider-specific integrations can be represented as external interfaces without selecting provider at System Engineering stage
+      owner: integration_engineer
+      validationTrigger: first concrete integration design
+      downstreamImpact: INTERFACE_INVENTORY
+    - id: SA-03
+      statement: local/restricted mode is feasible without weakening core traceability and gate controls
+      owner: system_engineer
+      validationTrigger: architecture option and prototype
+      downstreamImpact: ARCHITECTURE_OPTIONS
+  unknowns:
+    - id: SU-01
+      statement: concrete deployment topology
+      resolutionOwner: solution_architect_later
+      downstreamImpact: [THREAT_MODEL_V0, ARCHITECTURE_OPTIONS]
+    - id: SU-02
+      statement: final IAM and tenant hierarchy
+      resolutionOwner: system_engineer_security_engineer
+      downstreamImpact: [THREAT_MODEL_V0, REQUIREMENTS_BASELINE, DETAILED_DESIGN]
+    - id: SU-03
+      statement: exact external provider and connector set
+      resolutionOwner: product_manager_system_engineer
+      downstreamImpact: [THREAT_MODEL_V0, REQUIREMENTS_BASELINE]
+    - id: SU-04
+      statement: final persistence and runtime technologies
+      resolutionOwner: solution_architect_later
+      downstreamImpact: [ARCHITECTURE_OPTIONS]
+
+SYSTEM_MODEL_EVIDENCE_REGISTER:
+  status: ACTIVE
+  records:
+    - evidenceId: EV-SE-001
+      statement: FATHER must visualize lifecycle from general process to decomposed stages and evidence.
+      recordType: SYSTEM_FUNCTION
+      claimType: REQUIREMENT
+      sourceType: OWNER_DECISION
+      informationOwner: FATHER_owner
+      verificationState: OWNER_CONFIRMED
+      affectedArtifacts: [FUNCTION_MODEL, SYSTEM_CONTEXT]
+      downstreamImpact: [REQUIREMENTS_BASELINE, ARCHITECTURE_OPTIONS]
+    - evidenceId: EV-SE-002
+      statement: Security enters immediately after Product and must remain active through system modeling.
+      recordType: SYSTEM_BOUNDARY_CLAIM
+      claimType: CONSTRAINT
+      sourceType: FATHER_CONSTITUTION
+      informationOwner: FATHER_owner
+      verificationState: SOURCED
+      affectedArtifacts: [SYSTEM_CONTEXT, DATA_FLOW_MODEL]
+      downstreamImpact: [THREAT_MODEL_V0]
+    - evidenceId: EV-SE-003
+      statement: uploaded or connected project documents may be untrusted and project-specific in sensitivity.
+      recordType: INFORMATION_FLOW
+      claimType: CONSTRAINT
+      sourceType: SECURITY_INTAKE
+      informationOwner: security_engineer
+      verificationState: SOURCED
+      affectedArtifacts: [DATA_FLOW_MODEL, INTERFACE_INVENTORY]
+      downstreamImpact: [THREAT_MODEL_V0]
+    - evidenceId: EV-SE-004
+      statement: deployment topology and final provider set remain unknown.
+      recordType: UNKNOWN
+      claimType: UNKNOWN
+      sourceType: SECURITY_INTAKE
+      informationOwner: system_engineer
+      verificationState: OWNER_CONFIRMED
+      affectedArtifacts: [EXTERNAL_DEPENDENCY_REGISTER, OPERATIONAL_MODES]
+      downstreamImpact: [THREAT_MODEL_V0, ARCHITECTURE_OPTIONS]
+
+SYSTEM_MODEL_READY_DECISION:
+  decision: CONDITIONAL_PASS
+  blockers: []
+  openConditions:
+    - Threat Model v0 must evaluate the external-content, provider, authority and provenance boundaries
+    - Requirements Baseline must convert logical functions and constraints into testable requirements without choosing architecture
+    - IAM/tenant structure requires further system/security refinement
+    - concrete deployment and technology choices remain prohibited until architecture options stage
+  nextStage: THREAT_MODEL_V0
+  ruleRef: father/factory/process-model/stages/03-system-engineering/SYSTEM_MODEL_READY_DECISION_TABLE.yaml
