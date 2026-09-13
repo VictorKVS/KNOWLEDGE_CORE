@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>FATHER — Architecture Workbench</title>
+<style>
+:root{font-family:Inter,Segoe UI,Arial,sans-serif;color:#172033;background:#f5f7fb}*{box-sizing:border-box}body{margin:0}header{background:#101828;color:#fff;padding:28px 34px}.wrap{max-width:1500px;margin:auto;padding:24px}.section{background:#fff;border:1px solid #dde3ec;border-radius:14px;padding:20px;margin-bottom:22px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}.card{border:1px solid #d9e0ea;border-radius:12px;padding:14px}.locked{background:#fff7ed;border-color:#fdba74}.ok{background:#ecfdf3;border-color:#6ce9a6}.muted{color:#667085}.tag{display:inline-block;padding:3px 8px;border-radius:999px;background:#eef4ff;color:#3538cd;font-size:12px;margin:2px}.trace{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:14px;white-space:pre-wrap}.cols{display:grid;grid-template-columns:1fr 1fr;gap:14px}.item{border-left:4px solid #7f56d9;padding:10px 12px;background:#fcfcfd;margin:8px 0;border-radius:8px}.book{border-left-color:#2e90fa}.small{font-size:12px}.status{font-weight:700;color:#b54708}@media(max-width:800px){.cols{grid-template-columns:1fr}.wrap{padding:14px}header{padding:22px}}
+</style>
+</head>
+<body>
+<header><h1>FATHER — Architecture Workbench</h1><p>Рабочее место архитектора уже спроектировано, но архитектурные варианты заблокированы до прохождения обязательных gate.</p></header>
+<div class="wrap">
+<section class="section locked"><h2>Architecture entry</h2><p class="status">LOCKED UNTIL ARCHITECTURE_OPTIONS_ALLOWED</p><p class="muted">Наличие страницы не означает разрешение на архитектурное решение. Вход открывается только после Product, Security Intake, System Model, Threat Model v0 и Requirements Baseline.</p></section>
+
+<section class="section"><h2>1. Architecture Drivers / Characteristics</h2><p class="muted">Кандидаты могут появляться раньше архитектуры; финальный минимально достаточный набор подтверждается архитектором совместно со стейкхолдерами после gate.</p><div class="grid">
+<div class="card"><h3>Explicit drivers</h3><p>Производительность, доступность, безопасность, сроки, стоимость и другие свойства, прямо выраженные в требованиях/ограничениях.</p></div>
+<div class="card"><h3>Implicit drivers</h3><p>Свойства, необходимые предметной области, но не записанные явно. Они требуют evidence и подтверждения, а не догадки.</p></div>
+<div class="card"><h3>Trace</h3><p><span class="tag">Business driver</span><span class="tag">Requirement</span><span class="tag">Security</span><span class="tag">Operations</span><span class="tag">Evidence</span></p></div>
+<div class="card"><h3>Selection rule</h3><p>Не максимальный список свойств, а минимальный набор, который действительно определяет успех решения.</p></div>
+</div></section>
+
+<section class="section"><h2>2. Architecture Options + Trade-offs</h2><div class="cols"><div>
+<div class="item"><b>Option A</b><br><span class="small">assumptions → addressed characteristics → benefits → costs → risks → UNKNOWN</span></div>
+<div class="item"><b>Option B</b><br><span class="small">тот же контракт сравнения; никакого «B лучше» без контекста</span></div>
+<div class="item"><b>Option C</b><br><span class="small">вариант сохраняется даже если отклонён — для истории решения</span></div>
+</div><div class="card"><h3>Trade-off Matrix</h3><p>Каждый вариант сравнивается по одному набору драйверов. Отдельно фиксируются цена улучшения одного свойства, ухудшение другого, delivery/security/operability impact и uncertainty.</p></div></div></section>
+
+<section class="section"><h2>3. ADR — Architecture Decision Records</h2><p class="muted">Каждое значимое решение хранится как объект, а не как фраза в презентации.</p><div class="grid">
+<div class="card"><b>Title</b><p>Что за решение.</p></div><div class="card"><b>Status</b><p>PROPOSED / ACCEPTED / SUPERSEDED / REJECTED.</p></div><div class="card"><b>Context</b><p>Почему решение вообще возникло.</p></div><div class="card"><b>Decision</b><p>Что именно принято.</p></div><div class="card"><b>Consequences</b><p>Что решение улучшает и чем приходится платить.</p></div><div class="card"><b>Compliance</b><p>Как проверяется соблюдение решения.</p></div><div class="card"><b>Alternatives</b><p>Что рассматривалось и почему не выбрано.</p></div><div class="card"><b>Supersession</b><p>История изменений не стирается.</p></div>
+</div></section>
+
+<section class="section"><h2>4. Architecture Risk Storm</h2><div class="grid"><div class="card"><h3>Risk</h3><p>statement + affected option/driver/scenario.</p></div><div class="card"><h3>Evidence</h3><p>impact/likelihood только там, где есть доказательства; иначе uncertainty.</p></div><div class="card"><h3>Review</h3><p>участники, разногласия, consensus, actions.</p></div><div class="card"><h3>Owner</h3><p>риск не становится «ничейным».</p></div></div></section>
+
+<section class="section"><h2>5. Continuous Architecture Review</h2><p class="muted">После выбора архитектуры работа не заканчивается.</p><div class="grid"><div class="card">Изменился бизнес-контекст</div><div class="card">Изменились требования</div><div class="card">Изменился security/risk context</div><div class="card">Инцидент / деградация SLO</div><div class="card">Смена платформы/провайдера</div><div class="card">Нарушение принятого ADR</div></div></section>
+
+<section class="section"><h2>6. Главная трасса доказательства</h2><div class="trace">Business Driver
+   ↓
+Requirement / Constraint
+   ↓
+Architecture Characteristic
+   ↓
+Architecture Option
+   ↓
+Trade-off
+   ↓
+ADR
+   ↓
+Implementation Evidence
+   ↓
+Verification Evidence
+   ↓
+Operational Feedback
+   ↺ Continuous Review</div></section>
+
+<section class="section"><h2>7. Идеи из книг, уже заложенные в модель</h2><div class="item book"><b>Richards & Ford — architecture characteristics</b><br><span class="small">Отдельные явные/неявные свойства, минимальный значимый набор, связь с business/domain requirements.</span></div><div class="item book"><b>Richards & Ford — trade-offs</b><br><span class="small">Нет абсолютной «лучшей архитектуры» без контекста; решение сравнивается по компромиссам.</span></div><div class="item book"><b>Richards & Ford — ADR</b><br><span class="small">Контекст, решение, последствия, статус, compliance, alternatives и история supersession.</span></div><div class="item book"><b>Richards & Ford — risk storm + continuous analysis</b><br><span class="small">Риски и жизнеспособность архитектуры становятся постоянными объектами управления.</span></div></section>
+
+<section class="section"><p class="small muted">Canonical model: father/factory/architecture/ARCHITECTURE_WORKBENCH_MODEL.yaml. Book-derived ideas are tracked separately in father/factory/knowledge/BOOK_IDEA_INTAKE.yaml and remain candidate until independent review.</p></section>
+</div>
+</body></html>
