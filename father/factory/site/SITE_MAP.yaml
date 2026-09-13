@@ -1,4 +1,4 @@
-schemaVersion: 5
+schemaVersion: 6
 siteId: FATHER-ANALYTICAL-DESIGN-SITE-0001
 status: CANDIDATE_SITE_MAP
 pages:
@@ -25,7 +25,7 @@ pages:
       - father/factory/knowledge/BOOK_IDEA_INTAKE.yaml
   - id: OSINT_LIVE_PROJECT
     path: father/factory/site/osint-live-project.html
-    purpose: project-facing live reproduction of the real OSINT_deepseek project across OTUS lessons 01-12 and later 13-20
+    purpose: project-facing live reproduction of the real OSINT_deepseek project across OTUS lessons 01-13 and later 14-20
     externalCanonicalProject:
       repository: VictorKVS/OSINT_deepseek
       branch: feature/otus-live-reproduction-01-20
@@ -44,6 +44,7 @@ pages:
       - architecture_governance
       - integration_architecture
       - data_architecture
+      - genai_quality
       - next_lessons
   - id: DOCUMENT_AUTOMATION_WORKBENCH
     path: father/factory/site/document-automation.html
@@ -52,6 +53,7 @@ pages:
       - father/factory/automation/DOCUMENT_AUTOMATION_PIPELINE.yaml
       - father/factory/automation/DOCUMENT_APPROVAL_MATRIX.yaml
       - father/factory/automation/MODEL_ZOO_DECISION_PANEL.yaml
+      - father/factory/quality/QUALITY_GATE_INTEGRATION.yaml
     views:
       - intake_queue
       - llm_review_queue
@@ -62,12 +64,14 @@ pages:
       - version_diff
       - audit_history
       - model_zoo_panel_summary
+      - quality_gate_summary
   - id: MODEL_ZOO_DECISION_PANEL
     path: father/factory/site/model-zoo-decision.html
     purpose: adaptive champion-challenger-independent-judge council for material engineering decisions with preserved dissent and human final authority
     canonicalData:
       - father/factory/automation/MODEL_ZOO_DECISION_PANEL.yaml
       - father/factory/automation/DOCUMENT_AUTOMATION_PIPELINE.yaml
+      - father/factory/quality/GENAI_QUALITY_GATE_MODEL.yaml
     views:
       - materiality_router
       - selected_panel_profile
@@ -78,6 +82,23 @@ pages:
       - judge_summary
       - human_decision
       - per_capability_model_telemetry
+  - id: GENAI_QUALITY_GATE
+    path: father/factory/site/genai-quality.html
+    purpose: versioned eval datasets, semantic quality, grounding, security, load/cost evidence and promotion gates for RAG, LLM, agents, Model Zoo and document automation
+    canonicalData:
+      - father/factory/quality/GENAI_QUALITY_GATE_MODEL.yaml
+      - father/factory/quality/QUALITY_GATE_INTEGRATION.yaml
+    views:
+      - eval_dataset
+      - deterministic_checks
+      - retrieval_quality
+      - generation_quality
+      - security_adversarial
+      - load_reliability_cost
+      - ci_tiers
+      - quality_gate
+      - human_promotion
+      - model_zoo_feedback
 
 plannedDrilldowns:
   - id: ARTIFACT_DETAIL
@@ -104,6 +125,9 @@ plannedDrilldowns:
   - id: MODEL_PANEL_RUN
     routeIntent: '/decision-panel/{panelRunId}'
     sections: [materiality, selected_models, frozen_input_snapshot, champion, blind_challengers, evidence_verifier, cross_examination, judge, dissent_register, suggested_gate, human_decision, telemetry]
+  - id: QUALITY_EVAL_RUN
+    routeIntent: '/quality/{evalRunId}'
+    sections: [candidate, baseline, dataset_version, metric_versions, retrieval_results, generation_results, security_results, load_cost_results, critical_cases, human_review, gate_outcome]
 
 navigationPrinciple: >-
   The site is a projection over canonical registries and project sources. UI pages must never become an independent source of engineering truth.
