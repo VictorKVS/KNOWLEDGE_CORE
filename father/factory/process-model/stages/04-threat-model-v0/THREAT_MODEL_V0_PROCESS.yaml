@@ -1,0 +1,123 @@
+schemaVersion: 1
+processId: FATHER-STAGE-04-THREAT-MODEL-V0
+status: CANDIDATE_PROCESS
+stage: THREAT_MODEL_V0
+entryGate: SYSTEM_MODEL_READY
+exitGate: THREAT_MODEL_V0_READY
+principles:
+  - threat_model_precedes_architecture_decision
+  - scenario_must_trace_to_system_path_or_evidence
+  - false_precision_is_prohibited
+  - unknown_is_valid
+  - risk_acceptance_requires_risk_owner
+  - v0_does_not_claim_implementation_vulnerabilities
+operations:
+  - id: TM-01
+    name: identify_protected_interests_and_assets
+    accountable: security_engineer
+    supports: [system_engineer, data_owner, product_manager]
+    inputs: [SYSTEM_CONTEXT, SYSTEM_BOUNDARY, FUNCTION_MODEL, DATA_CLASSIFICATION]
+    outputs: [PROTECTED_INTEREST_REGISTER]
+    checks:
+      - material_product_and_information_interests_visible
+      - owner_or_business_consequence_owner_identified_where_known
+  - id: TM-02
+    name: identify_negative_consequences
+    accountable: security_engineer
+    supports: [product_manager, data_owner, risk_owner]
+    inputs: [PROTECTED_INTEREST_REGISTER, PRODUCT_VISION, SUCCESS_METRICS, DATA_CLASSIFICATION]
+    outputs: [NEGATIVE_CONSEQUENCE_REGISTER]
+    checks:
+      - consequence_describes_harm_not_technical_control_failure
+      - unsupported_severity_not_invented
+  - id: TM-03
+    name: identify_threat_sources
+    accountable: security_engineer
+    supports: [system_engineer, skeptical_reviewer]
+    inputs: [SYSTEM_CONTEXT, ACTOR_IDENTITY_INVENTORY, EXTERNAL_DEPENDENCY_REGISTER]
+    outputs: [THREAT_SOURCE_REGISTER]
+    checks:
+      - external_internal_and_supply_or_provider_sources_considered_where_applicable
+      - source_capability_assumptions_marked
+  - id: TM-04
+    name: map_trust_boundaries_and_entry_points
+    accountable: security_engineer
+    supports: [system_engineer, integration_engineer]
+    inputs: [SYSTEM_BOUNDARY, DATA_FLOW_MODEL, INTERFACE_INVENTORY, EXPOSURE_ASSUMPTION_REGISTER]
+    outputs: [TRUST_BOUNDARY_REGISTER, ENTRY_POINT_REGISTER]
+    checks:
+      - every_material_external_interface_mapped
+      - privileged_and_owner_approval_boundary_visible
+      - candidate_external_model_or_connector_boundary_visible
+  - id: TM-05
+    name: construct_threat_scenarios
+    accountable: security_engineer
+    supports: [system_engineer, skeptical_reviewer]
+    inputs:
+      - PROTECTED_INTEREST_REGISTER
+      - NEGATIVE_CONSEQUENCE_REGISTER
+      - THREAT_SOURCE_REGISTER
+      - TRUST_BOUNDARY_REGISTER
+      - ENTRY_POINT_REGISTER
+      - INITIAL_ABUSE_CASES
+    outputs: [THREAT_SCENARIO_REGISTER, THREAT_MODEL_V0]
+    schema: THREAT_SCENARIO_SCHEMA.yaml
+    checks:
+      - scenario_has_source_or_failure_origin
+      - scenario_has_entry_point_or_boundary
+      - scenario_has_target_interest_and_consequence
+      - scenario_preconditions_and_unknowns_visible
+  - id: TM-06
+    name: evaluate_evidence_uncertainty_and_relevance
+    accountable: security_engineer
+    supports: [knowledge_growth_analyst, system_engineer, legal_compliance]
+    inputs: [THREAT_SCENARIO_REGISTER, SYSTEM_MODEL_EVIDENCE_REGISTER, SECURITY_INTAKE_EVIDENCE_REGISTER]
+    outputs: [THREAT_MODEL_EVIDENCE_REGISTER]
+    checks:
+      - no_scenario_promoted_without_system_path_or_evidence
+      - regulatory_assumption_has_authority_state
+      - deferred_architecture_specific_details_marked
+  - id: TM-07
+    name: derive_security_drivers_and_requirements_draft
+    accountable: security_engineer
+    supports: [requirements_engineer, system_engineer, legal_compliance]
+    inputs: [THREAT_SCENARIO_REGISTER, SECURITY_CONSTRAINTS, REGULATORY_APPLICABILITY]
+    outputs: [SECURITY_DRIVER_REGISTER, SECURITY_REQUIREMENTS_DRAFT]
+    checks:
+      - requirement_is_architecture_independent_where_possible
+      - each_material_requirement_traces_to_scenario_constraint_or_source
+      - candidate_vs_mandatory_state_visible
+  - id: TM-08
+    name: register_security_risks_and_open_questions
+    accountable: security_engineer
+    supports: [risk_owner, project_manager, skeptical_reviewer]
+    inputs: [THREAT_SCENARIO_REGISTER, THREAT_MODEL_EVIDENCE_REGISTER]
+    outputs: [SECURITY_RISK_REGISTER, THREAT_MODEL_QUESTIONS_LOG]
+    checks:
+      - no_residual_risk_acceptance_by_security_engineer
+      - unknown_likelihood_not_replaced_with_numeric_score
+      - owner_and_reassessment_trigger_recorded
+  - id: TM-09
+    name: decide_threat_model_v0_readiness
+    accountable: security_engineer
+    reviewers: [system_engineer, skeptical_reviewer]
+    authorityChecks: [risk_owner, legal_compliance]
+    inputs:
+      - THREAT_MODEL_V0
+      - THREAT_SCENARIO_REGISTER
+      - TRUST_BOUNDARY_REGISTER
+      - SECURITY_REQUIREMENTS_DRAFT
+      - SECURITY_RISK_REGISTER
+      - THREAT_MODEL_EVIDENCE_REGISTER
+    outputs: [THREAT_MODEL_V0_READY_DECISION]
+    decisionTable: THREAT_MODEL_V0_READY_DECISION_TABLE.yaml
+handoff:
+  targetStage: REQUIREMENTS_BASELINE
+  requiredPackage:
+    - THREAT_MODEL_V0
+    - THREAT_SCENARIO_REGISTER
+    - TRUST_BOUNDARY_REGISTER
+    - SECURITY_REQUIREMENTS_DRAFT
+    - SECURITY_RISK_REGISTER
+    - THREAT_MODEL_EVIDENCE_REGISTER
+    - THREAT_MODEL_V0_READY_DECISION
