@@ -1,0 +1,185 @@
+schemaVersion: 1
+pilotId: FATHER-ANALYTICAL-DESIGN-PLATFORM
+stage: PRODUCT_DISCOVERY
+status: OWNER_REVIEW
+productReadyDecision: CONDITIONAL_PASS
+productReadyReason: >-
+  Core product purpose, owner authority and initial scope are owner-confirmed. Quantitative success targets,
+  exact user segments beyond the owner/team, deployment model and commercial boundaries remain open and must
+  stay visible during Security Intake and later stages.
+
+BUSINESS_NEED:
+  status: OWNER_CONFIRMED
+  owner: business_owner
+  statement: >-
+    Software/system design produces many interdependent decisions, artifacts, compliance obligations and reviews.
+    The product needs to turn this work into a visible, evidence-backed engineering production process rather than
+    disconnected documents or opaque LLM answers.
+  problemSignals:
+    - project knowledge is spread across documents, standards, discussions and repositories
+    - missing or contradictory inputs can silently become design assumptions
+    - architecture/security decisions need traceability to evidence and owners
+    - human understanding benefits from strong visual process and artifact navigation
+  mustNotBecome:
+    - document generator without evidence logic
+    - architecture generator that bypasses Product/Security/System gates
+    - self-verifying agent system
+
+PRODUCT_VISION:
+  status: OWNER_CONFIRMED
+  owner: product_manager
+  statement: >-
+    FATHER Analytical Design Platform is an analytical engineering environment that guides a project from product
+    context through security, system engineering, requirements, architecture, implementation evidence and operation,
+    using visual process models, canonical artifacts and evidence-backed gates.
+  primaryCapabilities:
+    - visualize end-to-end engineering workflow and drill down from L0 to L3
+    - show roles, inputs, operations, outputs, reviews and gates
+    - map standards and source evidence to artifact fields and decisions
+    - ingest existing project documents and compare them against canonical required knowledge
+    - create only missing or canonicalized artifacts instead of blindly duplicating documents
+    - expose FACT, CLAIM, ASSUMPTION, HYPOTHESIS, CONFLICT and UNKNOWN separately
+    - provide evidence analytics and readiness dashboards
+    - support professional agents without allowing them to self-certify
+  nonGoals:
+    - replace accountable human owners or risk acceptance authority
+    - claim legal/compliance applicability without evidence and review
+    - treat model confidence as professional verification
+
+STAKEHOLDER_REGISTER:
+  status: PARTIAL
+  decisionAuthority:
+    productOwner:
+      role: FATHER owner
+      status: OWNER_CONFIRMED
+  stakeholderGroups:
+    - product_manager
+    - security_engineer
+    - system_engineer
+    - requirements_engineer
+    - solution_architect
+    - software_engineer
+    - devsecops_engineer
+    - qa_verification
+    - operations
+    - knowledge_growth_analyst
+    - skeptical_reviewer
+  unknowns:
+    - external customer personas and organizational buying roles
+    - final operating/support ownership model
+
+SCOPE_BASELINE:
+  status: OWNER_CONFIRMED_WITH_OPEN_BOUNDARIES
+  inScope:
+    - engineering lifecycle process model
+    - normative/source registry and applicability overlays
+    - artifact registry and templates/schemas
+    - evidence/provenance graph
+    - stage and gate engine
+    - role/authority model
+    - visual process navigation
+    - brownfield document intake and gap analysis
+    - agent-assisted analysis with independent review controls
+    - metrics for completeness, conflicts, unknowns, evidence and maturity
+  outOfScopeForCurrentFactoryMVP:
+    - autonomous owner decisions
+    - automatic acceptance of residual risk
+    - automatic declaration of legal compliance
+    - unrestricted agent swarm
+    - replacing source documents with LLM summaries
+  openBoundaries:
+    - exact UI technology and deployment topology
+    - commercial packaging
+    - external integration catalogue
+
+SUCCESS_METRICS:
+  status: CANDIDATE
+  metrics:
+    - id: SM-01
+      name: lifecycle_traceability
+      intent: material decision can be traced to input, evidence, owner, artifact and review
+      target: TO_BE_BASELINED
+    - id: SM-02
+      name: gate_explainability
+      intent: every blocked/conditional/pass gate has machine-readable reasons and evidence refs
+      target: 100_percent_for_material_gates
+    - id: SM-03
+      name: artifact_gap_visibility
+      intent: missing/partial/conflicted/stale required information is visible before downstream decision
+      target: TO_BE_BASELINED
+    - id: SM-04
+      name: silent_state_collapse
+      intent: FACT/CLAIM/ASSUMPTION/HYPOTHESIS/UNKNOWN are not silently collapsed
+      target: zero_known_violations_in_eval_suite
+    - id: SM-05
+      name: visual_drilldown_coverage
+      intent: user can navigate lifecycle L0 -> stage L1 -> operation/artifact L2/L3
+      target: all_factory_stages
+    - id: SM-06
+      name: duplicate_document_avoidance
+      intent: existing evidence is mapped/reused before a new artifact is created
+      target: TO_BE_BASELINED
+
+ASSUMPTION_LOG:
+  status: OPEN
+  assumptions:
+    - id: A-01
+      statement: a canonical artifact/evidence model can represent multiple delivery methodologies without enforcing waterfall
+      owner: product_manager
+      validationTrigger: apply factory to at least one iterative software project and one brownfield project
+      downstreamImpact: process_model
+    - id: A-02
+      statement: BPMN/IDEF0/DMN/RACI plus graph navigation provides sufficient human-facing process clarity
+      owner: product_manager
+      validationTrigger: usability review on L0-L3 prototype
+      downstreamImpact: visualization_architecture
+    - id: A-03
+      statement: professional KBs can supply role-specific decision support while independent review prevents self-certification
+      owner: knowledge_growth_analyst
+      validationTrigger: role evals and independent domain review
+      downstreamImpact: agent_architecture
+  unknowns:
+    - id: U-01
+      statement: exact initial target user segment outside owner/development team
+      impact: product_prioritization_and_UX
+    - id: U-02
+      statement: required deployment topology for first usable release
+      impact: security_system_architecture
+    - id: U-03
+      statement: initial commercial/noncommercial distribution model
+      impact: product_and_legal_constraints
+
+INITIATIVE_EVIDENCE_REGISTER:
+  status: ACTIVE
+  records:
+    - evidenceId: EV-PD-001
+      statement: Product is an analytical design program where visualization and evidence analytics are first-class capabilities.
+      claimType: FACT
+      sourceType: OWNER_DECISION
+      informationOwner: FATHER_owner
+      verificationState: OWNER_CONFIRMED
+      affectedArtifacts: [BUSINESS_NEED, PRODUCT_VISION, SCOPE_BASELINE]
+    - evidenceId: EV-PD-002
+      statement: FATHER engineering order starts with Product and Security enters immediately after Product.
+      claimType: CONSTRAINT
+      sourceType: FATHER_CONSTITUTION
+      sourceRef: father/governance/FATHER_CONSTITUTION.md
+      verificationState: SOURCED
+      affectedArtifacts: [PRODUCT_VISION, SCOPE_BASELINE]
+    - evidenceId: EV-PD-003
+      statement: Product must visualize first the general factory and then decompose each stage.
+      claimType: REQUIREMENT
+      sourceType: OWNER_DECISION
+      informationOwner: FATHER_owner
+      verificationState: OWNER_CONFIRMED
+      affectedArtifacts: [PRODUCT_VISION, SUCCESS_METRICS]
+
+PRODUCT_READY_DECISION:
+  decision: CONDITIONAL_PASS
+  blockers: []
+  openConditions:
+    - baseline quantitative targets after first two real project runs
+    - refine external user/persona set
+    - keep deployment/commercial unknowns visible
+  nextStage: SECURITY_INTAKE
+  ruleRef: father/factory/process-model/stages/01-product-discovery/PRODUCT_READY_DECISION_TABLE.yaml
