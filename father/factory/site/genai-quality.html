@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>FATHER — GenAI Quality Gate</title>
+<style>
+:root{font-family:Inter,Segoe UI,Arial,sans-serif;color:#172033;background:#f5f7fb}*{box-sizing:border-box}body{margin:0}header{background:#101828;color:#fff;padding:28px 34px}.wrap{max-width:1500px;margin:auto;padding:24px}.section{background:#fff;border:1px solid #dde3ec;border-radius:14px;padding:20px;margin-bottom:22px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:12px}.card{border:1px solid #d9e0ea;border-radius:12px;padding:14px}.good{border-left:4px solid #039855}.warn{border-left:4px solid #dc6803}.block{border-left:4px solid #d92d20}.info{border-left:4px solid #1570ef}.muted,.small{color:#667085}.small{font-size:12px}.flow{display:flex;gap:9px;overflow:auto;padding:12px 0}.step{min-width:170px;border:1px solid #d7deea;border-radius:11px;padding:12px;background:#fff}.arrow{display:flex;align-items:center;font-size:22px;color:#98a2b3}.tag{display:inline-block;padding:3px 8px;border-radius:999px;background:#eef4ff;color:#3538cd;font-size:12px;margin:2px}.trace{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:15px;white-space:pre-wrap}a.nav{display:inline-block;margin:6px 8px 0 0;padding:9px 12px;border-radius:9px;border:1px solid #d0d5dd;text-decoration:none;color:#344054;background:#fff}@media(max-width:700px){header{padding:22px}.wrap{padding:14px}}
+</style>
+</head>
+<body>
+<header><h1>FATHER — GenAI Quality Gate</h1><p>Golden/Eval Dataset → retrieval quality → faithfulness → security → load/cost → promotion evidence.</p></header>
+<div class="wrap">
+<section class="section"><a class="nav" href="./index.html">← Factory home</a><a class="nav" href="./osint-live-project.html">OSINT Live Project</a><a class="nav" href="./model-zoo-decision.html">Model Zoo</a><h2>Зачем этот слой</h2><p>FATHER не принимает «модель отвечает красиво» как доказательство качества. Semantic/RAG/agent/document-worker изменение продвигается только через versioned dataset, evidence/security checks, operational metrics и человеческое решение.</p></section>
+
+<section class="section"><h2>Quality pipeline</h2><div class="flow"><div class="step"><b>1. Freeze</b><br><span class="small">candidate + baseline</span></div><div class="arrow">→</div><div class="step"><b>2. Eval Dataset</b><br><span class="small">version + evidence refs</span></div><div class="arrow">→</div><div class="step"><b>3. Retrieval</b><br><span class="small">coverage / Recall@K</span></div><div class="arrow">→</div><div class="step"><b>4. Generation</b><br><span class="small">Faithfulness / Relevancy</span></div><div class="arrow">→</div><div class="step block"><b>5. Security</b><br><span class="small">hard gates</span></div><div class="arrow">→</div><div class="step"><b>6. Load / Cost</b></div><div class="arrow">→</div><div class="step warn"><b>7. Quality Gate</b></div><div class="arrow">→</div><div class="step good"><b>8. Human Promotion</b></div></div></section>
+
+<section class="section"><h2>Пять слоёв качества</h2><div class="grid"><div class="card info"><h3>Deterministic</h3><p class="small">Schema, required fields, citation/evidence ref resolution, tool allowlist, budget/cycle limits, dataset integrity.</p></div><div class="card info"><h3>Retrieval</h3><p class="small">Expected evidence coverage, Recall@K, Precision@K, MRR/NDCG where meaningful.</p></div><div class="card info"><h3>Generation</h3><p class="small">Faithfulness, groundedness, Answer Relevancy, completeness, unsupported-claim rate, correct UNKNOWN.</p></div><div class="card block"><h3>Security</h3><p class="small">Prompt injection, retrieval poisoning, fabricated citations, tool privilege escape, secret/data exfiltration.</p></div><div class="card warn"><h3>Operational</h3><p class="small">p50/p95/p99, throughput, queue time, reliability, GPU/VRAM when local, cost/query and cost/accepted result.</p></div></div></section>
+
+<section class="section"><h2>Eval Dataset</h2><div class="grid"><div class="card"><h3>CALIBRATION</h3><p class="small">Настройка метрик/rubrics и human calibration.</p></div><div class="card"><h3>REGRESSION</h3><p class="small">Стабильный набор для CI и promotion.</p></div><div class="card"><h3>HOLDOUT</h3><p class="small">Не используется для рутинной подгонки.</p></div><div class="card block"><h3>SECURITY</h3><p class="small">Adversarial corpus: injection, poisoning, tool abuse, evidence fabrication.</p></div><div class="card"><h3>PRODUCTION SHADOW</h3><p class="small">Только если data policy допускает approved/sanitized реальные кейсы.</p></div></div></section>
+
+<section class="section"><h2>CI tiers</h2><div class="grid"><div class="card"><h3>Tier 0</h3><span class="tag">FAST</span><p class="small">Deterministic checks на каждом material change.</p></div><div class="card"><h3>Tier 1</h3><span class="tag">COMPACT</span><p class="small">Небольшой semantic regression для model/prompt/retrieval change.</p></div><div class="card"><h3>Tier 2</h3><span class="tag">FULL EVAL</span><p class="small">Перед promotion semantic route.</p></div><div class="card block"><h3>Tier 3</h3><span class="tag">SECURITY</span><p class="small">Retrieval/agent/tool/provider/sensitive-data changes.</p></div><div class="card warn"><h3>Tier 4</h3><span class="tag">LOAD + COST</span><p class="small">Перед Production/hosting decision.</p></div></div></section>
+
+<section class="section"><h2>Hard blocks</h2><div class="trace">fabricated material source/citation
+unsupported high-impact claim
+retrieved content changes system/tool policy
+prohibited data sent to external provider
+unauthorized tool execution
+material claim without resolvable evidence
+critical security regression</div><p class="small">Hard block нельзя «перекрыть» хорошим средним score, низкой стоимостью или большинством голосов моделей.</p></section>
+
+<section class="section"><h2>Связь с Model Zoo</h2><p>Champion / Challengers / Judge оцениваются не по бренду модели, а по накопленной телеметрии: human acceptance, unsupported claims, useful challenge rate, false challenges, judge↔human agreement, rework и cost per accepted result.</p><div class="trace">Model Zoo run
+  ↓
+Quality Gate evidence
+  ↓
+Human review
+  ↓
+Accepted / rejected claims
+  ↓
+Capability telemetry
+  ↓
+Next model routing decision</div></section>
+
+<section class="section"><h2>Текущее состояние</h2><div class="grid"><div class="card good"><h3>Контракт качества</h3><b>DEFINED</b></div><div class="card warn"><h3>Golden Dataset v1</h3><b>NOT YET BASELINED</b></div><div class="card warn"><h3>Model A vs Model B</h3><b>PLAN READY / RESULTS PENDING</b></div><div class="card warn"><h3>Semantic CI</h3><b>CONTRACT DEFINED / EXECUTION PENDING</b></div><div class="card"><h3>Measured winner</h3><b>UNKNOWN</b></div></div></section>
+
+<section class="section"><p class="small muted">Canonical models: <code>father/factory/quality/GENAI_QUALITY_GATE_MODEL.yaml</code> and <code>father/factory/quality/QUALITY_GATE_INTEGRATION.yaml</code>.</p></section>
+</div>
+</body></html>
