@@ -1,4 +1,4 @@
-schemaVersion: 1
+schemaVersion: 2
 siteId: FATHER-ANALYTICAL-DESIGN-SITE-0001
 status: CANDIDATE_SITE_MAP
 pages:
@@ -9,6 +9,13 @@ pages:
       - father/factory/pre-architecture/PRE_ARCHITECTURE_PACKAGE.yaml
       - father/factory/pre-architecture/PRE_ARCHITECTURE_ARTIFACT_CATALOG.yaml
       - father/factory/process-model/stages/01-product-discovery/documents/PRODUCT_DOCUMENT_PACK.yaml
+  - id: DELIVERY_FEASIBILITY_WORKBENCH
+    path: father/factory/site/delivery-feasibility.html
+    exitGate: DELIVERY_FEASIBILITY_READY
+    purpose: measurable NFR, verification intent, WBS v0, estimation, project risk, TCO and change control
+    canonicalData:
+      - father/factory/pre-architecture/DELIVERY_FEASIBILITY_MODEL.yaml
+      - father/factory/pre-architecture/OTUS_LESSON_02_CROSSWALK.yaml
   - id: ARCHITECTURE_WORKBENCH
     path: father/factory/site/architecture-workbench.html
     entryGate: ARCHITECTURE_OPTIONS_ALLOWED
@@ -20,53 +27,19 @@ pages:
 plannedDrilldowns:
   - id: ARTIFACT_DETAIL
     routeIntent: '/artifact/{artifactId}'
-    sections:
-      - purpose
-      - owner_and_reviewers
-      - when_created
-      - required_inputs
-      - how_to_collect
-      - required_information
-      - evidence_sources
-      - normative_sources_and_exact_clauses
-      - conflicts_and_unknowns
-      - downstream_consumers
-      - gate_impact
-      - examples
+    sections: [purpose, owner_and_reviewers, when_created, required_inputs, how_to_collect, required_information, evidence_sources, normative_sources_and_exact_clauses, conflicts_and_unknowns, downstream_consumers, gate_impact, examples]
   - id: ROLE_DETAIL
     routeIntent: '/role/{roleId}'
-    sections:
-      - mission
-      - inputs
-      - questions_to_answer
-      - outputs
-      - methods
-      - evidence
-      - authority_boundaries
-      - handoffs
+    sections: [mission, inputs, questions_to_answer, outputs, methods, evidence, authority_boundaries, handoffs]
   - id: SOURCE_DETAIL
     routeIntent: '/source/{sourceId}'
-    sections:
-      - source_status
-      - version_and_freshness
-      - applicability
-      - clause_map
-      - mapped_artifacts
-      - conflicts_supersession
+    sections: [source_status, version_and_freshness, applicability, clause_map, mapped_artifacts, conflicts_supersession]
   - id: DECISION_TRACE
     routeIntent: '/trace/{decisionId}'
-    sections:
-      - business_driver
-      - source_evidence
-      - requirement
-      - threat_or_constraint
-      - architecture_characteristic
-      - option
-      - tradeoff
-      - adr
-      - implementation
-      - verification
-      - operational_feedback
+    sections: [business_driver, source_evidence, requirement, threat_or_constraint, architecture_characteristic, option, tradeoff, adr, implementation, verification, operational_feedback]
+  - id: ESTIMATE_DETAIL
+    routeIntent: '/estimate/{estimateId}'
+    sections: [work_item, method, raw_inputs, assumptions, uncertainty_range, risk_refs, cost_impact, superseded_estimates]
 
 navigationPrinciple: >-
   The site is a projection over canonical registries. UI pages must never become an independent source of engineering truth.
