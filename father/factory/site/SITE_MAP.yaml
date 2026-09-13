@@ -1,0 +1,72 @@
+schemaVersion: 1
+siteId: FATHER-ANALYTICAL-DESIGN-SITE-0001
+status: CANDIDATE_SITE_MAP
+pages:
+  - id: PRE_ARCHITECTURE_HOME
+    path: father/factory/site/index.html
+    purpose: one-page pre-architecture factory with Product cards, role contributions and document acquisition branches
+    canonicalData:
+      - father/factory/pre-architecture/PRE_ARCHITECTURE_PACKAGE.yaml
+      - father/factory/pre-architecture/PRE_ARCHITECTURE_ARTIFACT_CATALOG.yaml
+      - father/factory/process-model/stages/01-product-discovery/documents/PRODUCT_DOCUMENT_PACK.yaml
+  - id: ARCHITECTURE_WORKBENCH
+    path: father/factory/site/architecture-workbench.html
+    entryGate: ARCHITECTURE_OPTIONS_ALLOWED
+    purpose: architecture drivers, quality attributes, options, trade-offs, ADR, risk storm and continuous architecture review
+    canonicalData:
+      - father/factory/architecture/ARCHITECTURE_WORKBENCH_MODEL.yaml
+      - father/factory/knowledge/BOOK_IDEA_INTAKE.yaml
+
+plannedDrilldowns:
+  - id: ARTIFACT_DETAIL
+    routeIntent: '/artifact/{artifactId}'
+    sections:
+      - purpose
+      - owner_and_reviewers
+      - when_created
+      - required_inputs
+      - how_to_collect
+      - required_information
+      - evidence_sources
+      - normative_sources_and_exact_clauses
+      - conflicts_and_unknowns
+      - downstream_consumers
+      - gate_impact
+      - examples
+  - id: ROLE_DETAIL
+    routeIntent: '/role/{roleId}'
+    sections:
+      - mission
+      - inputs
+      - questions_to_answer
+      - outputs
+      - methods
+      - evidence
+      - authority_boundaries
+      - handoffs
+  - id: SOURCE_DETAIL
+    routeIntent: '/source/{sourceId}'
+    sections:
+      - source_status
+      - version_and_freshness
+      - applicability
+      - clause_map
+      - mapped_artifacts
+      - conflicts_supersession
+  - id: DECISION_TRACE
+    routeIntent: '/trace/{decisionId}'
+    sections:
+      - business_driver
+      - source_evidence
+      - requirement
+      - threat_or_constraint
+      - architecture_characteristic
+      - option
+      - tradeoff
+      - adr
+      - implementation
+      - verification
+      - operational_feedback
+
+navigationPrinciple: >-
+  The site is a projection over canonical registries. UI pages must never become an independent source of engineering truth.
