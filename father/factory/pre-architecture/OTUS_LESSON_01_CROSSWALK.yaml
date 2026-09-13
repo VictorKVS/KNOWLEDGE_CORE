@@ -1,0 +1,125 @@
+schemaVersion: 1
+crosswalkId: FATHER-OTUS-LESSON-01-CROSSWALK-0001
+status: SOURCE_GROUNDED_CANDIDATE
+source:
+  repository: VictorKVS/OTUS-
+  lessonPath: '1. Пресейл, контракты и работа с требованиями закладываем фундамент проекта'
+  sourceFiles:
+    - 'Пресейл, контракты и работа с требованиями  закладываем фундамент проекта.txt'
+    - 'Бизнес_функциональные_требования_Суфлер-252831-d02306.pdf'
+    - 'Шаблон_Бизнес_функциональные_требования_БФТ-252831-0fda99.pdf'
+lessonScope:
+  - school_and_course_introduction
+  - initial_project_stages_from_first_client_contact_to_commercial_model_selection
+  - transform_vague_ideas_into_structured_requirements
+  - architect_role_in_presales
+  - initial_requirements_analysis_from_rough_idea_to_formal_TZ_GOST
+  - hidden_and_implicit_requirements_elicitation
+  - business_context_analysis
+  - project_typology_and_contract_models_FP_TM_TM_cap
+  - contract_model_effect_on_architecture_detail_change_management_and_uncertainty
+  - practice_on_three_anonymized_RFPs_with_clarifying_questions_and_contract_choice_rationale
+
+fatherMapping:
+  first_client_contact_and_presales:
+    roles: [business_owner, product_manager, project_manager, business_analyst, presales_architect_consultant]
+    artifacts:
+      - CLIENT_REQUEST_INTAKE
+      - RFP_INTAKE_REGISTER
+      - BUSINESS_NEED
+      - STAKEHOLDER_REGISTER
+      - DECISION_AUTHORITY_MAP
+      - INITIAL_SCOPE_AND_CONSTRAINTS
+  vague_idea_to_structured_requirements:
+    roles: [product_manager, business_analyst, requirements_engineer]
+    artifacts:
+      - PRODUCT_VISION
+      - PRODUCT_REQUIREMENTS_PRD
+      - BUSINESS_REQUIREMENTS
+      - REQUIREMENTS_QUESTION_LOG
+      - REQUIREMENTS_BASELINE
+  hidden_requirements:
+    roles: [business_analyst, requirements_engineer, presales_architect_consultant, skeptical_reviewer]
+    methods:
+      - open_questions
+      - business_context_analysis
+      - stakeholder_interviews
+      - process_analysis
+      - contradiction_and_gap_analysis
+    artifacts:
+      - HIDDEN_REQUIREMENT_CANDIDATES
+      - ASSUMPTION_LOG
+      - KNOWLEDGE_GAP_REGISTER
+      - CONFLICT_REGISTER
+  rfp_analysis:
+    roles: [business_analyst, presales_architect_consultant, project_manager, finance_procurement]
+    artifacts:
+      - RFP_ANALYSIS
+      - RFP_CLARIFYING_QUESTIONS
+      - RFP_RISK_REGISTER
+      - DELIVERY_ASSUMPTIONS
+      - COMMERCIAL_CONTRACT_CONSTRAINTS
+  commercial_model:
+    roles: [finance_procurement, project_manager, business_owner, presales_architect_consultant]
+    options: [FIXED_PRICE, TIME_AND_MATERIALS, TIME_AND_MATERIALS_WITH_CAP]
+    artifacts:
+      - CONTRACT_MODEL_DECISION
+      - COMMERCIAL_RISK_RATIONALE
+      - CHANGE_MANAGEMENT_MODEL
+      - UNCERTAINTY_REGISTER
+    rule: commercial_model_is_not_selected_by_architect_alone
+  architect_presales_role:
+    role: presales_architect_consultant
+    may:
+      - analyze_technical_implications_of_client_request
+      - formulate_architecture_relevant_clarifying_questions
+      - identify_missing_inputs_and_constraints
+      - estimate_uncertainty_and_delivery_risk
+      - explain_how_contract_model_changes_required_design_detail_and_change_control
+      - support_RFP_response
+    cannot:
+      - declare_target_architecture_before_FATHER_gates
+      - invent_business_legal_security_facts
+      - self_approve_material_architecture
+    produces:
+      - PRESALES_TECHNICAL_QUESTIONS
+      - PRESALES_TECHNICAL_RISK_NOTE
+      - ARCHITECTURE_INPUT_GAP_REGISTER
+      - ESTIMATION_ASSUMPTIONS
+
+coverageAssessment:
+  alreadyCovered:
+    - business_need_and_product_context
+    - stakeholder_and_decision_authority
+    - assumptions_unknowns_and_evidence
+    - business_analysis
+    - requirements_baseline
+    - finance_procurement_constraints
+    - architecture_entry_gate
+  newlyMadeExplicitFromLesson01:
+    - CLIENT_REQUEST_INTAKE
+    - RFP_INTAKE_REGISTER
+    - RFP_ANALYSIS
+    - RFP_CLARIFYING_QUESTIONS
+    - RFP_RISK_REGISTER
+    - CONTRACT_MODEL_DECISION
+    - COMMERCIAL_RISK_RATIONALE
+    - CHANGE_MANAGEMENT_MODEL
+    - presales_architect_consultant_role
+  interpretation:
+    - architect_may_participate_before_architecture_as_presales_consultant
+    - architecture_option_generation_remains_locked_until_pre_architecture_gates_pass
+    - analyst_and_architect_collaborate_on_questions_but_information_authority_stays_with_domain_owners
+
+lessonResultAlignment:
+  lessonResults: [lecture_notes, practical_case, Holst_workshop]
+  fatherEvidence:
+    - OTUS_LESSON_01_CROSSWALK
+    - RFP_ANALYSIS_PACK
+    - CONTRACT_MODEL_DECISION
+    - PRESALES_TECHNICAL_QUESTIONS
+
+openWork:
+  - parse the two BFT PDFs at section/field level
+  - map BFT template fields to BUSINESS_REQUIREMENTS and future TZ inputs
+  - run one of the lesson RFP-style cases through the FATHER pre-architecture package
