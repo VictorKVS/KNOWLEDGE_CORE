@@ -1,0 +1,122 @@
+schemaVersion: 1
+processId: FATHER-STAGE-02-SECURITY-INTAKE
+status: CANDIDATE_PROCESS
+stage: SECURITY_INTAKE
+entryGate: PRODUCT_READY
+exitGate: SECURITY_INTAKE_READY
+principles:
+  - security_enters_immediately_after_product
+  - legal_applicability_requires_authoritative_owner
+  - unknown_is_valid
+  - early_security_context_precedes_system_architecture
+  - security_intake_is_not_final_threat_model
+operations:
+  - id: SI-01
+    name: register_product_evidence_and_security_scope
+    accountable: security_engineer
+    supports: [product_manager, knowledge_growth_analyst]
+    inputs: [PRODUCT_READY_DECISION, PRODUCT_VISION, SCOPE_BASELINE, INITIATIVE_EVIDENCE_REGISTER]
+    outputs: [SECURITY_SCOPE_BASELINE, SECURITY_INTAKE_EVIDENCE_REGISTER]
+    checks:
+      - product_scope_source_identified
+      - exclusions_visible
+      - product_unknowns_carried_forward
+  - id: SI-02
+    name: inventory_and_classify_information
+    accountable: data_owner
+    supports: [security_engineer, legal_compliance]
+    inputs: [PRODUCT_VISION, SCOPE_BASELINE, SECURITY_SCOPE_BASELINE]
+    outputs: [DATA_CLASSIFICATION]
+    checks:
+      - information_classes_named
+      - owner_assigned_for_material_classes
+      - sensitivity_or_regulatory_status_not_guessed
+  - id: SI-03
+    name: identify_actors_identities_and_privilege
+    accountable: security_engineer
+    supports: [product_manager]
+    inputs: [STAKEHOLDER_REGISTER, PRODUCT_VISION, DATA_CLASSIFICATION]
+    outputs: [ACTOR_IDENTITY_INVENTORY]
+    checks:
+      - external_users_visible
+      - privileged_roles_visible
+      - machine_agent_service_identities_marked_if_known
+  - id: SI-04
+    name: identify_exposure_and_trust_assumptions
+    accountable: security_engineer
+    supports: [system_engineer]
+    inputs: [SECURITY_SCOPE_BASELINE, ACTOR_IDENTITY_INVENTORY, ASSUMPTION_LOG]
+    outputs: [EXPOSURE_ASSUMPTION_REGISTER, TRUST_ASSUMPTIONS_DRAFT]
+    checks:
+      - internet_or_external_exposure_status_explicit
+      - third_party_or_model_provider_boundaries_visible_if_known
+      - deployment_unknowns_not_silently_closed
+  - id: SI-05
+    name: assess_regulatory_applicability
+    accountable: legal_compliance
+    supports: [security_engineer, data_owner, knowledge_growth_analyst]
+    inputs: [DATA_CLASSIFICATION, SCOPE_BASELINE, NORMATIVE_SOURCE_REGISTRY]
+    outputs: [REGULATORY_APPLICABILITY]
+    decisionTable: REGULATORY_APPLICABILITY_DECISION_TABLE.yaml
+    checks:
+      - each_material_overlay_has_status
+      - applicable_claim_has_source_and_owner
+      - unknown_is_not_treated_as_not_applicable
+  - id: SI-06
+    name: draft_initial_abuse_cases
+    accountable: security_engineer
+    supports: [product_manager, skeptical_reviewer]
+    inputs: [DATA_CLASSIFICATION, ACTOR_IDENTITY_INVENTORY, EXPOSURE_ASSUMPTION_REGISTER, REGULATORY_APPLICABILITY]
+    outputs: [INITIAL_ABUSE_CASES]
+    checks:
+      - abuse_cases_tied_to_product_assets_or_actions
+      - abuse_cases_do_not_claim_final_threat_likelihood
+      - missing_system_detail_flagged_for_threat_model_v0
+  - id: SI-07
+    name: derive_security_constraints
+    accountable: security_engineer
+    supports: [data_owner, legal_compliance]
+    inputs: [DATA_CLASSIFICATION, REGULATORY_APPLICABILITY, INITIAL_ABUSE_CASES]
+    outputs: [SECURITY_CONSTRAINTS]
+    checks:
+      - each_material_constraint_has_evidence_or_owner
+      - mandatory_and_candidate_constraints_distinguished
+      - no_architecture_solution_is_forced_without_requirement
+  - id: SI-08
+    name: consolidate_questions_conflicts_unknowns
+    accountable: security_engineer
+    supports: [knowledge_growth_analyst, skeptical_reviewer]
+    inputs: [all_stage_outputs]
+    outputs: [SECURITY_QUESTIONS_LOG, SECURITY_INTAKE_EVIDENCE_REGISTER]
+    checks:
+      - conflict_owner_identified
+      - unknown_downstream_impact_recorded
+      - questions_have_target_owner
+  - id: SI-09
+    name: decide_security_intake_readiness
+    accountable: security_engineer
+    reviewers: [skeptical_reviewer]
+    legalAuthority: legal_compliance
+    inputs:
+      - SECURITY_INTAKE
+      - DATA_CLASSIFICATION
+      - REGULATORY_APPLICABILITY
+      - INITIAL_ABUSE_CASES
+      - SECURITY_CONSTRAINTS
+      - SECURITY_QUESTIONS_LOG
+      - SECURITY_INTAKE_EVIDENCE_REGISTER
+    outputs: [SECURITY_INTAKE_READY_DECISION]
+    decisionTable: SECURITY_INTAKE_READY_DECISION_TABLE.yaml
+handoff:
+  targetStage: SYSTEM_ENGINEERING
+  requiredPackage:
+    - PRODUCT_VISION
+    - SCOPE_BASELINE
+    - SECURITY_INTAKE
+    - DATA_CLASSIFICATION
+    - REGULATORY_APPLICABILITY
+    - INITIAL_ABUSE_CASES
+    - SECURITY_CONSTRAINTS
+    - SECURITY_QUESTIONS_LOG
+    - SECURITY_INTAKE_EVIDENCE_REGISTER
+    - SECURITY_INTAKE_READY_DECISION
