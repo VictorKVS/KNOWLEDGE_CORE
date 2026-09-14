@@ -1,0 +1,183 @@
+schemaVersion: 1
+pipelineId: FATHER-PAPER-PIPELINE-0001
+status: CANDIDATE_MANUAL_EXECUTION_PROTOCOL
+humanReadableRef: father/factory/paper-pipeline/FATHER_PAPER_PIPELINE_ALGORITHM.md
+methodCatalogRef: father/factory/paper-pipeline/PROCESSING_METHOD_CATALOG.yaml
+artifactDependencyRef: father/factory/paper-pipeline/ARTIFACT_DEPENDENCY_MATRIX.yaml
+courseCrosswalkRef: father/factory/paper-pipeline/OTUS_01_31_CROSSWALK.yaml
+sourceCoverageRef: father/factory/paper-pipeline/SOURCE_COVERAGE_STATUS.md
+stateModel: [EXPECTED, REQUESTED, RECEIVED, PARTIAL, CONFLICTED, GAP, DRAFT, OWNER_REVIEW, CONFIRMED, VERIFIED, STALE, REJECTED, NOT_APPLICABLE]
+executionRule: >-
+  A stage may consume VERIFIED upstream artifacts and explicitly bounded CONFIRMED/PARTIAL items only when the gate rule permits it.
+  UNKNOWN and CONFLICTED states remain visible; they are never silently converted to facts.
+stages:
+  A0:
+    name: SOURCE_PROJECT_INTAKE
+    ownerRoles: [project_manager, knowledge_growth_analyst]
+    reviewerRoles: [configuration_manager, skeptical_reviewer]
+    requiredInputs: [business_request, available_project_sources, normative_registry, professional_source_registry]
+    keyMethods: [SOURCE_IDENTITY, DOCUMENT_PARSE_AND_SEGMENT, ATOMIC_INFORMATION_EXTRACTION, ARTIFACT_FIELD_MAPPING, GAP_CONFLICT_STALENESS_ANALYSIS]
+    outputs: [PROJECT_SOURCE_REGISTER, SOURCE_VERSION_REGISTER, PROJECT_INTAKE_INVENTORY, EVIDENCE_REGISTER, EXISTING_ARTIFACT_COVERAGE_MAP, INITIAL_GAP_REGISTER]
+    exitGate: PROJECT_INTAKE_READY
+    forward: A1
+    reworkTargets: [A0]
+  A1:
+    name: PRODUCT_DISCOVERY
+    ownerRoles: [product_manager, business_owner]
+    reviewerRoles: [business_analyst, skeptical_reviewer]
+    requiredInputs: [PROJECT_INTAKE_READY, business_owner_input]
+    keyMethods: [PROBLEM_VS_SOLUTION_CHECK, STAKEHOLDER_AND_AUTHORITY_MAPPING, JOURNEY_PROCESS_MODELING]
+    outputs: [BUSINESS_NEED, PRODUCT_VISION, TARGET_USERS_USER_JOURNEYS, SUCCESS_METRICS, STAKEHOLDER_REGISTER, SCOPE_BASELINE, ASSUMPTION_LOG]
+    exitGate: PRODUCT_READY
+    forward: A2
+    reworkTargets: [A0,A1]
+  A2:
+    name: SECURITY_LEGAL_DATA_INTAKE
+    ownerRoles: [security_engineer, legal_compliance, data_owner]
+    reviewerRoles: [skeptical_reviewer]
+    requiredInputs: [PRODUCT_READY, PRODUCT_VISION, SCOPE_BASELINE, STAKEHOLDER_REGISTER]
+    keyMethods: [APPLICABILITY_ANALYSIS, DATA_FLOW_MODELING, SECURITY_BY_DESIGN]
+    outputs: [REGULATORY_APPLICABILITY, DATA_INVENTORY, DATA_CLASSIFICATION, SECURITY_INTAKE, INITIAL_ABUSE_CASES, SECURITY_CONSTRAINTS]
+    exitGate: SECURITY_INTAKE_READY
+    forward: A3
+    reworkTargets: [A1,A2]
+  A3:
+    name: BUSINESS_SYSTEM_ENGINEERING
+    ownerRoles: [business_analyst, system_engineer]
+    reviewerRoles: [security_engineer, integration_engineer]
+    requiredInputs: [PRODUCT_READY, SECURITY_INTAKE_READY]
+    keyMethods: [JOURNEY_PROCESS_MODELING, TERMINOLOGY_NORMALIZATION, SYSTEM_CONTEXT_MODELING, FUNCTIONAL_DECOMPOSITION, DATA_FLOW_MODELING, CONTRACT_DESIGN]
+    outputs: [BUSINESS_PROCESS_MODEL, DOMAIN_GLOSSARY, SYSTEM_CONTEXT, SYSTEM_BOUNDARY, FUNCTION_MODEL, DATA_FLOW_MODEL, INTERFACE_INVENTORY, EXTERNAL_DEPENDENCY_REGISTER, OPERATIONAL_MODES]
+    exitGate: SYSTEM_MODEL_READY
+    forward: A4
+    reworkTargets: [A1,A2,A3]
+  A4:
+    name: THREAT_MODEL_V0
+    ownerRoles: [security_engineer]
+    reviewerRoles: [system_engineer, skeptical_reviewer]
+    requiredInputs: [SYSTEM_MODEL_READY, DATA_CLASSIFICATION, SECURITY_CONSTRAINTS]
+    keyMethods: [THREAT_MODELING, RISK_ANALYSIS]
+    outputs: [THREAT_MODEL_V0, THREAT_SCENARIO_REGISTER, TRUST_BOUNDARY_REGISTER, SECURITY_REQUIREMENTS_DRAFT, SECURITY_RISK_REGISTER]
+    exitGate: THREAT_MODEL_V0_READY
+    forward: A5
+    reworkTargets: [A2,A3,A4]
+  A5:
+    name: REQUIREMENTS_NFR_ACCEPTANCE_BASELINE
+    ownerRoles: [requirements_engineer]
+    reviewerRoles: [product_manager, security_engineer, qa_engineer, system_engineer]
+    requiredInputs: [PRODUCT_READY, SYSTEM_MODEL_READY, THREAT_MODEL_V0_READY, REGULATORY_APPLICABILITY]
+    keyMethods: [REQUIREMENT_NORMALIZATION, QUALITY_ATTRIBUTE_SCENARIO, TRACEABILITY_BUILDING, TEST_DESIGN]
+    outputs: [BUSINESS_REQUIREMENTS, STAKEHOLDER_REQUIREMENTS, SYSTEM_REQUIREMENTS, SOFTWARE_REQUIREMENTS, NFR_CATALOGUE, SECURITY_REQUIREMENTS, ACCEPTANCE_CRITERIA, REQUIREMENTS_TRACEABILITY_MATRIX]
+    exitGate: REQUIREMENTS_BASELINE_READY
+    forward: A6
+    reworkTargets: [A1,A2,A3,A4,A5]
+  A6:
+    name: DELIVERY_FEASIBILITY
+    ownerRoles: [project_manager]
+    reviewerRoles: [finance_procurement, solution_architect, operations_engineer, skeptical_reviewer]
+    requiredInputs: [REQUIREMENTS_BASELINE_READY]
+    keyMethods: [WBS_DECOMPOSITION, ESTIMATION, RISK_ANALYSIS, TCO_FINOPS_MODELING, POC_EXPERIMENT_DESIGN]
+    outputs: [DELIVERY_WBS_V0, ESTIMATION_REGISTER_V0, PROJECT_RISK_REGISTER, TCO_MODEL_V0, POC_PLAN, CHANGE_MANAGEMENT_MODEL]
+    exitGate: DELIVERY_FEASIBILITY_READY
+    forward: A7
+    reworkTargets: [A5,A6]
+  A7:
+    name: ARCHITECTURE_DRIVERS_OPTIONS
+    ownerRoles: [solution_architect]
+    reviewerRoles: [security_engineer, system_engineer, operations_engineer, skeptical_reviewer]
+    requiredInputs: [SYSTEM_MODEL_READY, THREAT_MODEL_V0_READY, REQUIREMENTS_BASELINE_READY, DELIVERY_FEASIBILITY_READY]
+    keyMethods: [ARCHITECTURE_CHARACTERISTIC_DISCOVERY, QUALITY_ATTRIBUTE_SCENARIO, ARCHITECTURE_OPTION_GENERATION, C4_MODELING, TRADEOFF_ANALYSIS, ARCHITECTURE_RISK_STORM]
+    outputs: [ARCHITECTURE_DRIVER_SET, QUALITY_ATTRIBUTE_SCENARIOS, ARCHITECTURE_OPTION_SET, ARCHITECTURE_VIEWS, OPTION_TRADEOFF_MATRIX, OPTION_SECURITY_REVIEW]
+    exitGate: ARCHITECTURE_OPTIONS_READY
+    forward: A8
+    reworkTargets: [A3,A4,A5,A6,A7]
+  A8:
+    name: ARCHITECTURE_VERIFICATION_DECISION
+    ownerRoles: [solution_architect, business_or_system_decision_owner]
+    reviewerRoles: [security_engineer, skeptical_reviewer, risk_owner]
+    requiredInputs: [ARCHITECTURE_OPTIONS_READY, POC_BENCHMARK_EVIDENCE_when_required]
+    keyMethods: [CTO_ATAM_CHALLENGE, TRADEOFF_ANALYSIS, ADR_LIFECYCLE, RISK_ANALYSIS, TRACEABILITY_BUILDING]
+    outputs: [ARCHITECTURE_DECISION_RECORDS, TARGET_ARCHITECTURE, RESIDUAL_RISK_REGISTER, DECISION_EVIDENCE_REGISTER]
+    exitGate: ARCHITECTURE_DECISION_READY
+    forward: A9
+    reworkTargets: [A5,A6,A7,A8]
+  A9:
+    name: DETAILED_DESIGN
+    ownerRoles: [software_architect, system_engineer]
+    reviewerRoles: [security_engineer, data_engineer, integration_engineer, qa_engineer, operations_engineer]
+    requiredInputs: [ARCHITECTURE_DECISION_READY]
+    keyMethods: [COMPONENT_DESIGN, C4_MODELING, SEQUENCE_STATE_MODELING, CONTRACT_DESIGN, DATA_PIPELINE_DESIGN, SECURITY_BY_DESIGN, SIZING_CAPACITY, OBSERVABILITY_SLO, HA_DR, TEST_DESIGN]
+    outputs: [COMPONENT_DESIGN, API_CONTRACTS, EVENT_SCHEMAS, DATA_MODEL, IAM_MODEL, SECRETS_MODEL, DEPLOYMENT_DESIGN, OBSERVABILITY_DESIGN, SIZING_MODEL, THREAT_MODEL_V1_V2, TEST_STRATEGY]
+    exitGate: DESIGN_READY_FOR_IMPLEMENTATION
+    forward: A10
+    reworkTargets: [A5,A7,A8,A9]
+  A10:
+    name: IMPLEMENTATION_BUILD_DELIVERY_PLAN
+    ownerRoles: [technical_lead, project_manager, devsecops_engineer]
+    reviewerRoles: [solution_architect, security_engineer, qa_engineer, operations_engineer]
+    requiredInputs: [DESIGN_READY_FOR_IMPLEMENTATION]
+    keyMethods: [WBS_DECOMPOSITION, SECURE_BUILD_DEVSECOPS, MLOPS_LIFECYCLE, DEPLOYMENT_STRATEGY]
+    outputs: [IMPLEMENTATION_PLAN, IaC_PLAN, CI_CD_DESIGN, MLOPS_DESIGN, CONFIGURATION_IDENTIFICATION_PLAN, RELEASE_STRATEGY, MIGRATION_TEST_PLAN]
+    exitGate: IMPLEMENTATION_PLAN_READY
+    forward: A11
+    reworkTargets: [A9,A10]
+  A11:
+    name: IMPLEMENTATION_BASELINE
+    ownerRoles: [software_engineer, devsecops_engineer]
+    reviewerRoles: [code_reviewer, security_engineer, software_architect]
+    requiredInputs: [DESIGN_READY_FOR_IMPLEMENTATION, IMPLEMENTATION_PLAN_READY]
+    keyMethods: [SECURE_BUILD_DEVSECOPS, TEST_DESIGN, TRACEABILITY_BUILDING]
+    outputs: [SOURCE_CODE, BUILD_MANIFEST, DEPENDENCY_LOCK, SBOM, CONFIGURATION_BASELINE, CODE_REVIEW_RECORDS, UNIT_TEST_RESULTS, SAST_RESULTS, SCA_RESULTS, SECRET_SCAN_RESULTS, AI_COMPONENT_MANIFESTS]
+    exitGate: IMPLEMENTATION_BASELINE_READY
+    forward: A12
+    reworkTargets: [A9,A10,A11]
+  A12:
+    name: VERIFICATION_VALIDATION_SECURITY_GENAI_QUALITY
+    ownerRoles: [qa_engineer]
+    reviewerRoles: [requirements_engineer, security_engineer, product_manager, domain_specialist]
+    requiredInputs: [IMPLEMENTATION_BASELINE_READY, TEST_STRATEGY, REQUIREMENTS_TRACEABILITY_MATRIX]
+    keyMethods: [TEST_DESIGN, SECURITY_BY_DESIGN, SIZING_CAPACITY, GENAI_EVALUATION, TRACEABILITY_BUILDING]
+    outputs: [INTEGRATION_TEST_RESULTS, SYSTEM_TEST_RESULTS, SECURITY_TEST_RESULTS, DAST_RESULTS, PERFORMANCE_TEST_RESULTS, GENAI_EVAL_REPORT, ACCEPTANCE_TEST_RESULTS, DEFECT_REGISTER, VULNERABILITY_REGISTER, VERIFICATION_REPORT, VALIDATION_REPORT]
+    exitGate: RELEASE_CANDIDATE_READY
+    forward: A13
+    reworkTargets: [A5,A8,A9,A10,A11,A12]
+  A13:
+    name: RELEASE_MIGRATION_PRODUCTION_READINESS
+    ownerRoles: [release_manager, service_owner]
+    reviewerRoles: [operations_engineer, security_engineer, qa_engineer, risk_owner]
+    requiredInputs: [RELEASE_CANDIDATE_READY]
+    keyMethods: [DEPLOYMENT_STRATEGY, TRACEABILITY_BUILDING, GAP_CONFLICT_STALENESS_ANALYSIS]
+    outputs: [RELEASE_MANIFEST, RELEASE_NOTES, DEPLOYMENT_PLAN, MIGRATION_PLAN, ROLLBACK_PLAN, CHANGE_RECORD, DEPLOYMENT_EVIDENCE, OPERATIONAL_READINESS_REVIEW]
+    exitGate: PRODUCTION_READY
+    forward: A14
+    reworkTargets: [A8,A9,A10,A11,A12,A13]
+  A14:
+    name: OPERATION_OBSERVABILITY_SLO_INCIDENTS_FINOPS
+    ownerRoles: [service_owner, operations_engineer]
+    reviewerRoles: [security_engineer, product_manager, finance_procurement, solution_architect]
+    requiredInputs: [PRODUCTION_READY]
+    keyMethods: [OBSERVABILITY_SLO, HA_DR, SIZING_CAPACITY, GENAI_EVALUATION, TCO_FINOPS_MODELING, TRACEABILITY_BUILDING]
+    outputs: [RUNBOOKS, SLO_SLA, MONITORING_BASELINE, INCIDENT_RECORDS, PROBLEM_RECORDS, CAPACITY_REPORTS, SECURITY_MONITORING_REPORTS, AI_QUALITY_DRIFT_REPORTS, COST_REPORTS, FEEDBACK_BACKLOG]
+    exitGate: OPERATION_CONTROLLED
+    forward: A15
+    reworkTargets: [A13,A14]
+  A15:
+    name: EVOLUTION_SCALE_RADAR_GOVERNANCE_API_PRODUCT
+    ownerRoles: [solution_architect, product_manager, service_owner]
+    reviewerRoles: [security_engineer, finance_procurement, skeptical_reviewer, legal_compliance, data_owner]
+    requiredInputs: [FEEDBACK_BACKLOG_or_change_trigger]
+    keyMethods: [TECHNOLOGY_RADAR_EVOLUTION, ARCHITECTURE_RISK_STORM, TCO_FINOPS_MODELING, ETHICAL_AI_GOVERNANCE, API_AS_PRODUCT, TRACEABILITY_BUILDING]
+    outputs: [ARCHITECTURE_HEALTH_REVIEW, TECHNOLOGY_RADAR, TECH_DEBT_REGISTER, FINOPS_DECISION_RECORDS, AI_GOVERNANCE_REQUIREMENTS, API_PRODUCT_MODEL, CHANGE_REQUESTS]
+    exitGate: EVOLUTION_DECISION_READY
+    forwardRule: reopen_smallest_required_stage_or_A16
+    reworkTargets: [A1,A2,A3,A4,A5,A6,A7,A8,A9,A10,A11,A12,A13,A14,A15]
+  A16:
+    name: RETIREMENT
+    ownerRoles: [service_owner, project_owner]
+    reviewerRoles: [data_owner, legal_compliance, security_engineer, operations_engineer, configuration_manager]
+    requiredInputs: [retirement_decision]
+    keyMethods: [RETIREMENT_CONTROL, TRACEABILITY_BUILDING, TEST_DESIGN]
+    outputs: [RETIREMENT_PLAN, DATA_DISPOSITION_PLAN, ACCESS_REVOCATION_RECORD, ARCHIVE_PACKAGE, DEPENDENCY_DECOMMISSION_RECORD, RETIREMENT_VERIFICATION_REPORT, LESSONS_LEARNED]
+    exitGate: RETIRED_VERIFIED
+    forward: terminal
+    reworkTargets: [A16]
