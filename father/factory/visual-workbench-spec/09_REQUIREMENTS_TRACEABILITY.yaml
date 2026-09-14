@@ -1,0 +1,527 @@
+schemaVersion: 1
+specId: FATHER-VISUAL-WORKBENCH-TZ-0001
+status: DRAFT_V0_1
+rule: >-
+  Every implementation backlog item and material test must reference one or more requirement IDs from this catalogue.
+  This file is a trace index, not a replacement for the detailed specification text.
+
+verificationMethods:
+  UNIT: domain/unit test
+  INTEGRATION: backend/API/persistence integration test
+  E2E: browser end-to-end scenario
+  SECURITY: security negative/adversarial test
+  PERFORMANCE: benchmark/load profile
+  REVIEW: expert/manual design review
+  INSPECTION: artifact/configuration inspection
+  RESTORE: backup/restore test
+
+requirements:
+  - id: PR-001
+    priority: P0
+    text: One canonical engineering object must be reused across all views; views must not create independent semantic copies.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [UNIT, INTEGRATION, E2E]
+  - id: PR-002
+    priority: P0
+    text: UI is a projection over canonical data and must not become an independent engineering source of truth.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [REVIEW, INTEGRATION]
+  - id: PR-003
+    priority: P1
+    text: Simpler sufficient mechanisms must be preferred over unnecessary distributed or AI complexity.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [REVIEW]
+  - id: PR-004
+    priority: P0
+    text: Product-path implementation requires the pre-code evidence gate unless an explicit governed exception exists.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [UNIT, E2E, SECURITY]
+  - id: PR-005
+    priority: P0
+    text: Confidence or model voting must never replace evidence.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [UNIT, SECURITY]
+  - id: PR-006
+    priority: P0
+    text: UNKNOWN must remain a valid explicit engineering state.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [UNIT, E2E]
+  - id: PR-007
+    priority: P0
+    text: Human authority for material decisions must be explicit and server-enforced.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [SECURITY, INTEGRATION, E2E]
+  - id: PR-008
+    priority: P0
+    text: Material engineering decisions require backward and forward traceability.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [INTEGRATION, E2E]
+  - id: PR-009
+    priority: P1
+    text: Perspectives are filtered projections of one graph, not duplicated diagrams.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [UNIT, E2E]
+  - id: PR-010
+    priority: P0
+    text: Material upstream changes must trigger deterministic impact analysis and visible stale/blocking state downstream.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [UNIT, INTEGRATION, E2E]
+
+  - id: UX-LAYOUT-001
+    priority: P1
+    text: Left sidebar must support Palette, Project Tree, Saved Views, Search Results and Review Queue modes.
+    sourceDoc: 02_UX_INTERACTION_SPEC.md
+    verification: [E2E]
+  - id: UX-LAYOUT-002
+    priority: P1
+    text: A resizable right Inspector must remain available without replacing the canvas context.
+    sourceDoc: 02_UX_INTERACTION_SPEC.md
+    verification: [E2E]
+  - id: UX-LAYOUT-003
+    priority: P2
+    text: Bottom drawer must support flow, tests, diff, audit and blocker detail contexts.
+    sourceDoc: 02_UX_INTERACTION_SPEC.md
+    verification: [E2E]
+  - id: UX-CANVAS-001
+    priority: P0
+    text: Canvas must support pan, zoom, selection, fit-to-view and focus-neighborhood navigation.
+    sourceDoc: 02_UX_INTERACTION_SPEC.md
+    verification: [E2E]
+  - id: UX-CANVAS-002
+    priority: P1
+    text: Z1 large graph view must provide minimap/navigator.
+    sourceDoc: 02_UX_INTERACTION_SPEC.md
+    verification: [E2E]
+  - id: UX-CANVAS-004
+    priority: P1
+    text: Auto-layout must support preview/undo and must not silently destroy manual layout.
+    sourceDoc: 02_UX_INTERACTION_SPEC.md
+    verification: [E2E]
+  - id: UX-CANVAS-006
+    priority: P0
+    text: View/layout persistence must remain separate from semantic engineering data.
+    sourceDoc: 02_UX_INTERACTION_SPEC.md
+    verification: [UNIT, INTEGRATION]
+  - id: UX-NODE-001
+    priority: P0
+    text: Node status must use icon/text in addition to color.
+    sourceDoc: 02_UX_INTERACTION_SPEC.md
+    verification: [E2E, REVIEW]
+  - id: UX-NODE-003
+    priority: P1
+    text: Blocked node must expose blocker count and strongest blocker class.
+    sourceDoc: 02_UX_INTERACTION_SPEC.md
+    verification: [E2E]
+  - id: UX-NODE-004
+    priority: P1
+    text: Stale state must be visually distinct from failure.
+    sourceDoc: 02_UX_INTERACTION_SPEC.md
+    verification: [E2E]
+  - id: UX-DRILL-001
+    priority: P0
+    text: Double-click on composite station must drill into its internal subgraph.
+    sourceDoc: 02_UX_INTERACTION_SPEC.md
+    verification: [E2E]
+  - id: UX-DRILL-003
+    priority: P0
+    text: Returning from drill-down must restore previous viewport, perspective and selection.
+    sourceDoc: 02_UX_INTERACTION_SPEC.md
+    verification: [E2E]
+  - id: UX-FLOW-001
+    priority: P1
+    text: Users must be able to select or create a scenario flow over the existing graph.
+    sourceDoc: 02_UX_INTERACTION_SPEC.md
+    verification: [E2E]
+  - id: UX-FLOW-004
+    priority: P0
+    text: Scenario simulation must not mutate canonical project state by default.
+    sourceDoc: 02_UX_INTERACTION_SPEC.md
+    verification: [UNIT, E2E]
+
+  - id: FR-NODE-001
+    priority: P0
+    text: Logical node identity must remain stable across display name changes.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [UNIT]
+  - id: FR-NODE-002
+    priority: P0
+    text: Composite node must expose explicit typed input/output boundary contract.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [UNIT, E2E]
+  - id: FR-NODE-003
+    priority: P0
+    text: Material node output depending on a rule or algorithm must expose its algorithm reference.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [UNIT, E2E]
+  - id: FR-NODE-004
+    priority: P0
+    text: Node status must be derived from canonical state/rules rather than UI-only state.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [UNIT, INTEGRATION]
+
+  - id: FR-PORT-001
+    priority: P0
+    text: Incompatible port connection must be rejected before commit.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [UNIT, E2E]
+  - id: FR-PORT-002
+    priority: P0
+    text: Type conversion must be explicit through a transformation/adapter and never silently cast.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [UNIT, E2E]
+  - id: FR-PORT-003
+    priority: P1
+    text: Port direction and allowed relation types must be part of the port contract.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [UNIT]
+  - id: FR-PORT-004
+    priority: P1
+    text: Ports must indicate whether they are required for local readiness.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [UNIT, E2E]
+
+  - id: FR-STATE-001
+    priority: P0
+    text: DRAFT must not transition directly to VERIFIED when mandatory review/authority evidence is absent.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [UNIT, SECURITY]
+  - id: FR-STATE-002
+    priority: P0
+    text: Material change must trigger configured stale propagation.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [UNIT, INTEGRATION]
+  - id: FR-STATE-003
+    priority: P0
+    text: CONFLICTED state must not be automatically cleared by model majority vote.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [UNIT, SECURITY]
+
+  - id: FR-SRC-001
+    priority: P0
+    text: Every admitted source must have stable ID, version/status, authority/origin, classification and locator metadata.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [UNIT, INTEGRATION]
+  - id: FR-SRC-002
+    priority: P0
+    text: Original source snapshot must remain separate from derived text/chunks/annotations.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [INTEGRATION]
+  - id: FR-SRC-003
+    priority: P0
+    text: Every evidence link must resolve to an exact source version locator.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [UNIT, INTEGRATION]
+  - id: FR-SRC-004
+    priority: P1
+    text: Workbench must provide side-by-side artifact field and source evidence inspection.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [E2E]
+  - id: FR-SRC-005
+    priority: P0
+    text: Brownfield mode must search/map existing project information before creating duplicate artifacts.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [E2E]
+
+  - id: FR-REQ-001
+    priority: P0
+    text: Requirement must be a first-class versioned entity with source, owner, rationale, acceptance and verification links.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [UNIT, INTEGRATION]
+  - id: FR-REQ-002
+    priority: P0
+    text: Requirement must support bidirectional trace to source and downstream decision/component/test.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [INTEGRATION, E2E]
+  - id: FR-REQ-003
+    priority: P1
+    text: Requirements module must support deterministic quality validators and duplicate/conflict candidates.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [UNIT]
+  - id: FR-REQ-004
+    priority: P0
+    text: Requirements baseline must be a versioned exact set.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [UNIT, INTEGRATION]
+
+  - id: SEC-FR-001
+    priority: P0
+    text: Security perspective must begin during early intake and remain continuous through lifecycle.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [REVIEW, E2E]
+  - id: SEC-FR-002
+    priority: P0
+    text: Threat graph must trace protected interest/asset through scenario, requirement, control, test and residual risk.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [INTEGRATION, E2E]
+  - id: SEC-FR-003
+    priority: P0
+    text: Only assigned Risk Owner authority may accept residual risk.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [SECURITY, E2E]
+  - id: SEC-FR-004
+    priority: P0
+    text: Security test intent must be designed before product-path implementation for material security requirements.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [UNIT, E2E]
+
+  - id: FR-ARCH-001
+    priority: P0
+    text: Context/Container/Component/Dynamic/Deployment views must derive from one architecture model.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [UNIT, E2E]
+  - id: FR-ARCH-002
+    priority: P0
+    text: Material architecture options must trace to drivers/NFR/risks.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [UNIT, E2E]
+  - id: FR-ARCH-003
+    priority: P1
+    text: Material architecture decision must record alternatives or explicit single-feasible-option rationale.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [UNIT, REVIEW]
+  - id: FR-ARCH-004
+    priority: P0
+    text: ADR must link to affected elements and evidence.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [UNIT, E2E]
+
+  - id: FR-TEST-001
+    priority: P0
+    text: Critical requirement must have observable test oracle before CODE_ALLOWED.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [UNIT, E2E]
+  - id: FR-TEST-002
+    priority: P0
+    text: Test Case, Suite, Run and Evidence must be separate versioned entities.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [UNIT, INTEGRATION]
+  - id: FR-TEST-003
+    priority: P1
+    text: Workbench must expose verification coverage gaps such as requirements without tests and controls without evidence.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [E2E]
+  - id: FR-TEST-004
+    priority: P1
+    text: AI components must support versioned eval datasets, metrics, exact model/config identity and adversarial cases.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [UNIT, E2E]
+
+  - id: FR-GATE-001
+    priority: P0
+    text: Gate must be a first-class entity with evidence rules, authority, reviewers, blockers and decision record.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [UNIT, INTEGRATION]
+  - id: FR-GATE-002
+    priority: P0
+    text: Gate outcomes must distinguish PASS, CONDITIONAL_PASS, REWORK and BLOCKED.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [UNIT]
+  - id: FR-GATE-003
+    priority: P0
+    text: Authority decision must use explicit form/command with rationale and evidence snapshot.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [SECURITY, E2E]
+  - id: FR-GATE-004
+    priority: P0
+    text: Visual green status must never itself count as gate approval.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [UNIT, REVIEW]
+
+  - id: FR-SEARCH-001
+    priority: P1
+    text: Global search must support ID, name, text, type, source, owner, tag and status.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [E2E, PERFORMANCE]
+  - id: FR-SEARCH-002
+    priority: P2
+    text: Command palette must provide keyboard-first navigation and trace commands.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [E2E]
+  - id: FR-SEARCH-003
+    priority: P0
+    text: Every material object must support stable deep link.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [E2E]
+  - id: FR-SEARCH-004
+    priority: P1
+    text: Users must be able to focus N-hop graph neighborhood without duplicating objects.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [E2E]
+
+  - id: FR-VERSION-001
+    priority: P0
+    text: Material revisions require immutable revision identity.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [UNIT, INTEGRATION]
+  - id: FR-VERSION-002
+    priority: P1
+    text: Structured objects require semantic diff for field/relation/status/evidence changes.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [UNIT, E2E]
+  - id: FR-VERSION-003
+    priority: P0
+    text: Named baselines must reference exact immutable revisions.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [UNIT, INTEGRATION]
+  - id: FR-VERSION-004
+    priority: P1
+    text: Users must be able to inspect historical project state read-only.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [E2E]
+
+  - id: FR-COLLAB-001
+    priority: P1
+    text: Reviews must be assignable to object/subgraph/artifact/decision.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [E2E]
+  - id: FR-COLLAB-002
+    priority: P1
+    text: Comments/findings must anchor to object, field, relation and revision context.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [E2E]
+  - id: FR-COLLAB-003
+    priority: P0
+    text: Comment or review completion must not implicitly become authority decision.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [UNIT, SECURITY]
+
+  - id: FR-IO-001
+    priority: P1
+    text: MVP import architecture must support structured formats and project/source references without auto-verification.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [INTEGRATION, SECURITY]
+  - id: FR-IO-002
+    priority: P1
+    text: System must export canonical structured pack and architecture/report projections.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [INTEGRATION, E2E]
+  - id: FR-IO-003
+    priority: P0
+    text: Supported round-trip export/import must preserve stable IDs and material relations.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [INTEGRATION]
+
+  - id: AI-FR-001
+    priority: P0
+    text: AI invocation must be visible and scoped to a specific station/operation.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [UNIT, E2E]
+  - id: AI-FR-002
+    priority: P0
+    text: Every AI run must persist frozen input refs, model/provider/version, prompt version, permissions and review result.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [UNIT, SECURITY]
+  - id: AI-FR-003
+    priority: P0
+    text: Model selection must use capability/task/domain maturity rather than brand preference.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [REVIEW, UNIT]
+  - id: AI-FR-004
+    priority: P0
+    text: AI output remains candidate until required human/domain review.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [UNIT, SECURITY]
+  - id: AI-FR-005
+    priority: P0
+    text: Model Zoo remains disabled for lifecycle authority until activation gate explicitly permits mapped use cases.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [UNIT, SECURITY]
+  - id: AI-FR-006
+    priority: P0
+    text: AI features require prompt/retrieval injection, fabricated evidence, authority and data-routing security coverage.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [SECURITY]
+
+  - id: NFR-SEC-001
+    priority: P0
+    text: All material write/approve actions require server-side least-privilege authorization.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [SECURITY, INTEGRATION]
+  - id: NFR-SEC-002
+    priority: P0
+    text: Material changes, approvals, risk acceptance, baseline promotion and AI runs require audit trail.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [INTEGRATION, SECURITY]
+  - id: NFR-SEC-003
+    priority: P0
+    text: External AI/provider use must be disabled for data classes not explicitly permitted.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [SECURITY]
+  - id: NFR-USABILITY-001
+    priority: P1
+    text: UI must use progressive disclosure and avoid exposing Z2 complexity on initial project view.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [REVIEW, E2E]
+  - id: NFR-USABILITY-002
+    priority: P1
+    text: Core navigation and review actions must be keyboard accessible.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [E2E]
+  - id: NFR-A11Y-001
+    priority: P1
+    text: UI targets WCAG 2.2 AA where feasible and must not encode status by color alone.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [REVIEW, E2E]
+  - id: NFR-I18N-001
+    priority: P2
+    text: Stable identifiers must be independent of localized display labels; Russian primary with English planned.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [UNIT, REVIEW]
+  - id: NFR-MAINT-001
+    priority: P0
+    text: Schema/data migrations must be explicit, tested and recovery-safe.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [INTEGRATION, RESTORE]
+  - id: NFR-OBS-001
+    priority: P1
+    text: Backend/material frontend operations must expose structured logs/correlation and performance/error telemetry.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [INSPECTION, INTEGRATION]
+
+  - id: NFR-PERF-001
+    priority: P1
+    text: Typical Z1 view should remain interactively usable with hundreds of visible nodes/edges; exact benchmark target must be baselined.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [PERFORMANCE]
+  - id: NFR-PERF-002
+    priority: P1
+    text: Data architecture must support projects with tens of thousands of canonical objects through filtering/virtualization rather than whole-graph rendering.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [PERFORMANCE]
+  - id: NFR-PERF-003
+    priority: P2
+    text: Cached inspector opening should feel immediate and server fetch should meet baselined interactive latency target.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [PERFORMANCE]
+  - id: NFR-SEARCH-001
+    priority: P1
+    text: Search latency must meet an explicit p95 target on representative corpus before Production release.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [PERFORMANCE]
+  - id: NFR-AVAIL-001
+    priority: P0
+    text: Self-hosted Production deployment requires documented and verified backup/restore procedure.
+    sourceDoc: 00_MASTER_TZ.md
+    verification: [RESTORE]
+
+stationCoverage:
+  source_intake: [S00,S01,S02,S03,S04,S05,S06,S07]
+  product: [S08,S09,S10,S11,S12]
+  security_legal_data: [S13,S14,S15]
+  system_engineering: [S16,S17,S18,S19,S20]
+  threat_model_v0: [S21,S22,S23,S24]
+  requirements: [S25,S26,S27,S28]
+  feasibility: [S29,S30,S31,S32]
+  architecture_options: [S33,S34,S35,S36]
+  architecture_decision: [S37,S38,S39]
+  detailed_design: [S40,S41,S42,S43,S44,S45,S46,S47,S48]
+  implementation_plan: [S49,S50]
+  implementation: [S51,S52,S53]
+  verification: [S54,S55]
+  release: [S56,S57]
+  operations_evolution: [S58]
+  retirement: [S59]
+
+traceRule: >-
+  Future code modules, APIs, UI components, migrations and tests must reference requirement IDs from this file
+  in issue/PR metadata or equivalent trace records. Requirement presence does not imply implementation completion.
