@@ -1,0 +1,94 @@
+schemaVersion: 1
+modelId: FATHER-ROLE-COMPETENCY-MATURITY-0001
+status: CANDIDATE_MODEL
+purpose: >-
+  Define how a future AI-assisted FATHER role earns and maintains competence. Role labels such as senior/expert
+  are evidence-earned maturity states, not prompt personas.
+principles:
+  - role_specific_not_generic
+  - knowledge_source_traceability_required
+  - normative_sources_outrank_professional_preferences
+  - source_verified_before_training_use
+  - training_examples_and_eval_cases_are_separate_assets
+  - negative_and_adversarial_cases_are_mandatory_for_material_roles
+  - human_authority_boundaries_are_never_overridden_by_model_maturity
+  - production_promotion_requires_independent_review
+  - capability_maturity_is_per_domain_and_per_task_not_global
+maturityLevels:
+  M0_UNQUALIFIED:
+    description: role exists only as a concept/prompt; no evidence-backed competence claim
+    allowed: [draft_assistance_under_supervision]
+  M1_BASELINE:
+    description: canonical role scope, approved sources and basic deterministic evals exist
+    requires: [role_contract, source_map, basic_method_set, baseline_eval_pack]
+  M2_PRACTITIONER:
+    description: passes representative normal cases with traceable evidence and stable schema outputs
+    requires: [versioned_role_KB, representative_training_cases, representative_eval_cases, error_taxonomy]
+  M3_SENIOR_CANDIDATE:
+    description: handles conflicts, UNKNOWNs, trade-offs and non-happy paths with bounded authority
+    requires: [complex_cases, counterexamples, conflict_cases, independent_review, calibrated_uncertainty]
+  M4_SENIOR_VERIFIED:
+    description: sustained performance on hidden evals, adversarial/security cases and human review
+    requires: [hidden_eval_history, security_eval_history, human_acceptance_telemetry, low_material_error_rate, rework_telemetry, independent_domain_review]
+  M5_EXPERT_GOVERNED:
+    description: trusted advisory capability for material decisions with continuous monitoring and rollback
+    requires: [production_telemetry, drift_monitoring, periodic_recertification, incident_learning, authority_boundary_compliance]
+requiredAssetsPerRole:
+  - ROLE_CONTRACT
+  - PROFESSION_MODEL
+  - SOURCE_MAP
+  - NORMATIVE_SOURCE_SET
+  - PROFESSIONAL_SOURCE_SET
+  - DOMAIN_GLOSSARY
+  - METHOD_CATALOG
+  - DECISION_LOGIC
+  - TRAINING_CASE_PACK
+  - COUNTEREXAMPLE_PACK
+  - FAILURE_MODE_PACK
+  - SECURITY_ADVERSARIAL_PACK
+  - EVAL_CASE_PACK
+  - HIDDEN_EVAL_PACK
+  - ERROR_TAXONOMY
+  - CALIBRATION_RECORD
+  - HUMAN_REVIEW_TELEMETRY
+  - MATURITY_REVIEW_RECORD
+trainingLoop:
+  - ingest_verified_source_or_project_evidence
+  - extract_atomic_knowledge
+  - map_to_role_competencies
+  - detect_conflicts_and_supersession
+  - create_or_update_training_cases
+  - create_separate_eval_and_hidden_eval_cases
+  - add_negative_and_security_cases
+  - run_baseline_and_candidate_models
+  - compare_against_oracles_and_human_review
+  - classify_errors
+  - update_KB_or_method_only_after_review
+  - repeat_until_maturity_gate
+securityRecertification:
+  triggers:
+    - model_or_provider_change
+    - prompt_or_tool_contract_change
+    - new_data_class
+    - new_external_source_class
+    - new_privileged_tool
+    - major_KB_update
+    - material_incident
+    - significant_error_or_drift
+  requiredSuites:
+    - prompt_injection
+    - retrieval_poisoning
+    - fabricated_evidence
+    - authority_escalation
+    - sensitive_data_routing
+    - tool_abuse
+    - confused_deputy
+    - hidden_scope_expansion
+    - fail_closed_behavior
+    - cross_agent_delegation
+promotionRule: >-
+  A capability is promoted per role/task/domain only when its evidence package satisfies the target maturity gate.
+  Strong performance in one capability does not promote unrelated capabilities.
+demotionRule: >-
+  Security failure, material unsupported claim, persistent human rejection, drift or changed applicability may demote
+  the affected capability until retraining/review is complete.
