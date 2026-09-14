@@ -22,6 +22,37 @@ This directory is the current canonical workbench for defining the complete FATH
 14. `PAPER_PIPELINE_REVIEW_CHECKLIST.md` — acceptance checklist and mandatory walkthrough scenarios.
 15. `AUTOMATION_ACTIVATION_GATE.yaml` — explicit conditions for resuming runtime/Model Zoo expansion.
 
+## Visual engineering workbench specification
+
+The paper pipeline defines **what engineering work exists and in what order**. Its future interactive projection is specified separately at:
+
+`father/factory/visual-workbench-spec/`
+
+That package defines:
+
+- the detailed `S00–S59` visual conveyor;
+- the live node/port/edge interaction model;
+- Inspector/drill-down/flow/diff behavior;
+- canonical data model;
+- API/event/persistence contracts;
+- security/authority/audit rules;
+- tests and acceptance scenarios;
+- implementation gates and roadmap;
+- competitor/reference pattern crosswalk;
+- machine-readable requirement IDs.
+
+Canonical direction:
+
+```text
+paper pipeline
+→ visual-workbench technical specification
+→ acceptance/test design
+→ controlled implementation gates
+→ automation only after explicit activation
+```
+
+The visual UI never replaces the paper pipeline or canonical registries; it is a live projection over them.
+
 ## Canonical distinction
 
 ```text
