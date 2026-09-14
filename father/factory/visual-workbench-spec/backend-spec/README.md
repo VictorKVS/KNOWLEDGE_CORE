@@ -17,11 +17,27 @@ This directory decomposes the backend of FATHER Visual Engineering Workbench to 
 9. `08_OBSERVABILITY_BACKUP_RECOVERY.md` — logs, metrics, traces, health, backup, restore and failure recovery.
 10. `09_BACKEND_TEST_ACCEPTANCE_GATE.md` — deterministic acceptance package required before implementation promotion.
 11. `10_BACKEND_REQUIREMENTS_TRACEABILITY.yaml` — machine-readable backend requirements and verification mapping.
+12. `11_FATHER_DB_CANONICAL_ARCHITECTURE_V1.md` — one canonical `osint_kb` PostgreSQL database for all FATHER divisions; no duplicate DB truth.
+13. `12_DB_RECONCILIATION_MATRIX.yaml` — `KEEP / EXTEND / RENAME_VIEW / NEW` reconciliation contract before any DDL.
+
+## Canonical database decision
+
+```text
+ONE physical operational PostgreSQL database
+= osint_kb
+```
+
+FATHER, ALINA, OSINT, Security and future divisions use one canonical operational state and shared canonical IDs. Separate `father_db`, `alina_db`, per-agent vector stores or a full duplicate `kf.*` knowledge mirror are prohibited by default and require a material ADR if ever proposed.
+
+Existing schemas are reconciled first. Target logical schemas are not created blindly; every physical object is classified as `KEEP`, `EXTEND`, `RENAME_VIEW` or `NEW`.
+
+`KNOWLEDGE_CORE` remains source corpus/provenance/specification infrastructure and does not become a competing operational DB.
 
 ## Governing principle
 
 ```text
 canonical domain model
+→ canonical osint_kb reconciliation
 → backend contracts
 → state machines
 → transaction semantics
@@ -37,4 +53,4 @@ The backend is not a CRUD layer behind the canvas. It is the **engineering truth
 
 ## Simplicity rule
 
-Initial architecture remains a modular monolith with PostgreSQL and object storage. Splitting into services, introducing a message broker, graph database, external search engine or distributed workers requires a measured reason and an ADR.
+Initial architecture remains a modular monolith over `osint_kb` plus protected object/file storage. Splitting into services, introducing a message broker, graph database, external search engine or distributed workers requires a measured reason and an ADR.
