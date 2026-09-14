@@ -1,0 +1,373 @@
+schemaVersion: 1
+matrixId: FATHER-PAPER-ARTIFACT-DEPENDENCIES-0001
+status: CANDIDATE_COMPLETE_CORE_MATRIX
+rule: >-
+  Dependencies describe required information, not mandatory filenames. Existing brownfield evidence may satisfy
+  a field across several source files. Every output remains candidate until its owner/review/gate state permits promotion.
+commonRequiredMetadata: [ownerRole, reviewerRoles, sourceRefs, evidenceRefs, version, status, assumptions, unknowns]
+stages:
+  A0_SOURCE_PROJECT_INTAKE:
+    stageInputs: [business_request, contracts_RFP_TZ, existing_project_materials, normative_registry, professional_source_registry]
+    outputs:
+      PROJECT_SOURCE_REGISTER:
+        dataUses: [source_locator, source_class, authority, owner, received_at, version_or_date, hash_when_bytes_exist]
+        methods: [SOURCE_IDENTITY]
+        downstream: [all_stages]
+      SOURCE_VERSION_REGISTER:
+        dataUses: [PROJECT_SOURCE_REGISTER, supersession_metadata]
+        methods: [SOURCE_IDENTITY, GAP_CONFLICT_STALENESS_ANALYSIS]
+        downstream: [REGULATORY_APPLICABILITY, EVIDENCE_REGISTER]
+      PROJECT_INTAKE_INVENTORY:
+        dataUses: [PROJECT_SOURCE_REGISTER, existing_document_code_api_deployment_inventory]
+        methods: [DOCUMENT_PARSE_AND_SEGMENT]
+        downstream: [EXISTING_ARTIFACT_COVERAGE_MAP]
+      EVIDENCE_REGISTER:
+        dataUses: [PROJECT_SOURCE_REGISTER, atomic_items, locators]
+        methods: [ATOMIC_INFORMATION_EXTRACTION, TRACEABILITY_BUILDING]
+        downstream: [all_material_artifacts]
+      EXISTING_ARTIFACT_COVERAGE_MAP:
+        dataUses: [PROJECT_INTAKE_INVENTORY, atomic_items, FATHER_ARTIFACT_REGISTRY]
+        methods: [ARTIFACT_FIELD_MAPPING, GAP_CONFLICT_STALENESS_ANALYSIS]
+        downstream: [all_artifact_production]
+      INITIAL_GAP_REGISTER:
+        dataUses: [EXISTING_ARTIFACT_COVERAGE_MAP]
+        methods: [GAP_CONFLICT_STALENESS_ANALYSIS]
+        downstream: [owner_requests, project_plan]
+
+  A1_PRODUCT_DISCOVERY:
+    stageInputs: [business_request, sponsor_context, EVIDENCE_REGISTER, INITIAL_GAP_REGISTER]
+    outputs:
+      BUSINESS_NEED:
+        dataUses: [problem_evidence, current_cost_loss_opportunity, business_owner_input]
+        methods: [PROBLEM_VS_SOLUTION_CHECK]
+        downstream: [PRODUCT_VISION, SUCCESS_METRICS, BUSINESS_REQUIREMENTS]
+      PRODUCT_VISION:
+        dataUses: [BUSINESS_NEED, target_users, expected_outcome, constraints]
+        methods: [PROBLEM_VS_SOLUTION_CHECK, JOURNEY_PROCESS_MODELING]
+        downstream: [SECURITY_INTAKE, SYSTEM_CONTEXT, REQUIREMENTS_BASELINE]
+      TARGET_USERS_USER_JOURNEYS:
+        dataUses: [stakeholder_interviews, process_observation, PRODUCT_VISION]
+        methods: [JOURNEY_PROCESS_MODELING]
+        downstream: [FUNCTION_MODEL, ACCEPTANCE_CRITERIA, API_PRODUCT_MODEL]
+      SUCCESS_METRICS:
+        dataUses: [BUSINESS_NEED, baseline_data_or_baseline_gap, owner_target]
+        methods: [PROBLEM_VS_SOLUTION_CHECK]
+        downstream: [ACCEPTANCE_CRITERIA, VALIDATION_REPORT, SLO_SLA]
+      STAKEHOLDER_REGISTER:
+        dataUses: [organization_context, sponsor_context, contract_roles]
+        methods: [STAKEHOLDER_AND_AUTHORITY_MAPPING]
+        downstream: [all_owner_assignments]
+      SCOPE_BASELINE:
+        dataUses: [PRODUCT_VISION, owner_decisions, contract_scope, exclusions]
+        methods: [STAKEHOLDER_AND_AUTHORITY_MAPPING]
+        downstream: [REGULATORY_APPLICABILITY, SYSTEM_BOUNDARY, REQUIREMENTS_BASELINE]
+      ASSUMPTION_LOG:
+        dataUses: [all_unverified_product_claims]
+        methods: [GAP_CONFLICT_STALENESS_ANALYSIS]
+        downstream: [A2,A3,A5,A6,A7]
+
+  A2_SECURITY_LEGAL_DATA_INTAKE:
+    stageInputs: [PRODUCT_VISION, SCOPE_BASELINE, STAKEHOLDER_REGISTER, PROJECT_SOURCE_REGISTER, normative_registry]
+    outputs:
+      REGULATORY_APPLICABILITY:
+        dataUses: [jurisdiction, organization_type, system_type, data_categories, sector, normative_conditions]
+        methods: [APPLICABILITY_ANALYSIS]
+        ownerAuthority: legal_compliance
+        downstream: [DATA_CLASSIFICATION, SECURITY_REQUIREMENTS, project_overlays]
+      DATA_INVENTORY:
+        dataUses: [business_processes, intended_inputs_outputs, systems_interfaces, data_owner_input]
+        methods: [DATA_FLOW_MODELING]
+        downstream: [DATA_CLASSIFICATION, DATA_FLOW_MODEL, DATA_MODEL]
+      DATA_CLASSIFICATION:
+        dataUses: [DATA_INVENTORY, REGULATORY_APPLICABILITY, data_owner_decisions]
+        methods: [APPLICABILITY_ANALYSIS]
+        ownerAuthority: data_owner
+        downstream: [THREAT_MODEL_V0, SECURITY_REQUIREMENTS, DATA_MODEL, external_processing_policy]
+      SECURITY_INTAKE:
+        dataUses: [PRODUCT_VISION, SCOPE_BASELINE, DATA_INVENTORY, intended_external_providers]
+        methods: [SECURITY_BY_DESIGN]
+        downstream: [SYSTEM_ENGINEERING, THREAT_MODEL_V0]
+      INITIAL_ABUSE_CASES:
+        dataUses: [PRODUCT_VISION, user_roles, exposed_functions, trust_assumptions]
+        methods: [THREAT_MODELING]
+        downstream: [THREAT_MODEL_V0]
+      SECURITY_CONSTRAINTS:
+        dataUses: [REGULATORY_APPLICABILITY, SECURITY_INTAKE, DATA_CLASSIFICATION]
+        methods: [SECURITY_BY_DESIGN]
+        downstream: [SYSTEM_ENGINEERING, REQUIREMENTS_BASELINE, ARCHITECTURE_OPTIONS]
+
+  A3_BUSINESS_SYSTEM_ENGINEERING:
+    stageInputs: [PRODUCT_VISION, SCOPE_BASELINE, SECURITY_INTAKE, DATA_INVENTORY, DATA_CLASSIFICATION, SECURITY_CONSTRAINTS]
+    outputs:
+      BUSINESS_PROCESS_MODEL:
+        dataUses: [TARGET_USERS_USER_JOURNEYS, SOP, interviews, observations]
+        methods: [JOURNEY_PROCESS_MODELING]
+        downstream: [BUSINESS_REQUIREMENTS, FUNCTION_MODEL]
+      DOMAIN_GLOSSARY:
+        dataUses: [project_sources, normative_terms, business_terms]
+        methods: [TERMINOLOGY_NORMALIZATION]
+        downstream: [all_requirements_and_design_language]
+      SYSTEM_CONTEXT:
+        dataUses: [PRODUCT_VISION, external_actors, external_systems, SCOPE_BASELINE]
+        methods: [SYSTEM_CONTEXT_MODELING, C4_MODELING]
+        downstream: [SYSTEM_BOUNDARY, THREAT_MODEL_V0, ARCHITECTURE_VIEWS]
+      SYSTEM_BOUNDARY:
+        dataUses: [SYSTEM_CONTEXT, responsibility_decisions]
+        methods: [SYSTEM_CONTEXT_MODELING]
+        downstream: [FUNCTION_MODEL, DATA_FLOW_MODEL, THREAT_MODEL_V0]
+      FUNCTION_MODEL:
+        dataUses: [BUSINESS_PROCESS_MODEL, user_journeys, SYSTEM_BOUNDARY]
+        methods: [FUNCTIONAL_DECOMPOSITION]
+        downstream: [SYSTEM_REQUIREMENTS, ARCHITECTURE_OPTION_SET, COMPONENT_DESIGN]
+      DATA_FLOW_MODEL:
+        dataUses: [FUNCTION_MODEL, DATA_INVENTORY, INTERFACE_INVENTORY, DATA_CLASSIFICATION]
+        methods: [DATA_FLOW_MODELING]
+        downstream: [THREAT_MODEL_V0, DATA_MODEL, SECURITY_REQUIREMENTS]
+      INTERFACE_INVENTORY:
+        dataUses: [SYSTEM_CONTEXT, existing_API_protocol_config, external_system_owners]
+        methods: [CONTRACT_DESIGN]
+        downstream: [THREAT_MODEL_V0, API_CONTRACTS, ARCHITECTURE_OPTIONS]
+      EXTERNAL_DEPENDENCY_REGISTER:
+        dataUses: [SYSTEM_CONTEXT, INTERFACE_INVENTORY, providers_libraries_services]
+        methods: [GAP_CONFLICT_STALENESS_ANALYSIS]
+        downstream: [RISK_ANALYSIS, ARCHITECTURE_OPTIONS, SBOM]
+      OPERATIONAL_MODES:
+        dataUses: [business_hours, degraded_modes, maintenance, offline_online_modes, ops_input]
+        methods: [QUALITY_ATTRIBUTE_SCENARIO]
+        downstream: [NFR_CATALOGUE, ARCHITECTURE_OPTIONS, TEST_STRATEGY]
+
+  A4_THREAT_MODEL_V0:
+    stageInputs: [SYSTEM_CONTEXT, SYSTEM_BOUNDARY, DATA_FLOW_MODEL, INTERFACE_INVENTORY, DATA_CLASSIFICATION, SECURITY_CONSTRAINTS, INITIAL_ABUSE_CASES]
+    outputs:
+      THREAT_MODEL_V0:
+        dataUses: [protected_interests, negative_consequences, threat_sources, entry_points, trust_boundaries]
+        methods: [THREAT_MODELING]
+        downstream: [SECURITY_REQUIREMENTS_DRAFT, ARCHITECTURE_OPTIONS]
+      THREAT_SCENARIO_REGISTER:
+        dataUses: [THREAT_MODEL_V0, attack_paths]
+        methods: [THREAT_MODELING]
+        downstream: [SECURITY_REQUIREMENTS_DRAFT, TEST_STRATEGY]
+      TRUST_BOUNDARY_REGISTER:
+        dataUses: [DATA_FLOW_MODEL, system_interfaces]
+        methods: [THREAT_MODELING]
+        downstream: [ARCHITECTURE_VIEWS, IAM_MODEL, SECURITY_TEST_RESULTS]
+      SECURITY_REQUIREMENTS_DRAFT:
+        dataUses: [THREAT_SCENARIO_REGISTER, SECURITY_CONSTRAINTS, REGULATORY_APPLICABILITY]
+        methods: [REQUIREMENT_NORMALIZATION, SECURITY_BY_DESIGN]
+        downstream: [SECURITY_REQUIREMENTS]
+      SECURITY_RISK_REGISTER:
+        dataUses: [THREAT_SCENARIO_REGISTER, consequence_basis, likelihood_basis_when_available]
+        methods: [RISK_ANALYSIS]
+        downstream: [ARCHITECTURE_OPTIONS, RESIDUAL_RISK_REGISTER]
+
+  A5_REQUIREMENTS_BASELINE:
+    stageInputs: [BUSINESS_NEED, PRODUCT_VISION, SYSTEM_CONTEXT, FUNCTION_MODEL, DOMAIN_GLOSSARY, THREAT_MODEL_V0, SECURITY_REQUIREMENTS_DRAFT, REGULATORY_APPLICABILITY]
+    outputs:
+      BUSINESS_REQUIREMENTS:
+        dataUses: [BUSINESS_NEED, BUSINESS_PROCESS_MODEL]
+        methods: [REQUIREMENT_NORMALIZATION]
+        downstream: [STAKEHOLDER_REQUIREMENTS, SYSTEM_REQUIREMENTS]
+      STAKEHOLDER_REQUIREMENTS:
+        dataUses: [BUSINESS_REQUIREMENTS, STAKEHOLDER_REGISTER, user_journeys]
+        methods: [REQUIREMENT_NORMALIZATION]
+        downstream: [SYSTEM_REQUIREMENTS]
+      SYSTEM_REQUIREMENTS:
+        dataUses: [STAKEHOLDER_REQUIREMENTS, FUNCTION_MODEL, DATA_FLOW_MODEL, constraints]
+        methods: [REQUIREMENT_NORMALIZATION]
+        downstream: [SOFTWARE_REQUIREMENTS, ARCHITECTURE_OPTION_SET]
+      SOFTWARE_REQUIREMENTS:
+        dataUses: [SYSTEM_REQUIREMENTS, system_allocations]
+        methods: [REQUIREMENT_NORMALIZATION]
+        downstream: [COMPONENT_DESIGN, SOURCE_CODE]
+      NFR_CATALOGUE:
+        dataUses: [SUCCESS_METRICS, OPERATIONAL_MODES, threat_security_needs, workload_assumptions]
+        methods: [QUALITY_ATTRIBUTE_SCENARIO, REQUIREMENT_NORMALIZATION]
+        downstream: [ARCHITECTURE_DRIVER_SET, SIZING_MODEL, TEST_STRATEGY, SLO_SLA]
+      SECURITY_REQUIREMENTS:
+        dataUses: [SECURITY_REQUIREMENTS_DRAFT, REGULATORY_APPLICABILITY, DATA_CLASSIFICATION]
+        methods: [SECURITY_BY_DESIGN, REQUIREMENT_NORMALIZATION]
+        downstream: [ARCHITECTURE_OPTIONS, IAM_MODEL, SECRETS_MODEL, TEST_STRATEGY]
+      ACCEPTANCE_CRITERIA:
+        dataUses: [BUSINESS_REQUIREMENTS, SYSTEM_REQUIREMENTS, NFR_CATALOGUE, SUCCESS_METRICS]
+        methods: [TEST_DESIGN]
+        downstream: [TEST_STRATEGY, ACCEPTANCE_TEST_RESULTS]
+      REQUIREMENTS_TRACEABILITY_MATRIX:
+        dataUses: [all_requirement_sets, source_refs, risks, planned_tests]
+        methods: [TRACEABILITY_BUILDING]
+        downstream: [A7,A8,A9,A11,A12,A13]
+
+  A6_DELIVERY_FEASIBILITY:
+    stageInputs: [requirements_baseline, NFR_CATALOGUE, EXTERNAL_DEPENDENCY_REGISTER, ASSUMPTION_LOG]
+    outputs:
+      DELIVERY_WBS_V0:
+        dataUses: [requirements, deliverables, lifecycle_work]
+        methods: [WBS_DECOMPOSITION]
+        downstream: [ESTIMATION_REGISTER_V0, IMPLEMENTATION_PLAN]
+      ESTIMATION_REGISTER_V0:
+        dataUses: [DELIVERY_WBS_V0, historical_or_expert_inputs, uncertainty]
+        methods: [ESTIMATION]
+        downstream: [TCO_MODEL_V0, roadmap]
+      PROJECT_RISK_REGISTER:
+        dataUses: [uncertainties, dependencies, estimates, contract_model]
+        methods: [RISK_ANALYSIS]
+        downstream: [contingency, architecture_review]
+      TCO_MODEL_V0:
+        dataUses: [workload_assumptions, estimate, provider_hardware_ops_inputs]
+        methods: [TCO_FINOPS_MODELING]
+        downstream: [ARCHITECTURE_OPTIONS, ARCHITECTURE_DECISION]
+      POC_PLAN:
+        dataUses: [high_uncertainty_items, decision_questions]
+        methods: [POC_EXPERIMENT_DESIGN]
+        downstream: [POC_REPORT, ARCHITECTURE_OPTIONS]
+      CHANGE_MANAGEMENT_MODEL:
+        dataUses: [baseline_definition, authority_map, impact_dimensions]
+        methods: [TRACEABILITY_BUILDING]
+        downstream: [all_material_changes]
+
+  A7_ARCHITECTURE_OPTIONS:
+    stageInputs: [SYSTEM_MODEL_READY, THREAT_MODEL_V0_READY, REQUIREMENTS_BASELINE_READY, DELIVERY_FEASIBILITY_READY, POC_REPORT_when_required]
+    outputs:
+      ARCHITECTURE_DRIVER_SET:
+        dataUses: [NFR_CATALOGUE, SYSTEM_REQUIREMENTS, SECURITY_REQUIREMENTS, business_context, implicit_constraints]
+        methods: [ARCHITECTURE_CHARACTERISTIC_DISCOVERY]
+        downstream: [ARCHITECTURE_OPTION_SET, QUALITY_ATTRIBUTE_SCENARIOS]
+      QUALITY_ATTRIBUTE_SCENARIOS:
+        dataUses: [ARCHITECTURE_DRIVER_SET, NFR_CATALOGUE]
+        methods: [QUALITY_ATTRIBUTE_SCENARIO]
+        downstream: [TRADEOFF_ANALYSIS, TEST_STRATEGY]
+      ARCHITECTURE_OPTION_SET:
+        dataUses: [ARCHITECTURE_DRIVER_SET, system_model, pattern_catalog, POC_evidence]
+        methods: [ARCHITECTURE_OPTION_GENERATION, C4_MODELING]
+        downstream: [OPTION_TRADEOFF_MATRIX, OPTION_SECURITY_REVIEW]
+      ARCHITECTURE_VIEWS:
+        dataUses: [ARCHITECTURE_OPTION_SET, SYSTEM_CONTEXT]
+        methods: [C4_MODELING]
+        downstream: [A8,A9]
+      OPTION_TRADEOFF_MATRIX:
+        dataUses: [ARCHITECTURE_OPTION_SET, QUALITY_ATTRIBUTE_SCENARIOS, PROJECT_RISK_REGISTER, TCO_MODEL_V0]
+        methods: [TRADEOFF_ANALYSIS]
+        downstream: [ARCHITECTURE_DECISION_RECORDS]
+      OPTION_SECURITY_REVIEW:
+        dataUses: [ARCHITECTURE_OPTION_SET, THREAT_MODEL_V0, SECURITY_REQUIREMENTS]
+        methods: [SECURITY_BY_DESIGN, ARCHITECTURE_RISK_STORM]
+        downstream: [ARCHITECTURE_DECISION_RECORDS]
+
+  A8_ARCHITECTURE_DECISION:
+    stageInputs: [ARCHITECTURE_OPTION_SET, OPTION_TRADEOFF_MATRIX, OPTION_SECURITY_REVIEW, POC_BENCHMARK_EVIDENCE]
+    outputs:
+      ARCHITECTURE_DECISION_RECORDS:
+        dataUses: [context, options, evidence, tradeoffs, risks, owner_constraints]
+        methods: [ADR_LIFECYCLE, CTO_ATAM_CHALLENGE]
+        downstream: [TARGET_ARCHITECTURE, A9,A15]
+      TARGET_ARCHITECTURE:
+        dataUses: [accepted_ADRs, selected_views, conditions]
+        methods: [C4_MODELING, TRACEABILITY_BUILDING]
+        downstream: [all_detailed_design]
+      RESIDUAL_RISK_REGISTER:
+        dataUses: [SECURITY_RISK_REGISTER, OPTION_SECURITY_REVIEW, accepted_controls, unresolved_risks]
+        methods: [RISK_ANALYSIS]
+        ownerAuthority: risk_owner
+        downstream: [A9,A12,A13,A14]
+      DECISION_EVIDENCE_REGISTER:
+        dataUses: [all_evidence_used_by_ADR, independent_review]
+        methods: [TRACEABILITY_BUILDING]
+        downstream: [architecture_governance, future_revisit]
+
+  A9_DETAILED_DESIGN:
+    stageInputs: [TARGET_ARCHITECTURE, ADRs, SOFTWARE_REQUIREMENTS, SECURITY_REQUIREMENTS, NFR_CATALOGUE]
+    outputs:
+      COMPONENT_DESIGN: {dataUses: [TARGET_ARCHITECTURE, allocated_requirements], methods: [COMPONENT_DESIGN, C4_MODELING], downstream: [SOURCE_CODE, API_CONTRACTS, TEST_STRATEGY]}
+      API_CONTRACTS: {dataUses: [COMPONENT_DESIGN, consumers, SECURITY_REQUIREMENTS], methods: [CONTRACT_DESIGN], downstream: [SOURCE_CODE, INTEGRATION_TEST_RESULTS, API_PRODUCT_MODEL]}
+      EVENT_SCHEMAS: {dataUses: [async_flows_when_applicable, data_model], methods: [CONTRACT_DESIGN], downstream: [SOURCE_CODE, event_integration_tests]}
+      DATA_MODEL: {dataUses: [DATA_INVENTORY, DATA_CLASSIFICATION, DATA_FLOW_MODEL, requirements], methods: [DATA_PIPELINE_DESIGN], downstream: [SOURCE_CODE, migration_plan, tests]}
+      IAM_MODEL: {dataUses: [roles, trust_boundaries, SECURITY_REQUIREMENTS], methods: [SECURITY_BY_DESIGN], downstream: [implementation, SECURITY_TEST_RESULTS]}
+      SECRETS_MODEL: {dataUses: [dependencies, integrations, crypto_needs], methods: [SECURITY_BY_DESIGN], downstream: [implementation, secret_scan, operations]}
+      DEPLOYMENT_DESIGN: {dataUses: [TARGET_ARCHITECTURE, SIZING_MODEL, HA_DR_needs, data_residency], methods: [DEPLOYMENT_STRATEGY, HA_DR], downstream: [IaC_PLAN, DEPLOYMENT_PLAN]}
+      OBSERVABILITY_DESIGN: {dataUses: [NFR_CATALOGUE, critical_journeys, threat_monitoring], methods: [OBSERVABILITY_SLO], downstream: [MONITORING_BASELINE, SLO_SLA]}
+      SIZING_MODEL: {dataUses: [workload_profile, NFR_CATALOGUE, DATA_MODEL, model_runtime], methods: [SIZING_CAPACITY], downstream: [DEPLOYMENT_DESIGN, TCO_MODEL_V1, PERFORMANCE_TEST_RESULTS]}
+      THREAT_MODEL_V1_V2: {dataUses: [actual_components, flows, IAM, secrets, deployment], methods: [THREAT_MODELING, SECURITY_BY_DESIGN], downstream: [SECURITY_TEST_RESULTS, residual_risk_update]}
+      TEST_STRATEGY: {dataUses: [RTM, quality_scenarios, threat_models, acceptance_criteria], methods: [TEST_DESIGN], downstream: [A11,A12]}
+
+  A10_IMPLEMENTATION_PLAN:
+    stageInputs: [A9_outputs, DELIVERY_WBS_V0, project_risks]
+    outputs:
+      IMPLEMENTATION_PLAN: {dataUses: [component_work, dependencies, test_obligations], methods: [WBS_DECOMPOSITION], downstream: [SOURCE_CODE]}
+      IaC_PLAN: {dataUses: [DEPLOYMENT_DESIGN, environment_policy], methods: [SECURE_BUILD_DEVSECOPS], downstream: [deployment_code]}
+      CI_CD_DESIGN: {dataUses: [TEST_STRATEGY, security_scans, promotion_rules], methods: [SECURE_BUILD_DEVSECOPS], downstream: [build_release_pipeline]}
+      MLOPS_DESIGN: {dataUses: [AI_components, data_model, evals, model_registry_needs], methods: [MLOPS_LIFECYCLE], downstream: [AI_COMPONENT_MANIFESTS, promotion_records]}
+      RELEASE_STRATEGY: {dataUses: [risk, deployment_design, migration_constraints], methods: [DEPLOYMENT_STRATEGY], downstream: [A13]}
+
+  A11_IMPLEMENTATION_BASELINE:
+    stageInputs: [DESIGN_READY_FOR_IMPLEMENTATION, IMPLEMENTATION_PLAN_READY]
+    outputs:
+      SOURCE_CODE: {dataUses: [COMPONENT_DESIGN, API_CONTRACTS, SECURITY_REQUIREMENTS], methods: [SECURE_BUILD_DEVSECOPS], downstream: [build, tests]}
+      BUILD_MANIFEST: {dataUses: [source_revision, toolchain, build_inputs], methods: [SECURE_BUILD_DEVSECOPS], downstream: [RELEASE_MANIFEST]}
+      DEPENDENCY_LOCK: {dataUses: [declared_dependencies, versions, hashes], methods: [SECURE_BUILD_DEVSECOPS], downstream: [SBOM, SCA_RESULTS]}
+      SBOM: {dataUses: [DEPENDENCY_LOCK, built_artifact], methods: [SECURE_BUILD_DEVSECOPS], downstream: [security_review, release]}
+      CONFIGURATION_BASELINE: {dataUses: [config_templates, environment_contract, secret_refs], methods: [TRACEABILITY_BUILDING], downstream: [A12,A13,A14]}
+      CODE_REVIEW_RECORDS: {dataUses: [SOURCE_CODE, requirements, design], methods: [GAP_CONFLICT_STALENESS_ANALYSIS], downstream: [IMPLEMENTATION_BASELINE_READY]}
+      SAST_RESULTS: {dataUses: [SOURCE_CODE, analyzer_config], methods: [SECURE_BUILD_DEVSECOPS], downstream: [VULNERABILITY_REGISTER]}
+      SCA_RESULTS: {dataUses: [SBOM, advisory_data], methods: [SECURE_BUILD_DEVSECOPS], downstream: [VULNERABILITY_REGISTER]}
+      SECRET_SCAN_RESULTS: {dataUses: [repo_build_artifacts], methods: [SECURE_BUILD_DEVSECOPS], downstream: [VULNERABILITY_REGISTER]}
+      UNIT_TEST_RESULTS: {dataUses: [SOURCE_CODE, unit_contracts], methods: [TEST_DESIGN], downstream: [IMPLEMENTATION_BASELINE_READY]}
+
+  A12_VERIFICATION_VALIDATION:
+    stageInputs: [IMPLEMENTATION_BASELINE_READY, RTM, TEST_STRATEGY, Golden_Eval_Data_when_AI]
+    outputs:
+      INTEGRATION_TEST_RESULTS: {dataUses: [API_CONTRACTS, EVENT_SCHEMAS, deployed_test_components], methods: [TEST_DESIGN], downstream: [VERIFICATION_REPORT]}
+      SYSTEM_TEST_RESULTS: {dataUses: [SYSTEM_REQUIREMENTS, end_to_end_system], methods: [TEST_DESIGN], downstream: [VERIFICATION_REPORT]}
+      SECURITY_TEST_RESULTS: {dataUses: [SECURITY_REQUIREMENTS, THREAT_MODEL_V1_V2, test_system], methods: [SECURITY_BY_DESIGN, TEST_DESIGN], downstream: [VULNERABILITY_REGISTER, VERIFICATION_REPORT]}
+      PERFORMANCE_TEST_RESULTS: {dataUses: [NFR_CATALOGUE, SIZING_MODEL, load_profile], methods: [SIZING_CAPACITY, TEST_DESIGN], downstream: [VERIFICATION_REPORT, CAPACITY_PLAN]}
+      GENAI_EVAL_REPORT: {dataUses: [versioned_eval_dataset, candidate_models, retrieval_context, provenance], methods: [GENAI_EVALUATION], downstream: [model_promotion, VALIDATION_REPORT]}
+      ACCEPTANCE_TEST_RESULTS: {dataUses: [ACCEPTANCE_CRITERIA, release_candidate], methods: [TEST_DESIGN], downstream: [VALIDATION_REPORT]}
+      DEFECT_REGISTER: {dataUses: [all_failed_tests], methods: [GAP_CONFLICT_STALENESS_ANALYSIS], downstream: [rework]}
+      VULNERABILITY_REGISTER: {dataUses: [security_scan_and_test_findings], methods: [RISK_ANALYSIS], downstream: [rework, residual_risk]}
+      VERIFICATION_REPORT: {dataUses: [RTM, all_verification_results], methods: [TRACEABILITY_BUILDING], downstream: [RELEASE_CANDIDATE_READY]}
+      VALIDATION_REPORT: {dataUses: [SUCCESS_METRICS, acceptance_results, user_business_validation], methods: [TRACEABILITY_BUILDING], downstream: [RELEASE_CANDIDATE_READY]}
+
+  A13_RELEASE_DEPLOYMENT:
+    stageInputs: [RELEASE_CANDIDATE_READY, RELEASE_STRATEGY, unresolved_risk_decisions]
+    outputs:
+      RELEASE_MANIFEST: {dataUses: [build_manifest, SBOM, configuration_baseline, AI_manifests], methods: [TRACEABILITY_BUILDING], downstream: [deployment, archive]}
+      DEPLOYMENT_PLAN: {dataUses: [DEPLOYMENT_DESIGN, RELEASE_STRATEGY], methods: [DEPLOYMENT_STRATEGY], downstream: [DEPLOYMENT_EVIDENCE]}
+      MIGRATION_PLAN: {dataUses: [DATA_MODEL, schema_changes, consumer_dependencies], methods: [DEPLOYMENT_STRATEGY], downstream: [deployment_evidence]}
+      ROLLBACK_PLAN: {dataUses: [release_delta, data_migration_reversibility, failure_modes], methods: [DEPLOYMENT_STRATEGY], downstream: [PRODUCTION_READY]}
+      CHANGE_RECORD: {dataUses: [release_scope, approvals, risks, schedule], methods: [TRACEABILITY_BUILDING], downstream: [CHANGE_LOG]}
+      DEPLOYMENT_EVIDENCE: {dataUses: [actual_execution, health_checks, migration_results], methods: [TRACEABILITY_BUILDING], downstream: [OPERATIONAL_READINESS_REVIEW]}
+      OPERATIONAL_READINESS_REVIEW: {dataUses: [runbooks, monitoring, SLO, rollback, security, support], methods: [GAP_CONFLICT_STALENESS_ANALYSIS], downstream: [PRODUCTION_READY]}
+
+  A14_OPERATION:
+    stageInputs: [PRODUCTION_READY]
+    outputs:
+      RUNBOOKS: {dataUses: [operational_scenarios, failure_modes, recovery_steps], methods: [OBSERVABILITY_SLO, HA_DR], downstream: [incident_response]}
+      SLO_SLA: {dataUses: [NFR_CATALOGUE, business_criticality, observed_baseline], methods: [OBSERVABILITY_SLO], downstream: [monitoring, error_budget, product_reporting]}
+      MONITORING_BASELINE: {dataUses: [OBSERVABILITY_DESIGN, SLO_SLA, security_monitoring_needs], methods: [OBSERVABILITY_SLO], downstream: [alerts, incidents]}
+      INCIDENT_RECORDS: {dataUses: [alerts, logs_metrics_traces, operator_evidence], methods: [TRACEABILITY_BUILDING], downstream: [PROBLEM_RECORDS, A15_trigger]}
+      PROBLEM_RECORDS: {dataUses: [incident_patterns, root_cause_evidence], methods: [GAP_CONFLICT_STALENESS_ANALYSIS], downstream: [A15_trigger]}
+      CAPACITY_REPORTS: {dataUses: [traffic, latency, saturation, storage_growth], methods: [SIZING_CAPACITY], downstream: [A15_trigger, TCO]}
+      SECURITY_MONITORING_REPORTS: {dataUses: [security_events, threat_model, vulnerability_state], methods: [SECURITY_BY_DESIGN], downstream: [A15_trigger]}
+      AI_QUALITY_DRIFT_REPORTS: {dataUses: [production_eval_samples, user_feedback, model_data_version], methods: [GENAI_EVALUATION], downstream: [model_retrain_or_revisit]}
+      COST_REPORTS: {dataUses: [usage, invoices, infrastructure, model_tokens_compute], methods: [TCO_FINOPS_MODELING], downstream: [A15_trigger]}
+      FEEDBACK_BACKLOG: {dataUses: [incidents, product_feedback, SLO_cost_quality_drift], methods: [GAP_CONFLICT_STALENESS_ANALYSIS], downstream: [A15]}
+
+  A15_EVOLUTION_GOVERNANCE:
+    stageInputs: [FEEDBACK_BACKLOG, incidents, costs, regulatory_changes, technology_lifecycle, new_business_needs]
+    outputs:
+      ARCHITECTURE_HEALTH_REVIEW: {dataUses: [operational_evidence, architecture_drivers, risks, debt], methods: [TECHNOLOGY_RADAR_EVOLUTION, ARCHITECTURE_RISK_STORM], downstream: [change_decisions]}
+      TECHNOLOGY_RADAR: {dataUses: [technology_signals, lifecycle, PoC_evidence, ecosystem_risk], methods: [TECHNOLOGY_RADAR_EVOLUTION], downstream: [architecture_options]}
+      TECH_DEBT_REGISTER: {dataUses: [known_compromises, cost_of_delay, touch_triggers], methods: [RISK_ANALYSIS], downstream: [roadmap, change_request]}
+      FINOPS_DECISION_RECORDS: {dataUses: [COST_REPORTS, TCO_models, SLO_quality], methods: [TCO_FINOPS_MODELING], downstream: [architecture_change]}
+      AI_GOVERNANCE_REQUIREMENTS: {dataUses: [AI_impact, incidents, bias_safety_feedback, regulation], methods: [ETHICAL_AI_GOVERNANCE], downstream: [requirements_reopen]}
+      API_PRODUCT_MODEL: {dataUses: [API_consumers, usage, SLO, support, cost, contract], methods: [API_AS_PRODUCT], downstream: [product_requirements, API_lifecycle_policy]}
+      CHANGE_REQUESTS: {dataUses: [trigger, impact, evidence, owner], methods: [TRACEABILITY_BUILDING], downstream: [smallest_required_stage_reopen]}
+
+  A16_RETIREMENT:
+    stageInputs: [retirement_decision, asset_inventory, data_obligations, consumer_dependency_map]
+    outputs:
+      RETIREMENT_PLAN: {dataUses: [scope, schedule, consumers, assets], methods: [RETIREMENT_CONTROL], downstream: [retirement_execution]}
+      DATA_DISPOSITION_PLAN: {dataUses: [DATA_CLASSIFICATION, retention_rules, legal_obligations], methods: [RETIREMENT_CONTROL], downstream: [archive_or_deletion]}
+      ACCESS_REVOCATION_RECORD: {dataUses: [IAM_MODEL, active_accounts_keys_tokens], methods: [RETIREMENT_CONTROL], downstream: [RETIREMENT_VERIFICATION_REPORT]}
+      ARCHIVE_PACKAGE: {dataUses: [release_history, decisions, evidence, required_records], methods: [RETIREMENT_CONTROL], downstream: [long_term_archive]}
+      DEPENDENCY_DECOMMISSION_RECORD: {dataUses: [providers, integrations, licenses, contracts], methods: [RETIREMENT_CONTROL], downstream: [financial_and_security_closure]}
+      RETIREMENT_VERIFICATION_REPORT: {dataUses: [all_retirement_evidence], methods: [TEST_DESIGN, TRACEABILITY_BUILDING], downstream: [RETIRED_VERIFIED]}
+      LESSONS_LEARNED: {dataUses: [project_history, incidents, decisions, outcomes], methods: [GAP_CONFLICT_STALENESS_ANALYSIS], downstream: [knowledge_growth]}
