@@ -21,6 +21,7 @@ This directory decomposes the backend of FATHER Visual Engineering Workbench to 
 13. `12_DB_RECONCILIATION_MATRIX.yaml` — `KEEP / EXTEND / RENAME_VIEW / NEW` reconciliation contract before any DDL.
 14. `13_ROLE_AND_PROCESS_KB_ARCHITECTURE.md` — one shared canonical knowledge system with logical KB profiles for every specialist and every material process.
 15. `14_ROLE_PROCESS_KB_REGISTRY.yaml` — machine-readable role/process profile registry, knowledge classes, mappings and acceptance gate.
+16. `15_ROLE_PROCESS_KB_PROFILE_TEMPLATE.yaml` — mandatory section template for every role KB and process KB profile, including sources, methods, cases, evals, security, metrics and maturity.
 
 ## Canonical database decision
 
