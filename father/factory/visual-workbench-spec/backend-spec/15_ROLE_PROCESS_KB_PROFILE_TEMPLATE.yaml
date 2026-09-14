@@ -1,0 +1,182 @@
+schemaVersion: 1
+templateId: FATHER-ROLE-PROCESS-KB-PROFILE-TEMPLATE-0001
+status: CANDIDATE_TEMPLATE
+
+roleKBProfileTemplate:
+  identity:
+    roleId: REQUIRED
+    title: REQUIRED
+    version: REQUIRED
+    state: [DRAFT, REVIEW, VERIFIED, STALE, SUPERSEDED]
+  roleContract:
+    mission: REQUIRED
+    responsibilities: []
+    authority: []
+    cannot: []
+    upstreamRoles: []
+    downstreamRoles: []
+  ontology:
+    concepts: []
+    terms: []
+    definitions: []
+    contestedDefinitions: []
+  sourceMap:
+    normativeSourceRefs: []
+    standardMethodicalRefs: []
+    professionalBookRefs: []
+    scientificRefs: []
+    vendorDocRefs: []
+    freshnessPolicyRef: null
+  knowledge:
+    objectRefs: []
+    requiredConceptRefs: []
+    principleRefs: []
+    constraintRefs: []
+    decisionCriterionRefs: []
+    tradeoffRefs: []
+    patternRefs: []
+    antiPatternRefs: []
+    failureModeRefs: []
+  methods:
+    methodRefs: []
+    algorithmRefs: []
+    formulaRefs: []
+    deterministicCheckRefs: []
+    escalationRules: []
+  decisionLogic:
+    decisionTreeRefs: []
+    policyTableRefs: []
+    stopRules: []
+    blockRules: []
+    reworkRules: []
+    uncertaintyRules: []
+  artifacts:
+    ownedArtifactRefs: []
+    reviewedArtifactRefs: []
+    artifactSchemaRefs: []
+    artifactCompletionRuleRefs: []
+  training:
+    trainingCaseRefs: []
+    workedExampleRefs: []
+  counterexamples:
+    counterexampleRefs: []
+    failureCaseRefs: []
+    conflictCaseRefs: []
+    staleSourceCaseRefs: []
+    missingDataCaseRefs: []
+  securityAdversarial:
+    securityCaseRefs: []
+    authorityEscalationCaseRefs: []
+    poisonedEvidenceCaseRefs: []
+    sensitiveDataCaseRefs: []
+  evaluation:
+    evalPackRefs: []
+    hiddenEvalPackRefs: []
+    scoringRuleRefs: []
+    calibrationRefs: []
+  maturity:
+    capabilityStates: []
+    lastCertificationAt: null
+    lastIndependentReviewAt: null
+    materialErrorRefs: []
+    reworkTelemetryRefs: []
+    driftState: UNKNOWN
+  coverage:
+    sourceCoverage: UNKNOWN
+    normativeCoverage: UNKNOWN
+    methodCoverage: UNKNOWN
+    trainingCoverage: UNKNOWN
+    counterexampleCoverage: UNKNOWN
+    securityCaseCoverage: UNKNOWN
+    evalCoverage: UNKNOWN
+    unresolvedConflictCount: UNKNOWN
+    staleSourceCount: UNKNOWN
+
+processKBProfileTemplate:
+  identity:
+    processId: REQUIRED
+    title: REQUIRED
+    parentProcessRef: null
+    version: REQUIRED
+    state: [DRAFT, REVIEW, VERIFIED, STALE, SUPERSEDED]
+  purpose:
+    trigger: REQUIRED
+    objective: REQUIRED
+    entryCriteria: []
+    exitCriteria: []
+  inputs:
+    items: []
+    # each item: {type, sourceOrOwnerRef, minimumState, freshnessRule, classification, mandatory}
+  preconditions:
+    upstreamGateRefs: []
+    requiredAuthorityRefs: []
+    requiredEvidenceRefs: []
+    invariants: []
+    forbiddenStates: []
+  transformation:
+    stepRefs: []
+    methodRefs: []
+    algorithmRefs: []
+    deterministicCheckRefs: []
+    humanTaskRefs: []
+    futureAIAssistCandidateRefs: []
+  roles:
+    accountableRoleRef: null
+    producerRoleRefs: []
+    reviewerRoleRefs: []
+    consultedRoleRefs: []
+    finalAuthorityRefs: []
+    prohibitedSelfApprovalPairs: []
+  outputs:
+    items: []
+    # each item: {type, completionRuleRef, evidenceRuleRef, versionPolicyRef, downstreamProcessRefs}
+  tests:
+    validationRefs: []
+    consistencyCheckRefs: []
+    securityTestRefs: []
+    qualityCriterionRefs: []
+    acceptanceOracleRefs: []
+  exceptionsRework:
+    missingInputTargetRefs: []
+    conflictTargetRefs: []
+    staleInputTargetRefs: []
+    rejectedOutputTargetRefs: []
+    testFailureTargetRefs: []
+    missingAuthorityTargetRefs: []
+  metrics:
+    throughputMetricRefs: []
+    cycleTimeMetricRefs: []
+    reworkMetricRefs: []
+    blockedTimeMetricRefs: []
+    qualityMetricRefs: []
+    automationMetricRefs: []
+    humanReviewMetricRefs: []
+  sources:
+    normativeSourceRefs: []
+    professionalMethodRefs: []
+    scientificRefs: []
+    internalPolicyRefs: []
+  evolution:
+    previousVersionRef: null
+    changeReason: null
+    affectedRoleRefs: []
+    affectedArtifactRefs: []
+    affectedTestRefs: []
+    retrainingRequired: UNKNOWN
+  coverage:
+    inputCoverage: UNKNOWN
+    methodCoverage: UNKNOWN
+    outputCoverage: UNKNOWN
+    testCoverage: UNKNOWN
+    sourceCoverage: UNKNOWN
+    roleCoverage: UNKNOWN
+    unresolvedConflictCount: UNKNOWN
+    staleSourceCount: UNKNOWN
+
+rules:
+  - unknown_metrics_remain_UNKNOWN_until_denominator_and_evidence_exist
+  - profile_does_not_duplicate_underlying_knowledge_objects
+  - all_material_refs_use_canonical_ids
+  - role_process_profile_changes_are_versioned
+  - project_specific_learning_requires_review_before_global_promotion
+  - no_ddl_until_actual_osint_kb_reconciliation
