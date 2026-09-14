@@ -1,0 +1,117 @@
+schemaVersion: 1
+contractId: FATHER-DB-CANONICAL-ARCHITECTURE-V1
+status: CANDIDATE_RECONCILIATION_CONTRACT
+physicalDatabase: osint_kb
+sourceOfTruthRule: one_semantic_object_one_canonical_owner
+prohibitedByDefault:
+  - father_db
+  - alina_db
+  - second_knowledge_factory_database
+  - per_agent_vector_database
+  - full_duplicate_kf_schema_mirror
+reconciliationActions:
+  KEEP:
+    meaning: existing physical structure is already canonical enough
+  EXTEND:
+    meaning: preserve existing structure and add only missing fields/tables/indexes/constraints
+  RENAME_VIEW:
+    meaning: preserve physical structure but expose canonical naming through a compatibility view or adapter
+  NEW:
+    meaning: create only when no canonical equivalent exists
+knownExistingSchemas:
+  normative: {action: TO_BE_INVENTORIED}
+  knowledge: {action: TO_BE_INVENTORIED}
+  ontology: {action: TO_BE_INVENTORIED}
+  osint: {action: TO_BE_INVENTORIED}
+  public: {action: TO_BE_INVENTORIED}
+  security_core: {action: TO_BE_INVENTORIED}
+  security_advanced: {action: TO_BE_INVENTORIED}
+targetLogicalFamilies:
+  staging:
+    purpose: incoming_corpora_import_quarantine
+    action: TO_BE_MAPPED
+  source:
+    purpose: source_capture_provenance_versions_spans
+    action: TO_BE_MAPPED
+  normative:
+    purpose: laws_standards_requirements_applicability_versions
+    action: TO_BE_MAPPED
+  knowledge:
+    purpose: concepts_claims_ideas_methods_algorithms
+    action: TO_BE_MAPPED
+  ontology:
+    purpose: terms_definitions_canonical_entities
+    action: TO_BE_MAPPED
+  osint:
+    purpose: cases_observations_claims_hypotheses_entities
+    action: TO_BE_MAPPED
+  graph:
+    purpose: derived_query_projection_only
+    action: TO_BE_MAPPED
+  review:
+    purpose: universal_decisions_validation_conflicts_approvals
+    action: TO_BE_MAPPED
+  weights:
+    purpose: append_only_weight_versions
+    action: TO_BE_MAPPED
+  agents:
+    purpose: father_alina_osint_security_profiles_prompts_runs
+    action: TO_BE_MAPPED
+  rag:
+    purpose: retrieval_configs_embedding_metadata_vector_refs
+    action: TO_BE_MAPPED
+  security:
+    purpose: classification_access_security_review
+    action: TO_BE_MAPPED
+  audit:
+    purpose: append_only_events_snapshot_manifests
+    action: TO_BE_MAPPED
+  git_export:
+    purpose: explicitly_allowed_reviewed_sanitized_projection
+    action: TO_BE_MAPPED
+mandatorySharedInvariants:
+  provenance:
+    chain: [Source, CaptureOrSourceVersion, SourceSpanOrLocator, CanonicalObject]
+  graph:
+    canonical: false
+    rebuildable: true
+  embeddings:
+    backend: PostgreSQL_pgvector_shared
+    perAgentSilosAllowedByDefault: false
+  weights:
+    appendOnly: true
+    destructiveOverwriteAllowed: false
+  review:
+    universalAcrossDivisions: true
+  audit:
+    appendOnly: true
+    separateFromOrdinaryLogs: true
+  gitExport:
+    allowListOnly: true
+    classificationAware: true
+  llmPromotion:
+    directToCanonicalAllowed: false
+  destructiveMigration:
+    allowedBeforeReconciliationAcceptance: false
+migrationWorkflow:
+  - inventory_actual_database
+  - capture_schema_table_view_extension_index_snapshot
+  - assign_semantic_owner_to_each_existing_object
+  - map_target_families_to_existing_structures
+  - classify_KEEP_EXTEND_RENAME_VIEW_NEW
+  - detect_duplicate_truth_sources
+  - design_compatibility_adapters
+  - define_migration_tests
+  - define_rollback
+  - architecture_review
+  - only_then_prepare_DDL
+acceptanceGate: FATHER_DB_CANONICAL_ARCHITECTURE_V1_READY
+requiredEvidence:
+  - actual_osint_kb_inventory
+  - schema_ownership_map
+  - reconciliation_matrix
+  - duplicate_truth_report
+  - compatibility_adapter_plan
+  - migration_test_plan
+  - rollback_plan
+  - architecture_review_record
