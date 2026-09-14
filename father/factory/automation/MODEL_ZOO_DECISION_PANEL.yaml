@@ -1,9 +1,32 @@
 schemaVersion: 1
 panelId: FATHER-MODEL-ZOO-DECISION-PANEL-0001
-status: CANDIDATE_MODEL
+status: RUNTIME_MVP_AVAILABLE
 purpose: >-
   Use a routed portfolio of models as an advisory decision council for material FATHER documents and engineering decisions.
   The panel improves challenge diversity and evidence coverage, but never replaces the authorized human/domain decision owner.
+
+runtimeImplementation:
+  package: father/factory/runtime/
+  entrypoint: python -m father.factory.runtime
+  providersImplemented: [fixture, ollama, openai_compatible]
+  tests: tests/runtime/test_model_zoo_runtime.py
+  ciWorkflow: .github/workflows/father-runtime-tests.yml
+  verifiedOnPython: ['3.11', '3.12']
+  currentScope:
+    - materiality_routing
+    - champion
+    - blind_challengers
+    - deterministic_evidence_ref_verification
+    - independent_judge
+    - decision_packet
+    - authorized_human_approval_gate
+    - append_only_runtime_audit
+  deferredRuntimeFeatures:
+    - evidence_content_resolvers
+    - cross_examination_round
+    - adaptive_model_telemetry_routing
+    - document_pipeline_workers
+    - web_api_and_ui
 
 sourcePatterns:
   - source: VictorKVS/OSINT_deepseek/config/model_stage_registry.yaml
