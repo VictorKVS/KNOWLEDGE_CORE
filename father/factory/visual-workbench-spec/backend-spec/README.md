@@ -19,6 +19,8 @@ This directory decomposes the backend of FATHER Visual Engineering Workbench to 
 11. `10_BACKEND_REQUIREMENTS_TRACEABILITY.yaml` — machine-readable backend requirements and verification mapping.
 12. `11_FATHER_DB_CANONICAL_ARCHITECTURE_V1.md` — one canonical `osint_kb` PostgreSQL database for all FATHER divisions; no duplicate DB truth.
 13. `12_DB_RECONCILIATION_MATRIX.yaml` — `KEEP / EXTEND / RENAME_VIEW / NEW` reconciliation contract before any DDL.
+14. `13_ROLE_AND_PROCESS_KB_ARCHITECTURE.md` — one shared canonical knowledge system with logical KB profiles for every specialist and every material process.
+15. `14_ROLE_PROCESS_KB_REGISTRY.yaml` — machine-readable role/process profile registry, knowledge classes, mappings and acceptance gate.
 
 ## Canonical database decision
 
@@ -33,11 +35,36 @@ Existing schemas are reconciled first. Target logical schemas are not created bl
 
 `KNOWLEDGE_CORE` remains source corpus/provenance/specification infrastructure and does not become a competing operational DB.
 
+## Role/process knowledge decision
+
+Every professional role and every material business/engineering process gets a **logical knowledge profile**, not a separate physical database/schema.
+
+```text
+CANONICAL KNOWLEDGE OBJECT
+        ↙            ↘
+   ROLE PROFILE     PROCESS PROFILE
+```
+
+A method/definition/case is stored once and may be linked to many roles and many processes. Initial scope is all 27 canonical roles from `FATHER_ROLE_MATRIX.yaml` and all S00–S59 engineering stations. Project-specific business processes are linked as process instances/domain processes rather than duplicating universal methods.
+
+A specialist working context is assembled from:
+
+```text
+role profile
++ current process profile
++ project scope
++ applicable normative requirements
++ canonical knowledge
++ project evidence
++ authority/security policy
+```
+
 ## Governing principle
 
 ```text
 canonical domain model
 → canonical osint_kb reconciliation
+→ role/process KB reconciliation
 → backend contracts
 → state machines
 → transaction semantics
