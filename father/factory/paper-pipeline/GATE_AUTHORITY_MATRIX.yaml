@@ -1,0 +1,125 @@
+schemaVersion: 1
+matrixId: FATHER-PAPER-GATE-AUTHORITY-0001
+status: CANDIDATE_AUTHORITY_MATRIX
+principles:
+  - gate_is_evidence_based_not_file_count_based
+  - producer_does_not_self_approve_material_decision
+  - legal_applicability_requires_legal_authority
+  - data_classification_requires_data_owner
+  - residual_risk_requires_designated_risk_owner
+  - production_release_requires_service_release_authority
+  - models_and_automation_may_recommend_but_not_replace_required_human_authority
+gates:
+  PROJECT_INTAKE_READY:
+    stage: A0
+    finalAuthority: project_manager
+    requiredReviewers: [configuration_manager]
+    minimumEvidence: [source_register_exists, source_versions_identified, provenance_available, initial_gaps_visible]
+    blockingStates: [unidentified_source_for_material_claim, unresolved_source_identity_failure]
+  PRODUCT_READY:
+    stage: A1
+    finalAuthority: product_manager
+    requiredAuthorities: [business_owner]
+    requiredReviewers: [skeptical_reviewer]
+    minimumEvidence: [business_need_confirmed, product_scope_bounded, stakeholder_authority_known, success_measure_or_baseline_gap_visible, assumptions_unknowns_visible]
+    blockingStates: [missing_business_owner, solution_without_confirmed_problem, material_scope_conflict]
+  SECURITY_INTAKE_READY:
+    stage: A2
+    finalAuthority: security_engineer
+    conditionalAuthorities: [legal_compliance, data_owner]
+    requiredReviewers: [skeptical_reviewer]
+    minimumEvidence: [security_context, data_inventory_candidate, applicability_questions, security_constraints, abuse_cases]
+    blockingStates: [required_legal_decision_missing, required_data_owner_decision_missing, sensitive_external_processing_without_policy]
+  SYSTEM_MODEL_READY:
+    stage: A3
+    finalAuthority: system_engineer
+    requiredReviewers: [security_engineer, integration_engineer]
+    minimumEvidence: [system_context, boundary, function_model, data_flows, interfaces, dependencies, operational_modes, assumptions]
+    blockingStates: [unclear_system_boundary, material_hidden_dependency, unresolved_data_flow_conflict]
+  THREAT_MODEL_V0_READY:
+    stage: A4
+    finalAuthority: security_engineer
+    requiredReviewers: [system_engineer, skeptical_reviewer]
+    minimumEvidence: [protected_interests, negative_consequences, threat_sources, entry_points, trust_boundaries, threat_scenarios, security_drivers]
+    blockingStates: [critical_scope_without_threat_coverage, missing_trust_boundary_for_material_flow]
+  REQUIREMENTS_BASELINE_READY:
+    stage: A5
+    finalAuthority: requirements_engineer
+    conditionalAuthorities: [product_manager, security_engineer, data_owner, legal_compliance, operations_engineer]
+    requiredReviewers: [qa_engineer]
+    minimumEvidence: [requirement_ids, source_owner_trace, measurable_or_explicit_gap_NFRs, security_requirements, acceptance_intent, bidirectional_traceability]
+    blockingStates: [material_requirement_conflict, orphan_critical_requirement, untestable_material_requirement_without_accepted_exception]
+  DELIVERY_FEASIBILITY_READY:
+    stage: A6
+    finalAuthority: project_manager
+    conditionalAuthorities: [finance_procurement, operations_engineer]
+    requiredReviewers: [solution_architect, skeptical_reviewer]
+    minimumEvidence: [WBS_v0, estimate_basis_and_range, project_risks, TCO_inputs_or_explicit_unknowns, PoC_plan_for_high_uncertainty, change_model]
+    blockingStates: [material_estimate_without_basis, material_cost_commitment_without_owner, high_uncertainty_without_evidence_plan]
+  ARCHITECTURE_OPTIONS_READY:
+    stage: A7
+    finalAuthority: solution_architect
+    requiredReviewers: [security_engineer, system_engineer, operations_engineer, skeptical_reviewer]
+    minimumEvidence: [driver_set, multiple_material_options_or_reason_single_option, quality_scenarios, architecture_views, tradeoffs, security_review, risks]
+    blockingStates: [technology_first_without_driver, material_option_missing_tradeoff, unresolved_high_security_blocker]
+  ARCHITECTURE_DECISION_READY:
+    stage: A8
+    finalAuthority: business_or_system_decision_owner
+    requiredReviewers: [solution_architect, security_engineer, skeptical_reviewer]
+    conditionalAuthorities: [risk_owner, finance_procurement, operations_engineer]
+    minimumEvidence: [ADR, decision_evidence, rejected_alternatives, consequences, rollback_or_replacement_path, revisit_triggers, residual_risks]
+    blockingStates: [architect_self_approval, material_unsupported_claim, unresolved_required_residual_risk_acceptance, hidden_material_dissent]
+  DESIGN_READY_FOR_IMPLEMENTATION:
+    stage: A9
+    finalAuthority: software_architect
+    requiredReviewers: [solution_architect, security_engineer, qa_engineer, data_engineer, integration_engineer]
+    minimumEvidence: [component_design, critical_interactions, contracts, data_design, IAM_secrets, deployment, observability, sizing_assumptions, updated_threat_model, test_strategy]
+    blockingStates: [design_changes_architecture_without_ADR, incompatible_contract, unmapped_security_requirement, missing_test_obligation_for_critical_NFR]
+  IMPLEMENTATION_PLAN_READY:
+    stage: A10
+    finalAuthority: technical_lead
+    requiredReviewers: [project_manager, devsecops_engineer, security_engineer, qa_engineer]
+    minimumEvidence: [implementation_work_packages, DoR, CI_CD_plan, dependency_supply_chain_plan, config_version_plan, rollback_delivery_plan]
+    blockingStates: [implementation_task_without_contract, unplanned_material_dependency, no_rollback_for_material_change]
+  IMPLEMENTATION_BASELINE_READY:
+    stage: A11
+    finalAuthority: code_reviewer
+    requiredReviewers: [software_architect, security_engineer]
+    minimumEvidence: [reviewed_source, unit_tests, build_manifest, dependency_lock, SBOM_when_applicable, config_baseline, SAST_SCA_secret_scan_evidence]
+    blockingStates: [critical_code_review_blocker, unresolved_critical_security_finding, build_not_traceable_to_source]
+  RELEASE_CANDIDATE_READY:
+    stage: A12
+    finalAuthority: qa_engineer
+    conditionalAuthorities: [product_manager, security_engineer, requirements_engineer]
+    requiredReviewers: [domain_specialist_when_applicable]
+    minimumEvidence: [requirements_coverage, integration_system_tests, security_tests, performance_evidence, acceptance_results, GenAI_eval_when_applicable, unresolved_findings_register]
+    blockingStates: [critical_requirement_failure, critical_vulnerability, GenAI_quality_gate_failure_when_applicable, missing_material_test_evidence]
+  PRODUCTION_READY:
+    stage: A13
+    finalAuthority: service_owner
+    requiredAuthorities: [release_manager]
+    conditionalAuthorities: [risk_owner, security_engineer, data_owner, legal_compliance]
+    requiredReviewers: [qa_engineer, operations_engineer]
+    minimumEvidence: [release_manifest, deployment_plan, migration_rehearsal_when_needed, rollback_evidence, monitoring_ready, runbooks_ready, unresolved_risk_decisions, operational_readiness_review]
+    blockingStates: [rollback_not_viable, monitoring_not_ready_for_critical_SLO, unresolved_critical_risk, required_data_legal_authority_missing]
+  OPERATION_CONTROLLED:
+    stage: A14
+    finalAuthority: service_owner
+    requiredReviewers: [operations_engineer, security_engineer]
+    minimumEvidence: [SLO_monitoring, incident_process, security_monitoring, capacity_feedback, cost_visibility, AI_quality_drift_when_applicable]
+    blockingStates: [uncontrolled_critical_SLO_breach, repeated_unowned_incident, unmonitored_material_security_surface]
+  EVOLUTION_DECISION_READY:
+    stage: A15
+    finalAuthority: project_owner_or_designated_change_authority
+    requiredReviewers: [solution_architect, product_manager, service_owner, skeptical_reviewer]
+    conditionalAuthorities: [security_engineer, legal_compliance, data_owner, finance_procurement, risk_owner]
+    minimumEvidence: [change_trigger, impact_analysis, current_architecture_health, cost_risk_evidence, smallest_stage_reopen_decision]
+    blockingStates: [silent_architecture_change, old_ADR_rewritten_instead_of_superseded, material_change_without_authority]
+  RETIRED_VERIFIED:
+    stage: A16
+    finalAuthority: service_owner
+    requiredAuthorities: [project_owner]
+    conditionalAuthorities: [data_owner, legal_compliance, security_engineer]
+    requiredReviewers: [operations_engineer, configuration_manager]
+    minimumEvidence: [retirement_plan_executed, data_disposition_confirmed, access_revoked, integrations_providers_closed, required_archive_complete, consumers_migrated_or_explicitly_closed]
+    blockingStates: [unresolved_data_obligation, live_access_after_retirement, active_consumer_without_migration_or_acceptance]
