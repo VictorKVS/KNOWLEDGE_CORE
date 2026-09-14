@@ -1,0 +1,76 @@
+schemaVersion: 1
+modelId: FATHER-VISUAL-WORKBENCH-REFERENCE-PATTERNS-0001
+status: CANDIDATE_UI_REFERENCE
+principle: borrow proven interaction patterns, do not copy another product's domain model
+references:
+  DYNAMO:
+    borrow:
+      - typed_input_output_ports
+      - left_to_right_dataflow
+      - node_status_error_warning_preview
+      - downstream_freeze_on_invalid_dependency
+      - expandable_graphs
+    fatherUse: CORE_ENGINEERING_CANVAS
+  KNIME:
+    borrow:
+      - traffic_light_node_state
+      - node_segment_full_workflow_execution_modes
+      - reusable_components
+      - metanodes_for_collapsing_complexity
+      - output_inspection
+    fatherUse: STATION_INSPECTION_AND_NESTING
+  NODE_RED:
+    borrow:
+      - palette_canvas_sidebar_layout
+      - reusable_subflows
+      - flow_tabs
+      - node_status
+    fatherUse: WORKSPACE_ERGONOMICS
+  CAMUNDA_BPMN:
+    borrow:
+      - human_tasks
+      - exclusive_parallel_gateways
+      - forms
+      - waiting_states
+      - escalation_and_rework_paths
+    fatherUse: APPROVAL_PROCESS_VIEW_ONLY
+    restriction: not_canonical_engineering_information_model
+  STRUCTURIZR_C4:
+    borrow:
+      - one_model_multiple_views
+      - context_container_component_dynamic_deployment_views
+      - perspectives
+      - docs_and_adrs_attached_to_model
+      - model_as_code
+    fatherUse: ARCHITECTURE_VIEW_ENGINE
+  LABVIEW:
+    borrow:
+      - dataflow_execution_semantics
+      - node_executes_when_required_inputs_are_available
+      - explicit_data_paths
+    fatherUse: READINESS_SEMANTICS
+  REACT_FLOW:
+    borrow:
+      - custom_nodes
+      - typed_handles
+      - edges
+      - nested_subflows
+      - minimap
+      - pan_zoom_selection
+    fatherUse: WEB_CANVAS_IMPLEMENTATION_CANDIDATE
+  BPMN_JS:
+    borrow:
+      - embeddable_bpmn_viewer_and_modeler
+      - custom_annotations
+    fatherUse: OPTIONAL_PROCESS_VIEW_IMPLEMENTATION_CANDIDATE
+uiLayers:
+  Z0:
+    name: PROJECT_CONVEYOR
+    shows: [macro_stage, gate, global_blocker]
+  Z1:
+    name: ENGINEERING_STATIONS
+    shows: [station, typed_inputs, typed_outputs, local_state, owner, downstream]
+  Z2:
+    name: BLACK_BOX_INTERNALS
+    shows: [checks, methods, algorithms, evidence, reviewer_actions, tests, model_assistance]
+canonicalRule: UI state must be serializable back to canonical FATHER data; UI-only engineering truth is forbidden
