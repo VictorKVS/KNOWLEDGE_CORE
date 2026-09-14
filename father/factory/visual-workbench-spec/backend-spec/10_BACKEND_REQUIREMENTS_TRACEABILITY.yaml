@@ -1,0 +1,209 @@
+schemaVersion: 1
+registryId: FATHER-WORKBENCH-BACKEND-REQ-0001
+status: DRAFT_V0_1
+sources:
+  master: father/factory/visual-workbench-spec/backend-spec/00_BACKEND_MASTER_TZ.md
+  domain: father/factory/visual-workbench-spec/backend-spec/01_DOMAIN_MODULE_BOUNDARIES.md
+  states: father/factory/visual-workbench-spec/backend-spec/02_STATE_MACHINE_TRANSACTION_MODEL.md
+  persistence: father/factory/visual-workbench-spec/backend-spec/03_PERSISTENCE_INDEXING_QUERY_MODEL.md
+  evidence: father/factory/visual-workbench-spec/backend-spec/04_SOURCE_EVIDENCE_FILE_PIPELINE.md
+  trace: father/factory/visual-workbench-spec/backend-spec/05_SEARCH_TRACE_IMPACT_ENGINE.md
+  security: father/factory/visual-workbench-spec/backend-spec/06_AUTHORITY_SECURITY_AUDIT_BACKEND.md
+  jobs: father/factory/visual-workbench-spec/backend-spec/07_JOBS_INTEGRATION_NOTIFICATION_MODEL.md
+  operations: father/factory/visual-workbench-spec/backend-spec/08_OBSERVABILITY_BACKUP_RECOVERY.md
+  testing: father/factory/visual-workbench-spec/backend-spec/09_BACKEND_TEST_ACCEPTANCE_GATE.md
+requirements:
+  - id: BE-ARCH-001
+    priority: MUST
+    statement: Initial backend shall be a modular monolith unless measured evidence and ADR justify service split.
+    verify: [ARCH_REVIEW]
+  - id: BE-ARCH-002
+    priority: MUST
+    statement: Domain layer shall not depend on web framework, DB ORM, canvas or provider SDKs.
+    verify: [CODE_ARCH_TEST, REVIEW]
+  - id: BE-OBJ-001
+    priority: MUST
+    statement: Material canonical objects shall have stable logical ID and immutable revision IDs.
+    verify: [T-DOM-002, T-VC-003]
+  - id: BE-OBJ-002
+    priority: MUST
+    statement: Material revisions shall not be silently overwritten.
+    verify: [T-VC-001, REVIEW]
+  - id: BE-REL-001
+    priority: MUST
+    statement: Relations shall be typed first-class versionable objects with endpoint validation.
+    verify: [T-DOM-004, INTEGRATION]
+  - id: BE-BL-001
+    priority: MUST
+    statement: Promoted baselines shall be immutable exact revision membership snapshots.
+    verify: [T-DOM-001, T-VC-004]
+  - id: BE-ST-001
+    priority: MUST
+    statement: Governed lifecycle state transitions shall use explicit commands rather than arbitrary status PATCH.
+    verify: [T-DOM-003, API_CONTRACT]
+  - id: BE-TX-001
+    priority: MUST
+    statement: One canonical mutation command shall commit directly coupled invariant changes atomically.
+    verify: [INTEGRATION, FAILURE_INJECTION]
+  - id: BE-TX-002
+    priority: MUST
+    statement: External network/model/file-processing calls shall not be performed while canonical DB transaction is open.
+    verify: [ARCH_REVIEW, INTEGRATION]
+  - id: BE-TX-003
+    priority: MUST
+    statement: Optimistic concurrency shall prevent silent last-write-wins on material engineering objects.
+    verify: [T-VC-001]
+  - id: BE-IDEM-001
+    priority: MUST
+    statement: Retryable material commands/jobs shall support idempotency where duplicate side effects are possible.
+    verify: [T-VC-002, T-JOB-003]
+  - id: BE-SRC-001
+    priority: MUST
+    statement: Original source bytes or authoritative source revision identity shall be preserved independently from derived text.
+    verify: [T-EV-001]
+  - id: BE-SRC-002
+    priority: MUST
+    statement: Evidence shall resolve to exact source version and locator or explicit owner decision record.
+    verify: [T-EV-002, T-EV-004]
+  - id: BE-SRC-003
+    priority: MUST
+    statement: Source supersession shall not rewrite historical evidence links to newer source revisions.
+    verify: [T-EV-003]
+  - id: BE-EV-001
+    priority: MUST
+    statement: Conflicting evidence shall be preserved until explicit authority/applicability resolution.
+    verify: [T-EV-005]
+  - id: BE-TRACE-001
+    priority: MUST
+    statement: Backend shall support bounded upstream/downstream typed trace queries with cycle safety.
+    verify: [T-TR-001]
+  - id: BE-TRACE-002
+    priority: MUST
+    statement: Backend shall provide explainable path from impact/stale result to triggering change and rule.
+    verify: [T-TR-005]
+  - id: BE-IMPACT-001
+    priority: MUST
+    statement: Impact preview shall be non-mutating.
+    verify: [INTEGRATION]
+  - id: BE-IMPACT-002
+    priority: MUST
+    statement: Semantic/cosmetic changes shall be distinguishable for downstream invalidation.
+    verify: [T-TR-003, T-TR-004]
+  - id: BE-GATE-001
+    priority: MUST
+    statement: Gate readiness evaluation shall not equal authorized gate decision.
+    verify: [T-GT-001]
+  - id: BE-GATE-002
+    priority: MUST
+    statement: Gate decisions shall retain exact evidence/object revision snapshot.
+    verify: [T-GT-003]
+  - id: BE-AUTH-001
+    priority: MUST
+    statement: Backend shall enforce both permission and domain authority at command execution.
+    verify: [AUTH_MATRIX, SECURITY_TEST]
+  - id: BE-AUTH-002
+    priority: MUST
+    statement: Residual risk acceptance shall require assigned authorized risk owner.
+    verify: [T-DOM-005]
+  - id: BE-AUTH-003
+    priority: MUST
+    statement: AI/service identities shall not satisfy human-only authority requirements.
+    verify: [T-DOM-006, E2E-BE-07]
+  - id: BE-AUTH-004
+    priority: MUST
+    statement: Separation-of-duty policies shall be enforceable for material review/approval.
+    verify: [T-GT-004]
+  - id: BE-AUD-001
+    priority: MUST
+    statement: Material commands and decisions shall produce append-only audit events independent from ordinary application logs.
+    verify: [AUDIT_INTEGRITY_TEST]
+  - id: BE-SEC-001
+    priority: MUST
+    statement: Server shall never trust client-supplied role or authority claims without validated identity/policy context.
+    verify: [SECURITY_TEST]
+  - id: BE-SEC-002
+    priority: MUST
+    statement: Upload pipeline shall quarantine and validate untrusted bytes before normal evidence use.
+    verify: [UPLOAD_SECURITY_TEST]
+  - id: BE-SEC-003
+    priority: MUST
+    statement: External URL/connector acquisition shall include SSRF and data-policy controls.
+    verify: [SSRF_TEST]
+  - id: BE-SEC-004
+    priority: MUST
+    statement: Restricted data classification shall constrain view/download/export/external-provider routing.
+    verify: [AUTH_MATRIX, E2E_SECURITY]
+  - id: BE-JOB-001
+    priority: MUST
+    statement: Canonical transaction and required outbox record shall commit atomically.
+    verify: [T-JOB-001]
+  - id: BE-JOB-002
+    priority: MUST
+    statement: Background jobs shall support lease/retry/dead-letter visibility.
+    verify: [T-JOB-002, T-JOB-004]
+  - id: BE-JOB-003
+    priority: MUST
+    statement: Broker shall not be required for v1 unless benchmark and ADR justify it.
+    verify: [ARCH_REVIEW]
+  - id: BE-SEARCH-001
+    priority: SHOULD
+    statement: Initial search shall use PostgreSQL exact/FTS/trigram mechanisms before external search engine.
+    verify: [BENCHMARK, ARCH_REVIEW]
+  - id: BE-GRAPH-001
+    priority: SHOULD
+    statement: Initial trace/impact shall use indexed relational adjacency and bounded traversal before graph DB adoption.
+    verify: [BENCHMARK, ARCH_REVIEW]
+  - id: BE-OBS-001
+    priority: MUST
+    statement: Requests, commands, jobs and external effects shall share correlation identity where possible.
+    verify: [OBSERVABILITY_TEST]
+  - id: BE-OBS-002
+    priority: MUST
+    statement: Audit write path failure shall block material governed decisions that require auditability.
+    verify: [FAILURE_INJECTION]
+  - id: BE-BACKUP-001
+    priority: MUST
+    statement: Backup acceptance shall require successful restore verification, not backup-job success alone.
+    verify: [RESTORE_TEST]
+  - id: BE-REC-001
+    priority: MUST
+    statement: Projection/search corruption shall be recoverable from canonical data.
+    verify: [REBUILD_TEST]
+  - id: BE-IMP-001
+    priority: MUST
+    statement: Imported content shall remain candidate/mapped data until validation/review; import shall not equal truth promotion.
+    verify: [E2E-BE-02]
+  - id: BE-EXP-001
+    priority: MUST
+    statement: Exports shall identify exact baseline, generator version and schema version.
+    verify: [EXPORT_REPRODUCIBILITY_TEST]
+  - id: BE-AI-001
+    priority: MUST
+    statement: Future AI workers shall use scoped application interfaces and shall not directly write canonical DB tables.
+    verify: [ARCH_REVIEW, SECURITY_TEST]
+  - id: BE-AI-002
+    priority: MUST
+    statement: Completion of AI job shall never equal human approval or gate pass.
+    verify: [AI_AUTH_NEGATIVE_TEST]
+  - id: BE-MIG-001
+    priority: MUST
+    statement: Schema/data migrations shall preserve evidence and revision history and include pre/post invariants.
+    verify: [MIGRATION_TEST]
+  - id: BE-DESIGN-GATE-001
+    priority: MUST
+    statement: Backend implementation shall remain blocked until BACKEND_DESIGN_READY review is satisfied.
+    verify: [DESIGN_REVIEW_RECORD]
+acceptanceGate:
+  id: BACKEND_DESIGN_READY
+  requiredEvidence:
+    - module_boundary_review
+    - state_machine_review
+    - transaction_boundary_review
+    - persistence_index_review
+    - source_evidence_pipeline_review
+    - trace_impact_review
+    - authority_security_review
+    - async_job_review
+    - observability_backup_restore_review
+    - backend_test_oracle_review
+  outcomes: [NOT_READY, READY_WITH_EXPLICIT_UNKNOWNS, READY_FOR_IMPLEMENTATION_PLANNING]
