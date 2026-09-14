@@ -1,0 +1,64 @@
+schemaVersion: 1
+schemaId: FATHER-ALGORITHM-REVIEW-0001
+status: CANDIDATE_VALIDATION_SCHEMA
+purpose: define the minimum evidence required before a method becomes part of the canonical paper pipeline
+
+complexityPrinciple:
+  rule: choose_the_simplest_algorithm_that_proves_the_required_outcome
+  escalationLevels:
+    L0: deterministic_rule
+    L1: deterministic_algorithm_or_calculator
+    L2: statistical_or_bounded_heuristic
+    L3: single_model_assisted
+    L4: champion_plus_verifier
+    L5: model_zoo_or_multi_agent
+  escalationRequires:
+    - measured_requirement_not_met_by_lower_level
+    - explicit_failure_or_risk
+    - benchmark_or_experiment_evidence
+    - review_of_added_operational_complexity
+
+requiredFields:
+  identity: [algorithmId, title, lifecycleStages, ownerRole, reviewerRoles, status]
+  problem: [problemStatement, requirementOrRiskRefs, successCriterion, scopeExclusions]
+  inputs: [name, type, sourceRef, authority, allowedStates, preconditions, trustClass]
+  outputs: [name, structure, postconditions, downstreamConsumers, provenanceRequirement]
+  reasoning: [assumptions, invariants, candidateMethods, selectionCriteria, selectedMethod, rationale]
+  correctness: [correctnessOrAdequacyArgument, applicabilityLimits]
+  complexity: [time, space, ioNetwork, humanDecisions, modelCalls, worstExpectedCase]
+  safety: [failureModes, failClosedConditions, fallback, reworkTargets]
+  evaluation: [testPlan, baseline, falsificationCriterion, metrics, counterexamples]
+  evidence: [normativeRefs, projectEvidenceRefs, verifiedBookRefs, courseMethodRefs, scientificRefs, hypothesisRefs]
+  authority: [humanFinalAuthority, prohibitedAutomation]
+
+allowedEvidenceClasses:
+  - NORMATIVE
+  - PROJECT_EVIDENCE
+  - BOOK_VERIFIED
+  - COURSE_METHOD
+  - SCIENTIFIC
+  - ENGINEERING_HYPOTHESIS
+
+reviewQuestions:
+  - Can a simpler method satisfy the same gate?
+  - Are criteria defined before the preferred option is selected?
+  - Are assumptions visible and falsifiable?
+  - Are invariants testable?
+  - Does the algorithm preserve source provenance and authority boundaries?
+  - Is UNKNOWN preserved instead of guessed?
+  - Is the failure path explicit?
+  - Is there at least one counterexample or boundary case?
+  - Is any LLM use justified against a deterministic/statistical baseline?
+  - Can the result be reproduced from a frozen input snapshot?
+
+promotionOutcomes:
+  - ACCEPT_FOR_PAPER_PIPELINE
+  - ACCEPT_WITH_CONDITIONS
+  - NEEDS_EVIDENCE
+  - SIMPLIFY
+  - REWORK
+  - REJECT
+
+automationRule: >-
+  Passing this review allows a method into the paper pipeline only. It does not automatically authorize runtime automation.
+  Runtime activation remains controlled by AUTOMATION_ACTIVATION_GATE.yaml.
