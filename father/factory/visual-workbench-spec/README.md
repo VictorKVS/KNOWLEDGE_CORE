@@ -18,6 +18,7 @@ The specification is intentionally split into maintainable documents instead of 
 8. `07_IMPLEMENTATION_ROADMAP.md` — delivery phases, gates, DoR/DoD and controlled evolution from read-only model viewer to engineering platform.
 9. `08_COMPETITOR_PATTERN_CROSSWALK.md` — what is adopted from Ardoq, KNIME, Node-RED, BPMN/bpmn-js, Structurizr/C4 and React Flow, and what is explicitly rejected.
 10. `09_REQUIREMENTS_TRACEABILITY.yaml` — machine-readable requirement catalogue and verification intent.
+11. `10_DUAL_SITE_ALINA_FATHER_WORKFLOW.md` — how ALINA Knowledge Factory and FATHER Design Workbench operate as two live projections over the same canonical IDs and `osint_kb` state.
 
 ## Governing source documents
 
@@ -36,6 +37,9 @@ Primary upstream sources:
 - `father/factory/FATHER_ARTIFACT_REGISTRY.yaml`
 - `father/factory/FATHER_ROLE_MATRIX.yaml`
 - `father/factory/NORMATIVE_SOURCE_REGISTRY.yaml`
+- `father/factory/visual-workbench-spec/backend-spec/13_ROLE_AND_PROCESS_KB_ARCHITECTURE.md`
+- `father/factory/visual-workbench-spec/backend-spec/16_PROFESSIONAL_METHOD_ARTIFACT_CHAIN.md`
+- `father/factory/visual-workbench-spec/backend-spec/17_ROLE_ARTIFACT_HANDOFF_REGISTRY.yaml`
 
 ## Core product principle
 
@@ -63,6 +67,18 @@ The product must support three levels of abstraction:
 - `Z0` — macro lifecycle A0–A16;
 - `Z1` — detailed conveyor S00–S59;
 - `Z2` — internal logic of one station.
+
+## Two-site rule
+
+```text
+ALINA site
+= knowledge growth, specialist training, methods, sources, cases, evals
+
+FATHER site
+= project design, station execution, artifacts, handoffs, tests, gates
+```
+
+Both sites use the same canonical IDs and one PostgreSQL `osint_kb`. Cross-site navigation must preserve object ID, version, project/process context and authority without duplicating data.
 
 ## Implementation freeze
 
