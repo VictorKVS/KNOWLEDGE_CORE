@@ -22,6 +22,8 @@ This directory decomposes the backend of FATHER Visual Engineering Workbench to 
 14. `13_ROLE_AND_PROCESS_KB_ARCHITECTURE.md` — one shared canonical knowledge system with logical KB profiles for every specialist and every material process.
 15. `14_ROLE_PROCESS_KB_REGISTRY.yaml` — machine-readable role/process profile registry, knowledge classes, mappings and acceptance gate.
 16. `15_ROLE_PROCESS_KB_PROFILE_TEMPLATE.yaml` — mandatory section template for every role KB and process KB profile, including sources, methods, cases, evals, security, metrics and maturity.
+17. `16_PROFESSIONAL_METHOD_ARTIFACT_CHAIN.md` — full professional production chain for all 27 roles: knowledge, methods, inputs, owned artifacts, formats, reviewers and downstream handoffs.
+18. `17_ROLE_ARTIFACT_HANDOFF_REGISTRY.yaml` — machine-readable role↔station↔method↔artifact↔reviewer↔downstream registry and lifecycle handoff packages.
 
 ## Canonical database decision
 
@@ -60,12 +62,15 @@ role profile
 + authority/security policy
 ```
 
+The professional chain adds a mandatory artifact handoff contract so every material output has owner, reviewer, version/baseline, method/source lineage, tests and downstream consumers.
+
 ## Governing principle
 
 ```text
 canonical domain model
 → canonical osint_kb reconciliation
 → role/process KB reconciliation
+→ professional method/artifact chain
 → backend contracts
 → state machines
 → transaction semantics
