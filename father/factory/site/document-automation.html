@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>FATHER — Document Automation</title>
+<style>
+:root{font-family:Inter,Segoe UI,Arial,sans-serif;color:#172033;background:#f5f7fb}*{box-sizing:border-box}body{margin:0}header{background:#101828;color:#fff;padding:28px 34px}.wrap{max-width:1500px;margin:auto;padding:24px}.section{background:#fff;border:1px solid #dde3ec;border-radius:14px;padding:20px;margin-bottom:22px}.flow{display:flex;gap:8px;overflow:auto;padding:12px 0}.step{min-width:165px;border:1px solid #d7deea;border-radius:12px;padding:12px;background:#fff}.arrow{display:flex;align-items:center;font-size:22px;color:#98a2b3}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(270px,1fr));gap:12px}.card{border:1px solid #d9e0ea;border-radius:12px;padding:14px}.card h3{margin:0 0 7px}.muted,.small{color:#667085}.small{font-size:12px}.llm{border-left:4px solid #7f56d9}.human{border-left:4px solid #039855}.block{border-left:4px solid #d92d20}.gate{background:#fff7ed;border-color:#fdba74}.trace{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:15px;white-space:pre-wrap}.tag{display:inline-block;padding:3px 8px;border-radius:999px;background:#eef4ff;color:#3538cd;font-size:12px;margin:2px}.row{padding:10px 12px;border:1px solid #eaecf0;border-radius:9px;margin:8px 0}.status{font-weight:700}a.nav{display:inline-block;margin:6px 8px 0 0;padding:9px 12px;border-radius:9px;border:1px solid #d0d5dd;text-decoration:none;color:#344054;background:#fff}@media(max-width:700px){header{padding:22px}.wrap{padding:14px}}
+</style>
+</head>
+<body>
+<header><h1>FATHER — LLM Document Automation & Approval</h1><p>Будущий автоматический конвейер: LLM готовит и проверяет документы, а полномочия и финальные gate остаются у ответственных ролей.</p></header>
+<div class="wrap">
+<section class="section"><a class="nav" href="./index.html">← Factory home</a><a class="nav" href="./osint-live-project.html">OSINT Live Project →</a><h2>Главное правило</h2><p><b>LLM не является финальным согласующим.</b> Он может извлечь факты, привести документ к схеме, найти пробелы, противоречия, слабую трассировку и подготовить draft/gate recommendation. Но Legal applicability, Data ownership, Product authority, Architecture decision и Residual Risk Acceptance остаются за людьми/ролями с соответствующими полномочиями.</p></section>
+
+<section class="section"><h2>Автоматический поток документа</h2><div class="flow"><div class="step"><b>1. Receive</b><br><span class="small">source snapshot</span></div><div class="arrow">→</div><div class="step"><b>2. Parse</b><br><span class="small">sections/fields</span></div><div class="arrow">→</div><div class="step"><b>3. Extract</b><br><span class="small">claims / UNKNOWN</span></div><div class="arrow">→</div><div class="step"><b>4. Map</b><br><span class="small">artifact schema</span></div><div class="arrow">→</div><div class="step"><b>5. Trace</b><br><span class="small">source → field</span></div><div class="arrow">→</div><div class="step"><b>6. Check</b><br><span class="small">gaps / conflicts</span></div><div class="arrow">→</div><div class="step"><b>7. Draft</b><br><span class="small">candidate version</span></div><div class="arrow">→</div><div class="step"><b>8. Owner Review</b></div><div class="arrow">→</div><div class="step"><b>9. Independent Review</b></div><div class="arrow">→</div><div class="step gate"><b>10. Gate</b><br><span class="small">PASS / CONDITIONAL / BLOCKED</span></div><div class="arrow">→</div><div class="step"><b>11. Forward</b><br><span class="small">next stage</span></div></div></section>
+
+<section class="section"><h2>Что делает LLM</h2><div class="grid"><div class="card llm"><h3>Intake Extractor</h3><p class="small">Разбирает секции, поля, факты, требования, ограничения, assumptions и UNKNOWN. Не заполняет отсутствующие значения догадкой.</p></div><div class="card llm"><h3>Schema Mapper</h3><p class="small">Сопоставляет содержимое с полями конкретного артефакта и показывает unmapped/missing.</p></div><div class="card llm"><h3>Traceability Linker</h3><p class="small">Предлагает связи source → claim → requirement → decision → verification. Не выдумывает source/clause refs.</p></div><div class="card llm"><h3>Completeness Reviewer</h3><p class="small">Сравнивает документ с контрактом и формирует gap/questions register.</p></div><div class="card llm"><h3>Conflict Reviewer</h3><p class="small">Выявляет противоречивые утверждения, версии и definition drift; хранит обе стороны до решения владельца.</p></div><div class="card llm"><h3>Security / Normative Assistants</h3><p class="small">Предлагают applicability questions, abuse cases, threat drivers и missing evidence, но не выдают финальное Legal decision и не принимают residual risk.</p></div><div class="card llm"><h3>Architecture Reviewer</h3><p class="small">Сравнивает варианты, строит trade-off matrix, выявляет unsupported “best” claims и готовит ADR draft.</p></div><div class="card llm"><h3>Gate Assessor</h3><p class="small">Возвращает только <code>suggestedGateOutcome</code> и список blockers/conditions. Финальное gate-решение подписывает уполномоченная роль.</p></div></div></section>
+
+<section class="section"><h2>Что остаётся человеку</h2><div class="grid"><div class="card human"><h3>Business Owner / Product</h3><p class="small">Подтверждает проблему, scope, ценность, KPI, продуктовый gate.</p></div><div class="card human"><h3>Legal / Compliance</h3><p class="small">Финальная применимость правовых/регуляторных требований.</p></div><div class="card human"><h3>Data Owner</h3><p class="small">Классификация данных, допустимая обработка, sharing/retention.</p></div><div class="card human"><h3>Security</h3><p class="small">Security intake, threat model, security requirements; не подменяет risk owner.</p></div><div class="card human"><h3>Requirements / QA</h3><p class="small">Baseline требований, testability, acceptance evidence.</p></div><div class="card human"><h3>Architect + Independent Reviewer</h3><p class="small">Варианты архитектуры, решение, trade-offs; архитектор не self-approve material decision.</p></div><div class="card human"><h3>Risk Owner</h3><p class="small">Единственный, кто может принять остаточный риск в своей области полномочий.</p></div><div class="card human"><h3>Service / Release Owner</h3><p class="small">Release/operations gate, rollback, handoff, operational acceptance.</p></div></div></section>
+
+<section class="section"><h2>Маршрутизация по этапам</h2>
+<div class="row"><b>Product Discovery</b> → Product/Business Owner → <span class="tag">PRODUCT_READY</span></div>
+<div class="row"><b>Security Intake</b> → Security + conditional Legal/Data → <span class="tag">SECURITY_INTAKE_READY</span></div>
+<div class="row"><b>System Engineering</b> → System + Integration + Security review → <span class="tag">SYSTEM_MODEL_READY</span></div>
+<div class="row"><b>Threat Model v0</b> → Security + System + Independent review → <span class="tag">THREAT_MODEL_V0_READY</span></div>
+<div class="row"><b>Requirements</b> → Requirements + QA + domain authorities → <span class="tag">REQUIREMENTS_BASELINE_READY</span></div>
+<div class="row"><b>Delivery Feasibility</b> → PM + Finance/Ops → <span class="tag">DELIVERY_FEASIBILITY_READY</span></div>
+<div class="row"><b>Architecture Options</b> → Architect + Security + Skeptical Reviewer → <span class="tag">OPTIONS_REVIEWED</span></div>
+<div class="row"><b>Architecture Decision</b> → Decision owner + Security + Independent review → <span class="tag">ARCHITECTURE_DECISION_ALLOWED</span></div>
+<div class="row"><b>Detailed Design</b> → Software/API/Data/Integration + QA/Security → <span class="tag">DETAILED_DESIGN_READY</span></div>
+<div class="row"><b>Implementation</b> → Engineer + Code Review + Security evidence → <span class="tag">IMPLEMENTATION_VERIFIED</span></div>
+<div class="row"><b>Verification</b> → QA + Product/Security as applicable → <span class="tag">VERIFICATION_COMPLETE</span></div>
+<div class="row"><b>Release</b> → Release/Ops → Service Owner → <span class="tag">RELEASE_ALLOWED</span></div>
+<div class="row"><b>Operation</b> → Ops/Incident/Security → <span class="tag">CONTINUE / REASSESS</span></div>
+</section>
+
+<section class="section"><h2>Состояния документа</h2><div class="trace">RECEIVED
+  ↓
+INGESTED → PARSED → EXTRACTED → CLASSIFIED
+  ↓
+MAPPED_TO_ARTIFACT_SCHEMA
+  ↓
+TRACEABILITY_CHECKED
+  ↓
+COMPLETENESS_CHECKED
+  ↓
+CONFLICT_CHECKED
+  ↓
+CANDIDATE_DRAFT
+  ↓
+OWNER_REVIEW
+  ↓
+DOMAIN_REVIEW
+  ↓
+INDEPENDENT_REVIEW
+  ↓
+APPROVED / CONDITIONALLY_APPROVED
+  ↓
+GATE
+  ↓
+FORWARD
+
+Любая проверка может отправить документ в REWORK_REQUIRED / BLOCKED / REJECTED.</div></section>
+
+<section class="section"><h2>Hard Blocks</h2><div class="card block"><ul><li>нет accountable owner;</li><li>нет обязательного согласования;</li><li>blocking conflict не разрешён;</li><li>UNKNOWN превращён в факт;</li><li>source/evidence ref не разрешается;</li><li>material claim без provenance;</li><li>Legal applicability “утвердил” только LLM;</li><li>residual risk принял LLM или Security без risk authority;</li><li>архитектор self-approved material decision;</li><li>числовая цель/оценка выдана без требуемого basis.</li></ul></div></section>
+
+<section class="section"><h2>Как это будет выглядеть в автомате</h2><div class="grid"><div class="card"><h3>Inbox</h3><p class="small">Новые документы/версии, ещё не разобранные.</p></div><div class="card"><h3>LLM Review Queue</h3><p class="small">Автоматические extraction / mapping / completeness / conflict jobs.</p></div><div class="card"><h3>Human Approval Queue</h3><p class="small">Документы, ожидающие конкретную роль. Не общий “approve”.</p></div><div class="card"><h3>Blocked</h3><p class="small">Показывает точный blocker, owner и downstream impact.</p></div><div class="card"><h3>Gate Board</h3><p class="small">candidate outcome от LLM + финальный outcome от authority.</p></div><div class="card"><h3>Trace Graph</h3><p class="small">Документ → claim → evidence → review → approval → gate → downstream.</p></div><div class="card"><h3>Version/Diff</h3><p class="small">Что изменилось после прошлого согласования и какие approvals стали недействительны.</p></div><div class="card"><h3>Audit</h3><p class="small">Кто/когда/почему согласовал, отклонил или отправил на доработку.</p></div></div></section>
+
+<section class="section"><h2>Будущая исполняемая схема</h2><div class="trace">Document Store (immutable versions)
+        ↓ events
+Work Queue / Router
+        ↓
+LLM Workers
+  ├─ Extractor
+  ├─ Mapper
+  ├─ Trace Linker
+  ├─ Gap Reviewer
+  ├─ Conflict Reviewer
+  ├─ Security/Normative Assistants
+  └─ Gate Assessor
+        ↓
+Review Task Store
+        ↓
+Human Approval Queue
+        ↓
+Approval Records (append-only)
+        ↓
+Gate Engine
+        ↓
+Next-stage Router
+        ↓
+Notifications / dashboard / audit</div><p class="small">Каждый LLM-run должен хранить trace ID, model ID, prompt version, input refs, output refs, duration и результат последующей human review.</p></section>
+
+<section class="section"><p class="small muted">Canonical models: <code>father/factory/automation/DOCUMENT_AUTOMATION_PIPELINE.yaml</code> and <code>father/factory/automation/DOCUMENT_APPROVAL_MATRIX.yaml</code>.</p></section>
+</div>
+</body></html>

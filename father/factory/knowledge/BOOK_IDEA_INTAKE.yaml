@@ -1,0 +1,134 @@
+schemaVersion: 2
+registryId: FATHER-BOOK-IDEA-INTAKE-0001
+status: ACTIVE_CANDIDATE_REGISTRY
+purpose: >-
+  Extract reusable engineering ideas from user-owned books and promote them into FATHER only when their source,
+  scope, applicability and effect on process/data/UI are explicit. This prevents repeated redesign and prevents
+  book summaries from becoming unverified system rules.
+
+ideaLifecycle:
+  states: [DISCOVERED, SOURCE_VERIFIED, MAPPED, IMPLEMENTED_CANDIDATE, INDEPENDENT_REVIEW, PROMOTED, REJECTED, SUPERSEDED]
+  requiredFields:
+    - ideaId
+    - sourceTitle
+    - sourceLocator
+    - ideaSummary
+    - sourceEvidenceState
+    - applicability
+    - affectedFATHERObjects
+    - proposedChange
+    - conflictRefs
+    - reviewState
+    - implementationRefs
+
+rules:
+  - do_not_copy_long_copyrighted_text
+  - store_paraphrased_idea_plus_source_locator
+  - source_idea_does_not_override_normative_requirements
+  - preserve_conflicts_between_books_or_methods
+  - do_not_promote_an_idea_only_because_it_is_popular
+  - implementation_may_be_candidate_before_independent_review_but_must_be_labeled
+  - architecture_books_may_shape_data_and_UI_contracts_before_architecture_execution_is_unlocked
+
+ideas:
+  - ideaId: BOOK-RF-001
+    sourceTitle: 'Фундаментальный подход к программной архитектуре — Mark Richards, Neal Ford'
+    sourceLocator: 'главы 4–5; выбор архитектурных свойств'
+    ideaSummary: architecture characteristics are first-class design drivers; derive them from domain concerns, requirements and implicit context, and keep the selected set materially small
+    sourceEvidenceState: SOURCE_VERIFIED
+    applicability: ARCHITECTURE_AND_PRE_ARCHITECTURE_DRIVER_DISCOVERY
+    affectedFATHERObjects: [ARCHITECTURE_CHARACTERISTIC_CANDIDATE, ARCHITECTURE_DRIVER_SET, REQUIREMENTS_BASELINE]
+    proposedChange: model characteristics as traceable objects before option comparison
+    conflictRefs: []
+    reviewState: IMPLEMENTED_CANDIDATE
+    implementationRefs: [father/factory/architecture/ARCHITECTURE_WORKBENCH_MODEL.yaml, father/factory/paper-pipeline/PROCESSING_METHOD_CATALOG.yaml]
+
+  - ideaId: BOOK-RF-002
+    sourceTitle: 'Фундаментальный подход к программной архитектуре — Mark Richards, Neal Ford'
+    sourceLocator: 'главы 1–2; анализ компромиссов'
+    ideaSummary: architecture decisions are context-dependent trade-offs, not universally best technologies
+    sourceEvidenceState: SOURCE_VERIFIED
+    applicability: ARCHITECTURE_OPTIONS_AND_DECISIONS
+    affectedFATHERObjects: [ARCHITECTURE_OPTION, TRADEOFF_RECORD, OPTION_TRADEOFF_MATRIX]
+    proposedChange: require explicit benefit/cost/risk/rationale per material option comparison
+    conflictRefs: []
+    reviewState: IMPLEMENTED_CANDIDATE
+    implementationRefs: [father/factory/architecture/ARCHITECTURE_WORKBENCH_MODEL.yaml, father/factory/paper-pipeline/PROCESSING_METHOD_CATALOG.yaml]
+
+  - ideaId: BOOK-RF-003
+    sourceTitle: 'Фундаментальный подход к программной архитектуре — Mark Richards, Neal Ford'
+    sourceLocator: 'глава 19; запись архитектурных решений'
+    ideaSummary: significant architectural decisions should be recorded with status, context, decision, consequences and preserved history; compliance/notes/alternatives can extend the record
+    sourceEvidenceState: SOURCE_VERIFIED
+    applicability: ARCHITECTURE_DECISION
+    affectedFATHERObjects: [ADR, ARCHITECTURE_DECISION_RECORDS, DECISION_EVIDENCE_REGISTER]
+    proposedChange: implement ADR lifecycle and supersession history as first-class data
+    conflictRefs: []
+    reviewState: IMPLEMENTED_CANDIDATE
+    implementationRefs: [father/factory/architecture/ARCHITECTURE_WORKBENCH_MODEL.yaml, father/factory/paper-pipeline/PROCESSING_METHOD_CATALOG.yaml]
+
+  - ideaId: BOOK-RF-004
+    sourceTitle: 'Фундаментальный подход к программной архитектуре — Mark Richards, Neal Ford'
+    sourceLocator: 'глава 20; анализ архитектурных рисков'
+    ideaSummary: architecture risk review should be explicit, collaborative and trackable rather than buried in prose
+    sourceEvidenceState: SOURCE_VERIFIED
+    applicability: ARCHITECTURE_OPTIONS_REVIEW
+    affectedFATHERObjects: [ARCHITECTURE_RISK, RISK_STORM_REVIEW, SECURITY_RISK_REGISTER]
+    proposedChange: add risk-storm review records and evidence-backed risk tracking
+    conflictRefs: []
+    reviewState: IMPLEMENTED_CANDIDATE
+    implementationRefs: [father/factory/architecture/ARCHITECTURE_WORKBENCH_MODEL.yaml, father/factory/paper-pipeline/PROCESSING_METHOD_CATALOG.yaml]
+
+  - ideaId: BOOK-RF-005
+    sourceTitle: 'Фундаментальный подход к программной архитектуре — Mark Richards, Neal Ford'
+    sourceLocator: 'глава 1; постоянный анализ архитектуры'
+    ideaSummary: architecture must be continuously reassessed as business, technology and system conditions change
+    sourceEvidenceState: SOURCE_VERIFIED
+    applicability: OPERATION_AND_ARCHITECTURE_GOVERNANCE
+    affectedFATHERObjects: [ARCHITECTURE_HEALTH_REVIEW, FEEDBACK_BACKLOG, CHANGE_LOG]
+    proposedChange: add architecture health review triggers and timeline
+    conflictRefs: []
+    reviewState: IMPLEMENTED_CANDIDATE
+    implementationRefs: [father/factory/architecture/ARCHITECTURE_WORKBENCH_MODEL.yaml, father/factory/paper-pipeline/PROCESSING_METHOD_CATALOG.yaml]
+
+  - ideaId: BOOK-C4-001
+    sourceTitle: 'The C4 model for visualising software architecture — Simon Brown'
+    sourceLocator: 'chapter 5, parsed page 40; C4 hierarchy'
+    ideaSummary: describe software architecture with hierarchical views Context, Container, Component and Code, each zooming to a more detailed level
+    sourceEvidenceState: SOURCE_VERIFIED
+    applicability: ARCHITECTURE_REPRESENTATION
+    affectedFATHERObjects: [SYSTEM_CONTEXT, ARCHITECTURE_VIEWS, COMPONENT_DESIGN]
+    proposedChange: use C4 view hierarchy as one representation model while keeping lifecycle/process logic separate
+    conflictRefs: []
+    reviewState: MAPPED
+    implementationRefs: [father/factory/paper-pipeline/PROCESSING_METHOD_CATALOG.yaml]
+
+  - ideaId: BOOK-C4-002
+    sourceTitle: 'The C4 model for visualising software architecture — Simon Brown'
+    sourceLocator: 'chapters 6–8, parsed pages 44, 49, 55; view intent and optionality'
+    ideaSummary: System Context and Container are baseline views; Container communicates high-level architecture shape, responsibilities, major technology choices and interactions, while Component/Code views are created when their decision value justifies maintenance cost
+    sourceEvidenceState: SOURCE_VERIFIED
+    applicability: SYSTEM_AND_ARCHITECTURE_VIEW_SELECTION
+    affectedFATHERObjects: [SYSTEM_CONTEXT, ARCHITECTURE_VIEWS, COMPONENT_DESIGN]
+    proposedChange: require Context and Container for material software systems; make deeper views conditional on usefulness and maintainability
+    conflictRefs: []
+    reviewState: MAPPED
+    implementationRefs: [father/factory/paper-pipeline/FATHER_PAPER_PIPELINE_ALGORITHM.md, father/factory/paper-pipeline/PROCESSING_METHOD_CATALOG.yaml]
+
+backlogSources:
+  - 'Clements et al. — Documenting Software Architectures'
+  - 'Robert C. Martin — Clean Architecture'
+  - 'Gregor Hohpe — The Software Architect Elevator'
+  - 'Woods et al. — Software Systems Architecture'
+  - 'Building Evolutionary Architectures, 2e'
+  - 'Just Enough Software Architecture'
+  - 'Team Topologies'
+  - 'Building Secure & Reliable Systems'
+  - 'Software Architecture: The Hard Parts — source pilot pending canonical source-byte gate'
+
+nextAction:
+  - locate each user-owned source in Library
+  - extract only design-shaping ideas first
+  - map each idea to existing FATHER entities before adding new entities
+  - prefer additive schema changes over rewrites
+  - independently review before PROMOTED

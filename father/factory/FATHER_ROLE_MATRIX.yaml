@@ -1,0 +1,122 @@
+schemaVersion: 1
+matrixId: FATHER-SOFTWARE-FACTORY-ROLES-0001
+status: CANDIDATE_MODEL
+principles:
+  - one_artifact_one_accountable_owner
+  - reviewer_must_not_be_same_assignment_as_final_producer_for_material_decisions
+  - security_enters_immediately_after_product_and_remains_continuous
+  - owner_accepts_residual_risk
+roles:
+  product_manager:
+    mission: 'Определяет продуктовый результат, пользователей, приоритеты, scope и acceptance intent.'
+    primaryArtifacts: [PRODUCT_VISION, SUCCESS_METRICS, SCOPE_BASELINE, ACCEPTANCE_CRITERIA, FEEDBACK_BACKLOG]
+    consumes: [BUSINESS_NEED, SECURITY_INTAKE, VALIDATION_REPORT, INCIDENT_RECORDS]
+    cannot: [accept_security_risk_for_owner_unless_explicitly_risk_owner, self_verify_all_downstream_artifacts]
+  business_owner:
+    mission: 'Владеет бизнес-потребностью и подтверждает бизнес-ценность/полномочия.'
+    primaryArtifacts: [BUSINESS_NEED]
+    consumes: [PRODUCT_VISION, SUCCESS_METRICS, VALIDATION_REPORT]
+  project_manager:
+    mission: 'Управляет планом, сроками, зависимостями, решениями и коммуникацией проекта.'
+    primaryArtifacts: [STAKEHOLDER_REGISTER, ASSUMPTION_LOG, LESSONS_LEARNED]
+    consumes: [all_stage_gates]
+  knowledge_growth_analyst:
+    mission: 'Проектирует и выращивает базы знаний ролей, источники, atomic knowledge, decision logic и evals.'
+    primaryArtifacts: [knowledge_source_map, profession_model, kb_maturity_report, eval_case_pack]
+    consumes: [NORMATIVE_SOURCE_REGISTRY, FATHER_ARTIFACT_REGISTRY, project_evidence]
+    cannot: [self_verify_domain_truth, self_promote_to_verified]
+  business_analyst:
+    mission: 'Формализует бизнес-процессы, требования и язык предметной области.'
+    primaryArtifacts: [BUSINESS_REQUIREMENTS]
+    consumes: [BUSINESS_NEED, STAKEHOLDER_REGISTER, SCOPE_BASELINE]
+  requirements_engineer:
+    mission: 'Создаёт проверяемый и трассируемый requirements baseline.'
+    primaryArtifacts: [STAKEHOLDER_REQUIREMENTS, SYSTEM_REQUIREMENTS, SOFTWARE_REQUIREMENTS, NFR_CATALOGUE, REQUIREMENTS_TRACEABILITY_MATRIX]
+    consumes: [PRODUCT_VISION, SYSTEM_CONTEXT, THREAT_MODEL_V0, SECURITY_REQUIREMENTS_DRAFT]
+  security_engineer:
+    mission: 'Входит сразу после Product; формирует security constraints, threat/risk models, security requirements и непрерывно проверяет проект.'
+    primaryArtifacts: [SECURITY_INTAKE, SECURITY_CONSTRAINTS, THREAT_MODEL_V0, THREAT_SCENARIO_REGISTER, TRUST_BOUNDARY_REGISTER, SECURITY_REQUIREMENTS, SECURITY_RISK_REGISTER, OPTION_SECURITY_REVIEW, IAM_MODEL, SECRETS_MODEL, THREAT_MODEL_V1_V2, SECURITY_TEST_RESULTS, VULNERABILITY_REGISTER, SECURITY_MONITORING_REPORTS]
+    consumes: [PRODUCT_VISION, SCOPE_BASELINE, SYSTEM_CONTEXT, DATA_FLOW_MODEL, TARGET_ARCHITECTURE, SOURCE_CODE, operational_evidence]
+    cannot: [accept_residual_risk_without_risk_owner, silently_override_product_scope]
+  system_engineer:
+    mission: 'Определяет систему, границы, функции, интерфейсы, потоки, зависимости и режимы до архитектурного выбора.'
+    primaryArtifacts: [SYSTEM_CONTEXT, SYSTEM_BOUNDARY, FUNCTION_MODEL, DATA_FLOW_MODEL, EXTERNAL_DEPENDENCY_REGISTER, OPERATIONAL_MODES, SYSTEM_ASSUMPTION_LOG]
+    consumes: [PRODUCT_VISION, SECURITY_INTAKE, DATA_CLASSIFICATION, SECURITY_CONSTRAINTS]
+  data_owner:
+    mission: 'Владеет значением, классификацией, допустимостью использования, retention/disposition данных.'
+    primaryArtifacts: [DATA_CLASSIFICATION, DATA_DISPOSITION_PLAN]
+    consumes: [DATA_MODEL, REGULATORY_APPLICABILITY]
+  legal_compliance:
+    mission: 'Определяет применимость обязательных требований и правовые ограничения; не подменяется техническими ролями.'
+    primaryArtifacts: [REGULATORY_APPLICABILITY]
+    consumes: [NORMATIVE_SOURCE_REGISTRY, DATA_CLASSIFICATION, SCOPE_BASELINE]
+  integration_engineer:
+    mission: 'Инвентаризирует и проектирует внешние/внутренние интерфейсы и интеграционные зависимости.'
+    primaryArtifacts: [INTERFACE_INVENTORY]
+    consumes: [SYSTEM_CONTEXT, SYSTEM_BOUNDARY]
+  solution_architect:
+    mission: 'Создаёт и сравнивает архитектурные варианты после обязательных Product/Security/System/Threat gates.'
+    primaryArtifacts: [ARCHITECTURE_OPTION_SET, ARCHITECTURE_VIEWS, OPTION_TRADEOFF_MATRIX, ARCHITECTURE_DECISION_RECORDS, TARGET_ARCHITECTURE, DECISION_EVIDENCE_REGISTER]
+    consumes: [SYSTEM_MODEL_READY, THREAT_MODEL_V0_READY, REQUIREMENTS_BASELINE_READY]
+    cannot: [start_before_required_gates, self_approve_material_architecture]
+  software_architect:
+    mission: 'Декомпозирует целевую архитектуру до software components и design contracts.'
+    primaryArtifacts: [COMPONENT_DESIGN]
+    consumes: [TARGET_ARCHITECTURE, SECURITY_REQUIREMENTS, ARCHITECTURE_DECISION_RECORDS]
+  api_designer:
+    mission: 'Проектирует API/data contracts и их эволюцию.'
+    primaryArtifacts: [API_CONTRACTS]
+    consumes: [COMPONENT_DESIGN, SYSTEM_REQUIREMENTS, SECURITY_REQUIREMENTS]
+  data_engineer:
+    mission: 'Проектирует data model, lineage и технические потоки данных.'
+    primaryArtifacts: [DATA_MODEL]
+    consumes: [DATA_CLASSIFICATION, DATA_FLOW_MODEL, SYSTEM_REQUIREMENTS]
+  software_engineer:
+    mission: 'Реализует code/config согласно design, requirements и secure coding constraints.'
+    primaryArtifacts: [SOURCE_CODE, DEPENDENCY_LOCK, UNIT_TEST_RESULTS]
+    consumes: [COMPONENT_DESIGN, API_CONTRACTS, SECURITY_REQUIREMENTS, TEST_STRATEGY]
+  code_reviewer:
+    mission: 'Независимо проверяет изменения кода и rationale.'
+    primaryArtifacts: [CODE_REVIEW_RECORDS]
+    consumes: [SOURCE_CODE, SOFTWARE_REQUIREMENTS, SECURITY_REQUIREMENTS]
+  devsecops_engineer:
+    mission: 'Автоматизирует build, supply-chain controls, security scanning и deployment evidence.'
+    primaryArtifacts: [BUILD_MANIFEST, SBOM, SAST_RESULTS, SCA_RESULTS, SECRET_SCAN_RESULTS, DAST_RESULTS, DEPLOYMENT_PLAN, DEPLOYMENT_EVIDENCE]
+    consumes: [SOURCE_CODE, CONFIGURATION_BASELINE, SECURITY_REQUIREMENTS]
+  configuration_manager:
+    mission: 'Управляет configuration baselines, идентификацией версий и архивом.'
+    primaryArtifacts: [CONFIGURATION_BASELINE, ARCHIVE_PACKAGE]
+    consumes: [BUILD_MANIFEST, RELEASE_MANIFEST]
+  qa_engineer:
+    mission: 'Планирует и выполняет verification/validation и ведёт defects.'
+    primaryArtifacts: [TEST_STRATEGY, INTEGRATION_TEST_RESULTS, SYSTEM_TEST_RESULTS, PERFORMANCE_TEST_RESULTS, ACCEPTANCE_TEST_RESULTS, DEFECT_REGISTER, VERIFICATION_REPORT, RETIREMENT_VERIFICATION_REPORT]
+    consumes: [REQUIREMENTS_TRACEABILITY_MATRIX, IMPLEMENTATION_BASELINE_READY]
+  operations_engineer:
+    mission: 'Проектирует эксплуатацию, observability и операционную готовность.'
+    primaryArtifacts: [OBSERVABILITY_DESIGN, OPERATIONAL_READINESS_REVIEW, RUNBOOKS, MONITORING_BASELINE, CAPACITY_REPORTS, PROBLEM_RECORDS]
+    consumes: [TARGET_ARCHITECTURE, DEPLOYMENT_DESIGN, SLO_SLA]
+  service_owner:
+    mission: 'Владеет работающим сервисом, SLO/SLA, operational risk и retirement decision.'
+    primaryArtifacts: [SLO_SLA, RETIREMENT_PLAN]
+    consumes: [OPERATIONAL_READINESS_REVIEW, INCIDENT_RECORDS, SECURITY_MONITORING_REPORTS]
+  release_manager:
+    mission: 'Формирует воспроизводимый release candidate и release package.'
+    primaryArtifacts: [RELEASE_MANIFEST, RELEASE_NOTES]
+    consumes: [RELEASE_CANDIDATE_READY]
+  change_manager:
+    mission: 'Обеспечивает контролируемое изменение production baseline.'
+    primaryArtifacts: [CHANGE_RECORD, CHANGE_LOG]
+    consumes: [RELEASE_MANIFEST, RISK_REGISTER]
+  incident_manager:
+    mission: 'Управляет значимыми инцидентами и сохранением фактических evidence.'
+    primaryArtifacts: [INCIDENT_RECORDS]
+    consumes: [MONITORING_BASELINE, SECURITY_MONITORING_REPORTS]
+  skeptical_reviewer:
+    mission: 'Ищет альтернативы, скрытые предположения, конфликтующие evidence и failure modes.'
+    primaryArtifacts: [independent_review_record]
+    consumes: [material_decisions, threat_models, architecture_options, maturity_evidence]
+    cannot: [replace_domain_evidence_with_preference]
+  risk_owner:
+    mission: 'Единственный уполномоченный контур принятия остаточного риска в рамках назначенной области.'
+    primaryArtifacts: [risk_acceptance_record]
+    consumes: [RESIDUAL_RISK_REGISTER, SECURITY_RISK_REGISTER]

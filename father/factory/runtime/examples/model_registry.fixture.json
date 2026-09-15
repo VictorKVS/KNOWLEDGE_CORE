@@ -1,0 +1,79 @@
+{
+  "models": [
+    {
+      "model_id": "fixture-champion",
+      "provider": "fixture",
+      "model": "fixture-champion",
+      "roles": ["CHAMPION"],
+      "capabilities": ["*"],
+      "allowed_data_classes": ["PUBLIC", "INTERNAL", "SENSITIVE"],
+      "options": {
+        "response": {
+          "proposedDecision": "Option A",
+          "rationale": "Best supported by supplied evidence.",
+          "evidenceRefs": ["EV-1"],
+          "assumptions": ["workload remains bounded"],
+          "unknowns": ["production p95"],
+          "tradeoffs": ["speed vs control"],
+          "failureModes": ["provider outage"]
+        }
+      }
+    },
+    {
+      "model_id": "fixture-challenger-a",
+      "provider": "fixture",
+      "model": "fixture-challenger-a",
+      "roles": ["CHALLENGER"],
+      "capabilities": ["*"],
+      "allowed_data_classes": ["PUBLIC", "INTERNAL", "SENSITIVE"],
+      "options": {"response": {"challengedClaims": ["operations risk"], "alternativeOptions": ["Option B"], "counterEvidenceRefs": ["EV-2"], "hiddenAssumptions": ["stable provider terms"], "unresolvedUnknowns": ["recovery objective"], "severity": "MEDIUM"}}
+    },
+    {
+      "model_id": "fixture-challenger-b",
+      "provider": "fixture",
+      "model": "fixture-challenger-b",
+      "roles": ["CHALLENGER"],
+      "capabilities": ["*"],
+      "allowed_data_classes": ["PUBLIC", "INTERNAL", "SENSITIVE"],
+      "options": {"response": {"challengedClaims": ["cost assumptions incomplete"], "alternativeOptions": ["Hybrid"], "counterEvidenceRefs": ["EV-1"], "hiddenAssumptions": ["price stability"], "unresolvedUnknowns": ["monthly token volume"], "severity": "MEDIUM"}}
+    },
+    {
+      "model_id": "fixture-challenger-c",
+      "provider": "fixture",
+      "model": "fixture-challenger-c",
+      "roles": ["CHALLENGER"],
+      "capabilities": ["*"],
+      "allowed_data_classes": ["PUBLIC", "INTERNAL", "SENSITIVE"],
+      "options": {"response": {"challengedClaims": [], "alternativeOptions": [], "counterEvidenceRefs": ["EV-1"], "hiddenAssumptions": [], "unresolvedUnknowns": [], "severity": "LOW"}}
+    },
+    {
+      "model_id": "fixture-challenger-d",
+      "provider": "fixture",
+      "model": "fixture-challenger-d",
+      "roles": ["CHALLENGER"],
+      "capabilities": ["*"],
+      "allowed_data_classes": ["PUBLIC", "INTERNAL", "SENSITIVE"],
+      "options": {"response": {"challengedClaims": [], "alternativeOptions": [], "counterEvidenceRefs": ["EV-2"], "hiddenAssumptions": [], "unresolvedUnknowns": [], "severity": "LOW"}}
+    },
+    {
+      "model_id": "fixture-judge",
+      "provider": "fixture",
+      "model": "fixture-judge",
+      "roles": ["JUDGE"],
+      "capabilities": ["*"],
+      "allowed_data_classes": ["PUBLIC", "INTERNAL", "SENSITIVE"],
+      "options": {
+        "response": {
+          "consensusState": "CONSENSUS_WITH_CONDITIONS",
+          "strongestSupportedOption": "Option A with conditions",
+          "dissentRegister": [{"topic": "operations", "state": "open"}],
+          "insufficientEvidenceItems": ["production p95"],
+          "additionalEvidenceRequired": ["load test"],
+          "suggestedGateOutcome": "CONDITIONAL_PASS",
+          "decisionConfidenceBand": "MODERATE_EVIDENCE_SUPPORT",
+          "unknowns": ["production p95"]
+        }
+      }
+    }
+  ]
+}

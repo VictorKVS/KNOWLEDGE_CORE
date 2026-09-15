@@ -1,0 +1,111 @@
+schemaVersion: 1
+modelId: FATHER-SOFTWARE-FACTORY-LIFECYCLE-0001
+status: CANDIDATE_MODEL
+inherits:
+  constitution: father/governance/FATHER_CONSTITUTION.md
+canonicalFlow:
+  - PRODUCT_DISCOVERY
+  - SECURITY_INTAKE
+  - SYSTEM_ENGINEERING
+  - THREAT_MODEL_V0
+  - REQUIREMENTS_BASELINE
+  - ARCHITECTURE_OPTIONS
+  - ARCHITECTURE_DECISION
+  - DETAILED_DESIGN
+  - IMPLEMENTATION
+  - VERIFICATION_VALIDATION
+  - RELEASE_DEPLOYMENT
+  - OPERATION_MAINTENANCE
+  - RETIREMENT
+stages:
+  - id: PRODUCT_DISCOVERY
+    purpose: 'Определить зачем существует продукт, для кого, границы, ценность, ограничения и полномочия решений.'
+    mandatoryRoles: [product_manager, business_owner]
+    supportingRoles: [business_analyst, project_manager, knowledge_growth_analyst]
+    requiredInputs: [business_need, sponsor_context]
+    produces: [PRODUCT_VISION, BUSINESS_NEED, SUCCESS_METRICS, STAKEHOLDER_REGISTER, SCOPE_BASELINE, ASSUMPTION_LOG]
+    gate: PRODUCT_READY
+  - id: SECURITY_INTAKE
+    purpose: 'Подключить Security сразу после Product и сформировать ранние ограничения, классы данных, trust assumptions и abuse context.'
+    mandatoryRoles: [security_engineer]
+    supportingRoles: [product_manager, legal_compliance, data_owner, knowledge_growth_analyst]
+    requiredInputs: [PRODUCT_VISION, BUSINESS_NEED, STAKEHOLDER_REGISTER, SCOPE_BASELINE]
+    produces: [SECURITY_INTAKE, DATA_CLASSIFICATION, REGULATORY_APPLICABILITY, INITIAL_ABUSE_CASES, SECURITY_CONSTRAINTS, SECURITY_QUESTIONS_LOG]
+    gate: SECURITY_INTAKE_READY
+  - id: SYSTEM_ENGINEERING
+    purpose: 'Описать систему до выбора архитектуры: контекст, функции, интерфейсы, потоки данных, внешние зависимости, режимы и системные ограничения.'
+    mandatoryRoles: [system_engineer, security_engineer]
+    supportingRoles: [business_analyst, data_engineer, integration_engineer, operations_engineer]
+    requiredInputs: [PRODUCT_VISION, SCOPE_BASELINE, SECURITY_INTAKE, DATA_CLASSIFICATION, SECURITY_CONSTRAINTS]
+    produces: [SYSTEM_CONTEXT, SYSTEM_BOUNDARY, FUNCTION_MODEL, DATA_FLOW_MODEL, INTERFACE_INVENTORY, EXTERNAL_DEPENDENCY_REGISTER, OPERATIONAL_MODES, SYSTEM_ASSUMPTION_LOG]
+    gate: SYSTEM_MODEL_READY
+  - id: THREAT_MODEL_V0
+    purpose: 'Сформировать раннюю модель угроз до архитектурного решения.'
+    mandatoryRoles: [security_engineer]
+    supportingRoles: [system_engineer, product_manager, data_owner, skeptical_reviewer]
+    requiredInputs: [SYSTEM_CONTEXT, SYSTEM_BOUNDARY, DATA_FLOW_MODEL, DATA_CLASSIFICATION, INTERFACE_INVENTORY, SECURITY_CONSTRAINTS]
+    produces: [THREAT_MODEL_V0, THREAT_SCENARIO_REGISTER, TRUST_BOUNDARY_REGISTER, SECURITY_REQUIREMENTS_DRAFT, SECURITY_RISK_REGISTER]
+    gate: THREAT_MODEL_V0_READY
+  - id: REQUIREMENTS_BASELINE
+    purpose: 'Свести продуктовые, системные, security и quality requirements в проверяемый baseline.'
+    mandatoryRoles: [requirements_engineer]
+    supportingRoles: [product_manager, system_engineer, security_engineer, qa_engineer, operations_engineer]
+    requiredInputs: [PRODUCT_VISION, SYSTEM_CONTEXT, THREAT_MODEL_V0, SECURITY_REQUIREMENTS_DRAFT]
+    produces: [BUSINESS_REQUIREMENTS, STAKEHOLDER_REQUIREMENTS, SYSTEM_REQUIREMENTS, SOFTWARE_REQUIREMENTS, NFR_CATALOGUE, SECURITY_REQUIREMENTS, ACCEPTANCE_CRITERIA, REQUIREMENTS_TRACEABILITY_MATRIX]
+    gate: REQUIREMENTS_BASELINE_READY
+  - id: ARCHITECTURE_OPTIONS
+    purpose: 'Создать несколько архитектурных вариантов и сравнить их по требованиям, рискам, стоимости и эксплуатационным качествам.'
+    mandatoryRoles: [solution_architect]
+    supportingRoles: [system_engineer, security_engineer, data_architect, integration_architect, operations_engineer]
+    requiredInputs: [SYSTEM_MODEL_READY, THREAT_MODEL_V0_READY, REQUIREMENTS_BASELINE_READY]
+    produces: [ARCHITECTURE_OPTION_SET, ARCHITECTURE_VIEWS, QUALITY_ATTRIBUTE_SCENARIOS, OPTION_TRADEOFF_MATRIX, OPTION_SECURITY_REVIEW]
+    gate: ARCHITECTURE_OPTIONS_READY
+  - id: ARCHITECTURE_DECISION
+    purpose: 'Независимо проверить варианты, принять решение и сохранить rationale/risks/rollback.'
+    mandatoryRoles: [solution_architect, security_engineer, skeptical_reviewer]
+    supportingRoles: [product_manager, system_engineer, operations_engineer, finance_procurement]
+    requiredInputs: [ARCHITECTURE_OPTION_SET, OPTION_TRADEOFF_MATRIX, OPTION_SECURITY_REVIEW]
+    produces: [ARCHITECTURE_DECISION_RECORDS, TARGET_ARCHITECTURE, RESIDUAL_RISK_REGISTER, DECISION_EVIDENCE_REGISTER]
+    gate: ARCHITECTURE_DECISION_READY
+  - id: DETAILED_DESIGN
+    purpose: 'Декомпозировать выбранную архитектуру до компонентов, API, данных, IAM, secrets, deployment и детальной threat model.'
+    mandatoryRoles: [software_architect, security_engineer]
+    supportingRoles: [system_engineer, data_engineer, api_designer, devops_engineer, ux_designer]
+    requiredInputs: [TARGET_ARCHITECTURE, ARCHITECTURE_DECISION_RECORDS, SECURITY_REQUIREMENTS]
+    produces: [COMPONENT_DESIGN, API_CONTRACTS, DATA_MODEL, IAM_MODEL, SECRETS_MODEL, DEPLOYMENT_DESIGN, OBSERVABILITY_DESIGN, THREAT_MODEL_V1_V2, TEST_STRATEGY]
+    gate: DESIGN_READY_FOR_IMPLEMENTATION
+  - id: IMPLEMENTATION
+    purpose: 'Реализовать решение с управляемым кодом, зависимостями, конфигурацией, сборкой и secure coding evidence.'
+    mandatoryRoles: [software_engineer]
+    supportingRoles: [security_engineer, devsecops_engineer, configuration_manager]
+    requiredInputs: [COMPONENT_DESIGN, API_CONTRACTS, SECURITY_REQUIREMENTS, TEST_STRATEGY]
+    produces: [SOURCE_CODE, BUILD_MANIFEST, DEPENDENCY_LOCK, SBOM, CONFIGURATION_BASELINE, CODE_REVIEW_RECORDS, SAST_RESULTS, SCA_RESULTS, SECRET_SCAN_RESULTS, UNIT_TEST_RESULTS]
+    gate: IMPLEMENTATION_BASELINE_READY
+  - id: VERIFICATION_VALIDATION
+    purpose: 'Подтвердить соответствие требованиям, архитектуре и security constraints.'
+    mandatoryRoles: [qa_engineer, security_engineer]
+    supportingRoles: [software_engineer, product_manager, system_engineer, operations_engineer]
+    requiredInputs: [IMPLEMENTATION_BASELINE_READY, REQUIREMENTS_TRACEABILITY_MATRIX, TEST_STRATEGY]
+    produces: [INTEGRATION_TEST_RESULTS, SYSTEM_TEST_RESULTS, SECURITY_TEST_RESULTS, DAST_RESULTS, PERFORMANCE_TEST_RESULTS, ACCEPTANCE_TEST_RESULTS, DEFECT_REGISTER, VULNERABILITY_REGISTER, VERIFICATION_REPORT, VALIDATION_REPORT]
+    gate: RELEASE_CANDIDATE_READY
+  - id: RELEASE_DEPLOYMENT
+    purpose: 'Сформировать воспроизводимый выпуск и развернуть его с контролем изменений и отката.'
+    mandatoryRoles: [release_manager, devops_engineer]
+    supportingRoles: [security_engineer, operations_engineer, product_manager]
+    requiredInputs: [RELEASE_CANDIDATE_READY]
+    produces: [RELEASE_MANIFEST, RELEASE_NOTES, DEPLOYMENT_PLAN, MIGRATION_PLAN, ROLLBACK_PLAN, CHANGE_RECORD, DEPLOYMENT_EVIDENCE, OPERATIONAL_READINESS_REVIEW]
+    gate: PRODUCTION_READY
+  - id: OPERATION_MAINTENANCE
+    purpose: 'Эксплуатировать, наблюдать, реагировать, обновлять и возвращать фактические данные в требования/риски/архитектуру.'
+    mandatoryRoles: [operations_engineer, service_owner, security_engineer]
+    supportingRoles: [sre_engineer, software_engineer, product_manager, incident_manager]
+    requiredInputs: [PRODUCTION_READY]
+    produces: [RUNBOOKS, SLO_SLA, MONITORING_BASELINE, INCIDENT_RECORDS, PROBLEM_RECORDS, VULNERABILITY_MANAGEMENT_RECORDS, CHANGE_LOG, CAPACITY_REPORTS, SECURITY_MONITORING_REPORTS, FEEDBACK_BACKLOG]
+    gate: OPERATION_CONTROLLED
+  - id: RETIREMENT
+    purpose: 'Контролируемо вывести систему/версию из эксплуатации и закрыть данные, интеграции, доступы, обязательства и знания.'
+    mandatoryRoles: [service_owner, system_engineer, security_engineer]
+    supportingRoles: [data_owner, legal_compliance, operations_engineer, product_manager]
+    requiredInputs: [retirement_decision, current_asset_inventory]
+    produces: [RETIREMENT_PLAN, DATA_DISPOSITION_PLAN, ACCESS_REVOCATION_RECORD, ARCHIVE_PACKAGE, DEPENDENCY_DECOMMISSION_RECORD, RETIREMENT_VERIFICATION_REPORT, LESSONS_LEARNED]
+    gate: RETIRED_VERIFIED

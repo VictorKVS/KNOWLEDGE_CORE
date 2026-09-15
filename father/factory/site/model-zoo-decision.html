@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>FATHER — Model Zoo Decision Panel</title>
+<style>
+:root{font-family:Inter,Segoe UI,Arial,sans-serif;color:#172033;background:#f5f7fb}*{box-sizing:border-box}body{margin:0}header{background:#101828;color:#fff;padding:28px 34px}.wrap{max-width:1500px;margin:auto;padding:24px}.section{background:#fff;border:1px solid #dde3ec;border-radius:14px;padding:20px;margin-bottom:22px}.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:12px}.card{border:1px solid #d9e0ea;border-radius:12px;padding:14px}.card h3{margin:0 0 7px}.muted,.small{color:#667085}.small{font-size:12px}.champ{border-left:4px solid #7f56d9}.chall{border-left:4px solid #2e90fa}.judge{border-left:4px solid #dc6803}.human{border-left:4px solid #039855}.block{border-left:4px solid #d92d20}.flow{display:flex;gap:8px;overflow:auto;padding:12px 0}.step{min-width:165px;border:1px solid #d7deea;border-radius:12px;padding:12px}.arrow{display:flex;align-items:center;font-size:22px;color:#98a2b3}.tag{display:inline-block;padding:3px 8px;border-radius:999px;background:#eef4ff;color:#3538cd;font-size:12px;margin:2px}.trace{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;background:#f8fafc;border:1px solid #e2e8f0;border-radius:10px;padding:15px;white-space:pre-wrap}.profile{padding:11px 12px;border:1px solid #eaecf0;border-radius:9px;margin:8px 0}a.nav{display:inline-block;margin:6px 8px 0 0;padding:9px 12px;border-radius:9px;border:1px solid #d0d5dd;text-decoration:none;color:#344054;background:#fff}@media(max-width:700px){header{padding:22px}.wrap{padding:14px}}
+</style>
+</head>
+<body>
+<header><h1>FATHER — Model Zoo Decision Panel</h1><p>Твой зоопарк моделей используется как совет экспертов: champion → blind challengers → evidence verifier → independent judge → человек с полномочиями.</p></header>
+<div class="wrap">
+<section class="section"><a class="nav" href="./document-automation.html">← Document Automation</a><a class="nav" href="./osint-live-project.html">OSINT Live Project →</a><h2>Зачем нужен зоопарк</h2><p>Одна модель хорошо пишет связный ответ, но может уверенно пропустить альтернативу или повторить собственную ошибку. Несколько моделей полезны, если им назначены разные роли и если решение оценивается по evidence, а не по голосованию.</p><p class="muted">Принцип уже совместим с существующим OSINT model-stage registry: champion/challenger, independent judge, fail-closed unsupported claims и телеметрия human reject/rework.</p></section>
+
+<section class="section"><h2>Схема решения</h2><div class="flow"><div class="step champ"><b>Champion</b><br><span class="small">лучший кандидат</span></div><div class="arrow">→</div><div class="step chall"><b>Blind Challengers</b><br><span class="small">независимая атака</span></div><div class="arrow">→</div><div class="step"><b>Evidence Verifier</b><br><span class="small">источники/coverage</span></div><div class="arrow">→</div><div class="step judge"><b>Independent Judge</b><br><span class="small">сводит, не стирает dissent</span></div><div class="arrow">→</div><div class="step human"><b>Human Authority</b><br><span class="small">финальное решение</span></div></div></section>
+
+<section class="section"><h2>Роли совета</h2><div class="grid"><div class="card champ"><h3>Champion</h3><p class="small">Готовит сильнейший вариант решения: rationale, evidence, assumptions, unknowns, trade-offs, failure modes.</p></div><div class="card chall"><h3>Architecture Skeptic</h3><p class="small">Ищет более простые варианты, hidden coupling, reversibility issues и преждевременный technology lock-in.</p></div><div class="card chall"><h3>Security / Privacy Challenger</h3><p class="small">Ищет trust-boundary, data leakage, privilege, agent/tool и external-provider risks.</p></div><div class="card chall"><h3>Operations / Reliability Challenger</h3><p class="small">Проверяет failure/recovery, SLO, support, observability, operational burden.</p></div><div class="card chall"><h3>Cost / Delivery Challenger</h3><p class="small">Проверяет TCO, staffing, estimate assumptions, procurement, migration/rework cost.</p></div><div class="card"><h3>Evidence Verifier</h3><p class="small">Проверяет, что ссылки существуют, поддерживают утверждения и не устарели. По возможности deterministic-first.</p></div><div class="card judge"><h3>Independent Judge</h3><p class="small">Собирает consensus/dissent, показывает чего не хватает, но не придумывает консенсус.</p></div><div class="card human"><h3>Decision Owner</h3><p class="small">Выбирает APPROVE / CONDITIONS / MORE EVIDENCE / REWORK / REJECT / DEFER. Модели не забирают его полномочия.</p></div></div></section>
+
+<section class="section"><h2>Не весь зоопарк на каждую задачу</h2><div class="profile"><b>LOW — Routine document review</b><br><span class="small">1 champion + schema/deterministic checks. Без совета моделей.</span></div><div class="profile"><b>MEDIUM — Material engineering decision</b><br><span class="small">1 champion + 2 blind challengers + evidence verifier + independent judge + human approval.</span></div><div class="profile"><b>HIGH — Architecture / CTO Challenge</b><br><span class="small">1 champion + 4 challengers: architecture, security, operations, cost + verifier + judge + decision owner.</span></div><div class="profile"><b>CRITICAL — Security / Legal</b><br><span class="small">Расширенный совет моделей только как advisory layer. Final Legal/Privacy/Residual Risk decision моделям запрещён.</span></div></section>
+
+<section class="section"><h2>Почему первый раунд слепой</h2><p>Challengers не должны сначала видеть выводы друг друга. Иначе модели быстро сходятся к формальному консенсусу. Первый pass создаётся независимо; второй round допускается только для материальных расхождений.</p><div class="trace">Original task + frozen evidence snapshot
+  ├─ Champion independently
+  ├─ Challenger A independently
+  ├─ Challenger B independently
+  ├─ Challenger C independently
+  └─ Challenger D independently
+          ↓
+Evidence verification
+          ↓
+Material disagreement?
+   ├─ no → Judge
+   └─ yes → cross-examination → Judge
+          ↓
+Dissent Register + Suggested Gate
+          ↓
+Human Decision</div></section>
+
+<section class="section"><h2>Решение не считается голосованием</h2><div class="grid"><div class="card"><h3>Неправильно</h3><p class="small">4 модели сказали “A”, 2 модели сказали “B” → A победил.</p></div><div class="card"><h3>Правильно</h3><p class="small">У A сильнее evidence по cost, но B единственный выявил Critical privacy blocker → решение BLOCKED до закрытия privacy вопроса.</p></div></div><p><b>Evidence strength > model vote count.</b></p></section>
+
+<section class="section"><h2>Выход — Decision Packet</h2><div class="trace">Decision Packet
+├─ task / document / version
+├─ materiality + selected panel profile
+├─ frozen input refs
+├─ champion model/version
+├─ challenger models/versions
+├─ judge model/version
+├─ options considered
+├─ evidence coverage
+├─ unsupported claims
+├─ consensus state
+├─ dissent register
+├─ UNKNOWN / insufficient evidence
+├─ trade-offs
+├─ suggested gate outcome
+├─ required human authority
+└─ final human decision + rationale</div></section>
+
+<section class="section"><h2>Возможные итоги совета</h2><div class="grid"><div class="card"><span class="tag">CONSENSUS_WITH_STRONG_EVIDENCE</span></div><div class="card"><span class="tag">CONSENSUS_WITH_CONDITIONS</span></div><div class="card"><span class="tag">MAJORITY_WITH_MATERIAL_DISSENT</span></div><div class="card block"><span class="tag">MATERIAL_DISAGREEMENT</span></div><div class="card block"><span class="tag">INSUFFICIENT_EVIDENCE</span></div><div class="card block"><span class="tag">BLOCKED_BY_POLICY_OR_AUTHORITY</span></div></div></section>
+
+<section class="section"><h2>Зоопарк сам обучается на качестве решений</h2><p>После human review сохраняем, какие предложения были приняты/отклонены. Поэтому модель назначается не потому, что она “любимая”, а потому что на конкретной capability показывает хорошую историю.</p><div class="trace">per model / per capability:
+- human acceptance rate
+- useful challenger finding rate
+- false challenge rate
+- judge agreement with human
+- unsupported claim count
+- rework rate
+- duration / token-compute cost
+- cost per accepted decision</div><p class="small">Со временем champion/challenger для Requirements может быть одним набором, для Security — другим, для архитектуры — третьим.</p></section>
+
+<section class="section"><h2>Hard blocks</h2><div class="card block"><p class="small">Нет human decision owner; source failure по материальному утверждению; sensitive data ушли в неразрешённую внешнюю модель; Legal/Residual Risk финализированы только моделями; judge спрятал dissent; champion и judge не независимы там, где независимость обязательна.</p></div></section>
+
+<section class="section"><p class="small muted">Canonical contract: <code>father/factory/automation/MODEL_ZOO_DECISION_PANEL.yaml</code>. Это advisory decision engine, а не автоматический “верховный суд”.</p></section>
+</div>
+</body></html>

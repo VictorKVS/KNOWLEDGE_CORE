@@ -1,0 +1,78 @@
+schemaVersion: 1
+mappingId: FATHER-SOURCE-ARTIFACT-MAP-0001
+status: CANDIDATE_MAPPING
+rule: 'This file maps source intent to artifact families. Exact clause-level mapping requires full-text ingestion and independent verification.'
+mappings:
+  GOST-R-57193-2025:
+    artifactFamilies: [PRODUCT, GOVERNANCE, SYSTEM_ENGINEERING, REQUIREMENTS, ARCHITECTURE, VERIFICATION, VALIDATION, OPERATIONS, RETIREMENT, RISK, CONFIGURATION]
+    roleImpact: [project_manager, system_engineer, solution_architect, requirements_engineer, qa_engineer, operations_engineer]
+  GOST-R-58609-2019:
+    artifactFamilies: [ALL_INFORMATION_ITEMS]
+    roleImpact: [all_document_owners, knowledge_growth_analyst, configuration_manager]
+  GOST-R-ISO-IEC-12207-2010:
+    artifactFamilies: [SOFTWARE_REQUIREMENTS, DESIGN, IMPLEMENTATION, BUILD, VERIFICATION, VALIDATION, RELEASE, MAINTENANCE, RETIREMENT]
+    roleImpact: [software_architect, software_engineer, qa_engineer, configuration_manager, operations_engineer]
+  GOST-R-57100-2025:
+    artifactFamilies: [ARCHITECTURE, QUALITY, TRACEABILITY]
+    artifacts: [ARCHITECTURE_OPTION_SET, ARCHITECTURE_VIEWS, OPTION_TRADEOFF_MATRIX, ARCHITECTURE_DECISION_RECORDS, TARGET_ARCHITECTURE, DECISION_EVIDENCE_REGISTER]
+  GOST-R-57101-2016:
+    artifactFamilies: [GOVERNANCE, PROJECT_MANAGEMENT]
+    artifacts: [STAKEHOLDER_REGISTER, ASSUMPTION_LOG, project_management_plan, decision_log, issue_log]
+  GOST-R-59793-2021:
+    artifactFamilies: [AS_LIFECYCLE, STAGE_GATES]
+    roleImpact: [project_manager, system_engineer, solution_architect, qa_engineer]
+  GOST-34-201-2020:
+    artifactFamilies: [AS_DOCUMENTATION]
+    roleImpact: [configuration_manager, project_manager, all_document_owners]
+  GOST-R-59795-2021:
+    artifactFamilies: [AS_DOCUMENTATION_CONTENT]
+    roleImpact: [all_document_owners, reviewers]
+  GOST-34-602-2020:
+    artifactFamilies: [REQUIREMENTS]
+    artifacts: [SYSTEM_REQUIREMENTS, NFR_CATALOGUE, SECURITY_REQUIREMENTS, ACCEPTANCE_CRITERIA]
+  GOST-R-59792-2021:
+    artifactFamilies: [VERIFICATION, VALIDATION]
+    artifacts: [TEST_STRATEGY, SYSTEM_TEST_RESULTS, ACCEPTANCE_TEST_RESULTS, VERIFICATION_REPORT, VALIDATION_REPORT]
+  GOST-R-56939-2024:
+    artifactFamilies: [SECURITY_REQUIREMENTS, DESIGN, IMPLEMENTATION, SECURITY_VERIFICATION, VULNERABILITY_MANAGEMENT, CHANGE]
+    artifacts: [SECURITY_REQUIREMENTS, THREAT_MODEL_V1_V2, CODE_REVIEW_RECORDS, SAST_RESULTS, SCA_RESULTS, SECRET_SCAN_RESULTS, SECURITY_TEST_RESULTS, VULNERABILITY_REGISTER, VULNERABILITY_MANAGEMENT_RECORDS]
+  GOST-R-71207-2024:
+    artifactFamilies: [SECURITY_VERIFICATION]
+    artifacts: [SAST_RESULTS, static_analysis_procedure, analyzer_qualification_record]
+  FSTEC-METHOD-THREATS-2021:
+    artifactFamilies: [SECURITY, RISK]
+    artifacts: [THREAT_MODEL_V0, THREAT_MODEL_V1_V2, THREAT_SCENARIO_REGISTER, TRUST_BOUNDARY_REGISTER, SECURITY_RISK_REGISTER]
+  FSTEC-117-2025:
+    overlay: STATE_INFORMATION_SYSTEMS
+    artifactFamilies: [SECURITY_GOVERNANCE, SECURITY_REQUIREMENTS, SECURITY_VERIFICATION, OPERATIONS]
+    addsOrTightens: [REGULATORY_APPLICABILITY, SECURITY_INTAKE, SECURITY_REQUIREMENTS, SECURITY_MONITORING_REPORTS, protection_compliance_evidence]
+  FSTEC-21-2013:
+    overlay: PERSONAL_DATA
+    artifactFamilies: [DATA_SECURITY, SECURITY_REQUIREMENTS, SECURITY_VERIFICATION]
+    addsOrTightens: [DATA_CLASSIFICATION, REGULATORY_APPLICABILITY, SECURITY_REQUIREMENTS, SECURITY_TEST_RESULTS]
+  PP-RF-1119-2012:
+    overlay: PERSONAL_DATA
+    artifactFamilies: [DATA_SECURITY, SECURITY_REQUIREMENTS]
+    addsOrTightens: [DATA_CLASSIFICATION, pdn_protection_level_record, SECURITY_REQUIREMENTS]
+  FSB-378-2014:
+    overlay: CRYPTO_PERSONAL_DATA
+    artifactFamilies: [CRYPTOGRAPHIC_PROTECTION, SECURITY_REQUIREMENTS, OPERATIONS]
+    addsOrTightens: [crypto_applicability_record, crypto_control_profile, key_management_procedure]
+  PP-RF-127-2018:
+    overlay: KII
+    artifactFamilies: [KII_GOVERNANCE, RISK]
+    addsOrTightens: [kii_object_inventory, categorization_commission_record, significance_criteria_assessment, categorization_act]
+  FSTEC-235-2017:
+    overlay: SIGNIFICANT_KII_OBJECT
+    artifactFamilies: [SECURITY_GOVERNANCE, OPERATIONS]
+    addsOrTightens: [security_system_design, security_roles, security_operation_procedures]
+  FSTEC-239-2017:
+    overlay: SIGNIFICANT_KII_OBJECT
+    artifactFamilies: [SECURITY_REQUIREMENTS, SECURITY_VERIFICATION, OPERATIONS]
+    addsOrTightens: [SECURITY_REQUIREMENTS, protection_measure_profile, SECURITY_TEST_RESULTS, SECURITY_MONITORING_REPORTS]
+nextWork:
+  - ingest_full_text_for_each_source
+  - create_clause_level_requirement_records
+  - link_each_requirement_to_artifact_fields
+  - mark conflicts_and_supersession
+  - create sector overlays

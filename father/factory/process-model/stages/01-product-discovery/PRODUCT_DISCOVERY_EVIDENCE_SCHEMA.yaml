@@ -1,0 +1,55 @@
+schemaVersion: 1
+schemaId: FATHER-PRODUCT-EVIDENCE-0001
+stage: PRODUCT_DISCOVERY
+status: CANDIDATE_SCHEMA
+claimTypes: [FACT, CLAIM, REQUIREMENT, CONSTRAINT, ASSUMPTION, PREFERENCE, HYPOTHESIS, UNKNOWN]
+verificationStates: [UNSUPPORTED, SOURCED, OWNER_CONFIRMED, CONFLICTED, REJECTED, STALE]
+recordFields:
+  - evidenceId
+  - statement
+  - claimType
+  - sourceType
+  - sourceRef
+  - sourceVersion
+  - sourceDate
+  - informationOwner
+  - verificationState
+  - confidenceBasis
+  - conflictingEvidenceRefs
+  - affectedArtifacts
+  - downstreamImpact
+  - validationTrigger
+  - reviewedBy
+  - reviewedAt
+rules:
+  - id: E-01
+    rule: no_material_statement_without_claim_type
+  - id: E-02
+    rule: FACT_requires_source_or_owner_confirmation
+  - id: E-03
+    rule: UNSUPPORTED_claim_must_not_be_promoted_to_FACT
+  - id: E-04
+    rule: CONFLICTED_evidence_remains_visible_until_authoritative_resolution
+  - id: E-05
+    rule: UNKNOWN_is_valid_and_must_include_downstream_impact_when_material
+  - id: E-06
+    rule: model_generated_text_is_candidate_evidence_only_unless_supported_by_external_or_owner_evidence
+analytics:
+  stageIndicators:
+    - id: material_claims_total
+      definition: count_of_material_claims
+    - id: sourced_or_confirmed_ratio
+      definition: sourced_or_owner_confirmed_material_claims_divided_by_material_claims_total
+    - id: unsupported_claims
+      definition: count_verificationState_UNSUPPORTED
+    - id: conflicts_open
+      definition: count_verificationState_CONFLICTED
+    - id: material_unknowns
+      definition: count_material_UNKNOWN
+    - id: artifacts_with_owner
+      definition: required_product_artifacts_with_named_owner
+    - id: gate_blockers
+      definition: count_active_PRODUCT_READY_hard_blocks
+  interpretationRule: >-
+    Indicators support diagnosis and prioritization only. No percentage threshold by itself opens PRODUCT_READY;
+    the decision table and professional review remain authoritative.

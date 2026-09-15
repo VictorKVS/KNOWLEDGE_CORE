@@ -1,0 +1,69 @@
+schemaVersion: 1
+integrationId: FATHER-QUALITY-GATE-INTEGRATION-0001
+status: CANDIDATE_MODEL
+binds:
+  qualityModel: father/factory/quality/GENAI_QUALITY_GATE_MODEL.yaml
+  documentAutomation: father/factory/automation/DOCUMENT_AUTOMATION_PIPELINE.yaml
+  modelZoo: father/factory/automation/MODEL_ZOO_DECISION_PANEL.yaml
+  decisionRouting: father/factory/automation/AUTOMATION_DECISION_ROUTING.yaml
+purpose: >-
+  Insert measurable semantic quality evaluation between candidate LLM/agent/document changes and promotion to an approved baseline.
+
+routing:
+  lowRiskDeterministicDocumentChange:
+    requiredTiers: [TIER_0_FAST_DETERMINISTIC]
+  semanticDocumentWorkerChange:
+    requiredTiers: [TIER_0_FAST_DETERMINISTIC, TIER_1_COMPACT_SEMANTIC_REGRESSION]
+  modelPromptRetrievalPromotion:
+    requiredTiers: [TIER_0_FAST_DETERMINISTIC, TIER_1_COMPACT_SEMANTIC_REGRESSION, TIER_2_FULL_EVAL]
+  agentToolSecurityChange:
+    requiredTiers: [TIER_0_FAST_DETERMINISTIC, TIER_2_FULL_EVAL, TIER_3_SECURITY_ADVERSARIAL]
+  productionOrHostingDecision:
+    requiredTiers: [TIER_0_FAST_DETERMINISTIC, TIER_2_FULL_EVAL, TIER_3_SECURITY_ADVERSARIAL, TIER_4_LOAD_COST]
+
+flow:
+  - freeze_candidate_and_baseline
+  - freeze_dataset_metric_prompt_policy_and_index_versions
+  - execute_required_quality_tiers
+  - collect_raw_and_summary_evidence
+  - compare_candidate_to_baseline
+  - evaluate_hard_blocks
+  - if_close_or_material_disagreement_then_independent_review
+  - create_quality_gate_packet
+  - obtain_required_human_authority
+  - persist_gate_decision
+  - if_pass_then_promote_candidate
+  - if_conditional_then_limit_scope_and_record_conditions
+  - if_blocked_then_return_to_rework
+  - update_model_and_component_telemetry
+
+qualityGatePacket:
+  requiredFields:
+    - candidateRef
+    - baselineRef
+    - datasetVersion
+    - metricRubricVersions
+    - requiredTierResults
+    - qualityDelta
+    - securityFindings
+    - operationalDelta
+    - costDelta
+    - criticalCaseResults
+    - knownRegressions
+    - humanReviewRefs
+    - suggestedOutcome
+    - finalOutcome
+    - conditions
+    - revisitTriggers
+
+modelZooFeedback:
+  champion:
+    evaluate: [humanAcceptanceRate, unsupportedClaimRate, qualityGatePassRate, costPerAcceptedResult]
+  challenger:
+    evaluate: [usefulChallengerFindingRate, falseChallengeRate, securityFindingYield, reworkReduction]
+  judge:
+    evaluate: [judgeAgreementWithHumanRate, dissentPreservationRate, unsupportedConsensusRate]
+
+promotionRule: >-
+  A candidate model, prompt, retriever, agent or document worker may be promoted only when required quality tiers pass and
+  the authorized human/domain decision is present. Majority model preference is not promotion evidence by itself.

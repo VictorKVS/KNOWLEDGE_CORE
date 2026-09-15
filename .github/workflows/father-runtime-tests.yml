@@ -1,0 +1,46 @@
+name: father-runtime-tests
+
+on:
+  push:
+    branches:
+      - feature/father-artifact-factory
+    paths:
+      - 'father/factory/runtime/**'
+      - 'tests/runtime/**'
+      - '.github/workflows/father-runtime-tests.yml'
+  pull_request:
+    paths:
+      - 'father/factory/runtime/**'
+      - 'tests/runtime/**'
+
+permissions:
+  contents: read
+
+jobs:
+  unittest:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python-version: ['3.11', '3.12']
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Run stdlib unit tests
+        run: python -m unittest discover -s tests/runtime -p 'test_*.py' -v
+      - name: Run deterministic fixture demo
+        run: |
+          python -m father.factory.runtime run \
+            --registry father/factory/runtime/examples/model_registry.fixture.json \
+            --request father/factory/runtime/examples/decision_request.json \
+            --data-dir /tmp/father_runtime_demo > /tmp/decision.json
+          python - <<'PY'
+          import json
+          data = json.load(open('/tmp/decision.json', encoding='utf-8'))
+          assert data['profile'] == 'ARCHITECTURE_CTO_CHALLENGE'
+          assert len(data['challengers']) == 4
+          assert data['evidence_verification']['pass'] is True
+          assert data['suggested_gate_outcome'] == 'CONDITIONAL_PASS'
+          print('fixture demo OK')
+          PY

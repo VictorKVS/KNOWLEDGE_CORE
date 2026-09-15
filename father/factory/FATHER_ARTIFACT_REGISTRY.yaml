@@ -1,0 +1,103 @@
+schemaVersion: 1
+registryId: FATHER-ARTIFACT-REGISTRY-0001
+status: CANDIDATE_REGISTRY
+rule: 'Artifact means canonical information item, not necessarily a separate Word document.'
+states: [EXPECTED, REQUESTED, RECEIVED, PARTIAL, CONFLICTED, GAP, DRAFT, OWNER_REVIEW, CONFIRMED, VERIFIED, STALE, REJECTED, NOT_APPLICABLE]
+commonFields: [artifactId, title, stage, ownerRole, reviewerRoles, sourceRefs, version, status, assumptions, unknowns, evidenceRefs, downstreamConsumers]
+artifacts:
+  - {id: PRODUCT_VISION, family: PRODUCT, stage: PRODUCT_DISCOVERY, owner: product_manager, reviewers: [business_owner], opens: [PRODUCT_READY]}
+  - {id: BUSINESS_NEED, family: PRODUCT, stage: PRODUCT_DISCOVERY, owner: business_owner, reviewers: [product_manager], opens: [PRODUCT_READY]}
+  - {id: SUCCESS_METRICS, family: PRODUCT, stage: PRODUCT_DISCOVERY, owner: product_manager, reviewers: [business_owner], opens: [PRODUCT_READY]}
+  - {id: STAKEHOLDER_REGISTER, family: GOVERNANCE, stage: PRODUCT_DISCOVERY, owner: project_manager, reviewers: [product_manager], opens: [PRODUCT_READY]}
+  - {id: SCOPE_BASELINE, family: PRODUCT, stage: PRODUCT_DISCOVERY, owner: product_manager, reviewers: [business_owner, project_manager], opens: [PRODUCT_READY]}
+  - {id: ASSUMPTION_LOG, family: GOVERNANCE, stage: PRODUCT_DISCOVERY, owner: project_manager, reviewers: [skeptical_reviewer], opens: []}
+  - {id: SECURITY_INTAKE, family: SECURITY, stage: SECURITY_INTAKE, owner: security_engineer, reviewers: [product_manager, system_engineer], opens: [SECURITY_INTAKE_READY]}
+  - {id: DATA_CLASSIFICATION, family: DATA_SECURITY, stage: SECURITY_INTAKE, owner: data_owner, reviewers: [security_engineer, legal_compliance], opens: [SECURITY_INTAKE_READY]}
+  - {id: REGULATORY_APPLICABILITY, family: COMPLIANCE, stage: SECURITY_INTAKE, owner: legal_compliance, reviewers: [security_engineer], opens: [SECURITY_INTAKE_READY]}
+  - {id: INITIAL_ABUSE_CASES, family: SECURITY, stage: SECURITY_INTAKE, owner: security_engineer, reviewers: [product_manager], opens: []}
+  - {id: SECURITY_CONSTRAINTS, family: SECURITY, stage: SECURITY_INTAKE, owner: security_engineer, reviewers: [system_engineer], opens: [SECURITY_INTAKE_READY]}
+  - {id: SECURITY_QUESTIONS_LOG, family: SECURITY, stage: SECURITY_INTAKE, owner: security_engineer, reviewers: [], opens: []}
+  - {id: SYSTEM_CONTEXT, family: SYSTEM_ENGINEERING, stage: SYSTEM_ENGINEERING, owner: system_engineer, reviewers: [security_engineer, product_manager], opens: [SYSTEM_MODEL_READY]}
+  - {id: SYSTEM_BOUNDARY, family: SYSTEM_ENGINEERING, stage: SYSTEM_ENGINEERING, owner: system_engineer, reviewers: [security_engineer], opens: [SYSTEM_MODEL_READY]}
+  - {id: FUNCTION_MODEL, family: SYSTEM_ENGINEERING, stage: SYSTEM_ENGINEERING, owner: system_engineer, reviewers: [product_manager, business_analyst], opens: [SYSTEM_MODEL_READY]}
+  - {id: DATA_FLOW_MODEL, family: SYSTEM_ENGINEERING, stage: SYSTEM_ENGINEERING, owner: system_engineer, reviewers: [security_engineer, data_engineer], opens: [SYSTEM_MODEL_READY]}
+  - {id: INTERFACE_INVENTORY, family: INTEGRATION, stage: SYSTEM_ENGINEERING, owner: integration_engineer, reviewers: [system_engineer, security_engineer], opens: [SYSTEM_MODEL_READY]}
+  - {id: EXTERNAL_DEPENDENCY_REGISTER, family: SYSTEM_ENGINEERING, stage: SYSTEM_ENGINEERING, owner: system_engineer, reviewers: [security_engineer, operations_engineer], opens: [SYSTEM_MODEL_READY]}
+  - {id: OPERATIONAL_MODES, family: SYSTEM_ENGINEERING, stage: SYSTEM_ENGINEERING, owner: system_engineer, reviewers: [operations_engineer], opens: [SYSTEM_MODEL_READY]}
+  - {id: SYSTEM_ASSUMPTION_LOG, family: SYSTEM_ENGINEERING, stage: SYSTEM_ENGINEERING, owner: system_engineer, reviewers: [skeptical_reviewer], opens: []}
+  - {id: THREAT_MODEL_V0, family: SECURITY, stage: THREAT_MODEL_V0, owner: security_engineer, reviewers: [system_engineer, skeptical_reviewer], opens: [THREAT_MODEL_V0_READY]}
+  - {id: THREAT_SCENARIO_REGISTER, family: SECURITY, stage: THREAT_MODEL_V0, owner: security_engineer, reviewers: [system_engineer], opens: [THREAT_MODEL_V0_READY]}
+  - {id: TRUST_BOUNDARY_REGISTER, family: SECURITY, stage: THREAT_MODEL_V0, owner: security_engineer, reviewers: [system_engineer], opens: [THREAT_MODEL_V0_READY]}
+  - {id: SECURITY_REQUIREMENTS_DRAFT, family: SECURITY_REQUIREMENTS, stage: THREAT_MODEL_V0, owner: security_engineer, reviewers: [requirements_engineer], opens: []}
+  - {id: SECURITY_RISK_REGISTER, family: RISK, stage: THREAT_MODEL_V0, owner: security_engineer, reviewers: [risk_owner, product_manager], opens: []}
+  - {id: BUSINESS_REQUIREMENTS, family: REQUIREMENTS, stage: REQUIREMENTS_BASELINE, owner: business_analyst, reviewers: [business_owner], opens: [REQUIREMENTS_BASELINE_READY]}
+  - {id: STAKEHOLDER_REQUIREMENTS, family: REQUIREMENTS, stage: REQUIREMENTS_BASELINE, owner: requirements_engineer, reviewers: [stakeholder_representatives], opens: [REQUIREMENTS_BASELINE_READY]}
+  - {id: SYSTEM_REQUIREMENTS, family: REQUIREMENTS, stage: REQUIREMENTS_BASELINE, owner: requirements_engineer, reviewers: [system_engineer, security_engineer], opens: [REQUIREMENTS_BASELINE_READY]}
+  - {id: SOFTWARE_REQUIREMENTS, family: REQUIREMENTS, stage: REQUIREMENTS_BASELINE, owner: requirements_engineer, reviewers: [software_architect, qa_engineer], opens: [REQUIREMENTS_BASELINE_READY]}
+  - {id: NFR_CATALOGUE, family: QUALITY, stage: REQUIREMENTS_BASELINE, owner: requirements_engineer, reviewers: [system_engineer, security_engineer, operations_engineer], opens: [REQUIREMENTS_BASELINE_READY]}
+  - {id: SECURITY_REQUIREMENTS, family: SECURITY_REQUIREMENTS, stage: REQUIREMENTS_BASELINE, owner: security_engineer, reviewers: [requirements_engineer, system_engineer], opens: [REQUIREMENTS_BASELINE_READY]}
+  - {id: ACCEPTANCE_CRITERIA, family: REQUIREMENTS, stage: REQUIREMENTS_BASELINE, owner: product_manager, reviewers: [qa_engineer, business_owner], opens: [REQUIREMENTS_BASELINE_READY]}
+  - {id: REQUIREMENTS_TRACEABILITY_MATRIX, family: TRACEABILITY, stage: REQUIREMENTS_BASELINE, owner: requirements_engineer, reviewers: [qa_engineer, security_engineer], opens: [REQUIREMENTS_BASELINE_READY]}
+  - {id: ARCHITECTURE_OPTION_SET, family: ARCHITECTURE, stage: ARCHITECTURE_OPTIONS, owner: solution_architect, reviewers: [system_engineer, security_engineer], opens: [ARCHITECTURE_OPTIONS_READY]}
+  - {id: ARCHITECTURE_VIEWS, family: ARCHITECTURE, stage: ARCHITECTURE_OPTIONS, owner: solution_architect, reviewers: [system_engineer, operations_engineer], opens: [ARCHITECTURE_OPTIONS_READY]}
+  - {id: QUALITY_ATTRIBUTE_SCENARIOS, family: QUALITY, stage: ARCHITECTURE_OPTIONS, owner: solution_architect, reviewers: [requirements_engineer, operations_engineer], opens: []}
+  - {id: OPTION_TRADEOFF_MATRIX, family: ARCHITECTURE, stage: ARCHITECTURE_OPTIONS, owner: solution_architect, reviewers: [skeptical_reviewer, product_manager], opens: [ARCHITECTURE_OPTIONS_READY]}
+  - {id: OPTION_SECURITY_REVIEW, family: SECURITY, stage: ARCHITECTURE_OPTIONS, owner: security_engineer, reviewers: [skeptical_reviewer], opens: [ARCHITECTURE_OPTIONS_READY]}
+  - {id: ARCHITECTURE_DECISION_RECORDS, family: ARCHITECTURE, stage: ARCHITECTURE_DECISION, owner: solution_architect, reviewers: [security_engineer, skeptical_reviewer], opens: [ARCHITECTURE_DECISION_READY]}
+  - {id: TARGET_ARCHITECTURE, family: ARCHITECTURE, stage: ARCHITECTURE_DECISION, owner: solution_architect, reviewers: [system_engineer, security_engineer], opens: [ARCHITECTURE_DECISION_READY]}
+  - {id: RESIDUAL_RISK_REGISTER, family: RISK, stage: ARCHITECTURE_DECISION, owner: security_engineer, reviewers: [risk_owner], opens: [ARCHITECTURE_DECISION_READY]}
+  - {id: DECISION_EVIDENCE_REGISTER, family: TRACEABILITY, stage: ARCHITECTURE_DECISION, owner: solution_architect, reviewers: [skeptical_reviewer], opens: [ARCHITECTURE_DECISION_READY]}
+  - {id: COMPONENT_DESIGN, family: DESIGN, stage: DETAILED_DESIGN, owner: software_architect, reviewers: [software_engineer, security_engineer], opens: [DESIGN_READY_FOR_IMPLEMENTATION]}
+  - {id: API_CONTRACTS, family: INTEGRATION, stage: DETAILED_DESIGN, owner: api_designer, reviewers: [software_engineer, security_engineer], opens: [DESIGN_READY_FOR_IMPLEMENTATION]}
+  - {id: DATA_MODEL, family: DATA, stage: DETAILED_DESIGN, owner: data_engineer, reviewers: [data_owner, security_engineer], opens: [DESIGN_READY_FOR_IMPLEMENTATION]}
+  - {id: IAM_MODEL, family: SECURITY, stage: DETAILED_DESIGN, owner: security_engineer, reviewers: [system_engineer, software_architect], opens: [DESIGN_READY_FOR_IMPLEMENTATION]}
+  - {id: SECRETS_MODEL, family: SECURITY, stage: DETAILED_DESIGN, owner: security_engineer, reviewers: [devsecops_engineer], opens: [DESIGN_READY_FOR_IMPLEMENTATION]}
+  - {id: DEPLOYMENT_DESIGN, family: PLATFORM, stage: DETAILED_DESIGN, owner: devops_engineer, reviewers: [software_architect, security_engineer], opens: [DESIGN_READY_FOR_IMPLEMENTATION]}
+  - {id: OBSERVABILITY_DESIGN, family: OPERATIONS, stage: DETAILED_DESIGN, owner: operations_engineer, reviewers: [software_architect, security_engineer], opens: [DESIGN_READY_FOR_IMPLEMENTATION]}
+  - {id: THREAT_MODEL_V1_V2, family: SECURITY, stage: DETAILED_DESIGN, owner: security_engineer, reviewers: [software_architect, skeptical_reviewer], opens: [DESIGN_READY_FOR_IMPLEMENTATION]}
+  - {id: TEST_STRATEGY, family: VERIFICATION, stage: DETAILED_DESIGN, owner: qa_engineer, reviewers: [requirements_engineer, security_engineer], opens: [DESIGN_READY_FOR_IMPLEMENTATION]}
+  - {id: SOURCE_CODE, family: IMPLEMENTATION, stage: IMPLEMENTATION, owner: software_engineer, reviewers: [code_reviewer], opens: [IMPLEMENTATION_BASELINE_READY]}
+  - {id: BUILD_MANIFEST, family: BUILD, stage: IMPLEMENTATION, owner: devsecops_engineer, reviewers: [configuration_manager], opens: [IMPLEMENTATION_BASELINE_READY]}
+  - {id: DEPENDENCY_LOCK, family: SUPPLY_CHAIN, stage: IMPLEMENTATION, owner: software_engineer, reviewers: [devsecops_engineer], opens: [IMPLEMENTATION_BASELINE_READY]}
+  - {id: SBOM, family: SUPPLY_CHAIN, stage: IMPLEMENTATION, owner: devsecops_engineer, reviewers: [security_engineer], opens: [IMPLEMENTATION_BASELINE_READY]}
+  - {id: CONFIGURATION_BASELINE, family: CONFIGURATION, stage: IMPLEMENTATION, owner: configuration_manager, reviewers: [security_engineer], opens: [IMPLEMENTATION_BASELINE_READY]}
+  - {id: CODE_REVIEW_RECORDS, family: IMPLEMENTATION, stage: IMPLEMENTATION, owner: code_reviewer, reviewers: [software_engineer], opens: [IMPLEMENTATION_BASELINE_READY]}
+  - {id: SAST_RESULTS, family: SECURITY_VERIFICATION, stage: IMPLEMENTATION, owner: devsecops_engineer, reviewers: [security_engineer], opens: [IMPLEMENTATION_BASELINE_READY]}
+  - {id: SCA_RESULTS, family: SECURITY_VERIFICATION, stage: IMPLEMENTATION, owner: devsecops_engineer, reviewers: [security_engineer], opens: [IMPLEMENTATION_BASELINE_READY]}
+  - {id: SECRET_SCAN_RESULTS, family: SECURITY_VERIFICATION, stage: IMPLEMENTATION, owner: devsecops_engineer, reviewers: [security_engineer], opens: [IMPLEMENTATION_BASELINE_READY]}
+  - {id: UNIT_TEST_RESULTS, family: VERIFICATION, stage: IMPLEMENTATION, owner: software_engineer, reviewers: [qa_engineer], opens: [IMPLEMENTATION_BASELINE_READY]}
+  - {id: INTEGRATION_TEST_RESULTS, family: VERIFICATION, stage: VERIFICATION_VALIDATION, owner: qa_engineer, reviewers: [software_engineer], opens: [RELEASE_CANDIDATE_READY]}
+  - {id: SYSTEM_TEST_RESULTS, family: VERIFICATION, stage: VERIFICATION_VALIDATION, owner: qa_engineer, reviewers: [system_engineer], opens: [RELEASE_CANDIDATE_READY]}
+  - {id: SECURITY_TEST_RESULTS, family: SECURITY_VERIFICATION, stage: VERIFICATION_VALIDATION, owner: security_engineer, reviewers: [qa_engineer], opens: [RELEASE_CANDIDATE_READY]}
+  - {id: DAST_RESULTS, family: SECURITY_VERIFICATION, stage: VERIFICATION_VALIDATION, owner: devsecops_engineer, reviewers: [security_engineer], opens: [RELEASE_CANDIDATE_READY]}
+  - {id: PERFORMANCE_TEST_RESULTS, family: QUALITY, stage: VERIFICATION_VALIDATION, owner: qa_engineer, reviewers: [operations_engineer], opens: [RELEASE_CANDIDATE_READY]}
+  - {id: ACCEPTANCE_TEST_RESULTS, family: VALIDATION, stage: VERIFICATION_VALIDATION, owner: qa_engineer, reviewers: [product_manager, business_owner], opens: [RELEASE_CANDIDATE_READY]}
+  - {id: DEFECT_REGISTER, family: QUALITY, stage: VERIFICATION_VALIDATION, owner: qa_engineer, reviewers: [software_engineer], opens: []}
+  - {id: VULNERABILITY_REGISTER, family: SECURITY, stage: VERIFICATION_VALIDATION, owner: security_engineer, reviewers: [software_engineer], opens: []}
+  - {id: VERIFICATION_REPORT, family: VERIFICATION, stage: VERIFICATION_VALIDATION, owner: qa_engineer, reviewers: [requirements_engineer], opens: [RELEASE_CANDIDATE_READY]}
+  - {id: VALIDATION_REPORT, family: VALIDATION, stage: VERIFICATION_VALIDATION, owner: product_manager, reviewers: [business_owner, qa_engineer], opens: [RELEASE_CANDIDATE_READY]}
+  - {id: RELEASE_MANIFEST, family: RELEASE, stage: RELEASE_DEPLOYMENT, owner: release_manager, reviewers: [configuration_manager], opens: [PRODUCTION_READY]}
+  - {id: RELEASE_NOTES, family: RELEASE, stage: RELEASE_DEPLOYMENT, owner: release_manager, reviewers: [product_manager], opens: []}
+  - {id: DEPLOYMENT_PLAN, family: DEPLOYMENT, stage: RELEASE_DEPLOYMENT, owner: devops_engineer, reviewers: [operations_engineer, security_engineer], opens: [PRODUCTION_READY]}
+  - {id: MIGRATION_PLAN, family: DEPLOYMENT, stage: RELEASE_DEPLOYMENT, owner: devops_engineer, reviewers: [data_owner, operations_engineer], opens: [PRODUCTION_READY]}
+  - {id: ROLLBACK_PLAN, family: DEPLOYMENT, stage: RELEASE_DEPLOYMENT, owner: devops_engineer, reviewers: [operations_engineer], opens: [PRODUCTION_READY]}
+  - {id: CHANGE_RECORD, family: CHANGE, stage: RELEASE_DEPLOYMENT, owner: change_manager, reviewers: [service_owner], opens: [PRODUCTION_READY]}
+  - {id: DEPLOYMENT_EVIDENCE, family: TRACEABILITY, stage: RELEASE_DEPLOYMENT, owner: devops_engineer, reviewers: [operations_engineer], opens: [PRODUCTION_READY]}
+  - {id: OPERATIONAL_READINESS_REVIEW, family: OPERATIONS, stage: RELEASE_DEPLOYMENT, owner: operations_engineer, reviewers: [service_owner, security_engineer], opens: [PRODUCTION_READY]}
+  - {id: RUNBOOKS, family: OPERATIONS, stage: OPERATION_MAINTENANCE, owner: operations_engineer, reviewers: [service_owner], opens: [OPERATION_CONTROLLED]}
+  - {id: SLO_SLA, family: OPERATIONS, stage: OPERATION_MAINTENANCE, owner: service_owner, reviewers: [product_manager, operations_engineer], opens: [OPERATION_CONTROLLED]}
+  - {id: MONITORING_BASELINE, family: OBSERVABILITY, stage: OPERATION_MAINTENANCE, owner: operations_engineer, reviewers: [security_engineer], opens: [OPERATION_CONTROLLED]}
+  - {id: INCIDENT_RECORDS, family: INCIDENT, stage: OPERATION_MAINTENANCE, owner: incident_manager, reviewers: [service_owner, security_engineer], opens: []}
+  - {id: PROBLEM_RECORDS, family: PROBLEM, stage: OPERATION_MAINTENANCE, owner: operations_engineer, reviewers: [software_engineer], opens: []}
+  - {id: VULNERABILITY_MANAGEMENT_RECORDS, family: SECURITY, stage: OPERATION_MAINTENANCE, owner: security_engineer, reviewers: [service_owner], opens: []}
+  - {id: CHANGE_LOG, family: CHANGE, stage: OPERATION_MAINTENANCE, owner: change_manager, reviewers: [service_owner], opens: []}
+  - {id: CAPACITY_REPORTS, family: OPERATIONS, stage: OPERATION_MAINTENANCE, owner: operations_engineer, reviewers: [service_owner], opens: []}
+  - {id: SECURITY_MONITORING_REPORTS, family: SECURITY, stage: OPERATION_MAINTENANCE, owner: security_engineer, reviewers: [service_owner], opens: []}
+  - {id: FEEDBACK_BACKLOG, family: PRODUCT, stage: OPERATION_MAINTENANCE, owner: product_manager, reviewers: [service_owner], opens: []}
+  - {id: RETIREMENT_PLAN, family: RETIREMENT, stage: RETIREMENT, owner: service_owner, reviewers: [system_engineer, security_engineer], opens: [RETIRED_VERIFIED]}
+  - {id: DATA_DISPOSITION_PLAN, family: DATA, stage: RETIREMENT, owner: data_owner, reviewers: [legal_compliance, security_engineer], opens: [RETIRED_VERIFIED]}
+  - {id: ACCESS_REVOCATION_RECORD, family: SECURITY, stage: RETIREMENT, owner: security_engineer, reviewers: [service_owner], opens: [RETIRED_VERIFIED]}
+  - {id: ARCHIVE_PACKAGE, family: RECORDS, stage: RETIREMENT, owner: configuration_manager, reviewers: [legal_compliance], opens: [RETIRED_VERIFIED]}
+  - {id: DEPENDENCY_DECOMMISSION_RECORD, family: RETIREMENT, stage: RETIREMENT, owner: system_engineer, reviewers: [operations_engineer], opens: [RETIRED_VERIFIED]}
+  - {id: RETIREMENT_VERIFICATION_REPORT, family: VERIFICATION, stage: RETIREMENT, owner: qa_engineer, reviewers: [service_owner, security_engineer], opens: [RETIRED_VERIFIED]}
+  - {id: LESSONS_LEARNED, family: KNOWLEDGE, stage: RETIREMENT, owner: project_manager, reviewers: [knowledge_growth_analyst], opens: []}

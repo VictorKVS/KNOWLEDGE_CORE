@@ -1,0 +1,133 @@
+schemaVersion: 6
+siteId: FATHER-ANALYTICAL-DESIGN-SITE-0001
+status: CANDIDATE_SITE_MAP
+pages:
+  - id: PRE_ARCHITECTURE_HOME
+    path: father/factory/site/index.html
+    purpose: one-page pre-architecture factory with Product cards, role contributions and document acquisition branches
+    canonicalData:
+      - father/factory/pre-architecture/PRE_ARCHITECTURE_PACKAGE.yaml
+      - father/factory/pre-architecture/PRE_ARCHITECTURE_ARTIFACT_CATALOG.yaml
+      - father/factory/process-model/stages/01-product-discovery/documents/PRODUCT_DOCUMENT_PACK.yaml
+  - id: DELIVERY_FEASIBILITY_WORKBENCH
+    path: father/factory/site/delivery-feasibility.html
+    exitGate: DELIVERY_FEASIBILITY_READY
+    purpose: measurable NFR, verification intent, WBS v0, estimation, project risk, TCO and change control
+    canonicalData:
+      - father/factory/pre-architecture/DELIVERY_FEASIBILITY_MODEL.yaml
+      - father/factory/pre-architecture/OTUS_LESSON_02_CROSSWALK.yaml
+  - id: ARCHITECTURE_WORKBENCH
+    path: father/factory/site/architecture-workbench.html
+    entryGate: ARCHITECTURE_OPTIONS_ALLOWED
+    purpose: architecture drivers, quality attributes, options, trade-offs, ADR, risk storm and continuous architecture review
+    canonicalData:
+      - father/factory/architecture/ARCHITECTURE_WORKBENCH_MODEL.yaml
+      - father/factory/knowledge/BOOK_IDEA_INTAKE.yaml
+  - id: OSINT_LIVE_PROJECT
+    path: father/factory/site/osint-live-project.html
+    purpose: project-facing live reproduction of the real OSINT_deepseek project across OTUS lessons 01-13 and later 14-20
+    externalCanonicalProject:
+      repository: VictorKVS/OSINT_deepseek
+      branch: feature/otus-live-reproduction-01-20
+      path: docs/course_live_reproduction
+    courseMirror:
+      repository: VictorKVS/OTUS-
+      branch: feature/father-osint-live-reproduction-01-20
+      pattern: '<lesson-folder>/FATHER_OSINT_ANSWER.md'
+    views:
+      - lesson_status
+      - document_inventory
+      - lifecycle_truth
+      - unknowns
+      - improvement_backlog
+      - end_to_end_trace
+      - architecture_governance
+      - integration_architecture
+      - data_architecture
+      - genai_quality
+      - next_lessons
+  - id: DOCUMENT_AUTOMATION_WORKBENCH
+    path: father/factory/site/document-automation.html
+    purpose: future LLM-assisted staged document processing, review routing, human approvals and gate automation
+    canonicalData:
+      - father/factory/automation/DOCUMENT_AUTOMATION_PIPELINE.yaml
+      - father/factory/automation/DOCUMENT_APPROVAL_MATRIX.yaml
+      - father/factory/automation/MODEL_ZOO_DECISION_PANEL.yaml
+      - father/factory/quality/QUALITY_GATE_INTEGRATION.yaml
+    views:
+      - intake_queue
+      - llm_review_queue
+      - human_approval_queue
+      - blocked_documents
+      - gate_board
+      - trace_graph
+      - version_diff
+      - audit_history
+      - model_zoo_panel_summary
+      - quality_gate_summary
+  - id: MODEL_ZOO_DECISION_PANEL
+    path: father/factory/site/model-zoo-decision.html
+    purpose: adaptive champion-challenger-independent-judge council for material engineering decisions with preserved dissent and human final authority
+    canonicalData:
+      - father/factory/automation/MODEL_ZOO_DECISION_PANEL.yaml
+      - father/factory/automation/DOCUMENT_AUTOMATION_PIPELINE.yaml
+      - father/factory/quality/GENAI_QUALITY_GATE_MODEL.yaml
+    views:
+      - materiality_router
+      - selected_panel_profile
+      - champion_output
+      - blind_challenger_outputs
+      - evidence_verification
+      - dissent_register
+      - judge_summary
+      - human_decision
+      - per_capability_model_telemetry
+  - id: GENAI_QUALITY_GATE
+    path: father/factory/site/genai-quality.html
+    purpose: versioned eval datasets, semantic quality, grounding, security, load/cost evidence and promotion gates for RAG, LLM, agents, Model Zoo and document automation
+    canonicalData:
+      - father/factory/quality/GENAI_QUALITY_GATE_MODEL.yaml
+      - father/factory/quality/QUALITY_GATE_INTEGRATION.yaml
+    views:
+      - eval_dataset
+      - deterministic_checks
+      - retrieval_quality
+      - generation_quality
+      - security_adversarial
+      - load_reliability_cost
+      - ci_tiers
+      - quality_gate
+      - human_promotion
+      - model_zoo_feedback
+
+plannedDrilldowns:
+  - id: ARTIFACT_DETAIL
+    routeIntent: '/artifact/{artifactId}'
+    sections: [purpose, owner_and_reviewers, when_created, required_inputs, how_to_collect, required_information, evidence_sources, normative_sources_and_exact_clauses, conflicts_and_unknowns, downstream_consumers, gate_impact, examples]
+  - id: ROLE_DETAIL
+    routeIntent: '/role/{roleId}'
+    sections: [mission, inputs, questions_to_answer, outputs, methods, evidence, authority_boundaries, handoffs]
+  - id: SOURCE_DETAIL
+    routeIntent: '/source/{sourceId}'
+    sections: [source_status, version_and_freshness, applicability, clause_map, mapped_artifacts, conflicts_supersession]
+  - id: DECISION_TRACE
+    routeIntent: '/trace/{decisionId}'
+    sections: [business_driver, source_evidence, requirement, threat_or_constraint, architecture_characteristic, option, tradeoff, adr, implementation, verification, operational_feedback]
+  - id: ESTIMATE_DETAIL
+    routeIntent: '/estimate/{estimateId}'
+    sections: [work_item, method, raw_inputs, assumptions, uncertainty_range, risk_refs, cost_impact, superseded_estimates]
+  - id: DOCUMENT_WORK_ITEM
+    routeIntent: '/document/{documentId}/version/{version}'
+    sections: [source_snapshot, extracted_claims, field_mapping, traceability, gaps, conflicts, llm_runs, owner_review, domain_review, independent_review, approval_history, gate_impact, downstream]
+  - id: APPROVAL_TASK
+    routeIntent: '/approval/{approvalId}'
+    sections: [document_version, assignee_role, decision_options, blocking_findings, evidence_refs, rationale, downstream_impact]
+  - id: MODEL_PANEL_RUN
+    routeIntent: '/decision-panel/{panelRunId}'
+    sections: [materiality, selected_models, frozen_input_snapshot, champion, blind_challengers, evidence_verifier, cross_examination, judge, dissent_register, suggested_gate, human_decision, telemetry]
+  - id: QUALITY_EVAL_RUN
+    routeIntent: '/quality/{evalRunId}'
+    sections: [candidate, baseline, dataset_version, metric_versions, retrieval_results, generation_results, security_results, load_cost_results, critical_cases, human_review, gate_outcome]
+
+navigationPrinciple: >-
+  The site is a projection over canonical registries and project sources. UI pages must never become an independent source of engineering truth.

@@ -1,0 +1,110 @@
+schemaVersion: 1
+modelId: FATHER-PROCESS-HIERARCHY-0001
+status: CANDIDATE_MODEL
+notationPolicy:
+  workflow: BPMN_2_0
+  functionContext: IDEF0
+  decisions: DMN
+  responsibility: RACI
+  visualProjection: MERMAID
+levels:
+  L0:
+    name: FATHER Software Factory
+    purpose: End-to-end software/system production lifecycle.
+    children:
+      - L1-PRODUCT_DISCOVERY
+      - L1-SECURITY_INTAKE
+      - L1-SYSTEM_ENGINEERING
+      - L1-THREAT_MODEL_V0
+      - L1-REQUIREMENTS_BASELINE
+      - L1-ARCHITECTURE_OPTIONS
+      - L1-ARCHITECTURE_DECISION
+      - L1-DETAILED_DESIGN
+      - L1-IMPLEMENTATION
+      - L1-VERIFICATION_VALIDATION
+      - L1-RELEASE_DEPLOYMENT
+      - L1-OPERATION_MAINTENANCE
+      - L1-RETIREMENT
+  L1:
+    PRODUCT_DISCOVERY:
+      gate: PRODUCT_READY
+      activities: [capture_need, identify_authority_and_stakeholders, define_outcomes, define_scope, register_assumptions, product_gate_review]
+    SECURITY_INTAKE:
+      gate: SECURITY_INTAKE_READY
+      activities: [classify_data_and_assets, determine_regulatory_applicability, identify_trust_assumptions, identify_initial_abuse_cases, derive_security_constraints, security_intake_gate_review]
+    SYSTEM_ENGINEERING:
+      gate: SYSTEM_MODEL_READY
+      activities: [define_system_context, define_system_boundary, model_functions, model_data_flows, inventory_interfaces, inventory_external_dependencies, define_operational_modes, system_model_gate_review]
+    THREAT_MODEL_V0:
+      gate: THREAT_MODEL_V0_READY
+      activities: [identify_assets_and_impacts, identify_threat_sources, map_trust_boundaries, construct_threat_scenarios, derive_security_requirements_draft, register_security_risks, threat_model_gate_review]
+    REQUIREMENTS_BASELINE:
+      gate: REQUIREMENTS_BASELINE_READY
+      activities: [consolidate_business_requirements, consolidate_stakeholder_requirements, derive_system_requirements, derive_software_requirements, define_nfrs, baseline_security_requirements, define_acceptance_criteria, build_traceability_matrix, requirements_gate_review]
+    ARCHITECTURE_OPTIONS:
+      gate: ARCHITECTURE_OPTIONS_READY
+      activities: [identify_architecture_drivers, generate_multiple_options, build_architecture_views, build_quality_attribute_scenarios, evaluate_security_per_option, compare_tradeoffs, architecture_options_gate_review]
+    ARCHITECTURE_DECISION:
+      gate: ARCHITECTURE_DECISION_READY
+      activities: [independent_option_review, security_review, evaluate_residual_risk, select_option, record_adrs, establish_target_architecture, architecture_decision_gate_review]
+    DETAILED_DESIGN:
+      gate: DESIGN_READY_FOR_IMPLEMENTATION
+      activities: [decompose_components, define_api_contracts, define_data_model, define_iam_and_secrets, define_deployment, define_observability, refine_threat_model, define_test_strategy, design_gate_review]
+    IMPLEMENTATION:
+      gate: IMPLEMENTATION_BASELINE_READY
+      activities: [implement_code, manage_dependencies, build_and_package, generate_sbom, review_code, run_sast_sca_secret_scan, run_unit_tests, implementation_gate_review]
+    VERIFICATION_VALIDATION:
+      gate: RELEASE_CANDIDATE_READY
+      activities: [integration_testing, system_testing, security_testing, performance_testing, acceptance_testing, defect_and_vulnerability_triage, traceability_confirmation, release_candidate_gate_review]
+    RELEASE_DEPLOYMENT:
+      gate: PRODUCTION_READY
+      activities: [assemble_release, prepare_migration_and_deployment, prepare_rollback, approve_change, deploy, collect_deployment_evidence, operational_readiness_review]
+    OPERATION_MAINTENANCE:
+      gate: OPERATION_CONTROLLED
+      activities: [operate_service, monitor_slo_and_security, handle_incidents, handle_problems, vulnerability_management, change_management, capacity_management, feed_back_evidence, operation_control_review]
+    RETIREMENT:
+      gate: RETIRED_VERIFIED
+      activities: [approve_retirement, plan_data_disposition, revoke_access, decommission_dependencies, archive_required_evidence, verify_retirement, capture_lessons]
+implementationStatus:
+  L2:
+    PRODUCT_DISCOVERY:
+      status: IMPLEMENTED
+      path: stages/01-product-discovery
+      pilot: father-analytical-design-platform/STAGE_01_PRODUCT_DISCOVERY.yaml
+      pilotGate: CONDITIONAL_PASS
+    SECURITY_INTAKE:
+      status: IMPLEMENTED
+      path: stages/02-security-intake
+      pilot: father-analytical-design-platform/STAGE_02_SECURITY_INTAKE.yaml
+      pilotGate: CONDITIONAL_PASS
+    SYSTEM_ENGINEERING:
+      status: IMPLEMENTED
+      path: stages/03-system-engineering
+      pilot: father-analytical-design-platform/STAGE_03_SYSTEM_ENGINEERING.yaml
+      pilotGate: CONDITIONAL_PASS
+    THREAT_MODEL_V0:
+      status: IMPLEMENTED
+      path: stages/04-threat-model-v0
+      pilot: father-analytical-design-platform/STAGE_04_THREAT_MODEL_V0.yaml
+      pilotGate: CONDITIONAL_PASS
+    REQUIREMENTS_BASELINE:
+      status: NEXT
+    ARCHITECTURE_OPTIONS:
+      status: PLANNED
+    ARCHITECTURE_DECISION:
+      status: PLANNED
+    DETAILED_DESIGN:
+      status: PLANNED
+    IMPLEMENTATION:
+      status: PLANNED
+    VERIFICATION_VALIDATION:
+      status: PLANNED
+    RELEASE_DEPLOYMENT:
+      status: PLANNED
+    OPERATION_MAINTENANCE:
+      status: PLANNED
+    RETIREMENT:
+      status: PLANNED
+expansionRule:
+  L2: Decompose an L1 activity into role tasks, document transformations, checks and decisions.
+  L3: Decompose critical L2 tasks into artifact fields, source clauses, validation rules and executable DMN/gate checks.

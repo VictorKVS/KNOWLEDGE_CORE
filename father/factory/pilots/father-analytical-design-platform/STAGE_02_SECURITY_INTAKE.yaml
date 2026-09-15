@@ -1,0 +1,300 @@
+schemaVersion: 1
+pilotId: FATHER-ANALYTICAL-DESIGN-PLATFORM
+stage: SECURITY_INTAKE
+status: OWNER_REVIEW
+entryDecision: CONDITIONAL_PASS
+entryRef: STAGE_01_PRODUCT_DISCOVERY.yaml
+securityIntakeReadyDecision: CONDITIONAL_PASS
+securityIntakeReadyReason: >-
+  Early security context is sufficient for System Engineering: the security scope, information classes, candidate abuse cases,
+  security constraints and explicit UNKNOWNs are visible. Exact deployment topology, IAM model, external model/provider set,
+  tenant model, retention policy and project-specific legal/regulatory applicability remain unresolved and must be refined
+  by System Engineering and authoritative owners. No unresolved item is silently treated as safe or not applicable.
+
+SECURITY_INTAKE:
+  status: CANDIDATE_WITH_OWNER_CONFIRMED_BOUNDARIES
+  owner: security_engineer
+  sourceProductScope:
+    - analytical engineering workflow
+    - normative/source registry
+    - artifact/evidence graph
+    - visual process navigation
+    - brownfield document intake and gap analysis
+    - agent-assisted professional analysis
+  protectedInterests:
+    - integrity of owner-confirmed decisions
+    - confidentiality of project/source materials where required
+    - integrity and provenance of normative/evidence sources
+    - separation of FACT/CLAIM/ASSUMPTION/HYPOTHESIS/UNKNOWN
+    - authority boundaries between agents and accountable owners
+    - availability and recoverability of canonical project knowledge
+  explicitExclusionsAtThisStage:
+    - final threat likelihood assessment
+    - final security architecture
+    - legal compliance declaration
+    - residual risk acceptance
+
+DATA_CLASSIFICATION:
+  status: PARTIAL
+  owner: data_owner
+  classes:
+    - id: DC-01
+      name: owner_confirmed_product_decisions
+      examples: [scope, product decisions, gate decisions]
+      sensitivity: INTEGRITY_CRITICAL
+      handlingImplication: preserve provenance, version and authority
+    - id: DC-02
+      name: project_artifacts_and_source_documents
+      examples: [requirements, diagrams, specifications, contracts, reports]
+      sensitivity: PROJECT_SPECIFIC_UNKNOWN
+      handlingImplication: classification and disclosure rules must be inherited from project/data owner
+    - id: DC-03
+      name: normative_and_public_sources
+      examples: [standards metadata, public regulations, admitted public references]
+      sensitivity: PUBLIC_OR_LICENSE_CONSTRAINED
+      handlingImplication: preserve source/version/license/provenance; do not treat stale source as current
+    - id: DC-04
+      name: agent_prompts_context_and_traces
+      examples: [prompt versions, retrieved knowledge refs, routing trace, model outputs]
+      sensitivity: INTERNAL_BY_DEFAULT_CANDIDATE
+      handlingImplication: may contain embedded project data; inherit highest relevant project sensitivity
+    - id: DC-05
+      name: credentials_secrets_tokens
+      examples: [api keys, passwords, private tokens]
+      sensitivity: SECRET
+      handlingImplication: must not enter ordinary knowledge/evidence/prompt artifacts; dedicated secret handling only
+    - id: DC-06
+      name: personal_or_regulated_information
+      examples: [personal data, health data, regulated-sector information]
+      sensitivity: CONDITIONAL_PROJECT_SPECIFIC
+      handlingImplication: applicability and processing controls require authoritative project review
+  openQuestions:
+    - exact classification taxonomy for external/customer projects
+    - retention and deletion periods by data class
+    - cross-tenant isolation requirements
+
+ACTOR_IDENTITY_INVENTORY:
+  status: CANDIDATE
+  actors:
+    - FATHER_owner
+    - product_manager
+    - security_engineer
+    - system_engineer
+    - requirements_engineer
+    - solution_architect
+    - software_engineer
+    - reviewers
+    - knowledge_growth_analyst
+    - external_project_users
+    - llm_or_agent_runtime
+    - external_model_provider_if_used
+    - connected_source_provider_if_used
+  privilegedRoles:
+    - FATHER_owner
+    - artifact_approver
+    - security_reviewer
+    - release_or_configuration_authority
+  unknowns:
+    - final authentication provider
+    - tenant/admin hierarchy
+    - service and machine identity model
+
+EXPOSURE_ASSUMPTION_REGISTER:
+  status: OPEN
+  items:
+    - id: EX-01
+      statement: user may upload or connect untrusted project documents
+      state: EXPECTED_CAPABILITY
+      impact: parser, retrieval and prompt boundaries require untrusted-content treatment
+    - id: EX-02
+      statement: external LLM providers may be used for selected roles/tasks
+      state: CONDITIONAL
+      impact: project data disclosure boundary must be explicit before transmission
+    - id: EX-03
+      statement: local models may coexist with external providers
+      state: CANDIDATE
+      impact: routing must preserve data handling policy and provider trace
+    - id: EX-04
+      statement: deployment may be local, private or cloud
+      state: UNKNOWN
+      impact: network, trust boundary, logging, IAM and regulatory applicability cannot yet be finalized
+
+REGULATORY_APPLICABILITY:
+  status: PARTIAL_UNKNOWN
+  authorityOwner: legal_compliance
+  engineeringBaselines:
+    - sourceRef: GOST-R-56939-2024
+      use: secure_software_development_reference
+      state: ADOPTED_AS_CANDIDATE_ENGINEERING_BASELINE
+      note: adoption as engineering baseline is not a claim of mandatory legal applicability
+    - sourceRef: FSTEC-METHOD-THREATS-2021
+      use: threat_model_method_reference_where_applicable
+      state: CANDIDATE_METHOD_REFERENCE
+  overlays:
+    - overlay: STATE_INFORMATION_SYSTEMS
+      sourceRefs: [FSTEC-117-2025]
+      applicability: UNKNOWN
+      reason: final organization/system/deployment context not established
+    - overlay: PERSONAL_DATA
+      sourceRefs: [PP-RF-1119-2012, FSTEC-21-2013, FSB-378-2014]
+      applicability: CONDITIONALLY_APPLICABLE
+      condition: a project processes personal data in a context that triggers the relevant requirements
+      owner: legal_compliance
+    - overlay: KII
+      sourceRefs: [PP-RF-127-2018, FSTEC-235-2017, FSTEC-239-2017]
+      applicability: CONDITIONALLY_APPLICABLE
+      condition: project/system falls within KII scope and applicable categorization/significance conditions
+      owner: legal_compliance
+  limitations:
+    - federal-law layer is not yet complete in NORMATIVE_SOURCE_REGISTRY
+    - project-specific legal applicability is not declared by this pilot
+    - source status must be rechecked before material compliance decisions
+
+INITIAL_ABUSE_CASES:
+  status: CANDIDATE
+  cases:
+    - id: AB-01
+      title: malicious_document_influences_agent
+      scenario: uploaded or connected untrusted content contains instructions or crafted data that attempts to alter agent behavior or retrieved context
+      protectedInterest: decision_integrity
+      downstream: [SYSTEM_BOUNDARY, DATA_FLOW_MODEL, THREAT_MODEL_V0]
+    - id: AB-02
+      title: project_data_disclosed_to_external_model
+      scenario: sensitive project content is routed to an external model/provider without allowed disclosure context
+      protectedInterest: confidentiality
+      downstream: [DATA_FLOW_MODEL, INTERFACE_INVENTORY, SECURITY_REQUIREMENTS]
+    - id: AB-03
+      title: provenance_or_source_status_tampering
+      scenario: source identity/version/status is altered or stale evidence is presented as current, influencing a material decision
+      protectedInterest: evidence_integrity
+      downstream: [THREAT_MODEL_V0, REQUIREMENTS_TRACEABILITY_MATRIX]
+    - id: AB-04
+      title: agent_authority_escalation
+      scenario: agent or local workflow promotes candidate knowledge, approves architecture, changes owner decision or accepts risk beyond its authority
+      protectedInterest: authority_integrity
+      downstream: [IDENTITY_MODEL, AUTHORIZATION_MODEL, SECURITY_REQUIREMENTS]
+    - id: AB-05
+      title: secret_enters_prompt_or_evidence_store
+      scenario: API key/token/password is copied into prompts, traces, artifact repository or model context
+      protectedInterest: secret_confidentiality
+      downstream: [DATA_FLOW_MODEL, SECRETS_MODEL, SECURITY_REQUIREMENTS]
+    - id: AB-06
+      title: unauthorized_canonical_artifact_change
+      scenario: unapproved actor or automation changes canonical evidence, requirements, gate status or decision record
+      protectedInterest: configuration_and_decision_integrity
+      downstream: [SYSTEM_CONTEXT, IAM_MODEL, CONFIGURATION_BASELINE]
+    - id: AB-07
+      title: cross_project_or_cross_tenant_context_leak
+      scenario: knowledge or retrieved context from one project becomes visible in another project
+      protectedInterest: confidentiality_and_isolation
+      downstream: [SYSTEM_BOUNDARY, DATA_FLOW_MODEL, IAM_MODEL]
+
+SECURITY_CONSTRAINTS:
+  status: CANDIDATE_WITH_OWNER_CONFIRMED_CONSTITUTIONAL_RULES
+  constraints:
+    - id: SC-01
+      statement: agent/model may not silently replace owner authority or accept residual risk
+      sourceRef: father/governance/FATHER_CONSTITUTION.md
+      state: MANDATORY_FATHER
+    - id: SC-02
+      statement: FACT, candidate, hypothesis, interpretation and UNKNOWN states must remain distinguishable and traceable
+      sourceRef: father/governance/FATHER_CONSTITUTION.md
+      state: MANDATORY_FATHER
+    - id: SC-03
+      statement: credentials/secrets must not be stored in ordinary knowledge, prompt, trace or evidence artifacts
+      state: CANDIDATE_SECURITY_BASELINE
+    - id: SC-04
+      statement: untrusted uploaded/connected content must remain distinguishable from trusted system instructions and admitted evidence
+      state: CANDIDATE_SECURITY_BASELINE
+    - id: SC-05
+      statement: external model/provider use must be traceable and conditioned on project data handling policy
+      state: CANDIDATE_SECURITY_BASELINE
+    - id: SC-06
+      statement: canonical material changes require authenticated actor, authority check, version/provenance record and review where required
+      state: CANDIDATE_SECURITY_BASELINE
+    - id: SC-07
+      statement: normative source identity, version/status and applicability state must be preserved for material compliance/security decisions
+      state: CANDIDATE_SECURITY_BASELINE
+    - id: SC-08
+      statement: project/tenant context isolation must be explicit before multi-project or shared-service operation
+      state: CANDIDATE_SECURITY_BASELINE
+
+SECURITY_QUESTIONS_LOG:
+  status: OPEN
+  questions:
+    - id: SQ-01
+      question: what is the first deployment topology: local, private server, cloud, or hybrid
+      owner: product_manager
+      downstreamImpact: [SYSTEM_BOUNDARY, NETWORK_TRUST, LOGGING, REGULATORY_APPLICABILITY]
+    - id: SQ-02
+      question: which external model/providers are permitted for which data classes
+      owner: security_engineer
+      downstreamImpact: [DATA_FLOW_MODEL, INTERFACE_INVENTORY, SECURITY_REQUIREMENTS]
+    - id: SQ-03
+      question: what authentication and authorization hierarchy is required for owner/reviewer/agent actions
+      owner: system_engineer
+      downstreamImpact: [SYSTEM_CONTEXT, IAM_MODEL]
+    - id: SQ-04
+      question: what retention/deletion policy applies to uploaded documents, traces and generated artifacts
+      owner: data_owner
+      downstreamImpact: [DATA_MODEL, OPERATIONAL_REQUIREMENTS]
+    - id: SQ-05
+      question: will first release support multiple independent projects/tenants
+      owner: product_manager
+      downstreamImpact: [SYSTEM_BOUNDARY, DATA_ISOLATION, IAM_MODEL]
+    - id: SQ-06
+      question: which legal/regulatory overlays apply to the first real deployment and dataset
+      owner: legal_compliance
+      downstreamImpact: [REGULATORY_APPLICABILITY, SECURITY_REQUIREMENTS]
+
+SECURITY_INTAKE_EVIDENCE_REGISTER:
+  status: ACTIVE
+  records:
+    - evidenceId: EV-SI-001
+      statement: Security enters immediately after Product and remains continuous.
+      recordType: PRODUCT_SECURITY_CLAIM
+      claimType: CONSTRAINT
+      sourceType: FATHER_CONSTITUTION
+      sourceRef: father/governance/FATHER_CONSTITUTION.md
+      informationOwner: FATHER_owner
+      verificationState: SOURCED
+      affectedArtifacts: [SECURITY_INTAKE, SECURITY_CONSTRAINTS]
+      downstreamImpact: [SYSTEM_ENGINEERING, THREAT_MODEL_V0]
+    - evidenceId: EV-SI-002
+      statement: FATHER platform may ingest existing project documents and compare them against canonical required knowledge.
+      recordType: EXPOSURE_CLAIM
+      claimType: REQUIREMENT
+      sourceType: OWNER_DECISION
+      informationOwner: FATHER_owner
+      verificationState: OWNER_CONFIRMED
+      affectedArtifacts: [SECURITY_INTAKE, INITIAL_ABUSE_CASES]
+      downstreamImpact: [SYSTEM_BOUNDARY, DATA_FLOW_MODEL]
+    - evidenceId: EV-SI-003
+      statement: exact deployment topology and external provider set are not yet selected.
+      recordType: UNKNOWN
+      claimType: UNKNOWN
+      sourceType: PRODUCT_DISCOVERY
+      informationOwner: product_manager
+      verificationState: OWNER_CONFIRMED
+      affectedArtifacts: [EXPOSURE_ASSUMPTION_REGISTER, REGULATORY_APPLICABILITY]
+      downstreamImpact: [SYSTEM_ENGINEERING, THREAT_MODEL_V0]
+    - evidenceId: EV-SI-004
+      statement: project-specific legal/regulatory applicability is not yet established.
+      recordType: REGULATORY_APPLICABILITY_CLAIM
+      claimType: UNKNOWN
+      sourceType: SECURITY_INTAKE
+      informationOwner: legal_compliance
+      verificationState: UNSUPPORTED
+      affectedArtifacts: [REGULATORY_APPLICABILITY]
+      downstreamImpact: [SYSTEM_REQUIREMENTS, SECURITY_REQUIREMENTS]
+
+SECURITY_INTAKE_READY_DECISION:
+  decision: CONDITIONAL_PASS
+  blockers: []
+  openConditions:
+    - System Engineering must make deployment, external interfaces, data flows and identities explicit
+    - Data Owner must refine handling/retention for real project datasets
+    - Legal/Compliance must decide project-specific applicability before any compliance claim
+    - Threat Model v0 must test and refine initial abuse cases against the system model
+  nextStage: SYSTEM_ENGINEERING
+  ruleRef: father/factory/process-model/stages/02-security-intake/SECURITY_INTAKE_READY_DECISION_TABLE.yaml

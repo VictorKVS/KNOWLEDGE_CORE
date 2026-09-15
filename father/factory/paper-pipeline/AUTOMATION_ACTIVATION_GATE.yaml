@@ -1,0 +1,66 @@
+schemaVersion: 1
+activationGateId: FATHER-AUTOMATION-ACTIVATION-0001
+status: FROZEN_FOR_PAPER_PIPELINE_REVIEW
+appliesTo:
+  - father/factory/runtime/
+  - father/factory/automation/MODEL_ZOO_DECISION_PANEL.yaml
+  - father/factory/automation/DOCUMENT_AUTOMATION_PIPELINE.yaml
+  - father/factory/automation/AUTOMATION_DECISION_ROUTING.yaml
+rule: >-
+  Existing runtime MVP remains preserved and testable, but no new autonomous lifecycle behavior,
+  automatic promotion, automatic final gate, or expansion of Model Zoo authority is allowed until the
+  canonical paper pipeline is approved and manually walkthrough-tested.
+currentRuntimeState:
+  implementationExists: true
+  CIValidated: true
+  CIValidatedPython: ['3.11','3.12']
+  permittedWhileFrozen:
+    - bugfixes_that_do_not_change_lifecycle_semantics
+    - tests_that_preserve_current_behavior
+    - documentation
+    - fixture_reproduction
+  prohibitedWhileFrozen:
+    - new_final_authority_for_models
+    - automatic_legal_applicability_decision
+    - automatic_residual_risk_acceptance
+    - automatic_product_scope_approval
+    - automatic_production_release_approval
+    - new_lifecycle_stage_routing_not_mapped_to_paper_pipeline
+    - silent_promotion_of_candidate_artifacts_to_verified
+activationPrerequisites:
+  - id: PP-01
+    requirement: FATHER_PAPER_PIPELINE_ALGORITHM reviewed end-to-end
+    evidence: review_record
+  - id: PP-02
+    requirement: PROCESSING_METHOD_CATALOG reviewed for method/source/authority boundaries
+    evidence: review_record
+  - id: PP-03
+    requirement: ARTIFACT_DEPENDENCY_MATRIX validated against FATHER_ARTIFACT_REGISTRY
+    evidence: matrix_validation_record
+  - id: PP-04
+    requirement: FATHER_ROLE_MATRIX authority boundaries accepted
+    evidence: role_authority_review
+  - id: PP-05
+    requirement: normative precedence/applicability model accepted
+    evidence: normative_review
+  - id: PP-06
+    requirement: Greenfield walkthrough completes A0-A16 with explicit rework loops
+    evidence: greenfield_walkthrough_report
+  - id: PP-07
+    requirement: Brownfield walkthrough maps existing materials before creating new artifacts
+    evidence: brownfield_walkthrough_report
+  - id: PP-08
+    requirement: conflict, UNKNOWN, stale-source, rejected-artifact and supersession cases tested on paper
+    evidence: exception_walkthrough_report
+  - id: PP-09
+    requirement: each gate has explicit minimum evidence and authorized final decision role
+    evidence: gate_authority_matrix
+  - id: PP-10
+    requirement: source-to-clause exact mappings exist for any normative rule automated as a blocker
+    evidence: clause_trace_records
+activationDecision:
+  allowedOutcomes: [KEEP_FROZEN, PARTIAL_AUTOMATION_ALLOWED, AUTOMATION_M1_ALLOWED]
+  finalAuthority: project_owner_plus_architecture_governance
+modelZooActivationRule: >-
+  Zoo may assist analysis only at mapped invocation points. Final authority remains role-bound.
+  No number of model votes can satisfy a missing owner, missing evidence, unresolved legal question or risk acceptance.

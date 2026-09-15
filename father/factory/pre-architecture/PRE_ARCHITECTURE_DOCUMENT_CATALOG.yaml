@@ -1,0 +1,176 @@
+schemaVersion: 1
+catalogId: FATHER-PRE-ARCHITECTURE-DOCUMENT-CATALOG-0001
+status: CANDIDATE_CATALOG
+rule: >-
+  Every artifact shown in the UI must explain why it exists, who owns it, how information is obtained,
+  what evidence supports it, who reviews it, what normative source applies, and who consumes it downstream.
+commonFields:
+  - artifactId
+  - ownerRole
+  - purpose
+  - obtainBy
+  - requiredInformation
+  - evidence
+  - reviewers
+  - normativeRefs
+  - downstream
+  - blockingForArchitecture
+  - status
+
+branches:
+  product:
+    detailedPack: ../process-model/stages/01-product-discovery/documents/PRODUCT_DOCUMENT_PACK.yaml
+    normativeCrosswalk: ../process-model/stages/01-product-discovery/documents/PRODUCT_GOST_CROSSWALK.yaml
+    artifacts:
+      - BUSINESS_NEED
+      - PRODUCT_VISION
+      - TARGET_USER_SEGMENTS
+      - VALUE_PROPOSITION
+      - USER_JOURNEY
+      - PRODUCT_REQUIREMENTS_PRD
+      - MVP_SCOPE
+      - SUCCESS_METRICS
+      - PRODUCT_ROADMAP
+      - PRODUCT_BACKLOG
+      - STAKEHOLDER_REGISTER
+      - SCOPE_BASELINE
+      - ASSUMPTION_LOG
+      - EVIDENCE_REGISTER
+      - PRODUCT_READY_DECISION
+
+  business_analysis:
+    detailedPack: roles/business-analyst/BUSINESS_ANALYST_PACK.yaml
+    artifacts:
+      - BUSINESS_PROCESS_MODEL
+      - DOMAIN_GLOSSARY
+      - BUSINESS_RULE_CATALOGUE
+      - USER_AND_OPERATOR_JOURNEYS
+      - USE_CASE_CATALOGUE
+      - BUSINESS_REQUIREMENTS
+      - BUSINESS_GAP_AND_QUESTION_REGISTER
+
+  security:
+    processPack: ../process-model/stages/02-security-intake/SECURITY_INTAKE_PROCESS.yaml
+    threatPack: ../process-model/stages/04-threat-model-v0/THREAT_MODEL_V0_PROCESS.yaml
+    artifacts:
+      - SECURITY_INTAKE
+      - INITIAL_ABUSE_CASES
+      - SECURITY_CONSTRAINTS
+      - SECURITY_QUESTIONS_LOG
+      - THREAT_MODEL_V0
+      - THREAT_SCENARIO_REGISTER
+      - TRUST_BOUNDARY_REGISTER
+      - SECURITY_REQUIREMENTS_DRAFT
+      - SECURITY_RISK_REGISTER
+
+  legal_compliance:
+    artifacts:
+      - REGULATORY_APPLICABILITY
+      - MANDATORY_REQUIREMENT_REGISTER
+      - LEGAL_COMPLIANCE_QUESTIONS
+    acquisitionPattern:
+      obtainBy: [identify_jurisdiction, identify_system_and_data_categories, query_current_normative_registry, map_applicability_conditions, obtain_legal_owner_review]
+      requiredInformation: [jurisdiction, organization_type, system_type, data_categories, processing_context, sector, mandatory_sources, applicability_rationale, unresolved_questions]
+      evidence: [current_normative_text, source_status, applicability_rationale, legal_review]
+      blockingForArchitecture: true
+
+  data_governance:
+    artifacts:
+      - DATA_INVENTORY
+      - DATA_CLASSIFICATION
+      - DATA_OWNER_MATRIX
+      - DATA_HANDLING_CONSTRAINTS
+    acquisitionPattern:
+      obtainBy: [inventory_business_data, inspect_schemas_and_samples_when_authorized, interview_data_owners, map_processing_and_sharing, apply_legal_security_constraints]
+      requiredInformation: [data_element, business_meaning, owner, source, sensitivity, lawful_or_allowed_use, recipients, retention_intent, residency_or_location_constraints, quality, lineage]
+      evidence: [system_metadata, data_owner_confirmation, legal_refs]
+      blockingForArchitecture: true
+
+  system_engineering:
+    processPack: ../process-model/stages/03-system-engineering/SYSTEM_ENGINEERING_PROCESS.yaml
+    artifacts:
+      - SYSTEM_CONTEXT
+      - SYSTEM_BOUNDARY
+      - FUNCTION_MODEL
+      - DATA_FLOW_MODEL
+      - INTERFACE_INVENTORY
+      - EXTERNAL_DEPENDENCY_REGISTER
+      - OPERATIONAL_MODES
+      - SYSTEM_ASSUMPTION_LOG
+    blockingForArchitecture: true
+
+  integration:
+    artifacts:
+      - INTERFACE_INVENTORY
+      - INTEGRATION_CONSTRAINTS
+      - EXTERNAL_SYSTEM_DEPENDENCY_MAP
+    acquisitionPattern:
+      obtainBy: [collect_api_and_interface_specs, interview_system_owners, inspect_configs_or_traffic_when_authorized, identify_protocol_auth_data_contract_and_failure_modes]
+      requiredInformation: [interface_id, owner, direction, protocol, contract, authn_authz, data_classes, sla, rate_or_capacity, retry_timeout, failure_dependency, lifecycle_version]
+      evidence: [openapi_asyncapi_specs, configs, contracts, owner_confirmation]
+      blockingForArchitecture: true
+
+  operations_platform:
+    artifacts:
+      - SLA_SLO_INPUTS
+      - SUPPORT_MODEL
+      - PLATFORM_ENVIRONMENT_CONSTRAINTS
+      - CAPACITY_LOAD_PROFILE
+      - INCIDENT_PROBLEM_HISTORY
+      - OPERABILITY_REQUIREMENTS_INPUTS
+    acquisitionPattern:
+      obtainBy: [service_catalog, runtime_metrics, platform_policy, cmdb_or_inventory, operations_interviews, incident_postmortems, capacity_forecast]
+      requiredInformation: [availability, latency, support_hours, rto_rpo_if_applicable, environments, region_constraints, quotas, network_zones, current_load, peak_load, concurrency, growth, incident_patterns]
+      evidence: [monitoring_data, platform_policy, incident_records, owner_confirmation]
+      blockingForArchitecture: true
+
+  finance_procurement:
+    artifacts:
+      - COST_BUDGET_CONSTRAINTS
+      - COMMERCIAL_CONTRACT_CONSTRAINTS
+      - PROCUREMENT_DEPENDENCY_REGISTER
+    acquisitionPattern:
+      obtainBy: [approved_budget_review, contract_or_rfp_review, procurement_interview, vendor_license_review]
+      requiredInformation: [budget_envelope, capex_opex_constraints, buy_build_policy, vendor_constraints, license_model, lead_times, contract_acceptance, liability_or_service_constraints]
+      evidence: [approved_budget, contract_rfp_refs, procurement_confirmation]
+      blockingForArchitecture: true_when_material
+
+  qa_verification:
+    artifacts:
+      - ACCEPTANCE_CRITERIA_INPUTS
+      - VERIFICATION_CONSTRAINTS
+      - TESTABILITY_GAPS
+    acquisitionPattern:
+      obtainBy: [review_success_metrics, review_business_and_system_requirements, identify_unverifiable_statements, define_needed_test_evidence]
+      requiredInformation: [candidate_acceptance_measure, observable_result, test_environment_need, data_need, dependency_need, security_test_need, performance_test_need, unresolved_testability_gap]
+      evidence: [requirement_refs, product_metric_refs, qa_review]
+      blockingForArchitecture: false_but_required_before_requirements_gate
+
+  requirements_engineering:
+    artifacts:
+      - STAKEHOLDER_REQUIREMENTS
+      - SYSTEM_REQUIREMENTS
+      - SOFTWARE_REQUIREMENTS
+      - NFR_CATALOGUE
+      - SECURITY_REQUIREMENTS
+      - ACCEPTANCE_CRITERIA
+      - REQUIREMENTS_TRACEABILITY_MATRIX
+      - REQUIREMENTS_BASELINE_READY_DECISION
+    acquisitionPattern:
+      obtainBy: [normalize_all_upstream_inputs, classify_requirement_type, remove_duplicates, preserve_conflicts, make_requirements_measurable, assign_owner_and_source, define_acceptance, build_bidirectional_trace]
+      requiredInformation: [requirement_id, statement, type, source, owner, rationale, priority, fit_criterion, assumptions, constraints, conflicts, downstream_verification]
+      evidence: [source_to_requirement_trace, owner_confirmation, review_record]
+      blockingForArchitecture: true
+
+  evidence_governance:
+    artifacts:
+      - EVIDENCE_REGISTER
+      - KNOWLEDGE_GAP_REGISTER
+      - CONFLICT_REGISTER
+      - SOURCE_FRESHNESS_REPORT
+      - PRE_ARCHITECTURE_INDEPENDENT_REVIEW
+    acquisitionPattern:
+      obtainBy: [scan_all_material_artifacts, trace_claims_to_sources, detect_missing_owners, detect_conflicts, check_source_freshness, independent_challenge]
+      requiredInformation: [claim, source, owner, date_version, verification_state, conflict, unknown, downstream_impact, reviewer_finding]
+      evidence: [traceability_graph, review_refs]
+      blockingForArchitecture: true

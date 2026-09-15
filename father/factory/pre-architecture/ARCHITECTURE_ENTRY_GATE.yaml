@@ -1,0 +1,77 @@
+schemaVersion: 1
+gateId: ARCHITECTURE_OPTIONS_ALLOWED
+status: CANDIDATE_GATE
+purpose: prevent architecture option design before required upstream evidence exists
+
+requiredFamilies:
+  product_context:
+    requiredArtifacts: [BUSINESS_NEED, PRODUCT_VISION, SCOPE_BASELINE, SUCCESS_METRICS, STAKEHOLDER_REGISTER]
+    acceptedStates: [CONFIRMED, OWNER_CONFIRMED, VERIFIED, CONDITIONAL_WITH_VISIBLE_GAPS]
+  business_domain:
+    requiredArtifacts: [BUSINESS_PROCESS_MODEL, DOMAIN_GLOSSARY, BUSINESS_REQUIREMENTS]
+    acceptedStates: [CONFIRMED, VERIFIED, PARTIAL_WITH_VISIBLE_GAPS]
+  security:
+    requiredArtifacts: [SECURITY_INTAKE, SECURITY_CONSTRAINTS, THREAT_MODEL_V0, SECURITY_REQUIREMENTS_DRAFT]
+    acceptedStates: [CONFIRMED, VERIFIED, CONDITIONAL_WITH_VISIBLE_GAPS]
+  legal_and_data:
+    requiredArtifacts: [REGULATORY_APPLICABILITY, DATA_INVENTORY, DATA_CLASSIFICATION, DATA_HANDLING_CONSTRAINTS]
+    acceptedStates: [CONFIRMED, VERIFIED, PARTIAL_WITH_VISIBLE_GAPS]
+  system_model:
+    requiredArtifacts: [SYSTEM_CONTEXT, SYSTEM_BOUNDARY, FUNCTION_MODEL, DATA_FLOW_MODEL, INTERFACE_INVENTORY, EXTERNAL_DEPENDENCY_REGISTER, OPERATIONAL_MODES]
+    acceptedStates: [CONFIRMED, VERIFIED, CONDITIONAL_WITH_VISIBLE_GAPS]
+  operability:
+    requiredArtifacts: [SLA_SLO_INPUTS, PLATFORM_ENVIRONMENT_CONSTRAINTS, CAPACITY_LOAD_PROFILE]
+    acceptedStates: [CONFIRMED, VERIFIED, TO_BE_BASELINED_WITH_OWNER]
+  delivery_commercial:
+    requiredArtifacts: [PROJECT_CONSTRAINT_SNAPSHOT, COST_BUDGET_CONSTRAINTS, COMMERCIAL_CONTRACT_CONSTRAINTS]
+    acceptedStates: [CONFIRMED, VERIFIED, PARTIAL_WITH_VISIBLE_GAPS]
+  requirements:
+    requiredArtifacts: [STAKEHOLDER_REQUIREMENTS, SYSTEM_REQUIREMENTS, SOFTWARE_REQUIREMENTS, NFR_CATALOGUE, SECURITY_REQUIREMENTS, ACCEPTANCE_CRITERIA, REQUIREMENTS_TRACEABILITY_MATRIX]
+    acceptedStates: [BASELINED, VERIFIED]
+  evidence_governance:
+    requiredArtifacts: [ASSUMPTION_LOG, EVIDENCE_REGISTER, CONFLICT_REGISTER, PRE_ARCHITECTURE_INDEPENDENT_REVIEW]
+    acceptedStates: [ACTIVE, REVIEWED, VERIFIED]
+
+checks:
+  - id: AE-01
+    rule: all_required_families_present
+    onFail: BLOCKED
+  - id: AE-02
+    rule: no_material_conflict_hidden_or_unowned
+    onFail: BLOCKED
+  - id: AE-03
+    rule: no_unknown_promoted_to_fact
+    onFail: BLOCKED
+  - id: AE-04
+    rule: every_material_constraint_has_owner_and_source
+    onFail: BLOCKED
+  - id: AE-05
+    rule: requirements_baseline_is_traceable_to_upstream_sources
+    onFail: BLOCKED
+  - id: AE-06
+    rule: security_and_legal_unknowns_are_visible_to_architect
+    onFail: BLOCKED
+  - id: AE-07
+    rule: architecture_reviewer_assignment_is_independent_from_producer
+    onFail: BLOCKED
+
+outcomes:
+  PASS:
+    meaning: architecture options may be created
+  CONDITIONAL_PASS:
+    meaning: exploration/PoC may proceed; material architecture decision remains constrained by named nonblocking conditions
+  BLOCKED:
+    meaning: architecture options are not authorized as decision-ready work
+  INSUFFICIENT_EVIDENCE:
+    meaning: readiness cannot be determined; acquire or verify evidence
+
+uiSignals:
+  - family_completion
+  - missing_artifacts
+  - artifact_owner
+  - artifact_state
+  - open_conflicts
+  - open_unknowns
+  - source_freshness
+  - blocking_reason
+  - next_responsible_role

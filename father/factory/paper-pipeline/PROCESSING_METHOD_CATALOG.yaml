@@ -1,0 +1,341 @@
+schemaVersion: 1
+catalogId: FATHER-PAPER-PIPELINE-METHODS-0001
+status: CANDIDATE_COMPLETE_METHOD_CATALOG
+principles:
+  - method_does_not_override_source_authority
+  - deterministic_methods_preferred_for_identity_and_validation
+  - llm_outputs_are_candidates_until_reviewed
+  - expert_judgment_is_explicit_not_hidden_in_automation
+  - unknown_and_conflict_are_valid_outputs
+  - every_material_transformation_preserves_provenance
+methods:
+  SOURCE_IDENTITY:
+    stageRefs: [A0]
+    kind: DETERMINISTIC
+    inputs: [source_bytes, source_locator, metadata]
+    operations: [sha256, version_identity, timestamp_capture, source_classification]
+    outputs: [source_id, version_id, integrity_record]
+    automationClass: DETERMINISTIC
+  DOCUMENT_PARSE_AND_SEGMENT:
+    stageRefs: [A0]
+    kind: HYBRID
+    inputs: [native_document_or_image]
+    operations: [native_parse, layout_parse, OCR_when_required, section_segmentation, stable_locator_assignment]
+    outputs: [source_units, locators, uncertainty_flags]
+    automationClass: DETERMINISTIC_PLUS_MODEL_CANDIDATE
+  ATOMIC_INFORMATION_EXTRACTION:
+    stageRefs: [A0, A5]
+    kind: SEMANTIC_EXTRACTION
+    inputs: [source_units]
+    operations: [extract_fact, extract_claim, extract_requirement, extract_constraint, extract_assumption, extract_decision, extract_risk, extract_unknown]
+    outputs: [atomic_items]
+    automationClass: LLM_CANDIDATE_WITH_EVIDENCE_REFS
+  TERMINOLOGY_NORMALIZATION:
+    stageRefs: [A0, A3, A5]
+    kind: HYBRID
+    inputs: [atomic_items, glossary, normative_terms]
+    operations: [term_extraction, alias_detection, sense_separation, definition_conflict_detection]
+    outputs: [domain_glossary, term_map, definition_conflicts]
+    automationClass: MODEL_ASSISTED_OWNER_REVIEW
+  APPLICABILITY_ANALYSIS:
+    stageRefs: [A0, A2, A5]
+    kind: RULE_PLUS_AUTHORITY
+    inputs: [project_scope, jurisdiction, system_type, data_classes, normative_registry]
+    operations: [condition_matching, overlay_selection, supersession_check, unresolved_question_generation]
+    outputs: [applicability_candidates, applicable_overlays, legal_questions]
+    automationClass: DETERMINISTIC_PLUS_LEGAL_AUTHORITY
+    humanFinalAuthority: legal_compliance
+  ARTIFACT_FIELD_MAPPING:
+    stageRefs: [A0]
+    kind: HYBRID
+    inputs: [atomic_items, artifact_schema]
+    operations: [field_mapping, coverage_scoring, unmapped_item_detection]
+    outputs: [artifact_coverage_map]
+    automationClass: MODEL_ASSISTED
+  GAP_CONFLICT_STALENESS_ANALYSIS:
+    stageRefs: [A0, A1, A3, A5, A7, A8, A12, A15]
+    kind: HYBRID
+    inputs: [mapped_items, versions, owners, timestamps]
+    operations: [required_field_gap, contradiction_analysis, version_conflict, freshness_check, orphan_detection]
+    outputs: [gap_register, conflict_register, stale_register]
+    automationClass: DETERMINISTIC_PLUS_MODEL_CHALLENGE
+  STAKEHOLDER_AND_AUTHORITY_MAPPING:
+    stageRefs: [A1, A2]
+    kind: ANALYTICAL
+    inputs: [business_context, organization_roles, contract]
+    operations: [stakeholder_identification, RACI_like_mapping, decision_authority_resolution]
+    outputs: [stakeholder_register, authority_map]
+    automationClass: MODEL_ASSISTED_OWNER_CONFIRMATION
+  PROBLEM_VS_SOLUTION_CHECK:
+    stageRefs: [A1]
+    kind: ANALYTICAL
+    inputs: [business_need, proposed_solution]
+    operations: [separate_outcome_from_mechanism, assumption_detection, alternative_problem_statement]
+    outputs: [validated_problem_statement, technology_assumptions]
+    automationClass: MODEL_CHALLENGE_OWNER_CONFIRMATION
+  JOURNEY_PROCESS_MODELING:
+    stageRefs: [A1, A3]
+    kind: PROFESSIONAL_METHOD
+    inputs: [interviews, SOP, observations, current_process]
+    operations: [journey_mapping, BPMN, SIPOC, IDEF0_when_useful, exception_path_analysis]
+    outputs: [user_journeys, business_process_model, business_rules]
+    automationClass: MODEL_ASSISTED_DOMAIN_OWNER_REVIEW
+  SYSTEM_CONTEXT_MODELING:
+    stageRefs: [A3]
+    kind: PROFESSIONAL_METHOD
+    inputs: [product_scope, actors, external_systems]
+    operations: [system_of_interest_definition, boundary_definition, actor_external_system_mapping]
+    outputs: [system_context, system_boundary]
+    automationClass: MODEL_ASSISTED_SYSTEM_ENGINEER_OWNER
+  FUNCTIONAL_DECOMPOSITION:
+    stageRefs: [A3, A9]
+    kind: SYSTEM_ENGINEERING
+    inputs: [business_processes, use_cases, requirements]
+    operations: [function_decomposition, responsibility_assignment, input_output_mapping]
+    outputs: [function_model, component_candidate_responsibilities]
+    automationClass: MODEL_ASSISTED_SYSTEM_OR_SOFTWARE_ARCHITECT
+  DATA_FLOW_MODELING:
+    stageRefs: [A3, A9]
+    kind: SYSTEM_ENGINEERING
+    inputs: [functions, interfaces, data_inventory]
+    operations: [DFD, trust_boundary_annotation, persistence_annotation, data_class_annotation]
+    outputs: [data_flow_model]
+    automationClass: MODEL_ASSISTED_SECURITY_REVIEW
+  THREAT_MODELING:
+    stageRefs: [A4, A9]
+    kind: SECURITY_METHOD
+    inputs: [system_boundary, DFD, interfaces, data_classes, assets]
+    operations: [negative_consequence_analysis, threat_source_analysis, entry_point_analysis, trust_boundary_analysis, threat_scenario_generation, attack_path_reasoning]
+    outputs: [threat_model, threat_scenarios, security_drivers, security_risks]
+    automationClass: MODEL_ASSISTED_SECURITY_OWNER
+    sourceRefs: [FSTEC-METHOD-THREATS-2021]
+  REQUIREMENT_NORMALIZATION:
+    stageRefs: [A5]
+    kind: REQUIREMENTS_ENGINEERING
+    inputs: [product_requirements, system_model, security_drafts, normative_requirements]
+    operations: [atomic_requirement_split, ambiguity_scan, modality_check, solution_leakage_check, duplicate_detection, conflict_detection]
+    outputs: [normalized_requirements]
+    automationClass: MODEL_ASSISTED_REQUIREMENTS_OWNER
+  QUALITY_ATTRIBUTE_SCENARIO:
+    stageRefs: [A5, A7]
+    kind: ARCHITECTURE_METHOD
+    inputs: [NFR_candidates, operational_context]
+    operations: [stimulus, source, environment, artifact, response, response_measure]
+    outputs: [quality_attribute_scenarios]
+    automationClass: MODEL_ASSISTED_ARCHITECT_REVIEW
+  TRACEABILITY_BUILDING:
+    stageRefs: [A5, A7, A8, A9, A11, A12, A13, A14]
+    kind: DETERMINISTIC_GRAPH_PLUS_REVIEW
+    inputs: [sources, requirements, risks, decisions, components, controls, tests, SLOs, costs, releases]
+    operations: [link_creation, orphan_detection, broken_ref_detection, supersession_tracking]
+    outputs: [traceability_graph, RTM, broken_trace_findings]
+    automationClass: DETERMINISTIC_PLUS_MODEL_SUGGESTION
+  WBS_DECOMPOSITION:
+    stageRefs: [A6, A10]
+    kind: PROJECT_METHOD
+    inputs: [requirements, architecture_scope, deliverables]
+    operations: [capability_decomposition, work_package_decomposition, dependency_mapping]
+    outputs: [WBS]
+    automationClass: MODEL_ASSISTED_PM_OWNER
+  ESTIMATION:
+    stageRefs: [A6, A10, A15]
+    kind: PROJECT_METHOD
+    inputs: [WBS, historical_data, assumptions]
+    operations: [analogous, parametric, PERT, bottom_up, hybrid, uncertainty_range]
+    outputs: [estimate_register, assumption_log]
+    automationClass: CALCULATOR_PLUS_EXPERT_INPUT
+  RISK_ANALYSIS:
+    stageRefs: [A4, A6, A7, A8, A12, A13, A14, A15]
+    kind: RISK_METHOD
+    inputs: [threats, delivery_uncertainty, architecture_options, operational_evidence]
+    operations: [likelihood_impact_when_evidenced, risk_matrix, aggregation, treatment_mapping, trigger_mapping]
+    outputs: [risk_register, treatment_plan, residual_risks]
+    automationClass: MODEL_ASSISTED_RISK_OWNER_FINAL
+  TCO_FINOPS_MODELING:
+    stageRefs: [A6, A8, A14, A15]
+    kind: ECONOMIC_METHOD
+    inputs: [workload, provider_prices, capex, opex, staffing, storage, network, risk_cost]
+    operations: [scenario_cost_model, break_even, sensitivity_analysis, cost_per_unit]
+    outputs: [TCO_model, finops_decision_inputs]
+    automationClass: CALCULATOR_PLUS_FINANCE_REVIEW
+  POC_EXPERIMENT_DESIGN:
+    stageRefs: [A6, A7, A8]
+    kind: EXPERIMENTAL_METHOD
+    inputs: [uncertain_hypothesis, decision_threshold]
+    operations: [hypothesis, setup, controlled_inputs, raw_evidence_capture, limitations, go_pivot_stop]
+    outputs: [POC_plan, POC_report]
+    automationClass: HUMAN_DESIGN_AUTOMATED_EVIDENCE_CAPTURE
+  ARCHITECTURE_CHARACTERISTIC_DISCOVERY:
+    stageRefs: [A7]
+    kind: ARCHITECTURE_METHOD
+    inputs: [domain_concerns, requirements, implicit_context, constraints]
+    operations: [explicit_characteristic_extract, implicit_characteristic_infer_as_candidate, prioritization, minimal_driver_set]
+    outputs: [architecture_driver_set]
+    automationClass: MODEL_ASSISTED_ARCHITECT_OWNER
+    bookRefs: [BOOK-RF-001]
+  ARCHITECTURE_OPTION_GENERATION:
+    stageRefs: [A7]
+    kind: ARCHITECTURE_METHOD
+    inputs: [drivers, constraints, patterns, POC_evidence]
+    operations: [generate_multiple_options, pattern_fit_analysis, dependency_impact, reversibility_analysis]
+    outputs: [architecture_option_set]
+    automationClass: MODEL_ZOO_CANDIDATE_ARCHITECT_OWNER
+  TRADEOFF_ANALYSIS:
+    stageRefs: [A7, A8]
+    kind: ARCHITECTURE_METHOD
+    inputs: [options, drivers, risks, cost, operability]
+    operations: [benefit_cost_risk_matrix, quality_scenario_analysis, sensitivity, rejected_alternative_reasoning]
+    outputs: [tradeoff_matrix]
+    automationClass: MODEL_ZOO_CANDIDATE_INDEPENDENT_REVIEW
+    bookRefs: [BOOK-RF-002]
+  C4_MODELING:
+    stageRefs: [A3, A7, A9]
+    kind: ARCHITECTURE_REPRESENTATION
+    inputs: [system_context, architecture_options, component_design]
+    operations: [context_view, container_view, component_view_when_useful]
+    outputs: [C4_views]
+    automationClass: GENERATION_PLUS_ARCHITECT_REVIEW
+    bookRefs: [BOOK-C4-001, BOOK-C4-002]
+  ARCHITECTURE_RISK_STORM:
+    stageRefs: [A7, A8, A15]
+    kind: ARCHITECTURE_METHOD
+    inputs: [architecture_options, quality_attributes, dependencies]
+    operations: [collaborative_risk_identification, domain_aggregation, mitigation_tracking]
+    outputs: [architecture_risk_review]
+    automationClass: MODEL_ZOO_CANDIDATE_HUMAN_REVIEW
+    bookRefs: [BOOK-RF-004]
+  ADR_LIFECYCLE:
+    stageRefs: [A8, A15]
+    kind: DECISION_METHOD
+    inputs: [context, options, evidence, tradeoffs, risks]
+    operations: [record_status_context_decision_consequences, rejected_alternatives, supersession, revisit_triggers]
+    outputs: [ADR]
+    automationClass: MODEL_DRAFT_HUMAN_DECISION
+    bookRefs: [BOOK-RF-003]
+  CTO_ATAM_CHALLENGE:
+    stageRefs: [A8]
+    kind: INDEPENDENT_REVIEW
+    inputs: [option_set, quality_scenarios, tradeoffs, evidence]
+    operations: [challenge_assumptions, scenario_walkthrough, failure_mode_review, dissent_register]
+    outputs: [independent_review_record, decision_conditions]
+    automationClass: MODEL_ZOO_PLUS_HUMAN_AUTHORITY
+  COMPONENT_DESIGN:
+    stageRefs: [A9]
+    kind: DETAILED_DESIGN
+    inputs: [target_architecture, responsibilities]
+    operations: [C3_decomposition, interface_assignment, cohesion_coupling_review]
+    outputs: [component_design]
+    automationClass: MODEL_ASSISTED_SOFTWARE_ARCHITECT
+  SEQUENCE_STATE_MODELING:
+    stageRefs: [A9]
+    kind: DETAILED_DESIGN
+    inputs: [use_cases, components, failure_modes]
+    operations: [sequence_diagram, state_machine, timeout_retry_error_paths]
+    outputs: [interaction_models]
+    automationClass: MODEL_ASSISTED_REVIEW
+  CONTRACT_DESIGN:
+    stageRefs: [A9, A15]
+    kind: INTEGRATION_METHOD
+    inputs: [component_boundaries, consumers, data_model, security_requirements]
+    operations: [OpenAPI_AsyncAPI_event_schema, versioning, compatibility, idempotency, deprecation]
+    outputs: [API_contracts, event_schemas]
+    automationClass: GENERATION_PLUS_CONTRACT_VALIDATION
+  DATA_PIPELINE_DESIGN:
+    stageRefs: [A9]
+    kind: DATA_ENGINEERING
+    inputs: [data_sources, data_classes, workload, model_needs]
+    operations: [stream_batch_classification, raw_curated_semantic_zones, lineage, feature_definition, index_versioning]
+    outputs: [data_pipeline, storage_role_model, lineage_model]
+    automationClass: MODEL_ASSISTED_DATA_OWNER_REVIEW
+  SECURITY_BY_DESIGN:
+    stageRefs: [A2, A4, A7, A9, A11, A12, A13, A14]
+    kind: SECURITY_METHOD
+    inputs: [threat_models, requirements, component_flows]
+    operations: [least_privilege, trust_boundary_controls, secure_defaults, attack_surface_reduction, control_to_test_mapping]
+    outputs: [security_controls, updated_threat_model, security_test_obligations]
+    automationClass: MODEL_ASSISTED_SECURITY_OWNER
+  SIZING_CAPACITY:
+    stageRefs: [A6, A9, A12, A14]
+    kind: CAPACITY_METHOD
+    inputs: [workload_profile, SLO, data_growth, model_runtime]
+    operations: [throughput_concurrency_latency_model, storage_growth, CPU_RAM_GPU, headroom, sensitivity]
+    outputs: [sizing_model, capacity_plan]
+    automationClass: CALCULATOR_PLUS_BENCHMARK
+  TEST_DESIGN:
+    stageRefs: [A9, A12]
+    kind: VERIFICATION_METHOD
+    inputs: [requirements, threats, quality_scenarios]
+    operations: [requirement_to_test, boundary_negative_failure_tests, coverage_analysis]
+    outputs: [test_strategy, test_cases]
+    automationClass: MODEL_ASSISTED_QA_OWNER
+  GENAI_EVALUATION:
+    stageRefs: [A12, A14]
+    kind: AI_QUALITY_METHOD
+    inputs: [versioned_eval_dataset, retrieval_context, candidate_model_outputs]
+    operations: [retrieval_metrics, faithfulness, answer_relevancy, citation_coverage, robustness, safety, latency_cost]
+    outputs: [genai_eval_report, regression_gate]
+    automationClass: AUTOMATED_METRICS_PLUS_CALIBRATED_JUDGE_HUMAN_REVIEW
+  SECURE_BUILD_DEVSECOPS:
+    stageRefs: [A10, A11, A13]
+    kind: DELIVERY_METHOD
+    inputs: [source_code, dependencies, config, IaC]
+    operations: [build_reproducibility, SAST, SCA, secret_scan, SBOM, artifact_signing_when_applicable]
+    outputs: [build_evidence, security_scan_results, SBOM]
+    automationClass: DETERMINISTIC_TOOLS
+  MLOPS_LIFECYCLE:
+    stageRefs: [A10, A11, A12, A13, A14]
+    kind: AI_DELIVERY_METHOD
+    inputs: [model, dataset, features, prompts, indexes, evals]
+    operations: [version_registry, training_eval_promotion, reproducibility, model_data_prompt_index_lineage, rollback]
+    outputs: [model_manifest, promotion_record, lineage]
+    automationClass: PIPELINE_PLUS_HUMAN_PROMOTION
+  DEPLOYMENT_STRATEGY:
+    stageRefs: [A10, A13]
+    kind: RELEASE_METHOD
+    inputs: [risk, topology, migration, SLO]
+    operations: [rolling, blue_green, canary, feature_flag, rollback_rehearsal]
+    outputs: [deployment_plan, rollback_plan]
+    automationClass: AUTOMATED_EXECUTION_WITH_RELEASE_AUTHORITY
+  OBSERVABILITY_SLO:
+    stageRefs: [A9, A13, A14]
+    kind: OPERATIONS_METHOD
+    inputs: [NFR, architecture, critical_user_journeys]
+    operations: [SLI_definition, SLO, logs_metrics_traces, alerting, error_budget, model_quality_telemetry]
+    outputs: [observability_design, SLO_SLA, monitoring_baseline]
+    automationClass: TELEMETRY_AUTOMATION_SERVICE_OWNER
+  HA_DR:
+    stageRefs: [A5, A7, A9, A12, A13, A14]
+    kind: RELIABILITY_METHOD
+    inputs: [availability_NFR, RTO_RPO, failure_domains, data_topology]
+    operations: [failure_domain_analysis, redundancy, backup_restore, failover, DR_test]
+    outputs: [HA_DR_design, recovery_test_evidence]
+    automationClass: DESIGN_PLUS_AUTOMATED_TEST
+  TECHNOLOGY_RADAR_EVOLUTION:
+    stageRefs: [A15]
+    kind: EVOLUTION_METHOD
+    inputs: [technology_signals, incidents, cost, lifecycle, new_requirements]
+    operations: [adopt_trial_assess_hold, architecture_health_review, fitness_functions, revisit_trigger]
+    outputs: [technology_radar, architecture_health_review]
+    automationClass: MODEL_ZOO_CANDIDATE_ARCHITECT_OWNER
+    bookRefs: [BOOK-RF-005]
+  ETHICAL_AI_GOVERNANCE:
+    stageRefs: [A1, A2, A5, A7, A9, A12, A14, A15]
+    kind: AI_GOVERNANCE_METHOD
+    inputs: [use_case, affected_people, model_decisions, data, risks]
+    operations: [impact_assessment, fairness_accountability_transparency_questions, human_oversight, contestability, model_card]
+    outputs: [AI_governance_requirements, model_card, oversight_controls]
+    automationClass: MODEL_ASSISTED_HUMAN_GOVERNANCE
+  API_AS_PRODUCT:
+    stageRefs: [A1, A5, A7, A9, A13, A14, A15]
+    kind: PRODUCT_INTEGRATION_METHOD
+    inputs: [external_consumers, API_contract, SLO, economics]
+    operations: [consumer_segments, value, versioning, lifecycle, deprecation, developer_experience, quota_SLO_cost]
+    outputs: [API_product_model, API_lifecycle_policy]
+    automationClass: MODEL_ASSISTED_PRODUCT_OWNER
+  RETIREMENT_CONTROL:
+    stageRefs: [A16]
+    kind: LIFECYCLE_METHOD
+    inputs: [retirement_decision, assets, data, integrations, obligations]
+    operations: [data_disposition, access_revocation, archive, provider_termination, consumer_migration, final_verification]
+    outputs: [retirement_evidence]
+    automationClass: WORKFLOW_PLUS_HUMAN_AUTHORITY

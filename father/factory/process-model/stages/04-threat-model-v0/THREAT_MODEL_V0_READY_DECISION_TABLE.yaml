@@ -1,0 +1,62 @@
+schemaVersion: 1
+decisionTableId: FATHER-STAGE-04-THREAT-MODEL-V0-READY-0001
+status: CANDIDATE_DMN
+stage: THREAT_MODEL_V0
+responsibleRole: security_engineer
+reviewerRoles: [system_engineer, skeptical_reviewer]
+authorityRoles: [risk_owner, legal_compliance]
+outcomes: [PASS, CONDITIONAL_PASS, BLOCKED, INSUFFICIENT_EVIDENCE]
+mandatoryConditions:
+  - id: C1
+    statement: material protected interests/assets and negative consequences are explicit
+  - id: C2
+    statement: material external interfaces and sensitive flows are represented in threat coverage or have explicit rationale
+  - id: C3
+    statement: material authority/approval boundaries are represented in threat coverage
+  - id: C4
+    statement: material initial abuse cases are refined, retained, conditionally deferred or explicitly rejected with rationale
+  - id: C5
+    statement: each material threat scenario traces to a system path, evidence or explicit assumption
+  - id: C6
+    statement: threat scenarios preserve evidence state and uncertainty
+  - id: C7
+    statement: material scenarios produce architecture-independent security drivers or explicit defer rationale
+  - id: C8
+    statement: material security drivers map to draft requirements or explicit requirements-stage action
+  - id: C9
+    statement: unresolved risk/applicability questions have authoritative owner and reassessment trigger
+hardBlockers:
+  - id: B1
+    statement: known sensitive flow or external interface has no threat coverage and no rationale
+  - id: B2
+    statement: known high-consequence protected interest has no plausible threat scenario or explicit evidence-based rejection
+  - id: B3
+    statement: agent/model/security engineer silently accepts residual risk on behalf of risk owner
+  - id: B4
+    statement: regulatory applicability is presented as verified without authoritative owner/source state
+  - id: B5
+    statement: threat scenario invents exploit/vulnerability/path not supported by system model or explicit assumption
+  - id: B6
+    statement: material uncertainty is replaced by unsupported numeric likelihood or score
+  - id: B7
+    statement: critical reviewer objection is hidden from gate decision
+rules:
+  - id: TM-G-01
+    when: any_hard_blocker_true
+    then: BLOCKED
+  - id: TM-G-02
+    when: evidence_is_too_incomplete_to_evaluate_mandatory_conditions
+    then: INSUFFICIENT_EVIDENCE
+  - id: TM-G-03
+    when: all_mandatory_conditions_satisfied_and_no_material_open_conditions
+    then: PASS
+  - id: TM-G-04
+    when: threat_model_is_sufficient_for_requirements_baseline_and_remaining_gaps_are_explicit_nonblocking_with_owner_and_trigger
+    then: CONDITIONAL_PASS
+notes:
+  - PASS_does_not_mean_final_threat_model_or_security_certification
+  - architecture_specific_attack_paths_may_be_deferred_to_v1_v2
+  - requirement_drafts_remain_candidate_until_requirements_baseline_review
+  - decision_must_include_reasons_evidence_refs_and_open_conditions
+handoffOn: [PASS, CONDITIONAL_PASS]
+nextStage: REQUIREMENTS_BASELINE

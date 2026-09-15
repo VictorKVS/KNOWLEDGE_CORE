@@ -1,0 +1,73 @@
+schemaVersion: 1
+schemaId: FATHER-STAGE-04-THREAT-EVIDENCE-0001
+status: CANDIDATE_SCHEMA
+recordTypes:
+  - PROTECTED_INTEREST
+  - NEGATIVE_CONSEQUENCE
+  - THREAT_SOURCE
+  - TRUST_BOUNDARY
+  - ENTRY_POINT
+  - THREAT_SCENARIO
+  - SECURITY_DRIVER
+  - SECURITY_REQUIREMENT_DRAFT
+  - SECURITY_RISK
+  - CONFLICT
+  - UNKNOWN
+verificationStates: [UNSUPPORTED, SOURCED, OWNER_CONFIRMED, CANDIDATE, CONFLICTED, STALE, REJECTED, INSUFFICIENT_EVIDENCE]
+requiredFields:
+  - evidenceId
+  - statement
+  - recordType
+  - verificationState
+  - sourceType
+  - informationOwner
+  - affectedArtifacts
+  - downstreamImpact
+conditionalFields:
+  protectedInterest: [interestId, securityProperties]
+  negativeConsequence: [consequenceId, affectedOwnerOrStakeholder]
+  threatSource: [sourceId, sourceClass, assumedCapabilities]
+  trustBoundary: [boundaryId, fromZoneOrActor, toZoneOrActor]
+  entryPoint: [entryPointId, interfaceOrFlowRef]
+  threatScenario: [scenarioId, scenarioSchemaRef, relevanceState]
+  securityDriver: [driverId, scenarioRefs]
+  requirementDraft: [requirementId, driverRefs, requirementState]
+  securityRisk: [riskId, scenarioRefs, owner, assessmentState]
+  unknown: [resolutionOwner, resolutionTrigger]
+analytics:
+  protectedInterestsWithConsequence:
+    type: ratio
+    note: diagnostic_only
+  externalInterfacesCoveredByScenarioOrRationale:
+    type: ratio
+    note: diagnostic_only
+  sensitiveFlowsCoveredByScenarioOrRationale:
+    type: ratio
+    note: diagnostic_only
+  authorityBoundariesCovered:
+    type: ratio
+    note: diagnostic_only
+  initialAbuseCasesRefinedOrRejected:
+    type: ratio
+    note: diagnostic_only
+  scenariosWithExplicitEvidenceState:
+    type: ratio
+  materialScenariosWithSecurityDriver:
+    type: ratio
+  securityDriversWithRequirementDraft:
+    type: ratio
+  openThreatConflicts:
+    type: count
+  materialThreatUnknowns:
+    type: count
+  architectureSpecificDeferredItems:
+    type: count
+  gateBlockers:
+    type: count
+rules:
+  - coverage_ratio_is_diagnostic_not_a_gate_substitute
+  - scenario_without_system_path_or_explicit_assumption_is_not_promoted
+  - no_numeric_risk_likelihood_without_evidence
+  - risk_acceptance_record_requires_risk_owner
+  - legal_or_regulatory_claim_requires_authoritative_owner
+  - v0_must_preserve_items_deferred_to_architecture_and_detailed_design

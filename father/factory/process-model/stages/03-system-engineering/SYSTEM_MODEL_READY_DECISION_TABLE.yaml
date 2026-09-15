@@ -1,0 +1,59 @@
+schemaVersion: 1
+decisionTableId: FATHER-STAGE-03-SYSTEM-MODEL-READY-0001
+status: CANDIDATE_DMN
+stage: SYSTEM_ENGINEERING
+responsibleRole: system_engineer
+reviewerRoles: [security_engineer, skeptical_reviewer, product_manager]
+outcomes: [PASS, CONDITIONAL_PASS, BLOCKED, INSUFFICIENT_EVIDENCE]
+mandatoryConditions:
+  - id: C1
+    statement: system context identifies material external actors and system purpose
+  - id: C2
+    statement: system boundary is explicit enough to distinguish system responsibility from environment
+  - id: C3
+    statement: material system functions trace to product need, scope or hard constraint
+  - id: C4
+    statement: material information/data classes have visible flows or explicit not-processed status
+  - id: C5
+    statement: known external interactions have interface records or explicit UNKNOWN status
+  - id: C6
+    statement: material external dependencies and their trust/failure implications are visible
+  - id: C7
+    statement: security constraints from Security Intake are mapped to relevant system elements or open questions
+  - id: C8
+    statement: assumptions/conflicts/UNKNOWNs have owner and downstream impact
+hardBlockers:
+  - id: B1
+    statement: system boundary is materially ambiguous and would change threat or architecture scope
+  - id: B2
+    statement: required product capability has no identified system responsibility
+  - id: B3
+    statement: known sensitive or regulated information moves through the system but its flow is omitted
+  - id: B4
+    statement: known external interaction is absent from interface/dependency view
+  - id: B5
+    statement: material security constraint is ignored or contradicted without explicit owner resolution
+  - id: B6
+    statement: technology or architecture choice is silently embedded as a system fact without source/constraint
+  - id: B7
+    statement: material UNKNOWN is silently converted into confirmed design fact
+rules:
+  - id: SY-01
+    when: any_hard_blocker_true
+    then: BLOCKED
+  - id: SY-02
+    when: evidence_is_too_incomplete_to_evaluate_mandatory_conditions
+    then: INSUFFICIENT_EVIDENCE
+  - id: SY-03
+    when: all_mandatory_conditions_satisfied_and_no_material_open_conditions
+    then: PASS
+  - id: SY-04
+    when: system_model_is_sufficient_for_threat_model_v0_and_remaining_gaps_have_owner_trigger_and_bounded_impact
+    then: CONDITIONAL_PASS
+notes:
+  - exact software architecture_is_not_required_for_PASS
+  - deployment_topology_may_remain_unknown_if_system_boundary_and_external_trust_assumptions_are_explicit
+  - PASS_does_not_authorize_architecture_selection; Threat Model v0 and Requirements gates still apply
+  - decision_must_include_reasons_and_evidence_refs
+handoffOn: [PASS, CONDITIONAL_PASS]
+nextStage: THREAT_MODEL_V0

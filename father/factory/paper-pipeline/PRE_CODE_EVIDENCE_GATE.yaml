@@ -1,0 +1,113 @@
+schemaVersion: 1
+gateId: FATHER-PRE-CODE-EVIDENCE-GATE-0001
+status: CANDIDATE_POLICY
+purpose: >-
+  Prevent product-path implementation from starting before the engineering intent is sufficiently specified,
+  reviewable, testable and traceable. The gate is evidence-based, not document-count-based.
+
+principles:
+  - code_is_execution_of_an_approved_model_not_a_substitute_for_analysis
+  - tests_and_oracles_are_designed_before_material_implementation
+  - unresolved_UNKNOWN_may_exist_only_when_bounded_and_owned
+  - unresolved_CONFLICTED_items_block_dependent_code
+  - security_controls_require_traceable_test_intent
+  - architecture_and_requirements_must_not_be_reverse_engineered_from_finished_code_except_explicit_brownfield_reconstruction
+  - no_model_or_agent_can_waive_this_gate_without_authorized_human_owner
+
+requiredEvidence:
+  PRODUCT:
+    - BUSINESS_NEED
+    - PRODUCT_VISION
+    - SCOPE_BASELINE
+    - SUCCESS_METRICS
+  SYSTEM:
+    - SYSTEM_CONTEXT
+    - SYSTEM_BOUNDARY
+    - FUNCTION_MODEL
+    - DATA_FLOW_MODEL
+    - INTERFACE_INVENTORY
+    - EXTERNAL_DEPENDENCY_REGISTER
+  SECURITY_LEGAL_DATA:
+    - REGULATORY_APPLICABILITY
+    - DATA_CLASSIFICATION
+    - SECURITY_CONSTRAINTS
+    - THREAT_MODEL_V0
+    - SECURITY_REQUIREMENTS
+  REQUIREMENTS:
+    - BUSINESS_REQUIREMENTS
+    - SYSTEM_REQUIREMENTS
+    - SOFTWARE_REQUIREMENTS
+    - NFR_CATALOGUE
+    - ACCEPTANCE_CRITERIA
+    - REQUIREMENTS_TRACEABILITY_MATRIX
+  ARCHITECTURE:
+    - ARCHITECTURE_OPTION_SET
+    - OPTION_TRADEOFF_MATRIX
+    - ARCHITECTURE_DECISION_RECORDS
+    - TARGET_ARCHITECTURE
+    - DECISION_EVIDENCE_REGISTER
+  DETAILED_DESIGN:
+    - COMPONENT_DESIGN
+    - API_CONTRACTS
+    - DATA_MODEL
+    - IAM_MODEL
+    - SECRETS_MODEL
+    - DEPLOYMENT_DESIGN
+    - OBSERVABILITY_DESIGN
+    - THREAT_MODEL_V1_V2
+  TEST_DESIGN:
+    - TEST_STRATEGY
+    - critical_requirement_test_oracles
+    - critical_security_negative_cases
+    - interface_schema_contract_tests
+    - performance_capacity_test_intent_when_applicable
+    - failure_recovery_rollback_cases_when_applicable
+    - genai_eval_oracles_when_applicable
+  DELIVERY:
+    - IMPLEMENTATION_PLAN
+    - rollback_or_disable_strategy_for_material_changes
+
+traceabilityMinimum:
+  requiredChains:
+    - business_need_to_requirement
+    - requirement_to_architecture_or_design
+    - threat_or_risk_to_security_requirement
+    - security_requirement_to_control
+    - requirement_or_control_to_test_oracle
+    - material_decision_to_ADR_or_decision_record
+
+allowedStatesAtGate:
+  VERIFIED: allowed
+  CONFIRMED: allowed_if_gate_rule_permits
+  PARTIAL: allowed_only_with_named_owner_bounded_impact_and_no_critical_dependency
+  UNKNOWN: allowed_only_if_bounded_owned_and_non_blocking
+  CONFLICTED: blocked_when_dependency_is_material
+  GAP: blocked_when_required
+  STALE: blocked_when_material
+
+outcomes:
+  CODE_ALLOWED:
+    meaning: implementation may begin for the bounded approved scope
+  CODE_ALLOWED_WITH_CONDITIONS:
+    meaning: only explicitly bounded work may begin; conditions remain visible and testable
+  ANALYSIS_REWORK_REQUIRED:
+    meaning: return to the smallest upstream stage that owns the missing or conflicting evidence
+  BLOCKED:
+    meaning: implementation is prohibited until blocking evidence/authority issue is resolved
+
+finalAuthority:
+  primary: technical_lead_or_solution_owner
+  mandatoryReviewers:
+    - requirements_engineer
+    - solution_or_software_architect
+    - security_engineer
+    - qa_engineer
+  additionalWhenApplicable:
+    - data_owner
+    - legal_compliance
+    - operations_engineer
+    - risk_owner
+
+codeEntryRule: >-
+  No CODE_ALLOWED outcome means no new product-path implementation. Exploratory spikes are allowed only as explicit PoC work
+  with bounded scope, isolated outputs and no silent promotion into the implementation baseline.

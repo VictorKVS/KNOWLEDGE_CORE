@@ -1,0 +1,158 @@
+schemaVersion: 1
+factoryId: FATHER-ROLE-TRAINING-CERTIFICATION-0001
+status: CANDIDATE_MODEL
+purpose: >-
+  Define how every future AI-assisted FATHER professional role is built, trained, evaluated, security-tested,
+  promoted, monitored and recertified. A role is an evidence-governed capability system, not a persona prompt.
+
+principles:
+  - each_role_has_its_own_profession_model
+  - each_role_has_separate_training_and_eval_assets
+  - seniority_is_earned_per_capability_and_domain
+  - hidden_eval_is_mandatory_before_senior_verification
+  - negative_counterexample_and_failure_cases_are_mandatory
+  - security_adversarial_tests_are_continuous
+  - normative_and_project_authority_boundaries_override_model_confidence
+  - no_self_promotion_without_independent_review
+  - telemetry_can_demote_as_well_as_promote
+  - simpler_deterministic_methods_remain_preferred_when_sufficient
+
+roleBuildPipeline:
+  - id: R0_ROLE_CONTRACT
+    inputs: [FATHER_ROLE_MATRIX, lifecycle_stage, authority_boundaries]
+    produces: [ROLE_CONTRACT, capability_scope, forbidden_actions, required_human_authorities]
+    gate: ROLE_SCOPE_ACCEPTED
+  - id: R1_SOURCE_MAP
+    inputs: [normative_registry, professional_books, project_evidence, domain_sources]
+    produces: [SOURCE_MAP, source_authority_classes, freshness_and_supersession_rules]
+    gate: SOURCE_SET_ACCEPTED
+  - id: R2_KNOWLEDGE_BASE
+    inputs: [verified_sources]
+    methods: [atomic_extraction, terminology_normalization, conflict_detection, relation_mapping]
+    produces: [versioned_role_KB, DOMAIN_GLOSSARY, DECISION_LOGIC, failure_modes]
+    gate: KB_BASELINE_REVIEWED
+  - id: R3_TRAINING_CASES
+    inputs: [role_KB, historical_cases, synthetic_cases_reviewed_by_domain_expert]
+    produces: [TRAINING_CASE_PACK, COUNTEREXAMPLE_PACK, FAILURE_MODE_PACK]
+    gate: TRAINING_PACK_READY
+  - id: R4_EVALUATION_DESIGN
+    inputs: [role_contract, requirements, failure_modes]
+    produces: [EVAL_CASE_PACK, HIDDEN_EVAL_PACK, scoring_rubrics, calibration_cases]
+    separationRule: evaluators_and_hidden_cases_must_not_be_used_as_training_answers
+    gate: EVAL_DESIGN_READY
+  - id: R5_SECURITY_RED_TEAM
+    inputs: [role_tools, data_classes, authority_boundaries, source_channels]
+    produces: [SECURITY_ADVERSARIAL_PACK, abuse_cases, fail_closed_expectations]
+    gate: SECURITY_TEST_PACK_READY
+  - id: R6_BASELINE_RUN
+    inputs: [candidate_model_or_algorithm, eval_pack, security_pack]
+    produces: [BASELINE_EVAL_REPORT, ERROR_TAXONOMY, CALIBRATION_RECORD]
+    gate: BASELINE_MEASURED
+  - id: R7_INDEPENDENT_REVIEW
+    inputs: [baseline_report, hidden_eval_results, security_results]
+    produces: [MATURITY_REVIEW_RECORD, acceptance_or_rework_decision]
+    gate: MATURITY_DECISION
+  - id: R8_CONTROLLED_OPERATION
+    inputs: [promoted_role_capability]
+    produces: [HUMAN_REVIEW_TELEMETRY, rework_metrics, security_incidents, drift_signals]
+    gate: CONTINUOUS
+  - id: R9_RECERTIFICATION
+    inputs: [telemetry, new_sources, model_or_tool_changes, incidents]
+    produces: [RECERTIFICATION_REPORT, promotion_or_demotion_decision]
+    gate: RECERTIFIED_OR_DEMOTED
+
+mandatorySecuritySuites:
+  - prompt_injection
+  - retrieval_injection
+  - poisoned_source_or_evidence
+  - fabricated_citations
+  - authority_escalation
+  - confused_deputy
+  - tool_misuse
+  - sensitive_data_exfiltration_or_wrong_provider_route
+  - hidden_scope_expansion
+  - unsafe_autonomous_approval
+  - memory_or_KB_poisoning
+  - jailbreak_or_policy_override
+  - cross_agent_privilege_propagation
+  - fail_closed_on_missing_evidence
+  - fail_closed_on_unresolved_conflict
+
+promotionEvidence:
+  required:
+    - versioned_role_KB
+    - role_contract
+    - representative_training_cases
+    - independent_eval_cases
+    - hidden_eval_history
+    - counterexample_results
+    - security_adversarial_results
+    - calibrated_uncertainty
+    - error_taxonomy
+    - human_review_statistics_when_available
+    - independent_domain_review
+  forbiddenShortcuts:
+    - prompt_says_senior
+    - model_brand_or_size_only
+    - self_scored_quality_only
+    - one_demo_success
+    - benchmark_without_domain_cases
+
+maturityMetrics:
+  quality:
+    - material_claim_support_rate
+    - requirement_or_rule_coverage
+    - decision_correctness_against_oracle
+    - conflict_detection_rate
+    - unknown_preservation_rate
+    - calibration_error
+  review:
+    - human_acceptance_rate
+    - human_rejection_rate
+    - rework_rate
+    - material_error_rate
+    - useful_challenge_rate
+  security:
+    - adversarial_pass_rate
+    - unsafe_authority_attempt_rate
+    - fabricated_evidence_rate
+    - sensitive_data_policy_violation_rate
+    - fail_closed_success_rate
+  efficiency:
+    - median_latency
+    - cost_or_compute_per_accepted_artifact
+    - deterministic_fallback_usage
+
+recertificationTriggers:
+  - new_or_changed_normative_source
+  - major_professional_KB_update
+  - model_or_provider_change
+  - prompt_or_role_contract_change
+  - tool_permission_change
+  - new_data_class_or_sector
+  - significant_incident
+  - material_human_rejection_pattern
+  - measurable_drift
+  - new_failure_mode
+
+roleExampleProfiles:
+  BUSINESS_ANALYST:
+    coreCapabilities: [business_process_modeling, requirement_elicitation, terminology, ambiguity_detection]
+  SYSTEM_ENGINEER:
+    coreCapabilities: [boundary_analysis, functional_decomposition, data_flow, interface_inventory, operational_modes]
+  SECURITY_ENGINEER:
+    coreCapabilities: [applicability, threat_modeling, risk, security_requirements, control_test_traceability]
+  REQUIREMENTS_ENGINEER:
+    coreCapabilities: [requirement_normalization, NFR, acceptance_criteria, traceability, conflict_detection]
+  SOLUTION_ARCHITECT:
+    coreCapabilities: [architecture_drivers, options, tradeoffs, C4_views, ADR, risk_review]
+  QA_ENGINEER:
+    coreCapabilities: [test_oracle_design, negative_cases, verification_traceability, defect_classification]
+  DEVSECOPS_ENGINEER:
+    coreCapabilities: [build_integrity, supply_chain, SAST_SCA_secrets, CI_CD_controls, deployment_evidence]
+  OPERATIONS_SRE:
+    coreCapabilities: [observability, SLO, capacity, HA_DR, incident_feedback]
+
+finalRule: >-
+  FATHER never grants broad senior status to a model. It promotes a bounded role/capability/domain combination
+  only after evidence-backed evaluation and keeps that promotion reversible.

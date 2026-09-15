@@ -1,0 +1,145 @@
+schemaVersion: 1
+matrixId: FATHER-DOCUMENT-APPROVAL-MATRIX-0001
+status: CANDIDATE_MODEL
+purpose: >-
+  Separate production, review and approval authority for material engineering documents. The matrix is consumed
+  by the future routing engine and UI; it does not grant authority to an LLM.
+
+rules:
+  - producer_and_independent_reviewer_must_differ_for_material_decisions
+  - llm_may_draft_review_findings_but_is_never_the_final_approver
+  - authority_is_attached_to_role_and_project_context_not_to_document_presence
+  - conditional_authority_is_required_only_when_the_artifact_touches_that_domain
+  - rejected_or_rework_decisions_must_include_rationale
+  - approval_is_version_specific
+  - changing_an_approved_material_field_invalidates_affected_approvals
+
+matrix:
+  BUSINESS_NEED:
+    producer: product_manager
+    approver: business_owner
+    reviewers: [business_analyst]
+  PRODUCT_VISION:
+    producer: product_manager
+    approver: product_manager
+    conditionalApprover: business_owner
+    reviewers: [business_analyst]
+  SCOPE_BASELINE:
+    producer: product_manager
+    approver: business_owner
+    reviewers: [project_manager, business_analyst]
+  SUCCESS_METRICS:
+    producer: product_manager
+    approver: business_owner
+    reviewers: [qa_verification, business_analyst]
+  BUSINESS_PROCESS_MODEL:
+    producer: business_analyst
+    approver: process_owner
+    reviewers: [requirements_engineer]
+  BUSINESS_REQUIREMENTS:
+    producer: business_analyst
+    approver: business_owner
+    reviewers: [requirements_engineer]
+  REGULATORY_APPLICABILITY:
+    producer: legal_compliance
+    approver: legal_compliance
+    reviewers: [security_engineer, data_owner]
+  DATA_CLASSIFICATION:
+    producer: data_owner
+    approver: data_owner
+    reviewers: [security_engineer, legal_compliance]
+  SECURITY_INTAKE:
+    producer: security_engineer
+    approver: security_engineer
+    reviewers: [system_engineer, skeptical_reviewer]
+  THREAT_MODEL_V0:
+    producer: security_engineer
+    approver: security_engineer
+    reviewers: [system_engineer, skeptical_reviewer]
+  SYSTEM_CONTEXT:
+    producer: system_engineer
+    approver: system_engineer
+    reviewers: [security_engineer, integration_engineer]
+  DATA_FLOW_MODEL:
+    producer: system_engineer
+    approver: system_engineer
+    reviewers: [security_engineer, data_owner]
+  INTERFACE_INVENTORY:
+    producer: integration_engineer
+    approver: system_engineer
+    reviewers: [security_engineer]
+  REQUIREMENTS_BASELINE:
+    producer: requirements_engineer
+    approver: requirements_engineer
+    reviewers: [qa_verification]
+    conditionalApprovers: [product_manager, security_engineer, data_owner, legal_compliance, operations_platform]
+  NFR_CATALOGUE:
+    producer: requirements_engineer
+    approver: requirements_engineer
+    reviewers: [qa_verification, operations_platform]
+  DELIVERY_WBS_V0:
+    producer: project_manager
+    approver: project_manager
+    reviewers: [solution_architect, qa_verification]
+  ESTIMATION_REGISTER_V0:
+    producer: project_manager
+    approver: project_manager
+    reviewers: [finance_procurement, skeptical_reviewer]
+  PROJECT_RISK_REGISTER:
+    producer: project_manager
+    approver: project_manager
+    reviewers: [security_engineer, business_owner]
+  TCO_MODEL_V0:
+    producer: finance_procurement
+    approver: finance_procurement
+    reviewers: [operations_platform, solution_architect]
+  ARCHITECTURE_OPTIONS:
+    producer: solution_architect
+    approver: solution_architect
+    reviewers: [security_engineer, skeptical_reviewer]
+  ADR:
+    producer: solution_architect
+    approver: business_or_system_decision_owner
+    reviewers: [security_engineer, skeptical_reviewer]
+  C4_HLD:
+    producer: solution_architect
+    approver: solution_architect
+    reviewers: [system_engineer, security_engineer]
+  LLD:
+    producer: software_architect
+    approver: software_architect
+    reviewers: [security_engineer, qa_verification]
+  OPENAPI_SPEC:
+    producer: api_designer
+    approver: software_architect
+    reviewers: [integration_engineer, security_engineer, qa_verification]
+  RAG_ARCHITECTURE:
+    producer: solution_architect
+    approver: solution_architect
+    reviewers: [qa_verification, security_engineer, data_owner]
+  AGENT_ROLE_MODEL:
+    producer: solution_architect
+    approver: solution_architect
+    reviewers: [security_engineer, skeptical_reviewer]
+  TEST_STRATEGY:
+    producer: qa_verification
+    approver: qa_verification
+    reviewers: [requirements_engineer, security_engineer]
+  VERIFICATION_REPORT:
+    producer: qa_verification
+    approver: qa_verification
+    conditionalApprover: product_manager
+    reviewers: [security_engineer]
+  RELEASE_PLAN:
+    producer: release_manager
+    approver: service_owner
+    reviewers: [operations_engineer, security_engineer, qa_verification]
+  OPERATIONS_HANDOFF:
+    producer: operations_engineer
+    approver: service_owner
+    reviewers: [security_engineer, incident_manager]
+  RESIDUAL_RISK_ACCEPTANCE:
+    producer: risk_owner
+    approver: risk_owner
+    reviewers: [security_engineer, business_owner]
+    llmFinalApproval: false

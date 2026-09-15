@@ -1,0 +1,183 @@
+schemaVersion: 1
+registryId: FATHER-MASTER-SOURCE-REGISTRY-0001
+status: INITIALIZED_NOT_EXHAUSTIVE
+purpose: >-
+  Canonical inventory of all materials that may influence FATHER engineering decisions.
+  Presence in this registry does not imply authority, applicability, correctness or promotion.
+
+sourceClasses:
+  - MANDATORY_LAW_REGULATION
+  - STANDARD_METHODICAL
+  - PROJECT_FACT
+  - COURSE_METHOD
+  - PROFESSIONAL_BOOK
+  - SCIENTIFIC_PRIMARY
+  - VENDOR_PRODUCT_DOC
+  - COMPETITOR_REFERENCE
+  - HISTORICAL_SUPERSEDED
+  - HYPOTHESIS_NOTE
+
+processingStates:
+  - DISCOVERED
+  - IDENTIFIED
+  - ORIGINAL_VERIFIED
+  - PARSED
+  - ATOMIC_EXTRACTED
+  - MAPPED
+  - CONFLICT_CHECKED
+  - DOMAIN_REVIEW
+  - ADMITTED
+  - PARTIAL
+  - STALE
+  - SUPERSEDED
+  - REJECTED
+  - NOT_APPLICABLE
+  - BLOCKED_RIGHTS
+  - NEEDS_EXPERT_REVIEW
+
+requiredRecordFields:
+  - source_id
+  - source_class
+  - title
+  - authority_or_author
+  - version_or_revision
+  - source_date
+  - lifecycle_status
+  - locator
+  - rights_basis
+  - original_hash
+  - language
+  - content_type
+  - applicability
+  - freshness_rule
+  - processing_state
+  - atomic_coverage
+  - mapped_artifacts
+  - mapped_methods
+  - conflicts
+  - supersedes
+  - superseded_by
+  - reviewer_role
+  - promotion_state
+
+initialFamilies:
+  FATHER_CANONICAL:
+    class: PROJECT_FACT
+    priority: P0
+    examples:
+      - father/factory/FATHER_LIFECYCLE_STAGES.yaml
+      - father/factory/FATHER_ARTIFACT_REGISTRY.yaml
+      - father/factory/FATHER_ROLE_MATRIX.yaml
+      - father/factory/NORMATIVE_SOURCE_REGISTRY.yaml
+      - father/factory/SOURCE_ARTIFACT_MAPPING.yaml
+      - father/factory/paper-pipeline/
+      - father/factory/visual-workbench-spec/
+    purpose: current candidate source of FATHER design truth
+    state: IDENTIFIED
+
+  OSINT_WALKTHROUGH_PROJECT:
+    class: PROJECT_FACT
+    priority: P0
+    repository: VictorKVS/OSINT_deepseek
+    branch: feature/otus-live-reproduction-01-20
+    purpose: first real brownfield/hybrid walkthrough across A0-S59
+    state: IDENTIFIED
+
+  CORE_STANDARDS:
+    class: STANDARD_METHODICAL
+    priority: P0
+    examples:
+      - ГОСТ Р 57193-2025
+      - ГОСТ Р 58609-2019
+      - ГОСТ Р ИСО/МЭК 12207-2010
+      - ГОСТ Р 57100-2025
+      - ГОСТ Р 57101-2016
+      - ГОСТ Р 59793-2021
+      - ГОСТ 34.201-2020
+      - ГОСТ Р 59795-2021
+      - ГОСТ 34.602-2020
+      - ГОСТ Р 59792-2021
+      - ГОСТ Р 56939-2024
+      - ГОСТ Р 71207-2024
+    state: PARTIAL
+    note: exact clause-level ingestion/review remains required
+
+  SECURITY_REGULATION:
+    class: MANDATORY_LAW_REGULATION
+    priority: P0
+    examples:
+      - ФСТЭК Методика оценки угроз 2021
+      - ФСТЭК 117-2025
+      - ФСТЭК 21-2013
+      - ПП РФ 1119
+      - ФСБ 378
+      - ПП РФ 127
+      - ФСТЭК 235
+      - ФСТЭК 239
+    state: PARTIAL
+    note: federal-law and sector overlays remain incomplete
+
+  OTUS_AI_ARCHITECT:
+    class: COURSE_METHOD
+    priority: P1
+    repository: VictorKVS/OTUS-
+    lessons: 31
+    purpose: method/capability curriculum mapped to FATHER stages
+    state: IDENTIFIED
+
+  USER_ARCHITECTURE_LIBRARY:
+    class: PROFESSIONAL_BOOK
+    priority: P1
+    examples:
+      - Fundamentals of Software Architecture / Richards & Ford
+      - The C4 model for visualising software architecture / Simon Brown
+      - Software Architecture: The Hard Parts
+      - Building Evolutionary Architectures
+      - Documenting Software Architectures
+      - Clean Architecture
+      - Team Topologies
+      - Building Secure & Reliable Systems
+    state: PARTIAL
+    note: each book must independently pass source verification and idea mapping
+
+  COMPETITOR_UX_REFERENCE:
+    class: COMPETITOR_REFERENCE
+    priority: P1
+    examples:
+      - Ardoq
+      - IcePanel
+      - KNIME
+      - Node-RED
+      - Camunda/BPMN
+      - Structurizr/C4
+      - React Flow
+    purpose: interaction and visualization patterns only
+    state: IDENTIFIED
+
+  SCIENTIFIC_ALGORITHM_EVIDENCE:
+    class: SCIENTIFIC_PRIMARY
+    priority: P1
+    purpose: >-
+      Primary or peer-reviewed support for algorithms, metrics, experiments, security evaluation,
+      information retrieval, graph analysis, reliability and statistical decision procedures.
+    state: DISCOVERED
+
+admissionRules:
+  - source identity must be stable enough to cite
+  - authority/applicability must be explicit
+  - superseded versions must not silently drive current requirements
+  - professional/course sources cannot override mandatory applicable requirements
+  - translations/summaries do not replace original evidence
+  - unsupported claims remain UNKNOWN
+  - conflicts are preserved until resolved by correct authority
+  - exact clause mapping is required before normative requirements become automated blockers
+
+nextActions:
+  - enumerate exact FATHER canonical files and current revisions
+  - enumerate exact OSINT_deepseek evidence set for walkthrough
+  - expand federal-law and sector overlays
+  - ingest full text of P0 standards/regulations and create clause records
+  - inventory all user-owned books and source states
+  - map all OTUS lessons 01-31 to methods and artifacts
+  - create scientific-source backlog per material algorithm
+  - produce source coverage dashboard

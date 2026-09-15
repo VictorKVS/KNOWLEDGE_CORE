@@ -1,0 +1,225 @@
+schemaVersion: 1
+modelId: FATHER-DELIVERY-FEASIBILITY-0001
+status: CANDIDATE_MODEL
+purpose: >-
+  Bridge requirements and architecture with evidence-backed feasibility, estimation, project-risk and commercial-change controls.
+  This model deliberately separates early Estimate v0 from architecture-specific Estimate v1.
+entryInputs:
+  - PRODUCT_READY_PACKAGE
+  - BUSINESS_REQUIREMENTS
+  - SYSTEM_MODEL_READY_PACKAGE
+  - THREAT_MODEL_V0
+  - REQUIREMENTS_BASELINE_CANDIDATE
+exitGate: DELIVERY_FEASIBILITY_READY
+
+estimationLevels:
+  ESTIMATE_V0:
+    timing: PRE_ARCHITECTURE
+    goal: establish scope magnitude, uncertainty, risk, cost envelope and delivery feasibility without pretending final architecture detail is known
+    allowedMethods: [ANALOGOUS, PARAMETRIC, PERT, BOTTOM_UP, HYBRID]
+    outputs: [DELIVERY_WBS_V0, ESTIMATION_REGISTER_V0, ESTIMATION_ASSUMPTION_LOG, COST_RANGE_V0, DELIVERY_FEASIBILITY_DECISION]
+  ESTIMATE_V1:
+    timing: POST_ARCHITECTURE_OPTION_SELECTION
+    goal: refine effort, cost, sizing and operational economics using selected architecture evidence
+    outputs: [DELIVERY_WBS_V1, ESTIMATION_REGISTER_V1, TCO_MODEL_V1, SIZING_MODEL_V1, COST_BASELINE]
+
+artifacts:
+  NFR_SPECIFICATION:
+    owner: requirements_engineer
+    reviewers: [product_manager, qa_verification, security_engineer, operations_platform]
+    fields:
+      - nfrId
+      - category
+      - metric
+      - description
+      - baselineState
+      - targetValue
+      - unit
+      - priorityMoSCoW
+      - verificationMethod
+      - verificationOwner
+      - sourceRefs
+      - assumptions
+      - evidenceState
+      - downstreamCharacteristicRef
+    rules:
+      - target_may_be_TO_BE_BASELINED_if_not_yet_known
+      - do_not_invent_numeric_targets
+      - each_material_NFR_requires_verification_method
+      - distinguish_project_requirement_from_training_example
+
+  NFR_VERIFICATION_MATRIX:
+    owner: qa_verification
+    fields: [nfrRef, verificationMethod, testDataNeeded, environmentNeeded, toolCandidate, passCriteria, evidenceRef, status]
+    states: [DRAFT, TESTABLE, NOT_TESTABLE, NEEDS_BASELINE, BLOCKED]
+
+  DISCOVERY_QUESTION_REGISTER:
+    owner: business_analyst
+    contributors: [product_manager, presales_architect_consultant, security_engineer, data_owner, operations_platform]
+    fields: [questionId, category, question, rationale, ownerToAnswer, answer, evidenceRefs, state, downstreamImpact]
+    categories: [BUSINESS_VALUE, DATA_KNOWLEDGE, INFRA_SECURITY, INTEGRATION_UX, PROCESS_ACCEPTANCE, COMMERCIAL, LEGAL]
+    states: [OPEN, ANSWERED, CONFLICTED, DEFERRED, NOT_APPLICABLE]
+
+  DELIVERY_WBS_V0:
+    owner: project_manager
+    contributors: [requirements_engineer, presales_architect_consultant, engineering_leads, qa_verification, operations_platform]
+    fields: [workItemId, stage, task, responsibleRole, predecessorRefs, parallelismAssumption, outputArtifact, estimateRef, evidenceRefs]
+    rule: WBS is work decomposition, not architecture approval
+
+  ESTIMATION_REGISTER_V0:
+    owner: project_manager
+    reviewers: [finance_procurement, skeptical_reviewer]
+    fields:
+      - estimateId
+      - workItemRef
+      - method
+      - optimistic
+      - mostLikely
+      - pessimistic
+      - expected
+      - uncertaintyRange
+      - confidenceStatement
+      - assumptionRefs
+      - riskRefs
+      - estimatorRole
+      - evidenceRefs
+      - estimateState
+    methods:
+      PERT:
+        expectedFormula: '(O + 4*M + P) / 6'
+        sigmaFormula: '(P - O) / 6'
+        note: formulas are calculation conventions; input values remain estimates requiring rationale
+      BOTTOM_UP:
+        rule: decompose to estimable work items and roll up
+      ANALOGOUS:
+        rule: reference prior comparable work and record similarity/differences
+      PARAMETRIC:
+        rule: record the parameter, coefficient source and validity range
+    states: [ROUGH_ORDER_OF_MAGNITUDE, CANDIDATE, REVIEWED, SUPERSEDED]
+
+  ESTIMATION_ASSUMPTION_LOG:
+    owner: project_manager
+    fields: [assumptionId, statement, owner, validationTrigger, estimateImpact, state, evidenceRefs]
+    states: [OPEN, CONFIRMED, REJECTED, EXPIRED]
+
+  PROJECT_RISK_REGISTER:
+    owner: project_manager
+    contributors: [all_domain_owners]
+    fields:
+      - riskId
+      - category
+      - description
+      - probabilityEstimate
+      - probabilityEvidence
+      - impactEstimate
+      - impactEvidence
+      - scoreOrBand
+      - responseStrategy
+      - mitigationPlan
+      - trigger
+      - owner
+      - contractTreatment
+      - estimateImpact
+      - state
+    rules:
+      - security_risk_register_and_project_risk_register_are_linked_but_not_the_same_artifact
+      - numeric_probability_or_impact_without_rationale_is_ESTIMATE_NOT_FACT
+      - customer_or_vendor_dependency_may_be_contractually_allocated_but_not_erased
+
+  CHANGE_MANAGEMENT_MODEL:
+    owner: project_manager
+    reviewers: [product_manager, finance_procurement, presales_architect_consultant]
+    fields: [changeClasses, approvalAuthorities, impactAnalysisRequired, contractMechanism, versioningRule, baselineUpdateRule]
+
+  CHANGE_REQUEST:
+    owner: change_manager_candidate
+    fields:
+      - changeId
+      - requestedBy
+      - requestedChange
+      - currentBaseline
+      - desiredBaseline
+      - requirementImpact
+      - architectureImpact
+      - securityImpact
+      - dataImpact
+      - scheduleImpact
+      - budgetImpact
+      - operationalImpact
+      - riskImpact
+      - decision
+      - decisionOwner
+      - evidenceRefs
+    decisions: [APPROVE, REJECT, DEFER_TO_BACKLOG, NEED_MORE_EVIDENCE]
+
+  TCO_MODEL_V0:
+    owner: finance_procurement
+    contributors: [operations_platform, project_manager, presales_architect_consultant]
+    fields:
+      - scenarioId
+      - scenarioType
+      - capexItems
+      - opexItems
+      - horizon
+      - volumeAssumptions
+      - unitCost
+      - supportCost
+      - licensingCost
+      - infrastructureCost
+      - uncertainty
+      - evidenceRefs
+    scenarioTypes: [CLOUD_SAAS, SELF_HOSTED_CLOUD, ON_PREMISE, HYBRID, OTHER]
+    rule: no scenario is preferred without business/security/operations constraints and evidence
+
+  UNIT_ECONOMICS_V0:
+    owner: finance_procurement
+    fields: [unitName, volumeAssumption, variableCost, fixedCostAllocation, costPerUnit, sensitivityVariables, evidenceRefs]
+
+  GOLDEN_DATASET_PLAN:
+    owner: qa_verification
+    contributors: [product_manager, data_owner, domain_SME]
+    fields: [purpose, datasetOwner, coverageIntent, sourceCases, labelingMethod, acceptanceUse, versioning, privacyConstraints, readinessState]
+    states: [NOT_REQUIRED, PLANNED, IN_PROGRESS, READY, BLOCKED]
+    rule: lesson sample size is illustrative; dataset size is project-specific
+
+  POC_GATE_CRITERIA:
+    owner: product_manager
+    reviewers: [qa_verification, requirements_engineer, security_engineer]
+    fields: [hypothesis, measurableCriteria, testDataRefs, timebox, budgetCap, successDecision, failureDecision, evidenceRefs]
+    decisions: [GO, PIVOT, STOP, EXTEND_WITH_APPROVAL]
+
+  SIZING_MODEL_V0:
+    owner: operations_platform
+    contributors: [presales_architect_consultant, AI_ML_lead_candidate]
+    fields: [workloadAssumptions, modelRuntimeAssumptions, memoryAssumptions, concurrencyAssumptions, headroomPolicy, formulaRefs, estimateRange, evidenceRefs]
+    rule: pre-architecture sizing is scenario-level only and must be refined after architecture/model/runtime selection
+
+gate:
+  id: DELIVERY_FEASIBILITY_READY
+  outcomes: [PASS, CONDITIONAL_PASS, BLOCKED, INSUFFICIENT_EVIDENCE]
+  passRequires:
+    - material_NFRs_have_metric_or_explicit_baseline_gap
+    - each_material_NFR_has_verification_intent
+    - WBS_v0_exists_for_known_scope
+    - estimation_method_is_named_and_assumptions_visible
+    - material_project_risks_have_owner_and_response
+    - budget_or_cost_envelope_exists_or_is_explicitly_unknown_with_owner
+    - change_management_model_exists_for_contract_or_scope_change
+    - acceptance_evidence_strategy_is_defined
+  conditionalPassAllowedWhen:
+    - unresolved_items_are_nonblocking_and_owned
+    - architecture_is_needed_to_refine_not_to_invent_the_missing_business_facts
+  hardBlockers:
+    - unmeasurable_material_NFR_without_owner_or_plan
+    - exact_commitment_presented_without_estimation_basis
+    - hidden_scope_or_customer_dependency
+    - project_risk_register_missing_for_high_uncertainty_work
+    - fixed_price_scope_change_without_change_control
+    - training_example_number_silently_used_as_project_target
+
+traceability:
+  requiredChains:
+    - 'business_outcome -> NFR -> verification_method -> architecture_characteristic_candidate'
+    - 'requirement -> WBS_item -> estimate -> risk -> cost_range'
+    - 'scope_change -> impact_analysis -> change_decision -> baseline_update'
+    - 'delivery_option -> TCO_scenario -> assumptions -> evidence'

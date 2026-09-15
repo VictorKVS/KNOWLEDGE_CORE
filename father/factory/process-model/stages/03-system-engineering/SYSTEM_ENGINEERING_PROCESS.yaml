@@ -1,0 +1,122 @@
+schemaVersion: 1
+processId: FATHER-STAGE-03-SYSTEM-ENGINEERING
+status: CANDIDATE_PROCESS
+stage: SYSTEM_ENGINEERING
+entryGate: SECURITY_INTAKE_READY
+exitGate: SYSTEM_MODEL_READY
+principles:
+  - model_system_before_selecting_architecture
+  - consume_security_intake_not_postpone_security
+  - preserve_unknowns_and_conflicts
+  - logical_function_is_not_software_component
+  - external_dependency_and_interface_must_be_visible
+operations:
+  - id: SE-01
+    name: establish_system_context
+    accountable: system_engineer
+    supports: [product_manager, security_engineer]
+    inputs: [PRODUCT_VISION, SCOPE_BASELINE, SECURITY_INTAKE, STAKEHOLDER_REGISTER]
+    outputs: [SYSTEM_CONTEXT]
+    checks:
+      - external_actors_identified
+      - system_purpose_traces_to_product_need
+      - context_does_not_embed_unapproved_architecture
+  - id: SE-02
+    name: define_system_boundary
+    accountable: system_engineer
+    supports: [security_engineer, product_manager]
+    inputs: [SYSTEM_CONTEXT, SECURITY_CONSTRAINTS, DATA_CLASSIFICATION]
+    outputs: [SYSTEM_BOUNDARY]
+    checks:
+      - in_scope_and_out_of_scope_responsibilities_explicit
+      - trust_or_external_boundaries_not_hidden
+      - product_scope_conflicts_visible
+  - id: SE-03
+    name: model_required_system_functions
+    accountable: system_engineer
+    supports: [product_manager, business_analyst]
+    inputs: [PRODUCT_VISION, BUSINESS_NEED, SYSTEM_BOUNDARY]
+    outputs: [FUNCTION_MODEL]
+    checks:
+      - each_material_function_traces_to_product_need_or_constraint
+      - no_technology_component_is_mislabeled_as_requirement
+  - id: SE-04
+    name: model_information_and_data_flows
+    accountable: system_engineer
+    supports: [security_engineer, data_engineer, data_owner]
+    inputs: [FUNCTION_MODEL, DATA_CLASSIFICATION, SECURITY_CONSTRAINTS]
+    outputs: [DATA_FLOW_MODEL]
+    checks:
+      - material_information_classes_appear_in_flows_or_are_explicitly_not_processed
+      - external_provider_or_connector_flows_visible_if_known
+      - flow_unknowns_preserved
+  - id: SE-05
+    name: inventory_interfaces
+    accountable: integration_engineer
+    supports: [system_engineer, security_engineer]
+    inputs: [SYSTEM_CONTEXT, SYSTEM_BOUNDARY, DATA_FLOW_MODEL]
+    outputs: [INTERFACE_INVENTORY]
+    checks:
+      - external_interactions_have_interface_record_or_unknown
+      - owner_direction_and_information_class_recorded_where_known
+  - id: SE-06
+    name: inventory_external_dependencies
+    accountable: system_engineer
+    supports: [operations_engineer, security_engineer]
+    inputs: [SYSTEM_CONTEXT, INTERFACE_INVENTORY]
+    outputs: [EXTERNAL_DEPENDENCY_REGISTER]
+    checks:
+      - dependency_owner_or_provider_known_or_unknown
+      - trust_failure_and_availability_implication_visible
+  - id: SE-07
+    name: define_operational_modes
+    accountable: system_engineer
+    supports: [operations_engineer, product_manager]
+    inputs: [PRODUCT_VISION, EXTERNAL_DEPENDENCY_REGISTER, SECURITY_QUESTIONS_LOG]
+    outputs: [OPERATIONAL_MODES]
+    checks:
+      - normal_degraded_maintenance_or_offline_expectations_visible_where_relevant
+      - deployment_unknowns_not_made_into_architecture
+  - id: SE-08
+    name: consolidate_system_assumptions_conflicts_unknowns
+    accountable: system_engineer
+    supports: [security_engineer, skeptical_reviewer, knowledge_growth_analyst]
+    inputs: [all_stage_outputs]
+    outputs: [SYSTEM_ASSUMPTION_LOG, SYSTEM_MODEL_EVIDENCE_REGISTER]
+    checks:
+      - assumption_has_owner_and_validation_trigger
+      - conflict_has_resolution_owner
+      - unknown_has_downstream_impact
+  - id: SE-09
+    name: decide_system_model_readiness
+    accountable: system_engineer
+    reviewers: [security_engineer, skeptical_reviewer, product_manager]
+    inputs:
+      - SYSTEM_CONTEXT
+      - SYSTEM_BOUNDARY
+      - FUNCTION_MODEL
+      - DATA_FLOW_MODEL
+      - INTERFACE_INVENTORY
+      - EXTERNAL_DEPENDENCY_REGISTER
+      - OPERATIONAL_MODES
+      - SYSTEM_ASSUMPTION_LOG
+      - SYSTEM_MODEL_EVIDENCE_REGISTER
+    outputs: [SYSTEM_MODEL_READY_DECISION]
+    decisionTable: SYSTEM_MODEL_READY_DECISION_TABLE.yaml
+handoff:
+  targetStage: THREAT_MODEL_V0
+  requiredPackage:
+    - SYSTEM_CONTEXT
+    - SYSTEM_BOUNDARY
+    - FUNCTION_MODEL
+    - DATA_FLOW_MODEL
+    - INTERFACE_INVENTORY
+    - EXTERNAL_DEPENDENCY_REGISTER
+    - OPERATIONAL_MODES
+    - SYSTEM_ASSUMPTION_LOG
+    - DATA_CLASSIFICATION
+    - INITIAL_ABUSE_CASES
+    - SECURITY_CONSTRAINTS
+    - REGULATORY_APPLICABILITY
+    - SYSTEM_MODEL_EVIDENCE_REGISTER
+    - SYSTEM_MODEL_READY_DECISION

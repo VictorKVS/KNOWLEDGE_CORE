@@ -1,0 +1,162 @@
+schemaVersion: 1
+modelId: FATHER-PAPER-EXCEPTION-REWORK-0001
+status: CANDIDATE_COMPLETE_REWORK_MODEL
+principles:
+  - no_silent_forward_on_blocking_state
+  - rework_returns_to_smallest_stage_that_owns_the_invalid_assumption_or_fact
+  - downstream_artifacts_affected_by_superseded_inputs_become_STALE_until_rechecked
+  - rejected_evidence_is_preserved_with_reason
+  - unknown_is_not_a_defect_but_may_block_when_gate_requires_the_value
+  - conflict_is_preserved_until_authority_resolves_or_bounds_it
+states:
+  UNKNOWN:
+    meaning: value_or_fact_not_yet_known
+    defaultAction: keep_visible
+    blockRule: blocks_only_when_gate_requires_resolution
+  GAP:
+    meaning: required_information_missing
+    defaultAction: request_from_accountable_owner
+  PARTIAL:
+    meaning: information_exists_but_is_incomplete_or_ambiguous
+    defaultAction: bound_usage_and_request_completion
+  CONFLICTED:
+    meaning: incompatible_evidence_or_owner_statements_exist
+    defaultAction: preserve_all_sides_and_route_to_authority
+  STALE:
+    meaning: evidence_or_artifact_no_longer_fresh_enough_after_change
+    defaultAction: revalidate_before_material_use
+  REJECTED:
+    meaning: candidate_invalidated_by_owner_review_or_evidence
+    defaultAction: retain_history_and_remove_from_active_baseline
+  NOT_APPLICABLE:
+    meaning: applicability_explicitly_assessed_and_rejected
+    defaultAction: preserve_rationale_and_authority
+exceptionTypes:
+  SOURCE_IDENTITY_FAILURE:
+    detectedAt: [A0]
+    action: stop_use_of_source
+    returnTo: A0
+  SOURCE_SUPERSEDED:
+    detectedAt: [A0,A2,A5,A15]
+    action: mark_dependent_claims_and_artifacts_STALE
+    returnToRule: earliest_stage_consuming_changed_requirement
+  OWNER_MISSING:
+    detectedAt: [any]
+    action: block_gate_and_assign_authority_resolution
+    returnToRule: current_stage
+  MATERIAL_SOURCE_CONFLICT:
+    detectedAt: [A0,A1,A2,A3,A5,A7,A8,A12,A15]
+    action: preserve_conflict_register_and_route_to_domain_authority
+    returnToRule: stage_owning_conflicted_fact
+  LEGAL_APPLICABILITY_UNRESOLVED:
+    detectedAt: [A2,A5,A7,A9,A13,A15]
+    action: block_any_decision_depending_on_legal_result
+    finalAuthority: legal_compliance
+    returnTo: A2
+  DATA_CLASSIFICATION_UNRESOLVED:
+    detectedAt: [A2,A4,A5,A9,A13,A16]
+    action: block_processing_sharing_or_retirement_decision_depending_on_class
+    finalAuthority: data_owner
+    returnTo: A2
+  BUSINESS_SCOPE_CHANGE:
+    detectedAt: [A1,A5,A6,A7,A8,A9,A10,A11,A12,A13,A14,A15]
+    action: invalidate_scope_dependent_artifacts
+    returnTo: A1
+    downstreamRecheck: [A2,A3,A4,A5,A6,A7,A8,A9,A10,A11,A12,A13]
+  SYSTEM_BOUNDARY_CHANGE:
+    detectedAt: [A3,A4,A5,A7,A8,A9,A11,A14,A15]
+    action: recheck_flows_interfaces_threats_requirements_architecture
+    returnTo: A3
+    downstreamRecheck: [A4,A5,A7,A8,A9,A12]
+  THREAT_MODEL_MATERIAL_CHANGE:
+    detectedAt: [A4,A7,A9,A12,A14,A15]
+    action: recheck_security_requirements_controls_tests_residual_risk
+    returnTo: A4
+    downstreamRecheck: [A5,A7,A8,A9,A11,A12,A13]
+  REQUIREMENT_CONFLICT:
+    detectedAt: [A5,A7,A8,A9,A10,A11,A12]
+    action: block_dependent_design_or_test
+    returnTo: A5
+  UNTESTABLE_MATERIAL_REQUIREMENT:
+    detectedAt: [A5,A9,A12]
+    action: clarify_measure_or_record_authorized_exception
+    returnTo: A5
+  ESTIMATE_WITHOUT_BASIS:
+    detectedAt: [A6]
+    action: mark_estimate_UNKNOWN_or_range_and_collect_basis
+    returnTo: A6
+  POC_INVALIDATES_ASSUMPTION:
+    detectedAt: [A6,A7,A8]
+    action: supersede_assumption_and_recompute_dependent_options_estimates
+    returnToRule: earliest_stage_owning_assumption
+  NO_ARCHITECTURE_OPTION_MEETS_DRIVERS:
+    detectedAt: [A7,A8]
+    action: revisit_requirements_constraints_or_generate_new_options
+    returnToOptions: [A5,A6,A7]
+  MATERIAL_ARCHITECTURE_DISSENT:
+    detectedAt: [A8]
+    action: preserve_dissent_and_request_more_evidence_or_owner_decision
+    returnToOptions: [A6,A7,A8]
+  DESIGN_DEVIATES_FROM_ADR:
+    detectedAt: [A9,A10,A11]
+    action: either_rework_design_or_create_new_ADR
+    returnToOptions: [A8,A9]
+  IMPLEMENTATION_DEVIATES_FROM_DESIGN:
+    detectedAt: [A11,A12]
+    action: rework_code_or_formalize_design_change
+    returnToOptions: [A9,A11]
+  CRITICAL_TEST_FAILURE:
+    detectedAt: [A12]
+    action: defect_or_requirement_design_rework_based_on_root_cause
+    returnToRule: root_cause_stage
+  CRITICAL_SECURITY_FINDING:
+    detectedAt: [A11,A12,A13,A14]
+    action: remediate_or_explicit_risk_owner_decision_when_policy_allows
+    returnToRule: control_owner_stage
+  GENAI_QUALITY_GATE_FAILURE:
+    detectedAt: [A12,A14]
+    action: inspect_data_retrieval_prompt_model_or_requirement_before_retry
+    returnToOptions: [A5,A9,A10,A11,A12]
+  PERFORMANCE_SIZING_MISMATCH:
+    detectedAt: [A12,A14]
+    action: update_workload_model_sizing_or_architecture
+    returnToOptions: [A5,A6,A7,A9]
+  MIGRATION_OR_ROLLBACK_FAILURE:
+    detectedAt: [A13]
+    action: block_PRODUCTION_READY
+    returnToOptions: [A9,A10,A11,A12,A13]
+  PRODUCTION_INCIDENT:
+    detectedAt: [A14]
+    action: contain_record_root_cause_then_create_A15_trigger
+    returnTo: A15
+  SLO_BREACH:
+    detectedAt: [A14]
+    action: create_problem_and_capacity_architecture_review
+    returnTo: A15
+  COST_ANOMALY:
+    detectedAt: [A14]
+    action: FinOps_review_and_tradeoff_analysis
+    returnTo: A15
+  MODEL_DATA_DRIFT:
+    detectedAt: [A14]
+    action: MLOps_quality_review_and_possible_requirements_or_model_reopen
+    returnToOptions: [A5,A9,A10,A12,A15]
+  NEW_REGULATION:
+    detectedAt: [A14,A15]
+    action: update_registry_and_applicability_then_mark_dependents_STALE
+    returnTo: A2
+  TECHNOLOGY_EOL_OR_SUPPLY_CHAIN_EVENT:
+    detectedAt: [A14,A15]
+    action: technology_radar_architecture_revisit
+    returnToOptions: [A7,A8,A9,A10]
+  API_BREAKING_CONSUMER_IMPACT:
+    detectedAt: [A9,A13,A14,A15]
+    action: API_product_lifecycle_and_deprecation_review
+    returnToOptions: [A1,A5,A9,A15]
+  RETIREMENT_DATA_OBLIGATION_UNRESOLVED:
+    detectedAt: [A16]
+    action: block_RETIRED_VERIFIED
+    returnTo: A16
+revalidationRule: >-
+  When an upstream artifact is superseded, use the traceability graph to mark only dependent downstream artifacts STALE.
+  Re-run the smallest set of gates necessary; do not restart the whole lifecycle by default.

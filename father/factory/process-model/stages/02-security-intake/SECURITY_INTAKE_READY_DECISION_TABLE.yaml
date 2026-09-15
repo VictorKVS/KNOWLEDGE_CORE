@@ -1,0 +1,59 @@
+schemaVersion: 1
+decisionTableId: FATHER-STAGE-02-SECURITY-INTAKE-READY-0001
+status: CANDIDATE_DMN
+stage: SECURITY_INTAKE
+responsibleRole: security_engineer
+reviewerRoles: [skeptical_reviewer]
+legalAuthorityRole: legal_compliance
+outcomes: [PASS, CONDITIONAL_PASS, BLOCKED, INSUFFICIENT_EVIDENCE]
+mandatoryConditions:
+  - id: C1
+    statement: security scope is explicit and traceable to owner-confirmed product scope
+  - id: C2
+    statement: material information/data classes are identified at least to a level sufficient for System Engineering
+  - id: C3
+    statement: material information/data classes have accountable owners or explicit owner gaps
+  - id: C4
+    statement: known external, privileged, agent/service or third-party interactions are visible or explicitly UNKNOWN
+  - id: C5
+    statement: regulatory applicability statuses are explicit and owned by Legal/Compliance where material
+  - id: C6
+    statement: initial abuse cases exist for material product assets/actions without pretending to be final threat likelihood
+  - id: C7
+    statement: security constraints distinguish mandatory, owner-confirmed, sourced, candidate and unknown states
+  - id: C8
+    statement: conflicts and UNKNOWNs have downstream impact and resolution owner/trigger
+hardBlockers:
+  - id: B1
+    statement: product scope and security scope materially conflict with no resolution owner
+  - id: B2
+    statement: known sensitive_or_regulated information has no accountable owner and no explicit resolution path
+  - id: B3
+    statement: material legal/regulatory applicability is asserted as fact without authoritative review
+  - id: B4
+    statement: known external_or_privileged interaction is silently excluded from security scope
+  - id: B5
+    statement: material UNKNOWN is silently promoted to fact, not-applicable, or accepted risk
+rules:
+  - id: SR-01
+    when: any_hard_blocker_true
+    then: BLOCKED
+  - id: SR-02
+    when: evidence_is_too_incomplete_to_evaluate_mandatory_conditions
+    then: INSUFFICIENT_EVIDENCE
+  - id: SR-03
+    when: all_mandatory_conditions_satisfied_and_no_material_open_conditions
+    then: PASS
+  - id: SR-04
+    when: minimum_context_is_sufficient_for_system_engineering_and_remaining_gaps_are_nonblocking_with_named_owner_and_trigger
+    then: CONDITIONAL_PASS
+  - id: SR-05
+    when: deployment_topology_or_exact_interfaces_are_unknown_but_explicitly_carried_to_system_engineering
+    then: CONDITIONAL_PASS_ALLOWED
+notes:
+  - gate_decision_must_include_reasons_and_evidence_refs
+  - numeric_completeness_score_cannot_override_blocker
+  - security_engineer_does_not_accept_residual_risk_here
+  - PASS_does_not_mean_final_security_compliance_or_final_threat_model
+handoffOn: [PASS, CONDITIONAL_PASS]
+nextStage: SYSTEM_ENGINEERING

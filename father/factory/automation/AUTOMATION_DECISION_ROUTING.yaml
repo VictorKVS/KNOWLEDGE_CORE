@@ -1,0 +1,149 @@
+schemaVersion: 1
+routingId: FATHER-AUTOMATION-DECISION-ROUTING-0001
+status: CANDIDATE_MODEL
+binds:
+  documentPipeline: father/factory/automation/DOCUMENT_AUTOMATION_PIPELINE.yaml
+  approvalMatrix: father/factory/automation/DOCUMENT_APPROVAL_MATRIX.yaml
+  modelZooPanel: father/factory/automation/MODEL_ZOO_DECISION_PANEL.yaml
+purpose: >-
+  Insert the Model Zoo Decision Panel into the document automation path only when document or decision materiality
+  justifies multi-model challenge. Routine documents remain cheap; material decisions receive champion/challenger/judge review.
+
+routingPoint:
+  after:
+    - COMPLETENESS_CHECKED
+    - CONFLICT_CHECKED
+    - DOMAIN_CHECK
+  before:
+    - OWNER_REVIEW
+    - INDEPENDENT_REVIEW
+    - FINAL_GATE
+
+flow:
+  - freeze_document_version_and_evidence_snapshot
+  - calculate_materiality
+  - select_panel_profile
+  - if_profile_ROUTINE_DOCUMENT_REVIEW:
+      action: skip_multi_model_panel
+      continueTo: OWNER_REVIEW
+  - if_profile_MATERIAL_ENGINEERING_DECISION:
+      action: run_model_zoo_panel
+      continueTo: OWNER_REVIEW
+  - if_profile_ARCHITECTURE_CTO_CHALLENGE:
+      action: run_extended_model_zoo_panel
+      continueTo: OWNER_REVIEW
+  - if_profile_HIGH_RISK_SECURITY_LEGAL:
+      action: run_advisory_panel_only
+      continueTo: mandatory_domain_authority_review
+  - persist_decision_packet
+  - persist_dissent_register
+  - create_human_review_task
+  - apply_approval_matrix
+  - evaluate_gate_only_after_required_human_decisions
+
+materialityInputs:
+  reversibility:
+    LOW: easily_reversible_without_data_contract_or_user_impact
+    MEDIUM: reversible_with_coordinated_change
+    HIGH: expensive_or_risky_to_reverse
+  securityImpact: [NONE, LOW, MEDIUM, HIGH, CRITICAL]
+  legalPrivacyImpact: [NONE, LOW, MEDIUM, HIGH, CRITICAL]
+  costImpact: [LOW, MEDIUM, HIGH]
+  blastRadius: [LOCAL, MULTI_COMPONENT, SYSTEM_WIDE, EXTERNAL]
+  externalDependencyImpact: [NONE, REPLACEABLE, MATERIAL, HARD_LOCK_IN]
+  uncertainty: [LOW, MEDIUM, HIGH]
+
+profileSelection:
+  ROUTINE_DOCUMENT_REVIEW:
+    when:
+      all:
+        - reversibility == LOW
+        - securityImpact in [NONE, LOW]
+        - legalPrivacyImpact in [NONE, LOW]
+        - blastRadius == LOCAL
+        - uncertainty in [LOW, MEDIUM]
+  MATERIAL_ENGINEERING_DECISION:
+    when:
+      any:
+        - reversibility == MEDIUM
+        - blastRadius == MULTI_COMPONENT
+        - externalDependencyImpact == MATERIAL
+        - uncertainty == HIGH
+        - costImpact == MEDIUM
+  ARCHITECTURE_CTO_CHALLENGE:
+    when:
+      any:
+        - reversibility == HIGH
+        - blastRadius in [SYSTEM_WIDE, EXTERNAL]
+        - externalDependencyImpact == HARD_LOCK_IN
+        - costImpact == HIGH
+        - architectureDecision == true
+  HIGH_RISK_SECURITY_LEGAL:
+    when:
+      any:
+        - securityImpact == CRITICAL
+        - legalPrivacyImpact in [HIGH, CRITICAL]
+        - residualRiskDecision == true
+        - sensitiveExternalProcessing == true
+
+stageDefaults:
+  PRODUCT_DISCOVERY:
+    defaultProfile: ROUTINE_DOCUMENT_REVIEW
+    elevateWhen: [material_scope_change, business_owner_disagreement]
+  SECURITY_INTAKE:
+    defaultProfile: MATERIAL_ENGINEERING_DECISION
+    elevateWhen: [sensitive_external_processing, critical_security_question]
+  SYSTEM_ENGINEERING:
+    defaultProfile: MATERIAL_ENGINEERING_DECISION
+    elevateWhen: [system_boundary_change, external_dependency_lock_in]
+  THREAT_MODEL_V0:
+    defaultProfile: MATERIAL_ENGINEERING_DECISION
+    elevateWhen: [critical_threat_disagreement]
+  REQUIREMENTS_BASELINE:
+    defaultProfile: MATERIAL_ENGINEERING_DECISION
+    elevateWhen: [material_NFR_conflict, legal_security_requirement_conflict]
+  DELIVERY_FEASIBILITY:
+    defaultProfile: MATERIAL_ENGINEERING_DECISION
+    elevateWhen: [large_cost_commitment, fixed_price_high_uncertainty]
+  ARCHITECTURE_OPTIONS:
+    defaultProfile: ARCHITECTURE_CTO_CHALLENGE
+  ARCHITECTURE_DECISION:
+    defaultProfile: ARCHITECTURE_CTO_CHALLENGE
+  DETAILED_DESIGN:
+    defaultProfile: MATERIAL_ENGINEERING_DECISION
+    elevateWhen: [new_trust_boundary, irreversible_data_contract]
+  IMPLEMENTATION:
+    defaultProfile: ROUTINE_DOCUMENT_REVIEW
+    elevateWhen: [major_dependency, privileged_tooling, security_control_change]
+  VERIFICATION_VALIDATION:
+    defaultProfile: MATERIAL_ENGINEERING_DECISION
+    elevateWhen: [critical_requirement_failure, evidence_conflict]
+  RELEASE_DEPLOYMENT:
+    defaultProfile: MATERIAL_ENGINEERING_DECISION
+    elevateWhen: [critical_unresolved_risk, irreversible_migration]
+  OPERATION_MAINTENANCE:
+    defaultProfile: ROUTINE_DOCUMENT_REVIEW
+    elevateWhen: [major_incident, architecture_revisit_trigger]
+
+humanAuthorityRules:
+  - panel_output_is_advisory
+  - required_human_role_comes_from_DOCUMENT_APPROVAL_MATRIX
+  - model_majority_never_overrides_required_domain_authority
+  - material_dissent_must_be_visible_to_human_reviewer
+  - judge_cannot_close_legal_or_residual_risk_question
+  - human_decision_must_reference_evidence_or_explicit_authority_judgment
+
+executionRecord:
+  requiredFields:
+    - routingRunId
+    - documentId
+    - version
+    - lifecycleStage
+    - materialityInputs
+    - selectedProfile
+    - selectedModelRefs
+    - panelRunRef
+    - dissentRegisterRef
+    - approvalTaskRefs
+    - finalHumanDecisionRef
+    - gateDecisionRef

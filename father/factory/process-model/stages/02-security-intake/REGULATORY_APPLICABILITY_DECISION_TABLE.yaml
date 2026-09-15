@@ -1,0 +1,46 @@
+schemaVersion: 1
+decisionTableId: FATHER-STAGE-02-REGULATORY-APPLICABILITY-0001
+status: CANDIDATE_DMN
+purpose: determine project-specific applicability state for each regulatory/normative overlay without allowing technical roles or models to invent legal conclusions
+authorityOwner: legal_compliance
+supportingRoles: [security_engineer, data_owner, knowledge_growth_analyst]
+inputFacts:
+  - product_and_organization_context
+  - information_and_data_classes
+  - intended_processing_and_use
+  - deployment_and_operating_context_if_known
+  - normative_source_status
+  - jurisdiction_or_sector_context_if_known
+outputs:
+  - APPLICABLE
+  - NOT_APPLICABLE
+  - CONDITIONALLY_APPLICABLE
+  - UNKNOWN
+  - SOURCE_STATUS_RECHECK_REQUIRED
+rules:
+  - id: RA-01
+    when: normative_source_status_is_not_current_or_not_verified
+    then: SOURCE_STATUS_RECHECK_REQUIRED
+    rationale: applicability cannot rely on stale or superseded source status
+  - id: RA-02
+    when: required_project_facts_for_applicability_are_missing
+    then: UNKNOWN
+    rationale: lack of evidence is not evidence of non-applicability
+  - id: RA-03
+    when: authoritative_owner_confirms_trigger_conditions_and_current_source
+    then: APPLICABLE
+    evidenceRequired: [owner_confirmation, source_ref, triggering_project_facts]
+  - id: RA-04
+    when: authoritative_owner_confirms_trigger_conditions_are_absent_and_current_source
+    then: NOT_APPLICABLE
+    evidenceRequired: [owner_confirmation, source_ref, relevant_project_facts]
+  - id: RA-05
+    when: applicability_depends_on_future_deployment_data_or_scope_choice
+    then: CONDITIONALLY_APPLICABLE
+    evidenceRequired: [condition, owner, reevaluation_trigger]
+hardRules:
+  - security_engineer_may_propose_but_not_finally_assert_legal_applicability
+  - llm_or_agent_output_is_candidate_analysis_only
+  - unknown_must_not_be_mapped_to_not_applicable
+  - superseded_source_must_not_be_used_as_current_requirement
+  - applicability_must_be_reassessed_when_scope_data_deployment_or_source_status_changes

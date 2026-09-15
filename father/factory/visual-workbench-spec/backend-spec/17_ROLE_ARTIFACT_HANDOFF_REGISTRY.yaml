@@ -1,0 +1,287 @@
+schemaVersion: 1
+registryId: FATHER-ROLE-ARTIFACT-HANDOFF-0001
+status: CANDIDATE_CANONICAL
+physicalDatabase: osint_kb
+principles:
+  - one_canonical_id_across_alina_and_father
+  - no_free_form_untraceable_handoff
+  - no_role_private_database
+  - no_process_private_database
+  - method_requires_source_lineage
+  - artifact_requires_owner_and_downstream
+  - review_and_authority_separated_from_production_where_material
+  - downstream_consumes_only_allowed_states
+  - project_knowledge_does_not_auto_promote_global
+  - paper_design_precedes_material_implementation
+
+artifactContract:
+  requiredFields:
+    - artifact_id
+    - artifact_type
+    - project_id
+    - station_id
+    - owner_role
+    - status
+    - version
+    - baseline_id
+    - source_refs
+    - input_artifact_refs
+    - method_refs
+    - assumptions
+    - unknowns
+    - conflicts
+    - test_refs
+    - downstream_refs
+    - classification
+  preferredRepresentations:
+    narrative: [markdown]
+    machine: [yaml, json]
+    architecture: [c4, mermaid]
+    process: [bpmn, idef0, sipoc]
+    data: [erd, json_schema, sql_logical_model]
+    api: [openapi, asyncapi, json_schema]
+    reviewedExport: [pdf, docx]
+
+handoffStates:
+  - DRAFT
+  - READY_FOR_REVIEW
+  - REWORK_REQUIRED
+  - CONDITIONAL_PASS
+  - APPROVED_BASELINE
+  - STALE
+  - SUPERSEDED
+  - REJECTED
+
+handoffRequiredFields:
+  - handoff_id
+  - from_role
+  - from_station
+  - to_role
+  - to_station
+  - artifact_refs
+  - source_snapshot_id
+  - baseline_id
+  - conditions
+  - open_unknowns
+  - conflicts
+  - review_state
+  - accepted_by
+  - accepted_at
+
+methodSourceLayers:
+  L1_MANDATORY_AUTHORITY:
+    examples: [law, regulator_order, mandatory_policy, contract, adopted_standard]
+  L2_PRIMARY_PROFESSIONAL:
+    examples: [standards_body, official_method_owner, primary_vendor_spec]
+  L3_SCIENTIFIC_PROFESSIONAL:
+    examples: [peer_reviewed_research, systematic_review, reproducible_benchmark, professional_body]
+  L4_BOOK_EDUCATIONAL:
+    examples: [professional_book, OTUS, worked_example]
+  L5_INTERNAL_PRODUCTION:
+    examples: [incident, accepted_decision, rejected_decision, test_failure, telemetry, lesson_learned]
+
+roles:
+  product_manager:
+    primaryStations: [S08,S09,S10,S11,S12]
+    consultStations: [S25,S26,S27,S28,S29,S33,S34,S35,S36,S37,S38,S55,S58]
+    methodFamilies: [problem_solution_framing, value_proposition, jtbd_where_useful, journey_mapping, scope_in_out, kpi_baseline_target, experiment_framing]
+    owns: [BUSINESS_NEED, PRODUCT_VISION, VALUE_PROPOSITION, SCOPE_BASELINE, TARGET_USERS, USER_JOURNEYS, SUCCESS_METRICS]
+    reviewedBy: [business_owner, business_analyst, skeptical_reviewer]
+    downstream: [business_analyst, requirements_engineer, system_engineer, security_engineer]
+  business_owner:
+    primaryStations: [S08,S09,S10,S12,S30,S31,S32,S36,S37,S38,S39,S55,S56,S57]
+    methodFamilies: [business_case, benefit_cost_reasoning, decision_criteria, risk_acceptance, stage_gate]
+    owns: [BUSINESS_SCOPE_DECISION, BUSINESS_ACCEPTANCE, MATERIAL_BUSINESS_DECISION]
+    reviewedBy: [skeptical_reviewer]
+    downstream: [product_manager, project_manager, solution_architect, service_owner]
+  project_manager:
+    primaryStations: [S00,S09,S12,S29,S30,S31,S32,S49,S50,S55,S56,S57,S58,S59]
+    methodFamilies: [wbs, pert_where_justified, dependency_network, raid, milestone_gate_control, change_control]
+    owns: [PROJECT_SHELL, DELIVERY_WBS, PROJECT_PLAN, RAID_REGISTER, GATE_STATUS]
+    reviewedBy: [business_owner]
+    downstream: [all_roles]
+  knowledge_growth_analyst:
+    primaryStations: [S01,S02,S03,S04,S05,S06,S07,S58]
+    methodFamilies: [source_registry, sha_identity, provenance, atomic_extraction, source_authority_policy, conflict_supersession, ontology_mapping, evidence_sufficiency]
+    owns: [SOURCE_REGISTER, SOURCE_VERSION_REGISTER, SOURCE_SPAN, ATOMIC_ITEM_REGISTER, GAP_REGISTER, CONFLICT_REGISTER, KB_COVERAGE_REPORT]
+    reviewedBy: [domain_specialist_or_owner, skeptical_reviewer]
+    downstream: [all_roles]
+  business_analyst:
+    primaryStations: [S08,S09,S10,S11,S12,S16,S17,S25]
+    methodFamilies: [bpmn, sipoc, idef0_where_applicable, stakeholder_mapping, business_rule_catalogue, process_decomposition]
+    owns: [BUSINESS_PROCESS_MODEL, USER_JOURNEYS, BUSINESS_RULE_CATALOGUE, BUSINESS_REQUIREMENTS_DRAFT]
+    reviewedBy: [product_manager, business_owner]
+    downstream: [requirements_engineer, system_engineer]
+  requirements_engineer:
+    primaryStations: [S24,S25,S26,S27,S28,S29]
+    consultStations: [S33,S34,S36,S38,S48,S55]
+    methodFamilies: [requirements_normalization, atomicity_verifiability, duplicate_conflict_detection, quality_attribute_scenarios, traceability, acceptance_oracle_derivation]
+    owns: [REQUIREMENTS_BASELINE, NFR_CATALOGUE, ACCEPTANCE_CRITERIA, REQUIREMENTS_TRACEABILITY_MATRIX]
+    reviewedBy: [business_owner, system_engineer, security_engineer, skeptical_reviewer]
+    downstream: [solution_architect, software_architect, qa_engineer, software_engineer]
+  security_engineer:
+    primaryStations: [S13,S15,S18,S21,S22,S23,S24,S28,S36,S39,S43,S47,S48,S52,S54,S55,S57,S58]
+    methodFamilies: [asset_interest_analysis, trust_boundary_analysis, threat_source_analysis, threat_scenario_modeling, abuse_cases, risk_analysis, threat_requirement_control_test_mapping, secure_design_review]
+    owns: [SECURITY_INTAKE, ABUSE_CASES, THREAT_MODEL, SECURITY_REQUIREMENTS, SECURITY_ARCH_REVIEW, SECURITY_TEST_REQUIREMENTS]
+    reviewedBy: [skeptical_reviewer, risk_owner, legal_compliance]
+    downstream: [requirements_engineer, solution_architect, devsecops_engineer, qa_engineer, risk_owner]
+  system_engineer:
+    primaryStations: [S16,S17,S18,S19,S20,S25,S26,S33,S34,S35,S40,S41,S42,S44,S46,S47]
+    methodFamilies: [system_context, functional_decomposition, dfd, state_mode_analysis, interface_inventory, dependency_mapping, system_tradeoffs]
+    owns: [SYSTEM_CONTEXT, SYSTEM_BOUNDARY, FUNCTION_MODEL, DATA_FLOW_MODEL, INTERFACE_INVENTORY, OPERATIONAL_MODES]
+    reviewedBy: [solution_architect, security_engineer, skeptical_reviewer]
+    downstream: [requirements_engineer, solution_architect, integration_engineer, data_engineer, qa_engineer]
+  data_owner:
+    primaryStations: [S13,S14,S18,S25,S39,S42,S55,S56,S57,S58,S59]
+    methodFamilies: [data_inventory, data_classification, ownership_mapping, retention_rules, usage_constraints, data_quality_acceptance]
+    owns: [DATA_INVENTORY, DATA_CLASSIFICATION, DATA_OWNERSHIP_DECISION, RETENTION_DECISION]
+    reviewedBy: [legal_compliance, security_engineer]
+    downstream: [data_engineer, solution_architect, operations_engineer]
+  legal_compliance:
+    primaryStations: [S13,S24,S25,S28,S29,S36,S39,S55,S57,S58,S59]
+    methodFamilies: [applicability_decision_tree, source_version_validation, clause_requirement_mapping, exception_exemption_analysis, obligation_prohibition_permission_classification]
+    owns: [REGULATORY_APPLICABILITY, COMPLIANCE_CONSTRAINTS, CLAUSE_REQUIREMENT_MAP, COMPLIANCE_REVIEW]
+    reviewedBy: [skeptical_reviewer]
+    downstream: [requirements_engineer, security_engineer, solution_architect, data_owner]
+  integration_engineer:
+    primaryStations: [S19,S40,S41,S44,S53,S54,S55]
+    methodFamilies: [interface_inventory, sync_async_tradeoff, contract_first, sequence_diagram, idempotency_retry_backpressure, error_taxonomy]
+    owns: [INTEGRATION_CONTRACT, INTEGRATION_SEQUENCE, INTEGRATION_NFR]
+    reviewedBy: [software_architect, security_engineer, qa_engineer]
+    downstream: [api_designer, software_engineer, data_engineer, devsecops_engineer]
+  solution_architect:
+    primaryStations: [S33,S34,S35,S36,S37,S38,S39,S40,S41,S42,S43,S44,S45,S46,S47]
+    methodFamilies: [simplest_feasible_baseline, architecture_characteristics, c4, adr, atam_like_review, tradeoff_analysis, weighted_matrix_when_justified]
+    owns: [ARCHITECTURE_DRIVER_SET, ARCHITECTURE_OPTION_SET, ARCHITECTURE_VIEWS, TRADEOFF_RECORD, TARGET_ARCHITECTURE, ADR]
+    reviewedBy: [security_engineer, skeptical_reviewer, business_or_system_decision_owner]
+    downstream: [software_architect, integration_engineer, data_engineer, api_designer, devsecops_engineer]
+  software_architect:
+    primaryStations: [S38,S40,S41,S42,S43,S44,S45,S46,S47,S48]
+    methodFamilies: [component_decomposition, dependency_rules, sequence_state_design, pattern_antipattern_analysis, architecture_fitness_checks]
+    owns: [COMPONENT_MODEL, SOFTWARE_ARCH_RULES, TECHNICAL_ADR, IMPLEMENTATION_CONSTRAINTS]
+    reviewedBy: [solution_architect, security_engineer, skeptical_reviewer]
+    downstream: [api_designer, data_engineer, software_engineer, code_reviewer, qa_engineer]
+  api_designer:
+    primaryStations: [S19,S41,S48,S53,S54]
+    methodFamilies: [contract_first, resource_modeling, event_modeling, compatibility_check, error_model, pagination_idempotency]
+    owns: [OPENAPI_CONTRACT, ASYNCAPI_CONTRACT, API_SCHEMA, API_ACCEPTANCE_RULES]
+    reviewedBy: [integration_engineer, security_engineer, qa_engineer]
+    downstream: [software_engineer, integration_engineer, qa_engineer]
+  data_engineer:
+    primaryStations: [S18,S42,S44,S45,S46,S53,S54,S55,S58]
+    methodFamilies: [erd, lineage, pipeline_design, partition_index_strategy, data_quality_rules, batch_stream_tradeoff]
+    owns: [DATA_MODEL, PIPELINE_MODEL, LINEAGE_MODEL, DATA_QUALITY_TESTS]
+    reviewedBy: [data_owner, software_architect, security_engineer]
+    downstream: [software_engineer, devsecops_engineer, qa_engineer, operations_engineer]
+  software_engineer:
+    primaryStations: [S49,S51,S52,S53,S54]
+    methodFamilies: [implementation_decomposition, tdd_where_appropriate, secure_coding, defensive_programming, deterministic_unit_tests]
+    consumesGate: S50
+    owns: [CODE, UNIT_TESTS, IMPLEMENTATION_EVIDENCE]
+    reviewedBy: [code_reviewer, qa_engineer, security_engineer]
+    downstream: [code_reviewer, devsecops_engineer, qa_engineer]
+  code_reviewer:
+    primaryStations: [S51,S52,S53,S54]
+    methodFamilies: [diff_review, coding_checklist, architecture_constraint_check, test_adequacy_review]
+    owns: [CODE_REVIEW_RECORD]
+    reviewedBy: [qa_engineer_or_peer]
+    downstream: [software_engineer, devsecops_engineer, qa_engineer]
+  devsecops_engineer:
+    primaryStations: [S43,S44,S45,S46,S49,S52,S53,S54,S56,S57]
+    methodFamilies: [pipeline_as_code, iac, sbom, sast, sca, dast_where_applicable, secret_scan, immutable_build_identity, staged_rollout]
+    owns: [CI_CD_DESIGN, BUILD_MANIFEST, SBOM, SECURITY_SCAN_EVIDENCE, DEPLOYMENT_AUTOMATION, ROLLBACK_AUTOMATION]
+    reviewedBy: [security_engineer, qa_engineer, operations_engineer]
+    downstream: [release_manager, operations_engineer]
+  configuration_manager:
+    primaryStations: [S28,S38,S49,S50,S51,S52,S53,S54,S55,S56,S57]
+    methodFamilies: [baseline_control, version_manifest, configuration_item_register, change_traceability]
+    owns: [BASELINE_MANIFEST, CONFIGURATION_REGISTER, VERSION_TRACE]
+    reviewedBy: [project_manager]
+    downstream: [all_delivery_roles]
+  qa_engineer:
+    primaryStations: [S27,S28,S29,S48,S53,S54,S55,S57]
+    methodFamilies: [requirements_based_testing, equivalence_partitioning, boundary_value, state_transition, decision_table, negative_testing, performance_security_ai_test_planning, trace_coverage]
+    owns: [TEST_STRATEGY, TEST_SPECIFICATIONS, TEST_CASES, TEST_ORACLES, DEFECT_REGISTER, VERIFICATION_REPORT]
+    reviewedBy: [requirements_engineer, security_engineer, business_or_system_owner]
+    downstream: [software_engineer, release_manager, service_owner]
+  operations_engineer:
+    primaryStations: [S20,S44,S45,S46,S56,S57,S58,S59]
+    methodFamilies: [sli_slo, runbook_design, capacity_analysis, backup_restore, failure_recovery_scenarios]
+    owns: [RUNBOOKS, MONITORING_MODEL, CAPACITY_RECORD, RECOVERY_RECORD, OPERATIONAL_ACCEPTANCE]
+    reviewedBy: [service_owner, security_engineer]
+    downstream: [service_owner, incident_manager, change_manager]
+  service_owner:
+    primaryStations: [S45,S46,S55,S56,S57,S58,S59]
+    methodFamilies: [service_readiness, slo_governance, operational_risk_balance, service_cost_quality_balance]
+    owns: [SERVICE_ACCEPTANCE, PRODUCTION_AUTHORITY_DECISION, SERVICE_LIFECYCLE_DECISION]
+    reviewedBy: [business_owner, risk_owner]
+    downstream: [operations_engineer, release_manager, change_manager]
+  release_manager:
+    primaryStations: [S55,S56,S57]
+    methodFamilies: [release_checklist, release_evidence_packaging, deployment_gate, rollback_criteria]
+    owns: [RELEASE_MANIFEST, RELEASE_DECISION_RECORD, DEPLOYMENT_WINDOW, ROLLBACK_PLAN]
+    reviewedBy: [service_owner, change_manager]
+    downstream: [operations_engineer, service_owner]
+  change_manager:
+    primaryStations: [S56,S57,S58]
+    methodFamilies: [change_classification, impact_graph, authority_routing, rollback_readiness]
+    owns: [CHANGE_RECORD, CHANGE_IMPACT, CHANGE_APPROVAL]
+    reviewedBy: [service_owner, risk_owner]
+    downstream: [release_manager, operations_engineer, affected_design_roles]
+  incident_manager:
+    primaryStations: [S58]
+    methodFamilies: [incident_command, timeline_reconstruction, causal_analysis, five_whys_where_appropriate, fault_tree_where_appropriate, lessons_learned]
+    owns: [INCIDENT_RECORD, INCIDENT_TIMELINE, RCA, CORRECTIVE_ACTIONS, LESSON_CANDIDATE]
+    reviewedBy: [service_owner, security_engineer, skeptical_reviewer]
+    downstream: [change_manager, knowledge_growth_analyst, affected_design_roles]
+  skeptical_reviewer:
+    primaryStations: [S12,S24,S28,S32,S37,S38,S39,S48,S49,S50,S55,S56,S57]
+    methodFamilies: [adversarial_review, assumption_challenge, counterexample_search, failure_mode_review, atam_like_scenarios, consistency_check]
+    owns: [INDEPENDENT_REVIEW_RECORD, REWORK_REQUEST]
+    reviewedBy: [final_authority]
+    downstream: [artifact_owner, final_authority]
+  risk_owner:
+    primaryStations: [S23,S24,S30,S31,S32,S36,S37,S38,S39,S55,S56,S57,S58]
+    methodFamilies: [risk_decision_framework, treatment_comparison, residual_risk_acceptance, review_trigger_setting]
+    owns: [RISK_DECISION, RISK_ACCEPTANCE_CONDITIONS, RISK_REVIEW_TRIGGER]
+    reviewedBy: [business_owner_or_service_owner]
+    downstream: [security_engineer, solution_architect, service_owner]
+
+candidateRoles:
+  - finance_procurement
+  - sre_engineer
+  - ux_designer
+  - data_architect
+  - domain_specialist
+
+lifecycleHandoff:
+  - {from: S00-S07, to: S08-S12, package: EVIDENCE_FOUNDATION}
+  - {from: S08-S12, to: S13-S15, package: PRODUCT_BUSINESS_BASELINE}
+  - {from: S13-S15, to: S16-S20, package: LEGAL_DATA_SECURITY_CONSTRAINTS}
+  - {from: S16-S20, to: S21-S24, package: SYSTEM_MODEL_V0}
+  - {from: S21-S24, to: S25-S29, package: THREAT_SECURITY_DRIVERS}
+  - {from: S25-S29, to: S30-S32, package: REQUIREMENTS_ACCEPTANCE_BASELINE}
+  - {from: S30-S32, to: S33-S39, package: FEASIBILITY_EVIDENCE}
+  - {from: S33-S39, to: S40-S47, package: TARGET_ARCHITECTURE_DECISION}
+  - {from: S40-S47, to: S48, package: DETAILED_DESIGN_BASELINE}
+  - {from: S48, to: S49, package: TEST_SPECIFICATIONS_ORACLES}
+  - {from: S49, to: S50, package: IMPLEMENTATION_PLAN}
+  - {from: S50, to: S51, package: PRE_CODE_EVIDENCE_GATE}
+  - {from: S51-S52, to: S53-S55, package: IMPLEMENTATION_BUILD_EVIDENCE}
+  - {from: S53-S55, to: S56-S57, package: VERIFICATION_ACCEPTANCE_EVIDENCE}
+  - {from: S56-S57, to: S58, package: RELEASE_PRODUCTION_BASELINE}
+  - {from: S58, to: S59, package: OPERATION_EVOLUTION_EVIDENCE}
+
+methodLifecycle:
+  - SOURCE_CANDIDATE
+  - SOURCE_VERIFIED
+  - METHOD_EXTRACTED
+  - METHOD_REVIEWED
+  - TRAINING_CASES_READY
+  - EVAL_READY
+  - SECURITY_EVAL_READY
+  - ROLE_CAPABILITY_CANDIDATE
+  - ROLE_CAPABILITY_VERIFIED
+  - MONITORED
+
+acceptanceGate: PROFESSIONAL_CHAIN_V1_READY

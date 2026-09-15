@@ -1,0 +1,134 @@
+schemaVersion: 1
+crosswalkId: FATHER-OTUS-LESSON-02-CROSSWALK-0001
+status: SOURCE_GROUNDED_CANDIDATE
+source:
+  repository: VictorKVS/OTUS-
+  lessonPath: '2. Проектирование и оценка от требований к плану, рискам и смете'
+  sourceFiles:
+    - '2. Проектирование и оценка от требований к плану, рискам и смете.txt'
+    - 'Приложения к семинару 2_ AI-архитектор (1).txt'
+    - '2._Проектирование_и_оценка__от_требований_к_плану__рискам_и_смете__1-692345-dc397d.pdf'
+    - '2._Практическое_сравнение_программного_решения_созданного_в_парадигмах_облачного_и_не_облачного_проектирования-125632-603778.pdf'
+
+lessonScope:
+  - transform_business_requirements_into_technical_plan
+  - formalize_requirements_as_SRS_with_measurable_NFR
+  - estimate_work_using_analogous_parametric_PERT_and_bottom_up
+  - account_for_AI_and_RnD_uncertainty
+  - manage_fixed_price_risks_scope_creep_estimation_error_and_customer_dependencies
+  - use_change_management_and_contract_constraints
+  - build_risk_matrix_and_change_request
+  - compare_delivery_cost_and_TCO_options
+  - use_WBS_and_role_based_effort_estimation
+
+sourceArtifacts:
+  A1_AI_NFR_TEMPLATE:
+    purpose: measurable non-functional requirements for AI systems
+    fields: [category, metric, description, target_value, priority_MoSCoW, verification_method]
+    exampleCategories: [performance, quality, reliability_security, data_ops, constraints]
+    fatherRule: example metrics and target values from the lesson are EXAMPLE_ONLY and must not become project defaults without owner evidence
+  A2_PRESALE_AI_QUESTIONNAIRE:
+    purpose: discovery questions to expose architecture killers and missing inputs
+    blocks: [business_value, data_knowledge, infrastructure_security, integration_UX, process_acceptance]
+  A3_PERT_CALCULATOR:
+    purpose: estimate uncertain RnD tasks using optimistic_most_likely_pessimistic inputs
+    fatherRule: retain raw O_M_P assumptions and rationale; computed value is an estimate, not a fact
+  A4_GENAI_WBS:
+    purpose: project planning skeleton
+    phases: [data_discovery_design, proof_of_concept, MVP_engineering, production_readiness]
+    fatherRule: phase names and sample task counts are templates, not mandatory lifecycle stages
+  A5_AI_RISK_REGISTER:
+    purpose: track project risks, response and trigger
+    fields: [id, category, description, probability, impact, risk_score, strategy, mitigation_plan, trigger]
+    fatherRule: numeric probability/impact is allowed only as an explicit estimate with method/evidence; never as invented fact
+  A6_CHANGE_REQUEST:
+    purpose: controlled scope change
+    fields: [requested_change, architecture_impact, project_impact, schedule_impact, budget_impact, risk_impact, decision]
+  A7_TCO_UNIT_ECONOMICS:
+    purpose: compare implementation options across CapEx, OpEx, TCO and unit cost
+    fatherRule: lesson numbers are illustrative only; project values require sourced assumptions
+  A8_PROJECT_DEFENSE_CHEATSHEET:
+    purpose: explain uncertainty, PoC value, enterprise cost and post-release support to business
+    fatherUse: decision_explainability_and_stakeholder_communication
+  A9_EFFORT_AND_COST_CALCULATOR:
+    purpose: WBS-based effort, role allocation, management overhead and risk reserve
+    fatherRule: lesson coefficients are examples only; every coefficient requires organizational/project justification
+  A10_FORMULAS:
+    purpose: TCO and model sizing calculation examples
+    fatherRule: formulas/parameters must be versioned and validated against selected architecture and model/runtime before material commitment
+
+fatherMapping:
+  measurable_NFR:
+    roles: [requirements_engineer, product_manager, qa_verification, security_engineer, operations_platform]
+    produces: [NFR_SPECIFICATION, NFR_VERIFICATION_MATRIX]
+    requiredFields: [metric, target_or_baseline_state, priority, verification_method, owner, source_refs]
+  discovery_questionnaire:
+    roles: [business_analyst, presales_architect_consultant, security_engineer, data_owner, operations_platform]
+    produces: [DISCOVERY_QUESTION_REGISTER, ARCHITECTURE_INPUT_GAP_REGISTER]
+  estimation:
+    roles: [project_manager, presales_architect_consultant, engineering_leads, finance_procurement]
+    methods: [ANALOGOUS, PARAMETRIC, PERT, BOTTOM_UP]
+    produces: [DELIVERY_WBS_V0, ESTIMATION_REGISTER_V0, ESTIMATION_ASSUMPTION_LOG]
+  project_risk:
+    roles: [project_manager, domain_owners, skeptical_reviewer]
+    produces: [PROJECT_RISK_REGISTER]
+  change_control:
+    roles: [project_manager, product_manager, finance_procurement, presales_architect_consultant]
+    produces: [CHANGE_MANAGEMENT_MODEL, CHANGE_REQUEST]
+  economics:
+    roles: [finance_procurement, project_manager, presales_architect_consultant, operations_platform]
+    produces: [TCO_MODEL_V0, UNIT_ECONOMICS_V0, COST_BUDGET_CONSTRAINTS]
+  AI_validation_readiness:
+    roles: [product_manager, data_owner, qa_verification, AI_ML_lead_candidate]
+    produces: [GOLDEN_DATASET_PLAN, POC_GATE_CRITERIA]
+
+newGate:
+  id: DELIVERY_FEASIBILITY_READY
+  purpose: prove that requirements are measurable enough to estimate, key uncertainty is visible, and delivery/commercial risk is not hidden before architecture option work
+  accepts: [PASS, CONDITIONAL_PASS_WITH_NONBLOCKING_CONDITIONS]
+  requiredFamilies:
+    - measurable_NFR
+    - WBS_or_work_decomposition_v0
+    - estimation_method_and_range
+    - project_risk_register
+    - budget_or_cost_envelope
+    - change_management_model
+    - acceptance_and_verification_intent
+  doesNotRequire:
+    - final_architecture_specific_cost
+    - exact_model_or_platform_sizing
+    - final_procurement_quote
+  downstream: [ARCHITECTURE_OPTIONS_ALLOWED]
+
+coverageAssessment:
+  alreadyCoveredBeforeLesson02:
+    - requirements_baseline
+    - acceptance_criteria_inputs
+    - project_constraints
+    - security_risk_register
+    - cost_budget_constraints
+    - commercial_contract_constraints
+    - architecture_entry_gate
+  strengthenedByLesson02:
+    - measurable_NFR_as_first_class_artifact
+    - NFR_verification_method_per_requirement
+    - estimation_method_and_raw_assumptions
+    - WBS_v0_and_role_based_effort
+    - project_risk_separate_from_security_risk
+    - change_request_and_change_impact
+    - TCO_and_unit_economics_v0
+    - discovery_questionnaire_for_architecture_killers
+    - explicit_delivery_feasibility_gate
+    - AI_quality_and_golden_dataset_readiness
+
+interpretation:
+  - lesson02_does_not_authorize_premature_target_architecture
+  - presales_architect_may_help_estimate_and_identify_architecture_killers_before_architecture_gate
+  - exact_estimate_before_architecture_is_not_required; use range_and_uncertainty
+  - final_estimate_must_be_refined_after_architecture_option_selection
+  - example_numeric_targets_and_coefficients_from_training_materials_are_not_project_defaults
+
+implementationRefs:
+  - father/factory/pre-architecture/DELIVERY_FEASIBILITY_MODEL.yaml
+  - father/factory/pre-architecture/PRE_ARCHITECTURE_PACKAGE.yaml
+  - father/factory/site/delivery-feasibility.html
