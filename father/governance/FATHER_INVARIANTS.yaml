@@ -1,0 +1,133 @@
+schema_version: 1
+constitution_id: FATHER-CONSTITUTION-0001
+status: CONSTITUTIONAL
+mutability: OWNER_EXPLICIT_CHANGE_ONLY
+scope: ALL_FATHER_DERIVED_SYSTEMS
+
+conflict_policy:
+  local_rules_may_be_stricter: true
+  local_rules_may_weaken_constitution: false
+  on_conflict: FATHER_CONSTITUTION_PREVAILS
+  silent_override_allowed: false
+
+invariants:
+  - id: FTH-001
+    name: PRODUCT_BEFORE_ENGINEERING_DESIGN
+    mandatory: true
+  - id: FTH-002
+    name: SECURITY_IMMEDIATELY_AFTER_PRODUCT
+    mandatory: true
+    order:
+      after: PRODUCT_READY
+      before: SYSTEM_ENGINEERING
+  - id: FTH-003
+    name: SECURITY_IS_CONTINUOUS
+    mandatory: true
+  - id: FTH-004
+    name: SYSTEM_MODEL_BEFORE_ARCHITECTURE_SELECTION
+    mandatory: true
+  - id: FTH-005
+    name: THREAT_MODEL_BEFORE_ARCHITECTURE_DECISION
+    mandatory: true
+  - id: FTH-006
+    name: ARCHITECTURE_CANNOT_SELF_APPROVE
+    mandatory: true
+  - id: FTH-007
+    name: OWNER_AUTHORITY_PRESERVED
+    mandatory: true
+  - id: FTH-008
+    name: EVIDENCE_HYPOTHESIS_UNKNOWN_SEPARATION
+    mandatory: true
+  - id: FTH-009
+    name: TRACEABILITY_REQUIRED
+    mandatory: true
+  - id: FTH-010
+    name: MATURITY_EARNED_BY_EVIDENCE
+    mandatory: true
+  - id: FTH-011
+    name: PRODUCER_VERIFIER_SEPARATION
+    mandatory: true
+  - id: FTH-012
+    name: NO_SILENT_CONSTITUTIONAL_OVERRIDE
+    mandatory: true
+
+gates:
+  PRODUCT_READY:
+    required_before:
+      - SECURITY_INTAKE_READY
+    minimum_evidence:
+      - product_outcome
+      - users_or_actors
+      - scope
+      - constraints
+      - success_criteria
+      - assumptions_and_unknowns
+
+  SECURITY_INTAKE_READY:
+    requires:
+      - PRODUCT_READY
+    blocks_until_ready:
+      - SYSTEM_MODEL_READY
+      - ARCHITECTURE_OPTIONS_ALLOWED
+    minimum_evidence:
+      - data_and_asset_sensitivity
+      - abuse_cases
+      - trust_assumptions
+      - external_dependencies
+      - mandatory_security_constraints
+      - regulatory_applicability_status
+      - security_unknowns
+
+  SYSTEM_MODEL_READY:
+    requires:
+      - PRODUCT_READY
+      - SECURITY_INTAKE_READY
+    minimum_evidence:
+      - system_context
+      - actors
+      - interfaces
+      - data_flows
+      - external_dependencies
+      - operational_modes
+      - nonfunctional_constraints
+      - trust_boundaries
+      - unresolved_unknowns
+
+  THREAT_MODEL_V0_READY:
+    requires:
+      - PRODUCT_READY
+      - SECURITY_INTAKE_READY
+      - SYSTEM_MODEL_READY
+    minimum_evidence:
+      - assets
+      - threat_or_abuse_scenarios
+      - trust_boundaries
+      - plausible_entry_points
+      - impacts
+      - existing_or_required_controls
+      - evidence_gaps
+      - unresolved_unknowns
+
+  ARCHITECTURE_OPTIONS_ALLOWED:
+    requires:
+      - PRODUCT_READY
+      - SECURITY_INTAKE_READY
+      - SYSTEM_MODEL_READY
+      - THREAT_MODEL_V0_READY
+
+  ARCHITECTURE_DECISION_ALLOWED:
+    requires:
+      - ARCHITECTURE_OPTIONS_ALLOWED
+      - SECURITY_REVIEW_COMPLETE
+      - INDEPENDENT_REVIEW_COMPLETE
+    forbidden:
+      - SELF_APPROVAL_ONLY
+      - OWNER_RISK_ACCEPTANCE_IMPLIED
+
+amendment_policy:
+  agent_self_amendment_allowed: false
+  local_project_amendment_allowed: false
+  explicit_owner_decision_required: true
+  visible_change_record_required: true
+  independent_review_required: true
+  version_increment_required: true
