@@ -2,6 +2,18 @@
 
 Architecture decisions are treated as constrained engineering choices, not style preferences.
 
+> **Repository note:** this top-level `architecture/` tree is a legacy/candidate knowledge surface. Canonical professional software-architecture practice lives under `professional-knowledge/software-engineering/` and is governed by the professional evidence/review contracts.
+
+## Start here: project intake before design
+
+Before selecting topology or technology, establish whether the project context is sufficiently known.
+
+Canonical practice candidate:
+
+- [Architect Project Intake Playbook](../professional-knowledge/software-engineering/practice/ARCHITECT_PROJECT_INTAKE_PLAYBOOK.md) — expected project inputs, owners, acquisition routes, quality checks, missing-input recovery and the architect-owned working registers.
+
+The key rule is simple: an architect may reconstruct a missing artifact, but an architect-generated draft does not become business/product/security/legal truth until the authoritative owner confirms it.
+
 ## Core questions
 
 - What problem boundary is being designed?
