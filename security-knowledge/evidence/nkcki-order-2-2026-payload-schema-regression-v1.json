@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "suite_id": "NKTSKI-ORDER-2-2026-PAYLOAD-SCHEMA-REGRESSION-V1",
+  "cases": [
+    {"id":"NK2-REG-001","query":"expanded_field_count","report_type":"ATTACK","expected":38},
+    {"id":"NK2-REG-002","query":"expanded_field_count","report_type":"INCIDENT","expected":53},
+    {"id":"NK2-REG-003","query":"reference_value_allowed","field":"attack_type","value":"DDoS-атака","expected":true},
+    {"id":"NK2-REG-004","query":"reference_value_allowed","field":"attack_type","value":"Другая атака","expected":false},
+    {"id":"NK2-REG-005","query":"reference_value_allowed","field":"incident_type","value":"Событие не связано с компьютерной атакой","expected":true},
+    {"id":"NK2-REG-006","query":"pdn_conditional_fields","pdn_leak":true,"provided":["pdn_operator_address","pdn_notification_email","pdn_presumed_causes","pdn_characteristics","pdn_presumed_harm"],"expected":"PASS"},
+    {"id":"NK2-REG-007","query":"pdn_conditional_fields","pdn_leak":true,"provided":["pdn_operator_address"],"expected":"BLOCK_MISSING_CONDITIONAL_FIELDS"},
+    {"id":"NK2-REG-008","query":"pdn_conditional_fields","pdn_leak":false,"provided":[],"expected":"PASS"},
+    {"id":"NK2-REG-009","query":"indicator_overflow","count":30,"attachment":null,"expected":"INLINE_ALLOWED"},
+    {"id":"NK2-REG-010","query":"indicator_overflow","count":31,"attachment":"indicators.txt","one_per_line":true,"separators":false,"expected":"ATTACHMENT_ALLOWED"},
+    {"id":"NK2-REG-011","query":"indicator_overflow","count":31,"attachment":null,"expected":"BLOCK_MISSING_INDICATORS_TXT"},
+    {"id":"NK2-REG-012","query":"threshold_authority","threshold_status":"EXAMPLE_NON_NORMATIVE","expected":"DO_NOT_TREAT_AS_BINDING"},
+    {"id":"NK2-REG-013","query":"deadline_effect","payload_schema_does_not_modify_deadlines":true,"expected":"KEEP_FSB547_DEADLINE"},
+    {"id":"NK2-REG-014","query":"reserve_channel_schema","reserve_channel_retains_schema":true,"expected":"USE_SAME_SCHEMA"},
+    {"id":"NK2-REG-015","query":"delivery_identifier","identifier_assigned":true,"field_validation_passed":false,"expected":"DELIVERY_NOT_COMPLETENESS"},
+    {"id":"NK2-REG-016","query":"effective_date","explicit_effective_date":"NOT_STATED","expected":"DO_NOT_INVENT_EFFECTIVE_DATE"},
+    {"id":"NK2-REG-017","query":"applicant_requiredness","expected":"MANDATORY"},
+    {"id":"NK2-REG-018","query":"automated_transport_key","protocol_acquired":false,"expected":"PENDING_DO_NOT_INFER_FROM_LABEL"},
+    {"id":"NK2-REG-019","query":"partial_method_evidence","available":4,"missing":2,"expected":"SEND_AVAILABLE_MATERIALS"},
+    {"id":"NK2-REG-020","query":"public_connection_page_authority","connection_steps_published":true,"protocol_artifact_located":false,"expected":"BLOCK_AS_TRANSPORT_SCHEMA"},
+    {"id":"NK2-REG-021","query":"vendor_serialization_claim","vendor_says_xml":true,"authoritative_protocol_bound":false,"expected":"BLOCK_UNAUTHORITATIVE_VENDOR_MAPPING"},
+    {"id":"NK2-REG-022","query":"authenticated_instruction_status","request_route_known":true,"artifact_acquired":false,"expected":"PENDING_AUTHORIZED_ACQUISITION"},
+    {"id":"NK2-REG-023","query":"printed_schema_without_protocol","order2_hash_bound":true,"protocol_acquired":false,"expected":"ALLOW_PRINTED_TABLE_VALIDATION_ONLY"}
+  ]
+}

@@ -1,11 +1,11 @@
 schema_version: 1
 contract_id: NKTSKI-INCIDENT-EVIDENCE-NODES-V1
-observed_at: 2026-08-16
-status: PRIMARY_WEB_VERIFIED_BEHAVIOR_PLUS_INTERNAL_EXECUTABLE_MODEL
+observed_at: 2026-08-19
+status: PRIMARY_IMMUTABLE_SCHEMA_BOUND_PLUS_INTERNAL_EXECUTABLE_MODEL
 purpose: >
   Separate internal incident evidence, regulator submission evidence, delivery evidence,
-  package-completeness assertions and later supplementation. Do not infer exact NKTsKI
-  order No. 2 fields until the downloadable artifact is preserved and hash-bound.
+  package-completeness assertions and later supplementation. Exact printed Order No. 2
+  fields are hash-bound; automated protocol keys remain a separate validation layer.
 
 source_basis:
   - id: NKTSKI-NEWS-2026-07-14
@@ -24,6 +24,16 @@ source_basis:
     url: https://www.cert.gov.ru/materialy/organizatsiya-vzaimodeystviya/reglament-vzaimodeystviya-nktski-
     verified_fact: Official index exposes download entries for order No. 2 and the 2026-07-08 Initial Data document.
     limitation: Download-entry discovery is not immutable artifact acquisition.
+  - id: NKTSKI-ORDER-2-2026-IMMUTABLE
+    type: IMMUTABLE_PRIMARY
+    artifact: security-knowledge/evidence/primary-artifacts/2026/nkcki-order-2-2026-07-14.pdf
+    sha256: 704473892479161e244a6c6a71bfdae479ae4b9be5bcd49ccacf563ab009d686
+    field_schema: security-knowledge/evidence/nkcki-order-2-2026-payload-schema-v1.yaml
+  - id: NKTSKI-INITIAL-DATA-2026-IMMUTABLE
+    type: IMMUTABLE_PRIMARY
+    artifact: security-knowledge/evidence/primary-artifacts/2026/nkcki-attack-type-initial-data-2026-07-08.pdf
+    sha256: 69ee2551baf1b1e1a9468fefeb9897460e1e4fd472531937486d0e8a488a68d0
+    taxonomy: security-knowledge/threat-modeling/nkcki-attack-type-initial-data-2026-taxonomy-v1.yaml
 
 node_types:
   - id: EVD-INC-DETECTION
@@ -65,13 +75,15 @@ node_types:
   - id: EVD-NKTSKI-PACKAGE-STATE
     meaning: State of materials available at submission time.
     allowed_states:
+      - TABLE_SCHEMA_VALIDATED
       - MAXIMUM_AVAILABLE_SENT
       - PARTIAL_AVAILABLE_SENT
       - NO_AVAILABLE_MATERIALS_REQUIRES_REVIEW
-      - FIELD_SCHEMA_UNKNOWN
+      - AUTOMATED_PROTOCOL_SCHEMA_UNKNOWN
     rules:
       - Missing some expected materials does not block sending remaining available materials.
-      - FIELD_SCHEMA_UNKNOWN blocks any claim of exact field-level completeness.
+      - TABLE_SCHEMA_VALIDATED requires Order No. 2 hash identity and field validation.
+      - AUTOMATED_PROTOCOL_SCHEMA_UNKNOWN blocks claims about unacquired machine transport keys.
 
   - id: EVD-NKTSKI-SUPPLEMENT
     meaning: Evidence of a later supplementary transmission tied to an earlier package.
@@ -124,8 +136,6 @@ fail_closed_rules:
     prohibit: REWRITE_ORIGINAL_SUBMISSION_TIMESTAMP
 
 pending:
-  - exact downloadable bytes for NKTsKI order No. 2 dated 2026-07-14
-  - exact downloadable bytes for 2026-07-08 Initial Data
-  - retrieved_at, MIME, byte_length and SHA-256 for both artifacts
-  - exact field names, conditional fields and technical parameters from immutable artifacts
-  - channel-specific delivery evidence contracts once authoritative channel behavior is pinned
+  - separate automated-interaction rules/protocol serialization referenced by Order No. 2 clause 3
+  - channel-specific delivery evidence contracts beyond the Order No. 548 identifier rule
+  - authoritative evidence for the precise historical applicability start of the July 2026 format

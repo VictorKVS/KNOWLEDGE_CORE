@@ -1,0 +1,101 @@
+schema_version: "1.0"
+id: NKTSKI-AUTOMATED-INTERACTION-PROTOCOL-PUBLICATION-STATUS-2026-08-19
+checked_at: "2026-08-19"
+status: AUTHORITATIVE_PUBLIC_DISCOVERY_COMPLETE_PROTOCOL_NOT_LOCATED_PUBLICLY
+purpose: >-
+  Record the public-source boundary for the separate rules and protocols of automated
+  interaction referenced by NKTsKI Order No. 2 clause 3. This record proves neither
+  non-existence nor restricted status of the protocol; it records only what is and is
+  not available through the checked official public surfaces.
+
+authority_anchor:
+  source: NKTSKI_ORDER_2_2026
+  clause: "3"
+  page: 3
+  artifact: security-knowledge/evidence/primary-artifacts/2026/nkcki-order-2-2026-07-14.pdf
+  sha256: 704473892479161e244a6c6a71bfdae479ae4b9be5bcd49ccacf563ab009d686
+  verified_fact: >-
+    The order states that the description of automated-interaction rules and protocols
+    for NKTsKI technical infrastructure is placed on the official NKTsKI website.
+
+official_public_surfaces_checked:
+  - id: NKTSKI-CONNECTION-PAGE
+    url: https://www.cert.gov.ru/kak-podklyuchitsya-k-nktski/
+    authority: NKTSKI
+    observed_content:
+      - "Personal accounts of GosSOPKA subjects are part of NKTsKI technical infrastructure."
+      - "Connection follows conclusion of an interaction regulation."
+      - "Protected-channel connection options and technical onboarding steps are published."
+      - "Instructions for the personal account and access credentials are requested from NKTsKI after access is available."
+    protocol_artifact_link_observed: false
+  - id: GOSSOPKA-CONNECTION-PAGE
+    url: https://gossopka.ru/how/podklyuchenie-k-infrastrukture-nktski/
+    authority: OFFICIAL_GOSSOPKA_PORTAL
+    observed_content:
+      - "Public onboarding instructions cover protected channels and access to the personal account."
+      - "The page identifies technical prerequisites and contact routes."
+    protocol_artifact_link_observed: false
+  - id: GOSSOPKA-METHOD-INDEX
+    url: https://gossopka.ru/doc/method/
+    authority: OFFICIAL_GOSSOPKA_PORTAL
+    observed_content:
+      - "The public index lists the Initial Data methodology, interaction regulations, email-notification guidance and other methodological files."
+    protocol_artifact_link_observed: false
+  - id: NKTSKI-INTERACTION-MATERIALS-INDEX
+    url: https://www.cert.gov.ru/materialy/organizatsiya-vzaimodeystviya/reglament-vzaimodeystviya-nktski-
+    authority: NKTSKI
+    observed_content:
+      - "The index publishes Order No. 2 and the Initial Data document used by the current reporting model."
+    protocol_artifact_link_observed: false
+
+discovery_queries:
+  scope: OFFICIAL_DOMAINS_ONLY
+  domains: [cert.gov.ru, www.cert.gov.ru, gossopka.ru]
+  exact_phrase_queries:
+    - "описание правил и протоколов автоматизированного взаимодействия"
+    - "протоколов автоматизированного взаимодействия НКЦКИ"
+    - "правила и протоколы НКЦКИ"
+  result: NO_DISTINCT_PUBLIC_PROTOCOL_ARTIFACT_LOCATED
+
+interpretation:
+  proven:
+    - "A separate protocol description is contemplated by Order No. 2 clause 3."
+    - "Official public pages describe connection and personal-account onboarding."
+    - "The checked public pages do not expose a distinct protocol/schema artifact link."
+  not_proven:
+    - "The protocol does not exist."
+    - "The protocol is legally classified or access-restricted."
+    - "The personal-account instruction is identical to the automated protocol description."
+    - "Any vendor-implemented XML field names are the current authoritative NKTsKI transport keys."
+  bounded_inference: >-
+    Because the official connection page says that personal-account instructions and credentials
+    are obtained by request after access is established, the next acquisition step may require an
+    authorized organization account or direct NKTsKI request. This is an inference, not proof that
+    the protocol is available only through that route.
+
+machine_behavior:
+  printed_table_validation: ALLOWED_WITH_ORDER_2_HASH_BINDING
+  automated_transport_serialization: PENDING_AUTHORITATIVE_PROTOCOL_ARTIFACT
+  vendor_claim_as_authority: BLOCK
+  public_vpn_onboarding_as_payload_schema: BLOCK
+  guessed_json_xml_keys: BLOCK
+
+next_acquisition_action:
+  authority_required: ORGANIZATION_AUTHORIZED_INTERACTION_WITH_NKTSKI
+  routes:
+    - "Request the current personal-account/automated-interaction documentation through the official NKTsKI contact route."
+    - "Inspect the authenticated personal account after lawful organizational access is available."
+  evidence_to_preserve:
+    - document identity and version
+    - delivery/source metadata
+    - exact bytes and SHA-256 when preservation is permitted
+    - field keys, types, conditionality, schema version and protocol lifecycle
+  automation_limit: >-
+    The public repository automation has no authority to impersonate a GosSOPKA subject,
+    request credentials, or access an authenticated organizational account.
+
+red_team:
+  verdict: PASS_FAIL_CLOSED_PUBLIC_DISCOVERY_BOUNDARY
+  severity: MEDIUM_EXTERNAL_ACCESS_DEPENDENCY
+  critical_gap_created: false
+  high_gap_created: false

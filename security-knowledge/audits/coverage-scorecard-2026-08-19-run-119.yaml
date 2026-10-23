@@ -1,0 +1,89 @@
+run_id: SECURITY-KB-RUN-119
+run_date: "2026-08-19"
+strict_readiness:
+  overall_percent: 10
+  domains:
+    russian_npa: 10
+    gost_iso: 10
+    classification_categorization: 10
+    fstec_bdu: 10
+    risk_methods: 10
+    legal_consequences_koap_uk_gk_tk: 10
+    szi_skzi_licenses_lifecycle: 10
+    roles_deadlines_responsibility: 10
+    evidence_audit: 10
+    practical_cases: 10
+
+inventory:
+  verified: 293
+  pending: 31
+  count_change: 0
+  count_guard: >-
+    This run atomizes two already-registered and already-acquired sources. The master
+    inventory is family-level, so no row is promoted or added solely for field extraction.
+
+red_team:
+  critical_gaps: 0
+  high_gaps: 0
+  status: FAIL_SCOPE_INCOMPLETE
+  high_gap_ids: []
+  nktski_printed_schema_gate: PASS
+  nktski_method_taxonomy_gate: PASS
+  reason_global_not_pass: >-
+    The NKTsKI field/schema bottleneck is closed at the printed-table level, but 31
+    inventory items remain pending and the fixed master scope is not complete.
+
+added_this_run:
+  - "Extracted and page-bound 38 computer-attack fields and 53 computer-incident fields from NKTsKI Order No. 2."
+  - "Recorded mandatory, optional, conditional and progressive-disclosure requiredness; closed reference values; five conditional PII-leak fields; and the >30 indicator attachment rule."
+  - "Extracted all seven recommendatory attack-type sections, their ANY/ALL classification logic, exclusions and point-5 evidence lists."
+  - "Kept the explicit numeric examples non-normative and preserved the partial-evidence-does-not-block-submission rule."
+  - "Bound the payload model to FSB Order No. 547 deadlines and FSB Order No. 548 channels without importing or changing legal clocks."
+  - "Added a 19-case executable regression suite and immutable source-hash checks."
+
+source_quality:
+  source_artifacts: 2
+  immutable_primary: 2
+  pages_reviewed: 32
+  table_fields_atomized: 91
+  methodology_types_atomized: 7
+  machine_transport_keys_invented: 0
+  unstated_effective_dates_invented: 0
+
+readiness_change: 0
+reason_no_increase: >-
+  Strict readiness remains tied to completion of the full fixed master inventory, not
+  the depth of one source family. Atomization materially improves usability and auditability
+  but does not close any of the 31 family-level pending items.
+
+verification:
+  local_yaml_json_parse: PASS
+  immutable_pdf_hash_check: PASS_2_OF_2
+  visual_pdf_check: PASS
+  local_payload_schema_validator: PASS_38_ATTACK_53_INCIDENT_7_TYPES_19_CASES
+  github_actions:
+    nktski_order2_payload_schema:
+      run_id: 32215141228
+      conclusion: success
+    nktski_incident_evidence_nodes:
+      run_id: 32215141232
+      conclusion: success
+    nktski_reporting_format_authority:
+      run_id: 32215141203
+      conclusion: success
+    knowledge_quality:
+      run_id: 32215141197
+      conclusion: success
+    knowledge_graph_index:
+      run_id: 32215141234
+      conclusion: success
+    knowledge_core_ci:
+      run_id: 32215141204
+      conclusion: success
+
+next_bottleneck:
+  primary: >-
+    Acquire the separate NKTsKI automated-interaction rules/protocol description referenced
+    in Order No. 2 clause 3, then map printed labels to authoritative transport keys without inference.
+  secondary: >-
+    Resume the highest-impact items among the 31 family-level PENDING inventory entries.

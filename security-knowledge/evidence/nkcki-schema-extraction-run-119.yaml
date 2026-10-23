@@ -1,0 +1,57 @@
+run_id: SECURITY-KB-RUN-119
+checked_at: "2026-08-19"
+status: VERIFIED
+scope:
+  - NKTsKI Order No. 2 attack and incident reporting tables
+  - NKTsKI 2026 attack-type methodological taxonomy and point-5 evidence lists
+  - workflow binding to FSB Orders No. 547 and No. 548
+
+inputs:
+  - artifact: security-knowledge/evidence/primary-artifacts/2026/nkcki-order-2-2026-07-14.pdf
+    sha256: 704473892479161e244a6c6a71bfdae479ae4b9be5bcd49ccacf563ab009d686
+    pages: 20
+    evidence_level: IMMUTABLE_PRIMARY
+  - artifact: security-knowledge/evidence/primary-artifacts/2026/nkcki-attack-type-initial-data-2026-07-08.pdf
+    sha256: 69ee2551baf1b1e1a9468fefeb9897460e1e4fd472531937486d0e8a488a68d0
+    pages: 12
+    evidence_level: IMMUTABLE_PRIMARY
+
+method:
+  text_extraction: DISCOVERY_ONLY
+  visual_verification:
+    status: PASS
+    order_pages_checked: [4, 5, 12, 14, 15]
+    methodology_contact_sheet_checked: ALL_12_PAGES
+  governing_rule: "Printed PDF tables and page references control over extracted text."
+
+results:
+  attack_fields: 38
+  incident_fields: 53
+  shared_fields: 35
+  attack_specific_fields: 3
+  incident_specific_fields: 18
+  attack_type_reference_values: 7
+  incident_type_reference_values: 10
+  methodological_attack_types: 7
+  regression_cases: 19
+  local_validator: PASS
+
+legal_and_semantic_guards:
+  - "The method document is recommendatory and is used with the organization's approved information-security policy."
+  - "All numeric thresholds in the method are examples from general practice, not universal binding thresholds."
+  - "Missing some point-5 materials does not justify withholding the other available materials."
+  - "Order No. 2 changes neither the 3-hour nor 24-hour clocks in FSB Order No. 547."
+  - "The Order No. 548 delivery identifier is not proof of payload completeness."
+  - "No effective date is invented: Order No. 2 does not state one separately."
+  - "No JSON/XML or other machine transport key is inferred from a printed table label."
+
+outputs:
+  - security-knowledge/evidence/nkcki-order-2-2026-payload-schema-v1.yaml
+  - security-knowledge/threat-modeling/nkcki-attack-type-initial-data-2026-taxonomy-v1.yaml
+  - security-knowledge/evidence/nkcki-order-2-2026-payload-schema-regression-v1.json
+  - security-knowledge/validators/validate_nkcki_order2_payload_schema.py
+
+pending:
+  - "Separate automated-interaction rules/protocol description referenced in Order No. 2 clause 3."
+  - "Authoritative historical applicability-start evidence for the July 2026 format."
+  - "Operational channel export/receipt fixtures beyond the legal routing model."

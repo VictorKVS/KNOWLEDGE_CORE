@@ -1,8 +1,9 @@
 slice_id: NKTSKI-REPORTING-FORMAT-AUTHORITY-CHAIN-2025-2026-V1
-observed_at: 2026-08-16T10:10:00+03:00
+observed_at: 2026-08-19T07:02:53+03:00
 scope: >
   Authority and binding chain for NKTsKI-defined GosSOPKA reporting formats and technical parameters.
-  This slice does not claim exact field names or file schemas because exact 2026 artifact bytes are not preserved.
+  Exact printed field labels, requiredness and reference values are hash-bound in the companion
+  payload-schema record. Automated protocol serialization remains separately pending.
 
 sources:
   - id: FSB-540-2025
@@ -27,18 +28,22 @@ sources:
     type: REGULATOR_ACT
     title: Приказ НКЦКИ от 14.07.2026 № 2
     observed_on_official_index: true
-    evidence_level: PRIMARY_WEB_INDEX_VERIFIED
+    evidence_level: IMMUTABLE_PRIMARY
     described_effect:
       - defines GosSOPKA formats for information about computer attacks and computer incidents
       - defines composition of technical parameters
-    exact_artifact_acquired: false
+    exact_artifact_acquired: true
+    repository_artifact: security-knowledge/evidence/primary-artifacts/2026/nkcki-order-2-2026-07-14.pdf
+    sha256: 704473892479161e244a6c6a71bfdae479ae4b9be5bcd49ccacf563ab009d686
   - id: NKTSKI-INITIAL-DATA-2026-07-08
     type: METHODOLOGY
     title: Исходные данные для определения типа компьютерной атаки
     approval_date: 2026-07-08
-    evidence_level: PRIMARY_WEB_INDEX_VERIFIED
+    evidence_level: IMMUTABLE_PRIMARY
     legal_character: METHODOLOGICAL_RECOMMENDATION
-    exact_artifact_acquired: false
+    exact_artifact_acquired: true
+    repository_artifact: security-knowledge/evidence/primary-artifacts/2026/nkcki-attack-type-initial-data-2026-07-08.pdf
+    sha256: 69ee2551baf1b1e1a9468fefeb9897460e1e4fd472531937486d0e8a488a68d0
 
 authority_chain:
   - from: FSB-540-2025
@@ -61,9 +66,9 @@ machine_rules:
   - id: AUTH-NKTSKI-002
     rule: FSB-540 authority is temporally applicable only from 2026-01-30; historical routing before that date requires predecessor-law review.
   - id: AUTH-NKTSKI-003
-    rule: Official index confirmation of NKTsKI Order No.2 supports title/purpose/authority-chain claims but not exact field schema.
+    rule: Exact printed table fields may be used only when bound to the preserved Order No.2 SHA-256 and page references.
   - id: AUTH-NKTSKI-004
-    rule: Exact field names, conditionality, encodings and technical parameter values require exact artifact bytes or equivalent clause-level primary evidence.
+    rule: Printed table fields are extracted; machine transport keys and serialization still require the separate automated-interaction protocol referenced by Order No.2 clause 3.
   - id: AUTH-NKTSKI-005
     rule: The 2026-07-08 Initial Data document remains methodology; example thresholds are not universal mandatory thresholds without an independent binding rule.
   - id: AUTH-NKTSKI-006
@@ -72,14 +77,15 @@ machine_rules:
     rule: Authority to define technical parameters does not itself prove that any guessed parameter is part of the current format.
 
 red_team_guardrails:
-  - authority_exists_does_not_mean_exact_schema_known
+  - authority_exists_does_not_mean_machine_serialization_known
   - current_rule_must_be_version_and_time_bounded
   - regulator_methodology_does_not_equal_binding_npa
-  - index_metadata_does_not_equal_immutable_artifact
+  - printed_label_does_not_equal_automated_transport_key
   - do_not_backcast_2026_authority_chain_to_historical_events_without_predecessor_review
 
 provenance_notes:
   - Official publication portal identifies FSB Order No.540 as publication 0001202512250025, published 2025-12-25, registered No.84777, 5 pages, effective 2026-01-30 according to authoritative GosSOPKA publication.
   - Official GosSOPKA text of FSB Order No.540 reproduces amended NKTsKI function 4.10 concerning technical parameters.
   - Official GosSOPKA/NKTsKI pages identify NKTsKI Order No.2 dated 2026-07-14 and the 2026-07-08 Initial Data methodology.
-  - IMMUTABLE_PRIMARY is not claimed for NKTsKI 2026 artifacts in this slice.
+  - Both 2026 PDFs are preserved as immutable official-origin artifacts and independently hash-checked by repository validators.
+  - The order does not state a separate effective date; none is inferred.
