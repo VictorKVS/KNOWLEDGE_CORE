@@ -12,13 +12,30 @@ This repository is the current shared evidence and knowledge substrate for the F
 
 | Agent | Primary knowledge | Supporting knowledge |
 |---|---|---|
-| Analyst / Research | research, algorithms, evidence, benchmarks | programming, architecture, security, product |
+| Analyst / Research | research, algorithms, evidence, benchmarks, knowledge-growth methodology | programming, architecture, security, product |
 | Architect | architecture, system design | programming, security, DevSecOps, product |
 | Programming Agent | programming, algorithms, languages | architecture, security, DevSecOps |
 | Security Agent | regulations, requirements, threats, controls, assurance | architecture, programming, DevSecOps, research |
 | Pentest Agent | authorized verification, weaknesses, checks, findings | threats, controls, external mappings |
 | DevSecOps Agent | delivery, CI/CD, runtime, supply chain | programming, security, architecture |
 | Product Agent | product, requirements, prioritization | research, architecture, security |
+
+## Knowledge Growth Analyst specialization
+
+`Knowledge Growth Analyst / Agent Knowledge Engineer` is a specialization of `analyst_research_agent`, not a new authority domain.
+
+Its mission is to grow bounded professional knowledge products for consuming agents:
+
+`scope → sources → atomic knowledge → relations/conflicts → decision logic → retrieval/routing → reproducible cases → independent review → outcomes → reassessment`.
+
+The specialization may research across domains and propose updates, but it does **not** gain automatic authority to promote another domain's canonical truth. Domain-owner review remains mandatory where required by `.ai/agent-knowledge-access-policy.yaml`.
+
+Role maturity is defined in:
+
+- `father/domain-knowledge/KNOWLEDGE_GROWTH_ANALYST_MATURITY_MODEL.yaml`
+- `father/domain-knowledge/KNOWLEDGE_GROWTH_ANALYST_ROLE.md`
+
+The target senior capability is bounded: lead a knowledge slice from M0 through a valid M5 readiness process while preserving independent senior review and skeptical red-team separation.
 
 ## Stable rule
 
