@@ -1,0 +1,293 @@
+schema_version: "1.0"
+id: NKTSKI-ATTACK-TYPE-INITIAL-DATA-2026-TAXONOMY-V1
+checked_at: "2026-08-19"
+status: PRIMARY_IMMUTABLE_RECOMMENDATORY_TAXONOMY_EXTRACTED
+purpose: >-
+  Decision and evidence taxonomy transcribed from the NKTsKI methodological
+  recommendations "Initial data for determining the type of computer attack",
+  approved 2026-07-08. It supports classification and evidence collection but
+  is not encoded as an independent legal duty or deadline.
+
+source:
+  source_id: NKTSKI-ATTACK-TYPE-INITIAL-DATA-2026
+  repository_artifact: security-knowledge/evidence/primary-artifacts/2026/nkcki-attack-type-initial-data-2026-07-08.pdf
+  sha256: "69ee2551baf1b1e1a9468fefeb9897460e1e4fd472531937486d0e8a488a68d0"
+  pages: 12
+  approval_date: "2026-07-08"
+  official_download_urls:
+    - https://www.cert.gov.ru/upload/iblock/333/q3w0bnth1cxtnhskh5xi9s0zmimqymoq/Iskhodnye-dannye-dlya-opredeleniya-tipa-kompyuternoy-ataki.pdf
+    - https://gossopka.ru/upload/iblock/6e8/14xffkb0nlecz44gpaz5ywq66fj5gk2x/2026_iskhodnye-dannye.pdf
+
+legal_character:
+  document_type: METHODOLOGICAL_RECOMMENDATIONS
+  obligation_strength: RECOMMENDATORY_METHOD
+  intended_users: >-
+    Bodies and organizations that, by law or agreement, send computer-attack
+    information to NKTsKI.
+  use_with: ORGANIZATION_APPROVED_INFORMATION_SECURITY_POLICY
+  threshold_semantics: EXAMPLES_FROM_GENERAL_PRACTICE_NOT_UNIVERSAL_NORMATIVE_THRESHOLDS
+  evidence_rule: >-
+    Send the maximum amount of available materials listed in point 5 of the relevant
+    section. Absence of one or more listed materials is not a basis for withholding
+    the other available materials.
+
+taxonomy:
+  - id: DDOS_ATTACK
+    exact_name_ru: "DDoS-атака"
+    pages: [1, 2, 3]
+    definition: >-
+      Distributed attack intended to overload a target system's server, network or
+      application resources and disrupt availability for legitimate users.
+    key_indicators:
+      - anomalously high inbound traffic, especially from many IP addresses
+      - mass HTTP/HTTPS requests, UDP flood, SYN flood, ICMP flood or other flood traffic
+      - high CPU, memory or network-interface load
+      - geographically distributed sources across countries, autonomous systems or subnets
+      - an uncharacteristic number of requests, including legitimate-looking requests
+    classification_logic:
+      operator: ALL
+      criteria:
+        - anomalously high traffic
+        - attack originates from many sources such as a botnet, proxies or VPNs
+      examples:
+        - {value: "traffic at least 10 times normal", status: EXAMPLE_NON_NORMATIVE}
+    exclusions:
+      - single-source non-distributed DoS
+      - port scanning without resource overload
+      - high load caused by legitimate traffic
+    evidence_point_5:
+      - group: network_traffic_logs
+        items: ["NetFlow/sFlow for the attack period", "PCAP traffic dumps with anomalous packet examples"]
+      - group: protection_logs
+        items: ["NGFW and IDS/IPS logs", "anti-DDoS system data when used"]
+      - group: attack_technical_details
+        items: ["attack vector", "main and control attacker IP addresses when distinguishable", "destination ports and protocols"]
+      - group: infrastructure_impact
+        items: ["CPU, RAM and network-interface load graphs/statistics", "attack start and end time in UTC"]
+      - group: additional_data
+        items: ["monitoring dashboard screenshots", "other artifacts such as suspicious HTTP User-Agent values"]
+
+  - id: FAILED_AUTHORIZATION_ATTEMPTS
+    exact_name_ru: "Неудачные попытки авторизации"
+    pages: [3, 4]
+    definition: >-
+      Repeated login attempts with invalid credentials that may indicate brute force,
+      use of leaked passwords or activity involving compromised accounts.
+    key_indicators:
+      - multiple failed-login records
+      - attempts against multiple accounts from one IP address
+      - common login/password combinations
+      - unusual times or geographic locations
+      - Kerberos ticket request
+      - access to an authentication server such as LDAP or Keycloak
+    classification_logic:
+      operator: ANY
+      criteria:
+        - series of failed login attempts over a short period
+        - automated-attempt signs such as frequency, patterns or a tool name in User-Agent
+        - known vulnerable credential combinations
+      examples:
+        - {value: "more than 5-10 failed attempts over a short period", status: EXAMPLE_NON_NORMATIVE}
+    exclusions:
+      - {value: "isolated user password-entry errors, no more than four", status: EXAMPLE_NON_NORMATIVE}
+      - CAPTCHA or two-factor authentication problems
+      - account-locked errors without preceding login attempts
+      - software malfunction producing the same login/password signal
+    evidence_point_5:
+      - group: authentication_logs
+        items: ["Active Directory, /var/log/auth.log and SSO logs", "timestamp of each authorization attempt"]
+      - group: attacker_data
+        items: ["IP addresses with WHOIS data", "User-Agent strings", "accounts and domain name used", "passwords used by the attacker"]
+      - group: attack_context
+        items: ["target systems/services", "protocols such as RDP, SSH or web form", "activity period"]
+      - group: additional_artifacts
+        items: ["password pattern examples", "SIEM screenshots", "blocking data", "added SSH keys", "PAM/sshd configuration", "JA3 fingerprint and SNI"]
+
+  - id: MALWARE_IMPLANT_ATTEMPTS
+    exact_name_ru: "Попытки внедрения вредоносного программного обеспечения (ВПО)"
+    pages: [5, 6]
+    definition: >-
+      Actions intended to load and execute malicious code in a target system.
+    key_indicators:
+      - suspicious executable files, scripts or macro-enabled documents
+      - unauthorized changes to registry, autorun or scheduled tasks
+      - command-and-control traffic or connections to suspicious domains/IP addresses
+      - vulnerability exploitation attempts intended to execute code
+      - use of vulnerable browsers, office suites or remote-access software
+    classification_logic:
+      operator: ANY
+      criteria:
+        - attempted upload or execution of suspicious files
+        - vulnerability-exploitation signs aimed at code execution
+        - artifacts associated with known malware families
+        - attempts to persist malicious code
+        - events recorded by ABC or EDR as printed in the source
+    exclusions:
+      - antivirus false positives on legitimate software
+      - suspicious files not confirmed as malicious
+      - network attacks without attempted malicious-code execution
+    evidence_point_5:
+      - group: malware_artifacts
+        items: ["suspicious files in an isolated environment", "MD5, SHA-1 and SHA-256 hashes", "analysis results", "attributes and hashes of system executables and loaded libraries"]
+      - group: event_logs
+        items: ["antivirus/EDR logs", "Windows Event Log or syslog", "SIEM data"]
+      - group: attack_context
+        items: ["entry vector", "event timestamps", "affected systems"]
+      - group: additional_data
+        items: ["network indicators", "screenshots of suspicious activity", "dynamic-analysis results when performed"]
+
+  - id: VULNERABILITY_EXPLOITATION_ATTEMPTS
+    exact_name_ru: "Попытки эксплуатации уязвимости"
+    pages: [6, 7, 8]
+    definition: >-
+      Deliberate use of a known or zero-day vulnerability in software, equipment or
+      configuration to obtain unauthorized access, elevate privileges or disrupt operation.
+    key_indicators:
+      - exploit-like nonstandard network packets
+      - attempted commands through vulnerable interfaces
+      - public exploit or proof-of-concept use
+      - anomalous behavior or crashes of vulnerable services
+      - attempted access to protected memory areas such as buffer overflow
+    classification_logic:
+      operator: ANY
+      criteria:
+        - packets matching known exploits
+        - attempted exploit-code execution
+        - anomalies in vulnerable services
+        - matches to known vulnerability signatures
+        - integrity violation of executables or loaded libraries
+    exclusions:
+      - vulnerability scanning without exploitation attempt
+      - detection-system false positives
+      - authorized security testing
+    evidence_point_5:
+      - group: attack_technical_details
+        items: ["full PCAP traffic dumps", "exact vulnerability name or CVE ID", "attack vector"]
+      - group: logs_and_artifacts
+        items: ["firewall, IDS/IPS and host-sensor logs", "memory dumps of the attacked service", "exploit-analysis results", "system calls and interrupts of the suspected process"]
+      - group: impact_context
+        items: ["attack timestamps", "target systems and services", "access level obtained"]
+      - group: additional_data
+        items: ["indicators of compromise", "screenshots of anomalous activity", "vulnerability-remediation recommendations"]
+
+  - id: FRAUDULENT_INFORMATION_PUBLICATION
+    exact_name_ru: "Публикация мошеннической информации"
+    pages: [8, 9]
+    definition: >-
+      Publication of false, forged or misleading information to deceive users, obtain
+      unlawful benefit or damage reputation.
+    key_indicators:
+      - forged web pages imitating legitimate resources
+      - phishing through email, messengers or social networks
+      - fake advertisements or offers
+      - modified images or documents
+      - fake support or other social-engineering accounts
+    classification_logic:
+      operator: ANY
+      criteria:
+        - discovered fake resources imitating legitimate resources
+        - attempts to collect confidential data through fake forms
+        - dissemination of knowingly false information
+        - intentional deception of users established
+    exclusions:
+      - inadvertent publication errors
+      - spam without fraudulent elements
+      - legitimate marketing campaigns
+    evidence_point_5:
+      - group: fraud_evidence
+        items: ["screenshots of fake and legitimate pages/messages", "complete phishing-email headers", "fake and legitimate URLs when available"]
+      - group: technical_data
+        items: ["fraudster IP addresses and domains", "domain WHOIS data", "access logs for fake resources"]
+      - group: attack_context
+        items: ["target audience", "social-engineering techniques", "activity period"]
+      - group: additional_artifacts
+        items: ["victim information when available", "financial-loss data when applicable"]
+
+  - id: NETWORK_SCANNING
+    exact_name_ru: "Сетевое сканирование"
+    pages: [9, 10, 11]
+    definition: >-
+      Active examination of network infrastructure to identify hosts, services, ports,
+      protocols, configuration weaknesses and architectural characteristics.
+    key_indicators:
+      - mass requests across IP-address sequences
+      - systematic TCP/UDP port checks
+      - Nmap, Masscan, Zmap or similar scanner use
+      - anomalous temporal request patterns
+      - operating-system or service fingerprinting
+    classification_logic:
+      operator: ANY
+      criteria:
+        - systematic checks of IP ranges
+        - port-scanning attempts
+        - known scanning tools
+        - characteristic request sequence
+    exclusions:
+      - isolated erroneous connections
+      - legitimate availability checks
+      - automated monitoring tests
+      - background Internet scanning noise
+    evidence_point_5:
+      - group: scan_technical_data
+        items: ["PCAP traffic dumps", "target IP/port list", "activity timestamps", "scanning methods"]
+      - group: analytical_data
+        items: ["tool-analysis results", "source geolocation", "request frequency"]
+      - group: contextual_information
+        items: ["affected network segments", "potential vulnerabilities exposed by scanning", "links to other incidents"]
+      - group: additional_artifacts
+        items: ["IDS/IPS signatures", "firewall logs", "reverse source-analysis results", "JA3 fingerprint"]
+
+  - id: SOCIAL_ENGINEERING
+    exact_name_ru: "Социальная инженерия"
+    pages: [11, 12]
+    definition: >-
+      Manipulation of people through psychological techniques, rather than technical
+      vulnerabilities, to obtain confidential information or access to protected systems.
+    key_indicators:
+      - unlawful requests for passwords, payment details or other confidential data
+      - fake security-service or administrator notices
+      - impersonation of management, IT staff or banks
+      - physical intrusion under false pretence
+      - pressure based on urgency or fear
+    classification_logic:
+      operator: ANY
+      criteria:
+        - psychological influence established
+        - attempts to obtain data through circumvention
+        - forged documents or accounts used
+    exclusions:
+      - technical attacks without a human factor
+      - automated brute-force attacks
+      - employee mistakes without external influence
+      - malware implant attempts
+    evidence_point_5:
+      - group: contact_evidence
+        items: ["correspondence/message screenshots", "audio/video recordings", "copies of forged documents"]
+      - group: technical_data
+        items: ["message metadata", "email headers", "phishing-page URLs"]
+      - group: attack_context
+        items: ["influence scheme", "target data/systems", "number of victims"]
+      - group: additional_artifacts
+        items: ["fraudster identifiers", "examples of pretexts", "personnel-protection recommendations"]
+
+integration_rules:
+  - id: METHOD-TO-ORDER2-ATTACK-TYPE
+    rule: >-
+      Taxonomy IDs map only to the seven closed reference values of the Order No. 2
+      attack_type field; the methodology does not add an eighth transport value.
+  - id: METHOD-TO-FSB547
+    rule: >-
+      Classification assistance does not start, stop or extend the reporting clocks in
+      FSB Order No. 547. Available information must be routed within the applicable clock.
+  - id: METHOD-TO-EVIDENCE-NODES
+    rule: >-
+      Missing point-5 material is recorded as missing; remaining available material is sent
+      and later supplementation preserves the original submission timestamp.
+
+red_team:
+  verdict: PASS_RECOMMENDATORY_TAXONOMY_AND_EVIDENCE_EXTRACTION
+  guards:
+    - "Every numeric threshold remains EXAMPLE_NON_NORMATIVE."
+    - "ANY and ALL operators follow the source wording for classification criteria."
+    - "Exclusions assist triage but do not override statutory definitions or deadlines."
+    - "A partial point-5 evidence package does not block submission of available evidence."

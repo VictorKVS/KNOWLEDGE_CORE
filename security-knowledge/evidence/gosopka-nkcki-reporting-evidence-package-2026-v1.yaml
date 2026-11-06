@@ -1,12 +1,11 @@
 schema_version: "1.0"
 id: gosopka-nkcki-reporting-evidence-package-2026-v1
-checked_at: "2026-08-14"
-status: PRIMARY_WEB_VERIFIED_LIMITED_SCOPE
+checked_at: "2026-08-19"
+status: PRIMARY_IMMUTABLE_TABLE_SCHEMA_BOUND
 purpose: >-
-  Evidence-package behavior for current NKCKI reporting based only on facts explicitly
-  confirmed on the official cert.gov.ru publication pages. Exact attachment schemas and
-  field-level technical parameters remain pending until the downloadable artifacts are
-  preserved and hash-pinned.
+  Evidence-package behavior for current NKTsKI reporting, now bound to preserved official-origin
+  artifacts and the exact printed Order No. 2 table schema. Separate automated transport
+  serialization remains pending.
 
 primary_sources:
   - id: NKCKI-NEWS-2026-07-14
@@ -22,6 +21,11 @@ primary_sources:
     authority: NKCKI_CERT_GOV_RU
     url: "https://www.cert.gov.ru/uvedomlenie.php"
     source_type: PRIMARY_WEB_OPERATIONAL_FORM
+  - id: NKTSKI-ORDER-2-2026-IMMUTABLE
+    authority: NKTSKI
+    source_type: IMMUTABLE_PRIMARY
+    artifact: security-knowledge/evidence/primary-artifacts/2026/nkcki-order-2-2026-07-14.pdf
+    sha256: 704473892479161e244a6c6a71bfdae479ae4b9be5bcd49ccacf563ab009d686
 
 verified_rules:
   - id: GOS-EVD-2026-001
@@ -30,7 +34,7 @@ verified_rules:
       NKCKI order No. 2 dated 2026-07-14 defines formats for presenting information about
       computer attacks and computer incidents to GosSOPKA and the composition of technical parameters.
     provenance: NKCKI-NEWS-2026-07-14
-    guardrail: "Do not infer field names or mandatory attachment schemas until the downloadable artifact is preserved."
+    guardrail: "Use the hash-bound field schema; do not infer machine protocol keys from printed labels."
 
   - id: GOS-EVD-2026-002
     status: PRIMARY_WEB_VERIFIED
@@ -84,8 +88,10 @@ package_states:
   - id: PARTIAL_WITH_AVAILABLE_MATERIALS
     behavior: SEND_AVAILABLE_MATERIALS
     missing_materials_status: RECORDED_MISSING_NOT_AUTO_BLOCKING
-  - id: EXACT_SCHEMA_NOT_PRESERVED
-    behavior: FAIL_CLOSED_FOR_FIELD_LEVEL_COMPLETENESS_ASSERTION
+  - id: PRINTED_TABLE_SCHEMA_HASH_BOUND
+    behavior: VALIDATE_38_ATTACK_OR_53_INCIDENT_FIELDS
+  - id: AUTOMATED_PROTOCOL_SCHEMA_NOT_ACQUIRED
+    behavior: FAIL_CLOSED_FOR_MACHINE_SERIALIZATION_ASSERTION
   - id: THRESHOLD_ONLY_MATCH
     behavior: DO_NOT_TREAT_AS_LEGAL_CLASSIFICATION_PROOF
 
@@ -111,13 +117,12 @@ regression_fixtures:
     expected_behavior: FAIL_CLOSED_FOR_FIELD_LEVEL_COMPLETENESS_ASSERTION
 
 pending:
-  - "preserve and SHA-256 hash the downloadable NKCKI order No. 2 artifact"
-  - "preserve and SHA-256 hash the downloadable 2026-07-08 Initial Data document"
-  - "extract exact field names, attachment/parameter requirements and any machine-readable formats"
-  - "bind field-level validation to immutable artifact versions"
+  - "acquire and version the separate automated-interaction protocol referenced in Order No. 2 clause 3"
+  - "bind channel-specific delivery artifacts to a tested operational export"
+  - "verify exact historical applicability start without inferring an unstated effective date"
 
 red_team:
-  verdict: PARTIAL_PASS
+  verdict: PASS_PRINTED_SCHEMA_PROTOCOL_SERIALIZATION_PENDING
   blocker: >-
-    Evidence behavior is now fail-closed and the partial-package rule is explicit, but field-level completeness
-    cannot be certified until the exact downloadable artifacts are immutable/hash-pinned and parsed.
+    Printed field-level validation is now immutable and executable. Machine serialization and
+    channel-operational evidence remain fail-closed until their separate authoritative artifacts are acquired.
